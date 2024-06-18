@@ -418,7 +418,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     role_string = f"role='{AXObject.get_role_name(acc)}'"
     path_string = f"{indent}path={AXObject.get_path(acc)}"
     state_string = f"{indent}states='{AXObject.state_set_as_string(acc)}'"
-    rel_string = f"{indent}relations='{AXObject.relations_as_string(acc)}'"
+    rel_string = f"{indent}relations='{AXUtilities.relations_as_string(acc)}'"
     actions_string = f"{indent}actions='{AXObject.actions_as_string(acc)}'"
     iface_string = f"{indent}interfaces='{AXObject.supported_interfaces_as_string(acc)}'"
     attr_string = f"{indent}attributes='{AXObject.attributes_as_string(acc)}'"

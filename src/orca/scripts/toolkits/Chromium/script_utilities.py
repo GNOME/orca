@@ -30,9 +30,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 import re
 
 from orca import debug
@@ -221,11 +218,11 @@ class Utilities(web.Utilities):
         return result
 
     def autocompleteForPopup(self, obj):
-        relation = AXObject.get_relation(obj, Atspi.RelationType.POPUP_FOR)
-        if not relation:
+        targets = AXUtilities.get_is_popup_for(obj)
+        if not targets:
             return None
 
-        target = relation.get_target(0)
+        target = targets[0]
         if AXUtilities.is_autocomplete(target):
             return target
 

@@ -1619,7 +1619,7 @@ class SpeechGenerator(generator.Generator):
 
         # TODO - JD: We need other ways to determine group membership. Not all
         # implementations expose the member-of relation. Gtk3 does. Others are TBD.
-        members = AXObject.get_relation_targets(obj, Atspi.RelationType.MEMBER_OF)
+        members = AXUtilities.get_is_member_of(obj)
         if priorObj not in members:
             return result
 
@@ -1865,13 +1865,14 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get('role', AXObject.get_role(obj))
         enabled, disabled = self._getEnabledAndDisabledContextRoles()
-        if not (role in enabled or self._script.utilities.isDetails(obj)):
+        is_details = bool(AXUtilities.get_is_details_for(obj))
+        if not (role in enabled or is_details):
             return []
 
         count = args.get('count', 1)
 
         result = []
-        if self._script.utilities.isDetails(obj):
+        if is_details:
             result.append(messages.LEAVING_DETAILS)
         elif role == Atspi.Role.BLOCK_QUOTE:
             if count > 1:
@@ -2237,8 +2238,7 @@ class SpeechGenerator(generator.Generator):
 
         # TODO - JD: We need other ways to determine group membership. Not all
         # implementations expose the member-of relation. Gtk3 does. Others are TBD.
-        members = AXObject.get_relation_targets(
-            obj, Atspi.RelationType.MEMBER_OF, AXUtilities.is_showing)
+        members = list(filter(AXUtilities.is_showing, AXUtilities.get_is_member_of(obj)))
         if obj not in members:
             return []
 

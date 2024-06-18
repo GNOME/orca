@@ -18,6 +18,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
+
 """
 Utilities for finding all objects that meet a certain criteria.
 These utilities are app-type- and toolkit-agnostic. Utilities that might have
@@ -44,6 +48,7 @@ from gi.repository import Atspi
 from . import debug
 from .ax_collection import AXCollection
 from .ax_object import AXObject
+from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
@@ -1580,7 +1585,7 @@ class AXUtilitiesCollection:
         """Returns all the descendants of root that have a label role, but no relations"""
 
         def _pred(obj):
-            if AXObject.get_relations(obj):
+            if not AXUtilitiesRelation.object_is_unrelated(obj):
                 return False
             if pred is not None:
                 return pred(obj)

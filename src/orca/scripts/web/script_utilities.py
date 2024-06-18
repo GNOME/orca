@@ -83,13 +83,10 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleWords= {}
         self._hasLongDesc = {}
         self._hasVisibleCaption = {}
-        self._hasDetails = {}
-        self._isDetails = {}
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
-        self._isErrorMessage = {}
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
@@ -105,8 +102,6 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
-        self._labelsForObject = {}
-        self._labelTargets = {}
         self._descriptionListTerms = {}
         self._valuesForTerm = {}
         self._displayedLabelText = {}
@@ -178,13 +173,10 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleWords= {}
         self._hasLongDesc = {}
         self._hasVisibleCaption = {}
-        self._hasDetails = {}
-        self._isDetails = {}
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
         self._isAnchor = {}
         self._isEditableComboBox = {}
-        self._isErrorMessage = {}
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
@@ -200,8 +192,6 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
-        self._labelsForObject = {}
-        self._labelTargets = {}
         self._descriptionListTerms = {}
         self._valuesForTerm = {}
         self._displayedLabelText = {}
@@ -253,7 +243,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _getDocumentsEmbeddedBy(self, frame):
-        return AXObject.get_relation_targets(frame, Atspi.RelationType.EMBEDS, self.isDocument)
+        return list(filter(self.isDocument, AXUtilities.get_embeds(frame)))
 
     def sanity_check_active_window(self):
         app = self._script.app
@@ -347,9 +337,9 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None
 
-        relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
-        if relation:
-            return relation.get_target(0)
+        targets = AXUtilities.get_flows_to(obj)
+        if targets:
+            return targets[0]
 
         if obj == documentFrame:
             obj, offset = self.getCaretContext(documentFrame)
@@ -2713,7 +2703,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        for target in self.targetsForLabel(obj):
+        for target in AXUtilities.get_is_label_for(obj):
             if AXObject.find_ancestor(target, lambda x: x == obj):
                 rv = True
                 break
@@ -2733,7 +2723,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        targets = self.labelTargets(obj)
+        targets = AXUtilities.get_is_label_for(obj)
         if targets:
             end = max(1, AXText.get_character_count(obj))
             rect = AXText.get_range_rect(obj, 0, end)
@@ -2761,21 +2751,6 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
-    def targetsForLabel(self, obj):
-        return AXObject.get_relation_targets(obj, Atspi.RelationType.LABEL_FOR)
-
-    def labelTargets(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return []
-
-        rv = self._labelTargets.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = [hash(t) for t in self.targetsForLabel(obj)]
-        self._labelTargets[hash(obj)] = rv
-        return rv
-
     def isLinkAncestorOfImageInContents(self, link, contents):
         if not self.isLink(link):
             return False
@@ -2802,11 +2777,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def isLabellingInteractiveElement(self, obj):
-        if self._labelTargets.get(hash(obj)) == []:
-            return False
-
-        targets = self.targetsForLabel(obj)
-        for target in targets:
+        for target in AXUtilities.get_is_label_for(obj):
             if AXUtilities.is_focusable(target):
                 return True
 
@@ -2816,12 +2787,12 @@ class Utilities(script_utilities.Utilities):
         if self.isFocusModeWidget(obj):
             return False
 
-        targets = self.labelTargets(obj)
+        targets = AXUtilities.get_is_label_for(obj)
         if not contents:
             return bool(targets) or self.isLabelDescendant(obj)
 
         for acc, start, end, string in contents:
-            if hash(acc) in targets:
+            if acc in targets:
                 return True
 
         if not self.isTextBlockElement(obj):
@@ -2986,11 +2957,10 @@ class Utilities(script_utilities.Utilities):
         if listbox is None:
             return None
 
-        targets = AXObject.get_relation_targets(listbox,
-                                                Atspi.RelationType.CONTROLLED_BY,
-                                                self.isEditableComboBox)
-        if len(targets) == 1:
-            return targets[0]
+        targets = AXUtilities.get_is_controlled_by(listbox)
+        for target in targets:
+            if self.isEditableComboBox(target):
+                return target
 
         return AXObject.find_ancestor(listbox, self.isEditableComboBox)
 
@@ -3003,18 +2973,6 @@ class Utilities(script_utilities.Utilities):
         rv = self.getEditableComboBoxForItem(item) == comboBox
         tokens = ["WEB:", item, "is item of", comboBox, ":", rv]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
-    def isErrorMessage(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isErrorMessage(obj)
-
-        rv = self._isErrorMessage.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = AXObject.has_relation(obj, Atspi.RelationType.ERROR_FOR)
-        self._isErrorMessage[hash(obj)] = rv
         return rv
 
     def isFakePlaceholderForEntry(self, obj):
@@ -3355,7 +3313,7 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        labels = self.labelsForObject(obj)
+        labels = AXUtilities.get_is_labelled_by(obj)
 
         def isVisibleCaption(x):
             return AXUtilities.is_caption(x) \
@@ -3364,44 +3322,6 @@ class Utilities(script_utilities.Utilities):
         rv = bool(list(filter(isVisibleCaption, labels)))
         self._hasVisibleCaption[hash(obj)] = rv
         return rv
-
-    def hasDetails(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().hasDetails(obj)
-
-        rv = self._hasDetails.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        relation = AXObject.get_relation(obj, Atspi.RelationType.DETAILS)
-        rv = relation and relation.get_n_targets() > 0
-        self._hasDetails[hash(obj)] = rv
-        return rv
-
-    def detailsIn(self, obj):
-        if not self.hasDetails(obj):
-            return []
-
-        return AXObject.get_relation_targets(obj, Atspi.RelationType.DETAILS)
-
-    def isDetails(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isDetails(obj)
-
-        rv = self._isDetails.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        relation = AXObject.get_relation(obj, Atspi.RelationType.DETAILS_FOR)
-        rv = relation and relation.get_n_targets() > 0
-        self._isDetails[hash(obj)] = rv
-        return rv
-
-    def detailsFor(self, obj):
-        if not self.isDetails(obj):
-            return []
-
-        return AXObject.get_relation_targets(obj, Atspi.RelationType.DETAILS_FOR)
 
     def popupType(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3463,27 +3383,12 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        labels = self.labelsForObject(obj)
+        labels = AXUtilities.get_is_labelled_by(obj)
         strings = [AXObject.get_name(label)
                    or self.displayedText(label) for label in labels if label is not None]
         rv = " ".join(strings)
 
         self._displayedLabelText[hash(obj)] = rv
-        return rv
-
-    def labelsForObject(self, obj):
-        if not obj:
-            return []
-
-        rv = self._labelsForObject.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().labelsForObject(obj)
-        if not self.inDocumentContent(obj):
-            return rv
-
-        self._labelsForObject[hash(obj)] = rv
         return rv
 
     def isSpinnerEntry(self, obj):
@@ -3809,9 +3714,9 @@ class Utilities(script_utilities.Utilities):
         if not self.getError(obj):
             return None
 
-        relation = AXObject.get_relation(obj, Atspi.RelationType.ERROR_MESSAGE)
-        if relation:
-            return relation.get_target(0)
+        targets = AXUtilities.get_error_message(obj)
+        if targets:
+            return targets[0]
 
         return None
 

@@ -1126,9 +1126,9 @@ class Generator:
             return []
 
         radioGroupLabel = None
-        relation = AXObject.get_relation(obj, Atspi.RelationType.LABELLED_BY)
-        if relation:
-            radioGroupLabel = relation.get_target(0)
+        labels = AXUtilities.get_is_labelled_by(obj, False)
+        if labels:
+            radioGroupLabel = labels[0]
         if radioGroupLabel:
             return [self._script.utilities.displayedText(radioGroupLabel)]
 

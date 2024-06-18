@@ -216,7 +216,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateHasDetails(obj, **args)
 
-        objs = self._script.utilities.detailsIn(obj)
+        objs = AXUtilities.get_details(obj)
         if not objs:
             return []
 
@@ -233,10 +233,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
-        objs = self._script.utilities.detailsIn(obj)
-        if not objs:
-            container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
-            objs = self._script.utilities.detailsIn(container)
+        objs = []
+        container = obj
+        while container and not objs:
+            objs = AXUtilities.get_details(container)
+            container = AXObject.get_parent(container)
 
         if not objs:
             return []
@@ -266,7 +267,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateDetailsFor(obj, **args)
 
-        objs = self._script.utilities.detailsFor(obj)
+        objs = AXUtilities.get_is_details_for(obj)
         if not objs:
             return []
 
@@ -333,7 +334,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             caption = args.get('ancestorOf')
             if not AXUtilities.is_caption(caption):
                 caption = AXObject.find_ancestor(caption, AXUtilities.is_caption)
-            if caption and hash(obj) in self._script.utilities.labelTargets(caption):
+            if caption and obj in AXUtilities.get_is_label_for(caption):
                 return []
 
         role = args.get('role', AXObject.get_role(obj))

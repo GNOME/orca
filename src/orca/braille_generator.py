@@ -432,7 +432,7 @@ class BrailleGenerator(generator.Generator):
         details.
         """
         result = []
-        labels = self._script.utilities.labelsForObject(obj)
+        labels = AXUtilities.get_is_labelled_by(obj)
         for label in labels:
             result.extend(self.generate(label, **args))
             break
@@ -467,9 +467,9 @@ class BrailleGenerator(generator.Generator):
         if self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj):
             include = AXText.get_line_at_offset(obj)[1] == 0
             if include:
-                relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_FROM)
-                if relation:
-                    include = not self._script.utilities.isTextArea(relation.get_target(0))
+                targets = AXUtilities.get_flows_from(obj)
+                if targets:
+                    include = not self._script.utilities.isTextArea(targets[0])
         return include
 
     #####################################################################

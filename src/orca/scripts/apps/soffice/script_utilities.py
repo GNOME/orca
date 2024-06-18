@@ -28,10 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
@@ -195,10 +191,8 @@ class Utilities(script_utilities.Utilities):
 
     @staticmethod
     def _flowsFromOrToSelection(obj):
-        relationSet = AXObject.get_relations(obj)
-        flows = [Atspi.RelationType.FLOWS_FROM, Atspi.RelationType.FLOWS_TO]
-        relations = filter(lambda r: r.get_relation_type() in flows, relationSet)
-        targets = [r.get_target(0) for r in relations]
+        targets = AXUtilities.get_flows_from(obj)
+        targets.extend(AXUtilities.get_flows_to(obj))
         for target in targets:
             if AXText.has_selected_text(target):
                 return True

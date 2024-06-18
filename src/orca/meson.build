@@ -62,6 +62,7 @@ lib_sources = [
   'ax_text.py',
   'ax_utilities.py',
   'ax_utilities_collection.py',
+  'ax_utilities_relation.py',
   'ax_utilities_role.py',
   'ax_utilities_state.py',
   'ax_value.py',

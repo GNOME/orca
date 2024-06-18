@@ -183,7 +183,7 @@ class Script(default.Script):
             super().on_showing_changed(event)
             return
 
-        if self.utilities.isPopOver(event.source) \
+        if AXUtilities.get_is_popup_for(event.source) \
            or AXUtilities.is_alert(event.source) \
            or AXUtilities.is_info_bar(event.source):
             if AXUtilities.is_application(AXObject.get_parent(event.source)):

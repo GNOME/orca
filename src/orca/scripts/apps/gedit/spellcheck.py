@@ -65,7 +65,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
         def isError(x):
             return AXUtilities.is_label(x) \
-                  and ":" not in AXObject.get_name(x) and not AXObject.get_relations(x)
+                  and ":" not in AXObject.get_name(x) and AXUtilities.object_is_unrelated(x)
 
         return AXObject.find_descendant(panel, isError)
 

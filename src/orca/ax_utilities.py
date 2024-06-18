@@ -47,6 +47,7 @@ from . import debug
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities_collection import AXUtilitiesCollection
+from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
@@ -293,6 +294,9 @@ class AXUtilities:
                 return int(result) - 1
 
         return None
+
+for name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):
+    setattr(AXUtilities, name, method)
 
 for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
     setattr(AXUtilities, name, method)

@@ -28,10 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
 from orca.scripts.toolkits import gtk
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -96,11 +92,11 @@ class Utilities(gtk.Utilities):
         for i in range(row + 1, AXTable.get_row_count(parent, prefer_attribute=False)):
             cell = AXTable.get_cell_at(parent, i, col)
             nodeCell = AXObject.get_previous_sibling(cell)
-            relation = AXObject.get_relation(nodeCell, Atspi.RelationType.NODE_CHILD_OF)
-            if not relation:
+            targets = AXUtilities.get_is_node_child_of(nodeCell)
+            if not targets:
                 continue
 
-            nodeOf = relation.get_target(0)
+            nodeOf = targets[0]
             if self.isSameObject(obj, nodeOf):
                 nodes.append(cell)
             elif self.nodeLevel(nodeOf) <= nodeLevel:

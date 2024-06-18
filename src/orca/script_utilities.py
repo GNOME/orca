@@ -121,7 +121,7 @@ class Utilities:
         def pred(x):
             return AXObject.get_index_in_parent(x) >= 0
 
-        nodes = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF, pred)
+        nodes = list(filter(pred, AXUtilities.get_is_node_parent_of(obj)))
         tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-parent-of"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if nodes:
@@ -137,11 +137,11 @@ class Utilities:
 
         for i in range(row + 1, AXTable.get_row_count(parent, prefer_attribute=False)):
             cell = AXTable.get_cell_at(parent, i, col)
-            relation = AXObject.get_relation(cell, Atspi.RelationType.NODE_CHILD_OF)
-            if not relation:
+            targets = AXUtilities.get_is_node_child_of(cell)
+            if not targets:
                 continue
 
-            nodeOf = relation.get_target(0)
+            nodeOf = targets[0]
             if self.isSameObject(obj, nodeOf):
                 nodes.append(cell)
             elif self.nodeLevel(nodeOf) <= nodeLevel:
@@ -215,7 +215,7 @@ class Utilities:
                 self._script.generator_cache[self.DISPLAYED_LABEL] = {}
             labelString = None
 
-        labels = self.labelsForObject(obj)
+        labels = AXUtilities.get_is_labelled_by(obj)
         for label in labels:
             labelString = \
                 self.appendString(labelString, self.displayedText(label))
@@ -226,22 +226,6 @@ class Utilities:
     def preferDescriptionOverName(self, obj):
         return False
 
-    def descriptionsForObject(self, obj):
-        """Return a list of objects describing obj."""
-
-        descriptions = AXObject.get_relation_targets(obj, Atspi.RelationType.DESCRIBED_BY)
-        if not descriptions:
-            return []
-
-        labels = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
-        if descriptions == labels:
-            tokens = ["SCRIPT UTILITIES:", obj,
-                      "'s described-by targets are the same as labelled-by targets"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        return descriptions
-
     def detailsContentForObject(self, obj):
         details = self.detailsForObject(obj)
         return list(map(self.displayedText, details))
@@ -249,9 +233,8 @@ class Utilities:
     def detailsForObject(self, obj, textOnly=True):
         """Return a list of objects containing details for obj."""
 
-        details = AXObject.get_relation_targets(obj, Atspi.RelationType.DETAILS)
-        if not details and AXUtilities.is_toggle_button(obj) \
-            and AXUtilities.is_expanded(obj):
+        details = AXUtilities.get_details(obj)
+        if not details and AXUtilities.is_toggle_button(obj) and AXUtilities.is_expanded(obj):
             details = [child for child in AXObject.iter_children(obj)]
 
         if not textOnly:
@@ -274,7 +257,8 @@ class Utilities:
             if self.DISPLAYED_DESCRIPTION not in self._script.generator_cache:
                 self._script.generator_cache[self.DISPLAYED_DESCRIPTION] = {}
 
-        string = " ".join(map(self.displayedText, self.descriptionsForObject(obj)))
+        descriptions = AXUtilities.get_is_described_by(obj)
+        string = " ".join(map(self.displayedText, descriptions))
         self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj] = string
         return self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj]
 
@@ -1008,15 +992,6 @@ class Utilities:
             or AXUtilities.is_text(obj) \
             or AXUtilities.is_paragraph(obj)
 
-    def labelsForObject(self, obj):
-        """Return a list of the labels for this object."""
-
-        def isNotAncestor(acc):
-            return not AXObject.find_ancestor(obj, lambda x: x == acc)
-
-        result = AXObject.get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
-        return list(filter(isNotAncestor, result))
-
     def nestingLevel(self, obj):
         """Determines the nesting level of this object.
 
@@ -1072,10 +1047,10 @@ class Utilities:
         node = obj
         done = False
         while not done:
-            relation = AXObject.get_relation(node, Atspi.RelationType.NODE_CHILD_OF)
+            targets = AXUtilities.get_is_node_child_of(node)
             node = None
-            if relation:
-                node = relation.get_target(0)
+            if targets:
+                node = targets[0]
 
             # We want to avoid situations where something gives us an
             # infinite cycle of nodes.  Bon Echo has been seen to do
@@ -1504,7 +1479,7 @@ class Utilities:
         def _include(x):
             if not (x and AXObject.get_role(x) in labelRoles):
                 return False
-            if AXObject.get_relations(x):
+            if not AXUtilities.object_is_unrelated(x):
                 return False
             if onlyShowing and not AXUtilities.is_showing(x):
                 return False
@@ -1583,9 +1558,9 @@ class Utilities:
         if not AXObject.is_valid(obj):
             return None
 
-        relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_FROM)
-        if relation:
-            return relation.get_target(0)
+        targets = AXUtilities.get_flows_from(obj)
+        if targets:
+            return targets[0]
 
         return AXObject.get_previous_object(obj)
 
@@ -1595,9 +1570,9 @@ class Utilities:
         if not AXObject.is_valid(obj):
             return None
 
-        relation = AXObject.get_relation(obj, Atspi.RelationType.FLOWS_TO)
-        if relation:
-            return relation.get_target(0)
+        targets = AXUtilities.get_flows_to(obj)
+        if targets:
+            return targets[0]
 
         return AXObject.get_next_object(obj)
 
@@ -1686,7 +1661,7 @@ class Utilities:
         return ""
 
     def isErrorMessage(self, obj):
-        return False
+        return bool(AXUtilities.get_is_error_for(obj))
 
     def deletedText(self, event):
         return event.any_data
@@ -2465,11 +2440,8 @@ class Utilities:
 
         return self.displayedText(obj)
 
-    def isPopOver(self, obj):
-        return False
-
     def isNonModalPopOver(self, obj):
-        if not self.isPopOver(obj):
+        if not AXUtilities.get_is_popup_for(obj):
             return False
         return not AXUtilities.is_modal(obj)
 
@@ -2488,15 +2460,6 @@ class Utilities:
 
     def hasLongDesc(self, obj):
         return False
-
-    def hasDetails(self, obj):
-        return False
-
-    def isDetails(self, obj):
-        return False
-
-    def detailsFor(self, obj):
-        return []
 
     def hasVisibleCaption(self, obj):
         return False
@@ -2794,13 +2757,11 @@ class Utilities:
         return replicant
 
     def getFunctionalChildCount(self, obj):
-        relation = AXObject.get_relation(obj, Atspi.RelationType.NODE_PARENT_OF)
-        if relation:
-            return relation.get_n_targets()
-        return AXObject.get_child_count(obj)
+        targets = AXUtilities.get_is_node_parent_of(obj)
+        return len(targets) or AXObject.get_child_count(obj)
 
     def getFunctionalChildren(self, obj, sibling=None):
-        result = AXObject.get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF)
+        result = AXUtilities.get_is_node_parent_of(obj)
         if result:
             return result
         if AXUtilities.is_description_term(sibling):
@@ -2810,9 +2771,9 @@ class Utilities:
         return [x for x in AXObject.iter_children(obj)]
 
     def getFunctionalParent(self, obj):
-        relation = AXObject.get_relation(obj, Atspi.RelationType.NODE_CHILD_OF)
-        if relation:
-            return relation.get_target(0)
+        targets = AXUtilities.get_is_node_child_of(obj)
+        if targets:
+            return targets[0]
         return AXObject.get_parent(obj)
 
     def _shouldCalculatePositionAndSetSize(self, obj):
@@ -3376,22 +3337,12 @@ class Utilities:
                 return False
             return True
 
-        def isOld(target):
-            return target == old_focus
-
-        def isNew(target):
-            return target == new_focus
-
-        if AXObject.get_relation_targets(new_focus,
-                                         Atspi.RelationType.CONTROLLER_FOR, isOld):
-            msg += "new locusOfFocus controls old locusOfFocus"
+        if AXUtilities.object_is_controlled_by(old_focus, new_focus) \
+           or AXUtilities.object_is_controlled_by(new_focus, old_focus):
+            msg += "new locusOfFocus and old locusOfFocus have controls relation"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
-        if AXObject.get_relation_targets(old_focus,
-                                         Atspi.RelationType.CONTROLLER_FOR, isNew):
-            msg += "old locusOfFocus controls new locusOfFocus"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return False
+
         return True
 
     def stringsAreRedundant(self, str1, str2, threshold=0.7):

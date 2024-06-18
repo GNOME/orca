@@ -25,9 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 import re
 
 from orca import debug
@@ -140,9 +137,6 @@ class Utilities(script_utilities.Utilities):
     def isEntryCompletionPopupItem(self, obj):
         return AXUtilities.is_table_cell(obj) \
             and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
-
-    def isPopOver(self, obj):
-        return AXObject.has_relation(obj, Atspi.RelationType.POPUP_FOR)
 
     def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
                      ignoreDescriptions=True):
