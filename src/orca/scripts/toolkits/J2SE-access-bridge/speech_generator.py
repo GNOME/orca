@@ -47,40 +47,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _generateAncestors(self, obj, **args):
-        """The Swing toolkit has labelled panels that do not implement the
-        AccessibleText interface, but displayedText returns a meaningful
-        string that needs to be used if displayedLabel returns None.
-        """
-        args['requireText'] = False
-        result = speech_generator.SpeechGenerator._generateAncestors(
-            self, obj, **args)
-        del args['requireText']
-        return result
-
-    def _generateNewAncestors(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the text of the ancestors for
-        the object.  This is typically used to present the context for
-        an object (e.g., the names of the window, the panels, etc.,
-        that the object is contained in).  If the 'priorObj' attribute
-        of the args dictionary is set, only the differences in
-        ancestry between the 'priorObj' and the current obj will be
-        computed.  Otherwise, no ancestry will be computed.  The
-        'priorObj' is typically set by Orca to be the previous object
-        with focus.
-        """
-        result = []
-        if args.get('role', AXObject.get_role(obj)) == Atspi.Role.MENU:
-            # We're way too chatty here -- at least with the Swing2
-            # demo. Users entering a menu want to know they've gone
-            # into a menu; not a huge ancestry.
-            #
-            return result
-        result.extend(speech_generator.SpeechGenerator.\
-                          _generateNewAncestors(self, obj, **args))
-        return result
-
     def _generateNumberOfChildren(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represents the number of children the
