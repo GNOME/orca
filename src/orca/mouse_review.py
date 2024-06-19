@@ -45,7 +45,7 @@ from gi.repository import GLib
 try:
     gi.require_version("Wnck", "3.0")
     from gi.repository import Wnck
-    _MOUSE_REVIEW_CAPABLE = True
+    _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None
 except Exception:
     _MOUSE_REVIEW_CAPABLE = False
 
