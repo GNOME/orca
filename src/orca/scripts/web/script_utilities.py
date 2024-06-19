@@ -54,7 +54,6 @@ class Utilities(script_utilities.Utilities):
     def __init__(self, script):
         super().__init__(script)
 
-        self._currentTextAttrs = {}
         self._caretContexts = {}
         self._priorContexts = {}
         self._canHaveCaretContextDecision = {}
@@ -214,7 +213,6 @@ class Utilities(script_utilities.Utilities):
         self._currentLineContents = None
         self._currentWordContents = None
         self._currentCharacterContents = None
-        self._currentTextAttrs = {}
 
     def isDocument(self, obj, excludeDocumentFrame=True):
         if AXUtilities.is_document_web(obj) or AXUtilities.is_embedded(obj):
@@ -597,10 +595,6 @@ class Utilities(script_utilities.Utilities):
         return ""
 
     def textAttributes(self, acc, offset=None, get_defaults=False):
-        attrsForObj = self._currentTextAttrs.get(hash(acc)) or {}
-        if offset in attrsForObj:
-            return attrsForObj.get(offset)
-
         attrs = super().textAttributes(acc, offset, get_defaults)
         objAttributes = AXObject.get_attributes_dict(acc, False)
         for key in self._script.attributeNamesDict.keys():
@@ -608,7 +602,6 @@ class Utilities(script_utilities.Utilities):
             if value is not None:
                 attrs[0][key] = value
 
-        self._currentTextAttrs[hash(acc)] = {offset:attrs}
         return attrs
 
     def localizeTextAttribute(self, key, value):
