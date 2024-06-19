@@ -1282,6 +1282,7 @@ class Script(script.Script):
                 tokens = ["DEFAULT: Updating locusOfFocus to", event.source]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.getManager().set_locus_of_focus(event, event.source, False)
+                focus = event.source
             else:
                 msg = "DEFAULT: Source window is not active window"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1293,7 +1294,6 @@ class Script(script.Script):
 
         if self.flatReviewPresenter.is_active():
             self.flatReviewPresenter.quit()
-
 
         offset = AXText.get_caret_offset(event.source)
         self._saveLastCursorPosition(event.source, offset)
