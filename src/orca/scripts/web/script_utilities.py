@@ -3686,11 +3686,6 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_invalid_entry(obj):
             return False
 
-        try:
-            self._currentTextAttrs.pop(hash(obj))
-        except Exception:
-            pass
-
         attrs, start, end = self.textAttributes(obj, 0, True)
         error = attrs.get("invalid")
         if error == "false":
