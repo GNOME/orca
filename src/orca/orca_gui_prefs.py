@@ -1448,51 +1448,47 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # Speech pane.
         #
-        enable = prefs["enableSpeech"]
+        enable = prefs.get("enableSpeech", settings.enableSpeech)
         self.get_widget("speechSupportCheckButton").set_active(enable)
         self.get_widget("speechOptionsGrid").set_sensitive(enable)
 
-        enable = prefs["onlySpeakDisplayedText"]
+        enable = prefs.get("onlySpeakDisplayedText", settings.onlySpeakDisplayedText)
         self.get_widget("onlySpeakDisplayedTextCheckButton").set_active(enable)
         self.get_widget("contextOptionsGrid").set_sensitive(not enable)
 
-        if prefs["verbalizePunctuationStyle"] == \
-                               settings.PUNCTUATION_STYLE_NONE:
+        style = prefs.get("verbalizePunctuationStyle", settings.verbalizePunctuationStyle)
+        if style == settings.PUNCTUATION_STYLE_NONE:
             self.get_widget("noneButton").set_active(True)
-        elif prefs["verbalizePunctuationStyle"] == \
-                               settings.PUNCTUATION_STYLE_SOME:
+        elif style == settings.PUNCTUATION_STYLE_SOME:
             self.get_widget("someButton").set_active(True)
-        elif prefs["verbalizePunctuationStyle"] == \
-                               settings.PUNCTUATION_STYLE_MOST:
+        elif style == settings.PUNCTUATION_STYLE_MOST:
             self.get_widget("mostButton").set_active(True)
         else:
             self.get_widget("allButton").set_active(True)
 
-        if prefs["speechVerbosityLevel"] == settings.VERBOSITY_LEVEL_BRIEF:
+        level = prefs.get("speechVerbosityLevel", settings.speechVerbosityLevel)
+        if level == settings.VERBOSITY_LEVEL_BRIEF:
             self.get_widget("speechBriefButton").set_active(True)
         else:
             self.get_widget("speechVerboseButton").set_active(True)
-
         self.get_widget("onlySpeakDisplayedTextCheckButton").set_active(
-            prefs["onlySpeakDisplayedText"])
-
-        self.get_widget("enableSpeechIndentationCheckButton").set_active(\
-            prefs["enableSpeechIndentation"])
-
-        self.get_widget("speakBlankLinesCheckButton").set_active(\
-            prefs["speakBlankLines"])
-        self.get_widget("speakMultiCaseStringsAsWordsCheckButton").set_active(\
-            prefs["speakMultiCaseStringsAsWords"])
+            prefs.get("onlySpeakDisplayedText", settings.onlySpeakDisplayedText))
+        self.get_widget("enableSpeechIndentationCheckButton").set_active(
+            prefs.get("enableSpeechIndentation", settings.enableSpeechIndentation))
+        self.get_widget("speakBlankLinesCheckButton").set_active(
+            prefs.get("speakBlankLines", settings.speakBlankLines))
+        self.get_widget("speakMultiCaseStringsAsWordsCheckButton").set_active(
+            prefs.get("speakMultiCaseStringsAsWords", settings.speakMultiCaseStringsAsWords))
         self.get_widget("speakNumbersAsDigitsCheckButton").set_active(
             prefs.get("speakNumbersAsDigits", settings.speakNumbersAsDigits))
-        self.get_widget("enableTutorialMessagesCheckButton").set_active(\
-            prefs["enableTutorialMessages"])
-        self.get_widget("enablePauseBreaksCheckButton").set_active(\
-            prefs["enablePauseBreaks"])
-        self.get_widget("enablePositionSpeakingCheckButton").set_active(\
-            prefs["enablePositionSpeaking"])
-        self.get_widget("enableMnemonicSpeakingCheckButton").set_active(\
-            prefs["enableMnemonicSpeaking"])
+        self.get_widget("enableTutorialMessagesCheckButton").set_active(
+            prefs.get("enableTutorialMessages", settings.enableTutorialMessages))
+        self.get_widget("enablePauseBreaksCheckButton").set_active(
+            prefs.get("enablePauseBreaks", settings.enablePauseBreaks))
+        self.get_widget("enablePositionSpeakingCheckButton").set_active(
+            prefs.get("enablePositionSpeaking", settings.enablePositionSpeaking))
+        self.get_widget("enableMnemonicSpeakingCheckButton").set_active(
+            prefs.get("enableMnemonicSpeaking", settings.enableMnemonicSpeaking))
         self.get_widget("speakMisspelledIndicatorCheckButton").set_active(
             prefs.get("speakMisspelledIndicator", settings.speakMisspelledIndicator))
         self.get_widget("speakDescriptionCheckButton").set_active(
@@ -1562,7 +1558,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
           ])
 
         indexdate = DATE_FORMAT_LOCALE
-        dateFormat = self.prefsDict["presentDateFormat"]
+        dateFormat = self.prefsDict.get("presentDateFormat", settings.presentDateFormat)
         if dateFormat == messages.DATE_FORMAT_LOCALE:
             indexdate = DATE_FORMAT_LOCALE
         elif dateFormat == messages.DATE_FORMAT_NUMBERS_DM:
