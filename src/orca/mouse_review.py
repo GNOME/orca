@@ -34,6 +34,7 @@ __copyright__ = "Copyright (c) 2008 Eitan Isaacson" \
 __license__   = "LGPL"
 
 import math
+import os
 import time
 from collections import deque
 
@@ -42,12 +43,14 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
+_MOUSE_REVIEW_CAPABLE = False
 try:
-    gi.require_version("Wnck", "3.0")
-    from gi.repository import Wnck
-    _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None
+    if os.environ.get("XDG_SESSION_TYPE", "").lower() != "wayland":
+        gi.require_version("Wnck", "3.0")
+        from gi.repository import Wnck
+        _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None
 except Exception:
-    _MOUSE_REVIEW_CAPABLE = False
+    pass
 
 from . import cmdnames
 from . import debug
