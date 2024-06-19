@@ -353,7 +353,7 @@ class MouseReviewer:
         if not _MOUSE_REVIEW_CAPABLE:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
+            self._active = False
 
         if not self._active:
             return
@@ -416,6 +416,7 @@ class MouseReviewer:
         if not _MOUSE_REVIEW_CAPABLE:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._active = False
             return
 
         # Set up the initial object as the one with the focus to avoid
@@ -431,24 +432,26 @@ class MouseReviewer:
 
         self._event_listener.register("mouse:abs")
         screen = Wnck.Screen.get_default()
-        if screen:
-            # On first startup windows and workspace are likely to be None,
-            # but the signals we connect to will get emitted when proper values
-            # become available;  but in case we got disabled and re-enabled we
-            # have to get the initial values manually.
-            stacked = screen.get_windows_stacked()
-            if stacked:
-                stacked.reverse()
-                self._all_windows = stacked
-            self._workspace = screen.get_active_workspace()
-            if self._workspace:
-                self._update_workspace_windows()
+        if screen is None:
+            self._active = False
+            return
 
-            i = screen.connect("window-stacking-changed", self._on_stacking_changed)
-            self._handler_ids[i] = screen
-            i = screen.connect("active-workspace-changed", self._on_workspace_changed)
-            self._handler_ids[i] = screen
+        # On first startup windows and workspace are likely to be None,
+        # but the signals we connect to will get emitted when proper values
+        # become available;  but in case we got disabled and re-enabled we
+        # have to get the initial values manually.
+        stacked = screen.get_windows_stacked()
+        if stacked:
+            stacked.reverse()
+            self._all_windows = stacked
+        self._workspace = screen.get_active_workspace()
+        if self._workspace:
+            self._update_workspace_windows()
 
+        i = screen.connect("window-stacking-changed", self._on_stacking_changed)
+        self._handler_ids[i] = screen
+        i = screen.connect("active-workspace-changed", self._on_workspace_changed)
+        self._handler_ids[i] = screen
         self._active = True
 
     def deactivate(self):
