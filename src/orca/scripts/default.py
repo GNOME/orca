@@ -1208,16 +1208,12 @@ class Script(script.Script):
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        AXObject.clear_cache_now("children-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("children-changed event.")
+        AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
     def on_children_removed(self, event):
         """Callback for object:children-changed:remove accessibility events."""
 
-        AXObject.clear_cache_now("children-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("children-changed event.")
+        AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
@@ -1322,9 +1318,7 @@ class Script(script.Script):
     def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("expanded-changed event.")
-
+        AXUtilities.clear_all_cache_now(event.source, "expanded-changed event.")
         if not self.utilities.isPresentableExpandedChangedEvent(event):
             return
 
@@ -1411,9 +1405,7 @@ class Script(script.Script):
     def on_object_attributes_changed(self, event):
         """Callback for object:attributes-changed accessibility events."""
 
-        AXObject.clear_cache_now("object-attributes-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("object-attributes-changed event.")
+        AXUtilities.clear_all_cache_now(event.source, "object-attributes-changed event.")
 
     def on_pressed_changed(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
@@ -1752,7 +1744,7 @@ class Script(script.Script):
     def on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""
 
-        AXTable.clear_cache_now("column-reordered event.")
+        AXUtilities.clear_all_cache_now(event.source, "column-reordered event.")
         if not input_event_manager.get_manager().last_event_was_table_sort():
             return
 
@@ -1764,7 +1756,7 @@ class Script(script.Script):
     def on_row_reordered(self, event):
         """Callback for object:row-reordered accessibility events."""
 
-        AXTable.clear_cache_now("row-reordered event.")
+        AXUtilities.clear_all_cache_now(event.source, "row-reordered event.")
         if not input_event_manager.get_manager().last_event_was_table_sort():
             return
 

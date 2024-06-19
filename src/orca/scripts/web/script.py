@@ -1341,6 +1341,8 @@ class Script(default.Script):
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        AXUtilities.clear_all_cache_now(event.source, "busy-changed event.")
+
         if event.detail1 and self._loadingDocumentContent:
             msg = "WEB: Ignoring: Already loading document content"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1675,9 +1677,7 @@ class Script(default.Script):
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        AXObject.clear_cache_now("children-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("children-changed event.")
+        AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
@@ -1777,9 +1777,7 @@ class Script(default.Script):
     def on_children_removed(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
-        AXObject.clear_cache_now("children-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("children-changed event.")
+        AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content."
@@ -1851,6 +1849,7 @@ class Script(default.Script):
     def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
 
+        AXUtilities.clear_all_cache_now(event.source, "load-complete event.")
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

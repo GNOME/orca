@@ -34,6 +34,9 @@ class AXUtilities:
 
     # From ax_utilities.py
     @staticmethod
+    def clear_all_cache_now(obj=None, reason=""): ...
+
+    @staticmethod
     def get_desktop(): ...
 
     @staticmethod

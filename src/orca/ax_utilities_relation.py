@@ -71,6 +71,12 @@ class AXUtilitiesRelation:
             AXUtilitiesRelation.TARGETS.clear()
 
     @staticmethod
+    def clear_cache_now(reason=""):
+        """Clears all cached information immediately."""
+
+        AXUtilitiesRelation._clear_all_dictionaries(reason)
+
+    @staticmethod
     def start_cache_clearing_thread():
         """Starts thread to periodically clear cached details."""
 

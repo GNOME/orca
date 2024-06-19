@@ -380,9 +380,7 @@ class Script(default.Script):
             focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
             return
 
-        AXObject.clear_cache_now("children-changed event.")
-        if AXUtilities.is_table_related(event.source):
-            AXTable.clear_cache_now("children-changed event.")
+        AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
         if AXTable.is_last_cell(event.any_data):
             activeRow = self.point_of_reference.get('lastRow', -1)

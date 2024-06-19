@@ -29,7 +29,6 @@ from orca import debug
 from orca import focus_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 from .script_utilities import Utilities
 
@@ -73,7 +72,7 @@ class Script(default.Script):
 
         if AXUtilities.is_table_related(event.source):
             AXObject.clear_cache(event.any_data, True, "active-descendant-changed event.")
-            AXTable.clear_cache_now("active-descendant-changed event.")
+            AXUtilities.clear_all_cache_now(event.source, "active-descendant-changed event.")
 
         if AXUtilities.is_table_cell(focus):
             table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)

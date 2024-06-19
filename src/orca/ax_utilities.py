@@ -58,6 +58,15 @@ class AXUtilities:
     COMPARE_COLLECTION_PERFORMANCE = False
 
     @staticmethod
+    def clear_all_cache_now(obj=None, reason=""):
+        """Clears all cached information immediately."""
+
+        AXObject.clear_cache_now(reason)
+        AXUtilitiesRelation.clear_cache_now(reason)
+        if AXUtilitiesRole.is_table_related(obj):
+            AXTable.clear_cache_now(reason)
+
+    @staticmethod
     def get_desktop():
         """Returns the accessible desktop"""
 
