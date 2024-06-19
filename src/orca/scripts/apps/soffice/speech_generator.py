@@ -80,41 +80,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _generateDescription(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the description of the object,
-        if that description is different from that of the name and
-        label.
-        """
-        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
-            return []
-
-        if not settings_manager.get_manager().get_setting('speakDescription'):
-            return []
-
-        if not args.get('formatType', '').endswith('WhereAmI'):
-            return []
-
-        result = []
-        description = AXObject.get_description(obj)
-        if description:
-            # The description of some OOo paragraphs consists of the name
-            # and the displayed text, with punctuation added. Try to spot
-            # this and, if found, ignore the description.
-            #
-            text = self._script.utilities.displayedText(obj) or ""
-            desc = description.replace(text, "")
-            for item in AXObject.get_name(obj).split():
-                desc = desc.replace(item, "")
-            for char in desc.strip():
-                if char.isalnum():
-                    result.append(description)
-                    break
-
-        if result:
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        return result
-
     def _generateCurrentLineText(self, obj, **args):
         if AXUtilities.is_combo_box(obj):
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
