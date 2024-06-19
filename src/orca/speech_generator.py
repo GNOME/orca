@@ -653,6 +653,9 @@ class SpeechGenerator(generator.Generator):
 
         doNotPresent = [Atspi.Role.UNKNOWN,
                         Atspi.Role.REDUNDANT_OBJECT,
+                        Atspi.Role.SECTION,
+                        Atspi.Role.PARAGRAPH,
+                        Atspi.Role.FORM,
                         Atspi.Role.FILLER,
                         Atspi.Role.EXTENDED]
 
@@ -2949,6 +2952,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
@@ -3519,6 +3523,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generateCurrentLineText(obj, **args)
         else:
             result += self._generateLabelAndName(obj, **args)
+        result += self._generateRoleName(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -4072,6 +4077,7 @@ class SpeechGenerator(generator.Generator):
         result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args)
         result += self._generateReadOnly(obj, **args)
+        result += self._generateRoleName(obj, **args)
         result += self._generateTextIndentation(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
         result += self._generateAllTextSelection(obj, **args)
@@ -4265,6 +4271,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generateLabelAndName(obj, **args)
         result += self._generateCurrentLineText(obj, **args)
         result += self._generateAllTextSelection(obj, **args)
+        result += self._generateRoleName(obj, **args)
         result += self._generateMnemonic(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result

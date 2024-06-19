@@ -487,7 +487,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         total = args.get('total', 1)
 
         if not force:
-            doNotSpeak = [Atspi.Role.FOOTER,
+            doNotSpeak = [Atspi.Role.ARTICLE,
+                          Atspi.Role.FOOTER,
                           Atspi.Role.FORM,
                           Atspi.Role.LABEL,
                           Atspi.Role.MENU_ITEM,
