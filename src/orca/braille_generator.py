@@ -931,7 +931,13 @@ class BrailleGenerator(generator.Generator):
     def _generate_document(self, obj, **args):
         """Generates braille for document-related roles."""
 
-        return self._generate_text_object(obj, **args)
+        result = self._generate_default_prefix(obj, **args)
+        result += [braille.Text(
+            obj, "",
+            self.asString(self._generateEol(obj, **args)),
+            self._generateStartOffset(obj, **args),
+            self._generateEndOffset(obj, **args))]
+        return result
 
     def _generate_document_email(self, obj, **args):
         """Generates braille for the document-email role."""
