@@ -115,7 +115,7 @@ source tree.
 Scripts can also import features, but the features themselves should not live
 inside the script. Some examples of features imported by scripts include:
 
-* `src/orca/data_and_time_presenter.py`
+* `src/orca/system_information_presenter.py`
 * `src/orca/flat_review_presenter.py`
 * `src/orca/notification-presenter.py`
 * `src/orca/object_navigator.py`
