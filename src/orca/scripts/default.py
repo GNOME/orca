@@ -64,15 +64,6 @@ class Script(script.Script):
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     NO_BREAK_SPACE_CHARACTER  = '\u00a0'
 
-    # generator_cache
-    #
-    DISPLAYED_LABEL = 'displayedLabel'
-    DISPLAYED_TEXT = 'displayedText'
-    KEY_BINDING = 'keyBinding'
-    NESTING_LEVEL = 'nestingLevel'
-    NODE_LEVEL = 'nodeLevel'
-    REAL_ACTIVE_DESCENDANT = 'realActiveDescendant'
-
     def __init__(self, app):
         super().__init__(app)
 

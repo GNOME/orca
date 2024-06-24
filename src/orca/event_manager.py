@@ -854,7 +854,6 @@ class EventManager:
         if not self._should_process_event(event, script, active_script):
             return
 
-        script.generator_cache = {}
         listener = script.listeners.get(event.type)
         # The listener can be None if the event type has a suffix such as "system".
         if listener is None:

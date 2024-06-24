@@ -1336,16 +1336,7 @@ class SpeechGenerator(generator.Generator):
         A. if no text on the current line is selected, the current line
         B. if text is selected, the selected text
         C. if the current line is blank/empty, 'blank'
-
-        Also sets up a 'textInformation' attribute in
-        self._script.generator_cache to prevent computing this
-        information repeatedly while processing a single event.
         """
-
-        try:
-            return self._script.generator_cache['textInformation']
-        except Exception:
-            pass
 
         textContents, startOffset, endOffset = self._script.utilities.allSelectedText(obj)
         selected = textContents != ""
@@ -1363,10 +1354,7 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
             textContents = self._script.utilities.verbalizeAllPunctuation(textContents)
 
-        self._script.generator_cache['textInformation'] = \
-            [textContents, startOffset, endOffset, selected]
-
-        return self._script.generator_cache['textInformation']
+        return [textContents, startOffset, endOffset, selected]
 
     def _generateTextContent(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio

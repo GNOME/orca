@@ -72,15 +72,6 @@ class Utilities:
     WORDS_RE = re.compile(r"(\W+)", flags)
     PUNCTUATION = re.compile(r"[^\w\s]", flags)
 
-    # generator_cache
-    #
-    DISPLAYED_DESCRIPTION = 'displayedDescription'
-    DISPLAYED_LABEL = 'displayedLabel'
-    DISPLAYED_TEXT = 'displayedText'
-    KEY_BINDING = 'keyBinding'
-    NESTING_LEVEL = 'nestingLevel'
-    NODE_LEVEL = 'nodeLevel'
-
     def __init__(self, script):
         """Creates an instance of the Utilities class.
 
@@ -208,20 +199,8 @@ class Utilities:
         if there is nothing of interest here.
         """
 
-        try:
-            return self._script.generator_cache[self.DISPLAYED_LABEL][obj]
-        except Exception:
-            if self.DISPLAYED_LABEL not in self._script.generator_cache:
-                self._script.generator_cache[self.DISPLAYED_LABEL] = {}
-            labelString = None
-
         labels = AXUtilities.get_is_labelled_by(obj)
-        for label in labels:
-            labelString = \
-                self.appendString(labelString, self.displayedText(label))
-
-        self._script.generator_cache[self.DISPLAYED_LABEL][obj] = labelString
-        return self._script.generator_cache[self.DISPLAYED_LABEL][obj]
+        return " ".join(map(self.displayedText, labels))
 
     def preferDescriptionOverName(self, obj):
         return False
@@ -251,16 +230,8 @@ class Utilities:
     def displayedDescription(self, obj):
         """Returns the text being displayed for the object describing obj."""
 
-        try:
-            return self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj]
-        except Exception:
-            if self.DISPLAYED_DESCRIPTION not in self._script.generator_cache:
-                self._script.generator_cache[self.DISPLAYED_DESCRIPTION] = {}
-
         descriptions = AXUtilities.get_is_described_by(obj)
-        string = " ".join(map(self.displayedText, descriptions))
-        self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj] = string
-        return self._script.generator_cache[self.DISPLAYED_DESCRIPTION][obj]
+        return " ".join(map(self.displayedText, descriptions))
 
     def displayedText(self, obj):
         """Returns the text being displayed for an object.
@@ -273,11 +244,6 @@ class Utilities:
         """
 
         # TODO - JD: It's finally time to consider killing this for real.
-
-        try:
-            return self._script.generator_cache[self.DISPLAYED_TEXT][obj]
-        except Exception:
-            displayedText = None
 
         name = AXObject.get_name(obj)
         role = AXObject.get_role(obj)
@@ -300,11 +266,7 @@ class Utilities:
                 labels = self.unrelatedLabels(obj, onlyShowing=False, minimumWords=1)
             displayedText = " ".join(map(self.displayedText, labels))
 
-        if self.DISPLAYED_TEXT not in self._script.generator_cache:
-            self._script.generator_cache[self.DISPLAYED_TEXT] = {}
-
-        self._script.generator_cache[self.DISPLAYED_TEXT][obj] = displayedText
-        return self._script.generator_cache[self.DISPLAYED_TEXT][obj]
+        return displayedText
 
     def documentFrame(self, obj=None):
         """Returns the document frame which is displaying the content.
@@ -1001,13 +963,6 @@ class Utilities:
 
         if obj is None:
             return 0
-
-        try:
-            return self._script.generator_cache[self.NESTING_LEVEL][obj]
-        except Exception:
-            if self.NESTING_LEVEL not in self._script.generator_cache:
-                self._script.generator_cache[self.NESTING_LEVEL] = {}
-
         def pred(x):
             if AXUtilities.is_block_quote(obj):
                 return AXUtilities.is_block_quote(x)
@@ -1021,9 +976,7 @@ class Utilities:
             ancestors.append(ancestor)
             ancestor = AXObject.find_ancestor(ancestor, pred)
 
-        nestingLevel = len(ancestors)
-        self._script.generator_cache[self.NESTING_LEVEL][obj] = nestingLevel
-        return self._script.generator_cache[self.NESTING_LEVEL][obj]
+        return len(ancestors)
 
     def nodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree
@@ -1036,12 +989,6 @@ class Utilities:
 
         if not self.isTreeDescendant(obj):
             return -1
-
-        try:
-            return self._script.generator_cache[self.NODE_LEVEL][obj]
-        except Exception:
-            if self.NODE_LEVEL not in self._script.generator_cache:
-                self._script.generator_cache[self.NODE_LEVEL] = {}
 
         nodes = []
         node = obj
@@ -1068,8 +1015,7 @@ class Utilities:
             else:
                 done = True
 
-        self._script.generator_cache[self.NODE_LEVEL][obj] = len(nodes) - 1
-        return self._script.generator_cache[self.NODE_LEVEL][obj]
+        return len(nodes) - 1
 
     def isOnScreen(self, obj, boundingbox=None):
         if AXObject.is_dead(obj):
@@ -2141,16 +2087,9 @@ class Utilities:
         Returns: list containing strings: [mnemonic, shortcut, accelerator]
         """
 
-        try:
-            return self._script.generator_cache[self.KEY_BINDING][obj]
-        except Exception:
-            if self.KEY_BINDING not in self._script.generator_cache:
-                self._script.generator_cache[self.KEY_BINDING] = {}
-
         keybinding = AXObject.get_action_key_binding(obj, 0)
         if not keybinding:
-            self._script.generator_cache[self.KEY_BINDING][obj] = ["", "", ""]
-            return self._script.generator_cache[self.KEY_BINDING][obj]
+            return ["", "", ""]
 
         # Action is a string in the format, where the mnemonic and/or
         # accelerator can be missing.
@@ -2182,12 +2121,7 @@ class Utilities:
         mnemonic = self.labelFromKeySequence(mnemonic)
         accelerator = self.labelFromKeySequence(accelerator)
 
-        if self.KEY_BINDING not in self._script.generator_cache:
-            self._script.generator_cache[self.KEY_BINDING] = {}
-
-        self._script.generator_cache[self.KEY_BINDING][obj] = \
-            [mnemonic, fullShortcut, accelerator]
-        return self._script.generator_cache[self.KEY_BINDING][obj]
+        return [mnemonic, fullShortcut, accelerator]
 
     @staticmethod
     def stringToKeysAndDict(string):

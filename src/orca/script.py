@@ -80,7 +80,6 @@ class Script:
         self.run_find_command = False
         self.input_event_handlers = {}
         self.point_of_reference = {}
-        self.generator_cache = {}
         self.event_cache = {}
         self.key_bindings = keybindings.KeyBindings()
 
