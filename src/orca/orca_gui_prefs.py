@@ -1477,8 +1477,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs.get("enableSpeechIndentation", settings.enableSpeechIndentation))
         self.get_widget("speakBlankLinesCheckButton").set_active(
             prefs.get("speakBlankLines", settings.speakBlankLines))
-        self.get_widget("speakMultiCaseStringsAsWordsCheckButton").set_active(
-            prefs.get("speakMultiCaseStringsAsWords", settings.speakMultiCaseStringsAsWords))
         self.get_widget("speakNumbersAsDigitsCheckButton").set_active(
             prefs.get("speakNumbersAsDigits", settings.speakNumbersAsDigits))
         self.get_widget("enableTutorialMessagesCheckButton").set_active(

@@ -77,7 +77,6 @@ userCustomizableSettings = [
     "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
-    "speakMultiCaseStringsAsWords",
     "speakNumbersAsDigits",
     "speakMisspelledIndicator",
     "enabledSpokenTextAttributes",
@@ -229,7 +228,6 @@ speakCellSpan                = True
 speakCellHeaders             = True
 speakSpreadsheetCoordinates  = True
 alwaysSpeakSelectedSpreadsheetRange = False
-speakMultiCaseStringsAsWords = False
 speakNumbersAsDigits         = False
 speakMisspelledIndicator     = True
 useColorNames                = True

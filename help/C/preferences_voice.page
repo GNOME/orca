@@ -108,21 +108,6 @@
         Default value: checked
       </p>
     </section>
-    <section id="multicase_strings">
-      <title>Speak multicase strings as words</title>
-      <p>
-        In some text, and especially when working with code, one often comes
-        across a "word" consisting of several words with alternating case, such
-        as "MultiCaseString." Speech synthesizers do not always pronounce such
-        multicase strings correctly. Checking the <gui>Speak multicase strings
-        as words</gui> checkbox will cause <app>Orca</app> to break a word like
-        "MultiCaseString" into separate words ("Multi," "Case," and "String")
-        prior to passing it along to the speech synthesizer.
-      </p>
-      <p>
-        Default value: not checked
-      </p>
-    </section>
     <section id="numbers_as_digits">
       <title>Speak numbers as digits</title>
       <p>

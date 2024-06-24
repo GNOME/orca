@@ -1354,22 +1354,6 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="speakMultiCaseStringsAsWordsCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.">Speak multicase strings as wor_ds</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">1</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkCheckButton" id="speakNumbersAsDigitsCheckButton">
                                 <property name="label" translatable="yes" comments="Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.">Speak _numbers as digits</property>
                                 <property name="visible">True</property>
@@ -1382,7 +1366,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">2</property>
+                                <property name="top_attach">1</property>
                               </packing>
                             </child>
                             <child>

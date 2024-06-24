@@ -1918,10 +1918,6 @@ class Utilities:
         return "".join(tokens)
 
     @staticmethod
-    def _processMultiCaseString(string):
-        return re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', string)
-
-    @staticmethod
     def _convertWordToDigits(word):
         if not word.isnumeric():
             return word
@@ -1945,9 +1941,6 @@ class Utilities:
         # both types of spaces.
         line = line.replace("\u00a0", " ")
 
-        if settings.speakMultiCaseStringsAsWords:
-            line = self._processMultiCaseString(line)
-
         if self.speakMathSymbolNames():
             line = mathsymbols.adjustForSpeech(line)
 
@@ -1966,10 +1959,6 @@ class Utilities:
         newLine = ""
         words = self.WORDS_RE.split(line)
         newLine = ''.join(map(pronunciation_dict.getPronunciation, words))
-
-        if settings.speakMultiCaseStringsAsWords:
-            newLine = self._processMultiCaseString(newLine)
-
         return newLine
 
     def adjustForRepeats(self, line):
