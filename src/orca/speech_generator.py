@@ -3235,11 +3235,13 @@ class SpeechGenerator(generator.Generator):
             result += self._generateDisplayedText(obj, **args)
             result += self._generateAllTextSelection(obj, **args)
 
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePause(obj, **args)
-        result += self._generateTermValueCount(obj, **args)
-        result += self._generatePause(obj, **args)
-        result += self._generatePositionInList(obj, **args)
+        if settings_manager.get_manager().get_setting("speakContextList"):
+            result += self._generateRoleName(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generateTermValueCount(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generatePositionInList(obj, **args)
+
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -3252,9 +3254,11 @@ class SpeechGenerator(generator.Generator):
             result += self._generateDisplayedText(obj, **args)
             result += self._generateAllTextSelection(obj, **args)
 
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePause(obj, **args)
-        result += self._generatePositionInList(obj, **args)
+        if settings_manager.get_manager().get_setting("speakContextList"):
+            result += self._generateRoleName(obj, **args)
+            result += self._generatePause(obj, **args)
+            result += self._generatePositionInList(obj, **args)
+
         result += self._generate_default_suffix(obj, **args)
         return result
 
