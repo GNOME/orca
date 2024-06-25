@@ -63,6 +63,7 @@ class AXUtilities:
 
         AXObject.clear_cache_now(reason)
         AXUtilitiesRelation.clear_cache_now(reason)
+        AXUtilitiesState.clear_cache_now(reason)
         if AXUtilitiesRole.is_table_related(obj):
             AXTable.clear_cache_now(reason)
 

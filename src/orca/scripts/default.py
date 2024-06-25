@@ -646,9 +646,7 @@ class Script(script.Script):
         self.point_of_reference['lastColumn'] = column
         self.point_of_reference['lastRow'] = row
 
-        self.point_of_reference['checkedChange'] = hash(obj), AXUtilities.is_checked(obj)
-        self.point_of_reference['selectedChange'] = hash(obj), AXUtilities.is_selected(obj)
-        self.point_of_reference['expandedChange'] = hash(obj), AXUtilities.is_expanded(obj)
+        AXUtilities.save_state_info(obj)
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes.
@@ -1174,8 +1172,10 @@ class Script(script.Script):
     def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        if not self.utilities.isSameObject(
-           event.source, focus_manager.get_manager().get_locus_of_focus()):
+        if not AXUtilities.checked_state_did_change(event.source):
+            return
+
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
             return
 
         if AXUtilities.is_expandable(event.source):
@@ -1189,12 +1189,7 @@ class Script(script.Script):
            and not input_event_manager.get_manager().last_event_was_space():
             return
 
-        oldObj, oldState = self.point_of_reference.get('checkedChange', (None, 0))
-        if hash(oldObj) == hash(event.source) and oldState == event.detail1:
-            return
-
         self.presentObject(event.source, alreadyFocused=True, interrupt=True)
-        self.point_of_reference['checkedChange'] = hash(event.source), event.detail1
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
@@ -1309,24 +1304,26 @@ class Script(script.Script):
     def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
+        if not AXUtilities.expanded_state_did_change(event.source):
+            return
+
         AXUtilities.clear_all_cache_now(event.source, "expanded-changed event.")
         if not self.utilities.isPresentableExpandedChangedEvent(event):
             return
 
-        obj = event.source
-        oldObj, oldState = self.point_of_reference.get('expandedChange', (None, 0))
-        if hash(oldObj) == hash(obj) and oldState == event.detail1:
-            return
-
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.point_of_reference['expandedChange'] = hash(obj), event.detail1
-
-        details = self.utilities.detailsContentForObject(obj)
+        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+        details = self.utilities.detailsContentForObject(event.source)
         for detail in details:
             self.speakMessage(detail, interrupt=False)
 
     def on_indeterminate_changed(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
+
+        if not AXUtilities.indeterminate_state_did_change(event.source):
+            return
+
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
+            return
 
         # If this state is cleared, the new state will become checked or unchecked
         # and we should get object:state-changed:checked events for those cases.
@@ -1335,16 +1332,7 @@ class Script(script.Script):
         if not event.detail1:
             return
 
-        obj = event.source
-        if not self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
-            return
-
-        oldObj, oldState = self.point_of_reference.get('indeterminateChange', (None, 0))
-        if hash(oldObj) == hash(obj) and oldState == event.detail1:
-            return
-
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.point_of_reference['indeterminateChange'] = hash(obj), event.detail1
+        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def on_mouse_button(self, event):
         """Callback for mouse:button events."""
@@ -1401,46 +1389,28 @@ class Script(script.Script):
     def on_pressed_changed(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
 
-        obj = event.source
-        if not self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
+        if not AXUtilities.pressed_state_did_change(event.source):
             return
 
-        oldObj, oldState = self.point_of_reference.get('pressedChange', (None, 0))
-        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
+            msg = "DEFAULT: Event is not for locusOfFocus"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.point_of_reference['pressedChange'] = hash(obj), event.detail1
+        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        # TODO - JD: Is this still needed?
-        AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
-        if not AXUtilities.is_focused(event.source):
-            msg = "DEFAULT: Event is not toggling of currently-focused object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+        if not AXUtilities.selected_state_did_change(event.source):
             return
 
-        if not self.utilities.isSameObject(
-           focus_manager.get_manager().get_locus_of_focus(), event.source):
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "DEFAULT: Event is not for locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
-            return
-
-        isSelected = AXUtilities.is_selected(event.source)
-        if isSelected != event.detail1:
-            msg = "DEFAULT: Bogus event: detail1 doesn't match state"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return
-
-        oldObj, oldState = self.point_of_reference.get('selectedChange', (None, 0))
-        if hash(oldObj) == hash(event.source) and oldState == event.detail1:
-            msg = "DEFAULT: Duplicate or spam event"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
         announceState = False
@@ -1449,7 +1419,7 @@ class Script(script.Script):
             announceState = True
         elif (manager.last_event_was_up() or manager.last_event_was_down()) \
                 and AXUtilities.is_table_cell(event.source):
-            announceState = isSelected
+            announceState = AXUtilities.is_selected(event.source)
 
         if not announceState:
             return
@@ -1463,8 +1433,6 @@ class Script(script.Script):
             self.speakMessage(messages.TEXT_SELECTED, interrupt=False)
         else:
             self.speakMessage(messages.TEXT_UNSELECTED, interrupt=False)
-
-        self.point_of_reference['selectedChange'] = hash(event.source), event.detail1
 
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""

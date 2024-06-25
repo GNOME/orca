@@ -801,6 +801,24 @@ class AXUtilities:
 
     # From ax_utilities_state.py
     @staticmethod
+    def save_state_info(obj): ...
+
+    @staticmethod
+    def checked_state_did_change(obj): ...
+
+    @staticmethod
+    def expanded_state_did_change(obj): ...
+
+    @staticmethod
+    def indeterminate_state_did_change(obj): ...
+
+    @staticmethod
+    def pressed_state_did_change(obj): ...
+
+    @staticmethod
+    def selected_state_did_change(obj): ...
+
+    @staticmethod
     def has_no_state(obj): ...
 
     @staticmethod

@@ -1658,8 +1658,7 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        oldObj, oldState = self.point_of_reference.get('checkedChange', (None, 0))
-        if hash(oldObj) == hash(obj) and oldState == event.detail1:
+        if not AXUtilities.checked_state_did_change(event.source):
             msg = "WEB: Ignoring event, state hasn't changed"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
@@ -1671,7 +1670,6 @@ class Script(default.Script):
             return False
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        self.point_of_reference['checkedChange'] = hash(obj), event.detail1
         return True
 
     def on_children_added(self, event):
