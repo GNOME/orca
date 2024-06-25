@@ -1,3 +1,36 @@
+46.2 - 25 June 2024
+
+Updates:
+
+* Web: Eliminate chattiness from page-load events from embedded ads.
+
+* Web: Fix bug causing Orca to not present certain ARIA dialog titles.
+
+* Map xfce4-notifyd to notification-daemon script so that notifications
+  are presented.
+
+* Table Navigator: Ensure we set the caret in Writer tables.
+
+* LibreOffice: Fix presentation of editable combobox value changes.
+
+* General: Fix bug that could cause Orca to not present the new caret
+  location.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  eu              Basque                    Asier Sarasua Garmendia
+  he              Hebrew                    Yaron Shahrabani
+  id              Indonesian                Andika Triwidada
+  kab             Kabyle                    Athmane MOKRAOUI
+  kab             Kabyle                    Rachida SACI
+  ne              Nepali                    Pawan Chitrakar
+  pt_BR           Brazilian Portuguese      Leônidas Araújo
+  pt              Portuguese                Hugo Carvalho
+  ru              Russian                   Artur S0
+
+=========
+
 46.1 - 1 April 2024
 
 Bug fixes:
