@@ -174,7 +174,7 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
-### ### Announcement Example: GTK 4 (Minimum Version: 4.14)
+### Announcement Example: GTK 4 (Minimum Version: 4.14)
 
 ```python
 #!/usr/bin/python
