@@ -5,8 +5,8 @@
 ## Introduction
 
 Please note: This document is a work in progress and will be expanded over time to include details
-about what Orca expects from applications. In the meantime, it contains tips based on frequently-
-asked questions. We hope you find them useful.
+about what Orca expects from applications. In the meantime, it contains tips based on frequently-asked
+questions. We hope you find them useful.
 
 ## Accessible Events
 
@@ -116,7 +116,9 @@ doesn't mistakenly treat your labels as static text to be read automatically:**
 ## Speaking Your Application's Custom Message/Announcement
 
 AT-SPI2/ATK v2.46 added an `announcement` signal which can be used with Orca v45.2 and later.
-Here's a simple example:
+Simple examples are provided below.
+
+### GTK 3
 
 ```python
 #!/usr/bin/python
@@ -172,7 +174,7 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
-You can fire the announcement signal in GTK 4 starting from 4.14 as well:
+### GTK 4 (Minimum Version: 4.14)
 
 ```python
 #!/usr/bin/python
@@ -200,7 +202,8 @@ app.run(None)
 Note that in older GTK 4 releases there is no way how to do this, as you can't emit raw AT-SPI2
 events, or do similar platform-specific things.
 
-For Qt applications, the announcement signal can be sent like this from Qt 6.8 on:
+### Qt 6 (Minimum Version: 6.8)
+
 
 ```python
 #!/usr/bin/python
@@ -254,7 +257,7 @@ that presentation can be disabled by the user either globally or on per-app basi
 when disabled for focus changes, users can always obtain the help text on demand by using Orca's
 "Where Am I?" command.
 
-Here's a simple example:
+### GTK 3
 
 ```python
 #!/usr/bin/python
@@ -286,7 +289,8 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
-And in QT from 6.8, you can do it in the following way:
+### Qt 6 (Minimum Version: 6.8)
+
 ```python
 #!/usr/bin/python
 import sys
