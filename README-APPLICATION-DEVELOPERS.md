@@ -118,7 +118,7 @@ doesn't mistakenly treat your labels as static text to be read automatically:**
 AT-SPI2/ATK v2.46 added an `announcement` signal which can be used with Orca v45.2 and later.
 Simple examples are provided below.
 
-### GTK 3
+### Announcement Example: GTK 3
 
 ```python
 #!/usr/bin/python
@@ -174,7 +174,7 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
-### GTK 4 (Minimum Version: 4.14)
+### ### Announcement Example: GTK 4 (Minimum Version: 4.14)
 
 ```python
 #!/usr/bin/python
@@ -202,7 +202,7 @@ app.run(None)
 Note that in older GTK 4 releases there is no way how to do this, as you can't emit raw AT-SPI2
 events, or do similar platform-specific things.
 
-### Qt 6 (Minimum Version: 6.8)
+### Announcement Example: Qt 6 (Minimum Version: 6.8)
 
 
 ```python
@@ -257,7 +257,7 @@ that presentation can be disabled by the user either globally or on per-app basi
 when disabled for focus changes, users can always obtain the help text on demand by using Orca's
 "Where Am I?" command.
 
-### GTK 3
+### Help Message Example: GTK 3
 
 ```python
 #!/usr/bin/python
@@ -289,7 +289,7 @@ app.connect("activate", on_activate)
 app.run(None)
 ```
 
-### Qt 6 (Minimum Version: 6.8)
+### Help Message Example: Qt 6 (Minimum Version: 6.8)
 
 ```python
 #!/usr/bin/python
