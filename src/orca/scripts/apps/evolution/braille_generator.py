@@ -63,7 +63,7 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
             return isinstance(x, (braille.Component, braille.Text))
 
         def isObj(x):
-            return self._script.utilities.isSameObject(obj, x.accessible)
+            return obj == x.accessible
 
         matches = [r for r in result if hasObj(r) and isObj(r)]
         if matches:

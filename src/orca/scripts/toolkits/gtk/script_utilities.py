@@ -138,10 +138,6 @@ class Utilities(script_utilities.Utilities):
         return AXUtilities.is_table_cell(obj) \
             and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
-                     ignoreDescriptions=True):
-        return super().isSameObject(obj1, obj2, comparePaths, ignoreNames, False)
-
     def isUselessPanel(self, obj):
         if not AXUtilities.is_panel(obj):
             return False

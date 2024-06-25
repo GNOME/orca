@@ -65,7 +65,7 @@ class Script(gtk.Script):
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
-        if self.utilities.isSameObject(event.source, self._status_line):
+        if event.source == self._status_line:
             self.presentMessage(self.utilities.displayedText(self._status_line))
             return
 

@@ -97,7 +97,7 @@ class Utilities(gtk.Utilities):
                 continue
 
             nodeOf = targets[0]
-            if self.isSameObject(obj, nodeOf):
+            if obj == nodeOf:
                 nodes.append(cell)
             elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break

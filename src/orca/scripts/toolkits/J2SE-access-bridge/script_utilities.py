@@ -29,71 +29,10 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 from orca import script_utilities
-from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-#############################################################################
-#                                                                           #
-# Utilities                                                                 #
-#                                                                           #
-#############################################################################
-
 class Utilities(script_utilities.Utilities):
-
-    def __init__(self, script):
-        """Creates an instance of the Utilities class.
-
-        Arguments:
-        - script: the script with which this instance is associated.
-        """
-
-        script_utilities.Utilities.__init__(self, script)
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for finding, identifying, and comparing accessibles         #
-    #                                                                       #
-    #########################################################################
-
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
-                     ignoreDescriptions=True):
-        """Compares two objects to determine if they are functionally
-        the same object. This is needed because some applications and
-        toolkits kill and replace accessibles."""
-
-        if obj1 == obj2:
-            return True
-        if obj1 is None or obj2 is None:
-            return False
-        if not ignoreNames and AXObject.get_name(obj1) != AXObject.get_name(obj2):
-            return False
-        if AXObject.get_child_count(obj1) != AXObject.get_child_count(obj2):
-            return False
-
-        # This is to handle labels in trees. In some cases the default
-        # script's method gives us false positives; other times false
-        # negatives.
-        #
-        if AXUtilities.is_label(obj1) and AXUtilities.is_label(obj2):
-            if AXComponent.objects_have_same_rect(obj1, obj2):
-                return True
-
-        # In java applications, TRANSIENT state is missing for tree items
-        # (fix for bug #352250)
-        #
-        parent1 = obj1
-        parent2 = obj2
-        while AXUtilities.is_label(parent1) and AXUtilities.is_label(parent2):
-            if AXObject.get_index_in_parent(parent1) != AXObject.get_index_in_parent(parent2):
-                return False
-            parent1 = AXObject.get_parent(parent1)
-            parent2 = AXObject.get_parent(parent2)
-        if parent1 and parent2 and parent1 == parent2:
-            return True
-
-        return script_utilities.Utilities.isSameObject(
-            self, obj1, obj2, comparePaths, ignoreNames, ignoreDescriptions)
 
     def nodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree

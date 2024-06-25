@@ -352,14 +352,13 @@ class Script(default.Script):
         - event: the Event
         """
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.utilities.isSameObject(event.any_data, focus):
+        if event.any_data == focus_manager.get_manager().get_locus_of_focus():
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
             if AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
-                self.update_braille(focus)
+                self.update_braille(event.any_data)
                 self.spellcheck.presentSuggestionListItem()
             else:
                 self.spellcheck.presentErrorDetails()

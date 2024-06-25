@@ -54,20 +54,6 @@ class Utilities(web.Utilities):
 
         return False
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
-                     ignoreDescriptions=True):
-        if super().isSameObject(obj1, obj2, comparePaths, ignoreNames, ignoreDescriptions):
-            return True
-
-        roles = self._topLevelRoles()
-        if not (AXObject.get_role(obj1) in roles and AXObject.get_role(obj2) in roles):
-            return False
-
-        rv = AXObject.get_name(obj1) == AXObject.get_name(obj2)
-        tokens = ["GECKO: Treating", obj1, "and", obj2, "as same object:", rv]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
     def getOnScreenObjects(self, root, extents=None):
         objects = super().getOnScreenObjects(root, extents)
 

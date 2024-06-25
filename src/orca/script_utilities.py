@@ -133,7 +133,7 @@ class Utilities:
                 continue
 
             nodeOf = targets[0]
-            if self.isSameObject(obj, nodeOf):
+            if obj == nodeOf:
                 nodes.append(cell)
             elif self.nodeLevel(nodeOf) <= nodeLevel:
                 break
@@ -177,7 +177,7 @@ class Utilities:
         maxSearch = min(len(aParents), len(bParents))
         i = 0
         while i < maxSearch:
-            if self.isSameObject(aParents[i], bParents[i]):
+            if aParents[i] == bParents[i]:
                 commonAncestor = aParents[i]
                 i += 1
             else:
@@ -347,7 +347,7 @@ class Utilities:
         """
 
         return AXUtilities.is_combo_box(obj) \
-            and not self.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus())
+            and obj != focus_manager.get_manager().get_locus_of_focus()
 
     def inFindContainer(self, obj=None):
         if obj is None:
@@ -508,8 +508,7 @@ class Utilities:
         return AXValue.get_value_as_percent(obj) is not None
 
     def topLevelObjectIsActiveWindow(self, obj):
-        return self.isSameObject(
-            self.topLevelObject(obj), focus_manager.get_manager().get_active_window())
+        return obj == focus_manager.get_manager().get_active_window()
 
     def isProgressBarUpdate(self, obj):
         if not settings_manager.get_manager().get_setting('speakProgressBarUpdates') \
@@ -906,37 +905,6 @@ class Utilities:
                 index = len(path2)
 
         return path1[0:index] == path2[0:index]
-
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
-                     ignoreDescriptions=True):
-        if obj1 == obj2:
-            return True
-
-        if obj1 is None or obj2 is None:
-            return False
-
-        if not AXUtilities.have_same_role(obj1, obj2):
-            return False
-
-        if not ignoreNames and AXObject.get_name(obj1) != AXObject.get_name(obj2):
-            return False
-
-        if not ignoreDescriptions \
-           and AXObject.get_description(obj1) != AXObject.get_description(obj2):
-            return False
-
-        if comparePaths and self._hasSamePath(obj1, obj2):
-            return True
-
-        # Objects which claim to be different and which are in different
-        # locations are almost certainly not recreated objects.
-        if not AXComponent.objects_have_same_rect(obj1, obj2):
-            return False
-
-        if not AXComponent.has_no_size(obj1):
-            return True
-
-        return False
 
     def isTextArea(self, obj):
         """Returns True if obj is a GUI component that is for entering text.
@@ -1352,10 +1320,7 @@ class Utilities:
         if not AXUtilities.is_active(topLevel) or AXUtilities.is_defunct(topLevel):
             return False
 
-        if not self.isSameObject(topLevel, focus_manager.get_manager().get_active_window()):
-            return False
-
-        return True
+        return topLevel == focus_manager.get_manager().get_active_window()
 
     @staticmethod
     def pathComparison(path1, path2):
@@ -2668,7 +2633,19 @@ class Utilities:
             return None
 
         def isSame(x):
-            return self.isSameObject(x, obj, comparePaths=True, ignoreNames=True)
+            if x == obj:
+                return True
+            if x is None:
+                return False
+            if not AXUtilities.have_same_role(obj, x):
+                return False
+            if self._hasSamePath(obj, x):
+                return True
+            # Objects which claim to be different and which are in different
+            # locations are almost certainly not recreated objects.
+            if not AXComponent.objects_have_same_rect(obj, x):
+                return False
+            return not AXComponent.has_no_size(x)
 
         if isSame(root):
             replicant = root
@@ -2864,7 +2841,7 @@ class Utilities:
         clipboard.set_text(text, -1)
 
     def isPresentableExpandedChangedEvent(self, event):
-        if self.isSameObject(event.source, focus_manager.get_manager().get_locus_of_focus()):
+        if event.source == focus_manager.get_manager().get_locus_of_focus():
             return True
 
         if AXUtilities.is_table_row(event.source) or AXUtilities.is_list_box(event.source):

@@ -78,12 +78,6 @@ class Script(default.Script):
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
-        # Avoid doing this with objects that manage their descendants
-        # because they'll issue a descendant changed event. (Note: This
-        # equality check is intentional; utilities.isSameObject() is
-        # especially thorough with trees and tables, which is not
-        # performant.
-        #
         if event.source == self.lastDescendantChangedSource:
             return
 

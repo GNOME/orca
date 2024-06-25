@@ -125,23 +125,6 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def isSameObject(self, obj1, obj2, comparePaths=False, ignoreNames=False,
-                     ignoreDescriptions=True):
-        if obj1 == obj2:
-            return True
-
-        if not AXUtilities.have_same_role(obj1, obj2):
-            return False
-
-        if AXUtilities.is_paragraph(obj1):
-            return False
-
-        name = AXObject.get_name(obj1)
-        if name == AXObject.get_name(obj2) and AXUtilities.is_frame(obj1):
-            return True
-
-        return super().isSameObject(obj1, obj2, comparePaths, ignoreNames)
-
     def isLayoutOnly(self, obj):
         """Returns True if the given object is a container which has
         no presentable information (label, name, displayed text, etc.)."""

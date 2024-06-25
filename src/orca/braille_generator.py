@@ -227,8 +227,7 @@ class BrailleGenerator(generator.Generator):
             focusedRegion = None
 
         for region in result:
-            if isinstance(region, (braille.Component, braille.Text)) \
-               and self._script.utilities.isSameObject(region.accessible, obj, True):
+            if isinstance(region, (braille.Component, braille.Text)) and region.accessible == obj:
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Text) \

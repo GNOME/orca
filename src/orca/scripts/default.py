@@ -670,18 +670,6 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        # Don't apply the is-same-object heuristic in the case of table cells.
-        # One scenario is email client message lists. When you delete a message
-        # and land on the next one, the cells likely occupy the same space,
-        # have the same role, and might even have the same name, same path, etc.
-        if not AXUtilities.is_table_cell(old_focus) \
-           and not AXUtilities.is_table_cell(new_focus) \
-           and self.utilities.isSameObject(old_focus, new_focus):
-            tokens = ["DEFAULT: old focus", old_focus,
-                      "believed to be same as new focus", new_focus]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
-
         try:
             if self.run_find_command:
                 # Then the Orca Find dialog has just given up focus
@@ -1121,8 +1109,7 @@ class Script(script.Script):
             if event.detail1 and not focus_manager.get_manager().can_be_active_window(window):
                 return
 
-            sourceIsActiveWindow = self.utilities.isSameObject(
-                window, focus_manager.get_manager().get_active_window())
+            sourceIsActiveWindow = window == focus_manager.get_manager().get_active_window()
             if sourceIsActiveWindow and not event.detail1:
                 if self.utilities.inMenu():
                     msg = "DEFAULT: Ignoring event. In menu."
@@ -1756,8 +1743,7 @@ class Script(script.Script):
         if not focus_manager.get_manager().can_be_active_window(window):
             return
 
-        activeWindow = focus_manager.get_manager().get_active_window()
-        if self.utilities.isSameObject(window, activeWindow):
+        if window == focus_manager.get_manager().get_active_window():
             msg = "DEFAULT: Event is for active window."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return

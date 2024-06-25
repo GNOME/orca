@@ -102,16 +102,15 @@ class Script(default.Script):
     def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        obj = event.source
-        if self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
+        if event.source == focus_manager.get_manager().get_locus_of_focus():
             default.Script.on_checked_changed(self, event)
             return
 
         # Present changes of child widgets of GtkListBox items
-        if not AXObject.find_ancestor(obj, AXUtilities.is_list_box):
+        if not AXObject.find_ancestor(event.source, AXUtilities.is_list_box):
             return
 
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
+        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
@@ -215,11 +214,10 @@ class Script(default.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        obj = event.source
-        if not self.utilities.isSameObject(obj, focus_manager.get_manager().get_locus_of_focus()):
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
             return
 
-        default.Script.on_text_selection_changed(self, event)
+        super().on_text_selection_changed(event)
 
     def is_activatable_event(self, event):
         """Returns True if event should cause this script to become active."""

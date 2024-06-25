@@ -786,7 +786,7 @@ class Chat:
         # things working. And people should not be in multiple chat
         # rooms with identical names anyway. :-)
         #
-        if (AXUtilities.is_text(obj) or AXObject.is_entry(obj)) \
+        if (AXUtilities.is_text(obj) or AXUtilities.is_entry(obj)) \
            and AXUtilities.is_editable(obj):
             name = self.getChatRoomName(obj)
 
@@ -794,9 +794,6 @@ class Chat:
             if name:
                 if name == conversation.name:
                     return conversation
-            # Doing an equality check seems to be preferable here to
-            # utilities.isSameObject as a result of false positives.
-            #
             elif obj == conversation.accHistory:
                 return conversation
 
