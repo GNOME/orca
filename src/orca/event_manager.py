@@ -528,8 +528,14 @@ class EventManager:
             self.deregister_listener(event_type)
 
     @staticmethod
-    def _get_script_for_event(event):
+    def _get_script_for_event(event, active_script=None):
         """Returns the script associated with event."""
+
+        if event.source == focus_manager.get_manager().get_locus_of_focus():
+            script = active_script or script_manager.get_manager().get_active_script()
+            tokens = ["EVENT MANAGER: Script for event from locus of focus is", script]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return script
 
         if event.type.startswith("mouse:"):
             mouse_event = input_event.MouseButtonEvent(event)
@@ -584,9 +590,6 @@ class EventManager:
             script = self._get_script_for_event(event)
             if not script:
                 return False, "There is no script for this event."
-
-        if script == script_manager.get_manager().get_active_script():
-            return False, "The script for this event is already active."
 
         if not script.is_activatable_event(event):
             return False, "The script says not to activate for this event."
@@ -836,21 +839,22 @@ class EventManager:
                 debug.printMessage(debug.LEVEL_INFO, f"{indent}ANY DATA:")
                 debug.printDetails(debug.LEVEL_INFO, indent, event.any_data, includeApp=False)
 
-        script = self._get_script_for_event(event)
+        active_script = script_mgr.get_active_script()
+        script = self._get_script_for_event(event, active_script)
         if not script:
             msg = "ERROR: Could not get script for event"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        set_new_active_script, reason = self._is_activatable_event(event, script)
-        msg = f'EVENT MANAGER: Change active script: {set_new_active_script} ({reason})'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        if script != active_script:
+            set_new_active_script, reason = self._is_activatable_event(event, script)
+            msg = f'EVENT MANAGER: Change active script: {set_new_active_script} ({reason})'
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
 
-        if set_new_active_script:
-            script_mgr.set_active_script(script, reason)
-            active_script = script
-        else:
-            active_script = script_mgr.get_active_script()
+            if set_new_active_script:
+                script_mgr.set_active_script(script, reason)
+                active_script = script
+
         if not self._should_process_event(event, script, active_script):
             return
 
