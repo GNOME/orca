@@ -1423,6 +1423,12 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
+        activeDocument = self.utilities.activeDocument()
+        if activeDocument and activeDocument != event.source:
+            msg = "WEB: Ignoring: Event source is not active document"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
         focus = focus_manager.getManager().get_locus_of_focus()
         if not AXUtilities.is_document_web(event.source) \
            and not self.utilities.isOrDescendsFrom(focus, event.source):
@@ -1463,12 +1469,6 @@ class Script(default.Script):
                 self.presentMessage(msg, resetStyles=False)
             else:
                 self.presentMessage(messages.PAGE_LOADING_END)
-
-        activeDocument = self.utilities.activeDocument()
-        if activeDocument and activeDocument != event.source:
-            msg = "WEB: Ignoring: Event source is not active document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
 
         self._loadingDocumentContent = event.detail1
         if event.detail1:
