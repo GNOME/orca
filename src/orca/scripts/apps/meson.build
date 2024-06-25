@@ -1,7 +1,6 @@
 subdir('evince')
 subdir('evolution')
 subdir('gajim')
-subdir('gcalctool')
 subdir('gedit')
 subdir('gnome-shell')
 subdir('kwin')

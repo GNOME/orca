@@ -94,8 +94,7 @@ class ScriptManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return None
 
-        app_names = {'gnome-calculator': 'gcalctool',
-                     'gtk-window-decorator': 'switcher',
+        app_names = {'gtk-window-decorator': 'switcher',
                      'marco': 'switcher',
                      'mate-notification-daemon': 'notification-daemon',
                      'metacity': 'switcher',

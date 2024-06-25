@@ -118,10 +118,6 @@ BYPASS_MODE_ENABLED = _("Orca command keys off.")
 # being toggled back on.
 BYPASS_MODE_DISABLED = _("Orca command keys on.")
 
-# Translators: this is an indication that Orca is unable to obtain the display/
-# results area of the calculator being used (e.g. gcalctool).
-CALCULATOR_DISPLAY_NOT_FOUND = _("Unable to get calculator display")
-
 # Translators: Orca uses Speech Dispatcher to present content to users via
 # text-to-speech. Speech Dispatcher has a feature to control how capital
 # letters are presented: Do nothing at all, say the word 'capital' prior to

@@ -1,7 +1,6 @@
 __all__ = ['evince',
            'evolution',
            'gajim',
-           'gcalctool',
            'gedit',
            'gnome-shell',
            'kwin',
