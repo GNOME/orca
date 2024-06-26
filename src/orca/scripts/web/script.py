@@ -2304,19 +2304,18 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.handleAsLiveRegion(event):
-            msg = "WEB: Event to be handled as live region"
+        if self.utilities.eventIsEOCAdded(event):
+            msg = "WEB: Ignoring: Event was for embedded object char"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self.live_region_manager.handleEvent(event)
             return True
 
         if self.utilities.isLiveRegion(event.source):
+            if self.utilities.handleAsLiveRegion(event):
+                msg = "WEB: Event to be handled as live region"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                self.live_region_manager.handleEvent(event)
+                return True
             msg = "WEB: Ignoring because live region event not to be handled."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.utilities.eventIsEOCAdded(event):
-            msg = "WEB: Ignoring: Event was for embedded object char"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 

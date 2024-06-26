@@ -344,10 +344,6 @@ class EventManager:
             return False
 
         if event_type.startswith('object:text-changed'):
-            if "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
-                msg = "EVENT MANAGER: Ignoring because changed text is only embedded objects"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
             if "insert" in event_type and event.detail2 > 1000:
                 msg = "EVENT MANAGER: Ignoring because inserted text has more than 1000 chars"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
