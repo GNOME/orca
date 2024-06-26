@@ -4259,7 +4259,7 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         if self._canHaveCaretContext(obj):
-            if self.treatAsTextObject(obj):
+            if self.treatAsTextObject(obj) and AXText.get_character_count(obj):
                 allText = AXText.get_all_text(obj)
                 for i in range(offset + 1, len(allText)):
                     child = AXHypertext.get_child_at_offset(obj, i)
@@ -4328,7 +4328,7 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         if self._canHaveCaretContext(obj):
-            if self.treatAsTextObject(obj):
+            if self.treatAsTextObject(obj) and AXText.get_character_count(obj):
                 allText = AXText.get_all_text(obj)
                 if offset == -1 or offset > len(allText):
                     offset = len(allText)
