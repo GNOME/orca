@@ -360,7 +360,7 @@ def on_activate(application):
     entry = Gtk.Entry()
     box.add(entry)
 
-    # Setting the mnemonic widget will cause the accessible label-for relation to be
+    # Setting the mnemonic widget will cause the accessible labelled-by relation to be
     # set. Orca uses that to say "Type something here:" when the entry gains focus.
     label.set_mnemonic_widget(entry)
 
@@ -392,7 +392,7 @@ def on_activate(application):
     entry = Gtk.Entry()
     box.append(entry)
 
-    # Setting the mnemonic widget will cause the accessible labeled-by relation to be
+    # Setting the mnemonic widget will cause the accessible labelled-by relation to be
     # set. Orca uses that to say "Type something here:" when the entry gains focus.
     label.set_mnemonic_widget(entry)
 
