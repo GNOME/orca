@@ -95,6 +95,7 @@ class BrailleGenerator(generator.Generator):
             Atspi.Role.DOCUMENT_WEB: self._generate_document_web,
             'ROLE_DPUB_LANDMARK': self._generate_dpub_landmark,
             'ROLE_DPUB_SECTION': self._generate_dpub_section,
+            Atspi.Role.EDITBAR: self._generate_editbar,
             Atspi.Role.EMBEDDED: self._generate_embedded,
             Atspi.Role.ENTRY: self._generate_entry,
             'ROLE_FEED': self._generate_feed,
