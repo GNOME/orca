@@ -253,26 +253,6 @@ class Utilities(web.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             AXObject.grab_focus(link)
 
-    def handleAsLiveRegion(self, event):
-        if not super().handleAsLiveRegion(event):
-            return False
-
-        if not event.type.startswith("object:children-changed:add"):
-            return True
-
-        # At least some of the time, we're getting text insertion events immediately
-        # followed by children-changed events to tell us that the object whose text
-        # changed is now being added to the accessibility tree. Furthermore the
-        # additions are not always coming to us in presentational order, whereas
-        # the text changes appear to be. So most of the time, we can ignore the
-        # children-changed events. Except for when we can't.
-        if AXUtilities.is_table(event.any_data):
-            return True
-
-        msg = "CHROMIUM: Event is believed to be redundant live region notification"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        return False
-
     def getFindResultsCount(self, root=None):
         root = root or self._findContainer
         if not root:

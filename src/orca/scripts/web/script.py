@@ -1703,15 +1703,9 @@ class Script(default.Script):
                 msg = "WEB: Not dumping full cache"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 self.utilities.clearCachedObjects()
-
         elif isLiveRegion:
-            if self.utilities.handleAsLiveRegion(event):
-                msg = "WEB: Event to be handled as live region"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                self.live_region_manager.handleEvent(event)
-            else:
-                msg = "WEB: Ignoring because live region event not to be handled."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+            msg = "WEB: Ignoring event from live region."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
         else:
             msg = "WEB: Could not get document for event source"
@@ -1744,11 +1738,6 @@ class Script(default.Script):
             return True
 
         if AXUtilities.is_alert(event.any_data):
-            if event.any_data == self.utilities.lastQueuedLiveRegion():
-                tokens = ["WEB: Ignoring", event.any_data, "(is last queued live region)"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return True
-
             msg = "WEB: Presenting event.any_data"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.any_data, interrupt=True)
@@ -2304,11 +2293,6 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsEOCAdded(event):
-            msg = "WEB: Ignoring: Event was for embedded object char"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
         if self.utilities.isLiveRegion(event.source):
             if self.utilities.handleAsLiveRegion(event):
                 msg = "WEB: Event to be handled as live region"
@@ -2316,6 +2300,11 @@ class Script(default.Script):
                 self.live_region_manager.handleEvent(event)
                 return True
             msg = "WEB: Ignoring because live region event not to be handled."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.utilities.eventIsEOCAdded(event):
+            msg = "WEB: Ignoring: Event was for embedded object char"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 

@@ -103,6 +103,9 @@ class LiveRegionManager:
         # last live obj to be announced
         self.lastliveobj = None
 
+        self._last_presented_timestamp = None
+        self._last_presented_message = ""
+
         # Used to track whether a user wants to monitor all live regions
         # Not to be confused with the global Gecko.liveRegionsOn which
         # completely turns off live region support.  This one is based on
@@ -278,6 +281,25 @@ class LiveRegionManager:
         self._script.bookmarks.readBookmarksFromDisk(filename='politeness') \
         or {}
 
+    def _is_duplicate_message(self, message):
+        msg = f"LIVE REGION MANAGER: Message ({message}) is duplicate: "
+        if self._last_presented_timestamp is None:
+            msg += "False, no previous message"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
+        if message != self._last_presented_message:
+            msg += f"False, message is different (last message: {self._last_presented_message})"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
+        delta = time.time() - self._last_presented_timestamp
+        if delta > 1:
+            msg += f"False, last message content is same, but was {delta:.4f}s ago"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
+        msg += f"True, last message content is same and was {delta:.4f}s ago"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        return True
+
     def handleEvent(self, event):
         """Main live region event handler"""
         politeness = self._getLivevent_type(event.source)
@@ -296,7 +318,10 @@ class LiveRegionManager:
             self.msg_queue.purgeByPriority(LIVE_POLITE)
 
         message = self._getMessage(event)
-        if message:
+        if message and not self._is_duplicate_message(message):
+            self._last_presented_message = message
+            self._last_presented_timestamp = time.time()
+
             if len(self.msg_queue) == 0:
                 GLib.timeout_add(100, self.pumpMessages)
             self.msg_queue.enqueue(message, politeness, event.source)
@@ -514,13 +539,7 @@ class LiveRegionManager:
         # A message is divided into two parts: labels and content.  We
         # will first try to get the content.  If there is None,
         # assume it is an invalid message and return None
-        if event.type.startswith('object:children-changed:add'):
-            if attrs.get('container-atomic') == 'true':
-                content = self._script.utilities.expandEOCs(event.source)
-            else:
-                content = self._script.utilities.expandEOCs(event.any_data)
-
-        elif event.type.startswith('object:text-changed:insert'):
+        if event.type.startswith('object:text-changed:insert'):
             if attrs.get('container-atomic') != 'true':
                 if "\ufffc" not in event.any_data:
                     content = event.any_data

@@ -114,7 +114,6 @@ class Utilities(script_utilities.Utilities):
         self._currentLineContents = None
         self._currentWordContents = None
         self._currentCharacterContents = None
-        self._lastQueuedLiveRegionEvent = None
         self._findContainer = None
         self._validChildRoles = {Atspi.Role.LIST: [Atspi.Role.LIST_ITEM]}
 
@@ -204,7 +203,6 @@ class Utilities(script_utilities.Utilities):
         self._canHaveCaretContextDecision = {}
         self._cleanupContexts()
         self._priorContexts = {}
-        self._lastQueuedLiveRegionEvent = None
         self._findContainer = None
 
     def clearContentCache(self):
@@ -4383,18 +4381,6 @@ class Utilities(script_utilities.Utilities):
 
         return None, -1
 
-    def lastQueuedLiveRegion(self):
-        if self._lastQueuedLiveRegionEvent is None:
-            return None
-
-        if self._lastQueuedLiveRegionEvent.type.startswith("object:text-changed:insert"):
-            return self._lastQueuedLiveRegionEvent.source
-
-        if self._lastQueuedLiveRegionEvent.type.startswith("object:children-changed:add"):
-            return self._lastQueuedLiveRegionEvent.any_data
-
-        return None
-
     def handleAsLiveRegion(self, event):
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             return False
@@ -4408,34 +4394,12 @@ class Utilities(script_utilities.Utilities):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event.type.startswith("object:text-changed:insert"):
-            alert = AXObject.find_ancestor(event.source, self.isAriaAlert)
-            if alert and AXUtilities.get_focused_object(alert) == event.source:
-                msg = "WEB: Focused source will be presented as part of alert"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return False
+        alert = AXObject.find_ancestor(event.source, self.isAriaAlert)
+        if alert and AXUtilities.get_focused_object(alert) == event.source:
+            msg = "WEB: Focused source will be presented as part of alert"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
 
-            if self._lastQueuedLiveRegionEvent \
-               and self._lastQueuedLiveRegionEvent.type == event.type \
-               and self._lastQueuedLiveRegionEvent.any_data == event.any_data:
-                msg = "WEB: Event is believed to be duplicate message"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return False
-
-        if isinstance(event.any_data, Atspi.Accessible):
-            if AXUtilities.is_unknown_or_redundant(event.any_data) \
-               and self._getTag(event.any_data) in ["", None, "br"]:
-                tokens = ["WEB: Child has unknown role and no tag", event.any_data]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-
-            if self.lastQueuedLiveRegion() == event.any_data \
-               and self._lastQueuedLiveRegionEvent.type != event.type:
-                msg = "WEB: Event is believed to be redundant live region notification"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return False
-
-        self._lastQueuedLiveRegionEvent = event
         return True
 
     def preferDescriptionOverName(self, obj):
