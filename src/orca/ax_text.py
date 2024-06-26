@@ -53,6 +53,23 @@ class AXText:
     """Utilities for obtaining information about accessible text."""
 
     @staticmethod
+    def get_text_for_debugging(obj):
+        """Returns the text content of obj for debugging."""
+
+        try:
+            result = Atspi.Text.get_text(obj, 0, Atspi.Text.get_character_count(obj))
+        except Exception:
+            return ""
+
+        words = result.split()
+        if len(words) > 10:
+            debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+        else:
+            debug_string = result
+
+        return debug_string.replace("\n", "\\n")
+
+    @staticmethod
     def get_character_at_offset(obj, offset=None):
         """Returns the character, start, and end for the current or specified offset."""
 
@@ -451,6 +468,9 @@ class AXText:
 
         if not AXObject.supports_text(obj):
             return ""
+
+        if end_offset == -1:
+            end_offset = AXText.get_character_count(obj)
 
         try:
             result = Atspi.Text.get_text(obj, start_offset, end_offset)

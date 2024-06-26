@@ -44,6 +44,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 # Used to turn off all debugging.
@@ -422,6 +423,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     actions_string = f"{indent}actions='{AXObject.actions_as_string(acc)}'"
     iface_string = f"{indent}interfaces='{AXObject.supported_interfaces_as_string(acc)}'"
     attr_string = f"{indent}attributes='{AXObject.attributes_as_string(acc)}'"
+    text_string = f"{indent}text='{AXText.get_text_for_debugging(acc)}'"
     string += (
         f"{name_string} {role_string}\n"
         f"{desc_string}\n"
@@ -430,6 +432,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         f"{actions_string}\n"
         f"{iface_string}\n"
         f"{attr_string}\n"
+        f"{text_string}\n"
         f"{path_string}\n"
     )
     return string
