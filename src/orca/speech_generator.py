@@ -4294,6 +4294,7 @@ class SpeechGenerator(generator.Generator):
         result = self._generate_default_prefix(obj, **args)
         result += self._generateLabelAndName(obj, **args) + result
         result += self._generateRoleName(obj, **args)
+        result += self._generateValue(obj, **args)
         result += self._generateRequired(obj, **args)
         result += self._generatePause(obj, **args)
         result += self._generateInvalid(obj, **args)
