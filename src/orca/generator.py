@@ -1281,6 +1281,8 @@ class Generator:
                 atkRole = Atk.Role.STATUSBAR
             elif role == Atspi.Role.EDITBAR:
                 atkRole = Atk.Role.EDIT_BAR
+            elif role == Atspi.Role.TEAROFF_MENU_ITEM:
+                atkRole = Atk.Role.TEAR_OFF_MENU_ITEM
 
         return Atk.role_get_localized_name(atkRole)
 
