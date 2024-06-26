@@ -204,7 +204,6 @@ events, or do similar platform-specific things.
 
 ### Announcement Example: Qt 6 (Minimum Version: 6.8)
 
-
 ```python
 #!/usr/bin/python
 
@@ -283,6 +282,38 @@ def on_activate(application):
     # This text is presented by Orca as a "tutorial message."
     entry.get_accessible().set_help_text("Enter 10 characters.")
     window.show_all()
+
+app = Gtk.Application()
+app.connect("activate", on_activate)
+app.run(None)
+```
+
+### Help Message Example: GTK 4 (Minimum Version: 4.16)
+
+```python
+#!/usr/bin/python
+
+import gi
+gi.require_version("Gtk", "4.0")
+
+from gi.repository import Gtk
+
+def on_activate(application):
+    window = Gtk.ApplicationWindow(application=application)
+    box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 6)
+    window.set_child(box)
+    label = Gtk.Label(label="Type something here:")
+    box.append(label)
+    entry = Gtk.Entry()
+    box.append(entry)
+
+    # Setting the mnemonic widget will cause the accessible labeled-by relation to be
+    # set. Orca uses that to say "Type something here:" when the entry gains focus.
+    label.set_mnemonic_widget(entry)
+
+    # This text is presented by Orca as a "tutorial message."
+    entry.update_property([Gtk.AccessibleProperty.HELP_TEXT], ["Enter 10 characters."])
+    window.present()
 
 app = Gtk.Application()
 app.connect("activate", on_activate)
