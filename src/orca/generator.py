@@ -1276,8 +1276,11 @@ class Generator:
 
         nonlocalized = Atspi.role_get_name(role)
         atkRole = Atk.role_for_name(nonlocalized)
-        if atkRole == Atk.Role.INVALID and role == Atspi.Role.STATUS_BAR:
-            atkRole = Atk.role_for_name("statusbar")
+        if atkRole == Atk.Role.INVALID:
+            if role == Atspi.Role.STATUS_BAR:
+                atkRole = Atk.Role.STATUSBAR
+            elif role == Atspi.Role.EDITBAR:
+                atkRole = Atk.Role.EDIT_BAR
 
         return Atk.role_get_localized_name(atkRole)
 
