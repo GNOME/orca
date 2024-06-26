@@ -229,6 +229,91 @@ main_window.show()
 app.exec()
 ```
 
+### Announcement Example: Headless Application using Dasbus for DBus Communication
+
+In an application without a GUI, you can pretend to be enough of an accessible object to fire this
+event as well. To hear the result, Orca must be running first, though.
+
+```python
+#!/usr/bin/python3
+from dasbus.connection import SessionMessageBus, AddressedMessageBus
+from dasbus.loop import EventLoop
+from dasbus.server.interface import dbus_class, dbus_interface, dbus_signal
+from dasbus.typing import Int32, UInt32, Variant, Structure, Dict, List, Tuple, ObjPath, get_variant
+import threading
+import time
+
+ANNOUNCER_PATH = "/com/example/Announcer"
+
+@dbus_interface("org.a11y.atspi.Application")
+class Application:
+    """A minimal accessible application to fulfill AT-SPI2's expectations that events come from a
+    valid accessible application."""
+
+    @property
+    def ToolkitName(self) -> str:
+        return "Announcer"
+
+@dbus_interface("org.a11y.atspi.Event.Object")
+class ObjectEvents:
+    """Just a holder for the one needed signal."""
+
+    @dbus_signal
+    def Announcement(self, subtype: str, detail1: int, detail2: int, value: Variant, props: Structure):
+        pass
+
+@dbus_interface("org.a11y.atspi.Accessible")
+class Accessible:
+    """A minimal accessible object to fulfill AT-SPI2's expectations that events come from a valid
+    accessible object."""
+
+    def GetState(self) -> list[UInt32]:
+        return [1<<25, 0] # ATSPI_STATE_SHOWING
+
+    @property
+    def Name(self) -> str:
+        return "Announcer"
+
+    @property
+    def Parent(self) -> Tuple[str, ObjPath]:
+        return "", ObjPath("/org/a11y/atspi/null")
+
+    def GetRole(self) -> UInt32:
+        return 75 # ATSPI_ROLE_APPLICATION
+
+    def GetAttributes(self) -> Dict[str, str]:
+        return {}
+
+@dbus_class
+class Announcer(Accessible, Application, ObjectEvents):
+    pass
+
+CacheEntry = Tuple[Tuple[str, ObjPath], Tuple[str, ObjPath], Tuple[str, ObjPath], Int32, Int32, List[str], str, UInt32, str, List[UInt32]]
+
+@dbus_interface("org.a11y.atspi.Cache")
+class Cache:
+    """A minimal accessible objects cache to fulfill AT-SPI2's expectations that events come from an
+    accessible application which has a valid accessible objects cache."""
+
+    def GetItems(self) -> List[CacheEntry]:
+        return []
+
+session_bus = SessionMessageBus()
+a11y_bus_info_provider = session_bus.get_proxy("org.a11y.Bus", "/org/a11y/bus")
+address = a11y_bus_info_provider.GetAddress()
+a11y_bus = AddressedMessageBus(address)
+announcer = Announcer()
+a11y_bus.publish_object(ANNOUNCER_PATH, announcer)
+a11y_bus.publish_object("/org/a11y/atspi/cache", Cache())
+loop = EventLoop()
+threading.Thread(target=loop.run, daemon=True).start()
+print("About to announce Hello, world!")
+announcer.Announcement("", 1, 0, get_variant(str, "Hello, world!"), [])
+# Give the announcement time to be processed
+time.sleep(0.5)
+print("Done announcing Hello, world!")
+```
+
 **Please note:** Because "assertive" messages can be disruptive if presented at the wrong
 time, Orca *currently* treats an "assertive" notification from non-web applications the
 same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web
