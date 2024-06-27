@@ -216,7 +216,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 def on_button_clicked(checked):
     announcement_event = QAccessibleAnnouncementEvent(button, "Hello world. I am a notification.")
     # prio could be set like this (Polite is the default anyway)
-    announcement_event.setPriority(QAccessible.AnnouncementPriority.Polite)
+    announcement_event.setPoliteness(QAccessible.AnnouncementPoliteness.Polite)
     QAccessible.updateAccessibility(announcement_event)
 
 app = QApplication(sys.argv)
