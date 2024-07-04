@@ -62,7 +62,7 @@ meson dist -C builddir
 UPLOAD THE RELEASE:
 ------------------
 
-scp orca-40.rc.tar.xz yourusername@master.gnome.org:
+scp builddir/meson-dist/orca-40.rc.tar.xz yourusername@master.gnome.org:
 ssh master.gnome.org
 ftpadmin install orca-40.rc.tar.xz
 
