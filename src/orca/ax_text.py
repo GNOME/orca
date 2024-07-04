@@ -56,6 +56,9 @@ class AXText:
     def get_text_for_debugging(obj):
         """Returns the text content of obj for debugging."""
 
+        if not AXObject.supports_text(obj):
+            return ""
+
         try:
             result = Atspi.Text.get_text(obj, 0, Atspi.Text.get_character_count(obj))
         except Exception:
