@@ -31,7 +31,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2018-2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import time
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -53,8 +52,7 @@ class AXEventSynthesizer:
 
     @staticmethod
     def _window_coordinates_to_screen_coordinates(x, y):
-        # TODO - JD: This is a workaround to keep things working until we have something like
-        # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/158
+        # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
         active_window = focus_manager.get_manager().get_active_window()
         if active_window is None:
             msg = "AXEventSynthesizer: Could not get active window to adjust coordinates"
@@ -87,46 +85,48 @@ class AXEventSynthesizer:
         return new_x, new_y
 
     @staticmethod
-    def _get_mouse_coordinates():
-        """Returns the current mouse coordinates."""
-
-        root_window = Gtk.Window().get_screen().get_root_window()
-        _window, x_coord, y_coord, _modifiers = root_window.get_pointer()
-        tokens = ["AXEventSynthesizer: Mouse coordinates:", x_coord, ",", y_coord]
+    def _generate_mouse_event_new(obj, relative_x, relative_y, event):
+        tokens = ["AXEventSynthesizer: Attempting to generate new mouse event on", obj,
+                  f"at relative coordinates {relative_x},{relative_y}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return x_coord, y_coord
+
+        try:
+            device = Atspi.Device.new()
+            Atspi.Device.generate_mouse_event(device, obj, relative_x, relative_y, event)
+        except AttributeError:
+            message = "AXEventSynthesizer: Atspi.Device.generate_mouse_event requires v2.52."
+            debug.printMessage(debug.LEVEL_INFO, message, True)
+            return False
+        except Exception as error:
+            message = f"AXEventSynthesizer: Exception in _generate_mouse_event_new: {error}"
+            debug.printMessage(debug.LEVEL_INFO, message, True)
+            return False
+        return True
 
     @staticmethod
-    def _generate_mouse_event(x_coord, y_coord, event):
-        """Synthesize a mouse event at a specific screen coordinate."""
-
-        old_x, old_y = AXEventSynthesizer._get_mouse_coordinates()
-        tokens = ["AXEventSynthesizer: Generating", event, "mouse event at", x_coord, ",", y_coord]
+    def _generate_mouse_event_legacy(obj, screen_x, screen_y, event):
+        # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
+        tokens = ["AXEventSynthesizer: Attempting to generate legacy mouse event on", obj,
+                  f"at screen coordinates {screen_x},{screen_y}"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        screen_x, screen_y = AXEventSynthesizer._window_coordinates_to_screen_coordinates(
-            x_coord, y_coord)
 
         try:
             success = Atspi.generate_mouse_event(screen_x, screen_y, event)
         except Exception as error:
-            tokens = ["AXEventSynthesizer: Exception in _generate_mouse_event:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            success = False
-        else:
-            tokens = ["AXEventSynthesizer: Atspi.generate_mouse_event returned", success]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        # There seems to be a timeout / lack of reply from this blocking call.
-        # But often the mouse event is successful. Pause briefly before checking.
-        time.sleep(1)
-
-        new_x, new_y = AXEventSynthesizer._get_mouse_coordinates()
-        if old_x == new_x and old_y == new_y and (old_x, old_y) != (screen_x, screen_y):
-            msg = "AXEventSynthesizer: Mouse event possible failure. Pointer didn't move"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            message = f"AXEventSynthesizer: Exception in _generate_mouse_event_legacy: {error}"
+            debug.printMessage(debug.LEVEL_INFO, message, True)
             return False
+        return success
 
+    @staticmethod
+    def _generate_mouse_event(obj, relative_x, relative_y, event):
+        """Synthesize a mouse event at a specific screen coordinate."""
+
+        if not AXEventSynthesizer._generate_mouse_event_new(obj, relative_x, relative_y, event):
+            rect = AXComponent.get_rect(obj)
+            screen_x, screen_y = AXEventSynthesizer._window_coordinates_to_screen_coordinates(
+                rect.x + relative_x, rect.y + relative_y)
+            AXEventSynthesizer._generate_mouse_event_legacy(obj, screen_x, screen_y, event)
         return True
 
     @staticmethod
@@ -144,16 +144,18 @@ class AXEventSynthesizer:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        x_coord = max(extents.x, extents.y + (extents.width / 2) - 1)
-        y_coord = extents.y + extents.height / 2
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, event)
+        relative_x = (extents.x - rect.x) + extents.width / 2
+        relative_y = (extents.y - rect.y) + extents.height / 2
+        return AXEventSynthesizer._generate_mouse_event(obj, relative_x, relative_y, event)
 
     @staticmethod
     def _mouse_event_on_object(obj, event):
         """Performs the specified mouse event on obj."""
 
-        x_coord, y_coord = AXComponent.get_center_point(obj)
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, event)
+        rect = AXComponent.get_rect(obj)
+        relative_x = rect.width / 2
+        relative_y = rect.height / 2
+        return AXEventSynthesizer._generate_mouse_event(obj, relative_x, relative_y, event)
 
     @staticmethod
     def route_to_character(obj, offset=None):
