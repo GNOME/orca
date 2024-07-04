@@ -196,60 +196,6 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}c")
 
     @staticmethod
-    def double_click_character(obj, button=1):
-        """Double click on the current character in obj using the specified button."""
-
-        return AXEventSynthesizer._mouse_event_on_character(obj, f"b{button}d")
-
-    @staticmethod
-    def double_click_object(obj, button=1):
-        """Double click on obj using the specified button."""
-
-        return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}d")
-
-    @staticmethod
-    def double_click_point(x_coord, y_coord, button=1):
-        """Double click on the given point using the specified button."""
-
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}d")
-
-    @staticmethod
-    def press_at_character(obj, button=1):
-        """Performs a press on the current character in obj using the specified button."""
-
-        return AXEventSynthesizer._mouse_event_on_character(obj, f"b{button}p")
-
-    @staticmethod
-    def press_at_object(obj, button=1):
-        """Performs a press on obj using the specified button."""
-
-        return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}p")
-
-    @staticmethod
-    def press_at_point(x_coord, y_coord, button=1):
-        """Performs a press on the given point using the specified button."""
-
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}p")
-
-    @staticmethod
-    def release_at_character(obj, button=1):
-        """Performs a release on the current character in obj using the specified button."""
-
-        return AXEventSynthesizer._mouse_event_on_character(obj, f"b{button}r")
-
-    @staticmethod
-    def release_at_object(obj, button=1):
-        """Performs a release on obj using the specified button."""
-
-        return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}r")
-
-    @staticmethod
-    def release_at_point(x_coord, y_coord, button=1):
-        """Performs a release on the given point using the specified button."""
-
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}r")
-
-    @staticmethod
     def _scroll_to_location(obj, location, start_offset=None, end_offset=None):
         """Attempts to scroll to the specified location."""
 
