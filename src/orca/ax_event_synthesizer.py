@@ -186,12 +186,6 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}c")
 
     @staticmethod
-    def click_point(x_coord, y_coord, button=1):
-        """Single click on the given point using the specified button."""
-
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, f"b{button}c")
-
-    @staticmethod
     def _scroll_to_location(obj, location, start_offset=None, end_offset=None):
         """Attempts to scroll to the specified location."""
 
