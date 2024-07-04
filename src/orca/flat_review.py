@@ -38,7 +38,6 @@ from . import focus_manager
 from . import script_manager
 from . import settings
 from .ax_component import AXComponent
-from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -844,22 +843,6 @@ class Context:
         self.wordIndex = wordIndex
         self.charIndex = charIndex
         self.targetCharInfo = self.getCurrent(Context.CHAR)
-
-    def routeToCurrent(self):
-        """Routes the mouse pointer to the current accessible."""
-
-        offset = self.getCurrentTextOffset()
-        if offset >= 0:
-            return AXEventSynthesizer.route_to_character(self.getCurrentAccessible(), offset)
-        return AXEventSynthesizer.route_to_object(self.getCurrentAccessible())
-
-    def clickCurrent(self, button=1):
-        """Performs a mouse click on the current accessible."""
-
-        offset = self.getCurrentTextOffset()
-        if offset >= 0:
-            return AXEventSynthesizer.click_character(self.getCurrentAccessible(), offset, button)
-        return AXEventSynthesizer.click_object(self.getCurrentAccessible(), button)
 
     def _getCurrentZone(self):
         if not (self.lines and 0 <= self.lineIndex < len(self.lines)):
