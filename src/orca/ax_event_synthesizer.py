@@ -85,6 +85,50 @@ class AXEventSynthesizer:
         return new_x, new_y
 
     @staticmethod
+    def _is_scrolled_off_screen(obj, offset=None):
+        """Returns true if obj, or the caret offset therein, is scrolled off-screen."""
+
+        def _highest_ancestor(x):
+            parent = AXObject.get_parent(x)
+            return parent is None or AXUtilitiesRole.is_application(parent)
+
+        tokens = ["AXEventSynthesizer: Checking if", obj, "is scrolled offscreen"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        rect = AXComponent.get_rect(obj)
+        ancestor = AXObject.find_ancestor(obj, _highest_ancestor)
+        if ancestor is None:
+            tokens = ["AXEventSynthesizer: Could not get ancestor of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        ancestor_rect = AXComponent.get_rect(ancestor)
+        intersection = AXComponent.get_rect_intersection(ancestor_rect, rect)
+        if AXComponent.is_empty_rect(intersection):
+            tokens = ["AXEventSynthesizer:", obj, "is outside of", ancestor, ancestor_rect]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        if offset is None:
+            tokens = ["AXEventSynthesizer:", obj, "is not scrolled offscreen"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        extents = AXText.get_character_rect(obj, offset)
+        if AXComponent.is_empty_rect(extents):
+            tokens = ["AXEventSynthesizer: Could not get character rect of", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        intersection = AXComponent.get_rect_intersection(extents, rect)
+        if AXComponent.is_empty_rect(intersection):
+            tokens = ["AXEventSynthesizer:", obj, "'s caret", extents, "not in obj", rect]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
+
+    @staticmethod
     def _generate_mouse_event_new(obj, relative_x, relative_y, event):
         tokens = ["AXEventSynthesizer: Attempting to generate new mouse event on", obj,
                   f"at relative coordinates {relative_x},{relative_y}"]
@@ -133,6 +177,16 @@ class AXEventSynthesizer:
     def _mouse_event_on_character(obj, offset, event):
         """Performs the specified mouse event on the current character in obj."""
 
+        if offset is None:
+            offset = max(AXText.get_caret_offset(obj), 0)
+
+        if AXEventSynthesizer._is_scrolled_off_screen(obj, offset):
+            AXEventSynthesizer.scroll_into_view(obj, offset)
+            if AXEventSynthesizer._is_scrolled_off_screen(obj, offset):
+                tokens = ["AXEventSynthesizer:", obj, "is still offscreen. Setting caret."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                AXText.set_caret_offset(obj, offset)
+
         extents = AXText.get_character_rect(obj, offset)
         if AXComponent.is_empty_rect(extents):
             return False
@@ -151,6 +205,13 @@ class AXEventSynthesizer:
     @staticmethod
     def _mouse_event_on_object(obj, event):
         """Performs the specified mouse event on obj."""
+
+        if AXEventSynthesizer._is_scrolled_off_screen(obj):
+            AXEventSynthesizer.scroll_into_view(obj)
+            if AXEventSynthesizer._is_scrolled_off_screen(obj):
+                tokens = ["AXEventSynthesizer:", obj, "is still offscreen. Grabbing focus."]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                AXObject.grab_focus(obj)
 
         rect = AXComponent.get_rect(obj)
         relative_x = rect.width / 2
