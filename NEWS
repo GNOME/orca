@@ -1,3 +1,130 @@
+47.alpha - 4 July 2024
+
+Web:
+
+* Convert WebKitGTK support to be based on the web script so that all
+  browsers have the same user interaction, commands, etc. Note that
+  there are several WebKitGTK bugs that must be fixed in order for
+  this to work as expected. In the meantime, users should enable native
+  caret navigation and switch to focus mode when using the arrow keys.
+  Structural navigation should work as expected in browse mode.
+
+* Improve presentation of ARIA live regions.
+
+* Make line presentation in focus mode more consistent with that of
+  browse mode in content-editable content.
+
+* Don't speak description list term and value details if list context is
+  disabled.
+
+* Eliminate unnecessary keygrab refreshes (performance).
+
+* Fix bug causing us to not present a newly-focused link due to user
+  agent event ordering.
+
+LibreOffice:
+
+* Fix several issues related to presentation of application UI.
+
+Thunderbird:
+
+* Work around unexpected re-use of existing accessible objects when a
+  message is deleted from the message list.
+
+* Handle event spam (performance).
+
+General:
+
+* Much code cleanup, performance improvements, removal of obsolete
+  scripts, removal of hacks, etc.
+
+* Create documentation for application developers.
+
+* Stop listening for the "focus:" event which was deprecated over a
+  decade ago, replaced by "object:state-changed:focused".
+
+* Make posinset and setsize attribute retrieval global so they can be
+  used in native applications.
+
+* Prefer the description over unrelated labels for static text in
+  native applications.
+
+* Enable tutorial messages by default, so that the new "help text"
+  messages from applications is automatically presented.
+
+* Make Bypass Mode a toggle, rather than something which applies to
+  only the next keystroke.
+
+* Treat "activate" as a click-like action we should attempt when the
+  user attempts to synthesize a mouse-click on a widget.
+
+* Improve error handling and recovery when mouse review is enabled in
+  Wayland.
+
+* Eliminate chattiness from redundant objects in ancestry.
+
+* Handle issue causing selection changes in collapsed combo boxes to
+  not be presented.
+
+* Improve correctness of presentation of GTK managed-descendant tables.
+
+* Fix orca saying "invalid" for the "editbar" role.
+
+* Improve presentation of spin buttons.
+
+* Improve menu-related and has-popup presentation.
+
+* Fix bug causing press and hold events being treated as a multi-click.
+
+* Persist runtime settings between terminal and terminal app scripts
+  so that the user preferences are applied both in the terminal and
+  in the app UI.
+
+* Present character count rather than string in huge selection changes.
+
+* Don't apply the repeated character count presentation for alphanumeric
+  characters.
+
+* Ensure we say "blank" for an empty line in multiline text fields.
+
+* Fix "task_done() called too many times" error.
+
+* Fix several issues related to Spiel support.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Daniel Rusek
+  da              Danish                    Alan Mortensen
+  de              German                    Jürgen Benvenuti
+  de              German                    Tim Sabsch
+  en_GB           British English           Andi Chandler
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  fr              French                    Vincent Chatelain
+  gl              Galician                  Fran Dieguez
+  he              Hebrew                    Yaron Shahrabani
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Andika Triwidada
+  kab             Kabyle                    Athmane MOKRAOUI
+  ka              Georgian                  Ekaterine Papava
+  lt              Lithuanian                Aurimas Černius
+  lv              Latvian                   Rūdolfs Mazurs
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Juliano de Souza Camargo
+  pt_BR           Brazilian Portuguese      Leônidas Araújo
+  pt              Portuguese                Hugo Carvalho
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Martin
+  sl              Slovenian                 Matej Urbančič
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Sabri Ünal
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Boyuan Yang
+
+=========
+
 46.2 - 25 June 2024
 
 Updates:
