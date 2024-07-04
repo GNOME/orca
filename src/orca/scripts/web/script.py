@@ -1064,8 +1064,6 @@ class Script(default.Script):
             return
 
         if self._inMouseOverObject:
-            x, y = self.oldMouseCoordinates
-            self.get_event_synthesizer().route_to_point(x, y)
             self.restorePreMouseOverContext()
             return
 
@@ -1087,6 +1085,7 @@ class Script(default.Script):
         """Cleans things up after a mouse-over object has been hidden."""
 
         obj, offset = self._preMouseOverContext
+        self.get_event_synthesizer().route_to_object(obj)
         self.utilities.setCaretPosition(obj, offset)
         self.speakContents(self.utilities.getObjectContentsAtOffset(obj, offset))
         self.update_braille(obj)

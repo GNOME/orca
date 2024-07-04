@@ -1930,16 +1930,6 @@ class Utilities:
         return result
 
     @staticmethod
-    def absoluteMouseCoordinates():
-        """Gets the absolute position of the mouse pointer."""
-
-        from gi.repository import Gtk
-        rootWindow = Gtk.Window().get_screen().get_root_window()
-        window, x, y, modifiers = rootWindow.get_pointer()
-
-        return x, y
-
-    @staticmethod
     def appendString(text, newText, delimiter=" "):
         """Appends the newText to the given text with the delimiter in between
         and returns the new string.  Edge cases, such as no initial text or

@@ -85,11 +85,6 @@ class Script(script.Script):
         #
         self.lastMouseRoutingTime = None
 
-        # The last location of the mouse, which we might want if routing
-        # the pointer elsewhere.
-        #
-        self.oldMouseCoordinates = [0, 0]
-
         self._lastWordCheckedForSpelling = ""
 
         self._inSayAll = False
@@ -951,10 +946,6 @@ class Script(script.Script):
     def route_pointer_to_item(self, event=None):
         """Moves the mouse pointer to the current item."""
 
-        # Store the original location for scripts which want to restore
-        # it later.
-        #
-        self.oldMouseCoordinates = self.utilities.absoluteMouseCoordinates()
         self.lastMouseRoutingTime = time.time()
         if self.get_flat_review_presenter().is_active():
             self.get_flat_review_presenter().route_pointer_to_object(self, event)
