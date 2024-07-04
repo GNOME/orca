@@ -976,7 +976,7 @@ class Script(script.Script):
             return True
 
         if AXText.get_character_count(focus):
-            if self.get_event_synthesizer().click_character(focus, 1):
+            if self.get_event_synthesizer().click_character(focus, None, 1):
                 return True
 
         if self.get_event_synthesizer().click_object(focus, 1):
@@ -995,7 +995,7 @@ class Script(script.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.get_event_synthesizer().click_character(focus, 3):
+        if self.get_event_synthesizer().click_character(focus, None, 3):
             return True
 
         if self.get_event_synthesizer().click_object(focus, 3):

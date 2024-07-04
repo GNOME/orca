@@ -130,10 +130,10 @@ class AXEventSynthesizer:
         return True
 
     @staticmethod
-    def _mouse_event_on_character(obj, event):
+    def _mouse_event_on_character(obj, offset, event):
         """Performs the specified mouse event on the current character in obj."""
 
-        extents = AXText.get_character_rect(obj)
+        extents = AXText.get_character_rect(obj, offset)
         if AXComponent.is_empty_rect(extents):
             return False
 
@@ -156,12 +156,12 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, event)
 
     @staticmethod
-    def route_to_character(obj):
+    def route_to_character(obj, offset=None):
         """Routes the pointer to the current character in obj."""
 
-        tokens = ["AXEventSynthesizer: Attempting to route to character in", obj]
+        tokens = [f"AXEventSynthesizer: Attempting to route to offset {offset} in", obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return AXEventSynthesizer._mouse_event_on_character(obj, "abs")
+        return AXEventSynthesizer._mouse_event_on_character(obj, offset, "abs")
 
     @staticmethod
     def route_to_object(obj):
@@ -172,16 +172,12 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, "abs")
 
     @staticmethod
-    def route_to_point(x_coord, y_coord):
-        """Routes the pointer to the specified coordinates."""
-
-        return AXEventSynthesizer._generate_mouse_event(x_coord, y_coord, "abs")
-
-    @staticmethod
-    def click_character(obj, button=1):
+    def click_character(obj, offset=None, button=1):
         """Single click on the current character in obj using the specified button."""
 
-        return AXEventSynthesizer._mouse_event_on_character(obj, f"b{button}c")
+        tokens = [f"AXEventSynthesizer: Attempting to click at offset {offset} in", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return AXEventSynthesizer._mouse_event_on_character(obj, offset, f"b{button}c")
 
     @staticmethod
     def click_object(obj, button=1):

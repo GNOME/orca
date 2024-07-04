@@ -69,6 +69,11 @@ class Char:
         self.width = width
         self.height = height
 
+    def __str__(self):
+        return "CHAR: '%s' (%i-%i)" % \
+            (self.string.replace("\n", "\\n"),
+             self.startOffset,
+             self.endOffset)
 
 class Word:
     """A single chunk (word or object) of presentable information."""
@@ -840,37 +845,21 @@ class Context:
         self.charIndex = charIndex
         self.targetCharInfo = self.getCurrent(Context.CHAR)
 
-    def _getClickPoint(self):
-        string, x, y, width, height = self.getCurrent(Context.CHAR)
-        if (x < 0 and y < 0) or (width <= 0 and height <=0):
-            return -1, -1
-
-        # Click left of center to position the caret there.
-        x = int(max(x, x + (width / 2) - 1))
-        y = int(y + height / 2)
-
-        return x, y
-
     def routeToCurrent(self):
         """Routes the mouse pointer to the current accessible."""
 
-        x, y = self._getClickPoint()
-        if x < 0 or y < 0:
-            return False
-
-        return AXEventSynthesizer.route_to_point(x, y)
+        offset = self.getCurrentTextOffset()
+        if offset >= 0:
+            return AXEventSynthesizer.route_to_character(self.getCurrentAccessible(), offset)
+        return AXEventSynthesizer.route_to_object(self.getCurrentAccessible())
 
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
 
-        x, y = self._getClickPoint()
-        if x >= 0 and y >= 0 and AXEventSynthesizer.click_point(x, y, button):
-            return True
-
-        if AXEventSynthesizer.click_object(self.getCurrentAccessible(), button):
-            return True
-
-        return False
+        offset = self.getCurrentTextOffset()
+        if offset >= 0:
+            return AXEventSynthesizer.click_character(self.getCurrentAccessible(), offset, button)
+        return AXEventSynthesizer.click_object(self.getCurrentAccessible(), button)
 
     def _getCurrentZone(self):
         if not (self.lines and 0 <= self.lineIndex < len(self.lines)):
@@ -881,6 +870,20 @@ class Context:
             return None
 
         return line.zones[self.zoneIndex]
+
+    def getCurrentTextOffset(self):
+        """Returns the current text offset in the current accessible."""
+
+        zone = self._getCurrentZone()
+        if zone is None:
+            return -1
+        if not zone.words:
+            return -1
+        word = zone.words[self.wordIndex]
+        if not word.chars:
+            return -1
+        char = word.chars[self.charIndex]
+        return char.startOffset
 
     def getCurrentAccessible(self):
         """Returns the current accessible."""
