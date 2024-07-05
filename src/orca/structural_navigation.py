@@ -1025,7 +1025,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
-        AXEventSynthesizer.scroll_to_top_edge(obj)
+        AXEventSynthesizer.scroll_to_center(obj, start_offset=offset)
         self._script.presentObject(obj, offset=offset, priorObj=priorObj, interrupt=True)
 
     def _presentWithSayAll(self, obj, offset):

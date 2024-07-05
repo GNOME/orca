@@ -48,8 +48,6 @@ from .ax_utilities_role import AXUtilitiesRole
 class AXEventSynthesizer:
     """Provides support for synthesizing accessible input events."""
 
-    _banner = None
-
     @staticmethod
     def _window_coordinates_to_screen_coordinates(x, y):
         # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
@@ -85,18 +83,20 @@ class AXEventSynthesizer:
         return new_x, new_y
 
     @staticmethod
-    def _is_scrolled_off_screen(obj, offset=None):
-        """Returns true if obj, or the caret offset therein, is scrolled off-screen."""
+    def _highest_ancestor(obj):
+        """Returns the highest obtainable ancestor of obj, stopping before the application."""
+        parent = AXObject.get_parent(obj)
+        return parent is None or AXUtilitiesRole.is_application(parent)
 
-        def _highest_ancestor(x):
-            parent = AXObject.get_parent(x)
-            return parent is None or AXUtilitiesRole.is_application(parent)
+    @staticmethod
+    def _is_scrolled_off_screen(obj, offset=None, ancestor=None):
+        """Returns true if obj, or the caret offset therein, is scrolled off-screen."""
 
         tokens = ["AXEventSynthesizer: Checking if", obj, "is scrolled offscreen"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         rect = AXComponent.get_rect(obj)
-        ancestor = AXObject.find_ancestor(obj, _highest_ancestor)
+        ancestor = ancestor or AXObject.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
         if ancestor is None:
             tokens = ["AXEventSynthesizer: Could not get ancestor of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -253,11 +253,18 @@ class AXEventSynthesizer:
         """Attempts to scroll to the specified location."""
 
         before = AXComponent.get_position(obj)
-        if not AXText.scroll_substring_to_location(obj, location, start_offset, end_offset):
-            AXComponent.scroll_object_to_location(obj, location)
-
+        AXText.scroll_substring_to_location(obj, location, start_offset, end_offset)
+        AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
         after = AXComponent.get_position(obj)
-        tokens = ["AXEventSynthesizer: Before scroll:", before, "After scroll:", after]
+        tokens = ["AXEventSynthesizer: Text scroll, before:", before, "after:", after]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if before != after:
+            return
+
+        AXComponent.scroll_object_to_location(obj, location)
+        AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
+        after = AXComponent.get_position(obj)
+        tokens = ["AXEventSynthesizer: Object scroll, before:", before, "after:", after]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
@@ -265,11 +272,18 @@ class AXEventSynthesizer:
         """Attempts to scroll obj to the specified point."""
 
         before = AXComponent.get_position(obj)
-        if not AXText.scroll_substring_to_point(obj, x_coord, y_coord, start_offset, end_offset):
-            AXComponent.scroll_object_to_point(obj, x_coord, y_coord)
-
+        AXText.scroll_substring_to_point(obj, x_coord, y_coord, start_offset, end_offset)
+        AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
         after = AXComponent.get_position(obj)
-        tokens = ["AXEventSynthesizer: Before scroll:", before, "After scroll:", after]
+        tokens = ["AXEventSynthesizer: Text scroll, before:", before, "after:", after]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if before != after:
+            return
+
+        AXComponent.scroll_object_to_point(obj, x_coord, y_coord)
+        AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
+        after = AXComponent.get_position(obj)
+        tokens = ["AXEventSynthesizer: Object scroll, before:", before, "after:", after]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
@@ -280,82 +294,26 @@ class AXEventSynthesizer:
             obj, Atspi.ScrollType.ANYWHERE, start_offset, end_offset)
 
     @staticmethod
-    def _containing_document(obj):
-        """Returns the document containing obj"""
+    def scroll_to_center(obj, start_offset=None, end_offset=None):
+        """Attempts to scroll obj to the center of its window."""
 
-        document = AXObject.find_ancestor(obj, AXUtilitiesRole.is_document)
-        while document:
-            ancestor = AXObject.find_ancestor(document, AXUtilitiesRole.is_document)
-            if ancestor is None or ancestor == document:
-                break
-            document = ancestor
-
-        return document
-
-    @staticmethod
-    def _get_obscuring_banner(obj):
-        """"Returns the banner obscuring obj from view."""
-
-        document = AXEventSynthesizer._containing_document(obj)
-        if not document:
-            tokens = ["AXEventSynthesizer: No obscuring banner found for", obj, ". No document."]
+        ancestor = AXObject.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
+        if ancestor is None:
+            tokens = ["AXEventSynthesizer: Could not get ancestor of", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
+            return
 
-        if not AXObject.supports_component(document):
-            tokens = ["AXEventSynthesizer: No obscuring banner found for", obj, ". No doc iface."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        obj_rect = AXComponent.get_rect(obj)
-        doc_rect = AXComponent.get_rect(document)
-        left = AXComponent.get_descendant_at_point(document, doc_rect.x, obj_rect.y)
-        right = AXComponent.get_descendant_at_point(
-            document, doc_rect.x + doc_rect.width, obj_rect.y)
-        if not (left and right and left == right != document):
-            tokens = ["AXEventSynthesizer: No obscuring banner found for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        tokens = ["AXEventSynthesizer:", obj, "believed to be obscured by banner", left]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return left
-
-    @staticmethod
-    def _scroll_below_banner(obj, banner, start_offset, end_offset, margin=25):
-        """Attempts to scroll obj below banner."""
-
-        obj_rect = AXComponent.get_rect(obj)
-        banner_rect = AXComponent.get_rect(banner)
-
-        tokens = ["AXEventSynthesizer: Extents of banner: ", banner_rect]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        AXEventSynthesizer._scroll_to_point(
-            obj, obj_rect.x, banner_rect.y + banner_rect.height + margin, start_offset, end_offset)
+        ancestor_rect = AXComponent.get_rect(ancestor)
+        x_coord = ancestor_rect.x + ancestor_rect.width / 2
+        y_coord = ancestor_rect.y + ancestor_rect.height / 2
+        AXEventSynthesizer._scroll_to_point(obj, x_coord, y_coord, start_offset, end_offset)
 
     @staticmethod
     def scroll_to_top_edge(obj, start_offset=None, end_offset=None):
         """Attempts to scroll obj to the top edge."""
 
-        if AXEventSynthesizer._banner and not AXObject.is_dead(AXEventSynthesizer._banner):
-            msg = (
-                f"AXEventSynthesizer: Suspected existing banner found: "
-                f"{AXEventSynthesizer._banner}"
-            )
-            debug.println(debug.LEVEL_INFO, msg, True)
-            AXEventSynthesizer._scroll_below_banner(
-                obj, AXEventSynthesizer._banner, start_offset, end_offset)
-            return
-
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.TOP_EDGE, start_offset, end_offset)
-
-        AXEventSynthesizer._banner = AXEventSynthesizer._get_obscuring_banner(obj)
-        if AXEventSynthesizer._banner:
-            msg = f"AXEventSynthesizer: Re-scrolling {obj} due to banner"
-            AXEventSynthesizer._scroll_below_banner(
-                obj, AXEventSynthesizer._banner, start_offset, end_offset)
-            debug.println(debug.LEVEL_INFO, msg, True)
 
     @staticmethod
     def scroll_to_top_left(obj, start_offset=None, end_offset=None):
