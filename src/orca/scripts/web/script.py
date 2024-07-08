@@ -1664,11 +1664,6 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not AXUtilities.checked_state_did_change(event.source):
-            msg = "WEB: Ignoring event, state hasn't changed"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
         if not (self.caret_navigation.last_input_event_was_navigation_command() \
            and AXUtilities.is_radio_button(obj)):
             msg = "WEB: Event is something default can handle"

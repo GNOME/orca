@@ -110,10 +110,8 @@ class AXUtilitiesState:
         old_value = AXUtilitiesState.LAST_KNOWN_CHECKED.get(hash(obj))
         new_value = AXUtilitiesState.is_checked(obj)
         result = old_value != new_value
-        if not result:
-            tokens = ["AXUtilitiesState: Checked state of", obj, "has not changed"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        tokens = ["AXUtilitiesState: Checked state of", obj, f"was {old_value}, is {new_value}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_CHECKED[hash(obj)] = new_value
         return result
 
@@ -124,10 +122,8 @@ class AXUtilitiesState:
         old_value = AXUtilitiesState.LAST_KNOWN_EXPANDED.get(hash(obj))
         new_value = AXUtilitiesState.is_expanded(obj)
         result = old_value != new_value
-        if not result:
-            tokens = ["AXUtilitiesState: Expanded state of", obj, "has not changed"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        tokens = ["AXUtilitiesState: Expanded state of", obj, f"was {old_value}, is {new_value}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_EXPANDED[hash(obj)] = new_value
         return result
 
@@ -138,10 +134,9 @@ class AXUtilitiesState:
         old_value = AXUtilitiesState.LAST_KNOWN_INDETERMINATE.get(hash(obj))
         new_value = AXUtilitiesState.is_indeterminate(obj)
         result = old_value != new_value
-        if not result:
-            tokens = ["AXUtilitiesState: Indeterminate state of", obj, "has not changed"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        tokens = ["AXUtilitiesState: Indeterminate state of", obj, f"was {old_value},",
+                  f"is {new_value}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_INDETERMINATE[hash(obj)] = new_value
         return result
 
@@ -152,10 +147,8 @@ class AXUtilitiesState:
         old_value = AXUtilitiesState.LAST_KNOWN_PRESSED.get(hash(obj))
         new_value = AXUtilitiesState.is_pressed(obj)
         result = old_value != new_value
-        if not result:
-            tokens = ["AXUtilitiesState: Pressed state of", obj, "has not changed"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        tokens = ["AXUtilitiesState: Pressed state of", obj, f"was {old_value}, is {new_value}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_PRESSED[hash(obj)] = new_value
         return result
 
@@ -166,10 +159,8 @@ class AXUtilitiesState:
         old_value = AXUtilitiesState.LAST_KNOWN_SELECTED.get(hash(obj))
         new_value = AXUtilitiesState.is_selected(obj)
         result = old_value != new_value
-        if not result:
-            tokens = ["AXUtilitiesState: Selected state of", obj, "has not changed"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
+        tokens = ["AXUtilitiesState: Selected state of", obj, f"was {old_value}, is {new_value}"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_SELECTED[hash(obj)] = new_value
         return result
 
