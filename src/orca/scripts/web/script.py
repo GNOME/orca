@@ -1379,7 +1379,13 @@ class Script(default.Script):
             self.utilities.clearCaretContext()
 
         shouldPresent = True
-        if not (AXUtilities.is_showing(event.source) or AXUtilities.is_visible(event.source)):
+        mgr = settings_manager.get_manager()
+        if mgr.get_setting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_VERBOSE \
+           or mgr.get_setting('onlySpeakDisplayedText'):
+            msg = "WEB: Not presenting due to settings"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            shouldPresent = False
+        elif not (AXUtilities.is_showing(event.source) or AXUtilities.is_visible(event.source)):
             shouldPresent = False
             msg = "WEB: Not presenting because source is not showing or visible"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1392,8 +1398,7 @@ class Script(default.Script):
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        if not settings_manager.get_manager().get_setting(
-                'onlySpeakDisplayedText') and shouldPresent:
+        if shouldPresent:
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
