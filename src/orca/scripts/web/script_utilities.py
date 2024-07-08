@@ -4784,7 +4784,8 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
         if treatAsText:
             allText = AXText.get_all_text(obj)
-            if allText[offset] != self.EMBEDDED_OBJECT_CHARACTER or role == Atspi.Role.ENTRY:
+            if (allText and allText[offset] != self.EMBEDDED_OBJECT_CHARACTER) \
+               or role == Atspi.Role.ENTRY:
                 msg = "WEB: First caret context is unchanged"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return obj, offset
