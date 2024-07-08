@@ -85,7 +85,8 @@ class AXUtilitiesRole:
                  Atspi.Role.ENTRY,
                  Atspi.Role.PASSWORD_TEXT,
                  Atspi.Role.PUSH_BUTTON,
-                 Atspi.Role.SPIN_BUTTON]
+                 Atspi.Role.SPIN_BUTTON,
+                 Atspi.Role.TOGGLE_BUTTON]
         return roles
 
     @staticmethod
