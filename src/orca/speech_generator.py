@@ -621,9 +621,6 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
             return []
 
-        if self._script.utilities.isStatusBarNotification(obj):
-            return []
-
         if self._script.utilities.isDesktop(obj):
             return []
 
@@ -722,7 +719,7 @@ class SpeechGenerator(generator.Generator):
         relation.
         """
         result = []
-        visibleOnly = not self._script.utilities.isStatusBarNotification(obj)
+        visibleOnly = True
 
         minimumWords = 1
         role = args.get("role")

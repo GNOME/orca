@@ -721,11 +721,6 @@ class Utilities:
     def isNonFocusableList(self, obj):
         return AXUtilities.is_list(obj) and not AXUtilities.is_focusable(obj)
 
-    def isStatusBarNotification(self, obj):
-        if not AXUtilities.is_notification(obj):
-            return False
-        return AXObject.find_ancestor(obj, AXUtilities.is_status_bar) is not None
-
     def getNotificationContent(self, obj):
         if not AXUtilities.is_notification(obj):
             return ""
