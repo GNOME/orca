@@ -208,6 +208,8 @@ class AXText:
             offset = AXText.get_caret_offset(obj)
 
         # Don't adjust the length in multiline text because we want to say "blank" at the end.
+        # This may or may not be sufficient. GTK3 seems to give us the correct, empty line. But
+        # (at least) Chromium does not. See comment below.
         if not AXUtilitiesState.is_multi_line(obj):
             offset = min(max(0, offset), length - 1)
         else:
@@ -226,6 +228,11 @@ class AXText:
             # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
             msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+        else:
+            # Try again, e.g. Chromium returns "", -1, -1.
+            if result.start_offset == result.end_offset == -1 and offset == length:
+                offset -= 1
+                result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [f"AXText: Line at offset {offset} in", obj,
