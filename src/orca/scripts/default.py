@@ -1422,11 +1422,19 @@ class Script(script.Script):
             return
         elif AXUtilities.manages_descendants(event.source):
             return
-        elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)) \
-             and not AXObject.find_ancestor(event.source, AXUtilities.is_combo_box):
-            tokens = ["DEFAULT: Ignoring event: source is not showing and visible", event.source]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return
+        elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
+            # If the current combobox is collapsed, its menu child that fired the event might lack
+            # the showing and visible states. This happens in (at least) Thunderbird's calendar
+            # new-appointment comboboxes. Therefore check to see if the event came from the current
+            # combobox. This is necessary because (at least) VSCode's debugger has some hidden menu
+            # that the user is not in which is firing this event. This is why we cannot have nice
+            # things.
+            combobox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
+            focus = focus_manager.get_manager().get_locus_of_focus()
+            if combobox != focus and event.source != AXObject.get_parent(focus):
+                tokens = ["DEFAULT: Ignoring event: source lacks showing + visible", event.source]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return
 
         if AXUtilities.is_tree_or_tree_table(event.source):
             active_window = focus_manager.get_manager().get_active_window()
