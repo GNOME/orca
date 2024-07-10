@@ -236,6 +236,9 @@ class SpeechGenerator(generator.Generator):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = []
 
+        if args.get("isProgressBarUpdate") and rv and rv[0]:
+            self.setProgressBarUpdateTimeAndValue(obj)
+
         return rv
 
     def _resultElementToString(self, element, includeAll=True):
