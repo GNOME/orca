@@ -267,6 +267,15 @@ class FocusManager:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
+        if app and not AXUtilities.is_application_in_desktop(app):
+            tokens.append("is from app unknown to AT-SPI2")
+            # Firefox alerts and dialogs suffer from this bug too, but if we ignore these windows
+            # we'll fail to fully present things like the file chooser dialog and the replace-file
+            # alert. https://bugzilla.mozilla.org/show_bug.cgi?id=1882794
+            if not AXUtilities.is_dialog_or_alert(window):
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                return False
+
         tokens.append("can be active window")
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return True
