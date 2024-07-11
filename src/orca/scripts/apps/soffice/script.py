@@ -27,6 +27,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2013 The Orca Team."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from orca import cmdnames

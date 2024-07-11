@@ -44,6 +44,8 @@ class Script(gtk.Script):
         """Returns a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
+        import gi
+        gi.require_version("Gtk", "3.0")
         from gi.repository import Gtk
 
         grid = Gtk.Grid()

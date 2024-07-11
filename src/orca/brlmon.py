@@ -29,6 +29,8 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import brlapi
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import script_manager

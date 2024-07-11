@@ -282,6 +282,8 @@ class SpellCheck:
 
     def get_app_preferences_gui(self):
 
+        import gi
+        gi.require_version("Gtk", "3.0")
         from gi.repository import Gtk
 
         frame = Gtk.Frame()

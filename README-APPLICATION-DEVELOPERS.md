@@ -155,6 +155,7 @@ Here is an example of using the `notification` signal:
 #!/usr/bin/python
 
 import gi
+gi.require_version("Atk", "1.0")
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Atk, Gtk

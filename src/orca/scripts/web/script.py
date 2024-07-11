@@ -28,6 +28,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import time
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from orca import caret_navigation

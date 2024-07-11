@@ -27,6 +27,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import gi
+gi.require_version("Gdk", "3.0")
+gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, Gdk, Gtk
 
 from . import debug

@@ -26,6 +26,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gettext
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from .orca_i18n import _
