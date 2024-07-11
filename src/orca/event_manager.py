@@ -193,13 +193,6 @@ class EventManager:
             return True
 
         event_type = event.type
-        app = AXObject.get_application(event.source)
-        if app and not AXUtilities.is_application_in_desktop(app):
-            tokens = [f"EVENT MANAGER: Ignoring {event_type} from", event.source, "because", app,
-                      "is not known to AT-SPI2"]
-            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
-            return True
-
         if event_type.startswith('window') or event_type.startswith('mouse:button'):
             return False
 
@@ -230,6 +223,7 @@ class EventManager:
                 msg = 'EVENT_MANAGER: Ignoring due to lack of event.any_data'
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
+            app = AXObject.get_application(event.source)
             app_name = AXObject.get_name(app).lower()
             if "remove" in event_type and app_name in ["gnome-shell", ""]:
                 msg = "EVENT MANAGER: Ignoring event based on type and app"
@@ -254,7 +248,7 @@ class EventManager:
                 msg = "EVENT MANAGER: Ignoring because there is no active script"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
-            if script.app != app:
+            if script.app != AXObject.get_application(event.source):
                 msg = "EVENT MANAGER: Ignoring because event is not from active app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
