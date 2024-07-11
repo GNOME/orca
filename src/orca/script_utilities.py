@@ -508,7 +508,7 @@ class Utilities:
         return AXValue.get_value_as_percent(obj) is not None
 
     def topLevelObjectIsActiveWindow(self, obj):
-        return obj == focus_manager.get_manager().get_active_window()
+        return self.topLevelObject(obj) == focus_manager.get_manager().get_active_window()
 
     def isProgressBarUpdate(self, obj):
         if not settings_manager.get_manager().get_setting('speakProgressBarUpdates') \
