@@ -155,10 +155,7 @@ flatpak kill ai.piper.Speech.Provider
 flatpak kill org.espeak.Speech.Provider
 ```
 
-Then install the Flatpak for one or more providers:
-
-* [eSpeak](https://eeejay.github.io/spiel-demos/espeak.flatpakref)
-* [Piper](https://eeejay.github.io/spiel-demos/piper.flatpakref)
+Then install the Flatpak for one or more speech providers (i.e. piper or speak) by running the commands in the [Spiel documentation](https://project-spiel.org/install.html)
 
 To switch from Speech Dispatcher to Spiel, use `orca --replace --speech-system=spiel`. Using
 this flag is highly recommended while Orca's Spiel support is experimental. If you would like
