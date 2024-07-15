@@ -270,13 +270,13 @@ def main():
 
     if args.speech_system:
         try:
-            # Check factory modules ("orca.<speech system>") that loaded successfully
-            factories = [f.__name__[5:] for f in manager.getSpeechServerFactories()]
+            # Check successfully loaded factory modules ("orca.<speech system>") and get their names
+            factories = [f.__name__.removeprefix("orca.") for f in manager.get_speech_server_factories()]
             if args.speech_system not in factories:
                 raise KeyError
             
             setattr(settings, 'speechSystemOverride', args.speech_system)
-            manager.setSetting('speechServerFactory', args.speech_system)
+            manager.set_setting('speechServerFactory', args.speech_system)
         except Exception:
             print(messages.CLI_SPEECH_SYSTEM_ERROR % (args.speech_system, ', '.join(factories)))
 
