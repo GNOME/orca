@@ -909,7 +909,7 @@ class StructuralNavigation:
 
     def _getListDescription(self, obj):
         if AXUtilities.is_list(obj):
-            children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
+            children = list(AXObject.iter_children(obj, AXUtilities.is_list_item))
             if children:
                 if self._script.utilities.nestingLevel(obj):
                     return messages.nestedListItemCount(len(children))
@@ -919,6 +919,10 @@ class StructuralNavigation:
             children = AXUtilities.find_all_description_terms(obj)
             if children:
                 return messages.descriptionListTermCount(len(children))
+        elif AXUtilities.is_page_tab_list(obj):
+            children = list(AXObject.iter_children(obj, AXUtilities.is_page_tab))
+            if children:
+                return messages.tabListItemCount(len(children))
 
         return ""
 
@@ -1684,9 +1688,8 @@ class StructuralNavigation:
         return bindings
 
     def _listGetter(self, document, arg=None):
-        results = AXUtilities.find_all_lists(document)
-        results.extend(AXUtilities.find_all_description_lists(document))
-        return results
+        return AXUtilities.find_all_lists(
+            document, include_description_lists=True, include_tab_lists=True)
 
     def _listPresentation(self, obj, arg=None):
         if obj is not None:
@@ -1726,9 +1729,8 @@ class StructuralNavigation:
         return bindings
 
     def _listItemGetter(self, document, arg=None):
-        results = AXUtilities.find_all_list_items(document)
-        results.extend(AXUtilities.find_all_description_terms(document))
-        return results
+        return AXUtilities.find_all_list_items(
+            document, include_description_terms=True, include_tabs=True)
 
     def _listItemPresentation(self, obj, arg=None):
         if obj is None:
@@ -1743,6 +1745,9 @@ class StructuralNavigation:
         if AXUtilities.is_list_item(obj):
             thisList = AXObject.find_ancestor(obj, AXUtilities.is_list)
             priorList = AXObject.find_ancestor(focus, AXUtilities.is_list)
+        elif AXUtilities.is_page_tab(obj):
+            thisList = AXObject.find_ancestor(obj, AXUtilities.is_page_tab_list)
+            priorList = AXObject.find_ancestor(focus, AXUtilities.is_page_tab_list)
         else:
             thisList = AXObject.find_ancestor(obj, AXUtilities.is_description_list)
             priorList = AXObject.find_ancestor(focus, AXUtilities.is_description_list)
@@ -1751,7 +1756,7 @@ class StructuralNavigation:
 
         [obj, characterOffset] = self._getCaretPosition(obj)
         obj, characterOffset = self._setCaretPosition(obj, characterOffset)
-        self._presentLine(obj, characterOffset)
+        self._presentObject(obj, characterOffset)
 
     def _listItemDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LIST_ITEM]

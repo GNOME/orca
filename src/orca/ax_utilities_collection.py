@@ -950,10 +950,14 @@ class AXUtilitiesCollection:
         return matches
 
     @staticmethod
-    def find_all_lists(root, pred=None):
+    def find_all_lists(root, pred=None, include_description_lists=False, include_tab_lists=False):
         """Returns all descendants of root with the list role"""
 
         roles = [Atspi.Role.LIST]
+        if include_description_lists:
+            roles.append(Atspi.Role.DESCRIPTION_LIST)
+        if include_tab_lists:
+            roles.append(Atspi.Role.PAGE_TAB_LIST)
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -964,10 +968,14 @@ class AXUtilitiesCollection:
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
-    def find_all_list_items(root, pred=None):
+    def find_all_list_items(root, pred=None, include_description_terms=False, include_tabs=False):
         """Returns all descendants of root with the list item role"""
 
         roles = [Atspi.Role.LIST_ITEM]
+        if include_description_terms:
+            roles.append(Atspi.Role.DESCRIPTION_TERM)
+        if include_tabs:
+            roles.append(Atspi.Role.PAGE_TAB)
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod

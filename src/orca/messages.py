@@ -2673,6 +2673,11 @@ def descriptionListTermCount(count):
     return ngettext("Description list with %d term",
                     "Description list with %d terms", count) % count
 
+def tabListItemCount(count):
+    # Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
+    # example of a "tab list". This message describes the tab list to the user.
+    return ngettext("Tab list with %d tab", "Tab list with %d tabs", count) % count
+
 def valueCountForTerm(count):
     # Translators: This message describes a description list.
     # A given term ("dt" element) can have 0 or more values ("dd" elements).
