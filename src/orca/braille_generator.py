@@ -633,7 +633,7 @@ class BrailleGenerator(generator.Generator):
     def _generate_default_suffix(self, obj, **args):
         """Provides the default/role-agnostic information to present after obj."""
 
-        return []
+        return self._generateDescription(obj, **args)
 
     def _generate_text_object(self, obj, **args):
         """Provides a default/role-agnostic generation of text objects."""
