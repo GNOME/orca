@@ -74,12 +74,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generateAncestors(obj, **args)
 
-    def _generateIncludeContext(self, obj, **args):
-        if self._script.get_table_navigator().last_input_event_was_navigation_command():
-            return False
-
-        return super()._generateIncludeContext(obj, **args)
-
     def generateBraille(self, obj, **args):
         args['useDefaultFormatting'] = self._script.utilities.isNonFocusableList(obj)
         oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)

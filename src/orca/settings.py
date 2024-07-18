@@ -60,7 +60,6 @@ userCustomizableSettings = [
     "enableMnemonicSpeaking",
     "enablePositionSpeaking",
     "enableBraille",
-    "enableBrailleContext",
     "disableBrailleEOL",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
@@ -255,7 +254,6 @@ sayAllContextTable           = True
 # Braille
 enableBraille                  = True
 enableBrailleMonitor           = False
-enableBrailleContext           = True
 enableFlashMessages            = True
 brailleFlashTime               = 5000
 flashIsPersistent              = False

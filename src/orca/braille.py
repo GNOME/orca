@@ -356,7 +356,7 @@ class Region:
             self.cursorOffset = cursorOffset
 
     def __str__(self):
-        return "Region: '%s', %d" % (self.string, self.cursorOffset)
+        return f"REGION: '{self.string}', cursor offset:{self.cursorOffset}"
 
     def process_routing_key(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
@@ -492,7 +492,7 @@ class Component(Region):
         self.accessible = accessible
 
     def __str__(self):
-        return "Component: '%s', %d" % (self.string, self.cursorOffset)
+        return f"COMPONENT: '{self.string}', cursor offset:{self.cursorOffset}"
 
     def getCaretOffset(self, offset):
         """Returns the caret position of the given offset if the object
@@ -540,7 +540,7 @@ class Link(Component):
         Component.__init__(self, accessible, string, cursorOffset, '', True)
 
     def __str__(self):
-        return "Link: '%s', %d" % (self.string, self.cursorOffset)
+        return f"LINK: '{self.string}', cursor offset:{self.cursorOffset}"
 
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -634,7 +634,10 @@ class Text(Region):
             self.string += ' '
 
     def __str__(self):
-        return "Text: '%s', %d" % (self.string, self.cursorOffset)
+        return (
+            f"TEXT: '{self.string}', cursor offset:{self.cursorOffset} "
+            f"start offset:{self.startOffset}, line offset:{self.lineOffset}"
+        )
 
     def repositionCursor(self):
         """Attempts to reposition the cursor in response to a new
@@ -906,6 +909,13 @@ class Line:
 
         Returns [string, offsetIndex, attributeMask, ranges]
         """
+
+        # TODO: The way words are being combined here can result in incorrect range groupings.
+        # For instance, if we generate the full ancestry of a multiline text object and the
+        # line begins with whitespace, we'll wind up with a single range that contains the
+        # last word of the ancestor followed by the whitespace and the first word, e.g.
+        # "frame      Hello". We probably should not be creating a single string which we then
+        # split into words.
 
         string = ""
         focusOffset = -1

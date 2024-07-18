@@ -381,8 +381,6 @@ class BrailleGenerator(generator.Generator):
         previous object with focus.
         """
         result = []
-        if not settings_manager.get_manager().get_setting('enableBrailleContext'):
-            return result
         args['includeContext'] = False
 
         # Radio button group names are treated separately from the
@@ -535,30 +533,6 @@ class BrailleGenerator(generator.Generator):
 
         return super()._shouldPresentProgressBarUpdate(obj, **args)
 
-    def _generateIncludeContext(self, obj, **args):
-        """Returns True or False to indicate whether context should be
-        included or not.
-        """
-
-        if args.get('isProgressBarUpdate'):
-            return False
-
-        # For multiline text areas, we only show the context if we
-        # are on the very first line.  Otherwise, we show only the
-        # line.
-        #
-        include = settings_manager.get_manager().get_setting('enableBrailleContext')
-        if not include:
-            return include
-
-        if self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj):
-            include = AXText.get_line_at_offset(obj)[1] == 0
-            if include:
-                targets = AXUtilities.get_flows_from(obj)
-                if targets:
-                    include = not self._script.utilities.isTextArea(targets[0])
-        return include
-
     #####################################################################
     #                                                                   #
     # Other things for spacing                                          #
@@ -609,6 +583,21 @@ class BrailleGenerator(generator.Generator):
 
         if args.get("includeContext") is False:
             return []
+
+        if args.get("isProgressBarUpdate"):
+            return []
+
+        if self._script.get_table_navigator().last_input_event_was_navigation_command():
+            return []
+
+        # For multiline text areas, we only show the context if we are on the very first line,
+        # and there is text on that line.
+        if self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj):
+            string, start, _end = AXText.get_line_at_offset(obj)
+            if start != 0 or not string.strip():
+                return []
+            if AXUtilities.get_flows_from(obj):
+                return []
 
         result = self._generateAncestors(obj, **args)
         if result:
