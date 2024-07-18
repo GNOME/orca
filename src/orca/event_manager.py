@@ -536,7 +536,7 @@ class EventManager:
         if event.type.startswith("mouse:"):
             mouse_event = input_event.MouseButtonEvent(event)
             script = script_manager.get_manager().get_script(
-                mouse_event.app, mouse_event.window, False)
+                mouse_event.app, mouse_event.window)
             tokens = ["EVENT MANAGER: Script for event is", script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return script

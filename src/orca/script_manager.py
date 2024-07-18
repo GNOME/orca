@@ -213,24 +213,7 @@ class ScriptManager:
         self._sleep_mode_scripts[app] = script
         return script
 
-    def sanity_check_script(self, script):
-        """Sanity checks the script and returns it, or a replacement."""
-
-        if not self._active:
-            return script
-
-        if AXUtilities.is_application_in_desktop(script.app):
-            return script
-
-        new_script = self._get_script_for_app_replicant(script.app)
-        if new_script:
-            return new_script
-
-        tokens = ["WARNING: Failed to get a replacement script for", script.app]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return script
-
-    def get_script(self, app, obj=None, sanity_check=False):
+    def get_script(self, app, obj=None):
         """Get a script for an app (and make it if necessary).  This is used
         instead of a simple calls to Script's constructor.
 
@@ -240,7 +223,7 @@ class ScriptManager:
         Returns an instance of a Script.
         """
 
-        tokens = ["SCRIPT MANAGER: Getting script for", app, obj, f"sanity check: {sanity_check}"]
+        tokens = ["SCRIPT MANAGER: Getting script for", app, obj]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         custom_script = None
@@ -295,9 +278,6 @@ class ScriptManager:
             tokens = ["SCRIPT MANAGER: Script is toolkit script", toolkit_script]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return toolkit_script
-
-        if app and sanity_check:
-            app_script = self.sanity_check_script(app_script)
 
         tokens = ["SCRIPT MANAGER: Script is app script", app_script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
