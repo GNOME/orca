@@ -320,8 +320,3 @@ class Script:
 
     def deactivate(self):
         """Called when this script is deactivated."""
-
-    def get_transferable_attributes(self):
-        """Returns the transferable attributes of this script."""
-
-        return {}

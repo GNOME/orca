@@ -2455,9 +2455,3 @@ class Script(default.Script):
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         self._lastMouseButtonContext = None, -1
         return False
-
-    def get_transferable_attributes(self):
-        return {"_inFocusMode": self._inFocusMode,
-                "_focusModeIsSticky": self._focusModeIsSticky,
-                "_browseModeIsSticky": self._browseModeIsSticky,
-        }
