@@ -548,27 +548,10 @@ class EventManager:
             debug.printTokens(debug.LEVEL_WARNING, tokens, True)
             return None
 
-        skip_check = {
-            "object:children-changed",
-            "object:column-reordered",
-            "object:row-reordered",
-            "object:property-change",
-            "object:selection-changed",
-            "object:state-changed:checked",
-            "object:state-changed:expanded",
-            "object:state-changed:indeterminate",
-            "object:state-changed:pressed",
-            "object:state-changed:selected",
-            "object:state-changed:sensitive",
-            "object:state-changed:showing",
-            "object:text-changed",
-        }
-
-        check = not any(event.type.startswith(x) for x in skip_check)
-        tokens = ["EVENT MANAGER: Getting script for event for", app, "check:", check]
+        tokens = ["EVENT MANAGER: Getting script for event for", app, event.source]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
-        script = script_manager.get_manager().get_script(app, event.source, sanity_check=check)
+        script = script_manager.get_manager().get_script(app, event.source)
         tokens = ["EVENT MANAGER: Script for event is", script]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return script
