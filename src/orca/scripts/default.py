@@ -1462,6 +1462,11 @@ class Script(script.Script):
         mouseReviewItem = self.get_mouse_reviewer().get_current_item()
         selectedChildren = self.utilities.selectedChildren(event.source)
         focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus in selectedChildren:
+            msg = "DEFAULT: Ignoring event believed to be redundant to focus change"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return
+
         for child in selectedChildren:
             if AXObject.find_ancestor(focus, lambda x: x == child):
                 tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
