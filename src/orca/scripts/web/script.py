@@ -1492,8 +1492,6 @@ class Script(default.Script):
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        self.utilities.sanity_check_active_window()
-
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

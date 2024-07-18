@@ -38,7 +38,6 @@ from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
 from orca import script_utilities
-from orca import script_manager
 from orca import settings_manager
 from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
@@ -241,38 +240,6 @@ class Utilities(script_utilities.Utilities):
     def _getDocumentsEmbeddedBy(self, frame):
         return list(filter(self.isDocument, AXUtilities.get_embeds(frame)))
 
-    def sanity_check_active_window(self):
-        app = self._script.app
-        window = focus_manager.get_manager().get_active_window()
-        if AXObject.get_parent(window) == app:
-            return True
-
-        tokens = ["WARNING:", window, "is not child of", app]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        # TODO - JD: Is this exception handling still needed?
-        try:
-            script = script_manager.get_manager().get_script(app, window)
-            tokens = ["WEB: Script for active Window is", script]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        except Exception:
-            msg = "ERROR: Exception getting script for active window"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-        else:
-            if isinstance(script, type(self._script)):
-                attrs = script.get_transferable_attributes()
-                for attr, value in attrs.items():
-                    tokens = ["WEB: Setting", attr, "to", value]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    setattr(self._script, attr, value)
-
-        window = focus_manager.get_manager().find_active_window(app)
-        self._script.app = AXObject.get_application(window)
-        tokens = ["WEB: updating script's app to", self._script.app]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.get_manager().set_active_window(window)
-        return True
-
     def activeDocument(self, window=None):
         window = window or focus_manager.get_manager().get_active_window()
         documents = self._getDocumentsEmbeddedBy(window)
@@ -282,7 +249,7 @@ class Utilities(script_utilities.Utilities):
         return None
 
     def documentFrame(self, obj=None):
-        if not obj and self.sanity_check_active_window():
+        if not obj:
             document = self.activeDocument()
             if document:
                 return document
