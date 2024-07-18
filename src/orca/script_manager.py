@@ -333,33 +333,6 @@ class ScriptManager:
         braille.setupKeyRanges(new_script.braille_bindings.keys())
         speech.check_speech_setting()
 
-    def _get_script_for_app_replicant(self, app):
-        if not self._active:
-            return None
-
-        pid = AXObject.get_process_id(app)
-        if pid == -1:
-            return None
-
-        items = self.app_scripts.items()
-        for a, script in items:
-            if AXObject.get_process_id(a) != pid:
-                continue
-            if a != app and AXUtilities.is_application_in_desktop(a):
-                if script.app is None:
-                    script.app = a
-                tokens = ["SCRIPT MANAGER: Script for app replicant:", script, script.app]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-                sleep_mode_script = self._sleep_mode_scripts.get(a)
-                if sleep_mode_script:
-                    tokens = ["SCRIPT MANAGER: Replicant", a, "has sleep mode script. Using it."]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    return sleep_mode_script
-                return script
-
-        return None
-
     def reclaim_scripts(self):
         """Compares the list of known scripts to the list of known apps,
         deleting any scripts as necessary.
@@ -382,16 +355,6 @@ class ScriptManager:
 
             tokens = ["SCRIPT MANAGER: Old script for app found:", app_script, app_script.app]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-            new_script = self._get_script_for_app_replicant(app)
-            if new_script:
-                tokens = ["SCRIPT MANAGER: Transferring attributes:", new_script, new_script.app]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                attrs = app_script.get_transferable_attributes()
-                for attr, value in attrs.items():
-                    tokens = ["SCRIPT MANAGER: Setting", attr, "to", value]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                    setattr(new_script, attr, value)
 
             try:
                 self._sleep_mode_scripts.pop(app)
