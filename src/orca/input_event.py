@@ -86,8 +86,6 @@ class InputEvent:
 class KeyboardEvent(InputEvent):
     """Provides support for handling keyboard events."""
 
-    orcaModifierPressed = False
-
     TYPE_UNKNOWN          = "unknown"
     TYPE_PRINTABLE        = "printable"
     TYPE_MODIFIER         = "modifier"
@@ -271,6 +269,8 @@ class KeyboardEvent(InputEvent):
             if self.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
                 self._is_kp_with_numlock = True
 
+        modifier_manager = orca_modifier_manager.get_manager()
+
         self.key_type = None
         if self.is_navigation_key():
             self.key_type = KeyboardEvent.TYPE_NAVIGATION
@@ -279,7 +279,7 @@ class KeyboardEvent(InputEvent):
         elif self.is_modifier_key():
             self.key_type = KeyboardEvent.TYPE_MODIFIER
             if self.is_orca_modifier():
-                KeyboardEvent.orcaModifierPressed = pressed
+                modifier_manager.set_pressed_state(pressed)
         elif self.is_function_key():
             self.key_type = KeyboardEvent.TYPE_FUNCTION
         elif self.is_diacritical_key():
@@ -297,7 +297,7 @@ class KeyboardEvent(InputEvent):
         else:
             self.key_type = KeyboardEvent.TYPE_UNKNOWN
 
-        if KeyboardEvent.orcaModifierPressed:
+        if modifier_manager.get_pressed_state():
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
 
     # pylint:enable=too-many-arguments

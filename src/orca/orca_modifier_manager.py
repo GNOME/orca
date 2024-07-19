@@ -48,7 +48,7 @@ class OrcaModifierManager:
 
     def __init__(self):
         self._grabbed_modifiers = {}
-        self._toggled_modifier = None
+        self._is_pressed = False
 
         # Related to hacks which will soon die.
         self._original_xmodmap = ""
@@ -65,6 +65,18 @@ class OrcaModifierManager:
             return self.is_modifier_grabbed(modifier)
 
         return True
+
+    def get_pressed_state(self):
+        """Returns True if the Orca modifier has been pressed but not yet released."""
+
+        return self._is_pressed
+
+    def set_pressed_state(self, is_pressed):
+        """Updates the pressed state of the modifier based on event."""
+
+        msg = f"ORCA MODIFIER MANAGER: Setting pressed state to {is_pressed}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self._is_pressed = is_pressed
 
     def is_modifier_grabbed(self, modifier):
         """Returns True if there is an existing grab for modifier."""
@@ -88,6 +100,10 @@ class OrcaModifierManager:
             # Ideally that will stop being the case at some point.
             if modifier in ["Insert", "KP_Insert"]:
                 self.remove_modifier_grab(modifier)
+
+        msg = "ORCA MODIFIER MANAGER: Setting pressed state to False for grab removal"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        self._is_pressed = False
 
     def add_modifier_grab(self, modifier):
         """Adds a grab for modifier."""
