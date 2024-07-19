@@ -570,6 +570,10 @@ class EventManager:
             if not script:
                 return False, "There is no script for this event."
 
+        app = AXObject.get_application(event.source)
+        if app and not AXUtilities.is_application_in_desktop(app):
+            return False, "The application is unknown to AT-SPI2"
+
         if not script.is_activatable_event(event):
             return False, "The script says not to activate for this event."
 
