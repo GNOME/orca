@@ -2092,6 +2092,7 @@ class Script(default.Script):
             msg = "WEB: Event believed to be browser UI page switch"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             if event.detail1:
+                AXUtilities.clear_all_cache_now(reason=msg)
                 self.presentObject(event.source, priorObj=focus, interrupt=True)
             return True
 
