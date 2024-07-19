@@ -266,6 +266,12 @@ class NotificationPresenter:
             script.presentMessage(messages.NOTIFICATION_NO_MESSAGES)
             return True
 
+        if self._gui:
+            msg = "NOTIFICATION PRESENTER: Notification list already exists. Showing."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self._gui.show_gui()
+            return True
+
         msg = "NOTIFICATION PRESENTER: Showing notification list."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
@@ -274,11 +280,12 @@ class NotificationPresenter:
         title = guilabels.notifications_count(len(self._notifications))
         column_headers = [guilabels.NOTIFICATIONS_COLUMN_HEADER,
                           guilabels.NOTIFICATIONS_RECEIVED_TIME]
-        self._gui = NotificationListGUI(script, title, column_headers, rows)
+        self._gui = NotificationListGUI(
+            script, title, column_headers, rows, self.on_dialog_destroyed)
         self._gui.show_gui()
         return True
 
-    def on_dialog_destroyed(self):
+    def on_dialog_destroyed(self, _dialog):
         """Handler for the 'destroyed' signal of the dialog."""
 
         self._gui = None
@@ -286,10 +293,11 @@ class NotificationPresenter:
 class NotificationListGUI:
     """The dialog containing the notifications list."""
 
-    def __init__(self, script, title, column_headers, rows):
+    def __init__(self, script, title, column_headers, rows, destroyed_callback):
         self._script = script
         self._model = None
         self._gui = self._create_dialog(title, column_headers, rows)
+        self._gui.connect("destroy", destroyed_callback)
 
     def _create_dialog(self, title, column_headers, rows):
         dialog = Gtk.Dialog(title,
