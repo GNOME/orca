@@ -507,10 +507,10 @@ class SpeechServer(speechserver.SpeechServer):
 
             def _sentence_started(_speaker, _utterance, start, end, sayall_data):
                 debug.printMessage(debug.LEVEL_INFO, f"SENTENCE STARTED: {start}-{end}")
-                (callback, currentContext, _) = sayall_data
-                if currentContext == context:
+                (callback, currentUtterance, _) = sayall_data
+                if currentUtterance == utterance:
                     # TODO: map start/end to currentOffset/currentEndOffset
-                    callback(currentContext, speechserver.SayAllContext.PROGRESS)
+                    callback(context, speechserver.SayAllContext.PROGRESS)
 
             utterance = self._create_utterance(context.utterance, acss)
             if not utterance:
