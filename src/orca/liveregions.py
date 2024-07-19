@@ -127,7 +127,7 @@ class LiveRegionManager:
 
         if refresh:
             msg = "LIVE REGION MANAGER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -139,7 +139,7 @@ class LiveRegionManager:
 
         if refresh:
             msg = "LIVE REGION MANAGER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -224,9 +224,6 @@ class LiveRegionManager:
 
         msg = f"LIVE REGION MANAGER: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        tokens = [self._bindings]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def refresh_bindings_and_grabs(self, script, reason=""):
         """Refreshes live region bindings and grabs for script."""

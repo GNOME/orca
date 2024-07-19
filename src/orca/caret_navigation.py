@@ -64,7 +64,7 @@ class CaretNavigation:
 
         if refresh:
             msg = "CARET NAVIGATION: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -76,7 +76,7 @@ class CaretNavigation:
 
         if refresh:
             msg = "CARET NAVIGATION: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -271,9 +271,6 @@ class CaretNavigation:
 
         msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        tokens = [self._bindings]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""

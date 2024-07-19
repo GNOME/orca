@@ -65,7 +65,7 @@ class TableNavigator:
 
         if refresh:
             msg = "TABLE NAVIGATOR: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -77,7 +77,7 @@ class TableNavigator:
 
         if refresh:
             msg = "TABLE NAVIGATOR: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -247,9 +247,6 @@ class TableNavigator:
 
         msg = f"TABLE NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        tokens = [self._bindings]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def _setup_handlers(self):
         """Sets up the table-navigator input event handlers."""

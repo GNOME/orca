@@ -50,7 +50,7 @@ class Bookmarks:
 
         if refresh:
             msg = "BOOKMARKS: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -62,7 +62,7 @@ class Bookmarks:
 
         if refresh:
             msg = "BOOKMARKS: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers

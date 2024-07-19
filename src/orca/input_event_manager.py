@@ -89,8 +89,6 @@ class InputEventManager:
         for kd in binding.key_definitions():
             grab_ids.append(self._device.add_key_grab(kd, None))
 
-        tokens = ["INPUT EVENT MANAGER: Grab IDs for", binding, ":", grab_ids]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return grab_ids
 
     def remove_grabs_for_keybinding(self, binding):
@@ -109,9 +107,6 @@ class InputEventManager:
 
         for grab_id in grab_ids:
             self._device.remove_key_grab(grab_id)
-
-        tokens = ["INPUT EVENT MANAGER: Grab IDs removed for", binding, ":", grab_ids]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
     def map_keycode_to_modifier(self, keycode):
         """Maps keycode as a modifier, returns the newly-mapped modifier."""
