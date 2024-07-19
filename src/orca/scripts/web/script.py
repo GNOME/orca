@@ -1382,11 +1382,10 @@ class Script(default.Script):
 
         shouldPresent = True
         mgr = settings_manager.get_manager()
-        if mgr.get_setting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_VERBOSE \
-           or mgr.get_setting('onlySpeakDisplayedText'):
+        if mgr.get_setting('onlySpeakDisplayedText'):
+            shouldPresent = False
             msg = "WEB: Not presenting due to settings"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            shouldPresent = False
         elif not (AXUtilities.is_showing(event.source) or AXUtilities.is_visible(event.source)):
             shouldPresent = False
             msg = "WEB: Not presenting because source is not showing or visible"
@@ -1399,12 +1398,19 @@ class Script(default.Script):
             shouldPresent = False
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        elif mgr.get_setting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_VERBOSE:
+            shouldPresent = not event.detail1
+            tokens = ["WEB: Brief verbosity set. Should present", obj, f": {shouldPresent}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         if shouldPresent:
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
-                msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
+                if mgr.get_setting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_VERBOSE:
+                    msg = AXObject.get_name(event.source)
+                else:
+                    msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
                 self.presentMessage(msg, resetStyles=False)
             else:
                 self.presentMessage(messages.PAGE_LOADING_END)
