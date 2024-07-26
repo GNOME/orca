@@ -4462,7 +4462,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         if format_type.endswith("WhereAmI"):
-            result += self._generateRowHeader(obj, **args)
+            result = self._generateRowHeader(obj, **args)
             if result and not isinstance(result[-1], Pause):
                 result += self._generatePause(obj, **args)
             result = self._generateColumnHeader(obj, **args)
