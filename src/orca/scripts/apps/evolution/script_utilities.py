@@ -89,15 +89,3 @@ class Utilities(WebKitGTK.Utilities, gtk.Utilities):
             return False
 
         return AXObject.find_ancestor(document, AXUtilities.is_page_tab)
-
-    def realActiveDescendant(self, obj):
-        if self.isWebKitGTK(obj):
-            return super().realActiveDescendant(obj)
-
-        # TODO - JD: Is this still needed?
-        # This is some mystery child of the 'Messages' panel which fails to show
-        # up in the hierarchy or emit object:state-changed:focused events.
-        if AXUtilities.is_layered_pane(obj):
-            return AXObject.find_descendant(obj, AXUtilities.is_tree_table) or obj
-
-        return gtk.Utilities.realActiveDescendant(self, obj)
