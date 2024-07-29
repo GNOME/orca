@@ -1017,11 +1017,6 @@ class Script(script.Script):
             self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        if AXText.is_whitespace_or_empty(obj):
-            utterances = self.speech_generator.generateSpeech(obj)
-            speech.speak(utterances)
-            return True
-
         speech.say_all(self.textLines(obj, offset), self.__sayAllProgressCallback)
         return True
 
