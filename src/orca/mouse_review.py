@@ -327,9 +327,10 @@ class _ItemContext:
                 return True
             if not self._script.utilities.isEditableTextArea(self._obj):
                 return True
-            if AXUtilities.is_table_cell(self._obj) \
-               and self._string.get_string() == self._script.utilities.displayedText(self._obj):
-                return True
+            if AXUtilities.is_table_cell(self._obj):
+                text = AXText.get_all_text(self._obj) or AXObject.get_name(self._obj)
+                if self._string.get_string() == text:
+                    return True
 
         if self._string != prior._string and self._string.present():
             return True

@@ -2260,12 +2260,12 @@ class Utilities(script_utilities.Utilities):
             if rv is not None:
                 return rv
 
-            displayedText = string or AXObject.get_name(obj)
+            text = string or AXObject.get_name(obj)
             rv = True
-            if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not displayedText) \
+            if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not text) \
                or (self.isContentEditableWithEmbeddedObjects(obj) and not string.strip()) \
                or self.isEmptyAnchor(obj) \
-               or (AXComponent.has_no_size(obj) and not displayedText) \
+               or (AXComponent.has_no_size(obj) and not text) \
                or self.isHidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
@@ -3343,7 +3343,7 @@ class Utilities(script_utilities.Utilities):
 
         labels = AXUtilities.get_is_labelled_by(obj)
         strings = [AXObject.get_name(label)
-                   or self.displayedText(label) for label in labels if label is not None]
+                   or AXText.get_all_text(label) for label in labels if label is not None]
         rv = " ".join(strings)
 
         self._displayedLabelText[hash(obj)] = rv

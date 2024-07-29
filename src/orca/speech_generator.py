@@ -878,7 +878,7 @@ class SpeechGenerator(generator.Generator):
             #
             result.extend(self._generateLabel(obj))
             result.extend(self._generateRoleName(obj))
-            result.append(self._script.utilities.displayedText(obj))
+            result.append(AXText.get_all_text(obj))
         else:
             link_uri_info = urllib.parse.urlparse(link_uri)
             if link_uri_info[0] in ["ftp", "ftps", "file"]:
@@ -888,7 +888,7 @@ class SpeechGenerator(generator.Generator):
                                  "file" : fileName[-1]})
             else:
                 linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
-                text = self._script.utilities.displayedText(obj)
+                text = AXText.get_all_text(obj)
                 isVisited = AXUtilities.is_visited(obj)
                 if not isVisited:
                     linkOutput = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
@@ -2581,7 +2581,7 @@ class SpeechGenerator(generator.Generator):
             result = [messages.MATH_SQUARE_ROOT_OF]
         else:
             index = self._script.utilities.getMathRootIndex(obj)
-            string = self._script.utilities.displayedText(index)
+            string = AXText.get_all_text(index)
             if string == "2":
                 result = [messages.MATH_SQUARE_ROOT_OF]
             elif string == "3":

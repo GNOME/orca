@@ -29,6 +29,7 @@ from orca import focus_manager
 from orca import input_event_manager
 from orca.scripts.toolkits import gtk
 from orca.ax_object import AXObject
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from .spellcheck import SpellCheck
 
@@ -113,7 +114,7 @@ class Script(gtk.Script):
             return
 
         entry = self.spellcheck.getChangeToEntry()
-        if name != self.utilities.displayedText(entry):
+        if name != AXText.get_all_text(entry):
             return
 
         # If we're here, the locusOfFocus was in the selection list when

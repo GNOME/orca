@@ -131,12 +131,7 @@ class Generator:
         Otherwise, the accessible name of the object will be used.  If
         there is no accessible name, then the description of the
         object will be used.  This method will return an empty array
-        if nothing can be found.  [[[WDW - I wonder if we should just
-        have _generateName, _generateDescription,
-        _generateDisplayedText, etc., that don't do any fallback.
-        Then, we can allow the formatting to do the fallback (e.g.,
-        'displayedText or name or description'). [[[JD to WDW - I
-        needed a _generateDescription for whereAmI. :-) See below.
+        if nothing can be found.
         """
         result = []
         self._script.point_of_reference['usedDescriptionForName'] = False
@@ -648,9 +643,9 @@ class Generator:
 
         tokens = []
         for header in headers:
-            token = self._script.utilities.displayedText(header)
-            if token and token.strip():
-                tokens.append(token.strip())
+            token = AXObject.get_name(header).strip() or AXText.get_all_text(header).strip()
+            if token:
+                tokens.append(token)
 
         if not tokens:
             return result
@@ -681,9 +676,9 @@ class Generator:
 
         tokens = []
         for header in headers:
-            token = self._script.utilities.displayedText(header)
-            if token and token.strip():
-                tokens.append(token.strip())
+            token = AXObject.get_name(header).strip() or AXText.get_all_text(header).strip()
+            if token:
+                tokens.append(token)
 
         if not tokens:
             return result
@@ -720,11 +715,11 @@ class Generator:
 
         result = []
         descendant = self._script.utilities.realActiveDescendant(obj)
-        label = self._script.utilities.displayedText(descendant)
+        label = AXObject.get_name(descendant) or AXText.get_all_text(descendant)
         if not label and self._script.utilities.hasMeaningfulToggleAction(obj):
-              headers = AXTable.get_column_headers(obj)
-              if (headers):
-                result.append(AXObject.get_name(headers[0]))
+            headers = AXTable.get_column_headers(obj)
+            if headers:
+                result.append(AXObject.get_name(headers[0]) or AXText.get_all_text(headers[0]))
         return result
 
     def _generateRealTableCell(self, obj, **args):
@@ -866,11 +861,11 @@ class Generator:
         if result:
             return result
 
-        displayedText = self._script.utilities.displayedText(obj)
-        if not displayedText:
+        text = AXText.get_all_text(obj)
+        if not text:
             return []
 
-        return [displayedText]
+        return [text]
 
     #####################################################################
     #                                                                   #
@@ -968,7 +963,7 @@ class Generator:
         if labels:
             radioGroupLabel = labels[0]
         if radioGroupLabel:
-            return [self._script.utilities.displayedText(radioGroupLabel)]
+            return [AXObject.get_name(radioGroupLabel)]
 
         parent = AXObject.get_parent_checked(obj)
         while parent:
@@ -991,8 +986,7 @@ class Generator:
         if not (AXUtilities.is_table_cell(rad) and AXObject.get_child_count(rad)):
             return self._generateDisplayedText(rad, **args)
 
-        content = set([self._script.utilities.displayedText(x).strip() \
-            for x in AXObject.iter_children(rad)])
+        content = set([AXObject.get_name(x) for x in AXObject.iter_children(rad)])
         rv = " ".join(filter(lambda x: x, content))
         if not rv:
             return self._generateDisplayedText(rad, **args)

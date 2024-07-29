@@ -28,6 +28,7 @@ __license__   = "LGPL"
 from orca import messages
 from orca.scripts import default
 from orca import settings
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 class Script(default.Script):
@@ -35,8 +36,7 @@ class Script(default.Script):
     def on_window_created(self, event):
         """Callback for window:create accessibility events."""
 
-        allLabels = AXUtilities.find_all_labels(event.source)
-        texts = [self.utilities.displayedText(acc) for acc in allLabels]
+        texts = [AXText.get_all_text(acc) for acc in AXUtilities.find_all_labels(event.source)]
         text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
         voice = self.speech_generator.voice(obj=event.source, string=text)

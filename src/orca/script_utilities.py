@@ -202,14 +202,14 @@ class Utilities:
         """
 
         labels = AXUtilities.get_is_labelled_by(obj)
-        return " ".join(map(self.displayedText, labels))
+        return " ".join(AXText.get_all_text(label) or AXObject.get_name(label) for label in labels)
 
     def preferDescriptionOverName(self, obj):
         return False
 
     def detailsContentForObject(self, obj):
         details = self.detailsForObject(obj)
-        return list(map(self.displayedText, details))
+        return list(map(AXText.get_all_text, details))
 
     def detailsForObject(self, obj, textOnly=True):
         """Return a list of objects containing details for obj."""
@@ -233,42 +233,7 @@ class Utilities:
         """Returns the text being displayed for the object describing obj."""
 
         descriptions = AXUtilities.get_is_described_by(obj)
-        return " ".join(map(self.displayedText, descriptions))
-
-    def displayedText(self, obj):
-        """Returns the text being displayed for an object.
-
-        Arguments:
-        - obj: the object
-
-        Returns the text being displayed for an object or None if there isn't
-        any text being shown.
-        """
-
-        # TODO - JD: It's finally time to consider killing this for real.
-
-        name = AXObject.get_name(obj)
-        role = AXObject.get_role(obj)
-        if role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LABEL] and name:
-            return name
-
-        displayedText = AXText.get_all_text(obj)
-        if self.EMBEDDED_OBJECT_CHARACTER in displayedText:
-            displayedText = None
-
-        if not displayedText and role not in [Atspi.Role.COMBO_BOX, Atspi.Role.SPIN_BUTTON]:
-            # TODO - JD: This should probably get nuked. But all sorts of
-            # existing code might be relying upon this bogus hack. So it
-            # will need thorough testing when removed.
-            displayedText = name
-
-        if not displayedText and role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.LIST_ITEM]:
-            labels = self.unrelatedLabels(obj, minimumWords=1)
-            if not labels:
-                labels = self.unrelatedLabels(obj, onlyShowing=False, minimumWords=1)
-            displayedText = " ".join(map(self.displayedText, labels))
-
-        return displayedText
+        return " ".join(AXText.get_all_text(d) or AXObject.get_name(d) for d in descriptions)
 
     def documentFrame(self, obj=None):
         """Returns the document frame which is displaying the content.
@@ -735,7 +700,7 @@ class Utilities:
         if text and text not in tokens:
             tokens.append(text)
         else:
-            labels = " ".join(map(self.displayedText, self.unrelatedLabels(obj, False, 1)))
+            labels = " ".join(map(AXText.get_all_text, self.unrelatedLabels(obj, False, 1)))
             if labels and labels not in tokens:
                 tokens.append(labels)
 
@@ -829,7 +794,7 @@ class Utilities:
         elif self.isHidden(obj):
             layoutOnly = True
         else:
-            if not (self.displayedText(obj) or self.displayedLabel(obj)):
+            if not (AXObject.get_name(obj) or self.displayedLabel(obj) or AXText.get_all_text(obj)):
                 layoutOnly = True
 
         if layoutOnly:
@@ -1202,7 +1167,8 @@ class Utilities:
             return obj
 
         def pred(x):
-            return x and not self.isStaticTextLeaf(x) and self.displayedText(x).strip()
+            return x and not self.isStaticTextLeaf(x) \
+                and (AXObject.get_name(x) or AXText.get_all_text(x))
 
         child = AXObject.find_descendant(obj, pred)
         if child is not None:
@@ -1406,7 +1372,7 @@ class Utilities:
         # Eliminate things suspected to be labels for widgets
         labels_filtered = []
         for label in labels:
-            name = AXObject.get_name(label) or self.displayedText(label)
+            name = AXObject.get_name(label) or AXText.get_all_text(label)
             if name and name in [rootName, AXObject.get_name(AXObject.get_parent(label))]:
                 continue
             if len(name.split()) < minimumWords:
@@ -2301,18 +2267,18 @@ class Utilities:
 
     def getComboBoxValue(self, obj):
         if not AXObject.get_child_count(obj):
-            return self.displayedText(obj)
+            return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
         entry = self.getEntryForEditableComboBox(obj)
         if entry:
-            return self.displayedText(entry)
+            return AXText.get_all_text(entry)
 
         selected = self._script.utilities.selectedChildren(obj)
         selected = selected or self._script.utilities.selectedChildren(AXObject.get_child(obj, 0))
         if len(selected) == 1:
-            return selected[0].name or self.displayedText(selected[0])
+            return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
 
-        return self.displayedText(obj)
+        return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
     def isNonModalPopOver(self, obj):
         if not AXUtilities.get_is_popup_for(obj):

@@ -1056,8 +1056,8 @@ class StructuralNavigation:
     def _getText(self, obj):
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
-        text = self._script.utilities.displayedText(obj)
-        if not text:
+        text = AXText.get_all_text(obj)
+        if "\ufffc" in text:
             text = self._script.utilities.expandEOCs(obj)
         if not text:
             item = self._getSelectedItem(obj)
@@ -1935,7 +1935,7 @@ class StructuralNavigation:
         if obj is not None:
             caption = AXTable.get_caption(obj)
             if caption:
-                self._script.presentMessage(self._script.utilities.displayedText(caption))
+                self._script.presentMessage(AXText.get_all_text(caption))
             self._script.presentMessage(AXTable.get_table_description_for_presentation(obj))
             cell = AXTable.get_cell_at(obj, 0, 0)
             if not cell:
@@ -1962,7 +1962,7 @@ class StructuralNavigation:
         def rowData(obj):
             caption = AXTable.get_caption(obj)
             if caption:
-                name = self._script.utilities.displayedText(caption)
+                name = AXText.get_all_text(caption)
             else:
                 name = AXObject.get_name(obj)
             return [name, AXTable.get_table_description_for_presentation(obj)]

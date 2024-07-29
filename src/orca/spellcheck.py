@@ -105,13 +105,13 @@ class SpellCheck:
         if not self._errorWidget:
             return ""
 
-        return self._script.utilities.displayedText(self._errorWidget)
+        return AXText.get_all_text(self._errorWidget) or AXObject.get_name(self._errorWidget)
 
     def getCompletionMessage(self):
         if not self._errorWidget:
             return ""
 
-        return self._script.utilities.displayedText(self._errorWidget)
+        return AXText.get_all_text(self._errorWidget) or AXObject.get_name(self._errorWidget)
 
     def getChangeToEntry(self):
         return self._changeToEntry

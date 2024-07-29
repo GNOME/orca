@@ -285,7 +285,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = []
         for o in objs:
-            string = self._script.utilities.displayedText(o) or self.getLocalizedRoleName(o)
+            string = self._script.utilities.expandEOCs(o) or AXObject.get_name(o) \
+                or self.getLocalizedRoleName(o)
             words = string.split()
             if len(words) > 5:
                 words = words[0:5] + ['...']

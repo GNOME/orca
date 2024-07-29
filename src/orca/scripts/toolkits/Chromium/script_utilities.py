@@ -37,6 +37,7 @@ from orca import focus_manager
 from orca import input_event_manager
 from orca.scripts import web
 from orca.ax_object import AXObject
+from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -114,7 +115,7 @@ class Utilities(web.Utilities):
             elif AXObject.get_child_count(parent) > 1:
                 rv = AXObject.get_child(parent, 0) == obj
             else:
-                rv = AXObject.get_name(obj) != self.displayedText(parent)
+                rv = AXObject.get_name(obj) != AXText.get_all_text(parent)
 
         self._isListItemMarker[hash(obj)] = rv
         return rv

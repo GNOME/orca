@@ -847,31 +847,14 @@ class Chat:
         # should override this method. :-)
         #
         def pred(x):
-            return AXUtilities.is_page_tab(x) or AXUtilities.is_frame(x)
+            if not (AXUtilities.is_page_tab(x) or AXUtilities.is_frame(x)):
+                return False
+            return bool(AXObject.get_name(x))
 
         ancestor = AXObject.find_ancestor(obj, pred)
-        name = ""
-        try:
-            text = self._script.utilities.displayedText(ancestor)
-            if text.lower().strip() != self._script.name.lower().strip():
-                name = text
-        except Exception:
-            pass
-
-        # Some applications don't trash their page tab list when there is
-        # only one active chat, but instead they remove the text or hide
-        # the item. Therefore, we'll give it one more shot.
-        #
-        if not name:
-            ancestor = AXObject.find_ancestor(obj, AXUtilities.is_frame)
-            try:
-                text = self._script.utilities.displayedText(ancestor)
-                if text.lower().strip() != self._script.name.lower().strip():
-                    name = text
-            except Exception:
-                pass
-
-        return name
+        if ancestor:
+            return AXObject.get_name(ancestor)
+        return ""
 
     def isAutoCompletedTextEvent(self, event):
         """Returns True if event is associated with text being autocompleted.

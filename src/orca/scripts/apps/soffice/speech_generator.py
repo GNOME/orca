@@ -39,26 +39,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _generateName(self, obj, **args):
-        """Returns an array of strings for use by speech and braille that
-        represent the name of the object.  If the object is directly
-        displaying any text, that text will be treated as the name.
-        Otherwise, the accessible name of the object will be used.  If
-        there is no accessible name, then the description of the
-        object will be used.  This method will return an empty array
-        if nothing can be found.
-        """
-
-        # TODO - JD: This should be the behavior by default. But the default
-        # generators call displayedText(). Once that is corrected, this method
-        # can be removed.
-        if AXObject.get_name(obj):
-            result = [AXObject.get_name(obj)]
-            result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
-            return result
-
-        return super()._generateName(obj, **args)
-
     def _generateAnyTextSelection(self, obj, **args):
         comboBoxEntry = self._script.utilities.getEntryForEditableComboBox(obj)
         if comboBoxEntry:
