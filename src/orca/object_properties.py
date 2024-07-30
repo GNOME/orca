@@ -468,12 +468,6 @@ ROLE_LANDMARK_SEARCH = C_("role", "search")
 # already read.
 ROLE_VISITED_LINK = _("visited link")
 
-# Translators: This string should be treated as a role describing an object.
-# Examples of roles include "checkbox", "radio button", "paragraph", and "link."
-# A menu button is button widget that causes a menu to appear when the user
-# activates the button.
-ROLE_MENU_BUTTON = _("menu button")
-
 # Translators: This string refers to a row or column whose sort-order has been set
 # to ascending.
 SORT_ORDER_ASCENDING = _("sorted ascending")

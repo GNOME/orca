@@ -1164,9 +1164,6 @@ class Generator:
         if AXUtilities.is_figure(obj):
             return object_properties.ROLE_FIGURE
 
-        if self._script.utilities.isMenuButton(obj):
-            return object_properties.ROLE_MENU_BUTTON
-
         if AXUtilities.is_switch(obj):
             return object_properties.ROLE_SWITCH
 

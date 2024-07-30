@@ -2168,17 +2168,6 @@ class Utilities:
             return AXTable.get_selected_row_count(obj)
         return AXSelection.get_selected_child_count(obj)
 
-    def popupMenuFor(self, obj):
-        if obj is None:
-            return None
-
-        menus = [child for child in AXObject.iter_children(obj, AXUtilities.is_menu)]
-        for menu in menus:
-            if AXUtilities.is_enabled(menu):
-                return menu
-
-        return None
-
     def isButtonWithPopup(self, obj):
         return AXUtilities.is_button(obj) and AXUtilities.has_popup(obj)
 
@@ -2198,9 +2187,6 @@ class Utilities:
 
     def isMenuWithNoSelectedChild(self, obj):
         return AXUtilities.is_menu(obj) and not self.selectedChildCount(obj)
-
-    def isMenuButton(self, obj):
-        return AXUtilities.is_button(obj) and self.popupMenuFor(obj) is not None
 
     def inMenu(self, obj=None):
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
