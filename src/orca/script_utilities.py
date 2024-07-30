@@ -111,10 +111,7 @@ class Utilities:
         # First see if this accessible implements RELATION_NODE_PARENT_OF.
         # If it does, the full target list are the nodes. If it doesn't
         # we'll do an old-school, row-by-row search for child nodes.
-        def pred(x):
-            return AXObject.get_index_in_parent(x) >= 0
-
-        nodes = list(filter(pred, AXUtilities.get_is_node_parent_of(obj)))
+        nodes = AXUtilities.get_is_node_parent_of(obj)
         tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-parent-of"]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if nodes:
