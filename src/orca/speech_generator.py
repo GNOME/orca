@@ -25,7 +25,6 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import functools
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -1599,7 +1598,7 @@ class SpeechGenerator(generator.Generator):
         return []
 
     def _generateTermValueCount(self, obj, **args):
-        count = self._script.utilities.getValueCountForTerm(obj)
+        count = len(self._script.utilities.valuesForTerm(obj))
         # If we have a simple 1-term, 1-value situation, this announcment is chatty.
         if count in (-1, 1):
             return []
@@ -2201,36 +2200,6 @@ class SpeechGenerator(generator.Generator):
             obj = parent
         return self._generateRoleName(AXObject.get_parent(obj))
 
-    def _generatePositionInGroup(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the relative position of an
-        object in a group.
-        """
-        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
-            return []
-
-        # TODO - JD: We need other ways to determine group membership. Not all
-        # implementations expose the member-of relation. Gtk3 does. Others are TBD.
-        members = list(filter(AXUtilities.is_showing, AXUtilities.get_is_member_of(obj)))
-        if obj not in members:
-            return []
-
-        result = []
-
-        # TODO - JD: We used to adjust the position on the basis of this particular
-        # relation "tending to be given in the reverse order". But there's no reason
-        # that should be the case. And doesn't always appear to be the case in Gtk3.
-        # Until we sort out the position in group/list mess, try a more reliable
-        # "adjustment."
-        def cmp(x, y):
-            return AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
-
-        members = sorted(members, key=functools.cmp_to_key(cmp))
-        result.append(object_properties.GROUP_INDEX_SPEECH % {"index": members.index(obj) + 1,
-                                                              "total": len(members)})
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
-        return result
-
     def _generatePositionInList(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the relative position of an
@@ -2242,14 +2211,9 @@ class SpeechGenerator(generator.Generator):
                    or args.get('forceList', False)):
             return []
 
-        if self._script.utilities.isTopLevelMenu(obj):
-            return []
-
-        if self._script.utilities.isEditableComboBox(obj):
-            return []
-
         result = []
-        position, total = self._script.utilities.getPositionAndSetSize(obj, **args)
+        position = AXUtilities.get_position_in_set(obj)
+        total = AXUtilities.get_set_size(obj)
         if position < 0:
             return []
 
@@ -4130,7 +4094,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generateAvailability(obj, **args)
         result += self._generateMnemonic(obj, **args)
         result += self._generatePause(obj, **args)
-        result += self._generatePositionInGroup(obj, **args)
+        result += self._generatePositionInList(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 

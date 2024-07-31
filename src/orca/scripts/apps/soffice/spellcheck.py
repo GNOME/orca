@@ -118,7 +118,8 @@ class SpellCheck(spellcheck.SpellCheck):
         return rv
 
     def _getSuggestionIndexAndPosition(self, suggestion):
-        index, total = self._script.utilities.getPositionAndSetSize(suggestion)
+        index = AXUtilities.get_position_in_set(suggestion)
+        total = AXUtilities.get_set_size(suggestion)
         return index + 1, total
 
     def getMisspelledWord(self):

@@ -224,7 +224,7 @@ def _asString(obj):
     if isinstance(obj, Atspi.Rect):
         return f"(x:{obj.x}, y:{obj.y}, width:{obj.width}, height:{obj.height})"
 
-    if isinstance(obj, list):
+    if isinstance(obj, (list, set)):
         return f"[{', '.join(map(_asString, obj))}]"
 
     if isinstance(obj, dict):

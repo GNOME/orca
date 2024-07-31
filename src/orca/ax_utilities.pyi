@@ -70,6 +70,9 @@ class AXUtilities:
     def is_redundant_object(obj1, obj2): ...
 
     @staticmethod
+    def get_set_members(obj): ...
+
+    @staticmethod
     def get_set_size(obj): ...
 
     @staticmethod

@@ -350,28 +350,3 @@ class Utilities(web.Utilities):
             return []
 
         return super().findAllDescendants(root, includeIf, excludeIf)
-
-    def _shouldCalculatePositionAndSetSize(self, obj):
-        # Chromium calculates posinset and setsize for description lists based on the
-        # number of terms present. If we want to present the number of values associated
-        # with a given term, we need to work those values out ourselves.
-        if AXUtilities.is_description_value(obj):
-            return True
-
-        if self.inDocumentContent(obj):
-            return super()._shouldCalculatePositionAndSetSize(obj)
-
-        # Chromium has accessible menu items which are not focusable and therefore do not
-        # have a posinset and setsize calculated. But they may claim to be the selected
-        # item when an accessible child is selected (e.g. "zoom" when "+" or "-" gains focus.
-        # Normally we calculate posinset and setsize when the application hasn't provided it.
-        # We don't want to do that in the case of menu items like "zoom" because our result
-        # will not jibe with the values of its siblings. Thus if a sibling has a value,
-        # assume that the missing attributes are missing on purpose.
-        for sibling in AXObject.iter_children(AXObject.get_parent(obj)):
-            if isinstance(AXUtilities.get_position_in_set(sibling), int):
-                tokens = ["CHROMIUM:", obj, "'s sibling", sibling, "has posinset."]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return False
-
-        return True

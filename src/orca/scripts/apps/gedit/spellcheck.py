@@ -76,6 +76,7 @@ class SpellCheck(spellcheck.SpellCheck):
         return AXObject.find_descendant(root, isTable)
 
     def _getSuggestionIndexAndPosition(self, suggestion):
-        index, total = self._script.utilities.getPositionAndSetSize(suggestion)
+        index = AXUtilities.get_position_in_set(suggestion)
+        total = AXUtilities.get_set_size(suggestion)
         total -= 1
         return index, total

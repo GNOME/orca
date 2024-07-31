@@ -2575,97 +2575,6 @@ class Utilities:
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         return replicant
 
-    def getFunctionalChildCount(self, obj):
-        targets = AXUtilities.get_is_node_parent_of(obj)
-        return len(targets) or AXObject.get_child_count(obj)
-
-    def getFunctionalChildren(self, obj, sibling=None):
-        result = AXUtilities.get_is_node_parent_of(obj)
-        if result:
-            return result
-        if AXUtilities.is_description_term(sibling):
-            return self.descriptionListTerms(obj)
-        if AXUtilities.is_description_value(sibling):
-            return self.valuesForTerm(self.termForValue(sibling))
-        return [x for x in AXObject.iter_children(obj)]
-
-    def getFunctionalParent(self, obj):
-        targets = AXUtilities.get_is_node_child_of(obj)
-        if targets:
-            return targets[0]
-        return AXObject.get_parent(obj)
-
-    def _shouldCalculatePositionAndSetSize(self, obj):
-        return True
-
-    def getPositionAndSetSize(self, obj, **args):
-        if obj is None:
-            return -1, -1
-
-        posinset = AXUtilities.get_position_in_set(obj)
-        setsize = AXUtilities.get_set_size(obj)
-        if posinset is not None and setsize is not None:
-            tokens = ["SCRIPT UTILITIES:", obj, f"posinset:{posinset} setsize:{setsize}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return posinset, setsize
-
-        if not self._shouldCalculatePositionAndSetSize(obj):
-            return -1, -1
-
-        if AXUtilities.is_table_cell(obj) and args.get("readingRow"):
-            row = AXTable.get_cell_coordinates(obj)[0]
-            rowcount = AXTable.get_row_count(AXTable.get_table(obj))
-            return row, rowcount
-
-        if AXUtilities.is_combo_box(obj):
-            selected = self.selectedChildren(obj)
-            if selected:
-                obj = selected[0]
-            else:
-                def isMenu(x):
-                    return AXUtilities.is_menu(x) or AXUtilities.is_list_box(x)
-
-                selected = self.selectedChildren(AXObject.find_descendant(obj, isMenu))
-                if selected:
-                    obj = selected[0]
-                else:
-                    return -1, -1
-
-        parent = self.getFunctionalParent(obj)
-        childCount = self.getFunctionalChildCount(parent)
-        if childCount > 100 and parent == AXObject.get_parent(obj):
-            return AXObject.get_index_in_parent(obj), childCount
-
-        siblings = self.getFunctionalChildren(parent, obj)
-        if len(siblings) < 100 and not AXObject.find_ancestor(obj, AXUtilities.is_combo_box):
-            layoutRoles = [Atspi.Role.SEPARATOR, Atspi.Role.TEAROFF_MENU_ITEM]
-
-            def isNotLayoutOnly(x):
-                return AXObject.is_valid(x) and AXObject.get_role(x) not in layoutRoles
-
-            siblings = list(filter(isNotLayoutOnly, siblings))
-
-        if not (siblings and obj in siblings):
-            return -1, -1
-
-        if self.isFocusableLabel(obj):
-            siblings = list(filter(self.isFocusableLabel, siblings))
-            if len(siblings) == 1:
-                return -1, -1
-
-        position = siblings.index(obj)
-        setSize = len(siblings)
-        return position, setSize
-
-    def termForValue(self, obj):
-        if not AXUtilities.is_description_value(obj):
-            return None
-
-        while obj and not AXUtilities.is_description_term(obj):
-            obj = AXObject.get_previous_sibling(obj)
-
-        return obj
-
     def valuesForTerm(self, obj):
         if not AXUtilities.is_description_term(obj):
             return []
@@ -2677,9 +2586,6 @@ class Utilities:
             obj = AXObject.get_next_sibling(obj)
 
         return values
-
-    def getValueCountForTerm(self, obj):
-        return len(self.valuesForTerm(obj))
 
     def getRoleDescription(self, obj, isBraille=False):
         return ""

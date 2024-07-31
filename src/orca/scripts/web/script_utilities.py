@@ -100,8 +100,6 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
-        self._descriptionListTerms = {}
-        self._valuesForTerm = {}
         self._displayedLabelText = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
@@ -189,8 +187,6 @@ class Utilities(script_utilities.Utilities):
         self._isNonNavigableEmbeddedDocument = {}
         self._isParentOfNullChild = {}
         self._inferredLabels = {}
-        self._descriptionListTerms = {}
-        self._valuesForTerm = {}
         self._displayedLabelText = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
@@ -2856,36 +2852,6 @@ class Utilities(script_utilities.Utilities):
 
         rv = AXObject.find_ancestor(obj, AXUtilities.is_code) is not None
         self._isCodeDescendant[hash(obj)] = rv
-        return rv
-
-    def descriptionListTerms(self, obj):
-        if not obj:
-            return []
-
-        rv = self._descriptionListTerms.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().descriptionListTerms(obj)
-        if not self.inDocumentContent(obj):
-            return rv
-
-        self._descriptionListTerms[hash(obj)] = rv
-        return rv
-
-    def valuesForTerm(self, obj):
-        if not obj:
-            return []
-
-        rv = self._valuesForTerm.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().valuesForTerm(obj)
-        if not self.inDocumentContent(obj):
-            return rv
-
-        self._valuesForTerm[hash(obj)] = rv
         return rv
 
     def getComboBoxValue(self, obj):

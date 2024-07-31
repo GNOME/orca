@@ -520,8 +520,9 @@ class SoundGenerator(generator.Generator):
             return []
 
         # TODO: Implement the result.
-        # position, setSize = self._script.utilities.getPositionAndSetSize(obj)
-        # percent = int((position / setSize) * 100)
+        # index = AXUtilities.get_position_in_set(obj)
+        # total = AXUtilities.get_set_size(obj)
+        # percent = int((index / total) * 100)
 
         return []
 

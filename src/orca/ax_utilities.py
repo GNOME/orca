@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=broad-exception-caught
+# pylint: disable=too-many-return-statements
 # pylint: disable=wrong-import-position
 
 """
@@ -37,7 +38,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
+import functools
 import inspect
+import threading
+import time
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -45,6 +49,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_relation import AXUtilitiesRelation
@@ -57,10 +62,42 @@ class AXUtilities:
 
     COMPARE_COLLECTION_PERFORMANCE = False
 
+    # Things we cache.
+    SET_MEMBERS: dict = {}
+
+    _lock = threading.Lock()
+
+    @staticmethod
+    def start_cache_clearing_thread():
+        """Starts thread to periodically clear cached details."""
+
+        thread = threading.Thread(target=AXUtilities._clear_stored_data)
+        thread.daemon = True
+        thread.start()
+
+    @staticmethod
+    def _clear_stored_data():
+        """Clears any data we have cached for objects"""
+
+        while True:
+            time.sleep(60)
+            AXUtilities._clear_all_dictionaries()
+
+    @staticmethod
+    def _clear_all_dictionaries(reason=""):
+        msg = "AXUtilities: Clearing cache."
+        if reason:
+            msg += f" Reason: {reason}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
+        with AXUtilities._lock:
+            AXUtilities.SET_MEMBERS.clear()
+
     @staticmethod
     def clear_all_cache_now(obj=None, reason=""):
         """Clears all cached information immediately."""
 
+        AXUtilities._clear_all_dictionaries(reason)
         AXObject.clear_cache_now(reason)
         AXUtilitiesRelation.clear_cache_now(reason)
         AXUtilitiesState.clear_cache_now(reason)
@@ -268,6 +305,99 @@ class AXUtilities:
         return True
 
     @staticmethod
+    def _sort_by_child_index(object_list):
+        """Returns the list of objects sorted according to child index."""
+
+        def cmp(x, y):
+            return AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
+
+        result = sorted(object_list, key=functools.cmp_to_key(cmp))
+        if object_list != result:
+            tokens = ["AXUtilities: Original list", object_list]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            tokens = ["AXUtilities: Sorted list", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        return result
+
+    @staticmethod
+    def _get_set_members(obj, container):
+        """Returns the members of the container of obj"""
+
+        if container is None:
+            tokens = ["AXUtilities: Members of", obj, "not obtainable: container is None"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
+        result = AXUtilitiesRelation.get_is_member_of(obj)
+        if result:
+            tokens = ["AXUtilities: Members of", obj, "in", container, "via member-of", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return AXUtilities._sort_by_child_index(result)
+
+        result = AXUtilitiesRelation.get_is_node_parent_of(obj)
+        if result:
+            tokens = ["AXUtilities: Members of", obj, "in", container, "via node-parent-of", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return AXUtilities._sort_by_child_index(result)
+
+        if AXUtilitiesRole.is_description_value(obj):
+            result = []
+            previous_sibling = AXObject.get_previous_sibling(obj)
+            while previous_sibling and AXUtilitiesRole.is_description_value(previous_sibling):
+                result.append(previous_sibling)
+                previous_sibling = AXObject.get_previous_sibling(previous_sibling)
+            result.append(obj)
+            next_sibling = AXObject.get_next_sibling(obj)
+            while next_sibling and AXUtilitiesRole.is_description_value(next_sibling):
+                result.append(next_sibling)
+                next_sibling = AXObject.get_next_sibling(next_sibling)
+            tokens = ["AXUtilities: Members of", obj, "in", container, "based on siblings", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+
+        if AXUtilitiesRole.is_menu_related(obj):
+            result = list(AXObject.iter_children(container, AXUtilitiesRole.is_menu_related))
+            tokens = ["AXUtilities: Members of", obj, "in", container, "based on menu role", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+
+        role = AXObject.get_role(obj)
+        result = list(AXObject.iter_children(container, lambda x: AXObject.get_role(x) == role))
+        tokens = ["AXUtilities: Members of", obj, "in", container, "based on role", result]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
+    def get_set_members(obj):
+        """Returns the members of the container of obj."""
+
+        result = []
+        container = AXObject.get_parent_checked(obj)
+        if hash(container) in AXUtilities.SET_MEMBERS:
+            result = AXUtilities.SET_MEMBERS.get(hash(container))
+
+        if obj not in result:
+            if result:
+                tokens = ["AXUtilities:", obj, "not in cached members of", container, ":", result]
+                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+            result = AXUtilities._get_set_members(obj, container)
+            AXUtilities.SET_MEMBERS[hash(container)] = result
+
+        # In a collapsed combobox, one can arrow to change the selection without showing the items.
+        must_be_showing = not AXObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box)
+        if not must_be_showing:
+            return result
+
+        filtered = list(filter(AXUtilitiesState.is_showing, result))
+        if result != filtered:
+            tokens = ["AXUtilities: Filtered non-showing:", set(result).difference(set(filtered))]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        return filtered
+
+    @staticmethod
     def get_set_size(obj):
         """Returns the total number of objects in this container."""
 
@@ -278,7 +408,17 @@ class AXUtilities:
         if AXUtilitiesRole.is_table_row(obj):
             return AXTable.get_row_count(AXTable.get_table(obj))
 
-        return None
+        if AXUtilitiesRole.is_table_cell_or_header(obj) \
+           and not AXUtilitiesRole.is_table_row(AXObject.get_parent(obj)):
+            return AXTable.get_row_count(AXTable.get_table(obj))
+
+        if AXUtilitiesRole.is_combo_box(obj):
+            selected_children = AXSelection.get_selected_children(obj)
+            if len(selected_children) == 1:
+                obj = selected_children[0]
+
+        members = AXUtilities.get_set_members(obj)
+        return len(members)
 
     @staticmethod
     def get_position_in_set(obj):
@@ -303,7 +443,20 @@ class AXUtilities:
                 # ARIA posinset is 1-based.
                 return int(result) - 1
 
-        return None
+        if AXUtilitiesRole.is_table_cell_or_header(obj) \
+           and not AXUtilitiesRole.is_table_row(AXObject.get_parent(obj)):
+            return AXTable.get_cell_coordinates(obj)[0]
+
+        if AXUtilitiesRole.is_combo_box(obj):
+            selected_children = AXSelection.get_selected_children(obj)
+            if len(selected_children) == 1:
+                obj = selected_children[0]
+
+        members = AXUtilities.get_set_members(obj)
+        if obj not in members:
+            return -1
+
+        return members.index(obj)
 
 for name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):
     setattr(AXUtilities, name, method)
@@ -317,3 +470,5 @@ for name, method in inspect.getmembers(AXUtilitiesState, predicate=inspect.isfun
 for name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
     if name.startswith("find"):
         setattr(AXUtilities, name, method)
+
+AXUtilities.start_cache_clearing_thread()
