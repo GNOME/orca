@@ -28,7 +28,6 @@ __license__   = "LGPL"
 from orca import debug
 from orca import script_utilities
 from orca.ax_object import AXObject
-from orca.ax_selection import AXSelection
 from orca.ax_utilities import AXUtilities
 
 from orca.ax_text import AXText
@@ -41,16 +40,6 @@ class Utilities(script_utilities.Utilities):
 
     def clearCachedObjects(self):
         self._isLayoutOnly = {}
-
-    def selectedChildren(self, obj):
-        if AXObject.supports_selection(obj):
-            return AXSelection.get_selected_children(obj)
-
-        # This is a workaround for bgo#738705.
-        if not AXUtilities.is_panel(obj):
-            return []
-
-        return AXUtilities.find_all_selected_objects(obj)
 
     def insertedText(self, event):
         if event.any_data:

@@ -80,18 +80,10 @@ class Script(clutter.Script):
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        # Some buttons, like the Wikipedia button, claim to be selected but
-        # lack STATE_SELECTED. The other buttons, such as in the Dash and
-        # event switcher, seem to have the right state. Since the ones with
-        # the wrong state seem to be things we don't want to present anyway
-        # we'll stop doing so and hope we are right.
-        # TODO - JD: 1) Is this logic still needed? 2) If so, is clearing the
-        # cache still needed?
-        if event.detail1:
-            if AXUtilities.is_panel(event.source):
-                AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
-            if AXUtilities.is_selected(event.source):
-                focus_manager.get_manager().set_locus_of_focus(event, event.source)
+        # gnome-shell fails to implement the selection interface but fires state-changed
+        # selected in the switcher and similar containers.
+        if AXUtilities.is_selected(event.source):
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
         clutter.Script.on_selected_changed(self, event)
