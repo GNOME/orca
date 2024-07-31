@@ -197,31 +197,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().isSelectedTextDeletionEvent(event)
 
-    def selectedChildren(self, obj):
-        # TODO - JD: Are these overrides still needed? They appear to be
-        # quite old.
-
-        if obj is None:
-            return []
-
-        if not AXObject.supports_selection(obj) and AXUtilities.is_combo_box(obj):
-            child = AXObject.find_descendant(obj, AXObject.supports_selection)
-            if child:
-                return super().selectedChildren(child)
-
-        # Things only seem broken for certain tables, e.g. the Paths table.
-        # TODO - JD: File the LibreOffice bugs and reference them here.
-        if not AXUtilities.is_table(obj):
-            return super().selectedChildren(obj)
-
-        # We will need to special case this due to the possibility of there
-        # being lots of children (which may also prove to be invalid objects).
-        # This is why we can't have nice things.
-        if self.isSpreadSheetTable(obj):
-            return []
-
-        return AXSelection.get_selected_children(obj)
-
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         return AXText.get_word_at_offset(obj, offset)
 

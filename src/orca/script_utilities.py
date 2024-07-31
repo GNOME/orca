@@ -2085,6 +2085,11 @@ class Utilities:
         return root, offset
 
     def selectedChildren(self, obj):
+        # TODO - JD: This was originally in the LO script. See if it is still an issue when
+        # lots of cells are selected.
+        if self.isSpreadSheetTable(obj):
+            return []
+
         children = AXSelection.get_selected_children(obj)
         if children:
             return children
