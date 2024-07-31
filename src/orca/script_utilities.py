@@ -2090,28 +2090,7 @@ class Utilities:
         if self.isSpreadSheetTable(obj):
             return []
 
-        children = AXSelection.get_selected_children(obj)
-        if children:
-            return children
-
-        msg = "SCRIPT UTILITIES: Selected children not retrieved via selection interface."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        role = AXObject.get_role(obj)
-        if role == Atspi.Role.MENU and not children:
-            children = self.findAllDescendants(obj, AXUtilities.is_selected)
-
-        if role == Atspi.Role.COMBO_BOX \
-           and children and AXObject.get_role(children[0]) == Atspi.Role.MENU:
-            children = self.selectedChildren(children[0])
-            name = AXObject.get_name(obj)
-            if not children and name:
-                def pred(x):
-                    return AXObject.get_name(x) == name
-
-                children = self.findAllDescendants(obj, pred)
-
-        return children
+        return AXSelection.get_selected_children(obj)
 
     def speakSelectedCellRange(self, obj):
         return False
