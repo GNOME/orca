@@ -809,13 +809,19 @@ class Script(default.Script):
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
 
-        if not self.caret_navigation.last_input_event_was_navigation_command() \
-           and not self.utilities.isContentEditableWithEmbeddedObjects(obj):
+        tokens = ["WEB: Say character for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not self.utilities.inDocumentContent(obj):
+            msg = "WEB: Object is not in document content."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             super().sayCharacter(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
+        tokens = ["WEB: Adjusted object and offset for say character to", obj, offset]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         if not obj:
             return
 
@@ -846,8 +852,11 @@ class Script(default.Script):
     def sayWord(self, obj):
         """Speaks the word at the current caret position."""
 
-        isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
-        if not self.caret_navigation.last_input_event_was_navigation_command() and not isEditable:
+        tokens = ["WEB: Say word for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not self.utilities.inDocumentContent(obj):
+            msg = "WEB: Object is not in document content."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             super().sayWord(obj)
             return
 
@@ -855,6 +864,9 @@ class Script(default.Script):
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
         if input_event_manager.get_manager().last_event_was_right():
             offset -= 1
+
+        tokens = ["WEB: Adjusted object and offset for say word to", obj, offset]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=True)
         textObj, startOffset, endOffset, word = wordContents[0]
@@ -865,22 +877,21 @@ class Script(default.Script):
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
-        lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
-        lastCommandWasStructNav = \
-            self.structural_navigation.last_input_event_was_navigation_command() \
-            or self.get_table_navigator().last_input_event_was_navigation_command()
-
-        isEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
-        if not (lastCommandWasCaretNav or lastCommandWasStructNav) and not isEditable:
+        tokens = ["WEB: Say line for", obj]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if not self.utilities.inDocumentContent(obj):
+            msg = "WEB: Object is not in document content."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             super().sayLine(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
-        priorObj = None
-        if lastCommandWasCaretNav or isEditable:
-            priorObj, priorOffset = self.utilities.getPriorContext(documentFrame=document)
+        priorObj, _priorOffset = self.utilities.getPriorContext(documentFrame=document)
 
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
+        tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
         self.speakContents(contents, priorObj=priorObj)
         self.point_of_reference["lastTextUnitSpoken"] = "line"
