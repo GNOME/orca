@@ -1234,67 +1234,41 @@ class Script(default.Script):
         self.update_braille(new_focus, documentFrame=document)
 
         contents = None
-        args = {}
-        lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
-        lastCommandWasStructNav = \
-            self.structural_navigation.last_input_event_was_navigation_command() \
-            or self.get_table_navigator().last_input_event_was_navigation_command()
+        args = {"priorObj":old_focus}
         manager = input_event_manager.get_manager()
-        lastCommandWasLineNav = manager.last_event_was_line_navigation() \
-            and not lastCommandWasCaretNav
-
-        if manager.last_event_was_mouse_button() and event \
-             and event.type.startswith("object:text-caret-moved"):
-            msg = "WEB: Last input event was mouse button. Generating line."
+        if event and event.type.startswith("object:children-changed:remove") \
+           and self.utilities.isFocusModeWidget(new_focus):
+            tokens = ["WEB: New focus", new_focus, "is removed-child recovery. Generating speech."]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        elif manager.last_event_was_character_navigation() \
+           or manager.last_event_was_line_boundary_navigation():
+            msg = "WEB: Last input event was character/line boundary navigation. Generating char."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getCharacterContentsAtOffset(new_focus, caretOffset)
+        elif manager.last_event_was_word_navigation():
+            msg = "WEB: Last input event was word navigation. Generating word."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            contents = self.utilities.getWordContentsAtOffset(new_focus, caretOffset)
+        elif manager.last_event_was_caret_navigation():
+            msg = "WEB: Last input event was non-char/word caret navigation. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-            args['priorObj'] = old_focus
-        elif self.utilities.isContentEditableWithEmbeddedObjects(new_focus) \
-           and (lastCommandWasCaretNav or lastCommandWasStructNav or lastCommandWasLineNav) \
-           and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus)):
-            tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-        elif self.utilities.isAnchor(new_focus):
-            tokens = ["WEB: New focus", new_focus, "is anchor. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
-        elif input_event_manager.get_manager().last_event_was_page_navigation() \
-             and not AXTable.get_table(new_focus) \
-             and not AXUtilities.is_feed_article(new_focus):
-            tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        elif manager.last_event_was_mouse_button() and event \
+             and event.type.startswith("object:text-caret-moved"):
+            msg = "WEB: Last input event was mouse button triggering caret move. Generating line."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
         elif self.utilities.isFocusedWithMathChild(new_focus):
             tokens = ["WEB: New focus", new_focus, "has math child. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-        elif AXUtilities.is_heading(new_focus):
-            tokens = ["WEB: New focus", new_focus, "is heading. Generating object."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getObjectContentsAtOffset(new_focus, 0)
         elif self.utilities.caretMovedToSamePageFragment(event, old_focus):
             tokens = ["WEB: Source", event.source, "is same page fragment. Generating line."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
-        elif event and event.type.startswith("object:children-changed:remove") \
-             and self.utilities.isFocusModeWidget(new_focus):
-            tokens = ["WEB: New focus", new_focus,
-                      "is recovery from removed child. Generating speech."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        elif lastCommandWasLineNav and not AXObject.is_valid(old_focus):
-            msg = "WEB: Last input event was line nav; old_focus is invalid. Generating line."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-        elif lastCommandWasLineNav and event and event.type.startswith("object:children-changed"):
-            msg = "WEB: Last input event was line nav and children changed. Generating line."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-            args['priorObj'] = old_focus
         else:
             tokens = ["WEB: New focus", new_focus, "is not a special case. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            args['priorObj'] = old_focus
 
         if new_focus and AXObject.is_dead(new_focus):
             msg = "WEB: New focus has since died"
