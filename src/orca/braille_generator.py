@@ -1582,7 +1582,8 @@ class BrailleGenerator(generator.Generator):
         result += [braille.Component(
             obj, self.asString(
                 self._generateColumnHeaderIfToggleAndNoText(obj, **args) +
-                self._generateRealActiveDescendantDisplayedText(obj, **args) +
+                (self._generateRealActiveDescendantDisplayedText(obj, **args) \
+                    or self._generateLabelAndName(obj, **args)) +
                 self._generateRealActiveDescendantRoleName(obj, **args) +
                 self._generateExpandableState(obj, **args)))]
         result += suffix

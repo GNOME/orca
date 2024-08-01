@@ -4386,6 +4386,7 @@ class SpeechGenerator(generator.Generator):
             or self._generateColumnHeaderIfToggleAndNoText(obj, **args))
         result += self._generateCellCheckedState(obj, **args)
         result += (self._generateRealActiveDescendantDisplayedText(obj, **args) \
+            or self._generateLabelAndName(obj, **args) \
             or self._generateImageDescription(obj, **args))
         result += self._generateExpandableState(obj, **args)
         result += self._generateNumberOfChildren(obj, **args)
