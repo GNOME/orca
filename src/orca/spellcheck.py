@@ -216,7 +216,7 @@ class SpellCheck:
             return False
 
         label = self._script.utilities.displayedLabel(entry) or AXObject.get_name(entry)
-        string = self._script.utilities.substring(entry, 0, -1)
+        string = AXText.get_substring(entry, 0, -1)
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speakMessage(msg, voice=voice)

@@ -29,6 +29,7 @@ from orca import braille
 from orca import braille_generator
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
+from orca.ax_text import AXText
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
@@ -59,12 +60,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.isSpreadSheetCell(obj):
             return result
 
-        try:
-            objectText = self._script.utilities.substring(obj, 0, -1)
-            cellName = AXTable.get_label_for_cell_coordinates(obj) \
-                or self._script.utilities.spreadSheetCellName(obj)
-        except Exception:
-            return []
+        objectText = AXText.get_substring(obj, 0, -1)
+        cellName = AXTable.get_label_for_cell_coordinates(obj) \
+            or self._script.utilities.spreadSheetCellName(obj)
 
         return [braille.Component(obj, " ".join((objectText, cellName)))]
 

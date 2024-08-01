@@ -1506,7 +1506,7 @@ class Utilities:
             debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
             endOffset = -1
 
-        string = self.substring(obj, startOffset, endOffset)
+        string = AXText.get_substring(obj, startOffset, endOffset)
         if self.EMBEDDED_OBJECT_CHARACTER not in string:
             return string
 
@@ -1577,10 +1577,6 @@ class Utilities:
     def setCaretOffset(self, obj, offset):
         # TODO - JD. Remove this function if the web override can be adjusted
         AXText.set_caret_offset(obj, offset)
-
-    def substring(self, obj, startOffset, endOffset):
-        # TODO - JD. Remove this function if the web override can be adjusted
-        return AXText.get_substring(obj, startOffset, endOffset)
 
     def getAppNameForAttribute(self, attribName):
         """Converts the given Atk attribute name into the application's
@@ -1658,7 +1654,7 @@ class Utilities:
                 break
             startOffset = max(start, startOffset)
             endOffset = min(end, endOffset)
-            string = self.substring(obj, startOffset, endOffset)
+            string = AXText.get_substring(obj, startOffset, endOffset)
             rv.append([startOffset, endOffset, string, language, dialect])
 
         return rv

@@ -822,7 +822,7 @@ class Generator:
         if start is None or end is None:
             return []
 
-        substring = args.get('string', self._script.utilities.substring(obj, start, end))
+        substring = args.get('string', AXText.get_substring(obj, start, end))
         if substring and self._script.EMBEDDED_OBJECT_CHARACTER not in substring:
             return [substring]
 

@@ -546,15 +546,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().expandEOCs(obj, startOffset, endOffset).strip()
 
-    def substring(self, obj, startOffset, endOffset):
-        if not self.inDocumentContent(obj):
-            return super().substring(obj, startOffset, endOffset)
-
-        if self.treatAsTextObject(obj):
-            return AXText.get_substring(obj, startOffset, endOffset)
-
-        return ""
-
     def textAttributes(self, acc, offset=None, get_defaults=False):
         attrs = super().textAttributes(acc, offset, get_defaults)
         objAttributes = AXObject.get_attributes_dict(acc, False)
@@ -2002,7 +1993,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if AXUtilities.is_list(obj) and offset is not None:
-            string = self.substring(obj, offset, offset + 1)
+            string = AXText.get_substring(obj, offset, offset + 1)
             if string and string != self.EMBEDDED_OBJECT_CHARACTER:
                 return True
 
