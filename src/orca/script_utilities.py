@@ -1496,11 +1496,17 @@ class Utilities:
         Returns the fully expanded text for the object.
         """
 
-        try:
-            string = self.substring(obj, startOffset, endOffset)
-        except Exception:
-            return ""
+        # TODO - JD: Audit all callers and eliminate these arguments having been set to None.
+        if startOffset is None:
+            tokens = ["SCRIPT UTILITIES: expandEOCs called with start offset of None on", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+            startOffset = 0
+        if endOffset is None:
+            tokens = ["SCRIPT UTILITIES: expandEOCs called with end offset of None on", obj]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+            endOffset = -1
 
+        string = self.substring(obj, startOffset, endOffset)
         if self.EMBEDDED_OBJECT_CHARACTER not in string:
             return string
 
