@@ -8,3 +8,8 @@ line-length = 100  # same as rustfmt
 ignore = [
   "E402", # Module level import not at top of file
 ]
+
+[tool.mypy]
+disable_error_code = [
+  "import-untyped",
+]

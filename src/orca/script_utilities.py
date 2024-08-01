@@ -682,9 +682,6 @@ class Utilities:
     def isFocusableLabel(self, obj):
         return AXUtilities.is_label(obj) and AXUtilities.is_focusable(obj)
 
-    def isNonFocusableList(self, obj):
-        return AXUtilities.is_list(obj) and not AXUtilities.is_focusable(obj)
-
     def getNotificationContent(self, obj):
         if not AXUtilities.is_notification(obj):
             return ""

@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Produces speech presentation for accessible objects."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -26,11 +28,12 @@ __license__   = "LGPL"
 from orca import speech_generator
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
+    """Produces speech presentation for accessible objects."""
 
-    def _generateExpandableState(self, obj, **args):
+    def _generate_state_expanded(self, obj, **args):
         cell = self._script.utilities.getExpanderCellFor(obj) or obj
-        return super()._generateExpandableState(cell, **args)
+        return super()._generate_state_expanded(cell, **args)
 
-    def _generateNumberOfChildren(self, obj, **args):
+    def _generate_number_of_children(self, obj, **args):
         cell = self._script.utilities.getExpanderCellFor(obj) or obj
-        return super()._generateNumberOfChildren(cell, **args)
+        return super()._generate_number_of_children(cell, **args)

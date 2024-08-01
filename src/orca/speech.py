@@ -183,8 +183,7 @@ def speak(content, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
-    valid_types = (str, list, speech_generator.Pause,
-                  speech_generator.LineBreak, ACSS)
+    valid_types = (str, list, speech_generator.Pause, ACSS)
     error = "SPEECH: Bad content sent to speak():"
     if not isinstance(content, valid_types):
         debug.printMessage(debug.LEVEL_INFO, error + str(content), True, True)

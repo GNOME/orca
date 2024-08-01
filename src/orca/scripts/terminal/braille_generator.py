@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Produces braille presentation for accessible objects."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -28,8 +30,9 @@ from orca import braille_generator
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
+    """Produces braille presentation for accessible objects."""
 
-    def _generateDescription(self, obj, **args):
+    def _generate_accessible_description(self, _obj, **_args):
         # The text in the description is the same as the text in the page
         # tab and similar to (and sometimes the same as) the prompt.
         return []

@@ -687,7 +687,7 @@ class Script(script.Script):
         if old_focus is None:
             old_focus = active_window
 
-        utterances = self.speech_generator.generateSpeech(
+        utterances = self.speech_generator.generate_speech(
             new_focus,
             priorObj=old_focus)
 
@@ -722,7 +722,7 @@ class Script(script.Script):
         if not obj:
             return
 
-        result, focusedRegion = self.braille_generator.generateBraille(obj, **args)
+        result, focusedRegion = self.braille_generator.generate_braille(obj, **args)
         if not result:
             return
 
@@ -1398,7 +1398,7 @@ class Script(script.Script):
             return
 
         # TODO - JD: Unlike the other state-changed callbacks, it seems unwise
-        # to call generateSpeech() here because that also will present the
+        # to call generate_speech() here because that also will present the
         # expandable state if appropriate for the object type. The generators
         # need to gain some smarts w.r.t. state changes.
 
@@ -1517,7 +1517,7 @@ class Script(script.Script):
             if not event.detail1:
                 return
 
-            speech.speak(self.speech_generator.generateSpeech(obj))
+            speech.speak(self.speech_generator.generate_speech(obj))
             msg = self.utilities.getNotificationContent(obj)
             self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
             self.get_notification_presenter().save_notification(msg)
@@ -1730,7 +1730,7 @@ class Script(script.Script):
             self._save_focused_object_info(event.source)
 
         self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
-        speech.speak(self.speech_generator.generateSpeech(
+        speech.speak(self.speech_generator.generate_speech(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
         self.__play(self.sound_generator.generateSound(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
@@ -2154,7 +2154,7 @@ class Script(script.Script):
 
         if not args.get("speechonly", False):
             self.update_braille(obj, **args)
-        utterances = self.speech_generator.generateSpeech(obj, **args)
+        utterances = self.speech_generator.generate_speech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
 
     def stopSpeechOnActiveDescendantChanged(self, event):
@@ -2314,7 +2314,7 @@ class Script(script.Script):
             offset = AXText.get_caret_offset(obj)
 
         while obj:
-            speech.speak(self.speech_generator.generateContext(obj, priorObj=priorObj))
+            speech.speak(self.speech_generator.generate_context(obj, priorObj=priorObj))
 
             style = settings_manager.get_manager().get_setting('sayAllStyle')
             if style == settings.SAYALL_STYLE_SENTENCE and AXText.supports_sentence_iteration(obj):
@@ -2543,7 +2543,7 @@ class Script(script.Script):
 
         Arguments:
         - region: a braille.Region (e.g. what is returned by the braille
-          generator's generateBraille() method.
+          generator's generate_braille() method.
         - line: a braille.Line
         """
 
@@ -2555,7 +2555,7 @@ class Script(script.Script):
 
         Arguments:
         - regions: a series of braille.Region instances (a single instance
-          being what is returned by the braille generator's generateBraille()
+          being what is returned by the braille generator's generate_braille()
           method.
         - line: a braille.Line
         """
