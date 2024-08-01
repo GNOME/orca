@@ -347,9 +347,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXObject.get_name(obj):
             if self._script.utilities.preferDescriptionOverName(obj):
                 result = [AXObject.get_description(obj)]
-            elif self._script.utilities.isLink(obj) \
-                 and not self._script.utilities.hasExplicitName(obj):
-                return []
             else:
                 name = AXObject.get_name(obj)
                 if not self._script.utilities.hasExplicitName(obj):
