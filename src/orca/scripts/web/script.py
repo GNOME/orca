@@ -1236,9 +1236,8 @@ class Script(default.Script):
         contents = None
         args = {"priorObj":old_focus}
         manager = input_event_manager.get_manager()
-        if event and event.type.startswith("object:children-changed:remove") \
-           and self.utilities.isFocusModeWidget(new_focus):
-            tokens = ["WEB: New focus", new_focus, "is removed-child recovery. Generating speech."]
+        if self.utilities.isFocusModeWidget(new_focus):
+            tokens = ["WEB: New focus", new_focus, "is focus mode widget. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
         elif manager.last_event_was_character_navigation() \
            or manager.last_event_was_line_boundary_navigation():
