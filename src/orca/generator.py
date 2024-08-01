@@ -865,6 +865,8 @@ class Generator:
         if not text:
             return []
 
+        if "\ufffc" in text:
+            return self._generateExpandedEOCs(obj, **args)
         return [text]
 
     #####################################################################
