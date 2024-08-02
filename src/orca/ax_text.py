@@ -486,7 +486,7 @@ class AXText:
             result = Atspi.Text.get_text(obj, start_offset, end_offset)
         except Exception as error:
             msg = f"AXText: Exception in get_substring: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
             return ""
 
         debug_string = result.replace("\n", "\\n")

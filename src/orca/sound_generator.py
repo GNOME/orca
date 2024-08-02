@@ -92,111 +92,6 @@ class SoundGenerator(generator.Generator):
     def __init__(self, script):
         super().__init__(script, "sound")
         self._sounds = os.path.join(settings_manager.get_manager().get_prefs_dir(), "sounds")
-        self._generators = {
-            Atspi.Role.ALERT: self._generate_alert,
-            Atspi.Role.ANIMATION: self._generate_animation,
-            Atspi.Role.ARTICLE: self._generate_article,
-            'ROLE_ARTICLE_IN_FEED': self._generate_article_in_feed,
-            Atspi.Role.BLOCK_QUOTE: self._generate_block_quote,
-            Atspi.Role.CANVAS: self._generate_canvas,
-            Atspi.Role.CAPTION: self._generate_caption,
-            Atspi.Role.CHECK_BOX: self._generate_check_box,
-            Atspi.Role.CHECK_MENU_ITEM: self._generate_check_menu_item,
-            Atspi.Role.COLOR_CHOOSER: self._generate_color_chooser,
-            Atspi.Role.COLUMN_HEADER: self._generate_column_header,
-            Atspi.Role.COMBO_BOX: self._generate_combo_box,
-            Atspi.Role.COMMENT: self._generate_comment,
-            Atspi.Role.CONTENT_DELETION: self._generate_content_deletion,
-            'ROLE_CONTENT_ERROR': self._generate_content_error,
-            Atspi.Role.CONTENT_INSERTION: self._generate_content_insertion,
-            Atspi.Role.DEFINITION: self._generate_definition,
-            Atspi.Role.DESCRIPTION_LIST: self._generate_description_list,
-            Atspi.Role.DESCRIPTION_TERM: self._generate_description_term,
-            Atspi.Role.DESCRIPTION_VALUE: self._generate_description_value,
-            Atspi.Role.DIAL: self._generate_dial,
-            Atspi.Role.DIALOG: self._generate_dialog,
-            Atspi.Role.DOCUMENT_EMAIL: self._generate_document_email,
-            Atspi.Role.DOCUMENT_FRAME: self._generate_document_frame,
-            Atspi.Role.DOCUMENT_PRESENTATION: self._generate_document_presentation,
-            Atspi.Role.DOCUMENT_SPREADSHEET: self._generate_document_spreadsheet,
-            Atspi.Role.DOCUMENT_TEXT: self._generate_document_text,
-            Atspi.Role.DOCUMENT_WEB: self._generate_document_web,
-            'ROLE_DPUB_LANDMARK': self._generate_dpub_landmark,
-            'ROLE_DPUB_SECTION': self._generate_dpub_section,
-            Atspi.Role.EDITBAR: self._generate_editbar,
-            Atspi.Role.EMBEDDED: self._generate_embedded,
-            Atspi.Role.ENTRY: self._generate_entry,
-            'ROLE_FEED': self._generate_feed,
-            Atspi.Role.FOOTNOTE: self._generate_footnote,
-            Atspi.Role.FOOTER: self._generate_footer,
-            Atspi.Role.FORM: self._generate_form,
-            Atspi.Role.FRAME: self._generate_frame,
-            Atspi.Role.HEADER: self._generate_header,
-            Atspi.Role.HEADING: self._generate_heading,
-            Atspi.Role.ICON: self._generate_icon,
-            Atspi.Role.IMAGE: self._generate_image,
-            Atspi.Role.INFO_BAR: self._generate_info_bar,
-            Atspi.Role.INTERNAL_FRAME: self._generate_internal_frame,
-            Atspi.Role.LABEL: self._generate_label,
-            Atspi.Role.LANDMARK: self._generate_landmark,
-            Atspi.Role.LAYERED_PANE: self._generate_layered_pane,
-            Atspi.Role.LINK: self._generate_link,
-            Atspi.Role.LEVEL_BAR: self._generate_level_bar,
-            Atspi.Role.LIST: self._generate_list,
-            Atspi.Role.LIST_BOX: self._generate_list_box,
-            Atspi.Role.LIST_ITEM: self._generate_list_item,
-            Atspi.Role.MATH: self._generate_math,
-            'ROLE_MATH_ENCLOSED': self._generate_math_enclosed,
-            'ROLE_MATH_FENCED': self._generate_math_fenced,
-            Atspi.Role.MATH_FRACTION: self._generate_math_fraction,
-            Atspi.Role.MATH_ROOT: self._generate_math_root,
-            'ROLE_MATH_MULTISCRIPT': self._generate_math_multiscript,
-            'ROLE_MATH_SCRIPT_SUBSUPER': self._generate_math_script_subsuper,
-            'ROLE_MATH_SCRIPT_UNDEROVER': self._generate_math_script_underover,
-            'ROLE_MATH_TABLE': self._generate_math_table,
-            'ROLE_MATH_TABLE_ROW': self._generate_math_row,
-            Atspi.Role.MARK: self._generate_mark,
-            Atspi.Role.MENU: self._generate_menu,
-            Atspi.Role.MENU_ITEM: self._generate_menu_item,
-            Atspi.Role.NOTIFICATION: self._generate_notification,
-            Atspi.Role.PAGE: self._generate_page,
-            Atspi.Role.PAGE_TAB: self._generate_page_tab,
-            Atspi.Role.PANEL: self._generate_panel,
-            Atspi.Role.PARAGRAPH: self._generate_paragraph,
-            Atspi.Role.PASSWORD_TEXT: self._generate_password_text,
-            Atspi.Role.PROGRESS_BAR: self._generate_progress_bar,
-            Atspi.Role.PUSH_BUTTON: self._generate_push_button,
-            Atspi.Role.RADIO_BUTTON: self._generate_radio_button,
-            Atspi.Role.RADIO_MENU_ITEM: self._generate_radio_menu_item,
-            'ROLE_REGION': self._generate_region,
-            Atspi.Role.ROW_HEADER: self._generate_row_header,
-            Atspi.Role.SCROLL_BAR: self._generate_scroll_bar,
-            Atspi.Role.SCROLL_PANE: self._generate_scroll_pane,
-            Atspi.Role.SECTION: self._generate_section,
-            Atspi.Role.SLIDER: self._generate_slider,
-            Atspi.Role.SPIN_BUTTON: self._generate_spin_button,
-            Atspi.Role.SEPARATOR: self._generate_separator,
-            Atspi.Role.SPLIT_PANE: self._generate_split_pane,
-            Atspi.Role.STATIC: self._generate_static,
-            Atspi.Role.STATUS_BAR: self._generate_status_bar,
-            Atspi.Role.SUBSCRIPT: self._generate_subscript,
-            Atspi.Role.SUGGESTION: self._generate_suggestion,
-            Atspi.Role.SUPERSCRIPT: self._generate_superscript,
-            'ROLE_SWITCH': self._generate_switch,
-            Atspi.Role.TABLE: self._generate_table,
-            Atspi.Role.TABLE_CELL: self._generate_table_cell_in_row,
-            'REAL_ROLE_TABLE_CELL': self._generate_table_cell,
-            Atspi.Role.TABLE_ROW: self._generate_table_row,
-            Atspi.Role.TEAROFF_MENU_ITEM: self._generate_tearoff_menu_item,
-            Atspi.Role.TERMINAL: self._generate_terminal,
-            Atspi.Role.TEXT: self._generate_text,
-            Atspi.Role.TOGGLE_BUTTON: self._generate_toggle_button,
-            Atspi.Role.TOOL_BAR: self._generate_tool_bar,
-            Atspi.Role.TOOL_TIP: self._generate_tool_tip,
-            Atspi.Role.TREE: self._generate_tree,
-            Atspi.Role.TREE_ITEM: self._generate_tree_item,
-            Atspi.Role.WINDOW: self._generate_window,
-        }
 
     def _convertFilenameToIcon(self, filename):
         icon = Icon(self._sounds, filename)
@@ -204,28 +99,6 @@ class SoundGenerator(generator.Generator):
             return icon
 
         return None
-
-    def generate(self, obj, **args):
-        _generator = self._generators.get(args.get("role") or AXObject.get_role(obj))
-        if _generator is None:
-            tokens = ["SOUND GENERATOR:", obj, "lacks dedicated generator"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            _generator = self._generate_default_presentation
-
-        args["mode"] = self._mode
-        if not args.get("formatType", None):
-            if args.get("alreadyFocused", False):
-                args["formatType"] = "focused"
-            else:
-                args["formatType"] = "unfocused"
-
-        tokens = ["SOUND GENERATOR:", _generator, "for", obj, "args:", args]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        result = _generator(obj, **args)
-        tokens = ["SOUND GENERATOR: Results:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-        return result
 
     def generateSound(self, obj, **args):
         """Returns an array of sounds for the complete presentation of obj."""
@@ -242,7 +115,7 @@ class SoundGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generateAvailability(self, obj, **args):
+    def _generate_state_sensitive(self, obj, **args):
         """Returns an array of sounds indicating obj is grayed out."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -258,13 +131,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateCheckedState(self, obj, **args):
+    def _generate_state_checked(self, obj, **args):
         """Returns an array of sounds indicating the checked state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateCheckedState(obj, **args)
+        filenames = super()._generate_state_checked(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -272,7 +145,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateClickable(self, obj, **args):
+    def _generate_has_click_action(self, obj, **args):
         """Returns an array of sounds indicating obj is clickable."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -288,13 +161,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateExpandableState(self, obj, **args):
+    def _generate_state_expanded(self, obj, **args):
         """Returns an array of sounds indicating the expanded state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateExpandableState(obj, **args)
+        filenames = super()._generate_state_expanded(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -302,13 +175,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateInvalid(self, obj, **args):
+    def _generate_state_invalid(self, obj, **args):
         """Returns an array of sounds indicating the invalid state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateInvalid(obj, **args)
+        filenames = super()._generate_state_invalid(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -316,7 +189,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateHasLongDesc(self, obj, **args):
+    def _generate_has_long_description(self, obj, **args):
         """Returns an array of sounds indicating obj has a longdesc."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -332,27 +205,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateMenuItemCheckedState(self, obj, **args):
-        """Returns an array of sounds indicating the checked state of obj."""
-
-        if not settings_manager.get_manager().get_setting("playSoundForState"):
-            return []
-
-        filenames = super()._generateMenuItemCheckedState(obj, **args)
-        if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
-            if result:
-                return [result]
-
-        return []
-
-    def _generateMultiselectableState(self, obj, **args):
+    def _generate_state_multiselectable(self, obj, **args):
         """Returns an array of sounds indicating obj is multiselectable."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateMultiselectableState(obj, **args)
+        filenames = super()._generate_state_multiselectable(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -360,13 +219,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateRadioState(self, obj, **args):
+    def _generate_state_selected_for_radio_button(self, obj, **args):
         """Returns an array of sounds indicating the selected state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateRadioState(obj, **args)
+        filenames = super()._generate_state_selected_for_radio_button(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -374,13 +233,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateReadOnly(self, obj, **args):
+    def _generate_state_read_only(self, obj, **args):
         """Returns an array of sounds indicating obj is read only."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateReadOnly(obj, **args)
+        filenames = super()._generate_state_read_only(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -388,13 +247,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateRequired(self, obj, **args):
+    def _generate_state_required(self, obj, **args):
         """Returns an array of sounds indicating obj is required."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateRequired(obj, **args)
+        filenames = super()._generate_state_required(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -402,13 +261,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateSwitchState(self, obj, **args):
+    def _generate_state_checked_for_switch(self, obj, **args):
         """Returns an array of sounds indicating the on/off state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateSwitchState(obj, **args)
+        filenames = super()._generate_state_checked_for_switch(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -416,13 +275,13 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateToggleState(self, obj, **args):
+    def _generate_state_pressed(self, obj, **args):
         """Returns an array of sounds indicating the toggled state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        filenames = super()._generateToggleState(obj, **args)
+        filenames = super()._generate_state_pressed(obj, **args)
         if filenames and filenames[0]:
             result = self._convertFilenameToIcon(filenames[0])
             if result:
@@ -430,7 +289,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateVisitedState(self, obj, **args):
+    def _generate_visited_state(self, obj, **args):
         """Returns an array of sounds indicating the visited state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -452,7 +311,7 @@ class SoundGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generatePercentage(self, obj, **args):
+    def _generate_value_as_percentage(self, obj, **args):
         """Returns an array of sounds reflecting the percentage of obj."""
 
         if not settings_manager.get_manager().get_setting('playSoundForValue'):
@@ -464,11 +323,11 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateProgressBarValue(self, obj, **args):
+    def _generate_progress_bar_value(self, obj, **args):
         """Returns an array of sounds representing the progress bar value."""
 
         if args.get('isProgressBarUpdate'):
-            if not self._shouldPresentProgressBarUpdate(obj, **args):
+            if not self._should_present_progress_bar_update(obj, **args):
                 return []
         elif not settings_manager.get_manager().get_setting('playSoundForValue'):
             return []
@@ -494,18 +353,18 @@ class SoundGenerator(generator.Generator):
 
         return [Tone(duration, frequency, volumeMultiplier, Tone.SINE_WAVE)]
 
-    def _getProgressBarUpdateInterval(self):
+    def _get_progress_bar_update_interval(self):
         interval = settings_manager.get_manager().get_setting('progressBarBeepInterval')
         if interval is None:
-            return super()._getProgressBarUpdateInterval()
+            return super()._get_progress_bar_update_interval()
 
         return int(interval)
 
-    def _shouldPresentProgressBarUpdate(self, obj, **args):
+    def _should_present_progress_bar_update(self, obj, **args):
         if not settings_manager.get_manager().get_setting('beepProgressBarUpdates'):
             return False
 
-        return super()._shouldPresentProgressBarUpdate(obj, **args)
+        return super()._should_present_progress_bar_update(obj, **args)
 
     #####################################################################
     #                                                                   #
@@ -513,7 +372,7 @@ class SoundGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generatePositionInSet(self, obj, **args):
+    def _generate_position_in_set(self, obj, **args):
         """Returns an array of sounds reflecting the set position of obj."""
 
         if not settings_manager.get_manager().get_setting('playSoundForPositionInSet'):
@@ -526,7 +385,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generateRoleName(self, obj, **args):
+    def _generate_accessible_role(self, obj, **args):
         """Returns an array of sounds indicating the role of obj."""
 
         if not settings_manager.get_manager().get_setting('playSoundForRole'):
@@ -552,7 +411,7 @@ class SoundGenerator(generator.Generator):
         """Provides a default/role-agnostic presentation of obj."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -620,8 +479,8 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the canvas role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -640,14 +499,14 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateCheckedState(obj, **args)
+            return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateCheckedState(obj, **args)
-        result += self._generateRequired(obj, **args)
-        result += self._generateInvalid(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_checked(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -656,13 +515,13 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateCheckedState(obj, **args)
+            return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateCheckedState(obj, **args)
-        result += self._generateAvailability(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_checked(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -682,13 +541,13 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -752,14 +611,14 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generatePercentage(obj, **args)
+            return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePercentage(obj, **args)
-        result += self._generateRequired(obj, **args)
-        result += self._generateInvalid(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_value_as_percentage(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -837,11 +696,11 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the entry role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateReadOnly(obj, **args)
-        result += self._generateRequired(obj, **args)
-        result += self._generateInvalid(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_read_only(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -906,12 +765,12 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -924,8 +783,8 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the icon role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -974,14 +833,14 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generatePercentage(obj, **args)
+            return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePercentage(obj, **args)
-        result += self._generateRequired(obj, **args)
-        result += self._generateInvalid(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_value_as_percentage(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -991,12 +850,12 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateExpandableState(obj, **args)
-        result += self._generateVisitedState(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_visited_state(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1009,8 +868,8 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the list-box role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateMultiselectableState(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_multiselectable(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1020,13 +879,13 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1111,14 +970,14 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
-        result += self._generateAvailability(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1141,8 +1000,8 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the page-tab role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1177,12 +1036,12 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateProgressBarValue(obj, **args)
+            result += self._generate_progress_bar_value(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateProgressBarValue(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_progress_bar_value(obj, **args)
         return result
 
     def _generate_push_button(self, obj, **args):
@@ -1191,13 +1050,13 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1211,13 +1070,13 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateRadioState(obj, **args)
+            return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateRadioState(obj, **args)
-        result += self._generateAvailability(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_selected_for_radio_button(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1226,13 +1085,13 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateRadioState(obj, **args)
+            return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateRadioState(obj, **args)
-        result += self._generateAvailability(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_selected_for_radio_button(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1266,11 +1125,11 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generatePercentage(obj, **args)
+            return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePercentage(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_value_as_percentage(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1294,14 +1153,14 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generatePercentage(obj, **args)
+            return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePercentage(obj, **args)
-        result += self._generateRequired(obj, **args)
-        result += self._generateInvalid(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_value_as_percentage(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1310,14 +1169,14 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generatePercentage(obj, **args)
+            return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePercentage(obj, **args)
-        result += self._generateRequired(obj, **args)
-        result += self._generateInvalid(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_value_as_percentage(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1326,12 +1185,12 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generatePercentage(obj, **args)
+            return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generatePercentage(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_value_as_percentage(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1365,12 +1224,12 @@ class SoundGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateSwitchState(obj, **args)
+            return self._generate_state_checked_for_switch(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateSwitchState(obj, **args)
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_checked_for_switch(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1385,12 +1244,12 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1410,12 +1269,12 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1455,14 +1314,14 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generateExpandableState(obj, **args) \
-                or self._generateToggleState(obj, **args)
+            return self._generate_state_expanded(obj, **args) \
+                or self._generate_state_pressed(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += (self._generateExpandableState(obj, **args) \
-                or self._generateToggleState(obj, **args))
-        result += self._generateAvailability(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += (self._generate_state_expanded(obj, **args) \
+                or self._generate_state_pressed(obj, **args))
+        result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1487,13 +1346,13 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result += self._generateExpandableState(obj, **args)
+            result += self._generate_state_expanded(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generateRoleName(obj, **args)
-        result += self._generateExpandableState(obj, **args)
-        result += self._generatePositionInSet(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_position_in_set(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 

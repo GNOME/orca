@@ -709,14 +709,17 @@ class AXObject:
         return role
 
     @staticmethod
-    def get_role_name(obj):
+    def get_role_name(obj, localized=False):
         """Returns the accessible role name of obj"""
 
         if not AXObject.is_valid(obj):
             return ""
 
         try:
-            role_name = Atspi.Accessible.get_role_name(obj)
+            if not localized:
+                role_name = Atspi.Accessible.get_role_name(obj)
+            else:
+                role_name = Atspi.Accessible.get_localized_role_name(obj)
         except Exception as error:
             msg = f"AXObject: Exception in get_role_name: {error}"
             AXObject.handle_error(obj, error, msg)

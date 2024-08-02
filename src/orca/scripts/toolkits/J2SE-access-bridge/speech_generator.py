@@ -18,6 +18,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
+"""Produces speech presentation for accessible objects."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -29,6 +33,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca import debug
 from orca import messages
 from orca import settings
 from orca import settings_manager
@@ -36,50 +41,42 @@ from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-########################################################################
-#                                                                      #
-# Speech Generator                                                     #
-#                                                                      #
-########################################################################
-
 class SpeechGenerator(speech_generator.SpeechGenerator):
+    """Produces speech presentation for accessible objects."""
 
-    def __init__(self, script):
-        speech_generator.SpeechGenerator.__init__(self, script)
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
 
-    def _generateNumberOfChildren(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represents the number of children the
-        object has."""
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"JAVA SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
 
+    @log_generator_output
+    def _generate_number_of_children(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
            or settings_manager.get_manager().get_setting('speechVerbosityLevel') \
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
         result = []
-        childCount = AXObject.get_child_count(obj)
-        if childCount and AXUtilities.is_label(obj) \
-           and AXUtilities.is_expanded(obj):
-            result.append(messages.itemCount(childCount))
+        child_count = AXObject.get_child_count(obj)
+        if child_count and AXUtilities.is_label(obj) and AXUtilities.is_expanded(obj):
+            result.append(messages.itemCount(child_count))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         else:
-            result.extend(speech_generator.SpeechGenerator.\
-                          _generateNumberOfChildren(self, obj, **args))
+            result.extend(super()._generate_number_of_children(obj, **args))
 
         return result
 
-    def generateSpeech(self, obj, **args):
-        result = []
+    def generate_speech(self, obj, **args):
         if AXUtilities.is_check_box(obj) and AXUtilities.is_menu(AXObject.get_parent(obj)):
-            oldRole = self._overrideRole(Atspi.Role.CHECK_MENU_ITEM, args)
-            result.extend(speech_generator.SpeechGenerator.\
-                                           generateSpeech(self, obj, **args))
-            self._restoreRole(oldRole, args)
-
-        if args.get('formatType', 'unfocused') == 'basicWhereAmI' and AXUtilities.is_text(obj):
+            args["role"] = Atspi.Role.CHECK_MENU_ITEM
+        elif args.get('formatType', 'unfocused') == 'basicWhereAmI' and AXUtilities.is_text(obj):
             spinbox = AXObject.find_ancestor(obj, AXUtilities.is_spin_button)
             if spinbox is not None:
                 obj = spinbox
-        result.extend(speech_generator.SpeechGenerator.generateSpeech(self, obj, **args))
-        return result
+        return super().generate_speech( obj, **args)

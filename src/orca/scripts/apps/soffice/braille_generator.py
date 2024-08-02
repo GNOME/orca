@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for StarOffice and OpenOffice."""
+"""Produces braille presentation for accessible objects."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -27,57 +27,50 @@ __license__   = "LGPL"
 
 from orca import braille
 from orca import braille_generator
+from orca import debug
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
+    """Produces braille presentation for accessible objects."""
 
-    def _generateRoleName(self, obj, **args):
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"SOFFICE BRAILLE GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
+    def _generate_accessible_role(self, obj, **args):
         if self._script.utilities.isDocument(obj):
             return []
 
-        if self._script.utilities.isFocusableLabel(obj):
-            return []
+        return super()._generate_accessible_role(obj, **args)
 
-        return super()._generateRoleName(obj, **args)
-
-    def _generateRealTableCell(self, obj, **args):
+    @log_generator_output
+    def _generate_real_table_cell(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
-            return super()._generateRealTableCell(obj, **args)
+            return super()._generate_real_table_cell(obj, **args)
 
         if not AXObject.get_child_count(obj):
-            result = super()._generateRealTableCell(obj, **args)
+            result = super()._generate_real_table_cell(obj, **args)
         else:
             result = []
-            formatType = args.get('formatType')
-            args['formatType'] = 'focused'
+            args["formatType"] = "focused"
             for child in AXObject.iter_children(obj):
                 result.extend(self.generate(child, **args))
-            args['formatType'] = formatType
 
         if not self._script.utilities.isSpreadSheetCell(obj):
             return result
 
-        objectText = AXText.get_substring(obj, 0, -1)
-        cellName = AXTable.get_label_for_cell_coordinates(obj) \
-            or self._script.utilities.spreadSheetCellName(obj)
-
-        return [braille.Component(obj, " ".join((objectText, cellName)))]
-
-    def _generateAncestors(self, obj, **args):
-        if self._script.get_table_navigator().last_input_event_was_navigation_command():
-            return []
-
-        return super()._generateAncestors(obj, **args)
-
-    def generateBraille(self, obj, **args):
-        args['useDefaultFormatting'] = self._script.utilities.isNonFocusableList(obj)
-        oldRole = self._overrideRole(self._getAlternativeRole(obj, **args), args)
-
-        result = super().generateBraille(obj, **args)
-
-        del args['useDefaultFormatting']
-        self._restoreRole(oldRole, args)
-        return result
+        object_text = AXText.get_substring(obj, 0, -1)
+        cell_name = AXTable.get_label_for_cell_coordinates(obj) \
+                or self._script.utilities.spreadSheetCellName(obj)
+        return [braille.Component(obj, " ".join((object_text, cell_name)))]

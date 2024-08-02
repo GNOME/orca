@@ -324,7 +324,7 @@ class StateZone(Zone):
         else:
             generator = script.braille_generator
 
-        result = generator.getStateIndicator(self.accessible, role=self.role)
+        result = generator.get_state_indicator(self.accessible, role=self.role)
         if result:
             return result[0]
 
@@ -353,8 +353,8 @@ class ValueZone(Zone):
 
         # TODO - JD: This cobbling together beats what we had, but the
         # generators should also be doing the assembly.
-        rolename = generator.getLocalizedRoleName(self.accessible)
-        value = generator.getValue(self.accessible)
+        rolename = generator.get_localized_role_name(self.accessible)
+        value = generator.get_value(self.accessible)
         if rolename and value:
             result = f"{rolename} {value[0]}"
 
@@ -667,11 +667,11 @@ class Context:
             string = ""
             redundant = [Atspi.Role.TABLE_ROW]
             if role not in redundant:
-                string = self.script.speech_generator.getName(accessible, inFlatReview=True)
+                string = self.script.speech_generator.get_name(accessible, inFlatReview=True)
 
             useless = [Atspi.Role.TABLE_CELL, Atspi.Role.LABEL]
             if not string and role not in useless:
-                string = self.script.speech_generator.getRoleName(accessible)
+                string = self.script.speech_generator.get_role_name(accessible)
             if string:
                 zones.append(Zone(accessible, string, *extents))
 

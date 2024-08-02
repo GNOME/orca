@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for StarOffice and OpenOffice."""
+"""Produces speech presentation for accessible objects."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from orca import debug
 from orca import messages
 from orca import settings_manager
 from orca import speech_generator
@@ -36,35 +37,25 @@ from orca.ax_utilities import AXUtilities
 
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
-    def __init__(self, script):
-        speech_generator.SpeechGenerator.__init__(self, script)
+    """Produces speech presentation for accessible objects."""
 
-    def _generateAnyTextSelection(self, obj, **args):
-        comboBoxEntry = self._script.utilities.getEntryForEditableComboBox(obj)
-        if comboBoxEntry:
-            return super()._generateAnyTextSelection(comboBoxEntry)
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
 
-        return super()._generateAnyTextSelection(obj, **args)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"SOFFICE SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
 
-    def _generateAvailability(self, obj, **args):
-        """Returns an array of strings for use by speech and braille that
-        represent the grayed/sensitivity/availability state of the
-        object, but only if it is insensitive (i.e., grayed out and
-        inactive).  Otherwise, and empty array will be returned.
-        """
-
-        result = []
-        if not self._script.utilities.isSpreadSheetCell(obj):
-            result.extend(speech_generator.SpeechGenerator.\
-                _generateAvailability(self, obj, **args))
-
-        return result
-
-    def _generateCurrentLineText(self, obj, **args):
+    @log_generator_output
+    def _generate_text_line(self, obj, **args):
         if AXUtilities.is_combo_box(obj):
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
             if entry:
-                return super()._generateCurrentLineText(entry)
+                return super()._generate_text_line(entry)
             return []
 
         # TODO - JD: The SayLine, etc. code should be generated and not put
@@ -76,9 +67,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(string=text, obj=obj, **args))
             return result
 
-        return super()._generateCurrentLineText(obj, **args)
+        return super()._generate_text_line(obj, **args)
 
-    def _generateToggleState(self, obj, **args):
+    @log_generator_output
+    def _generate_state_pressed(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
 
@@ -86,7 +78,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if not AXUtilities.is_tool_bar(AXObject.get_parent(obj)):
-            return super()._generateToggleState(obj, **args)
+            return super()._generate_state_pressed(obj, **args)
 
         if AXUtilities.is_checked(obj):
             result = [messages.ON]
@@ -95,7 +87,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def _generateTooLong(self, obj, **args):
+    def _generate_too_long(self, obj, **args):
         """If there is text in this spread sheet cell, compare the size of
         the text within the table cell with the size of the actual table
         cell and report back to the user if it is larger.
@@ -109,22 +101,22 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # TODO - JD: Can this be moved to AXText?
         result = []
         length = AXText.get_character_count(obj)
-        tooLongCount = 0
+        too_long_count = 0
         extents = AXComponent.get_rect(obj)
         for i in range(length):
             rect = AXText.get_character_rect(obj, i)
             if rect.x < extents.x:
-                tooLongCount += 1
+                too_long_count += 1
             elif rect.x + rect.width > extents.x + extents.width:
-                tooLongCount += length - i
+                too_long_count += length - i
                 break
-        if tooLongCount > 0:
-            result = [messages.charactersTooLong(tooLongCount)]
+        if too_long_count > 0:
+            result = [messages.charactersTooLong(too_long_count)]
         if result:
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def _generateHasFormula(self, obj, **args):
+    def _generate_has_formula(self, obj, **args):
         formula = AXTable.get_cell_formula(obj)
         if not formula:
             return []
@@ -137,50 +129,40 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def _generateRealTableCell(self, obj, **args):
-        """Get the speech for a table cell. If this isn't inside a
-        spread sheet, just return the utterances returned by the default
-        table cell speech handler.
-
-        Arguments:
-        - obj: the table cell
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
+    @log_generator_output
+    def _generate_real_table_cell(self, obj, **args):
         if self._script.inSayAll():
             return []
 
-        result = super()._generateRealTableCell(obj, **args)
+        result = super()._generate_real_table_cell(obj, **args)
 
         if not self._script.utilities.isSpreadSheetCell(obj):
             if self._script.get_table_navigator().last_input_event_was_navigation_command():
                 return result
 
-            if settings_manager.get_manager().get_setting('speakCellCoordinates'):
+            if settings_manager.get_manager().get_setting("speakCellCoordinates"):
                 result.append(AXObject.get_name(obj))
             return result
 
-        isBasicWhereAmI = args.get('formatType') == 'basicWhereAmI'
-        speakCoordinates = settings_manager.get_manager().get_setting('speakSpreadsheetCoordinates')
-        if speakCoordinates or isBasicWhereAmI:
+        if settings_manager.get_manager().get_setting("speakSpreadsheetCoordinates") \
+           or args.get("formatType") == "basicWhereAmI":
             label = AXTable.get_label_for_cell_coordinates(obj) \
                 or self._script.utilities.spreadSheetCellName(obj)
             result.append(label)
 
-        if self._script.utilities.shouldReadFullRow(obj, args.get('priorObj')):
+        if self._script.utilities.shouldReadFullRow(obj, args.get("priorObj")):
             if self._script.utilities.cellRowChanged(obj):
                 return result
 
-        tooLong = self._generateTooLong(obj, **args)
-        if tooLong:
-            result.extend(self._generatePause(obj, **args))
-            result.extend(tooLong)
+        too_long = self._generate_too_long(obj, **args)
+        if too_long:
+            result.extend(self._generate_pause(obj, **args))
+            result.extend(too_long)
 
-        hasFormula = self._generateHasFormula(obj, **args)
-        if hasFormula:
-            result.extend(self._generatePause(obj, **args))
-            result.extend(hasFormula)
+        has_formula = self._generate_has_formula(obj, **args)
+        if has_formula:
+            result.extend(self._generate_pause(obj, **args))
+            result.extend(has_formula)
 
         if result == speech_generator.PAUSE:
             result = [messages.BLANK]
@@ -188,50 +170,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _generateEndOfTableIndicator(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) indicating that this cell is the last cell
-        in the table. Overridden here because Orca keeps saying "end
-        of table" in certain lists (e.g. the Templates and Documents
-        dialog).
-        """
-
-        if self._script.get_table_navigator().last_input_event_was_navigation_command() \
-           or self._script.inSayAll():
-            return []
-
-        if AXUtilities.is_dialog_or_alert(self._script.utilities.topLevelObject(obj)):
-            return []
-
-        return super()._generateEndOfTableIndicator(obj, **args)
-
-    def _generateNewAncestors(self, obj, **args):
-        priorObj = args.get('priorObj', None)
-        if not priorObj or AXObject.get_role_name(priorObj) == 'text frame':
-            return []
-
+    @log_generator_output
+    def _generate_new_ancestors(self, obj, **args):
         if self._script.utilities.isSpreadSheetCell(obj) \
-           and self._script.utilities.isDocumentPanel(AXObject.get_parent(priorObj)):
+           and self._script.utilities.isDocumentPanel(AXObject.get_parent(args.get("priorObj"))):
             return []
 
-        return super()._generateNewAncestors(obj, **args)
+        return super()._generate_new_ancestors(obj, **args)
 
-    def _generateOldAncestors(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the text of the ancestors for
-        the object being left."""
-
-        if AXObject.get_role_name(obj) == 'text frame':
+    @log_generator_output
+    def _generate_old_ancestors(self, obj, **args):
+        if self._script.utilities.isSpreadSheetCell(args.get("priorObj")):
             return []
 
-        priorObj = args.get('priorObj', None)
-        if self._script.utilities.isSpreadSheetCell(priorObj):
-            return []
-
-        return super()._generateOldAncestors(obj, **args)
-
-    def _generateUnselectedCell(self, obj, **args):
-        if not self._script.utilities.isGUICell(obj):
-            return []
-
-        return super()._generateUnselectedCell(obj, **args)
+        return super()._generate_old_ancestors(obj, **args)

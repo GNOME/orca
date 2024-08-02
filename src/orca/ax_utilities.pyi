@@ -122,6 +122,9 @@ class AXUtilities:
     def get_widget_roles(): ...
 
     @staticmethod
+    def get_localized_role_name(obj, role=None): ...
+
+    @staticmethod
     def have_same_role(obj1, obj2): ...
 
     @staticmethod

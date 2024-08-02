@@ -541,8 +541,8 @@ class Utilities(script_utilities.Utilities):
             return ""
 
         if self._preserveTree(obj):
-            utterances = self._script.speech_generator.generateSpeech(obj)
-            return self._script.speech_generator.utterancesToString(utterances)
+            utterances = self._script.speech_generator.generate_speech(obj)
+            return self._script.speech_generator.utterances_to_string(utterances)
 
         return super().expandEOCs(obj, startOffset, endOffset).strip()
 

@@ -34,6 +34,10 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+gi.require_version("Atk", "1.0")
+from gi.repository import Atk
+
+from . import object_properties
 from .ax_object import AXObject
 
 class AXUtilitiesRole:
@@ -208,6 +212,152 @@ class AXUtilitiesRole:
                  Atspi.Role.TEXT, # predicate recommended to check it is editable
                  Atspi.Role.TOGGLE_BUTTON]
         return roles
+
+    @staticmethod
+    def get_localized_role_name(obj, role=None):
+        """Returns a string representing the localized role name of obj."""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        if AXObject.supports_value(obj):
+            if AXUtilitiesRole.is_horizontal_slider(obj, role):
+                return object_properties.ROLE_SLIDER_HORIZONTAL
+            if AXUtilitiesRole.is_vertical_slider(obj, role):
+                return object_properties.ROLE_SLIDER_VERTICAL
+            if AXUtilitiesRole.is_horizontal_scrollbar(obj, role):
+                return object_properties.ROLE_SCROLL_BAR_HORIZONTAL
+            if AXUtilitiesRole.is_vertical_scrollbar(obj, role):
+                return object_properties.ROLE_SCROLL_BAR_VERTICAL
+            if AXUtilitiesRole.is_horizontal_separator(obj, role):
+                return object_properties.ROLE_SPLITTER_HORIZONTAL
+            if AXUtilitiesRole.is_vertical_separator(obj, role):
+                return object_properties.ROLE_SPLITTER_VERTICAL
+            if AXUtilitiesRole.is_split_pane(obj, role):
+                # The splitter has the opposite orientation of the split pane.
+                if AXObject.has_state(obj, Atspi.StateType.HORIZONTAL):
+                    return object_properties.ROLE_SPLITTER_VERTICAL
+                if AXObject.has_state(obj, Atspi.StateType.VERTICAL):
+                    return object_properties.ROLE_SPLITTER_HORIZONTAL
+
+        if AXUtilitiesRole.is_suggestion(obj, role):
+            return object_properties.ROLE_CONTENT_SUGGESTION
+
+        if AXUtilitiesRole.is_feed(obj, role):
+            return object_properties.ROLE_FEED
+
+        if AXUtilitiesRole.is_figure(obj, role):
+            return object_properties.ROLE_FIGURE
+
+        if AXUtilitiesRole.is_switch(obj, role):
+            return object_properties.ROLE_SWITCH
+
+        if AXUtilitiesRole.is_dpub(obj):
+            if AXUtilitiesRole.is_landmark(obj, role):
+                if AXUtilitiesRole.is_dpub_acknowledgments(obj, role):
+                    return object_properties.ROLE_ACKNOWLEDGMENTS
+                if AXUtilitiesRole.is_dpub_afterword(obj, role):
+                    return object_properties.ROLE_AFTERWORD
+                if AXUtilitiesRole.is_dpub_appendix(obj, role):
+                    return object_properties.ROLE_APPENDIX
+                if AXUtilitiesRole.is_dpub_bibliography(obj, role):
+                    return object_properties.ROLE_BIBLIOGRAPHY
+                if AXUtilitiesRole.is_dpub_chapter(obj, role):
+                    return object_properties.ROLE_CHAPTER
+                if AXUtilitiesRole.is_dpub_conclusion(obj, role):
+                    return object_properties.ROLE_CONCLUSION
+                if AXUtilitiesRole.is_dpub_credits(obj, role):
+                    return object_properties.ROLE_CREDITS
+                if AXUtilitiesRole.is_dpub_endnotes(obj, role):
+                    return object_properties.ROLE_ENDNOTES
+                if AXUtilitiesRole.is_dpub_epilogue(obj, role):
+                    return object_properties.ROLE_EPILOGUE
+                if AXUtilitiesRole.is_dpub_errata(obj, role):
+                    return object_properties.ROLE_ERRATA
+                if AXUtilitiesRole.is_dpub_foreword(obj, role):
+                    return object_properties.ROLE_FOREWORD
+                if AXUtilitiesRole.is_dpub_glossary(obj, role):
+                    return object_properties.ROLE_GLOSSARY
+                if AXUtilitiesRole.is_dpub_index(obj, role):
+                    return object_properties.ROLE_INDEX
+                if AXUtilitiesRole.is_dpub_introduction(obj, role):
+                    return object_properties.ROLE_INTRODUCTION
+                if AXUtilitiesRole.is_dpub_pagelist(obj, role):
+                    return object_properties.ROLE_PAGELIST
+                if AXUtilitiesRole.is_dpub_part(obj, role):
+                    return object_properties.ROLE_PART
+                if AXUtilitiesRole.is_dpub_preface(obj, role):
+                    return object_properties.ROLE_PREFACE
+                if AXUtilitiesRole.is_dpub_prologue(obj, role):
+                    return object_properties.ROLE_PROLOGUE
+                if AXUtilitiesRole.is_dpub_toc(obj, role):
+                    return object_properties.ROLE_TOC
+            elif role == "ROLE_DPUB_SECTION":
+                if AXUtilitiesRole.is_dpub_abstract(obj, role):
+                    return object_properties.ROLE_ABSTRACT
+                if AXUtilitiesRole.is_dpub_colophon(obj, role):
+                    return object_properties.ROLE_COLOPHON
+                if AXUtilitiesRole.is_dpub_credit(obj, role):
+                    return object_properties.ROLE_CREDIT
+                if AXUtilitiesRole.is_dpub_dedication(obj, role):
+                    return object_properties.ROLE_DEDICATION
+                if AXUtilitiesRole.is_dpub_epigraph(obj, role):
+                    return object_properties.ROLE_EPIGRAPH
+                if AXUtilitiesRole.is_dpub_example(obj, role):
+                    return object_properties.ROLE_EXAMPLE
+                if AXUtilitiesRole.is_dpub_pullquote(obj, role):
+                    return object_properties.ROLE_PULLQUOTE
+                if AXUtilitiesRole.is_dpub_qna(obj, role):
+                    return object_properties.ROLE_QNA
+            elif AXUtilitiesRole.is_list_item(obj, role):
+                if AXUtilitiesRole.is_dpub_biblioref(obj, role):
+                    return object_properties.ROLE_BIBLIOENTRY
+                if AXUtilitiesRole.is_dpub_endnote(obj, role):
+                    return object_properties.ROLE_ENDNOTE
+            else:
+                if AXUtilitiesRole.is_dpub_cover(obj, role):
+                    return object_properties.ROLE_COVER
+                if AXUtilitiesRole.is_dpub_pagebreak(obj, role):
+                    return object_properties.ROLE_PAGEBREAK
+                if AXUtilitiesRole.is_dpub_subtitle(obj, role):
+                    return object_properties.ROLE_SUBTITLE
+
+        if AXUtilitiesRole.is_landmark(obj, role):
+            if AXUtilitiesRole.is_landmark_without_type(obj, role):
+                return ""
+            if AXUtilitiesRole.is_landmark_banner(obj, role):
+                return object_properties.ROLE_LANDMARK_BANNER
+            if AXUtilitiesRole.is_landmark_complementary(obj, role):
+                return object_properties.ROLE_LANDMARK_COMPLEMENTARY
+            if AXUtilitiesRole.is_landmark_contentinfo(obj, role):
+                return object_properties.ROLE_LANDMARK_CONTENTINFO
+            if AXUtilitiesRole.is_landmark_main(obj, role):
+                return object_properties.ROLE_LANDMARK_MAIN
+            if AXUtilitiesRole.is_landmark_navigation(obj, role):
+                return object_properties.ROLE_LANDMARK_NAVIGATION
+            if AXUtilitiesRole.is_landmark_region(obj, role):
+                return object_properties.ROLE_LANDMARK_REGION
+            if AXUtilitiesRole.is_landmark_search(obj, role):
+                return object_properties.ROLE_LANDMARK_SEARCH
+            if AXUtilitiesRole.is_landmark_form(obj, role):
+                role = Atspi.Role.FORM
+        elif AXUtilitiesRole.is_comment(obj, role):
+            role = Atspi.Role.COMMENT
+
+        if not isinstance(role, Atspi.Role):
+            return AXObject.get_role_name(obj, True)
+
+        non_localized = Atspi.role_get_name(role)
+        atk_role = Atk.role_for_name(non_localized)
+        if atk_role == Atk.Role.INVALID:
+            if role == Atspi.Role.STATUS_BAR:
+                atk_role = Atk.Role.STATUSBAR
+            elif role == Atspi.Role.EDITBAR:
+                atk_role = Atk.Role.EDIT_BAR
+            elif role == Atspi.Role.TEAROFF_MENU_ITEM:
+                atk_role = Atk.Role.TEAR_OFF_MENU_ITEM
+
+        return Atk.role_get_localized_name(atk_role)
 
     @staticmethod
     def have_same_role(obj1, obj2):

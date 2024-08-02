@@ -338,7 +338,7 @@ class WhereAmIPresenter:
             script.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        title = script.speech_generator.generateTitle(obj)
+        title = script.speech_generator.generate_window_title(obj)
         for (string, voice) in title:
             script.presentMessage(string, voice=voice)
         return True

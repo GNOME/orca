@@ -17,20 +17,37 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Produces speech presentation for accessible objects."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from orca import debug
 from orca import speech_generator
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
+    """Produces speech presentation for accessible objects."""
 
-    def _generateExpandableState(self, obj, **args):
-        cell = self._script.utilities.getExpanderCellFor(obj) or obj
-        return super()._generateExpandableState(cell, **args)
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
 
-    def _generateNumberOfChildren(self, obj, **args):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"PIDGIN SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
+    def _generate_state_expanded(self, obj, **args):
         cell = self._script.utilities.getExpanderCellFor(obj) or obj
-        return super()._generateNumberOfChildren(cell, **args)
+        return super()._generate_state_expanded(cell, **args)
+
+    @log_generator_output
+    def _generate_number_of_children(self, obj, **args):
+        cell = self._script.utilities.getExpanderCellFor(obj) or obj
+        return super()._generate_number_of_children(cell, **args)
