@@ -797,7 +797,7 @@ class Generator:
     def _generate_text_expanding_embedded_objects(self, obj, **args):
         text = self._script.utilities.expandEOCs(
             obj, args.get("startOffset"), args.get("endOffset"))
-        if text:
+        if text and not self._script.utilities.stringsAreRedundant(AXObject.get_name(obj), text):
             return [text]
         return []
 
