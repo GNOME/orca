@@ -885,6 +885,15 @@ class Script(default.Script):
             super().sayLine(obj)
             return
 
+        # TODO - JD: We're making an exception here because the default script's sayLine()
+        # handles verbalized punctuation, indentation, repeats, etc. That adjustment belongs
+        # in the generators, but that's another potentially non-trivial change.
+        if AXUtilities.is_editable(obj) and "\ufffc" not in AXText.get_line_at_offset(obj)[0]:
+            msg = "WEB: Object is editable and line has no EOCs."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            super().sayLine(obj)
+            return
+
         document = self.utilities.getTopLevelDocumentForObject(obj)
         priorObj, _priorOffset = self.utilities.getPriorContext(documentFrame=document)
 
