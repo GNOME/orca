@@ -732,44 +732,46 @@ class Generator:
     ##################################### TEXT ######################################
 
     def _generate_text_substring(self, obj, **args):
-        if hash(obj) in Generator.CACHED_TEXT_SUBSTRING:
-            return Generator.CACHED_TEXT_SUBSTRING.get(hash(obj))
-
         start = args.get("startOffset")
         end = args.get("endOffset")
+        if (hash(obj), start, end) in Generator.CACHED_TEXT_SUBSTRING:
+            return Generator.CACHED_TEXT_SUBSTRING.get((hash(obj), start, end))
+
         if start is None or end is None:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_SUBSTRING[hash(obj)] = []
+                Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
             return []
 
         substring = args.get("string", AXText.get_substring(obj, start, end))
         if substring and self._script.EMBEDDED_OBJECT_CHARACTER not in substring:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_SUBSTRING[hash(obj)] = [substring]
+                Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = [substring]
             return [substring]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT_SUBSTRING[hash(obj)] = []
+            Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
         return []
 
     def _generate_text_line(self, obj, **args):
-        if hash(obj) in Generator.CACHED_TEXT_LINE:
-            return Generator.CACHED_TEXT_LINE.get(hash(obj))
+        start = args.get("startOffset")
+        end = args.get("endOffset")
+        if (hash(obj), start, end) in Generator.CACHED_TEXT_LINE:
+            return Generator.CACHED_TEXT_LINE.get((hash(obj), start, end))
 
         result = self._generate_text_substring(obj, **args)
         if result:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_LINE[hash(obj)] = result
+                Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = result
             return result
 
         text = AXText.get_line_at_offset(obj)[0]
         if text and self._script.EMBEDDED_OBJECT_CHARACTER not in text:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_LINE[hash(obj)] = [text]
+                Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = [text]
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT_LINE[hash(obj)] = []
+            Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = []
         return []
 
     def _generate_text_content(self, obj, **args):
@@ -785,7 +787,7 @@ class Generator:
         text = AXText.get_all_text(obj)
         if text and self._script.EMBEDDED_OBJECT_CHARACTER not in text:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_LINE[hash(obj)] = [text]
+                Generator.CACHED_TEXT[hash(obj)] = [text]
             return [text]
 
         if not AXUtilities.is_editable(obj):
