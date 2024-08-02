@@ -1649,7 +1649,7 @@ class Utilities(script_utilities.Utilities):
             indices.reverse()
 
         for i in indices:
-            result = self._findSelectionBoundaryObject(root[i], findStart)
+            result = self._findSelectionBoundaryObject(AXObject.get_child(root, i), findStart)
             if result:
                 return result
 
