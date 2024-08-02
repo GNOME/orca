@@ -1329,6 +1329,7 @@ class Utilities:
                      Atspi.Role.FRAME,
                      Atspi.Role.LIST_BOX,
                      Atspi.Role.LIST,
+                     Atspi.Role.LIST_ITEM,
                      Atspi.Role.MENU,
                      Atspi.Role.MENU_BAR,
                      Atspi.Role.PUSH_BUTTON,
