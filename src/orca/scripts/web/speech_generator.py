@@ -315,6 +315,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not args.get("inFlatReview"):
             return []
 
+        if AXUtilities.is_link(obj) and args.get("startOffset") is not None:
+            return []
+
         if self._script.utilities.hasVisibleCaption(obj):
             return []
 
