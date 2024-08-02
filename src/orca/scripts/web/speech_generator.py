@@ -440,6 +440,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if (is_editable and obj == args.get("priorObj")):
             return []
 
+        isEditable = AXUtilities.is_editable(obj)
+        if (isEditable and obj == args.get("priorObj")):
+            return []
+
         result = []
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
