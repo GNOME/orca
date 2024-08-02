@@ -465,6 +465,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generateRoleName(obj, **args)
 
+        isEditable = AXUtilities.is_editable(obj)
+        if (isEditable and obj == args.get("priorObj")):
+            return []
+
         result = []
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
@@ -516,7 +520,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if self._script.utilities.isMenuInCollapsedSelectElement(obj):
                 doNotSpeak.append(Atspi.Role.MENU)
 
-        isEditable = AXUtilities.is_editable(obj)
         mgr = input_event_manager.get_manager()
         if isEditable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             if (mgr.last_event_was_forward_caret_navigation() or self._script.inSayAll()) and start:
