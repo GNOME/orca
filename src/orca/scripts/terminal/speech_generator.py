@@ -26,12 +26,25 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
+from orca import debug
 from orca import speech_generator
 
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"TERMINAL SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
     def _generate_accessible_description(self, _obj, **_args):
         # The text in the description is the same as the text in the page
         # tab and similar to (and sometimes the same as) the prompt.

@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 from orca import braille
 from orca import braille_generator
+from orca import debug
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
@@ -35,12 +36,25 @@ from orca.ax_text import AXText
 class BrailleGenerator(braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"SOFFICE BRAILLE GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
     def _generate_accessible_role(self, obj, **args):
         if self._script.utilities.isDocument(obj):
             return []
 
         return super()._generate_accessible_role(obj, **args)
 
+    @log_generator_output
     def _generate_real_table_cell(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_real_table_cell(obj, **args)

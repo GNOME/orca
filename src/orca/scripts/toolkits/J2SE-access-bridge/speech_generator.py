@@ -33,6 +33,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca import debug
 from orca import messages
 from orca import settings
 from orca import settings_manager
@@ -43,6 +44,18 @@ from orca.ax_utilities import AXUtilities
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"JAVA SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
     def _generate_number_of_children(self, obj, **args):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
            or settings_manager.get_manager().get_setting('speechVerbosityLevel') \

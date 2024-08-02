@@ -27,6 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
+from orca import debug
 from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -34,6 +35,17 @@ from orca.scripts import web
 
 class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
+
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"EVOLUTION SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
 
     def __init__(self, script):
         super().__init__(script)
@@ -69,6 +81,7 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
 
         return rv
 
+    @log_generator_output
     def _generate_state_checked_for_cell(self, obj, **args):
         if self._is_message_list_status_cell(obj):
             return []
@@ -79,18 +92,21 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
 
         return super()._generate_state_checked_for_cell(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_label(self, obj, **args):
         if self._is_message_list_toggle_cell(obj):
             return []
 
         return super()._generate_accessible_label(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_name(self, obj, **args):
         if self._is_message_list_toggle_cell(obj) and not self._is_message_list_status_cell(obj):
             return []
 
         return super()._generate_accessible_name(obj, **args)
 
+    @log_generator_output
     def _generate_real_active_descendant_displayed_text(self, obj, **args):
         if self._is_message_list_toggle_cell(obj) and not self._is_message_list_status_cell(obj):
             if not AXUtilities.is_checked(obj):
@@ -100,12 +116,14 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
 
         return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_role(self, obj, **args):
         if self._is_message_list_toggle_cell(obj) and not AXUtilities.is_focused(obj):
             return []
 
         return super()._generate_accessible_role(obj, **args)
 
+    @log_generator_output
     def _generate_state_unselected(self, obj, **args):
         if self._is_message_list_toggle_cell(obj) \
            or AXUtilities.is_tree_table(AXObject.get_parent(obj)):
@@ -117,5 +135,4 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
         self._cache = {}
         results = super().generate_speech(obj, **args)
         self._cache = {}
-
         return results

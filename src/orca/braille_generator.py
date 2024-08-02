@@ -69,6 +69,17 @@ class BrailleGenerator(generator.Generator):
     def __init__(self, script):
         super().__init__(script, "braille")
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"BRAILLE GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
     def generate_braille(self, obj, **args):
         """Returns a [result, focused_region] list for presenting obj."""
 
@@ -128,18 +139,41 @@ class BrailleGenerator(generator.Generator):
 
         return [result, focused_region]
 
-    #####################################################################
-    #                                                                   #
-    # Name, role, and label information                                 #
-    #                                                                   #
-    #####################################################################
+    def get_localized_role_name(self, obj, **args):
+        if settings_manager.get_manager().get_setting("brailleRolenameStyle") \
+                == settings.BRAILLE_ROLENAME_STYLE_SHORT:
+            rv = shortRoleNames.get(args.get("role", AXObject.get_role(obj)))
+            if rv:
+                return rv
 
+        return super().get_localized_role_name(obj, **args)
+
+    def _as_string(self, content, delimiter=" "):
+        combined = ""
+        prior = None
+        if isinstance(content, str):
+            combined = content
+        elif content and isinstance(content, list):
+            # Strip off leading and trailing spaces.
+            #
+            while content and isinstance(content[0], Space):
+                content = content[1:]
+            while content and isinstance(content[-1], Space):
+                content = content[0:-1]
+            for element in content:
+                if isinstance(element, Space) and prior:
+                    combined += element.delimiter
+                    prior = None
+                else:
+                    prior = self._as_string(element)
+                    combined = self._script.utilities.appendString(
+                        combined, prior, delimiter)
+        return combined
+
+    ################################# BASIC DETAILS #################################
+
+    @log_generator_output
     def _generate_accessible_role(self, obj, **args):
-        """Returns the role name for the object in an array of strings, with
-        the exception that the Atspi.Role.UNKNOWN role will yield an
-        empty array.  Note that a 'role' attribute in args will
-        override the accessible role of the obj.
-        """
 
         if args.get('isProgressBarUpdate') \
            and not settings_manager.get_manager().get_setting('brailleProgressBarUpdates'):
@@ -170,25 +204,7 @@ class BrailleGenerator(generator.Generator):
             result.append(self.get_localized_role_name(obj, **args))
         return result
 
-    def get_localized_role_name(self, obj, **args):
-        """Returns the localized rolename of the given Accessible object."""
-
-        if settings_manager.get_manager().get_setting('brailleRolenameStyle') \
-                == settings.BRAILLE_ROLENAME_STYLE_SHORT:
-            role = args.get('role', AXObject.get_role(obj))
-            rv = shortRoleNames.get(role)
-            if rv:
-                return rv
-
-        return super().get_localized_role_name(obj, **args)
-
-
-    #####################################################################
-    #                                                                   #
-    # Hierarchy and related dialog information                          #
-    #                                                                   #
-    #####################################################################
-
+    @log_generator_output
     def _generate_alert_and_dialog_count(self, obj,  **_args):
         result = []
         alert_and_dialog_count = self._script.utilities.unfocusedAlertAndDialogCount(obj)
@@ -197,6 +213,7 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
+    @log_generator_output
     def _generate_ancestors(self, obj, **args):
         if not settings_manager.get_manager().get_setting('enableBrailleContext'):
             return []
@@ -219,12 +236,14 @@ class BrailleGenerator(generator.Generator):
         result.reverse()
         return result
 
+    @log_generator_output
     def _generate_term_value_count(self, obj, **_args):
         count = len(self._script.utilities.valuesForTerm(obj))
         if count < 0:
             return []
         return [f"({messages.valueCountForTerm(count)})"]
 
+    @log_generator_output
     def _generate_status_bar_items(self, obj, **_args):
         if not AXUtilities.is_status_bar(obj):
             return []
@@ -242,6 +261,7 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
+    @log_generator_output
     def _generate_list_box_item_widgets(self, obj, **_args):
         if not AXUtilities.is_list_box(AXObject.get_parent(obj)):
             return []
@@ -251,71 +271,6 @@ class BrailleGenerator(generator.Generator):
             result.extend(self.generate(widget, includeContext=False))
             result.append(braille.Region(" "))
         return result
-
-    def _generate_progress_bar_index(self, obj, **_args):
-        acc = self._get_most_recent_progress_bar_update()[0]
-        if acc != obj:
-            number = self._get_progress_bar_number_and_count(obj)[0]
-            return [f'{number}']
-
-        return []
-
-    def _generate_progress_bar_value(self, obj, **args):
-        result = self._generate_value_as_percentage(obj, **args)
-        if obj == focus_manager.get_manager().get_locus_of_focus() and not result:
-            return [""]
-
-        return result
-
-    def _get_progress_bar_update_interval(self):
-        interval = settings_manager.get_manager().get_setting('progressBarBrailleInterval')
-        if interval is None:
-            return super()._get_progress_bar_update_interval()
-
-        return int(interval)
-
-    def _should_present_progress_bar_update(self, obj, **args):
-        if not settings_manager.get_manager().get_setting('brailleProgressBarUpdates'):
-            return False
-
-        return super()._should_present_progress_bar_update(obj, **args)
-
-    #####################################################################
-    #                                                                   #
-    # Other things for spacing                                          #
-    #                                                                   #
-    #####################################################################
-
-    def _generate_eol(self, obj, **_args):
-        if settings_manager.get_manager().get_setting("disableBrailleEOL"):
-            return []
-
-        if not (AXUtilities.is_editable(obj) or AXUtilities.is_code(obj)):
-            return []
-
-        return [object_properties.EOL_INDICATOR_BRAILLE]
-
-    def _as_string(self, content, delimiter=" "):
-        combined = ""
-        prior = None
-        if isinstance(content, str):
-            combined = content
-        elif content and isinstance(content, list):
-            # Strip off leading and trailing spaces.
-            #
-            while content and isinstance(content[0], Space):
-                content = content[1:]
-            while content and isinstance(content[-1], Space):
-                content = content[0:-1]
-            for element in content:
-                if isinstance(element, Space) and prior:
-                    combined += element.delimiter
-                    prior = None
-                else:
-                    prior = self._as_string(element)
-                    combined = self._script.utilities.appendString(
-                        combined, prior, delimiter)
-        return combined
 
     ################################### KEYBOARD ###################################
 
@@ -330,7 +285,52 @@ class BrailleGenerator(generator.Generator):
             result.append("(" + accelerator + ")")
         return result
 
-    ################################### PER-ROLE ###################################
+    ################################ PROGRESS BARS ##################################
+
+    @log_generator_output
+    def _generate_progress_bar_index(self, obj, **_args):
+        acc = self._get_most_recent_progress_bar_update()[0]
+        if acc != obj:
+            number = self._get_progress_bar_number_and_count(obj)[0]
+            return [f'{number}']
+
+        return []
+
+    @log_generator_output
+    def _generate_progress_bar_value(self, obj, **args):
+        result = self._generate_value_as_percentage(obj, **args)
+        if obj == focus_manager.get_manager().get_locus_of_focus() and not result:
+            return [""]
+
+        return result
+
+    def _get_progress_bar_update_interval(self):
+        interval = settings_manager.get_manager().get_setting("progressBarBrailleInterval")
+        if interval is None:
+            return super()._get_progress_bar_update_interval()
+
+        return int(interval)
+
+    def _should_present_progress_bar_update(self, obj, **args):
+        if not settings_manager.get_manager().get_setting("brailleProgressBarUpdates"):
+            return False
+
+        return super()._should_present_progress_bar_update(obj, **args)
+
+    ##################################### TEXT ######################################
+
+    @log_generator_output
+    def _generate_eol(self, obj, **_args):
+        if settings_manager.get_manager().get_setting("disableBrailleEOL"):
+            return []
+
+        if not (AXUtilities.is_editable(obj) or AXUtilities.is_code(obj)):
+            return []
+
+        return [object_properties.EOL_INDICATOR_BRAILLE]
+
+
+    ################################### PER-ROLE ####################################
 
     def _generate_default_prefix(self, obj, **args):
         """Provides the default/role-agnostic information to present before obj."""

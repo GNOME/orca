@@ -25,6 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from orca import debug
 from orca import messages
 from orca import settings_manager
 from orca import speech_generator
@@ -38,6 +39,18 @@ from orca.ax_utilities import AXUtilities
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"SOFFICE SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
     def _generate_text_line(self, obj, **args):
         if AXUtilities.is_combo_box(obj):
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
@@ -56,6 +69,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_text_line(obj, **args)
 
+    @log_generator_output
     def _generate_state_pressed(self, obj, **args):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
@@ -115,6 +129,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
+    @log_generator_output
     def _generate_real_table_cell(self, obj, **args):
         if self._script.inSayAll():
             return []
@@ -155,6 +170,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_new_ancestors(self, obj, **args):
         if self._script.utilities.isSpreadSheetCell(obj) \
            and self._script.utilities.isDocumentPanel(AXObject.get_parent(args.get("priorObj"))):
@@ -162,6 +178,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_new_ancestors(obj, **args)
 
+    @log_generator_output
     def _generate_old_ancestors(self, obj, **args):
         if self._script.utilities.isSpreadSheetCell(args.get("priorObj")):
             return []

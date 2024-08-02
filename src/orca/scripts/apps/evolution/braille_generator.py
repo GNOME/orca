@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 from orca import braille
 from orca import braille_generator
+from orca import debug
 from orca.scripts import web
 
 class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator):
@@ -37,6 +38,17 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
     def __init__(self, script):
         super().__init__(script)
         self._cache = {}
+
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"EVOLUTION BRAILLE GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
 
     def _is_message_list_toggle_cell(self, obj):
         cached = self._cache.get(hash(obj), {})
@@ -48,6 +60,7 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
 
         return rv
 
+    @log_generator_output
     def _generate_real_active_descendant_displayed_text(self, obj, **args):
         if self._is_message_list_toggle_cell(obj):
             return []

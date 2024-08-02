@@ -27,11 +27,24 @@ __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import braille_generator
+from orca import debug
 
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"TERMINAL BRAILLE GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
     def _generate_accessible_description(self, _obj, **_args):
         # The text in the description is the same as the text in the page
         # tab and similar to (and sometimes the same as) the prompt.

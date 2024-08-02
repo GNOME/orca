@@ -50,6 +50,17 @@ from orca.ax_utilities import AXUtilities
 class BrailleGenerator(braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"WEB BRAILLE GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
     def get_localized_role_name(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super().get_localized_role_name(obj, **args)
@@ -60,6 +71,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super().get_localized_role_name(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_role(self, obj, **args):
         """Prevents some roles from being displayed."""
 
@@ -118,6 +130,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_accessible_label(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label(obj, **args)
@@ -128,6 +141,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generate_accessible_label(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_label_and_name(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label_and_name(obj, **args)
@@ -145,6 +159,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generate_accessible_label_and_name(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_description(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_description(obj, **args)
@@ -154,6 +169,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return super()._generate_accessible_description(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_name(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_name(obj, **args)
@@ -181,6 +197,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_real_active_descendant_displayed_text(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)

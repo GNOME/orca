@@ -56,12 +56,25 @@ from orca.ax_utilities import AXUtilities
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
 
+    @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"WEB SPEECH GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @log_generator_output
     def _generate_old_ancestors(self, obj, **args):
         if args.get("index", 0) > 0:
             return []
 
         return super()._generate_old_ancestors(obj, **args)
 
+    @log_generator_output
     def _generate_new_ancestors(self, obj, **args):
         if args.get("index", 0) > 0 and not self._script.utilities.isListDescendant(obj):
             return []
@@ -113,7 +126,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_state_has_popup(self, obj, **args):
+        # TODO - JD: Can this be merged into the default's
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -136,6 +151,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_state_has_popup(obj, **args)
 
+    @log_generator_output
     def _generate_has_click_action(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -153,6 +169,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
+    @log_generator_output
     def _generate_accessible_description(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -185,6 +202,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_accessible_description(obj, **args)
 
+    @log_generator_output
     def _generate_has_long_description(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -199,6 +217,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
+    @log_generator_output
     def _generate_has_details(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -218,6 +237,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
+    @log_generator_output
     def _generate_all_details(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -249,6 +269,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_details_for(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -286,6 +307,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_accessible_label_and_name(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label_and_name(obj, **args)
@@ -305,6 +327,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_accessible_label_and_name(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_name(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_name(obj, **args)
@@ -343,6 +366,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_accessible_name(obj, **args)
 
+    @log_generator_output
     def _generate_accessible_label(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label(obj, **args)
@@ -355,6 +379,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return []
 
+    @log_generator_output
     def _generate_leaving(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -371,6 +396,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_leaving(obj, **args)
 
+    @log_generator_output
     def _generate_new_radio_button_group(self, obj, **args):
         # TODO - JD: The default speech generator"s method determines group membership
         # via the member-of relation. We cannot count on that here. Plus, radio buttons
@@ -379,6 +405,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # try to filter out some of the noise....
         return []
 
+    @log_generator_output
     def _generate_number_of_children(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
            or settings_manager.get_manager().get_setting("speechVerbosityLevel") \
@@ -425,6 +452,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super().get_localized_role_name(obj, **args)
 
+    @log_generator_output
     def _generate_real_active_descendant_displayed_text(self, obj, **args):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
@@ -432,6 +460,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         rad = self._script.utilities.realActiveDescendant(obj)
         return self._generate_text_content(rad, **args)
 
+    @log_generator_output
     def _generate_accessible_role(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -554,6 +583,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    @log_generator_output
     def _generate_position_in_list(self, obj, **args):
         if AXUtilities.is_list_item(obj):
             if args.get("index", 0) + 1 < args.get("total", 1):
@@ -565,6 +595,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_position_in_list(obj, **args)
 
+    @log_generator_output
     def _generate_state_unselected(self, obj, **args):
         if not self._script.inFocusMode():
             return []
@@ -573,6 +604,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     # TODO - JD: This function and its associated fake role really need to die....
     # TODO - JD: Why isn"t this logic part of normal table cell generation?
+    @log_generator_output
     def _generate_real_table_cell(self, obj, **args):
         result = super()._generate_real_table_cell(obj, **args)
         if not self._script.inFocusMode():
