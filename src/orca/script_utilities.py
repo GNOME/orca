@@ -1526,7 +1526,17 @@ class Utilities:
                     result += " "
                 toBuild[i] = result
 
-        return "".join(toBuild)
+        result = "".join(toBuild)
+        tokens = ["SCRIPT UTILITIES: Expanded EOCs for", obj, f"range: {startOffset}:{endOffset}:",
+                 f"'{result}'"]
+        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        if self.EMBEDDED_OBJECT_CHARACTER in result:
+            msg = "SCRIPT UTILITIES: Unable to expand EOCs"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        return result
 
     def getError(self, obj):
         return AXUtilities.is_invalid_entry(obj)
