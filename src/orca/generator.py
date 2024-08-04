@@ -183,6 +183,17 @@ class Generator:
         }
 
     @staticmethod
+    def log_generator_output(func):
+        """Decorator for logging."""
+
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            tokens = [f"GENERATOR: {func.__name__}:", result]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            return result
+        return wrapper
+
+    @staticmethod
     def _clear_stored_data():
         """Clears any data we have cached for objects"""
 
@@ -295,6 +306,7 @@ class Generator:
 
     ################################# BASIC DETAILS #################################
 
+    @log_generator_output
     def _generate_accessible_description(self, obj, **_args):
         if hash(obj) in Generator.CACHED_DESCRIPTION:
             return Generator.CACHED_DESCRIPTION.get(hash(obj))
@@ -316,6 +328,7 @@ class Generator:
         Generator.CACHED_DESCRIPTION[hash(obj)] = [description]
         return [description]
 
+    @log_generator_output
     def _generate_accessible_image_description(self, obj, **_args):
         if hash(obj) in Generator.CACHED_IMAGE_DESCRIPTION:
             return Generator.CACHED_IMAGE_DESCRIPTION.get(hash(obj))
@@ -328,6 +341,7 @@ class Generator:
         Generator.CACHED_IMAGE_DESCRIPTION[hash(obj)] = [description]
         return [description]
 
+    @log_generator_output
     def _generate_accessible_label(self, obj, **_args):
         result = []
         label = self._script.utilities.displayedLabel(obj)
@@ -335,6 +349,7 @@ class Generator:
             result.append(label)
         return result
 
+    @log_generator_output
     def _generate_accessible_label_and_name(self, obj, **args):
         if hash(obj) in Generator.CACHED_LABEL_AND_NAME:
             return Generator.CACHED_LABEL_AND_NAME.get(hash(obj))
@@ -384,6 +399,7 @@ class Generator:
         Generator.CACHED_LABEL_AND_NAME[hash(obj)] = result
         return result
 
+    @log_generator_output
     def _generate_accessible_name(self, obj, **args):
         name = AXObject.get_name(obj)
         if name:
@@ -410,6 +426,7 @@ class Generator:
 
         return []
 
+    @log_generator_output
     def _generate_accessible_placeholder_text(self, obj, **_args):
         attrs = AXObject.get_attributes_dict(obj)
         placeholder = attrs.get("placeholder-text")
@@ -422,9 +439,11 @@ class Generator:
 
         return []
 
+    @log_generator_output
     def _generate_accessible_role(self, _obj, **_args):
         return []
 
+    @log_generator_output
     def _generate_accessible_static_text(self, obj, **args):
         if hash(obj) in Generator.CACHED_STATIC_TEXT:
             return Generator.CACHED_STATIC_TEXT.get(hash(obj))
@@ -448,6 +467,7 @@ class Generator:
         Generator.CACHED_STATIC_TEXT[hash(obj)] = result
         return result
 
+    @log_generator_output
     def _get_functional_role(self, obj, **args):
         role = args.get("role", AXObject.get_role(obj))
         if AXUtilities.is_math_related(obj):
@@ -501,6 +521,7 @@ class Generator:
 
         return role
 
+    @log_generator_output
     def _generate_focused_item(self, obj, **args):
         role = args.get("role")
         if not (AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role)):
@@ -519,6 +540,7 @@ class Generator:
 
         return result
 
+    @log_generator_output
     def _generate_radio_button_group(self, obj, **_args):
         if not AXUtilities.is_radio_button(obj):
             return []
@@ -541,6 +563,7 @@ class Generator:
 
     ##################################### STATE #####################################
 
+    @log_generator_output
     def _generate_state_checked(self, obj, **_args):
         if self._mode == "braille":
             indicators = object_properties.CHECK_BOX_INDICATORS_BRAILLE
@@ -557,6 +580,7 @@ class Generator:
             return [indicators[2]]
         return [indicators[0]]
 
+    @log_generator_output
     def _generate_state_checked_for_cell(self, obj, **args):
         result = []
         if self._script.utilities.hasMeaningfulToggleAction(obj):
@@ -565,6 +589,7 @@ class Generator:
 
         return result
 
+    @log_generator_output
     def _generate_state_checked_for_switch(self, obj, **_args):
         if self._mode == "braille":
             indicators = object_properties.SWITCH_INDICATORS_BRAILLE
@@ -579,6 +604,7 @@ class Generator:
             return [indicators[1]]
         return [indicators[0]]
 
+    @log_generator_output
     def _generate_state_checked_if_checkable(self, obj, **args):
         if AXUtilities.is_checkable(obj) or AXUtilities.is_check_menu_item(obj):
             return self._generate_state_checked(obj, **args)
@@ -588,6 +614,7 @@ class Generator:
 
         return []
 
+    @log_generator_output
     def _generate_state_expanded(self, obj, **_args):
         if self._mode == "braille":
             indicators = object_properties.EXPANSION_INDICATORS_BRAILLE
@@ -606,9 +633,11 @@ class Generator:
             return [indicators[0]]
         return []
 
+    @log_generator_output
     def _generate_state_has_popup(self, _obj, **_args):
         return []
 
+    @log_generator_output
     def _generate_state_invalid(self, obj, **_args):
         error = self._script.utilities.getError(obj)
         if not error:
@@ -639,6 +668,7 @@ class Generator:
 
         return result
 
+    @log_generator_output
     def _generate_state_multiselectable(self, obj, **_args):
         if not (AXUtilities.is_multiselectable(obj) and AXObject.get_child_count(obj)):
             return []
@@ -652,6 +682,7 @@ class Generator:
             return [object_properties.STATE_MULTISELECT_SOUND]
         return []
 
+    @log_generator_output
     def _generate_state_pressed(self, obj, **_args):
         if self._mode == "braille":
             indicators = object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE
@@ -666,6 +697,7 @@ class Generator:
             return [indicators[1]]
         return [indicators[0]]
 
+    @log_generator_output
     def _generate_state_read_only(self, obj, **_args):
         if not (AXUtilities.is_read_only(obj) or self._script.utilities.isReadOnlyTextArea(obj)):
             return []
@@ -679,6 +711,7 @@ class Generator:
 
         return []
 
+    @log_generator_output
     def _generate_state_required(self, obj, **_args):
         is_required = AXUtilities.is_required(obj)
         if not is_required and AXUtilities.is_radio_button(obj):
@@ -695,6 +728,7 @@ class Generator:
 
         return []
 
+    @log_generator_output
     def _generate_state_selected_for_radio_button(self, obj, **_args):
         if self._mode == "braille":
             indicators = object_properties.RADIO_BUTTON_INDICATORS_BRAILLE
@@ -709,6 +743,7 @@ class Generator:
             return [indicators[1]]
         return [indicators[0]]
 
+    @log_generator_output
     def _generate_state_sensitive(self, obj, **_args):
         if AXUtilities.is_sensitive(obj):
             return []
@@ -722,15 +757,18 @@ class Generator:
 
         return []
 
+    @log_generator_output
     def _generate_state_unselected(self, _obj, **_args):
         return []
 
+    @log_generator_output
     def _generate_state_visited(self, _obj, **_args):
         # Note that in the case of speech, this state is added to the role name.
         return []
 
     ##################################### TEXT ######################################
 
+    @log_generator_output
     def _generate_text_substring(self, obj, **args):
         start = args.get("startOffset")
         end = args.get("endOffset")
@@ -752,6 +790,7 @@ class Generator:
             Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
         return []
 
+    @log_generator_output
     def _generate_text_line(self, obj, **args):
         start = args.get("startOffset")
         end = args.get("endOffset")
@@ -774,6 +813,7 @@ class Generator:
             Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = []
         return []
 
+    @log_generator_output
     def _generate_text_content(self, obj, **args):
         if hash(obj) in Generator.CACHED_TEXT:
             return Generator.CACHED_TEXT.get(hash(obj))
@@ -794,6 +834,7 @@ class Generator:
             Generator.CACHED_TEXT[hash(obj)] = [text]
         return [text]
 
+    @log_generator_output
     def _generate_text_expanding_embedded_objects(self, obj, **args):
         text = self._script.utilities.expandEOCs(
             obj, args.get("startOffset"), args.get("endOffset"))
@@ -803,6 +844,7 @@ class Generator:
 
     ################################## POSITION #####################################
 
+    @log_generator_output
     def _get_nesting_level(self, obj):
         level = Generator.CACHED_NESTING_LEVEL.get(hash(obj))
         if level is None:
@@ -810,6 +852,7 @@ class Generator:
             Generator.CACHED_NESTING_LEVEL[hash(obj)] = level
         return level
 
+    @log_generator_output
     def _generate_nesting_level(self, obj, **args):
         if args.get("startOffset") is not None and args.get("endOffset") is not None:
             return []
@@ -824,9 +867,11 @@ class Generator:
             return [object_properties.NESTING_LEVEL_SPEECH % (level)]
         return []
 
+    @log_generator_output
     def _generate_position_in_list(self, _obj, **_args):
         return []
 
+    @log_generator_output
     def _generate_tree_item_level(self, obj, **args):
         level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(obj))
         if level is None:
@@ -853,9 +898,11 @@ class Generator:
 
     ################################ PROGRESS BARS ##################################
 
+    @log_generator_output
     def _generate_progress_bar_index(self, _obj, **_args):
         return []
 
+    @log_generator_output
     def _generate_progress_bar_value(self, _obj, **_args):
         return []
 
@@ -912,6 +959,7 @@ class Generator:
     ##################################### TABLE #####################################
 
     # TODO - JD: This function and fake role really need to die....
+    @log_generator_output
     def _generate_real_table_cell(self, obj, **args):
         result = []
         args["role"] = "REAL_ROLE_TABLE_CELL"
@@ -935,6 +983,7 @@ class Generator:
         return True
 
     # TODO - JD: This is part of the complicated "REAL_ROLE_TABLE_CELL" mess.
+    @log_generator_output
     def _generate_table_cell_row(self, obj, **args):
         present_all = args.get("readingRow") is True \
             or args.get("formatType") == "detailedWhereAmI" \
@@ -972,6 +1021,7 @@ class Generator:
 
 
     # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.
+    @log_generator_output
     def _generate_column_header_if_toggle_and_no_text(self, obj, **_args):
         if not self._get_is_nameless_toggle(obj):
             return []
@@ -984,6 +1034,7 @@ class Generator:
         return result
 
     # TODO - JD: This needs to also be looked into.
+    @log_generator_output
     def _generate_real_active_descendant_displayed_text(self, obj, **args):
         rad = self._script.utilities.realActiveDescendant(obj)
 
@@ -996,6 +1047,7 @@ class Generator:
             return self._generate_text_content(rad, **args)
         return [rv]
 
+    @log_generator_output
     def _generate_table_cell_column_header(self, obj, **args):
         if args.get("readingRow") and not self._get_is_nameless_toggle(obj):
             return []
@@ -1028,6 +1080,7 @@ class Generator:
         result.append(text)
         return result
 
+    @log_generator_output
     def _generate_table_cell_row_header(self, obj, **args):
         if args.get("readingRow"):
             return []
@@ -1059,6 +1112,7 @@ class Generator:
         result.append(text)
         return result
 
+    @log_generator_output
     def _generate_table_sort_order(self, obj, **_args):
         description = self._script.utilities.getSortOrderDescription(obj)
         if not description:
@@ -1068,6 +1122,7 @@ class Generator:
 
     ##################################### VALUE #####################################
 
+    @log_generator_output
     def _generate_value(self, obj, **args):
         if AXUtilities.is_combo_box(obj, args.get("role")):
             value = self._script.utilities.getComboBoxValue(obj)
@@ -1081,6 +1136,7 @@ class Generator:
             return [result]
         return []
 
+    @log_generator_output
     def _generate_value_as_percentage(self, obj, **_args):
         percent = AXValue.get_value_as_percent(obj)
         if percent is not None:
