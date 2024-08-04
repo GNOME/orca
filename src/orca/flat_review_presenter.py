@@ -27,8 +27,9 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
+import time
 
+import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -1214,7 +1215,7 @@ class FlatReviewContextGUI:
         """Shows the dialog."""
 
         self._gui.show_all()
-        self._gui.present_with_time(Gtk.get_current_event_time())
+        self._gui.present_with_time(time.time())
 
 
 _presenter = FlatReviewPresenter()

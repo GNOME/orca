@@ -27,6 +27,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import time
+
 import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
@@ -118,7 +120,7 @@ class OrcaNavListGUI:
 
     def showGUI(self):
         self._gui.show_all()
-        self._gui.present_with_time(Gtk.get_current_event_time())
+        self._gui.present_with_time(time.time())
 
     def _onCursorChanged(self, widget):
         obj, offset = self._getSelectedAccessibleAndOffset()

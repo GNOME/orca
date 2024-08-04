@@ -27,8 +27,9 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
+import time
 
+import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk
@@ -304,7 +305,7 @@ class LearnModePresenter:
         uri = "help:orca"
         if page:
             uri += f"/{page}"
-        Gtk.show_uri(Gdk.Screen.get_default(), uri, Gtk.get_current_event_time())
+        Gtk.show_uri(Gdk.Screen.get_default(), time.time())
         return True
 
 class CommandListGUI:
@@ -369,7 +370,7 @@ class CommandListGUI:
         """Shows the dialog."""
 
         self._gui.show_all()
-        self._gui.present_with_time(Gtk.get_current_event_time())
+        self._gui.present_with_time(time.time())
 
 
 _presenter = LearnModePresenter()

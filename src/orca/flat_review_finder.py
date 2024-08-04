@@ -30,6 +30,7 @@ __license__   = "LGPL"
 
 import copy
 import re
+import time
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -544,7 +545,7 @@ class FlatReviewFinderGUI:
         """Shows the notifications list dialog."""
 
         self._gui.show_all()
-        self._gui.present_with_time(Gtk.get_current_event_time())
+        self._gui.present_with_time(time.time())
 
 
 _finder = FlatReviewFinder()

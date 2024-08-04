@@ -355,7 +355,7 @@ class NotificationListGUI:
         """Shows the notifications list dialog."""
 
         self._gui.show_all()
-        self._gui.present_with_time(Gtk.get_current_event_time())
+        self._gui.present_with_time(time.time())
 
 _presenter = NotificationPresenter()
 def get_presenter():

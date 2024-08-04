@@ -330,7 +330,7 @@ class KeyboardEvent(InputEvent):
              + f"                 modifiers={modifiers}\n" \
              + f"                 event_string=({event_string})\n" \
              + f"                 keyval_name=({keyval_name})\n" \
-             + f"                 timestamp=%{self.timestamp}\n" \
+             + f"                 timestamp={self.timestamp}\n" \
              + f"                 time={time.time():f}\n" \
              + f"                 key_type={key_type}\n" \
              + f"                 clickCount={self._click_count}\n" \

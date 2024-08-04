@@ -26,8 +26,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
+import time
 
+import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
@@ -206,7 +207,7 @@ class ActionMenu(Gtk.Menu):
         event = Gdk.Event.new(Gdk.EventType.BUTTON_PRESS)
         event.set_screen(screen)
         event.set_device(device)
-        event.time = Gtk.get_current_event_time()
+        event.time = time.time()
         event.x = x
         event.y = y
 
