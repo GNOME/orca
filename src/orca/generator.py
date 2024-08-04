@@ -66,6 +66,7 @@ class Generator:
     CACHED_TEXT_SUBSTRING: dict = {}
     CACHED_TEXT_LINE: dict = {}
     CACHED_TEXT: dict = {}
+    CACHED_TEXT_EXPANDING_EOCS: dict = {}
     CACHED_TREE_ITEM_LEVEL: dict = {}
     USED_DESCRIPTION_FOR_STATIC_TEXT: dict = {}
 
@@ -212,6 +213,7 @@ class Generator:
                 Generator.CACHED_TEXT_SUBSTRING = {}
                 Generator.CACHED_TEXT_LINE = {}
                 Generator.CACHED_TEXT = {}
+                Generator.CACHED_TEXT_EXPANDING_EOCS = {}
                 Generator.CACHED_TREE_ITEM_LEVEL = {}
                 Generator.USED_DESCRIPTION_FOR_STATIC_TEXT = {}
 
@@ -836,10 +838,21 @@ class Generator:
 
     @log_generator_output
     def _generate_text_expanding_embedded_objects(self, obj, **args):
+        start = args.get("startOffset")
+        end = args.get("endOffset")
+        if (hash(obj), start, end) in Generator.CACHED_TEXT_EXPANDING_EOCS:
+            return Generator.CACHED_TEXT_EXPANDING_EOCS.get((hash(obj), start, end))
+
         text = self._script.utilities.expandEOCs(
-            obj, args.get("startOffset"), args.get("endOffset"))
-        if text and not self._script.utilities.stringsAreRedundant(AXObject.get_name(obj), text):
+            obj, args.get("startOffset", 0), args.get("endOffset", -1))
+        if text.strip() and self._script.EMBEDDED_OBJECT_CHARACTER not in text \
+           and not self._script.utilities.stringsAreRedundant(AXObject.get_name(obj), text):
+            if not AXUtilities.is_editable(obj):
+                Generator.CACHED_TEXT_EXPANDING_EOCS[hash(obj), start, end] = [text]
             return [text]
+
+        if not AXUtilities.is_editable(obj):
+            Generator.CACHED_TEXT_EXPANDING_EOCS[(hash(obj), start, end)] = []
         return []
 
     ################################## POSITION #####################################
