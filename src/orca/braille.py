@@ -1546,7 +1546,7 @@ def _initFlash(flashTime):
 def displayRegions(regionInfo, flashTime=0):
     """Displays a list of regions on a single line, setting focus to the
        specified region.  The regionInfo parameter is something that is
-       typically returned by a call to braille_generator.generateBraille.
+       typically returned by a call to braille_generator.generate_braille.
 
     Arguments:
     - regionInfo: a list where the first element is a list of regions

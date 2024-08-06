@@ -571,7 +571,7 @@ class Script(default.Script):
                 if self.utilities.isLinkAncestorOfImageInContents(obj, contents):
                     continue
 
-                utterances = self.speech_generator.generateContents(
+                utterances = self.speech_generator.generate_contents(
                     [content], eliminatePauses=True, priorObj=priorObj)
                 priorObj = obj
 
@@ -803,7 +803,7 @@ class Script(default.Script):
     def speakContents(self, contents, **args):
         """Speaks the specified contents."""
 
-        utterances = self.speech_generator.generateContents(contents, **args)
+        utterances = self.speech_generator.generate_contents(contents, **args)
         speech.speak(utterances)
 
     def sayCharacter(self, obj):
@@ -1007,7 +1007,7 @@ class Script(default.Script):
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
         document = args.get("documentFrame")
-        result = self.braille_generator.generateContents(contents, documentFrame=document)
+        result = self.braille_generator.generate_contents(contents, documentFrame=document)
         if not result:
             msg = "WEB: Generating braille contents failed"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
@@ -1316,7 +1316,7 @@ class Script(default.Script):
         if contents:
             self.speakContents(contents, **args)
         else:
-            utterances = self.speech_generator.generateSpeech(new_focus, **args)
+            utterances = self.speech_generator.generate_speech(new_focus, **args)
             speech.speak(utterances)
 
         self._save_focused_object_info(new_focus)
@@ -1780,7 +1780,7 @@ class Script(default.Script):
         if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
             utterances = []
             utterances.append(messages.NEW_ITEM_ADDED)
-            utterances.extend(self.speech_generator.generateSpeech(event.any_data, force=True))
+            utterances.extend(self.speech_generator.generate_speech(event.any_data, force=True))
             speech.speak(utterances)
             self._lastMouseOverObject = event.any_data
             self.preMouseOverContext = self.utilities.getCaretContext()

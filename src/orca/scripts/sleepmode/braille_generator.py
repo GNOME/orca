@@ -30,8 +30,9 @@ from orca import debug
 from orca import braille_generator
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
+    """Braille Generator for Sleep Mode. Does nothing."""
 
-    def generateBraille(self, obj, **args):
+    def generate_braille(self, _obj, **_args):
         msg = "SLEEP MODE BRAILLE GENERATOR: Generating nothing."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return []

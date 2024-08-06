@@ -30,8 +30,9 @@ from orca import debug
 from orca import speech_generator
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
+    """Speech Generator for Sleep Mode. Does nothing."""
 
-    def generateSpeech(self, obj, **args):
+    def generate_speech(self, _obj, **_args):
         msg = "SLEEP MODE SPEECH GENERATOR: Generating nothing."
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return []
