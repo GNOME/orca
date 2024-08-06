@@ -838,8 +838,10 @@ class Script(default.Script):
             return
 
         obj, start, end, string = contents[0]
-        if start > 0:
-            string = string or "\n"
+        if start > 0 and string == "\n":
+            if settings_manager.get_manager().get_setting("speakBlankLines"):
+                self.speakMessage(messages.BLANK, interrupt=False)
+                return
 
         if string:
             self.speakMisspelledIndicator(obj, start)

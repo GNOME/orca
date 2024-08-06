@@ -2069,10 +2069,8 @@ class Script(script.Script):
                 result.extend(voice)
                 utterance.append(result)
             speech.speak(utterance)
-        else:
-            # Speak blank line if appropriate.
-            #
-            self.sayCharacter(obj)
+        elif settings_manager.get_manager().get_setting("speakBlankLines"):
+            self.speakMessage(messages.BLANK, interrupt=False)
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
