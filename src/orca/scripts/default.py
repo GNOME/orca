@@ -1410,6 +1410,7 @@ class Script(script.Script):
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.handlePasteLocusOfFocusChange():
             if self.utilities.topLevelObjectIsActiveAndCurrent(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
@@ -1417,6 +1418,12 @@ class Script(script.Script):
             return
         elif AXUtilities.manages_descendants(event.source):
             return
+        elif event.source == focus:
+            # There is a bug in (at least) Pidgin in which a newly-expanded submenu lacks the
+            # showing and visible states, causing the logic below to be triggered. Work around
+            # that here by trusting selection changes from the locus of focus are probably valid
+            # even if the state set is not.
+            pass
         elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
             # If the current combobox is collapsed, its menu child that fired the event might lack
             # the showing and visible states. This happens in (at least) Thunderbird's calendar
@@ -1425,7 +1432,6 @@ class Script(script.Script):
             # that the user is not in which is firing this event. This is why we cannot have nice
             # things.
             combobox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
-            focus = focus_manager.get_manager().get_locus_of_focus()
             if combobox != focus and event.source != AXObject.get_parent(focus):
                 tokens = ["DEFAULT: Ignoring event: source lacks showing + visible", event.source]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
