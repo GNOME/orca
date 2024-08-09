@@ -34,9 +34,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-gi.require_version("Atk", "1.0")
-from gi.repository import Atk
-
 from . import object_properties
 from .ax_object import AXObject
 
@@ -347,17 +344,7 @@ class AXUtilitiesRole:
         if not isinstance(role, Atspi.Role):
             return AXObject.get_role_name(obj, True)
 
-        non_localized = Atspi.role_get_name(role)
-        atk_role = Atk.role_for_name(non_localized)
-        if atk_role == Atk.Role.INVALID:
-            if role == Atspi.Role.STATUS_BAR:
-                atk_role = Atk.Role.STATUSBAR
-            elif role == Atspi.Role.EDITBAR:
-                atk_role = Atk.Role.EDIT_BAR
-            elif role == Atspi.Role.TEAROFF_MENU_ITEM:
-                atk_role = Atk.Role.TEAR_OFF_MENU_ITEM
-
-        return Atk.role_get_localized_name(atk_role)
+        return Atspi.role_get_localized_name(role)
 
     @staticmethod
     def have_same_role(obj1, obj2):
