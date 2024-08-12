@@ -2492,6 +2492,9 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_text_content(obj, **args)
 
         if settings_manager.get_manager().get_setting("speakContextList"):
+            if args.get("index", 0) + 1 < args.get("total", 1):
+                return result
+
             result += self._generate_accessible_role(obj, **args)
             result += self._generate_pause(obj, **args)
             result += self._generate_term_value_count(obj, **args)
@@ -2514,6 +2517,9 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_text_content(obj, **args)
 
         if settings_manager.get_manager().get_setting("speakContextList"):
+            if args.get("index", 0) + 1 < args.get("total", 1):
+                return result
+
             result += self._generate_accessible_role(obj, **args)
             result += self._generate_pause(obj, **args)
             result += self._generate_position_in_list(obj, **args)
