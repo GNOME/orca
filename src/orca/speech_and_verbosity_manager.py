@@ -20,7 +20,7 @@
 
 # pylint: disable=unused-argument
 
-"""Module for configuring speech and verbosity settings."""
+"""Configures speech and verbosity settings and adjusts strings accordingly."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -28,6 +28,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2023 Igalia, S.L."
 __license__   = "LGPL"
+
+import re
 
 from . import cmdnames
 from . import debug
@@ -38,10 +40,11 @@ from . import messages
 from . import settings
 from . import settings_manager
 from . import speech
+from .ax_hypertext import AXHypertext
 from .ax_table import AXTable
 
 class SpeechAndVerbosityManager:
-    """Configures speech and verbosity settings."""
+    """Configures speech and verbosity settings and adjusts strings accordingly."""
 
     def __init__(self):
         self._handlers = self.get_handlers(True)
@@ -570,6 +573,39 @@ class SpeechAndVerbosityManager:
 
         script.presentMessage(msg)
         return True
+
+    @staticmethod
+    def adjust_for_links(obj, line, start_offset):
+        """Adjust line to include the word "link" after any hypertext links."""
+
+        end_offset = start_offset + len(line)
+        links = AXHypertext.get_all_links_in_range(obj, start_offset, end_offset)
+        offsets = [AXHypertext.get_link_end_offset(link) for link in links]
+        offsets = sorted([offset - start_offset for offset in offsets], reverse=True)
+        tokens = list(line)
+        for o in offsets:
+            string = f" {messages.LINK}"
+            if o < len(tokens) and tokens[o].isalnum():
+                string += " "
+            tokens[o:o] = string
+        return "".join(tokens)
+
+    @staticmethod
+    def adjust_for_repeats(string):
+        """Adjust line to include a description of repeated symbols."""
+
+        def replacement(match):
+            char = match.group(1)
+            count = len(match.group(0))
+            if match.start() > 0 and string[match.start() - 1].isalnum():
+                return f" {messages.repeatedCharCount(char, count)}"
+            return messages.repeatedCharCount(char, count)
+
+        if len(string) < 4 or settings.repeatCharacterLimit < 4:
+            return string
+
+        pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(settings.repeatCharacterLimit - 1) + ",}")
+        return re.sub(pattern, replacement, string)
 
 _manager = SpeechAndVerbosityManager()
 def get_manager():

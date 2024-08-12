@@ -52,6 +52,7 @@ from . import object_properties
 from . import settings
 from . import settings_manager
 from . import speech
+from . import speech_and_verbosity_manager
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -2065,8 +2066,10 @@ class SpeechGenerator(generator.Generator):
                 args.pop("string")
 
             voice = self.voice(string=string, obj=obj, **args)
-            string = self._script.utilities.adjustForLinks(obj, string, start)
-            rv = [self._script.utilities.adjustForRepeats(string)]
+            # TODO - JD: Can we combine all the adjusting?
+            manager = speech_and_verbosity_manager.get_manager()
+            string = manager.adjust_for_links(obj, string, start)
+            rv = [manager.adjust_for_repeats(string)]
             rv.extend(voice)
 
             # TODO - JD: speech.speak() has a bug which causes a list of utterances to

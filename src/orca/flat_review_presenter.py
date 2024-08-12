@@ -45,6 +45,7 @@ from . import messages
 from . import script_manager
 from . import settings_manager
 from . import settings
+from . import speech_and_verbosity_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 
 
@@ -1106,7 +1107,8 @@ class FlatReviewPresenter:
             elif speech_type == 3:
                 script.phoneticSpellCurrentItem(line_string)
             else:
-                line_string = script.utilities.adjustForRepeats(line_string)
+                manager = speech_and_verbosity_manager.get_manager()
+                line_string = manager.adjust_for_repeats(line_string)
                 script.speakMessage(line_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
@@ -1137,7 +1139,8 @@ class FlatReviewPresenter:
                 elif speech_type == 3:
                     script.phoneticSpellCurrentItem(word_string)
                 elif speech_type == 1:
-                    word_string = script.utilities.adjustForRepeats(word_string)
+                    manager = speech_and_verbosity_manager.get_manager()
+                    word_string = manager.adjust_for_repeats(word_string)
                     script.speakMessage(word_string, voice)
 
         focus_manager.get_manager().emit_region_changed(

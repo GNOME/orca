@@ -50,6 +50,7 @@ from orca import settings
 from orca import settings_manager
 from orca import sound
 from orca import speech
+from orca import speech_and_verbosity_manager
 from orca import speechserver
 
 from orca.ax_document import AXDocument
@@ -1600,7 +1601,8 @@ class Script(script.Script):
             self.speak_character(string)
         else:
             voice = self.speech_generator.voice(string=string)
-            string = self.utilities.adjustForRepeats(string)
+            manager = speech_and_verbosity_manager.get_manager()
+            string = manager.adjust_for_repeats(string)
             self.speakMessage(string, voice)
 
     def on_text_inserted(self, event):
@@ -1667,7 +1669,8 @@ class Script(script.Script):
                 self.speak_character(string)
             else:
                 voice = self.speech_generator.voice(obj=event.source, string=string)
-                string = self.utilities.adjustForRepeats(string)
+                manager = speech_and_verbosity_manager.get_manager()
+                string = manager.adjust_for_repeats(string)
                 self.speakMessage(string, voice)
 
         if len(string) != 1:
@@ -1955,7 +1958,8 @@ class Script(script.Script):
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=sentence)
-        sentence = self.utilities.adjustForRepeats(sentence)
+        manager = speech_and_verbosity_manager.get_manager()
+        sentence = manager.adjust_for_repeats(sentence)
         self.speakMessage(sentence, voice)
         return True
 
@@ -1983,7 +1987,8 @@ class Script(script.Script):
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=word)
-        word = self.utilities.adjustForRepeats(word)
+        manager = speech_and_verbosity_manager.get_manager()
+        word = manager.adjust_for_repeats(word)
         self.speakMessage(word, voice)
         return True
 
@@ -2061,8 +2066,10 @@ class Script(script.Script):
                 # TODO - JD: This needs to be done in the generators.
                 voice = self.speech_generator.voice(
                     obj=obj, string=string, language=language, dialect=dialect)
-                string = self.utilities.adjustForLinks(obj, string, start)
-                string = self.utilities.adjustForRepeats(string)
+                # TODO - JD: Can we combine all the adjusting?
+                manager = speech_and_verbosity_manager.get_manager()
+                string = manager.adjust_for_links(obj, string, start)
+                string = manager.adjust_for_repeats(string)
                 if self.utilities.shouldVerbalizeAllPunctuation(obj):
                     string = self.utilities.verbalizeAllPunctuation(string)
 
@@ -2104,7 +2111,8 @@ class Script(script.Script):
                 obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
             voice = self.speech_generator.voice(obj=obj, string=phrase)
-            phrase = self.utilities.adjustForRepeats(phrase)
+            manager = speech_and_verbosity_manager.get_manager()
+            phrase = manager.adjust_for_repeats(phrase)
             if self.utilities.shouldVerbalizeAllPunctuation(obj):
                 phrase = self.utilities.verbalizeAllPunctuation(phrase)
 
@@ -2333,8 +2341,10 @@ class Script(script.Script):
                 if voice and isinstance(voice, list):
                     voice = voice[0]
 
-                string = self.utilities.adjustForLinks(obj, string, start)
-                string = self.utilities.adjustForRepeats(string)
+                # TODO - JD: Can we combine all the adjusting?
+                manager = speech_and_verbosity_manager.get_manager()
+                string = manager.adjust_for_links(obj, string, start)
+                string = manager.adjust_for_repeats(string)
 
                 context = speechserver.SayAllContext(obj, string, start, end)
                 tokens = ["DEFAULT:", context]

@@ -60,6 +60,7 @@ from . import input_event
 from . import messages
 from . import script_manager
 from . import settings_manager
+from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -157,7 +158,8 @@ class _StringContext:
             return False
 
         voice = self._script.speech_generator.voice(obj=self._obj, string=self._string)
-        string = self._script.utilities.adjustForRepeats(self._string)
+        manager = speech_and_verbosity_manager.get_manager()
+        string = manager.adjust_for_repeats(self._string)
 
         focus_manager.get_manager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW)

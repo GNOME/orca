@@ -1726,31 +1726,6 @@ class Utilities:
     #                                                                       #
     #########################################################################
 
-    def _addRepeatSegment(self, segment, line):
-        """Add in the latest line segment, adjusting for repeat characters
-        and punctuation.
-
-        Arguments:
-        - segment: the segment of repeated characters.
-        - line: the current built-up line to characters to speak.
-
-        Returns: the current built-up line plus the new segment, after
-        adjusting for repeat character counts and punctuation.
-        """
-
-        if segment.isalnum():
-            return line + segment
-
-        count = len(segment)
-        if count >= settings.repeatCharacterLimit and segment[0] not in self._script.whitespace:
-            repeatChar = segment[0]
-            repeatSegment = messages.repeatedCharCount(repeatChar, count)
-            line = f"{line} {repeatSegment} "
-        else:
-            line += segment
-
-        return line
-
     def shouldVerbalizeAllPunctuation(self, obj):
         if not (AXUtilities.is_code(obj) or self.isCodeDescendant(obj)):
             return False
@@ -1771,31 +1746,6 @@ class Utilities:
             result = re.sub(r"\%s" % symbol, charName, result)
 
         return result
-
-    def adjustForLinks(self, obj, line, startOffset):
-        """Adjust line to include the word "link" after any hypertext links.
-
-        Arguments:
-        - obj: the accessible object that this line came from.
-        - line: the string to adjust for links.
-        - startOffset: the caret offset at the start of the line.
-
-        Returns: a new line adjusted to add the speaking of "link" after
-        text which is also a link.
-        """
-
-        endOffset = startOffset + len(line)
-        links = AXHypertext.get_all_links_in_range(obj, startOffset, endOffset)
-        offsets = [AXHypertext.get_link_end_offset(link) for link in links]
-        offsets = sorted([offset - startOffset for offset in offsets], reverse=True)
-        tokens = list(line)
-        for o in offsets:
-            string = f" {messages.LINK}"
-            if o < len(tokens) and tokens[o].isalnum():
-                string += " "
-            tokens[o:o] = string
-
-        return "".join(tokens)
 
     @staticmethod
     def _convertWordToDigits(word):
@@ -1840,42 +1790,6 @@ class Utilities:
         words = self.WORDS_RE.split(line)
         newLine = ''.join(map(pronunciation_dict.getPronunciation, words))
         return newLine
-
-    def adjustForRepeats(self, line):
-        """Adjust line to include repeat character counts. As some people
-        will want this and others might not, there is a setting in
-        settings.py that determines whether this functionality is enabled.
-
-        repeatCharacterLimit = <n>
-
-        If <n> is 0, then there would be no repeat characters.
-        Otherwise <n> would be the number of same characters (or more)
-        in a row that cause the repeat character count output.
-        If the value is set to 1, 2 or 3 then it's treated as if it was
-        zero. In other words, no repeat character count is given.
-
-        Arguments:
-        - line: the string to adjust for repeat character counts.
-
-        Returns: a new line adjusted for repeat character counts (if enabled).
-        """
-
-        if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
-            return line
-
-        newLine = ''
-        segment = lastChar = line[0]
-
-        for i in range(1, len(line)):
-            if line[i] == lastChar:
-                segment += line[i]
-            else:
-                newLine = self._addRepeatSegment(segment, newLine)
-                segment = line[i]
-
-            lastChar = line[i]
-
-        return self._addRepeatSegment(segment, newLine)
 
     def indentationDescription(self, line):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
