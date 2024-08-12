@@ -341,7 +341,7 @@ ROLE_HEADING_LEVEL_BRAILLE = _("h%d")
 # Translators: The %(level)d is in reference to a heading level in HTML (e.g.,
 # For <h3>, the level is 3) and the %(role)s is in reference to a previously
 # translated rolename for the heading.
-ROLE_HEADING_LEVEL_SPEECH = _("%(role)s level %(level)d")
+ROLE_HEADING_LEVEL_SPEECH = _("%(role)s %(level)d")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
