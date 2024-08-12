@@ -284,62 +284,111 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
-    @log_generator_output
-    def _generate_accessible_role(self, obj, **args):
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
-            return []
+    def _should_speak_role(self, obj, **args):
+        settings_mgr = settings_manager.get_manager()
+        if settings_mgr.get_setting("onlySpeakDisplayedText"):
+            return False
 
-        if self._script.utilities.isDesktop(obj):
-            return []
+        role = args.get("role", AXObject.get_role(obj))
+        _enabled, disabled = self._get_enabled_and_disabled_context_roles()
+        if role in disabled:
+            return False
 
-        if self._script.utilities.isDockedFrame(obj):
-            return []
-
-        result = []
-        role = args.get('role', AXObject.get_role(obj))
-
-        do_not_present = [Atspi.Role.UNKNOWN,
+        do_not_speak = [Atspi.Role.ARTICLE,
+                        Atspi.Role.EXTENDED,
+                        Atspi.Role.FILLER,
+                        Atspi.Role.FOOTER,
+                        Atspi.Role.FORM,
+                        Atspi.Role.LABEL,
+                        Atspi.Role.MENU_ITEM,
+                        Atspi.Role.PARAGRAPH,
                         Atspi.Role.REDUNDANT_OBJECT,
                         Atspi.Role.SECTION,
-                        Atspi.Role.PARAGRAPH,
-                        Atspi.Role.FORM,
-                        Atspi.Role.FILLER,
-                        Atspi.Role.EXTENDED]
+                        Atspi.Role.STATIC,
+                        Atspi.Role.TABLE_CELL,
+                        Atspi.Role.TEXT,
+                        Atspi.Role.UNKNOWN]
+        if settings_mgr.get_setting("speechVerbosityLevel") == settings.VERBOSITY_LEVEL_BRIEF:
+            do_not_speak.extend([
+                Atspi.Role.CANVAS,
+                Atspi.Role.ICON,
+            ])
+
+        if args.get("string"):
+            do_not_speak.extend([
+                "ROLE_CONTENT_SUGGESTION",
+            ])
+        if args.get("formatType") != "basicWhereAmI":
+            do_not_speak.extend([
+                Atspi.Role.LIST,
+                Atspi.Role.LIST_ITEM,
+            ])
+        if args.get("startOffset") is not None or args.get("endOffset") is not None:
+            do_not_speak.extend([
+                Atspi.Role.ALERT,
+                Atspi.Role.DOCUMENT_FRAME,
+                Atspi.Role.DOCUMENT_PRESENTATION,
+                Atspi.Role.DOCUMENT_SPREADSHEET,
+                Atspi.Role.DOCUMENT_TEXT,
+                Atspi.Role.DOCUMENT_WEB,
+            ])
+        if args.get("total", 1) > 1:
+            do_not_speak.extend([
+                Atspi.Role.ROW_HEADER,
+            ])
+
+        if role in do_not_speak:
+            return False
+
+        if AXUtilities.is_combo_box(AXObject.get_parent(obj)):
+            return False
+
+        if self._script.utilities.isAnchor(obj):
+            return False
+
+        if self._script.utilities.isDesktop(obj):
+            return False
+
+        if self._script.utilities.isDockedFrame(obj):
+            return False
+
+        if AXUtilities.is_panel(obj, role):
+            if AXUtilities.is_selected(obj):
+                return False
+            child = args.get("ancestorOf")
+            if not (child and AXUtilities.is_widget(child)):
+                return False
+
+        if AXUtilities.is_editable(obj) and obj == args.get("priorObj"):
+            return False
+
+        return True
+
+    @log_generator_output
+    def _generate_accessible_role(self, obj, **args):
+        if not self._should_speak_role(obj, **args):
+            return []
 
         parent = AXObject.get_parent(obj)
         if AXUtilities.is_menu(obj, args.get("role")) and AXUtilities.is_combo_box(parent):
             return self._generate_accessible_role(parent)
 
         if self._script.utilities.isSingleLineAutocompleteEntry(obj):
-            result.append(self.get_localized_role_name(obj, role=Atspi.Role.AUTOCOMPLETE))
+            result = [self.get_localized_role_name(obj, role=Atspi.Role.AUTOCOMPLETE)]
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
-
-        if AXUtilities.is_panel(obj, args.get("role")) and AXUtilities.is_selected(obj):
-            return []
-
-        # egg-list-box, e.g. privacy panel in gnome-control-center
-        if AXUtilities.is_list_box(parent):
-            do_not_present.append(AXObject.get_role(obj))
-
-        if self._script.utilities.isStatusBarDescendant(obj):
-            do_not_present.append(Atspi.Role.LABEL)
-
-        if settings_manager.get_manager().get_setting('speechVerbosityLevel') \
-                == settings.VERBOSITY_LEVEL_BRIEF:
-            do_not_present.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
         if AXUtilities.is_heading(obj):
             level = self._script.utilities.headingLevel(obj)
             if level:
-                result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
-                    'role': self.get_localized_role_name(obj, **args),
-                    'level': level})
+                result = [object_properties.ROLE_HEADING_LEVEL_SPEECH % {
+                    "role": self.get_localized_role_name(obj, **args),
+                    "level": level}]
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
+                return result
 
-        if role not in do_not_present and not result:
-            result.append(self.get_localized_role_name(obj, **args))
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result = [self.get_localized_role_name(obj, **args)]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
@@ -2729,6 +2778,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -3023,6 +3073,7 @@ class SpeechGenerator(generator.Generator):
 
         result += (self._generate_accessible_label_and_name(obj, **args) or \
             self._generate_text_content(obj, **args))
+        result += self._generate_accessible_role(obj, **args)
         result += self._generate_state_checked_if_checkable(obj, **args)
         result += self._generate_pause(obj, **args)
         result += self._generate_state_unselected(obj, **args)
@@ -3233,6 +3284,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_pause(obj, **args)
 
         result += self._generate_accessible_label_and_name(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
         result += self._generate_state_checked_if_checkable(obj, **args)
         result += self._generate_state_expanded(obj, **args)
         result += self._generate_state_sensitive(obj, **args)
@@ -3306,12 +3358,9 @@ class SpeechGenerator(generator.Generator):
         if not result:
             result += self._generate_accessible_label_and_name(obj, **args)
 
+
         result += self._generate_accessible_static_text(obj, **args)
-
-        child = args.get("ancestorOf")
-        if child and AXUtilities.is_widget(child):
-            result += self._generate_accessible_role(obj, **args)
-
+        result += self._generate_accessible_role(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 

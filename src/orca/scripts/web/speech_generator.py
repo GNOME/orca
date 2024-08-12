@@ -462,68 +462,27 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_accessible_role(self, obj, **args):
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
-            return []
-
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_role(obj, **args)
 
-        is_editable = AXUtilities.is_editable(obj)
-        if (is_editable and obj == args.get("priorObj")):
-            return []
-
-        result = []
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
             result = [roledescription]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
-        role = args.get("role", AXObject.get_role(obj))
-        _enabled, disabled = self._get_enabled_and_disabled_context_roles()
-        if role in disabled:
+        if not self._should_speak_role(obj, **args):
             return []
 
-        force = args.get("force", False)
+        role = args.get("role", AXObject.get_role(obj))
         start = args.get("startOffset")
         end = args.get("endOffset")
         index = args.get("index", 0)
         total = args.get("total", 1)
 
-        if not force:
-            do_not_speak = [Atspi.Role.ARTICLE,
-                            Atspi.Role.FOOTER,
-                            Atspi.Role.FORM,
-                            Atspi.Role.LABEL,
-                            Atspi.Role.MENU_ITEM,
-                            Atspi.Role.PARAGRAPH,
-                            Atspi.Role.SECTION,
-                            Atspi.Role.REDUNDANT_OBJECT,
-                            Atspi.Role.UNKNOWN]
-        else:
-            do_not_speak = [Atspi.Role.UNKNOWN]
-
-        if not force:
-            do_not_speak.append(Atspi.Role.TABLE_CELL)
-            do_not_speak.append(Atspi.Role.TEXT)
-            do_not_speak.append(Atspi.Role.STATIC)
-            if args.get("string"):
-                do_not_speak.append("ROLE_CONTENT_SUGGESTION")
-            if args.get("formatType", "unfocused") != "basicWhereAmI":
-                do_not_speak.append(Atspi.Role.LIST_ITEM)
-                do_not_speak.append(Atspi.Role.LIST)
-            if (start or end):
-                do_not_speak.append(Atspi.Role.DOCUMENT_FRAME)
-                do_not_speak.append(Atspi.Role.DOCUMENT_WEB)
-                do_not_speak.append(Atspi.Role.ALERT)
-            if self._script.utilities.isAnchor(obj):
-                do_not_speak.append(AXObject.get_role(obj))
-            if total > 1:
-                do_not_speak.append(Atspi.Role.ROW_HEADER)
-            if self._script.utilities.isMenuInCollapsedSelectElement(obj):
-                do_not_speak.append(Atspi.Role.MENU)
-
+        result = []
         mgr = input_event_manager.get_manager()
+        is_editable = AXUtilities.is_editable(obj)
         if is_editable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             if (mgr.last_event_was_forward_caret_navigation() or self._script.inSayAll()) and start:
                 return []
@@ -531,9 +490,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                and self._script.utilities.treatAsTextObject(obj) \
                and end not in [None, AXText.get_character_count(obj)]:
                 return []
-            if role not in do_not_speak:
-                result.append(self.get_localized_role_name(obj, **args))
-                result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+            result.append(self.get_localized_role_name(obj, **args))
+            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif is_editable and self._script.utilities.isDocument(obj):
             parent = AXObject.get_parent(obj)
@@ -566,7 +524,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(self.get_localized_role_name(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
-        elif role not in do_not_speak:
+        else:
             result.append(self.get_localized_role_name(obj, **args))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
