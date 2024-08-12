@@ -909,8 +909,12 @@ class SpeechGenerator(generator.Generator):
     @log_generator_output
     def _generate_position_in_list(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
-           or not (settings_manager.get_manager().get_setting('enablePositionSpeaking') \
-                   or args.get('forceList', False)):
+           or not (settings_manager.get_manager().get_setting("enablePositionSpeaking") \
+                   or args.get("forceList", False)) \
+           or args.get("formatType") == "ancestor":
+            return []
+
+        if args.get("index", 0) + 1 < args.get("total", 1):
             return []
 
         result = []
