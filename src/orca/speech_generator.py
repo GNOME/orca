@@ -43,6 +43,7 @@ from gi.repository import Atspi
 
 from . import acss
 from . import debug
+from . import focus_manager
 from . import generator
 from . import input_event_manager
 from . import mathsymbols
@@ -288,6 +289,10 @@ class SpeechGenerator(generator.Generator):
         settings_mgr = settings_manager.get_manager()
         if settings_mgr.get_setting("onlySpeakDisplayedText"):
             return False
+
+        mode, _acc = focus_manager.get_manager().get_active_mode_and_object_of_interest()
+        if mode == focus_manager.OBJECT_NAVIGATOR:
+            return True
 
         role = args.get("role", AXObject.get_role(obj))
         _enabled, disabled = self._get_enabled_and_disabled_context_roles()
