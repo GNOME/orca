@@ -2482,6 +2482,10 @@ class SpeechGenerator(generator.Generator):
     def _generate_description_term(self, obj, **args):
         """Generates speech for the description-term role."""
 
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return []
+
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
         if not result:
@@ -2499,6 +2503,10 @@ class SpeechGenerator(generator.Generator):
 
     def _generate_description_value(self, obj, **args):
         """Generates speech for the description-value role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            return []
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
