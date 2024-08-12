@@ -465,6 +465,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_role(obj, **args)
 
+        # Do this check before the rolescription check, e.g. navigation within VSCode's editor.
+        if AXUtilities.is_editable(obj) and obj == args.get("priorObj"):
+            return []
+
         roledescription = self._script.utilities.getRoleDescription(obj)
         if roledescription:
             result = [roledescription]
