@@ -41,6 +41,8 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
+import re
+
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -977,6 +979,12 @@ class AXText:
             return True
 
         return not AXText.get_all_text(obj).strip()
+
+    @staticmethod
+    def has_presentable_text(obj):
+        """Returns True if obj has presentable text."""
+
+        return bool(re.search(r"\w+", AXText.get_all_text(obj)))
 
     @staticmethod
     def scroll_substring_to_point(obj, x, y, start_offset, end_offset):

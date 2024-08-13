@@ -1029,7 +1029,7 @@ class Utilities:
     def hasPresentableText(self, obj):
         if self.isStaticTextLeaf(obj):
             return False
-        return bool(re.search(r"\w+", AXText.get_all_text(obj)))
+        return AXText.has_presentable_text(obj)
 
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):

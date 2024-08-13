@@ -339,7 +339,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if AXUtilities.is_link(obj) and args.get("startOffset") is not None \
-           and AXText.get_character_count(obj):
+           and AXText.has_presentable_text(obj):
             return []
 
         if self._script.utilities.hasVisibleCaption(obj):
