@@ -1668,9 +1668,13 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
         notify = force = handled = False
         AXObject.clear_cache(event.source, False, "Updating state for caret moved event.")
+
+        if self._inFocusMode:
+            obj, offset = event.source, event.detail1
+        else:
+            obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
 
         if input_event_manager.get_manager().last_event_was_page_navigation():
             msg = "WEB: Caret moved due to scrolling."
