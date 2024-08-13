@@ -49,6 +49,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
 class AXText:
@@ -212,7 +213,8 @@ class AXText:
         # Don't adjust the length in multiline text because we want to say "blank" at the end.
         # This may or may not be sufficient. GTK3 seems to give us the correct, empty line. But
         # (at least) Chromium does not. See comment below.
-        if not AXUtilitiesState.is_multi_line(obj):
+        if not AXUtilitiesState.is_multi_line(obj) \
+           and not AXUtilitiesRole.is_paragraph(obj) and not AXUtilitiesRole.is_section(obj):
             offset = min(max(0, offset), length - 1)
         else:
             offset = max(0, offset)
