@@ -2035,7 +2035,7 @@ class SpeechGenerator(generator.Generator):
     @log_generator_output
     def _generate_text_substring(self, obj, **args):
         result = super()._generate_text_substring(obj, **args)
-        if not (result and result[0]):
+        if not result:
             return []
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -2056,7 +2056,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = self._generate_text_substring(obj, **args)
-        if result and result[0]:
+        if result:
             return result
 
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]

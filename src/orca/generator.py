@@ -783,7 +783,7 @@ class Generator:
             return []
 
         substring = args.get("string", AXText.get_substring(obj, start, end))
-        if substring and self._script.EMBEDDED_OBJECT_CHARACTER not in substring:
+        if self._script.EMBEDDED_OBJECT_CHARACTER not in substring:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = [substring]
             return [substring]
