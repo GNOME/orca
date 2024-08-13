@@ -894,6 +894,7 @@ class Script(default.Script):
         if AXUtilities.is_editable(obj) and "\ufffc" not in AXText.get_line_at_offset(obj)[0]:
             msg = "WEB: Object is editable and line has no EOCs."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
+            self.utilities.setCaretPosition(obj, 0)
             super().sayLine(obj)
             return
 
@@ -905,6 +906,9 @@ class Script(default.Script):
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
+        if contents and contents[0]:
+            self.utilities.setCaretPosition(contents[0][0], contents[0][1])
+
         self.speakContents(contents, priorObj=priorObj)
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
@@ -914,6 +918,7 @@ class Script(default.Script):
             return
 
         if AXUtilities.is_status_bar(obj):
+            self.utilities.setCaretPosition(obj, 0)
             super().presentObject(obj, **args)
             return
 
@@ -928,6 +933,7 @@ class Script(default.Script):
         AXEventSynthesizer.scroll_to_center(obj, start_offset=0)
 
         if AXUtilities.is_entry(obj):
+            self.utilities.setCaretPosition(obj, 0)
             super().presentObject(obj, **args)
             return
 
@@ -941,6 +947,8 @@ class Script(default.Script):
         useCache = False
         offset = args.get("offset", 0)
         contents = self.utilities.getObjectContentsAtOffset(obj, offset, useCache)
+        if contents and contents[0]:
+            self.utilities.setCaretPosition(contents[0][0], contents[0][1])
         self.displayContents(contents)
         self.speakContents(contents, **args)
 

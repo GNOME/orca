@@ -967,33 +967,6 @@ class StructuralNavigation:
 
         return self._script.utilities.getFirstCaretPosition(obj)
 
-    def _setCaretPosition(self, obj, characterOffset):
-        """Sets the caret at the specified offset within obj."""
-
-        objPath = AXObject.get_path(obj)
-        objRole = AXObject.get_role(obj)
-        if objRole == Atspi.Role.INVALID:
-            return obj, characterOffset
-
-        self._script.utilities.setCaretPosition(obj, characterOffset)
-        AXObject.clear_cache(
-            obj,
-            False,
-            "Structural navigation workaround for object destruction when setting caret.")
-        if not AXUtilities.is_defunct(obj):
-            return obj, characterOffset
-
-        tokens = ["STRUCTURAL NAVIGATION:", obj, "became defunct after setting caret position"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        replicant = self._script.utilities.getObjectFromPath(objPath)
-        if replicant and AXObject.get_role(replicant) == objRole:
-            tokens = ["STRUCTURAL NAVIGATION: Updating obj to replicant", replicant]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            obj = replicant
-
-        return obj, characterOffset
-
     def _presentLine(self, obj, offset):
         """Presents the first line of the object to the user.
 
@@ -1177,7 +1150,6 @@ class StructuralNavigation:
     def _blockquotePresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_BLOCKQUOTES
@@ -1216,7 +1188,6 @@ class StructuralNavigation:
     def _buttonPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_BUTTONS
@@ -1255,7 +1226,6 @@ class StructuralNavigation:
     def _checkBoxPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_CHECK_BOXES
@@ -1309,8 +1279,6 @@ class StructuralNavigation:
 
     def _chunkPresentation(self, obj, arg=None):
         if obj is not None:
-            [newObj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
             full = messages.NO_MORE_CHUNKS
@@ -1350,7 +1318,6 @@ class StructuralNavigation:
     def _comboBoxPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_COMBO_BOXES
@@ -1393,7 +1360,6 @@ class StructuralNavigation:
     def _entryPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_ENTRIES
@@ -1439,7 +1405,6 @@ class StructuralNavigation:
             if AXUtilities.is_text(obj) and AXObject.get_child_count(obj):
                 obj = AXObject.get_child(obj, 0)
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_FORM_FIELDS
@@ -1512,7 +1477,6 @@ class StructuralNavigation:
     def _headingPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         elif arg is None:
             full = messages.NO_MORE_HEADINGS
@@ -1566,7 +1530,6 @@ class StructuralNavigation:
     def _iframePresentation(self, obj, arg=None):
         if obj is not None:
             [newObj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
             full = messages.NO_MORE_IFRAMES
@@ -1607,8 +1570,6 @@ class StructuralNavigation:
 
     def _imagePresentation(self, obj, arg=None):
         if obj is not None:
-            [newObj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
             full = messages.NO_MORE_IMAGES
@@ -1647,7 +1608,6 @@ class StructuralNavigation:
     def _landmarkPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._script.presentMessage(AXObject.get_name(obj))
             self._presentLine(obj, characterOffset)
         else:
@@ -1690,7 +1650,6 @@ class StructuralNavigation:
         if obj is not None:
             self._script.speakMessage(self._getListDescription(obj))
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
         else:
             full = messages.NO_MORE_LISTS
@@ -1750,7 +1709,6 @@ class StructuralNavigation:
             self._script.speakMessage(self._getListDescription(thisList))
 
         [obj, characterOffset] = self._getCaretPosition(obj)
-        obj, characterOffset = self._setCaretPosition(obj, characterOffset)
         self._presentObject(obj, characterOffset)
 
     def _listItemDialogData(self):
@@ -1785,7 +1743,6 @@ class StructuralNavigation:
     def _liveRegionPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_LIVE_REGIONS
@@ -1824,8 +1781,6 @@ class StructuralNavigation:
 
     def _paragraphPresentation(self, obj, arg=None):
         if obj is not None:
-            [newObj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
             full = messages.NO_MORE_PARAGRAPHS
@@ -1864,7 +1819,6 @@ class StructuralNavigation:
     def _radioButtonPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_RADIO_BUTTONS
@@ -1900,8 +1854,6 @@ class StructuralNavigation:
 
     def _separatorPresentation(self, obj, arg=None):
         if obj is not None:
-            [newObj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
             full = messages.NO_MORE_SEPARATORS
@@ -1946,8 +1898,6 @@ class StructuralNavigation:
 
             self.lastTableCell = [0, 0]
             self._presentObject(cell, 0, priorObj=obj)
-            [cell, characterOffset] = self._getCaretPosition(cell)
-            self._setCaretPosition(cell, characterOffset)
         else:
             full = messages.NO_MORE_TABLES
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -1992,7 +1942,6 @@ class StructuralNavigation:
     def _unvisitedLinkPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_UNVISITED_LINKS
@@ -2033,7 +1982,6 @@ class StructuralNavigation:
     def _visitedLinkPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_VISITED_LINKS
@@ -2073,7 +2021,6 @@ class StructuralNavigation:
     def _linkPresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
             full = messages.NO_MORE_LINKS
@@ -2121,7 +2068,6 @@ class StructuralNavigation:
     def _clickablePresentation(self, obj, arg=None):
         if obj is not None:
             [obj, characterOffset] = self._getCaretPosition(obj)
-            obj, characterOffset = self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         elif not arg:
             full = messages.NO_MORE_CLICKABLES
@@ -2171,5 +2117,4 @@ class StructuralNavigation:
         if characterOffset is None:
             obj, characterOffset = self._getCaretPosition(obj)
 
-        obj, characterOffset = self._setCaretPosition(obj, characterOffset)
         self._presentLine(obj, characterOffset)
