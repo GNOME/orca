@@ -326,7 +326,6 @@ class SpeechGenerator(generator.Generator):
                         Atspi.Role.SECTION,
                         Atspi.Role.STATIC,
                         Atspi.Role.TABLE_CELL,
-                        Atspi.Role.TEXT,
                         Atspi.Role.UNKNOWN]
         if settings_mgr.get_setting("speechVerbosityLevel") == settings.VERBOSITY_LEVEL_BRIEF:
             do_not_speak.extend([
