@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-07-15 09:10+0000\n"
-"PO-Revision-Date: 2024-07-16 23:04+0200\n"
+"POT-Creation-Date: 2024-08-12 12:04+0000\n"
+"PO-Revision-Date: 2024-08-13 07:50+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -11595,8 +11595,8 @@ msgstr "h%d"
 #. translated rolename for the heading.
 #: src/orca/object_properties.py:344
 #, python-format
-msgid "%(role)s level %(level)d"
-msgstr "%(role)s raven %(level)d"
+msgid "%(role)s %(level)d"
+msgstr "%(role)s %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11763,75 +11763,67 @@ msgstr "iskanje"
 msgid "visited link"
 msgstr "obiskana povezava"
 
-#. Translators: This string should be treated as a role describing an object.
-#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
-#. A menu button is button widget that causes a menu to appear when the user
-#. activates the button.
-#: src/orca/object_properties.py:475
-msgid "menu button"
-msgstr "gumb menija"
-
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to ascending.
-#: src/orca/object_properties.py:479
+#: src/orca/object_properties.py:473
 msgid "sorted ascending"
 msgstr "razvrščeno naraščajoče"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to descending.
-#: src/orca/object_properties.py:483
+#: src/orca/object_properties.py:477
 msgid "sorted descending"
 msgstr "razvrščeno padajoče"
 
 #. Translators: This string refers to a row or column whose sort-order has been set,
 #. but the nature of the sort order is unknown or something other than ascending or
 #. descending.
-#: src/orca/object_properties.py:488
+#: src/orca/object_properties.py:482
 msgid "sorted"
 msgstr "razvrščeno"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
-#: src/orca/object_properties.py:492
+#: src/orca/object_properties.py:486
 msgid "clickable"
 msgstr "klikljivo"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: src/orca/object_properties.py:497
+#: src/orca/object_properties.py:491
 msgid "collapsed"
 msgstr "zloženo"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
-#: src/orca/object_properties.py:502
+#: src/orca/object_properties.py:496
 msgid "expanded"
 msgstr "razširjeno"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
-#: src/orca/object_properties.py:506
+#: src/orca/object_properties.py:500
 msgid "has long description"
 msgstr "ima dolg opis"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: src/orca/object_properties.py:510
+#: src/orca/object_properties.py:504
 msgid "horizontal"
 msgstr "vodoravno"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
-#: src/orca/object_properties.py:514
+#: src/orca/object_properties.py:508
 msgid "vertical"
 msgstr "navpično"
 
 #. Translators: This is a state which applies to a check box.
 #. Please don't use the same translation as for "selected",
 #. or it will be impossible to differentiate a checkbox in a list-item.
-#: src/orca/object_properties.py:519
+#: src/orca/object_properties.py:513
 msgctxt "checkbox"
 msgid "checked"
 msgstr "označeno"
@@ -11839,83 +11831,83 @@ msgstr "označeno"
 #. Translators: This is a state which applies to a check box.
 #. Please don't use the same translation as for "not selected",
 #. or it will be impossible to differentiate a checkbox in a list-item.
-#: src/orca/object_properties.py:524
+#: src/orca/object_properties.py:518
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "ni označeno"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: src/orca/object_properties.py:528
+#: src/orca/object_properties.py:522
 msgctxt "switch"
 msgid "on"
 msgstr "omogočeno"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
-#: src/orca/object_properties.py:532
+#: src/orca/object_properties.py:526
 msgctxt "switch"
 msgid "off"
 msgstr "onemogočeno"
 
 #. Translators: This is a state which applies to a check box.
-#: src/orca/object_properties.py:535
+#: src/orca/object_properties.py:529
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "delno označeno"
 
 #. Translators: This is a state which applies to a toggle button.
-#: src/orca/object_properties.py:538
+#: src/orca/object_properties.py:532
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "pritisnjeno"
 
 #. Translators: This is a state which applies to a toggle button.
-#: src/orca/object_properties.py:541
+#: src/orca/object_properties.py:535
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "ni pritisnjeno"
 
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
-#: src/orca/object_properties.py:545
+#: src/orca/object_properties.py:539
 msgctxt "listitem"
 msgid "not selected"
 msgstr "ni izbrano"
 
 #. Translators: This is a state which applies to a radio button.
-#: src/orca/object_properties.py:548
+#: src/orca/object_properties.py:542
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "izbrano"
 
 #. Translators: This is a state which applies to a radio button.
-#: src/orca/object_properties.py:551
+#: src/orca/object_properties.py:545
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "ni izbrano"
 
 #. Translators: This is a state which applies to a table cell.
-#: src/orca/object_properties.py:554
+#: src/orca/object_properties.py:548
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "ni izbrano"
 
 #. Translators: This is a state which applies to a link.
-#: src/orca/object_properties.py:557
+#: src/orca/object_properties.py:551
 msgctxt "link state"
 msgid "visited"
 msgstr "obiskano"
 
 #. Translators: This is a state which applies to a link.
-#: src/orca/object_properties.py:560
+#: src/orca/object_properties.py:554
 msgctxt "link state"
 msgid "unvisited"
 msgstr "neobiskano"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
-#: src/orca/object_properties.py:564 src/orca/object_properties.py:568
+#: src/orca/object_properties.py:558 src/orca/object_properties.py:562
 msgid "grayed"
 msgstr "sivo"
 
@@ -11924,7 +11916,7 @@ msgstr "sivo"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the spoken
 #. version.
-#: src/orca/object_properties.py:575
+#: src/orca/object_properties.py:569
 msgctxt "text"
 msgid "read only"
 msgstr "le za branje"
@@ -11934,27 +11926,27 @@ msgstr "le za branje"
 #. It is assumed that form fields will be editable; if they lack this state,
 #. we need to present that information to the user. This string is the braille
 #. version. (Because braille displays have limited real estate, we abbreviate.)
-#: src/orca/object_properties.py:582
+#: src/orca/object_properties.py:576
 msgctxt "text"
 msgid "rdonly"
 msgstr "samo za branje"
 
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
-#: src/orca/object_properties.py:586 src/orca/object_properties.py:590
+#: src/orca/object_properties.py:580 src/orca/object_properties.py:584
 msgid "required"
 msgstr "zahtevano"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
-#: src/orca/object_properties.py:594
+#: src/orca/object_properties.py:588
 msgid "multi-select"
 msgstr "več izbir"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
-#: src/orca/object_properties.py:599
+#: src/orca/object_properties.py:593
 msgctxt "error"
 msgid "invalid entry"
 msgstr "neveljaven vnos"
@@ -11964,7 +11956,7 @@ msgstr "neveljaven vnos"
 #. when all we know is that an error has occurred, but not the type of error.
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
-#: src/orca/object_properties.py:606
+#: src/orca/object_properties.py:600
 msgctxt "error"
 msgid "invalid"
 msgstr "neveljavno"
@@ -11972,7 +11964,7 @@ msgstr "neveljavno"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
-#: src/orca/object_properties.py:611
+#: src/orca/object_properties.py:605
 msgctxt "error"
 msgid "invalid spelling"
 msgstr "neveljavno črkovanje"
@@ -11981,7 +11973,7 @@ msgstr "neveljavno črkovanje"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: src/orca/object_properties.py:617
+#: src/orca/object_properties.py:611
 msgctxt "error"
 msgid "spelling"
 msgstr "črkovanje"
@@ -11989,7 +11981,7 @@ msgstr "črkovanje"
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
-#: src/orca/object_properties.py:622
+#: src/orca/object_properties.py:616
 msgctxt "error"
 msgid "invalid grammar"
 msgstr "neveljavna slovnica"
@@ -11998,7 +11990,7 @@ msgstr "neveljavna slovnica"
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to grammar. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
-#: src/orca/object_properties.py:628
+#: src/orca/object_properties.py:622
 msgctxt "error"
 msgid "grammar"
 msgstr "slovnica"
