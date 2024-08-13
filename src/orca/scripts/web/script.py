@@ -2476,6 +2476,11 @@ class Script(default.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self.structural_navigation.last_input_event_was_navigation_command():
+            msg = "WEB: Ignoring: Last input event was structural navigation command."
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
         char = AXText.get_character_at_offset(event.source)[0]
         manager = input_event_manager.get_manager()
         if char == self.EMBEDDED_OBJECT_CHARACTER \
