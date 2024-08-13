@@ -982,7 +982,7 @@ class StructuralNavigation:
             return
 
         self._script.update_braille(obj)
-        self._script.sayLine(obj)
+        self._script.sayLine(obj, offset)
 
     def _presentObject(self, obj, offset, priorObj=None):
         """Presents the entire object to the user.

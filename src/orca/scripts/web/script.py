@@ -877,7 +877,7 @@ class Script(default.Script):
         self.speakContents(wordContents)
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
-    def sayLine(self, obj):
+    def sayLine(self, obj, offset=None):
         """Speaks the line at the current caret position."""
 
         tokens = ["WEB: Say line for", obj]
@@ -901,9 +901,10 @@ class Script(default.Script):
         document = self.utilities.getTopLevelDocumentForObject(obj)
         priorObj, _priorOffset = self.utilities.getPriorContext(documentFrame=document)
 
-        obj, offset = self.utilities.getCaretContext(documentFrame=document)
-        tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        if offset is None:
+            obj, offset = self.utilities.getCaretContext(documentFrame=document)
+            tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
         if contents and contents[0]:

@@ -2037,7 +2037,7 @@ class Script(script.Script):
 
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
-    def sayLine(self, obj):
+    def sayLine(self, obj, offset=None):
         """Speaks the line of an AccessibleText object that contains the
         caret, unless the line is empty in which case it's ignored.
 
@@ -2046,7 +2046,10 @@ class Script(script.Script):
                interface
         """
 
-        line, startOffset = AXText.get_line_at_offset(obj)[0:2]
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        line, startOffset = AXText.get_line_at_offset(obj, offset)[0:2]
         if len(line) and line != "\n":
             # TODO - JD: This needs to be done in the generators.
             indentationDescription = self.utilities.indentationDescription(line)
