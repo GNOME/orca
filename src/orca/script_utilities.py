@@ -2998,6 +2998,9 @@ class Utilities:
         if not (str1 and str2):
             return False
 
+        if str1 in str2 or str2 in str1:
+            return True
+
         similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
         msg = (
             f"SCRIPT UTILITIES: Similarity between '{str1}', '{str2}': {similarity} "
