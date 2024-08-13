@@ -955,18 +955,6 @@ class StructuralNavigation:
 
         return obj
 
-    def _getCaretPosition(self, obj):
-        """Returns the [obj, characterOffset] where the caret should be
-        positioned. For most scripts, the object should not change and
-        the offset should be 0.  That's not always the case with Gecko.
-
-        Arguments:
-        - obj: the accessible object in which the caret should be
-          positioned.
-        """
-
-        return self._script.utilities.getFirstCaretPosition(obj)
-
     def _presentLine(self, obj, offset):
         """Presents the first line of the object to the user.
 
@@ -1149,12 +1137,12 @@ class StructuralNavigation:
 
     def _blockquotePresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_BLOCKQUOTES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_BLOCKQUOTES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _blockquoteDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_BLOCKQUOTE]
@@ -1187,12 +1175,12 @@ class StructuralNavigation:
 
     def _buttonPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_BUTTONS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_BUTTONS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _buttonDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_BUTTON]
@@ -1225,12 +1213,12 @@ class StructuralNavigation:
 
     def _checkBoxPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_CHECK_BOXES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_CHECK_BOXES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _checkBoxDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_CHECK_BOX]
@@ -1280,10 +1268,11 @@ class StructuralNavigation:
     def _chunkPresentation(self, obj, arg=None):
         if obj is not None:
             self._presentObject(obj, 0)
-        else:
-            full = messages.NO_MORE_CHUNKS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            return
+
+        full = messages.NO_MORE_CHUNKS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _chunkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_OBJECT]
@@ -1317,12 +1306,12 @@ class StructuralNavigation:
 
     def _comboBoxPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_COMBO_BOXES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_COMBO_BOXES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _comboBoxDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_COMBO_BOX]
@@ -1359,12 +1348,12 @@ class StructuralNavigation:
 
     def _entryPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_ENTRIES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_ENTRIES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _entryDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LABEL]
@@ -1404,12 +1393,12 @@ class StructuralNavigation:
         if obj is not None:
             if AXUtilities.is_text(obj) and AXObject.get_child_count(obj):
                 obj = AXObject.get_child(obj, 0)
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_FORM_FIELDS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_FORM_FIELDS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _formFieldDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LABEL]
@@ -1476,16 +1465,14 @@ class StructuralNavigation:
 
     def _headingPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        elif arg is None:
-            full = messages.NO_MORE_HEADINGS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
-        else:
+            self._presentObject(obj, 0)
+            return
+
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        full = messages.NO_MORE_HEADINGS
+        if arg is not None:
             full = messages.NO_MORE_HEADINGS_AT_LEVEL % arg
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+        self._script.presentMessage(full, brief)
 
     def _headingDialogData(self, arg=None):
         columnHeaders = [guilabels.SN_HEADER_HEADING]
@@ -1529,12 +1516,12 @@ class StructuralNavigation:
 
     def _iframePresentation(self, obj, arg=None):
         if obj is not None:
-            [newObj, characterOffset] = self._getCaretPosition(obj)
             self._presentObject(obj, 0)
-        else:
-            full = messages.NO_MORE_IFRAMES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            return
+
+        full = messages.NO_MORE_IFRAMES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _iframeDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_IFRAME]
@@ -1571,10 +1558,11 @@ class StructuralNavigation:
     def _imagePresentation(self, obj, arg=None):
         if obj is not None:
             self._presentObject(obj, 0)
-        else:
-            full = messages.NO_MORE_IMAGES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            return
+
+        full = messages.NO_MORE_IMAGES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _imageDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_IMAGE]
@@ -1607,13 +1595,13 @@ class StructuralNavigation:
 
     def _landmarkPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
             self._script.presentMessage(AXObject.get_name(obj))
-            self._presentLine(obj, characterOffset)
-        else:
-            full = messages.NO_LANDMARK_FOUND
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentLine(obj, 0)
+            return
+
+        full = messages.NO_LANDMARK_FOUND
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _landmarkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LANDMARK]
@@ -1649,8 +1637,7 @@ class StructuralNavigation:
     def _listPresentation(self, obj, arg=None):
         if obj is not None:
             self._script.speakMessage(self._getListDescription(obj))
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentLine(obj, characterOffset)
+            self._presentLine(AXObject.get_child(obj, 0) or obj, 0)
         else:
             full = messages.NO_MORE_LISTS
             brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
@@ -1708,8 +1695,7 @@ class StructuralNavigation:
         if thisList is not None and priorList != thisList:
             self._script.speakMessage(self._getListDescription(thisList))
 
-        [obj, characterOffset] = self._getCaretPosition(obj)
-        self._presentObject(obj, characterOffset)
+        self._presentObject(obj, 0)
 
     def _listItemDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LIST_ITEM]
@@ -1742,12 +1728,12 @@ class StructuralNavigation:
 
     def _liveRegionPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_LIVE_REGIONS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_LIVE_REGIONS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     ########################
     #                      #
@@ -1782,10 +1768,11 @@ class StructuralNavigation:
     def _paragraphPresentation(self, obj, arg=None):
         if obj is not None:
             self._presentObject(obj, 0)
-        else:
-            full = messages.NO_MORE_PARAGRAPHS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            return
+
+        full = messages.NO_MORE_PARAGRAPHS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _paragraphDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_PARAGRAPH]
@@ -1818,12 +1805,12 @@ class StructuralNavigation:
 
     def _radioButtonPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_RADIO_BUTTONS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_RADIO_BUTTONS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _radioButtonDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_RADIO_BUTTON]
@@ -1941,12 +1928,12 @@ class StructuralNavigation:
 
     def _unvisitedLinkPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_UNVISITED_LINKS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_UNVISITED_LINKS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _unvisitedLinkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LINK]
@@ -1981,12 +1968,12 @@ class StructuralNavigation:
 
     def _visitedLinkPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_VISITED_LINKS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_VISITED_LINKS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _visitedLinkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LINK]
@@ -2020,12 +2007,12 @@ class StructuralNavigation:
 
     def _linkPresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        else:
-            full = messages.NO_MORE_LINKS
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_LINKS
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _linkDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LINK]
@@ -2067,12 +2054,12 @@ class StructuralNavigation:
 
     def _clickablePresentation(self, obj, arg=None):
         if obj is not None:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._presentObject(obj, characterOffset)
-        elif not arg:
-            full = messages.NO_MORE_CLICKABLES
-            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
-            self._script.presentMessage(full, brief)
+            self._presentObject(obj, 0)
+            return
+
+        full = messages.NO_MORE_CLICKABLES
+        brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+        self._script.presentMessage(full, brief)
 
     def _clickableDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_CLICKABLE]
@@ -2115,6 +2102,7 @@ class StructuralNavigation:
 
         characterOffset = arg
         if characterOffset is None:
-            obj, characterOffset = self._getCaretPosition(obj)
+            # TODO - JD: Determine when it is None and see if this can be handled differently.
+            obj, characterOffset = self._script.utilities.getFirstCaretPosition(obj)
 
         self._presentLine(obj, characterOffset)
