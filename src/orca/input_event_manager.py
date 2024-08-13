@@ -213,10 +213,15 @@ class InputEventManager:
 
         event.set_click_count(self._determine_keyboard_event_click_count(event))
         result = event.process()
-        self._last_input_event = event
-        if not event.is_modifier_key():
-            self._last_non_modifier_key_event = event
 
+        if event.is_modifier_key():
+            if self.is_release_for(event, self._last_input_event):
+                msg = "INPUT EVENT MANAGER: Clearing last non modifier key event"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                self._last_non_modifier_key_event = None
+        else:
+            self._last_non_modifier_key_event = event
+        self._last_input_event = event
         return result
 
     def _determine_keyboard_event_click_count(self, event):
@@ -279,8 +284,10 @@ class InputEventManager:
 
         result = event1.id == event2.id \
             and event1.hw_code == event2.hw_code \
-            and event1.modifiers == event2.modifiers \
-            and event1.keyval_name == event2.keyval_name \
+            and event1.keyval_name == event2.keyval_name
+
+        if result and not event1.is_modifier_key:
+            result = event1.modifiers == event2.modifiers
 
         msg = (
             f"INPUT EVENT MANAGER: {event1.as_single_line_string()} "
