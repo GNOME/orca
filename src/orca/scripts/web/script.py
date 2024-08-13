@@ -50,6 +50,7 @@ from orca import structural_navigation
 from orca.acss import ACSS
 from orca.scripts import default
 from orca.ax_document import AXDocument
+from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
@@ -923,6 +924,8 @@ class Script(default.Script):
            or args.get("includeContext") or AXTable.get_table(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
+
+        AXEventSynthesizer.scroll_to_center(obj, start_offset=0)
 
         if AXUtilities.is_entry(obj):
             super().presentObject(obj, **args)

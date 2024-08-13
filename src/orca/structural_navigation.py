@@ -44,7 +44,6 @@ from . import orca_gui_navlist
 from . import settings
 from . import settings_manager
 from .ax_collection import AXCollection
-from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
@@ -1026,7 +1025,6 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, offset):
             return
 
-        AXEventSynthesizer.scroll_to_center(obj, start_offset=offset)
         self._script.presentObject(obj, offset=offset, priorObj=priorObj, interrupt=True)
 
     def _presentWithSayAll(self, obj, offset):
