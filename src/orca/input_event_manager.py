@@ -279,6 +279,10 @@ class InputEventManager:
         if event1 is None or event2 is None:
             return False
 
+        if not isinstance(event1, input_event.KeyboardEvent) \
+           or not isinstance(event2, input_event.KeyboardEvent):
+            return False
+
         if event1.is_pressed_key() or not event2.is_pressed_key():
             return False
 
