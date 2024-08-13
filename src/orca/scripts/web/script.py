@@ -1690,7 +1690,8 @@ class Script(default.Script):
              (AXUtilities.is_focused(event.source) or not AXUtilities.is_focusable(event.source)):
             msg = "WEB: Editable object is not (yet) the locus of focus."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
-            notify = force = handled = True
+            notify = force = handled = \
+                input_event_manager.get_manager().last_event_was_line_navigation()
 
         elif input_event_manager.get_manager().last_event_was_caret_navigation():
             msg = "WEB: Caret moved due to native caret navigation."
