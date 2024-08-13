@@ -918,6 +918,8 @@ class Script(default.Script):
 
         priorObj = args.get("priorObj")
         if self.caret_navigation.last_input_event_was_navigation_command() \
+           or self.structural_navigation.last_input_event_was_navigation_command() \
+           or self.get_table_navigator().last_input_event_was_navigation_command() \
            or args.get("includeContext") or AXTable.get_table(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
