@@ -482,22 +482,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         index = args.get("index", 0)
         total = args.get("total", 1)
 
+        ancestor_with_usable_role = self._get_ancestor_with_usable_role(obj, **args)
         if not self._should_speak_role(obj, **args):
-            # Sometimes we have a role that we shouldn't speak, such as a static inside a heading.
-            # In that case, we don't want to return early before presenting that ancestor role.
-            # TODO - JD: What really should happen is that this role comes from new ancestors,
-            # but that doesn't happen in structural navigation.
-            def use_ancestor_role(x):
-                if not AXUtilities.is_heading(x) or AXUtilities.is_link(x):
-                    return False
-                if AXObject.get_role(x) == role:
-                    return False
-                return index == total - 1 or AXObject.get_name(x) == AXObject.get_name(obj)
-
-            ancestor = AXObject.find_ancestor(obj, use_ancestor_role)
-            if ancestor and index == total - 1:
-                return self._generate_accessible_role(ancestor)
-
+            if ancestor_with_usable_role:
+                return self._generate_accessible_role(ancestor_with_usable_role)
             return []
 
         result = []
@@ -547,6 +535,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         else:
             result.append(self.get_localized_role_name(obj, **args))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+
+        if ancestor_with_usable_role:
+            result[1:1] = self._generate_accessible_role(ancestor_with_usable_role)
 
         return result
 

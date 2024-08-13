@@ -286,6 +286,20 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
+    def _get_ancestor_with_usable_role(self, obj, **args):
+        role = args.get("role", AXObject.get_role(obj))
+        index = args.get("index", 0)
+        total = args.get("total", 1)
+
+        def use_ancestor_role(x):
+            if not AXUtilities.is_heading(x) or AXUtilities.is_link(x):
+                return False
+            if AXObject.get_role(x) == role:
+                return False
+            return index == total - 1 or AXObject.get_name(x) == AXObject.get_name(obj)
+
+        return AXObject.find_ancestor(obj, use_ancestor_role)
+
     def _should_speak_role(self, obj, **args):
         settings_mgr = settings_manager.get_manager()
         if settings_mgr.get_setting("onlySpeakDisplayedText"):
