@@ -799,7 +799,7 @@ class Generator:
         if (hash(obj), start, end) in Generator.CACHED_TEXT_LINE:
             return Generator.CACHED_TEXT_LINE.get((hash(obj), start, end))
 
-        result = self._generate_text_substring(obj, **args)
+        result = Generator._generate_text_substring(self, obj, **args)
         if result:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = result
@@ -820,7 +820,7 @@ class Generator:
         if hash(obj) in Generator.CACHED_TEXT:
             return Generator.CACHED_TEXT.get(hash(obj))
 
-        result = self._generate_text_substring(obj, **args)
+        result = Generator._generate_text_substring(self, obj, **args)
         if result:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT[hash(obj)] = result
