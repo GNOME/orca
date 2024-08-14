@@ -1710,7 +1710,7 @@ class Utilities(script_utilities.Utilities):
         return subtree
 
     def handleTextSelectionChange(self, obj, speakMessage=True):
-        if not self.inDocumentContent(obj):
+        if not self.inDocumentContent(obj) or self._script.inFocusMode():
             return super().handleTextSelectionChange(obj)
 
         oldStart, oldEnd = \
