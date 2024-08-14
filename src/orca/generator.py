@@ -59,8 +59,6 @@ class Generator:
     CACHED_DESCRIPTION: dict = {}
     CACHED_IMAGE_DESCRIPTION: dict = {}
     CACHED_IS_NAMELESS_TOGGLE: dict = {}
-    CACHED_LABEL_AND_NAME: dict = {}
-    CACHED_LOCALIZED_ROLE_NAME: dict = {}
     CACHED_NESTING_LEVEL: dict = {}
     CACHED_STATIC_TEXT: dict = {}
     CACHED_TEXT_SUBSTRING: dict = {}
@@ -206,8 +204,6 @@ class Generator:
                 Generator.CACHED_DESCRIPTION = {}
                 Generator.CACHED_IMAGE_DESCRIPTION = {}
                 Generator.CACHED_IS_NAMELESS_TOGGLE = {}
-                Generator.CACHED_LABEL_AND_NAME = {}
-                Generator.CACHED_LOCALIZED_ROLE_NAME = {}
                 Generator.CACHED_NESTING_LEVEL = {}
                 Generator.CACHED_STATIC_TEXT = {}
                 Generator.CACHED_TEXT_SUBSTRING = {}
@@ -265,11 +261,7 @@ class Generator:
     def get_localized_role_name(self, obj, **args):
         """Returns a string representing the localized rolename of obj."""
 
-        if hash(obj) in Generator.CACHED_LOCALIZED_ROLE_NAME:
-            return Generator.CACHED_LOCALIZED_ROLE_NAME.get(hash(obj))
-
         result = AXUtilities.get_localized_role_name(obj, args.get("role"))
-        Generator.CACHED_LOCALIZED_ROLE_NAME[hash(obj)] = result
         return result
 
     def get_state_indicator(self, obj, **args):
@@ -353,14 +345,10 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj, **args):
-        if hash(obj) in Generator.CACHED_LABEL_AND_NAME:
-            return Generator.CACHED_LABEL_AND_NAME.get(hash(obj))
-
         if AXUtilities.is_menu(obj, args.get("role")) \
            and self._script.utilities.isPopupMenuForCurrentItem(obj):
             tokens = ["GENERATOR:", obj, "is popup menu for current item."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            Generator.CACHED_LABEL_AND_NAME[hash(obj)] = []
             return []
 
         result = []
@@ -373,32 +361,25 @@ class Generator:
 
         # If we don't have a label, always use the name.
         if not label:
-            Generator.CACHED_LABEL_AND_NAME[hash(obj)] = name
             return name
 
         result.extend(label)
         if not name:
-            Generator.CACHED_LABEL_AND_NAME[hash(obj)] = result
             return result
 
         if self._script.utilities.stringsAreRedundant(name[0], label[0]):
             if len(name[0]) < len(label[0]):
-                Generator.CACHED_LABEL_AND_NAME[hash(obj)] = label
                 return label
-
-            Generator.CACHED_LABEL_AND_NAME[hash(obj)] = name
             return name
 
         result.extend(name)
         if result:
-            Generator.CACHED_LABEL_AND_NAME[hash(obj)] = result
             return result
 
         parent = AXObject.get_parent(obj)
         if AXUtilities.is_autocomplete(parent):
             result = self._generate_accessible_label_and_name(parent, **args)
 
-        Generator.CACHED_LABEL_AND_NAME[hash(obj)] = result
         return result
 
     @log_generator_output
