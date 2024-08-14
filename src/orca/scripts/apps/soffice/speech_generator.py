@@ -51,6 +51,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return wrapper
 
     @log_generator_output
+    def _generate_accessible_name(self, obj, **args):
+        if self._script.utilities.isSpreadSheetCell(obj):
+            # Currently the coordinates of the cell are exposed as the name.
+            return []
+        return super()._generate_accessible_name(obj, **args)
+
+    @log_generator_output
     def _generate_text_line(self, obj, **args):
         if AXUtilities.is_combo_box(obj):
             entry = self._script.utilities.getEntryForEditableComboBox(obj)
