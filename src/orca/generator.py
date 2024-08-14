@@ -833,8 +833,8 @@ class Generator:
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT[hash(obj)] = [text]
-        return [text]
+            Generator.CACHED_TEXT[hash(obj)] = []
+        return []
 
     @log_generator_output
     def _generate_text_expanding_embedded_objects(self, obj, **args):
