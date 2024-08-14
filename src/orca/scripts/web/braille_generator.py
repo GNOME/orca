@@ -181,9 +181,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.preferDescriptionOverName(obj):
             return [AXObject.get_description(obj)]
 
-        if AXUtilities.is_link(obj) and args.get("startOffset") is not None:
-            return []
-
         if AXObject.get_name(obj) and not self._script.utilities.hasValidName(obj):
             return []
 
