@@ -588,6 +588,9 @@ class AXTable:
     def get_new_row_headers(cell, old_cell):
         """Returns row headers of cell that are not also headers of old_cell. """
 
+        if old_cell and not AXUtilitiesRole.is_table_cell_or_header(old_cell):
+            old_cell = AXObject.find_ancestor(old_cell, AXUtilitiesRole.is_table_cell_or_header)
+
         headers = AXTable.get_row_headers(cell)
         if old_cell is None:
             return headers
@@ -598,6 +601,9 @@ class AXTable:
     @staticmethod
     def get_new_column_headers(cell, old_cell):
         """Returns column headers of cell that are not also headers of old_cell. """
+
+        if old_cell and not AXUtilitiesRole.is_table_cell_or_header(old_cell):
+            old_cell = AXObject.find_ancestor(old_cell, AXUtilitiesRole.is_table_cell_or_header)
 
         headers = AXTable.get_column_headers(cell)
         if old_cell is None:
