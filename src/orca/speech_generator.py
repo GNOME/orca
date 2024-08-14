@@ -2041,6 +2041,7 @@ class SpeechGenerator(generator.Generator):
         if result[0] in ['\n', ''] \
            and settings_manager.get_manager().get_setting("speakBlankLines") \
            and not self._script.inSayAll() and args.get('total', 1) == 1 \
+           and not AXUtilities.is_table_cell_or_header(obj) \
            and args.get("formatType") != "ancestor":
             result[0] = messages.BLANK
 
@@ -2061,6 +2062,7 @@ class SpeechGenerator(generator.Generator):
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]
         if text == '\n' and settings_manager.get_manager().get_setting("speakBlankLines") \
            and not self._script.inSayAll() and args.get('total', 1) == 1 \
+           and not AXUtilities.is_table_cell_or_header(obj) \
            and args.get("formatType") != "ancestor":
             result = [messages.BLANK]
             result.extend(self.voice(string=text, obj=obj, **args))
