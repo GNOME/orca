@@ -1,3 +1,65 @@
+47.beta - 19 August 2024
+
+Web:
+
+* Present indentation in non-editable code/pre elements.
+
+* Treat tab lists as lists and tabs as list items to make them reachable
+  via structural navigation.
+
+* Treat toggle buttons as a form control for structural navigation.
+
+* Improve reliability of synthesized clicks.
+
+* Eliminate some chattiness with lists and description terms and values.
+
+* Eliminate some chattiness related to page-load events.
+
+* Reduce verbosity of heading presentation.
+
+* Present object rather than line for focus mode widget navigation.
+
+* Fix SayAll failing when launched from non-text web element.
+
+* Work around https://bugzilla.mozilla.org/show_bug.cgi?id=1882794
+  more reliably in order to be less chatty and less likely to refresh
+  keygrabs unnecessarily.
+
+General:
+
+* Much code cleanup, old-hack removal, and miscellaneous performance
+  improvements.
+
+* Fix Orca dialogs opening in the background.
+
+* Always speak the role if object navigator is active.
+
+* Improve identification of redundant descriptions to eliminate
+  some chattiness.
+
+* Fix bug causing incorrect presentation of content during line
+  navigation.
+
+* Fix bug causing table cell headers to be repeated.
+
+* Include description when generating braille.
+
+* Notification Presenter: Ensure we only create one dialog.
+
+* Fix sentence tracking in the Spiel speechserver.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  el              Greek                     Giannis Antypas
+  fa              Persian                   Danial Behzadi
+  hu              Hungarian                 Attila Hammer
+  ka              Georgian                  Ekaterine Papava
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Martin
+  th              Thai                      Aefgh Threenine
+
+=========
+
 47.alpha - 4 July 2024
 
 Web:
