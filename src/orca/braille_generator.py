@@ -924,10 +924,19 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                (self._generate_text_line(obj, **args) or \
-                      self._generate_accessible_label_and_name(obj, **args)) +
+        line = self._generate_text_line(obj, **args)
+        if line and AXUtilities.is_editable(obj):
+            result += [braille.Text(
+                obj,
+                self._as_string(line),
+                self._as_string(self._generate_eol(obj, **args)),
+                args.get("startOffset"),
+                args.get("endOffset"),
+                args.get("caretOffset"))]
+        else:
+            result += [braille.Component(
+                obj,
+                self._as_string(line or self._generate_accessible_label_and_name(obj, **args) +
                 self._generate_state_expanded(obj, **args)))]
 
         level = self._generate_nesting_level(obj, **args)
