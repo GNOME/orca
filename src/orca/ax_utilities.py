@@ -417,6 +417,9 @@ class AXUtilities:
             if len(selected_children) == 1:
                 obj = selected_children[0]
 
+        if AXUtilitiesRole.is_list(obj) or AXUtilitiesRole.is_list_box(obj):
+            obj = AXObject.find_descendant(obj, AXUtilitiesRole.is_list_item)
+
         members = AXUtilities.get_set_members(obj)
         return len(members)
 

@@ -170,6 +170,9 @@ class BrailleGenerator(generator.Generator):
                         combined, prior, delimiter)
         return combined
 
+    def _generate_result_separator(self, _obj, **_args):
+        return [braille.Region(" ")]
+
     ################################# BASIC DETAILS #################################
 
     @log_generator_output
@@ -242,35 +245,6 @@ class BrailleGenerator(generator.Generator):
         if count < 0:
             return []
         return [f"({messages.valueCountForTerm(count)})"]
-
-    @log_generator_output
-    def _generate_status_bar_items(self, obj, **_args):
-        if not AXUtilities.is_status_bar(obj):
-            return []
-
-        items = self._script.utilities.statusBarItems(obj)
-        if not items or items == [obj]:
-            return []
-
-        result = []
-        for child in items:
-            child_result = self.generate(child, includeContext=False)
-            if child_result:
-                result.extend(child_result)
-                result.append(braille.Region(" "))
-
-        return result
-
-    @log_generator_output
-    def _generate_list_box_item_widgets(self, obj, **_args):
-        if not AXUtilities.is_list_box(AXObject.get_parent(obj)):
-            return []
-
-        result = []
-        for widget in AXUtilities.get_all_widgets(obj):
-            result.extend(self.generate(widget, includeContext=False))
-            result.append(braille.Region(" "))
-        return result
 
     ################################### KEYBOARD ###################################
 
@@ -959,10 +933,7 @@ class BrailleGenerator(generator.Generator):
         if level:
             result += [braille.Region(" " + self._as_string(level))]
 
-        widgets = self._generate_list_box_item_widgets(obj, **args)
-        if widgets:
-            result += [braille.Region(" " + self._as_string(widgets))]
-
+        result += self._generate_descendants(obj, **args)
         return result
 
     def _generate_log(self, obj, **args):
@@ -1294,7 +1265,7 @@ class BrailleGenerator(generator.Generator):
                 self._generate_accessible_label_and_name(obj, **args) +
                 self._generate_accessible_role(obj, **args)))]
         result += [braille.Region(" ")]
-        result += self._generate_status_bar_items(obj, **args)
+        result += self._generate_descendants(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 

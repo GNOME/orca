@@ -1170,32 +1170,6 @@ class Utilities:
 
         return obj
 
-    def isStatusBarDescendant(self, obj):
-        if obj is None:
-            return False
-
-        return AXObject.find_ancestor(obj, AXUtilities.is_status_bar) is not None
-
-    def statusBarItems(self, obj):
-        if not AXUtilities.is_status_bar(obj):
-            return []
-
-        start = time.time()
-        items = self._script.point_of_reference.get('statusBarItems')
-        if not items:
-
-            def include(x):
-                return not AXUtilities.is_status_bar(x)
-
-            items = list(filter(include, self.getOnScreenObjects(obj)))
-            self._script.point_of_reference['statusBarItems'] = items
-
-        end = time.time()
-        msg = f"SCRIPT UTILITIES: Time getting status bar items: {end - start:.4f}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
-        return items
-
     def infoBar(self, root):
         return None
 

@@ -43,6 +43,7 @@ from gi.repository import Atspi
 
 from . import braille
 from . import debug
+from . import focus_manager
 from . import object_properties
 from . import settings
 from . import settings_manager
@@ -298,10 +299,16 @@ class Generator:
 
         return []
 
+    def _generate_result_separator(self, _obj, **_args):
+        return []
+
     ################################# BASIC DETAILS #################################
 
     @log_generator_output
-    def _generate_accessible_description(self, obj, **_args):
+    def _generate_accessible_description(self, obj, **args):
+        if args.get("omitDescription"):
+            return []
+
         if hash(obj) in Generator.CACHED_DESCRIPTION:
             return Generator.CACHED_DESCRIPTION.get(hash(obj))
 
@@ -345,11 +352,11 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj, **args):
-        if AXUtilities.is_menu(obj, args.get("role")) \
-           and self._script.utilities.isPopupMenuForCurrentItem(obj):
-            tokens = ["GENERATOR:", obj, "is popup menu for current item."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return []
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus and obj != focus:
+            name = AXObject.get_name(obj)
+            if name and name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
+                return []
 
         result = []
         label = self._generate_accessible_label(obj, **args)
@@ -503,6 +510,33 @@ class Generator:
             return Atspi.Role.IMAGE
 
         return role
+
+    @log_generator_output
+    def _generate_descendants(self, obj, **args):
+        result = []
+        obj_name = AXObject.get_name(obj)
+        descendants = self._script.utilities.getOnScreenObjects(obj)
+        for child in descendants:
+            if child == obj:
+                continue
+            if AXUtilities.is_image(child):
+                continue
+            if AXUtilities.is_label(child):
+                if not AXText.has_presentable_text(child):
+                    continue
+                if AXObject.get_name(child) == obj_name:
+                    continue
+                if child in AXUtilities.get_is_labelled_by(obj):
+                    continue
+                if child in AXUtilities.get_is_described_by(obj):
+                    continue
+
+            child_result = self.generate(child, includeContext=False, omitDescription=True)
+            if child_result:
+                result.extend(child_result)
+                result.extend(self._generate_result_separator(child, **args))
+
+        return result
 
     @log_generator_output
     def _generate_focused_item(self, obj, **args):

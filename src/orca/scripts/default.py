@@ -1345,6 +1345,11 @@ class Script(script.Script):
                 msg = "DEFAULT: Event is redundant notification for the locusOfFocus"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return
+            if AXObject.get_name(focus) == event.any_data:
+                msg = "DEFAULT: Event is redundant notification for the locusOfFocus"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                return
+
         elif event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "DEFAULT: Event is for object other than the locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)

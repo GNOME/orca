@@ -375,9 +375,7 @@ class WhereAmIPresenter:
         if frame:
             statusbar = AXUtilities.get_status_bar(frame)
             if statusbar:
-                script.point_of_reference['statusBarItems'] = None
                 script.presentObject(statusbar, interrupt=True)
-                script.point_of_reference['statusBarItems'] = None
             else:
                 full = messages.STATUS_BAR_NOT_FOUND_FULL
                 brief = messages.STATUS_BAR_NOT_FOUND_BRIEF
