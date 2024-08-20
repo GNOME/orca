@@ -926,7 +926,8 @@ class BrailleGenerator(generator.Generator):
         result = self._generate_default_prefix(obj, **args)
         result += [braille.Component(
             obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
+                (self._generate_text_line(obj, **args) or \
+                      self._generate_accessible_label_and_name(obj, **args)) +
                 self._generate_state_expanded(obj, **args)))]
 
         level = self._generate_nesting_level(obj, **args)
