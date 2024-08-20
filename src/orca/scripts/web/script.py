@@ -1009,7 +1009,8 @@ class Script(default.Script):
         # can prevent us from presenting table column headers when braille is enabled because
         # we think they are not "new." Commit bd877203f0 addressed that, but we need to stop
         # such side effects from happening in the first place.
-        obj, offset = self.utilities.getCaretContext(documentFrame=document, getReplicant=True)
+        if args.get("offset") is None:
+            obj, offset = self.utilities.getCaretContext(documentFrame=document, getReplicant=True)
         if offset > 0 and isContentEditable and self.utilities.treatAsTextObject(obj):
             offset = min(offset, AXText.get_character_count(obj))
 

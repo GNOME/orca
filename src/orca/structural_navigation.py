@@ -1662,8 +1662,7 @@ class StructuralNavigation:
         if self._presentWithSayAll(obj, 0):
             return
 
-        self._script.speakMessage(self._getListDescription(obj))
-        self._presentLine(AXObject.get_child(obj, 0) or obj, 0)
+        focus_manager.get_manager().set_locus_of_focus(None, AXObject.get_child(obj, 0) or obj)
 
     def _listDialogData(self):
         columnHeaders = [guilabels.SN_HEADER_LIST]
