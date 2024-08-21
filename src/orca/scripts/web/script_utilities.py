@@ -858,69 +858,66 @@ class Utilities(script_utilities.Utilities):
                 break
         return text[rangeStart:rangeEnd], rangeStart, rangeEnd
 
-    def _getTextAtOffset(self, obj, offset, boundary):
+    def _getTextAtOffset(self, obj, offset, granularity):
         def stringForDebug(x):
             return x.replace(self.EMBEDDED_OBJECT_CHARACTER, "[OBJ]").replace("\n", "\\n")
 
         if not obj:
-            tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+            tokens = ["WEB:", granularity, f"at offset {offset} for", obj, ":",
                       "'', Start: 0, End: 0. (obj is None)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return '', 0, 0
 
         if not self.treatAsTextObject(obj):
-            tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+            tokens = ["WEB:", granularity, f"at offset {offset} for", obj, ":",
                       "'', Start: 0, End: 1. (treatAsTextObject() returned False)"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return '', 0, 1
 
         allText = AXText.get_all_text(obj)
-        if boundary is None:
+        if granularity is None:
             string, start, end = allText, 0, len(allText)
             s = stringForDebug(string)
-            tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+            tokens = ["WEB:", granularity, f"at offset {offset} for", obj, ":",
                       f"'{s}', Start: {start}, End: {end}."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return string, start, end
 
-        if boundary == Atspi.TextBoundaryType.SENTENCE_START and not AXUtilities.is_editable(obj):
+        if granularity == Atspi.TextGranularity.SENTENCE and not AXUtilities.is_editable(obj):
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] \
                or not (re.search(r"\w", allText) and self.isTextBlockElement(obj)):
                 string, start, end = allText, 0, len(allText)
                 s = stringForDebug(string)
-                tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+                tokens = ["WEB:", granularity, f"at offset {offset} for", obj, ":",
                           f"'{s}', Start: {start}, End: {end}."]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return string, start, end
 
-        if boundary == Atspi.TextBoundaryType.LINE_START and self.treatAsEndOfLine(obj, offset):
+        if granularity == Atspi.TextGranularity.LINE and self.treatAsEndOfLine(obj, offset):
             offset -= 1
             tokens = ["WEB: Line sought for", obj, "at end of text. Adjusting offset to",
                       offset, "."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         offset = max(0, offset)
-
-        # TODO - JD: Audit callers so we don't have to use boundaries.
-        # Also, can the logic be entirely moved to AXText?
-        if boundary == Atspi.TextBoundaryType.LINE_START:
+        if granularity == Atspi.TextGranularity.LINE:
             string, start, end = AXText.get_line_at_offset(obj, offset)
-        elif boundary == Atspi.TextBoundaryType.SENTENCE_START:
+        elif granularity == Atspi.TextGranularity.SENTENCE:
             string, start, end = AXText.get_sentence_at_offset(obj, offset)
-        elif boundary == Atspi.TextBoundaryType.WORD_START:
+        elif granularity == Atspi.TextGranularity.WORD:
             string, start, end = AXText.get_word_at_offset(obj, offset)
-        elif boundary == Atspi.TextBoundaryType.CHAR:
+        elif granularity == Atspi.TextGranularity.CHAR:
             string, start, end = AXText.get_character_at_offset(obj, offset)
         else:
             string, start, end = AXText.get_line_at_offset(obj, offset)
 
         s = stringForDebug(string)
-        tokens = [f"WEB: Text at offset {offset} for", obj, "using", boundary, ":",
+        tokens = ["WEB:", granularity, f"at offset {offset} for", obj, ":",
                   f"'{s}', Start: {start}, End: {end}."]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
 
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1141181
-        needSadHack = boundary == Atspi.TextBoundaryType.SENTENCE_START and allText \
+        needSadHack = granularity == Atspi.TextGranularity.SENTENCE and allText \
            and (string, start, end) == ("", 0, 0)
 
         if needSadHack:
@@ -933,18 +930,18 @@ class Utilities(script_utilities.Utilities):
 
         return string, start, end
 
-    def _getContentsForObj(self, obj, offset, boundary):
-        tokens = ["WEB: Attempting to get contents for", obj, boundary]
+    def _getContentsForObj(self, obj, offset, granularity):
+        tokens = ["WEB: Attempting to get contents for", obj, granularity]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         if not obj:
             return []
 
-        if boundary == Atspi.TextBoundaryType.SENTENCE_START and AXUtilities.is_time(obj):
+        if granularity == Atspi.TextGranularity.SENTENCE and AXUtilities.is_time(obj):
             string = AXText.get_all_text(obj)
             if string:
                 return [[obj, 0, len(string), string]]
 
-        if boundary == Atspi.TextBoundaryType.LINE_START:
+        if granularity == Atspi.TextGranularity.LINE:
             if AXUtilities.is_math_related(obj):
                 if AXUtilities.is_math(obj):
                     math = obj
@@ -961,7 +958,7 @@ class Utilities(script_utilities.Utilities):
 
                 tokens = ["WEB: Returning all text as contents for", obj, "(single-char lines)"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                boundary = None
+                granularity = None
 
             if self.elementLinesAreSingleWords(obj):
                 if AXObject.get_name(obj) and treatAsText:
@@ -971,12 +968,12 @@ class Utilities(script_utilities.Utilities):
 
                 tokens = ["WEB: Returning all text as contents for", obj, "(single-word lines)"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                boundary = None
+                granularity = None
 
         if AXUtilities.is_internal_frame(obj) and AXObject.get_child_count(obj) == 1:
-            return self._getContentsForObj(AXObject.get_child(obj, 0), 0, boundary)
+            return self._getContentsForObj(AXObject.get_child(obj, 0), 0, granularity)
 
-        string, start, end = self._getTextAtOffset(obj, offset, boundary)
+        string, start, end = self._getTextAtOffset(obj, offset, granularity)
         if not string:
             return [[obj, start, end, string]]
 
@@ -990,7 +987,7 @@ class Utilities(script_utilities.Utilities):
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 child = AXHypertext.get_child_at_offset(obj, offset)
                 if child:
-                    return self._getContentsForObj(child, 0, boundary)
+                    return self._getContentsForObj(child, 0, granularity)
 
         ranges = [m.span() for m in re.finditer("[^\ufffc]+", string)]
         strings = list(filter(lambda x: x[0] <= stringOffset <= x[1], ranges))
@@ -1000,7 +997,7 @@ class Utilities(script_utilities.Utilities):
             string = string[rangeStart:rangeEnd]
             end = start + len(string)
 
-        if boundary in [Atspi.TextBoundaryType.WORD_START, Atspi.TextBoundaryType.CHAR]:
+        if granularity in [Atspi.TextGranularity.WORD, Atspi.TextGranularity.CHAR]:
             return [[obj, start, end, string]]
 
         return self.adjustContentsForLanguage([[obj, start, end, string]])
@@ -1022,8 +1019,8 @@ class Utilities(script_utilities.Utilities):
                     obj, offset, self._currentSentenceContents, usingCache=True) != -1:
                 return self._currentSentenceContents
 
-        boundary = Atspi.TextBoundaryType.SENTENCE_START
-        objects = self._getContentsForObj(obj, offset, boundary)
+        granularity = Atspi.TextGranularity.SENTENCE
+        objects = self._getContentsForObj(obj, offset, granularity)
         if AXUtilities.is_editable(obj):
             if AXUtilities.is_focused(obj):
                 return objects
@@ -1055,7 +1052,7 @@ class Utilities(script_utilities.Utilities):
                     break
 
             prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
-            onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
+            onLeft = self._getContentsForObj(prevObj, pOffset, granularity)
             onLeft = list(filter(lambda x: x not in objects, onLeft))
             endsOnLeft = list(filter(_treatAsSentenceEnd, onLeft))
             if endsOnLeft:
@@ -1072,7 +1069,7 @@ class Utilities(script_utilities.Utilities):
         while not _treatAsSentenceEnd(objects[-1]):
             lastObj, lastStart, lastEnd, lastString = objects[-1]
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
-            onRight = self._getContentsForObj(nextObj, nOffset, boundary)
+            onRight = self._getContentsForObj(nextObj, nOffset, granularity)
             onRight = list(filter(lambda x: x not in objects, onRight))
             if not onRight:
                 break
@@ -1101,8 +1098,8 @@ class Utilities(script_utilities.Utilities):
                     obj, offset, self._currentCharacterContents, usingCache=True) != -1:
                 return self._currentCharacterContents
 
-        boundary = Atspi.TextBoundaryType.CHAR
-        objects = self._getContentsForObj(obj, offset, boundary)
+        granularity = Atspi.TextGranularity.CHAR
+        objects = self._getContentsForObj(obj, offset, granularity)
         if useCache:
             self._currentCharacterContents = objects
 
@@ -1126,8 +1123,8 @@ class Utilities(script_utilities.Utilities):
                 self._debugContentsInfo(obj, offset, self._currentWordContents, "Word (cached)")
                 return self._currentWordContents
 
-        boundary = Atspi.TextBoundaryType.WORD_START
-        objects = self._getContentsForObj(obj, offset, boundary)
+        granularity = Atspi.TextGranularity.WORD
+        objects = self._getContentsForObj(obj, offset, granularity)
         extents = self.getExtents(obj, offset, offset + 1)
 
         def _include(x):
@@ -1149,7 +1146,7 @@ class Utilities(script_utilities.Utilities):
             if not char or char.isspace():
                 break
 
-            onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
+            onLeft = self._getContentsForObj(prevObj, pOffset, granularity)
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
                 break
@@ -1168,7 +1165,7 @@ class Utilities(script_utilities.Utilities):
             if nextObj == lastObj:
                 break
 
-            onRight = self._getContentsForObj(nextObj, nOffset, boundary)
+            onRight = self._getContentsForObj(nextObj, nOffset, granularity)
             if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
                 onRight = onRight[0:-1]
 
@@ -1404,8 +1401,8 @@ class Utilities(script_utilities.Utilities):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents)
             return onSameLine
 
-        boundary = Atspi.TextBoundaryType.LINE_START
-        objects = self._getContentsForObj(obj, offset, boundary)
+        granularity = Atspi.TextGranularity.LINE
+        objects = self._getContentsForObj(obj, offset, granularity)
         if not layoutMode:
             if useCache:
                 self._currentLineContents = objects
@@ -1442,7 +1439,7 @@ class Utilities(script_utilities.Utilities):
             if char == "\n" and firstObj == prevObj:
                 break
 
-            onLeft = self._getContentsForObj(prevObj, pOffset, boundary)
+            onLeft = self._getContentsForObj(prevObj, pOffset, granularity)
             onLeft = list(filter(_include, onLeft))
             if not onLeft:
                 break
@@ -1469,7 +1466,7 @@ class Utilities(script_utilities.Utilities):
             if char == "\n" and lastObj == nextObj:
                 break
 
-            onRight = self._getContentsForObj(nextObj, nOffset, boundary)
+            onRight = self._getContentsForObj(nextObj, nOffset, granularity)
             if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
                 onRight = onRight[0:-1]
 

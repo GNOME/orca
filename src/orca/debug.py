@@ -218,7 +218,7 @@ def _asString(obj):
         )
 
     if isinstance(obj, (Atspi.Role, Atspi.StateType, Atspi.CollectionMatchType,
-                        Atspi.TextBoundaryType, Atspi.ScrollType)):
+                        Atspi.TextGranularity, Atspi.ScrollType)):
         return obj.value_nick
 
     if isinstance(obj, Atspi.Rect):
