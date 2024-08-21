@@ -3038,7 +3038,7 @@ class SpeechGenerator(generator.Generator):
         format_type = args.get("formatType", "unfocused")
         result += self._generate_accessible_label_and_name(obj, **args)
 
-        if format_type != "focused":
+        if format_type not in ["focused", "ancestor"]:
             result += self._generate_focused_item(obj, **args)
             result += self._generate_pause(obj, **args)
 
