@@ -928,7 +928,7 @@ class BrailleGenerator(generator.Generator):
         if line and AXUtilities.is_editable(obj):
             result += [braille.Text(
                 obj,
-                self._as_string(line),
+                "",
                 self._as_string(self._generate_eol(obj, **args)),
                 args.get("startOffset"),
                 args.get("endOffset"),
