@@ -427,6 +427,8 @@ def main():
         settings_manager.get_manager().set_accessibility(True)
 
     debug.printMessage(debug.LEVEL_INFO, "ORCA: Initializing.", True)
+    event_manager.get_manager().pause_queuing(True, True, "Initialization not complete.")
+
     init()
     debug.printMessage(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
@@ -453,6 +455,8 @@ def main():
             script = script_manager.get_manager().get_script(
                 AXObject.get_application(focusedObject), focusedObject)
             script_manager.get_manager().set_active_script(script, "Found focused object.")
+
+    event_manager.get_manager().pause_queuing(False, False, "Initialization complete.")
 
     try:
         msg = "ORCA: Starting ATSPI registry."

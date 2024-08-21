@@ -229,7 +229,7 @@ class EventManager:
                 msg = "EVENT MANAGER: Ignoring event based on type and app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
-            if "remove" in event_type and AXObject.is_dead(focus):
+            if "remove" in event_type and focus and AXObject.is_dead(focus):
                 return False
             if AXObject.is_dead(child):
                 msg = 'EVENT_MANAGER: Ignoring due to dead event.any_data'
