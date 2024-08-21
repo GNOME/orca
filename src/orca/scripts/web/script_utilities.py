@@ -1970,18 +1970,6 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def textAtPoint(self, obj, x, y, boundary=None):
-        if boundary is None:
-            boundary = Atspi.TextBoundaryType.LINE_START
-
-        string, start, end = super().textAtPoint(obj, x, y, boundary)
-        if string == self.EMBEDDED_OBJECT_CHARACTER:
-            child = AXHypertext.get_child_at_offset(obj, start)
-            if child:
-                return self.textAtPoint(child, x, y, boundary)
-
-        return string, start, end
-
     def _treatAlertsAsDialogs(self):
         return False
 

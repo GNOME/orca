@@ -2287,46 +2287,6 @@ class Utilities:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
-    def textAtPoint(self, obj, x, y, boundary=None):
-        # TODO - JD: Audit callers so we don't have to use boundaries.
-        # Also, can the logic be entirely moved to AXText?
-        if boundary in (None, Atspi.TextBoundaryType.LINE_START):
-            string, start, end = AXText.get_line_at_point(obj, x, y)
-        elif boundary == Atspi.TextBoundaryType.SENTENCE_START:
-            string, start, end = AXText.get_sentence_at_point(obj, x, y)
-        elif boundary == Atspi.TextBoundaryType.WORD_START:
-            string, start, end = AXText.get_word_at_point(obj, x, y)
-        elif boundary == Atspi.TextBoundaryType.CHAR:
-            string, start, end = AXText.get_character_at_point(obj, x, y)
-        else:
-            return "", 0, 0
-
-        if not string:
-            return "", start, end
-
-        if boundary == Atspi.TextBoundaryType.WORD_START and not string.strip():
-            return "", 0, 0
-
-        extents = AXText.get_range_rect(obj, start, end)
-        rect = Atspi.Rect()
-        rect.x = x
-        rect.y = y
-        rect.width = rect.height = 0
-        if not AXComponent.get_rect_intersection(extents, rect) and string != "\n":
-            return "", 0, 0
-
-        if not string.endswith("\n") or string == "\n":
-            return string, start, end
-
-        if boundary == Atspi.TextBoundaryType.CHAR:
-            return string, start, end
-
-        char = self.textAtPoint(obj, x, y, Atspi.TextBoundaryType.CHAR)
-        if char[0] == "\n" and char[2] - char[1] == 1:
-            return char
-
-        return string, start, end
-
     def visibleRows(self, obj, table_rect):
         nRows = AXTable.get_row_count(obj)
 

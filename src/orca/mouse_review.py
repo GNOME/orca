@@ -171,14 +171,14 @@ class _StringContext:
 class _ItemContext:
     """Holds all the information of the item at a specified point."""
 
-    def __init__(self, x=0, y=0, obj=None, boundary=None, frame=None, script=None):
+    def __init__(self, x=0, y=0, obj=None, granularity=None, frame=None, script=None):
         """Initialize the _ItemContext.
 
         Arguments:
         - x: The X coordinate
         - y: The Y coordinate
         - obj: The accessible object of interest at that coordinate
-        - boundary: The accessible-text boundary type
+        - granularity: The accessible-text granularity type
         - frame: The containing accessible object (often a top-level window)
         - script: The script associated with the accessible object
         """
@@ -186,7 +186,7 @@ class _ItemContext:
         self._x = x
         self._y = y
         self._obj = obj
-        self._boundary = boundary
+        self._granularity = granularity
         self._frame = frame
         self._script = script
         self._string = self._get_string_context()
@@ -237,13 +237,10 @@ class _ItemContext:
         if self._treat_as_single_object():
             return _StringContext(self._obj, self._script)
 
-        try:
-            string, start, end = self._script.utilities.textAtPoint(
-                self._obj, self._x, self._y, self._boundary)
-        except Exception as error:
-            msg = f"MOUSE REVIEW: Exception getting text at point: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return _StringContext(self._obj, self._script)
+        if self._granularity == Atspi.TextGranularity.WORD:
+            string, start, end = AXText.get_word_at_point(self._obj, self._x, self._y)
+        else:
+            string, start, end = AXText.get_line_at_point(self._obj, self._x, self._y)
 
         if string:
             string = self._script.utilities.expandEOCs(self._obj, start, end)
@@ -622,23 +619,17 @@ class MouseReviewer:
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
-        boundary = None
+        granularity = Atspi.TextGranularity.LINE
         _x, y, _width, height = self._current_mouse_over.get_bounding_box()
         if y <= window_y <= y + height and self._current_mouse_over.get_string():
-            boundary = Atspi.TextBoundaryType.WORD_START
-        elif obj == self._current_mouse_over.get_object():
-            boundary = Atspi.TextBoundaryType.LINE_START
-        elif AXUtilities.is_selectable(obj):
-            boundary = Atspi.TextBoundaryType.LINE_START
-        elif self._is_multi_paragraph_object(obj):
-            boundary = Atspi.TextBoundaryType.LINE_START
+            granularity = Atspi.TextGranularity.WORD
 
         if len(self._event_queue):
             msg = "MOUSE REVIEW: Mouse moved again."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        new = _ItemContext(window_x, window_y, obj, boundary, window, script)
+        new = _ItemContext(window_x, window_y, obj, granularity, window, script)
         if new.present(self._current_mouse_over):
             self._current_mouse_over = new
 
