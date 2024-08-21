@@ -622,14 +622,6 @@ class MouseReviewer:
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 return
 
-        obj_document = script.utilities.getTopLevelDocumentForObject(obj)
-        if obj_document and script.utilities.inDocumentContent():
-            document = script.utilities.activeDocument()
-            if document != obj_document:
-                tokens = ["MOUSE REVIEW:", obj, "is not in active document", document]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-                return
-
         boundary = None
         _x, y, _width, height = self._current_mouse_over.get_bounding_box()
         if y <= window_y <= y + height and self._current_mouse_over.get_string():
