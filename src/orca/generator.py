@@ -524,7 +524,7 @@ class Generator:
             if AXUtilities.is_label(child):
                 if not AXText.has_presentable_text(child):
                     continue
-                if AXObject.get_name(child) == obj_name:
+                if AXObject.get_name(child) in obj_name:
                     continue
                 if child in AXUtilities.get_is_labelled_by(obj):
                     continue
