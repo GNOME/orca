@@ -694,7 +694,8 @@ class Utilities:
         if text and text not in tokens:
             tokens.append(text)
         else:
-            labels = " ".join(map(AXText.get_all_text, self.unrelatedLabels(obj, False, 1)))
+            labels = " ".join(map(lambda x: AXText.get_all_text(x) or AXObject.get_name(x),
+                                  self.unrelatedLabels(obj, False, 1)))
             if labels and labels not in tokens:
                 tokens.append(labels)
 
