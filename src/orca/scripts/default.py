@@ -1529,8 +1529,9 @@ class Script(script.Script):
             if not event.detail1:
                 return
 
+            self.speakMessage(self.speech_generator.get_localized_role_name(obj))
             msg = self.utilities.getNotificationContent(obj)
-            self.presentMessage(msg)
+            self.presentMessage(msg, resetStyles=False)
             self.get_notification_presenter().save_notification(msg)
             return
 
