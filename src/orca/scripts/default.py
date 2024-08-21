@@ -1529,9 +1529,8 @@ class Script(script.Script):
             if not event.detail1:
                 return
 
-            speech.speak(self.speech_generator.generate_speech(obj))
             msg = self.utilities.getNotificationContent(obj)
-            self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
+            self.presentMessage(msg)
             self.get_notification_presenter().save_notification(msg)
             return
 

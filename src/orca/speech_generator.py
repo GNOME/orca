@@ -3288,6 +3288,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_notification(self, obj, **args):
         """Generates speech for the notification role."""
 
+        # TODO - JD: Should this instead or also be using the logic in getNotificationContent?
         result = []
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
