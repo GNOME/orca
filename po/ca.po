@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2024-05-31 08:45+0000\n"
-"PO-Revision-Date: 2024-08-20 23:43+0200\n"
+"PO-Revision-Date: 2024-08-29 23:43+0200\n"
 "Last-Translator: Bàrbara Vidal <barbara@barbara.cat>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -5196,7 +5196,7 @@ msgstr[1] "%d notificacions"
 #: src/orca/keynames.py:40
 msgctxt "keyboard"
 msgid "Shift"
-msgstr "Tecla majúscula"
+msgstr "Tecla de majúscules"
 
 #. Translators: this is how someone would speak the name of the alt key
 #: src/orca/keynames.py:44
@@ -8392,7 +8392,7 @@ msgstr "Configura les preferències de l'usuari (versió gràfica)"
 #. from the command line and the help text is displayed.
 #: src/orca/messages.py:346
 msgid "Report bugs on https://gitlab.gnome.org/GNOME/orca/-/issues."
-msgstr "Informeu del errors a https://gitlab.gnome.org/GNOME/orca/-/issues."
+msgstr "Informeu dels errors a https://gitlab.gnome.org/GNOME/orca/-/issues."
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
