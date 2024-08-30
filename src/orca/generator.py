@@ -353,7 +353,10 @@ class Generator:
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj, **args):
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus and obj != focus:
+        # TODO - JD: The role check is a quick workaround for issue #535 in which we stopped
+        # presenting Qt table cells because Qt keeps giving us a different object each and
+        # every time we ask for the cell. File a bug against Qt to get them to stop that.
+        if focus and obj != focus and AXObject.get_role(obj) != AXObject.get_role(focus):
             name = AXObject.get_name(obj)
             if name and name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
                 return []
