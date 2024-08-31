@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-08-12 12:04+0000\n"
-"PO-Revision-Date: 2024-08-16 18:03+0700\n"
+"POT-Creation-Date: 2024-08-27 07:49+0000\n"
+"PO-Revision-Date: 2024-08-31 14:08+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -1334,7 +1334,7 @@ msgstr "แสดงขนาดและตำแหน่งที่ตั้
 #. expected in the editor.
 #: src/orca/cmdnames.py:597
 msgid "Toggle all Orca command keys"
-msgstr "เปิด/ปิดใช้คีย์คำสั่งทั้งหมดของ Orca"
+msgstr "เปิด/ปิดใช้ปุ่มคำสั่งทั้งหมดของ Orca"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
@@ -1468,115 +1468,89 @@ msgstr "ตัดบรรทัด"
 #. notification message.
 #: src/orca/cmdnames.py:702
 msgid "Present last notification message"
-msgstr ""
+msgstr "แสดงข้อความแจ้งเตือนสุดท้าย"
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
 #: src/orca/cmdnames.py:706
 msgid "Present notification messages list"
-msgstr ""
+msgstr "แสดงรายชื่อข้อความแจ้งเตือน"
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
 #: src/orca/cmdnames.py:710
 msgid "Present previous notification message"
-msgstr ""
+msgstr "แสดงข้อความแจ้งเตือนก่อนหน้า"
 
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
 #: src/orca/cmdnames.py:714
 msgid "Present next notification message"
-msgstr ""
+msgstr "แสดงข้อความแจ้งเตือนถัดไป"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:717
-#, fuzzy
-#| msgid "Goes to next character."
 msgid "Go to next character"
 msgstr "ไปยังอักขระถัดไป"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:720
-#, fuzzy
-#| msgid "Goes to previous character."
 msgid "Go to previous character"
 msgstr "ไปยังอักขระก่อนหน้า"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:723
-#, fuzzy
-#| msgid "Goes to next word."
 msgid "Go to next word"
 msgstr "ไปยังคำถัดไป"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:726
-#, fuzzy
-#| msgid "Goes to previous word."
 msgid "Go to previous word"
 msgstr "ไปยังคำก่อนหน้า"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:729
-#, fuzzy
-#| msgid "Goes to next line."
 msgid "Go to next line"
 msgstr "ไปยังบรรทัดถัดไป"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:732
-#, fuzzy
-#| msgid "Goes to previous line."
 msgid "Go to previous line"
 msgstr "ไปยังบรรทัดก่อนหน้า"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:735
-#, fuzzy
-#| msgid "Goes to the top of the file."
 msgid "Go to the top of the file"
 msgstr "ไปยังต้นแฟ้ม"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:738
-#, fuzzy
-#| msgid "Goes to the bottom of the file."
 msgid "Go to the bottom of the file"
 msgstr "ไปยังท้ายแฟ้ม"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:741
-#, fuzzy
-#| msgid "Goes to the beginning of the line."
 msgid "Go to the beginning of the line"
 msgstr "ไปยังต้นบรรทัด"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:744
-#, fuzzy
-#| msgid "Goes to the end of the line."
 msgid "Go to the end of the line"
 msgstr "ไปยังท้ายบรรทัด"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:747
-#, fuzzy
-#| msgid "Goes to the next object."
 msgid "Go to the next object"
 msgstr "ไปยังวัตถุชิ้นถัดไป"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:750
-#, fuzzy
-#| msgid "Goes to the previous object."
 msgid "Go to the previous object"
 msgstr "ไปยังวัตถุชิ้นก่อนหน้า"
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
 #: src/orca/cmdnames.py:755
-#, fuzzy
-#| msgid "Causes the current combo box to be expanded."
 msgid "Cause the current combo box to be expanded"
 msgstr "ทำให้กล่องคอมโบปัจจุบันขยายออก"
 
@@ -1585,10 +1559,8 @@ msgstr "ทำให้กล่องคอมโบปัจจุบันข
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: src/orca/cmdnames.py:762
-#, fuzzy
-#| msgid "Switches between Gecko native and Orca caret navigation."
 msgid "Switch between native and screen-reader caret navigation"
-msgstr "สลับไปมาระหว่างการท่องดูด้วยเคอร์เซอร์ของ Gecko เองกับของ Orca"
+msgstr "สลับไปมาระหว่างการท่องดูด้วยเคอร์เซอร์ของตัวเบราว์เซอร์เองกับของโปรแกรมอ่านหน้าจอ"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -1598,8 +1570,6 @@ msgstr "สลับไปมาระหว่างการท่องดู
 #. features to facilitate accessing live regions. This string refers to a command
 #. to cycle through the different "politeness" levels.
 #: src/orca/cmdnames.py:771
-#, fuzzy
-#| msgid "Advance live region politeness setting."
 msgid "Advance live region politeness setting"
 msgstr "เลื่อนระดับความสุภาพของพื้นที่แสดงสด"
 
@@ -1611,8 +1581,6 @@ msgstr "เลื่อนระดับความสุภาพของพ
 #. features to facilitate accessing live regions. This string refers to a command
 #. to turn off live regions by default.
 #: src/orca/cmdnames.py:781
-#, fuzzy
-#| msgid "Set default live region politeness level to off."
 msgid "Set default live region politeness level to off"
 msgstr "กำหนดระดับความสุภาพปริยายของพื้นที่แสดงสดเป็นค่าปิด"
 
@@ -1621,8 +1589,6 @@ msgstr "กำหนดระดับความสุภาพปริยา
 #. This string refers to a command for reviewing up to nine stored previous live
 #. messages.
 #: src/orca/cmdnames.py:787
-#, fuzzy
-#| msgid "Review live region announcement."
 msgid "Review live region announcement"
 msgstr "ประกาศการสำรวจพื้นที่แสดงสด"
 
@@ -1636,8 +1602,6 @@ msgstr "ประกาศการสำรวจพื้นที่แสด
 #. Orca commands for doing so -- as long as the monitoring of live regions is
 #. enabled.
 #: src/orca/cmdnames.py:798
-#, fuzzy
-#| msgid "Monitor live regions."
 msgid "Monitor live regions"
 msgstr "เฝ้าสังเกตพื้นที่แสดงสด"
 
@@ -1654,18 +1618,14 @@ msgstr ""
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
 #: src/orca/cmdnames.py:810
-#, fuzzy
-#| msgid "Set the row to use as dynamic column headers when speaking calc cells."
 msgid "Set the row to use as dynamic column headers"
-msgstr "กำหนดแถวที่จะใช้เป็นหัวคอลัมน์ชนิดแปรเปลี่ยน สำหรับการอ่านออกเสียงช่องตาราง calc"
+msgstr "กำหนดแถวที่จะใช้เป็นหัวคอลัมน์ชนิดแปรเปลี่ยน"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to unset the row so it is no longer treated as if it contained
 #. column headers.
 #: src/orca/cmdnames.py:816
-#, fuzzy
-#| msgid "Clears the dynamic column headers."
 msgid "Clear the dynamic column headers"
 msgstr "ล้างหัวคอลัมน์ชนิดแปรเปลี่ยน"
 
@@ -1673,28 +1633,22 @@ msgstr "ล้างหัวคอลัมน์ชนิดแปรเปล
 #. spreadsheet or table should be treated as containing row headers. This
 #. string refers to the command to set the column.
 #: src/orca/cmdnames.py:821
-#, fuzzy
-#| msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgid "Set the column to use as dynamic row headers"
-msgstr "กำหนดคอลัมน์ที่จะใช้เป็นหัวแถวชนิดแปรเปลี่ยน สำหรับการอ่านออกเสียงช่องตาราง calc"
+msgstr "กำหนดคอลัมน์ที่จะใช้เป็นหัวแถวชนิดแปรเปลี่ยน"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
 #. string refers to the command to unset the column so it is no longer treated
 #. as if it contained row headers.
 #: src/orca/cmdnames.py:827
-#, fuzzy
-#| msgid "Clears the dynamic row headers"
 msgid "Clear the dynamic row headers"
 msgstr "ล้างหัวแถวชนิดแปรเปลี่ยน"
 
 #. Translators: This string refers to an Orca command. The "input line" refers
 #. to the place where one enters formulas for a spreadsheet.
 #: src/orca/cmdnames.py:831
-#, fuzzy
-#| msgid "Speaks the contents of the input line."
 msgid "Present the contents of the input line"
-msgstr "อ่านออกเสียงเนื้อหาของบรรทัดที่รับข้อความ"
+msgstr "แสดงเนื้อหาของบรรทัดที่รับข้อความ"
 
 #. Translators: the structural navigation keys are designed to move the caret
 #. around the document content by object type. Thus H moves you to the next
@@ -1702,8 +1656,6 @@ msgstr "อ่านออกเสียงเนื้อหาของบร
 #. This feature needs to be toggle-able so that it does not interfere with normal
 #. writing functions.
 #: src/orca/cmdnames.py:838
-#, fuzzy
-#| msgid "Toggles structural navigation keys."
 msgid "Toggle structural navigation keys"
 msgstr "เปิด/ปิดการใช้ปุ่มท่องดูตามโครงสร้าง"
 
@@ -1711,103 +1663,79 @@ msgstr "เปิด/ปิดการใช้ปุ่มท่องดู�
 #. next cell in a given direction. This string is the description of the command
 #. which enables/disables this support.
 #: src/orca/cmdnames.py:843
-#, fuzzy
-#| msgid "Toggles structural navigation keys."
 msgid "Toggle table navigation keys"
-msgstr "เปิด/ปิดการใช้ปุ่มท่องดูตามโครงสร้าง"
+msgstr "เปิด/ปิดการใช้ปุ่มท่องดูตาราง"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:846
-#, fuzzy
-#| msgid "Goes to previous blockquote."
 msgid "Go to previous blockquote"
 msgstr "ไปยังบล็อคอ้างคำพูดก่อนหน้า"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:849
-#, fuzzy
-#| msgid "Goes to next blockquote."
 msgid "Go to next blockquote"
 msgstr "ไปยังบล็อคอ้างคำพูดถัดไป"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:852
 msgid "Display a list of blockquotes"
-msgstr ""
+msgstr "แสดงรายชื่อบล็อคอ้างคำพูด"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:855
-#, fuzzy
-#| msgid "Goes to previous button."
 msgid "Go to previous button"
 msgstr "ไปยังปุ่มก่อนหน้า"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:858
-#, fuzzy
-#| msgid "Goes to next button."
 msgid "Go to next button"
 msgstr "ไปยังปุ่มถัดไป"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:861
-#, fuzzy
-#| msgid "Display more options"
 msgid "Display a list of buttons"
-msgstr "แสดงตัวเลือกเพิ่มเติม"
+msgstr "แสดงรายชื่อปุ่ม"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:864
-#, fuzzy
-#| msgid "Goes to previous check box."
 msgid "Go to previous check box"
 msgstr "ไปยังกล่องกาก่อนหน้า"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:867
-#, fuzzy
-#| msgid "Goes to next check box."
 msgid "Go to next check box"
 msgstr "ไปยังกล่องกาถัดไป"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:870
 msgid "Display a list of check boxes"
-msgstr ""
+msgstr "แสดงรายชื่อกล่องกา"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:874
-#, fuzzy
-#| msgid "Goes to previous table."
 msgid "Go to previous clickable"
-msgstr "ไปยังตารางก่อนหน้า"
+msgstr "ไปยังพื้นที่ที่สามารถคลิกได้ก่อนหน้า"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:878
-#, fuzzy
-#| msgid "Goes to next table."
 msgid "Go to next clickable"
-msgstr "ไปยังตารางถัดไป"
+msgstr "ไปยังพื้นที่ที่สามารถคลิกได้ถัดไป"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:882
 msgid "Display a list of clickables"
-msgstr ""
+msgstr "แสดงรายชื่อพื้นที่ที่สามารถคลิกได้"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:885
-#, fuzzy
-#| msgid "Goes to previous combo box."
 msgid "Go to previous combo box"
 msgstr "ไปยังกล่องคอมโบก่อนหน้า"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:888
-#, fuzzy
-#| msgid "Goes to next combo box."
 msgid "Go to next combo box"
 msgstr "ไปยังกล่องคอมโบถัดไป"
 
@@ -1815,150 +1743,121 @@ msgstr "ไปยังกล่องคอมโบถัดไป"
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:893
-#, fuzzy
-#| msgid "h t m l container"
 msgid "Go to start of container"
-msgstr "เครื่องบรรจุ html"
+msgstr "ไปยังจุดต้นของเครื่องบรรจุ"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:898
-#, fuzzy
-#| msgid "h t m l container"
 msgid "Go to end of container"
-msgstr "เครื่องบรรจุ html"
+msgstr "ไปยังจุดท้ายของเครื่องบรรจุ"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:901
 msgid "Display a list of combo boxes"
-msgstr ""
+msgstr "แสดงรายชื่อกล่องคอมโบ"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:904
-#, fuzzy
-#| msgid "Goes to previous entry."
 msgid "Go to previous entry"
 msgstr "ไปยังช่องป้อนข้อความก่อนหน้า"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:907
-#, fuzzy
-#| msgid "Goes to next entry."
 msgid "Go to next entry"
 msgstr "ไปยังช่องป้อนข้อความถัดไป"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:910
 msgid "Display a list of entries"
-msgstr ""
+msgstr "แสดงรายชื่อช่องป้อนข้อความ"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:913
-#, fuzzy
-#| msgid "Goes to previous form field."
 msgid "Go to previous form field"
 msgstr "ไปยังช่องข้อมูลแบบฟอร์มช่องก่อนหน้า"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:916
-#, fuzzy
-#| msgid "Goes to next form field."
 msgid "Go to next form field"
 msgstr "ไปยังช่องข้อมูลแบบฟอร์มช่องถัดไป"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:919
 msgid "Display a list of form fields"
-msgstr ""
+msgstr "แสดงรายชื่อช่องข้อมูลแบบฟอร์ม"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:922
-#, fuzzy
-#| msgid "Goes to previous heading."
 msgid "Go to previous heading"
 msgstr "ไปยังหัวข้อก่อนหน้า"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:925
-#, fuzzy
-#| msgid "Goes to next heading."
 msgid "Go to next heading"
 msgstr "ไปยังหัวข้อถัดไป"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:928
 msgid "Display a list of headings"
-msgstr ""
+msgstr "แสดงรายชื่อหัวข้อ"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:932
-#, fuzzy, python-format
-#| msgid "Goes to previous heading at level %d."
+#, python-format
 msgid "Go to previous heading at level %d"
 msgstr "ไปยังหัวข้อก่อนหน้าที่ระดับ %d"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:936
-#, fuzzy, python-format
-#| msgid "Goes to next heading at level %d."
+#, python-format
 msgid "Go to next heading at level %d"
 msgstr "ไปยังหัวข้อถัดไปที่ระดับ %d"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:940
-#, fuzzy, python-format
-#| msgid "No more headings at level %d."
+#, python-format
 msgid "Display a list of headings at level %d"
-msgstr "ไม่มีหัวข้ออีกในระดับ %d"
+msgstr "แสดงรายชื่อหัวข้อในระดับ %d"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:943
-#, fuzzy
-#| msgid "Goes to previous table."
 msgid "Go to previous internal frame"
-msgstr "ไปยังตารางก่อนหน้า"
+msgstr "ไปยังกรอบภายในอันก่อนหน้า"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:946
-#, fuzzy
-#| msgid "internal frame"
 msgid "Go to next internal frame"
-msgstr "กรอบภายใน"
+msgstr "ไปยังกรอบภายในอันถัดไป"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:949
 msgid "Display a list of internal frames"
-msgstr ""
+msgstr "แสดงรายชื่อกรอบภายใน"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:952
-#, fuzzy
-#| msgid "Goes to previous line."
 msgid "Go to previous image"
-msgstr "ไปยังบรรทัดก่อนหน้า"
+msgstr "ไปยังภาพก่อนหน้า"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:955
-#, fuzzy
-#| msgid "Goes to next line."
 msgid "Go to next image"
-msgstr "ไปยังบรรทัดถัดไป"
+msgstr "ไปยังภาพถัดไป"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:958
 msgid "Display a list of images"
-msgstr ""
+msgstr "แสดงรายชื่อภาพ"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:963
-#, fuzzy
-#| msgid "Goes to previous landmark."
 msgid "Go to previous landmark"
 msgstr "ไปยังตำแหน่งสำคัญตำแหน่งก่อนหน้า"
 
@@ -1966,8 +1865,6 @@ msgstr "ไปยังตำแหน่งสำคัญตำแหน่ง
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:968
-#, fuzzy
-#| msgid "Goes to next landmark."
 msgid "Go to next landmark"
 msgstr "ไปยังตำแหน่งสำคัญตำแหน่งถัดไป"
 
@@ -1976,14 +1873,12 @@ msgstr "ไปยังตำแหน่งสำคัญตำแหน่ง
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:973
 msgid "Display a list of landmarks"
-msgstr ""
+msgstr "แสดงรายชื่อตำแหน่งสำคัญ"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:978
-#, fuzzy
-#| msgid "Goes to previous large object."
 msgid "Go to previous large object"
 msgstr "ไปยังวัตถุใหญ่ชิ้นก่อนหน้า"
 
@@ -1991,8 +1886,6 @@ msgstr "ไปยังวัตถุใหญ่ชิ้นก่อนหน
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:983
-#, fuzzy
-#| msgid "Goes to next large object."
 msgid "Go to next large object"
 msgstr "ไปยังวัตถุใหญ่ชิ้นถัดไป"
 
@@ -2000,76 +1893,58 @@ msgstr "ไปยังวัตถุใหญ่ชิ้นถัดไป"
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:988
-#, fuzzy
-#| msgid "No more large objects."
 msgid "Display a list of large objects"
-msgstr "ไม่มีวัตถุใหญ่อีก"
+msgstr "แสดงรายชื่อวัตถุใหญ่"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:991
-#, fuzzy
-#| msgid "Goes to previous line."
 msgid "Go to previous link"
-msgstr "ไปยังบรรทัดก่อนหน้า"
+msgstr "ไปยังลิงก์อันก่อนหน้า"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:994
-#, fuzzy
-#| msgid "Goes to next line."
 msgid "Go to next link"
-msgstr "ไปยังบรรทัดถัดไป"
+msgstr "ไปยังลิงก์อันถัดไป"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:997
-#, fuzzy
-#| msgid "Display more options"
 msgid "Display a list of links"
-msgstr "แสดงตัวเลือกเพิ่มเติม"
+msgstr "แสดงรายชื่อลิงก์"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:1000
-#, fuzzy
-#| msgid "Goes to previous list."
 msgid "Go to previous list"
 msgstr "ไปยังรายชื่อก่อนหน้า"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:1003
-#, fuzzy
-#| msgid "Goes to next list."
 msgid "Go to next list"
 msgstr "ไปยังรายชื่อถัดไป"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:1006
 msgid "Display a list of lists"
-msgstr ""
+msgstr "แสดงรายชื่อของรายชื่อ"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:1009
-#, fuzzy
-#| msgid "Goes to previous list item."
 msgid "Go to previous list item"
 msgstr "ไปยังรายการก่อนหน้าในรายชื่อ"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:1012
-#, fuzzy
-#| msgid "Goes to next list item."
 msgid "Go to next list item"
 msgstr "ไปยังรายการถัดไปในรายชื่อ"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:1015
 msgid "Display a list of list items"
-msgstr ""
+msgstr "แสดงรายชื่อของรายการต่างๆ ในรายชื่อ"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:1020
-#, fuzzy
-#| msgid "Goes to previous live region."
 msgid "Go to previous live region"
 msgstr "ไปยังพื้นที่แสดงสดก่อนหน้า"
 
@@ -2077,8 +1952,6 @@ msgstr "ไปยังพื้นที่แสดงสดก่อนหน
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:1025
-#, fuzzy
-#| msgid "Goes to next live region."
 msgid "Go to next live region"
 msgstr "ไปยังพื้นที่แสดงสดถัดไป"
 
@@ -2136,148 +2009,110 @@ msgstr "เปิด/ปิดการใช้ปุ่มท่องดู�
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1058
-#, fuzzy
-#| msgid "Goes to previous paragraph."
 msgid "Go to previous paragraph"
 msgstr "ไปยังย่อหน้าก่อนหน้า"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1061
-#, fuzzy
-#| msgid "Goes to next paragraph."
 msgid "Go to next paragraph"
 msgstr "ไปยังย่อหน้าถัดไป"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1064
 msgid "Display a list of paragraphs"
-msgstr ""
+msgstr "แสดงรายชื่อย่อหน้า"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1067
-#, fuzzy
-#| msgid "Goes to previous radio button."
 msgid "Go to previous radio button"
 msgstr "ไปยังปุ่มวิทยุก่อนหน้า"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1070
-#, fuzzy
-#| msgid "Goes to next radio button."
 msgid "Go to next radio button"
 msgstr "ไปยังปุ่มวิทยุถัดไป"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1073
-#, fuzzy
-#| msgid "No more radio buttons."
 msgid "Display a list of radio buttons"
-msgstr "ไม่มีปุ่มวิทยุอีก"
+msgstr "แสดงรายชื่อปุ่มวิทยุ"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:1077
-#, fuzzy
-#| msgid "Goes to previous paragraph."
 msgid "Go to previous separator"
-msgstr "ไปยังย่อหน้าก่อนหน้า"
+msgstr "ไปยังตัวคั่นก่อนหน้า"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:1081
-#, fuzzy
-#| msgid "Goes to next paragraph."
 msgid "Go to next separator"
-msgstr "ไปยังย่อหน้าถัดไป"
+msgstr "ไปยังตัวคั่นถัดไป"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1084
-#, fuzzy
-#| msgid "Goes to previous table."
 msgid "Go to previous table"
 msgstr "ไปยังตารางก่อนหน้า"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1087
-#, fuzzy
-#| msgid "Goes to next table."
 msgid "Go to next table"
 msgstr "ไปยังตารางถัดไป"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1090
 msgid "Display a list of tables"
-msgstr ""
+msgstr "แสดงรายชื่อตาราง"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1093
-#, fuzzy
-#| msgid "Goes down one cell."
 msgid "Go down one cell"
-msgstr "เลื่อนลงหนึ่งช่องตาราง"
+msgstr "เลื่อนลงหนึ่งเซลล์"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1096
-#, fuzzy
-#| msgid "Goes to the first cell in a table."
 msgid "Go to the first cell in a table"
-msgstr "ไปยังช่องแรกสุดของตาราง"
+msgstr "ไปยังเซลล์แรกสุดของตาราง"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1099
-#, fuzzy
-#| msgid "Goes to the last cell in a table."
 msgid "Go to the last cell in a table"
-msgstr "ไปยังช่องท้ายสุดของตาราง"
+msgstr "ไปยังเซลล์ท้ายสุดของตาราง"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1102
-#, fuzzy
-#| msgid "Goes left one cell."
 msgid "Go left one cell"
-msgstr "เลื่อนไปทางซ้ายหนึ่งช่องตาราง"
+msgstr "เลื่อนไปทางซ้ายหนึ่งเซลล์"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1105
-#, fuzzy
-#| msgid "Goes right one cell."
 msgid "Go right one cell"
-msgstr "เลื่อนไปทางขวาหนึ่งช่องตาราง"
+msgstr "เลื่อนไปทางขวาหนึ่งเซลล์"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1108
-#, fuzzy
-#| msgid "Goes up one cell."
 msgid "Go up one cell"
-msgstr "เลื่อนขึ้นหนึ่งช่องตาราง"
+msgstr "เลื่อนขึ้นหนึ่งเซลล์"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1111
-#, fuzzy
-#| msgid "Goes to the beginning of the line."
 msgid "Go to the beginning of the row"
-msgstr "ไปยังต้นบรรทัด"
+msgstr "ไปยังต้นแถว"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1114
-#, fuzzy
-#| msgid "Goes to the end of the line."
 msgid "Go to the end of the row"
-msgstr "ไปยังท้ายบรรทัด"
+msgstr "ไปยังท้ายแถว"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1117
-#, fuzzy
-#| msgid "Goes to the top of the file."
 msgid "Go to the top of the column"
-msgstr "ไปยังต้นแฟ้ม"
+msgstr "ไปยังต้นคอลัมน์"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1120
-#, fuzzy
-#| msgid "Goes to the bottom of the file."
 msgid "Go to the bottom of the column"
-msgstr "ไปยังท้ายแฟ้ม"
+msgstr "ไปยังท้ายคอลัมน์"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -2344,45 +2179,33 @@ msgstr ""
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1174
-#, fuzzy
-#| msgid "Goes to previous unvisited link."
 msgid "Go to previous unvisited link"
 msgstr "ไปยังลิงก์ก่อนหน้าที่ยังไม่ได้ดู"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1177
-#, fuzzy
-#| msgid "Goes to next unvisited link."
 msgid "Go to next unvisited link"
 msgstr "ไปยังลิงก์ถัดไปที่ยังไม่ได้ดู"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1180
-#, fuzzy
-#| msgid "No more unvisited links."
 msgid "Display a list of unvisited links"
-msgstr "ไม่มีลิงก์ที่ยังไม่ดูอีก"
+msgstr "แสดงรายชื่อลิงก์ที่ยังไม่ได้ดู"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1183
-#, fuzzy
-#| msgid "Goes to previous visited link."
 msgid "Go to previous visited link"
 msgstr "ไปยังลิงก์ก่อนหน้าที่ดูแล้ว"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1186
-#, fuzzy
-#| msgid "Goes to next visited link."
 msgid "Go to next visited link"
 msgstr "ไปยังลิงก์ถัดไปที่ดูแล้ว"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1189
-#, fuzzy
-#| msgid "No more visited links."
 msgid "Display a list of visited links"
-msgstr "ไม่มีลิงก์ที่ดูแล้วอีก"
+msgstr "แสดงรายชื่อลิงก์ที่ดูแล้ว"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -5123,8 +4946,6 @@ msgstr[0] "ไม่เรียงชิดขอบ"
 #. Translators: this is how someone would speak the name of the shift key
 #.
 #: src/orca/keynames.py:40
-#, fuzzy
-#| msgid "Shift"
 msgctxt "keyboard"
 msgid "Shift"
 msgstr "Shift"
@@ -5132,20 +4953,16 @@ msgstr "Shift"
 #. Translators: this is how someone would speak the name of the alt key
 #.
 #: src/orca/keynames.py:44
-#, fuzzy
-#| msgid "Alt_R"
 msgctxt "keyboard"
 msgid "Alt"
-msgstr "Alt_R"
+msgstr "Alt"
 
 #. Translators: this is how someone would speak the name of the control key
 #.
 #: src/orca/keynames.py:48
-#, fuzzy
-#| msgid "left control"
 msgctxt "keyboard"
 msgid "Control"
-msgstr "ปุ่ม control ซ้าย"
+msgstr "Control"
 
 #. Translators: this is how someone would speak the name of the left shift key
 #.
@@ -5211,10 +5028,8 @@ msgstr "caps lock"
 #. There is no reason to make it different from the translation for "caps lock"
 #.
 #: src/orca/keynames.py:93
-#, fuzzy
-#| msgid "caps lock"
 msgid "shift lock"
-msgstr "caps lock"
+msgstr "shift lock"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
@@ -5316,7 +5131,7 @@ msgstr "เมนู"
 #.
 #: src/orca/keynames.py:201
 msgid "Alt Gr"
-msgstr ""
+msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
@@ -5328,7 +5143,7 @@ msgstr "วิธีใช้"
 #.
 #: src/orca/keynames.py:209
 msgid "multi"
-msgstr ""
+msgstr "multi"
 
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
@@ -5370,7 +5185,7 @@ msgstr "end"
 #.
 #: src/orca/keynames.py:253
 msgid "begin"
-msgstr ""
+msgstr "begin"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
@@ -5383,19 +5198,15 @@ msgstr "grave"
 #. non-spacing diacritical key for the acute glyph
 #.
 #: src/orca/keynames.py:263
-#, fuzzy
-#| msgid "a acute"
 msgid "acute"
-msgstr "a acute"
+msgstr "acute"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
 #: src/orca/keynames.py:268
-#, fuzzy
-#| msgid "a circumflex"
 msgid "circumflex"
-msgstr "a circumflex"
+msgstr "circumflex"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
@@ -5409,16 +5220,14 @@ msgstr "tilde"
 #.
 #: src/orca/keynames.py:278
 msgid "diaeresis"
-msgstr ""
+msgstr "diaeresis"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
 #.
 #: src/orca/keynames.py:283
-#, fuzzy
-#| msgid "a ring"
 msgid "ring"
-msgstr "a ring"
+msgstr "ring"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
@@ -5431,10 +5240,8 @@ msgstr "cedilla"
 #. non-spacing diacritical key for the stroke glyph
 #.
 #: src/orca/keynames.py:293
-#, fuzzy
-#| msgid "o stroke"
 msgid "stroke"
-msgstr "o ขีดทับ"
+msgstr "stroke"
 
 #. Translators: this is how someone would speak the name of the minus key
 #.
@@ -5451,10 +5258,8 @@ msgstr "บวก"
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
 #: src/orca/keybindings.py:153
-#, fuzzy
-#| msgid "insert"
 msgid "Insert"
-msgstr "insert"
+msgstr "Insert"
 
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
@@ -5490,10 +5295,8 @@ msgstr "Meta2"
 #. "alt" modifier.
 #.
 #: src/orca/keybindings.py:186
-#, fuzzy
-#| msgid "Alt_R"
 msgid "Alt"
-msgstr "Alt_R"
+msgstr "Alt"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
@@ -7945,28 +7748,28 @@ msgstr "โปรแกรม"
 #. retrieve any information about the battery.
 #: src/orca/messages.py:45
 msgid "Battery status unknown"
-msgstr ""
+msgstr "ไม่ทราบสถานะแบตเตอรี่"
 
 #. Translators: Orca has a command to report the battery status. This message
 #. presents the battery level as a percent.
 #: src/orca/messages.py:49
 #, python-format
 msgid "Battery: %d%%"
-msgstr ""
+msgstr "แบตเตอรี่: %d%%"
 
 #. Translators: Orca has a command to report the battery status. This message
 #. presents the plugged-in status to the user.
 #: src/orca/messages.py:53
 msgctxt "Battery"
 msgid "plugged in"
-msgstr ""
+msgstr "เสียบปลั๊กอยู่"
 
 #. Translators: Orca has a command to report the battery status. This message
 #. presents the plugged-in status to the user.
 #: src/orca/messages.py:57
 msgctxt "Battery"
 msgid "not plugged in"
-msgstr ""
+msgstr "ไม่ได้เสียบปลั๊กอยู่"
 
 #. Translators: This is presented when the user has navigated to an empty line.
 #: src/orca/messages.py:60
@@ -8011,10 +7814,8 @@ msgstr "ไม่สามารถบันทึกที่คั่นหน
 #. presented to the user when they try to go to a bookmark, but don't have
 #. any bookmarks.
 #: src/orca/messages.py:91
-#, fuzzy
-#| msgid "No landmark found."
 msgid "No bookmarks found."
-msgstr "ไม่พบตำแหน่งสำคัญ"
+msgstr "ไม่พบที่คั่นหน้าใด"
 
 #. Translators: Orca has a feature in which users can store/save a particular
 #. location in an application window and return to it later by pressing a
@@ -8023,10 +7824,8 @@ msgstr "ไม่พบตำแหน่งสำคัญ"
 #. index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
 #. that index.
 #: src/orca/messages.py:99
-#, fuzzy
-#| msgid "No landmark found."
 msgid "Bookmark not found."
-msgstr "ไม่พบตำแหน่งสำคัญ"
+msgstr "ไม่พบที่คั่นหน้า"
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -8037,10 +7836,8 @@ msgstr "ไม่พบตำแหน่งสำคัญ"
 #. editor. This string is what Orca presents to the user when Orca's commands are
 #. being toggled off.
 #: src/orca/messages.py:109
-#, fuzzy
-#| msgid "Structural navigation keys off."
 msgid "Orca command keys off."
-msgstr "ปิดใช้ปุ่มท่องดูตามโครงสร้างแล้ว"
+msgstr "ปิดใช้ปุ่มคำสั่งของ Orca แล้ว"
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -8052,7 +7849,7 @@ msgstr "ปิดใช้ปุ่มท่องดูตามโครงส
 #. being toggled back on.
 #: src/orca/messages.py:119
 msgid "Orca command keys on."
-msgstr ""
+msgstr "เปิดใช้ปุ่มคำสั่งของ Orca แล้ว"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -8143,20 +7940,16 @@ msgstr ""
 #. is presented to indicate that the application's native caret navigation is
 #. active / not being overridden by Orca.
 #: src/orca/messages.py:186
-#, fuzzy
-#| msgid "Gecko is controlling the caret."
 msgid "The application is controlling the caret."
-msgstr "Gecko กำลังควบคุมเคอร์เซอร์"
+msgstr "แอปพลิเคชันกำลังควบคุมเคอร์เซอร์"
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
 #: src/orca/messages.py:192
-#, fuzzy
-#| msgid "Orca is controlling the caret."
 msgid "The screen reader is controlling the caret."
-msgstr "Orca กำลังควบคุมเคอร์เซอร์"
+msgstr "โปรแกรมอ่านหน้าจอกำลังควบคุมเคอร์เซอร์"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #: src/orca/messages.py:195
