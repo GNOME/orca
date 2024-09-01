@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-08-27 07:49+0000\n"
-"PO-Revision-Date: 2024-08-28 19:24+0330\n"
+"POT-Creation-Date: 2024-08-28 15:55+0000\n"
+"PO-Revision-Date: 2024-09-01 10:55+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -3385,8 +3385,8 @@ msgstr "نقطهٔ _۷"
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
 #. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:103 src/orca/orca-setup.ui:2308 src/orca/orca-setup.ui:2408
-#: src/orca/orca-setup.ui:3327
+#: src/orca/guilabels.py:103 src/orca/orca-setup.ui:2308
+#: src/orca/orca-setup.ui:2408 src/orca/orca-setup.ui:3327
 msgid "Dot _8"
 msgstr "نقطهٔ _۸"
 
@@ -3394,8 +3394,8 @@ msgstr "نقطهٔ _۸"
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
 #. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:109 src/orca/orca-setup.ui:2324 src/orca/orca-setup.ui:2424
-#: src/orca/orca-setup.ui:3343
+#: src/orca/guilabels.py:109 src/orca/orca-setup.ui:2324
+#: src/orca/orca-setup.ui:2424 src/orca/orca-setup.ui:3343
 msgid "Dots 7 an_d 8"
 msgstr "نقطه‌های ۷ _و ۸"
 
@@ -3838,7 +3838,7 @@ msgstr "گفتار و پرگویی"
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:427
 msgid "Flat review contents"
-msgstr ""
+msgstr "محتوای بازبینی تخت"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -3880,7 +3880,7 @@ msgstr "دریافت شد"
 #. are associated with presenting notifications.
 #: src/orca/guilabels.py:456
 msgid "Notification presenter"
-msgstr ""
+msgstr "ارائه کنندهٔ آگاهی"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -3891,7 +3891,7 @@ msgstr ""
 #: src/orca/guilabels.py:464
 #, python-format
 msgid "Screen Reader Preferences for %s"
-msgstr ""
+msgstr "ترجیحات صفحه‌خوان برای %s"
 
 #. Translators: This is a table column header. This column consists of a single
 #. checkbox. If the checkbox is checked, Orca will indicate the associated item
@@ -3900,7 +3900,7 @@ msgstr ""
 #. "underlining" with braille dots 7-8 a word that is bold.
 #: src/orca/guilabels.py:471
 msgid "Mark in braille"
-msgstr ""
+msgstr "نشانه‌گذاری در بریل"
 
 #. Translators: "Present Unless" is a column header of the text attributes panel
 #. of the Orca preferences dialog. On this panel, the user can select a set of
@@ -3914,7 +3914,7 @@ msgstr ""
 #. when it's not underlined). "Present" here is being used as a verb.
 #: src/orca/guilabels.py:483
 msgid "Present Unless"
-msgstr ""
+msgstr "ارائه مگر در صورت"
 
 #. Translators: This is a table column header. The "Speak" column consists of a
 #. single checkbox. If the checkbox is checked, Orca will speak the associated
@@ -4026,13 +4026,13 @@ msgstr "برداشتن نمایهٔ کاربری"
 #: src/orca/guilabels.py:565
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved in this "
-"profile will be lost. Do you want to continue and remove this profile and all related "
-"settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in "
+"this profile will be lost. Do you want to continue and remove this profile and "
+"all related settings?"
 msgstr ""
-"دارید نمایهٔ %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نمایه ذخیره "
-"شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نمایه را با همهٔ تنظیمات مربوطه "
-"بردارید؟"
+"دارید نمایهٔ %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نمایه "
+"ذخیره شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نمایه را با همهٔ "
+"تنظیمات مربوطه بردارید؟"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "All" means that Orca will present progress bar
@@ -4583,7 +4583,7 @@ msgstr "پخش‌کنندهٔ گفتار"
 #. system. (https://github.com/eeejay/spiel)
 #: src/orca/guilabels.py:931
 msgid "Spiel"
-msgstr ""
+msgstr "اسپیل"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
@@ -4670,7 +4670,7 @@ msgstr "گفتن مختصات _سلول"
 #. a particular table cell spans in a table).
 #: src/orca/guilabels.py:993
 msgid "Speak _multiple cell spans"
-msgstr ""
+msgstr "گفتن دهانه‌های _چندخانه‌ای"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
@@ -4685,18 +4685,19 @@ msgstr "نام مشخصّه"
 #. label of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:1004
 msgid "Control caret navigation"
-msgstr ""
+msgstr "واپایش ناوش مکان‌نمایی"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:1009
 msgid "Enable _structural navigation"
-msgstr ""
+msgstr "به کار انداختن ناوش _ساختار یافته"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:1013 src/orca/orca-setup.ui:1464 src/orca/orca-setup.ui:2208
+#: src/orca/guilabels.py:1013 src/orca/orca-setup.ui:1464
+#: src/orca/orca-setup.ui:2208
 msgid "Brie_f"
 msgstr "_کوتاه"
 
@@ -4970,14 +4971,14 @@ msgstr "گور"
 #.
 #: src/orca/keynames.py:263
 msgid "acute"
-msgstr ""
+msgstr "حاد"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
 #: src/orca/keynames.py:268
 msgid "circumflex"
-msgstr ""
+msgstr "دور زدن"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
@@ -4991,7 +4992,7 @@ msgstr "مد"
 #.
 #: src/orca/keynames.py:278
 msgid "diaeresis"
-msgstr ""
+msgstr "دیارزیس"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
@@ -5005,7 +5006,7 @@ msgstr "حلقه"
 #.
 #: src/orca/keynames.py:288
 msgid "cedilla"
-msgstr ""
+msgstr "سدیلا"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
@@ -5926,7 +5927,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1590
 msgctxt "math symbol"
 msgid "almost equal to"
-msgstr ""
+msgstr "تقریباً مساوی با"
 
 #. Translators: this is the spoken representation for the character '≉' (U+2249)
 #: src/orca/mathsymbols.py:1593
@@ -6376,13 +6377,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1815
 msgctxt "math symbol"
 msgid "square cap"
-msgstr ""
+msgstr "کلاه مربّع"
 
 #. Translators: this is the spoken representation for the character '⊔' (U+2294)
 #: src/orca/mathsymbols.py:1818
 msgctxt "math symbol"
 msgid "square cup"
-msgstr ""
+msgstr "جام مربّع"
 
 #. Translators: this is the spoken representation for the character '⊕' (U+2295)
 #. Translators: this is the spoken representation for the character '⨁' (U+2a01)
@@ -6498,7 +6499,7 @@ msgstr "درج"
 #: src/orca/mathsymbols.py:1875
 msgctxt "math symbol"
 msgid "models"
-msgstr ""
+msgstr "مدل‌ها"
 
 #. Translators: this is the spoken representation for the character '⊨' (U+22a8)
 #: src/orca/mathsymbols.py:1878
@@ -6510,7 +6511,7 @@ msgstr "درست"
 #: src/orca/mathsymbols.py:1881
 msgctxt "math symbol"
 msgid "forces"
-msgstr ""
+msgstr "اجبار می‌کند"
 
 #. Translators: this is the spoken representation for the character '⊪' (U+22aa)
 #: src/orca/mathsymbols.py:1884
@@ -6528,7 +6529,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1890
 msgctxt "math symbol"
 msgid "does not prove"
-msgstr ""
+msgstr "اثبات نمی‌کند"
 
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
 #: src/orca/mathsymbols.py:1893
@@ -6540,7 +6541,7 @@ msgstr "نادرست"
 #: src/orca/mathsymbols.py:1896
 msgctxt "math symbol"
 msgid "does not force"
-msgstr ""
+msgstr "اجبار نمی‌کند"
 
 #. Translators: this is the spoken representation for the character '⊯' (U+22af)
 #: src/orca/mathsymbols.py:1899
@@ -6636,13 +6637,13 @@ msgstr "nor"
 #: src/orca/mathsymbols.py:1944
 msgctxt "math symbol"
 msgid "right angle with arc"
-msgstr ""
+msgstr "زاویهٔ راست با کمان"
 
 #. Translators: this is the spoken representation for the character '⊿' (U+22bf)
 #: src/orca/mathsymbols.py:1947
 msgctxt "math symbol"
 msgid "right triangle"
-msgstr ""
+msgstr "سه‌گوش راست"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
 #: src/orca/mathsymbols.py:1962
@@ -6666,7 +6667,7 @@ msgstr "عملگر ستاره"
 #: src/orca/mathsymbols.py:1971
 msgctxt "math symbol"
 msgid "division times"
-msgstr ""
+msgstr "تقسیم ضرب"
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
 #: src/orca/mathsymbols.py:1974
@@ -6756,13 +6757,13 @@ msgstr "مساوی و موازی با"
 #: src/orca/mathsymbols.py:2016
 msgctxt "math symbol"
 msgid "less than with dot"
-msgstr ""
+msgstr "کوچک‌تر از با نقطه"
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
 #: src/orca/mathsymbols.py:2019
 msgctxt "math symbol"
 msgid "greater than with dot"
-msgstr ""
+msgstr "بزرگ‌تر از با نقطه"
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
 #: src/orca/mathsymbols.py:2022
@@ -6852,13 +6853,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:2064
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
-msgstr ""
+msgstr "کوچک‌تر ولی نه مساوی با"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
 #: src/orca/mathsymbols.py:2067
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
-msgstr ""
+msgstr "بزرگ‌تر ولی نه مساوی با"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
 #: src/orca/mathsymbols.py:2070
@@ -6900,71 +6901,71 @@ msgstr ""
 #: src/orca/mathsymbols.py:2088
 msgctxt "math symbol"
 msgid "vertical ellipsis"
-msgstr ""
+msgstr "سه‌نقطهٔ عمودی"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
 #: src/orca/mathsymbols.py:2091
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
-msgstr ""
+msgstr "سه‌نقطهٔ افقی در میان خط"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
 #: src/orca/mathsymbols.py:2094
 msgctxt "math symbol"
 msgid "up right diagonal ellipsis"
-msgstr ""
+msgstr "سه‌نقطهٔ کج به بالا راست"
 
 #. Translators: this is the spoken representation for the character '⋱' (U+22f1)
 #: src/orca/mathsymbols.py:2097
 msgctxt "math symbol"
 msgid "down right diagonal ellipsis"
-msgstr ""
+msgstr "سه‌نقطهٔ کج به پایین راست"
 
 #. Translators: this is the spoken representation for the character '⋲' (U+22f2)
 #: src/orca/mathsymbols.py:2100
 msgctxt "math symbol"
 msgid "element of with long horizontal stroke"
-msgstr ""
+msgstr "عضو با خط افقی دراز"
 
 #: src/orca/mathsymbols.py:2104
 msgctxt "math symbol"
 msgid "element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "عضو با نوار عمودی در پایان خط افقی"
 
 #: src/orca/mathsymbols.py:2108
 msgctxt "math symbol"
 msgid "small element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "عضو کوچک با نوار عمودی در پایان خط افقی"
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
 #: src/orca/mathsymbols.py:2111
 msgctxt "math symbol"
 msgid "element of with dot above"
-msgstr ""
+msgstr "عضو با نقطهٔ بالایی"
 
 #. Translators: this is the spoken representation for the character '⋶' (U+22f6)
 #: src/orca/mathsymbols.py:2114
 msgctxt "math symbol"
 msgid "element of with overbar"
-msgstr ""
+msgstr "عضو با نوار بالایی"
 
 #. Translators: this is the spoken representation for the character '⋷' (U+22f7)
 #: src/orca/mathsymbols.py:2117
 msgctxt "math symbol"
 msgid "small element of with overbar"
-msgstr ""
+msgstr "عضو کوچک با نوار بالایی"
 
 #. Translators: this is the spoken representation for the character '⋸' (U+22f8)
 #: src/orca/mathsymbols.py:2120
 msgctxt "math symbol"
 msgid "element of with underbar"
-msgstr ""
+msgstr "عضو با نوار زیرین"
 
 #. Translators: this is the spoken representation for the character '⋹' (U+22f9)
 #: src/orca/mathsymbols.py:2123
 msgctxt "math symbol"
 msgid "element of with two horizontal strokes"
-msgstr ""
+msgstr "عضو با دو خط افقی"
 
 #. Translators: this is the spoken representation for the character '⋺' (U+22fa)
 #: src/orca/mathsymbols.py:2126
@@ -7029,25 +7030,25 @@ msgstr "کف راست"
 #: src/orca/mathsymbols.py:2157
 msgctxt "math symbol"
 msgid "top brace"
-msgstr ""
+msgstr "کروشهٔ بالا"
 
 #. Translators: this is the spoken representation for the character '⏟' (U+23df)
 #: src/orca/mathsymbols.py:2160
 msgctxt "math symbol"
 msgid "bottom brace"
-msgstr ""
+msgstr "کروشهٔ پایین"
 
 #. Translators: this is the spoken representation for the character '⟨' (U+27e8)
 #: src/orca/mathsymbols.py:2163
 msgctxt "math symbol"
 msgid "left angle bracket"
-msgstr ""
+msgstr "براکت سمت چپ"
 
 #. Translators: this is the spoken representation for the character '⟩' (U+27e9)
 #: src/orca/mathsymbols.py:2166
 msgctxt "math symbol"
 msgid "right angle bracket"
-msgstr ""
+msgstr "براکت سمت راست"
 
 #. Translators: this is the spoken representation for the character '⨀' (U+2a00)
 #: src/orca/mathsymbols.py:2169
@@ -7084,48 +7085,48 @@ msgstr "اجتماع مربّعی"
 #: src/orca/mathsymbols.py:2187
 msgctxt "math symbol"
 msgid "black square"
-msgstr ""
+msgstr "مربّع سیاه"
 
 #. Translators: this is the spoken representation for the character '□' (U+25a1)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2191
 msgctxt "math symbol"
 msgid "white square"
-msgstr ""
+msgstr "لوزی سفید"
 
 #. Translators: this is the spoken representation for the character '◆' (U+25c6)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2195
 msgctxt "math symbol"
 msgid "black diamond"
-msgstr ""
+msgstr "لوزی سیاه"
 
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2199
 msgctxt "math symbol"
 msgid "white circle"
-msgstr ""
+msgstr "دایرهٔ سفید"
 
 #. Translators: this is the spoken representation for the character '●' (U+25cf)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2203
 msgctxt "math symbol"
 msgid "black circle"
-msgstr ""
+msgstr "دایرهٔ سیاه"
 
 #. Translators: this is the spoken representation for the character '◦' (U+25e6)
 #: src/orca/mathsymbols.py:2206
 msgctxt "math symbol"
 msgid "white bullet"
-msgstr ""
+msgstr "گلولهٔ سفید"
 
 #. Translators: this is the spoken representation for the character '◾' (U+25fe)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2210
 msgctxt "math symbol"
 msgid "black medium small square"
-msgstr ""
+msgstr "مربّع کوچک متوسّط سیاه"
 
 #. Translators: this is the spoken representation for the character '̱' (U+0331)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -8743,10 +8744,10 @@ msgstr ""
 #. Mode.
 #: src/orca/messages.py:1229
 msgid ""
-"Entering learn mode.  Press any key to hear its function.  To view the screen reader’s "
-"documentation, press F1. To get a list of the screen reader’s default shortcuts, press "
-"F2. To get a list of the screen reader’s shortcuts for the current application, press "
-"F3. To exit learn mode, press the escape key."
+"Entering learn mode.  Press any key to hear its function.  To view the screen "
+"reader’s documentation, press F1. To get a list of the screen reader’s default "
+"shortcuts, press F2. To get a list of the screen reader’s shortcuts for the "
+"current application, press F3. To exit learn mode, press the escape key."
 msgstr ""
 
 #. Translators: This message is presented when a user is navigating within a
@@ -12254,7 +12255,8 @@ msgid "Display Settings"
 msgstr "تنظیمات نمایشگر"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.
-#: src/orca/orca-setup.ui:2276 src/orca/orca-setup.ui:2376 src/orca/orca-setup.ui:3295
+#: src/orca/orca-setup.ui:2276 src/orca/orca-setup.ui:2376
+#: src/orca/orca-setup.ui:3295
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_هیچ‌کدام"
@@ -12440,10 +12442,10 @@ msgstr "ویژگی‌های متن"
 #.
 #: src/orca/phonnames.py:53
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : "
-"hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : "
-"papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : "
-"whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, "
+"h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, "
+"o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
+"v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
 
 #. Translators: this attribute specifies the background color of the text.
@@ -13756,29 +13758,31 @@ msgstr "نوشتار"
 #~ msgid "To activate press space."
 #~ msgstr "برای فعال‌سازی کلید فاصله را بفشارید."
 
-#~ msgid "Use up or down arrow to select value. Or type in the desired numerical value."
+#~ msgid ""
+#~ "Use up or down arrow to select value. Or type in the desired numerical value."
 #~ msgstr ""
-#~ "از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار دلخواه عددیتان "
-#~ "را بنویسید."
+#~ "از کلیدهای جهتی بالا یا پایین برای انتخاب مقدار استفاده کنید. یا مقدار دلخواه "
+#~ "عددیتان را بنویسید."
 
 #~ msgid "Use arrow keys to change."
 #~ msgstr "برای تغییر از کلیدهای جهتی استفاده کنید."
 
 #~ msgid ""
-#~ "To navigate, press left or right arrow. To move through items press up or down arrow."
+#~ "To navigate, press left or right arrow. To move through items press up or "
+#~ "down arrow."
 #~ msgstr ""
-#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، کلیدهای بالا "
-#~ "یا پایین را بفشارید."
+#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، "
+#~ "کلیدهای بالا یا پایین را بفشارید."
 
 #~ msgid "To enter sub menu, press right arrow."
 #~ msgstr "برای ورود به زیرمنو، کلید جهت راست را فشار دهید."
 
 #~ msgid ""
-#~ "To decrease press left arrow, to increase press right arrow. To go to minimum press "
-#~ "home, and for maximum press end."
+#~ "To decrease press left arrow, to increase press right arrow. To go to minimum "
+#~ "press home, and for maximum press end."
 #~ msgstr ""
-#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. برای "
-#~ "حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
+#~ "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
 
 #~ msgctxt "structural navigation"
 #~ msgid "Interal Frames"
