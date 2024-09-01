@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-08-20 21:22+0000\n"
+"POT-Creation-Date: 2024-08-27 07:49+0000\n"
 "PO-Revision-Date: 2024-08-24 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -13409,90 +13409,3 @@ msgstr "düz"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "heceleme"
-
-#~ msgid "Unable to get calculator display"
-#~ msgstr "Hesap makinesi ekranı alınamadı"
-
-#~ msgid "menu button"
-#~ msgstr "menü düğmesi"
-
-#~ msgid "Speak multicase strings as wor_ds"
-#~ msgstr "Değişik büyüklükteki dizgeleri _sözcük olarak oku"
-
-#~ msgid "document selected from cursor position"
-#~ msgstr "belge imleç konumundan itibaren seçili"
-
-#~ msgid "document unselected from cursor position"
-#~ msgstr "belge imleç konumundan itibaren seçimsiz"
-
-#~ msgid "document selected to cursor position"
-#~ msgstr "belge imleç konumuna kadar seçili"
-
-#~ msgid "document unselected to cursor position"
-#~ msgstr "belge imleç konumuna kadar seçimsiz"
-
-#~ msgid "line selected down from cursor position"
-#~ msgstr "satır imleç konumundan aşağı doğru seçildi"
-
-#~ msgid "line selected up from cursor position"
-#~ msgstr "satır imleç konumundan yukarı doğru seçildi"
-
-#~ msgid "line unselected down from cursor position"
-#~ msgstr "satır imleç konumundan aşağı doğru seçimsiz"
-
-#~ msgid "line unselected up from cursor position"
-#~ msgstr "satır imleç konumundan yukarı doğru seçimsiz"
-
-#~ msgid "line selected from start to previous cursor position"
-#~ msgstr "satır önceki imleç konumundan itibaren seçildi"
-
-#~ msgid "line selected to end from previous cursor position"
-#~ msgstr "önceki imleç konumundan satır sonuna kadar seçildi"
-
-#~ msgid "setting live region to rude"
-#~ msgstr "canlı bölge kaba olarak belirleniyor"
-
-#~ msgid "page selected from cursor position"
-#~ msgstr "sayfa imleç konumundan itibaren seçili"
-
-#~ msgid "page selected to cursor position"
-#~ msgstr "sayfa imleç konumuna kadar seçili"
-
-#~ msgid "page unselected from cursor position"
-#~ msgstr "sayfa imleç konumundan itibaren seçimsiz"
-
-#~ msgid "page unselected to cursor position"
-#~ msgstr "imleç konumuna kadar seçimsiz"
-
-#~ msgid "paragraph selected down from cursor position"
-#~ msgstr "imleç konumundan aşağıya doğru paragraf seçildi"
-
-#~ msgid "paragraph selected up from cursor position"
-#~ msgstr "imleç konumundan yukarıya doğru paragraf seçildi"
-
-#~ msgid "paragraph unselected down from cursor position"
-#~ msgstr "imleç konumundan aşağıya doğru paragraf seçimi kaldırıldı"
-
-#~ msgid "paragraph unselected up from cursor position"
-#~ msgstr "imleç konumundan yukarıya doğru paragraf seçimi kaldırıldı"
-
-#~ msgid "Screen Reader Find Dialog"
-#~ msgstr "Ekran Okuyucusu Bul Penceresi"
-
-#~ msgid "_Close"
-#~ msgstr "_Kapat"
-
-#~ msgid "_Find"
-#~ msgstr "_Bul"
-
-#~ msgid "Search for:"
-#~ msgstr "Aranacak:"
-
-#~ msgid "Top of window"
-#~ msgstr "Pencerenin üstü"
-
-#~ msgid "Pass the next command on to the current application"
-#~ msgstr "Geçerli uygulamaya sonraki komutu geçir"
-
-#~ msgid "Bypass mode enabled."
-#~ msgstr "Atlama kipi etkin."
