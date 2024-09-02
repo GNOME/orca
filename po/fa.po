@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-08-28 15:55+0000\n"
-"PO-Revision-Date: 2024-09-01 11:27+0330\n"
+"POT-Creation-Date: 2024-09-01 07:58+0000\n"
+"PO-Revision-Date: 2024-09-02 19:05+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -7444,7 +7444,7 @@ msgstr "آرگومان‌های اختیاری"
 #. It is followed by a brief list of Orca's optional command-line arguments.
 #: src/orca/messages.py:242
 msgid "Usage: "
-msgstr "استفاده:"
+msgstr "استفاده: "
 
 #. Translators: This message is displayed when the user starts Orca from the
 #. command line and includes an invalid option or argument. After the message,
@@ -8751,6 +8751,10 @@ msgid ""
 "shortcuts, press F2. To get a list of the screen reader’s shortcuts for the "
 "current application, press F3. To exit learn mode, press the escape key."
 msgstr ""
+"وارد شدن به حالت آموزش.  زدن خر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن "
+"مستندات صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن F3 "
+"برای گرفتن سیاههٔ میان‌برهای صفحه‌خوان برای برنامهٔ کنونی. زدن کلید گریز برای خروج "
+"از حالت آموزش."
 
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
@@ -9823,7 +9827,7 @@ msgstr "رقم‌ها"
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:2007
 msgid "Speak numbers as digits."
-msgstr ""
+msgstr "گفتن عددها به شکل رقم."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -9842,7 +9846,7 @@ msgstr "واژّ‌ها"
 #. the user has enabled speaking numbers as words.
 #: src/orca/messages.py:2021
 msgid "Speak numbers as words."
-msgstr ""
+msgstr "گفتن عددها به شکل واژه."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -9856,19 +9860,19 @@ msgstr "خاموش"
 #. with text formatting (bold, italics, underlining, justification, etc.).
 #: src/orca/messages.py:2031
 msgid "on"
-msgstr ""
+msgstr "روشن"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
 #: src/orca/messages.py:2035
 msgid "Loading.  Please wait."
-msgstr ""
+msgstr "بار کردن. لطفاً شکیبا باشید."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
 #: src/orca/messages.py:2039
 msgid "Finished loading."
-msgstr ""
+msgstr "بار کردن پایان یافت."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
@@ -9876,7 +9880,7 @@ msgstr ""
 #: src/orca/messages.py:2044
 #, python-format
 msgid "Finished loading %s."
-msgstr ""
+msgstr "بار کردن %s پایان یافت."
 
 #. Translators: This message is presented to the user when the page of the
 #. current document changes, e.g. as a result of navigation or scrolling.
@@ -9894,7 +9898,7 @@ msgstr "صفحهٔ %d"
 #: src/orca/messages.py:2056
 #, python-format
 msgid "Page has %s."
-msgstr ""
+msgstr "صفحه %s دارد."
 
 #. Translators: This message appears in a warning dialog when the user performs
 #. the command to get into Orca's preferences dialog when the preferences dialog
@@ -9904,13 +9908,15 @@ msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
 msgstr ""
+"نمونه‌ای از گفت‌وگوی ترجیحات اورکا از پیش باز است.\n"
+"لطفاُ پیش از گشودن گفت‌وگویی جدید ببیندیدش."
 
 #. Translators: This message is an indication of the position of the focused
 #. slide and the total number of slides in the presentation.
 #: src/orca/messages.py:2067
 #, python-format
 msgid "slide %(position)d of %(count)d"
-msgstr ""
+msgstr "اسلاید %(position)d از %(count)d"
 
 #. Translators: This is a detailed message which will be presented as the user
 #. cycles amongst his/her saved profiles. A "profile" is a collection of settings
@@ -9920,7 +9926,7 @@ msgstr ""
 #: src/orca/messages.py:2074
 #, python-format
 msgid "Profile set to %s."
-msgstr ""
+msgstr "نمایه روی %s تنظیم شد."
 
 #. Translators: This is an error message presented when the user attempts to
 #. cycle among his/her saved profiles, but no profiles can be found. A profile
@@ -9929,7 +9935,7 @@ msgstr ""
 #. selected when reading Spanish content.
 #: src/orca/messages.py:2081
 msgid "No profiles found."
-msgstr ""
+msgstr "نمایه‌ای پیدا نشد."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
@@ -9937,7 +9943,7 @@ msgstr ""
 #: src/orca/messages.py:2086
 #, python-format
 msgid "Progress bar %d."
-msgstr ""
+msgstr "نوار پیشرفت %d."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -9954,7 +9960,7 @@ msgstr "همه"
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2098
 msgid "Punctuation level set to all."
-msgstr ""
+msgstr "سطح نقطه‌گذاری روی همه تنظیم شد."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -9971,7 +9977,7 @@ msgstr "بیش‌تر"
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2110
 msgid "Punctuation level set to most."
-msgstr ""
+msgstr "سطح نقطه‌گذاری روی بیش‌تر تنظیم شد."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -9988,7 +9994,7 @@ msgstr "هیچ‌کدام"
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2122
 msgid "Punctuation level set to none."
-msgstr ""
+msgstr "سطح نقطه‌گذاری روی هیچ تنظیم شد."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -10005,25 +10011,25 @@ msgstr "برخی"
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2134
 msgid "Punctuation level set to some."
-msgstr ""
+msgstr "سطح نقطه‌گذاری روی برخی تنظیم شد."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
 #: src/orca/messages.py:2138
 msgid "Searching."
-msgstr ""
+msgstr "جست‌وجو کردن."
 
 #. Translators: This message is presented to indicate a search executed by the
 #. user has been completed.
 #: src/orca/messages.py:2142
 msgid "Search complete."
-msgstr ""
+msgstr "جست‌وجو کامل شد."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
 #: src/orca/messages.py:2146
 msgid "Screen reader settings reloaded."
-msgstr ""
+msgstr "تنظیمات صفحه‌خوان بازخوانی شد."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is spoken by Orca before speaking the text which is
@@ -10031,7 +10037,7 @@ msgstr ""
 #: src/orca/messages.py:2151
 #, python-format
 msgid "Selected text is: %s"
-msgstr ""
+msgstr "متن گزیده: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -10040,7 +10046,7 @@ msgstr ""
 #. fact instead of presenting the full string which was just deleted.
 #: src/orca/messages.py:2158
 msgid "Selection deleted."
-msgstr ""
+msgstr "گزینش حذف شد."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -10052,14 +10058,14 @@ msgstr ""
 #. which was just inserted.
 #: src/orca/messages.py:2168
 msgid "Selection restored."
-msgstr ""
+msgstr "گزینش بازگردانده شد."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2173
 msgid "Text unselected."
-msgstr ""
+msgstr "متن ناگزیده شد."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -10068,7 +10074,7 @@ msgstr ""
 #: src/orca/messages.py:2179
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr ""
+msgstr "اندازه: ‪%d, %d‬. مکان: ‪%d, %d‬."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -10077,19 +10083,19 @@ msgstr ""
 #: src/orca/messages.py:2185
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
-msgstr ""
+msgstr "پهنا: %d. بلندا: %d. ‏%d از چپ. %d از بالا."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
 #: src/orca/messages.py:2189
 msgid "Speech disabled."
-msgstr ""
+msgstr "گفتن از کار افتاد."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
 #: src/orca/messages.py:2193
 msgid "Speech enabled."
-msgstr ""
+msgstr "گفتن به کار افتاد."
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -10107,7 +10113,7 @@ msgstr ""
 #: src/orca/messages.py:2208
 #, python-format
 msgid "Sleep mode disabled for %s."
-msgstr ""
+msgstr "خالت خواب برای %s از کار افتاد."
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -10125,7 +10131,7 @@ msgstr ""
 #: src/orca/messages.py:2223
 #, python-format
 msgid "Sleep mode enabled for %s."
-msgstr ""
+msgstr "خالت خواب برای %s به کار افتاد."
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2226
@@ -10183,7 +10189,7 @@ msgstr "سطح پرگویی: پرگو"
 #. turns into "Open dot dot dot".
 #: src/orca/messages.py:2261
 msgid " dot dot dot"
-msgstr ""
+msgstr " نقطه نقطه نقطه"
 
 #. Translators: This message is presented when the user attempts to use a
 #. command specific to a spreadsheet, such as reading the input line, but is
@@ -10195,17 +10201,17 @@ msgstr "نه در یک صفحهٔ گسترده."
 #. Translators: This message is presented to the user when Orca is launched.
 #: src/orca/messages.py:2269
 msgid "Screen reader on."
-msgstr ""
+msgstr "صفحه‌خوان روشن."
 
 #. Translators: This message is presented to the user when Orca is quit.
 #: src/orca/messages.py:2272
 msgid "Screen reader off."
-msgstr ""
+msgstr "صفحه‌خوان خاموش."
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: src/orca/messages.py:2275
 msgid "Speech is unavailable."
-msgstr ""
+msgstr "گفتن موجود نیست."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
@@ -10220,7 +10226,7 @@ msgstr "پیدا نشد"
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2285
 msgid "Status bar not found"
-msgstr ""
+msgstr "نور وضعیت پیدا نشد"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -10228,7 +10234,7 @@ msgstr ""
 #. for was not found.
 #: src/orca/messages.py:2291
 msgid "string not found"
-msgstr ""
+msgstr "رشته پیدا نشد"
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -10238,7 +10244,7 @@ msgstr ""
 #. of Orca. It should be a brief informative message.
 #: src/orca/messages.py:2299
 msgid "Structural navigation keys off."
-msgstr ""
+msgstr "کلیدهای پیمایش ساختاری خاموش."
 
 #. Translators: The structural navigation keys are designed to move the caret
 #. around document content by object type. H moves you to the next heading,
@@ -10248,7 +10254,7 @@ msgstr ""
 #. of Orca. It should be a brief informative message.
 #: src/orca/messages.py:2307
 msgid "Structural navigation keys on."
-msgstr ""
+msgstr "کلیدهای پیمایش ساختاری روشن."
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -10265,41 +10271,41 @@ msgstr "پیدا نشد"
 #: src/orca/messages.py:2318
 #, python-format
 msgid "Row %(row)d, column %(column)d."
-msgstr ""
+msgstr "ردیف %(row)d، ستون %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
 #: src/orca/messages.py:2322
 msgid "End of table"
-msgstr ""
+msgstr "پایان جدول"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2327
 msgid "Speak cell"
-msgstr ""
+msgstr "گفتن خانه"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2332
 msgid "Speak row"
-msgstr ""
+msgstr "گفتن ردیف"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
 #: src/orca/messages.py:2337
 msgid "Non-uniform"
-msgstr ""
+msgstr "نایکسان"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
 #: src/orca/messages.py:2342
 msgid "Not in a table."
-msgstr ""
+msgstr "خارج از جدول."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
@@ -10319,41 +10325,41 @@ msgstr "پیمایش جدول به کار افتاده."
 #. have been reordered.
 #: src/orca/messages.py:2356
 msgid "Columns reordered"
-msgstr ""
+msgstr "جای ستون‌ها عوض شد"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
 #: src/orca/messages.py:2360
 msgid "Rows reordered"
-msgstr ""
+msgstr "جای ردیف‌ها عوض شد"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
 #: src/orca/messages.py:2364
 #, python-format
 msgid "column %d"
-msgstr ""
+msgstr "ستون %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
 #: src/orca/messages.py:2368
 #, python-format
 msgid "column %(index)d of %(total)d"
-msgstr ""
+msgstr "ستون %(index)d از %(total)d"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
 #: src/orca/messages.py:2373
 msgid "Bottom of column."
-msgstr ""
+msgstr "پایین ستون."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
 #: src/orca/messages.py:2378
 msgid "Top of column."
-msgstr ""
+msgstr "بالای ستون."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
