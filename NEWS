@@ -1,3 +1,51 @@
+47.rc - 2 September 2024
+
+Web:
+
+* Fix double-presenting editable list items in braille.
+
+* Fix regressions in name presentation.
+
+* Improve speech presentation of list items in structural
+  navigation.
+
+General:
+
+* Handle event floods during start up.
+
+* Work around Qt bug causing table cells to not be announced
+  during navigation.
+
+* Fix regression in the presentation of notifications.
+
+* Address several issues related to presentation of sets in UI.
+
+* Eliminate some chattiness from redundant descriptions and
+  ancestors with redundant names.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas
+  ca              Catalan                   Jordi Mas i Hernandez
+  de              German                    Jürgen Benvenuti
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  gl              Galician                  Fran Dieguez
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lt              Lithuanian                Aurimas Černius
+  pt_BR           Brazilian Portuguese      Jhonata Fernandes
+  pt              Portuguese                Hugo Carvalho
+  ro              Romanian                  Daniel Șerbănescu
+  ru              Russian                   Artur S0
+  sv              Swedish                   Anders Jonsson
+  th              Thai                      Aefgh Threenine
+  tr              Turkish                   Emin Tufan Çetin
+  tr              Turkish                   Sabri Ünal
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
 47.beta - 19 August 2024
 
 Web:
