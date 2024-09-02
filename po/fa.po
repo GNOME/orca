@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2024-09-01 07:58+0000\n"
-"PO-Revision-Date: 2024-09-02 19:05+0330\n"
+"PO-Revision-Date: 2024-09-02 19:33+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -5563,19 +5563,19 @@ msgstr "عضو کوچک"
 #: src/orca/mathsymbols.py:1407
 msgctxt "math symbol"
 msgid "contains as a member"
-msgstr ""
+msgstr "شامل عضو"
 
 #. Translators: this is the spoken representation for the character '∌' (U+220c)
 #: src/orca/mathsymbols.py:1410
 msgctxt "math symbol"
 msgid "does not contain as a member"
-msgstr ""
+msgstr "شامل عضو نیست"
 
 #. Translators: this is the spoken representation for the character '∍' (U+220d)
 #: src/orca/mathsymbols.py:1413
 msgctxt "math symbol"
 msgid "small contains as a member"
-msgstr ""
+msgstr "شامل عضو کوچک"
 
 #. Translators: this is the spoken representation for the character '∎' (U+220e)
 #: src/orca/mathsymbols.py:1416
@@ -10367,7 +10367,7 @@ msgstr "بالای ستون."
 #: src/orca/messages.py:2383
 #, python-format
 msgid "Column %s selected"
-msgstr ""
+msgstr "ستون %s گزیده شد"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10377,7 +10377,7 @@ msgstr ""
 #: src/orca/messages.py:2390
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "ستون‌های %s تا %s گزیده شد"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10387,7 +10387,7 @@ msgstr ""
 #: src/orca/messages.py:2397
 #, python-format
 msgid "Columns %s through %s unselected"
-msgstr ""
+msgstr "ستون‌های %s تا %s ناگزیده شد"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
@@ -10395,60 +10395,60 @@ msgstr ""
 #: src/orca/messages.py:2402
 #, python-format
 msgid "Column %s unselected"
-msgstr ""
+msgstr "ستون %s ناگزیده شد"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
 #: src/orca/messages.py:2406
 #, python-format
 msgid "row %d"
-msgstr ""
+msgstr "ردیف %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
 #: src/orca/messages.py:2410
 #, python-format
 msgid "row %(index)d of %(total)d"
-msgstr ""
+msgstr "ردیف %(index)d از %(total)d"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
 #: src/orca/messages.py:2415
 msgid "Beginning of row."
-msgstr ""
+msgstr "آغاز ردیف."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
 #: src/orca/messages.py:2420
 msgid "End of row."
-msgstr ""
+msgstr "پیان ردیف."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
 #: src/orca/messages.py:2424
 msgid "Row deleted."
-msgstr ""
+msgstr "ردیف حذف شد."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
 #: src/orca/messages.py:2428
 msgid "Last row deleted."
-msgstr ""
+msgstr "آخرین ردیف حذف شد."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
 #: src/orca/messages.py:2432
 msgid "Row inserted."
-msgstr ""
+msgstr "ردیف درج شد."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
 #: src/orca/messages.py:2437
 msgid "Row inserted at the end of the table."
-msgstr ""
+msgstr "ردیف در پایان جدول درج شد."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
@@ -10456,7 +10456,7 @@ msgstr ""
 #: src/orca/messages.py:2442
 #, python-format
 msgid "Row %s selected"
-msgstr ""
+msgstr "ردیف %s گزیده شد"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10466,7 +10466,7 @@ msgstr ""
 #: src/orca/messages.py:2449
 #, python-format
 msgid "Rows %s through %s selected"
-msgstr ""
+msgstr "ردیف %s تا %s گزیده شد"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10476,7 +10476,7 @@ msgstr ""
 #: src/orca/messages.py:2456
 #, python-format
 msgid "Rows %s through %s unselected"
-msgstr ""
+msgstr "ردیف %s تا %s ناگزیده شد"
 
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
@@ -10484,7 +10484,7 @@ msgstr ""
 #: src/orca/messages.py:2461
 #, python-format
 msgid "Row %s unselected"
-msgstr ""
+msgstr "ردیف %s ناگزیده شد"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
@@ -10505,14 +10505,14 @@ msgstr "گزیده نشد"
 #. it to be presented with.
 #: src/orca/messages.py:2480
 msgid "%H hours, %M minutes and %S seconds"
-msgstr ""
+msgstr "%H ساعت و %M دقیقه و %S ثانیه"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2485
 msgid "%H hours and %M minutes"
-msgstr ""
+msgstr "%H ساعت و %M دقیقه"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
@@ -10577,8 +10577,8 @@ msgstr "۰ مورد"
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "خانه %d ردیف دهانه دارد"
+msgstr[1] "خانه %d ردیف دهانه دارد"
 
 #. Translators: this represents the number of columns in a table.
 #: src/orca/messages.py:2534
@@ -10595,8 +10595,8 @@ msgstr[1] " %d ستون"
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "خانه %d ستون دهانه دارد"
+msgstr[1] "خانه %d ستون دهانه دارد"
 
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
@@ -12148,7 +12148,7 @@ msgstr "گفتن _تورفتگی‌ها و هم‌ترازی‌ها"
 
 #: src/orca/orca-setup.ui:1693
 msgid "Spea_k object mnemonics"
-msgstr ""
+msgstr "گفتن _میان‌بر شی"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: src/orca/orca-setup.ui:1709
@@ -12455,6 +12455,10 @@ msgid ""
 "o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
 "v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
+"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, "
+"خ : خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : "
+"شال, ص : صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : "
+"قند, ک : کبوتر, گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
