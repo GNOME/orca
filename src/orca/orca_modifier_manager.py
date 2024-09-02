@@ -200,7 +200,9 @@ class OrcaModifierManager:
         debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         self.unset_orca_modifiers(reason)
-        self._original_xmodmap = subprocess.check_output(['xkbcomp', os.environ['DISPLAY'], '-'])
+        p = subprocess.Popen(['xkbcomp', os.environ['DISPLAY'], '-'],
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        self._original_xmodmap, _ = p.communicate()
         self._create_orca_xmodmap()
 
     def _create_orca_xmodmap(self):
