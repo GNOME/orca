@@ -522,6 +522,16 @@ class Generator:
         for child in descendants:
             if child == obj:
                 continue
+            if AXUtilities.is_section(child):
+                continue
+            if AXUtilities.is_paragraph(child):
+                continue
+            if AXUtilities.is_table_related(child):
+                continue
+            if AXUtilities.is_static(child):
+                continue
+            if AXUtilities.is_link(child):
+                continue
             if AXUtilities.is_image(child):
                 continue
             if AXUtilities.is_label(child):
