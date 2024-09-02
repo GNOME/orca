@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2024-09-01 07:58+0000\n"
-"PO-Revision-Date: 2024-09-02 19:33+0330\n"
+"PO-Revision-Date: 2024-09-03 02:23+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -5635,13 +5635,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1446
 msgctxt "math symbol"
 msgid "ring operator"
-msgstr ""
+msgstr "عملگر حلقه"
 
 #. Translators: this is the spoken representation for the character '∙' (U+2219)
 #: src/orca/mathsymbols.py:1449
 msgctxt "math symbol"
 msgid "bullet operator"
-msgstr ""
+msgstr "عملگر گلوله"
 
 #. Translators: this is the spoken representation for the character '√' (U+221a)
 #: src/orca/mathsymbols.py:1452
@@ -5707,7 +5707,7 @@ msgstr "تقسیم بر"
 #: src/orca/mathsymbols.py:1482
 msgctxt "math symbol"
 msgid "does not divide"
-msgstr ""
+msgstr "تقسیم ناپذیر بر"
 
 #. Translators: this is the spoken representation for the character '∥' (U+2225)
 #: src/orca/mathsymbols.py:1485
@@ -5740,7 +5740,7 @@ msgstr "یای منطقی"
 #: src/orca/mathsymbols.py:1497 src/orca/mathsymbols.py:1956
 msgctxt "math symbol"
 msgid "intersection"
-msgstr ""
+msgstr "اشتراک"
 
 #. Translators: this is the spoken representation for the character '∪' (U+222a)
 #. Translators: this is the spoken representation for the character '⋃' (U+22c3)
@@ -5873,7 +5873,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1563
 msgctxt "math symbol"
 msgid "sine wave"
-msgstr ""
+msgstr "موج سینوسی"
 
 #. Translators: this is the spoken representation for the character '≀' (U+2240)
 #: src/orca/mathsymbols.py:1566
@@ -5909,19 +5909,19 @@ msgstr ""
 #: src/orca/mathsymbols.py:1581
 msgctxt "math symbol"
 msgid "approximately equal to"
-msgstr ""
+msgstr "تقریباً مساوی"
 
 #. Translators: this is the spoken representation for the character '≆' (U+2246)
 #: src/orca/mathsymbols.py:1584
 msgctxt "math symbol"
 msgid "approximately but not actually equal to"
-msgstr ""
+msgstr "تقریباً ولی نه دقیقاً مساوی"
 
 #. Translators: this is the spoken representation for the character '≇' (U+2247)
 #: src/orca/mathsymbols.py:1587
 msgctxt "math symbol"
 msgid "neither approximately nor actually equal to"
-msgstr ""
+msgstr "نه تثریباً و نه دقیقاً مساوی"
 
 #. Translators: this is the spoken representation for the character '≈' (U+2248)
 #: src/orca/mathsymbols.py:1590
@@ -5933,13 +5933,13 @@ msgstr "تقریباً مساوی با"
 #: src/orca/mathsymbols.py:1593
 msgctxt "math symbol"
 msgid "not almost equal to"
-msgstr ""
+msgstr "تقریباً نامساوی"
 
 #. Translators: this is the spoken representation for the character '≊' (U+224a)
 #: src/orca/mathsymbols.py:1596
 msgctxt "math symbol"
 msgid "almost equal or equal to"
-msgstr ""
+msgstr "مساوی یا تقریباً مساوی"
 
 #. Translators: this is the spoken representation for the character '≋' (U+224b)
 #: src/orca/mathsymbols.py:1599
@@ -5957,13 +5957,13 @@ msgstr ""
 #: src/orca/mathsymbols.py:1605
 msgctxt "math symbol"
 msgid "equivalent to"
-msgstr ""
+msgstr "معادل"
 
 #. Translators: this is the spoken representation for the character '≎' (U+224e)
 #: src/orca/mathsymbols.py:1608
 msgctxt "math symbol"
 msgid "geometrically equivalent to"
-msgstr ""
+msgstr "معادل هندسی"
 
 #. Translators: this is the spoken representation for the character '≏' (U+224f)
 #: src/orca/mathsymbols.py:1611
@@ -5981,19 +5981,19 @@ msgstr ""
 #: src/orca/mathsymbols.py:1617
 msgctxt "math symbol"
 msgid "geometrically equal to"
-msgstr ""
+msgstr "مساوی هندسی"
 
 #. Translators: this is the spoken representation for the character '≒' (U+2252)
 #: src/orca/mathsymbols.py:1620
 msgctxt "math symbol"
 msgid "approximately equal to or the image of"
-msgstr ""
+msgstr "تقریباً مساوی یا تصویر"
 
 #. Translators: this is the spoken representation for the character '≓' (U+2253)
 #: src/orca/mathsymbols.py:1623
 msgctxt "math symbol"
 msgid "image of or approximately equal to"
-msgstr ""
+msgstr "تصویر یا تقریباً مساوی"
 
 #. Translators: this is the spoken representation for the character '≔' (U+2254)
 #: src/orca/mathsymbols.py:1626
@@ -6053,7 +6053,7 @@ msgstr ""
 #: src/orca/mathsymbols.py:1653
 msgctxt "math symbol"
 msgid "equal to by definition"
-msgstr ""
+msgstr "بنا به تعریف مساوی"
 
 #. Translators: this is the spoken representation for the character '≞' (U+225e)
 #: src/orca/mathsymbols.py:1656
@@ -6107,13 +6107,13 @@ msgstr "بزرگ‌تر یا مساوی با"
 #: src/orca/mathsymbols.py:1680
 msgctxt "math symbol"
 msgid "less than over equal to"
-msgstr ""
+msgstr "کوچک‌تر روی مساوی"
 
 #. Translators: this is the spoken representation for the character '≧' (U+2267)
 #: src/orca/mathsymbols.py:1683
 msgctxt "math symbol"
 msgid "greater than over equal to"
-msgstr ""
+msgstr "بزرگ‌تر روی مساوی"
 
 #. Translators: this is the spoken representation for the character '≨' (U+2268)
 #: src/orca/mathsymbols.py:1686
@@ -6149,7 +6149,7 @@ msgstr "بین"
 #: src/orca/mathsymbols.py:1701
 msgctxt "math symbol"
 msgid "not equivalent to"
-msgstr ""
+msgstr "نا معادل"
 
 #. Translators: this is the spoken representation for the character '≮' (U+226e)
 #: src/orca/mathsymbols.py:1704
@@ -6179,25 +6179,25 @@ msgstr "نه بزرگ‌تر و نه مساوی با"
 #: src/orca/mathsymbols.py:1716
 msgctxt "math symbol"
 msgid "less than or equivalent to"
-msgstr ""
+msgstr "کوچک‌تر یا معادل"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
 #: src/orca/mathsymbols.py:1719
 msgctxt "math symbol"
 msgid "greater than or equivalent to"
-msgstr ""
+msgstr "بزرگ‌تر یا معادل"
 
 #. Translators: this is the spoken representation for the character '≴' (U+2274)
 #: src/orca/mathsymbols.py:1722
 msgctxt "math symbol"
 msgid "neither less than nor equivalent to"
-msgstr ""
+msgstr "نه کوچک‌تر نه معادل"
 
 #. Translators: this is the spoken representation for the character '≵' (U+2275)
 #: src/orca/mathsymbols.py:1725
 msgctxt "math symbol"
 msgid "neither greater than nor equivalent to"
-msgstr ""
+msgstr "نه بزرگ‌تر نه معادل"
 
 #. Translators: this is the spoken representation for the character '≶' (U+2276)
 #: src/orca/mathsymbols.py:1728
@@ -6215,13 +6215,13 @@ msgstr "بزرگ‌تر یا کوچک‌تر از"
 #: src/orca/mathsymbols.py:1734
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr ""
+msgstr "نه کوچک‌تر نه بزرگ‌تر از"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
 #: src/orca/mathsymbols.py:1737
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr ""
+msgstr "نه بزرگ‌تر نه کوچک‌تر از"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
 #: src/orca/mathsymbols.py:1740
