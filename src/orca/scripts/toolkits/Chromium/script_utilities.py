@@ -156,9 +156,6 @@ class Utilities(web.Utilities):
             return False
         return AXUtilities.is_menu_bar(AXObject.get_child(obj, 0))
 
-    def isTopLevelMenu(self, obj):
-        return AXUtilities.is_menu(obj) and self.isFrameForPopupMenu(self.topLevelObject(obj))
-
     def popupMenuForFrame(self, obj):
         if not self.isFrameForPopupMenu(obj):
             return None

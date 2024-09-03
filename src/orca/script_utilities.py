@@ -2081,27 +2081,6 @@ class Utilities:
 
         return False
 
-    def inContextMenu(self, obj=None):
-        obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        if not self.inMenu(obj):
-            return False
-
-        return AXObject.find_ancestor(obj, self.isContextMenu) is not None
-
-    def _contextMenuParentRoles(self):
-        return Atspi.Role.FRAME, Atspi.Role.WINDOW
-
-    def isContextMenu(self, obj):
-        if not AXUtilities.is_menu(obj):
-            return False
-
-        return AXObject.get_role(AXObject.get_parent(obj)) in self._contextMenuParentRoles()
-
-    def isTopLevelMenu(self, obj):
-        if not AXUtilities.is_menu(obj):
-            return False
-        return AXObject.get_parent(obj) == self.topLevelObject(obj)
-
     def isSingleLineAutocompleteEntry(self, obj):
         if not AXUtilities.is_entry(obj):
             return False
@@ -2145,11 +2124,6 @@ class Utilities:
             return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
 
         return AXObject.get_name(obj) or AXText.get_all_text(obj)
-
-    def isNonModalPopOver(self, obj):
-        if not AXUtilities.get_is_popup_for(obj):
-            return False
-        return not AXUtilities.is_modal(obj)
 
     def isUselessPanel(self, obj):
         return False
