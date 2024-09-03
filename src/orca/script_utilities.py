@@ -331,20 +331,6 @@ class Utilities:
     def isCodeDescendant(self, obj):
         return False
 
-    def isDockedFrame(self, obj):
-        if not AXUtilities.is_frame(obj):
-            return False
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('window-type') == 'dock'
-
-    def isDesktop(self, obj):
-        if not AXUtilities.is_frame(obj):
-            return False
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('is-desktop') == 'true'
-
     def isComboBoxWithToggleDescendant(self, obj):
         return False
 
@@ -714,90 +700,6 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table) is not None
 
-    def isLayoutOnly(self, obj):
-        """Returns True if the given object is a container which has
-        no presentable information (label, name, displayed text, etc.)."""
-
-        layoutOnly = False
-
-        if not AXObject.is_valid(obj):
-            return True
-
-        role = AXObject.get_role(obj)
-        parentRole = AXObject.get_role(AXObject.get_parent(obj))
-        firstChild = AXObject.get_child(obj, 0)
-
-        topLevelRoles = self._topLevelRoles()
-        ignorePanelParent = [Atspi.Role.MENU,
-                             Atspi.Role.MENU_ITEM,
-                             Atspi.Role.LIST_ITEM,
-                             Atspi.Role.TREE_ITEM]
-
-        if role == Atspi.Role.TABLE:
-            layoutOnly = AXTable.is_layout_table(obj)
-        elif role == Atspi.Role.TABLE_CELL and AXObject.get_child_count(obj):
-            if parentRole == Atspi.Role.TREE_TABLE:
-                layoutOnly = not AXObject.get_name(obj)
-            elif AXUtilities.is_table_cell(firstChild):
-                layoutOnly = True
-            elif parentRole == Atspi.Role.TABLE:
-                layoutOnly = self.isLayoutOnly(AXObject.get_parent(obj))
-        elif role == Atspi.Role.SECTION:
-            layoutOnly = not AXUtilities.is_block_quote(obj)
-        elif role == Atspi.Role.BLOCK_QUOTE:
-            layoutOnly = False
-        elif role == Atspi.Role.FILLER:
-            layoutOnly = True
-        elif role == Atspi.Role.SCROLL_PANE:
-            layoutOnly = True
-        elif role == Atspi.Role.LAYERED_PANE:
-            layoutOnly = self.isDesktop(self.topLevelObject(obj))
-        elif role == Atspi.Role.AUTOCOMPLETE:
-            layoutOnly = True
-        elif role in [Atspi.Role.TEAROFF_MENU_ITEM, Atspi.Role.SEPARATOR]:
-            layoutOnly = True
-        elif role in [Atspi.Role.LIST_BOX, Atspi.Role.TREE_TABLE]:
-            layoutOnly = False
-        elif role in topLevelRoles:
-            layoutOnly = False
-        elif role == Atspi.Role.MENU:
-            layoutOnly = parentRole == Atspi.Role.COMBO_BOX
-        elif role == Atspi.Role.COMBO_BOX:
-            layoutOnly = False
-        elif role == Atspi.Role.LIST:
-            layoutOnly = False
-        elif role == Atspi.Role.FORM:
-            layoutOnly = False
-        elif role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]:
-            layoutOnly = False
-        elif role in [Atspi.Role.TEXT, Atspi.Role.PASSWORD_TEXT, Atspi.Role.ENTRY]:
-            layoutOnly = False
-        elif role == Atspi.Role.LIST_ITEM and parentRole == Atspi.Role.LIST_BOX:
-            layoutOnly = False
-        elif role in [Atspi.Role.REDUNDANT_OBJECT, Atspi.Role.UNKNOWN]:
-            layoutOnly = True
-        elif self.isTableRow(obj):
-            layoutOnly = not (AXUtilities.is_focusable(obj) or AXUtilities.is_selectable(obj))
-        elif role == Atspi.Role.PANEL and AXObject.get_role(firstChild) in ignorePanelParent:
-            layoutOnly = True
-        elif role == Atspi.Role.PANEL \
-                and AXObject.has_same_non_empty_name(obj, AXObject.get_application(obj)):
-            layoutOnly = True
-        elif AXObject.get_child_count(obj) == 1 \
-                and AXObject.has_same_non_empty_name(obj, firstChild):
-            layoutOnly = True
-        elif self.isHidden(obj):
-            layoutOnly = True
-        else:
-            if not (AXObject.get_name(obj) or self.displayedLabel(obj) or AXText.get_all_text(obj)):
-                layoutOnly = True
-
-        if layoutOnly:
-            tokens = ["SCRIPT UTILITIES:", obj, "is deemed to be layout only"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        return layoutOnly
-
     def isLink(self, obj):
         """Returns True if obj is a link."""
 
@@ -1102,32 +1004,6 @@ class Utilities:
 
         return [root]
 
-    @staticmethod
-    def isTableRow(obj):
-        """Determines if obj is a table row -- real or functionally."""
-
-        childCount = AXObject.get_child_count(obj)
-        if not childCount:
-            return False
-
-        if AXObject.get_parent(obj) is None:
-            return False
-
-        if AXUtilities.is_table_row(obj):
-            return True
-
-        if AXUtilities.is_table_cell_or_header(obj):
-            return False
-
-        if not AXUtilities.is_table(AXObject.get_parent(obj)):
-            return False
-
-        cells = [x for x in AXObject.iter_children(obj, AXUtilities.is_table_cell_or_header)]
-        if len(cells) == childCount:
-            return True
-
-        return False
-
     def realActiveAncestor(self, obj):
         if AXUtilities.is_focused(obj):
             return obj
@@ -1137,7 +1013,7 @@ class Utilities:
 
         ancestor = AXObject.find_ancestor(obj, pred)
         if ancestor is not None \
-           and not self._script.utilities.isLayoutOnly(AXObject.get_parent(ancestor)):
+           and not AXUtilities.is_layout_only(AXObject.get_parent(ancestor)):
             obj = ancestor
 
         return obj
@@ -2048,9 +1924,6 @@ class Utilities:
             return AXTable.get_selected_row_count(obj)
         return AXSelection.get_selected_child_count(obj)
 
-    def isButtonWithPopup(self, obj):
-        return AXUtilities.is_button(obj) and AXUtilities.has_popup(obj)
-
     def isPopupMenuForCurrentItem(self, obj):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if obj == focus:
@@ -2080,13 +1953,6 @@ class Utilities:
             return AXObject.find_ancestor(obj, AXUtilities.is_menu) is not None
 
         return False
-
-    def isSingleLineAutocompleteEntry(self, obj):
-        if not AXUtilities.is_entry(obj):
-            return False
-        if not AXUtilities.supports_autocompletion(obj):
-            return False
-        return AXUtilities.is_single_line(obj)
 
     def isEntryCompletionPopupItem(self, obj):
         return False

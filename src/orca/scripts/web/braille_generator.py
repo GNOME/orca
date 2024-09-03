@@ -185,7 +185,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return []
 
         result = super()._generate_accessible_name(obj, **args)
-        if result and result[0] and not self._script.utilities.hasExplicitName(obj):
+        if result and result[0] and not AXUtilities.has_explicit_name(obj):
             result[0] = result[0].strip()
         elif not result and AXUtilities.is_check_box(obj):
             grid_cell = AXObject.find_ancestor(obj, AXUtilities.is_grid_cell)

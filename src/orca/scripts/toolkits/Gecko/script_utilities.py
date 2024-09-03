@@ -45,15 +45,6 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(web.Utilities):
 
-    def isLayoutOnly(self, obj):
-        if super().isLayoutOnly(obj):
-            return True
-
-        if AXUtilities.is_tool_bar(obj) and AXObject.get_child_count(obj):
-            return AXUtilities.is_page_tab_list(AXObject.get_child(obj, 0))
-
-        return False
-
     def getOnScreenObjects(self, root, extents=None):
         objects = super().getOnScreenObjects(root, extents)
 

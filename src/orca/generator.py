@@ -1039,7 +1039,7 @@ class Generator:
             obj, forceFullRow=not self._script.utilities.isSpreadSheetCell(obj))
 
         row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
-        if row and AXObject.get_name(row) and not self._script.utilities.isLayoutOnly(row):
+        if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
             return self.generate(row)
 
         # Remove any pre-calculated values which only apply to obj and not row cells.

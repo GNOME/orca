@@ -82,28 +82,6 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def isLayoutOnly(self, obj):
-        """Returns True if the given object is a container which has
-        no presentable information (label, name, displayed text, etc.)."""
-
-        if AXUtilities.is_list(obj):
-            if AXUtilities.is_combo_box(AXObject.get_parent(obj)):
-                return True
-            return super().isLayoutOnly(obj)
-
-        name = AXObject.get_name(obj)
-        if not name:
-            return super().isLayoutOnly(obj)
-
-        if AXUtilities.is_frame(obj):
-            return name == AXObject.get_name(focus_manager.get_manager().get_active_window())
-
-        if AXUtilities.is_panel(obj) and AXObject.get_child_count(obj):
-            if AXObject.get_name(AXObject.get_child(obj, 0)) == name:
-                return True
-
-        return super().isLayoutOnly(obj)
-
     def frameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing
         the object. Overridden here for presentation of the title

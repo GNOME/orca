@@ -21,6 +21,9 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-statements
 
 """Utilities for obtaining role-related information."""
 
@@ -36,6 +39,7 @@ from gi.repository import Atspi
 
 from . import object_properties
 from .ax_object import AXObject
+from .ax_utilities_state import AXUtilitiesState
 
 class AXUtilitiesRole:
     """Utilities for obtaining role-related information."""
@@ -88,6 +92,18 @@ class AXUtilitiesRole:
                  Atspi.Role.PUSH_BUTTON,
                  Atspi.Role.SPIN_BUTTON,
                  Atspi.Role.TOGGLE_BUTTON]
+        return roles
+
+    @staticmethod
+    def get_layout_only_roles():
+        """Returns the list of roles we consider are for layout only"""
+
+        roles = [Atspi.Role.AUTOCOMPLETE,
+                 Atspi.Role.FILLER,
+                 Atspi.Role.REDUNDANT_OBJECT,
+                 Atspi.Role.UNKNOWN,
+                 Atspi.Role.SCROLL_PANE,
+                 Atspi.Role.TEAROFF_MENU_ITEM]
         return roles
 
     @staticmethod
@@ -433,6 +449,14 @@ class AXUtilitiesRole:
         return role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]
 
     @staticmethod
+    def is_button_with_popup(obj, role=None):
+        """Returns True if obj has the push- or toggle-button role and a popup"""
+
+        if not AXUtilitiesRole.is_button(obj, role):
+            return False
+        return AXUtilitiesState.has_popup(obj)
+
+    @staticmethod
     def is_calendar(obj, role=None):
         """Returns True if obj has the calendar role"""
 
@@ -595,7 +619,12 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESKTOP_FRAME
+        if role == Atspi.Role.DESKTOP_FRAME:
+            return True
+        if role == Atspi.Role.FRAME:
+            attrs = AXObject.get_attributes_dict(obj)
+            return attrs.get("is-desktop") == "true"
+        return False
 
     @staticmethod
     def is_desktop_icon(obj, role=None):
@@ -647,6 +676,16 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.DIRECTORY_PANE
+
+    @staticmethod
+    def is_docked_frame(obj, role=None):
+        """Returns True if obj has the frame role and is docked."""
+
+        if not AXUtilitiesRole.is_frame(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("window-type") == "dock"
 
     @staticmethod
     def is_document(obj, role=None):
@@ -1064,14 +1103,6 @@ class AXUtilitiesRole:
         return role == Atspi.Role.GLASS_PANE
 
     @staticmethod
-    def is_grouping(obj, role=None):
-        """Returns True if obj has the grouping role"""
-
-        if role is None:
-            role = AXObject.get_role(obj)
-        return role == Atspi.Role.GROUPING
-
-    @staticmethod
     def is_grid(obj, role=None):
         """Returns True if obj has the grid role."""
 
@@ -1093,6 +1124,20 @@ class AXUtilitiesRole:
         if "cell" in roles:
             return AXObject.find_ancestor(obj, AXUtilitiesRole.is_grid)
         return False
+
+    @staticmethod
+    def is_group(obj, _role=None):
+        """Returns True if obj is an ARIA group."""
+
+        return "group" in AXUtilitiesRole._get_xml_roles(obj)
+
+    @staticmethod
+    def is_grouping(obj, role=None):
+        """Returns True if obj has the grouping role"""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+        return role == Atspi.Role.GROUPING
 
     @staticmethod
     def is_header(obj, role=None):
@@ -1767,11 +1812,19 @@ class AXUtilitiesRole:
         return role == Atspi.Role.SEPARATOR
 
     @staticmethod
-    def is_single_line_entry(obj, role=None):
-        """Returns True if obj has the entry role and multiline state"""
+    def is_single_line_autocomplete_entry(obj, role=None):
+        """Returns True if obj has the entry role and single-line state"""
 
-        return AXUtilitiesRole.is_entry(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.SINGLE_LINE)
+        if not AXUtilitiesRole.is_single_line_entry(obj, role):
+            return False
+
+        return AXUtilitiesState.supports_autocompletion(obj)
+
+    @staticmethod
+    def is_single_line_entry(obj, role=None):
+        """Returns True if obj has the entry role and the single-line state"""
+
+        return AXUtilitiesRole.is_entry(obj, role) and AXUtilitiesState.is_single_line(obj)
 
     @staticmethod
     def is_slider(obj, role=None):

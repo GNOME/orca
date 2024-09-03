@@ -40,12 +40,6 @@ class Script(clutter.Script):
     def get_utilities(self):
         return Utilities(self)
 
-    def deactivate(self):
-        """Called when this script is deactivated."""
-
-        self.utilities.clearCachedObjects()
-        super().deactivate()
-
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 

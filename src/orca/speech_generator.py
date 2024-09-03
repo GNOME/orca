@@ -368,10 +368,10 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.isAnchor(obj):
             return False
 
-        if self._script.utilities.isDesktop(obj):
+        if AXUtilities.is_desktop_frame(obj):
             return False
 
-        if self._script.utilities.isDockedFrame(obj):
+        if AXUtilities.is_docked_frame(obj):
             return False
 
         if AXUtilities.is_panel(obj, role):
@@ -395,7 +395,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_menu(obj, args.get("role")) and AXUtilities.is_combo_box(parent):
             return self._generate_accessible_role(parent)
 
-        if self._script.utilities.isSingleLineAutocompleteEntry(obj):
+        if AXUtilities.is_single_line_autocomplete_entry(obj):
             result = [self.get_localized_role_name(obj, role=Atspi.Role.AUTOCOMPLETE)]
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
@@ -835,9 +835,9 @@ class SpeechGenerator(generator.Generator):
                 pass
             elif include_only and parent_role not in include_only:
                 pass
-            elif self._script.utilities.isLayoutOnly(parent):
+            elif AXUtilities.is_layout_only(parent):
                 pass
-            elif self._script.utilities.isButtonWithPopup(parent):
+            elif AXUtilities.is_button_with_popup(parent):
                 pass
             elif parent != common_ancestor or present_common_ancestor:
                 is_redundant = False
@@ -1767,7 +1767,7 @@ class SpeechGenerator(generator.Generator):
         if table:
             if input_event_manager.get_manager().last_event_was_left_or_right():
                 return []
-            if self._script.utilities.isLayoutOnly(table):
+            if AXTable.is_layout_table(table):
                 return []
             if not self._script.utilities.isGUICell(obj):
                 return []
@@ -1904,7 +1904,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("leaving"):
             return []
 
-        if self._script.utilities.isLayoutOnly(obj):
+        if AXTable.is_layout_table(obj):
             return []
 
         if self._script.utilities.isSpreadSheetTable(obj):

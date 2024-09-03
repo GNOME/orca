@@ -356,7 +356,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result = [AXObject.get_description(obj)]
             else:
                 name = AXObject.get_name(obj)
-                if not self._script.utilities.hasExplicitName(obj):
+                if not AXUtilities.has_explicit_name(obj):
                     name = name.strip()
                 result = [name]
 

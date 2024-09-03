@@ -164,7 +164,7 @@ class Script(default.Script):
 
             selectedChildren = self.utilities.selectedChildren(event.source)
             for child in selectedChildren:
-                if not self.utilities.isLayoutOnly(child):
+                if not AXUtilities.is_layout_only(child):
                     self.presentObject(child)
             return
 

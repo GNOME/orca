@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=broad-exception-caught
+# pylint: disable=too-many-branches
 # pylint: disable=too-many-return-statements
 # pylint: disable=wrong-import-position
 
@@ -64,6 +65,7 @@ class AXUtilities:
 
     # Things we cache.
     SET_MEMBERS: dict = {}
+    IS_LAYOUT_ONLY: dict = {}
 
     _lock = threading.Lock()
 
@@ -92,6 +94,7 @@ class AXUtilities:
 
         with AXUtilities._lock:
             AXUtilities.SET_MEMBERS.clear()
+            AXUtilities.IS_LAYOUT_ONLY.clear()
 
     @staticmethod
     def clear_all_cache_now(obj=None, reason=""):
@@ -248,6 +251,108 @@ class AXUtilities:
                 return result
 
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
+
+    @staticmethod
+    def _is_layout_only(obj):
+        """Returns True and a string reason if obj is believed to serve only for layout."""
+
+        reason = ""
+        role = AXObject.get_role(obj)
+        if role in AXUtilitiesRole.get_layout_only_roles():
+            return True, "has layout-only role"
+
+        if AXUtilitiesRole.is_layered_pane(obj, role):
+            result = AXObject.find_ancestor(obj, AXUtilitiesRole.is_desktop_frame) is not None
+            if result:
+                reason = "is inside desktop frame"
+            return result, reason
+
+        if AXUtilitiesRole.is_menu(obj, role) or AXUtilitiesRole.is_list(obj, role):
+            result = AXUtilitiesRole.is_combo_box(AXObject.get_parent(obj))
+            if result:
+                reason = "is inside combo box"
+            return result, reason
+
+        if AXUtilitiesRole.is_group(obj, role):
+            return not AXUtilities.has_explicit_name(obj)
+
+        if AXUtilitiesRole.is_panel(obj, role):
+            name = AXObject.get_name(obj)
+            description = AXObject.get_description(obj)
+            labelled_by = AXUtilitiesRelation.get_is_labelled_by(obj)
+            described_by = AXUtilitiesRelation.get_is_described_by(obj)
+            if not (name or description or labelled_by or described_by):
+                return True, "lacks name, description, and relations"
+            if name == AXObject.get_name(AXObject.get_application(obj)):
+                return True, "has same name as app"
+            if AXObject.get_child_count(obj) == 1:
+                child = AXObject.get_child(obj, 0)
+                if name == AXObject.get_name(child):
+                    return True, "has same name as its only child"
+                if not AXUtilitiesRole.is_label(child) and child in labelled_by:
+                    return True, "is labelled by non-label only child"
+            set_roles = AXUtilitiesRole.get_set_container_roles()
+            if AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles):
+                return True, "is in set container"
+            return False, reason
+
+        if AXUtilitiesRole.is_section(obj, role):
+            if AXUtilitiesState.is_focusable(obj):
+                return False, "is focusable"
+            if AXObject.has_action(obj, "click"):
+                return False, "has click action"
+            return True, "is not interactive"
+
+        if AXUtilitiesRole.is_tool_bar(obj):
+            result = AXUtilitiesRole.is_page_tab_list(AXObject.get_child(obj, 0))
+            if result:
+                reason = "is parent of page tab list"
+            return result, reason
+
+        if AXUtilitiesRole.is_table(obj, role):
+            result = AXTable.is_layout_table(obj)
+            if result:
+                reason = "is layout table"
+            return reason, result
+
+        if AXUtilitiesRole.is_table_row(obj):
+            if AXUtilitiesState.is_focusable(obj):
+                return False, "is focusable"
+            if AXUtilitiesState.is_selectable(obj):
+                return False, "is selectable"
+            if AXUtilitiesState.is_expandable(obj):
+                return False, "is expandable"
+            if AXUtilities.has_explicit_name(obj):
+                return False, "has explicit name"
+            return True, "is not focusable, selectable, or expandable and lacks explicit name"
+
+        if AXUtilitiesRole.is_table_cell(obj, role):
+            if AXUtilitiesRole.is_table_cell(AXObject.get_child(obj, 0)):
+                return True, "child of this cell is table cell"
+            table = AXTable.get_table(obj)
+            if AXUtilitiesRole.is_table(table):
+                result = AXTable.is_layout_table(table)
+                if result:
+                    reason = "is in layout table"
+                return result, reason
+
+        return False, reason
+
+    @staticmethod
+    def is_layout_only(obj):
+        """Returns True if obj is believed to serve only for layout."""
+
+        if hash(obj) in AXUtilities.IS_LAYOUT_ONLY:
+            result, reason = AXUtilities.IS_LAYOUT_ONLY.get(hash(obj))
+        else:
+            result, reason = AXUtilities._is_layout_only(obj)
+            AXUtilities.IS_LAYOUT_ONLY[hash(obj)] = result, reason
+
+        if reason:
+            tokens = ["AXUtilities:", obj, f"believed to be layout only: {result}, {reason}"]
+            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+
+        return result
 
     @staticmethod
     def is_message_dialog(obj):
@@ -461,17 +566,24 @@ class AXUtilities:
 
         return members.index(obj)
 
-for name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):
-    setattr(AXUtilities, name, method)
+    @staticmethod
+    def has_explicit_name(obj):
+        """Returns True if obj has an author/app-provided name as opposed to a calculated name."""
 
-for name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
-    setattr(AXUtilities, name, method)
+        return AXObject.get_attribute(obj, "explicit-name") == "true"
 
-for name, method in inspect.getmembers(AXUtilitiesState, predicate=inspect.isfunction):
-    setattr(AXUtilities, name, method)
 
-for name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
-    if name.startswith("find"):
-        setattr(AXUtilities, name, method)
+for method_name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesState, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
+    if method_name.startswith("find"):
+        setattr(AXUtilities, method_name, method)
 
 AXUtilities.start_cache_clearing_thread()

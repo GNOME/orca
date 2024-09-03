@@ -34,13 +34,6 @@ from orca.ax_text import AXText
 
 class Utilities(script_utilities.Utilities):
 
-    def __init__(self, script):
-        script_utilities.Utilities.__init__(self, script)
-        self._isLayoutOnly = {}
-
-    def clearCachedObjects(self):
-        self._isLayoutOnly = {}
-
     def insertedText(self, event):
         if event.any_data:
             return event.any_data
@@ -75,20 +68,3 @@ class Utilities(script_utilities.Utilities):
             return []
 
         return super().unrelatedLabels(root, onlyShowing, minimumWords)
-
-    def isLayoutOnly(self, obj):
-        rv = self._isLayoutOnly.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().isLayoutOnly(obj)
-        if not rv and AXUtilities.is_panel(obj) and AXObject.get_child_count(obj) == 1:
-            child = AXObject.get_child(obj, 0)
-            if self.displayedLabel(obj) == AXObject.get_name(child) \
-               and not AXUtilities.is_label(child):
-                rv = True
-                tokens = ["GNOME SHELL:", obj, "is deemed to be layout only"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        self._isLayoutOnly[hash(obj)] = rv
-        return rv

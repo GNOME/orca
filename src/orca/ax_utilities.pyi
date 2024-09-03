@@ -64,6 +64,9 @@ class AXUtilities:
     def get_status_bar(obj): ...
 
     @staticmethod
+    def is_layout_only(obj): ...
+
+    @staticmethod
     def is_message_dialog(obj): ...
 
     @staticmethod
@@ -77,6 +80,9 @@ class AXUtilities:
 
     @staticmethod
     def get_position_in_set(obj): ...
+
+    @staticmethod
+    def has_explicit_name(obj): ...
 
     # From ax_utilities_role.py
     @staticmethod
@@ -93,6 +99,9 @@ class AXUtilities:
 
     @staticmethod
     def get_form_field_roles(): ...
+
+    @staticmethod
+    def get_layout_only_roles(): ...
 
     @staticmethod
     def get_menu_item_roles(): ...
@@ -156,6 +165,9 @@ class AXUtilities:
 
     @staticmethod
     def is_button(obj, role=None): ...
+
+    @staticmethod
+    def is_button_with_popup(obj, role=None): ...
 
     @staticmethod
     def is_calendar(obj, role=None): ...
@@ -234,6 +246,9 @@ class AXUtilities:
 
     @staticmethod
     def is_directory_pane(obj, role=None): ...
+
+    @staticmethod
+    def is_docked_frame(obj, role=None): ...
 
     @staticmethod
     def is_document(obj, role=None): ...
@@ -423,6 +438,9 @@ class AXUtilities:
 
     @staticmethod
     def is_grid_cell(obj, role=None): ...
+
+    @staticmethod
+    def is_group(obj, _role=None): ...
 
     @staticmethod
     def is_grouping(obj, role=None): ...
@@ -672,6 +690,9 @@ class AXUtilities:
 
     @staticmethod
     def is_separator(obj, role=None): ...
+
+    @staticmethod
+    def is_single_line_autocomplete_entry(obj, role=None): ...
 
     @staticmethod
     def is_single_line_entry(obj, role=None): ...

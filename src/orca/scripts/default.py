@@ -1493,7 +1493,7 @@ class Script(script.Script):
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
                 break
 
-            if not self.utilities.isLayoutOnly(child):
+            if not AXUtilities.is_layout_only(child):
                 focus_manager.get_manager().set_locus_of_focus(event, child)
                 break
 

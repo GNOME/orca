@@ -230,7 +230,7 @@ class BrailleGenerator(generator.Generator):
             parent = AXObject.get_parent_checked(parent)
         while parent:
             parent_result = []
-            if not self._script.utilities.isLayoutOnly(parent):
+            if not AXUtilities.is_layout_only(parent):
                 parent_result = self.generate(parent, **args)
             if result and parent_result:
                 result.append(braille.Region(" "))

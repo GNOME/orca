@@ -171,14 +171,14 @@ class ObjectNavigator:
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        # isLayoutOnly should catch things that really should be skipped.
+        # is_layout_only should catch things that really should be skipped.
         #
         # You do not want to exclude all sections because they may be focusable, e.g.
         # <div tabindex=0>foo</div> should not be excluded, despite the poor authoring.
         #
         # You do not want to exclude table cells and headers because it will make the
         # selectable items in tables non-navigable (e.g. the mail folders in Evolution)
-        if script.utilities.isLayoutOnly(obj):
+        if AXUtilities.is_layout_only(obj):
             tokens = ["OBJECT NAVIGATOR: Excluding", obj, ": is layout only"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True

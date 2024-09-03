@@ -38,16 +38,12 @@ class Utilities(script_utilities.Utilities):
         super().__init__(script)
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
-        self._isTypeahead = {}
         self._isUselessPanel = {}
-        self._isLayoutOnly = {}
 
     def clearCachedObjects(self):
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
-        self._isTypeahead = {}
         self._isUselessPanel = {}
-        self._isLayoutOnly = {}
 
     def infoBar(self, root):
         return AXObject.find_descendant(root, AXUtilities.is_info_bar)
@@ -73,18 +69,6 @@ class Utilities(script_utilities.Utilities):
         self._isComboBoxWithToggleDescendant[hash(obj)] = rv
         return rv
 
-    def isLayoutOnly(self, obj):
-        rv = self._isLayoutOnly.get(hash(obj))
-        if rv is not None:
-            if rv:
-                tokens = ["GTK:", obj, "is deemed to be layout only"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return rv
-
-        rv = super().isLayoutOnly(obj)
-        self._isLayoutOnly[hash(obj)] = rv
-        return rv
-
     def isToggleDescendantOfComboBox(self, obj):
         if not AXUtilities.is_toggle_button(obj):
             return False
@@ -102,23 +86,10 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def isTypeahead(self, obj):
-        if not obj or AXObject.is_dead(obj):
-            return False
-
         if not AXUtilities.is_text(obj):
             return False
 
-        rv = self._isTypeahead.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        parent = AXObject.get_parent(obj)
-        while parent and self.isLayoutOnly(parent):
-            parent = AXObject.get_parent(parent)
-
-        rv = AXUtilities.is_window(parent)
-        self._isTypeahead[hash(obj)] = rv
-        return rv
+        return AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
 
     def isSearchEntry(self, obj, focusedOnly=False):
         # Another example of why we need subrole support in ATK and AT-SPI2.

@@ -72,7 +72,6 @@ class Utilities(script_utilities.Utilities):
         self._isNavigableToolTipDescendant = {}
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
-        self._isLayoutOnly = {}
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
@@ -158,7 +157,6 @@ class Utilities(script_utilities.Utilities):
         self._isNavigableToolTipDescendant = {}
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
-        self._isLayoutOnly = {}
         self._isFocusableWithMathChild = {}
         self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
@@ -728,7 +726,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if self.hasExplicitName(obj) and AXObject.supports_action(obj):
+        if AXUtilities.has_explicit_name(obj) and AXObject.supports_action(obj):
             for child in AXObject.iter_children(obj):
                 if not self.isUselessEmptyElement(child) or self.isUselessImage(child):
                     break
@@ -813,7 +811,7 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         if role in [Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER] \
-           and self.hasExplicitName(obj):
+           and AXUtilities.has_explicit_name(obj):
             return True
 
         if role == Atspi.Role.COMBO_BOX:
@@ -823,7 +821,7 @@ class Utilities(script_utilities.Utilities):
             return not self._script.browseModeIsSticky()
 
         if role == Atspi.Role.LINK:
-            return self.hasExplicitName(obj) or self.hasUselessCanvasDescendant(obj)
+            return AXUtilities.has_explicit_name(obj) or self.hasUselessCanvasDescendant(obj)
 
         if self.isNonNavigableEmbeddedDocument(obj):
             return True
@@ -837,7 +835,7 @@ class Utilities(script_utilities.Utilities):
         # Example: Some StackExchange instances have a focusable "note"/comment role
         # with a name (e.g. "Accepted"), and a single child div which is empty.
         if role in self._textBlockElementRoles() and AXUtilities.is_focusable(obj) \
-           and self.hasExplicitName(obj):
+           and AXUtilities.has_explicit_name(obj):
             for child in AXObject.iter_children(obj):
                 if not self.isUselessEmptyElement(child):
                     return False
@@ -1815,14 +1813,14 @@ class Utilities(script_utilities.Utilities):
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        if AXUtilities.is_list_item(obj):
+        if AXUtilities.is_list_item(obj, role):
             rv = AXObject.find_ancestor(obj, AXUtilities.is_list_box)
             if rv:
                 tokens = ["WEB:", obj, "is focus mode widget because it's a listbox descendant"]
                 debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
-        if self.isButtonWithPopup(obj):
+        if AXUtilities.is_button_with_popup(obj, role):
             tokens = ["WEB:", obj, "is focus mode widget because it's a button with popup"]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -2243,7 +2241,7 @@ class Utilities(script_utilities.Utilities):
                or self.isLabellingContents(obj, contents):
                 rv = False
             elif AXUtilities.is_table_row(obj):
-                rv = self.hasExplicitName(obj)
+                rv = AXUtilities.has_explicit_name(obj)
             else:
                 widget = self.isInferredLabelForContents(x, contents)
                 alwaysFilter = [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]
@@ -2465,67 +2463,6 @@ class Utilities(script_utilities.Utilities):
 
         rv = AXObject.find_ancestor(obj, AXUtilities.is_embedded) is not None
         self._isWebAppDescendant[hash(obj)] = rv
-        return rv
-
-    def isLayoutOnly(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isLayoutOnly(obj)
-
-        rv = self._isLayoutOnly.get(hash(obj))
-        if rv is not None:
-            if rv:
-                tokens = ["WEB:", obj, "is deemed to be layout only"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            return rv
-
-        if AXUtilities.is_list(obj):
-            rv = self.treatAsDiv(obj)
-        elif AXUtilities.is_description_list(obj):
-            rv = False
-        elif AXUtilities.is_description_term(obj):
-            rv = False
-        elif AXUtilities.is_description_value(obj):
-            rv = False
-        elif AXUtilities.is_math_related(obj):
-            rv = False
-        elif AXUtilities.is_landmark(obj):
-            rv = False
-        elif AXUtilities.is_content_deletion(obj):
-            rv = False
-        elif AXUtilities.is_content_insertion(obj):
-            rv = False
-        elif AXUtilities.is_mark(obj):
-            rv = False
-        elif AXUtilities.is_suggestion(obj):
-            rv = False
-        elif AXUtilities.is_dpub(obj):
-            rv = False
-        elif AXUtilities.is_feed(obj):
-            rv = False
-        elif AXUtilities.is_figure(obj):
-            rv = False
-        elif AXUtilities.is_grid(obj):
-            rv = False
-        elif self.isInlineIframe(obj):
-            rv = not self.hasExplicitName(obj)
-        elif AXUtilities.is_table_header(obj):
-            rv = False
-        elif AXUtilities.is_separator(obj):
-            rv = False
-        elif AXUtilities.is_panel(obj):
-            rv = not self.hasExplicitName(obj)
-        elif AXUtilities.is_table_row(obj) and not AXUtilities.is_expandable(obj):
-            rv = not self.hasExplicitName(obj)
-        elif self.isCustomImage(obj):
-            rv = False
-        else:
-            rv = super().isLayoutOnly(obj)
-
-        if rv:
-            tokens = ["WEB:", obj, "is deemed to be layout only"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-
-        self._isLayoutOnly[hash(obj)] = rv
         return rv
 
     def elementLinesAreSingleWords(self, obj):
@@ -2770,16 +2707,6 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return True
-
-    def isTopLevelBrowserUIAlert(self, obj):
-        if not self.isBrowserUIAlert(obj):
-            return False
-
-        parent = AXObject.get_parent(obj)
-        while parent and self.isLayoutOnly(parent):
-            parent = AXObject.get_parent(parent)
-
-        return AXUtilities.is_frame(parent)
 
     def isClickableElement(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3052,7 +2979,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if self.isCustomElement(obj) and self.hasExplicitName(obj) \
+        if self.isCustomElement(obj) and AXUtilities.has_explicit_name(obj) \
            and AXUtilities.is_section(obj) \
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', AXText.get_all_text(obj)):
@@ -3074,24 +3001,25 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = True
+        has_explicit_name = AXUtilities.has_explicit_name(obj)
         if not (AXUtilities.is_image_or_canvas(obj) or AXUtilities.is_svg(obj)):
             rv = False
         if rv and (AXObject.get_name(obj) \
                    or AXObject.get_description(obj) \
                    or self.hasLongDesc(obj)):
             rv = False
-        if rv and (self.isClickableElement(obj) and not self.hasExplicitName(obj)):
+        if rv and self.isClickableElement(obj) and not has_explicit_name:
             rv = False
         if rv and AXUtilities.is_focusable(obj):
             rv = False
-        if rv and AXUtilities.is_link(AXObject.get_parent(obj)) and not self.hasExplicitName(obj):
+        if rv and AXUtilities.is_link(AXObject.get_parent(obj)) and not has_explicit_name:
             uri = AXHypertext.get_link_uri(AXObject.get_parent(obj))
             if uri and not uri.startswith('javascript'):
                 rv = False
         if rv and AXObject.supports_image(obj):
             if AXObject.get_image_description(obj):
                 rv = False
-            elif not self.hasExplicitName(obj) and not self.isRedundantSVG(obj):
+            elif not has_explicit_name and not self.isRedundantSVG(obj):
                 width, height = AXObject.get_image_size(obj)
                 if width > 25 and height > 25:
                     rv = False
@@ -3161,13 +3089,6 @@ class Utilities(script_utilities.Utilities):
 
         self._isUselessEmptyElement[hash(obj)] = rv
         return rv
-
-    def hasExplicitName(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('explicit-name') == 'true'
 
     def hasLongDesc(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -3303,7 +3224,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if event.type.startswith("object:text-") \
-           and self.isSingleLineAutocompleteEntry(event.source):
+           and AXUtilities.is_single_line_autocomplete_entry(event.source):
             return input_event_manager.get_manager().last_event_was_return()
         if event.type.startswith("object:text-") or event.type.endswith("accessible-name"):
             return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source) \
@@ -3365,7 +3286,7 @@ class Utilities(script_utilities.Utilities):
 
     def _eventIsBrowserUIAutocompleteTextNoise(self, event):
         if not event.type.startswith("object:text-") \
-           or not self.isSingleLineAutocompleteEntry(event.source):
+           or not AXUtilities.is_single_line_autocomplete_entry(event.source):
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
