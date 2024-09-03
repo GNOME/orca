@@ -98,7 +98,6 @@ class Utilities(script_utilities.Utilities):
         self._isUselessEmptyElement = {}
         self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
-        self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._displayedLabelText = {}
         self._preferDescriptionOverName = {}
@@ -185,7 +184,6 @@ class Utilities(script_utilities.Utilities):
         self._isUselessEmptyElement = {}
         self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
-        self._isParentOfNullChild = {}
         self._inferredLabels = {}
         self._displayedLabelText = {}
         self._preferDescriptionOverName = {}
@@ -3164,25 +3162,6 @@ class Utilities(script_utilities.Utilities):
         self._isUselessEmptyElement[hash(obj)] = rv
         return rv
 
-    def isParentOfNullChild(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isParentOfNullChild.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = False
-        childCount = AXObject.get_child_count(obj)
-        if childCount and AXObject.get_child(obj, 0) is None:
-            tokens = ["ERROR: ", obj, "reports", childCount,
-                      "children, but AXObject.get_child(obj, 0) is None"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            rv = True
-
-        self._isParentOfNullChild[hash(obj)] = rv
-        return rv
-
     def hasExplicitName(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return False
@@ -3683,10 +3662,6 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isEmptyToolTip(obj):
             tokens = ["WEB: Empty tool tip cannot have caret context", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            rv = False
-        elif self.isParentOfNullChild(obj):
-            tokens = ["WEB: Parent of null child cannot have caret context", obj]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             rv = False
         elif self.isPseudoElement(obj):
