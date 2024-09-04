@@ -1132,9 +1132,6 @@ class Script(script.Script):
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return
 
-        if self.stopSpeechOnActiveDescendantChanged(event):
-            self.presentationInterrupt()
-
         tokens = ["DEFAULT: Setting locus of focus to any_data", event.any_data]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
@@ -2178,39 +2175,6 @@ class Script(script.Script):
             self.update_braille(obj, **args)
         utterances = self.speech_generator.generate_speech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
-
-    def stopSpeechOnActiveDescendantChanged(self, event):
-        """Whether or not speech should be stopped prior to setting the
-        locusOfFocus in on_active_descendant_changed.
-
-        Arguments:
-        - event: the Event
-
-        Returns True if speech should be stopped; False otherwise.
-        """
-
-        if not event.any_data:
-            return True
-
-        # In an object which manages its descendants, the
-        # 'descendants' may really be a single object which changes
-        # its name. If the name-change occurs followed by the active
-        # descendant changing (to the same object) we won't present
-        # the locusOfFocus because it hasn't changed. Thus we need to
-        # be sure not to cut of the presentation of the name-change
-        # event.
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus == event.any_data:
-            names = self.point_of_reference.get('names', {})
-            oldName = names.get(hash(focus), '')
-            if not oldName or AXObject.get_name(event.any_data) == oldName:
-                return False
-
-        if event.source == focus == AXObject.get_parent(event.any_data):
-            return False
-
-        return True
 
     def getFlatReviewContext(self):
         """Returns the flat review context, creating one if necessary."""

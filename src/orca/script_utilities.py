@@ -2739,7 +2739,9 @@ class Utilities:
             return False
 
         if event is not None and event.type.startswith("object:active-descendant-changed"):
-            return self._script.stopSpeechOnActiveDescendantChanged(event)
+            msg += "event is active-descendant-changed"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return False
 
         if AXUtilities.is_table_cell(old_focus) and AXUtilities.is_text(new_focus) \
            and AXUtilities.is_editable(new_focus):

@@ -54,9 +54,6 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         return Utilities(self)
 
-    def stopSpeechOnActiveDescendantChanged(self, event):
-        return False
-
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
