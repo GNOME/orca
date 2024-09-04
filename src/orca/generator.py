@@ -114,6 +114,7 @@ class Generator:
             Atspi.Role.FOOTER: self._generate_footer,
             Atspi.Role.FORM: self._generate_form,
             Atspi.Role.FRAME: self._generate_frame,
+            Atspi.Role.GROUPING: self._generate_grouping,
             Atspi.Role.HEADER: self._generate_header,
             Atspi.Role.HEADING: self._generate_heading,
             Atspi.Role.ICON: self._generate_icon,
