@@ -1264,6 +1264,11 @@ LEAVING_FIGURE = C_("role", "leaving figure.")
 # form and then navigates out of it.
 LEAVING_FORM = _("leaving form.")
 
+# Translators: This message is presented when a user is navigating within a
+# panel and then navigates out of it. A grouping is a container of related
+# widgets.
+LEAVING_GROUPING = _("leaving grouping.")
+
 # Translators: This message is presented when a user is navigating within
 # a type of landmark and then navigates out of it. The word or phrase that
 # follows "leaving" should be consistent with the translation provided for

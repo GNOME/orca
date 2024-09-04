@@ -276,7 +276,7 @@ class AXUtilities:
         if AXUtilitiesRole.is_group(obj, role):
             return not AXUtilities.has_explicit_name(obj)
 
-        if AXUtilitiesRole.is_panel(obj, role):
+        if AXUtilitiesRole.is_panel(obj, role) or AXUtilitiesRole.is_grouping(obj, role):
             name = AXObject.get_name(obj)
             description = AXObject.get_description(obj)
             labelled_by = AXUtilitiesRelation.get_is_labelled_by(obj)

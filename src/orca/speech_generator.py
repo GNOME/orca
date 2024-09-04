@@ -577,6 +577,7 @@ class SpeechGenerator(generator.Generator):
                     Atspi.Role.DESCRIPTION_LIST,
                     'ROLE_FEED',
                     Atspi.Role.FORM,
+                    Atspi.Role.GROUPING,
                     Atspi.Role.LANDMARK,
                     Atspi.Role.LIST,
                     Atspi.Role.PANEL,
@@ -599,6 +600,7 @@ class SpeechGenerator(generator.Generator):
                                 Atspi.Role.TOOL_TIP,
                                 Atspi.Role.CONTENT_DELETION,
                                 Atspi.Role.CONTENT_INSERTION,
+                                Atspi.Role.GROUPING,
                                 Atspi.Role.MARK,
                                 Atspi.Role.SUGGESTION,
                                 'ROLE_DPUB_SECTION'])
@@ -620,6 +622,7 @@ class SpeechGenerator(generator.Generator):
                                 Atspi.Role.TOOL_TIP,
                                 Atspi.Role.CONTENT_DELETION,
                                 Atspi.Role.CONTENT_INSERTION,
+                                Atspi.Role.GROUPING,
                                 Atspi.Role.MARK,
                                 Atspi.Role.SUGGESTION,
                                 'ROLE_DPUB_SECTION'])
@@ -667,6 +670,8 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.LEAVING_PANEL)
             else:
                 result = ['']
+        elif role == Atspi.Role.GROUPING:
+            result.append(messages.LEAVING_GROUPING)
         elif role == Atspi.Role.TABLE and self._script.utilities.isTextDocumentTable(obj):
             result.append(messages.LEAVING_TABLE)
         elif role == 'ROLE_DPUB_LANDMARK':
@@ -2833,7 +2838,22 @@ class SpeechGenerator(generator.Generator):
     def _generate_grouping(self, obj, **args):
         """Generates speech for the grouping role."""
 
-        return self._generate_default_presentation(obj, **args)
+        result = self._generate_default_prefix(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result += self._generate_leaving(obj, **args)
+            if result:
+                return result
+
+        if self._generate_text_substring(obj, **args):
+            result += self._generate_text_line(obj, **args)
+        if not result:
+            result += self._generate_accessible_label_and_name(obj, **args)
+
+        result += self._generate_accessible_static_text(obj, **args)
+        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
 
     def _generate_header(self, obj, **args):
         """Generates speech for the header role."""

@@ -789,7 +789,16 @@ class BrailleGenerator(generator.Generator):
     def _generate_grouping(self, obj, **args):
         """Generates braille for the grouping role."""
 
-        return self._generate_default_presentation(obj, **args)
+        if self._generate_text_substring(obj, **args):
+            return self._generate_text_object(obj, **args)
+
+        result = self._generate_default_prefix(obj, **args)
+        result += [braille.Component(
+            obj, self._as_string(
+                self._generate_accessible_label_and_name(obj, **args) +
+                self._generate_accessible_role(obj, **args)))]
+        result += self._generate_default_suffix(obj, **args)
+        return result
 
     def _generate_header(self, obj, **args):
         """Generates braille for the header role."""
