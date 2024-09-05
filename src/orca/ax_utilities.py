@@ -274,7 +274,10 @@ class AXUtilities:
             return result, reason
 
         if AXUtilitiesRole.is_group(obj, role):
-            return not AXUtilities.has_explicit_name(obj)
+            result = not AXUtilities.has_explicit_name(obj)
+            if result:
+                reason = "Lacks explicit name"
+            return result, reason
 
         if AXUtilitiesRole.is_panel(obj, role) or AXUtilitiesRole.is_grouping(obj, role):
             name = AXObject.get_name(obj)
