@@ -3079,8 +3079,8 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_state_expanded(obj, **args)
             return result
 
-        result += (self._generate_accessible_label_and_name(obj, **args) or \
-            self._generate_text_line(obj, **args))
+        result += (self._generate_text_line(obj, **args) or \
+            self._generate_accessible_label_and_name(obj, **args))
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_state_checked_if_checkable(obj, **args)
         result += self._generate_pause(obj, **args)
