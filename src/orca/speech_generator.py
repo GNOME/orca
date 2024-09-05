@@ -3337,6 +3337,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_page_tab(self, obj, **args):
         """Generates speech for the page-tab role."""
 
+        format_type = args.get("formatType", "unfocused")
+        if format_type == "ancestor":
+            result = self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_accessible_role(obj, **args)
+            return result
+
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_state_expanded(obj, **args)
