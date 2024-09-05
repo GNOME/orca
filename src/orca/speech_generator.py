@@ -3635,8 +3635,10 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the split-pane role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "focused":
             return self._generate_value(obj, **args)
+        if format_type == "ancestor":
+            return []
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
