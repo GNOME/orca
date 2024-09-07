@@ -67,6 +67,7 @@ class Generator:
     CACHED_TEXT: dict = {}
     CACHED_TEXT_EXPANDING_EOCS: dict = {}
     CACHED_TREE_ITEM_LEVEL: dict = {}
+    USED_DESCRIPTION_FOR_NAME: dict = {}
     USED_DESCRIPTION_FOR_STATIC_TEXT: dict = {}
 
     _lock = threading.Lock()
@@ -213,6 +214,7 @@ class Generator:
                 Generator.CACHED_TEXT = {}
                 Generator.CACHED_TEXT_EXPANDING_EOCS = {}
                 Generator.CACHED_TREE_ITEM_LEVEL = {}
+                Generator.USED_DESCRIPTION_FOR_NAME = {}
                 Generator.USED_DESCRIPTION_FOR_STATIC_TEXT = {}
 
     @staticmethod
@@ -317,6 +319,10 @@ class Generator:
             Generator.CACHED_DESCRIPTION[hash(obj)] = []
             return []
 
+        if Generator.USED_DESCRIPTION_FOR_NAME.get(hash(obj)):
+            Generator.CACHED_DESCRIPTION[hash(obj)] = []
+            return []
+
         description = AXObject.get_description(obj) \
             or self._script.utilities.displayedDescription(obj) or ""
         if not description:
@@ -396,12 +402,14 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_name(self, obj, **args):
+        Generator.USED_DESCRIPTION_FOR_NAME[hash(obj)] = False
         name = AXObject.get_name(obj)
         if name:
             return [name]
 
         description = AXObject.get_description(obj)
         if description:
+            Generator.USED_DESCRIPTION_FOR_NAME[hash(obj)] = True
             return [description]
 
         link = None
