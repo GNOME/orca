@@ -25,9 +25,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-08-22 16:52+0000\n"
-"PO-Revision-Date: 2024-08-24 17:18+0200\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2024-09-04 11:14+0000\n"
+"PO-Revision-Date: 2024-09-04 20:36+0200\n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -8878,11 +8878,18 @@ msgstr "Abbildung wird verlassen."
 msgid "leaving form."
 msgstr "Formular wird verlassen."
 
+#. Translators: This message is presented when a user is navigating within a
+#. panel and then navigates out of it. A grouping is a container of related
+#. widgets.
+#: src/orca/messages.py:1270
+msgid "leaving grouping."
+msgstr "Gruppierung wird verlassen."
+
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1271
+#: src/orca/messages.py:1276
 msgctxt "role"
 msgid "leaving banner."
 msgstr "Banner wird verlassen."
@@ -8891,7 +8898,7 @@ msgstr "Banner wird verlassen."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1277
+#: src/orca/messages.py:1282
 msgctxt "role"
 msgid "leaving complementary content."
 msgstr "Ergänzender Inhalt wird verlassen."
@@ -8900,7 +8907,7 @@ msgstr "Ergänzender Inhalt wird verlassen."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1283
+#: src/orca/messages.py:1288
 msgctxt "role"
 msgid "leaving information."
 msgstr "Information wird verlassen."
@@ -8909,7 +8916,7 @@ msgstr "Information wird verlassen."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1289
+#: src/orca/messages.py:1294
 msgctxt "role"
 msgid "leaving main content."
 msgstr "Hauptinhalt wird verlassen."
@@ -8918,7 +8925,7 @@ msgstr "Hauptinhalt wird verlassen."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1295
+#: src/orca/messages.py:1300
 msgctxt "role"
 msgid "leaving navigation."
 msgstr "Navigation wird verlassen."
@@ -8927,7 +8934,7 @@ msgstr "Navigation wird verlassen."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1301
+#: src/orca/messages.py:1306
 msgctxt "role"
 msgid "leaving region."
 msgstr "Bereich wird verlassen."
@@ -8936,33 +8943,33 @@ msgstr "Bereich wird verlassen."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1307
+#: src/orca/messages.py:1312
 msgctxt "role"
 msgid "leaving search."
 msgstr "Suche wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
-#: src/orca/messages.py:1311
+#: src/orca/messages.py:1316
 msgid "leaving list."
 msgstr "Liste wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
-#: src/orca/messages.py:1316
+#: src/orca/messages.py:1321
 msgid "leaving panel."
 msgstr "Panel wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
-#: src/orca/messages.py:1320
+#: src/orca/messages.py:1325
 msgid "leaving table."
 msgstr "Tabelle wird verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. tooltip in a web application and then navigates out of it.
-#: src/orca/messages.py:1324
+#: src/orca/messages.py:1329
 msgid "leaving tooltip."
 msgstr "Minihilfe wird verlassen."
 
@@ -8970,7 +8977,7 @@ msgstr "Minihilfe wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1330
+#: src/orca/messages.py:1335
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "Zusammenfassung wird verlassen."
@@ -8979,7 +8986,7 @@ msgstr "Zusammenfassung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1336
+#: src/orca/messages.py:1341
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "Danksagungen werden verlassen."
@@ -8988,7 +8995,7 @@ msgstr "Danksagungen werden verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1342
+#: src/orca/messages.py:1347
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "Nachwort wird verlassen."
@@ -8997,7 +9004,7 @@ msgstr "Nachwort wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1348
+#: src/orca/messages.py:1353
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "Anhang wird verlassen."
@@ -9006,7 +9013,7 @@ msgstr "Anhang wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1354
+#: src/orca/messages.py:1359
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "Bibliografie wird verlassen."
@@ -9015,7 +9022,7 @@ msgstr "Bibliografie wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1360
+#: src/orca/messages.py:1365
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "Kapitel wird verlassen."
@@ -9024,7 +9031,7 @@ msgstr "Kapitel wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1366
+#: src/orca/messages.py:1371
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "Schlussschrift wird verlassen."
@@ -9033,7 +9040,7 @@ msgstr "Schlussschrift wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1372
+#: src/orca/messages.py:1377
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "Schlussfolgerung wird verlassen."
@@ -9042,7 +9049,7 @@ msgstr "Schlussfolgerung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1378
+#: src/orca/messages.py:1383
 msgctxt "role"
 msgid "leaving credit."
 msgstr "Danksagung wird verlassen."
@@ -9051,7 +9058,7 @@ msgstr "Danksagung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1384
+#: src/orca/messages.py:1389
 msgctxt "role"
 msgid "leaving credits."
 msgstr "Danksagung wird verlassen."
@@ -9060,7 +9067,7 @@ msgstr "Danksagung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1390
+#: src/orca/messages.py:1395
 msgctxt "role"
 msgid "leaving dedication."
 msgstr "Widmung wird verlassen."
@@ -9069,7 +9076,7 @@ msgstr "Widmung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1396
+#: src/orca/messages.py:1401
 msgctxt "role"
 msgid "leaving endnotes."
 msgstr "Endnoten werden verlassen."
@@ -9078,7 +9085,7 @@ msgstr "Endnoten werden verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1402
+#: src/orca/messages.py:1407
 msgctxt "role"
 msgid "leaving epigraph."
 msgstr "Epigraph wird verlassen."
@@ -9087,7 +9094,7 @@ msgstr "Epigraph wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1408
+#: src/orca/messages.py:1413
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "Epilog wird verlassen."
@@ -9096,7 +9103,7 @@ msgstr "Epilog wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1414
+#: src/orca/messages.py:1419
 msgctxt "role"
 msgid "leaving errata."
 msgstr "Errata werden verlassen."
@@ -9105,7 +9112,7 @@ msgstr "Errata werden verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1420
+#: src/orca/messages.py:1425
 msgctxt "role"
 msgid "leaving example."
 msgstr "Beispiel wird verlassen."
@@ -9114,7 +9121,7 @@ msgstr "Beispiel wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1426
+#: src/orca/messages.py:1431
 msgctxt "role"
 msgid "leaving foreword."
 msgstr "Vorwort wird verlassen."
@@ -9123,7 +9130,7 @@ msgstr "Vorwort wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1432
+#: src/orca/messages.py:1437
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "Glossar wird verlassen."
@@ -9132,7 +9139,7 @@ msgstr "Glossar wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1438
+#: src/orca/messages.py:1443
 msgctxt "role"
 msgid "leaving index."
 msgstr "Index wird verlassen."
@@ -9141,7 +9148,7 @@ msgstr "Index wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1444
+#: src/orca/messages.py:1449
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "Einführung wird verlassen."
@@ -9150,7 +9157,7 @@ msgstr "Einführung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1450
+#: src/orca/messages.py:1455
 msgctxt "role"
 msgid "leaving page list."
 msgstr "Seitenliste wird verlassen."
@@ -9159,7 +9166,7 @@ msgstr "Seitenliste wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1456
+#: src/orca/messages.py:1461
 msgctxt "role"
 msgid "leaving part."
 msgstr "Teil wird verlassen."
@@ -9168,7 +9175,7 @@ msgstr "Teil wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1462
+#: src/orca/messages.py:1467
 msgctxt "role"
 msgid "leaving preface."
 msgstr "Einleitung wird verlassen."
@@ -9177,7 +9184,7 @@ msgstr "Einleitung wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1468
+#: src/orca/messages.py:1473
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "Prolog wird verlassen."
@@ -9186,7 +9193,7 @@ msgstr "Prolog wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1474
+#: src/orca/messages.py:1479
 msgctxt "role"
 msgid "leaving pullquote."
 msgstr "Zitat wird verlassen."
@@ -9195,7 +9202,7 @@ msgstr "Zitat wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1480
+#: src/orca/messages.py:1485
 msgctxt "role"
 msgid "leaving QNA."
 msgstr "Fragen und Antworten werden verlassen."
@@ -9205,7 +9212,7 @@ msgstr "Fragen und Antworten werden verlassen."
 #. a proposed change. This change can include the insertion and/or deletion
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
-#: src/orca/messages.py:1487
+#: src/orca/messages.py:1492
 msgctxt "role"
 msgid "leaving suggestion."
 msgstr "Vorschlag wird verlassen."
@@ -9214,7 +9221,7 @@ msgstr "Vorschlag wird verlassen."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1493
+#: src/orca/messages.py:1498
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "Inhaltsverzeichnis wird verlassen."
@@ -9225,50 +9232,50 @@ msgstr "Inhaltsverzeichnis wird verlassen."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented in speech and braille when
 #. exiting Learn Mode.
-#: src/orca/messages.py:1501
+#: src/orca/messages.py:1506
 msgid "Exiting learn mode."
 msgstr "Lernmodus wird verlassen."
 
 #. Translators: this indicates that this piece of text is a hypertext link.
-#: src/orca/messages.py:1504
+#: src/orca/messages.py:1509
 msgid "link"
 msgstr "Link"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is on the same page.
-#: src/orca/messages.py:1508
+#: src/orca/messages.py:1513
 msgid "same page"
 msgstr "Die selbe Seite"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at the same site (but not on the same page as the link).
-#: src/orca/messages.py:1512
+#: src/orca/messages.py:1517
 msgid "same site"
 msgstr "Die selbe Website"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at a different site than that of the link.
-#: src/orca/messages.py:1516
+#: src/orca/messages.py:1521
 msgid "different site"
 msgstr "Andere Website"
 
 #. Translators: this refers to a link to a file, where the first item is the
 #. protocol (ftp, ftps, or file) and the second item the name of the file being
 #. linked to.
-#: src/orca/messages.py:1521
+#: src/orca/messages.py:1526
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s Link auf %(file)s"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
-#: src/orca/messages.py:1524
+#: src/orca/messages.py:1529
 #, python-format
 msgid "%s link"
 msgstr "%s Link"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
 #. along with the visited state of that link.
-#: src/orca/messages.py:1528
+#: src/orca/messages.py:1533
 #, python-format
 msgid "visited %s link"
 msgstr "Besuchter %s-Link"
@@ -9276,7 +9283,7 @@ msgstr "Besuchter %s-Link"
 #. Translators: The following string instructs the user how to navigate amongst
 #. the list of commands presented in learn mode, as well as how to exit the list
 #. when finished.
-#: src/orca/messages.py:1534
+#: src/orca/messages.py:1539
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Verwenden Sie Pfeil hoch und runter, um in der Liste zu navigieren. Drücken "
@@ -9290,7 +9297,7 @@ msgstr ""
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed to
 #. "off" for all of the live regions.
-#: src/orca/messages.py:1544
+#: src/orca/messages.py:1549
 msgid "All live regions set to off"
 msgstr "Alle dynamischen Bereiche ausgeschaltet"
 
@@ -9302,7 +9309,7 @@ msgstr "Alle dynamischen Bereiche ausgeschaltet"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level for all live
 #. regions has been restored to their original values.
-#: src/orca/messages.py:1554
+#: src/orca/messages.py:1559
 msgid "live regions politeness levels restored"
 msgstr "Höflichkeitseinstellungen für dynamische Bereiche wiederhergestellt"
 
@@ -9313,7 +9320,7 @@ msgstr "Höflichkeitseinstellungen für dynamische Bereiche wiederhergestellt"
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user of the "politeness" level for the current live region.
-#: src/orca/messages.py:1563
+#: src/orca/messages.py:1568
 #, python-format
 msgid "politeness level %s"
 msgstr "Höflichkeitsstufe %s"
@@ -9326,7 +9333,7 @@ msgstr "Höflichkeitsstufe %s"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1573
+#: src/orca/messages.py:1578
 msgid "setting live region to assertive"
 msgstr "Dynamischer Bereich auf bestimmend eingestellt"
 
@@ -9338,7 +9345,7 @@ msgstr "Dynamischer Bereich auf bestimmend eingestellt"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1583
+#: src/orca/messages.py:1588
 msgid "setting live region to off"
 msgstr "Höflichkeitseinstellungen für den dynamischen Bereich ausgeschaltet"
 
@@ -9350,7 +9357,7 @@ msgstr "Höflichkeitseinstellungen für den dynamischen Bereich ausgeschaltet"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1593
+#: src/orca/messages.py:1598
 msgid "setting live region to polite"
 msgstr "Dynamischer Bereich auf höflich eingestellt"
 
@@ -9363,7 +9370,7 @@ msgstr "Dynamischer Bereich auf höflich eingestellt"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: src/orca/messages.py:1604
+#: src/orca/messages.py:1609
 msgid "Live regions monitoring off"
 msgstr "Überwachung der dynamischen Bereiche ist ausgeschaltet"
 
@@ -9376,7 +9383,7 @@ msgstr "Überwachung der dynamischen Bereiche ist ausgeschaltet"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: src/orca/messages.py:1615
+#: src/orca/messages.py:1620
 msgid "Live regions monitoring on"
 msgstr "Überwachung der dynamischen Bereiche ist eingeschaltet"
 
@@ -9385,7 +9392,7 @@ msgstr "Überwachung der dynamischen Bereiche ist eingeschaltet"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that a cached message is not available for the
 #. the current live region.
-#: src/orca/messages.py:1622
+#: src/orca/messages.py:1627
 msgid "no live message saved"
 msgstr "Keine dynamischen Meldungen gespeichert"
 
@@ -9394,14 +9401,14 @@ msgstr "Keine dynamischen Meldungen gespeichert"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that Orca's live region features have been
 #. turned off.
-#: src/orca/messages.py:1629
+#: src/orca/messages.py:1634
 msgid "Live region support is off"
 msgstr "Unterstützung für dynamische Bereiche ist ausgeschaltet"
 
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a brief message which will be presented if for
 #. some reason Orca cannot identify/find the current location.
-#: src/orca/messages.py:1634
+#: src/orca/messages.py:1639
 msgctxt "location"
 msgid "Not found"
 msgstr "Nicht gefunden"
@@ -9409,7 +9416,7 @@ msgstr "Nicht gefunden"
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a detailed message which will be presented if
 #. for some reason Orca cannot identify/find the current location.
-#: src/orca/messages.py:1639
+#: src/orca/messages.py:1644
 msgid "Could not find current location."
 msgstr "Aktuelle Position konnte nicht gefunden werden."
 
@@ -9418,7 +9425,7 @@ msgstr "Aktuelle Position konnte nicht gefunden werden."
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: src/orca/messages.py:1646
+#: src/orca/messages.py:1651
 msgctxt "locking key state"
 msgid "off"
 msgstr "aus"
@@ -9428,21 +9435,21 @@ msgstr "aus"
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: src/orca/messages.py:1653
+#: src/orca/messages.py:1658
 msgctxt "locking key state"
 msgid "on"
 msgstr "an"
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
-#: src/orca/messages.py:1657
+#: src/orca/messages.py:1662
 msgid "misspelled"
 msgstr "falsch geschrieben"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The first thing it does is let the user know
 #. what the misspelled word is.
-#: src/orca/messages.py:1662
+#: src/orca/messages.py:1667
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Falsch geschriebenes Wort: %s"
@@ -9450,7 +9457,7 @@ msgstr "Falsch geschriebenes Wort: %s"
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
 #. containing the misspelled word in the document. This is known as the context.
-#: src/orca/messages.py:1667
+#: src/orca/messages.py:1672
 #, python-format
 msgid "Context is %s"
 msgstr "Kontext ist %s"
@@ -9468,7 +9475,7 @@ msgstr "Kontext ist %s"
 #. key presses as commands to read the content; in focus mode, Orca treats
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to browse mode.
-#: src/orca/messages.py:1682
+#: src/orca/messages.py:1687
 msgid "Browse mode"
 msgstr "Stöbern-Modus"
 
@@ -9485,7 +9492,7 @@ msgstr "Stöbern-Modus"
 #. key presses as commands to read the content; in focus mode, Orca treats
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to focus mode.
-#: src/orca/messages.py:1697
+#: src/orca/messages.py:1702
 msgid "Focus mode"
 msgstr "Fokus-Modus"
 
@@ -9506,7 +9513,7 @@ msgstr "Fokus-Modus"
 #. they must press to enable focus mode for the purposes of interacting
 #. with the widget. The substituted string is a human-consumable keybinding
 #. such as "Alt+Shift+A."
-#: src/orca/messages.py:1716
+#: src/orca/messages.py:1721
 #, python-format
 msgid "To enable focus mode press %s."
 msgstr "Drücken Sie %s zum Aktivieren des Fokus-Modus."
@@ -9520,7 +9527,7 @@ msgstr "Drücken Sie %s zum Aktivieren des Fokus-Modus."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is the message presented when Orca switches to sticky focus mode.
-#: src/orca/messages.py:1727
+#: src/orca/messages.py:1732
 msgid "Focus mode is sticky."
 msgstr "Dauerhafter Fokus-Modus."
 
@@ -9533,7 +9540,7 @@ msgstr "Dauerhafter Fokus-Modus."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is the message presented when Orca switches to sticky browse mode.
-#: src/orca/messages.py:1738
+#: src/orca/messages.py:1743
 msgid "Browse mode is sticky."
 msgstr "Dauerhafter Stöber-Modus."
 
@@ -9548,7 +9555,7 @@ msgstr "Dauerhafter Stöber-Modus."
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation. This string is presented when the user
 #. switches to layout mode via an Orca command.
-#: src/orca/messages.py:1751
+#: src/orca/messages.py:1756
 msgid "Layout mode."
 msgstr "Layout-Modus."
 
@@ -9564,13 +9571,13 @@ msgstr "Layout-Modus."
 #. both for presentation and navigation. This string is presented when the user
 #. toggles layout mode off via an Orca command and switches to the aforementioned
 #. object-based presentation.
-#: src/orca/messages.py:1765
+#: src/orca/messages.py:1770
 msgid "Object mode."
 msgstr "Objekt-Modus."
 
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
-#: src/orca/messages.py:1769
+#: src/orca/messages.py:1774
 msgid "Pointer moved to object."
 msgstr "Mauszeiger wurde zum Objekt bewegt."
 
@@ -9578,21 +9585,21 @@ msgstr "Mauszeiger wurde zum Objekt bewegt."
 #. new object to appear such as a pop-up menu. Orca has a command will move the
 #. user to the object which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
-#: src/orca/messages.py:1775
+#: src/orca/messages.py:1780
 msgid "Mouse over object not found."
 msgstr "Kein Mouse-Over Objekt gefunden."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
-#: src/orca/messages.py:1780
+#: src/orca/messages.py:1785
 msgid "Mouse review disabled."
 msgstr "Maus-Sprachauswertung ist deaktiviert."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
-#: src/orca/messages.py:1785
+#: src/orca/messages.py:1790
 msgid "Mouse review enabled."
 msgstr "Maus-Sprachauswertung ist aktiviert."
 
@@ -9601,56 +9608,56 @@ msgstr "Maus-Sprachauswertung ist aktiviert."
 #. could with native keyboard navigation. This is a message that will be
 #. presented to the user when an error (such as the operation timing out) kept us
 #. from getting these objects.
-#: src/orca/messages.py:1792
+#: src/orca/messages.py:1797
 msgid "Error: Could not create list of objects."
 msgstr "Fehler: Objektliste konnte nicht erstellt werden."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no children.
-#: src/orca/messages.py:1797
+#: src/orca/messages.py:1802
 msgid "No children."
 msgstr "Keine Unterelemente."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no next sibling.
-#: src/orca/messages.py:1802
+#: src/orca/messages.py:1807
 msgid "No next."
 msgstr "Kein weiteres Element."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no parent.
-#: src/orca/messages.py:1807
+#: src/orca/messages.py:1812
 msgid "No parent."
 msgstr "Kein übergeordnetes Element."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
-#: src/orca/messages.py:1812
+#: src/orca/messages.py:1817
 msgid "No previous."
 msgstr "Kein vorheriges Element."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is enabled.
-#: src/orca/messages.py:1817
+#: src/orca/messages.py:1822
 msgid "Simplified navigation enabled."
 msgstr "Vereinfachte Navigation aktiviert."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
-#: src/orca/messages.py:1822
+#: src/orca/messages.py:1827
 msgid "Simplified navigation disabled."
 msgstr "Vereinfachte Navigation deaktiviert."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list).
-#: src/orca/messages.py:1827 src/orca/object_properties.py:60
+#: src/orca/messages.py:1832 src/orca/object_properties.py:60
 #, python-format
 msgid "Nesting level %d"
 msgstr "Ebene %d"
@@ -9658,7 +9665,7 @@ msgstr "Ebene %d"
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
-#: src/orca/messages.py:1832
+#: src/orca/messages.py:1837
 msgid "New item has been added"
 msgstr "Ein neues Objekt ist erschienen"
 
@@ -9667,41 +9674,41 @@ msgstr "Ein neues Objekt ist erschienen"
 #. presents when the object has no actions. The string substitution will be the
 #. name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
 #. localized rolename if it does not.
-#: src/orca/messages.py:1839
+#: src/orca/messages.py:1844
 #, python-format
 msgid "No actions found on: %s"
 msgstr "Keine Aktionen für %s gefunden"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
-#: src/orca/messages.py:1843
+#: src/orca/messages.py:1848
 msgid "No focus"
 msgstr "Kein Fokus"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
-#: src/orca/messages.py:1847
+#: src/orca/messages.py:1852
 msgid "No application has focus."
 msgstr "Keine Anwendung besitzt den Fokus."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
-#: src/orca/messages.py:1852
+#: src/orca/messages.py:1857
 msgid "No more blockquotes."
 msgstr "Keine weiteren Zitate."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
-#: src/orca/messages.py:1857
+#: src/orca/messages.py:1862
 msgid "No more buttons."
 msgstr "Keine weiteren Knöpfe."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
-#: src/orca/messages.py:1862
+#: src/orca/messages.py:1867
 msgid "No more check boxes."
 msgstr "Keine weiteren Ankreuzfelder."
 
@@ -9709,42 +9716,42 @@ msgstr "Keine weiteren Ankreuzfelder."
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
 #. such as a paragraph, a list, a table, etc. This is a detailed message which
 #. will be presented to the user if no more check boxes can be found.
-#: src/orca/messages.py:1868
+#: src/orca/messages.py:1873
 msgid "No more large objects."
 msgstr "Keine weiteren größeren Objekte."
 
 #. Translators: This is for navigating document content by moving amongst web
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
-#: src/orca/messages.py:1873
+#: src/orca/messages.py:1878
 msgid "No more clickables."
 msgstr "Keine weiteren Klickelemente."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
 #. user if no more combo boxes can be found.
-#: src/orca/messages.py:1878
+#: src/orca/messages.py:1883
 msgid "No more combo boxes."
 msgstr "Keine weiteren kombinierten Auswahlfelder."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
 #. if no more entries can be found.
-#: src/orca/messages.py:1883
+#: src/orca/messages.py:1888
 msgid "No more entries."
 msgstr "Keine weiteren Eingabefelder."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
 #. the user if no more form fields can be found.
-#: src/orca/messages.py:1888
+#: src/orca/messages.py:1893
 msgid "No more form fields."
 msgstr "Keine weiteren Formularfelder."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
-#: src/orca/messages.py:1893
+#: src/orca/messages.py:1898
 msgid "No more headings."
 msgstr "Keine weiteren Überschriften."
 
@@ -9752,7 +9759,7 @@ msgstr "Keine weiteren Überschriften."
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
 #. is a detailed message which will be presented to the user if no more headings
 #. at the desired level can be found.
-#: src/orca/messages.py:1899
+#: src/orca/messages.py:1904
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Keine weiteren Überschriften der Ebene %d."
@@ -9760,14 +9767,14 @@ msgstr "Keine weiteren Überschriften der Ebene %d."
 #. Translators: This is for navigating document content by moving from iframe
 #. to iframe. This is a detailed message which will be presented to the user
 #. if no more iframes can be found.
-#: src/orca/messages.py:1904
+#: src/orca/messages.py:1909
 msgid "No more internal frames."
 msgstr "Keine weiteren inneren Rahmen."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
-#: src/orca/messages.py:1909
+#: src/orca/messages.py:1914
 msgid "No more images."
 msgstr "Keine weiteren Bilder."
 
@@ -9775,28 +9782,28 @@ msgstr "Keine weiteren Bilder."
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #. This is an indication that one was not found.
-#: src/orca/messages.py:1915
+#: src/orca/messages.py:1920
 msgid "No landmark found."
 msgstr "Keinen Orientierungspunkt gefunden."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
-#: src/orca/messages.py:1920
+#: src/orca/messages.py:1925
 msgid "No more links."
 msgstr "Keine weiteren Links."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
-#: src/orca/messages.py:1925
+#: src/orca/messages.py:1930
 msgid "No more lists."
 msgstr "Keine weiteren Listen."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
-#: src/orca/messages.py:1930
+#: src/orca/messages.py:1935
 msgid "No more list items."
 msgstr "Keine weiteren Listeneinträge."
 
@@ -9805,89 +9812,89 @@ msgstr "Keine weiteren Listeneinträge."
 #. periodically updated, e.g. stock ticker. This is a detailed message which
 #. will be presented to the user if no more live regions can be found. For
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: src/orca/messages.py:1937
+#: src/orca/messages.py:1942
 msgid "No more live regions."
 msgstr "Keine weiteren dynamischen Bereiche."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
 #. if no more paragraphs can be found.
-#: src/orca/messages.py:1942
+#: src/orca/messages.py:1947
 msgid "No more paragraphs."
 msgstr "Keine weiteren Absätze."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
 #. the user if no more radio buttons can be found.
-#: src/orca/messages.py:1947
+#: src/orca/messages.py:1952
 msgid "No more radio buttons."
 msgstr "Keine weiteren Auswahlknöpfe."
 
 #. Translators: This is for navigating document content by moving from separator
 #. to separator (e.g. <hr> tags). This is a detailed message which will be
 #. presented to the user if no more separators can be found.
-#: src/orca/messages.py:1952
+#: src/orca/messages.py:1957
 msgid "No more separators."
 msgstr "Keine weiteren Trenner."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
-#: src/orca/messages.py:1957
+#: src/orca/messages.py:1962
 msgid "No more tables."
 msgstr "Keine weiteren Tabellen."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
-#: src/orca/messages.py:1962
+#: src/orca/messages.py:1967
 msgid "No more unvisited links."
 msgstr "Keine weiteren nicht besuchten Links."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
-#: src/orca/messages.py:1967
+#: src/orca/messages.py:1972
 msgid "No more visited links."
 msgstr "Keine weiteren besuchten Links."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is what Orca will present if the user performs this
 #. command when no text is selected.
-#: src/orca/messages.py:1972
+#: src/orca/messages.py:1977
 msgid "No selected text."
 msgstr "Kein ausgewählter Text."
 
 #. Translators: Orca has a dedicated command to speak detailed information
 #. about the currently-focused link. This message is what Orca will present
 #. if the user performs this command when not on a link.
-#: src/orca/messages.py:1977
+#: src/orca/messages.py:1982
 msgid "Not on a link."
 msgstr "Nicht in einem Link."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
-#: src/orca/messages.py:1981
+#: src/orca/messages.py:1986
 msgid "Notification"
 msgstr "Benachrichtigung"
 
 #. Translators: This is a brief message presented to the user when the bottom of
 #. the list of notifications is reached.
-#: src/orca/messages.py:1985
+#: src/orca/messages.py:1990
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Unterste"
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
-#: src/orca/messages.py:1989
+#: src/orca/messages.py:1994
 msgctxt "notification"
 msgid "Top"
 msgstr "Oberste"
 
 #. Translators: This message is presented to the user when the notifications list
 #. is empty.
-#: src/orca/messages.py:1993
+#: src/orca/messages.py:1998
 msgid "No notification messages"
 msgstr "Keine Benachrichtigungen"
 
@@ -9896,7 +9903,7 @@ msgstr "Keine Benachrichtigungen"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as digits.
-#: src/orca/messages.py:2000
+#: src/orca/messages.py:2005
 msgctxt "number style"
 msgid "digits"
 msgstr "Ziffern"
@@ -9906,7 +9913,7 @@ msgstr "Ziffern"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as digits.
-#: src/orca/messages.py:2007
+#: src/orca/messages.py:2012
 msgid "Speak numbers as digits."
 msgstr "Zahlen ziffernweise vorlesen."
 
@@ -9915,7 +9922,7 @@ msgstr "Zahlen ziffernweise vorlesen."
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as words.
-#: src/orca/messages.py:2014
+#: src/orca/messages.py:2019
 msgctxt "number style"
 msgid "words"
 msgstr "Worte"
@@ -9925,40 +9932,40 @@ msgstr "Worte"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as words.
-#: src/orca/messages.py:2021
+#: src/orca/messages.py:2026
 msgid "Speak numbers as words."
 msgstr "Zahlen als Wort vorlesen."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: src/orca/messages.py:2026
+#: src/orca/messages.py:2031
 msgid "off"
 msgstr "aus"
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: src/orca/messages.py:2031
+#: src/orca/messages.py:2036
 msgid "on"
 msgstr "an"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
-#: src/orca/messages.py:2035
+#: src/orca/messages.py:2040
 msgid "Loading.  Please wait."
 msgstr "Es wird geladen. Bitte warten."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
-#: src/orca/messages.py:2039
+#: src/orca/messages.py:2044
 msgid "Finished loading."
 msgstr "Laden abgeschlossen."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
 #. object which has just finished loading (most likely the page's title).
-#: src/orca/messages.py:2044
+#: src/orca/messages.py:2049
 #, python-format
 msgid "Finished loading %s."
 msgstr "Laden von %s abgeschlossen."
@@ -9966,7 +9973,7 @@ msgstr "Laden von %s abgeschlossen."
 #. Translators: This message is presented to the user when the page of the
 #. current document changes, e.g. as a result of navigation or scrolling.
 #. The string substitution is the number of the current page.
-#: src/orca/messages.py:2049
+#: src/orca/messages.py:2054
 #, python-format
 msgid "Page %d"
 msgstr "Seite %d"
@@ -9976,7 +9983,7 @@ msgstr "Seite %d"
 #. (landmarks, forms, links, tables, etc.). The following string precedes the
 #. presentation of the summary. The string substitution is a list of items, such
 #. as "10 headings, 1 form, 52 links".
-#: src/orca/messages.py:2056
+#: src/orca/messages.py:2061
 #, python-format
 msgid "Page has %s."
 msgstr "Seite hat %s."
@@ -9984,7 +9991,7 @@ msgstr "Seite hat %s."
 #. Translators: This message appears in a warning dialog when the user performs
 #. the command to get into Orca's preferences dialog when the preferences dialog
 #. is already open.
-#: src/orca/messages.py:2062
+#: src/orca/messages.py:2067
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -9994,7 +10001,7 @@ msgstr ""
 
 #. Translators: This message is an indication of the position of the focused
 #. slide and the total number of slides in the presentation.
-#: src/orca/messages.py:2067
+#: src/orca/messages.py:2072
 #, python-format
 msgid "slide %(position)d of %(count)d"
 msgstr "Folie %(position)d von %(count)d"
@@ -10004,7 +10011,7 @@ msgstr "Folie %(position)d von %(count)d"
 #. which apply to a given task, such as a "Spanish" profile which would use
 #. Spanish text-to-speech and Spanish braille and selected when reading Spanish
 #. content. The string representing the profile name is created by the user.
-#: src/orca/messages.py:2074
+#: src/orca/messages.py:2079
 #, python-format
 msgid "Profile set to %s."
 msgstr "Profil wurde auf %s gesetzt."
@@ -10014,14 +10021,14 @@ msgstr "Profil wurde auf %s gesetzt."
 #. is a collection of settings which apply to a given task, such as a "Spanish"
 #. profile which would use Spanish text-to-speech and Spanish braille and
 #. selected when reading Spanish content.
-#: src/orca/messages.py:2081
+#: src/orca/messages.py:2086
 msgid "No profiles found."
 msgstr "Keine Profile gefunden."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
 #. progress bars (e.g. in the Firefox downloads dialog).
-#: src/orca/messages.py:2086
+#: src/orca/messages.py:2091
 #, python-format
 msgid "Progress bar %d."
 msgstr "Fortschrittsanzeige %d."
@@ -10030,7 +10037,7 @@ msgstr "Fortschrittsanzeige %d."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2092
+#: src/orca/messages.py:2097
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Alle"
@@ -10039,7 +10046,7 @@ msgstr "Alle"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2098
+#: src/orca/messages.py:2103
 msgid "Punctuation level set to all."
 msgstr "Ansage der Sonderzeichen eingestellt auf alle."
 
@@ -10047,7 +10054,7 @@ msgstr "Ansage der Sonderzeichen eingestellt auf alle."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2104
+#: src/orca/messages.py:2109
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "Die meisten"
@@ -10056,7 +10063,7 @@ msgstr "Die meisten"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2110
+#: src/orca/messages.py:2115
 msgid "Punctuation level set to most."
 msgstr "Ansage der Sonderzeichen eingestellt auf meiste."
 
@@ -10064,7 +10071,7 @@ msgstr "Ansage der Sonderzeichen eingestellt auf meiste."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2116
+#: src/orca/messages.py:2121
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Keine"
@@ -10073,7 +10080,7 @@ msgstr "Keine"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2122
+#: src/orca/messages.py:2127
 msgid "Punctuation level set to none."
 msgstr "Ansage der Sonderzeichen auf keine gesetzt."
 
@@ -10081,7 +10088,7 @@ msgstr "Ansage der Sonderzeichen auf keine gesetzt."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2128
+#: src/orca/messages.py:2133
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Einige"
@@ -10090,32 +10097,32 @@ msgstr "Einige"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2134
+#: src/orca/messages.py:2139
 msgid "Punctuation level set to some."
 msgstr "Ansage der Sonderzeichen eingestellt auf einige."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
-#: src/orca/messages.py:2138
+#: src/orca/messages.py:2143
 msgid "Searching."
 msgstr "Suche."
 
 #. Translators: This message is presented to indicate a search executed by the
 #. user has been completed.
-#: src/orca/messages.py:2142
+#: src/orca/messages.py:2147
 msgid "Search complete."
 msgstr "Suche abgeschlossen."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
-#: src/orca/messages.py:2146
+#: src/orca/messages.py:2151
 msgid "Screen reader settings reloaded."
 msgstr "Die Bildschirmleser-Einstellungen wurden neu geladen."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is spoken by Orca before speaking the text which is
 #. selected. The string substitution is for the selected text.
-#: src/orca/messages.py:2151
+#: src/orca/messages.py:2156
 #, python-format
 msgid "Selected text is: %s"
 msgstr "Ausgewählter Text ist: %s"
@@ -10125,7 +10132,7 @@ msgstr "Ausgewählter Text ist: %s"
 #. large string. Therefore, if the text which has just been deleted from a
 #. document matches the previously-selected contents, Orca will indicate that
 #. fact instead of presenting the full string which was just deleted.
-#: src/orca/messages.py:2158
+#: src/orca/messages.py:2163
 msgid "Selection deleted."
 msgstr "Auswahl gelöscht."
 
@@ -10137,14 +10144,14 @@ msgstr "Auswahl gelöscht."
 #. and then pressed Ctrl+Z to undo that deletion). In this instance, Orca
 #. will indicate the restoration rather than presenting the full string
 #. which was just inserted.
-#: src/orca/messages.py:2168
+#: src/orca/messages.py:2173
 msgid "Selection restored."
 msgstr "Auswahl wiederhergestellt."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
-#: src/orca/messages.py:2173
+#: src/orca/messages.py:2178
 msgid "Text unselected."
 msgstr "Text ist nicht mehr ausgewählt."
 
@@ -10152,7 +10159,7 @@ msgstr "Text ist nicht mehr ausgewählt."
 #. current object in pixels. This string refers to the brief/non-verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2179
+#: src/orca/messages.py:2184
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
 msgstr "Größe %d, %d. Ort: %d, %d."
@@ -10161,20 +10168,20 @@ msgstr "Größe %d, %d. Ort: %d, %d."
 #. current object in pixels. This string refers to the full/verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2185
+#: src/orca/messages.py:2190
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
 msgstr "Breite: %d. Höhe: %d. %d von links. %d von oben."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: src/orca/messages.py:2189
+#: src/orca/messages.py:2194
 msgid "Speech disabled."
 msgstr "Sprachausgabe deaktiviert."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: src/orca/messages.py:2193
+#: src/orca/messages.py:2198
 msgid "Speech enabled."
 msgstr "Sprachausgabe aktiviert."
 
@@ -10191,7 +10198,7 @@ msgstr "Sprachausgabe aktiviert."
 #. resume working. This string is the message Orca presents when sleep mode is
 #. disabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode disabled for VirtualBox."
-#: src/orca/messages.py:2208
+#: src/orca/messages.py:2213
 #, python-format
 msgid "Sleep mode disabled for %s."
 msgstr "Schlafmodus deaktiviert für %s."
@@ -10209,38 +10216,38 @@ msgstr "Schlafmodus deaktiviert für %s."
 #. resume working. This string is the message Orca presents when sleep mode is
 #. enabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode enabled for VirtualBox."
-#: src/orca/messages.py:2223
+#: src/orca/messages.py:2228
 #, python-format
 msgid "Sleep mode enabled for %s."
 msgstr "Schlafmodus aktiviert für %s."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2226
+#: src/orca/messages.py:2231
 msgid "faster."
 msgstr "schneller."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2229
+#: src/orca/messages.py:2234
 msgid "slower."
 msgstr "langsamer."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2232
+#: src/orca/messages.py:2237
 msgid "higher."
 msgstr "höher."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2235
+#: src/orca/messages.py:2240
 msgid "lower."
 msgstr "tiefer."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2238
+#: src/orca/messages.py:2243
 msgid "louder."
 msgstr "lauter."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2241
+#: src/orca/messages.py:2246
 msgid "softer."
 msgstr "weicher."
 
@@ -10249,7 +10256,7 @@ msgstr "weicher."
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2248
+#: src/orca/messages.py:2253
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr "Ausführlichkeit: kurz"
@@ -10259,7 +10266,7 @@ msgstr "Ausführlichkeit: kurz"
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2255
+#: src/orca/messages.py:2260
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Ausführlichkeit: gesprächig"
@@ -10268,36 +10275,36 @@ msgstr "Ausführlichkeit: gesprächig"
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: src/orca/messages.py:2261
+#: src/orca/messages.py:2266
 msgid " dot dot dot"
 msgstr " Punkt Punkt Punkt"
 
 #. Translators: This message is presented when the user attempts to use a
 #. command specific to a spreadsheet, such as reading the input line, but is
 #. not in a spreadsheet.
-#: src/orca/messages.py:2266
+#: src/orca/messages.py:2271
 msgid "Not in a spreadsheet."
 msgstr "Nicht in einem Tabellenblatt."
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: src/orca/messages.py:2269
+#: src/orca/messages.py:2274
 msgid "Screen reader on."
 msgstr "Bildschirmleser an."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: src/orca/messages.py:2272
+#: src/orca/messages.py:2277
 msgid "Screen reader off."
 msgstr "Bildschirmleser aus."
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: src/orca/messages.py:2275
+#: src/orca/messages.py:2280
 msgid "Speech is unavailable."
 msgstr "Sprachausgabe steht nicht zur Verfügung."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2280
+#: src/orca/messages.py:2285
 msgctxt "status bar"
 msgid "Not found"
 msgstr "Nicht gefunden"
@@ -10305,7 +10312,7 @@ msgstr "Nicht gefunden"
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2285
+#: src/orca/messages.py:2290
 msgid "Status bar not found"
 msgstr "Statusleiste nicht gefunden"
 
@@ -10313,7 +10320,7 @@ msgstr "Statusleiste nicht gefunden"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: src/orca/messages.py:2291
+#: src/orca/messages.py:2296
 msgid "string not found"
 msgstr "Zeichenkette nicht gefunden"
 
@@ -10323,7 +10330,7 @@ msgstr "Zeichenkette nicht gefunden"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2299
+#: src/orca/messages.py:2304
 msgid "Structural navigation keys off."
 msgstr "Navigationstasten ausgeschaltet."
 
@@ -10333,7 +10340,7 @@ msgstr "Navigationstasten ausgeschaltet."
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2307
+#: src/orca/messages.py:2312
 msgid "Structural navigation keys on."
 msgstr "Navigationstasten eingeschaltet."
 
@@ -10343,87 +10350,87 @@ msgstr "Navigationstasten eingeschaltet."
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: src/orca/messages.py:2315
+#: src/orca/messages.py:2320
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Nicht gefunden"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: src/orca/messages.py:2318
+#: src/orca/messages.py:2323
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Zeile %(row)d, Spalte %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: src/orca/messages.py:2322
+#: src/orca/messages.py:2327
 msgid "End of table"
 msgstr "Tabellen Ende"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2327
+#: src/orca/messages.py:2332
 msgid "Speak cell"
 msgstr "Zelle vorlesen"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2332
+#: src/orca/messages.py:2337
 msgid "Speak row"
 msgstr "Zeile vorlesen"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: src/orca/messages.py:2337
+#: src/orca/messages.py:2342
 msgid "Non-uniform"
 msgstr "Nicht einheitlich"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: src/orca/messages.py:2342
+#: src/orca/messages.py:2347
 msgid "Not in a table."
 msgstr "Nicht in einer Tabelle."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
-#: src/orca/messages.py:2347
+#: src/orca/messages.py:2352
 msgid "Table navigation disabled."
 msgstr "Tabellennavigation deaktiviert."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
-#: src/orca/messages.py:2352
+#: src/orca/messages.py:2357
 msgid "Table navigation enabled."
 msgstr "Tabellennavigation aktiviert."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: src/orca/messages.py:2356
+#: src/orca/messages.py:2361
 msgid "Columns reordered"
 msgstr "Spalten wurden neu geordnet"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: src/orca/messages.py:2360
+#: src/orca/messages.py:2365
 msgid "Rows reordered"
 msgstr "Zeilen wurden neu geordnet"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: src/orca/messages.py:2364
+#: src/orca/messages.py:2369
 #, python-format
 msgid "column %d"
 msgstr "Spalte %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: src/orca/messages.py:2368
+#: src/orca/messages.py:2373
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "Spalte %(index)d von %(total)d"
@@ -10431,21 +10438,21 @@ msgstr "Spalte %(index)d von %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: src/orca/messages.py:2373
+#: src/orca/messages.py:2378
 msgid "Bottom of column."
 msgstr "Unterer Rand der Spalte."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: src/orca/messages.py:2378
+#: src/orca/messages.py:2383
 msgid "Top of column."
 msgstr "Oberer Rand der Spalte."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2383
+#: src/orca/messages.py:2388
 #, python-format
 msgid "Column %s selected"
 msgstr "Spalte %s ausgewählt"
@@ -10455,7 +10462,7 @@ msgstr "Spalte %s ausgewählt"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: src/orca/messages.py:2390
+#: src/orca/messages.py:2395
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr "Spalten %s bis %s ausgewählt"
@@ -10465,7 +10472,7 @@ msgstr "Spalten %s bis %s ausgewählt"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: src/orca/messages.py:2397
+#: src/orca/messages.py:2402
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr "Spalten %s bis %s nicht mehr ausgewählt"
@@ -10473,21 +10480,21 @@ msgstr "Spalten %s bis %s nicht mehr ausgewählt"
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2402
+#: src/orca/messages.py:2407
 #, python-format
 msgid "Column %s unselected"
 msgstr "Spalte %s nicht mehr ausgewählt"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: src/orca/messages.py:2406
+#: src/orca/messages.py:2411
 #, python-format
 msgid "row %d"
 msgstr "Zeile %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: src/orca/messages.py:2410
+#: src/orca/messages.py:2415
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "Zeile %(index)d von %(total)d"
@@ -10495,46 +10502,46 @@ msgstr "Zeile %(index)d von %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: src/orca/messages.py:2415
+#: src/orca/messages.py:2420
 msgid "Beginning of row."
 msgstr "Zeilenanfang."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: src/orca/messages.py:2420
+#: src/orca/messages.py:2425
 msgid "End of row."
 msgstr "Zeilenende."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: src/orca/messages.py:2424
+#: src/orca/messages.py:2429
 msgid "Row deleted."
 msgstr "Zeile gelöscht."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: src/orca/messages.py:2428
+#: src/orca/messages.py:2433
 msgid "Last row deleted."
 msgstr "Letzte Zeile gelöscht."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: src/orca/messages.py:2432
+#: src/orca/messages.py:2437
 msgid "Row inserted."
 msgstr "Zeile eingefügt."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: src/orca/messages.py:2437
+#: src/orca/messages.py:2442
 msgid "Row inserted at the end of the table."
 msgstr "Zeile am Ende der Tabelle eingefügt."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: src/orca/messages.py:2442
+#: src/orca/messages.py:2447
 #, python-format
 msgid "Row %s selected"
 msgstr "Zeile %s ausgewählt"
@@ -10544,7 +10551,7 @@ msgstr "Zeile %s ausgewählt"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: src/orca/messages.py:2449
+#: src/orca/messages.py:2454
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr "Zeilen %s bis %s ausgewählt"
@@ -10554,7 +10561,7 @@ msgstr "Zeilen %s bis %s ausgewählt"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: src/orca/messages.py:2456
+#: src/orca/messages.py:2461
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr "Zeilen %s bis %s nicht mehr ausgewählt"
@@ -10562,21 +10569,21 @@ msgstr "Zeilen %s bis %s nicht mehr ausgewählt"
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: src/orca/messages.py:2461
+#: src/orca/messages.py:2466
 #, python-format
 msgid "Row %s unselected"
 msgstr "Zeile %s nicht mehr ausgewählt"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: src/orca/messages.py:2465
+#: src/orca/messages.py:2470
 msgctxt "text"
 msgid "selected"
 msgstr "ausgewählt"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: src/orca/messages.py:2469
+#: src/orca/messages.py:2474
 msgctxt "text"
 msgid "unselected"
 msgstr "nicht ausgewählt"
@@ -10584,47 +10591,47 @@ msgstr "nicht ausgewählt"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2480
+#: src/orca/messages.py:2485
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%H Stunden, %M Minuten und %S Sekunden"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2485
+#: src/orca/messages.py:2490
 msgid "%H hours and %M minutes"
 msgstr "%H Stunden und %M Minuten"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: src/orca/messages.py:2489
+#: src/orca/messages.py:2494
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2493
+#: src/orca/messages.py:2498
 msgctxt "command"
 msgid "undo"
 msgstr "rückgängig"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2497
+#: src/orca/messages.py:2502
 msgctxt "command"
 msgid "redo"
 msgstr "wiederholen"
 
 #. Translators: This message presents the Orca version number.
-#: src/orca/messages.py:2500
+#: src/orca/messages.py:2505
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Bildschirmleser-Version %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: src/orca/messages.py:2504
+#: src/orca/messages.py:2509
 msgid "white space"
 msgstr "Leerzeichen"
 
@@ -10632,7 +10639,7 @@ msgstr "Leerzeichen"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: src/orca/messages.py:2510
+#: src/orca/messages.py:2515
 msgid "Wrapping to bottom."
 msgstr "Nach unten springen."
 
@@ -10640,21 +10647,21 @@ msgstr "Nach unten springen."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: src/orca/messages.py:2516
+#: src/orca/messages.py:2521
 msgid "Wrapping to top."
 msgstr "Nach oben springen."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: src/orca/messages.py:2521
+#: src/orca/messages.py:2526
 msgid "0 items"
 msgstr "0 Objekte"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2529 src/orca/messages.py:2548
+#: src/orca/messages.py:2534 src/orca/messages.py:2553
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -10662,7 +10669,7 @@ msgstr[0] "Zelle erstreckt sich über %d Zeile"
 msgstr[1] "Zelle erstreckt sich über %d Zeilen"
 
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2534
+#: src/orca/messages.py:2539
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -10672,7 +10679,7 @@ msgstr[1] " %d Spalten"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2541
+#: src/orca/messages.py:2546
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -10681,7 +10688,7 @@ msgstr[1] "Zelle erstreckt sich über %d Spalten"
 
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
-#: src/orca/messages.py:2557
+#: src/orca/messages.py:2562
 #, python-format
 msgid "%d character selected"
 msgid_plural "%d characters selected"
@@ -10690,7 +10697,7 @@ msgstr[1] "%d Zeichen ausgewählt"
 
 #. Translators: This message describes the number of characters that were just
 #. unselected in a body of text.
-#: src/orca/messages.py:2562
+#: src/orca/messages.py:2567
 #, python-format
 msgid "%d character unselected"
 msgid_plural "%d characters unselected"
@@ -10700,7 +10707,7 @@ msgstr[1] "%d Zeichen nicht mehr ausgewählt"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: src/orca/messages.py:2568
+#: src/orca/messages.py:2573
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -10710,7 +10717,7 @@ msgstr[1] "%d Zeichen zu viel"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: src/orca/messages.py:2576
+#: src/orca/messages.py:2581
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -10720,7 +10727,7 @@ msgstr[1] "(%d Dialoge)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: src/orca/messages.py:2582
+#: src/orca/messages.py:2587
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -10728,7 +10735,7 @@ msgstr[0] "%d Dialog ohne Fokus"
 msgstr[1] "%d Dialoge ohne Fokus"
 
 #. Translators: This is the size of a file in bytes
-#: src/orca/messages.py:2586
+#: src/orca/messages.py:2591
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -10737,7 +10744,7 @@ msgstr[1] "%d Bytes"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: src/orca/messages.py:2591
+#: src/orca/messages.py:2596
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -10745,7 +10752,7 @@ msgstr[0] "%d Datei gefunden"
 msgstr[1] "%d Dateien gefunden"
 
 #. Translators: This message presents the number of forms in a document.
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2603
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -10753,7 +10760,7 @@ msgstr[0] "%d Formular"
 msgstr[1] "%d Formulare"
 
 #. Translators: This message presents the number of headings in a document.
-#: src/orca/messages.py:2605
+#: src/orca/messages.py:2610
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -10762,7 +10769,7 @@ msgstr[1] "%d Überschriften"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: src/orca/messages.py:2610
+#: src/orca/messages.py:2615
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -10772,7 +10779,7 @@ msgstr[1] "%d Objekte"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2619
+#: src/orca/messages.py:2624
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -10782,7 +10789,7 @@ msgstr[1] "%d Orientierungspunkte"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: src/orca/messages.py:2625
+#: src/orca/messages.py:2630
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -10792,7 +10799,7 @@ msgstr[1] "%d Objekte gefunden"
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: src/orca/messages.py:2631
+#: src/orca/messages.py:2636
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -10801,7 +10808,7 @@ msgstr[1] "%d Zitate werden verlassen."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: src/orca/messages.py:2636
+#: src/orca/messages.py:2641
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
@@ -10814,12 +10821,12 @@ msgstr[1] "%d Listen werden verlassen."
 #. you're currently viewing messages 1-100 out of some huge, unspecified
 #. number. Normally Orca announces "list with n items" when the count is
 #. known. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2646
+#: src/orca/messages.py:2651
 msgid "List of unknown size"
 msgstr "Liste mit unbekannter Objektanzahl"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2649
+#: src/orca/messages.py:2654
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -10828,7 +10835,7 @@ msgstr[1] "Liste mit %d Einträgen"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
-#: src/orca/messages.py:2654
+#: src/orca/messages.py:2659
 #, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
@@ -10840,13 +10847,13 @@ msgstr[1] "Verschachtelte Liste mit %d Einträgen"
 #. scrolling, adding and/or removing items as the user moves up or down.
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2663
+#: src/orca/messages.py:2668
 msgid "Feed of unknown size"
 msgstr "Artikelliste mit unbekannter Artikelanzahl"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
-#: src/orca/messages.py:2667
+#: src/orca/messages.py:2672
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
@@ -10856,7 +10863,7 @@ msgstr[1] "Artikelliste mit %d Artikeln"
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
-#: src/orca/messages.py:2673
+#: src/orca/messages.py:2678
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -10865,7 +10872,7 @@ msgstr[1] "Beschreibungsliste mit %d Einträgen"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
-#: src/orca/messages.py:2679
+#: src/orca/messages.py:2684
 #, python-format
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
@@ -10876,7 +10883,7 @@ msgstr[1] "Reiterliste mit %d Reitern"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2686
+#: src/orca/messages.py:2691
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -10885,7 +10892,7 @@ msgstr[1] "%d Werte"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2691
+#: src/orca/messages.py:2696
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -10898,8 +10905,8 @@ msgstr[1] "Mathematische Tabelle mit %d Zeilen"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2696 src/orca/messages.py:2712
-#: src/orca/messages.py:2820
+#: src/orca/messages.py:2701 src/orca/messages.py:2717
+#: src/orca/messages.py:2825
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -10909,7 +10916,7 @@ msgstr[1] "%d Spalten"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2706
+#: src/orca/messages.py:2711
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -10918,7 +10925,7 @@ msgstr[1] "verschachtelte mathematische Tabelle mit %d Zeilen"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2721
+#: src/orca/messages.py:2726
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -10927,7 +10934,7 @@ msgstr[1] "%d Nachrichten.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2726
+#: src/orca/messages.py:2731
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -10937,7 +10944,7 @@ msgstr[1] "%d Prozent."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2732
+#: src/orca/messages.py:2737
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -10946,7 +10953,7 @@ msgstr[1] "%d Prozent des Dokumentes gelesen"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2739
+#: src/orca/messages.py:2744
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -10956,7 +10963,7 @@ msgstr[1] "%d Pixel"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2745
+#: src/orca/messages.py:2750
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -10965,7 +10972,7 @@ msgstr[1] "%(count)d mal das Zeichen %(repeatChar)s"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2752
+#: src/orca/messages.py:2757
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -10976,7 +10983,7 @@ msgstr[1] "%(index)d von %(total)d Objekten ausgewählt"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2761
+#: src/orca/messages.py:2766
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -10986,7 +10993,7 @@ msgstr[1] "%d Bildschirmleser-Tastenkombinationen gefunden."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2769
+#: src/orca/messages.py:2774
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -10997,7 +11004,7 @@ msgstr[1] ""
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2776
+#: src/orca/messages.py:2781
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11006,7 +11013,7 @@ msgstr[1] "%d Leerzeichen"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2781
+#: src/orca/messages.py:2786
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -11014,7 +11021,7 @@ msgstr[0] "%d Tabulator"
 msgstr[1] "%d Tabulatoren"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2788
+#: src/orca/messages.py:2793
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11025,14 +11032,14 @@ msgstr[1] "%d Tabellen"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2797
+#: src/orca/messages.py:2802
 msgid "table of unknown size"
 msgstr "Tabelle mit unbekannter Dimension"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
 #. in a vertically infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2802
+#: src/orca/messages.py:2807
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
@@ -11042,7 +11049,7 @@ msgstr[1] "Tabelle mit %d Spalten, Zeilenanzahl unbekannt"
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
 #. in a horizontally infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2810
+#: src/orca/messages.py:2815
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
@@ -11050,7 +11057,7 @@ msgstr[0] "Tabelle mit %d Zeile, Spaltenanzahl unbekannt"
 msgstr[1] "Tabelle mit %d Zeilen, Spaltenanzahl unbekannt"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2815
+#: src/orca/messages.py:2820
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11059,7 +11066,7 @@ msgstr[1] "Tabelle mit %d Zeilen"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
-#: src/orca/messages.py:2829
+#: src/orca/messages.py:2834
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -11068,7 +11075,7 @@ msgstr[1] "Vor %d Sekunden"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
-#: src/orca/messages.py:2834
+#: src/orca/messages.py:2839
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
@@ -11077,7 +11084,7 @@ msgstr[1] "Vor %d Minuten"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
-#: src/orca/messages.py:2839
+#: src/orca/messages.py:2844
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
@@ -11086,7 +11093,7 @@ msgstr[1] "Vor %d Stunden"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
-#: src/orca/messages.py:2844
+#: src/orca/messages.py:2849
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -11095,7 +11102,7 @@ msgstr[1] "Vor %d Tagen"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2862
+#: src/orca/messages.py:2867
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11104,7 +11111,7 @@ msgstr[1] "%d nicht besuchte Links"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2870
+#: src/orca/messages.py:2875
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
