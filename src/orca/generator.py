@@ -332,6 +332,12 @@ class Generator:
             Generator.CACHED_DESCRIPTION[hash(obj)] = []
             return []
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus and obj != focus \
+           and description in [AXObject.get_name(focus), AXObject.get_description(focus)]:
+            Generator.CACHED_DESCRIPTION[hash(obj)] = []
+            return []
+
         Generator.CACHED_DESCRIPTION[hash(obj)] = [description]
         return [description]
 
