@@ -363,7 +363,7 @@ class Generator:
         # presenting Qt table cells because Qt keeps giving us a different object each and
         # every time we ask for the cell. File a bug against Qt to get them to stop that.
         if focus and obj != focus and AXObject.get_role(obj) != AXObject.get_role(focus):
-            name = AXObject.get_name(obj)
+            name = AXObject.get_name(obj) or AXObject.get_description(obj)
             if name and name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
                 return []
 
