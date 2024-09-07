@@ -2169,11 +2169,13 @@ class SpeechGenerator(generator.Generator):
         if args.get("includeContext") is False:
             return []
 
+        # Do not call _generate_accessible_static_text here for ancestors.
+        # The roles of objects which typically have static text we want to
+        # present (panels, groupings, dialogs) already generate it. If we
+        # include it here, it will be double-presented.
         format_type = args.get("formatType", "unfocused")
-        if format_type == "focused":
+        if format_type in ["focused", "ancestor"]:
             return []
-        if format_type == "ancestor":
-            return self._generate_accessible_static_text(obj, **args)
 
         result = []
         if format_type.endswith("WhereAmI"):
