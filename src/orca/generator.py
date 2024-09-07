@@ -365,7 +365,7 @@ class Generator:
         # every time we ask for the cell. https://bugreports.qt.io/browse/QTBUG-128558
         # Once that's fixed we can remove the role check.
         if focus and obj != focus and AXObject.get_role(obj) != AXObject.get_role(focus):
-            name = AXObject.get_name(obj)
+            name = AXObject.get_name(obj) or AXObject.get_description(obj)
             if name and name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
                 return []
 
