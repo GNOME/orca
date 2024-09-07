@@ -3766,6 +3766,9 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_state_invalid(obj, **args)
         if result and not isinstance(result[-1], Pause):
             result += self._generate_pause(obj, **args)
+        result += self._generate_state_sensitive(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generate_pause(obj, **args)
         result += self._generate_tree_item_level(obj, **args)
         result += self._generate_state_unselected(obj, **args)
         result += self._generate_default_suffix(obj, **args)
