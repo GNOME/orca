@@ -356,7 +356,8 @@ class Generator:
         focus = focus_manager.get_manager().get_locus_of_focus()
         # TODO - JD: The role check is a quick workaround for issue #535 in which we stopped
         # presenting Qt table cells because Qt keeps giving us a different object each and
-        # every time we ask for the cell. File a bug against Qt to get them to stop that.
+        # every time we ask for the cell. https://bugreports.qt.io/browse/QTBUG-128558
+        # Once that's fixed we can remove the role check.
         if focus and obj != focus and AXObject.get_role(obj) != AXObject.get_role(focus):
             name = AXObject.get_name(obj)
             if name and name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
