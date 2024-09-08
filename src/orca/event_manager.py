@@ -20,6 +20,11 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-locals
 
 """Manager for accessible object events."""
 
@@ -60,6 +65,7 @@ class EventManager:
         self._gidle_id        = 0
         self._gidle_lock      = threading.Lock()
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
+        self._event_history = {} # key: event type, value: (hash of app, time as float)
         debug.printMessage(debug.LEVEL_INFO, 'Event manager initialized', True)
 
     def activate(self):
@@ -179,10 +185,6 @@ class EventManager:
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
 
-        # pylint: disable=too-many-return-statements
-        # pylint: disable=too-many-branches
-        # pylint: disable=too-many-statements
-
         debug.printMessage(debug.LEVEL_INFO, '')
         tokens = ["EVENT MANAGER:", event]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -196,11 +198,6 @@ class EventManager:
         if event_type.startswith('window') or event_type.startswith('mouse:button'):
             return False
 
-        if self._in_deluge() and self._ignore_during_deluge(event):
-            msg = 'EVENT MANAGER: Ignoring event type due to deluge'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
         # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher
         # is used and something else has claimed focus. We don't want to update our
         # location or the keygrabs in response.
@@ -212,35 +209,31 @@ class EventManager:
         # Keep these checks early in the process so we can assume them throughout
         # the rest of our checks.
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus == event.source or AXUtilities.is_focused(event.source):
+        if focus == event.source \
+           or AXUtilities.is_focused(event.source) or AXUtilities.is_selected(event.source):
             return False
         if focus == event.any_data:
             return False
 
+        last_app, last_time = self._event_history.get(event_type, (None, 0))
+        app = AXObject.get_application(event.source)
+        ignore = last_app == hash(app) and time.time() - last_time < 0.1
+        self._event_history[event_type] = hash(app), time.time()
+        if ignore:
+            msg = "EVENT_MANAGER: Ignoring due to multiple events of this type in short time"
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            return True
+
         if event_type.startswith("object:children-changed"):
-            child = event.any_data
-            if child is None:
-                msg = 'EVENT_MANAGER: Ignoring due to lack of event.any_data'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            app = AXObject.get_application(event.source)
-            app_name = AXObject.get_name(app).lower()
-            if "remove" in event_type and app_name in ["gnome-shell", ""]:
-                msg = "EVENT MANAGER: Ignoring event based on type and app"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
             if "remove" in event_type and focus and AXObject.is_dead(focus):
                 return False
-            if AXObject.is_dead(child):
-                msg = 'EVENT_MANAGER: Ignoring due to dead event.any_data'
+            child = event.any_data
+            if child is None or AXObject.is_dead(child):
+                msg = "EVENT_MANAGER: Ignoring due to null/dead event.any_data"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
                 msg = 'EVENT_MANAGER: Ignoring due to role of event.any_data'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return True
-            if event_type.endswith("system") and app_name == "thunderbird":
-                msg = "EVENT MANAGER: Ignoring event based on type and app"
                 debug.printMessage(debug.LEVEL_INFO, msg, True)
                 return True
             script = script_manager.get_manager().get_active_script()
@@ -390,12 +383,6 @@ class EventManager:
             return
 
         self._queue_println(e)
-
-        if self._in_flood() and self._prioritize_during_flood(e):
-            msg = 'EVENT MANAGER: Pruning event queue due to flood.'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            self._prune_events_during_flood()
-
         app = AXObject.get_application(e.source)
         tokens = ["EVENT MANAGER: App for event source is", app]
         debug.printTokens(debug.LEVEL_INFO, tokens, True)
@@ -559,9 +546,6 @@ class EventManager:
     def _is_activatable_event(self, event, script=None):
         """Determines if event should cause us to change the active script."""
 
-        # pylint: disable=too-many-return-statements
-        # pylint: disable=too-many-branches
-
         if not event.source:
             return False, "event.source? What event.source??"
 
@@ -616,132 +600,6 @@ class EventManager:
 
         return False
 
-    def _ignore_during_deluge(self, event):
-        """Returns true if this event should be ignored during a deluge."""
-
-        if self._event_source_is_dead(event):
-            return True
-
-        ignore = ["object:text-changed:delete",
-                  "object:text-changed:insert",
-                  "object:text-changed:delete:system",
-                  "object:text-changed:insert:system",
-                  "object:text-attributes-changed",
-                  "object:text-caret-moved",
-                  "object:children-changed:add",
-                  "object:children-changed:add:system",
-                  "object:children-changed:remove",
-                  "object:children-changed:remove:system",
-                  "object:property-change:accessible-name",
-                  "object:property-change:accessible-description",
-                  "object:selection-changed",
-                  "object:state-changed:showing",
-                  "object:state-changed:sensitive"]
-
-        if event.type not in ignore:
-            return False
-
-        return event.source != focus_manager.get_manager().get_locus_of_focus()
-
-    def _in_flood(self):
-        """Returns True if we're in an event flood."""
-
-        size = self._event_queue.qsize()
-        if size > 50:
-            msg = f"EVENT MANAGER: FLOOD? Queue size is {size}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False
-
-    def _in_deluge(self):
-        """Returns True if we're in a deluge / huge flood."""
-
-        size = self._event_queue.qsize()
-        if size > 100:
-            msg = f"EVENT MANAGER: DELUGE! Queue size is {size}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False
-
-    def _process_during_flood(self, event, focus=None):
-        """Returns true if this event should be processed during a flood."""
-
-        if self._event_source_is_dead(event):
-            return False
-
-        ignore = ["object:text-changed:delete",
-                  "object:text-changed:insert",
-                  "object:text-changed:delete:system",
-                  "object:text-changed:insert:system",
-                  "object:text-attributes-changed",
-                  "object:text-caret-moved",
-                  "object:children-changed:add",
-                  "object:children-changed:add:system",
-                  "object:children-changed:remove",
-                  "object:children-changed:remove:system",
-                  "object:property-change:accessible-name",
-                  "object:property-change:accessible-description",
-                  "object:selection-changed",
-                  "object:state-changed:showing",
-                  "object:state-changed:sensitive"]
-
-        if event.type not in ignore:
-            return True
-
-        focus = focus or focus_manager.get_manager().get_locus_of_focus()
-        return event.source == focus
-
-    def _prioritize_during_flood(self, event):
-        """Returns true if this event should be prioritized during a flood."""
-
-        if event.type.startswith("object:state-changed:focused") \
-           or event.type.startswith("object:state-changed:selected"):
-            return event.detail1
-
-        if event.type.startswith("object:text-selection-changed"):
-            return True
-
-        if event.type.startswith("window:activate") or event.type.startswith("window:deactivate"):
-            return True
-
-        if event.type.startswith("object:state-changed:active"):
-            return AXUtilities.is_frame(event.source) or AXUtilities.is_window(event.source)
-
-        if event.type.startswith("document:load-complete") \
-           or event.type.startswith("object:state-changed:busy"):
-            return True
-
-        return False
-
-    def _prune_events_during_flood(self):
-        """Gets rid of events we don't care about during a flood."""
-
-        old_size = self._event_queue.qsize()
-
-        new_queue = queue.Queue(0)
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        while not self._event_queue.empty():
-            try:
-                event = self._event_queue.get()
-            except Exception as error:
-                msg = f"EVENT MANAGER: Exception pruning events: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-            else:
-                if self._process_during_flood(event, focus):
-                    new_queue.put(event)
-                    self._queue_println(event, is_prune=False)
-            finally:
-                if not self._event_queue.empty():
-                    self._event_queue.task_done()
-
-        self._event_queue = new_queue
-        new_size = self._event_queue.qsize()
-
-        msg = f"EVENT MANAGER: {old_size - new_size} events pruned. New size: {new_size}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-
     def _should_process_event(self, event, event_script, active_script):
         """Returns True if this event should be processed."""
 
@@ -767,10 +625,6 @@ class EventManager:
 
     def _process_object_event(self, event):
         """Handles all object events destined for scripts."""
-
-        # pylint: disable=too-many-return-statements
-        # pylint: disable=too-many-branches
-        # pylint: disable=too-many-statements
 
         if self._is_obsoleted_by(event):
             return
@@ -802,16 +656,6 @@ class EventManager:
             tokens = ["EVENT MANAGER: Ignoring iconified object:", event.source]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
             return
-
-        if self._in_flood():
-            if not self._process_during_flood(event):
-                msg = 'EVENT MANAGER: Not processing this event due to flood.'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                return
-            if self._prioritize_during_flood(event):
-                msg = 'EVENT MANAGER: Pruning event queue due to flood.'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
-                self._prune_events_during_flood()
 
         debug.printObjectEvent(debug.LEVEL_INFO, event, timestamp=True)
         if not debug.eventDebugFilter or debug.eventDebugFilter.match(event_type) \
