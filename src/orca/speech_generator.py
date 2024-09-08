@@ -1735,11 +1735,9 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        if AXUtilities.is_sensitive(obj):
-            return []
-
-        result = [object_properties.STATE_INSENSITIVE_SPEECH]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result = super()._generate_state_sensitive(obj, **args)
+        if result:
+            result.extend(self.voice(STATE, obj=obj, **args))
         return result
 
     @log_generator_output
