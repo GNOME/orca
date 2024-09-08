@@ -206,6 +206,10 @@ class EventManager:
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             return True
 
+        # Events on the window itself are typically something we want to handle.
+        if AXUtilities.is_frame(event.source):
+            return False
+
         # Keep these checks early in the process so we can assume them throughout
         # the rest of our checks.
         focus = focus_manager.get_manager().get_locus_of_focus()
