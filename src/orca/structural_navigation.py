@@ -1015,6 +1015,8 @@ class StructuralNavigation:
         if not text and AXUtilities.is_list(obj):
             children = [x for x in AXObject.iter_children(obj, AXUtilities.is_list_item)]
             text = " ".join(list(map(self._getText, children)))
+        if not text:
+            text = AXObject.get_name(obj)
 
         return text
 
