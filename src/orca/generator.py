@@ -792,6 +792,9 @@ class Generator:
         if AXUtilities.is_sensitive(obj):
             return []
 
+        if self._script.utilities.isSpreadSheetCell(obj):
+            return []
+
         if self._mode == "braille":
             return [object_properties.STATE_INSENSITIVE_BRAILLE]
         if self._mode == "speech":
