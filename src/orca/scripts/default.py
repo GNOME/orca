@@ -1381,6 +1381,13 @@ class Script(script.Script):
         if not AXUtilities.selected_state_did_change(event.source):
             return
 
+        if event.detail1 and AXUtilities.is_page_tab(event.source) \
+           and not AXUtilities.is_showing(event.source):
+            AXObject.clear_cache(event.source, False, "selected page tab lacks showing state")
+            if AXUtilities.is_showing(event.source):
+                msg = "DEFAULT: Event source is now showing"
+                debug.printMessage(debug.LEVEL_INFO, msg, True)
+
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "DEFAULT: Event is not for locusOfFocus"
             debug.printMessage(debug.LEVEL_INFO, msg, True)
