@@ -905,7 +905,10 @@ class Script(script.Script):
     def process_routing_key(self, event=None):
         """Processes a cursor routing key."""
 
-        self.presentationInterrupt()
+        # Don't kill flash here because it will restore the previous contents and
+        # then process the routing key. If the contents accept a click action, this
+        # would result in clicking on the link instead of clearing the flash message.
+        self.presentationInterrupt(killFlash=False)
         braille.process_routing_key(event)
         return True
 

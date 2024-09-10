@@ -363,7 +363,9 @@ class Region:
         is 0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
-        pass
+
+        msg = f"BRAILLE REGION: Process routing key. Offset: {offset}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -508,6 +510,9 @@ class Component(Region):
         is 0-based, where 0 represents the leftmost character of string
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
+
+        msg = f"BRAILLE COMPONENT: Process routing key. Offset: {offset}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         script = script_manager.get_manager().get_active_script()
         if script and script.utilities.grabFocusBeforeRouting(self.accessible, offset):
@@ -689,6 +694,9 @@ class Text(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display.
         """
+
+        msg = f"BRAILLE TEXT: Process routing key. Offset: {offset}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         caretOffset = self.getCaretOffset(offset)
 
@@ -874,6 +882,9 @@ class ReviewText(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
+        msg = f"BRAILLE REVIEW TEXT: Process routing key. Offset: {offset}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
+
         caretOffset = self.getCaretOffset(offset)
         script = script_manager.get_manager().get_active_script()
         script.utilities.setCaretOffset(self.accessible, caretOffset)
@@ -994,6 +1005,9 @@ class Line:
         is 0-based, where 0 represents the leftmost character of string
         associated with this line.  Note that the zeroeth character may have
         been scrolled off the display."""
+
+        msg = f"BRAILLE LINE: Process routing key. Offset: {offset}"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
 
         [region, regionOffset] = self.getRegionAtOffset(offset)
         if region:
@@ -1491,12 +1505,17 @@ def _flashCallback():
 
     if _flashEventSourceId:
         (_lines, _regionWithFocus, viewport, flashTime) = _saved
+        msg = "BRAILLE: Flash message callback"
+        debug.printMessage(debug.LEVEL_INFO, msg, True)
         refresh(panToCursor=False, stopFlash=False)
         _flashEventSourceId = 0
 
     return False
 
 def killFlash(restoreSaved=True):
+    msg = "BRAILLE: Kill flash message"
+    debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+
     global _flashEventSourceId
     global _lines
     global _regionWithFocus
@@ -1530,6 +1549,9 @@ def _initFlash(flashTime):
 
     global _saved
     global _flashEventSourceId
+
+    msg = f"BRAILLE: Initializing flash: Source ID: {_flashEventSourceId}"
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     if _flashEventSourceId:
         if _flashEventSourceId > 0:
@@ -1584,6 +1606,9 @@ def displayMessage(message, cursor=-1, flashTime=0):
                   means display the message until some other message
                   comes along or the user presses a cursor routing key.
     """
+
+    msg = f"BRAILLE: Display message: '{message}' (flashTime: {flashTime})"
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
 
     _initFlash(flashTime)
     clear()
@@ -1737,8 +1762,9 @@ def process_routing_key(event):
     the dictionary form of the expanded BrlAPI event.
     """
 
-    # If a message is being flashed, we'll use a routing key to dismiss it.
-    #
+    msg = f"BRAILLE: Process routing key. Source ID: {_flashEventSourceId}"
+    debug.printMessage(debug.LEVEL_INFO, msg, True)
+
     if _flashEventSourceId:
         killFlash()
         return
