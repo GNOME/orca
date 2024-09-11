@@ -113,7 +113,7 @@ class AXUtilitiesDebugging:
             module_name = inspect.getmodulename(obj.filename)
             return f"{module_name}.{obj.function}"
 
-        return AXUtilitiesDebugging._format_string(str(obj))
+        return str(obj)
 
     @staticmethod
     def actions_as_string(obj):
