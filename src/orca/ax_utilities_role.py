@@ -2011,6 +2011,76 @@ class AXUtilitiesRole:
         return role in roles
 
     @staticmethod
+    def is_text_input_date(obj, role=None):
+        """Returns True if obj is a date text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "date"
+
+    @staticmethod
+    def is_text_input_email(obj, role=None):
+        """Returns True if obj is an email text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "email"
+
+    @staticmethod
+    def is_text_input_number(obj, role=None):
+        """Returns True if obj is a numeric text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "number"
+
+    @staticmethod
+    def is_text_input_telephone(obj, role=None):
+        """Returns True if obj is a telephone text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "telephone"
+
+    @staticmethod
+    def is_text_input_time(obj, role=None):
+        """Returns True if obj is a time text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "time"
+
+    @staticmethod
+    def is_text_input_url(obj, role=None):
+        """Returns True if obj is a url text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "url"
+
+    @staticmethod
+    def is_text_input_week(obj, role=None):
+        """Returns True if obj is a week text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("text-input-type") == "week"
+
+    @staticmethod
     def is_time(obj, _role=None):
         """Returns True if obj has the time role"""
 
