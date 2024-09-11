@@ -52,10 +52,11 @@ class AXUtilitiesDebugging:
     @staticmethod
     def _format_string(string=""):
         string = string.replace("\n", "\\n").replace("\ufffc", "[OBJ]")
-        words = string.split()
-        if len(words) > 10:
-            string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+        if len(string) < 100:
+            return string
 
+        words = string.split()
+        string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
         return string
 
     @staticmethod

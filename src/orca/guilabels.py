@@ -331,6 +331,10 @@ KB_HEADER_KEY_BINDING = _("Key Binding")
 KB_GROUP_DEFAULT = C_("keybindings", "Default")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to debugging.
+KB_GROUP_DEBUGGING_TOOLS = C_("keybindings", "Debugging Tools")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to its "learn mode". Please use the same translation as done
 # in cmdnames.py
 KB_GROUP_LEARN_MODE = C_("keybindings", "Learn mode")

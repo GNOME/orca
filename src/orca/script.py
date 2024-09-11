@@ -48,6 +48,7 @@ from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
 from . import debug
+from . import debugging_tools_manager
 from . import flat_review_finder
 from . import flat_review_presenter
 from . import keybindings
@@ -166,6 +167,11 @@ class Script:
         """Returns the caret navigation support for this script."""
 
         return None
+
+    def get_debugging_tools_manager(self):
+        """Returns the debugging tools manager for this script."""
+
+        return debugging_tools_manager.get_manager()
 
     def get_utilities(self):
         """Returns the utilities for this script."""

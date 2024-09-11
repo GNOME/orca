@@ -2199,6 +2199,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterLearnMode = self._createNode(guilabels.KB_GROUP_LEARN_MODE)
         iterMouseReviewer = self._createNode(guilabels.KB_GROUP_MOUSE_REVIEW)
         iterActionPresenter = self._createNode(guilabels.KB_GROUP_ACTIONS)
+        iterDebuggingTools = self._createNode(guilabels.KB_GROUP_DEBUGGING_TOOLS)
 
         if not self.kbindings:
             layout = settings_manager.get_manager().get_setting('keyboardLayout')
@@ -2234,6 +2235,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
             waiKeyBindings = self.script.get_where_am_i_presenter().get_bindings(
                 is_desktop=isDesktop)
+            debuggingKeyBindings = self.script.get_debugging_tools_manager().get_bindings(
+                is_desktop=isDesktop)
 
             for kb in allKeyBindings.key_bindings:
                 if not self.kbindings.has_key_binding(kb, "strict"):
@@ -2264,6 +2267,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterActionPresenter)
                     elif mrKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterMouseReviewer)
+                    elif debuggingKeyBindings.has_key_binding(kb, "description"):
+                        self._insertRow(handl, kb, iterDebuggingTools)
                     elif not defKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     elif kb.keysymstring:

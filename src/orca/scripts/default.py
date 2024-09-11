@@ -173,11 +173,6 @@ class Script(script.Script):
                 Script.cycle_settings_profile,
                 cmdnames.CYCLE_SETTINGS_PROFILE)
 
-        self.input_event_handlers["cycleDebugLevelHandler"] = \
-            input_event.InputEventHandler(
-                Script.cycle_debug_level,
-                cmdnames.CYCLE_DEBUG_LEVEL)
-
         self.input_event_handlers.update(self.get_notification_presenter().get_handlers())
         self.input_event_handlers.update(self.get_flat_review_finder().get_handlers())
         self.input_event_handlers.update(self.get_flat_review_presenter().get_handlers())
@@ -191,6 +186,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
         self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
         self.input_event_handlers.update(self.get_action_presenter().get_handlers())
+        self.input_event_handlers.update(self.get_debugging_tools_manager().get_handlers())
 
     def get_listeners(self):
         """Sets up the AT-SPI event listeners for this script."""
@@ -386,6 +382,11 @@ class Script(script.Script):
         for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
+        bindings = self.get_debugging_tools_manager().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
+            keyBindings.add(keyBinding)
+
         return keyBindings
 
     def get_key_bindings(self, enabled_only=True):
@@ -442,13 +443,6 @@ class Script(script.Script):
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("cycleSettingsProfileHandler")))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.DEFAULT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers.get("cycleDebugLevelHandler")))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -1053,29 +1047,6 @@ class Script(script.Script):
         self.setup_input_event_handlers()
 
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
-        return True
-
-    def cycle_debug_level(self, _event=None):
-        """Cycles through the existing debug levels"""
-        levels = [debug.LEVEL_ALL, "all",
-                  debug.LEVEL_INFO, "info",
-                  debug.LEVEL_WARNING, "warning",
-                  debug.LEVEL_SEVERE, "severe",
-                  debug.LEVEL_OFF, "off"]
-
-        try:
-            levelIndex = levels.index(debug.debugLevel) + 2
-        except Exception:
-            levelIndex = 0
-        else:
-            if levelIndex >= len(levels):
-                levelIndex = 0
-
-        debug.debugLevel = levels[levelIndex]
-        briefMessage = levels[levelIndex + 1]
-        fullMessage =  f"Debug level {briefMessage}."
-        self.presentMessage(fullMessage, briefMessage)
-
         return True
 
     ########################################################################

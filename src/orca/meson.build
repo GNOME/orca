@@ -79,6 +79,7 @@ lib_sources = [
   'cmdnames.py',
   'colornames.py',
   'debug.py',
+  'debugging_tools_manager.py',
   'event_manager.py',
   'flat_review.py',
   'flat_review_finder.py',

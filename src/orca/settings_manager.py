@@ -117,6 +117,18 @@ class SettingsManager:
 
         debug.print_message(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
 
+    def get_overridden_settings_for_debugging(self):
+        """Returns overridden settings for the purpose of debugging."""
+
+        changed = {}
+        for key, value in self.default_general.items():
+            if value != self.general.get(key) and key not in self.customized_settings:
+                changed[key] = self.general.get(key)
+        for key, value in self._app_general.items():
+            if value != self.general.get(key):
+                changed[key] = self.general.get(key)
+        return changed
+
     def activate(self, prefsDir=None, customSettings={}):
         """Activates this manager."""
 

@@ -540,6 +540,33 @@ CPU_AND_MEMORY_USAGE_UNKNOWN = _("CPU and memory usage unknown")
 # message presents the levels to the user.
 CPU_AND_MEMORY_USAGE_LEVELS = _("CPU: %d%%. Memory: %d%%")
 
+# Translators: Orca has a command for advanced users and developers to clear
+# the AT-SPI cache in case there is stale information due to an application
+# bug. This message is presented when the user tried to clear the cache but
+# an error occurred.
+DEBUG_CLEAR_CACHE_FAILED = _("Clearing cache failed.")
+
+# Translators: Orca has a command for advanced users and developers to clear
+# the AT-SPI cache in case there is stale information due to an application
+# bug. This message is presented when the user performs the command.
+DEBUG_CLEAR_CACHE = _("Clearing cache.")
+
+# Translators: this is a debug message for advanced users and developers. It
+# describes a command to print detailed debugging information about the current
+# state with respect to the accessible applications being used, such as the
+# accessibility tree of the current window, a list of all the running accessible
+# objects, etc. This message is presented to confirm to the user that the snapshot
+# capture has begun.
+DEBUG_CAPTURE_SNAPSHOT_START = _("Capturing debugging snapshot")
+
+# Translators: this is a debug message for advanced users and developers. It
+# describes a command to print detailed debugging information about the current
+# state with respect to the accessible applications being used, such as the
+# accessibility tree of the current window, a list of all the running accessible
+# objects, etc. This message is presented to confirm to the user that the snapshot
+# capture has begun.
+DEBUG_CAPTURE_SNAPSHOT_END = _("Debugging snapshot captured")
+
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box. The string
 # substitution is the name of the button (e.g. "OK" or "Close").
