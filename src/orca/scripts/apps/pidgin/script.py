@@ -88,7 +88,7 @@ class Script(gtk.Script):
 
         if AXUtilities.is_selected(event.any_data):
             msg = "PIDGIN: Not presenting addition of already-selected tab"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         # In the chat window, the frame name changes to reflect the active chat.
@@ -100,7 +100,7 @@ class Script(gtk.Script):
                 break
         else:
             tokens = ["PIDGIN:", frame, "does not seem to be a chat window"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         line = messages.CHAT_NEW_TAB % AXObject.get_name(event.any_data)
@@ -144,12 +144,12 @@ class Script(gtk.Script):
 
         if not settings.enableSadPidginHack:
             msg = "PIDGIN: Hack for missing events disabled"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             super().on_window_activated(event)
             return
 
         msg = "PIDGIN: Starting hack for missing events"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
@@ -157,7 +157,7 @@ class Script(gtk.Script):
         AXUtilities.find_all_page_tabs(event.source)
 
         msg = "PIDGIN: Hack to work around missing events complete"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         super().on_window_activated(event)
 
     def on_expanded_changed(self, event):

@@ -35,5 +35,5 @@ class Utilities(script_utilities.Utilities):
         """Returns true if we'll echo this character."""
 
         msg = "SLEEP MODE: Will not echo character."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return False

@@ -58,35 +58,35 @@ class SpellCheck:
 
     def activate(self, window):
         tokens = ["SPELL CHECK: Attempting activation for", window]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not self._isCandidateWindow(window):
             tokens = ["SPELL CHECK:", window, "is not spellcheck window"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if self._hasChangeToEntry:
             self._changeToEntry = self._findChangeToEntry(window)
             if not self._changeToEntry:
                 msg = 'SPELL CHECK: Change-to entry not found'
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
         self._errorWidget = self._findErrorWidget(window)
         if not self._errorWidget:
             msg = 'SPELL CHECK: Error widget not found'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         self._suggestionsList = self._findSuggestionsList(window)
         if not self._suggestionsList:
             msg = 'SPELL CHECK: Suggestions list not found'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         self._window = window
         self._activated = True
         msg = 'SPELL CHECK: Activation complete'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
     def deactivate(self):

@@ -280,7 +280,7 @@ class StructuralNavigationObject:
 
         if self._dialogData is None:
             msg = "STRUCTURAL NAVIGATION: Cannot show list without dialog data"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         title, columnHeaders, rowData = self._dialogData()
@@ -590,7 +590,7 @@ class StructuralNavigation:
 
         if refresh:
             msg = "STRUCTURAL NAVIGATION: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -617,14 +617,14 @@ class StructuralNavigation:
             self.functions.extend(structuralNavigationObject.functions)
 
         msg = f"STRUCTURAL NAVIGATION: Handlers set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the structural navigation keybindings."""
 
         if refresh:
             msg = "STRUCTURAL NAVIGATION: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -658,7 +658,7 @@ class StructuralNavigation:
             self._handlers, self._bindings, False)
 
         msg = f"STRUCTURAL NAVIGATION: Bindings set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""
@@ -671,7 +671,7 @@ class StructuralNavigation:
             string = "None"
 
         msg = f"STRUCTURAL NAVIGATION: Last navigation event ({string}) is last key event: {result}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     def refresh_bindings_and_grabs(self, script, reason=""):
@@ -680,7 +680,7 @@ class StructuralNavigation:
         msg = "STRUCTURAL NAVIGATION: Refreshing bindings and grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
             script.key_bindings.remove(binding, include_grabs=True)
@@ -718,9 +718,9 @@ class StructuralNavigation:
         msg = f"STRUCTURAL NAVIGATION: Suspended: {suspended}"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
@@ -741,7 +741,7 @@ class StructuralNavigation:
                 f"STRUCTURAL NAVIGATION: in modal dialog has changed from "
                 f"{self._inModalDialog} to {inModalDialog}"
             )
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.clearCache()
             self._inModalDialog = inModalDialog
 
@@ -751,7 +751,7 @@ class StructuralNavigation:
         matches = cache.get(key, [])
         if matches:
             tokens = ["STRUCTURAL NAVIGATION: Returning", len(matches), "matches from cache"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return matches.copy()
 
         if structuralNavigationObject.getter:
@@ -760,7 +760,7 @@ class StructuralNavigation:
             return []
         elif not AXObject.supports_collection(document):
             tokens = ["STRUCTURAL NAVIGATION:", document, "does not support collection"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
         else:
             rule = structuralNavigationObject.criteria(arg)
@@ -771,7 +771,7 @@ class StructuralNavigation:
             matches = [m for m in matches if AXObject.find_ancestor(m, lambda x: x == modalDialog)]
             tokens = ["STRUCTURAL NAVIGATION: Removed", {originalSize - len(matches)},
                       "objects outside of modal dialog", modalDialog]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         rv = matches.copy()
         cache[key] = matches
@@ -1921,11 +1921,11 @@ class StructuralNavigation:
         cell = AXTable.get_cell_at(obj, 0, 0)
         if not cell:
             tokens = ["STRUCTURAL NAVIGATION: Broken table interface for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             cell = AXObject.find_descendant(obj, AXUtilities.is_table_cell)
             if cell:
                 tokens = ["STRUCTURAL NAVIGATION: Located", cell, "for first cell"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.lastTableCell = [0, 0]
         if self._presentWithSayAll(cell, 0):

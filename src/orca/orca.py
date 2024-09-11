@@ -33,6 +33,7 @@ import faulthandler
 import gi
 import os
 import signal
+import subprocess
 import sys
 
 gi.require_version("Atspi", "2.0")
@@ -62,6 +63,7 @@ from . import settings_manager
 from . import speech
 from . import sound
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 _logger = logger.getLogger()
 
@@ -100,7 +102,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     Returns True to indicate the input event has been consumed.
     """
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
 
     global _userSettings
 
@@ -121,17 +123,17 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             settings_manager.get_manager().set_profile(_profile)
             reloaded = True
         except ImportError:
-            debug.printException(debug.LEVEL_INFO)
+            debug.print_exception(debug.LEVEL_INFO)
         except Exception:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.print_exception(debug.LEVEL_SEVERE)
     else:
         _profile = settings_manager.get_manager().profile
         try:
             _userSettings = settings_manager.get_manager().get_general_settings(_profile)
         except ImportError:
-            debug.printException(debug.LEVEL_INFO)
+            debug.print_exception(debug.LEVEL_INFO)
         except Exception:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.print_exception(debug.LEVEL_SEVERE)
 
     if not script:
         script = script_manager.get_manager().get_default_script()
@@ -140,29 +142,29 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     if settings_manager.get_manager().get_setting('enableSpeech'):
         msg = 'ORCA: About to enable speech'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
                 script.speakMessage(messages.SETTINGS_RELOADED)
         except Exception:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.print_exception(debug.LEVEL_SEVERE)
     else:
         msg = 'ORCA: Speech is not enabled in settings'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     if settings_manager.get_manager().get_setting('enableBraille'):
         msg = 'ORCA: About to enable braille'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         try:
             braille.init(input_event_manager.get_manager().process_braille_event)
         except Exception:
-            debug.printException(debug.LEVEL_WARNING)
+            debug.print_exception(debug.LEVEL_WARNING)
             msg = 'ORCA: Could not initialize connection to braille.'
-            debug.printMessage(debug.LEVEL_WARNING, msg, True)
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
     else:
         msg = 'ORCA: Braille is not enabled in settings'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
 
     if settings_manager.get_manager().get_setting('enableMouseReview'):
@@ -179,7 +181,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     event_manager.get_manager().activate()
     script_manager.get_manager().activate()
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
 
     return True
 
@@ -196,12 +198,12 @@ def init():
     module has already been initialized.
     """
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Initializing', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Initializing', True)
 
     global _initialized
 
     if _initialized and settings_manager.get_manager().is_screen_reader_service_enabled():
-        debug.printMessage(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
+        debug.print_message(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
         return False
 
     # Do not hang on initialization if we can help it.
@@ -222,14 +224,14 @@ def init():
     if a11yAppSettings:
         a11yAppSettings.connect('changed', onEnabledChanged)
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Initialized', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Initialized', True)
 
     return True
 
 def start():
     """Starts Orca."""
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Starting', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Starting', True)
 
     if not _initialized:
         init()
@@ -251,9 +253,9 @@ def start():
 
     Gdk.notify_startup_complete()
     msg = 'ORCA: Startup complete notification made'
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
+    debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Starting Atspi main event loop', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Starting Atspi main event loop', True)
     Atspi.event_main()
 
 def die(exitCode=1):
@@ -265,14 +267,35 @@ def die(exitCode=1):
 
     shutdown()
     sys.exit(exitCode)
-    if exitCode > 1:
-        os.kill(pid, signal.SIGTERM)
+
+def examineProcesses(force=False):
+    if force:
+        level = debug.LEVEL_SEVERE
+    else:
+        level = debug.LEVEL_INFO
+
+    if level < debug.debugLevel:
+        return
+
+    desktop = AXUtilities.get_desktop()
+    msg = f"Desktop has {AXObject.get_child_count(desktop)} apps:"
+    debug.print_message(level, msg, True)
+    for i, app in enumerate(AXObject.iter_children(desktop)):
+        pid = AXObject.get_process_id(app)
+        name = AXObject.get_name(app) or "[DEAD]"
+        try:
+            cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
+        except Exception as error:
+            cmdline = f"EXCEPTION: {error}"
+        else:
+            cmdline = cmdline.replace("\x00", " ")
+        msg = f"{i+1:3}. {name} (pid: {pid}) {cmdline}"
+        debug.print_message(level, msg, True)
 
 def timeout(signum=None, frame=None):
     msg = 'TIMEOUT: something has hung. Aborting.'
-    debug.printMessage(debug.LEVEL_SEVERE, msg, True)
-    debug.printStack(debug.LEVEL_SEVERE)
-    debug.examineProcesses(force=True)
+    debug.print_message(debug.LEVEL_SEVERE, msg, True)
+    examineProcesses(force=True)
     die(EXIT_CODE_HANG)
 
 def shutdown(script=None, inputEvent=None):
@@ -282,7 +305,7 @@ def shutdown(script=None, inputEvent=None):
     was never initialized.
     """
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
 
     global _initialized
 
@@ -324,9 +347,9 @@ def shutdown(script=None, inputEvent=None):
     _initialized = False
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
 
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
     Atspi.event_quit()
-    debug.printMessage(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
+    debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
 
     return True
 
@@ -336,7 +359,7 @@ def shutdownOnSignal(signum, frame):
 
     signalString = f'({signal.strsignal(signum)})'
     msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
+    debug.print_message(debug.LEVEL_INFO, msg, True)
 
     # Well...we'll try to exit nicely, but if we keep getting called,
     # something bad is happening, so just quit.
@@ -374,8 +397,7 @@ def shutdownOnSignal(signum, frame):
 def crashOnSignal(signum, frame):
     signalString = f'({signal.strsignal(signum)})'
     msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
-    debug.printMessage(debug.LEVEL_SEVERE, msg, True)
-    debug.printStack(debug.LEVEL_SEVERE)
+    debug.print_message(debug.LEVEL_SEVERE, msg, True)
     orca_modifier_manager.get_manager().unset_orca_modifiers(f"Shutting down: {signalString}.")
 
     script = script_manager.get_manager().get_active_script()
@@ -403,7 +425,9 @@ def main():
     session = "%s %s".strip() % (sessionType, sessionDesktop)
     if session:
         msg += f" Session: {session}"
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
+    debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    examineProcesses(False)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
         faulthandler.enable(file=debug.debugFile, all_threads=True)
@@ -422,21 +446,21 @@ def main():
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, crashOnSignal)
 
-    debug.printMessage(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not settings_manager.get_manager().is_accessibility_enabled():
         settings_manager.get_manager().set_accessibility(True)
 
-    debug.printMessage(debug.LEVEL_INFO, "ORCA: Initializing.", True)
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Initializing.", True)
     event_manager.get_manager().pause_queuing(True, True, "Initialization not complete.")
 
     init()
-    debug.printMessage(debug.LEVEL_INFO, "ORCA: Initialized.", True)
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
     try:
         script = script_manager.get_manager().get_default_script()
         script.presentMessage(messages.START_ORCA)
     except Exception:
-        debug.printException(debug.LEVEL_SEVERE)
+        debug.print_exception(debug.LEVEL_SEVERE)
 
     window = focus_manager.get_manager().find_active_window()
     if window and not focus_manager.get_manager().get_locus_of_focus():
@@ -460,11 +484,11 @@ def main():
 
     try:
         msg = "ORCA: Starting ATSPI registry."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         start() # waits until we stop the registry
     except Exception:
         msg = "ORCA: Exception starting ATSPI registry."
-        debug.printMessage(debug.LEVEL_SEVERE, msg, True)
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
         die(EXIT_CODE_HANG)
     return 0
 

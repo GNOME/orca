@@ -61,11 +61,11 @@ class AXSelection:
             count = Atspi.Selection.get_n_selected_children(obj)
         except Exception as error:
             tokens = ["AXSelection: Exception in get_selected_child_count:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
         tokens = ["AXSelection:", obj, "reports", count, "selected children"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
     @staticmethod
@@ -86,16 +86,16 @@ class AXSelection:
             child = Atspi.Selection.get_selected_child(obj, index)
         except Exception as error:
             tokens = ["AXSelection: Exception in get_selected_child:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if child == obj:
             tokens = ["AXSelection:", obj, "claims to be its own selected child"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         tokens = ["AXSelection:", child, "is selected child #", index, "of", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return child
 
     @staticmethod
@@ -117,7 +117,7 @@ class AXSelection:
                 child = Atspi.Selection.get_selected_child(obj, i)
             except Exception as error:
                 tokens = ["AXSelection: Exception in get_selected_children:", error]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return []
 
             if child is not None:
@@ -125,12 +125,12 @@ class AXSelection:
 
         if obj in children:
             tokens = ["AXSelection:", obj, "claims to be its own selected child"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             children.remove(obj)
 
         result = list(children)
         if len(result) != count:
             tokens = ["AXSelection: Selected child count of", obj, f"is {count}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result

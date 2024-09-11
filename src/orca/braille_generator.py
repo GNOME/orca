@@ -76,7 +76,7 @@ class BrailleGenerator(generator.Generator):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             tokens = [f"BRAILLE GENERATOR: {func.__name__}:", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
         return wrapper
 
@@ -85,7 +85,7 @@ class BrailleGenerator(generator.Generator):
 
         if not settings_manager.get_manager().get_setting("enableBraille") \
            and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.printMessage(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
+            debug.print_message(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
             return [[], None]
 
         if obj == focus_manager.get_manager().get_locus_of_focus() \
@@ -133,7 +133,7 @@ class BrailleGenerator(generator.Generator):
             candidates = list(filter(pred, result))
             tokens = ["BRAILLE GENERATOR: Could not determine focused region for",
                       obj, "Candidates:", candidates]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if len(candidates) == 1:
                 focused_region = candidates[0]
 

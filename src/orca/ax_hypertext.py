@@ -62,11 +62,11 @@ class AXHypertext:
             count = Atspi.Hypertext.get_n_links(obj)
         except Exception as error:
             msg = f"AXHypertext: Exception in _get_link_count: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
         tokens = ["AXHypertext:", obj, f"reports {count} hyperlinks"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
     @staticmethod
@@ -80,7 +80,7 @@ class AXHypertext:
             link = Atspi.Hypertext.get_link(obj, index)
         except Exception as error:
             msg = f"AXHypertext: Exception in _get_link_at_index: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
         return link
@@ -98,7 +98,7 @@ class AXHypertext:
 
         tokens = [f"AXHypertext: {len(links)} hyperlinks found in", obj,
                   f"between start: {start_offset} and end: {end_offset}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return links
 
     @staticmethod
@@ -112,7 +112,7 @@ class AXHypertext:
                 links.append(link)
 
         tokens = [f"AXHypertext: {len(links)} hyperlinks found in", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return links
 
     @staticmethod
@@ -124,11 +124,11 @@ class AXHypertext:
             uri = Atspi.Hyperlink.get_uri(link, index)
         except Exception as error:
             msg = f"AXHypertext: Exception in get_link_uri: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
         tokens = ["AXHypertext: URI of", obj, f"at index {index} is {uri}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return uri
 
     @staticmethod
@@ -142,18 +142,18 @@ class AXHypertext:
 
         if link is None:
             tokens = ["AXHypertext: Couldn't get hyperlink for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
         try:
             offset = Atspi.Hyperlink.get_start_index(link)
         except Exception as error:
             msg = f"AXHypertext: Exception in get_link_start_offset: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
 
         tokens = ["AXHypertext: Start offset of", obj, f"is {offset}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return offset
 
     @staticmethod
@@ -167,18 +167,18 @@ class AXHypertext:
 
         if link is None:
             tokens = ["AXHypertext: Couldn't get hyperlink for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1
 
         try:
             offset = Atspi.Hyperlink.get_end_index(link)
         except Exception as error:
             msg = f"AXHypertext: Exception in get_link_end_offset: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
 
         tokens = ["AXHypertext: End offset of", obj, f"is {offset}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return offset
 
     @staticmethod
@@ -196,7 +196,7 @@ class AXHypertext:
             basename = re.sub(r"[-_]", " ", basename)
 
         tokens = ["AXHypertext: Basename for link", obj, f"is '{basename}'"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return basename
 
     @staticmethod
@@ -210,7 +210,7 @@ class AXHypertext:
             index = Atspi.Hypertext.get_link_index(obj, offset)
         except Exception as error:
             msg = f"AXHypertext: Exception in get_child_at_offset: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
         if index < 0:
@@ -224,11 +224,11 @@ class AXHypertext:
             child = Atspi.Hyperlink.get_object(link, 0)
         except Exception as error:
             msg = f"AXHypertext: Exception in get_child_at_offset: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
         tokens = [f"AXHypertext: Child at offset {offset} in", obj, "is", child]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return child
 
     @staticmethod

@@ -65,7 +65,7 @@ class NotificationPresenter:
 
         if refresh:
             msg = "NOTIFICATION PRESENTER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -77,7 +77,7 @@ class NotificationPresenter:
 
         if refresh:
             msg = "NOTIFICATION PRESENTER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -86,7 +86,7 @@ class NotificationPresenter:
         """Adds message to the list of notification messages."""
 
         tokens = ["NOTIFICATION PRESENTER: Adding '", message, "'."]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         to_remove = max(len(self._notifications) - self._max_size + 1, 0)
         self._notifications = self._notifications[to_remove:]
         self._notifications.append([message, time.time()])
@@ -95,7 +95,7 @@ class NotificationPresenter:
         """Clears the notifications list."""
 
         msg = "NOTIFICATION PRESENTER: Clearing list."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._notifications = []
         self._current_index = -1
 
@@ -125,7 +125,7 @@ class NotificationPresenter:
                 cmdnames.NOTIFICATION_MESSAGES_LIST)
 
         msg = "NOTIFICATION PRESENTER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the notification-presenter key bindings."""
@@ -161,7 +161,7 @@ class NotificationPresenter:
                 self._handlers.get("show_notification_list")))
 
         msg = "NOTIFICATION PRESENTER: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _timestamp_to_string(self, timestamp):
         diff = time.time() - timestamp
@@ -187,7 +187,7 @@ class NotificationPresenter:
             return True
 
         msg = "NOTIFICATION PRESENTER: Presenting last notification."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         message, timestamp = self._notifications[-1]
         string = f"{message} {self._timestamp_to_string(timestamp)}"
@@ -206,7 +206,7 @@ class NotificationPresenter:
             f"NOTIFICATION PRESENTER: Presenting previous notification. "
             f"Current index: {self._current_index}"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # This is the first (oldest) message in the list.
         if self._current_index == 0 :
@@ -219,7 +219,7 @@ class NotificationPresenter:
                 self._current_index -= 1
             except IndexError:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 script.presentMessage(messages.NOTIFICATION_LIST_TOP)
                 message, timestamp = self._notifications[self._current_index]
 
@@ -238,7 +238,7 @@ class NotificationPresenter:
             f"NOTIFICATION PRESENTER: Presenting next notification. "
             f"Current index: {self._current_index}"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # This is the last (newest) message in the list.
         if self._current_index == -1:
@@ -251,7 +251,7 @@ class NotificationPresenter:
                 self._current_index += 1
             except IndexError:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 script.presentMessage(messages.NOTIFICATION_LIST_BOTTOM)
                 message, timestamp = self._notifications[self._current_index]
 
@@ -268,12 +268,12 @@ class NotificationPresenter:
 
         if self._gui:
             msg = "NOTIFICATION PRESENTER: Notification list already exists. Showing."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._gui.show_gui()
             return True
 
         msg = "NOTIFICATION PRESENTER: Showing notification list."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         rows = [(message, self._timestamp_to_string(timestamp)) \
                     for message, timestamp in reversed(self._notifications)]

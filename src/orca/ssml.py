@@ -171,7 +171,7 @@ class SSML(dict):
                 if i >= len(offsets):
                     # This is really not supposed to happen
                     msg = f"{i}th U+E000 does not have corresponding index"
-                    debug.printMessage(debug.LEVEL_WARNING, msg, True)
+                    debug.print_message(debug.LEVEL_WARNING, msg, True)
                 else:
                     ssml += '<mark name="%u:%u"/>' % offsets[i]
                 i += 1

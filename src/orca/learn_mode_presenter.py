@@ -68,7 +68,7 @@ class LearnModePresenter:
 
         if refresh:
             msg = "LEARN MODE PRESENTER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -80,7 +80,7 @@ class LearnModePresenter:
 
         if refresh:
             msg = "LEARN MODE PRESENTER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -96,7 +96,7 @@ class LearnModePresenter:
                 cmdnames.ENTER_LEARN_MODE)
 
         msg = "LEARN MODE PRESENTER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the learn-mode-presenter key bindings."""
@@ -111,14 +111,14 @@ class LearnModePresenter:
                 self._handlers.get("enterLearnModeHandler")))
 
         msg = "LEARN MODE PRESENTER: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def start(self, script=None, event=None):
         """Starts learn mode."""
 
         if self._is_active:
             msg = "LEARN MODE PRESENTER: Start called when already active"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if script is None:
@@ -131,7 +131,7 @@ class LearnModePresenter:
 
         input_event_manager.get_manager().grab_keyboard("Entering learn mode")
         msg = "LEARN MODE PRESENTER: Is now active"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = True
         return True
 
@@ -140,7 +140,7 @@ class LearnModePresenter:
 
         if not self._is_active:
             msg = "LEARN MODE PRESENTER: Quit called when already inactive"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if script is None:
@@ -151,7 +151,7 @@ class LearnModePresenter:
 
         input_event_manager.get_manager().ungrab_keyboard("Exiting learn mode")
         msg = "LEARN MODE PRESENTER: Is now inactive"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = False
         return True
 

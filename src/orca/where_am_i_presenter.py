@@ -53,7 +53,7 @@ class WhereAmIPresenter:
 
         if refresh:
             msg = "WHERE AM I PRESENTER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()
@@ -69,7 +69,7 @@ class WhereAmIPresenter:
 
         if refresh:
             msg = "WHERE AM I PRESENTER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -131,7 +131,7 @@ class WhereAmIPresenter:
                 cmdnames.WHERE_AM_I_SELECTION)
 
         msg = "WHERE AM I PRESENTER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_desktop_bindings(self):
         """Sets up the where-am-i-presenter desktop key bindings."""
@@ -206,7 +206,7 @@ class WhereAmIPresenter:
                 self._handlers.get("whereAmISelectionHandler")))
 
         msg = "WHERE AM I PRESENTER: Desktop bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_laptop_bindings(self):
         """Sets up the where-am-i-presenter laptop key bindings."""
@@ -281,7 +281,7 @@ class WhereAmIPresenter:
                 self._handlers.get("whereAmISelectionHandler")))
 
         msg = "WHERE AM I PRESENTER: Laptop bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def present_character_attributes(self, script, event=None):
         """Presents the font and formatting details for the current character."""
@@ -435,7 +435,7 @@ class WhereAmIPresenter:
             return True
 
         tokens = ["WHERE AM I PRESENTER: presenting selection for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         spreadsheet = AXObject.find_ancestor(obj, script.utilities.isSpreadSheetTable)
         if spreadsheet is not None and script.utilities.speakSelectedCellRange(spreadsheet):
@@ -444,7 +444,7 @@ class WhereAmIPresenter:
         container = script.utilities.getSelectionContainer(obj)
         if container is None:
             tokens = ["WHERE AM I PRESENTER: Selection container not found for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return self.present_selected_text(script, event, obj)
 
         selected_count = script.utilities.selectedChildCount(container)

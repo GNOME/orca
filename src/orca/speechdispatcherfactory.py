@@ -115,11 +115,11 @@ class SpeechServer(speechserver.SpeechServer):
             )
         if not _speechd_available:
             msg = 'ERROR: Speech Dispatcher is not available'
-            debug.printMessage(debug.LEVEL_WARNING, msg, True)
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
             return
         if not _speechd_version_ok:
             msg = 'ERROR: Speech Dispatcher version 0.6.2 or later is required.'
-            debug.printMessage(debug.LEVEL_WARNING, msg, True)
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
             return
         # The following constants must be initialized in runtime since they
         # depend on the speechd module being available.
@@ -145,9 +145,9 @@ class SpeechServer(speechserver.SpeechServer):
         try:
             self._init()
         except Exception:
-            debug.printException(debug.LEVEL_WARNING)
+            debug.print_exception(debug.LEVEL_WARNING)
             msg = 'ERROR: Speech Dispatcher service failed to connect'
-            debug.printMessage(debug.LEVEL_WARNING, msg, True)
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
         else:
             SpeechServer._active_servers[serverId] = self
 
@@ -175,7 +175,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._client.set_cap_let_recogn(style)
         except speechd.SSIPCommunicationError:
             msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.reset()
             self._client.set_cap_let_recogn(style)
         except Exception:
@@ -191,7 +191,7 @@ class SpeechServer(speechserver.SpeechServer):
             return command(*args, **kwargs)
         except speechd.SSIPCommunicationError:
             msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.reset()
             return command(*args, **kwargs)
         except Exception:
@@ -276,7 +276,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"{styles.get(settings_manager.get_manager().get_setting('verbalizePunctuationStyle'))}\n"
             f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss):
         if acss is None:
@@ -339,7 +339,7 @@ class SpeechServer(speechserver.SpeechServer):
                                 f"{context.currentOffset}:{context.currentEndOffset} / "
                                 f"{context.startOffset}:{context.endOffset}"
                             )
-                            debug.printMessage(debug.LEVEL_INFO, msg, True)
+                            debug.print_message(debug.LEVEL_INFO, msg, True)
                     else:
                         context.currentOffset = context.startOffset
                         context.currentEndOffset = None
@@ -365,7 +365,7 @@ class SpeechServer(speechserver.SpeechServer):
             rate = 50
         acss[ACSS.RATE] = max(0, min(99, rate + delta))
         msg = f"SPEECH DISPATCHER: Rate set to {rate}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_SLOWER \
                    or messages.SPEECH_FASTER, acss=acss)
 
@@ -378,7 +378,7 @@ class SpeechServer(speechserver.SpeechServer):
             pitch = 5
         acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
         msg = f"SPEECH DISPATCHER: Pitch set to {pitch}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_LOWER \
                    or messages.SPEECH_HIGHER, acss=acss)
 
@@ -391,7 +391,7 @@ class SpeechServer(speechserver.SpeechServer):
             volume = 10
         acss[ACSS.GAIN] = max(0, min(9, volume + delta))
         msg = f"SPEECH DISPATCHER: Volume set to {volume}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_SOFTER \
                    or messages.SPEECH_LOUDER, acss=acss)
 
@@ -463,12 +463,12 @@ class SpeechServer(speechserver.SpeechServer):
 
         if len(text) == 1:
             msg = f"SPEECH DISPATCHER: Speaking '{text}' as char"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self._send_command(self._client.char, text)
         else:
             msg = f"SPEECH DISPATCHER: Speaking '{text}' as string"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._speak(text, acss)
 
     def say_all(self, utterance_iterator, progress_callback):
@@ -484,7 +484,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         if not name or name == character:
             msg = f"SPEECH DISPATCHER: Speaking '{character}' as char"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._send_command(self._client.char, character)
             return
 
@@ -496,12 +496,12 @@ class SpeechServer(speechserver.SpeechServer):
         event_string = f"{event_string} {lockingStateString}".strip()
         if len(event_string) == 1:
             msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as key"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self._send_command(self._client.key, event_string)
         else:
             msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as string"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak(event_string, acss=acss)
 
     def increaseSpeechRate(self, step=5):
@@ -573,7 +573,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"SPEECH DISPATCHER: Found {len(result)} match(es) for language='{language}' "
             f"dialect='{dialect}' in {time.time() - start:.4f}s."
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     def shouldChangeVoiceForLanguage(self, language, dialect=""):
@@ -587,21 +587,21 @@ class SpeechServer(speechserver.SpeechServer):
             f"Current: '{current_language}' '{current_dialect}' "
             f"New: '{other_language}' '{other_dialect}'"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if current_language == other_language and current_dialect == other_dialect:
             msg ="SPEECH DISPATCHER: No. Language and dialect are the same."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         families = self.getVoiceFamiliesForLanguage(other_language, other_dialect, maximum=1)
         if families:
             tokens = ["SPEECH DISPATCHER: Yes. Found matching family", families[0], "."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         tokens = ["SPEECH DISPATCHER: No. No matching family in", self.getOutputModule(), "."]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def getOutputModule(self):

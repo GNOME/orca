@@ -34,5 +34,5 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def generate_speech(self, _obj, **_args):
         msg = "SLEEP MODE SPEECH GENERATOR: Generating nothing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return []

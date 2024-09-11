@@ -58,7 +58,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.locus_of_focus_changed(self, event, old_focus, new_focus)
 
     def on_active_changed(self, event):
@@ -72,7 +72,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_active_changed(self, event)
 
     def on_busy_changed(self, event):
@@ -80,14 +80,14 @@ class Script(web.Script):
 
         if self.utilities.isNotRealDocument(event.source):
             msg = "GECKO: Ignoring: Event source is not real document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_busy_changed(event):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_busy_changed(self, event)
 
     def on_caret_moved(self, event):
@@ -97,7 +97,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_caret_moved(self, event)
 
     def on_checked_changed(self, event):
@@ -107,7 +107,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_checked_changed(self, event)
 
     def on_column_reordered(self, event):
@@ -117,7 +117,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_column_reordered(self, event)
 
     def on_children_added(self, event):
@@ -127,7 +127,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_children_added(self, event)
 
     def on_children_removed(self, event):
@@ -137,7 +137,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_children_removed(self, event)
 
     def on_document_load_complete(self, event):
@@ -145,14 +145,14 @@ class Script(web.Script):
 
         if self.utilities.isNotRealDocument(event.source):
             msg = "GECKO: Ignoring: Event source is not real document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_document_load_complete(event):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_load_complete(self, event)
 
     def on_document_load_stopped(self, event):
@@ -162,7 +162,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_load_stopped(self, event)
 
     def on_document_reload(self, event):
@@ -172,7 +172,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_reload(self, event)
 
     def on_expanded_changed(self, event):
@@ -182,7 +182,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_expanded_changed(self, event)
 
     def on_focused_changed(self, event):
@@ -194,11 +194,11 @@ class Script(web.Script):
         if AXUtilities.is_panel(event.source):
             if focus_manager.get_manager().focus_is_active_window():
                 msg = "GECKO: Ignoring event believed to be noise."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_focused_changed(self, event)
 
     def on_mouse_button(self, event):
@@ -208,7 +208,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_mouse_button(self, event)
 
     def on_name_changed(self, event):
@@ -218,7 +218,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_name_changed(self, event)
 
     def on_row_reordered(self, event):
@@ -228,7 +228,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_row_reordered(self, event)
 
     def on_selected_changed(self, event):
@@ -238,7 +238,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_selected_changed(self, event)
 
     def on_selection_changed(self, event):
@@ -248,7 +248,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_selection_changed(self, event)
 
     def on_showing_changed(self, event):
@@ -260,12 +260,12 @@ class Script(web.Script):
         if event.detail1 and AXUtilities.is_menu(event.source) \
            and not self.utilities.inDocumentContent(event.source):
             msg = "GECKO: Setting locus of focus to newly shown menu."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_showing_changed(self, event)
 
     def on_text_attributes_changed(self, event):
@@ -275,7 +275,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_attributes_changed(self, event)
 
     def on_text_deleted(self, event):
@@ -285,7 +285,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_deleted(self, event)
 
     def on_text_inserted(self, event):
@@ -295,7 +295,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_inserted(self, event)
 
     def on_text_selection_changed(self, event):
@@ -305,7 +305,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_selection_changed(self, event)
 
     def on_window_activated(self, event):
@@ -318,7 +318,7 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_window_activated(self, event)
 
     def on_window_deactivated(self, event):
@@ -328,5 +328,5 @@ class Script(web.Script):
             return
 
         msg = "GECKO: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_window_deactivated(self, event)

@@ -68,11 +68,11 @@ class Utilities(web.Utilities):
         document = self.getDocumentForObject(obj)
         if AXUtilities.is_editable(document):
             tokens = ["GECKO:", obj, "is in an editable document:", document]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         tokens = ["GECKO: Editable", obj, "not in an editable document"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     def isNotRealDocument(self, obj):
@@ -111,7 +111,7 @@ class Utilities(web.Utilities):
             return False
 
         tokens = ["GECKO: Treating", obj, "as entry"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def _isQuickFind(self, obj):
@@ -128,16 +128,16 @@ class Utilities(web.Utilities):
 
         if len(AXUtilities.find_all_entries(obj)) != 1:
             tokens = ["GECKO:", obj, "not believed to be quick-find container (entry count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if len(AXUtilities.find_all_push_buttons(obj)) != 1:
             tokens = ["GECKO:", obj, "not believed to be quick-find container (button count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         tokens = ["GECKO:", obj, "believed to be quick-find container (accessibility tree)"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._findContainer = obj
         return True
 
@@ -154,7 +154,7 @@ class Utilities(web.Utilities):
         result = self.getFindResultsCount(obj)
         if result:
             tokens = ["GECKO:", obj, "believed to be find-in-page container (", result, ")"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._findContainer = obj
             return True
 
@@ -162,16 +162,16 @@ class Utilities(web.Utilities):
 
         if len(AXUtilities.find_all_entries(obj)) != 1:
             tokens = ["GECKO:", obj, "not believed to be find-in-page container (entry count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if len(AXUtilities.find_all_push_buttons(obj)) < 5:
             tokens = ["GECKO:", obj, "not believed to be find-in-page container (button count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         tokens = ["GECKO:", obj, "believed to be find-in-page container (accessibility tree)"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._findContainer = obj
         return True
 
@@ -189,12 +189,12 @@ class Utilities(web.Utilities):
         result = self.isFindContainer(toolbar)
         if result:
             tokens = ["GECKO:", obj, "believed to be find-in-page widget (toolbar)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if self._isQuickFind(toolbar):
             tokens = ["GECKO:", obj, "believed to be find-in-page widget (quick find)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False

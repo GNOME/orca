@@ -121,11 +121,11 @@ class Script(Gecko.Script):
     def useFocusMode(self, obj, prevObj=None):
         if self.utilities.isEditableMessage(obj):
             tokens = ["THUNDERBIRD: Using focus mode for editable message", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         tokens = ["THUNDERBIRD:", obj, "is not an editable message."]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return super().useFocusMode(obj, prevObj)
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
@@ -319,21 +319,21 @@ class Script(Gecko.Script):
 
         if settings_manager.get_manager().get_setting('pageSummaryOnLoad'):
             tokens = ["THUNDERBIRD: Getting page summary for", documentFrame]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             summary = AXDocument.get_document_summary(documentFrame)
             if summary:
                 self.presentMessage(summary)
 
         if not settings_manager.get_manager().get_setting('sayAllOnLoad'):
             msg = "THUNDERBIRD: SayAllOnLoad is False. Presenting line."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(obj, offset)
             self.speakContents(contents)
             return
 
         if settings_manager.get_manager().get_setting('enableSpeech'):
             msg = "THUNDERBIRD: SayAllOnLoad is True and speech is enabled"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.say_all(None)
 
     def on_window_activated(self, event):

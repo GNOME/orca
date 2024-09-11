@@ -47,7 +47,7 @@ class Icon:
     def __init__(self, location, filename):
         self.path = os.path.join(location, filename)
         msg = f"SOUND GENERATOR: Looking for '{filename}' in {location}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def __str__(self):
         return f'Icon(path: {self.path}, isValid: {self.isValid()})'
@@ -104,7 +104,7 @@ class SoundGenerator(generator.Generator):
         """Returns an array of sounds for the complete presentation of obj."""
 
         if not settings_manager.get_manager().get_setting("enableSound"):
-            debug.printMessage(debug.LEVEL_INFO, "SOUND GENERATOR: Generation disabled", True)
+            debug.print_message(debug.LEVEL_INFO, "SOUND GENERATOR: Generation disabled", True)
             return []
 
         return self.generate(obj, **args)

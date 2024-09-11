@@ -71,27 +71,27 @@ class AXObject:
         msg = "AXObject: Clearing local cache."
         if reason:
             msg += f" Reason: {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         with AXObject._lock:
             tokens = ["AXObject: Clearing known dead-or-alive state for",
                         len(AXObject.KNOWN_DEAD), "objects"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.KNOWN_DEAD.clear()
 
             tokens = ["AXObject: Clearing", len(AXObject.REAL_APP_FOR_MUTTER_FRAME),
                         "real apps for mutter frames"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
 
             tokens = ["AXObject: Clearing", len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME),
                         "real frames for mutter frames"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
 
             tokens = ["AXObject: Clearing cached object attributes for",
                         len(AXObject.OBJECT_ATTRIBUTES), "objects"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.OBJECT_ATTRIBUTES.clear()
 
     @staticmethod
@@ -120,7 +120,7 @@ class AXObject:
            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME \
            and Atspi.Accessible.get_toolkit_name(obj).lower() == "gecko":
             tokens = ["AXObject:", obj, "is bogus. See mozilla bug 1879750."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             return True
 
         return False
@@ -151,12 +151,12 @@ class AXObject:
         AXObject.KNOWN_DEAD[hash(obj)] = is_dead
         if is_dead:
             msg = "AXObject: Adding to known dead objects"
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             return
 
         if current_status:
             tokens = ["AXObject: Removing", obj, "from known-dead objects"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
     def handle_error(obj, error, msg):
@@ -165,12 +165,12 @@ class AXObject:
         error = str(error)
         if re.search(r"accessible/\d+ does not exist", error):
             msg = msg.replace(error, "object no longer exists")
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         elif re.search(r"The application no longer exists", error):
             msg = msg.replace(error, "app no longer exists")
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if AXObject.KNOWN_DEAD.get(hash(obj)) is False:
@@ -202,7 +202,7 @@ class AXObject:
         app_name = AXObject.get_name(AXObject.get_application(obj))
         if app_name in ["soffice"]:
             tokens = ["AXObject: Treating", app_name, "as not supporting collection."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         try:
@@ -391,32 +391,6 @@ class AXObject:
         return iface is not None
 
     @staticmethod
-    def supported_interfaces_as_string(obj):
-        """Returns the supported interfaces of obj as a string"""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        iface_checks = [
-            (AXObject.supports_action, "Action"),
-            (AXObject.supports_collection, "Collection"),
-            (AXObject.supports_component, "Component"),
-            (AXObject.supports_document, "Document"),
-            (AXObject.supports_editable_text, "EditableText"),
-            (AXObject.supports_hyperlink, "Hyperlink"),
-            (AXObject.supports_hypertext, "Hypertext"),
-            (AXObject.supports_image, "Image"),
-            (AXObject.supports_selection, "Selection"),
-            (AXObject.supports_table, "Table"),
-            (AXObject.supports_table_cell, "TableCell"),
-            (AXObject.supports_text, "Text"),
-            (AXObject.supports_value, "Value"),
-        ]
-
-        ifaces = [iface for check, iface in iface_checks if check(obj)]
-        return ", ".join(ifaces)
-
-    @staticmethod
     def get_path(obj):
         """Returns the path from application to obj as list of child indices"""
 
@@ -469,13 +443,13 @@ class AXObject:
 
         if parent == obj:
             tokens = ["AXObject:", obj, "claims to be its own parent"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if parent is None \
            and AXObject.get_role(obj) not in [Atspi.Role.INVALID, Atspi.Role.DESKTOP_FRAME]:
             tokens = ["AXObject:", obj, "claims to have no parent"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return parent
 
@@ -505,7 +479,7 @@ class AXObject:
         if index < 0 or index >= n_children:
             tokens = ["AXObject:", obj, "has index", index,
                       "; parent", parent, "has", n_children, "children"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return parent
 
         # This performs our check and includes any errors. We don't need the return value here.
@@ -526,7 +500,7 @@ class AXObject:
             if parent in objects:
                 tokens = ["AXObject: Circular tree suspected in find_ancestor. ",
                           parent, "already in: ", objects]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return None
 
             if pred(parent):
@@ -575,7 +549,7 @@ class AXObject:
 
         if child == obj:
             tokens = ["AXObject:", obj, "claims to be its own child"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return child
@@ -594,7 +568,7 @@ class AXObject:
         parent = AXObject.get_parent(child)
         if obj != parent:
             tokens = ["AXObject:", obj, "claims", child, "as child; child's parent is", parent]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return child
 
@@ -616,7 +590,7 @@ class AXObject:
         if real_child != reported_child:
             tokens = ["AXObject: ", container, f"'s child at {index} is ", real_child,
                       "; not reported child", reported_child]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return real_child
 
@@ -645,7 +619,7 @@ class AXObject:
         start = time.time()
         result = AXObject._find_descendant(obj, pred)
         tokens = ["AXObject: find_descendant: found", result, f"in {time.time() - start:.4f}s"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -688,7 +662,7 @@ class AXObject:
             f"AXObject: find_all_descendants: {len(matches)} "
             f"matches found in {time.time() - start:.4f}s"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return matches
 
     @staticmethod
@@ -812,7 +786,7 @@ class AXObject:
 
         try:
             # Added in Atspi 2.52.
-            text = Atspi.Accessible.get_help_text(obj)
+            text = Atspi.Accessible.get_help_text(obj) or ""
         except Exception:
             # This is for prototyping in the meantime.
             text = AXObject.get_attribute(obj, "helptext") or ""
@@ -867,7 +841,7 @@ class AXObject:
         sibling = AXObject.get_child(parent, index - 1)
         if sibling == obj:
             tokens = ["AXObject:", obj, "claims to be its own sibling"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return sibling
@@ -890,7 +864,7 @@ class AXObject:
         sibling = AXObject.get_child(parent, index + 1)
         if sibling == obj:
             tokens = ["AXObject:", obj, "claims to be its own sibling"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return sibling
@@ -915,7 +889,7 @@ class AXObject:
         next_object = AXObject.get_child(parent, index)
         if next_object == obj:
             tokens = ["AXObject:", obj, "claims to be its own next object"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return next_object
@@ -940,7 +914,7 @@ class AXObject:
         previous_object = AXObject.get_child(parent, index)
         if previous_object == obj:
             tokens = ["AXObject:", obj, "claims to be its own previous object"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return previous_object
@@ -972,18 +946,6 @@ class AXObject:
         return AXObject.get_state_set(obj).contains(state)
 
     @staticmethod
-    def state_set_as_string(obj):
-        """Returns the state set associated with obj as a string"""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        def as_string(state):
-            return state.value_name[12:].replace("_", "-").lower()
-
-        return ", ".join(map(as_string, AXObject.get_state_set(obj).get_states()))
-
-    @staticmethod
     def find_real_app_and_window_for(obj, app=None):
         """Work around for window events coming from mutter-x11-frames."""
 
@@ -1004,13 +966,13 @@ class AXObject:
             return real_app, real_frame
 
         tokens = ["AXObject:", app, "is not valid app for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         try:
             desktop = Atspi.get_desktop(0)
         except Exception as error:
             tokens = ["AXObject: Exception getting desktop from Atspi:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None, None
 
         name = AXObject.get_name(obj)
@@ -1023,11 +985,11 @@ class AXObject:
                     real_frame = frame
 
         tokens = ["AXObject:", real_app, "is real app for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if real_frame != obj:
             msg = "AXObject: Updated frame to frame from real app"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         AXObject.REAL_APP_FOR_MUTTER_FRAME[hash(obj)] = real_app
         AXObject.REAL_FRAME_FOR_MUTTER_FRAME[hash(obj)] = real_frame
@@ -1075,7 +1037,7 @@ class AXObject:
             name = Atspi.Accessible.get_toolkit_name(app)
         except Exception as error:
             tokens = ["AXObject: Exception in get_application_toolkit_name:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         return name
@@ -1095,7 +1057,7 @@ class AXObject:
             version = Atspi.Accessible.get_toolkit_version(app)
         except Exception as error:
             tokens = ["AXObject: Exception in get_application_toolkit_version:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         return version
@@ -1128,14 +1090,14 @@ class AXObject:
         tokens = ["AXObject: Clearing AT-SPI cache on", obj, f"Recursive: {recursive}."]
         if reason:
             tokens.append(f" Reason: {reason}")
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not recursive:
             try:
                 Atspi.Accessible.clear_cache_single(obj)
             except Exception as error:
                 msg = f"AXObject: Exception in clear_cache_single: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         try:
@@ -1216,18 +1178,6 @@ class AXObject:
 
         attributes = AXObject.get_attributes_dict(obj, use_cache)
         return attributes.get(attribute_name, "")
-
-    @staticmethod
-    def attributes_as_string(obj):
-        """Returns the object attributes of obj as a string."""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        def as_string(attribute):
-            return f"{attribute[0]}:{attribute[1]}"
-
-        return ", ".join(map(as_string, AXObject.get_attributes_dict(obj).items()))
 
     @staticmethod
     def get_n_actions(obj):
@@ -1359,24 +1309,10 @@ class AXObject:
         index = AXObject.get_action_index(obj, action_name)
         if index == -1:
             tokens = ["INFO:", action_name, "not an available action for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return AXObject.do_action(obj, index)
-
-    @staticmethod
-    def actions_as_string(obj):
-        """Returns information about the actions as a string."""
-
-        results = []
-        for i in range(AXObject.get_n_actions(obj)):
-            result = AXObject.get_action_name(obj, i)
-            keybinding = AXObject.get_action_key_binding(obj, i)
-            if keybinding:
-                result += f" ({keybinding})"
-            results.append(result)
-
-        return "; ".join(results)
 
     @staticmethod
     def grab_focus(obj):
@@ -1397,7 +1333,7 @@ class AXObject:
 
         if result and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             tokens = ["AXObject:", obj, "lacks focused state after focus grab"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 

@@ -127,7 +127,7 @@ class LiveRegionManager:
 
         if refresh:
             msg = "LIVE REGION MANAGER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -139,7 +139,7 @@ class LiveRegionManager:
 
         if refresh:
             msg = "LIVE REGION MANAGER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -174,7 +174,7 @@ class LiveRegionManager:
                 enabled = not self._suspended)
 
         msg = f"LIVE REGION MANAGER: Handlers set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the live-region-manager key bindings."""
@@ -223,7 +223,7 @@ class LiveRegionManager:
             self._handlers, self._bindings, False)
 
         msg = f"LIVE REGION MANAGER: Bindings set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def refresh_bindings_and_grabs(self, script, reason=""):
         """Refreshes live region bindings and grabs for script."""
@@ -231,7 +231,7 @@ class LiveRegionManager:
         msg = "LIVE REGION MANAGER: Refreshing bindings and grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
             script.key_bindings.remove(binding, include_grabs=True)
@@ -251,7 +251,7 @@ class LiveRegionManager:
         msg = f"LIVE REGION MANAGER: Commands suspended: {suspended}"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
@@ -282,19 +282,19 @@ class LiveRegionManager:
         msg = f"LIVE REGION MANAGER: Message ({message}) is duplicate: "
         if self._last_presented_timestamp is None:
             msg += "False, no previous message"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
         if message != self._last_presented_message:
             msg += f"False, message is different (last message: {self._last_presented_message})"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
         delta = time.time() - self._last_presented_timestamp
         if delta > 1:
             msg += f"False, last message content is same, but was {delta:.4f}s ago"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
         msg += f"True, last message content is same and was {delta:.4f}s ago"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
     def handleEvent(self, event):
@@ -330,7 +330,7 @@ class LiveRegionManager:
         """
 
         if len(self.msg_queue) > 0:
-            debug.printMessage(debug.eventDebugLevel, "\nvvvvv PRESENT LIVE REGION MESSAGE vvvvv")
+            debug.print_message(debug.LEVEL_INFO, "\nvvvvv PRESENT LIVE REGION MESSAGE vvvvv")
             self.msg_queue.purgeByKeepAlive()
             politeness, timestamp, message, obj = self.msg_queue.dequeue()
             # Form output message.  No need to repeat labels and content.
@@ -345,7 +345,7 @@ class LiveRegionManager:
                 self._script.presentMessage(utts)
             else:
                 msg = "INFO: Not presenting message because monitoring is off"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
             # set the last live obj to be announced
             self.lastliveobj = obj
@@ -358,8 +358,8 @@ class LiveRegionManager:
             self.msg_queue.purgeByKeepAlive()
 
         msg = f'LIVE REGIONS: messages in queue: {len(self.msg_queue)}'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
-        debug.printMessage(debug.eventDebugLevel, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, "^^^^^ PRESENT LIVE REGION MESSAGE ^^^^^\n")
 
         # See you again soon, stay in event loop if we still have messages.
         return len(self.msg_queue) > 0
@@ -480,7 +480,7 @@ class LiveRegionManager:
         result = AXCollection.get_all_matches(document, rule)
 
         msg = f'LIVE REGIONS: {len(result)} regions found'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     def generateLiveRegionDescription(self, obj, **args):

@@ -71,7 +71,7 @@ class AXComponent:
             point = Atspi.Component.get_position(obj, Atspi.CoordType.WINDOW)
         except Exception as error:
             msg = f"AXComponent: Exception in get_position: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         return point.x, point.y
@@ -87,7 +87,7 @@ class AXComponent:
             rect = Atspi.Component.get_extents(obj, Atspi.CoordType.WINDOW)
         except Exception as error:
             msg = f"AXComponent: Exception in get_rect: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return Atspi.Rect()
 
         return rect
@@ -113,7 +113,7 @@ class AXComponent:
             result.height = y_intersection[-1] - result.y
 
         tokens = ["AXComponent: The intersection of", rect1, "and", rect2, "is:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -127,7 +127,7 @@ class AXComponent:
             point = Atspi.Component.get_size(obj, Atspi.CoordType.WINDOW)
         except Exception as error:
             msg = f"AXComponent: Exception in get_position: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         # An Atspi.Point object stores width in x and height in y.
@@ -153,12 +153,12 @@ class AXComponent:
 
         if (rect.width < -1 or rect.height < -1):
             tokens = ["WARNING: ", obj, "has a broken rect:", rect]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.clear_cache(obj)
             rect = AXComponent.get_rect(obj)
             if (rect.width < -1 or rect.height < -1):
                 msg = "AXComponent: Clearing cache did not fix the rect"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
         return False
@@ -192,11 +192,11 @@ class AXComponent:
             result = Atspi.Component.contains(obj, x, y, Atspi.CoordType.WINDOW)
         except Exception as error:
             msg = f"AXComponent: Exception in object_contains_point: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         tokens = ["AXComponent: ", obj, f"contains point {x}, {y}: {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -213,25 +213,25 @@ class AXComponent:
         rect = AXComponent.get_rect(obj)
         if abs(rect.x) > 10000 or abs(rect.y) > 10000:
             tokens = ["AXComponent: Treating", obj, "as offscreen due to position"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if rect.width == 0 or rect.height == 0:
             if not AXObject.get_child_count(obj):
                 tokens = ["AXComponent: Treating", obj, "as offscreen due to size and no children"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             if AXUtilitiesRole.is_menu(obj):
                 tokens = ["AXComponent: Treating", obj, "as offscreen due to size and role"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
             tokens = ["AXComponent: Treating sizeless", obj, "as onscreen"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         result = rect.x + rect.width < 0 and rect.y + rect.height < 0
         tokens = ["AXComponent:", obj, f"is off-screen: {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -289,11 +289,11 @@ class AXComponent:
             result = Atspi.Component.get_accessible_at_point(obj, x, y, Atspi.CoordType.WINDOW)
         except Exception as error:
             msg = f"AXComponent: Exception in get_child_at_point: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
         tokens = ["AXComponent: Child of", obj, f"at {x}, {y} is", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -318,7 +318,7 @@ class AXComponent:
 
         result = AXComponent._get_descendant_at_point(obj, x, y)
         tokens = ["AXComponent: Descendant of", obj, f"at {x}, {y} is", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -332,11 +332,11 @@ class AXComponent:
             result = Atspi.Component.scroll_to_point(obj, Atspi.CoordType.WINDOW, x, y)
         except Exception as error:
             msg = f"AXComponent: Exception in scroll_object_to_point: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         tokens = ["AXComponent: Scrolled", obj, f"to {x}, {y}:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -350,11 +350,11 @@ class AXComponent:
             result = Atspi.Component.scroll_to(obj, location)
         except Exception as error:
             msg = f"AXComponent: Exception in scroll_object_to_location: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         tokens = ["AXComponent: Scrolled", obj, "to", location, f": {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod

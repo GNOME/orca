@@ -40,16 +40,16 @@ class Utilities(script_utilities.Utilities):
 
         if event.detail1 == -1:
             msg = "GNOME SHELL: Broken text insertion event"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
             string = AXText.get_all_text(event.source)
             if string:
                 msg = f"GNOME SHELL: Returning last char in '{string}'"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return string[-1]
 
             msg = "GNOME SHELL: Unable to correct broken text insertion event"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         return ""
 
@@ -64,7 +64,7 @@ class Utilities(script_utilities.Utilities):
 
         if not hasRole(root) and AXObject.find_ancestor(root, hasRole) is None:
             tokens = ["GNOME SHELL: Not seeking unrelated labels for", root]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         return super().unrelatedLabels(root, onlyShowing, minimumWords)

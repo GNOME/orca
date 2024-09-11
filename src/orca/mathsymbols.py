@@ -2304,7 +2304,7 @@ def _getSpokenName(symbol, includeStyle):
 def getCharacterName(symbol):
     result = _getSpokenName(symbol, speakStyle != SPEAK_NEVER)
     msg = f"MATHSYMBOLS: Name of '{symbol}' is '{result}'"
-    debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+    debug.print_message(debug.LEVEL_INFO, msg, True, True)
     return result
 
 def adjustForSpeech(string):

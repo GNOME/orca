@@ -45,7 +45,7 @@ class Utilities(script_utilities.Utilities):
         result = super().topLevelObject(obj, useFallbackSearch=True)
         if result is not None and AXObject.get_role(result) not in self._topLevelRoles():
             tokens = ["QT: Top level object", result, "lacks expected role."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -57,11 +57,11 @@ class Utilities(script_utilities.Utilities):
             return frame, dialog
 
         tokens = ["QT: Could not find frame or dialog for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         topLevel = self.topLevelObject(obj, True)
 
         tokens = ["QT: Returning", topLevel, "as frame for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return topLevel, None
 
     def hasMeaningfulToggleAction(self, obj):
@@ -70,7 +70,7 @@ class Utilities(script_utilities.Utilities):
         # https://bugreports.qt.io/browse/QTBUG-116204
         if AXUtilities.is_table_cell_or_header(obj):
             tokens = ["QT: Ignoring toggle action on", obj, "."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return super().hasMeaningfulToggleAction(obj)

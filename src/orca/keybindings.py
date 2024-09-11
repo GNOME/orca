@@ -374,7 +374,7 @@ class KeyBindings:
                f"KEYBINDINGS: '{key_binding.as_string()}' "
                f"({key_binding.description()}) already in keybindings"
             )
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.key_bindings.append(key_binding)
         if include_grabs:
@@ -396,7 +396,7 @@ class KeyBindings:
             # binding. This function gets called with the original binding.
             tokens = ["KEYBINDINGS: Warning: No binding in set to remove for", key_binding,
                       "Alternates:", candidates]
-            debug.printTokens(debug.LEVEL_WARNING, tokens, True)
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             for candidate in self.get_bindings_for_handler(key_binding.handler):
                 self.remove(candidate, include_grabs)
             return
@@ -407,7 +407,7 @@ class KeyBindings:
             else:
                 # TODO - JD: This better not happen. Be sure that is indeed the case.
                 tokens = ["KEYBINDINGS: Warning:", key_binding, "will be removed but has grabs."]
-                debug.printTokens(debug.LEVEL_WARNING, tokens, True)
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
 
         self.key_bindings.remove(key_binding)
 
@@ -422,7 +422,7 @@ class KeyBindings:
         msg = "KEYBINDINGS: Adding key grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
+        debug.print_message(debug.LEVEL_INFO, msg, True, not reason)
 
         count = 0
         for binding in self.key_bindings:
@@ -431,7 +431,7 @@ class KeyBindings:
                 binding.add_grabs()
 
         msg = f"KEYBINDINGS: {count} key grabs out of {len(self.key_bindings)} added."
-        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
+        debug.print_message(debug.LEVEL_INFO, msg, True, not reason)
 
     def remove_key_grabs(self, reason=""):
         """Removes all grabs for this set of keybindings."""
@@ -439,7 +439,7 @@ class KeyBindings:
         msg = "KEYBINDINGS: Removing key grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
+        debug.print_message(debug.LEVEL_INFO, msg, True, not reason)
 
         count = 0
         for binding in self.key_bindings:
@@ -448,7 +448,7 @@ class KeyBindings:
                 binding.remove_grabs()
 
         msg = f"KEYBINDINGS: {count} key grabs out of {len(self.key_bindings)} removed."
-        debug.printMessage(debug.LEVEL_INFO, msg, True, not reason)
+        debug.print_message(debug.LEVEL_INFO, msg, True, not reason)
 
     def has_handler(self, handler):
         """Returns True if the handler is found in this set of keybindings."""
@@ -516,7 +516,7 @@ class KeyBindings:
             match = bindings.get(string)
             if match is not None:
                 tokens = ["WARNING: '", string, "' (", kb.description(), ") also matches:", match]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             bindings[string] = kb.description()
 
         return bound
@@ -545,7 +545,7 @@ class KeyBindings:
             f"KEYBINDINGS: '{keyboard_event.as_single_line_string()}' "
             f"matches multiple handlers: {', '.join(map(to_string, result))}"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_input_handler(self, event):
         """Returns the input handler matching keyboardEvent)"""
@@ -564,7 +564,7 @@ class KeyBindings:
                     candidates.append(binding)
 
         tokens = [f"KEYBINDINGS: {event.as_single_line_string()} matches", matches]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._check_matching_bindings(event, matches)
         if matches:
@@ -574,7 +574,7 @@ class KeyBindings:
             return None
 
         tokens = [f"KEYBINDINGS: {event.as_single_line_string()} fallback candidates", candidates]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # If we're still here, we don't have an exact match. Prefer the one whose click count is
         # closest to, but does not exceed, the actual click count.

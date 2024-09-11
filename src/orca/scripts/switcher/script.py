@@ -55,16 +55,16 @@ class Script(default.Script):
 
         if not self.utilities.isSwitcherContainer(event.source):
             msg = "SWITCHER: Event is not from switcher container"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.isSwitcherSelectionChangeEventType(event):
             msg = "SWITCHER: Not treating event as selection change."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "SWITCHER: Treating event as selection change"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.presentationInterrupt()
         focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(event.source))
@@ -76,7 +76,7 @@ class Script(default.Script):
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         if AXUtilities.is_window(new_focus) and not AXObject.get_name(new_focus):
             msg = "SWITCHER: Not presenting newly-focused nameless window."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         super().locus_of_focus_changed(event, old_focus, new_focus)

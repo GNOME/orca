@@ -100,7 +100,7 @@ class AXTable:
         msg = "AXTable: Clearing cache."
         if reason:
             msg += f" Reason: {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         with AXTable._lock:
             AXTable.CAPTIONS.clear()
@@ -137,11 +137,11 @@ class AXTable:
             caption = Atspi.Table.get_caption(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_caption: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
         tokens = ["AXTable: Caption for", table, "is", caption]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.CAPTIONS[hash(table)] = caption
         return caption
 
@@ -165,11 +165,11 @@ class AXTable:
             count = Atspi.Table.get_n_columns(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_column_count: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
 
         tokens = ["AXTable: Column count for", table, "is", count]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_COLUMN_COUNT[hash(table)] = count
         return count
 
@@ -187,7 +187,7 @@ class AXTable:
             count = int(attr)
 
         tokens = ["AXTable: Column count attribute for", table, "is", count]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COLUMN_COUNT[hash(table)] = count
         return count
 
@@ -211,11 +211,11 @@ class AXTable:
             count = Atspi.Table.get_n_rows(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_row_count: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
 
         tokens = ["AXTable: Row count for", table, "is", count]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_ROW_COUNT[hash(table)] = count
         return count
 
@@ -233,7 +233,7 @@ class AXTable:
             count = int(attr)
 
         tokens = ["AXTable: Row count attribute for", table, "is", count]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_ROW_COUNT[hash(table)] = count
         return count
 
@@ -250,7 +250,7 @@ class AXTable:
                         return True
                 except Exception as error:
                     msg = f"AXTable: Exception in is_non_uniform_table: {error}"
-                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
                     return False
 
         return False
@@ -266,11 +266,11 @@ class AXTable:
             count = Atspi.Table.get_n_selected_columns(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_selected_column_count {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = ["AXTable: Selected column count for", table, "is", count]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
     @staticmethod
@@ -284,11 +284,11 @@ class AXTable:
             columns = Atspi.Table.get_selected_columns(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_selected_columns: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = ["AXTable: Selected columns for", table, "are", columns]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return columns
 
     @staticmethod
@@ -302,11 +302,11 @@ class AXTable:
             count = Atspi.Table.get_n_selected_rows(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_selected_row_count {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = ["AXTable: Selected row count for", table, "is", count]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
     @staticmethod
@@ -320,11 +320,11 @@ class AXTable:
             rows = Atspi.Table.get_selected_rows(table)
         except Exception as error:
             msg = f"AXTable: Exception in get_selected_rows: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = ["AXTable: Selected rows for", table, "are", rows]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rows
 
     @staticmethod
@@ -356,11 +356,11 @@ class AXTable:
         except Exception as error:
             tokens = [f"AXTable: Exception getting cell at row: {row} col: {column} in", table,
                       ":", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         tokens = [f"AXTable: Cell at row: {row} col: {column} in", table, "is", cell]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return cell
 
     @staticmethod
@@ -415,7 +415,7 @@ class AXTable:
         col_span = attrs.get("colspan")
 
         tokens = ["AXTable: Row and col span attributes for", cell, ":", row_span, ",", col_span]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_SPANS[hash(cell)] = row_span, col_span
         return row_span, col_span
 
@@ -446,7 +446,7 @@ class AXTable:
             result = Atspi.Table.get_row_column_extents_at_index(table, index)
         except Exception as error:
             msg = f"AXTable: Exception in _get_cell_spans_from_table: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         if not result[0]:
@@ -457,7 +457,7 @@ class AXTable:
         if row_span > row_count:
             tokens = ["AXTable: Table iface row span for", cell,
                       f"{row_span} is greater than row count: {row_count}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             row_span = 1
 
         col_span = result.col_extents
@@ -465,12 +465,12 @@ class AXTable:
         if col_span > col_count:
             tokens = ["AXTable: Table iface col span for", cell,
                       f"{col_span} is greater than col count: {col_count}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             col_span = 1
 
         tokens = ["AXTable: Table iface spans for", cell,
                   f"are rowspan: {row_span}, colspan: {col_span}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_SPANS_FROM_TABLE[hash(cell)] = row_span, col_span
         return row_span, col_span
 
@@ -491,12 +491,12 @@ class AXTable:
             col_span = Atspi.TableCell.get_column_span(cell)
         except Exception as error:
             msg = f"AXTable: Exception in _get_cell_spans_from_table_cell: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         tokens = ["AXTable: TableCell iface spans for", cell,
                   f"are rowspan: {row_span}, colspan: {col_span}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_SPANS_FROM_CELL[hash(cell)] = row_span, col_span
         return row_span, col_span
 
@@ -514,11 +514,11 @@ class AXTable:
             header = Atspi.Table.get_column_header(table, column)
         except Exception as error:
             msg = f"AXTable: Exception in _get_column_headers_from_table: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = [f"AXTable: Table iface header for column {column} of", table, "is", header]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if header is not None:
             return [header]
 
@@ -535,11 +535,11 @@ class AXTable:
             headers = Atspi.TableCell.get_column_header_cells(cell)
         except Exception as error:
             msg = f"AXTable: Exception in _get_column_headers_from_table_cell: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = ["AXTable: TableCell iface column headers for cell are:", headers]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return headers
 
     @staticmethod
@@ -556,11 +556,11 @@ class AXTable:
             header = Atspi.Table.get_row_header(table, row)
         except Exception as error:
             msg = f"AXTable: Exception in _get_row_headers_from_table: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = [f"AXTable: Table iface header for row {row} of", table, "is", header]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if header is not None:
             return [header]
 
@@ -577,11 +577,11 @@ class AXTable:
             headers = Atspi.TableCell.get_row_header_cells(cell)
         except Exception as error:
             msg = f"AXTable: Exception in _get_row_headers_from_table_cell: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         tokens = ["AXTable: TableCell iface row headers for cell are:", headers]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return headers
 
     @staticmethod
@@ -806,7 +806,7 @@ class AXTable:
         table = AXTable.get_table(cell)
         if table is None:
             tokens = ["AXTable: Couldn't find table-implementing ancestor for", cell]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         try:
@@ -814,11 +814,11 @@ class AXTable:
             column = Atspi.Table.get_column_at_index(table, index)
         except Exception as error:
             msg = f"AXTable: Exception in _get_cell_coordinates_from_table: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         tokens = ["AXTable: Table iface coords for", cell, f"are row: {row}, col: {column}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_COORDINATES_FROM_TABLE[hash(cell)] = row, column
         return row, column
 
@@ -836,14 +836,14 @@ class AXTable:
             success, row, column = Atspi.TableCell.get_position(cell)
         except Exception as error:
             msg = f"AXTable: Exception in _get_cell_coordinates_from_table_cell: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
         if not success:
             return -1, -1
 
         tokens = ["AXTable: TableCell iface coords for", cell, f"are row: {row}, col: {column}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_COORDINATES_FROM_CELL[hash(cell)] = row, column
         return row, column
 
@@ -862,7 +862,7 @@ class AXTable:
         col_index = attrs.get("colindex")
 
         tokens = ["AXTable: Row and col index attributes for", cell, ":", row_index, ",", col_index]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COORDINATES[hash(cell)] = row_index, col_index
         if row_index is not None and col_index is not None:
             return row_index, col_index
@@ -876,7 +876,7 @@ class AXTable:
         col_index = attrs.get("colindex", col_index)
 
         tokens = ["AXTable: Updated attributes based on", row, ":", row_index, col_index]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COORDINATES[hash(cell)] = row_index, col_index
         return row_index, col_index
 
@@ -892,7 +892,7 @@ class AXTable:
                 table = Atspi.TableCell.get_table(obj)
             except Exception as error:
                 msg = f"AXTable: Exception in get_table: {error}"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             else:
                 if AXObject.supports_table(table):
                     return table
@@ -1090,7 +1090,7 @@ class AXTable:
                 result, reason = False, "Has caption"
 
         tokens = ["AXTable:", table, f"is layout only: {result} ({reason})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -1111,7 +1111,7 @@ class AXTable:
             result = f"{col_label}{row_label}"
 
         tokens = ["AXTable: Coordinates label for", cell, f": {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COORDINATES_LABELS[hash(cell)] = result
         if result:
             return result
@@ -1127,7 +1127,7 @@ class AXTable:
             result = f"{col_label}{row_label}"
 
         tokens = ["AXTable: Updated coordinates label based on", row, f": {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COORDINATES_LABELS[hash(cell)] = result
         return result
 

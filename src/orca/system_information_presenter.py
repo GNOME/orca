@@ -56,7 +56,7 @@ class SystemInformationPresenter:
 
         if refresh:
             msg = "SYSTEM INFORMATION PRESENTER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -68,7 +68,7 @@ class SystemInformationPresenter:
 
         if refresh:
             msg = "SYSTEM INFORMATION PRESENTER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -99,7 +99,7 @@ class SystemInformationPresenter:
                 cmdnames.PRESENT_CPU_AND_MEMORY_USAGE)
 
         msg = "SYSTEM INFORMATION PRESENTER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the system-information-presenter key bindings."""
@@ -139,7 +139,7 @@ class SystemInformationPresenter:
                 1))
 
         msg = "SYSTEM INFORMATION PRESENTER: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def present_time(self, script, event=None):
         """Presents the current time."""

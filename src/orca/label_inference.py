@@ -63,31 +63,31 @@ class LabelInference:
         """
 
         tokens = ["LABEL INFERENCE: Infer label for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not obj:
             return None, []
 
         if focusedOnly and not AXUtilities.is_focused(obj):
             tokens = ["LABEL INFERENCE:", obj, "is not focused"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None, []
 
         result, objects = None, []
         if not result:
             result, objects = self.inferFromTextLeft(obj)
-            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Left: '{result}'", True)
+            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Left: '{result}'", True)
         if not result or self._preferRight(obj):
             result, objects = self.inferFromTextRight(obj) or result
-            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Right: '{result}'", True)
+            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Right: '{result}'", True)
         if not result:
             result, objects = self.inferFromTable(obj)
-            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Table: '{result}'", True)
+            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Table: '{result}'", True)
         if not result:
             result, objects = self.inferFromTextAbove(obj)
-            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Above: '{result}'", True)
+            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Above: '{result}'", True)
         if not result:
             result, objects = self.inferFromTextBelow(obj)
-            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Below: '{result}'", True)
+            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Text Below: '{result}'", True)
 
         # TODO - We probably do not wish to "infer" from these. Instead, we
         # should ensure that this content gets presented as part of the widget.
@@ -95,7 +95,7 @@ class LabelInference:
         # are each something other than a label.)
         if not result:
             result, objects = AXObject.get_name(obj), []
-            debug.printMessage(debug.LEVEL_INFO, f"LABEL INFERENCE: Name: '{result}'", True)
+            debug.print_message(debug.LEVEL_INFO, f"LABEL INFERENCE: Name: '{result}'", True)
 
         if result:
             result = result.strip()
@@ -104,7 +104,7 @@ class LabelInference:
         # Desperate times call for desperate measures....
         if not result:
             result, objects = self.inferFromTextLeft(obj, proximity=200)
-            debug.printMessage(
+            debug.print_message(
                 debug.LEVEL_INFO,
                 f"LABEL INFERENCE: Text Left with proximity of 200: '{result}'", True)
 

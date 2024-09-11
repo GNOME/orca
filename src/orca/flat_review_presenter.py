@@ -75,7 +75,7 @@ class FlatReviewPresenter:
 
         if not self._context:
             msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
             if self._restrict:
                 mode, obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
@@ -91,7 +91,7 @@ class FlatReviewPresenter:
             return self._context
 
         msg = f"FLAT REVIEW PRESENTER: Using existing context. Restrict: {self._restrict}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # If we are in unrestricted mode, update the context as below.
         # If the context already exists, but the active mode is not flat review, update
@@ -108,13 +108,13 @@ class FlatReviewPresenter:
            and not self._restrict:
             tokens = ["FLAT REVIEW PRESENTER: Attempting to update location from",
                       self._context.getCurrentAccessible(), "to", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._context.setCurrentToZoneWithObject(obj)
 
         # If we are restricting, and the current mode is not flat review, calculate a new context
         if self._restrict and mode != focus_manager.FLAT_REVIEW:
             msg = "FLAT REVIEW PRESENTER: Creating new restricted context."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._context = flat_review.Context(script, obj)
 
         return self._context
@@ -124,7 +124,7 @@ class FlatReviewPresenter:
 
         if refresh:
             msg = "FLAT REVIEW PRESENTER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()
@@ -152,7 +152,7 @@ class FlatReviewPresenter:
                 self._handlers.get("reviewBottomLeftHandler")
         except Exception as error:
             tokens = ["FLAT REVIEW PRESENTER: Exception getting braille bindings:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return {}
         return bindings
 
@@ -161,7 +161,7 @@ class FlatReviewPresenter:
 
         if refresh:
             msg = "FLAT REVIEW PRESENTER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -318,7 +318,7 @@ class FlatReviewPresenter:
                 cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW)
 
         msg = "FLAT REVIEW PRESENTER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_desktop_bindings(self):
         """Sets up the flat-review-presenter desktop key bindings."""
@@ -525,7 +525,7 @@ class FlatReviewPresenter:
                 self._handlers.get("flatReviewToggleRestrictHandler")))
 
         msg = "FLAT REVIEW PRESENTER: Desktop bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_laptop_bindings(self):
         """Sets up the flat-review-presenter laptop key bindings."""
@@ -732,18 +732,18 @@ class FlatReviewPresenter:
                 self._handlers.get("flatReviewToggleRestrictHandler")))
 
         msg = "FLAT REVIEW PRESENTER: Laptop bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def start(self, script=None, event=None):
         """Starts flat review."""
 
         if self._context:
             msg = "FLAT REVIEW PRESENTER: Already in flat review"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "FLAT REVIEW PRESENTER: Starting flat review"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if script is None:
             script = script_manager.get_manager().get_active_script()
@@ -762,11 +762,11 @@ class FlatReviewPresenter:
 
         if self._context is None:
             msg = "FLAT REVIEW PRESENTER: Not in flat review"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "FLAT REVIEW PRESENTER: Quitting flat review"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self._context = None
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -1041,7 +1041,7 @@ class FlatReviewPresenter:
         """Displays the entire flat review contents in a text view."""
 
         msg = "FLAT REVIEW PRESENTER: Showing contents."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         text = "\n".join(self._get_all_lines(script, event))
         title = guilabels.FLAT_REVIEW_CONTENTS

@@ -75,7 +75,7 @@ class Utilities(web.Utilities):
             and self._getTag(obj) in (None, "", "br")
         if rv:
             tokens = ["CHROMIUM:", obj, "believed to be static text leaf"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._isStaticTextLeaf[hash(obj)] = rv
         return rv
@@ -91,7 +91,7 @@ class Utilities(web.Utilities):
         rv = self._getTag(obj) in ["<pseudo:before>", "<pseudo:after>"]
         if rv:
             tokens = ["CHROMIUM:", obj, "believed to be pseudo element"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._isPseudoElement[hash(obj)] = rv
         return rv
@@ -162,7 +162,7 @@ class Utilities(web.Utilities):
 
         menu = AXObject.find_descendant(obj, AXUtilities.is_menu)
         tokens = ["CHROMIUM: Popup menu for", obj, ":", menu]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return menu
 
     def topLevelObject(self, obj, useFallbackSearch=False):
@@ -176,7 +176,7 @@ class Utilities(web.Utilities):
             else:
                 parent = AXObject.get_parent(result)
                 tokens = ["CHROMIUM: Top level object for", obj, "is", parent]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return parent
 
         cached = self._topLevelObject.get(hash(obj))
@@ -184,7 +184,7 @@ class Utilities(web.Utilities):
             return cached
 
         tokens = ["CHROMIUM: WARNING: Top level object for", obj, "is", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # The only (known) object giving us a broken ancestry is the omnibox popup.
         if not (AXUtilities.is_list_item(obj or AXUtilities.is_list_box(obj))):
@@ -202,7 +202,7 @@ class Utilities(web.Utilities):
         if not AXUtilities.is_list_box(listbox):
             if AXUtilities.is_redundant_object(listbox):
                 tokens = ["CHROMIUM: WARNING: Suspected bogus role on listbox", listbox]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             else:
                 return result
 
@@ -210,7 +210,7 @@ class Utilities(web.Utilities):
         if autocomplete:
             result = self.topLevelObject(autocomplete)
             tokens = ["CHROMIUM: Top level object for", autocomplete, "is", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._topLevelObject[hash(obj)] = result
         return result
@@ -248,7 +248,7 @@ class Utilities(web.Utilities):
         link = AXObject.find_ancestor(obj, AXUtilities.is_link)
         if link is not None:
             tokens = ["CHROMIUM: HACK: Grabbing focus on", obj, "'s ancestor", link]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.grab_focus(link)
 
     def getFindResultsCount(self, root=None):
@@ -281,7 +281,7 @@ class Utilities(web.Utilities):
         result = self.getFindResultsCount(obj)
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (", result, ")"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._findContainer = obj
             return True
 
@@ -293,22 +293,22 @@ class Utilities(web.Utilities):
 
         if len(AXUtilities.find_all_entries(obj)) != 1:
             tokens = ["CHROMIUM:", obj, "not believed to be find-in-page container (entry count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if len(AXUtilities.find_all_push_buttons(obj)) != 3:
             tokens = ["CHROMIUM:", obj, "not believed to be find-in-page container (button count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if len(AXUtilities.find_all_separators(obj)) != 1:
             tokens = ["CHROMIUM:", obj,
                       "not believed to be find-in-page container (separator count)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (accessibility tree)"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._findContainer = obj
         return True
 
@@ -322,7 +322,7 @@ class Utilities(web.Utilities):
         result = self.isFindContainer(AXObject.find_ancestor(obj, AXUtilities.is_dialog))
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page widget"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -343,7 +343,7 @@ class Utilities(web.Utilities):
         # nothing but a TON of static text leaf nodes, which we want to ignore.
         if AXUtilities.is_code(root):
             tokens = ["CHROMIUM: Returning 0 descendants for pre/code", root]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         return super().findAllDescendants(root, includeIf, excludeIf)

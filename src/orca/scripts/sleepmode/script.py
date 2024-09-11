@@ -49,7 +49,7 @@ class Script(default.Script):
         """Called when this script is activated."""
 
         tokens = ["SLEEP MODE: Activating script for", self.app]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         orca_modifier_manager.get_manager().unset_orca_modifiers("Entering sleep mode.")
         self.add_key_grabs("script activation")
 
@@ -57,7 +57,7 @@ class Script(default.Script):
         """Called when this script is deactivated."""
 
         tokens = ["SLEEP MODE: De-activating script for", self.app]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.remove_key_grabs("script deactivation")
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Exiting sleep mode.")
 
@@ -80,7 +80,7 @@ class Script(default.Script):
         """Returns the braille bindings for this script."""
 
         msg = "SLEEP MODE: Has no braille bindings."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return {}
 
     def get_key_bindings(self, enabled_only=True):
@@ -108,19 +108,19 @@ class Script(default.Script):
         """Updates the braille display to show the give object."""
 
         msg = "SLEEP MODE: Not updating braille."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def presentKeyboardEvent(self, event):
         """Presents the keyboard event to the user."""
 
         msg = "SLEEP MODE: Not presenting keyboard event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True, True)
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
         tokens = ["SLEEP MODE: focus changed from", old_focus, "to", new_focus, "due to", event]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
             self.clearBraille()
@@ -128,140 +128,140 @@ class Script(default.Script):
             return
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_children_removed(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_load_complete(self, event)
 
     def on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_document_reload(self, event):
         """Callback for document:reload accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_mouse_button(self, event):
         """Callback for mouse:button accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
@@ -274,4 +274,4 @@ class Script(default.Script):
         """Callback for window:deactivate accessibility events."""
 
         msg = "SLEEP MODE: Ignoring event."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)

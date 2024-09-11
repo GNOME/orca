@@ -48,7 +48,7 @@ class Utilities(script_utilities.Utilities):
 
         adjusted = event.any_data[:match.start()]
         tokens = ["TERMINAL: Adjusted deletion: '", adjusted, "'"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return adjusted
 
     def insertedText(self, event):
@@ -64,20 +64,20 @@ class Utilities(script_utilities.Utilities):
         start, end = event.detail1, event.detail1 + len(event.any_data)
         firstLine = AXText.get_line_at_offset(event.source, start)
         tokens = ["TERMINAL: First line of insertion:", firstLine]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         lastLine = AXText.get_line_at_offset(event.source, end - 1)
         tokens = ["TERMINAL: Last line of insertion:", lastLine]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if firstLine == lastLine:
             msg = "TERMINAL: Not adjusting single-line insertion."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return event.any_data
 
         currentLine = AXText.get_line_at_offset(event.source, None)
         tokens = ["TERMINAL: Current line:", currentLine]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if firstLine != ("", 0, 0):
             start = firstLine[1]
@@ -93,10 +93,10 @@ class Utilities(script_utilities.Utilities):
         adjusted = AXText.get_substring(event.source, start, end)
         if adjusted:
             tokens = ["TERMINAL: Adjusted insertion: '", adjusted, "'"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
             msg = "TERMINAL: Adjustment failed. Returning any_data."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             adjusted = event.any_data
 
         return adjusted

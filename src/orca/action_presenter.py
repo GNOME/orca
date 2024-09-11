@@ -58,7 +58,7 @@ class ActionPresenter:
 
         if refresh:
             msg = "ACTION PRESENTER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -70,7 +70,7 @@ class ActionPresenter:
 
         if refresh:
             msg = "ACTION PRESENTER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -86,7 +86,7 @@ class ActionPresenter:
                 cmdnames.SHOW_ACTIONS_MENU)
 
         msg = "ACTION PRESENTER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the action-presenter key bindings."""
@@ -101,13 +101,13 @@ class ActionPresenter:
                 self._handlers.get("show_actions_menu")))
 
         msg = "ACTION PRESENTER: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _restore_focus(self):
         """Restores focus to the object associated with the actions menu."""
 
         tokens = ["ACTION PRESENTER: Restoring focus to", self._obj, "in", self._window]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # TODO - JD: Consider having set_locus_of_focus always update the active script.
         reason = "Action Presenter menu is being destroyed"
@@ -125,7 +125,7 @@ class ActionPresenter:
 
         result = AXObject.do_named_action(self._obj, action)
         tokens = ["ACTION PRESENTER: Performing", action, "on", self._obj, "succeeded:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._gui = None
 
     def show_actions_menu(self, script, event=None):
@@ -145,7 +145,7 @@ class ActionPresenter:
             description = AXObject.get_action_description(obj, i)
             tokens = [f"ACTION PRESENTER: Action {i} on", obj,
                       f": '{name}' localized description: '{description}'"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             actions[name] = description or name
 
         if not actions.items():
@@ -158,7 +158,7 @@ class ActionPresenter:
         self._gui = ActionMenu(actions, self._perform_action, self._restore_focus)
         timeout = 500
         msg = f"ACTION PRESENTER: Delaying popup {timeout}ms due to GtkMenu grab conflict."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(timeout, self._gui.show_gui)
         return True
 
@@ -186,13 +186,13 @@ class ActionMenu(Gtk.Menu):
         """Handler for the 'popped-up' menu signal"""
 
         msg = "ACTION PRESENTER: ActionMenu popped up"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _on_hidden(self, *args):
         """Handler for the 'hide' menu signal"""
 
         msg = "ACTION PRESENTER: ActionMenu hidden"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.on_menu_hidden()
 
     def show_gui(self):

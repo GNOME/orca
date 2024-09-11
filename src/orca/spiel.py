@@ -150,15 +150,15 @@ class SpeechServer(speechserver.SpeechServer):
             )
         if not _spiel_available:
             msg = 'ERROR: Spiel is not available'
-            debug.printMessage(debug.LEVEL_WARNING, msg, True)
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
             return
 
         try:
             self._init()
         except Exception as error:
-            debug.printException(debug.LEVEL_WARNING)
+            debug.print_exception(debug.LEVEL_WARNING)
             msg = f"ERROR: Spiel service failed to connect {error}"
-            debug.printMessage(debug.LEVEL_WARNING, msg, True)
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
         else:
             SpeechServer._active_servers[serverId] = self
 
@@ -272,7 +272,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"{styles.get(manager.get_setting('verbalizePunctuationStyle'))}\n"
             f"SD rate {rate}, pitch {pitch}, volume {volume}, language {language}"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss):
         if acss is None:
@@ -316,7 +316,7 @@ class SpeechServer(speechserver.SpeechServer):
         voice = self._get_voice(acss.get(ACSS.FAMILY, {}))
 
         if voice is None:
-            debug.printMessage(debug.LEVEL_WARNING, "No available voices", True)
+            debug.print_message(debug.LEVEL_WARNING, "No available voices", True)
             return None
 
         # If the text is not pre-formatted SSML, and the voice supports it,
@@ -386,14 +386,14 @@ class SpeechServer(speechserver.SpeechServer):
         return families
 
     def speak_character(self, character, acss=None):
-        debug.printMessage(debug.LEVEL_INFO, f"SPIEL Character: '{character}'")
+        debug.print_message(debug.LEVEL_INFO, f"SPIEL Character: '{character}'")
 
         if not acss:
             acss = settings.voices[settings.DEFAULT_VOICE]
 
         voice = self._get_voice(acss.get(ACSS.FAMILY, {}))
         if voice is None:
-            debug.printMessage(debug.LEVEL_WARNING, "No available voices", True)
+            debug.print_message(debug.LEVEL_WARNING, "No available voices", True)
             return
 
         features = voice.props.features
@@ -415,12 +415,12 @@ class SpeechServer(speechserver.SpeechServer):
         event_string = f"{event_string} {lockingStateString}".strip()
         if len(event_string) == 1:
             msg = f"SPIEL: Speaking '{event_string}' as key"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self.speak_character(event_string, acss)
         else:
             msg = f"SPIEL: Speaking '{event_string}' as string"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak(event_string, acss=acss)
 
     def speak(self, text=None, acss=None, interrupt=True):
@@ -436,12 +436,12 @@ class SpeechServer(speechserver.SpeechServer):
 
         if len(text) == 1:
             msg = f"SPIEL: Speaking '{text}' as char"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             self.speak_character(text, acss)
         else:
             msg = f"SPIEL: Speaking '{text}' as string"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             utterance = self._create_utterance(text, acss)
             self._speak_utterance(utterance, acss)
 
@@ -452,13 +452,13 @@ class SpeechServer(speechserver.SpeechServer):
             pass
         else:
             def _utterance_started(speaker, utterance, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"STARTED: {utterance.props.text}")
+                debug.print_message(debug.LEVEL_INFO, f"STARTED: {utterance.props.text}")
                 (callback, currentUtterance, _) = sayall_data
                 if currentUtterance == utterance:
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _utterance_finished(speaker, utterance, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"FINISHED: {utterance.props.text}")
+                debug.print_message(debug.LEVEL_INFO, f"FINISHED: {utterance.props.text}")
                 (callback, currentUtterance, handlers) = sayall_data
                 if currentUtterance == utterance:
                     callback(context, speechserver.SayAllContext.PROGRESS)
@@ -469,35 +469,35 @@ class SpeechServer(speechserver.SpeechServer):
                     self.say_all(utterance_iterator, callback)
 
             def _utterance_canceled(speaker, utterance, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"CANCELED: {utterance.props.text}")
+                debug.print_message(debug.LEVEL_INFO, f"CANCELED: {utterance.props.text}")
                 (callback, currentUtterance, handlers) = sayall_data
                 if currentUtterance == utterance:
                     [speaker.disconnect(handler) for handler in handlers]
                     callback(context, speechserver.SayAllContext.INTERRUPTED)
 
             def _utterance_error(speaker, utterance, error, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"ERROR: {utterance.props.text}")
-                debug.printMessage(debug.LEVEL_WARNING, f"ERROR: {repr(error)}")
+                debug.print_message(debug.LEVEL_INFO, f"ERROR: {utterance.props.text}")
+                debug.print_message(debug.LEVEL_WARNING, f"ERROR: {repr(error)}")
                 (callback, currentUtterance, handlers) = sayall_data
                 if currentUtterance == utterance:
                     [speaker.disconnect(handler) for handler in handlers]
                     callback(context, speechserver.SayAllContext.INTERRUPTED)
 
             def _mark_reached(_speaker, utterance, name, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"MARK REACHED: {name}")
+                debug.print_message(debug.LEVEL_INFO, f"MARK REACHED: {name}")
                 (callback, currentUtterance, handlers) = sayall_data
                 if currentUtterance == utterance:
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _range_started(_speaker, utterance, start, end, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"RANGE STARTED: {start}-{end}")
+                debug.print_message(debug.LEVEL_INFO, f"RANGE STARTED: {start}-{end}")
                 (callback, currentUtterance, handlers) = sayall_data
                 if currentUtterance == utterance:
                     # TODO: map start/end to currentOffset/currentEndOffset
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _word_started(_speaker, utterance, start, end, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"WORD STARTED: {start}-{end}")
+                debug.print_message(debug.LEVEL_INFO, f"WORD STARTED: {start}-{end}")
                 (callback, currentUtterance, handlers) = sayall_data
                 if currentUtterance == utterance:
                     context.currentOffset = start
@@ -506,7 +506,7 @@ class SpeechServer(speechserver.SpeechServer):
                     callback(context, speechserver.SayAllContext.PROGRESS)
 
             def _sentence_started(_speaker, _utterance, start, end, sayall_data):
-                debug.printMessage(debug.LEVEL_INFO, f"SENTENCE STARTED: {start}-{end}")
+                debug.print_message(debug.LEVEL_INFO, f"SENTENCE STARTED: {start}-{end}")
                 (callback, currentUtterance, _) = sayall_data
                 if currentUtterance == utterance:
                     # TODO: map start/end to currentOffset/currentEndOffset
@@ -556,7 +556,7 @@ class SpeechServer(speechserver.SpeechServer):
             rate = 50
         acss[ACSS.RATE] = max(0, min(99, rate + delta))
         msg = f"SPIEL: Rate set to {rate}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_SLOWER \
                    or messages.SPEECH_FASTER, acss=acss)
 
@@ -569,7 +569,7 @@ class SpeechServer(speechserver.SpeechServer):
             pitch = 5
         acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
         msg = f"SPIEL: Pitch set to {pitch}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_LOWER \
                    or messages.SPEECH_HIGHER, acss=acss)
 
@@ -582,7 +582,7 @@ class SpeechServer(speechserver.SpeechServer):
             volume = 10
         acss[ACSS.GAIN] = max(0, min(9, volume + delta))
         msg = f"SPIEL: Volume set to {volume}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.speak(decrease and messages.SPEECH_SOFTER \
                    or messages.SPEECH_LOUDER, acss=acss)
 

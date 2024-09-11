@@ -58,7 +58,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.locus_of_focus_changed(self, event, old_focus, new_focus)
 
     def on_active_changed(self, event):
@@ -73,7 +73,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_active_changed(self, event)
 
     def on_busy_changed(self, event):
@@ -83,7 +83,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_busy_changed(self, event)
 
     def on_caret_moved(self, event):
@@ -91,7 +91,7 @@ class Script(web.Script, gtk.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         tokens = ["WEBKITGTK: Locus of focus is", focus]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.utilities.isWebKitGTK(focus):
             document = self.utilities.getDocumentForObject(event.source)
@@ -104,7 +104,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_caret_moved(self, event)
 
     def on_checked_changed(self, event):
@@ -114,7 +114,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_checked_changed(self, event)
 
     def on_column_reordered(self, event):
@@ -124,7 +124,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_column_reordered(self, event)
 
     def on_children_added(self, event):
@@ -134,7 +134,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_children_added(self, event)
 
     def on_children_removed(self, event):
@@ -144,7 +144,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_children_removed(self, event)
 
     def on_document_load_complete(self, event):
@@ -154,7 +154,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_document_load_complete(self, event)
 
     def on_document_load_stopped(self, event):
@@ -164,7 +164,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_document_load_stopped(self, event)
 
     def on_document_reload(self, event):
@@ -174,7 +174,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_document_reload(self, event)
 
     def on_expanded_changed(self, event):
@@ -184,7 +184,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_expanded_changed(self, event)
 
     def on_focused_changed(self, event):
@@ -194,7 +194,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_focused_changed(self, event)
 
     def on_mouse_button(self, event):
@@ -204,7 +204,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_mouse_button(self, event)
 
     def on_name_changed(self, event):
@@ -214,7 +214,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_name_changed(self, event)
 
     def on_row_reordered(self, event):
@@ -224,7 +224,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_row_reordered(self, event)
 
     def on_selected_changed(self, event):
@@ -234,7 +234,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_selected_changed(self, event)
 
     def on_selection_changed(self, event):
@@ -244,7 +244,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_selection_changed(self, event)
 
     def on_showing_changed(self, event):
@@ -254,7 +254,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_showing_changed(self, event)
 
     def on_text_attributes_changed(self, event):
@@ -264,7 +264,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_text_attributes_changed(self, event)
 
     def on_text_deleted(self, event):
@@ -274,7 +274,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_text_deleted(self, event)
 
     def on_text_inserted(self, event):
@@ -284,7 +284,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_text_inserted(self, event)
 
     def on_text_selection_changed(self, event):
@@ -294,7 +294,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_text_selection_changed(self, event)
 
     def on_window_activated(self, event):
@@ -304,7 +304,7 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_window_activated(self, event)
 
     def on_window_deactivated(self, event):
@@ -314,5 +314,5 @@ class Script(web.Script, gtk.Script):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         gtk.Script.on_window_deactivated(self, event)

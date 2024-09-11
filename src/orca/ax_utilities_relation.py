@@ -64,7 +64,7 @@ class AXUtilitiesRelation:
         msg = "AXUtilitiesRelation: Clearing local cache."
         if reason:
             msg += f" Reason: {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         with AXUtilitiesRelation._lock:
             AXUtilitiesRelation.RELATIONS.clear()
@@ -85,7 +85,7 @@ class AXUtilitiesRelation:
         thread.start()
 
     @staticmethod
-    def _get_relations(obj):
+    def get_relations(obj):
         """Returns the list of Atspi.Relation objects associated with obj"""
 
         if not AXObject.is_valid(obj):
@@ -99,7 +99,7 @@ class AXUtilitiesRelation:
             relations = Atspi.Accessible.get_relation_set(obj)
         except Exception as error:
             msg = f"AXUtilitiesRelation: Exception in get_relations: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         AXUtilitiesRelation.RELATIONS[hash(obj)] = relations
@@ -109,11 +109,17 @@ class AXUtilitiesRelation:
     def _get_relation(obj, relation_type):
         """Returns the specified Atspi.Relation for obj"""
 
-        for relation in AXUtilitiesRelation._get_relations(obj):
+        for relation in AXUtilitiesRelation.get_relations(obj):
             if relation and relation.get_relation_type() == relation_type:
                 return relation
 
         return None
+
+    @staticmethod
+    def get_relation_targets_for_debugging(obj, relation_type):
+        """Returns the list of targets with the specified relation type to obj."""
+
+        return AXUtilitiesRelation._get_relation_targets(obj, relation_type)
 
     @staticmethod
     def _get_relation_targets(obj, relation_type):
@@ -138,7 +144,7 @@ class AXUtilitiesRelation:
         type_includes_object = [Atspi.RelationType.MEMBER_OF]
         if relation_type not in type_includes_object and obj in targets:
             tokens = ["AXUtilitiesRelation: ", obj, "is in its own", relation_type, "target list"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             targets.remove(obj)
 
         result = list(targets)
@@ -147,40 +153,12 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def relations_as_string(obj):
-        """Returns the relations associated with obj as a string"""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        def as_string(relations):
-            return relations.value_name[15:].replace("_", "-").lower()
-
-        def obj_as_string(acc):
-            result = AXObject.get_role_name(acc)
-            name = AXObject.get_name(acc)
-            if name:
-                result += f": '{name}'"
-            if not result:
-                result = "DEAD"
-            return f"[{result}]"
-
-        results = []
-        for rel in AXUtilitiesRelation._get_relations(obj):
-            type_string = as_string(rel.get_relation_type())
-            targets = AXUtilitiesRelation._get_relation_targets(obj, rel.get_relation_type())
-            target_string = ",".join(map(obj_as_string, targets))
-            results.append(f"{type_string}: {target_string}")
-
-        return "; ".join(results)
-
-    @staticmethod
     def get_is_controlled_by(obj):
         """Returns a list of accessible objects that obj is controlled by."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.CONTROLLED_BY)
         tokens = ["AXUtilitiesRelation:", obj, "is controlled by:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -189,7 +167,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.CONTROLLER_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "is controller for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -198,7 +176,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DESCRIBED_BY)
         tokens = ["AXUtilitiesRelation:", obj, "is described by:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -207,7 +185,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DESCRIPTION_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "is description for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -216,7 +194,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DETAILS)
         tokens = ["AXUtilitiesRelation:", obj, "has details in:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -225,7 +203,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DETAILS_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "contains details for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -234,7 +212,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.EMBEDDED_BY)
         tokens = ["AXUtilitiesRelation:", obj, "is embedded by:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -243,7 +221,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.EMBEDS)
         tokens = ["AXUtilitiesRelation:", obj, "embeds:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -252,7 +230,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.ERROR_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "is error for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -261,7 +239,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.ERROR_MESSAGE)
         tokens = ["AXUtilitiesRelation:", obj, "has error messages in:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -270,7 +248,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.FLOWS_FROM)
         tokens = ["AXUtilitiesRelation:", obj, "flows from:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -279,7 +257,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.FLOWS_TO)
         tokens = ["AXUtilitiesRelation:", obj, "flows to:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -288,7 +266,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.LABEL_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "is label for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -303,7 +281,7 @@ class AXUtilitiesRelation:
             result = list(filter(is_not_ancestor, result))
 
         tokens = ["AXUtilitiesRelation:", obj, "is labelled by:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -312,7 +290,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.MEMBER_OF)
         tokens = ["AXUtilitiesRelation:", obj, "is member of:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -321,7 +299,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.NODE_CHILD_OF)
         tokens = ["AXUtilitiesRelation:", obj, "is node child of:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -330,7 +308,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF)
         tokens = ["AXUtilitiesRelation:", obj, "is node parent of:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -339,7 +317,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.PARENT_WINDOW_OF)
         tokens = ["AXUtilitiesRelation:", obj, "is parent window of:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -348,7 +326,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.POPUP_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "is popup for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -357,7 +335,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.SUBWINDOW_OF)
         tokens = ["AXUtilitiesRelation:", obj, "is subwindow of:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -366,7 +344,7 @@ class AXUtilitiesRelation:
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.TOOLTIP_FOR)
         tokens = ["AXUtilitiesRelation:", obj, "is tooltip for:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -376,13 +354,13 @@ class AXUtilitiesRelation:
         targets = AXUtilitiesRelation._get_relation_targets(obj1, Atspi.RelationType.CONTROLLED_BY)
         result = obj2 in targets
         tokens = ["AXUtilitiesRelation:", obj1, "is controlled by", obj2, f": {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
     def object_is_unrelated(obj):
         """Returns True if obj does not have any relations."""
 
-        return not AXUtilitiesRelation._get_relations(obj)
+        return not AXUtilitiesRelation.get_relations(obj)
 
 AXUtilitiesRelation.start_cache_clearing_thread()

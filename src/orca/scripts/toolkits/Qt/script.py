@@ -44,7 +44,7 @@ class Script(default.Script):
 
         if AXUtilities.is_accelerator_label(event.source):
             msg = "QT: Ignoring event due to role."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         super().on_caret_moved(event)
@@ -57,29 +57,29 @@ class Script(default.Script):
 
         if AXUtilities.is_accelerator_label(event.source):
             msg = "QT: Ignoring event due to role."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         frame = self.utilities.topLevelObject(event.source)
         if not frame:
             msg = "QT: Ignoring event because we couldn't find an ancestor window."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         isActive = AXUtilities.is_active(frame)
         if not isActive:
             tokens = ["QT: Event came from inactive top-level object", frame]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             AXObject.clear_cache(frame, False, "Ensuring we have correct active state.")
             isActive = AXUtilities.is_active(frame)
             tokens = ["QT: Cleared cache of", frame, ". Frame is now active:", isActive]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilities.is_focused(event.source):
             super().on_focused_changed(event)
             return
 
         msg = "QT: WARNING - source lacks focused state. Setting focus anyway."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         focus_manager.get_manager().set_locus_of_focus(event, event.source)

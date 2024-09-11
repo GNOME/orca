@@ -65,7 +65,7 @@ class Script(default.Script):
 
         if self.utilities.treatEventAsNoise(event):
             msg = "TERMINAL: Deletion is believed to be noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         super().on_text_deleted(event)
@@ -75,12 +75,12 @@ class Script(default.Script):
 
         if not self.utilities.treatEventAsCommand(event):
             msg = "TERMINAL: Passing along event to default script."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             super().on_text_inserted(event)
             return
 
         msg = "TERMINAL: Insertion is believed to be due to terminal command"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.update_braille(event.source)
 
@@ -93,7 +93,7 @@ class Script(default.Script):
 
         if self.get_flat_review_presenter().is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         offset = AXText.get_caret_offset(event.source)
@@ -121,6 +121,6 @@ class Script(default.Script):
             return False
 
         tokens = ["TERMINAL: Presenting keyboard event", string]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.speak_key_event(event)
         return True

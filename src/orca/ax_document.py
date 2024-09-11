@@ -68,7 +68,7 @@ class AXDocument:
         while True:
             time.sleep(60)
             msg = "AXDocument: Clearing local cache."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             AXDocument.LAST_KNOWN_PAGE.clear()
 
     @staticmethod
@@ -90,7 +90,7 @@ class AXDocument:
         result = old_page != AXDocument._get_current_page(document)
         if result:
             tokens = ["AXDocument: Previous page of", document, f"was {old_page}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -105,11 +105,11 @@ class AXDocument:
             page = Atspi.Document.get_current_page_number(document)
         except Exception as error:
             msg = f"AXDocument: Exception in _get_current_page: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
         tokens = ["AXDocument: Current page of", document, f"is {page}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return page
 
     @staticmethod
@@ -134,11 +134,11 @@ class AXDocument:
             count = Atspi.Document.get_page_count(document)
         except Exception as error:
             msg = f"AXDocument: Exception in get_page_count: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
         tokens = ["AXDocument: Page count of", document, f"is {count}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return count
 
     @staticmethod
@@ -152,11 +152,11 @@ class AXDocument:
             result = Atspi.Document.get_locale(document)
         except Exception as error:
             msg = f"AXDocument: Exception in get_locale: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
         tokens = ["AXDocument: Locale of", document, f"is '{result}'"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -170,11 +170,11 @@ class AXDocument:
             result = Atspi.Document.get_document_attributes(document)
         except Exception as error:
             msg = f"AXDocument: Exception in _get_attributes_dict: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return {}
 
         tokens = ["AXDocument: Attributes of", document, "are:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod

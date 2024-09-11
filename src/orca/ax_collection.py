@@ -92,7 +92,7 @@ class AXCollection:
                                        invert)
         except Exception as error:
             tokens = ["AXCollection: Exception in create_match_rule:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return rule
@@ -104,7 +104,7 @@ class AXCollection:
 
         if not AXObject.supports_collection(obj):
             tokens = ["AXCollection:", obj, "does not implement this interface."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         if rule is None:
@@ -117,11 +117,11 @@ class AXCollection:
             matches = Atspi.Collection.get_matches(obj, rule, order, 0, True)
         except Exception as error:
             tokens = ["AXCollection: Exception in get_all_matches:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         msg = f"AXCollection: {len(matches)} match(es) found in {time.time() - start:.4f}s"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return matches
 
     @staticmethod
@@ -130,7 +130,7 @@ class AXCollection:
 
         if not AXObject.supports_collection(obj):
             tokens = ["AXCollection:", obj, "does not implement this interface."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if rule is None:
@@ -143,7 +143,7 @@ class AXCollection:
             matches = Atspi.Collection.get_matches(obj, rule, order, 1, True)
         except Exception as error:
             tokens = ["AXCollection: Exception in get_first_match:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         match = None
@@ -151,5 +151,5 @@ class AXCollection:
             match = matches[0]
 
         tokens = ["AXCollection: found", match, f"in {time.time() - start:.4f}s"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return match

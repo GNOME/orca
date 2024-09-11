@@ -90,7 +90,7 @@ class AXUtilities:
         msg = "AXUtilities: Clearing cache."
         if reason:
             msg += f" Reason: {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         with AXUtilities._lock:
             AXUtilities.SET_MEMBERS.clear()
@@ -115,7 +115,7 @@ class AXUtilities:
             desktop = Atspi.get_desktop(0)
         except Exception as error:
             tokens = ["ERROR: Exception getting desktop from Atspi:", error]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return desktop
@@ -149,7 +149,7 @@ class AXUtilities:
                 return True
 
         tokens = ["WARNING:", app, "is not in", desktop]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     @staticmethod
@@ -165,7 +165,7 @@ class AXUtilities:
                 return app
 
         tokens = ["WARNING: app with pid", pid, "is not in", desktop]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return None
 
     @staticmethod
@@ -353,7 +353,7 @@ class AXUtilities:
 
         if reason:
             tokens = ["AXUtilities:", obj, f"believed to be layout only: {result}, {reason}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -370,31 +370,31 @@ class AXUtilities:
 
         if AXUtilitiesCollection.has_scroll_pane(obj):
             tokens = ["AXUtilities:", obj, "is not a message dialog: has scroll pane"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXUtilitiesCollection.has_split_pane(obj):
             tokens = ["AXUtilities:", obj, "is not a message dialog: has split pane"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXUtilitiesCollection.has_tree_or_tree_table(obj):
             tokens = ["AXUtilities:", obj, "is not a message dialog: has tree or tree table"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXUtilitiesCollection.has_combo_box_or_list_box(obj):
             tokens = ["AXUtilities:", obj, "is not a message dialog: has combo box or list box"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXUtilitiesCollection.has_editable_object(obj):
             tokens = ["AXUtilities:", obj, "is not a message dialog: has editable object"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         tokens = ["AXUtilities:", obj, "is believed to be a message dialog"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @staticmethod
@@ -409,7 +409,7 @@ class AXUtilities:
             return False
 
         tokens = ["AXUtilities:", obj2, "is redundant to", obj1]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @staticmethod
@@ -422,9 +422,9 @@ class AXUtilities:
         result = sorted(object_list, key=functools.cmp_to_key(cmp))
         if object_list != result:
             tokens = ["AXUtilities: Original list", object_list]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             tokens = ["AXUtilities: Sorted list", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -434,19 +434,19 @@ class AXUtilities:
 
         if container is None:
             tokens = ["AXUtilities: Members of", obj, "not obtainable: container is None"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         result = AXUtilitiesRelation.get_is_member_of(obj)
         if result:
             tokens = ["AXUtilities: Members of", obj, "in", container, "via member-of", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return AXUtilities._sort_by_child_index(result)
 
         result = AXUtilitiesRelation.get_is_node_parent_of(obj)
         if result:
             tokens = ["AXUtilities: Members of", obj, "in", container, "via node-parent-of", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return AXUtilities._sort_by_child_index(result)
 
         if AXUtilitiesRole.is_description_value(obj):
@@ -461,19 +461,19 @@ class AXUtilities:
                 result.append(next_sibling)
                 next_sibling = AXObject.get_next_sibling(next_sibling)
             tokens = ["AXUtilities: Members of", obj, "in", container, "based on siblings", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
         if AXUtilitiesRole.is_menu_related(obj):
             result = list(AXObject.iter_children(container, AXUtilitiesRole.is_menu_related))
             tokens = ["AXUtilities: Members of", obj, "in", container, "based on menu role", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
         role = AXObject.get_role(obj)
         result = list(AXObject.iter_children(container, lambda x: AXObject.get_role(x) == role))
         tokens = ["AXUtilities: Members of", obj, "in", container, "based on role", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -488,7 +488,7 @@ class AXUtilities:
         if obj not in result:
             if result:
                 tokens = ["AXUtilities:", obj, "not in cached members of", container, ":", result]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             result = AXUtilities._get_set_members(obj, container)
             AXUtilities.SET_MEMBERS[hash(container)] = result
@@ -501,7 +501,7 @@ class AXUtilities:
         filtered = list(filter(AXUtilitiesState.is_showing, result))
         if result != filtered:
             tokens = ["AXUtilities: Filtered non-showing:", set(result).difference(set(filtered))]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return filtered
 

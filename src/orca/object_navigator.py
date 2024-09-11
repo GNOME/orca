@@ -53,7 +53,7 @@ class ObjectNavigator:
 
         if refresh:
             msg = "OBJECT NAVIGATOR: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -65,7 +65,7 @@ class ObjectNavigator:
 
         if refresh:
             msg = "OBJECT NAVIGATOR: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -118,7 +118,7 @@ class ObjectNavigator:
                 self._handlers.get("object_navigator_toggle_simplify")))
 
         msg = "OBJECT NAVIGATOR: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_handlers(self):
         """Sets up the object-navigator input event handlers."""
@@ -156,7 +156,7 @@ class ObjectNavigator:
                 cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED)
 
         msg = "OBJECT NAVIGATOR: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _include_in_simple_navigation(self, obj):
         """Returns True if obj should be included in simple navigation."""
@@ -168,7 +168,7 @@ class ObjectNavigator:
 
         if self._include_in_simple_navigation(obj):
             tokens = ["OBJECT NAVIGATOR: Not excluding", obj, ": explicit inclusion"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         # is_layout_only should catch things that really should be skipped.
@@ -180,11 +180,11 @@ class ObjectNavigator:
         # selectable items in tables non-navigable (e.g. the mail folders in Evolution)
         if AXUtilities.is_layout_only(obj):
             tokens = ["OBJECT NAVIGATOR: Excluding", obj, ": is layout only"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         tokens = ["OBJECT NAVIGATOR: Not excluding", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     def _children(self, script, obj):
@@ -242,7 +242,7 @@ class ObjectNavigator:
         """Presents the current navigator focus to the user."""
 
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().emit_region_changed(
             self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)

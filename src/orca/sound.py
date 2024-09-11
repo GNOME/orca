@@ -51,7 +51,7 @@ class Player:
 
         if not _gstreamerAvailable:
             msg = 'SOUND ERROR: Gstreamer is not available'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self.init()
@@ -63,7 +63,7 @@ class Player:
             self._player.set_state(Gst.State.NULL)
             error, info = message.parse_error()
             msg = f'SOUND ERROR: {error}'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _onPipelineMessage(self, bus, message):
         if message.type == Gst.MessageType.EOS:
@@ -72,7 +72,7 @@ class Player:
             self._pipeline.set_state(Gst.State.NULL)
             error, info = message.parse_error()
             msg = f'SOUND ERROR: {error}'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _onTimeout(self, element):
         element.set_state(Gst.State.NULL)
@@ -112,7 +112,7 @@ class Player:
         self._player = Gst.ElementFactory.make('playbin', 'player')
         if self._player is None:
             msg = 'SOUND ERROR: Gstreamer is available, but player is None'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         bus = self._player.get_bus()
@@ -144,7 +144,7 @@ class Player:
             self._playTone(item, interrupt)
         else:
             tokens = ["SOUND ERROR:", item, "is not an Icon or Tone"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def stop(self, element=None):
         """Stops play."""

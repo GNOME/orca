@@ -59,7 +59,7 @@ def _init_speech_server(module_name, speech_server_info):
         try:
             factory = importlib.import_module(module_name)
         except Exception:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.print_exception(debug.LEVEL_SEVERE)
 
     # Now, get the speech server we care about.
     #
@@ -71,7 +71,7 @@ def _init_speech_server(module_name, speech_server_info):
         _speechserver = factory.SpeechServer.get_speech_server()
         if speech_server_info:
             tokens = ["SPEECH: Invalid speechServerInfo:", speech_server_info]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if not _speechserver:
         raise RuntimeError(f"ERROR: No speech server for factory: {module_name}")
@@ -79,9 +79,9 @@ def _init_speech_server(module_name, speech_server_info):
 def init():
     """Initializes the speech server."""
 
-    debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
+    debug.print_message(debug.LEVEL_INFO, 'SPEECH: Initializing', True)
     if _speechserver:
-        debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
+        debug.print_message(debug.LEVEL_INFO, 'SPEECH: Already initialized', True)
         return
 
     # HACK: Orca goes to incredible lengths to avoid a broken configuration, so this
@@ -103,22 +103,22 @@ def init():
                     if _speechserver:
                         break
                 except Exception:
-                    debug.printException(debug.LEVEL_SEVERE)
+                    debug.print_exception(debug.LEVEL_SEVERE)
 
     if _speechserver:
         tokens = ["SPEECH: Using speech server factory:", module_name]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     else:
         msg = 'SPEECH: Not available'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
+    debug.print_message(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
 def check_speech_setting():
     """Starts up or shuts down speech based on the current setting."""
 
     msg = "SPEECH: Checking speech setting."
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
+    debug.print_message(debug.LEVEL_INFO, msg, True)
 
     if not settings.enableSpeech:
         shutdown()
@@ -151,7 +151,7 @@ def say_all(utterance_iterator, progress_callback):
     else:
         for [context, _acss] in utterance_iterator:
             log_line = f"SPEECH OUTPUT: '{context.utterance}'"
-            debug.printMessage(debug.LEVEL_INFO, log_line, True)
+            debug.print_message(debug.LEVEL_INFO, log_line, True)
             log.info(log_line)
 
 def _speak(text, acss, interrupt):
@@ -159,7 +159,7 @@ def _speak(text, acss, interrupt):
 
     if not _speechserver:
         log_line = f"SPEECH OUTPUT: '{text}' {acss}"
-        debug.printMessage(debug.LEVEL_INFO, log_line, True)
+        debug.print_message(debug.LEVEL_INFO, log_line, True)
         log.info(log_line)
         return
 
@@ -168,11 +168,11 @@ def _speak(text, acss, interrupt):
         voice.update(__resolve_acss(acss))
     except Exception as error:
         msg = f"SPEECH: Exception updated voice with {acss}: {error}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     resolved_voice = __resolve_acss(voice)
     msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
-    debug.printMessage(debug.LEVEL_INFO, msg, True)
+    debug.print_message(debug.LEVEL_INFO, msg, True)
     _speechserver.speak(text, resolved_voice, interrupt)
 
 def speak(content, acss=None, interrupt=True):
@@ -186,15 +186,15 @@ def speak(content, acss=None, interrupt=True):
     valid_types = (str, list, speech_generator.Pause, ACSS)
     error = "SPEECH: Bad content sent to speak():"
     if not isinstance(content, valid_types):
-        debug.printMessage(debug.LEVEL_INFO, error + str(content), True, True)
+        debug.print_message(debug.LEVEL_INFO, error + str(content), True, True)
         return
 
     if isinstance(content, str):
         msg = f"SPEECH: Speak '{content}' acss: {acss}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
     else:
         tokens = ["SPEECH: Speak", content, ", acss:", acss]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     if isinstance(content, str):
         _speak(content, acss, interrupt)
@@ -208,7 +208,7 @@ def speak(content, acss=None, interrupt=True):
 
     for element in content:
         if not isinstance(element, valid_types):
-            debug.printMessage(debug.LEVEL_INFO, error + str(element), True, True)
+            debug.print_message(debug.LEVEL_INFO, error + str(element), True, True)
         elif isinstance(element, list):
             speak(element, acss, interrupt)
         elif isinstance(element, str):
@@ -227,7 +227,7 @@ def speak(content, acss=None, interrupt=True):
                 if new_voice == active_voice:
                     continue
                 tokens = ["SPEECH: New voice", new_voice, " != active voice", active_voice]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 new_items_to_speak.append(to_speak.pop())
 
             if to_speak:
@@ -250,7 +250,7 @@ def speak_key_event(event, acss=None):
     acss = __resolve_acss(acss)
     msg = f"{key_name} {event.get_locking_state_string()}"
     log_line = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
-    debug.printMessage(debug.LEVEL_INFO, log_line, True)
+    debug.print_message(debug.LEVEL_INFO, log_line, True)
     log.info(log_line)
 
     if _speechserver:
@@ -265,7 +265,7 @@ def speak_character(character, acss=None):
     acss = __resolve_acss(acss)
     log_line = f"SPEECH OUTPUT: '{character}'"
     tokens = [log_line, acss]
-    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     log.info(log_line)
 
     if _speechserver:
@@ -289,7 +289,7 @@ def stop():
 def shutdown():
     """Shuts down the speech server."""
 
-    debug.printMessage(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
+    debug.print_message(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
     global _speechserver
     if _speechserver:
         _speechserver.shutdownActiveServers()

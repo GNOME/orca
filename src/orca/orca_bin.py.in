@@ -213,11 +213,11 @@ def cleanup(sigval):
     """Tries to clean up any other running Orca instances owned by this user."""
 
     orcasToKill = otherOrcas()
-    debug.printMessage(debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
+    debug.print_message(debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
 
     def onTimeout(signum, frame):
         orcasToKill = otherOrcas()
-        debug.printMessage(debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
+        debug.print_message(debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
         for pid in orcasToKill:
             os.kill(pid, signal.SIGKILL)
 
@@ -236,7 +236,6 @@ def main():
 
     if args.debug:
         debug.debugLevel = debug.LEVEL_ALL
-        debug.eventDebugLevel = debug.LEVEL_OFF
         debug.debugFile = open(args.debug_file, 'w')
 
     if args.replace:
@@ -248,7 +247,7 @@ def main():
         print(messages.CLI_NO_DESKTOP_ERROR)
         return 1
 
-    debug.printMessage(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
+    debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
 
     from orca import orca
     manager = orca.getSettingsManager()
@@ -257,7 +256,7 @@ def main():
         print(messages.CLI_SETTINGS_MANAGER_ERROR)
         return 1
 
-    debug.printMessage(debug.LEVEL_INFO, "INFO: About to activate settings manager.", True)
+    debug.print_message(debug.LEVEL_INFO, "INFO: About to activate settings manager.", True)
     manager.activate(args.user_prefs, settingsDict)
     sys.path.insert(0, manager.get_prefs_dir())
 
@@ -274,7 +273,7 @@ def main():
             factories = [f.__name__.removeprefix("orca.") for f in manager.get_speech_server_factories()]
             if args.speech_system not in factories:
                 raise KeyError
-            
+
             setattr(settings, 'speechSystemOverride', args.speech_system)
             manager.set_setting('speechServerFactory', args.speech_system)
         except Exception:
@@ -289,7 +288,7 @@ def main():
         print(messages.CLI_OTHER_ORCAS_ERROR)
         return 1
 
-    debug.printMessage(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
+    debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
     return orca.main()
 
 if __name__ == "__main__":

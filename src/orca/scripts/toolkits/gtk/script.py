@@ -66,7 +66,7 @@ class Script(default.Script):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.isTypeahead(focus):
             msg = "GTK: Locus of focus believed to be typeahead. Presenting change."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.any_data, interrupt=True)
             return
 
@@ -78,18 +78,18 @@ class Script(default.Script):
             table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
             if table is not None and table != event.source:
                 msg = "GTK: Event is from a different tree or tree table."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return
 
         child = AXObject.get_active_descendant_checked(event.source, event.any_data)
         if child is not None and child != event.any_data:
             tokens = ["GTK: Bogus any_data suspected. Setting focus to", child]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, child)
             return
 
         msg = "GTK: Passing event to super class for processing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         super().on_active_descendant_changed(event)
 
     def on_caret_moved(self, event):
@@ -117,13 +117,13 @@ class Script(default.Script):
 
         if self.utilities.isUselessPanel(event.source):
             msg = "GTK: Event source believed to be useless panel"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXObject.is_ancestor(focus, event.source) and AXUtilities.is_focused(focus):
             msg = "GTK: Ignoring focus change on ancestor of still-focused locusOfFocus"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         super().on_focused_changed(event)
@@ -160,7 +160,7 @@ class Script(default.Script):
 
         if not isFocused and self.utilities.isTypeahead(focus):
             msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
             selectedChildren = self.utilities.selectedChildren(event.source)
             for child in selectedChildren:
@@ -196,7 +196,7 @@ class Script(default.Script):
 
         if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
             tokens = ["GTK:", event.source, "is not showing and visible"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         super().on_text_deleted(event)
@@ -206,7 +206,7 @@ class Script(default.Script):
 
         if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
             tokens = ["GTK:", event.source, "is not showing and visible"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         super().on_text_inserted(event)

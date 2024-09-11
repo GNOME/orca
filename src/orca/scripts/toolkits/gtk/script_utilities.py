@@ -136,7 +136,7 @@ class Utilities(script_utilities.Utilities):
 
         if not self.topLevelObjectIsActiveWindow(event.source):
             msg = "GTK: Event is believed to be canvas noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False

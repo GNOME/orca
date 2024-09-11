@@ -50,7 +50,7 @@ class Bookmarks:
 
         if refresh:
             msg = "BOOKMARKS: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -62,7 +62,7 @@ class Bookmarks:
 
         if refresh:
             msg = "BOOKMARKS: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -98,7 +98,7 @@ class Bookmarks:
                 cmdnames.BOOKMARK_SAVE)
 
         msg = "BOOKMARKS: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the bookmark key bindings."""
@@ -142,7 +142,7 @@ class Bookmarks:
                     self._handlers.get("addBookmark")))
 
         msg = "BOOKMARKS: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def addSaveObserver(self, observer):
         self._saveObservers.append(observer)

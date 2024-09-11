@@ -75,7 +75,7 @@ class OrcaModifierManager:
         """Updates the pressed state of the modifier based on event."""
 
         msg = f"ORCA MODIFIER MANAGER: Setting pressed state to {is_pressed}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_pressed = is_pressed
 
     def is_modifier_grabbed(self, modifier):
@@ -102,7 +102,7 @@ class OrcaModifierManager:
                 self.remove_modifier_grab(modifier)
 
         msg = "ORCA MODIFIER MANAGER: Setting pressed state to False for grab removal"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_pressed = False
 
     def add_modifier_grab(self, modifier):
@@ -151,15 +151,15 @@ class OrcaModifierManager:
             return False
 
         msg = "ORCA MODIFIER MANAGER: Removing grab pre-toggle"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.remove_modifier_grab(keyboard_event.keyval_name)
 
         msg = f"ORCA MODIFIER MANAGER: Scheduling toggle of {keyboard_event.keyval_name}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(1, toggle, keyboard_event.hw_code)
 
         msg = "ORCA MODIFIER MANAGER: Scheduling re-adding grab post-toggle"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(500, restore_grab, keyboard_event.keyval_name)
 
     def _toggle_modifier_lock(self, keyboard_event):
@@ -172,11 +172,11 @@ class OrcaModifierManager:
             if modifiers & modifier:
                 lock = Atspi.KeySynthType.UNLOCKMODIFIERS
                 msg = "ORCA MODIFIER MANAGER: Unlocking CapsLock"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             else:
                 lock = Atspi.KeySynthType.LOCKMODIFIERS
                 msg = "ORCA MODIFIER MANAGER: Locking CapsLock"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             Atspi.generate_keyboard_event(modifier, "", lock)
             return
 
@@ -188,7 +188,7 @@ class OrcaModifierManager:
             return
 
         msg = "ORCA MODIFIER MANAGER: Scheduling lock change"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(1, toggle, keyboard_event.modifiers, modifier)
 
     def refresh_orca_modifiers(self, reason=""):
@@ -197,7 +197,7 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Refreshing Orca modifiers"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.unset_orca_modifiers(reason)
         p = subprocess.Popen(['xkbcomp', os.environ['DISPLAY'], '-'],
@@ -209,7 +209,7 @@ class OrcaModifierManager:
         """Makes an Orca-specific Xmodmap so that the Orca modifier works."""
 
         msg = "ORCA MODIFIER MANAGER: Creating Orca xmodmap"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if self.is_orca_modifier("Caps_Lock") or self.is_orca_modifier("Shift_Lock"):
             self.set_caps_lock_as_orca_modifier(True)
@@ -224,11 +224,11 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Attempting to restore original xmodmap"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not self._original_xmodmap:
             msg = "ORCA MODIFIER MANAGER: No stored xmodmap found"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self._caps_lock_cleared = False
@@ -237,13 +237,13 @@ class OrcaModifierManager:
         p.communicate(self._original_xmodmap)
 
         msg = "ORCA MODIFIER MANAGER: Original xmodmap restored"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def set_caps_lock_as_orca_modifier(self, enable):
         """Enable or disable use of the caps lock key as an Orca modifier key."""
 
         msg = "ORCA MODIFIER MANAGER: Setting caps lock as the Orca modifier"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         interpret_caps_line_prog = re.compile(
             r'^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$', re.I)
@@ -292,13 +292,13 @@ class OrcaModifierManager:
                     found_shift_interpret_section = False
         if modified:
             msg = "ORCA MODIFIER MANAGER: Updating xmodmap"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
                 stdin=subprocess.PIPE, stdout=None, stderr=None)
             p.communicate(bytes('\n'.join(lines), 'UTF-8'))
         else:
             msg = "ORCA MODIFIER MANAGER: Not updating xmodmap"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
 
 _manager = OrcaModifierManager()

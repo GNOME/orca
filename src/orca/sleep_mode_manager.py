@@ -50,7 +50,7 @@ class SleepModeManager:
 
         if refresh:
             msg = f"SLEEP MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -62,7 +62,7 @@ class SleepModeManager:
 
         if refresh:
             msg = "SLEEP MODE MANAGER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -73,7 +73,7 @@ class SleepModeManager:
         result = app and hash(app) in self._apps
         if result:
             tokens = ["SLEEP MODE MANAGER: Is active for", app]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def _setup_handlers(self):
@@ -87,7 +87,7 @@ class SleepModeManager:
                 cmdnames.TOGGLE_SLEEP_MODE)
 
         msg = "SLEEP MODE MANAGER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up and returns the sleep-mode-manager key bindings."""
@@ -102,7 +102,7 @@ class SleepModeManager:
                 self._handlers.get("toggle_sleep_mode")))
 
         msg = "SLEEP MODE MANAGER: Bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def toggle_sleep_mode(self, script, event=None):
         """Toggles sleep mode."""

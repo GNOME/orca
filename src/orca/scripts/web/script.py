@@ -113,7 +113,7 @@ class Script(default.Script):
         """Called when this script is activated."""
 
         tokens = ["WEB: Activating script for", self.app]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         in_doc = self.utilities.inDocumentContent()
         reason = f"script activation, in document content: {in_doc}"
@@ -506,7 +506,7 @@ class Script(default.Script):
     def presentationInterrupt(self, killFlash=True):
         super().presentationInterrupt(killFlash)
         msg = "WEB: Flushing live region messages"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.live_region_manager.flushMessages()
 
     # TODO - JD: This needs to be moved out of the scripts.
@@ -515,7 +515,7 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent():
             tokens = ["WEB: textLines called for non-document content", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().textLines(obj, offset)
             return
 
@@ -558,7 +558,7 @@ class Script(default.Script):
                 obj, startOffset, endOffset, text = content
                 tokens = ["WEB SAY ALL CONTENT:",
                           i, ". ", obj, "'", text, "' (", startOffset, "-", endOffset, ")"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
                 if self.utilities.isInferredLabelForContents(content, contents):
                     continue
@@ -584,7 +584,7 @@ class Script(default.Script):
                     context = speechserver.SayAllContext(
                         obj, element, startOffset, endOffset)
                     tokens = ["WEB", context]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     self._sayAllContexts.append(context)
                     self.get_event_synthesizer().scroll_into_view(obj, startOffset, endOffset)
                     yield [context, voices[i]]
@@ -596,7 +596,7 @@ class Script(default.Script):
             if obj == lastObj and characterOffset <= lastOffset:
                 tokens = ["WEB: Cycle within object detected in textLines. Last:",
                           lastObj, ", ", lastOffset, "Next:", obj, ", ", characterOffset]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 break
 
             done = obj is None
@@ -606,7 +606,7 @@ class Script(default.Script):
         self._sayAllContexts = []
 
         msg = "WEB: textLines complete. Verifying SayAll status"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.inSayAll()
 
     def presentFindResults(self, obj, offset):
@@ -736,17 +736,17 @@ class Script(default.Script):
 
         if self._focusModeIsSticky:
             msg = "WEB: Using focus mode because focus mode is sticky"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._browseModeIsSticky:
             msg = "WEB: Not using focus mode because browse mode is sticky"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.inSayAll():
             msg = "WEB: Not using focus mode because we're in SayAll."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         lastCommandWasStructNav = \
@@ -755,7 +755,7 @@ class Script(default.Script):
         if not settings_manager.get_manager().get_setting('structNavTriggersFocusMode') \
            and lastCommandWasStructNav:
             msg = "WEB: Not using focus mode due to struct nav settings"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if prevObj and AXObject.is_dead(prevObj):
@@ -766,39 +766,39 @@ class Script(default.Script):
            and  lastCommandWasCaretNav \
            and not self.utilities.isNavigableToolTipDescendant(prevObj):
             msg = "WEB: Not using focus mode due to caret nav settings"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not settings_manager.get_manager().get_setting('nativeNavTriggersFocusMode') \
            and not (lastCommandWasStructNav or lastCommandWasCaretNav):
             msg = "WEB: Not changing focus/browse mode due to native nav settings"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return self._inFocusMode
 
         if self.utilities.isFocusModeWidget(obj):
             tokens = ["WEB: Using focus mode because", obj, "is a focus mode widget"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         doNotToggle = AXUtilities.is_link(obj) or AXUtilities.is_radio_button(obj)
         if self._inFocusMode and doNotToggle \
            and input_event_manager.get_manager().last_event_was_unmodified_arrow():
             tokens = ["WEB: Staying in focus mode due to arrowing in role of", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if self._inFocusMode and self.utilities.isWebAppDescendant(obj):
             if self.utilities.forceBrowseModeForWebAppDescendant(obj):
                 tokens = ["WEB: Forcing browse mode for web app descendant", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
             msg = "WEB: Staying in focus mode because we're inside a web application"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         tokens = ["WEB: Not using focus mode for", obj, "due to lack of cause"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     def speakContents(self, contents, **args):
@@ -811,17 +811,17 @@ class Script(default.Script):
         """Speaks the character at the current caret position."""
 
         tokens = ["WEB: Say character for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not self.utilities.inDocumentContent(obj):
             msg = "WEB: Object is not in document content."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             super().sayCharacter(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
         obj, offset = self.utilities.getCaretContext(documentFrame=document)
         tokens = ["WEB: Adjusted object and offset for say character to", obj, offset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not obj:
             return
@@ -856,10 +856,10 @@ class Script(default.Script):
         """Speaks the word at the current caret position."""
 
         tokens = ["WEB: Say word for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not self.utilities.inDocumentContent(obj):
             msg = "WEB: Object is not in document content."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             super().sayWord(obj)
             return
 
@@ -869,7 +869,7 @@ class Script(default.Script):
             offset -= 1
 
         tokens = ["WEB: Adjusted object and offset for say word to", obj, offset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=True)
         textObj, startOffset, endOffset, word = wordContents[0]
@@ -881,10 +881,10 @@ class Script(default.Script):
         """Speaks the line at the current caret position."""
 
         tokens = ["WEB: Say line for", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not self.utilities.inDocumentContent(obj):
             msg = "WEB: Object is not in document content."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             super().sayLine(obj)
             return
 
@@ -893,7 +893,7 @@ class Script(default.Script):
         # in the generators, but that's another potentially non-trivial change.
         if AXUtilities.is_editable(obj) and "\ufffc" not in AXText.get_line_at_offset(obj)[0]:
             msg = "WEB: Object is editable and line has no EOCs."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
             super().sayLine(obj)
@@ -905,7 +905,7 @@ class Script(default.Script):
         if offset is None:
             obj, offset = self.utilities.getCaretContext(documentFrame=document)
             tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
         if contents and contents[0] and not self._inFocusMode:
@@ -946,7 +946,7 @@ class Script(default.Script):
 
         interrupt = args.get("interrupt", False)
         tokens = ["WEB: Presenting object", obj, ". Interrupt:", interrupt]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # We shouldn't use cache in this method, because if the last thing we presented
         # included this object and offset (e.g. a Say All or Mouse Review), we're in
@@ -972,23 +972,23 @@ class Script(default.Script):
         """Updates the braille display to show the given object."""
 
         tokens = ["WEB: updating braille for", obj, args]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         if not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
-            debug.printMessage(debug.LEVEL_INFO, "BRAILLE: disabled", True)
+            debug.print_message(debug.LEVEL_INFO, "BRAILLE: disabled", True)
             return
 
         if self._inFocusMode and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, **args)
             return
 
         document = args.get("documentFrame", self.utilities.getTopLevelDocumentForObject(obj))
         if not document:
             tokens = ["WEB: updating braille for non-document object", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, **args)
             return
 
@@ -1001,7 +1001,7 @@ class Script(default.Script):
            and not AXDocument.is_plain_text(document) \
            and not input_event_manager.get_manager().last_event_was_caret_selection():
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, **args)
             return
 
@@ -1022,11 +1022,11 @@ class Script(default.Script):
         """Displays contents in braille."""
 
         tokens = ["WEB: Displaying", contents, args]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         if not settings_manager.get_manager().get_setting('enableBraille') \
            and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
-            debug.printMessage(debug.LEVEL_INFO, "WEB: Braille disabled", True)
+            debug.print_message(debug.LEVEL_INFO, "WEB: Braille disabled", True)
             return
 
         line = self.getNewBrailleLine(clearBraille=True, addLine=True)
@@ -1034,12 +1034,12 @@ class Script(default.Script):
         result = self.braille_generator.generate_contents(contents, documentFrame=document)
         if not result:
             msg = "WEB: Generating braille contents failed"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         regions, focusedRegion = result
         tokens = ["WEB: Generated result", regions, "focused region", focusedRegion]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for region in regions:
             self.addBrailleRegionsToLine(region, line)
@@ -1205,7 +1205,7 @@ class Script(default.Script):
         """Handles changes of focus of interest to the script."""
 
         tokens = ["WEB: Focus changing from", old_focus, "to", new_focus]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if new_focus and not AXObject.is_valid(new_focus):
             return True
@@ -1219,7 +1219,7 @@ class Script(default.Script):
 
         if not document:
             msg = "WEB: Locus of focus changed to non-document obj"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._madeFindAnnouncement = False
             self._inFocusMode = False
 
@@ -1229,11 +1229,11 @@ class Script(default.Script):
 
             if old_focus and not oldDocument:
                 msg = "WEB: Not refreshing grabs because we weren't in a document before"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
             tokens = ["WEB: Refreshing grabs because we left document", oldDocument]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             reason = "locus of focus no longer in document"
             self.caret_navigation.suspend_commands(self, True, reason)
@@ -1255,7 +1255,7 @@ class Script(default.Script):
 
         if AXUtilities.is_unknown_or_redundant(new_focus):
             msg = "WEB: Event source has bogus role. Likely browser bug."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             new_focus, offset = self.utilities.findFirstCaretContext(new_focus, 0)
 
         if self.utilities.treatAsTextObject(new_focus):
@@ -1279,62 +1279,62 @@ class Script(default.Script):
         if manager.last_event_was_mouse_button() and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
             args['priorObj'] = old_focus
         elif self.utilities.isContentEditableWithEmbeddedObjects(new_focus) \
            and (lastCommandWasCaretNav or lastCommandWasStructNav or lastCommandWasLineNav) \
            and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus)):
             tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
         elif self.utilities.isAnchor(new_focus):
             tokens = ["WEB: New focus", new_focus, "is anchor. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
         elif input_event_manager.get_manager().last_event_was_page_navigation() \
              and not AXTable.get_table(new_focus) \
              and not AXUtilities.is_feed_article(new_focus):
             tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
         elif self.utilities.isFocusedWithMathChild(new_focus):
             tokens = ["WEB: New focus", new_focus, "has math child. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
         elif AXUtilities.is_heading(new_focus):
             tokens = ["WEB: New focus", new_focus, "is heading. Generating object."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getObjectContentsAtOffset(new_focus, 0)
         elif self.utilities.caretMovedToSamePageFragment(event, old_focus):
             tokens = ["WEB: Source", event.source, "is same page fragment. Generating line."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
         elif event and event.type.startswith("object:children-changed:remove") \
              and self.utilities.isFocusModeWidget(new_focus):
             tokens = ["WEB: New focus", new_focus,
                       "is recovery from removed child. Generating speech."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         elif lastCommandWasLineNav and not AXObject.is_valid(old_focus):
             msg = "WEB: Last input event was line nav; old_focus is invalid. Generating line."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
         elif lastCommandWasLineNav and event and event.type.startswith("object:children-changed"):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
             args['priorObj'] = old_focus
         else:
             tokens = ["WEB: New focus", new_focus, "is not a special case. Generating speech."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             args['priorObj'] = old_focus
 
         if new_focus and AXObject.is_dead(new_focus):
             msg = "WEB: New focus has since died"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             if self._get_queued_event("object:state-changed:focused", True):
                 msg = "WEB: Have matching focused event. Not speaking contents"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
         if contents:
@@ -1369,17 +1369,17 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not event.detail1:
             msg = "WEB: Ignoring because event source is now inactive"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXUtilities.is_dialog_or_alert(event.source):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
 
@@ -1392,32 +1392,32 @@ class Script(default.Script):
 
         if event.detail1 and self._loadingDocumentContent:
             msg = "WEB: Ignoring: Already loading document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         activeDocument = self.utilities.activeDocument()
         if activeDocument and activeDocument != event.source:
             msg = "WEB: Ignoring: Event source is not active document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_document_web(event.source) \
            and not self.utilities.isOrDescendsFrom(focus, event.source):
             msg = "WEB: Ignoring: Not document and not something we're in"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         self.structural_navigation.clearCache()
 
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
@@ -1429,23 +1429,23 @@ class Script(default.Script):
         if mgr.get_setting('onlySpeakDisplayedText'):
             shouldPresent = False
             msg = "WEB: Not presenting due to settings"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         elif not (AXUtilities.is_showing(event.source) or AXUtilities.is_visible(event.source)):
             shouldPresent = False
             msg = "WEB: Not presenting because source is not showing or visible"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         elif not AXDocument.get_uri(event.source):
             shouldPresent = False
             msg = "WEB: Not presenting because source lacks URI"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         elif not event.detail1 and self._inFocusMode and AXObject.is_valid(obj):
             shouldPresent = False
             tokens = ["WEB: Not presenting due to focus mode for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         elif mgr.get_setting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_VERBOSE:
             shouldPresent = not event.detail1
             tokens = ["WEB: Brief verbosity set. Should present", obj, f": {shouldPresent}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if shouldPresent:
             if event.detail1:
@@ -1471,12 +1471,12 @@ class Script(default.Script):
            and not self.utilities.inDocumentContent(focus) \
            and AXUtilities.is_focused(focus):
             msg = "WEB: Not presenting content, focus is outside of document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if settings_manager.get_manager().get_setting('pageSummaryOnLoad') and shouldPresent:
             tokens = ["WEB: Getting page summary for", event.source]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             summary = AXDocument.get_document_summary(event.source)
             if summary:
                 self.presentMessage(summary)
@@ -1485,7 +1485,7 @@ class Script(default.Script):
         if not AXUtilities.is_busy(event.source) \
            and self.utilities.isTopLevelWebApp(event.source):
             tokens = ["WEB: Setting locusOfFocus to", obj, "with sticky focus mode"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
             self.enableStickyFocusMode(None, True)
             return True
@@ -1495,47 +1495,47 @@ class Script(default.Script):
 
         if not obj:
             msg = "WEB: Could not get caret context"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isFocusModeWidget(obj):
             tokens = ["WEB: Setting locus of focus to focusModeWidget", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
             return True
 
         if self.utilities.isLink(obj) and AXUtilities.is_focused(obj):
             tokens = ["WEB: Setting locus of focus to focused link", obj, ". No SayAll."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
             return True
 
         if offset > 0:
             tokens = ["WEB: Setting locus of focus to context obj", obj, ". No SayAll"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
             return True
 
         if not AXUtilities.is_focused(focus_manager.get_manager().get_locus_of_focus()):
             tokens = ["WEB: Setting locus of focus to context obj", obj, "(no notification)"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj, False)
 
         self.update_braille(obj)
         if AXDocument.get_document_uri_fragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         elif not settings_manager.get_manager().get_setting('sayAllOnLoad'):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
         elif settings_manager.get_manager().get_setting('enableSpeech'):
             msg = "WEB: Doing SayAll"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.say_all(None)
         else:
             msg = "WEB: Not doing SayAll due to enableSpeech being False"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         return True
 
@@ -1544,62 +1544,62 @@ class Script(default.Script):
 
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if not document:
             if self.utilities.eventIsBrowserUINoise(event):
                 msg = "WEB: Ignoring event believed to be browser UI noise"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
                 msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         obj, offset = self.utilities.getCaretContext(document, False, False)
         tokens = ["WEB: Context: ", obj, ", ", offset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self.caret_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.structural_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was table nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if input_event_manager.get_manager().last_event_was_mouse_button():
             msg = "WEB: Last input event was mouse button"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
             if (event.source, event.detail1) == (obj, offset):
                 msg = "WEB: Event is for current caret context."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             if (event.source, event.detail1) == self._lastMouseButtonContext:
                 msg = "WEB: Event is for last mouse button context."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             self._lastMouseButtonContext = event.source, event.detail1
 
             msg = "WEB: Event handled: Last command was mouse button"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
             notify = not self.utilities.isEntryDescendant(event.source)
             focus_manager.get_manager().set_locus_of_focus(event, event.source, notify, True)
@@ -1608,34 +1608,34 @@ class Script(default.Script):
         if input_event_manager.get_manager().last_event_was_tab_navigation():
             if self.utilities.isDocument(event.source):
                 msg = "WEB: Event ignored: Caret moved in document due to Tab."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             if self.utilities.isLink(event.source):
                 msg = "WEB: Event ignored: Caret moved in link due to Tab."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
         if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
             self._save_focused_object_info(focus_manager.get_manager().get_locus_of_focus())
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
             msg = "WEB: Event ignored: Not from locus of focus document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Event handled: Updating position due to insertion"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
         if self.utilities.textEventIsDueToDeletion(event):
             msg = "WEB: Event handled: Updating position due to deletion"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
@@ -1644,22 +1644,22 @@ class Script(default.Script):
            and not input_event_manager.get_manager().last_event_was_character_navigation() \
            and not input_event_manager.get_manager().last_event_was_line_boundary_navigation():
             msg = "WEB: Event ignored: Editable combobox noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event, document):
             msg = "WEB: Event ignored: Autocomplete noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self._inFocusMode and self.utilities.caretMovedOutsideActiveGrid(event):
             msg = "WEB: Event ignored: Caret moved outside active grid during focus mode"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.treatEventAsSpinnerValueChange(event):
             msg = "WEB: Event handled as the value-change event we wish we'd get"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.update_braille(event.source)
             self._presentTextAtNewCaretPosition(event)
             return True
@@ -1667,7 +1667,7 @@ class Script(default.Script):
         if not self.utilities.treatAsTextObject(event.source) \
            and not AXUtilities.is_editable(event.source):
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         notify = force = handled = False
@@ -1680,27 +1680,27 @@ class Script(default.Script):
 
         if input_event_manager.get_manager().last_event_was_page_navigation():
             msg = "WEB: Caret moved due to scrolling."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
         elif self.utilities.caretMovedToSamePageFragment(event):
             msg = "WEB: Caret moved to fragment."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
         elif event.source != focus and AXUtilities.is_editable(event.source) and \
              (AXUtilities.is_focused(event.source) or not AXUtilities.is_focusable(event.source)):
             msg = "WEB: Editable object is not (yet) the locus of focus."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = \
                 input_event_manager.get_manager().last_event_was_line_navigation()
 
         elif input_event_manager.get_manager().last_event_was_caret_navigation():
             msg = "WEB: Caret moved due to native caret navigation."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset, f", notify: {notify}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.utilities.setCaretContext(obj, offset, document)
         focus_manager.get_manager().set_locus_of_focus(event, obj, notify, force)
         return handled
@@ -1710,19 +1710,19 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         obj, offset = self.utilities.getCaretContext()
         if obj != event.source:
             msg = "WEB: Event source is not context object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not (self.caret_navigation.last_input_event_was_navigation_command() \
            and AXUtilities.is_radio_button(obj)):
             msg = "WEB: Event is something default can handle"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         self.presentObject(obj, alreadyFocused=True, interrupt=True)
@@ -1735,7 +1735,7 @@ class Script(default.Script):
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         isLiveRegion = self.utilities.isLiveRegion(event.source)
@@ -1744,64 +1744,64 @@ class Script(default.Script):
             focus = focus_manager.get_manager().get_locus_of_focus()
             if event.source == focus:
                 msg = "WEB: Dumping cache: source is focus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif focus_manager.get_manager().focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif AXObject.find_ancestor(focus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
                 msg = "WEB: Not dumping full cache"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.clearCachedObjects()
         elif isLiveRegion:
             msg = "WEB: Ignoring event from live region."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
         else:
             msg = "WEB: Could not get document for event source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._loadingDocumentContent:
             msg = "WEB: Ignoring because document content is being loaded."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not AXObject.is_valid(document):
             tokens = ["WEB: Ignoring because", document, "is not valid."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if AXUtilities.is_busy(document):
             tokens = ["WEB: Ignoring because", document, "is busy."]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if not AXObject.is_valid(event.any_data):
             msg = "WEB: Ignoring because any data is not valid."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.handleEventFromContextReplicant(event, event.any_data):
             msg = "WEB: Event handled by updating locusOfFocus and context to child."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXUtilities.is_alert(event.any_data):
             msg = "WEB: Presenting event.any_data"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.any_data, interrupt=True)
 
             focused = AXUtilities.get_focused_object(event.any_data)
             if focused:
                 notify = not self.utilities.treatAsTextObject(focused)
                 tokens = ["WEB: Setting locusOfFocus and caret context to", focused]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.get_manager().set_locus_of_focus(event, focused, notify)
                 self.utilities.setCaretContext(focused, 0)
             return True
@@ -1824,21 +1824,21 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self._loadingDocumentContent:
             msg = "WEB: Ignoring because document content is being loaded."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isLiveRegion(event.source):
             if self.utilities.handleEventForRemovedChild(event):
                 msg = "WEB: Event handled for removed live-region child."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             else:
                 msg = "WEB: Ignoring removal from live region."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
@@ -1846,24 +1846,24 @@ class Script(default.Script):
             focus = focus_manager.get_manager().get_locus_of_focus()
             if event.source == focus:
                 msg = "WEB: Dumping cache: source is focus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif focus_manager.get_manager().focus_is_dead():
                 msg = "WEB: Dumping cache: dead focus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             elif AXObject.find_ancestor(focus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dumpCache(document, preserveContext=True)
             else:
                 msg = "WEB: Not dumping full cache"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.clearCachedObjects()
 
         if self.utilities.handleEventForRemovedChild(event):
             msg = "WEB: Event handled for removed child."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -1873,13 +1873,13 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != AXTable.get_table(focus):
             msg = "WEB: focus is not in this table"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
@@ -1895,11 +1895,11 @@ class Script(default.Script):
         AXUtilities.clear_all_cache_now(event.source, "load-complete event.")
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Updating loading state and resetting live regions"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
         self.live_region_manager.reset()
         return True
@@ -1909,11 +1909,11 @@ class Script(default.Script):
 
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Updating loading state"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = False
         return True
 
@@ -1922,11 +1922,11 @@ class Script(default.Script):
 
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Updating loading state"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._loadingDocumentContent = True
         return True
 
@@ -1935,21 +1935,21 @@ class Script(default.Script):
 
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
         tokens = ["WEB: Caret context is", obj, ", ", offset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not AXObject.is_valid(obj) and event.source == focus:
             msg = "WEB: Setting caret context to event source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, 0)
 
         return False
@@ -1959,71 +1959,71 @@ class Script(default.Script):
 
         if not event.detail1:
             msg = "WEB: Ignoring because event source lost focus"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         document = self.utilities.getDocumentForObject(event.source)
         if not document:
             msg = "WEB: Could not get document for event source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         prevDocument = self.utilities.getDocumentForObject(focus)
         if prevDocument != document:
             tokens = ["WEB: document changed from", prevDocument, "to", document]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self.utilities.isWebAppDescendant(event.source):
             if self._browseModeIsSticky:
                 msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_tool_tip(event.source) \
               and AXObject.find_ancestor(focus, lambda x: x == event.source):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             else:
                 msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return True
 
         if AXUtilities.is_editable(event.source):
             msg = "WEB: Event source is editable"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_dialog_or_alert(event.source):
             msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
 
         if self.utilities.handleEventFromContextReplicant(event, event.source):
             msg = "WEB: Event handled by updating locusOfFocus and context to source."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
         tokens = ["WEB: Caret context is", obj, ", ", offset]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not AXObject.is_valid(obj) or prevDocument != document:
             tokens = ["WEB: Clearing context - obj", obj, "is not valid or document changed"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.utilities.clearCaretContext()
 
             obj, offset = self.utilities.searchForCaretContext(event.source)
             if obj:
                 notify = self.utilities.inFindContainer(focus)
                 tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
                 if not notify and prevDocument is None:
                     reason = "updating locus of focus without notification"
@@ -2034,41 +2034,41 @@ class Script(default.Script):
                 self.utilities.setCaretContext(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if self.caret_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.structural_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was table nav"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not (AXUtilities.is_focusable(event.source) and AXUtilities.is_focused(event.source)):
             msg = "WEB: Event ignored: Source is not focusable or focused"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not AXUtilities.is_document(event.source):
             msg = "WEB: Deferring to other scripts for handling non-document source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not obj:
             msg = "WEB: Unable to get valid context object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if input_event_manager.get_manager().last_event_was_page_navigation():
             msg = "WEB: Event handled: Focus changed due to scrolling"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
             self.utilities.setCaretContext(obj, offset)
             return True
@@ -2079,7 +2079,7 @@ class Script(default.Script):
         isFocused = AXUtilities.is_focused(obj)
         if wasFocused != isFocused:
             tokens = ["WEB: Focused state of", obj, "changed to", isFocused]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if self.utilities.isAnchor(obj):
@@ -2094,7 +2094,7 @@ class Script(default.Script):
             return False
 
         tokens = ["WEB: Event handled: Setting locusOfFocus to", obj, "(", cause, ")"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().set_locus_of_focus(event, obj)
         return True
 
@@ -2108,7 +2108,7 @@ class Script(default.Script):
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2118,13 +2118,13 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != AXTable.get_table(focus):
             msg = "WEB: focus is not in this table"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
@@ -2139,13 +2139,13 @@ class Script(default.Script):
 
         if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.eventIsBrowserUIPageSwitch(event):
             msg = "WEB: Event believed to be browser UI page switch"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             if event.detail1:
                 AXUtilities.clear_all_cache_now(reason=msg)
                 self.presentObject(event.source, priorObj=focus, interrupt=True)
@@ -2153,12 +2153,12 @@ class Script(default.Script):
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if focus != event.source:
             msg = "WEB: Ignoring because event source is not locusOfFocus"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2168,27 +2168,27 @@ class Script(default.Script):
 
         if self.utilities.eventIsBrowserUIAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be browser UI autocomplete noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsBrowserUIPageSwitch(event):
             msg = "WEB: Ignoring event believed to be browser UI page switch"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not self.utilities.inDocumentContent(focus_manager.get_manager().get_locus_of_focus()):
             msg = "WEB: Event ignored: locusOfFocus is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
             msg = "WEB: Event ignored: Not from locus of focus document"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isWebAppDescendant(event.source):
@@ -2199,23 +2199,23 @@ class Script(default.Script):
                                      True,
                                      "Workaround for missing events on descendants.")
                 msg = "WEB: Event source is web app descendant and we're in focus mode"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
             msg = "WEB: Event source is web app descendant and we're in browse mode"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsIrrelevantSelectionChangedEvent(event):
             msg = "WEB: Event ignored: Irrelevant"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext()
         ancestor = self.utilities.commonAncestor(obj, event.source)
         if ancestor and self.utilities.isTextBlockElement(ancestor):
             msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2225,13 +2225,13 @@ class Script(default.Script):
 
         if event.detail1 and self.utilities.isBrowserUIAlert(event.source):
             msg = "WEB: Event handled: Presenting event source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentObject(event.source, interrupt=True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         return True
@@ -2240,7 +2240,7 @@ class Script(default.Script):
         """Callback for object:text-attributes-changed accessibility events."""
 
         msg = "WEB: Clearing cached text attributes"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._currentTextAttrs = {}
         return False
 
@@ -2249,64 +2249,64 @@ class Script(default.Script):
 
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if input_event_manager.get_manager().last_event_was_page_switch():
             msg = "WEB: Deletion is believed to be due to page switch"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isLiveRegion(event.source):
             msg = "WEB: Ignoring deletion from live region"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring event believed to be autocomplete noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Clearing content cache due to text deletion"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
         if self.utilities.textEventIsDueToDeletion(event):
             msg = "WEB: Event believed to be due to editable text deletion"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.textEventIsDueToInsertion(event):
             msg = "WEB: Ignoring event believed to be due to text insertion"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.getCaretContext(getReplicant=False)
         if obj and obj != event.source \
            and not AXObject.find_ancestor(obj, lambda x: x == event.source):
             tokens = ["WEB: Ignoring event because it isn't", obj, "or its ancestor"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if not AXObject.is_valid(obj):
             if self.utilities.isLink(obj):
                 msg = "WEB: Focused link deleted. Taking no further action."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             obj, offset = self.utilities.getCaretContext(getReplicant=True)
@@ -2315,23 +2315,23 @@ class Script(default.Script):
 
         if not AXObject.is_valid(obj):
             msg = "WEB: Unable to get valid context object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         document = self.utilities.getDocumentForObject(event.source)
         if document:
             tokens = ["WEB: Clearing structural navigation cache for", document]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.structural_navigation.clearCache(document)
 
         if not AXUtilities.is_editable(event.source) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             if self._inMouseOverObject and not AXObject.is_valid(self._lastMouseOverObject):
                 msg = "WEB: Restoring pre-mouseover context"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.restorePreMouseOverContext()
 
             msg = "WEB: Done processing non-editable source"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2341,92 +2341,92 @@ class Script(default.Script):
 
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if input_event_manager.get_manager().last_event_was_page_switch():
             msg = "WEB: Insertion is believed to be due to page switch"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isLiveRegion(event.source):
             if self.utilities.handleAsLiveRegion(event):
                 msg = "WEB: Event to be handled as live region"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.live_region_manager.handleEvent(event)
                 return True
             msg = "WEB: Ignoring because live region event not to be handled."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsEOCAdded(event):
             msg = "WEB: Ignoring: Event was for embedded object char"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring: Event believed to be autocomplete noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         msg = "WEB: Clearing content cache due to text insertion"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if focus_manager.get_manager().focus_is_dead():
             msg = "WEB: Dumping cache: dead focus"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.dumpCache(document, preserveContext=True)
 
             if AXUtilities.is_focused(event.source):
                 msg = "WEB: Event handled: Setting locusOfFocus to event source"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(None, event.source, force=True)
                 return True
 
         else:
             tokens = ["WEB: Clearing structural navigation cache for", document]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.structural_navigation.clearCache(document)
 
         if not self.utilities.treatAsTextObject(event.source):
             msg = "WEB: Ignoring: Event source is not a text object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         sourceIsFocus = event.source == focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_editable(event.source):
             if not sourceIsFocus:
                 msg = "WEB: Done processing non-editable, non-locusOfFocus source"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
             if self.utilities.isClickableElement(event.source):
                 msg = "WEB: Event handled: Re-setting locusOfFocus to changed clickable"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(None, event.source, force=True)
                 return True
 
         if not sourceIsFocus and AXUtilities.is_text_input(event.source) \
            and AXUtilities.is_focused(event.source):
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2436,59 +2436,59 @@ class Script(default.Script):
 
         if not AXObject.is_valid(event.source):
             msg = "WEB: Event source is not valid"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if not self.utilities.inDocumentContent(focus):
             msg = "WEB: Locus of focus is not in document content"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsAutocompleteNoise(event):
             msg = "WEB: Ignoring: Event believed to be autocomplete noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.eventIsSpinnerNoise(event):
             msg = "WEB: Ignoring: Event believed to be spinner noise"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.textEventIsForNonNavigableTextObject(event):
             msg = "WEB: Ignoring event for non-navigable text object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.treatAsTextObject(event.source):
             msg = "WEB: Ignoring: Event source is not a text object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if event.source != focus and AXUtilities.is_text_input(event.source) \
            and AXUtilities.is_focused(event.source):
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             msg = "WEB: In content editable with embedded objects"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.structural_navigation.last_input_event_was_navigation_command():
             msg = "WEB: Ignoring: Last input event was structural navigation command."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         char = AXText.get_character_at_offset(event.source)[0]
@@ -2497,7 +2497,7 @@ class Script(default.Script):
            and not manager.last_event_was_caret_selection() \
            and not manager.last_event_was_command():
             msg = "WEB: Ignoring: Not selecting and event offset is at embedded object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -2506,13 +2506,13 @@ class Script(default.Script):
         """Callback for window:activate accessibility events."""
 
         msg = "WEB: Deferring to app/toolkit script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
         msg = "WEB: Clearing command state"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._lastMouseButtonContext = None, -1
         return False

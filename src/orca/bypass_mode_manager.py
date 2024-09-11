@@ -50,7 +50,7 @@ class BypassModeManager:
 
         if refresh:
             msg = "BYPASS MODE MANAGER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -62,7 +62,7 @@ class BypassModeManager:
 
         if refresh:
             msg = "BYPASS MODE MANAGER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers

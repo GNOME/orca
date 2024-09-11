@@ -34,5 +34,5 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     def generate_braille(self, _obj, **_args):
         msg = "SLEEP MODE BRAILLE GENERATOR: Generating nothing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return []

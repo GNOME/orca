@@ -57,7 +57,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.locus_of_focus_changed(self, event, old_focus, new_focus)
 
     def on_active_changed(self, event):
@@ -71,7 +71,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_active_changed(self, event)
 
     def on_busy_changed(self, event):
@@ -79,19 +79,19 @@ class Script(web.Script):
 
         if AXComponent.has_no_size(event.source):
             msg = "CHROMIUM: Ignoring event from page with no size."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_busy_changed(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_busy_changed(self, event)
 
     def on_caret_moved(self, event):
@@ -99,19 +99,19 @@ class Script(web.Script):
 
         if self.utilities.isStaticTextLeaf(event.source):
             msg = "CHROMIUM: Ignoring event from static-text leaf"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isRedundantAutocompleteEvent(event):
             msg = "CHROMIUM: Ignoring redundant autocomplete event"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_caret_moved(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_caret_moved(self, event)
 
     def on_checked_changed(self, event):
@@ -121,7 +121,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_checked_changed(self, event)
 
     def on_column_reordered(self, event):
@@ -131,7 +131,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_column_reordered(self, event)
 
     def on_children_added(self, event):
@@ -139,14 +139,14 @@ class Script(web.Script):
 
         if self.utilities.isStaticTextLeaf(event.any_data):
             msg = "CHROMIUM: Ignoring because child is static text leaf"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_children_added(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_children_added(self, event)
 
     def on_children_removed(self, event):
@@ -154,14 +154,14 @@ class Script(web.Script):
 
         if self.utilities.isStaticTextLeaf(event.any_data):
             msg = "CHROMIUM: Ignoring because child is static text leaf"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_children_removed(event):
             return
 
         msg = "Chromium: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_children_removed(self, event)
 
     def on_document_load_complete(self, event):
@@ -169,14 +169,14 @@ class Script(web.Script):
 
         if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_document_load_complete(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_load_complete(self, event)
 
     def on_document_load_stopped(self, event):
@@ -184,14 +184,14 @@ class Script(web.Script):
 
         if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_document_load_stopped(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_load_stopped(self, event)
 
     def on_document_reload(self, event):
@@ -199,14 +199,14 @@ class Script(web.Script):
 
         if not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from page with no URI."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_document_reload(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_document_reload(self, event)
 
     def on_expanded_changed(self, event):
@@ -216,7 +216,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_expanded_changed(self, event)
 
     def on_focused_changed(self, event):
@@ -225,14 +225,14 @@ class Script(web.Script):
         if self.utilities.isDocument(event.source) \
            and not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from document with no URI."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_focused_changed(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_focused_changed(self, event)
 
     def on_mouse_button(self, event):
@@ -242,7 +242,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_mouse_button(self, event)
 
     def on_name_changed(self, event):
@@ -252,7 +252,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_name_changed(self, event)
 
     def on_row_reordered(self, event):
@@ -262,7 +262,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_row_reordered(self, event)
 
     def on_selected_changed(self, event):
@@ -272,7 +272,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_selected_changed(self, event)
 
     def on_selection_changed(self, event):
@@ -282,7 +282,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_selection_changed(self, event)
 
     def on_showing_changed(self, event):
@@ -292,7 +292,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_showing_changed(self, event)
 
     def on_text_attributes_changed(self, event):
@@ -302,7 +302,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_attributes_changed(self, event)
 
     def on_text_deleted(self, event):
@@ -312,7 +312,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_deleted(self, event)
 
     def on_text_inserted(self, event):
@@ -322,7 +322,7 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_inserted(self, event)
 
     def on_text_selection_changed(self, event):
@@ -330,19 +330,19 @@ class Script(web.Script):
 
         if self.utilities.isStaticTextLeaf(event.source):
             msg = "CHROMIUM: Ignoring event from static-text leaf"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isListItemMarker(event.source):
             msg = "CHROMIUM: Ignoring event from list item marker"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if super().on_text_selection_changed(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_text_selection_changed(self, event)
 
     def on_window_activated(self, event):
@@ -370,19 +370,19 @@ class Script(web.Script):
                     focus_manager.get_manager().set_locus_of_focus(event, menu, False)
 
                 tokens = ["CHROMIUM: Setting locusOfFocus to active item", activeItem]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.get_manager().set_locus_of_focus(event, activeItem)
                 return
 
             tokens = ["CHROMIUM: Setting locusOfFocus to popup menu", menu]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, menu)
 
         if super().on_window_activated(event):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_window_activated(self, event)
 
         # Right now we don't get accessibility events for alerts which are
@@ -399,5 +399,5 @@ class Script(web.Script):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_window_deactivated(self, event)

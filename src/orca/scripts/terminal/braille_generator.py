@@ -40,7 +40,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             tokens = [f"TERMINAL BRAILLE GENERATOR: {func.__name__}:", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
         return wrapper
 

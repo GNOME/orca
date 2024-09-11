@@ -63,7 +63,7 @@ class AXValue:
         while True:
             time.sleep(60)
             msg = "AXValue: Clearing local cache."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             AXValue.LAST_KNOWN_VALUE.clear()
 
     @staticmethod
@@ -85,7 +85,7 @@ class AXValue:
         result = old_value != AXValue._get_current_value(obj)
         if result:
             tokens = ["AXValue: Previous value of", obj, f"was {old_value}"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
@@ -100,11 +100,11 @@ class AXValue:
             value = Atspi.Value.get_current_value(obj)
         except Exception as error:
             msg = f"AXValue: Exception in _get_current_value: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
         tokens = ["AXValue: Current value of", obj, f"is {value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @staticmethod
@@ -125,7 +125,7 @@ class AXValue:
         text = AXObject.get_attribute(obj, "valuetext", False) or ""
         if text:
             tokens = ["AXValue: valuetext attribute for", obj, f"is '{text}'"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return text
 
         if not AXObject.supports_value(obj):
@@ -135,11 +135,11 @@ class AXValue:
             value = Atspi.Value.get_text(obj)
         except Exception as error:
             msg = f"AXValue: Exception in get_current_value_text: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             value = ""
 
         tokens = ["AXValue: Value text of", obj, f"is '{value}'"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if value:
             return value
 
@@ -162,7 +162,7 @@ class AXValue:
         value = AXValue._get_current_value(obj)
         if AXUtilities.is_indeterminate(obj) and value <= 0:
             tokens = ["AXValue:", obj, "has state indeterminate"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         minimum = AXValue.get_minimum_value(obj)
@@ -172,7 +172,7 @@ class AXValue:
 
         result = int((value / (maximum - minimum)) * 100)
         tokens = ["AXValue: Current value of", obj, f"as percent is is {result}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     @staticmethod
@@ -186,11 +186,11 @@ class AXValue:
             value = Atspi.Value.get_minimum_value(obj)
         except Exception as error:
             msg = f"AXValue: Exception in get_minimum_value: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
         tokens = ["AXValue: Minimum value of", obj, f"is {value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @staticmethod
@@ -204,11 +204,11 @@ class AXValue:
             value = Atspi.Value.get_maximum_value(obj)
         except Exception as error:
             msg = f"AXValue: Exception in get_maximum_value: {error}"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
         tokens = ["AXValue: Maximum value of", obj, f"is {value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
 AXValue.start_cache_clearing_thread()

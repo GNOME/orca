@@ -64,7 +64,7 @@ class CaretNavigation:
 
         if refresh:
             msg = "CARET NAVIGATION: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -76,7 +76,7 @@ class CaretNavigation:
 
         if refresh:
             msg = "CARET NAVIGATION: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -156,7 +156,7 @@ class CaretNavigation:
                 enabled = enabled)
 
         msg = f"CARET NAVIGATION: Handlers set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self):
         """Sets up the caret-navigation key bindings."""
@@ -270,7 +270,7 @@ class CaretNavigation:
             self._handlers, self._bindings, False)
 
         msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def last_input_event_was_navigation_command(self):
         """Returns true if the last input event was a navigation command."""
@@ -283,7 +283,7 @@ class CaretNavigation:
             string = "None"
 
         msg = f"CARET NAVIGATION: Last navigation event ({string}) is last key event: {result}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     def refresh_bindings_and_grabs(self, script, reason=""):
@@ -292,7 +292,7 @@ class CaretNavigation:
         msg = "CARET NAVIGATION: Refreshing bindings and grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
             script.key_bindings.remove(binding, include_grabs=True)
@@ -331,7 +331,7 @@ class CaretNavigation:
         msg = f"CARET NAVIGATION: Commands suspended: {suspended}"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
@@ -421,7 +421,7 @@ class CaretNavigation:
             _settings_manager = settings_manager.get_manager()
             if _settings_manager.get_setting('rewindAndFastForwardInSayAll'):
                 msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
-                debug.printMessage(debug.LEVEL_INFO, msg)
+                debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
         obj, offset = script.utilities.getCaretContext()
@@ -451,7 +451,7 @@ class CaretNavigation:
             _settings_manager = settings_manager.get_manager()
             if _settings_manager.get_setting('rewindAndFastForwardInSayAll'):
                 msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
-                debug.printMessage(debug.LEVEL_INFO, msg)
+                debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
 
@@ -536,11 +536,11 @@ class CaretNavigation:
 
         document = script.utilities.documentFrame()
         tokens = ["CARET NAVIGATION: Go to end of", document]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = script.utilities.getLastObjectInDocument(document)
         tokens = ["CARET NAVIGATION: Last object in", document, "is", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:

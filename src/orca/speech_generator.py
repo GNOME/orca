@@ -101,7 +101,7 @@ class SpeechGenerator(generator.Generator):
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             tokens = [f"SPEECH GENERATOR: {func.__name__}:", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
         return wrapper
 
@@ -111,7 +111,7 @@ class SpeechGenerator(generator.Generator):
         rv = self.generate(obj, **args)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
             tokens = ["SPEECH GENERATOR: Results for", obj, "are pauses only"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = []
 
         return rv
@@ -191,7 +191,7 @@ class SpeechGenerator(generator.Generator):
             f"SPEECH GENERATOR: {key} voice requested with "
             f"language='{language}', dialect='{dialect}'"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # This is purely for debugging. The code needed to actually switch voices
         # does not yet exist due to some problems which need to be debugged and
@@ -1201,7 +1201,7 @@ class SpeechGenerator(generator.Generator):
             strings.append(messages.MATH_ENCLOSURE_MADRUWB)
         if not strings:
             tokens = ["SPEECH GENERATOR: Could not get enclosure message for", enclosures]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         if len(strings) == 1:
@@ -2047,7 +2047,7 @@ class SpeechGenerator(generator.Generator):
             args["language"], args["dialect"] = language, dialect
             if "string" in args:
                 msg = f"INFO: Found existing string '{args.get('string')}'; using '{string}'"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 args.pop("string")
 
             voice = self.voice(string=string, obj=obj, **args)

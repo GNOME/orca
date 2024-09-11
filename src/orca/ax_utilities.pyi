@@ -1580,9 +1580,6 @@ class AXUtilities:
     def _get_relation_targets(obj, relation_type): ...
 
     @staticmethod
-    def relations_as_string(obj): ...
-
-    @staticmethod
     def get_is_controlled_by(obj): ...
 
     @staticmethod

@@ -336,7 +336,7 @@ class Script(default.Script):
 
         if not AXObject.get_parent(event.source):
             msg = "SOFFICE: Event source lacks parent"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         # Prevent this events from activating the find operation.
@@ -416,7 +416,7 @@ class Script(default.Script):
 
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # We will present this when the selection changes.
         # TODO - JD: Is this still needed? If so, why is the default script not handling it?
@@ -452,14 +452,14 @@ class Script(default.Script):
         if self.utilities.isSpreadSheetTable(event.source):
             if focus_manager.get_manager().focus_is_dead():
                 msg = "SOFFICE: Event believed to be post-editing focus claim."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
                 return
 
             focus = focus_manager.get_manager().get_locus_of_focus()
             if AXUtilities.is_paragraph(focus) or AXUtilities.is_table_cell(focus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
                 return
 
@@ -478,20 +478,20 @@ class Script(default.Script):
                                  "Caret-moved event from object which lacks focused state.")
             if AXUtilities.is_focused(event.source):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if self.utilities._flowsFromOrToSelection(event.source):
            return
 
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if self.utilities.isSpreadSheetCell(focus_manager.get_manager().get_locus_of_focus()):
             if not self.utilities.isCellBeingEdited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return
 
         super().on_caret_moved(event)
@@ -519,11 +519,11 @@ class Script(default.Script):
         full, brief = "", ""
         if self.utilities.isSelectedTextDeletionEvent(event):
             msg = "SOFFICE: Change is believed to be due to deleting selected text"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             full = messages.SELECTION_DELETED
         elif self.utilities.isSelectedTextRestoredEvent(event):
             msg = "SOFFICE: Selection is believed to be due to restoring selected text"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             if self.utilities.handleUndoTextEvent(event):
                 full = messages.SELECTION_RESTORED
 
@@ -551,7 +551,7 @@ class Script(default.Script):
         if event.source == self.spellcheck.getSuggestionsList():
             if focus_manager.get_manager().focus_is_active_window():
                 msg = "SOFFICE: Not presenting because locusOfFocus is window"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
                 self.update_braille(event.any_data)

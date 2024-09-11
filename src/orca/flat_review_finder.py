@@ -121,7 +121,7 @@ class FlatReviewFinder:
 
         if refresh:
             msg = "FLAT REVIEW FINDER: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()
@@ -137,7 +137,7 @@ class FlatReviewFinder:
 
         if refresh:
             msg = "FLAT REVIEW FINDER: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers
@@ -175,7 +175,7 @@ class FlatReviewFinder:
                 self._handlers.get("findPreviousHandler")))
 
         msg = "FLAT REVIEW FINDER: Desktop bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_laptop_bindings(self):
         """Sets up the flat-review-finder laptop key bindings."""
@@ -204,7 +204,7 @@ class FlatReviewFinder:
                 self._handlers.get("findPreviousHandler")))
 
         msg = "FLAT REVIEW FINDER: Laptop bindings set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_handlers(self):
         """Sets up the flat-review-presenter input event handlers."""
@@ -228,7 +228,7 @@ class FlatReviewFinder:
 
 
         msg = "FLAT REVIEW FINDER: Handlers set up."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _on_query(self, query):
         """Handler after a query has been made via the Find dialog."""
@@ -337,7 +337,7 @@ class FlatReviewFinder:
             match = re.search(pattern, string)
             debug_string = string.replace("\n", "\\n")
             msg = f"FLAT REVIEW FINDER: Looking in {type_string}='{debug_string}'. Match: {match}"
-            debug.println(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return bool(match)
 
         found = matches(context, pattern, context_type)
@@ -382,7 +382,7 @@ class FlatReviewFinder:
         msg = f"FLAT REVIEW FINDER: Searching for {str(query)}"
         if self._match:
             msg += f". Last match: {self._match}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         flags = re.U
         if not query.case_sensitive:

@@ -191,7 +191,7 @@ class Generator:
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             tokens = [f"GENERATOR: {func.__name__}:", result]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
         return wrapper
 
@@ -202,7 +202,7 @@ class Generator:
         while True:
             time.sleep(2)
             msg = "GENERATOR: Clearing cache."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             with Generator._lock:
                 Generator.CACHED_DESCRIPTION = {}
                 Generator.CACHED_IMAGE_DESCRIPTION = {}
@@ -241,7 +241,7 @@ class Generator:
         _generator = self._generators.get(args.get("role") or AXObject.get_role(obj))
         if _generator is None:
             tokens = [f"{self._mode.upper()} GENERATOR:", obj, "lacks dedicated generator"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             _generator = self._generate_default_presentation
 
         if not args.get("formatType", None):
@@ -251,11 +251,11 @@ class Generator:
                 args["formatType"] = "unfocused"
 
         tokens = [f"{self._mode.upper()} GENERATOR:", _generator, "for", obj, "args:", args]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         result = _generator(obj, **args)
         tokens = [f"{self._mode.upper()} GENERATOR: Results:", result]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if args.get("isProgressBarUpdate") and result and result[0]:
             self._set_progress_bar_update_time_and_value(obj)
@@ -974,7 +974,7 @@ class Generator:
         last_time, last_value = self._get_progress_bar_update_time_and_value(obj, type=self)
         if percent == last_value:
             tokens = ["GENERATOR: Not presenting update for", obj, ". Value still", percent]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if percent == 100:

@@ -236,11 +236,11 @@ class Zone:
 
     def getWordAtOffset(self, charOffset):
         msg = f"FLAT REVIEW: Searching for word at offset {charOffset}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         for word in self.words:
             tokens = ["FLAT REVIEW: Checking", word]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             offset = word.getRelativeOffset(charOffset)
             if offset >= 0:
@@ -493,11 +493,11 @@ class Context:
         if root is not None:
             self.topLevel = root
             tokens = ["FLAT REVIEW: Restricting flat review to", root]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
             self.topLevel = dialog or frame
         tokens = ["FLAT REVIEW: Frame:", frame, "Dialog:", dialog, ". Top level:", self.topLevel]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.bounds = AXComponent.get_rect(self.topLevel)
 
@@ -531,7 +531,7 @@ class Context:
             f"FLAT REVIEW: On line {self.lineIndex}, zone {self.zoneIndex} "
             f"word {self.wordIndex}, char {self.charIndex}"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def splitTextIntoZones(self, accessible, string, startOffset, cliprect):
         """Traverses the string, splitting it up into separate zones if the
@@ -585,7 +585,7 @@ class Context:
             intersection = AXComponent.get_rect_intersection(rect, cliprect)
             if AXComponent.is_same_rect(rect, intersection):
                 tokens = ["FLAT REVIEW: Cliprect", cliprect, "->", rect, "from", container]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 cliprect = rect
 
         if AXObject.supports_editable_text(accessible) and AXUtilities.is_single_line(accessible):
@@ -594,11 +594,11 @@ class Context:
             return [TextZone(accessible, 0, AXText.get_all_text(accessible), *extents)]
 
         tokens = ["FLAT REVIEW: Getting lines for", accessible]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         lines = AXText.get_visible_lines(accessible, cliprect)
         tokens = ["FLAT REVIEW:", len(lines), "lines found for", accessible]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for string, startOffset, endOffset in lines:
             zones.extend(self.splitTextIntoZones(accessible, string, startOffset, cliprect))
@@ -694,11 +694,11 @@ class Context:
         tokens = ["FLAT REVIEW: Current", self.getCurrentAccessible(),
                   f"line: {self.lineIndex}, zone: {self.zoneIndex},",
                   f"word: {self.wordIndex}, char: {self.charIndex})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         zone = self._findZoneWithObject(obj)
         tokens = ["FLAT REVIEW: Zone with", obj, "is", zone]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if zone is None:
             return False
 
@@ -711,17 +711,17 @@ class Context:
                     self.wordIndex = word.index
                     self.charIndex = offset
                 msg = "FLAT REVIEW: Updated current zone."
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 break
         else:
             msg = "FLAT REVIEW: Failed to update current zone."
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         tokens = ["FLAT REVIEW: Updated", self.getCurrentAccessible(),
                   f"line: {self.lineIndex}, zone: {self.zoneIndex},",
                   f"word: {self.wordIndex}, char: {self.charIndex})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def _findZoneWithObject(self, obj):
@@ -740,7 +740,7 @@ class Context:
             # but the ancestor item might not.
             if AXObject.is_ancestor(zone.accessible, obj):
                 tokens = ["FLAT REVIEW:", zone.accessible, "is ancestor of zone accessible", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return zone
 
         return None
@@ -753,7 +753,7 @@ class Context:
 
         objs = self.script.utilities.getOnScreenObjects(root, boundingbox)
         tokens = ["FLAT REVIEW:", len(objs), "on-screen objects found for", root]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         allZones, focusZone = [], None
         for o in objs:
@@ -772,7 +772,7 @@ class Context:
                 focusZone = zones[0]
 
         tokens = ["FLAT REVIEW:", len(allZones), "zones found for", root]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return allZones, focusZone
 
     def clusterZonesByLine(self, zones):
@@ -802,7 +802,7 @@ class Context:
                 zone.index = zoneIndex
 
         tokens = ["FLAT REVIEW: Zones clustered into", len(lines), "lines"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return lines
 
     def getCurrent(self, flatReviewType=ZONE):
@@ -1010,7 +1010,7 @@ class Context:
         """
 
         if not self.lines:
-            debug.printMessage(debug.LEVEL_INFO, 'goPrevious(): no lines in context')
+            debug.print_message(debug.LEVEL_INFO, 'goPrevious(): no lines in context')
             return False
 
         moved = False
@@ -1143,7 +1143,7 @@ class Context:
         """
 
         if not self.lines:
-            debug.printMessage(debug.LEVEL_INFO, 'goNext(): no lines in context')
+            debug.print_message(debug.LEVEL_INFO, 'goNext(): no lines in context')
             return False
 
         moved = False

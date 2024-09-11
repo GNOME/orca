@@ -59,11 +59,11 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         if self.utilities.isIgnorableEventFromDocumentPreview(event.source):
             msg = "EVOLUTION: Ignoring event from document preview"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "EVOLUTION: Passing event to super class for processing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         super().on_busy_changed(event)
 
     def on_caret_moved(self, event):
@@ -71,11 +71,11 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         if self.utilities.isIgnorableEventFromDocumentPreview(event.source):
             msg = "EVOLUTION: Ignoring event from document preview"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         msg = "EVOLUTION: Passing event to super class for processing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         super().on_caret_moved(event)
 
     def on_focused_changed(self, event):
@@ -86,9 +86,9 @@ class Script(WebKitGTK.Script, gtk.Script):
         # `iframe` tag claims focus. We don't want to update our location in response.
         if AXUtilities.is_internal_frame(event.source):
             tokens = ["EVOLUTION: Ignoring event from internal frame", event.source]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         msg = "EVOLUTION: Passing event to super class for processing."
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         super().on_focused_changed(event)

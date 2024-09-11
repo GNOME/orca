@@ -70,7 +70,7 @@ class SettingsManager:
         backend='json'
         """
 
-        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
+        debug.print_message(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
 
         self.backend_module = None
         self._backend = None
@@ -115,12 +115,12 @@ class SettingsManager:
         # For handling the currently-"classic" application settings
         self.settingsPackages = ["app-settings"]
 
-        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
+        debug.print_message(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initialized', True)
 
     def activate(self, prefsDir=None, customSettings={}):
         """Activates this manager."""
 
-        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activating', True)
+        debug.print_message(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activating', True)
 
         self.customized_settings.update(customSettings)
         self._prefs_dir = prefsDir \
@@ -143,16 +143,16 @@ class SettingsManager:
         #
         self._create_defaults()
 
-        debug.printMessage(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
+        debug.print_message(debug.LEVEL_INFO, 'SETTINGS MANAGER: Activated', True)
 
         # Set the active profile and load its stored settings
         tokens = ["SETTINGS MANAGER: Current profile is", self.profile]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self.profile is None:
             self.profile = self.general.get('startingProfile')[1]
             tokens = ["SETTINGS MANAGER: Current profile is now", self.profile]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.set_profile(self.profile)
 
@@ -270,7 +270,7 @@ class SettingsManager:
             success = True
             tokens.extend(["failed due to:", error, ". Not loading customizations."])
 
-        debug.printTokens(debug.LEVEL_ALL, tokens, True)
+        debug.print_tokens(debug.LEVEL_ALL, tokens, True)
         return success
 
     def get_prefs_dir(self):
@@ -303,10 +303,10 @@ class SettingsManager:
                 module = importlib.import_module(f'orca.{module_name}')
                 factories.append(module)
                 tokens = ["SETTINGS MANAGER: Valid speech server factory:", module_name]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             except Exception:
                 tokens = ["SETTINGS MANAGER: Invalid speech server factory:", module_name]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return factories
 
@@ -317,7 +317,7 @@ class SettingsManager:
         change from one profile to another."""
 
         tokens = ["SETTINGS MANAGER: Loading settings for", profile, "profile"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if profile is None:
             profile = self.profile
@@ -326,14 +326,14 @@ class SettingsManager:
         self.profile_keybindings = self.get_keybindings(profile) or {}
 
         tokens = ["SETTINGS MANAGER: Settings for", profile, "profile loaded"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _merge_settings(self):
         """Update the changed values on the profile settings
         over the current and active settings"""
 
         msg = 'SETTINGS MANAGER: Merging settings.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.profile_general.update(self._app_general)
         self.profile_pronunciations.update(self._appPronunciations)
@@ -344,7 +344,7 @@ class SettingsManager:
         self.keybindings.update(self.profile_keybindings)
 
         msg = 'SETTINGS MANAGER: Settings merged.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _enable_accessibility(self):
         """Enables the GNOME accessibility flag.  Users need to log out and
@@ -362,7 +362,7 @@ class SettingsManager:
 
     def is_accessibility_enabled(self):
         msg = 'SETTINGS MANAGER: Checking if accessibility is enabled.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         msg = 'SETTINGS MANAGER: Accessibility enabled: '
         if not _PROXY:
@@ -372,23 +372,23 @@ class SettingsManager:
             rv = _PROXY.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
             msg += str(rv)
 
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
 
     def set_accessibility(self, enable):
         msg = f'SETTINGS MANAGER: Attempting to set accessibility to {enable}.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not _PROXY:
             msg = 'SETTINGS MANAGER: Error (no proxy)'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         vEnable = GLib.Variant('b', enable)
         _PROXY.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)
 
         msg = f'SETTINGS MANAGER: Finished setting accessibility to {enable}.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def is_screen_reader_service_enabled(self):
         """Returns True if the screen reader service is enabled. Note that
@@ -404,7 +404,7 @@ class SettingsManager:
             rv = _PROXY.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
             msg += str(rv)
 
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
 
     def set_starting_profile(self, profile=None):
@@ -421,7 +421,7 @@ class SettingsManager:
         and updated the current settings with them."""
 
         tokens = ["SETTINGS MANAGER: Setting profile to:", profile]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         oldVoiceLocale = self.get_voice_locale('default')
         self.profile = profile
@@ -439,14 +439,14 @@ class SettingsManager:
             orca_i18n.setLocaleForGUI(newVoiceLocale)
 
         tokens = ["SETTINGS MANAGER: Profile set to:", profile]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def remove_profile(self, profile):
         self._backend.remove_profile(profile)
 
     def _set_settings_runtime(self, settingsDict):
         msg = 'SETTINGS MANAGER: Setting runtime settings.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         for key, value in settingsDict.items():
             setattr(settings, str(key), value)
@@ -455,7 +455,7 @@ class SettingsManager:
             setattr(settings, str(key), value)
 
         msg = 'SETTINGS MANAGER: Runtime settings set.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _set_pronunciations_runtime(self, pronunciationsDict):
         pronunciation_dict.pronunciation_dict = {}
@@ -486,7 +486,7 @@ class SettingsManager:
         as the profile's."""
 
         msg = 'SETTINGS MANAGER: Setting general settings for profile'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.profile_general = {}
 
@@ -501,33 +501,33 @@ class SettingsManager:
                 self.profile_general[key] = value
 
         msg = 'SETTINGS MANAGER: General settings for profile set'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _set_profile_pronunciations(self, pronunciations):
         """Set the changed pronunciations settings from the defaults' ones
         as the profile's."""
 
         msg = 'SETTINGS MANAGER: Setting pronunciation settings for profile.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.profile_pronunciations = self.default_pronunciations.copy()
         self.profile_pronunciations.update(pronunciations)
 
         msg = 'SETTINGS MANAGER: Pronunciation settings for profile set.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _set_profile_keybindings(self, keybindings):
         """Set the changed keybindings settings from the defaults' ones
         as the profile's."""
 
         msg = 'SETTINGS MANAGER: Setting keybindings settings for profile.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.profile_keybindings = self.default_keybindings.copy()
         self.profile_keybindings.update(keybindings)
 
         msg = 'SETTINGS MANAGER: Keybindings settings for profile set.'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _save_app_settings(self, appName, general, pronunciations, keybindings):
         appGeneral = {}
@@ -563,7 +563,7 @@ class SettingsManager:
         """Save the settings provided for the script provided."""
 
         tokens = ["SETTINGS MANAGER: Saving settings for", script, "(app:", script.app, ")"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         app = script.app
         if app:
             self._save_app_settings(AXObject.get_name(app), general, pronunciations, keybindings)
@@ -584,7 +584,7 @@ class SettingsManager:
         self._set_profile_keybindings(keybindings)
 
         tokens = ["SETTINGS MANAGER: Saving for backend", self._backend]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._backend.saveProfileSettings(self.profile,
                                           self.profile_general,
@@ -592,7 +592,7 @@ class SettingsManager:
                                           self.profile_keybindings)
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._enable_accessibility()
 
     def _adjust_binding_tuple_values(self, bindingTuple):
@@ -619,24 +619,24 @@ class SettingsManager:
             if enabled_only:
                 if not bindings.has_handler(handler):
                     tokens = ["SETTINGS MANAGER:", handler, "is not in the bindings provided."]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
                 if not bindings.has_enabled_handler(handler):
                     tokens = ["SETTINGS MANAGER:", handler.function,
                               "is not enabled. Not overriding."]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
             oldBindings = bindings.get_bindings_for_handler(handler)
             wasEnabled = None
             for b in oldBindings:
                 tokens = ["SETTINGS MANAGER: Removing old binding for", b]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
                 if wasEnabled is not None and b.is_enabled() != wasEnabled:
                     msg = "SETTINGS MANAGER: Warning, different enabled values found for binding"
-                    debug.printMessage(debug.LEVEL_INFO, msg, True)
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
 
                 wasEnabled = b.is_enabled()
                 bindings.remove(b, True)
@@ -647,7 +647,7 @@ class SettingsManager:
                 newBinding = KeyBinding(keysym, mask, mods, handler, clicks, enabled=wasEnabled)
                 bindings.add(newBinding)
                 tokens = ["SETTINGS MANAGER:", handler, f"is rebound to {bindingTuple}"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return bindings
 

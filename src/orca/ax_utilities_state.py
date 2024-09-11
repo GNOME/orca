@@ -69,7 +69,7 @@ class AXUtilitiesState:
         msg = "AXUtilitiesState: Clearing local cache."
         if reason:
             msg += f" Reason: {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         with AXUtilitiesState._lock:
             AXUtilitiesState.LAST_KNOWN_CHECKED.clear()
@@ -111,7 +111,7 @@ class AXUtilitiesState:
         new_value = AXUtilitiesState.is_checked(obj)
         result = old_value != new_value
         tokens = ["AXUtilitiesState: Checked state of", obj, f"was {old_value}, is {new_value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_CHECKED[hash(obj)] = new_value
         return result
 
@@ -123,7 +123,7 @@ class AXUtilitiesState:
         new_value = AXUtilitiesState.is_expanded(obj)
         result = old_value != new_value
         tokens = ["AXUtilitiesState: Expanded state of", obj, f"was {old_value}, is {new_value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_EXPANDED[hash(obj)] = new_value
         return result
 
@@ -136,7 +136,7 @@ class AXUtilitiesState:
         result = old_value != new_value
         tokens = ["AXUtilitiesState: Indeterminate state of", obj, f"was {old_value},",
                   f"is {new_value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_INDETERMINATE[hash(obj)] = new_value
         return result
 
@@ -148,7 +148,7 @@ class AXUtilitiesState:
         new_value = AXUtilitiesState.is_pressed(obj)
         result = old_value != new_value
         tokens = ["AXUtilitiesState: Pressed state of", obj, f"was {old_value}, is {new_value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_PRESSED[hash(obj)] = new_value
         return result
 
@@ -160,7 +160,7 @@ class AXUtilitiesState:
         new_value = AXUtilitiesState.is_selected(obj)
         result = old_value != new_value
         tokens = ["AXUtilitiesState: Selected state of", obj, f"was {old_value}, is {new_value}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXUtilitiesState.LAST_KNOWN_SELECTED[hash(obj)] = new_value
         return result
 
@@ -215,7 +215,7 @@ class AXUtilitiesState:
 
         if AXObject.has_state(obj, Atspi.StateType.CHECKED):
             tokens = ["AXUtilitiesState:", obj, "is checked but lacks state checkable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -229,7 +229,7 @@ class AXUtilitiesState:
 
         if not AXObject.has_state(obj, Atspi.StateType.CHECKABLE):
             tokens = ["AXUtilitiesState:", obj, "is checked but lacks state checkable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return True
 
@@ -272,7 +272,7 @@ class AXUtilitiesState:
 
         if AXObject.has_state(obj, Atspi.StateType.EXPANDED):
             tokens = ["AXUtilitiesState:", obj, "is expanded but lacks state expandable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -286,7 +286,7 @@ class AXUtilitiesState:
 
         if not AXObject.has_state(obj, Atspi.StateType.EXPANDABLE):
             tokens = ["AXUtilitiesState:", obj, "is expanded but lacks state expandable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return True
 
@@ -299,7 +299,7 @@ class AXUtilitiesState:
 
         if AXObject.has_state(obj, Atspi.StateType.FOCUSED):
             tokens = ["AXUtilitiesState:", obj, "is focused but lacks state focusable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
@@ -313,7 +313,7 @@ class AXUtilitiesState:
 
         if not AXObject.has_state(obj, Atspi.StateType.FOCUSABLE):
             tokens = ["AXUtilitiesState:", obj, "is focused but lacks state focusable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return True
 

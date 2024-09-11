@@ -677,40 +677,40 @@ class KeyboardEvent(InputEvent):
         else:
             data = "(obscured)"
 
-        debug.printMessage(debug.LEVEL_INFO, f"\n{self}")
+        debug.print_message(debug.LEVEL_INFO, f"\n{self}")
 
         msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
-        debug.printMessage(debug.LEVEL_INFO, msg, False)
+        debug.print_message(debug.LEVEL_INFO, msg, False)
 
         tokens = ["SCRIPT:", self._script]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["WINDOW:", self._window]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         tokens = ["LOCATION:", self._obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._script:
             self._handler = self._get_user_handler() \
                 or self._script.key_bindings.get_input_handler(self)
             tokens = ["HANDLER:", self._handler]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if self._script.get_learn_mode_presenter().is_active():
                 self._consumer = self._script.get_learn_mode_presenter().handle_event
                 tokens = ["CONSUMER:", self._consumer]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._did_consume, self._result_reason = self._process()
         tokens = ["CONSUMED:", self._did_consume, self._result_reason]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         msg = f"^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n"
-        debug.printMessage(debug.LEVEL_INFO, msg, False)
+        debug.print_message(debug.LEVEL_INFO, msg, False)
 
         return self._did_consume
 
@@ -742,25 +742,25 @@ class KeyboardEvent(InputEvent):
         start_time = time.time()
         data = f"'{self.event_string}' ({self.hw_code})"
         msg = f'\nvvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv'
-        debug.printMessage(debug.LEVEL_INFO, msg, False)
+        debug.print_message(debug.LEVEL_INFO, msg, False)
 
         if self._consumer:
             msg = f'KEYBOARD EVENT: Consumer is {self._consumer.__name__}'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._consumer(self)
         elif self._handler.function and self._handler.is_enabled():
             msg = f'KEYBOARD EVENT: Handler is {self._handler}'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._handler.function(self._script, self)
         else:
             msg = 'KEYBOARD EVENT: No enabled handler or consumer'
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         msg = f'TOTAL PROCESSING TIME: {time.time() - start_time:.4f}'
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         msg = f'^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^\n'
-        debug.printMessage(debug.LEVEL_INFO, msg, False)
+        debug.print_message(debug.LEVEL_INFO, msg, False)
 
         return False
 
@@ -789,27 +789,27 @@ class BrailleEvent(InputEvent):
         if user_bindings and command in user_bindings:
             handler = user_bindings[command]
             tokens = [f"BRAILLE EVENT: User handler for command {command} is", handler]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return handler
 
         handler = self._script.braille_bindings.get(command)
         tokens = [f"BRAILLE EVENT: Handler for command {command} is", handler]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return handler
 
     def process(self):
         """Processes this event."""
 
         tokens = ["\nvvvvv PROCESS", self, "vvvvv"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, False)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         start_time = time.time()
         result = self._process()
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-        debug.printMessage(debug.LEVEL_INFO, msg, False)
+        debug.print_message(debug.LEVEL_INFO, msg, False)
 
         tokens = ["^^^^^ PROCESS", self, "^^^^^"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, False)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
         return result
 
     def _process(self):
@@ -817,16 +817,16 @@ class BrailleEvent(InputEvent):
         if not handler:
             if self._script.get_learn_mode_presenter().is_active():
                 tokens = ["BRAILLE EVENT: Learn mode presenter handles", self]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
 
             tokens = ["BRAILLE EVENT: No handler found for", self]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if handler.function:
             tokens = ["BRAILLE EVENT: Handler is:", handler]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             handler.function(self._script, self)
 
         return True
@@ -877,7 +877,7 @@ class MouseButtonEvent(InputEvent):
             f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. "
             f"Updating to ({x}, {y})"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self.x, self.y = x, y
 
 class InputEventHandler:
@@ -922,7 +922,7 @@ class InputEventHandler:
         """Returns True if this handler is enabled."""
 
         msg = f"INPUT EVENT HANDLER: {self.description} is enabled: {self._enabled}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return self._enabled
 
     def set_enabled(self, enabled):

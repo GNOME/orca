@@ -113,7 +113,7 @@ class Utilities:
         # we'll do an old-school, row-by-row search for child nodes.
         nodes = AXUtilities.get_is_node_parent_of(obj)
         tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-parent-of"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if nodes:
             return nodes
 
@@ -138,7 +138,7 @@ class Utilities:
                 break
 
         tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-child-of"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return nodes
 
     def commonAncestor(self, a, b):
@@ -150,7 +150,7 @@ class Utilities:
         """
 
         tokens = ["SCRIPT UTILITIES: Looking for common ancestor of", a, "and", b]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (a and b):
             return None
@@ -183,7 +183,7 @@ class Utilities:
                 break
 
         tokens = ["SCRIPT UTILITIES: Common ancestor of", a, "and", b, "is", commonAncestor]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return commonAncestor
 
     def displayedLabel(self, obj):
@@ -257,13 +257,13 @@ class Utilities:
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not obj:
             msg = "SCRIPT UTILITIES: frameAndDialog() called without valid object"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return results
 
         topLevel = self.topLevelObject(obj)
         if topLevel is None:
             tokens = ["SCRIPT UTILITIES: could not find top-level object for", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return results
 
         dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
@@ -286,7 +286,7 @@ class Utilities:
                 results[1] = AXObject.find_ancestor(obj, isDialog)
 
         tokens = ["SCRIPT UTILITIES:", obj, "is in frame", results[0], "and dialog", results[1]]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return results
 
     def presentEventFromNonShowingObject(self, event):
@@ -831,11 +831,11 @@ class Utilities:
             # this (see bug 351847).
             if nodes.count(node):
                 tokens = ["SCRIPT UTILITIES:", node, "is already in the list of nodes for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 done = True
             if len(nodes) > 100:
                 tokens = ["SCRIPT UTILITIES: More than 100 nodes found for", obj]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 done = True
             elif node:
                 nodes.append(node)
@@ -853,20 +853,20 @@ class Utilities:
 
         if not (AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj)):
             tokens = ["SCRIPT UTILITIES:", obj, "is not showing and visible"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if AXUtilities.is_filler(obj):
                 AXObject.clear_cache(obj, False, "Suspecting filler might have wrong state")
                 if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
                     tokens = ["WARNING: Now", obj, "is showing and visible"]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     return True
 
             return False
 
         if AXComponent.has_no_size_or_invalid_rect(obj):
             tokens = ["SCRIPT UTILITIES: Rect of", obj, "is unhelpful. Treating as onscreen"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         if AXComponent.object_is_off_screen(obj):
@@ -877,7 +877,7 @@ class Utilities:
 
         if not AXComponent.object_intersects_rect(obj, boundingbox):
             tokens = ["SCRIPT UTILITIES:", obj, "not in", boundingbox]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         return True
@@ -955,10 +955,10 @@ class Utilities:
             AXObject.clear_cache(root, True, "Root is empty filler.")
             count = AXObject.get_child_count(root)
             tokens = ["SCRIPT UTILITIES:", root, f"now reports {count} children"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not count:
                 tokens = ["WARNING: unexpectedly empty filler", root]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if extents is None:
             extents = AXComponent.get_rect(root)
@@ -1066,7 +1066,7 @@ class Utilities:
 
         rv = focus == self.topLevelObject(focus)
         tokens = ["SCRIPT UTILITIES:", focus, "is top-level object:", rv]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     def _findWindowWithDescendant(self, child):
@@ -1083,11 +1083,11 @@ class Utilities:
             window = AXObject.get_child(app, i)
             if AXObject.find_descendant(window, lambda x: x == child) is not None:
                 tokens = ["SCRIPT UTILITIES:", window, "contains", child]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return window
 
             tokens = ["SCRIPT UTILITIES:", window, "does not contain", child]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return None
 
@@ -1109,11 +1109,11 @@ class Utilities:
             rv = AXObject.find_ancestor(obj, self._isTopLevelObject)
 
         tokens = ["SCRIPT UTILITIES:", rv, "is top-level object for:", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if rv is None and useFallbackSearch:
             msg = "SCRIPT UTILITIES: Attempting to find top-level object via fallback search"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             rv = self._findWindowWithDescendant(obj)
 
         return rv
@@ -1348,11 +1348,11 @@ class Utilities:
         # TODO - JD: Audit all callers and eliminate these arguments having been set to None.
         if startOffset is None:
             tokens = ["SCRIPT UTILITIES: expandEOCs called with start offset of None on", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             startOffset = 0
         if endOffset is None:
             tokens = ["SCRIPT UTILITIES: expandEOCs called with end offset of None on", obj]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             endOffset = -1
 
         string = AXText.get_substring(obj, startOffset, endOffset)
@@ -1380,11 +1380,11 @@ class Utilities:
         result = "".join(toBuild)
         tokens = ["SCRIPT UTILITIES: Expanded EOCs for", obj, f"range: {startOffset}:{endOffset}:",
                  f"'{result}'"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self.EMBEDDED_OBJECT_CHARACTER in result:
             msg = "SCRIPT UTILITIES: Unable to expand EOCs"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
         return result
@@ -1406,17 +1406,17 @@ class Utilities:
             return event.any_data
 
         msg = "SCRIPT UTILITIES: Broken text insertion event"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_password_text(event.source):
             string = AXText.get_all_text(event.source)
             if string:
                 tokens = ["HACK: Returning last char in '", string, "'"]
-                debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return string[-1]
 
         msg = "FAIL: Unable to correct broken text insertion event"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return ""
 
     def getCaretContext(self):
@@ -2024,7 +2024,7 @@ class Utilities:
             value = int(attrs.get('level', '0'))
         except ValueError:
             tokens = ["SCRIPT UTILITIES: Exception getting value for", obj, "(", attrs, ")"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return 0
 
         return value
@@ -2076,7 +2076,7 @@ class Utilities:
                 f"SCRIPT UTILITIES: Adjusted word at offset {offset} for ongoing word nav is "
                 f"'{debugString}' ({start}-{end})"
             )
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return word, start, end
 
         # Otherwise, attempt some smarts so that the user winds up with the same presentation
@@ -2124,20 +2124,20 @@ class Utilities:
             f"SCRIPT UTILITIES: Adjusted word at offset {offset} for new word nav is "
             f"'{debugString}' ({start}-{end})"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
     def visibleRows(self, obj, table_rect):
         nRows = AXTable.get_row_count(obj)
 
         tokens = ["SCRIPT UTILITIES: ", obj, f"has {nRows} rows"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         cell = AXComponent.get_descendant_at_point(obj, table_rect.x, table_rect.y + 1)
         row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         startIndex = max(0, row)
         tokens = ["SCRIPT UTILITIES: First cell:", cell, f"(row: {row}"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # Just in case the row above is a static header row in a scrollable table.
         cell_rect = AXComponent.get_rect(cell)
@@ -2146,13 +2146,13 @@ class Utilities:
         row, AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         nextIndex = max(startIndex, row)
         tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         cell = AXComponent.get_descendant_at_point(
             obj, table_rect.x, table_rect.y + table_rect.height - 1)
         row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         tokens = ["SCRIPT UTILITIES: Last cell:", cell, f"(row: {row})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if row == -1:
             row = nRows
@@ -2243,7 +2243,7 @@ class Utilities:
 
     def findReplicant(self, root, obj):
         tokens = ["SCRIPT UTILITIES: Searching for replicant for", obj, "in", root]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not (root and obj):
             return None
 
@@ -2271,7 +2271,7 @@ class Utilities:
             replicant = AXObject.find_descendant(root, isSame)
 
         tokens = ["HACK: Returning", replicant, "as replicant for invalid object", obj]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return replicant
 
     def valuesForTerm(self, obj):
@@ -2293,7 +2293,7 @@ class Utilities:
         textSelections = self._script.point_of_reference.get('textSelections', {})
         start, end, string = textSelections.get(hash(obj), (0, 0, ''))
         tokens = ["SCRIPT UTILITIES: Cached selection for", obj, f"is '{string}' ({start}, {end})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return start, end, string
 
     def updateCachedTextSelection(self, obj):
@@ -2314,7 +2314,7 @@ class Utilities:
 
         string, start, end = AXText.get_selected_text(obj)
         tokens = ["SCRIPT UTILITIES: New selection for", obj, f"is '{string}' ({start}, {end})"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         textSelections[hash(obj)] = start, end, string
         self._script.point_of_reference['textSelections'] = textSelections
 
@@ -2326,7 +2326,7 @@ class Utilities:
 
         if time.time() - Utilities._last_clipboard_update < 0.05:
             msg = "SCRIPT UTILITIES: Clipboard contents change believed to be duplicate"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         Utilities._last_clipboard_update = time.time()
@@ -2386,7 +2386,7 @@ class Utilities:
            or AXUtilities.is_spin_button(event.source) \
            or AXUtilities.is_label(event.source):
             msg = "SCRIPT UTILITIES: Event is not being presented due to role"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_focused(event.source):
@@ -2398,7 +2398,7 @@ class Utilities:
                 return True
         elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
             msg = "SCRIPT UTILITIES: Event is not being presented due to role and states"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if focus_manager.get_manager().get_locus_of_focus() in \
@@ -2406,7 +2406,7 @@ class Utilities:
             return True
 
         msg = "SCRIPT UTILITIES: Event is not being presented due to lack of cause"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
     def isBackSpaceCommandTextDeletionEvent(self, event):
@@ -2479,7 +2479,7 @@ class Utilities:
            and event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "SCRIPT UTILITIES: Not echoable text insertion event: " \
                  "focusable source is not focused"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_password_text(event.source):
@@ -2632,7 +2632,7 @@ class Utilities:
                 return False
 
             msg = f"SCRIPT UTILITIES: All {childCount} children believed to be selected"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return AXTable.all_cells_are_selected(obj)
@@ -2735,38 +2735,38 @@ class Utilities:
         msg = "SCRIPT UTILITIES: Not interrupting for locusOfFocus change: "
         if event is None:
             msg += "event is None"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if event is not None and event.type.startswith("object:active-descendant-changed"):
             msg += "event is active-descendant-changed"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXUtilities.is_table_cell(old_focus) and AXUtilities.is_text(new_focus) \
            and AXUtilities.is_editable(new_focus):
             msg += "suspected editable cell"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if not AXUtilities.is_menu_related(new_focus) \
            and (AXUtilities.is_check_menu_item(old_focus) \
                 or AXUtilities.is_radio_menu_item(old_focus)):
             msg += "suspected menuitem state change"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if AXObject.is_ancestor(new_focus, old_focus):
             if AXObject.get_name(old_focus):
                 msg += "old locusOfFocus is ancestor with name of new locusOfFocus"
-                debug.printMessage(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
             return True
 
         if AXUtilities.object_is_controlled_by(old_focus, new_focus) \
            or AXUtilities.object_is_controlled_by(new_focus, old_focus):
             msg += "new locusOfFocus and old locusOfFocus have controls relation"
-            debug.printMessage(debug.LEVEL_INFO, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         return True
@@ -2783,5 +2783,5 @@ class Utilities:
             f"SCRIPT UTILITIES: Similarity between '{str1}', '{str2}': {similarity} "
             f"(threshold: {threshold})"
         )
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return similarity >= threshold

@@ -65,7 +65,7 @@ class TableNavigator:
 
         if refresh:
             msg = "TABLE NAVIGATOR: Refreshing bindings."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -77,7 +77,7 @@ class TableNavigator:
 
         if refresh:
             msg = "TABLE NAVIGATOR: Refreshing handlers."
-            debug.printMessage(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_handlers()
 
         return self._handlers
@@ -98,7 +98,7 @@ class TableNavigator:
             string = "None"
 
         msg = f"TABLE NAVIGATOR: Last navigation event ({string}) was last key event: {result}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     def _setup_bindings(self):
@@ -246,7 +246,7 @@ class TableNavigator:
             self._handlers, self._bindings, False)
 
         msg = f"TABLE NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_handlers(self):
         """Sets up the table-navigator input event handlers."""
@@ -344,7 +344,7 @@ class TableNavigator:
                 enabled = self._enabled and not self._suspended)
 
         msg = f"TABLE NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def refresh_bindings_and_grabs(self, script, reason=""):
         """Refreshes table navigation bindings and grabs for script."""
@@ -352,7 +352,7 @@ class TableNavigator:
         msg = "TABLE NAVIGATOR: Refreshing bindings and grabs"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         for binding in self._bindings.key_bindings:
             script.key_bindings.remove(binding, include_grabs=True)
@@ -386,7 +386,7 @@ class TableNavigator:
         msg = f"TABLE NAVIGATOR: Suspended: {suspended}"
         if reason:
             msg += f": {reason}"
-        debug.printMessage(debug.LEVEL_INFO, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
@@ -395,29 +395,29 @@ class TableNavigator:
 
         if AXUtilities.is_focusable(obj):
             tokens = ["TABLE NAVIGATOR:", obj, "is not blank: it is focusable"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXObject.get_name(obj):
             tokens = ["TABLE NAVIGATOR:", obj, "is not blank: it has a name"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         if AXObject.get_child_count(obj):
             for child in AXObject.iter_children(obj):
                 if not self._is_blank(child):
                     tokens = ["TABLE NAVIGATOR:", obj, "is not blank:", child, "is not blank"]
-                    debug.printTokens(debug.LEVEL_INFO, tokens, True)
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     return False
             return True
 
         if not AXText.is_whitespace_or_empty(obj):
             tokens = ["TABLE NAVIGATOR:", obj, "is not blank: it has text"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         tokens = ["TABLE NAVIGATOR: Treating", obj, "as blank"]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     def _get_current_cell(self):
@@ -439,7 +439,7 @@ class TableNavigator:
             cell = AXObject.find_ancestor(cell, AXUtilities.is_table_cell_or_header)
 
         tokens = ["TABLE NAVIGATOR: Current cell is", cell]
-        debug.printTokens(debug.LEVEL_INFO, tokens, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return cell
 
     def _get_cell_coordinates(self, cell):
@@ -729,7 +729,7 @@ class TableNavigator:
 
         if not AXUtilities.is_table_cell_or_header(cell):
             tokens = ["TABLE NAVIGATOR: ", cell, f"(row {row}, column {col}) is not cell or header"]
-            debug.printTokens(debug.LEVEL_INFO, tokens, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         self._previous_reported_row = row
