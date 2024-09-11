@@ -42,6 +42,7 @@ from . import settings_manager
 from . import speech
 from .ax_hypertext import AXHypertext
 from .ax_table import AXTable
+from .ax_utilities import AXUtilities
 
 class SpeechAndVerbosityManager:
     """Configures speech and verbosity settings and adjusts strings accordingly."""
@@ -583,7 +584,7 @@ class SpeechAndVerbosityManager:
                 word = " ".join(list(word))
             return word
 
-        if not settings.speakNumbersAsDigits:
+        if not (settings.speakNumbersAsDigits or AXUtilities.is_text_input_telephone(obj)):
             return string
 
         return "".join(map(_convert, string.split()))
