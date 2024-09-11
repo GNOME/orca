@@ -1598,13 +1598,6 @@ class Utilities:
 
         return result
 
-    @staticmethod
-    def _convertWordToDigits(word):
-        if not word.isnumeric():
-            return word
-
-        return ' '.join(list(word))
-
     def adjustForPronunciation(self, line):
         """Adjust the line to replace words in the pronunciation dictionary,
         with what those words actually sound like.
@@ -1624,10 +1617,6 @@ class Utilities:
 
         if self.speakMathSymbolNames():
             line = mathsymbols.adjustForSpeech(line)
-
-        if settings.speakNumbersAsDigits:
-            words = self.WORDS_RE.split(line)
-            line = ''.join(map(self._convertWordToDigits, words))
 
         if len(line) == 1 and not self._script.inSayAll() and self.isInMath():
             charname = mathsymbols.getCharacterName(line)

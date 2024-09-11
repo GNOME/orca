@@ -575,6 +575,20 @@ class SpeechAndVerbosityManager:
         return True
 
     @staticmethod
+    def adjust_for_digits(obj, string):
+        """Adjusts string to present numbers as digits."""
+
+        def _convert(word):
+            if word.isnumeric():
+                word = " ".join(list(word))
+            return word
+
+        if not settings.speakNumbersAsDigits:
+            return string
+
+        return "".join(map(_convert, string.split()))
+
+    @staticmethod
     def adjust_for_links(obj, line, start_offset):
         """Adjust line to include the word "link" after any hypertext links."""
 

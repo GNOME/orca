@@ -2054,6 +2054,7 @@ class SpeechGenerator(generator.Generator):
             # TODO - JD: Can we combine all the adjusting?
             manager = speech_and_verbosity_manager.get_manager()
             string = manager.adjust_for_links(obj, string, start)
+            string = manager.adjust_for_digits(obj, string)
             rv = [manager.adjust_for_repeats(string)]
             rv.extend(voice)
 

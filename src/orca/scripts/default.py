@@ -1581,6 +1581,7 @@ class Script(script.Script):
         else:
             voice = self.speech_generator.voice(string=string)
             manager = speech_and_verbosity_manager.get_manager()
+            string = manager.adjust_for_digits(event.source, string)
             string = manager.adjust_for_repeats(string)
             self.speakMessage(string, voice)
 
@@ -1649,6 +1650,7 @@ class Script(script.Script):
             else:
                 voice = self.speech_generator.voice(obj=event.source, string=string)
                 manager = speech_and_verbosity_manager.get_manager()
+                string = manager.adjust_for_digits(event.source, string)
                 string = manager.adjust_for_repeats(string)
                 self.speakMessage(string, voice)
 
@@ -1938,6 +1940,7 @@ class Script(script.Script):
 
         voice = self.speech_generator.voice(obj=obj, string=sentence)
         manager = speech_and_verbosity_manager.get_manager()
+        sentence = manager.adjust_for_digits(obj, sentence)
         sentence = manager.adjust_for_repeats(sentence)
         self.speakMessage(sentence, voice)
         return True
@@ -1967,6 +1970,7 @@ class Script(script.Script):
 
         voice = self.speech_generator.voice(obj=obj, string=word)
         manager = speech_and_verbosity_manager.get_manager()
+        word = manager.adjust_for_digits(obj, word)
         word = manager.adjust_for_repeats(word)
         self.speakMessage(word, voice)
         return True
@@ -2051,6 +2055,7 @@ class Script(script.Script):
                 # TODO - JD: Can we combine all the adjusting?
                 manager = speech_and_verbosity_manager.get_manager()
                 string = manager.adjust_for_links(obj, string, start)
+                string = manager.adjust_for_digits(obj, string)
                 string = manager.adjust_for_repeats(string)
                 if self.utilities.shouldVerbalizeAllPunctuation(obj):
                     string = self.utilities.verbalizeAllPunctuation(string)
@@ -2094,6 +2099,7 @@ class Script(script.Script):
 
             voice = self.speech_generator.voice(obj=obj, string=phrase)
             manager = speech_and_verbosity_manager.get_manager()
+            phrase = manager.adjust_for_digits(obj, phrase)
             phrase = manager.adjust_for_repeats(phrase)
             if self.utilities.shouldVerbalizeAllPunctuation(obj):
                 phrase = self.utilities.verbalizeAllPunctuation(phrase)
@@ -2293,6 +2299,7 @@ class Script(script.Script):
                 # TODO - JD: Can we combine all the adjusting?
                 manager = speech_and_verbosity_manager.get_manager()
                 string = manager.adjust_for_links(obj, string, start)
+                string = manager.adjust_for_digits(obj, string)
                 string = manager.adjust_for_repeats(string)
 
                 context = speechserver.SayAllContext(obj, string, start, end)
