@@ -922,6 +922,11 @@ class Script(default.Script):
             super().presentObject(obj, **args)
             return
 
+        mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
+        if mode == focus_manager.OBJECT_NAVIGATOR:
+            super().presentObject(obj, **args)
+            return
+
         if AXUtilities.is_status_bar(obj):
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
