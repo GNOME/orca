@@ -354,7 +354,9 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.any_data == focus_manager.get_manager().get_locus_of_focus():
+        manager = focus_manager.get_manager()
+        focus = manager.get_locus_of_focus()
+        if event.any_data == focus:
             return
 
         if event.source == self.spellcheck.getSuggestionsList():
@@ -371,6 +373,16 @@ class Script(default.Script):
            and not AXUtilities.is_focused(event.source) :
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             AXObject.clear_cache(event.source, False, msg)
+
+        if not AXObject.find_ancestor(focus, lambda x: x == event.source):
+            msg = "SOFFICE: Working around LO bug 161444."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            # If we immediately set focus to the table, the lack of common ancestor will result in
+            # the ancestry up to the frame being spoken.
+            manager.set_locus_of_focus(None, AXObject.get_parent(event.source), False)
+            # Now setting focus to the table should cause us to present it. Then we can handle the
+            # presentation of the actual event we're processing without too much chattiness.
+            manager.set_locus_of_focus(event, event.source)
 
         default.Script.on_active_descendant_changed(self, event)
 
