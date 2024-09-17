@@ -1,3 +1,31 @@
+47.0 - 17 September 2024
+
+General:
+
+* Fix several regressions in presentation that resulted from the
+  code cleanup work. Thanks to everyone who tested!
+
+* Don't kill braille flash message in default.process_routing_key()
+
+Web:
+
+* Support aria-disabled on gridcell
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+  bg              Bulgarian                 Alexander Shopov
+  da              Danish                    Alan Mortensen
+  en_GB           British English           Bruce Cowan
+  es              Spanish                   Daniel
+  fa              Persian                   Danial Behzadi
+  fr              French                    Alexandre Franke
+  id              Indonesian                Andika Triwidada
+  pl              Polish                    Piotr Drąg
+  th              Thai                      Aefgh Threenine
+
+=========
+
 47.rc - 2 September 2024
 
 Web:
