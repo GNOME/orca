@@ -2933,7 +2933,9 @@ class Utilities:
         if not (str1 and str2):
             return False
 
-        if str1 in str2 or str2 in str1:
+        if (str1 in str2 and len(str1.split()) > 3) or (str2 in str1 and len(str2.split()) > 3):
+            msg = f"SCRIPT UTILITIES: Treating '{str2}' as redundant to '{str1}'"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
