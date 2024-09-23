@@ -295,7 +295,7 @@ class SpeechGenerator(generator.Generator):
         total = args.get("total", 1)
 
         def use_ancestor_role(x):
-            if not AXUtilities.is_heading(x) or AXUtilities.is_link(x):
+            if not (AXUtilities.is_heading(x) or AXUtilities.is_link(x)):
                 return False
             if AXObject.get_role(x) == role:
                 return False
