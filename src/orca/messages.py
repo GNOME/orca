@@ -355,6 +355,12 @@ CLI_GUI_SETUP = _("Set up user preferences (GUI version)")
 # from the command line and the help text is displayed.
 CLI_EPILOG = _("Report bugs on https://gitlab.gnome.org/GNOME/orca/-/issues.")
 
+# Translators: Orca has a command to present the contents of the clipboard without
+# the user having to switch to a clipboard manager. This message is spoken by Orca
+# before speaking the text which is in the clipboard. The string substitution is
+# for the clipboard contents.
+CLIPBOARD_CONTAINS = _("Clipboard contains: %s")
+
 # Translators: Orca normal speaks the text which was just deleted from a
 # document via command. Depending on the circumstances, that might be a
 # large string. Therefore, if the text which has just been deleted from a

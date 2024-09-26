@@ -264,6 +264,11 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_NOTIFICATIONS] = bound
             items += len(bound)
 
+            bound = script.get_clipboard_presenter().get_bindings(
+                is_desktop=is_desktop).get_bound_bindings()
+            bindings[guilabels.KB_GROUP_CLIPBOARD] = bound
+            items += len(bound)
+
             bound = script.get_bookmarks().get_bindings(
                 is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_BOOKMARKS] = bound

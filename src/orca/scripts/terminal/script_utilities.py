@@ -58,7 +58,7 @@ class Utilities(script_utilities.Utilities):
         if self.isAutoTextEvent(event):
             return event.any_data
 
-        if self.isClipboardTextChangedEvent(event):
+        if self._script.get_clipboard_presenter().is_clipboard_text_changed_event(event):
             return event.any_data
 
         start, end = event.detail1, event.detail1 + len(event.any_data)

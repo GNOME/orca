@@ -173,6 +173,7 @@ class Script(script.Script):
                 Script.cycle_settings_profile,
                 cmdnames.CYCLE_SETTINGS_PROFILE)
 
+        self.input_event_handlers.update(self.get_clipboard_presenter().get_handlers())
         self.input_event_handlers.update(self.get_notification_presenter().get_handlers())
         self.input_event_handlers.update(self.get_flat_review_finder().get_handlers())
         self.input_event_handlers.update(self.get_flat_review_presenter().get_handlers())
@@ -323,6 +324,11 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.get_notification_presenter().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.get_clipboard_presenter().get_bindings(
             refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
@@ -590,12 +596,14 @@ class Script(script.Script):
         self.add_key_grabs("refreshing")
 
     def register_event_listeners(self):
+        """Registers for listeners needed by this script."""
+
         event_manager.get_manager().register_script_listeners(self)
-        self.utilities.connectToClipboard()
 
     def deregister_event_listeners(self):
+        """De-registers the listeners needed by this script."""
+
         event_manager.get_manager().deregister_script_listeners(self)
-        self.utilities.disconnectFromClipboard()
 
     def _save_focused_object_info(self, obj):
         """Saves some basic information about obj. Note that this method is
@@ -938,7 +946,7 @@ class Script(script.Script):
 
         AXText.set_selected_text(obj, startOffset, endOffset)
         text = AXText.get_selected_text(obj)[0]
-        self.utilities.setClipboardText(text)
+        self.get_clipboard_presenter().set_text(text)
         return True
 
     def route_pointer_to_item(self, event=None):
@@ -1548,18 +1556,10 @@ class Script(script.Script):
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         self.update_braille(event.source)
 
-        full, brief = "", ""
-        if self.utilities.isClipboardTextChangedEvent(event):
-            msg = "DEFAULT: Deletion is believed to be due to clipboard cut"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            full, brief = messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF
-        elif self.utilities.isSelectedTextDeletionEvent(event):
+        if self.utilities.isSelectedTextDeletionEvent(event):
             msg = "DEFAULT: Deletion is believed to be due to deleting selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            full = messages.SELECTION_DELETED
-
-        if full or brief:
-            self.presentMessage(full, brief)
+            self.presentMessage(messages.SELECTION_DELETED)
             self.utilities.updateCachedTextSelection(event.source)
             return
 
@@ -1600,11 +1600,7 @@ class Script(script.Script):
         self.update_braille(event.source)
 
         full, brief = "", ""
-        if self.utilities.isClipboardTextChangedEvent(event):
-            msg = "DEFAULT: Insertion is believed to be due to clipboard paste"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            full, brief = messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
-        elif self.utilities.isSelectedTextRestoredEvent(event):
+        if self.utilities.isSelectedTextRestoredEvent(event):
             msg = "DEFAULT: Insertion is believed to be due to restoring selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             full = messages.SELECTION_RESTORED
@@ -1622,6 +1618,10 @@ class Script(script.Script):
         manager = input_event_manager.get_manager()
         if manager.last_event_was_page_switch():
             msg = "DEFAULT: Insertion is believed to be due to page switch"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            speakString = False
+        elif manager.last_event_was_paste():
+            msg = "DEFAULT: Insertion is believed to be due to paste"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             speakString = False
         elif manager.last_event_was_command():
@@ -1777,29 +1777,6 @@ class Script(script.Script):
 
         focus_manager.get_manager().clear_state("Window deactivated")
         script_manager.get_manager().set_active_script(None, "Window deactivated")
-
-    def onClipboardContentsChanged(self, *args):
-        if self.get_flat_review_presenter().is_active():
-            return
-
-        if not self.utilities.objectContentsAreInClipboard():
-            return
-
-        if not self.utilities.topLevelObjectIsActiveAndCurrent():
-            return
-
-        manager = input_event_manager.get_manager()
-        if manager.last_event_was_copy():
-            self.presentMessage(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
-            return
-
-        if not manager.last_event_was_cut():
-            return
-
-        if AXUtilities.is_editable(focus_manager.get_manager().get_locus_of_focus()):
-            return
-
-        self.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
 
     ########################################################################
     #                                                                      #

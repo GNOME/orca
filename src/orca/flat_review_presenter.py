@@ -1056,7 +1056,7 @@ class FlatReviewPresenter:
             script.presentMessage(messages.FLAT_REVIEW_NOT_IN)
             return True
 
-        script.utilities.setClipboardText(self._current_contents.rstrip("\n"))
+        script.get_clipboard_presenter().set_text(self._current_contents.rstrip("\n"))
         script.presentMessage(messages.FLAT_REVIEW_COPIED)
         return True
 
@@ -1067,7 +1067,7 @@ class FlatReviewPresenter:
             script.presentMessage(messages.FLAT_REVIEW_NOT_IN)
             return True
 
-        script.utilities.appendTextToClipboard(self._current_contents.rstrip("\n"))
+        script.get_clipboard_presenter().append_text(self._current_contents.rstrip("\n"))
         script.presentMessage(messages.FLAT_REVIEW_APPENDED)
         return True
 

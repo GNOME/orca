@@ -47,6 +47,7 @@ from . import ax_event_synthesizer
 from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
+from . import clipboard
 from . import debug
 from . import debugging_tools_manager
 from . import flat_review_finder
@@ -167,6 +168,11 @@ class Script:
         """Returns the caret navigation support for this script."""
 
         return None
+
+    def get_clipboard_presenter(self):
+        """Returns the clipboard presenter for this script."""
+
+        return clipboard.get_presenter()
 
     def get_debugging_tools_manager(self):
         """Returns the debugging tools manager for this script."""

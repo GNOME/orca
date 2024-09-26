@@ -2187,6 +2187,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
         iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
         iterNotificationPresenter = self._createNode(guilabels.KB_GROUP_NOTIFICATIONS)
+        iterClipboardPresenter = self._createNode(guilabels.KB_GROUP_CLIPBOARD)
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
         iterFind = self._createNode(guilabels.KB_GROUP_FIND)
         iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
@@ -2210,6 +2211,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             allKeyBindings = self.script.get_key_bindings(False)
             defKeyBindings = self.script.getDefaultKeyBindings()
             npKeyBindings = self.script.get_notification_presenter().get_bindings(
+                is_desktop=isDesktop)
+            cbKeyBindings = self.script.get_clipboard_presenter().get_bindings(
                 is_desktop=isDesktop)
             svKeyBindings = self.script.get_speech_and_verbosity_manager().get_bindings(
                 is_desktop=isDesktop)
@@ -2243,6 +2246,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                     handl = self._get_input_event_handler_key(kb.handler)
                     if npKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterNotificationPresenter)
+                    elif cbKeyBindings.has_key_binding(kb, "description"):
+                        self._insertRow(handl, kb, iterClipboardPresenter)
                     elif onKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterObjectNav)
                     elif tnKeyBindings.has_key_binding(kb, "description"):

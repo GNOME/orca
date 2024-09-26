@@ -48,6 +48,7 @@ except Exception:
     a11yAppSettings = None
 
 from . import braille
+from . import clipboard
 from . import debug
 from . import event_manager
 from . import focus_manager
@@ -177,8 +178,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     # Handle the case where a change was made in the Orca Preferences dialog.
     orca_modifier_manager.get_manager().refresh_orca_modifiers("Loading user settings.")
     event_manager.get_manager().pause_queuing(False, False, "User settings loaded.")
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
-
+    debug.print_message(debug.LEVEL_INFO, "ORCA: User Settings Loaded", True)
     return True
 
 # If True, this module has been initialized.
@@ -326,6 +326,7 @@ def shutdown(script=None, inputEvent=None):
     event_manager.get_manager().pause_queuing(True, True, "Shutting down.")
     script_manager.get_manager().deactivate()
     event_manager.get_manager().deactivate()
+    clipboard.get_presenter().deactivate()
 
     # Shutdown all the other support.
     #
@@ -475,7 +476,9 @@ def main():
                 AXObject.get_application(focusedObject), focusedObject)
             script_manager.get_manager().set_active_script(script, "Found focused object.")
 
+
     script_manager.get_manager().activate()
+    clipboard.get_presenter().activate()
 
     try:
         msg = "ORCA: Starting ATSPI registry."

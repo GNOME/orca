@@ -76,6 +76,7 @@ lib_sources = [
   'bypass_mode_manager.py',
   'caret_navigation.py',
   'chat.py',
+  'clipboard.py',
   'cmdnames.py',
   'colornames.py',
   'debug.py',

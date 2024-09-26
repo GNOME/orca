@@ -117,18 +117,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        if not obj:
-            return False
-
-        if self.isSpreadSheetCell(obj):
-            contents = self.getClipboardContents()
-            string = AXText.get_all_text(obj) or "\n"
-            return string in contents
-
-        return super().objectContentsAreInClipboard(obj)
-
     #########################################################################
     #                                                                       #
     # Miscellaneous Utilities                                               #

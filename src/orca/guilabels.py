@@ -355,6 +355,10 @@ KB_GROUP_BRAILLE = _("Braille Bindings")
 KB_GROUP_BOOKMARKS = _("Bookmarks")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to the clipboard.
+KB_GROUP_CLIPBOARD = _("Clipboard")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to presenting the date and time.
 KB_GROUP_DATE_AND_TIME = _("Date and time")
 

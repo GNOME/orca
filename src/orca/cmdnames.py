@@ -487,6 +487,11 @@ TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION = \
 # toggling between the two options.
 CHANGE_NUMBER_STYLE = _("Change spoken number style")
 
+# Translators: Orca has a command to present the current clipboard contents to
+# the user without them having to switch to a clipboard manager application. This
+# string is the description of that command.
+CLIPBOARD_PRESENT_CONTENTS = _("Present clipboard contents")
+
 # Translators: Orca allows users to cycle through punctuation levels. None,
 # some, most, or all, punctuation will be spoken.
 CYCLE_PUNCTUATION_LEVEL = _("Cycle to the next speaking of punctuation level")

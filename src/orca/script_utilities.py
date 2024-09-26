@@ -31,15 +31,13 @@ __license__   = "LGPL"
 import gi
 import locale
 import re
-import time
 from difflib import SequenceMatcher
 
 gi.require_version("Atspi", "2.0")
-gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gdk
 from gi.repository import Gtk
+
 
 from . import colornames
 from . import debug
@@ -65,9 +63,6 @@ from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
 class Utilities:
-
-    _last_clipboard_update = time.time()
-
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     ZERO_WIDTH_NO_BREAK_SPACE = '\ufeff'
     flags = re.UNICODE
@@ -82,7 +77,6 @@ class Utilities:
         """
 
         self._script = script
-        self._clipboardHandlerId = None
         self._selectedMenuBarMenu = {}
 
     #########################################################################
@@ -1742,7 +1736,6 @@ class Utilities:
         """Turns a key sequence into a user-presentable label."""
 
         try:
-            from gi.repository import Gtk
             key, mods = Gtk.accelerator_parse(sequence)
             newSequence = Gtk.accelerator_get_label(key, mods)
             if newSequence and \
@@ -2307,52 +2300,6 @@ class Utilities:
         textSelections[hash(obj)] = start, end, string
         self._script.point_of_reference['textSelections'] = textSelections
 
-    @staticmethod
-    def onClipboardContentsChanged(*args):
-        script = script_manager.get_manager().get_active_script()
-        if script is None:
-            return
-
-        if time.time() - Utilities._last_clipboard_update < 0.05:
-            msg = "SCRIPT UTILITIES: Clipboard contents change believed to be duplicate"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        Utilities._last_clipboard_update = time.time()
-        script.onClipboardContentsChanged(*args)
-
-    def connectToClipboard(self):
-        if self._clipboardHandlerId is not None:
-            return
-
-        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        self._clipboardHandlerId = clipboard.connect(
-            'owner-change', self.onClipboardContentsChanged)
-
-    def disconnectFromClipboard(self):
-        if self._clipboardHandlerId is None:
-            return
-
-        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        clipboard.disconnect(self._clipboardHandlerId)
-
-    def getClipboardContents(self):
-        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        return clipboard.wait_for_text()
-
-    def setClipboardText(self, text):
-        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        clipboard.set_text(text, -1)
-
-    def appendTextToClipboard(self, text):
-        clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
-        clipboard.request_text(self._appendTextToClipboardCallback, text)
-
-    def _appendTextToClipboardCallback(self, clipboard, text, newText, separator="\n"):
-        text = text.rstrip("\n")
-        text = f"{text}{separator}{newText}"
-        clipboard.set_text(text, -1)
-
     def isPresentableExpandedChangedEvent(self, event):
         if event.source == focus_manager.get_manager().get_locus_of_focus():
             return True
@@ -2430,7 +2377,8 @@ class Utilities:
         if not event.type.startswith("object:text-changed:delete"):
             return False
 
-        if input_event_manager.get_manager().last_event_was_paste():
+        manager = input_event_manager.get_manager()
+        if manager.last_event_was_paste() or manager.last_event_was_cut():
             return False
 
         start, end, string = self.getCachedTextSelection(event.source)
@@ -2483,58 +2431,6 @@ class Utilities:
         if not self.isTextArea(obj):
             return False
         return AXUtilities.is_editable(obj)
-
-    def isClipboardTextChangedEvent(self, event):
-        if not event.type.startswith("object:text-changed"):
-            return False
-
-        manager = input_event_manager.get_manager()
-        if not manager.last_event_was_command() or manager.last_event_was_undo():
-            return False
-
-        if self.isBackSpaceCommandTextDeletionEvent(event):
-            return False
-
-        if "delete" in event.type and input_event_manager.get_manager().last_event_was_paste():
-            return False
-
-        if not self.isEditableTextArea(event.source):
-            return False
-
-        contents = self.getClipboardContents()
-        if not contents:
-            return False
-        if event.any_data == contents:
-            return True
-        if bool(re.search(r"\w", event.any_data)) != bool(re.search(r"\w", contents)):
-            return False
-
-        # HACK: If the application treats each paragraph as a separate object,
-        # we'll get individual events for each paragraph rather than a single
-        # event whose any_data matches the clipboard contents.
-        if "\n" in contents and event.any_data.rstrip() in contents:
-            return True
-
-        return False
-
-    def objectContentsAreInClipboard(self, obj=None):
-        obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        if not obj or AXObject.is_dead(obj):
-            return False
-
-        contents = self.getClipboardContents()
-        if not contents:
-            return False
-
-        string, start, end = AXText.get_selected_text(obj)
-        if string and string in contents:
-            return True
-
-        obj = self.realActiveDescendant(obj) or obj
-        if AXObject.is_dead(obj):
-            return False
-
-        return obj and AXObject.get_name(obj) in contents
 
     def clearCachedCommandState(self):
         self._script.point_of_reference['undo'] = False
@@ -2646,6 +2542,9 @@ class Utilities:
         # is added to ATK and implemented by the toolkits. (BGO 638378)
 
         if not AXObject.supports_text(obj):
+            return False
+
+        if input_event_manager.get_manager().last_event_was_cut():
             return False
 
         oldStart, oldEnd, oldString = self.getCachedTextSelection(obj)
