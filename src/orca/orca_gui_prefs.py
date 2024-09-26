@@ -2185,7 +2185,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         appName = AXObject.get_name(self.script.app)
         iterApp = self._createNode(appName)
         iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
-        iterUnbound = self._createNode(guilabels.KB_GROUP_UNBOUND)
         iterNotificationPresenter = self._createNode(guilabels.KB_GROUP_NOTIFICATIONS)
         iterClipboardPresenter = self._createNode(guilabels.KB_GROUP_CLIPBOARD)
         iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
@@ -2276,17 +2275,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterDebuggingTools)
                     elif not defKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
-                    elif kb.keysymstring:
-                        self._insertRow(handl, kb, iterOrca)
                     else:
-                        self._insertRow(handl, kb, iterUnbound)
+                        self._insertRow(handl, kb, iterOrca)
                     self.kbindings.add(kb)
 
         if not self.keyBindingsModel.iter_has_child(iterApp):
             self.keyBindingsModel.remove(iterApp)
-
-        if not self.keyBindingsModel.iter_has_child(iterUnbound):
-            self.keyBindingsModel.remove(iterUnbound)
 
         self._updateOrcaModifier()
         self._markModified()

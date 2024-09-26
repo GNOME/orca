@@ -404,10 +404,6 @@ KB_GROUP_TABLE_NAVIGATION = _("Table navigation")
 KB_GROUP_WHERE_AM_I = _("Object details")
 
 # Translators: This string is a label for the group of Orca commands which
-# do not currently have an associated key binding.
-KB_GROUP_UNBOUND = _("Unbound")
-
-# Translators: This string is a label for the group of Orca commands which
 # are related to Orca's "flat review" feature. This feature allows the blind
 # user to explore the text in a window in a 2D fashion. That is, Orca treats
 # all the text from all objects in a window (e.g., buttons, labels, etc.) as
