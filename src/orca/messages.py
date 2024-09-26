@@ -2589,6 +2589,10 @@ def cellSpan(rowspan, colspan):
 
     return spanString
 
+def characterCount(count):
+    # Translators: This message describes the number of characters in a string.
+    return ngettext("%d characters", "%d characters", count) % count
+
 def selectedCharacterCount(count):
     # Translators: This message describes the number of characters that were just
     # selected in a body of text.
