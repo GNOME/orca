@@ -456,6 +456,7 @@ def main():
     except Exception:
         debug.print_exception(debug.LEVEL_SEVERE)
 
+    event_manager.get_manager().activate()
     window = focus_manager.get_manager().find_active_window()
     if window and not focus_manager.get_manager().get_locus_of_focus():
         app = AXObject.get_application(window)
@@ -474,7 +475,6 @@ def main():
                 AXObject.get_application(focusedObject), focusedObject)
             script_manager.get_manager().set_active_script(script, "Found focused object.")
 
-    event_manager.get_manager().activate()
     script_manager.get_manager().activate()
 
     try:
