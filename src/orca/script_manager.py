@@ -59,7 +59,11 @@ class ScriptManager:
     def activate(self):
         """Called when this script manager is activated."""
 
-        debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Activating", True)
+        debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Activating", True, True)
+        if self._active:
+            debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Already activated", True)
+            return
+
         self._default_script = self.get_script(None)
         self._default_script.register_event_listeners()
         self.set_active_script(self._default_script, "activate")
@@ -69,7 +73,11 @@ class ScriptManager:
     def deactivate(self):
         """Called when this script manager is deactivated."""
 
-        debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivating", True)
+        debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivating", True, True)
+        if not self._active:
+            debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Already deactivated", True)
+            return
+
         if self._default_script:
             self._default_script.deregister_event_listeners()
         self._default_script = None

@@ -113,8 +113,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     speech.shutdown()
     braille.shutdown()
 
-    script_manager.get_manager().deactivate()
-
+    event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
     reloaded = False
     if _userSettings:
         _profile = settings_manager.get_manager().get_setting('activeProfile')[1]
@@ -177,10 +176,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     # Handle the case where a change was made in the Orca Preferences dialog.
     orca_modifier_manager.get_manager().refresh_orca_modifiers("Loading user settings.")
-
-    event_manager.get_manager().activate()
-    script_manager.get_manager().activate()
-
+    event_manager.get_manager().pause_queuing(False, False, "User settings loaded.")
     debug.print_message(debug.LEVEL_INFO, 'ORCA: User Settings Loaded', True)
 
     return True
@@ -451,8 +447,6 @@ def main():
         settings_manager.get_manager().set_accessibility(True)
 
     debug.print_message(debug.LEVEL_INFO, "ORCA: Initializing.", True)
-    event_manager.get_manager().pause_queuing(True, True, "Initialization not complete.")
-
     init()
     debug.print_message(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
@@ -480,7 +474,8 @@ def main():
                 AXObject.get_application(focusedObject), focusedObject)
             script_manager.get_manager().set_active_script(script, "Found focused object.")
 
-    event_manager.get_manager().pause_queuing(False, False, "Initialization complete.")
+    event_manager.get_manager().activate()
+    script_manager.get_manager().activate()
 
     try:
         msg = "ORCA: Starting ATSPI registry."

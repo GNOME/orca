@@ -72,7 +72,11 @@ class EventManager:
     def activate(self):
         """Called when this event manager is activated."""
 
-        debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Activating', True)
+        debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Activating", True, True)
+        if self._active:
+            debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Already activated", True)
+            return
+
         input_event_manager.get_manager().start_key_watcher()
         self._active = True
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
@@ -80,7 +84,11 @@ class EventManager:
     def deactivate(self):
         """Called when this event manager is deactivated."""
 
-        debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivating', True)
+        debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Deactivating", True, True)
+        if not self._active:
+            debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Already deactivated", True)
+            return
+
         input_event_manager.get_manager().stop_key_watcher()
         self._active = False
         self._event_queue = queue.Queue(0)
