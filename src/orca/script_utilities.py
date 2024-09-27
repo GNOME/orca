@@ -2626,7 +2626,7 @@ class Utilities:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event is not None and event.type.startswith("object:active-descendant-changed"):
+        if event.type.startswith("object:active-descendant-changed"):
             msg += "event is active-descendant-changed"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -2647,6 +2647,10 @@ class Utilities:
         if AXObject.is_ancestor(new_focus, old_focus):
             if AXObject.get_name(old_focus):
                 msg += "old locusOfFocus is ancestor with name of new locusOfFocus"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            if AXUtilities.is_dialog_or_window(old_focus):
+                msg += "old locusOfFocus is ancestor dialog or window of the new locusOfFocus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
             return True
