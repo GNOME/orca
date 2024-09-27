@@ -113,7 +113,15 @@ class EventManager:
     def _get_priority(self, event):
         """Returns the priority associated with event."""
 
-        priority = EventManager.PRIORITY_NORMAL
+        event_type = event.type
+        if event_type.startswith("window"):
+            priority = EventManager.PRIORITY_IMPORTANT
+        elif event_type == "object:state-changed:active" and \
+            (AXUtilities.is_frame(event.source) or AXUtilities.is_dialog_or_alert(event.source)):
+            priority = EventManager.PRIORITY_IMPORTANT
+        else:
+            priority = EventManager.PRIORITY_NORMAL
+
         tokens = ["EVENT MANAGER:", event, f"has priority level: {priority}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return priority
