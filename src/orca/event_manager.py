@@ -57,12 +57,18 @@ from .ax_utilities_debugging import AXUtilitiesDebugging
 class EventManager:
     """Manager for accessible object events."""
 
+    PRIORITY_IMMEDIATE = 1
+    PRIORITY_IMPORTANT = 2
+    PRIORITY_HIGH = 3
+    PRIORITY_NORMAL = 4
+    PRIORITY_LOW = 5
+
     def __init__(self):
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
         self._script_listener_counts = {}
         self._active = False
         self._paused = False
-        self._event_queue     = queue.Queue(0)
+        self._event_queue     = queue.PriorityQueue(0)
         self._gidle_id        = 0
         self._gidle_lock      = threading.Lock()
         self._listener = Atspi.EventListener.new(self._enqueue_object_event)
@@ -91,7 +97,7 @@ class EventManager:
 
         input_event_manager.get_manager().stop_key_watcher()
         self._active = False
-        self._event_queue = queue.Queue(0)
+        self._event_queue = queue.PriorityQueue(0)
         self._script_listener_counts = {}
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
@@ -102,7 +108,15 @@ class EventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._paused = pause
         if clear_queue:
-            self._event_queue = queue.Queue(0)
+            self._event_queue = queue.PriorityQueue(0)
+
+    def _get_priority(self, event):
+        """Returns the priority associated with event."""
+
+        priority = EventManager.PRIORITY_NORMAL
+        tokens = ["EVENT MANAGER:", event, f"has priority level: {priority}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return priority
 
     def _is_obsoleted_by(self, event):
         """Returns the event which renders this one no longer worthy of being processed."""
@@ -163,7 +177,7 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 events = []
 
-        for e in events:
+        for _priority, e in events:
             if e == event:
                 return None
             if is_same(e):
@@ -403,7 +417,8 @@ class EventManager:
         script.event_cache[e.type] = (e, time.time())
 
         with self._gidle_lock:
-            self._event_queue.put(e)
+            priority = self._get_priority(e)
+            self._event_queue.put((priority, e))
             if not self._gidle_id:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
 
@@ -423,18 +438,18 @@ class EventManager:
 
         rerun = True
         try:
-            event = self._event_queue.get_nowait()
+            priority, event = self._event_queue.get_nowait()
             self._queue_println(event, is_enqueue=False)
             start_time = time.time()
             msg = (
-                f"\nvvvvv PROCESS OBJECT EVENT {event.type} "
+                f"\nvvvvv START PRIORITY-{priority} OBJECT EVENT {event.type.upper()} "
                 f"(queue size: {self._event_queue.qsize()}) vvvvv"
             )
             debug.print_message(debug.LEVEL_INFO, msg, False)
             self._process_object_event(event)
             msg = (
                 f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-                f"\n^^^^^ PROCESS OBJECT EVENT {event.type} ^^^^^\n"
+                f"\n^^^^^ FINISHED PRIORITY-{priority} OBJECT EVENT {event.type.upper()} ^^^^^\n"
             )
             debug.print_message(debug.LEVEL_INFO, msg, False)
             with self._gidle_lock:
