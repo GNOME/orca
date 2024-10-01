@@ -305,7 +305,7 @@ class LearnModePresenter:
         uri = "help:orca"
         if page:
             uri += f"/{page}"
-        Gtk.show_uri(Gdk.Screen.get_default(), time.time())
+        Gtk.show_uri(Gdk.Screen.get_default(), uri, time.time())
         return True
 
 class CommandListGUI:
