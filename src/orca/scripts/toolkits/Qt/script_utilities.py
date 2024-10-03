@@ -56,6 +56,7 @@ class Utilities(script_utilities.Utilities):
         if frame or dialog:
             return frame, dialog
 
+        # https://bugreports.qt.io/browse/QTBUG-129656
         tokens = ["QT: Could not find frame or dialog for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         topLevel = self.topLevelObject(obj, True)
