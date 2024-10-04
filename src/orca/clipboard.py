@@ -132,6 +132,11 @@ class _ClipboardManagerFallback(_ClipboardManager):
 
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
         result = clipboard.wait_for_text()
+        if result is None:
+            msg = "FALLBACK: Have handler, but text is None"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
         debug_string = result.replace("\n", "\\n")
         msg = f"FALLBACK: Clipboard contents: {debug_string}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
