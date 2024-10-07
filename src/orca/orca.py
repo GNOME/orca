@@ -33,7 +33,6 @@ import faulthandler
 import gi
 import os
 import signal
-import subprocess
 import sys
 
 gi.require_version("Atspi", "2.0")
@@ -50,6 +49,7 @@ except Exception:
 from . import braille
 from . import clipboard
 from . import debug
+from . import debugging_tools_manager
 from . import event_manager
 from . import focus_manager
 from . import input_event_manager
@@ -64,7 +64,6 @@ from . import settings_manager
 from . import speech
 from . import sound
 from .ax_object import AXObject
-from .ax_utilities import AXUtilities
 
 _logger = logger.getLogger()
 
@@ -264,34 +263,10 @@ def die(exitCode=1):
     shutdown()
     sys.exit(exitCode)
 
-def examineProcesses(force=False):
-    if force:
-        level = debug.LEVEL_SEVERE
-    else:
-        level = debug.LEVEL_INFO
-
-    if level < debug.debugLevel:
-        return
-
-    desktop = AXUtilities.get_desktop()
-    msg = f"Desktop has {AXObject.get_child_count(desktop)} apps:"
-    debug.print_message(level, msg, True)
-    for i, app in enumerate(AXObject.iter_children(desktop)):
-        pid = AXObject.get_process_id(app)
-        name = AXObject.get_name(app) or "[DEAD]"
-        try:
-            cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
-        except Exception as error:
-            cmdline = f"EXCEPTION: {error}"
-        else:
-            cmdline = cmdline.replace("\x00", " ")
-        msg = f"{i+1:3}. {name} (pid: {pid}) {cmdline}"
-        debug.print_message(level, msg, True)
-
 def timeout(signum=None, frame=None):
     msg = 'TIMEOUT: something has hung. Aborting.'
     debug.print_message(debug.LEVEL_SEVERE, msg, True)
-    examineProcesses(force=True)
+    debugging_tools_manager.get_manager().print_running_applications(force=True)
     die(EXIT_CODE_HANG)
 
 def shutdown(script=None, inputEvent=None):
@@ -423,8 +398,7 @@ def main():
     if session:
         msg += f" Session: {session}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    examineProcesses(False)
+    debugging_tools_manager.get_manager().print_running_applications(force=False)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
         faulthandler.enable(file=debug.debugFile, all_threads=True)

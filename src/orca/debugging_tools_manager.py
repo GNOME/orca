@@ -180,7 +180,7 @@ class DebuggingToolsManager:
         old_level = debug.debugLevel
         debug.debugLevel = debug.LEVEL_SEVERE
         debug.print_message(debug.debugLevel, "DEBUGGING SNAPSHOT STARTING", True)
-        self._print_running_applications()
+        self.print_running_applications()
 
         manager = settings_manager.get_manager()
         info = AXUtilitiesDebugging.as_string(manager.get_overridden_settings_for_debugging())
@@ -196,12 +196,20 @@ class DebuggingToolsManager:
         debug.debugLevel = old_level
         return True
 
-    def _print_running_applications(self):
+    def print_running_applications(self, force=False):
         """Prints basic details about the running accessible applications."""
 
+        if force:
+            level = debug.LEVEL_SEVERE
+        else:
+            level = debug.LEVEL_INFO
+
+        if level < debug.debugLevel:
+            return
+
         desktop = AXUtilities.get_desktop()
-        msg = f"Desktop has {AXObject.get_child_count(desktop)} apps:"
-        debug.print_message(debug.debugLevel, msg, True)
+        msg = f"DEBUGGING TOOLS MANAGER: Desktop has {AXObject.get_child_count(desktop)} apps:"
+        debug.print_message(level, msg, True)
         for i, app in enumerate(AXObject.iter_children(desktop)):
             pid = AXObject.get_process_id(app)
             name = AXObject.get_name(app) or "[DEAD]"
@@ -212,7 +220,7 @@ class DebuggingToolsManager:
             else:
                 cmdline = cmdline.replace("\x00", " ")
             msg = f"{i+1:3}. {name} (pid: {pid}) {cmdline}"
-            debug.print_message(debug.debugLevel, msg, True)
+            debug.print_message(level, msg, True)
 
 _manager = DebuggingToolsManager()
 def get_manager():
