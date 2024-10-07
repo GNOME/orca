@@ -48,30 +48,12 @@ from orca import debug
 from orca import messages
 from orca import settings
 from orca import script_manager
-from orca.ax_object import AXObject
-from orca.ax_utilities import AXUtilities
+from orca import debugging_tools_manager
 from orca.orca_platform import version
 
 class ListApps(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
-        desktop = AXUtilities.get_desktop()
-        for app in AXObject.iter_children(desktop):
-            pid = AXObject.get_process_id(app)
-            try:
-                name = Atspi.Accessible.get_name(app) or "(none)"
-            except Exception:
-                name = "[DEAD]"
-
-            try:
-                cmdline = subprocess.getoutput('cat /proc/%s/cmdline' % pid)
-            except Exception:
-                cmdline = '(exception encountered)'
-            else:
-                cmdline = cmdline.replace('\x00', ' ')
-
-            print(time.strftime('%H:%M:%S', time.localtime()),
-                  '  pid: %5s   %-25s  %s' % (pid, name, cmdline))
-
+        debugging_tools_manager.get_manager().print_running_applications(is_command_line=True)
         parser.exit()
 
 class Settings(argparse.Action):

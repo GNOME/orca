@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
 __license__   = "LGPL"
 
 import subprocess
+import time
 
 from . import cmdnames
 from . import debug
@@ -196,20 +197,15 @@ class DebuggingToolsManager:
         debug.debugLevel = old_level
         return True
 
-    def print_running_applications(self, force=False):
-        """Prints basic details about the running accessible applications."""
-
-        if force:
-            level = debug.LEVEL_SEVERE
-        else:
-            level = debug.LEVEL_INFO
-
-        if level < debug.debugLevel:
-            return
+    def _get_running_applications_as_string_iter(self, is_command_line):
+        """Generator providing strings with basic details about the running accessible apps."""
 
         desktop = AXUtilities.get_desktop()
-        msg = f"DEBUGGING TOOLS MANAGER: Desktop has {AXObject.get_child_count(desktop)} apps:"
-        debug.print_message(level, msg, True)
+        msg = f"Desktop has {AXObject.get_child_count(desktop)} apps:"
+        if not is_command_line:
+            msg = f"DEBUGGING TOOLS MANAGER: {msg}"
+        yield msg
+
         for i, app in enumerate(AXObject.iter_children(desktop)):
             pid = AXObject.get_process_id(app)
             name = AXObject.get_name(app) or "[DEAD]"
@@ -219,8 +215,30 @@ class DebuggingToolsManager:
                 cmdline = f"EXCEPTION: {error}"
             else:
                 cmdline = cmdline.replace("\x00", " ")
-            msg = f"{i+1:3}. {name} (pid: {pid}) {cmdline}"
-            debug.print_message(level, msg, True)
+            if is_command_line:
+                prefix = f"{time.strftime('%H:%M:%S', time.localtime()):<12}"
+            else:
+                prefix = f"{i+1:3}."
+
+            msg = f"{prefix} pid: {pid:<10} {name:<25} {cmdline}"
+            yield msg
+
+    def print_running_applications(self, force=False, is_command_line=False):
+        """Prints basic details about the running accessible applications."""
+
+        if force:
+            level = debug.LEVEL_SEVERE
+        else:
+            level = debug.LEVEL_INFO
+
+        if level < debug.debugLevel and not is_command_line:
+            return
+
+        for app_string in self._get_running_applications_as_string_iter(is_command_line):
+            if is_command_line:
+                print(app_string)
+            else:
+                debug.print_message(level, app_string, True)
 
 _manager = DebuggingToolsManager()
 def get_manager():
