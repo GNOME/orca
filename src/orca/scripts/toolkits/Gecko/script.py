@@ -197,6 +197,13 @@ class Script(web.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return
 
+        # We're sometimes getting a spurious focus claim from the Firefox window after opening
+        # a file from (at least) Caja.
+        if AXUtilities.is_frame(event.source):
+            msg = "GECKO: Ignoring event believed to be noise."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         msg = "GECKO: Passing along event to default script"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         default.Script.on_focused_changed(self, event)
