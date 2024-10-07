@@ -34,6 +34,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011-2024 Igalia, S.L."
 __license__   = "LGPL"
 
+import itertools
 import queue
 import threading
 import time
@@ -68,6 +69,7 @@ class EventManager:
         self._script_listener_counts = {}
         self._active = False
         self._paused = False
+        self._counter = itertools.count()
         self._event_queue     = queue.PriorityQueue(0)
         self._gidle_id        = 0
         self._gidle_lock      = threading.Lock()
@@ -185,7 +187,7 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 events = []
 
-        for _priority, e in events:
+        for _priority, _counter, e in events:
             if e == event:
                 return None
             if is_same(e):
@@ -407,7 +409,7 @@ class EventManager:
         if is_enqueue:
             tokens[0:0] = ["EVENT MANAGER: Queueing"]
         else:
-            tokens[0:0] = ["EVENT MANAGER: Dequeued"]
+            tokens[0:0] = ["EVENT MANAGER: Dequeueing"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _enqueue_object_event(self, e):
@@ -426,7 +428,10 @@ class EventManager:
 
         with self._gidle_lock:
             priority = self._get_priority(e)
-            self._event_queue.put((priority, e))
+            counter = next(self._counter)
+            self._event_queue.put((priority, counter, e))
+            tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority}, counter: {counter}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not self._gidle_id:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
 
@@ -446,8 +451,10 @@ class EventManager:
 
         rerun = True
         try:
-            priority, event = self._event_queue.get_nowait()
+            priority, counter, event = self._event_queue.get_nowait()
             self._queue_println(event, is_enqueue=False)
+            tokens = ["EVENT MANAGER: Dequeued", event, f"priority: {priority}, counter: {counter}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             start_time = time.time()
             msg = (
                 f"\nvvvvv START PRIORITY-{priority} OBJECT EVENT {event.type.upper()} "
