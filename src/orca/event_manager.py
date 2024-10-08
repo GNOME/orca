@@ -258,7 +258,7 @@ class EventManager:
             return False
 
         last_app, last_time = self._event_history.get(event_type, (None, 0))
-        app = AXObject.get_application(event.source)
+        app = AXUtilities.get_application(event.source)
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
         self._event_history[event_type] = hash(app), time.time()
         if ignore:
@@ -283,7 +283,7 @@ class EventManager:
                 msg = f"EVENT MANAGER: Ignoring {event_type} because there is no active script"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
-            if script.app != AXObject.get_application(event.source):
+            if script.app != AXUtilities.get_application(event.source):
                 msg = f"EVENT MANAGER: Ignoring {event_type} because event is not from active app"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
@@ -419,7 +419,7 @@ class EventManager:
             return
 
         self._queue_println(e)
-        app = AXObject.get_application(e.source)
+        app = AXUtilities.get_application(e.source)
         tokens = ["EVENT MANAGER: App for event source is", app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -564,7 +564,7 @@ class EventManager:
             return script
 
         script = None
-        app = AXObject.get_application(event.source)
+        app = AXUtilities.get_application(event.source)
         if AXUtilities.is_defunct(app):
             tokens = ["EVENT MANAGER:", app, "is defunct. Cannot get script for event."]
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
@@ -589,7 +589,7 @@ class EventManager:
             if not script:
                 return False, "There is no script for this event."
 
-        app = AXObject.get_application(event.source)
+        app = AXUtilities.get_application(event.source)
         if app and not AXUtilities.is_application_in_desktop(app):
             return False, "The application is unknown to AT-SPI2"
 

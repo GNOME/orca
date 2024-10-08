@@ -24,15 +24,7 @@
 # pylint: disable=too-many-statements
 # pylint: disable=wrong-import-position
 
-"""
-Utilities for performing tasks related to accessibility inspection.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
-
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for performing tasks related to accessibility inspection."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -42,7 +34,6 @@ __license__   = "LGPL"
 
 import functools
 import inspect
-import subprocess
 import threading
 import time
 
@@ -54,6 +45,7 @@ from . import debug
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
+from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
@@ -104,91 +96,11 @@ class AXUtilities:
 
         AXUtilities._clear_all_dictionaries(reason)
         AXObject.clear_cache_now(reason)
+        AXUtilitiesApplication.clear_cache_now(reason)
         AXUtilitiesRelation.clear_cache_now(reason)
         AXUtilitiesState.clear_cache_now(reason)
         if AXUtilitiesRole.is_table_related(obj):
             AXTable.clear_cache_now(reason)
-
-    @staticmethod
-    def get_desktop():
-        """Returns the accessible desktop"""
-
-        try:
-            desktop = Atspi.get_desktop(0)
-        except Exception as error:
-            tokens = ["ERROR: Exception getting desktop from Atspi:", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        return desktop
-
-    @staticmethod
-    def get_all_applications(must_have_window=False, exclude_unresponsive=True):
-        """Returns a list of running applications known to Atspi."""
-
-        desktop = AXUtilities.get_desktop()
-        if desktop is None:
-            return []
-
-        def pred(obj):
-            if exclude_unresponsive and AXUtilities.is_application_unresponsive(obj):
-                return False
-            if must_have_window:
-                return AXObject.get_child_count(obj) > 0
-            return True
-
-        return list(AXObject.iter_children(desktop, pred))
-
-    @staticmethod
-    def is_application_unresponsive(app):
-        """Returns true if app's process is known to be unresponsive."""
-
-        pid = AXObject.get_process_id(app)
-        try:
-            state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
-            state = state.split()[1]
-        except Exception as error:
-            tokens = [f"AXUtilities: Exception checking state of pid {pid}: {error}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if state == "Z":
-            tokens = [f"AXUtilities: pid {pid} is zombie process"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if state == "T":
-            tokens = [f"AXUtilities: pid {pid} is suspended process"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
-
-    @staticmethod
-    def is_application_in_desktop(app):
-        """Returns true if app is known to Atspi"""
-
-        applications = AXUtilities.get_all_applications()
-        for child in applications:
-            if child == app:
-                return True
-
-        tokens = ["WARNING:", app, "is not in the accessible desktop"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return False
-
-    @staticmethod
-    def get_application_with_pid(pid):
-        """Returns the accessible application with the specified pid"""
-
-        applications = AXUtilities.get_all_applications()
-        for child in applications:
-            if AXObject.get_process_id(child) == pid:
-                return child
-
-        tokens = ["WARNING: app with pid", pid, "is not in the accessible desktop"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return None
 
     @staticmethod
     def get_all_static_text_leaf_nodes(obj):
@@ -308,7 +220,7 @@ class AXUtilities:
             described_by = AXUtilitiesRelation.get_is_described_by(obj)
             if not (name or description or labelled_by or described_by):
                 return True, "lacks name, description, and relations"
-            if name == AXObject.get_name(AXObject.get_application(obj)):
+            if name == AXObject.get_name(AXUtilities.get_application(obj)):
                 return True, "has same name as app"
             if AXObject.get_child_count(obj) == 1:
                 child = AXObject.get_child(obj, 0)
@@ -597,6 +509,9 @@ class AXUtilities:
 
         return AXObject.get_attribute(obj, "explicit-name") == "true"
 
+
+for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)

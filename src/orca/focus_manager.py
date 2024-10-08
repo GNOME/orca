@@ -179,7 +179,7 @@ class FocusManager:
         # TODO - JD: Consider always updating the active script here.
         script = script_manager.get_manager().get_active_script()
         if event and (script and not script.app):
-            app = AXObject.get_application(event.source)
+            app = AXUtilities.get_application(event.source)
             script = script_manager.get_manager().get_script(app, event.source)
             script_manager.get_manager().set_active_script(script, "Setting locus of focus")
 
@@ -244,7 +244,7 @@ class FocusManager:
             return False
 
         AXObject.clear_cache(window, False, "Checking if window can be the active window")
-        app = AXObject.get_application(window)
+        app = AXUtilities.get_application(window)
         tokens = ["FOCUS MANAGER:", window, "from", app]
 
         if not AXUtilities.is_active(window):
@@ -309,7 +309,7 @@ class FocusManager:
                              "whatsapp-desktop-linux"]
         filtered = []
         for frame in candidates:
-            if AXObject.get_name(AXObject.get_application(frame)) in suspect_app_names:
+            if AXObject.get_name(AXUtilities.get_application(frame)) in suspect_app_names:
                 tokens = ["FOCUS MANAGER: Suspecting", frame, "is a non-active Electron app"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             else:
@@ -351,7 +351,7 @@ class FocusManager:
         elif frame is None:
             self._window = None
         else:
-            real_app, real_frame = AXObject.find_real_app_and_window_for(frame, app)
+            real_app, real_frame = AXUtilities.find_real_app_and_window_for(frame, app)
             if real_frame != frame:
                 tokens = ["FOCUS MANAGER: Correcting active window to", real_frame, "in", real_app]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -366,7 +366,7 @@ class FocusManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             self.set_locus_of_focus(None, self._window, notify_script=True)
 
-        app = AXObject.get_application(self._focus)
+        app = AXUtilities.get_application(self._focus)
         script = script_manager.get_manager().get_script(app, self._focus)
         script_manager.get_manager().set_active_script(script, "Setting active window")
 

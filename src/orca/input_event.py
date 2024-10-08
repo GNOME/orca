@@ -51,7 +51,6 @@ from . import messages
 from . import orca_modifier_manager
 from . import script_manager
 from . import settings
-from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 KEYBOARD_EVENT     = "keyboard"
@@ -863,7 +862,7 @@ class MouseButtonEvent(InputEvent):
         if not self.window:
             return
 
-        self.app = AXObject.get_application(self.window)
+        self.app = AXUtilities.get_application(self.window)
 
     def _validate_coordinates(self):
         if not self._pointer:

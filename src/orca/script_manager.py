@@ -188,7 +188,7 @@ class ScriptManager:
         if script:
             return script
 
-        toolkit_name = AXObject.get_application_toolkit_name(app)
+        toolkit_name = AXUtilities.get_application_toolkit_name(app)
         if app and toolkit_name:
             script = self._new_named_script(app, toolkit_name)
 

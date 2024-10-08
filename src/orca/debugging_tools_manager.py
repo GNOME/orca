@@ -162,7 +162,7 @@ class DebuggingToolsManager:
             script.presentMessage(messages.DEBUG_CLEAR_CACHE_FAILED)
             return True
 
-        app = AXObject.get_application(obj)
+        app = AXUtilities.get_application(obj)
         if app is None:
             msg = "DEBUGGING TOOLS MANAGER: Cannot clear cache on null application."
             debug.print_message(debug.debugLevel, msg, True)
@@ -207,7 +207,7 @@ class DebuggingToolsManager:
         yield msg
 
         for i, app in enumerate(applications):
-            pid = AXObject.get_process_id(app)
+            pid = AXUtilities.get_process_id(app)
             if AXUtilities.is_application_unresponsive(app):
                 name = "[UNRESPONSIVE]"
             else:

@@ -480,7 +480,7 @@ class Utilities:
             return False, "Top-level object is not active window"
 
         if verbosity == settings.PROGRESS_BAR_APPLICATION:
-            app = AXObject.get_application(obj)
+            app = AXUtilities.get_application(obj)
             activeApp = script_manager.get_manager().get_active_script_app()
             if app == activeApp:
                 return True, "Verbosity is app"
@@ -1069,7 +1069,7 @@ class Utilities:
         be used to work around broken accessibility trees where topLevelObject
         fails."""
 
-        app = AXObject.get_application(child)
+        app = AXUtilities.get_application(child)
         if app is None:
             return None
 
@@ -1245,7 +1245,7 @@ class Utilities:
         def isDialog(x):
             return AXObject.get_role(x) in roles or self.isFunctionalDialog(x)
 
-        dialogs = [x for x in AXObject.iter_children(AXObject.get_application(obj), isDialog)]
+        dialogs = [x for x in AXObject.iter_children(AXUtilities.get_application(obj), isDialog)]
         dialogs.extend([x for x in AXObject.iter_children(self.topLevelObject(obj), isDialog)])
 
         def isPresentable(x):

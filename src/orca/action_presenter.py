@@ -41,6 +41,7 @@ from . import keybindings
 from . import messages
 from . import script_manager
 from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 
 class ActionPresenter:
@@ -111,7 +112,7 @@ class ActionPresenter:
 
         # TODO - JD: Consider having set_locus_of_focus always update the active script.
         reason = "Action Presenter menu is being destroyed"
-        app = AXObject.get_application(self._obj)
+        app = AXUtilities.get_application(self._obj)
         script = script_manager.get_manager().get_script(app, self._obj)
         script_manager.get_manager().set_active_script(script, reason)
 

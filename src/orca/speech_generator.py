@@ -891,7 +891,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_page_tab(obj):
             return []
 
-        if AXObject.get_application(obj) != AXObject.get_application(prior_obj) \
+        if AXUtilities.get_application(obj) != AXUtilities.get_application(prior_obj) \
            or AXObject.find_ancestor(obj, lambda x: x == prior_obj):
             return []
 

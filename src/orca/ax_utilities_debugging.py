@@ -43,6 +43,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from .ax_object import AXObject
+from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_relation import AXUtilitiesRelation
 
 
@@ -76,7 +77,7 @@ class AXUtilitiesDebugging:
         if isinstance(obj, Atspi.Event):
             return (
                 f"{obj.type} for {AXUtilitiesDebugging.as_string(obj.source)} in "
-                f"{AXUtilitiesDebugging.as_string(AXObject.get_application(obj.source))} "
+                f"{AXUtilitiesApplication.application_as_string(obj.source)} "
                 f"({obj.detail1}, {obj.detail2}, {AXUtilitiesDebugging.as_string(obj.any_data)})"
             )
 
@@ -230,7 +231,7 @@ class AXUtilitiesDebugging:
             return "(exception fetching data)"
 
         if include_app:
-            string = f"{indent}app='{AXObject.application_as_string(obj)}' "
+            string = f"{indent}app='{AXUtilitiesApplication.application_as_string(obj)}' "
         else:
             string = indent
 

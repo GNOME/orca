@@ -429,7 +429,7 @@ class MouseReviewer:
         script = None
         frame = None
         if obj:
-            script = script_manager.get_manager().get_script(AXObject.get_application(obj), obj)
+            script = script_manager.get_manager().get_script(AXUtilities.get_application(obj), obj)
         if script:
             frame = script.utilities.topLevelObject(obj)
         self._current_mouse_over = _ItemContext(obj=obj, frame=frame, script=script)
@@ -590,7 +590,7 @@ class MouseReviewer:
         if not window:
             return
 
-        script = script_manager.get_manager().get_script(AXObject.get_application(window))
+        script = script_manager.get_manager().get_script(AXUtilities.get_application(window))
         if not script:
             return
 
@@ -613,7 +613,7 @@ class MouseReviewer:
             tokens = ["MOUSE REVIEW: Object in", window, f"at ({window_x}, {window_y}) is", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        script = script_manager.get_manager().get_script(AXObject.get_application(window), obj)
+        script = script_manager.get_manager().get_script(AXUtilities.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
             if AXComponent.objects_overlap(obj, menu):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]

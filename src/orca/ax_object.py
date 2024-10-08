@@ -24,15 +24,7 @@
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-public-methods
 
-"""
-Utilities for obtaining information about accessible objects.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
-
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for obtaining information about accessible objects."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -41,7 +33,6 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
-import subprocess
 import threading
 import time
 
@@ -55,10 +46,8 @@ from . import debug
 class AXObject:
     """Utilities for obtaining information about accessible objects."""
 
-    KNOWN_DEAD = {}
-    REAL_APP_FOR_MUTTER_FRAME = {}
-    REAL_FRAME_FOR_MUTTER_FRAME = {}
-    OBJECT_ATTRIBUTES = {}
+    KNOWN_DEAD: dict = {}
+    OBJECT_ATTRIBUTES: dict = {}
 
     _lock = threading.Lock()
 
@@ -78,24 +67,7 @@ class AXObject:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         with AXObject._lock:
-            tokens = ["AXObject: Clearing known dead-or-alive state for",
-                        len(AXObject.KNOWN_DEAD), "objects"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.KNOWN_DEAD.clear()
-
-            tokens = ["AXObject: Clearing", len(AXObject.REAL_APP_FOR_MUTTER_FRAME),
-                        "real apps for mutter frames"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.REAL_APP_FOR_MUTTER_FRAME.clear()
-
-            tokens = ["AXObject: Clearing", len(AXObject.REAL_FRAME_FOR_MUTTER_FRAME),
-                        "real frames for mutter frames"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.REAL_FRAME_FOR_MUTTER_FRAME.clear()
-
-            tokens = ["AXObject: Clearing cached object attributes for",
-                        len(AXObject.OBJECT_ATTRIBUTES), "objects"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.OBJECT_ATTRIBUTES.clear()
 
     @staticmethod
@@ -203,7 +175,14 @@ class AXObject:
         if not AXObject.is_valid(obj):
             return False
 
-        app_name = AXObject.get_name(AXObject.get_application(obj))
+        try:
+            app = Atspi.Accessible.get_application(obj)
+        except Exception as error:
+            msg = f"AXObject: Exception in supports_collection: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        app_name = AXObject.get_name(app)
         if app_name in ["soffice"]:
             tokens = ["AXObject: Treating", app_name, "as not supporting collection."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -948,173 +927,6 @@ class AXObject:
             return False
 
         return AXObject.get_state_set(obj).contains(state)
-
-    @staticmethod
-    def _is_application_unresponsive(app):
-        """Returns true if app's process is known to be unresponsive."""
-
-        # TODO - JD: This duplicates logic in AXUtilities to avoid a circular import.
-        # Create a new utilities class for application-related logic.
-
-        pid = AXObject.get_process_id(app)
-        try:
-            state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
-            state = state.split()[1]
-        except Exception as error:
-            tokens = [f"AXObject: Exception checking state of pid {pid}: {error}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if state == "Z":
-            tokens = [f"AXObject: pid {pid} is zombie process"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if state == "T":
-            tokens = [f"AXObject: pid {pid} is suspended/stopped process"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
-
-    @staticmethod
-    def find_real_app_and_window_for(obj, app=None):
-        """Work around for window events coming from mutter-x11-frames."""
-
-        if app is None:
-            try:
-                app = Atspi.Accessible.get_application(obj)
-            except Exception as error:
-                msg = f"AXObject: Exception getting application of {obj}: {error}"
-                AXObject.handle_error(obj, error, msg)
-                return None, None
-
-        if AXObject.get_name(app) != "mutter-x11-frames":
-            return app, obj
-
-        real_app = AXObject.REAL_APP_FOR_MUTTER_FRAME.get(hash(obj))
-        real_frame = AXObject.REAL_FRAME_FOR_MUTTER_FRAME.get(hash(obj))
-        if real_app is not None and real_frame is not None:
-            return real_app, real_frame
-
-        tokens = ["AXObject:", app, "is not valid app for", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        try:
-            desktop = Atspi.get_desktop(0)
-        except Exception as error:
-            tokens = ["AXObject: Exception getting desktop from Atspi:", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None, None
-
-        unresponsive_apps = []
-        name = AXObject.get_name(obj)
-        for desktop_app in AXObject.iter_children(desktop):
-            if AXObject._is_application_unresponsive(desktop_app):
-                unresponsive_apps.append(desktop_app)
-                continue
-            if AXObject.get_name(desktop_app) == "mutter-x11-frames":
-                continue
-            for frame in AXObject.iter_children(desktop_app):
-                if name == AXObject.get_name(frame):
-                    real_app = desktop_app
-                    real_frame = frame
-
-        tokens = ["AXObject:", real_app, "is real app for", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if real_frame != obj:
-            msg = "AXObject: Updated frame to frame from real app"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        AXObject.REAL_APP_FOR_MUTTER_FRAME[hash(obj)] = real_app
-        AXObject.REAL_FRAME_FOR_MUTTER_FRAME[hash(obj)] = real_frame
-        return real_app, real_frame
-
-    @staticmethod
-    def get_application(obj):
-        """Returns the accessible application associated with obj"""
-
-        if not AXObject.is_valid(obj):
-            return None
-
-        app = AXObject.REAL_APP_FOR_MUTTER_FRAME.get(hash(obj))
-        if app is not None:
-            return app
-
-        try:
-            app = Atspi.Accessible.get_application(obj)
-        except Exception as error:
-            msg = f"AXObject: Exception in get_application: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return None
-
-        if AXObject.get_name(app) != "mutter-x11-frames":
-            return app
-
-        real_app = AXObject.find_real_app_and_window_for(obj, app)[0]
-        if real_app is not None:
-            app = real_app
-
-        return app
-
-    @staticmethod
-    def get_application_toolkit_name(obj):
-        """Returns the toolkit name reported for obj's application."""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        app = AXObject.get_application(obj)
-        if app is None:
-            return ""
-
-        try:
-            name = Atspi.Accessible.get_toolkit_name(app)
-        except Exception as error:
-            tokens = ["AXObject: Exception in get_application_toolkit_name:", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return ""
-
-        return name
-
-    @staticmethod
-    def get_application_toolkit_version(obj):
-        """Returns the toolkit version reported for obj's application."""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        app = AXObject.get_application(obj)
-        if app is None:
-            return ""
-
-        try:
-            version = Atspi.Accessible.get_toolkit_version(app)
-        except Exception as error:
-            tokens = ["AXObject: Exception in get_application_toolkit_version:", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return ""
-
-        return version
-
-    @staticmethod
-    def application_as_string(obj):
-        """Returns the application details of obj as a string."""
-
-        if not AXObject.is_valid(obj):
-            return ""
-
-        app = AXObject.get_application(obj)
-        if app is None:
-            return ""
-
-        string = (
-            f"{AXObject.get_name(app)} "
-            f"({AXObject.get_application_toolkit_name(obj)} "
-            f"{AXObject.get_application_toolkit_version(obj)})"
-        )
-        return string
 
     @staticmethod
     def clear_cache(obj, recursive=False, reason=""):

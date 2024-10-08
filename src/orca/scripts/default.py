@@ -1068,7 +1068,7 @@ class Script(script.Script):
 
         window = event.source
         if AXUtilities.is_application(AXObject.get_parent(event.source)):
-            window = AXObject.find_real_app_and_window_for(event.source)[1]
+            window = AXUtilities.find_real_app_and_window_for(event.source)[1]
 
         if AXUtilities.is_dialog_or_alert(window) or AXUtilities.is_frame(window):
             if event.detail1 and not focus_manager.get_manager().can_be_active_window(window):
@@ -1728,7 +1728,7 @@ class Script(script.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        window = AXObject.find_real_app_and_window_for(event.source)[1]
+        window = AXUtilities.find_real_app_and_window_for(event.source)[1]
         if not focus_manager.get_manager().can_be_active_window(window):
             return
 
