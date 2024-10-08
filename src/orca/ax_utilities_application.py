@@ -173,6 +173,9 @@ class AXUtilitiesApplication:
     def get_application(obj):
         """Returns the accessible application associated with obj"""
 
+        if obj is None:
+            return None
+
         app = AXUtilitiesApplication.REAL_APP_FOR_MUTTER_FRAME.get(hash(obj))
         if app is not None:
             return app
