@@ -21,6 +21,7 @@
 # pylint: disable=broad-exception-caught
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-return-statements
+# pylint: disable=too-many-statements
 # pylint: disable=wrong-import-position
 
 """
@@ -140,15 +141,12 @@ class AXUtilities:
     def is_application_in_desktop(app):
         """Returns true if app is known to Atspi"""
 
-        desktop = AXUtilities.get_desktop()
-        if desktop is None:
-            return False
-
-        for child in AXObject.iter_children(desktop):
+        applications = AXUtilities.get_all_applications()
+        for child in applications:
             if child == app:
                 return True
 
-        tokens = ["WARNING:", app, "is not in", desktop]
+        tokens = ["WARNING:", app, "is not in the accessible desktop"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
@@ -156,15 +154,12 @@ class AXUtilities:
     def get_application_with_pid(pid):
         """Returns the accessible application with the specified pid"""
 
-        desktop = AXUtilities.get_desktop()
-        if desktop is None:
-            return None
+        applications = AXUtilities.get_all_applications()
+        for child in applications:
+            if AXObject.get_process_id(child) == pid:
+                return child
 
-        for app in AXObject.iter_children(desktop):
-            if AXObject.get_process_id(app) == pid:
-                return app
-
-        tokens = ["WARNING: app with pid", pid, "is not in", desktop]
+        tokens = ["WARNING: app with pid", pid, "is not in the accessible desktop"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return None
 

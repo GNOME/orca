@@ -56,7 +56,7 @@ class DebuggingToolsManager:
         """Returns the debugging-tools-manager keybindings."""
 
         if refresh:
-            msg = "DEBUGGING TOOLS MANAGER: Refreshing bindings."
+            msg = f"DEBUGGING TOOLS MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -200,13 +200,13 @@ class DebuggingToolsManager:
     def _get_running_applications_as_string_iter(self, is_command_line):
         """Generator providing strings with basic details about the running accessible apps."""
 
-        desktop = AXUtilities.get_desktop()
-        msg = f"Desktop has {AXObject.get_child_count(desktop)} apps:"
+        applications = AXUtilities.get_all_applications()
+        msg = f"Desktop has {len(applications)} apps:"
         if not is_command_line:
             msg = f"DEBUGGING TOOLS MANAGER: {msg}"
         yield msg
 
-        for i, app in enumerate(AXObject.iter_children(desktop)):
+        for i, app in enumerate(applications):
             pid = AXObject.get_process_id(app)
             name = AXObject.get_name(app) or "[DEAD]"
             try:
