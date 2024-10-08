@@ -1489,7 +1489,13 @@ class Script(script.Script):
             return
 
         if not AXUtilities.is_focused(event.source):
-            return
+            tokens = ["DEFAULT:", event.source, "lacks focused state. Clearing cache."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            AXObject.clear_cache(event.source, reason="Event detail1 does not match state.")
+            if not AXUtilities.is_focused(event.source):
+                msg = "DEFAULT: Clearing cache did not update state."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return
 
         obj = event.source
         window, dialog = self.utilities.frameAndDialog(obj)
