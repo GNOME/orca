@@ -684,9 +684,7 @@ class EventManager:
                 script_mgr.set_active_script(None, "Active window is dead or defunct")
             return
 
-        if event_type.startswith("window:") and not event_type.endswith("create"):
-            script_mgr.reclaim_scripts()
-        elif event_type.endswith("state-changed:active") and AXUtilities.is_frame(event.source):
+        if event_type.startswith("window:") and event_type.endswith("destroy"):
             script_mgr.reclaim_scripts()
 
         if AXUtilities.is_iconified(event.source):
