@@ -42,6 +42,7 @@ __license__   = "LGPL"
 
 import functools
 import inspect
+import subprocess
 import threading
 import time
 
@@ -122,20 +123,46 @@ class AXUtilities:
         return desktop
 
     @staticmethod
-    def get_all_applications(must_have_window=False):
-        """Returns a list of running applications known to Atspi, filtering out
-        those which have no child windows if must_have_window is True."""
+    def get_all_applications(must_have_window=False, exclude_unresponsive=True):
+        """Returns a list of running applications known to Atspi."""
 
         desktop = AXUtilities.get_desktop()
         if desktop is None:
             return []
 
         def pred(obj):
+            if exclude_unresponsive and AXUtilities.is_application_unresponsive(obj):
+                return False
             if must_have_window:
                 return AXObject.get_child_count(obj) > 0
             return True
 
         return list(AXObject.iter_children(desktop, pred))
+
+    @staticmethod
+    def is_application_unresponsive(app):
+        """Returns true if app's process is known to be unresponsive."""
+
+        pid = AXObject.get_process_id(app)
+        try:
+            state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
+            state = state.split()[1]
+        except Exception as error:
+            tokens = [f"AXUtilities: Exception checking state of pid {pid}: {error}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if state == "Z":
+            tokens = [f"AXUtilities: pid {pid} is zombie process"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        if state == "T":
+            tokens = [f"AXUtilities: pid {pid} is suspended process"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
 
     @staticmethod
     def is_application_in_desktop(app):

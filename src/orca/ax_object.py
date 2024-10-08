@@ -20,6 +20,9 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-public-methods
 
 """
 Utilities for obtaining information about accessible objects.
@@ -38,6 +41,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
+import subprocess
 import threading
 import time
 
@@ -946,6 +950,34 @@ class AXObject:
         return AXObject.get_state_set(obj).contains(state)
 
     @staticmethod
+    def _is_application_unresponsive(app):
+        """Returns true if app's process is known to be unresponsive."""
+
+        # TODO - JD: This duplicates logic in AXUtilities to avoid a circular import.
+        # Create a new utilities class for application-related logic.
+
+        pid = AXObject.get_process_id(app)
+        try:
+            state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
+            state = state.split()[1]
+        except Exception as error:
+            tokens = [f"AXObject: Exception checking state of pid {pid}: {error}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if state == "Z":
+            tokens = [f"AXObject: pid {pid} is zombie process"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        if state == "T":
+            tokens = [f"AXObject: pid {pid} is suspended/stopped process"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
+
+    @staticmethod
     def find_real_app_and_window_for(obj, app=None):
         """Work around for window events coming from mutter-x11-frames."""
 
@@ -975,8 +1007,12 @@ class AXObject:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None, None
 
+        unresponsive_apps = []
         name = AXObject.get_name(obj)
         for desktop_app in AXObject.iter_children(desktop):
+            if AXObject._is_application_unresponsive(desktop_app):
+                unresponsive_apps.append(desktop_app)
+                continue
             if AXObject.get_name(desktop_app) == "mutter-x11-frames":
                 continue
             for frame in AXObject.iter_children(desktop_app):

@@ -200,7 +200,7 @@ class DebuggingToolsManager:
     def _get_running_applications_as_string_iter(self, is_command_line):
         """Generator providing strings with basic details about the running accessible apps."""
 
-        applications = AXUtilities.get_all_applications()
+        applications = AXUtilities.get_all_applications(exclude_unresponsive=False)
         msg = f"Desktop has {len(applications)} apps:"
         if not is_command_line:
             msg = f"DEBUGGING TOOLS MANAGER: {msg}"
@@ -208,7 +208,10 @@ class DebuggingToolsManager:
 
         for i, app in enumerate(applications):
             pid = AXObject.get_process_id(app)
-            name = AXObject.get_name(app) or "[DEAD]"
+            if AXUtilities.is_application_unresponsive(app):
+                name = "[UNRESPONSIVE]"
+            else:
+                name = AXObject.get_name(app) or "[DEAD]"
             try:
                 cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
             except Exception as error:
