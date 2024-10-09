@@ -50,11 +50,15 @@ from orca import messages
 from orca import settings
 from orca import script_manager
 from orca import settings_manager
-from orca.orca_platform import version
 
 class ListApps(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         debugging_tools_manager.get_manager().print_running_applications(is_command_line=True)
+        parser.exit()
+
+class PrintVersion(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        debugging_tools_manager.get_manager().print_session_details(is_command_line=True)
         parser.exit()
 
 class Settings(argparse.Action):
@@ -93,7 +97,7 @@ class Parser(argparse.ArgumentParser):
         self.add_argument(
             "-h", "--help", action="help", help=messages.CLI_HELP)
         self.add_argument(
-            "-v", "--version", action="version", version=version, help=messages.CLI_VERSION)
+            "-v", "--version", action=PrintVersion, nargs=0, help=messages.CLI_VERSION)
         self.add_argument(
             "-r", "--replace", action="store_true", help=messages.CLI_REPLACE)
         self.add_argument(

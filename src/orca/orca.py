@@ -56,7 +56,6 @@ from . import input_event_manager
 from . import messages
 from . import mouse_review
 from . import orca_modifier_manager
-from . import orca_platform
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -364,19 +363,9 @@ def main():
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
 
-    msg = f"ORCA: Launching version {orca_platform.version}"
-    if orca_platform.revision:
-        msg += f" (rev {orca_platform.revision})"
-
-    atspiVersion = Atspi.get_version()
-    msg += f" AT-SPI2 version: {atspiVersion[0]}.{atspiVersion[1]}.{atspiVersion[2]}"
-    sessionType = os.environ.get('XDG_SESSION_TYPE') or ""
-    sessionDesktop = os.environ.get('XDG_SESSION_DESKTOP') or ""
-    session = "%s %s".strip() % (sessionType, sessionDesktop)
-    if session:
-        msg += f" Session: {session}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
-    debugging_tools_manager.get_manager().print_running_applications(force=False)
+    manager = debugging_tools_manager.get_manager()
+    manager.print_session_details()
+    manager.print_running_applications(force=False)
 
     if debug.debugFile and os.path.exists(debug.debugFile.name):
         faulthandler.enable(file=debug.debugFile, all_threads=True)

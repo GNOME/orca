@@ -21,6 +21,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=broad-exception-caught
+# pylint: disable=no-name-in-module
 
 """Provides debugging tools."""
 
@@ -31,8 +32,13 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
+import os
 import subprocess
 import time
+
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from . import cmdnames
 from . import debug
@@ -40,6 +46,7 @@ from . import focus_manager
 from . import input_event
 from . import keybindings
 from . import messages
+from . import orca_platform
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -242,6 +249,27 @@ class DebuggingToolsManager:
                 print(app_string)
             else:
                 debug.print_message(level, app_string, True)
+
+    def print_session_details(self, is_command_line=False):
+        """Prints basic details about the current session."""
+
+        msg = f"Orca version {orca_platform.version}"
+        if orca_platform.revision:
+            msg += f" (rev {orca_platform.revision})"
+
+        atspi_version = Atspi.get_version()
+        msg += f", AT-SPI2 version: {atspi_version[0]}.{atspi_version[1]}.{atspi_version[2]}"
+        session_type = os.environ.get("XDG_SESSION_TYPE") or ""
+        session_desktop = os.environ.get("XDG_SESSION_DESKTOP") or ""
+        session = f"{session_type} {session_desktop}".strip()
+        if session:
+            msg += f", Session: {session}"
+
+        if is_command_line:
+            print(msg)
+        else:
+            msg = f"DEBUGGING TOOLS MANAGER: {msg}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
 _manager = DebuggingToolsManager()
 def get_manager():
