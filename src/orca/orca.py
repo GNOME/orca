@@ -205,30 +205,6 @@ def init():
 
     return True
 
-def start():
-    """Starts Orca."""
-
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Starting', True)
-
-    if not _initialized:
-        init()
-
-    # Do not hang on startup if we can help it.
-    #
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.signal(signal.SIGALRM, settings.timeoutCallback)
-        signal.alarm(settings.timeoutTime)
-
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.alarm(0)
-
-    Gdk.notify_startup_complete()
-    msg = 'ORCA: Startup complete notification made'
-    debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Starting Atspi main event loop', True)
-    Atspi.event_main()
-
 def die(exitCode=1):
     pid = os.getpid()
     if exitCode == EXIT_CODE_HANG:
@@ -386,11 +362,8 @@ def main():
     init()
     debug.print_message(debug.LEVEL_INFO, "ORCA: Initialized.", True)
 
-    try:
-        script = script_manager.get_manager().get_default_script()
-        script.presentMessage(messages.START_ORCA)
-    except Exception:
-        debug.print_exception(debug.LEVEL_SEVERE)
+    script = script_manager.get_manager().get_default_script()
+    script.presentMessage(messages.START_ORCA)
 
     event_manager.get_manager().activate()
     window = focus_manager.get_manager().find_active_window()
@@ -414,13 +387,13 @@ def main():
 
     script_manager.get_manager().activate()
     clipboard.get_presenter().activate()
+    Gdk.notify_startup_complete()
 
     try:
-        msg = "ORCA: Starting ATSPI registry."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        start() # waits until we stop the registry
-    except Exception:
-        msg = "ORCA: Exception starting ATSPI registry."
+        debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)
+        Atspi.event_main()
+    except Exception as error:
+        msg = f"ORCA: Exception starting ATSPI registry: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
         die(EXIT_CODE_HANG)
     return 0
