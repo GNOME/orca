@@ -57,13 +57,13 @@ from . import speech
 from . import sound
 from .ax_utilities import AXUtilities
 
-def onEnabledChanged(gsetting, key):
-    try:
-        enabled = gsetting.get_boolean(key)
-    except Exception:
-        return
+_a11y_applications_gsetting = None
 
-    if key == 'screen-reader-enabled' and not enabled:
+def onEnabledChanged(gsetting, key):
+    enabled = gsetting.get_boolean(key)
+    msg = f"ORCA: {key} changed to {enabled}."
+    debug.print_message(debug.LEVEL_INFO, msg, True)
+    if key == "screen-reader-enabled" and not enabled:
         shutdown()
 
 # The user-settings module (see loadUserSettings).
@@ -204,9 +204,13 @@ def main():
 
     loadUserSettings()
 
+    # TODO - JD: This is temporary.
+    global _a11y_applications_gsetting
     try:
-        Settings(schema_id="org.gnome.desktop.a11y.applications").connect(
-            "changed", onEnabledChanged)
+        _a11y_applications_gsetting = Settings(schema_id="org.gnome.desktop.a11y.applications")
+        connection = _a11y_applications_gsetting.connect("changed", onEnabledChanged)
+        msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
     except Exception as error:
         msg = f"ORCA: Exception connecting to a11y applications gsetting: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
