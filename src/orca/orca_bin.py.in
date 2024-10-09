@@ -45,10 +45,11 @@ sys.path.insert(1, '@libdir@')
 # them challenging to debug when they cannot be reproduced locally.
 
 from orca import debug
+from orca import debugging_tools_manager
 from orca import messages
 from orca import settings
 from orca import script_manager
-from orca import debugging_tools_manager
+from orca import settings_manager
 from orca.orca_platform import version
 
 class ListApps(argparse.Action):
@@ -230,10 +231,7 @@ def main():
         return 1
 
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
-
-    from orca import orca
-    manager = orca.getSettingsManager()
-
+    manager = settings_manager.get_manager()
     if not manager:
         print(messages.CLI_SETTINGS_MANAGER_ERROR)
         return 1
@@ -270,6 +268,7 @@ def main():
         print(messages.CLI_OTHER_ORCAS_ERROR)
         return 1
 
+    from orca import orca
     debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
     return orca.main()
 

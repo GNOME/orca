@@ -53,7 +53,6 @@ from . import debugging_tools_manager
 from . import event_manager
 from . import focus_manager
 from . import input_event_manager
-from . import logger
 from . import messages
 from . import mouse_review
 from . import orca_modifier_manager
@@ -65,8 +64,6 @@ from . import speech
 from . import sound
 from .ax_utilities import AXUtilities
 
-_logger = logger.getLogger()
-
 def onEnabledChanged(gsetting, key):
     try:
         enabled = gsetting.get_boolean(key)
@@ -75,12 +72,6 @@ def onEnabledChanged(gsetting, key):
 
     if key == 'screen-reader-enabled' and not enabled:
         shutdown()
-
-def getSettingsManager():
-    return settings_manager.get_manager()
-
-def getLogger():
-    return _logger
 
 EXIT_CODE_HANG = 50
 
