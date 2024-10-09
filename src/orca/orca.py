@@ -183,10 +183,8 @@ def shutdown(script=None, inputEvent=None):
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
 
     # Try to say goodbye, but be defensive if something has hung.
-    #
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.signal(signal.SIGALRM, settings.timeoutCallback)
-        signal.alarm(settings.timeoutTime)
+    signal.signal(signal.SIGALRM, timeout)
+    signal.alarm(5)
 
     script = script_manager.get_manager().get_active_script()
     if script is not None:
@@ -212,8 +210,7 @@ def shutdown(script=None, inputEvent=None):
         player = sound.getPlayer()
         player.shutdown()
 
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.alarm(0)
+    signal.alarm(0)
 
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
 
@@ -265,7 +262,6 @@ def main():
     manager.print_session_details()
     manager.print_running_applications(force=False)
 
-    settings.timeoutCallback = timeout
     signal.signal(signal.SIGHUP, shutdownOnSignal)
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)
