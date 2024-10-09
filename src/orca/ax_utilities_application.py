@@ -153,7 +153,7 @@ class AXUtilitiesApplication:
         return real_app, real_frame
 
     @staticmethod
-    def get_all_applications(must_have_window=False, exclude_unresponsive=True):
+    def get_all_applications(must_have_window=False, exclude_unresponsive=False):
         """Returns a list of running applications known to Atspi."""
 
         desktop = AXUtilitiesApplication.get_desktop()
