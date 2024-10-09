@@ -32,7 +32,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import locale
-import signal
 import os
 import re
 
@@ -1788,11 +1787,7 @@ def _processBrailleEvent(event):
 
     tokens = ["BRAILLE: Processing event", event]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.signal(signal.SIGALRM, settings.timeoutCallback)
-        signal.alarm(settings.timeoutTime)
-
+    consumed = False
     if _callback:
         try:
             # Like key event handlers, a return value of True means
@@ -1803,9 +1798,6 @@ def _processBrailleEvent(event):
             msg = f"WARNING: Could not process braille event: {error}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             consumed = False
-
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.alarm(0)
 
     return consumed
 
