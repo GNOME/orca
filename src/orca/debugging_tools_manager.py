@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
+import faulthandler
 import os
 import subprocess
 import time
@@ -58,6 +59,11 @@ class DebuggingToolsManager:
     def __init__(self):
         self._handlers = self.get_handlers(True)
         self._bindings = keybindings.KeyBindings()
+
+        if debug.debugFile and os.path.exists(debug.debugFile.name):
+            faulthandler.enable(file=debug.debugFile, all_threads=True)
+        else:
+            faulthandler.enable(all_threads=False)
 
     def get_bindings(self, refresh=False, is_desktop=True):
         """Returns the debugging-tools-manager keybindings."""

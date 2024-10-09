@@ -29,7 +29,6 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import faulthandler
 import gi
 import os
 import signal
@@ -366,11 +365,6 @@ def main():
     manager = debugging_tools_manager.get_manager()
     manager.print_session_details()
     manager.print_running_applications(force=False)
-
-    if debug.debugFile and os.path.exists(debug.debugFile.name):
-        faulthandler.enable(file=debug.debugFile, all_threads=True)
-    else:
-        faulthandler.enable(all_threads=False)
 
     # Method to call when we think something might be hung.
     #
