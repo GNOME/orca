@@ -236,18 +236,10 @@ def shutdownOnSignal(signum, frame):
     #
     if exitCount:
         die(signum)
-    else:
-        exitCount += 1
+        return
 
-    # Try to do a graceful shutdown if we can.
-    #
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.signal(signal.SIGALRM, settings.timeoutCallback)
-        signal.alarm(settings.timeoutTime)
-
+    exitCount += 1
     shutdown()
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.alarm(0)
 
 def crashOnSignal(signum, frame):
     signalString = f'({signal.strsignal(signum)})'
@@ -284,16 +276,7 @@ def main():
     if not settings_manager.get_manager().is_accessibility_enabled():
         settings_manager.get_manager().set_accessibility(True)
 
-    # TODO - JD: We shouldn't time out loading user settings. So is this still needed?
-    if settings.timeoutTime > 0:
-        signal.signal(signal.SIGALRM, settings.timeoutCallback)
-        signal.alarm(settings.timeoutTime)
-
     loadUserSettings()
-
-    # TODO - JD: See comment above.
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.alarm(0)
 
     try:
         Settings(schema_id="org.gnome.desktop.a11y.applications").connect(
