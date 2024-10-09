@@ -38,12 +38,7 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import Gdk
-
-try:
-    from gi.repository.Gio import Settings
-    a11yAppSettings = Settings(schema_id='org.gnome.desktop.a11y.applications')
-except Exception:
-    a11yAppSettings = None
+from gi.repository.Gio import Settings
 
 from . import braille
 from . import clipboard
@@ -300,9 +295,12 @@ def main():
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
-    # TODO - JD: Could it ever be None?
-    if a11yAppSettings is not None:
-        a11yAppSettings.connect("changed", onEnabledChanged)
+    try:
+        Settings(schema_id="org.gnome.desktop.a11y.applications").connect(
+            "changed", onEnabledChanged)
+    except Exception as error:
+        msg = f"ORCA: Exception connecting to a11y applications gsetting: {error}"
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     script = script_manager.get_manager().get_default_script()
     script.presentMessage(messages.START_ORCA)
