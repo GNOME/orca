@@ -217,25 +217,12 @@ def shutdown(script=None, inputEvent=None):
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
     Atspi.event_quit()
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
-
     return True
 
-exitCount = 0
 def shutdownOnSignal(signum, frame):
-    global exitCount
-
     signalString = f'({signal.strsignal(signum)})'
     msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    # Well...we'll try to exit nicely, but if we keep getting called,
-    # something bad is happening, so just quit.
-    #
-    if exitCount:
-        die(signum)
-        return
-
-    exitCount += 1
     shutdown()
 
 def crashOnSignal(signum, frame):
