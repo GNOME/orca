@@ -72,12 +72,8 @@ EXIT_CODE_HANG = 50
 #
 _userSettings = None
 
-def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
-    """Loads (and reloads) the user settings module, reinitializing
-    things such as speech if necessary.
-
-    Returns True to indicate the input event has been consumed.
-    """
+def loadUserSettings(script=None, skipReloadMessage=False):
+    """(Re)Loads the user settings module, re-initializing things such as speech if necessary."""
 
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
 
@@ -89,27 +85,18 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     player.shutdown()
     speech.shutdown()
     braille.shutdown()
+    mouse_review.get_reviewer().deactivate()
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
     reloaded = False
     if _userSettings:
         _profile = settings_manager.get_manager().get_setting('activeProfile')[1]
-        try:
-            _userSettings = settings_manager.get_manager().get_general_settings(_profile)
-            settings_manager.get_manager().set_profile(_profile)
-            reloaded = True
-        except ImportError:
-            debug.print_exception(debug.LEVEL_INFO)
-        except Exception:
-            debug.print_exception(debug.LEVEL_SEVERE)
+        _userSettings = settings_manager.get_manager().get_general_settings(_profile)
+        settings_manager.get_manager().set_profile(_profile)
+        reloaded = True
     else:
         _profile = settings_manager.get_manager().profile
-        try:
-            _userSettings = settings_manager.get_manager().get_general_settings(_profile)
-        except ImportError:
-            debug.print_exception(debug.LEVEL_INFO)
-        except Exception:
-            debug.print_exception(debug.LEVEL_SEVERE)
+        _userSettings = settings_manager.get_manager().get_general_settings(_profile)
 
     if not script:
         script = script_manager.get_manager().get_default_script()
@@ -117,36 +104,16 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     settings_manager.get_manager().load_app_settings(script)
 
     if settings_manager.get_manager().get_setting('enableSpeech'):
-        msg = 'ORCA: About to enable speech'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        try:
-            speech.init()
-            if reloaded and not skipReloadMessage:
-                script.speakMessage(messages.SETTINGS_RELOADED)
-        except Exception:
-            debug.print_exception(debug.LEVEL_SEVERE)
-    else:
-        msg = 'ORCA: Speech is not enabled in settings'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        speech.init()
+        if reloaded and not skipReloadMessage:
+            script.speakMessage(messages.SETTINGS_RELOADED)
 
     if settings_manager.get_manager().get_setting('enableBraille'):
-        msg = 'ORCA: About to enable braille'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        try:
-            braille.init(input_event_manager.get_manager().process_braille_event)
-        except Exception:
-            debug.print_exception(debug.LEVEL_WARNING)
-            msg = 'ORCA: Could not initialize connection to braille.'
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
-    else:
-        msg = 'ORCA: Braille is not enabled in settings'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        braille.init(input_event_manager.get_manager().process_braille_event)
 
-
+    # TODO - JD: This ultimately belongs in an extension manager.
     if settings_manager.get_manager().get_setting('enableMouseReview'):
         mouse_review.get_reviewer().activate()
-    else:
-        mouse_review.get_reviewer().deactivate()
 
     if settings_manager.get_manager().get_setting('enableSound'):
         player.init()
@@ -155,7 +122,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     orca_modifier_manager.get_manager().refresh_orca_modifiers("Loading user settings.")
     event_manager.get_manager().pause_queuing(False, False, "User settings loaded.")
     debug.print_message(debug.LEVEL_INFO, "ORCA: User Settings Loaded", True)
-    return True
 
 def die(exitCode=1):
     pid = os.getpid()
@@ -196,7 +162,10 @@ def shutdown(script=None, inputEvent=None, signum=None):
     event_manager.get_manager().pause_queuing(True, True, "Shutting down.")
     script_manager.get_manager().deactivate()
     event_manager.get_manager().deactivate()
+
+    # TODO - JD: This ultimately belongs in an extension manager.
     clipboard.get_presenter().deactivate()
+    mouse_review.get_reviewer().deactivate()
 
     # Shutdown all the other support.
     #
