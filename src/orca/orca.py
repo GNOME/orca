@@ -173,23 +173,21 @@ def timeout(signum=None, frame=None):
     debugging_tools_manager.get_manager().print_running_applications(force=True)
     die(EXIT_CODE_HANG)
 
-def shutdown(script=None, inputEvent=None):
-    """Exits Orca.  Unregisters any event listeners and cleans up.
+def shutdown(script=None, inputEvent=None, signum=None):
+    """Exits Orca. Returns True if shutdown ran to completion."""
 
-    Returns True if the shutdown procedure ran or False if this module
-    was never initialized.
-    """
-
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
-
-    # Try to say goodbye, but be defensive if something has hung.
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Shutting down", True)
     signal.signal(signal.SIGALRM, timeout)
     signal.alarm(5)
 
+    orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
     script = script_manager.get_manager().get_active_script()
     if script is not None:
         script.presentationInterrupt()
         script.presentMessage(messages.STOP_ORCA, resetStyles=False)
+
+    if signum == signal.SIGSEGV:
+        sys.exit(1)
 
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
@@ -211,9 +209,6 @@ def shutdown(script=None, inputEvent=None):
         player.shutdown()
 
     signal.alarm(0)
-
-    orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
-
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
     Atspi.event_quit()
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
@@ -223,20 +218,7 @@ def shutdownOnSignal(signum, frame):
     signalString = f'({signal.strsignal(signum)})'
     msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
-    shutdown()
-
-def crashOnSignal(signum, frame):
-    signalString = f'({signal.strsignal(signum)})'
-    msg = f"ORCA: Shutting down and exiting due to signal={signum} {signalString}"
-    debug.print_message(debug.LEVEL_SEVERE, msg, True)
-    orca_modifier_manager.get_manager().unset_orca_modifiers(f"Shutting down: {signalString}.")
-
-    script = script_manager.get_manager().get_active_script()
-    if script is not None:
-        script.presentationInterrupt()
-        script.presentMessage(messages.STOP_ORCA, resetStyles=False)
-
-    sys.exit(1)
+    shutdown(signum=signum)
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will
@@ -253,7 +235,11 @@ def main():
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
-    signal.signal(signal.SIGSEGV, crashOnSignal)
+
+    # TODO - JD: Handling was added for this signal so that we could restore CapsLock during a
+    # crash. But handling this signal is generally not recommended. If there's a crash, fixing
+    # that seems more important than cleaning up CapsLock.
+    signal.signal(signal.SIGSEGV, shutdownOnSignal)
 
     debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not settings_manager.get_manager().is_accessibility_enabled():
