@@ -66,8 +66,6 @@ def onEnabledChanged(gsetting, key):
     if key == 'screen-reader-enabled' and not enabled:
         shutdown()
 
-EXIT_CODE_HANG = 50
-
 # The user-settings module (see loadUserSettings).
 #
 _userSettings = None
@@ -123,21 +121,11 @@ def loadUserSettings(script=None, skipReloadMessage=False):
     event_manager.get_manager().pause_queuing(False, False, "User settings loaded.")
     debug.print_message(debug.LEVEL_INFO, "ORCA: User Settings Loaded", True)
 
-def die(exitCode=1):
-    pid = os.getpid()
-    if exitCode == EXIT_CODE_HANG:
-        # Someting is hung and we wish to abort.
-        os.kill(pid, signal.SIGKILL)
-        return
-
-    shutdown()
-    sys.exit(exitCode)
-
 def timeout(signum=None, frame=None):
     msg = 'TIMEOUT: something has hung. Aborting.'
     debug.print_message(debug.LEVEL_SEVERE, msg, True)
     debugging_tools_manager.get_manager().print_running_applications(force=True)
-    die(EXIT_CODE_HANG)
+    os.kill(os.getpid(), signal.SIGKILL)
 
 def shutdown(script=None, inputEvent=None, signum=None):
     """Exits Orca. Returns True if shutdown ran to completion."""
@@ -255,7 +243,7 @@ def main():
     except Exception as error:
         msg = f"ORCA: Exception starting ATSPI registry: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
-        die(EXIT_CODE_HANG)
+        os.kill(os.getpid(), signal.SIGKILL)
     return 0
 
 if __name__ == "__main__":
