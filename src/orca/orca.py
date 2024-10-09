@@ -162,49 +162,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     debug.print_message(debug.LEVEL_INFO, "ORCA: User Settings Loaded", True)
     return True
 
-# If True, this module has been initialized.
-#
-_initialized = False
-
-def init():
-    """Initialize the orca module, which initializes the speech and braille
-    modules.  Also builds up the application list, registers for AT-SPI events,
-    and creates scripts for all known applications.
-
-    Returns True if the initialization procedure has run, or False if this
-    module has already been initialized.
-    """
-
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Initializing', True)
-
-    global _initialized
-
-    if _initialized and settings_manager.get_manager().is_screen_reader_service_enabled():
-        debug.print_message(debug.LEVEL_INFO, 'ORCA: Already initialized', True)
-        return False
-
-    # Do not hang on initialization if we can help it.
-    #
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.signal(signal.SIGALRM, settings.timeoutCallback)
-        signal.alarm(settings.timeoutTime)
-
-    loadUserSettings()
-
-    if settings.timeoutCallback and (settings.timeoutTime > 0):
-        signal.alarm(0)
-
-    _initialized = True
-    # In theory, we can do this through dbus. In practice, it fails to
-    # work sometimes. Until we know why, we need to leave this as-is
-    # so that we respond when gnome-control-center is used to stop Orca.
-    if a11yAppSettings:
-        a11yAppSettings.connect('changed', onEnabledChanged)
-
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Initialized', True)
-
-    return True
-
 def die(exitCode=1):
     pid = os.getpid()
     if exitCode == EXIT_CODE_HANG:
@@ -229,11 +186,6 @@ def shutdown(script=None, inputEvent=None):
     """
 
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutting down', True)
-
-    global _initialized
-
-    if not _initialized:
-        return False
 
     # Try to say goodbye, but be defensive if something has hung.
     #
@@ -268,7 +220,6 @@ def shutdown(script=None, inputEvent=None):
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
-    _initialized = False
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
 
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
@@ -299,24 +250,9 @@ def shutdownOnSignal(signum, frame):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    try:
-        if _initialized:
-            shutdown()
-        else:
-            # We always want to try to shutdown speech since the
-            # speech servers are very persistent about living.
-            #
-            speech.shutdown()
-            shutdown()
-        cleanExit = True
-    except Exception:
-        cleanExit = False
-
+    shutdown()
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
-
-    if not cleanExit:
-        die(EXIT_CODE_HANG)
 
 def crashOnSignal(signum, frame):
     signalString = f'({signal.strsignal(signum)})'
@@ -342,12 +278,7 @@ def main():
     manager.print_session_details()
     manager.print_running_applications(force=False)
 
-    # Method to call when we think something might be hung.
-    #
     settings.timeoutCallback = timeout
-
-    # Various signal handlers we want to listen for.
-    #
     signal.signal(signal.SIGHUP, shutdownOnSignal)
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)
@@ -358,9 +289,20 @@ def main():
     if not settings_manager.get_manager().is_accessibility_enabled():
         settings_manager.get_manager().set_accessibility(True)
 
-    debug.print_message(debug.LEVEL_INFO, "ORCA: Initializing.", True)
-    init()
-    debug.print_message(debug.LEVEL_INFO, "ORCA: Initialized.", True)
+    # TODO - JD: We shouldn't time out loading user settings. So is this still needed?
+    if settings.timeoutTime > 0:
+        signal.signal(signal.SIGALRM, settings.timeoutCallback)
+        signal.alarm(settings.timeoutTime)
+
+    loadUserSettings()
+
+    # TODO - JD: See comment above.
+    if settings.timeoutCallback and (settings.timeoutTime > 0):
+        signal.alarm(0)
+
+    # TODO - JD: Could it ever be None?
+    if a11yAppSettings is not None:
+        a11yAppSettings.connect("changed", onEnabledChanged)
 
     script = script_manager.get_manager().get_default_script()
     script.presentMessage(messages.START_ORCA)
@@ -383,7 +325,6 @@ def main():
             script = script_manager.get_manager().get_script(
                 AXUtilities.get_application(focusedObject), focusedObject)
             script_manager.get_manager().set_active_script(script, "Found focused object.")
-
 
     script_manager.get_manager().activate()
     clipboard.get_presenter().activate()
