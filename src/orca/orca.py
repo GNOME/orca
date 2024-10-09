@@ -79,13 +79,6 @@ EXIT_CODE_HANG = 50
 #
 _userSettings = None
 
-def deviceChangeHandler(deviceManager, device):
-    """Handles device-* signals."""
-
-    source = device.get_source()
-    if source == Gdk.InputSource.KEYBOARD:
-        orca_modifier_manager.get_manager().refresh_orca_modifiers("Keyboard change detected.")
-
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -230,12 +223,6 @@ def start():
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
-
-    # Event handlers for input devices being plugged in/unplugged.
-    display = Gdk.Display.get_default()
-    devmanager=display.get_device_manager()
-    devmanager.connect("device-added", deviceChangeHandler)
-    devmanager.connect("device-removed", deviceChangeHandler)
 
     Gdk.notify_startup_complete()
     msg = 'ORCA: Startup complete notification made'

@@ -19,6 +19,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-branches
+
 """Manages the Orca modifier key."""
 
 __id__        = "$Id$"
@@ -33,9 +37,11 @@ import re
 import subprocess
 
 import gi
-gi.require_version('Atspi', '2.0')
+gi.require_version("Atspi", "2.0")
+gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import GLib
+from gi.repository import Gdk
 
 from . import debug
 from . import keybindings
@@ -54,6 +60,25 @@ class OrcaModifierManager:
         self._original_xmodmap = ""
         self._caps_lock_cleared = False
         self._need_to_restore_orca_modifier = False
+
+        # Event handlers for input devices being plugged in/unplugged.
+        display = Gdk.Display.get_default()
+        if display is not None:
+            device_manager = display.get_device_manager()
+            device_manager.connect("device-added", self._on_device_changed)
+            device_manager.connect("device-removed", self._on_device_changed)
+        else:
+            msg = "ORCA MODIFIER MANAGER: Cannot listen for input device changes."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def _on_device_changed(self, _device_manager, device):
+        """Handles device-* signals."""
+
+        source = device.get_source()
+        tokens = ["ORCA MODIFIER MANAGER: Device changed", source]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if source == Gdk.InputSource.KEYBOARD:
+            self.refresh_orca_modifiers("Keyboard change detected.")
 
     def is_orca_modifier(self, modifier):
         """Returns True if modifier is one of the user's Orca modifier keys."""
@@ -165,7 +190,7 @@ class OrcaModifierManager:
     def _toggle_modifier_lock(self, keyboard_event):
         """Toggles the lock for a modifier to enable double-clicking causing normal behavior."""
 
-        if not (keyboard_event.is_pressed_key()):
+        if not keyboard_event.is_pressed_key():
             return
 
         def toggle(modifiers, modifier):
@@ -178,7 +203,6 @@ class OrcaModifierManager:
                 msg = "ORCA MODIFIER MANAGER: Locking CapsLock"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             Atspi.generate_keyboard_event(modifier, "", lock)
-            return
 
         if keyboard_event.keyval_name == "Caps_Lock":
             modifier = 1 << Atspi.ModifierType.SHIFTLOCK
@@ -200,9 +224,9 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.unset_orca_modifiers(reason)
-        p = subprocess.Popen(['xkbcomp', os.environ['DISPLAY'], '-'],
-            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-        self._original_xmodmap, _ = p.communicate()
+        with subprocess.Popen(["xkbcomp", os.environ["DISPLAY"], "-"],
+                              stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as p:
+            self._original_xmodmap, _ = p.communicate()
         self._create_orca_xmodmap()
 
     def _create_orca_xmodmap(self):
@@ -232,9 +256,9 @@ class OrcaModifierManager:
             return
 
         self._caps_lock_cleared = False
-        p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
-            stdin=subprocess.PIPE, stdout=None, stderr=None)
-        p.communicate(self._original_xmodmap)
+        with subprocess.Popen(["xkbcomp", "-w0", "-", os.environ["DISPLAY"]],
+                              stdin=subprocess.PIPE, stdout=None, stderr=None) as p:
+            p.communicate(self._original_xmodmap)
 
         msg = "ORCA MODIFIER MANAGER: Original xmodmap restored"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -293,9 +317,11 @@ class OrcaModifierManager:
         if modified:
             msg = "ORCA MODIFIER MANAGER: Updating xmodmap"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
-                stdin=subprocess.PIPE, stdout=None, stderr=None)
-            p.communicate(bytes('\n'.join(lines), 'UTF-8'))
+
+
+            with subprocess.Popen(["xkbcomp", "-w0", "-", os.environ["DISPLAY"]],
+                              stdin=subprocess.PIPE, stdout=None, stderr=None) as p:
+                p.communicate(bytes('\n'.join(lines), 'UTF-8'))
         else:
             msg = "ORCA MODIFIER MANAGER: Not updating xmodmap"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -303,4 +329,6 @@ class OrcaModifierManager:
 
 _manager = OrcaModifierManager()
 def get_manager():
+    """Returns the OrcaModifierManager singleton."""
+
     return _manager
