@@ -102,6 +102,31 @@ class AXObject:
         return False
 
     @staticmethod
+    def has_broken_ancestry(obj):
+        """Returns True if obj's ancestry is broken."""
+
+        if obj is None:
+            return False
+
+        # https://bugreports.qt.io/browse/QTBUG-130116
+        toolkit_name = Atspi.Accessible.get_toolkit_name(obj) or ""
+        if not toolkit_name.lower().startswith("qt"):
+            return False
+
+        reached_app = False
+        parent = AXObject.get_parent(obj)
+        while parent and not reached_app:
+            reached_app = AXObject.get_role(parent) == Atspi.Role.APPLICATION
+            parent = AXObject.get_parent(parent)
+
+        if not reached_app:
+            tokens = ["AXObject:", obj, "has broken ancestry. See qt bug 130116."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
+
+    @staticmethod
     def is_valid(obj):
         """Returns False if we know for certain this object is invalid"""
 

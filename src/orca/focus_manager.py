@@ -364,7 +364,11 @@ class FocusManager:
         elif not (self.focus_is_active_window() or self.focus_is_in_active_window()):
             tokens = ["FOCUS MANAGER: Focus", self._focus, "is not in", self._window]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
-            self.set_locus_of_focus(None, self._window, notify_script=True)
+
+            # Don't update the focus to the active window if we can't get to the active window
+            # from the focused object. https://bugreports.qt.io/browse/QTBUG-130116
+            if not AXObject.has_broken_ancestry(self._focus):
+                self.set_locus_of_focus(None, self._window, notify_script=True)
 
         app = AXUtilities.get_application(self._focus)
         script = script_manager.get_manager().get_script(app, self._focus)
