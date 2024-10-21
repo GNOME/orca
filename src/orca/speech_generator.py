@@ -3554,8 +3554,9 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the section role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_pause(obj, **args)
+        if AXUtilities.is_focusable(obj):
+            result += self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_pause(obj, **args)
         result += self._generate_text_indentation(obj, **args)
         result += self._generate_text_line(obj, **args)
         result += self._generate_accessible_role(obj, **args)
