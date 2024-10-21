@@ -210,7 +210,7 @@ class AXUtilities:
         if AXUtilitiesRole.is_group(obj, role):
             result = not AXUtilities.has_explicit_name(obj)
             if result:
-                reason = "Lacks explicit name"
+                reason = "lacks explicit name"
             return result, reason
 
         if AXUtilitiesRole.is_panel(obj, role) or AXUtilitiesRole.is_grouping(obj, role):
@@ -233,7 +233,7 @@ class AXUtilities:
                 return True, "is in set container"
             return False, reason
 
-        if AXUtilitiesRole.is_section(obj, role):
+        if AXUtilitiesRole.is_section(obj, role) or AXUtilitiesRole.is_document(obj, role):
             if AXUtilitiesState.is_focusable(obj):
                 return False, "is focusable"
             if AXObject.has_action(obj, "click"):
