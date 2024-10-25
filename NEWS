@@ -1,3 +1,31 @@
+47.1 - 25 October 2024
+
+LibreOffice:
+
+* Fix bug causing navigation in Calc sheets to not be presented.
+
+Web:
+
+* Fix presentation of heading role in Google docs.
+
+* Fix bug in presenting link ancestors
+
+* Fix several chattiness issues.
+
+General:
+
+* Fix bug causing Orca's help window to not be displayed.
+
+* Make string-redundancy check slightly more conservative
+  so that descriptions are not incorrectly filtered out.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  th              Thai                      Aefgh Threenine
+
+=========
+
 47.0 - 17 September 2024
 
 General:
