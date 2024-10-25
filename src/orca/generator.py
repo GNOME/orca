@@ -533,8 +533,10 @@ class Generator:
     @log_generator_output
     def _generate_descendants(self, obj, **args):
         result = []
-        obj_name = AXObject.get_name(obj)
+        obj_name = AXObject.get_name(obj) or self._script.utilities.displayedLabel(obj)
+        obj_desc = AXObject.get_description(obj) or self._script.utilities.displayedDescription(obj)
         descendants = self._script.utilities.getOnScreenObjects(obj)
+        used_description_as_static_text = False
         for child in descendants:
             if child == obj:
                 continue
@@ -550,21 +552,25 @@ class Generator:
                 continue
             if AXUtilities.is_image(child):
                 continue
+
+            child_name = AXObject.get_name(child)
+            if AXUtilities.is_button(child) and child_name in obj_name:
+                continue
+
             if AXUtilities.is_label(child):
                 if not AXText.has_presentable_text(child):
                     continue
-                if obj_name and AXObject.get_name(child) in obj_name:
+                if self._script.utilities.stringsAreRedundant(obj_name, child_name):
                     continue
-                if child in AXUtilities.get_is_labelled_by(obj):
-                    continue
-                if child in AXUtilities.get_is_described_by(obj):
-                    continue
+                if self._script.utilities.stringsAreRedundant(obj_desc, child_name):
+                    used_description_as_static_text = True
 
             child_result = self.generate(child, includeContext=False, omitDescription=True)
             if child_result:
                 result.extend(child_result)
                 result.extend(self._generate_result_separator(child, **args))
 
+        Generator.USED_DESCRIPTION_FOR_STATIC_TEXT[hash(obj)] = used_description_as_static_text
         return result
 
     @log_generator_output
