@@ -1131,6 +1131,9 @@ class Utilities(script_utilities.Utilities):
             if x in objects:
                 return False
 
+            if AXUtilities.is_text_input(obj):
+                return False
+
             xObj, xStart, xEnd, xString = x
             if xStart == xEnd or not xString:
                 return False
