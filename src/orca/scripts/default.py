@@ -1224,8 +1224,14 @@ class Script(script.Script):
 
         descriptions[hash(obj)] = event.any_data
         self.point_of_reference['descriptions'] = descriptions
-        if event.any_data:
-            self.presentMessage(event.any_data)
+        if not event.any_data.strip():
+            return
+
+        focus_string = f"{AXObject.get_name(obj)} {AXObject.get_description(obj)}"
+        if self.utilities.stringsAreRedundant(focus_string, event.any_data):
+            return
+
+        self.presentMessage(event.any_data)
 
     def on_document_attributes_changed(self, event):
         """Callback for document:attributes-changed accessibility events."""
