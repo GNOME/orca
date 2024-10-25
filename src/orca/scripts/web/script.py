@@ -1281,12 +1281,12 @@ class Script(default.Script):
         lastCommandWasLineNav = manager.last_event_was_line_navigation() \
             and not lastCommandWasCaretNav
 
+        args["priorObj"] = old_focus
         if manager.last_event_was_mouse_button() and event \
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-            args['priorObj'] = old_focus
         elif self.utilities.isContentEditableWithEmbeddedObjects(new_focus) \
            and (lastCommandWasCaretNav or lastCommandWasStructNav or lastCommandWasLineNav) \
            and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus)):
@@ -1328,11 +1328,9 @@ class Script(default.Script):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.printMessage(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
-            args['priorObj'] = old_focus
         else:
             tokens = ["WEB: New focus", new_focus, "is not a special case. Generating speech."]
             debug.printTokens(debug.LEVEL_INFO, tokens, True)
-            args['priorObj'] = old_focus
 
         if new_focus and AXObject.is_dead(new_focus):
             msg = "WEB: New focus has since died"
