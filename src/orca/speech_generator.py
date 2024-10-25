@@ -3577,10 +3577,14 @@ class SpeechGenerator(generator.Generator):
     def _generate_section(self, obj, **args):
         """Generates speech for the section role."""
 
+        format_type = args.get("formatType", "unfocused")
         result = self._generate_default_prefix(obj, **args)
         if AXUtilities.is_focusable(obj) or AXUtilities.has_explicit_name(obj):
             result += self._generate_accessible_label_and_name(obj, **args)
             result += self._generate_pause(obj, **args)
+        if format_type == "ancestor":
+            return result
+
         result += self._generate_text_indentation(obj, **args)
         result += self._generate_text_line(obj, **args)
         result += self._generate_accessible_role(obj, **args)
