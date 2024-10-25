@@ -874,7 +874,7 @@ class Script(default.Script):
         wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=True)
         textObj, startOffset, endOffset, word = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
-        self.speakContents(wordContents)
+        self.speakContents(wordContents, alreadyFocused=True)
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def sayLine(self, obj, offset=None):

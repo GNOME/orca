@@ -1710,6 +1710,9 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
+        if args.get("alreadyFocused"):
+            return []
+
         result = super()._generate_state_required(obj, **args)
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
