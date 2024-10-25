@@ -376,7 +376,7 @@ class Script(default.Script):
 
         if not AXObject.find_ancestor(focus, lambda x: x == event.source):
             msg = "SOFFICE: Working around LO bug 161444."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            debug.printMessage(debug.LEVEL_INFO, msg, True)
             # If we immediately set focus to the table, the lack of common ancestor will result in
             # the ancestry up to the frame being spoken.
             manager.set_locus_of_focus(None, AXObject.get_parent(event.source), False)
