@@ -374,7 +374,7 @@ class Script(default.Script):
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             AXObject.clear_cache(event.source, False, msg)
 
-        if not AXObject.find_ancestor(focus, lambda x: x == event.source):
+        if event.source != focus and not AXObject.find_ancestor(focus, lambda x: x == event.source):
             msg = "SOFFICE: Working around LO bug 161444."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             # If we immediately set focus to the table, the lack of common ancestor will result in
