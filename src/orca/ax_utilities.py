@@ -103,6 +103,101 @@ class AXUtilities:
             AXTable.clear_cache_now(reason)
 
     @staticmethod
+    def can_be_active_window(window):
+        """Returns True if window can be the active window based on its state."""
+
+        if window is None:
+            return False
+
+        AXObject.clear_cache(window, False, "Checking if window can be the active window")
+        app = AXUtilitiesApplication.get_application(window)
+        tokens = ["AXUtilities:", window, "from", app]
+
+        if not AXUtilitiesState.is_active(window):
+            tokens.append("lacks active state")
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if not AXUtilitiesState.is_showing(window):
+            tokens.append("lacks showing state")
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXUtilitiesState.is_iconified(window):
+            tokens.append("is iconified")
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXObject.get_name(app) == "mutter-x11-frames":
+            tokens.append("is from app that cannot have the real active window")
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if app and not AXUtilitiesApplication.is_application_in_desktop(app):
+            tokens.append("is from app unknown to AT-SPI2")
+            # Firefox alerts and dialogs suffer from this bug too, but if we ignore these windows
+            # we'll fail to fully present things like the file chooser dialog and the replace-file
+            # alert. https://bugzilla.mozilla.org/show_bug.cgi?id=1882794
+            if not AXUtilitiesRole.is_dialog_or_alert(window):
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
+
+        tokens.append("can be active window")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return True
+
+    @staticmethod
+    def find_active_window():
+        """Tries to locate the active window; may or may not succeed."""
+
+        candidates = []
+        apps = AXUtilitiesApplication.get_all_applications(must_have_window=True)
+        for app in apps:
+            candidates.extend(list(AXObject.iter_children(app, AXUtilities.can_be_active_window)))
+
+        if not candidates:
+            tokens = ["AXUtilities: Unable to find active window from", apps]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        if len(candidates) == 1:
+            tokens = ["AXUtilities: Active window is", candidates[0]]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return candidates[0]
+
+        tokens = ["AXUtilities: These windows all claim to be active:", candidates]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        # Some electron apps running in the background claim to be active even when they
+        # are not. These are the ones we know about. We can add others as we go.
+        suspect_apps = ["slack",
+                        "discord",
+                        "outline-client",
+                        "whatsapp-desktop-linux"]
+        filtered = []
+        for frame in candidates:
+            if AXObject.get_name(AXUtilitiesApplication.get_application(frame)) in suspect_apps:
+                tokens = ["AXUtilities: Suspecting", frame, "is a non-active Electron app"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            else:
+                filtered.append(frame)
+
+        if len(filtered) == 1:
+            tokens = ["AXUtilities: Active window is believed to be", filtered[0]]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return filtered[0]
+
+        guess = None
+        if filtered:
+            tokens = ["AXUtilities: Still have multiple active windows:", filtered]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            guess = filtered[0]
+
+        tokens = ["AXUtilities: Returning", guess, "as active window"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return guess
+
+    @staticmethod
     def get_all_static_text_leaf_nodes(obj):
         """Returns all the descendants of obj that are static text leaf nodes"""
 

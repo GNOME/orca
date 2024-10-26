@@ -219,7 +219,7 @@ def main():
     script.presentMessage(messages.START_ORCA)
 
     event_manager.get_manager().activate()
-    window = focus_manager.get_manager().find_active_window()
+    window = AXUtilities.find_active_window()
     if window and not focus_manager.get_manager().get_locus_of_focus():
         app = AXUtilities.get_application(window)
 

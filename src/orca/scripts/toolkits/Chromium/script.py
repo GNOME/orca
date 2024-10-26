@@ -67,7 +67,7 @@ class Script(web.Script):
             return
 
         if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not focus_manager.get_manager().can_be_active_window(event.source):
+           and not AXUtilities.can_be_active_window(event.source):
             return
 
         msg = "CHROMIUM: Passing along event to default script"
@@ -348,7 +348,7 @@ class Script(web.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        if not focus_manager.get_manager().can_be_active_window(event.source):
+        if not AXUtilities.can_be_active_window(event.source):
             return
 
         # If this is a frame for a popup menu, we don't want to treat

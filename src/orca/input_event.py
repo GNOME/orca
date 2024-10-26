@@ -856,8 +856,8 @@ class MouseButtonEvent(InputEvent):
         if not self._script:
             return
 
-        if not focus_manager.get_manager().can_be_active_window(self.window):
-            self.window = focus_manager.get_manager().find_active_window()
+        if not AXUtilities.can_be_active_window(self.window):
+            self.window = AXUtilities.find_active_window()
 
         if not self.window:
             return

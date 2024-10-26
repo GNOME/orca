@@ -194,8 +194,8 @@ class InputEventManager:
         manager = focus_manager.get_manager()
         if pressed:
             window = manager.get_active_window()
-            if not manager.can_be_active_window(window):
-                window = manager.find_active_window()
+            if not AXUtilities.can_be_active_window(window):
+                window = AXUtilities.find_active_window()
                 tokens = ["INPUT EVENT MANAGER: Updating window and active window to", window]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 manager.set_active_window(window)

@@ -69,7 +69,7 @@ class Script(web.Script, gtk.Script):
 
         _focus_manager = focus_manager.get_manager()
         if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not _focus_manager.can_be_active_window(event.source):
+           and not AXUtilities.can_be_active_window(event.source):
             return
 
         msg = "WEBKITGTK: Passing along event to gtk script"
