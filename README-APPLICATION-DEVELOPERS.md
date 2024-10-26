@@ -162,7 +162,7 @@ The `details`/`details-for` and `error-message`/`error-for` relation types were 
 and there was no indication that they might be of interest to developers of native applications.
 As a result, support in Orca for these new relation types was implemented only for web apps.
 [There are plans to support these relation types globally](https://gitlab.gnome.org/GNOME/orca/-/issues/514),
-hopefully during the v47 release cycle.
+hopefully during the v48 release cycle.
 
 ### Why Is Orca Speaking My Labels As Static Text?
 
