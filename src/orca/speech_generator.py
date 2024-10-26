@@ -157,7 +157,7 @@ class SpeechGenerator(generator.Generator):
         if dialog:
             result.append(self._generate_accessible_label_and_name(dialog))
 
-        alert_and_dialog_count = self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
             dialogs = [messages.dialogCountSpeech(alert_and_dialog_count)]
             dialogs.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -559,7 +559,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        alert_and_dialog_count = self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
             result.append(messages.dialogCountSpeech(alert_and_dialog_count))
             result.extend(self.voice(SYSTEM, obj=obj, **args))

@@ -198,6 +198,33 @@ class AXUtilities:
         return guess
 
     @staticmethod
+    def is_unfocused_alert_or_dialog(obj):
+        """Returns True if obj is an unfocused alert or dialog with presentable items."""
+
+        if not AXUtilitiesRole.is_dialog_or_alert(obj):
+            return False
+        if not AXObject.get_child_count(obj):
+            return False
+        if not AXUtilitiesState.is_showing(obj):
+            return False
+        return not AXUtilities.can_be_active_window(obj)
+
+    @staticmethod
+    def get_unfocused_alerts_and_dialogs(obj):
+        """Returns a list of all the unfocused alerts and dialogs in the app and window of obj."""
+
+        app = AXUtilitiesApplication.get_application(obj)
+        result = list(AXObject.iter_children(app, AXUtilities.is_unfocused_alert_or_dialog))
+
+        frame = AXObject.find_ancestor(
+            obj, lambda x: AXUtilitiesRole.is_application(AXObject.get_parent(x)))
+        result.extend(list(AXObject.iter_children(frame, AXUtilities.is_unfocused_alert_or_dialog)))
+
+        tokens = ["AXUtilities: Unfocused alerts and dialogs for", obj, ":", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
     def get_all_static_text_leaf_nodes(obj):
         """Returns all the descendants of obj that are static text leaf nodes"""
 

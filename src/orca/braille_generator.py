@@ -210,7 +210,7 @@ class BrailleGenerator(generator.Generator):
     @log_generator_output
     def _generate_alert_and_dialog_count(self, obj,  **_args):
         result = []
-        alert_and_dialog_count = self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
             result.append(messages.dialogCountBraille(alert_and_dialog_count))
 

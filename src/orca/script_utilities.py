@@ -260,10 +260,7 @@ class Utilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return results
 
-        dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
-        if self._treatAlertsAsDialogs():
-            dialog_roles.append(Atspi.Role.ALERT)
-
+        dialog_roles = [Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER, Atspi.Role.ALERT]
         role = AXObject.get_role(topLevel)
         if role in dialog_roles:
             results[1] = topLevel
@@ -1040,9 +1037,8 @@ class Utilities:
         roles = [Atspi.Role.DIALOG,
                  Atspi.Role.FILE_CHOOSER,
                  Atspi.Role.FRAME,
-                 Atspi.Role.WINDOW]
-        if self._treatAlertsAsDialogs():
-            roles.append(Atspi.Role.ALERT)
+                 Atspi.Role.WINDOW,
+                 Atspi.Role.ALERT]
         return roles
 
     def _locusOfFocusIsTopLevelObject(self):
@@ -1214,42 +1210,6 @@ class Utilities:
             labels_filtered.append(label)
 
         return AXComponent.sort_objects_by_position(labels_filtered)
-
-    def _treatAlertsAsDialogs(self):
-        return True
-
-    def unfocusedAlertAndDialogCount(self, obj):
-        """If the current application has one or more alert or dialog
-        windows and the currently focused window is not an alert or a dialog,
-        return a count of the number of alert and dialog windows, otherwise
-        return a count of zero.
-
-        Arguments:
-        - obj: the Accessible object
-
-        Returns the alert and dialog count.
-        """
-
-        roles = [Atspi.Role.DIALOG]
-        if self._treatAlertsAsDialogs():
-            roles.append(Atspi.Role.ALERT)
-
-        def isDialog(x):
-            return AXObject.get_role(x) in roles
-
-        dialogs = [x for x in AXObject.iter_children(AXUtilities.get_application(obj), isDialog)]
-        dialogs.extend([x for x in AXObject.iter_children(self.topLevelObject(obj), isDialog)])
-
-        def isPresentable(x):
-            return AXUtilities.is_showing(x) and AXUtilities.is_visible(x) \
-                and (AXObject.get_name(x) or AXObject.get_child_count(x))
-
-        def cannotBeActiveWindow(x):
-            return not AXUtilities.can_be_active_window(x)
-
-        presentable = list(filter(isPresentable, set(dialogs)))
-        unfocused = list(filter(cannotBeActiveWindow, presentable))
-        return len(unfocused)
 
     #########################################################################
     #                                                                       #
