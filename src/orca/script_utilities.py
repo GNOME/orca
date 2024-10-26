@@ -340,14 +340,6 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, lambda x: x and x == ancestor)
 
-    def isFunctionalDialog(self, obj):
-        """Returns True if the window is a functioning as a dialog.
-        This method should be subclassed by application scripts as
-        needed.
-        """
-
-        return False
-
     def isContentError(self, obj):
         return False
 
@@ -1243,7 +1235,7 @@ class Utilities:
             roles.append(Atspi.Role.ALERT)
 
         def isDialog(x):
-            return AXObject.get_role(x) in roles or self.isFunctionalDialog(x)
+            return AXObject.get_role(x) in roles
 
         dialogs = [x for x in AXObject.iter_children(AXUtilities.get_application(obj), isDialog)]
         dialogs.extend([x for x in AXObject.iter_children(self.topLevelObject(obj), isDialog)])

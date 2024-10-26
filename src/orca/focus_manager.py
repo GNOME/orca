@@ -229,14 +229,6 @@ class FocusManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return is_active
 
-    def _is_desktop_frame(self, window):
-        """Returns True if this object is the desktop frame"""
-
-        if not AXUtilities.is_frame(window):
-            return False
-
-        return AXObject.get_attributes_dict(window).get("is-desktop") == "true"
-
     def can_be_active_window(self, window):
         """Returns True if window can be the active window based on its state."""
 
