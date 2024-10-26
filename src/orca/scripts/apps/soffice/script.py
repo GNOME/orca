@@ -426,6 +426,12 @@ class Script(default.Script):
         if self._inSayAll:
             return
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXUtilities.is_root_pane(event.source) and AXObject.is_ancestor(focus, event.source):
+            msg = "SOFFICE: Event ignored: Source is root pane ancestor of current focus."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -468,7 +474,6 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
                 return
 
-            focus = focus_manager.get_manager().get_locus_of_focus()
             if AXUtilities.is_paragraph(focus) or AXUtilities.is_table_cell(focus):
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
