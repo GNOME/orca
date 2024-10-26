@@ -436,21 +436,11 @@ class Script(default.Script):
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        # We will present this when the selection changes.
-        # TODO - JD: Is this still needed? If so, why is the default script not handling it?
-        if AXUtilities.is_menu(event.source):
-            return
-
         if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
             comboBox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
             if comboBox:
                 focus_manager.get_manager().set_locus_of_focus(event, comboBox, True)
                 return
-
-        # TODO - JD: Why are we doing this early?
-        if AXUtilities.is_tool_bar(AXObject.get_parent(event.source)):
-            default.Script.on_focused_changed(self, event)
-            return
 
         # TODO - JD: This is private. Also why is it here?
         if self.utilities._flowsFromOrToSelection(event.source):
