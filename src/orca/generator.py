@@ -550,6 +550,8 @@ class Generator:
                 continue
             if AXUtilities.is_image(child):
                 continue
+            if AXUtilities.is_separator(child):
+                continue
 
             child_name = AXObject.get_name(child)
             if AXUtilities.is_button(child) and child_name in obj_name:
