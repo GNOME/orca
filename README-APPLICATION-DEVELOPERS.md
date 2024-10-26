@@ -8,6 +8,13 @@ Please note: This document is a work in progress and will be expanded over time 
 about what Orca expects from applications. In the meantime, it contains tips based on frequently-asked
 questions. We hope you find them useful.
 
+## A Request
+
+If Orca is not presenting your application in the way you think it should, and the techniques in
+this document do not apply, please file a bug against Orca so we can determine where the fix belongs.
+It might be an Orca bug which we can fix for you. Otherwise, we can help you address it in your
+application and update this document accordingly.
+
 ## Accessible Events
 
 Orca has many commands and modes which make it possible for users to interact with your application.
@@ -38,6 +45,8 @@ If you are interested in seeing what accessible events your application is firin
 
 ## What Orca Presents In Response To Location Changes
 
+### As a General Rule
+
 When an accessible event informs Orca that the object of interest, or the user's location therein,
 has changed, Orca will generally present two things:
 
@@ -53,10 +62,67 @@ unchecked "Allow access to microphone" checkbox, Orca will say:
 If the user then tabs to another widget in the "Permissions" group, Orca will only present that
 widget and will not repeat "Permissions."
 
-What Orca presents for any given object depends on the role of that object. However, **for UI
+What Orca presents for any given object depends on the role of that object. However, for UI
 components, Orca will always present the accessible name and, by default, the accessible
-description.** (The latter can be disabled by the user either globally or on a per-app basis,
+description. (The latter can be disabled by the user either globally or on a per-app basis,
 though it is always available on demand via Orca's "Where Am I?" command.)
+
+### Presentation of "Selected"/"Not selected" in UI
+
+In most groups of selectable items, selection follows focus. In other words, arrowing to an item
+causes it to become both focused and selected. In these instances, Orca deliberately does not say
+"selected" because that is the expected state, and most users dislike "chattiness." However, Orca
+should announce "not selected" when the user navigates to a selectable item that did not become
+selected as a result of navigation. This presentation can be seen by using Ctrl+Arrow in Caja to
+move among items without selecting them.
+
+The way Orca determines that "not selected" should be announced is by finding the "selectable"
+accessible state present and the "selected" state absent on the item which just claimed focus.
+If the "selectable" state is absent, Orca will not say "not selected" because doing so makes no sense
+on an object which is not selectable.
+
+Orca should also announce when the selected state of the focused item subsequently changes. For
+instance, after using Ctrl+Arrow to move to an item without selecting it, one can use Ctrl+Space to
+toggle that item's selected state. When it becomes selected, Orca will say "selected". When it
+becomes unselected, Orca will say "unselected".
+
+What causes Orca to make this announcement is an `object:state-changed:selected` event being fired
+by the item whose state changed. If the event is not fired, Orca will be unaware that the state
+changed and remain silent in response. For standard toolkit widgets, using the toolkit's API to
+toggle the selection should cause the accessible state to be updated and the accessible event to
+be fired. If that is not the case, there may be a toolkit bug. For custom widgets, it is likely that
+you will need to make these updates within your application.
+
+### Status Bars and Focusable List Items
+
+That there are a couple of instances in which Orca will also include the descendants of a UI
+component in the presentation of that component:
+
+1. Status bars. Because status bars are normally not focusable, Orca provides a
+["Where Am I?" command](https://gnome.pages.gitlab.gnome.org/orca/help/commands_where_am_i.html)
+to speak the contents of the status bar.
+2. Focusable list items. GTK `ListItem`s containing multiple descendants are becoming increasingly
+common in applications. Some application developers have stated that Orca should automatically present
+all of the displayed information inside a `ListItem` when it becomes focused. This change was made
+in Orca v47.
+
+Because some application developers use the accessible name as a means to make Orca present the
+full contents of the list item, Orca has filtering which attempts to eliminate presentation of
+descendants whose contents are in reflected in the name. Since the release of Orca v47, it was
+discovered that this filtering is insufficient for some applications. It is being increased in
+Orca v47.2. However, we recommend that application developers do not expose the full contents of
+a focusable list item in that item's accessible name, and to file a bug if Orca fails to present
+the list item correctly.
+
+### Tables
+
+When a user navigates among rows in a table/grid, sometimes the full row should be presented;
+other times just the current cell/item. It can be difficult to programmatically determine which
+makes sense for any given application. In addition, user needs and preferences vary. For these
+reasons, the amount Orca reads when arrowing up or down in a container with the accessible `table`
+role is a [user-configurable option](https://gnome.pages.gitlab.gnome.org/orca/help/preferences_speech.html)
+which can be set on a [per-application basis](https://gnome.pages.gitlab.gnome.org/orca/help/preferences_introduction.html)
+and customized by the type of table (GUI, spreadsheet, and document).
 
 ## Speaking Your Application's Non-Focusable Static Text
 
@@ -77,6 +143,14 @@ Examples:
 * If there is an on-screen message associated with a group of widgets, set the accessible description
   of that group to the on-screen message. As stated in the previous section, Orca will present the
   name and description of new ancestors prior to presenting the focused object.
+
+When using this technique, keep in mind that the description is the last thing presented for any
+object. Taking the "Permissions" group example from the previous section, that means Orca will say:
+
+* "Permissions panel", followed by the description of that group
+* "Allow access to microphone checkbox. Not checked.", followed by the description of the checkbox
+
+If the static text should not be presented last, a different technique might be advisable.
 
 **Note:** Orca v47.alpha or later is required to have Orca present the accessible description, and
 any changes to that description, on *ancestors* of the object of interest. In Orca v46 and earlier,
