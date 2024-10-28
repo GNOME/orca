@@ -95,7 +95,7 @@ you will need to make these updates within your application.
 
 ### Status Bars and Focusable List Items
 
-That there are a couple of instances in which Orca will also include the descendants of a UI
+There are a couple of instances in which Orca will also include the descendants of a UI
 component in the presentation of that component:
 
 1. Status bars. Because status bars are normally not focusable, Orca provides a
