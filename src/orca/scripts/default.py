@@ -1255,7 +1255,7 @@ class Script(script.Script):
         if not event.any_data.strip():
             return
 
-        focus_string = f"{AXObject.get_name(obj)} {AXObject.get_description(obj)}"
+        focus_string = f"{AXObject.get_name(focus)} {AXObject.get_description(focus)}"
         if self.utilities.stringsAreRedundant(focus_string, event.any_data):
             return
 
