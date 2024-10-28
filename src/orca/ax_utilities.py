@@ -584,6 +584,10 @@ class AXUtilities:
         if AXUtilitiesRole.is_list(obj) or AXUtilitiesRole.is_list_box(obj):
             obj = AXObject.find_descendant(obj, AXUtilitiesRole.is_list_item)
 
+        child_count = AXObject.get_child_count(AXObject.get_parent(obj))
+        if child_count > 500:
+            return child_count
+
         members = AXUtilities.get_set_members(obj)
         return len(members)
 
@@ -618,6 +622,10 @@ class AXUtilities:
             selected_children = AXSelection.get_selected_children(obj)
             if len(selected_children) == 1:
                 obj = selected_children[0]
+
+        child_count = AXObject.get_child_count(AXObject.get_parent(obj))
+        if child_count > 500:
+            return AXObject.get_index_in_parent(obj)
 
         members = AXUtilities.get_set_members(obj)
         if obj not in members:

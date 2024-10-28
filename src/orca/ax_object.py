@@ -826,6 +826,10 @@ class AXObject:
             return
 
         child_count = AXObject.get_child_count(obj)
+        if child_count > 500:
+            tokens = ["AXObject:", obj, "has more than 500 children"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+
         for index in range(child_count):
             child = AXObject.get_child(obj, index)
             if child is not None and (pred is None or pred(child)):
