@@ -571,6 +571,14 @@ class LiveRegionManager:
     def flushMessages(self):
         self.msg_queue.clear()
 
+        # This function is called as part of presentation interrupt. One of the times we interrupt
+        # presentation is in response to a key press. The motivation for clearing the last message
+        # details is to prevent concluding incorrectly that a live region message is duplicate.
+        # For instance, if the same live region message results from two different back-to-back key
+        # presses, both of those messages should be presented.
+        self._last_presented_message = ""
+        self._last_presented_timestamp = None
+
     def _cacheMessage(self, utts):
         """Cache a message in our cache list of length CACHE_SIZE"""
         self.msg_cache.append(utts)
