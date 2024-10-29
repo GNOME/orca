@@ -927,7 +927,7 @@ class Script(default.Script):
             super().presentObject(obj, **args)
             return
 
-        if AXUtilities.is_status_bar(obj):
+        if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
             super().presentObject(obj, **args)
