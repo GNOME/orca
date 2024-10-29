@@ -244,8 +244,8 @@ class EventManager:
         # Text insertions in the text role are typically something we want to handle.
         if AXUtilities.is_text(event.source):
             return False
-        # Notifications are something we want to handle.
-        if AXUtilities.is_notification(event.source):
+        # Notifications and alerts are things we want to handle.
+        if AXUtilities.is_notification(event.source) or AXUtilities.is_alert(event.source):
             return False
 
         # Keep these checks early in the process so we can assume them throughout
