@@ -1134,6 +1134,10 @@ class Utilities(script_utilities.Utilities):
             if xStart == xEnd or not xString:
                 return False
 
+            if AXUtilities.is_table_cell_or_header(obj) \
+               and AXUtilities.is_table_cell_or_header(xObj) and obj != xObj:
+                return False
+
             xExtents = self.getExtents(xObj, xStart, xStart + 1)
             return self.extentsAreOnSameLine(extents, xExtents)
 
