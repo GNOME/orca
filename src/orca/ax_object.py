@@ -705,6 +705,14 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return Atspi.Role.INVALID
 
+        # Handle the fact that GTK4 is not following the Core-AAM mappings and is instead exposing
+        # roles that should be exposed as PANEL as GROUPING. This is not a problem in Orca v48
+        # because it has explicit handling for the GROUPING role. Back porting the necessary logic
+        # to v47 is a bigger change than I would like to make for a stable version. Therefore if
+        # we are given a GROUPING, pretend we were given a PANEL.
+        if role == Atspi.Role.GROUPING:
+            role = Atspi.Role.PANEL
+
         AXObject._set_known_dead_status(obj, False)
         return role
 
