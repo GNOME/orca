@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2024-09-01 07:58+0000\n"
-"PO-Revision-Date: 2024-09-03 03:07+0330\n"
+"POT-Creation-Date: 2024-10-30 08:37+0000\n"
+"PO-Revision-Date: 2024-11-04 13:02+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: \n"
 "Language: fa\n"
@@ -3385,8 +3385,8 @@ msgstr "نقطهٔ _۷"
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
 #. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:103 src/orca/orca-setup.ui:2308 src/orca/orca-setup.ui:2408
-#: src/orca/orca-setup.ui:3327
+#: src/orca/guilabels.py:103 src/orca/orca-setup.ui:2308
+#: src/orca/orca-setup.ui:2408 src/orca/orca-setup.ui:3327
 msgid "Dot _8"
 msgstr "نقطهٔ _۸"
 
@@ -3394,8 +3394,8 @@ msgstr "نقطهٔ _۸"
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
 #. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
-#: src/orca/guilabels.py:109 src/orca/orca-setup.ui:2324 src/orca/orca-setup.ui:2424
-#: src/orca/orca-setup.ui:3343
+#: src/orca/guilabels.py:109 src/orca/orca-setup.ui:2324
+#: src/orca/orca-setup.ui:2424 src/orca/orca-setup.ui:3343
 msgid "Dots 7 an_d 8"
 msgstr "نقطه‌های ۷ _و ۸"
 
@@ -4026,13 +4026,13 @@ msgstr "برداشتن نمایهٔ کاربری"
 #: src/orca/guilabels.py:565
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved in this "
-"profile will be lost. Do you want to continue and remove this profile and all "
-"related settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in "
+"this profile will be lost. Do you want to continue and remove this profile and "
+"all related settings?"
 msgstr ""
-"دارید نمایهٔ %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نمایه ذخیره "
-"شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نمایه را با همهٔ تنظیمات مربوطه "
-"بردارید؟"
+"دارید نمایهٔ %s را برمی‌دارید. همهٔ تنظیمات ذخیره نشده و آن‌هایی که در این نمایه "
+"ذخیره شده‌اند از دست خواهند رفت. می‌خواهید ادامه داده و این نمایه را با همهٔ "
+"تنظیمات مربوطه بردارید؟"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "All" means that Orca will present progress bar
@@ -4696,7 +4696,8 @@ msgstr "به کار انداختن ناوش _ساختار یافته"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:1013 src/orca/orca-setup.ui:1464 src/orca/orca-setup.ui:2208
+#: src/orca/guilabels.py:1013 src/orca/orca-setup.ui:1464
+#: src/orca/orca-setup.ui:2208
 msgid "Brie_f"
 msgstr "_کوتاه"
 
@@ -8747,12 +8748,13 @@ msgstr "دانستن بیش‌تر.  زدن گریز برای خروج."
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the screen "
 "reader’s documentation, press F1. To get a list of the screen reader’s default "
-"shortcuts, press F2. To get a list of the screen reader’s shortcuts for the current "
-"application, press F3. To exit learn mode, press the escape key."
+"shortcuts, press F2. To get a list of the screen reader’s shortcuts for the "
+"current application, press F3. To exit learn mode, press the escape key."
 msgstr ""
-"وارد شدن به حالت آموزش.  زدن خر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن مستندات "
-"صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن F3 برای گرفتن "
-"سیاههٔ میان‌برهای صفحه‌خوان برای برنامهٔ کنونی. زدن کلید گریز برای خروج از حالت آموزش."
+"وارد شدن به حالت آموزش.  زدن خر کلیدی برای شنیدن کاراییش.  زدن F1 برای دیدن "
+"مستندات صفحه‌خوان. زدن F2 برای گرفتن سیاههٔ میان‌برهای پیش‌گزیدهٔ صفحه‌خوان. زدن F3 "
+"برای گرفتن سیاههٔ میان‌برهای صفحه‌خوان برای برنامهٔ کنونی. زدن کلید گریز برای خروج "
+"از حالت آموزش."
 
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
@@ -10866,8 +10868,8 @@ msgstr[1] "%d درصد از سند خوانده شد"
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
-msgstr[0] "%d پیکسل"
-msgstr[1] "%d پیکسل"
+msgstr[0] "%d تصدانه"
+msgstr[1] "%d تصدانه"
 
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
@@ -12261,7 +12263,8 @@ msgid "Display Settings"
 msgstr "تنظیمات نمایشگر"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to underline certain characters.
-#: src/orca/orca-setup.ui:2276 src/orca/orca-setup.ui:2376 src/orca/orca-setup.ui:3295
+#: src/orca/orca-setup.ui:2276 src/orca/orca-setup.ui:2376
+#: src/orca/orca-setup.ui:3295
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_هیچ‌کدام"
@@ -12447,15 +12450,15 @@ msgstr "ویژگی‌های متن"
 #.
 #: src/orca/phonnames.py:53
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : "
-"hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : "
-"oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : "
-"victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, "
+"h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, "
+"o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, "
+"v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, خ : "
-"خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : شال, ص : "
-"صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : قند, ک : "
-"کبوتر, گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
+"ا : آبان, ب : بستنی, پ : پسته, ت : تانک, ث : ثریا, ج : جوجه, چ : چای, ح : حوله, "
+"خ : خمیر, د : دانیال, ذ : ذبیح, ر : راننده, ز : زمین, ژ : ژاله, س : سنگ, ش : "
+"شال, ص : صابون, ض : ضریح, ط : طلا, ظ : ظالم, ع : عسل, غ : غرفه, ف : فانوس, ق : "
+"قند, ک : کبوتر, گ : گل, ل : لوله, م : ماه, ن : نان, و : وان, ه : هسته, ی : یاس"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -12642,7 +12645,7 @@ msgstr "سبک بند"
 #: src/orca/text_attribute_names.py:187
 msgctxt "textattr"
 msgid "pixels above lines"
-msgstr "پیکسل بالای خط‌ها"
+msgstr "تصدانه بالای خط‌ها"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave below each newline-terminated line.
@@ -12652,7 +12655,7 @@ msgstr "پیکسل بالای خط‌ها"
 #: src/orca/text_attribute_names.py:194
 msgctxt "textattr"
 msgid "pixels below lines"
-msgstr "پیکسل زیر خط‌ها"
+msgstr "تصدانه زیر خط‌ها"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave between wrapped lines inside the same newline-terminated line
@@ -13777,11 +13780,11 @@ msgstr "نوشتار"
 #~ msgstr "برای تغییر از کلیدهای جهتی استفاده کنید."
 
 #~ msgid ""
-#~ "To navigate, press left or right arrow. To move through items press up or down "
-#~ "arrow."
+#~ "To navigate, press left or right arrow. To move through items press up or "
+#~ "down arrow."
 #~ msgstr ""
-#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، کلیدهای "
-#~ "بالا یا پایین را بفشارید."
+#~ "برای ناوبری، کلید جهت‌های راست و چپ را بفشارید. برای حرکت میان گزینه‌ها، "
+#~ "کلیدهای بالا یا پایین را بفشارید."
 
 #~ msgid "To enter sub menu, press right arrow."
 #~ msgstr "برای ورود به زیرمنو، کلید جهت راست را فشار دهید."
@@ -13790,8 +13793,8 @@ msgstr "نوشتار"
 #~ "To decrease press left arrow, to increase press right arrow. To go to minimum "
 #~ "press home, and for maximum press end."
 #~ msgstr ""
-#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. برای "
-#~ "حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
+#~ "برای کاهش کلید جهت چپ را فشار دهید، برای افزایش کلید جهت راست را فشار دهید. "
+#~ "برای حداقل کلید خانه و برای حداکثر کلید پایان را فشار دهید."
 
 #~ msgctxt "structural navigation"
 #~ msgid "Interal Frames"
