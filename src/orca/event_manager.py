@@ -239,6 +239,11 @@ class EventManager:
 
         # Events on the window itself are typically something we want to handle.
         if AXUtilities.is_frame(event.source):
+            app = AXUtilities.get_application(event.source)
+            if AXObject.get_name(app) == "mutter-x11-frames":
+                msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
             return False
 
         # Text insertions in the text role are typically something we want to handle.
@@ -258,7 +263,7 @@ class EventManager:
             return False
 
         last_app, last_time = self._event_history.get(event_type, (None, 0))
-        app = AXUtilities.get_application(event.source, sanity_check=False)
+        app = AXUtilities.get_application(event.source)
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
         self._event_history[event_type] = hash(app), time.time()
         if ignore:

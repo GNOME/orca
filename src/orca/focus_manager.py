@@ -250,13 +250,7 @@ class FocusManager:
         elif frame is None:
             self._window = None
         else:
-            real_app, real_frame = AXUtilities.find_real_app_and_window_for(frame, app)
-            if real_frame != frame:
-                tokens = ["FOCUS MANAGER: Correcting active window to", real_frame, "in", real_app]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                self._window = real_frame
-            else:
-                self._window = frame
+            self._window = frame
 
         if set_window_as_focus:
             self.set_locus_of_focus(None, self._window, notify_script)

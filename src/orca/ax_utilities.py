@@ -97,7 +97,6 @@ class AXUtilities:
 
         AXUtilities._clear_all_dictionaries(reason)
         AXObject.clear_cache_now(reason)
-        AXUtilitiesApplication.clear_cache_now(reason)
         AXUtilitiesRelation.clear_cache_now(reason)
         AXUtilitiesEvent.clear_cache_now(reason)
         if AXUtilitiesRole.is_table_related(obj):

@@ -1046,9 +1046,6 @@ class Script(script.Script):
         """Callback for object:state-changed:active accessibility events."""
 
         window = event.source
-        if AXUtilities.is_application(AXObject.get_parent(event.source)):
-            window = AXUtilities.find_real_app_and_window_for(event.source)[1]
-
         if AXUtilities.is_dialog_or_alert(window) or AXUtilities.is_frame(window):
             if event.detail1 and not AXUtilities.can_be_active_window(window):
                 return
@@ -1599,25 +1596,24 @@ class Script(script.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        window = AXUtilities.find_real_app_and_window_for(event.source)[1]
-        if not AXUtilities.can_be_active_window(window):
+        if not AXUtilities.can_be_active_window(event.source):
             return
 
-        if window == focus_manager.get_manager().get_active_window():
+        if event.source == focus_manager.get_manager().get_active_window():
             msg = "DEFAULT: Event is for active window."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self.point_of_reference = {}
 
-        focus_manager.get_manager().set_active_window(window)
-        if AXObject.get_child_count(window) == 1:
-            child = AXObject.get_child(window, 0)
+        focus_manager.get_manager().set_active_window(event.source)
+        if AXObject.get_child_count(event.source) == 1:
+            child = AXObject.get_child(event.source, 0)
             if AXUtilities.is_menu(child):
                 focus_manager.get_manager().set_locus_of_focus(event, child)
                 return
 
-        focus_manager.get_manager().set_locus_of_focus(event, window)
+        focus_manager.get_manager().set_locus_of_focus(event, event.source)
 
     def on_window_created(self, event):
         """Callback for window:create accessibility events."""

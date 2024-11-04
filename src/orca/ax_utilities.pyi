@@ -89,9 +89,6 @@ class AXUtilities:
     def application_as_string(obj): ...
 
     @staticmethod
-    def find_real_app_and_window_for(obj, app=None): ...
-
-    @staticmethod
     def get_all_applications(must_have_window=False, exclude_unresponsive=False): ...
 
     @staticmethod
