@@ -1713,25 +1713,9 @@ class Script(default.Script):
     def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        if not self.utilities.inDocumentContent(event.source):
-            msg = "WEB: Event source is not in document content"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        obj, offset = self.utilities.getCaretContext()
-        if obj != event.source:
-            msg = "WEB: Event source is not context object"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if not (self.caret_navigation.last_input_event_was_navigation_command() \
-           and AXUtilities.is_radio_button(obj)):
-            msg = "WEB: Event is something default can handle"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        self.presentObject(obj, alreadyFocused=True, interrupt=True)
-        return True
+        msg = "WEB: This event is is handled by the toolkit or default script."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return False
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""

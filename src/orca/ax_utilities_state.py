@@ -34,9 +34,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import threading
-import time
-
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -47,122 +44,6 @@ from .ax_object import AXObject
 
 class AXUtilitiesState:
     """Utilities for obtaining state-related information."""
-
-    LAST_KNOWN_CHECKED = {}
-    LAST_KNOWN_EXPANDED = {}
-    LAST_KNOWN_INDETERMINATE = {}
-    LAST_KNOWN_PRESSED = {}
-    LAST_KNOWN_SELECTED = {}
-
-    _lock = threading.Lock()
-
-    @staticmethod
-    def _clear_stored_data():
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            AXUtilitiesState._clear_all_dictionaries()
-
-    @staticmethod
-    def _clear_all_dictionaries(reason=""):
-        msg = "AXUtilitiesState: Clearing local cache."
-        if reason:
-            msg += f" Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        with AXUtilitiesState._lock:
-            AXUtilitiesState.LAST_KNOWN_CHECKED.clear()
-            AXUtilitiesState.LAST_KNOWN_EXPANDED.clear()
-            AXUtilitiesState.LAST_KNOWN_INDETERMINATE.clear()
-            AXUtilitiesState.LAST_KNOWN_PRESSED.clear()
-            AXUtilitiesState.LAST_KNOWN_SELECTED.clear()
-
-    @staticmethod
-    def clear_cache_now(reason=""):
-        """Clears all cached information immediately."""
-
-        AXUtilitiesState._clear_all_dictionaries(reason)
-
-    @staticmethod
-    def start_cache_clearing_thread():
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXUtilitiesState._clear_stored_data)
-        thread.daemon = True
-        thread.start()
-
-    @staticmethod
-    def save_state_info(obj):
-        """Saves some state info to be used with subsequent state-changed events."""
-
-        AXUtilitiesState.LAST_KNOWN_CHECKED[hash(obj)] = AXUtilitiesState.is_checked(obj)
-        AXUtilitiesState.LAST_KNOWN_EXPANDED[hash(obj)] = AXUtilitiesState.is_expanded(obj)
-        AXUtilitiesState.LAST_KNOWN_INDETERMINATE[hash(obj)] = \
-            AXUtilitiesState.is_indeterminate(obj)
-        AXUtilitiesState.LAST_KNOWN_PRESSED[hash(obj)] = AXUtilitiesState.is_pressed(obj)
-        AXUtilitiesState.LAST_KNOWN_SELECTED[hash(obj)] = AXUtilitiesState.is_selected(obj)
-
-    @staticmethod
-    def checked_state_did_change(obj):
-        """Returns True if the checked state of obj is known to have changed."""
-
-        old_value = AXUtilitiesState.LAST_KNOWN_CHECKED.get(hash(obj))
-        new_value = AXUtilitiesState.is_checked(obj)
-        result = old_value != new_value
-        tokens = ["AXUtilitiesState: Checked state of", obj, f"was {old_value}, is {new_value}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        AXUtilitiesState.LAST_KNOWN_CHECKED[hash(obj)] = new_value
-        return result
-
-    @staticmethod
-    def expanded_state_did_change(obj):
-        """Returns True if the expanded state of obj is known to have changed."""
-
-        old_value = AXUtilitiesState.LAST_KNOWN_EXPANDED.get(hash(obj))
-        new_value = AXUtilitiesState.is_expanded(obj)
-        result = old_value != new_value
-        tokens = ["AXUtilitiesState: Expanded state of", obj, f"was {old_value}, is {new_value}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        AXUtilitiesState.LAST_KNOWN_EXPANDED[hash(obj)] = new_value
-        return result
-
-    @staticmethod
-    def indeterminate_state_did_change(obj):
-        """Returns True if the indeterminate state of obj is known to have changed."""
-
-        old_value = AXUtilitiesState.LAST_KNOWN_INDETERMINATE.get(hash(obj))
-        new_value = AXUtilitiesState.is_indeterminate(obj)
-        result = old_value != new_value
-        tokens = ["AXUtilitiesState: Indeterminate state of", obj, f"was {old_value},",
-                  f"is {new_value}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        AXUtilitiesState.LAST_KNOWN_INDETERMINATE[hash(obj)] = new_value
-        return result
-
-    @staticmethod
-    def pressed_state_did_change(obj):
-        """Returns True if the pressed state of obj is known to have changed."""
-
-        old_value = AXUtilitiesState.LAST_KNOWN_PRESSED.get(hash(obj))
-        new_value = AXUtilitiesState.is_pressed(obj)
-        result = old_value != new_value
-        tokens = ["AXUtilitiesState: Pressed state of", obj, f"was {old_value}, is {new_value}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        AXUtilitiesState.LAST_KNOWN_PRESSED[hash(obj)] = new_value
-        return result
-
-    @staticmethod
-    def selected_state_did_change(obj):
-        """Returns True if the selected state of obj is known to have changed."""
-
-        old_value = AXUtilitiesState.LAST_KNOWN_SELECTED.get(hash(obj))
-        new_value = AXUtilitiesState.is_selected(obj)
-        result = old_value != new_value
-        tokens = ["AXUtilitiesState: Selected state of", obj, f"was {old_value}, is {new_value}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        AXUtilitiesState.LAST_KNOWN_SELECTED[hash(obj)] = new_value
-        return result
 
     @staticmethod
     def has_no_state(obj):
@@ -478,5 +359,3 @@ class AXUtilitiesState:
         """Returns true if obj has the supports-autocompletion state"""
 
         return AXObject.has_state(obj, Atspi.StateType.SUPPORTS_AUTOCOMPLETION)
-
-AXUtilitiesState.start_cache_clearing_thread()

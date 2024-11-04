@@ -607,28 +607,7 @@ class Script(script.Script):
 
     def _save_focused_object_info(self, obj):
         """Saves some basic information about obj. Note that this method is
-        intended to be called primarily (if not only) by locus_of_focus_changed().
-        It is expected that accessible event callbacks will update the point
-        of reference data specific to that event. The goal here is to weed
-        out duplicate events."""
-
-        if not obj:
-            return
-
-        # We want to save the name because some apps and toolkits emit name
-        # changes after the focus or selection has changed, even though the
-        # name has not.
-        name = AXObject.get_name(obj)
-        names = self.point_of_reference.get('names', {})
-        names[hash(obj)] = name
-        window = focus_manager.get_manager().get_active_window()
-        if window:
-            names[hash(window)] = AXObject.get_name(window)
-        self.point_of_reference['names'] = names
-
-        descriptions = self.point_of_reference.get('descriptions', {})
-        descriptions[hash(obj)] = AXObject.get_description(obj)
-        self.point_of_reference['descriptions'] = descriptions
+        intended to be called primarily (if not only) by locus_of_focus_changed()."""
 
         # We want to save the offset for text objects because some apps and
         # toolkits emit caret-moved events immediately after a text object
@@ -644,7 +623,7 @@ class Script(script.Script):
         self.point_of_reference['lastColumn'] = column
         self.point_of_reference['lastRow'] = row
 
-        AXUtilities.save_state_info(obj)
+        AXUtilities.save_object_info_for_events(obj)
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes.
@@ -1099,46 +1078,17 @@ class Script(script.Script):
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        if not event.any_data:
-            msg = "DEFAULT: Ignoring event. No any_data."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        if not AXUtilities.is_focused(event.source) \
-           and not AXUtilities.is_focused(event.any_data):
-            msg = "DEFAULT: Ignoring event. Neither source nor child have focused state."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        tokens = ["DEFAULT: Setting locus of focus to any_data", event.any_data]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
+        if AXUtilities.is_presentable_active_descendant_change(event):
+            focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
 
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
-        pass
 
     def on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
 
-        if not AXUtilities.checked_state_did_change(event.source):
-            return
-
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            return
-
-        if AXUtilities.is_expandable(event.source):
-            return
-
-        # Radio buttons normally change their state when you arrow to them,
-        # so we handle the announcement of their state changes in the focus
-        # handling code.  However, we do need to handle radio buttons where
-        # the user needs to press the space key to select them.
-        if AXUtilities.is_radio_button(event.source) \
-           and not input_event_manager.get_manager().last_event_was_space():
-            return
-
-        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+        if AXUtilities.is_presentable_checked_change(event):
+            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
@@ -1208,30 +1158,8 @@ class Script(script.Script):
     def on_description_changed(self, event):
         """Callback for object:property-change:accessible-description events."""
 
-        obj = event.source
-        descriptions = self.point_of_reference.get('description', {})
-        oldDescription = descriptions.get(hash(obj))
-        if oldDescription == event.any_data:
-            tokens = ["DEFAULT: Old description (", oldDescription, ") is the same as new one"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if obj != focus and not AXObject.is_ancestor(focus, obj):
-            msg = "DEFAULT: Event is for object other than the locusOfFocus or ancestor"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        descriptions[hash(obj)] = event.any_data
-        self.point_of_reference['descriptions'] = descriptions
-        if not event.any_data.strip():
-            return
-
-        focus_string = f"{AXObject.get_name(focus)} {AXObject.get_description(focus)}"
-        if self.utilities.stringsAreRedundant(focus_string, event.any_data):
-            return
-
-        self.presentMessage(event.any_data)
+        if AXUtilities.is_presentable_description_change(event):
+            self.presentMessage(event.any_data)
 
     def on_document_attributes_changed(self, event):
         """Callback for document:attributes-changed accessibility events."""
@@ -1259,11 +1187,8 @@ class Script(script.Script):
     def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
-        if not AXUtilities.expanded_state_did_change(event.source):
-            return
-
         AXUtilities.clear_all_cache_now(event.source, "expanded-changed event.")
-        if not self.utilities.isPresentableExpandedChangedEvent(event):
+        if not AXUtilities.is_presentable_expanded_change(event):
             return
 
         self.presentObject(event.source, alreadyFocused=True, interrupt=True)
@@ -1274,20 +1199,8 @@ class Script(script.Script):
     def on_indeterminate_changed(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
 
-        if not AXUtilities.indeterminate_state_did_change(event.source):
-            return
-
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            return
-
-        # If this state is cleared, the new state will become checked or unchecked
-        # and we should get object:state-changed:checked events for those cases.
-        # Therefore, if the state is not now indeterminate/partially checked,
-        # ignore this event.
-        if not event.detail1:
-            return
-
-        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+        if AXUtilities.is_presentable_indeterminate_change(event):
+            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def on_mouse_button(self, event):
         """Callback for mouse:button events."""
@@ -1303,42 +1216,7 @@ class Script(script.Script):
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        names = self.point_of_reference.get('names', {})
-        oldName = names.get(hash(event.source))
-        if oldName == event.any_data:
-            tokens = ["DEFAULT: Old name (", oldName, ") is the same as new name"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        if AXUtilities.is_combo_box(event.source) or AXUtilities.is_table_cell(event.source):
-            msg = "DEFAULT: Event is redundant notification for this role"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        if AXUtilities.is_frame(event.source):
-            if event.source != focus_manager.get_manager().get_active_window():
-                msg = "DEFAULT: Event is for frame other than the active window"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return
-            focus = focus_manager.get_manager().get_locus_of_focus()
-            if AXUtilities.is_editable(focus) and AXText.get_character_count(focus) \
-               and AXText.get_all_text(focus) in event.any_data:
-                msg = "DEFAULT: Event is redundant notification for the locusOfFocus"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return
-            if AXObject.get_name(focus) == event.any_data:
-                msg = "DEFAULT: Event is redundant notification for the locusOfFocus"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return
-
-        elif event.source != focus_manager.get_manager().get_locus_of_focus():
-            msg = "DEFAULT: Event is for object other than the locusOfFocus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        names[hash(event.source)] = event.any_data
-        self.point_of_reference['names'] = names
-        if event.any_data:
+        if AXUtilities.is_presentable_name_change(event):
             self.presentMessage(event.any_data)
 
     def on_object_attributes_changed(self, event):
@@ -1349,32 +1227,13 @@ class Script(script.Script):
     def on_pressed_changed(self, event):
         """Callback for object:state-changed:pressed accessibility events."""
 
-        if not AXUtilities.pressed_state_did_change(event.source):
-            return
-
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            msg = "DEFAULT: Event is not for locusOfFocus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+        if AXUtilities.is_presentable_pressed_change(event):
+            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
 
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        if not AXUtilities.selected_state_did_change(event.source):
-            return
-
-        if event.detail1 and AXUtilities.is_page_tab(event.source) \
-           and not AXUtilities.is_showing(event.source):
-            AXObject.clear_cache(event.source, False, "selected page tab lacks showing state")
-            if AXUtilities.is_showing(event.source):
-                msg = "DEFAULT: Event source is now showing"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            msg = "DEFAULT: Event is not for locusOfFocus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if not AXUtilities.is_presentable_selected_change(event):
             return
 
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):

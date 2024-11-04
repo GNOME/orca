@@ -2249,17 +2249,6 @@ class Utilities:
         textSelections[hash(obj)] = start, end, string
         self._script.point_of_reference['textSelections'] = textSelections
 
-    def isPresentableExpandedChangedEvent(self, event):
-        if event.source == focus_manager.get_manager().get_locus_of_focus():
-            return True
-
-        if AXUtilities.is_table_row(event.source) or AXUtilities.is_list_box(event.source):
-            return True
-
-        if AXUtilities.is_combo_box(event.source) or AXUtilities.is_button(event.source):
-            return AXUtilities.is_focused(event.source)
-
-        return False
 
     def isPresentableTextChangedEventForLocusOfFocus(self, event):
         if not event.type.startswith("object:text-changed:") \

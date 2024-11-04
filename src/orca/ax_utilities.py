@@ -47,6 +47,7 @@ from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
+from .ax_utilities_event import AXUtilitiesEvent
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
@@ -98,7 +99,7 @@ class AXUtilities:
         AXObject.clear_cache_now(reason)
         AXUtilitiesApplication.clear_cache_now(reason)
         AXUtilitiesRelation.clear_cache_now(reason)
-        AXUtilitiesState.clear_cache_now(reason)
+        AXUtilitiesEvent.clear_cache_now(reason)
         if AXUtilitiesRole.is_table_related(obj):
             AXTable.clear_cache_now(reason)
 
@@ -641,6 +642,9 @@ class AXUtilities:
 
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesEvent, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):
