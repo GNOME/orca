@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import re
 
-from orca import debug
 from orca import script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -113,14 +112,3 @@ class Utilities(script_utilities.Utilities):
         red, green, blue = string.split(",")
 
         return int(red) >> 8, int(green) >> 8, int(blue) >> 8
-
-    def eventIsCanvasNoise(self, event):
-        if not AXUtilities.is_canvas(event.source):
-            return False
-
-        if not self.topLevelObjectIsActiveWindow(event.source):
-            msg = "GTK: Event is believed to be canvas noise"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return False

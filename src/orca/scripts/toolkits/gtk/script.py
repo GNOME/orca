@@ -213,11 +213,3 @@ class Script(default.Script):
             return
 
         super().on_text_selection_changed(event)
-
-    def is_activatable_event(self, event):
-        """Returns True if event should cause this script to become active."""
-
-        if self.utilities.eventIsCanvasNoise(event):
-            return False
-
-        return super().is_activatable_event(event)

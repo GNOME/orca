@@ -2434,9 +2434,6 @@ class Utilities:
 
         return False
 
-    def eventIsCanvasNoise(self, event):
-        return False
-
     def eventIsSpinnerNoise(self, event):
         return False
 
