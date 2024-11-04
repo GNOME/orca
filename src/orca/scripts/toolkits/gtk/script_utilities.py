@@ -38,12 +38,10 @@ class Utilities(script_utilities.Utilities):
         super().__init__(script)
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
-        self._isUselessPanel = {}
 
     def clearCachedObjects(self):
         self._isComboBoxWithToggleDescendant = {}
         self._isToggleDescendantOfComboBox = {}
-        self._isUselessPanel = {}
 
     def infoBar(self, root):
         return AXObject.find_descendant(root, AXUtilities.is_info_bar)
@@ -108,20 +106,6 @@ class Utilities(script_utilities.Utilities):
     def isEntryCompletionPopupItem(self, obj):
         return AXUtilities.is_table_cell(obj) \
             and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
-
-    def isUselessPanel(self, obj):
-        if not AXUtilities.is_panel(obj):
-            return False
-
-        rv = self._isUselessPanel.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        childCount = AXObject.get_child_count(obj)
-        name = AXObject.get_name(obj)
-        rv = not (name or childCount or AXObject.supports_text(obj))
-        self._isUselessPanel[hash(obj)] = rv
-        return rv
 
     def rgbFromString(self, attributeValue):
         regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)

@@ -115,11 +115,6 @@ class Script(default.Script):
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
-        if self.utilities.isUselessPanel(event.source):
-            msg = "GTK: Event source believed to be useless panel"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXObject.is_ancestor(focus, event.source) and AXUtilities.is_focused(focus):
             msg = "GTK: Ignoring focus change on ancestor of still-focused locusOfFocus"
@@ -223,9 +218,6 @@ class Script(default.Script):
         """Returns True if event should cause this script to become active."""
 
         if self.utilities.eventIsCanvasNoise(event):
-            return False
-
-        if self.utilities.isUselessPanel(event.source):
             return False
 
         return super().is_activatable_event(event)

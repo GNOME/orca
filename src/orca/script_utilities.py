@@ -1925,9 +1925,6 @@ class Utilities:
 
         return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
-    def isUselessPanel(self, obj):
-        return False
-
     def rgbFromString(self, attributeValue):
         regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)
         string = re.sub(regex, "", attributeValue)
