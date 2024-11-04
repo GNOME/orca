@@ -153,7 +153,7 @@ class AXUtilitiesApplication:
         return real_app, real_frame
 
     @staticmethod
-    def get_all_applications(must_have_window=False, exclude_unresponsive=False):
+    def get_all_applications(must_have_window=False, exclude_unresponsive=False, is_debug=False):
         """Returns a list of running applications known to Atspi."""
 
         desktop = AXUtilitiesApplication.get_desktop()
@@ -165,12 +165,14 @@ class AXUtilitiesApplication:
                 return False
             if must_have_window:
                 return AXObject.get_child_count(obj) > 0
+            if AXObject.get_name(obj) == "mutter-x11-frames":
+                return is_debug
             return True
 
         return list(AXObject.iter_children(desktop, pred))
 
     @staticmethod
-    def get_application(obj):
+    def get_application(obj, sanity_check=True):
         """Returns the accessible application associated with obj"""
 
         if obj is None:
@@ -187,7 +189,7 @@ class AXUtilitiesApplication:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
-        if AXObject.get_name(app) != "mutter-x11-frames":
+        if not sanity_check or AXObject.get_name(app) != "mutter-x11-frames":
             return app
 
         real_app = AXUtilitiesApplication.find_real_app_and_window_for(obj, app)[0]

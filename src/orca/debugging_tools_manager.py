@@ -213,7 +213,7 @@ class DebuggingToolsManager:
     def _get_running_applications_as_string_iter(self, is_command_line):
         """Generator providing strings with basic details about the running accessible apps."""
 
-        applications = AXUtilities.get_all_applications()
+        applications = AXUtilities.get_all_applications(is_debug=True)
         msg = f"Desktop has {len(applications)} apps:"
         if not is_command_line:
             msg = f"DEBUGGING TOOLS MANAGER: {msg}"

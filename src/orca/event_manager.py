@@ -258,11 +258,17 @@ class EventManager:
             return False
 
         last_app, last_time = self._event_history.get(event_type, (None, 0))
-        app = AXUtilities.get_application(event.source)
+        app = AXUtilities.get_application(event.source, sanity_check=False)
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
         self._event_history[event_type] = hash(app), time.time()
         if ignore:
             msg = f"EVENT_MANAGER: Ignoring {event_type} due to multiple instances in short time"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        # mutter-x11-frames is firing accessibility events. We will never present them.
+        if AXObject.get_name(app) == "mutter-x11-frames":
+            msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
