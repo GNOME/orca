@@ -32,7 +32,6 @@ from orca import input_event
 from orca.scripts import default
 from orca import settings_manager
 from orca.scripts.toolkits import Gecko
-from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -300,33 +299,6 @@ class Script(Gecko.Script):
             return
 
         super().on_name_changed(event)
-
-    def _presentMessage(self, documentFrame):
-        """Presents the first line of the message, or the entire message,
-        depending on the user's sayAllOnLoad setting."""
-
-        [obj, offset] = self.utilities.findFirstCaretContext(documentFrame, 0)
-        self.utilities.setCaretPosition(obj, offset)
-        self.update_braille(obj)
-
-        if settings_manager.get_manager().get_setting('pageSummaryOnLoad'):
-            tokens = ["THUNDERBIRD: Getting page summary for", documentFrame]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            summary = AXDocument.get_document_summary(documentFrame)
-            if summary:
-                self.presentMessage(summary)
-
-        if not settings_manager.get_manager().get_setting('sayAllOnLoad'):
-            msg = "THUNDERBIRD: SayAllOnLoad is False. Presenting line."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(obj, offset)
-            self.speakContents(contents)
-            return
-
-        if settings_manager.get_manager().get_setting('enableSpeech'):
-            msg = "THUNDERBIRD: SayAllOnLoad is True and speech is enabled"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.say_all(None)
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
