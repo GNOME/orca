@@ -42,11 +42,6 @@ class Script(Gecko.Script):
     """The script for Thunderbird."""
 
     def __init__(self, app):
-        # Store the last autocompleted string for the address fields
-        # so that we're not too 'chatty'.  See bug #533042.
-        #
-        self._lastAutoComplete = ""
-
         if settings_manager.get_manager().get_setting('sayAllOnLoad') is None:
             settings_manager.get_manager().set_setting('sayAllOnLoad', False)
         if settings_manager.get_manager().get_setting('pageSummaryOnLoad') is None:
@@ -152,7 +147,6 @@ class Script(Gecko.Script):
         if not event.detail1:
             return
 
-        self._lastAutoComplete = ""
         obj = event.source
         if self.spellcheck.isAutoFocusEvent(event):
             focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
@@ -248,30 +242,10 @@ class Script(Gecko.Script):
         if len(event.any_data) > 1 and event.source == self.spellcheck.getChangeToEntry():
             return
 
-        isSystemEvent = event.type.endswith("system")
-
         # Try to stop unwanted chatter when a message is being replied to.
         # See bgo#618484.
-        if isSystemEvent and self.utilities.isEditableMessage(event.source):
+        if event.type.endswith("system") and self.utilities.isEditableMessage(event.source):
             return
-
-        # Speak the autocompleted text, but only if it is different
-        # address so that we're not too "chatty." See bug #533042.
-        if AXUtilities.is_autocomplete(parent):
-            if len(event.any_data) == 1:
-                default.Script.on_text_inserted(self, event)
-                return
-
-            if self._lastAutoComplete and self._lastAutoComplete in event.any_data:
-                return
-
-            # Mozilla cannot seem to get their ":system" suffix right
-            # to save their lives, so we'll add yet another sad hack.
-            if isSystemEvent or AXText.has_selected_text(event.source):
-                voice = self.speech_generator.voice(obj=event.source, string=event.any_data)
-                self.speakMessage(event.any_data, voice=voice)
-                self._lastAutoComplete = event.any_data
-                return
 
         super().on_text_inserted(event)
 
