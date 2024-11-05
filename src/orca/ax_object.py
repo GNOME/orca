@@ -23,6 +23,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-public-methods
+# pylint: disable=duplicate-code
 
 """Utilities for obtaining information about accessible objects."""
 

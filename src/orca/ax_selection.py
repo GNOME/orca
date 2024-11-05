@@ -20,16 +20,9 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
+# pylint: disable=duplicate-code
 
-"""
-Utilities for obtaining information about containers supporting selection.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
-
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for obtaining information about containers supporting selection."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"

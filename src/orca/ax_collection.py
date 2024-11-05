@@ -20,16 +20,10 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-positional-arguments
+# pylint: disable=duplicate-code
 
-"""
-Utilities for obtaining objects via the collection interface.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
-
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for obtaining objects via the collection interface."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -54,16 +48,25 @@ class AXCollection:
     # This function wraps Atspi.MatchRule.new which has all the arguments.
     # pylint: disable=R0913,R0914
     @staticmethod
-    def create_match_rule(states=[],
+    def create_match_rule(states=None,
                           state_match_type=Atspi.CollectionMatchType.ALL,
-                          attributes=[],
+                          attributes=None,
                           attribute_match_type=Atspi.CollectionMatchType.ANY,
-                          roles=[],
+                          roles=None,
                           role_match_type=Atspi.CollectionMatchType.ANY,
-                          interfaces=[],
+                          interfaces=None,
                           interface_match_type=Atspi.CollectionMatchType.ALL,
                           invert=False):
         """Creates a match rule based on the supplied criteria."""
+
+        if states is None:
+            states = []
+        if attributes is None:
+            attributes = []
+        if roles is None:
+            roles = []
+        if interfaces is None:
+            interfaces = []
 
         state_set = Atspi.StateSet()
         if states:

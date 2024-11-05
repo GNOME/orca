@@ -20,6 +20,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-return-statements
+# pylint: disable=duplicate-code
 
 """Utilities for obtaining event-related information."""
 

@@ -19,8 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# For the "AXUtilities has no ... member"
-# pylint: disable=E1101
+# pylint: disable=duplicate-code
 
 """Custom script for SeaMonkey."""
 
@@ -39,6 +38,7 @@ from orca.scripts.toolkits import Gecko
 
 
 class Script(Gecko.Script):
+    """Custom script for SeaMonkey."""
 
     def setup_input_event_handlers(self):
         """Defines the input event handlers for this script."""

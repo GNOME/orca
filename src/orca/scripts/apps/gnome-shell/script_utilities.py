@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script utilities for gnome-shell."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -33,6 +35,7 @@ from orca.ax_utilities import AXUtilities
 from orca.ax_text import AXText
 
 class Utilities(script_utilities.Utilities):
+    """Custom script utilities for gnome-shell."""
 
     def insertedText(self, event):
         if event.any_data:
@@ -57,12 +60,12 @@ class Utilities(script_utilities.Utilities):
         if not root:
             return []
 
-        def hasRole(x):
+        def has_role(x):
             return AXUtilities.is_dialog(x) \
                 or AXUtilities.is_notification(x) \
                 or AXUtilities.is_menu_item(x)
 
-        if not hasRole(root) and AXObject.find_ancestor(root, hasRole) is None:
+        if not has_role(root) and AXObject.find_ancestor(root, has_role) is None:
             tokens = ["GNOME SHELL: Not seeking unrelated labels for", root]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []

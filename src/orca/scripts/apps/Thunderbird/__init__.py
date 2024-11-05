@@ -17,8 +17,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for Thunderbird 3.
-"""
+# pylint: disable=invalid-name
+# pylint: disable=duplicate-code
+
+"""Custom script for Thunderbird."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"

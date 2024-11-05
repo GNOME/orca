@@ -1590,7 +1590,7 @@ class Script(script.Script):
         self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speech_generator.generate_speech(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
-        self.__play(self.sound_generator.generateSound(
+        self.__play(self.sound_generator.generate_sound(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
 
     def on_window_activated(self, event):

@@ -19,6 +19,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+# pylint: disable=too-many-lines
+# pylint: disable=too-few-public-methods
+# pylint: disable=wrong-import-position
+
 """Utilities for obtaining sounds to be presented for objects."""
 
 __id__        = "$Id:$"
@@ -27,11 +32,11 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
+import os
+
 import gi
 gi.require_version('Atspi', '2.0')
 from gi.repository import Atspi
-
-import os
 
 from . import debug
 from . import generator
@@ -50,9 +55,10 @@ class Icon:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def __str__(self):
-        return f'Icon(path: {self.path}, isValid: {self.isValid()})'
+        return f'Icon(path: {self.path}, is_valid: {self.is_valid()})'
 
-    def isValid(self):
+    def is_valid(self):
+        """Returns True if the path associated with this icon is valid."""
         return os.path.isfile(self.path)
 
 class Tone:
@@ -72,10 +78,10 @@ class Tone:
     INVERTED_PINK_NOISE = 11
     INVERTED_RED_NOISE = 12
 
-    def __init__(self, duration, frequency, volumeMultiplier=1, wave=SINE_WAVE):
+    def __init__(self, duration, frequency, volume_multiplier=1, wave=SINE_WAVE):
         self.duration = duration
         self.frequency = min(max(0, frequency), 20000)
-        self.volume = settings_manager.get_manager().get_setting('soundVolume') * volumeMultiplier
+        self.volume = settings_manager.get_manager().get_setting('soundVolume') * volume_multiplier
         self.wave = wave
 
     def __str__(self):
@@ -93,14 +99,14 @@ class SoundGenerator(generator.Generator):
         super().__init__(script, "sound")
         self._sounds = os.path.join(settings_manager.get_manager().get_prefs_dir(), "sounds")
 
-    def _convertFilenameToIcon(self, filename):
+    def _convert_filename_to_icon(self, filename):
         icon = Icon(self._sounds, filename)
-        if icon.isValid():
+        if icon.is_valid():
             return icon
 
         return None
 
-    def generateSound(self, obj, **args):
+    def generate_sound(self, obj, **args):
         """Returns an array of sounds for the complete presentation of obj."""
 
         if not settings_manager.get_manager().get_setting("enableSound"):
@@ -115,7 +121,7 @@ class SoundGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generate_state_sensitive(self, obj, **args):
+    def _generate_state_sensitive(self, obj, **_args):
         """Returns an array of sounds indicating obj is grayed out."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -125,7 +131,7 @@ class SoundGenerator(generator.Generator):
             return []
 
         filename = object_properties.STATE_INSENSITIVE_SPEECH
-        result = self._convertFilenameToIcon(filename)
+        result = self._convert_filename_to_icon(filename)
         if result:
             return [result]
 
@@ -139,13 +145,13 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_checked(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
         return []
 
-    def _generate_has_click_action(self, obj, **args):
+    def _generate_has_click_action(self, obj, **_args):
         """Returns an array of sounds indicating obj is clickable."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -155,7 +161,7 @@ class SoundGenerator(generator.Generator):
             return []
 
         filename = object_properties.STATE_CLICKABLE_SOUND
-        result = self._convertFilenameToIcon(filename)
+        result = self._convert_filename_to_icon(filename)
         if result:
             return [result]
 
@@ -169,7 +175,7 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_expanded(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
@@ -183,13 +189,13 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_invalid(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
         return []
 
-    def _generate_has_long_description(self, obj, **args):
+    def _generate_has_long_description(self, obj, **_args):
         """Returns an array of sounds indicating obj has a longdesc."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -199,7 +205,7 @@ class SoundGenerator(generator.Generator):
             return []
 
         filename = object_properties.STATE_HAS_LONGDESC_SOUND
-        result = self._convertFilenameToIcon(filename)
+        result = self._convert_filename_to_icon(filename)
         if result:
             return [result]
 
@@ -213,7 +219,7 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_multiselectable(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
@@ -227,7 +233,7 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_selected_for_radio_button(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
@@ -241,7 +247,7 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_read_only(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
@@ -255,7 +261,7 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_required(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
@@ -269,7 +275,7 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_checked_for_switch(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
@@ -283,13 +289,13 @@ class SoundGenerator(generator.Generator):
 
         filenames = super()._generate_state_pressed(obj, **args)
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 
         return []
 
-    def _generate_visited_state(self, obj, **args):
+    def _generate_visited_state(self, obj, **_args):
         """Returns an array of sounds indicating the visited state of obj."""
 
         if not settings_manager.get_manager().get_setting("playSoundForState"):
@@ -299,19 +305,13 @@ class SoundGenerator(generator.Generator):
             return []
 
         filename = object_properties.STATE_VISITED_SOUND
-        result = self._convertFilenameToIcon(filename)
+        result = self._convert_filename_to_icon(filename)
         if result:
             return [result]
 
         return []
 
-    #####################################################################
-    #                                                                   #
-    # Value interface information                                       #
-    #                                                                   #
-    #####################################################################
-
-    def _generate_value_as_percentage(self, obj, **args):
+    def _generate_value_as_percentage(self, obj, **_args):
         """Returns an array of sounds reflecting the percentage of obj."""
 
         if not settings_manager.get_manager().get_setting('playSoundForValue'):
@@ -343,7 +343,7 @@ class SoundGenerator(generator.Generator):
             duration = 0.075
 
         # Reduce volume as pitch increases.
-        volumeMultiplier = 1 - (percent / 120)
+        volume_multiplier = 1 - (percent / 120)
 
         # Adjusting so that the initial beeps are not too deep.
         if percent < 7:
@@ -351,7 +351,7 @@ class SoundGenerator(generator.Generator):
         else:
             frequency = int(percent * 22)
 
-        return [Tone(duration, frequency, volumeMultiplier, Tone.SINE_WAVE)]
+        return [Tone(duration, frequency, volume_multiplier, Tone.SINE_WAVE)]
 
     def _get_progress_bar_update_interval(self):
         interval = settings_manager.get_manager().get_setting('progressBarBeepInterval')
@@ -366,13 +366,7 @@ class SoundGenerator(generator.Generator):
 
         return super()._should_present_progress_bar_update(obj, **args)
 
-    #####################################################################
-    #                                                                   #
-    # Role and hierarchical information                                 #
-    #                                                                   #
-    #####################################################################
-
-    def _generate_position_in_set(self, obj, **args):
+    def _generate_position_in_set(self, _obj, **_args):
         """Returns an array of sounds reflecting the set position of obj."""
 
         if not settings_manager.get_manager().get_setting('playSoundForPositionInSet'):
@@ -394,7 +388,7 @@ class SoundGenerator(generator.Generator):
         role = args.get("role", AXObject.get_role(obj))
         filenames = [Atspi.role_get_name(role).replace(" ", "-")]
         if filenames and filenames[0]:
-            result = self._convertFilenameToIcon(filenames[0])
+            result = self._convert_filename_to_icon(filenames[0])
             if result:
                 return [result]
 

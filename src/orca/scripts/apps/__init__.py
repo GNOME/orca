@@ -1,3 +1,5 @@
+"""Orca's application scripts."""
+
 __all__ = ['evince',
            'evolution',
            'gajim',

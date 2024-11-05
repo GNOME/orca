@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script utilities for kwin."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -30,6 +32,7 @@ from orca.scripts import switcher
 
 
 class Utilities(switcher.Utilities):
+    """Custom script utilities for kwin."""
 
     def isSwitcherContainer(self, obj):
         """Returns True if obj is the switcher container."""

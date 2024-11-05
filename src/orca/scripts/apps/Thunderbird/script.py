@@ -17,6 +17,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+# pylint: disable=too-many-public-methods
+
 """Custom script for Thunderbird."""
 
 __id__        = "$Id$"
@@ -105,9 +108,9 @@ class Script(Gecko.Script):
         """Handles changes of focus of interest to the script."""
 
         if self.spellcheck.isSuggestionsItem(new_focus):
-            includeLabel = not self.spellcheck.isSuggestionsItem(old_focus)
+            include_label = not self.spellcheck.isSuggestionsItem(old_focus)
             self.update_braille(new_focus)
-            self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
+            self.spellcheck.presentSuggestionListItem(includeLabel=include_label)
             return
 
         super().locus_of_focus_changed(event, old_focus, new_focus)
@@ -141,18 +144,6 @@ class Script(Gecko.Script):
 
         super().togglePresentationMode(inputEvent, documentFrame)
 
-    def on_focused_changed(self, event):
-        """Callback for object:state-changed:focused accessibility events."""
-
-        if not event.detail1:
-            return
-
-        if self.spellcheck.isAutoFocusEvent(event):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-            self.update_braille(event.source)
-
-        super().on_focused_changed(event)
-
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
@@ -176,6 +167,27 @@ class Script(Gecko.Script):
                 return
 
         super().on_caret_moved(event)
+
+    def on_focused_changed(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
+
+        if not event.detail1:
+            return
+
+        if self.spellcheck.isAutoFocusEvent(event):
+            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+            self.update_braille(event.source)
+
+        super().on_focused_changed(event)
+
+    def on_name_changed(self, event):
+        """Callback for object:property-change:accessible-name events."""
+
+        if AXObject.get_name(event.source) == self.spellcheck.getMisspelledWord():
+            self.spellcheck.presentErrorDetails()
+            return
+
+        super().on_name_changed(event)
 
     def on_selection_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
@@ -243,27 +255,16 @@ class Script(Gecko.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        obj = event.source
-        spellCheckEntry = self.spellcheck.getChangeToEntry()
-        if obj == spellCheckEntry:
+        if event.source == self.spellcheck.getChangeToEntry():
             return
 
-        if self.utilities.isEditableMessage(obj) and self.spellcheck.isActive():
-            selStart = AXText.get_selection_start_offset(obj)
-            if selStart >= 0:
-                self.spellcheck.setDocumentPosition(obj, selStart)
+        if self.utilities.isEditableMessage(event.source) and self.spellcheck.isActive():
+            selection_start = AXText.get_selection_start_offset(event.source)
+            if selection_start >= 0:
+                self.spellcheck.setDocumentPosition(event.source, selection_start)
             return
 
         super().on_text_selection_changed(event)
-
-    def on_name_changed(self, event):
-        """Callback for object:property-change:accessible-name events."""
-
-        if AXObject.get_name(event.source) == self.spellcheck.getMisspelledWord():
-            self.spellcheck.presentErrorDetails()
-            return
-
-        super().on_name_changed(event)
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""

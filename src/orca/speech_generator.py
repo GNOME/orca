@@ -24,6 +24,9 @@
 # pylint: disable=too-many-return-statements
 # pylint: disable=broad-exception-caught
 # pylint: disable=too-few-public-methods
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-boolean-expressions
+# pylint: disable=duplicate-code
 
 """Produces speech presentation for accessible objects."""
 
@@ -768,7 +771,6 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
-    # pylint: disable=too-many-locals
     def _generate_ancestors(self, obj, **args):
         result = []
 
@@ -874,7 +876,6 @@ class SpeechGenerator(generator.Generator):
         if not leaving:
             result.reverse()
         return result
-    # pylint: enable=too-many-locals
 
     @log_generator_output
     def _generate_old_ancestors(self, obj, **args):

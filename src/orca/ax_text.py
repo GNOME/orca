@@ -23,16 +23,11 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-lines
+# pylint: disable=duplicate-code
 
-"""
-Utilities for obtaining information about accessible text.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
-
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for obtaining information about accessible text."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"

@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Custom script for kwin."""
 
 __id__        = "$Id$"
@@ -33,6 +35,7 @@ from .script_utilities import Utilities
 
 
 class Script(switcher.Script, Qt.Script):
+    """Custom script for kwin."""
 
     def get_utilities(self):
         """Returns the utilities for this script."""

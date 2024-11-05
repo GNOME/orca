@@ -18,15 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""
-Utilities for obtaining state-related information.
-These utilities are app-type- and toolkit-agnostic. Utilities that might have
-different implementations or results depending on the type of app (e.g. terminal,
-chat, web) or toolkit (e.g. Qt, Gtk) should be in script_utilities.py file(s).
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
+# pylint: disable=duplicate-code
 
-N.B. There are currently utilities that should never have custom implementations
-that live in script_utilities.py files. These will be moved over time.
-"""
+"""Utilities for obtaining state-related information."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"

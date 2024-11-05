@@ -20,6 +20,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script for gnome-shell."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -36,22 +38,54 @@ from .script_utilities import Utilities
 
 
 class Script(clutter.Script):
+    """Custom script for gnome-shell."""
 
     def get_utilities(self):
+        """Returns the utilities for this script."""
+
         return Utilities(self)
+
+    def is_activatable_event(self, event):
+        """Returns True if event should cause this script to become active."""
+
+        if event.type.startswith("object:state-changed:selected") and event.detail1:
+            return True
+
+        return super().is_activatable_event(event)
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
+        # TODO - JD: This workaround no longer works because the window has a name.
         if event is not None and event.type == "window:activate" \
           and new_focus is not None and not AXObject.get_name(new_focus):
-            queuedEvent = self._get_queued_event("object:state-changed:focused", True)
-            if queuedEvent and queuedEvent.source != event.source:
+            queued_event = self._get_queued_event("object:state-changed:focused", True)
+            if queued_event and queued_event.source != event.source:
                 msg = "GNOME SHELL: Have matching focused event. Not announcing nameless window."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return
 
         super().locus_of_focus_changed(event, old_focus, new_focus)
+
+    def on_focused_changed(self, event):
+        """Callback for object:state-changed:focused accessibility events."""
+
+        if not event.detail1:
+            return
+
+        # We're getting a spurious focus claim from the gnome-shell window after
+        # the window switcher is used.
+        if AXUtilities.is_window(event.source):
+            return
+
+        if not AXObject.get_name(event.source) and AXUtilities.is_menu_item(event.source) \
+           and not AXUtilities.get_is_labelled_by(event.source):
+            descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
+            if descendant is not None:
+                focus_manager.get_manager().set_locus_of_focus(event, descendant)
+                return
+
+        clutter.Script.on_focused_changed(self, event)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -81,31 +115,3 @@ class Script(clutter.Script):
             return
 
         clutter.Script.on_selected_changed(self, event)
-
-    def on_focused_changed(self, event):
-        """Callback for object:state-changed:focused accessibility events."""
-
-        if not event.detail1:
-            return
-
-        # We're getting a spurious focus claim from the gnome-shell window after
-        # the window switcher is used.
-        if AXUtilities.is_window(event.source):
-            return
-
-        if not AXObject.get_name(event.source) and AXUtilities.is_menu_item(event.source) \
-           and not AXUtilities.get_is_labelled_by(event.source):
-            descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
-            if descendant is not None:
-                focus_manager.get_manager().set_locus_of_focus(event, descendant)
-                return
-
-        clutter.Script.on_focused_changed(self, event)
-
-    def is_activatable_event(self, event):
-        """Returns True if event should cause this script to become active."""
-
-        if event.type.startswith('object:state-changed:selected') and event.detail1:
-            return True
-
-        return super().is_activatable_event(event)

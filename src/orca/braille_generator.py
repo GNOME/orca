@@ -21,6 +21,7 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=broad-exception-caught
 # pylint: disable=too-few-public-methods
+# pylint: disable=duplicate-code
 
 """Produces braille presentation for accessible objects."""
 

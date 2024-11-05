@@ -44,10 +44,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_state_expanded(self, obj, **args):
-        cell = self._script.utilities.getExpanderCellFor(obj) or obj
+        cell = self._script.utilities.get_expander_cell_for(obj) or obj
         return super()._generate_state_expanded(cell, **args)
 
     @log_generator_output
     def _generate_number_of_children(self, obj, **args):
-        cell = self._script.utilities.getExpanderCellFor(obj) or obj
+        cell = self._script.utilities.get_expander_cell_for(obj) or obj
         return super()._generate_number_of_children(cell, **args)

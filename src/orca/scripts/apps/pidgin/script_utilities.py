@@ -17,10 +17,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Commonly-required utility methods needed by -- and potentially
-   customized by -- application and toolkit scripts. They have
-   been pulled out from the scripts because certain scripts had
-   gotten way too large as a result of including these methods."""
+# pylint: disable=duplicate-code
+
+"""Custom script utilities for pidgin."""
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
@@ -34,8 +33,11 @@ from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 class Utilities(gtk.Utilities):
+    """Custom script utilities for pidgin."""
 
-    def getExpanderCellFor(self, obj):
+    def get_expander_cell_for(self, obj):
+        """Returns the cell that is expandable in the row with obj."""
+
         if not self._script.chat.isInBuddyList(obj):
             return None
 
@@ -82,7 +84,7 @@ class Utilities(gtk.Utilities):
 
         # increment the column because the expander cell is hidden.
         col += 1
-        nodeLevel = self.nodeLevel(obj)
+        node_level = self.nodeLevel(obj)
 
         # Candidates will be in the rows beneath the current row.
         # Only check in the current column and stop checking as
@@ -91,15 +93,15 @@ class Utilities(gtk.Utilities):
         #
         for i in range(row + 1, AXTable.get_row_count(parent, prefer_attribute=False)):
             cell = AXTable.get_cell_at(parent, i, col)
-            nodeCell = AXObject.get_previous_sibling(cell)
-            targets = AXUtilities.get_is_node_child_of(nodeCell)
+            node_cell = AXObject.get_previous_sibling(cell)
+            targets = AXUtilities.get_is_node_child_of(node_cell)
             if not targets:
                 continue
 
-            nodeOf = targets[0]
-            if obj == nodeOf:
+            node_of = targets[0]
+            if obj == node_of:
                 nodes.append(cell)
-            elif self.nodeLevel(nodeOf) <= nodeLevel:
+            elif self.nodeLevel(node_of) <= node_level:
                 break
 
         return nodes

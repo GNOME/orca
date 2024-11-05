@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Produces braille presentation for accessible objects."""
 
 __id__        = "$Id$"
@@ -35,10 +37,6 @@ from orca.scripts import web
 class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
 
-    def __init__(self, script):
-        super().__init__(script)
-        self._cache = {}
-
     @staticmethod
     def log_generator_output(func):
         """Decorator for logging."""
@@ -49,29 +47,15 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
         return wrapper
-
-    def _is_message_list_toggle_cell(self, obj):
-        cached = self._cache.get(hash(obj), {})
-        rv = cached.get("isMessageListToggleCell")
-        if rv is None:
-            rv = self._script.utilities.isMessageListToggleCell(obj)
-            cached["isMessageListToggleCell"] = rv
-            self._cache[hash(obj)] = cached
-
-        return rv
-
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(self, obj, **args):
-        if self._is_message_list_toggle_cell(obj):
+        if self._script.utilities.is_message_list_status_cell(obj):
             return []
 
         return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
     def generate_braille(self, obj, **args):
-        self._cache = {}
         result, focused_region = super().generate_braille(obj, **args)
-        self._cache = {}
-
         if not result or focused_region != result[0]:
             return [result, focused_region]
 

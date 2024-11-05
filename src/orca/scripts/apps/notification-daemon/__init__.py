@@ -17,9 +17,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=invalid-name
+
 """ Custom script for notification daemon."""
 
 # https://gitlab.gnome.org/GNOME/orca/-/issues/358
 # ruff: noqa: F401
 from .script import Script
-

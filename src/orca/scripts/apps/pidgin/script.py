@@ -38,6 +38,7 @@ from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
 
 class Script(gtk.Script):
+    """Custom script for pidgin."""
 
     def get_chat(self):
         """Returns the 'chat' class for this script."""

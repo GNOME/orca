@@ -22,6 +22,7 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 # pylint: disable=broad-exception-caught
+# pylint: disable=duplicate-code
 
 """Utilities for obtaining relation-related information."""
 

@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Custom chat module for Pidgin."""
 
 __id__        = "$Id$"
@@ -28,23 +30,11 @@ __license__   = "LGPL"
 from orca import chat
 from orca.ax_text import AXText
 
-########################################################################
-#                                                                      #
-# The Pidgin chat class.                                               #
-#                                                                      #
-########################################################################
-
 class Chat(chat.Chat):
-
-    def __init__(self, script):
-        chat.Chat.__init__(self, script)
+    """Custom chat module for Pidgin."""
 
     def isTypingStatusChangedEvent(self, event):
-        """Returns True if event is associated with a change in typing status.
-
-        Arguments:
-        - event: the accessible event being examined
-        """
+        """Returns True if event is associated with a change in typing status."""
 
         if not event.type.startswith("object:text-changed:insert"):
             return False
@@ -54,4 +44,4 @@ class Chat(chat.Chat):
         # this text via its attributes because these attributes are absent
         # from user inserted text -- no matter how that text is formatted.
         attr = AXText.get_text_attributes_at_offset(event.source, event.detail1)[0]
-        return float(attr.get('scale', '1')) < 1 or int(attr.get('weight', '400')) < 400
+        return float(attr.get("scale", "1")) < 1 or int(attr.get("weight", "400")) < 400

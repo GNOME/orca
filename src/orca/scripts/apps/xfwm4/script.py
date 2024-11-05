@@ -30,6 +30,7 @@ from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 class Script(default.Script):
+    """Custom script for xfwm4."""
 
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""

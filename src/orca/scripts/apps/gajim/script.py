@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Custom script for Gajim."""
 
 __id__        = "$Id$"
@@ -30,6 +32,7 @@ from orca.scripts import default
 from orca.ax_utilities import AXUtilities
 
 class Script(default.Script):
+    """Custom script for Gajim."""
 
     def get_chat(self):
         """Returns the 'chat' class for this script."""

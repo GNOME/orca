@@ -17,10 +17,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Commonly-required utility methods needed by -- and potentially
-   customized by -- application and toolkit scripts. They have
-   been pulled out from the scripts because certain scripts had
-   gotten way too large as a result of including these methods."""
+# pylint: disable=too-many-branches
+
+"""Custom script utilities for LibreOffice"""
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
@@ -39,41 +38,28 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
-#############################################################################
-#                                                                           #
-# Utilities                                                                 #
-#                                                                           #
-#############################################################################
-
 class Utilities(script_utilities.Utilities):
+    """Custom script utilities for LibreOffice"""
 
     def __init__(self, script):
-        """Creates an instance of the Utilities class.
+        super().__init__(script)
+        self._calc_selected_cells = []
+        self._calc_selected_rows = []
+        self._calc_selected_columns = []
 
-        Arguments:
-        - script: the script with which this instance is associated.
-        """
+    def is_cell_being_edited(self, obj):
+        """Returns True if obj is a cell being edited."""
 
-        script_utilities.Utilities.__init__(self, script)
-
-        self._calcSelectedCells = []
-        self._calcSelectedRows = []
-        self._calcSelectedColumns = []
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for finding, identifying, and comparing accessibles         #
-    #                                                                       #
-    #########################################################################
-
-    def isCellBeingEdited(self, obj):
         parent = AXObject.get_parent(obj)
         if AXUtilities.is_panel(parent) or AXUtilities.is_extended(parent):
-            return self.spreadSheetCellName(parent)
+            return self.spreadsheet_cell_name(parent)
 
         return False
 
-    def spreadSheetCellName(self, cell):
+    def spreadsheet_cell_name(self, cell):
+        """Returns the accessible name of the cell."""
+
+        # TODO - JD: Is this still needed? See also _get_cell_name_for_coordinates.
         name_list = AXObject.get_name(cell).split()
         for name in name_list:
             name = name.replace('.', '')
@@ -81,6 +67,16 @@ class Utilities(script_utilities.Utilities):
                 return name
 
         return ''
+
+    def _get_cell_name_for_coordinates(self, obj, row, col, include_contents=False):
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
+        cell = AXTable.get_cell_at(obj, row, col)
+        name = self.spreadsheet_cell_name(cell)
+        if include_contents:
+            text = AXText.get_all_text(cell)
+            name = f"{text} {name}"
+
+        return name.strip()
 
     def frameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing
@@ -108,7 +104,10 @@ class Utilities(script_utilities.Utilities):
         return results
 
     @staticmethod
-    def _flowsFromOrToSelection(obj):
+    def flows_from_or_to_selection(obj):
+        """Returns True if obj flows to or from another object with selected text."""
+
+        # TODO - JD: 1) Is this still needed? 2) If so, move it to AXUtilities.
         targets = AXUtilities.get_flows_from(obj)
         targets.extend(AXUtilities.get_flows_to(obj))
         for target in targets:
@@ -117,19 +116,9 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    #########################################################################
-    #                                                                       #
-    # Miscellaneous Utilities                                               #
-    #                                                                       #
-    #########################################################################
-
     def isAutoTextEvent(self, event):
-        """Returns True if event is associated with text being autocompleted
-        or autoinserted or autocorrected or autosomethingelsed.
+        """Returns True if event is believed to be an automatic text insertion."""
 
-        Arguments:
-        - event: the accessible event being examined
-        """
         # default logic for editable comboboxes works for LibreOffice >= 24.8
         if self.isEditableDescendantOfComboBox(event.source):
             return super().isAutoTextEvent(event)
@@ -151,12 +140,16 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isReadOnlyTextArea(self, obj):
+        """Returns True if event is believed to be a read-only text area."""
+
         if not super().isReadOnlyTextArea(obj):
             return False
 
         return not self.inDocumentContent(obj)
 
     def isSelectedTextDeletionEvent(self, event):
+        """Returns True if event is believed to be deletion of selected text."""
+
         if event.type.startswith("object:state-changed:selected") and not event.detail1:
             return input_event_manager.get_manager().last_event_was_delete() \
                 and focus_manager.get_manager().focus_is_dead()
@@ -164,9 +157,13 @@ class Utilities(script_utilities.Utilities):
         return super().isSelectedTextDeletionEvent(event)
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
+        """Returns the word in obj at the specified or current offset."""
+
         return AXText.get_word_at_offset(obj, offset)
 
     def shouldReadFullRow(self, obj, prevObj=None):
+        """Returns True if the full row in obj should be read."""
+
         if self._script.get_table_navigator().last_input_event_was_navigation_command():
             return False
 
@@ -176,6 +173,8 @@ class Utilities(script_utilities.Utilities):
         return super().shouldReadFullRow(obj, prevObj)
 
     def presentEventFromNonShowingObject(self, event):
+        """Returns True if we should present this event even though the object isn't showing."""
+
         return self.inDocumentContent(event.source)
 
     def _isTopLevelObject(self, obj):
@@ -188,7 +187,7 @@ class Utilities(script_utilities.Utilities):
         return super()._isTopLevelObject(obj)
 
     def columnConvert(self, column):
-        """ Convert a spreadsheet column into it's column label."""
+        """Convert a spreadsheet column into its column label."""
 
         base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -203,17 +202,7 @@ class Utilities(script_utilities.Utilities):
 
         return res
 
-    def _getCellNameForCoordinates(self, obj, row, col, includeContents=False):
-        # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
-        cell = AXTable.get_cell_at(obj, row, col)
-        name = self.spreadSheetCellName(cell)
-        if includeContents:
-            text = AXText.get_all_text(cell)
-            name = f"{text} {name}"
-
-        return name.strip()
-
-    def _getCoordinatesForSelectedRange(self, obj):
+    def _get_coordinates_for_selected_range(self, obj):
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             tokens = ["SOFFICE:", obj, "does not implement both selection and table"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -224,6 +213,8 @@ class Utilities(script_utilities.Utilities):
         return AXTable.get_cell_coordinates(first), AXTable.get_cell_coordinates(last)
 
     def getSelectionContainer(self, obj):
+        """Returns the selection container of obj."""
+
         # Writer implements the selection interface on the document and all its
         # children. The former is interesting, but interferes with our presentation
         # of selected text. The latter is just weird.
@@ -234,59 +225,64 @@ class Utilities(script_utilities.Utilities):
         return super().getSelectionContainer(obj)
 
     def speakSelectedCellRange(self, obj):
-        firstCoords, lastCoords = self._getCoordinatesForSelectedRange(obj)
-        if firstCoords == (-1, -1) or lastCoords == (-1, -1):
+        """Speaks the selected cell range."""
+
+        first_coords, last_coords = self._get_coordinates_for_selected_range(obj)
+        if first_coords == (-1, -1) or last_coords == (-1, -1):
             return False
 
         self._script.presentationInterrupt()
 
-        if firstCoords == lastCoords:
-            cell = self._getCellNameForCoordinates(obj, *firstCoords, True)
+        if first_coords == last_coords:
+            cell = self._get_cell_name_for_coordinates(obj, *first_coords, True)
             self._script.speakMessage(messages.CELL_SELECTED % cell)
             return True
 
-        cell1 = self._getCellNameForCoordinates(obj, *firstCoords, True)
-        cell2 = self._getCellNameForCoordinates(obj, *lastCoords, True)
+        cell1 = self._get_cell_name_for_coordinates(obj, *first_coords, True)
+        cell2 = self._get_cell_name_for_coordinates(obj, *last_coords, True)
         self._script.speakMessage(messages.CELL_RANGE_SELECTED % (cell1, cell2))
         return True
 
-    def handleCellSelectionChange(self, obj):
-        firstCoords, lastCoords = self._getCoordinatesForSelectedRange(obj)
-        if firstCoords == (-1, -1) or lastCoords == (-1, -1):
+    def handle_cell_selection_change(self, obj):
+        """Presents the selection change for obj."""
+
+        first_coords, last_coords = self._get_coordinates_for_selected_range(obj)
+        if first_coords == (-1, -1) or last_coords == (-1, -1):
             return True
 
         current = []
-        for r in range(firstCoords[0], lastCoords[0]+1):
-            current.extend((r, c) for c in range(firstCoords[1], lastCoords[1]+1))
+        for r in range(first_coords[0], last_coords[0]+1):
+            current.extend((r, c) for c in range(first_coords[1], last_coords[1]+1))
 
         current = set(current)
-        previous = set(self._calcSelectedCells)
+        previous = set(self._calc_selected_cells)
         current.discard((-1, -1))
         previous.discard((-1, -1))
 
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
-        focusCoords = AXTable.get_cell_coordinates(focus_manager.get_manager().get_locus_of_focus())
-        if focusCoords in selected:
-            selected.remove(focusCoords)
+        focus_coords = AXTable.get_cell_coordinates(
+            focus_manager.get_manager().get_locus_of_focus())
+        if focus_coords in selected:
+            selected.remove(focus_coords)
 
-        self._calcSelectedCells = sorted(current)
+        self._calc_selected_cells = sorted(current)
 
         msgs = []
         if len(unselected) == 1:
-            cell = self._getCellNameForCoordinates(obj, *unselected[0], True)
+            cell = self._get_cell_name_for_coordinates(obj, *unselected[0], True)
             msgs.append(messages.CELL_UNSELECTED % cell)
         elif len(unselected) > 1:
-            cell1 = self._getCellNameForCoordinates(obj, *unselected[0], True)
-            cell2 = self._getCellNameForCoordinates(obj, *unselected[-1], True)
+            cell1 = self._get_cell_name_for_coordinates(obj, *unselected[0], True)
+            cell2 = self._get_cell_name_for_coordinates(obj, *unselected[-1], True)
             msgs.append(messages.CELL_RANGE_UNSELECTED % (cell1, cell2))
 
         if len(selected) == 1:
-            cell = self._getCellNameForCoordinates(obj, *selected[0], True)
+            cell = self._get_cell_name_for_coordinates(obj, *selected[0], True)
             msgs.append(messages.CELL_SELECTED % cell)
         elif len(selected) > 1:
-            cell1 = self._getCellNameForCoordinates(obj, *selected[0], True)
-            cell2 = self._getCellNameForCoordinates(obj, *selected[-1], True)
+            cell1 = self._get_cell_name_for_coordinates(obj, *selected[0], True)
+            cell2 = self._get_cell_name_for_coordinates(obj, *selected[-1], True)
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
         if msgs:
@@ -295,67 +291,70 @@ class Utilities(script_utilities.Utilities):
         for msg in msgs:
             self._script.speakMessage(msg, interrupt=False)
 
-        return bool(len(msgs))
+        return bool(msgs)
 
-    def handleRowAndColumnSelectionChange(self, obj):
+    def handle_row_and_column_selection_change(self, obj):
+        """Presents the selection change for obj."""
+
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             return True
 
         cols = set(AXTable.get_selected_columns(obj))
         rows = set(AXTable.get_selected_rows(obj))
 
-        selectedCols = sorted(cols.difference(set(self._calcSelectedColumns)))
-        unselectedCols = sorted(set(self._calcSelectedColumns).difference(cols))
+        selected_cols = sorted(cols.difference(set(self._calc_selected_columns)))
+        unselected_cols = sorted(set(self._calc_selected_columns).difference(cols))
 
-        def convertColumn(x):
+        def convert_column(x):
             return self.columnConvert(x+1)
 
-        def convertRow(x):
+        def convert_row(x):
             return x + 1
 
-        selectedCols = list(map(convertColumn, selectedCols))
-        unselectedCols = list(map(convertColumn, unselectedCols))
+        selected_cols = list(map(convert_column, selected_cols))
+        unselected_cols = list(map(convert_column, unselected_cols))
 
-        selectedRows = sorted(rows.difference(set(self._calcSelectedRows)))
-        unselectedRows = sorted(set(self._calcSelectedRows).difference(rows))
+        selected_rows = sorted(rows.difference(set(self._calc_selected_rows)))
+        unselected_rows = sorted(set(self._calc_selected_rows).difference(rows))
 
-        selectedRows = list(map(convertRow, selectedRows))
-        unselectedRows = list(map(convertRow, unselectedRows))
+        selected_rows = list(map(convert_row, selected_rows))
+        unselected_rows = list(map(convert_row, unselected_rows))
 
-        self._calcSelectedColumns = list(cols)
-        self._calcSelectedRows = list(rows)
+        self._calc_selected_columns = list(cols)
+        self._calc_selected_rows = list(rows)
 
-        columnCount = AXTable.get_column_count(obj)
-        if len(cols) == columnCount:
+        column_count = AXTable.get_column_count(obj)
+        if len(cols) == column_count:
             self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
             return True
 
-        if not cols and len(unselectedCols) == columnCount:
+        if not cols and len(unselected_cols) == column_count:
             self._script.speakMessage(messages.DOCUMENT_UNSELECTED_ALL)
             return True
 
         msgs = []
-        if len(unselectedCols) == 1:
-            msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselectedCols[0])
-        elif len(unselectedCols) > 1:
+        if len(unselected_cols) == 1:
+            msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselected_cols[0])
+        elif len(unselected_cols) > 1:
             msgs.append(messages.TABLE_COLUMN_RANGE_UNSELECTED % \
-                        (unselectedCols[0], unselectedCols[-1]))
+                        (unselected_cols[0], unselected_cols[-1]))
 
-        if len(unselectedRows) == 1:
-            msgs.append(messages.TABLE_ROW_UNSELECTED % unselectedRows[0])
-        elif len(unselectedRows) > 1:
+        if len(unselected_rows) == 1:
+            msgs.append(messages.TABLE_ROW_UNSELECTED % unselected_rows[0])
+        elif len(unselected_rows) > 1:
             msgs.append(messages.TABLE_ROW_RANGE_UNSELECTED % \
-                        (unselectedRows[0], unselectedRows[-1]))
+                        (unselected_rows[0], unselected_rows[-1]))
 
-        if len(selectedCols) == 1:
-            msgs.append(messages.TABLE_COLUMN_SELECTED % selectedCols[0])
-        elif len(selectedCols) > 1:
-            msgs.append(messages.TABLE_COLUMN_RANGE_SELECTED % (selectedCols[0], selectedCols[-1]))
+        if len(selected_cols) == 1:
+            msgs.append(messages.TABLE_COLUMN_SELECTED % selected_cols[0])
+        elif len(selected_cols) > 1:
+            msgs.append(
+                messages.TABLE_COLUMN_RANGE_SELECTED % (selected_cols[0], selected_cols[-1]))
 
-        if len(selectedRows) == 1:
-            msgs.append(messages.TABLE_ROW_SELECTED % selectedRows[0])
-        elif len(selectedRows) > 1:
-            msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selectedRows[0], selectedRows[-1]))
+        if len(selected_rows) == 1:
+            msgs.append(messages.TABLE_ROW_SELECTED % selected_rows[0])
+        elif len(selected_rows) > 1:
+            msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selected_rows[0], selected_rows[-1]))
 
         if msgs:
             self._script.presentationInterrupt()
@@ -363,4 +362,4 @@ class Utilities(script_utilities.Utilities):
         for msg in msgs:
             self._script.speakMessage(msg, interrupt=False)
 
-        return bool(len(msgs))
+        return bool(msgs)

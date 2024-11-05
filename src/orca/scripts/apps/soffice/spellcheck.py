@@ -35,19 +35,20 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 class SpellCheck(spellcheck.SpellCheck):
+    """Customized support for spellcheck in LibreOffice."""
 
     def __init__(self, script):
         super().__init__(script, hasChangeToEntry=False)
         self._windows = {}
 
-    def _findChildDialog(self, root):
+    def _find_child_dialog(self, root):
         if root is None:
             return None
 
         if AXUtilities.is_dialog(root):
             return root
 
-        return self._findChildDialog(AXObject.get_child(root, 0))
+        return self._find_child_dialog(AXObject.get_child(root, 0))
 
     def _isCandidateWindow(self, window):
         if AXObject.is_dead(window):
@@ -61,7 +62,7 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
-        dialog = self._findChildDialog(window)
+        dialog = self._find_child_dialog(window)
         if not dialog:
             self._windows[hash(window)] = False
             tokens = ["SOFFICE:", window,
@@ -73,7 +74,7 @@ class SpellCheck(spellcheck.SpellCheck):
         # (older versions have no ID set, will fall back to heuristics further below)
         dialog_id = dialog.get_accessible_id()
         if dialog_id:
-            rv = (dialog_id == "SpellingDialog")
+            rv = dialog_id == "SpellingDialog"
             self._windows[hash(dialog)] = rv
             tokens = ["SOFFICE:", dialog, "is spellcheck dialog based on accessible ID:", rv]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -94,25 +95,25 @@ class SpellCheck(spellcheck.SpellCheck):
         return rv
 
     def _findErrorWidget(self, root):
-        def isError(x):
+        def is_error(x):
             if not AXObject.supports_editable_text(x):
                 return False
             return AXUtilities.is_focusable(x) and AXUtilities.is_multi_line(x)
 
-        rv = AXObject.find_descendant(root, isError)
+        rv = AXObject.find_descendant(root, is_error)
         tokens = ["SOFFICE: Error widget for:", root, "is:", rv]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
     def _findSuggestionsList(self, root):
-        def isSelectableList(x):
+        def is_selectable_list(x):
             if not AXObject.supports_selection(x):
                 return False
             return AXUtilities.is_list(x) \
                 or AXUtilities.is_list_box(x) \
                 or AXUtilities.is_tree_table(x)
 
-        rv = AXObject.find_descendant(root, isSelectableList)
+        rv = AXObject.find_descendant(root, is_selectable_list)
         tokens = ["SOFFICE: Suggestions list for:", root, "is:", rv]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv

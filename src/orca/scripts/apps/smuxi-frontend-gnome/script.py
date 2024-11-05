@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Custom script for Smuxi."""
 
 __id__        = "$Id$"
@@ -31,6 +33,7 @@ from orca.scripts.toolkits import gtk
 from .chat import Chat
 
 class Script(gtk.Script):
+    """Custom script for Smuxi."""
 
     def get_chat(self):
         """Returns the 'chat' class for this script."""

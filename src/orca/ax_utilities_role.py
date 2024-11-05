@@ -24,6 +24,7 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
+# pylint: disable=duplicate-code
 
 """Utilities for obtaining role-related information."""
 

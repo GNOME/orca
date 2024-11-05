@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Custom script for gedit."""
 
 __id__        = "$Id$"
@@ -24,6 +26,10 @@ __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 from orca import focus_manager
 from orca import input_event_manager
@@ -35,6 +41,7 @@ from .spellcheck import SpellCheck
 
 
 class Script(gtk.Script):
+    """Custom script for gedit."""
 
     def get_spellcheck(self):
         """Returns the spellcheck for this script."""
@@ -44,10 +51,6 @@ class Script(gtk.Script):
     def get_app_preferences_gui(self):
         """Returns a GtkGrid containing the application unique configuration
         GUI items for the current application."""
-
-        import gi
-        gi.require_version("Gtk", "3.0")
-        from gi.repository import Gtk
 
         grid = Gtk.Grid()
         grid.set_border_width(12)
@@ -65,9 +68,9 @@ class Script(gtk.Script):
         """Handles changes of focus of interest to the script."""
 
         if self.spellcheck.isSuggestionsItem(new_focus):
-            includeLabel = not self.spellcheck.isSuggestionsItem(old_focus)
+            include_label = not self.spellcheck.isSuggestionsItem(old_focus)
             self.update_braille(new_focus)
-            self.spellcheck.presentSuggestionListItem(includeLabel=includeLabel)
+            self.spellcheck.presentSuggestionListItem(includeLabel=include_label)
             return
 
         super().locus_of_focus_changed(event, old_focus, new_focus)

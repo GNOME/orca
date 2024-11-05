@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Produces speech presentation for accessible objects."""
 
 __id__        = "$Id$"
@@ -154,7 +156,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if settings_manager.get_manager().get_setting("speakSpreadsheetCoordinates") \
            or args.get("formatType") == "basicWhereAmI":
             label = AXTable.get_label_for_cell_coordinates(obj) \
-                or self._script.utilities.spreadSheetCellName(obj)
+                or self._script.utilities.spreadsheet_cell_name(obj)
             result.append(label)
 
         if self._script.utilities.shouldReadFullRow(obj, args.get("priorObj")):

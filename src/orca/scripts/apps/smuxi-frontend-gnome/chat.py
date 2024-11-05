@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Custom chat module for Smuxi."""
 
 __id__        = "$Id$"
@@ -34,12 +36,13 @@ from orca.ax_utilities import AXUtilities
 
 
 class Chat(chat.Chat):
+    """Custom chat module for Smuxi."""
 
     def isFocusedChat(self, obj):
         """Returns True if we plan to treat this chat as focused."""
 
-        pageTab = AXObject.find_ancestor(obj, AXUtilities.is_page_tab)
-        if pageTab is None:
+        page_tab = AXObject.find_ancestor(obj, AXUtilities.is_page_tab)
+        if page_tab is None:
             return super().isFocusedChat(obj)
 
-        return AXUtilities.is_showing(pageTab)
+        return AXUtilities.is_showing(page_tab)

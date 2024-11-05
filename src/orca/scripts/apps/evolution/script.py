@@ -27,7 +27,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2013 Igalia, S.L."
 __license__   = "LGPL"
 
-
 from orca import debug
 from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import gtk
@@ -38,7 +37,7 @@ from .script_utilities import Utilities
 
 
 class Script(WebKitGTK.Script, gtk.Script):
-
+    """Custom script for Evolution."""
     def get_braille_generator(self):
         """Returns the braille generator for this script."""
 
@@ -57,7 +56,7 @@ class Script(WebKitGTK.Script, gtk.Script):
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
-        if self.utilities.isIgnorableEventFromDocumentPreview(event.source):
+        if self.utilities.is_ignorable_event_from_document_preview(event):
             msg = "EVOLUTION: Ignoring event from document preview"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -69,7 +68,7 @@ class Script(WebKitGTK.Script, gtk.Script):
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if self.utilities.isIgnorableEventFromDocumentPreview(event.source):
+        if self.utilities.is_ignorable_event_from_document_preview(event):
             msg = "EVOLUTION: Ignoring event from document preview"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return

@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script utilities for Evolution."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -35,9 +37,11 @@ from orca.ax_utilities import AXUtilities
 
 
 class Utilities(WebKitGTK.Utilities, gtk.Utilities):
+    """Custom script utilities for Evolution."""
+    def is_message_list_status_cell(self, obj):
+        """Returns True if obj is a message list status cell."""
 
-    def isMessageListStatusCell(self, obj):
-        if not self.isMessageListToggleCell(obj):
+        if not self.is_message_list_toggle_cell(obj):
             return False
 
         headers = AXTable.get_column_headers(obj)
@@ -46,7 +50,9 @@ class Utilities(WebKitGTK.Utilities, gtk.Utilities):
 
         return headers[0] and AXObject.get_name(headers[0]) != AXObject.get_name(obj)
 
-    def isMessageListToggleCell(self, obj):
+    def is_message_list_toggle_cell(self, obj):
+        """Returns True if obj is a message list toggle cell."""
+
         if self.isWebKitGTK(obj):
             return False
 
@@ -58,8 +64,10 @@ class Utilities(WebKitGTK.Utilities, gtk.Utilities):
 
         return True
 
-    def isIgnorableEventFromDocumentPreview(self, obj):
-        if not self.isDocumentPreview(obj):
+    def is_ignorable_event_from_document_preview(self, event):
+        """Returns True if event is from a document preview and can be ignored."""
+
+        if not self.is_document_preview(event.source):
             return False
 
         if not input_event_manager.get_manager().last_event_was_unmodified_arrow():
@@ -75,7 +83,7 @@ class Utilities(WebKitGTK.Utilities, gtk.Utilities):
 
         return True
 
-    def isDocumentPreview(self, obj):
+    def is_document_preview(self, obj):
         """Returns True if obj is or descends from the preview document."""
 
         if not self.isWebKitGTK(obj):

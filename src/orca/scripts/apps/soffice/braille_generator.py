@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=duplicate-code
+
 """Produces braille presentation for accessible objects."""
 
 __id__        = "$Id$"
@@ -72,5 +74,5 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         object_text = AXText.get_substring(obj, 0, -1)
         cell_name = AXTable.get_label_for_cell_coordinates(obj) \
-                or self._script.utilities.spreadSheetCellName(obj)
+                or self._script.utilities.spreadsheet_cell_name(obj)
         return [braille.Component(obj, " ".join((object_text, cell_name)))]
