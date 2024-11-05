@@ -1452,7 +1452,7 @@ class Script(default.Script):
             tokens = ["WEB: Brief verbosity set. Should present", obj, f": {shouldPresent}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if shouldPresent:
+        if shouldPresent and AXDocument.get_uri(event.source).startswith("http"):
             if event.detail1:
                 self.presentMessage(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):

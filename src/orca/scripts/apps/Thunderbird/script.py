@@ -172,22 +172,14 @@ class Script(Gecko.Script):
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        # TODO - JD: Can this logic be moved to the web script?
         if self.utilities.isEditableMessage(event.source):
             return
 
         if self.inFocusMode():
             return
 
-        obj = event.source
-        if self.utilities.isDocument(obj) and not event.detail1:
-            focus = focus_manager.get_manager().get_locus_of_focus()
-            if AXObject.get_name(focus) \
-                and (AXUtilities.is_frame(focus) or AXUtilities.is_page_tab(focus)):
-                focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-
-            if self.utilities.inDocumentContent():
-                self.speakMessage(AXObject.get_name(obj))
-                self._presentMessage(obj)
+        super().on_busy_changed(event)
 
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
