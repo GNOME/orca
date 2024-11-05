@@ -147,18 +147,9 @@ class Script(Gecko.Script):
         if not event.detail1:
             return
 
-        obj = event.source
         if self.spellcheck.isAutoFocusEvent(event):
             focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
             self.update_braille(event.source)
-
-        if not self.utilities.inDocumentContent(obj):
-            super().on_focused_changed(event)
-            return
-
-        if self.utilities.isEditableMessage(obj):
-            super().on_focused_changed(event)
-            return
 
         super().on_focused_changed(event)
 
