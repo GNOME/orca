@@ -103,6 +103,7 @@ class AXUtilitiesEvent:
 
         window = focus_manager.get_manager().get_active_window()
         AXUtilitiesEvent.LAST_KNOWN_NAME[hash(window)] = AXObject.get_name(window)
+        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(window)] = AXObject.get_description(window)
 
     @staticmethod
     def start_cache_clearing_thread():
