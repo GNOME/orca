@@ -571,10 +571,6 @@ class Script(default.Script):
             self.spellcheck.deactivate()
             return
 
-        child = AXObject.get_child(event.source, 0)
-        if AXUtilities.is_dialog(child):
-            focus_manager.get_manager().set_locus_of_focus(event, child, False)
-
         self.spellcheck.present_error_details()
 
     def on_window_deactivated(self, event):
