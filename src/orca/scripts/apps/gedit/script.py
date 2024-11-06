@@ -159,7 +159,7 @@ class Script(gtk.Script):
         """Callback for window:activate accessibility events."""
 
         gtk.Script.on_window_activated(self, event)
-        if not self.spellcheck.is_check_window(event.source):
+        if not self.spellcheck.is_spell_check_window(event.source):
             self.spellcheck.deactivate()
             return
 

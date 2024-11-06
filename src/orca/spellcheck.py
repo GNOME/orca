@@ -70,7 +70,7 @@ class SpellCheck:
 
         tokens = ["SPELL CHECK: Attempting activation for", window]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if not self._is_candidate_window(window):
+        if not self.can_be_spell_check_window(window):
             tokens = ["SPELL CHECK:", window, "is not spellcheck window"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -146,7 +146,7 @@ class SpellCheck:
 
         return self._activated
 
-    def is_check_window(self, window):
+    def is_spell_check_window(self, window):
         """Returns True if window is the window/dialog containing the spellcheck."""
 
         if window and window == self._window:
@@ -197,7 +197,7 @@ class SpellCheck:
                 match = list(filter(lambda x: x.count(word), sentences))
                 string = match[0]
 
-        if not string:
+        if not string.strip():
             return False
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string
@@ -328,7 +328,23 @@ class SpellCheck:
         self._suggestions_list = None
         self._activated = False
 
+    def can_be_spell_check_window(self, window):
+        """Returns True if the window can be the spell check window."""
+
+        window_id = AXObject.get_accessible_id(window)
+        if not window_id:
+            tokens = ["SPELL CHECK:", window, "lacks an accessible ID. Will use heuristics."]
+            return self._is_candidate_window(window)
+
+        # The "SpellingDialog" accessible id is supported by the following:
+        # * LO >= 25.2
+        tokens = ["SPELL CHECK:", window, f"has id: '{window_id}'"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return window_id == "SpellingDialog"
+
     def _is_candidate_window(self, _window):
+        """Returns True if window could be the spellcheck window pending other checks."""
+
         raise NotImplementedError("SPELL CHECK: subclasses must provide this implementation.")
 
     def _find_change_to_entry(self, root):

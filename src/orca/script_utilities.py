@@ -1148,7 +1148,7 @@ class Utilities:
         Returns a list of unrelated labels under the given root.
         """
 
-        if self._script.spellcheck and self._script.spellcheck.is_check_window(root):
+        if self._script.spellcheck and self._script.spellcheck.is_spell_check_window(root):
             return []
 
         labelRoles = [Atspi.Role.LABEL, Atspi.Role.STATIC]

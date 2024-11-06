@@ -70,17 +70,6 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        # for LO >= 25.2, dialog has an accessible ID of "SpellingDialog" set
-        # (older versions have no ID set, will fall back to heuristics further below)
-        dialog_id = AXObject.get_accessible_id(dialog)
-        if dialog_id:
-            rv = dialog_id == "SpellingDialog"
-            self._windows[hash(dialog)] = rv
-            tokens = ["SOFFICE SPELL CHECK:", dialog,
-                      "is spellcheck dialog based on accessible ID:", rv]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return rv
-
         if AXObject.find_descendant(dialog, AXUtilities.is_page_tab_list) is not None:
             self._windows[hash(window)] = False
             self._windows[hash(dialog)] = False

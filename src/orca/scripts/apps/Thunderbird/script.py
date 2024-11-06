@@ -270,7 +270,7 @@ class Script(Gecko.Script):
         """Callback for window:activate accessibility events."""
 
         super().on_window_activated(event)
-        if not self.spellcheck.is_check_window(event.source):
+        if not self.spellcheck.is_spell_check_window(event.source):
             self.spellcheck.deactivate()
             return
 
