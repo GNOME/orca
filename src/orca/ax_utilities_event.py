@@ -192,8 +192,9 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            msg = "AXUtilitiesEvent: The event is not from the locus of focus."
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if event.source != focus and not AXObject.is_ancestor(focus, event.source):
+            msg = "AXUtilitiesEvent: The event is not from the locus of focus or ancestor."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
