@@ -30,8 +30,6 @@ __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import debug
-from orca import focus_manager
-from orca import input_event_manager
 from orca import spellcheck
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -39,16 +37,6 @@ from orca.ax_utilities import AXUtilities
 
 class SpellCheck(spellcheck.SpellCheck):
     """Customized support for spellcheck in Thunderbird."""
-
-    def is_autofocus_event(self, event):
-        if event.source != self._change_to_entry:
-            return False
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if not AXUtilities.is_push_button(focus):
-            return False
-
-        return input_event_manager.get_manager().last_event_was_shortcut_for(focus)
 
     def _is_candidate_window(self, window):
         if not (AXUtilities.is_dialog(window) or AXUtilities.is_modal(window)):

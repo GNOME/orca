@@ -168,18 +168,6 @@ class Script(Gecko.Script):
 
         super().on_caret_moved(event)
 
-    def on_focused_changed(self, event):
-        """Callback for object:state-changed:focused accessibility events."""
-
-        if not event.detail1:
-            return
-
-        if self.spellcheck.is_autofocus_event(event):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-            self.update_braille(event.source)
-
-        super().on_focused_changed(event)
-
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 

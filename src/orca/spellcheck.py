@@ -161,11 +161,6 @@ class SpellCheck:
             return not AXUtilities.is_sensitive(self._change_to_entry)
         return False
 
-    def is_autofocus_event(self, _event):
-        """Returns True if event is an auto-focus event."""
-
-        return False
-
     def is_suggestions_item(self, obj):
         """Returns True if obj is an item in the suggestions list."""
 
