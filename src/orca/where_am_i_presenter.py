@@ -461,8 +461,8 @@ class WhereAmIPresenter:
     def _do_where_am_i(self, script, event=None, basic_only=True, obj=None):
         """Presents details about the current location at the specified level."""
 
-        if script.spellcheck and script.spellcheck.isActive():
-            script.spellcheck.presentErrorDetails(not basic_only)
+        if script.spellcheck and script.spellcheck.is_active():
+            script.spellcheck.present_error_details(not basic_only)
 
         if obj is None:
             obj = focus_manager.get_manager().get_locus_of_focus()

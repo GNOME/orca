@@ -1825,7 +1825,13 @@ class AXUtilitiesRole:
     def is_single_line_entry(obj, role=None):
         """Returns True if obj has the entry role and the single-line state"""
 
-        return AXUtilitiesRole.is_entry(obj, role) and AXUtilitiesState.is_single_line(obj)
+        if not AXUtilitiesState.is_single_line(obj):
+            return False
+        if AXUtilitiesRole.is_entry(obj, role):
+            return True
+        if AXUtilitiesRole.is_text(obj, role):
+            return AXUtilitiesState.is_editable(obj)
+        return False
 
     @staticmethod
     def is_slider(obj, role=None):

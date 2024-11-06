@@ -289,10 +289,10 @@ class Script(default.Script):
         if self.get_flat_review_presenter().is_active():
             self.get_flat_review_presenter().quit()
 
-        if self.spellcheck.isSuggestionsItem(new_focus) \
-           and not self.spellcheck.isSuggestionsItem(old_focus):
+        if self.spellcheck.is_suggestions_item(new_focus) \
+           and not self.spellcheck.is_suggestions_item(old_focus):
             self.update_braille(new_focus)
-            self.spellcheck.presentSuggestionListItem(includeLabel=True)
+            self.spellcheck.present_suggestion_list_item(include_label=True)
             return
 
         # TODO - JD: This is a hack that needs to be done better. For now it
@@ -343,13 +343,13 @@ class Script(default.Script):
         if event.any_data == focus:
             return
 
-        if event.source == self.spellcheck.getSuggestionsList():
+        if event.source == self.spellcheck.get_suggestions_list():
             if AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
                 self.update_braille(event.any_data)
-                self.spellcheck.presentSuggestionListItem()
+                self.spellcheck.present_suggestion_list_item()
             else:
-                self.spellcheck.presentErrorDetails()
+                self.spellcheck.present_error_details()
             return
 
         if self.utilities.isSpreadSheetCell(event.any_data) \
@@ -549,16 +549,16 @@ class Script(default.Script):
             self.utilities.handle_cell_selection_change(event.source)
             return
 
-        if event.source == self.spellcheck.getSuggestionsList():
+        if event.source == self.spellcheck.get_suggestions_list():
             if focus_manager.get_manager().focus_is_active_window():
                 msg = "SOFFICE: Not presenting because locusOfFocus is window"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
                 self.update_braille(event.any_data)
-                self.spellcheck.presentSuggestionListItem()
+                self.spellcheck.present_suggestion_list_item()
             else:
-                self.spellcheck.presentErrorDetails()
+                self.spellcheck.present_error_details()
             return
 
         super().on_selection_changed(event)
@@ -567,14 +567,15 @@ class Script(default.Script):
         """Callback for window:activate accessibility events."""
 
         super().on_window_activated(event)
-        if not self.spellcheck.isCheckWindow(event.source):
+        if not self.spellcheck.is_check_window(event.source):
+            self.spellcheck.deactivate()
             return
 
         child = AXObject.get_child(event.source, 0)
         if AXUtilities.is_dialog(child):
             focus_manager.get_manager().set_locus_of_focus(event, child, False)
 
-        self.spellcheck.presentErrorDetails()
+        self.spellcheck.present_error_details()
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""

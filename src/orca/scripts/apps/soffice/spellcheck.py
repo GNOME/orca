@@ -38,7 +38,7 @@ class SpellCheck(spellcheck.SpellCheck):
     """Customized support for spellcheck in LibreOffice."""
 
     def __init__(self, script):
-        super().__init__(script, hasChangeToEntry=False)
+        super().__init__(script, has_change_to_entry=False)
         self._windows = {}
 
     def _find_child_dialog(self, root):
@@ -50,95 +50,73 @@ class SpellCheck(spellcheck.SpellCheck):
 
         return self._find_child_dialog(AXObject.get_child(root, 0))
 
-    def _isCandidateWindow(self, window):
+    def _is_candidate_window(self, window):
         if AXObject.is_dead(window):
-            tokens = ["SOFFICE:", window, "is not spellcheck window because it's dead."]
+            tokens = ["SOFFICE SPELL CHECK:", window, "is not spellcheck window because it's dead."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         rv = self._windows.get(hash(window))
         if rv is not None:
-            tokens = ["SOFFICE:", window, "is spellcheck window:", rv]
+            tokens = ["SOFFICE SPELL CHECK:", window, "is spellcheck window:", rv]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
         dialog = self._find_child_dialog(window)
         if not dialog:
             self._windows[hash(window)] = False
-            tokens = ["SOFFICE:", window,
+            tokens = ["SOFFICE SPELL CHECK:", window,
                       "is not spellcheck window because the dialog was not found."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         # for LO >= 25.2, dialog has an accessible ID of "SpellingDialog" set
         # (older versions have no ID set, will fall back to heuristics further below)
-        dialog_id = dialog.get_accessible_id()
+        dialog_id = AXObject.get_accessible_id(dialog)
         if dialog_id:
             rv = dialog_id == "SpellingDialog"
             self._windows[hash(dialog)] = rv
-            tokens = ["SOFFICE:", dialog, "is spellcheck dialog based on accessible ID:", rv]
+            tokens = ["SOFFICE SPELL CHECK:", dialog,
+                      "is spellcheck dialog based on accessible ID:", rv]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return rv
 
         if AXObject.find_descendant(dialog, AXUtilities.is_page_tab_list) is not None:
             self._windows[hash(window)] = False
             self._windows[hash(dialog)] = False
-            tokens = ["SOFFICE:", dialog,
+            tokens = ["SOFFICE SPELL CHECK:", dialog,
                       "is not spellcheck dialog because a page tab list was found."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         rv = AXObject.find_descendant(dialog, AXUtilities.is_combo_box) is not None
-        tokens = ["SOFFICE:", dialog, "is spellcheck dialog based on combobox descendant:", rv]
+        tokens = ["SOFFICE SPELL CHECK:", dialog,
+                  "is spellcheck dialog based on combobox descendant:", rv]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._windows[hash(dialog)] = rv
         return rv
 
-    def _findErrorWidget(self, root):
-        def is_error(x):
-            if not AXObject.supports_editable_text(x):
-                return False
-            return AXUtilities.is_focusable(x) and AXUtilities.is_multi_line(x)
+    def _is_error_widget(self, obj):
+        if not AXObject.supports_editable_text(obj):
+            return False
+        return AXUtilities.is_focusable(obj) and AXUtilities.is_multi_line(obj)
 
-        rv = AXObject.find_descendant(root, is_error)
-        tokens = ["SOFFICE: Error widget for:", root, "is:", rv]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
-    def _findSuggestionsList(self, root):
-        def is_selectable_list(x):
-            if not AXObject.supports_selection(x):
-                return False
-            return AXUtilities.is_list(x) \
-                or AXUtilities.is_list_box(x) \
-                or AXUtilities.is_tree_table(x)
-
-        rv = AXObject.find_descendant(root, is_selectable_list)
-        tokens = ["SOFFICE: Suggestions list for:", root, "is:", rv]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
-    def _getSuggestionIndexAndPosition(self, suggestion):
-        index = AXUtilities.get_position_in_set(suggestion)
-        total = AXUtilities.get_set_size(suggestion)
-        return index + 1, total
-
-    def getMisspelledWord(self):
-        length = AXText.get_character_count(self._errorWidget)
+    def get_misspelled_word(self):
+        length = AXText.get_character_count(self._error_widget)
         offset, string = 0, ""
         while 0 <= offset < length:
-            attrs, start, end = AXText.get_text_attributes_at_offset(self._errorWidget, offset)
+            attrs, start, end = AXText.get_text_attributes_at_offset(self._error_widget, offset)
             if attrs.get("fg-color", "").replace(" ", "") == "255,0,0":
-                return AXText.get_substring(self._errorWidget, start, end)
+                return AXText.get_substring(self._error_widget, start, end)
             offset = max(end, offset + 1)
 
         return string
 
-    def presentContext(self):
-        if not self.isActive():
+    def present_context(self):
+        if not self.is_active():
             return False
 
-        string = AXText.get_all_text(self._errorWidget)
+        string = AXText.get_all_text(self._error_widget)
         if not string:
             return False
 

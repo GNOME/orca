@@ -67,10 +67,10 @@ class Script(gtk.Script):
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        if self.spellcheck.isSuggestionsItem(new_focus):
-            include_label = not self.spellcheck.isSuggestionsItem(old_focus)
+        if self.spellcheck.is_suggestions_item(new_focus):
+            include_label = not self.spellcheck.is_suggestions_item(old_focus)
             self.update_braille(new_focus)
-            self.spellcheck.presentSuggestionListItem(includeLabel=include_label)
+            self.spellcheck.present_suggestion_list_item(include_label=include_label)
             return
 
         super().locus_of_focus_changed(event, old_focus, new_focus)
@@ -78,7 +78,7 @@ class Script(gtk.Script):
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        if event.source == self.spellcheck.getSuggestionsList():
+        if event.source == self.spellcheck.get_suggestions_list():
             return
 
         gtk.Script.on_active_descendant_changed(self, event)
@@ -87,7 +87,7 @@ class Script(gtk.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         if AXUtilities.is_multi_line(event.source):
-            self.spellcheck.setDocumentPosition(event.source, event.detail1)
+            self.spellcheck.set_document_position(event.source, event.detail1)
 
         gtk.Script.on_caret_moved(self, event)
 
@@ -102,21 +102,21 @@ class Script(gtk.Script):
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if not self.spellcheck.isActive():
+        if not self.spellcheck.is_active():
             gtk.Script.on_name_changed(self, event)
             return
 
         name = AXObject.get_name(event.source)
-        if name == self.spellcheck.getMisspelledWord():
-            self.spellcheck.presentErrorDetails()
+        if name == self.spellcheck.get_misspelled_word():
+            self.spellcheck.present_error_details()
             return
 
         parent = AXObject.get_parent(event.source)
-        if parent != self.spellcheck.getSuggestionsList() \
+        if parent != self.spellcheck.get_suggestions_list() \
            or not AXUtilities.is_focused(parent):
             return
 
-        entry = self.spellcheck.getChangeToEntry()
+        entry = self.spellcheck.get_change_to_entry()
         if name != AXText.get_all_text(entry):
             return
 
@@ -128,8 +128,8 @@ class Script(gtk.Script):
     def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
 
-        if event.source == self.spellcheck.getChangeToEntry() \
-           and self.spellcheck.presentCompletionMessage():
+        if event.source == self.spellcheck.get_change_to_entry() \
+           and self.spellcheck.present_completion_message():
             return
 
         gtk.Script.on_sensitive_changed(self, event)
@@ -159,11 +159,12 @@ class Script(gtk.Script):
         """Callback for window:activate accessibility events."""
 
         gtk.Script.on_window_activated(self, event)
-        if not self.spellcheck.isCheckWindow(event.source):
+        if not self.spellcheck.is_check_window(event.source):
+            self.spellcheck.deactivate()
             return
 
-        self.spellcheck.presentErrorDetails()
-        entry = self.spellcheck.getChangeToEntry()
+        self.spellcheck.present_error_details()
+        entry = self.spellcheck.get_change_to_entry()
         focus_manager.get_manager().set_locus_of_focus(None, entry, False)
         self.update_braille(entry)
 

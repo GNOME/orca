@@ -711,6 +711,23 @@ class AXObject:
         return role_name
 
     @staticmethod
+    def get_accessible_id(obj):
+        """Returns the accessible id of obj"""
+
+        if not AXObject.is_valid(obj):
+            return ""
+
+        try:
+            result = Atspi.Accessible.get_accessible_id(obj)
+        except Exception as error:
+            msg = f"AXObject: Exception in get_accessible_id: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return ""
+
+        AXObject._set_known_dead_status(obj, False)
+        return result
+
+    @staticmethod
     def get_name(obj):
         """Returns the accessible name of obj"""
 

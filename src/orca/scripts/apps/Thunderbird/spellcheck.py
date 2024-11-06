@@ -29,6 +29,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
+from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
 from orca import spellcheck
@@ -39,8 +40,8 @@ from orca.ax_utilities import AXUtilities
 class SpellCheck(spellcheck.SpellCheck):
     """Customized support for spellcheck in Thunderbird."""
 
-    def isAutoFocusEvent(self, event):
-        if event.source != self._changeToEntry:
+    def is_autofocus_event(self, event):
+        if event.source != self._change_to_entry:
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -49,8 +50,10 @@ class SpellCheck(spellcheck.SpellCheck):
 
         return input_event_manager.get_manager().last_event_was_shortcut_for(focus)
 
-    def _isCandidateWindow(self, window):
-        if not AXUtilities.is_dialog(window):
+    def _is_candidate_window(self, window):
+        if not (AXUtilities.is_dialog(window) or AXUtilities.is_modal(window)):
+            tokens = ["THUNDERBIRD SPELL CHECK:", window, "is not a dialog or modal window"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         def is_non_spell_check_child(x):
@@ -60,31 +63,3 @@ class SpellCheck(spellcheck.SpellCheck):
             return False
 
         return True
-
-    def _findChangeToEntry(self, root):
-        return AXObject.find_descendant(root, AXUtilities.is_single_line_entry)
-
-    def _findErrorWidget(self, root):
-        def is_error(x):
-            return AXUtilities.is_label(x) \
-                    and ":" not in AXObject.get_name(x) \
-                    and AXUtilities.object_is_unrelated(x)
-
-        return AXObject.find_descendant(root, is_error)
-
-    def _findSuggestionsList(self, root):
-        def is_list(x):
-            if not AXObject.supports_selection(x):
-                return False
-            return AXUtilities.is_list_box(x) or AXUtilities.is_list(x)
-
-        return AXObject.find_descendant(root, is_list)
-
-    def _getSuggestionIndexAndPosition(self, suggestion):
-        attrs = AXObject.get_attributes_dict(suggestion)
-        index = attrs.get("posinset")
-        total = attrs.get("setsize")
-        if index is None or total is None:
-            return super()._getSuggestionIndexAndPosition(suggestion)
-
-        return int(index), int(total)

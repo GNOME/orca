@@ -107,10 +107,10 @@ class Script(Gecko.Script):
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
 
-        if self.spellcheck.isSuggestionsItem(new_focus):
-            include_label = not self.spellcheck.isSuggestionsItem(old_focus)
+        if self.spellcheck.is_suggestions_item(new_focus):
+            include_label = not self.spellcheck.is_suggestions_item(old_focus)
             self.update_braille(new_focus)
-            self.spellcheck.presentSuggestionListItem(includeLabel=include_label)
+            self.spellcheck.present_suggestion_list_item(include_label=include_label)
             return
 
         super().locus_of_focus_changed(event, old_focus, new_focus)
@@ -162,8 +162,8 @@ class Script(Gecko.Script):
         if self.utilities.isEditableMessage(event.source):
             if event.detail1 == -1:
                 return
-            self.spellcheck.setDocumentPosition(event.source, event.detail1)
-            if self.spellcheck.isActive():
+            self.spellcheck.set_document_position(event.source, event.detail1)
+            if self.spellcheck.is_active():
                 return
 
         super().on_caret_moved(event)
@@ -174,7 +174,7 @@ class Script(Gecko.Script):
         if not event.detail1:
             return
 
-        if self.spellcheck.isAutoFocusEvent(event):
+        if self.spellcheck.is_autofocus_event(event):
             focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
             self.update_braille(event.source)
 
@@ -183,8 +183,8 @@ class Script(Gecko.Script):
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if AXObject.get_name(event.source) == self.spellcheck.getMisspelledWord():
-            self.spellcheck.presentErrorDetails()
+        if AXObject.get_name(event.source) == self.spellcheck.get_misspelled_word():
+            self.spellcheck.present_error_details()
             return
 
         super().on_name_changed(event)
@@ -193,7 +193,7 @@ class Script(Gecko.Script):
         """Callback for object:state-changed:showing accessibility events."""
 
         # We present changes when the list has focus via focus-changed events.
-        if event.source == self.spellcheck.getSuggestionsList():
+        if event.source == self.spellcheck.get_suggestions_list():
             return
 
         parent = AXObject.get_parent(event.source)
@@ -205,8 +205,8 @@ class Script(Gecko.Script):
     def on_sensitive_changed(self, event):
         """Callback for object:state-changed:sensitive accessibility events."""
 
-        if event.source == self.spellcheck.getChangeToEntry() \
-           and self.spellcheck.presentCompletionMessage():
+        if event.source == self.spellcheck.get_change_to_entry() \
+           and self.spellcheck.present_completion_message():
             return
 
         super().on_sensitive_changed(event)
@@ -242,7 +242,7 @@ class Script(Gecko.Script):
         if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(parent):
             return
 
-        if len(event.any_data) > 1 and event.source == self.spellcheck.getChangeToEntry():
+        if len(event.any_data) > 1 and event.source == self.spellcheck.get_change_to_entry():
             return
 
         # Try to stop unwanted chatter when a message is being replied to.
@@ -255,13 +255,13 @@ class Script(Gecko.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        if event.source == self.spellcheck.getChangeToEntry():
+        if event.source == self.spellcheck.get_change_to_entry():
             return
 
-        if self.utilities.isEditableMessage(event.source) and self.spellcheck.isActive():
+        if self.utilities.isEditableMessage(event.source) and self.spellcheck.is_active():
             selection_start = AXText.get_selection_start_offset(event.source)
             if selection_start >= 0:
-                self.spellcheck.setDocumentPosition(event.source, selection_start)
+                self.spellcheck.set_document_position(event.source, selection_start)
             return
 
         super().on_text_selection_changed(event)
@@ -270,12 +270,12 @@ class Script(Gecko.Script):
         """Callback for window:activate accessibility events."""
 
         super().on_window_activated(event)
-        if not self.spellcheck.isCheckWindow(event.source):
+        if not self.spellcheck.is_check_window(event.source):
             self.spellcheck.deactivate()
             return
 
-        self.spellcheck.presentErrorDetails()
-        entry = self.spellcheck.getChangeToEntry()
+        self.spellcheck.present_error_details()
+        entry = self.spellcheck.get_change_to_entry()
         focus_manager.get_manager().set_locus_of_focus(None, entry, False)
         self.update_braille(entry)
 

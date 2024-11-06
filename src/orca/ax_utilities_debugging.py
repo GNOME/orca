@@ -239,8 +239,9 @@ class AXUtilitiesDebugging:
         name = AXUtilitiesDebugging._format_string(AXObject.get_name(obj))
         desc = AXUtilitiesDebugging._format_string(AXObject.get_description(obj))
         help_text = AXUtilitiesDebugging._format_string(AXObject.get_help_text(obj))
+        id = AXObject.get_accessible_id(obj)
         string += (
-            f"name='{name}' role='{AXObject.get_role_name(obj)}'\n"
+            f"name='{name}' role='{AXObject.get_role_name(obj)}' id='{id}'\n"
             f"{indent}description='{desc}'\n"
             f"{indent}help='{help_text}'\n"
             f"{indent}states='{AXUtilitiesDebugging.state_set_as_string(obj)}'\n"
