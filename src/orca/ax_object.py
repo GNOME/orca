@@ -629,11 +629,12 @@ class AXObject:
 
         for i in range(AXObject.get_child_count(obj)):
             child = AXObject.get_child_checked(obj, i)
-            if child and pred(child):
+            if child is None:
+                continue
+            if pred(child):
                 return child
-
             child = AXObject._find_descendant(child, pred)
-            if child and pred(child):
+            if child:
                 return child
 
         return None
