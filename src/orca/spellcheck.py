@@ -335,23 +335,40 @@ class SpellCheck:
         # * LO >= 25.2
         tokens = ["SPELL CHECK:", window, f"has id: '{window_id}'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return window_id == "SpellingDialog"
+        return window_id.lower().startswith("spelling")
 
     def _is_candidate_window(self, _window):
         """Returns True if window could be the spellcheck window pending other checks."""
 
         raise NotImplementedError("SPELL CHECK: subclasses must provide this implementation.")
 
+    def _is_change_to_entry(self, obj):
+        """Returns True if obj could be the spell check change-to entry."""
+
+        obj_id = AXObject.get_accessible_id(obj)
+        if obj_id.lower().startswith("replacement"):
+            tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the change-to entry"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return AXUtilities.is_single_line_entry(obj)
+
     def _find_change_to_entry(self, root):
         if not self._has_change_to_entry:
             return None
 
-        result = AXObject.find_descendant(root, AXUtilities.is_single_line_entry)
+        result = AXObject.find_descendant(root, self._is_change_to_entry)
         tokens = ["SPELL CHECK: Change-to entry for:", root, "is:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
     def _is_error_widget(self, obj):
+        obj_id = AXObject.get_accessible_id(obj)
+        if obj_id.lower().startswith("error"):
+            tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the error widget"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
         if not AXUtilities.is_label(obj):
             return False
 
@@ -374,6 +391,11 @@ class SpellCheck:
         return result
 
     def _is_suggestions_list(self, obj):
+        obj_id = AXObject.get_accessible_id(obj)
+        if obj_id.lower().startswith("suggestions"):
+            tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the suggestions list"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
         if not AXObject.supports_selection(obj):
             return False
         return AXUtilities.is_list(obj) or AXUtilities.is_list_box(obj) \

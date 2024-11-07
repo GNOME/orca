@@ -86,6 +86,12 @@ class SpellCheck(spellcheck.SpellCheck):
         return rv
 
     def _is_error_widget(self, obj):
+        obj_id = AXObject.get_accessible_id(obj)
+        if obj_id.lower().startswith("error"):
+            tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the error widget"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
         if not AXObject.supports_editable_text(obj):
             return False
         return AXUtilities.is_focusable(obj) and AXUtilities.is_multi_line(obj)
