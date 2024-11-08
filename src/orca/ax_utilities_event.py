@@ -192,6 +192,11 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if not AXUtilitiesState.is_showing(event.source):
+            msg = "AXUtilitiesEvent: The event source is not showing."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != focus and not AXObject.is_ancestor(focus, event.source):
             msg = "AXUtilitiesEvent: The event is not from the locus of focus or ancestor."
@@ -277,6 +282,11 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_NAME[hash(event.source)] = new_name
         if not new_name:
             msg = "AXUtilitiesEvent: The name is empty."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not AXUtilitiesState.is_showing(event.source):
+            msg = "AXUtilitiesEvent: The event source is not showing."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
