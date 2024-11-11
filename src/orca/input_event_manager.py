@@ -824,7 +824,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 1 and self._last_input_event.pressed
+        rv = self._last_input_event.button == "1" and self._last_input_event.pressed
         msg = f"INPUT EVENT MANAGER: Last event was primary click: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
@@ -835,7 +835,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 1 and not self._last_input_event.pressed
+        rv = self._last_input_event.button == "1" and not self._last_input_event.pressed
         msg = f"INPUT EVENT MANAGER: Last event was primary release: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
@@ -846,7 +846,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 1
+        rv = self._last_input_event.button == "1"
         msg = f"INPUT EVENT MANAGER: Last event was primary click or release: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
@@ -857,7 +857,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 2 and self._last_input_event.pressed
+        rv = self._last_input_event.button == "2" and self._last_input_event.pressed
         msg = f"INPUT EVENT MANAGER: Last event was middle click: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
@@ -868,7 +868,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 2 and not self._last_input_event.pressed
+        rv = self._last_input_event.button == "2" and not self._last_input_event.pressed
         msg = f"INPUT EVENT MANAGER: Last event was middle release: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
@@ -879,7 +879,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 3 and self._last_input_event.pressed
+        rv = self._last_input_event.button == "3" and self._last_input_event.pressed
         msg = f"INPUT EVENT MANAGER: Last event was secondary click: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
@@ -890,7 +890,7 @@ class InputEventManager:
         if not self.last_event_was_mouse_button():
             return False
 
-        rv = self._last_input_event.button == 3 and not self._last_input_event.pressed
+        rv = self._last_input_event.button == "3" and not self._last_input_event.pressed
         msg = f"INPUT EVENT MANAGER: Last event was secondary release: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
