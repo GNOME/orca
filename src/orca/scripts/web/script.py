@@ -2230,7 +2230,6 @@ class Script(default.Script):
 
         msg = "WEB: Clearing cached text attributes"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._currentTextAttrs = {}
         return False
 
     def on_text_deleted(self, event):
