@@ -1703,21 +1703,6 @@ class StructuralNavigation:
             self._script.presentMessage(full, brief)
             return
 
-        thisList = None
-        priorList = None
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_list_item(obj):
-            thisList = AXObject.find_ancestor(obj, AXUtilities.is_list)
-            priorList = AXObject.find_ancestor(focus, AXUtilities.is_list)
-        elif AXUtilities.is_page_tab(obj):
-            thisList = AXObject.find_ancestor(obj, AXUtilities.is_page_tab_list)
-            priorList = AXObject.find_ancestor(focus, AXUtilities.is_page_tab_list)
-        else:
-            thisList = AXObject.find_ancestor(obj, AXUtilities.is_description_list)
-            priorList = AXObject.find_ancestor(focus, AXUtilities.is_description_list)
-        if thisList is not None and priorList != thisList:
-            self._script.speakMessage(self._getListDescription(thisList))
-
         if self._presentWithSayAll(obj, 0):
             return
 
