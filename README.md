@@ -141,7 +141,7 @@ meson compile -C _build
 meson install -C _build
 ```
 
-If you have existing build directory, don't forget to use `--reconfigure`. If
+If you have an existing build directory, don't forget to use `--reconfigure`. If
 you have problems after an update, you may need to re-build and re-install:
 
 ```
