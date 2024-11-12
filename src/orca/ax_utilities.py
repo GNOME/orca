@@ -225,25 +225,6 @@ class AXUtilities:
         return result
 
     @staticmethod
-    def get_all_static_text_leaf_nodes(obj):
-        """Returns all the descendants of obj that are static text leaf nodes"""
-
-        roles = [Atspi.Role.STATIC, Atspi.Role.TEXT]
-        def is_not_element(acc):
-            return AXObject.get_attribute(acc, "tag") in (None, "", "br")
-
-        result = None
-        if AXObject.supports_collection(obj):
-            result = AXUtilitiesCollection.find_all_with_role(obj, roles, is_not_element)
-            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
-                return result
-
-        def is_match(acc):
-            return AXObject.get_role(acc) in roles and is_not_element(acc)
-
-        return AXObject.find_all_descendants(obj, is_match)
-
-    @staticmethod
     def get_all_widgets(obj, must_be_showing_and_visible=True, exclude_push_button=False):
         """Returns all the descendants of obj with a widget role"""
 

@@ -37,7 +37,6 @@ from orca import focus_manager
 from orca import input_event_manager
 from orca.scripts import web
 from orca.ax_object import AXObject
-from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 
@@ -45,80 +44,11 @@ class Utilities(web.Utilities):
 
     def __init__(self, script):
         super().__init__(script)
-        self._isStaticTextLeaf = {}
-        self._isPseudoElement = {}
-        self._isListItemMarker = {}
         self._topLevelObject = {}
 
     def clearCachedObjects(self):
         super().clearCachedObjects()
-        self._isStaticTextLeaf = {}
-        self._isPseudoElement = {}
-        self._isListItemMarker = {}
         self._topLevelObject = {}
-
-    def isStaticTextLeaf(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isStaticTextLeaf(obj)
-
-        if AXObject.get_child_count(obj):
-            return False
-
-        if self.isListItemMarker(obj):
-            return False
-
-        rv = self._isStaticTextLeaf.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = AXUtilities.is_static(obj) or AXUtilities.is_text(obj) \
-            and self._getTag(obj) in (None, "", "br")
-        if rv:
-            tokens = ["CHROMIUM:", obj, "believed to be static text leaf"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self._isStaticTextLeaf[hash(obj)] = rv
-        return rv
-
-    def isPseudoElement(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isPseudoElement(obj)
-
-        rv = self._isPseudoElement.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = self._getTag(obj) in ["<pseudo:before>", "<pseudo:after>"]
-        if rv:
-            tokens = ["CHROMIUM:", obj, "believed to be pseudo element"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self._isPseudoElement[hash(obj)] = rv
-        return rv
-
-    def isListItemMarker(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isListItemMarker.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = False
-        parent = AXObject.get_parent(obj)
-        if AXUtilities.is_list_item(parent):
-            tag = self._getTag(obj)
-            if tag == "::marker":
-                rv = True
-            elif tag:
-                rv = False
-            elif AXObject.get_child_count(parent) > 1:
-                rv = AXObject.get_child(parent, 0) == obj
-            else:
-                rv = AXObject.get_name(obj) != AXText.get_all_text(parent)
-
-        self._isListItemMarker[hash(obj)] = rv
-        return rv
 
     def isMenuInCollapsedSelectElement(self, obj):
         if not AXUtilities.is_menu(obj):

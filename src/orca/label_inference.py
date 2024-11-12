@@ -150,9 +150,7 @@ class LabelInference:
             return False
 
         def isMatch(x):
-            return x is not None \
-                  and not self._script.utilities.isStaticTextLeaf(x) \
-                  and not AXUtilities.is_link(x)
+            return AXUtilities.is_web_element(x) and not AXUtilities.is_link(x)
 
         children = [child for child in AXObject.iter_children(obj, isMatch)]
         if len(children) > 1:

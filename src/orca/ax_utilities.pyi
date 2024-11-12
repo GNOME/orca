@@ -49,9 +49,6 @@ class AXUtilities:
     def get_unfocused_alerts_and_dialogs(obj): ...
 
     @staticmethod
-    def get_all_static_text_leaf_nodes(obj): ...
-
-    @staticmethod
     def get_all_widgets(obj, must_be_showing_and_visible=True): ...
 
     @staticmethod
@@ -905,6 +902,9 @@ class AXUtilities:
 
     @staticmethod
     def is_widget(obj, role=None): ...
+
+    @staticmethod
+    def is_web_element(obj, exclude_pseudo_elements=True): ...
 
     @staticmethod
     def is_window(obj, role=None): ...

@@ -1673,14 +1673,14 @@ class Utilities(script_utilities.Utilities):
             return x is not None
 
         def _exclude(x):
-            return self.isStaticTextLeaf(x)
+            return not AXUtilities.is_web_element(x)
 
         subtree = []
         startObjParent = AXObject.get_parent(startObj)
         for i in range(AXObject.get_index_in_parent(startObj),
                         AXObject.get_child_count(startObjParent)):
             child = AXObject.get_child(startObjParent, i)
-            if self.isStaticTextLeaf(child):
+            if not AXUtilities.is_web_element(child):
                 continue
             subtree.append(child)
             subtree.extend(self.findAllDescendants(child, _include, _exclude))
@@ -3465,7 +3465,7 @@ class Utilities(script_utilities.Utilities):
         rv = False
         def hasTextBlockRole(x):
             return AXObject.get_role(x) in self._textBlockElementRoles() \
-                and not self.isFakePlaceholderForEntry(x) and not self.isStaticTextLeaf(x)
+                and not self.isFakePlaceholderForEntry(x) and AXUtilities.is_web_element(x)
 
         if self._getTag(obj) in ["input", "textarea"]:
             rv = False
@@ -3546,6 +3546,10 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Invalid object cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
+        if not AXUtilities.is_web_element(obj):
+            tokens = ["WEB: Non-element cannot have caret context", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
 
         start_time = time.time()
         rv = None
@@ -3561,10 +3565,6 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Landmark can have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = True
-        elif self.isStaticTextLeaf(obj):
-            tokens = ["WEB: Static text leaf cannot have caret context", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            rv = False
         elif self.isUselessEmptyElement(obj):
             tokens = ["WEB: Useless empty element cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -3587,10 +3587,6 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self.isEmptyToolTip(obj):
             tokens = ["WEB: Empty tool tip cannot have caret context", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            rv = False
-        elif self.isPseudoElement(obj):
-            tokens = ["WEB: Pseudo element cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
         elif self.isFakePlaceholderForEntry(obj):
@@ -3621,9 +3617,6 @@ class Utilities(script_utilities.Utilities):
         msg = f"INFO: _canHaveCaretContext took {time.time() - start_time:.4f}s"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
-
-    def isPseudoElement(self, obj):
-        return False
 
     def searchForCaretContext(self, obj):
         tokens = ["WEB: Searching for caret context in", obj]
@@ -4026,12 +4019,6 @@ class Utilities(script_utilities.Utilities):
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 offset += 1
                 child = AXHypertext.get_child_at_offset(obj, offset)
-
-        if self.isListItemMarker(child):
-            tokens = ["WEB: First caret context is next offset in", obj, ":",
-                      offset + 1, "(skipping list item marker child)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return obj, offset + 1
 
         if self.isEmptyAnchor(child):
             nextObj, nextOffset = self.nextContext(obj, offset)

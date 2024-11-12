@@ -97,8 +97,9 @@ class Script(web.Script):
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.source):
-            msg = "CHROMIUM: Ignoring event from static-text leaf"
+        if not AXUtilities.is_web_element(event.source) \
+           and AXUtilities.is_web_element(AXObject.get_parent(event.source)):
+            msg = "CHROMIUM: Ignoring because source is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -137,8 +138,9 @@ class Script(web.Script):
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.any_data):
-            msg = "CHROMIUM: Ignoring because child is static text leaf"
+        if AXUtilities.is_web_element(event.source) \
+           and not AXUtilities.is_web_element(event.any_data):
+            msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -152,8 +154,9 @@ class Script(web.Script):
     def on_children_removed(self, event):
         """Callback for object:children-changed:removed accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.any_data):
-            msg = "CHROMIUM: Ignoring because child is static text leaf"
+        if AXUtilities.is_web_element(event.source) \
+           and not AXUtilities.is_web_element(event.any_data):
+            msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -328,13 +331,9 @@ class Script(web.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        if self.utilities.isStaticTextLeaf(event.source):
-            msg = "CHROMIUM: Ignoring event from static-text leaf"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        if self.utilities.isListItemMarker(event.source):
-            msg = "CHROMIUM: Ignoring event from list item marker"
+        if not AXUtilities.is_web_element(event.source) \
+           and AXUtilities.is_web_element(AXObject.get_parent(event.source)):
+            msg = "CHROMIUM: Ignoring because source is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 

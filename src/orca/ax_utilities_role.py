@@ -2231,6 +2231,18 @@ class AXUtilitiesRole:
         return role == Atspi.Role.VIEWPORT
 
     @staticmethod
+    def is_web_element(obj, exclude_pseudo_elements=True):
+        """Returns True if obj is a web element"""
+
+        tag = AXUtilitiesRole._get_tag(obj)
+        if not tag:
+            return False
+        if not exclude_pseudo_elements:
+            return True
+        exclude = ["::before", "::after", "::marker"]
+        return tag not in exclude
+
+    @staticmethod
     def is_widget(obj, role=None):
         """Returns True if obj has a widget role"""
 

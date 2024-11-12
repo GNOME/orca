@@ -906,15 +906,7 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, inSelectedMenu) is not None
 
-    def isStaticTextLeaf(self, obj):
-        return False
-
-    def isListItemMarker(self, obj):
-        return False
-
     def hasPresentableText(self, obj):
-        if self.isStaticTextLeaf(obj):
-            return False
         return AXText.has_presentable_text(obj)
 
     def getOnScreenObjects(self, root, extents=None):
@@ -958,10 +950,7 @@ class Utilities:
         elif self.hasPresentableText(root):
             objects.append(root)
 
-        def pred(x):
-            return x is not None and not self.isStaticTextLeaf(x)
-
-        for child in AXObject.iter_children(root, pred):
+        for child in AXObject.iter_children(root):
             objects.extend(self.getOnScreenObjects(child, extents))
 
         if AXUtilities.is_menu_bar(root):
@@ -1021,8 +1010,7 @@ class Utilities:
             return obj
 
         def pred(x):
-            return x and not self.isStaticTextLeaf(x) \
-                and (AXObject.get_name(x) or AXText.get_all_text(x))
+            return AXObject.get_name(x) or AXText.get_all_text(x)
 
         child = AXObject.find_descendant(obj, pred)
         if child is not None:
