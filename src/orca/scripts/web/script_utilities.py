@@ -1625,14 +1625,6 @@ class Utilities(script_utilities.Utilities):
 
         return contents
 
-    def updateCachedTextSelection(self, obj):
-        if not self.inDocumentContent(obj):
-            super().updateCachedTextSelection(obj)
-            return
-
-        if self.hasPresentableText(obj):
-            super().updateCachedTextSelection(obj)
-
     def _findSelectionBoundaryObject(self, root, findStart=True):
         string = AXText.get_selected_text(root)[0]
         if not string:
@@ -1734,7 +1726,7 @@ class Utilities(script_utilities.Utilities):
         for descendant in descendants:
             if descendant not in (oldStart, oldEnd, start, end) \
                and AXObject.find_ancestor(descendant, lambda x: x in descendants):
-                super().updateCachedTextSelection(descendant)
+                AXText.update_cached_selected_text(descendant)
             else:
                 super().handleTextSelectionChange(descendant, speakMessage)
 

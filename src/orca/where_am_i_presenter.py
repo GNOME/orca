@@ -283,7 +283,7 @@ class WhereAmIPresenter:
         msg = "WHERE AM I PRESENTER: Laptop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def present_character_attributes(self, script, event=None):
+    def present_character_attributes(self, script, _event=None):
         """Presents the font and formatting details for the current character."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -327,7 +327,7 @@ class WhereAmIPresenter:
         script.presentMessage(full, brief)
         return True
 
-    def present_title(self, script, event=None):
+    def present_title(self, script, _event=None):
         """Presents the title of the current window."""
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -343,11 +343,12 @@ class WhereAmIPresenter:
             script.presentMessage(string, voice=voice)
         return True
 
-    def _present_default_button(self, script, event=None, dialog=None, error_messages=True):
+    def _present_default_button(self, script, _event=None, dialog=None, error_messages=True):
         """Presents the default button of the current dialog."""
 
         obj = focus_manager.get_manager().get_locus_of_focus()
-        frame, dialog = script.utilities.frameAndDialog(obj)
+        if dialog is None:
+            _frame, dialog = script.utilities.frameAndDialog(obj)
         if dialog is None:
             if error_messages:
                 script.presentMessage(messages.DIALOG_NOT_IN_A)
@@ -406,7 +407,32 @@ class WhereAmIPresenter:
 
         return self._do_where_am_i(script, event, True, link)
 
-    def present_selected_text(self, script, event=None, obj=None):
+    def _get_all_selected_text(self, script, obj):
+        """Returns the selected text of obj plus any adjacent text objects."""
+
+        string = AXText.get_selected_text(obj)[0]
+        if script.utilities.isSpreadSheetCell(obj):
+            return string
+
+        prev_obj = script.utilities.findPreviousObject(obj)
+        while prev_obj:
+            selection = AXText.get_selected_text(prev_obj)[0]
+            if not selection:
+                break
+            string = f"{selection} {string}"
+            prev_obj = script.utilities.findPreviousObject(prev_obj)
+
+        next_obj = script.utilities.findNextObject(obj)
+        while next_obj:
+            selection = AXText.get_selected_text(next_obj)[0]
+            if not selection:
+                break
+            string = f"{string} {selection}"
+            next_obj = script.utilities.findNextObject(next_obj)
+
+        return string
+
+    def present_selected_text(self, script, _event=None, obj=None):
         """Presents the selected text."""
 
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
@@ -414,7 +440,7 @@ class WhereAmIPresenter:
             script.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        text = script.utilities.allSelectedText(obj)[0]
+        text = self._get_all_selected_text(script, obj)
         if not text:
             script.speakMessage(messages.NO_SELECTED_TEXT)
             return True
@@ -458,7 +484,7 @@ class WhereAmIPresenter:
         script.speakMessage(item_names)
         return True
 
-    def _do_where_am_i(self, script, event=None, basic_only=True, obj=None):
+    def _do_where_am_i(self, script, _event=None, basic_only=True, obj=None):
         """Presents details about the current location at the specified level."""
 
         if script.spellcheck and script.spellcheck.is_active():

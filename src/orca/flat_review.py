@@ -571,7 +571,7 @@ class Context:
         Returns a list of Zones.
         """
 
-        if not self.script.utilities.hasPresentableText(accessible):
+        if not AXText.has_presentable_text(accessible):
             return []
 
         zones = []

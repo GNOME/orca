@@ -614,7 +614,7 @@ class Script(script.Script):
         # gains focus, even though the caret has not actually moved.
         caretOffset = AXText.get_caret_offset(obj)
         self._saveLastCursorPosition(obj, max(0, caretOffset))
-        self.utilities.updateCachedTextSelection(obj)
+        AXText.update_cached_selected_text(obj)
 
         # We want to save the current row and column of a newly focused
         # or selected table cell so that on subsequent cell focus/selection
@@ -1142,7 +1142,7 @@ class Script(script.Script):
             self.utilities.handleTextSelectionChange(event.source)
             return
 
-        string = self.utilities.getCachedTextSelection(obj)[2]
+        string, _start, _end = AXText.get_cached_selected_text(obj)
         if string and self.utilities.handleTextSelectionChange(obj):
             msg = "DEFAULT: Event handled as text selection change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1428,7 +1428,7 @@ class Script(script.Script):
             msg = "DEFAULT: Deletion is believed to be due to deleting selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentMessage(messages.SELECTION_DELETED)
-            self.utilities.updateCachedTextSelection(event.source)
+            AXText.update_cached_selected_text(event.source)
             return
 
         string = self.utilities.deletedText(event)
@@ -1475,7 +1475,7 @@ class Script(script.Script):
 
         if full or brief:
             self.presentMessage(full, brief)
-            self.utilities.updateCachedTextSelection(event.source)
+            AXText.update_cached_selected_text(event.source)
             return
 
         speakString = True
@@ -1681,7 +1681,7 @@ class Script(script.Script):
             self.sayLine(obj)
             return True
         if manager.last_event_was_primary_click_or_release():
-            string = self.utilities.getCachedTextSelection(event.source)[-1]
+            string, _start, _end = AXText.get_cached_selected_text(event.source)
             if not string:
                 self.sayLine(obj)
                 return True

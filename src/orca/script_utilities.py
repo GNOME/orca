@@ -906,9 +906,6 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, inSelectedMenu) is not None
 
-    def hasPresentableText(self, obj):
-        return AXText.has_presentable_text(obj)
-
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []
@@ -947,7 +944,7 @@ class Utilities:
         hasNameOrDesc = AXObject.get_name(root) or AXObject.get_description(root)
         if hasNameOrDesc and (AXUtilities.is_page_tab(root) or AXUtilities.is_image(root)):
             objects.append(root)
-        elif self.hasPresentableText(root):
+        elif AXText.has_presentable_text(root):
             objects.append(root)
 
         for child in AXObject.iter_children(root):
@@ -1228,44 +1225,6 @@ class Utilities:
             return targets[0]
 
         return AXObject.get_next_object(obj)
-
-    def allSelectedText(self, obj):
-        """Get all the text applicable text selections for the given object.
-        including any previous or next text objects that also have
-        selected text and add in their text contents.
-
-        Arguments:
-        - obj: the text object to start extracting the selected text from.
-
-        Returns: all the selected text contents plus the start and end
-        offsets within the text for the given object.
-        """
-
-        # TODO - JD: Move to AXText if possible
-        textContents, startOffset, endOffset = AXText.get_selected_text(obj)
-        if textContents and self._script.point_of_reference.get('entireDocumentSelected'):
-            return textContents, startOffset, endOffset
-
-        if self.isSpreadSheetCell(obj):
-            return textContents, startOffset, endOffset
-
-        prevObj = self.findPreviousObject(obj)
-        while prevObj:
-            selection = AXText.get_selected_text(prevObj)[0]
-            if not selection:
-                 break
-            textContents = f"{selection} {textContents}"
-            prevObj = self.findPreviousObject(prevObj)
-
-        nextObj = self.findNextObject(obj)
-        while nextObj:
-            selection = AXText.get_selected_text(nextObj)[0]
-            if not selection:
-                break
-            textContents = f"{textContents} {selection}"
-            nextObj = self.findNextObject(nextObj)
-
-        return textContents, startOffset, endOffset
 
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
@@ -2208,36 +2167,6 @@ class Utilities:
     def getRoleDescription(self, obj, isBraille=False):
         return ""
 
-    def getCachedTextSelection(self, obj):
-        textSelections = self._script.point_of_reference.get('textSelections', {})
-        start, end, string = textSelections.get(hash(obj), (0, 0, ''))
-        tokens = ["SCRIPT UTILITIES: Cached selection for", obj, f"is '{string}' ({start}, {end})"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return start, end, string
-
-    def updateCachedTextSelection(self, obj):
-        if self._script.point_of_reference.get('entireDocumentSelected'):
-            selectedText = self.allSelectedText(obj)[0]
-            if not selectedText:
-                self._script.point_of_reference['entireDocumentSelected'] = False
-                self._script.point_of_reference['textSelections'] = {}
-
-        textSelections = self._script.point_of_reference.get('textSelections', {})
-
-        # Because some apps and toolkits create, destroy, and duplicate objects
-        # and events.
-        if hash(obj) in textSelections:
-            value = textSelections.pop(hash(obj))
-            for x in [k for k in textSelections.keys() if textSelections.get(k) == value]:
-                textSelections.pop(x)
-
-        string, start, end = AXText.get_selected_text(obj)
-        tokens = ["SCRIPT UTILITIES: New selection for", obj, f"is '{string}' ({start}, {end})"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        textSelections[hash(obj)] = start, end, string
-        self._script.point_of_reference['textSelections'] = textSelections
-
-
     def isPresentableTextChangedEventForLocusOfFocus(self, event):
         if not event.type.startswith("object:text-changed:") \
            and not event.type.startswith("object:text-attributes-changed"):
@@ -2296,7 +2225,7 @@ class Utilities:
         if not input_event_manager.get_manager().last_event_was_undo():
             return False
 
-        start, end, string = self.getCachedTextSelection(event.source)
+        string, _start, _end = AXText.get_cached_selected_text(event.source)
         return not string
 
     def isSelectedTextDeletionEvent(self, event):
@@ -2307,15 +2236,15 @@ class Utilities:
         if manager.last_event_was_paste() or manager.last_event_was_cut():
             return False
 
-        start, end, string = self.getCachedTextSelection(event.source)
+        string, _start, _end = AXText.get_cached_selected_text(event.source)
         return string and string.strip() == event.any_data.strip()
 
     def isSelectedTextInsertionEvent(self, event):
         if not event.type.startswith("object:text-changed:insert"):
             return False
 
-        self.updateCachedTextSelection(event.source)
-        start, end, string = self.getCachedTextSelection(event.source)
+        AXText.update_cached_selected_text(event.source)
+        string, start, _end = AXText.get_cached_selected_text(event.source)
         return string and string == event.any_data and start == event.detail1
 
     def isSelectedTextRestoredEvent(self, event):
@@ -2368,14 +2297,14 @@ class Utilities:
             if not self._script.point_of_reference.get('undo'):
                 self._script.presentMessage(messages.UNDO)
                 self._script.point_of_reference['undo'] = True
-            self.updateCachedTextSelection(event.source)
+            AXText.update_cached_selected_text(event.source)
             return True
 
         if input_event_manager.get_manager().last_event_was_redo():
             if not self._script.point_of_reference.get('redo'):
                 self._script.presentMessage(messages.REDO)
                 self._script.point_of_reference['redo'] = True
-            self.updateCachedTextSelection(event.source)
+            AXText.update_cached_selected_text(event.source)
             return True
 
         return False
@@ -2470,33 +2399,32 @@ class Utilities:
         if input_event_manager.get_manager().last_event_was_cut():
             return False
 
-        oldStart, oldEnd, oldString = self.getCachedTextSelection(obj)
-        self.updateCachedTextSelection(obj)
-        newStart, newEnd, newString = self.getCachedTextSelection(obj)
+        old_string, old_start, old_end = AXText.get_cached_selected_text(obj)
+        AXText.update_cached_selected_text(obj)
+        new_string, new_start, new_end = AXText.get_cached_selected_text(obj)
 
-        if input_event_manager.get_manager().last_event_was_select_all() and newString:
-            if not self._script.point_of_reference.get('entireDocumentSelected'):
-                self._script.point_of_reference['entireDocumentSelected'] = True
+        if input_event_manager.get_manager().last_event_was_select_all() and new_string:
+            if new_string != old_string:
                 self._script.speakMessage(messages.DOCUMENT_SELECTED_ALL)
             return True
 
         # Even though we present a message, treat it as unhandled so the new location is
         # still presented.
         if not input_event_manager.get_manager().last_event_was_caret_selection() \
-           and oldString and not newString:
+           and old_string and not new_string:
             self._script.speakMessage(messages.SELECTION_REMOVED)
             return False
 
         changes = []
-        oldChars = set(range(oldStart, oldEnd))
-        newChars = set(range(newStart, newEnd))
+        oldChars = set(range(old_start, old_end))
+        newChars = set(range(new_start, new_end))
         if not oldChars.union(newChars):
             return False
 
         if oldChars and newChars and not oldChars.intersection(newChars):
             # A simultaneous unselection and selection centered at one offset.
-            changes.append([oldStart, oldEnd, messages.TEXT_UNSELECTED])
-            changes.append([newStart, newEnd, messages.TEXT_SELECTED])
+            changes.append([old_start, old_end, messages.TEXT_UNSELECTED])
+            changes.append([new_start, new_end, messages.TEXT_SELECTED])
         else:
             change = sorted(oldChars.symmetric_difference(newChars))
             if not change:
@@ -2505,17 +2433,17 @@ class Utilities:
             changeStart, changeEnd = change[0], change[-1] + 1
             if oldChars < newChars:
                 changes.append([changeStart, changeEnd, messages.TEXT_SELECTED])
-                if oldString.endswith(self.EMBEDDED_OBJECT_CHARACTER) and oldEnd == changeStart:
+                if old_string.endswith(self.EMBEDDED_OBJECT_CHARACTER) and old_end == changeStart:
                     # There's a possibility that we have a link spanning multiple lines. If so,
                     # we want to present the continuation that just became selected.
-                    child = AXHypertext.get_child_at_offset(obj, oldEnd - 1)
+                    child = AXHypertext.get_child_at_offset(obj, old_end - 1)
                     self.handleTextSelectionChange(child, False)
             else:
                 changes.append([changeStart, changeEnd, messages.TEXT_UNSELECTED])
-                if newString.endswith(self.EMBEDDED_OBJECT_CHARACTER):
+                if new_string.endswith(self.EMBEDDED_OBJECT_CHARACTER):
                     # There's a possibility that we have a link spanning multiple lines. If so,
                     # we want to present the continuation that just became unselected.
-                    child = AXHypertext.get_child_at_offset(obj, newEnd - 1)
+                    child = AXHypertext.get_child_at_offset(obj, new_end - 1)
                     self.handleTextSelectionChange(child, False)
 
         speakMessage = speakMessage \

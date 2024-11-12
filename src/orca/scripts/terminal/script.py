@@ -98,7 +98,7 @@ class Script(default.Script):
 
         offset = AXText.get_caret_offset(event.source)
         self._saveLastCursorPosition(event.source, offset)
-        self.utilities.updateCachedTextSelection(event.source)
+        AXText.update_cached_selected_text(event.source)
 
     def presentKeyboardEvent(self, event):
         if not event.is_printable_key():

@@ -482,7 +482,7 @@ class Script(default.Script):
 
         if AXUtilities.is_paragraph(event.source):
             obj, _offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
-            start, end, _string = self.utilities.getCachedTextSelection(obj)
+            _string, start, end = AXText.get_cached_selected_text(obj)
             if start != end:
                 return
 
@@ -530,7 +530,7 @@ class Script(default.Script):
 
         if full or brief:
             self.presentMessage(full, brief)
-            self.utilities.updateCachedTextSelection(event.source)
+            AXText.update_cached_selected_text(event.source)
             return
 
         super().on_selected_changed(event)

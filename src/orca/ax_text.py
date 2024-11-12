@@ -50,6 +50,8 @@ from .ax_utilities_state import AXUtilitiesState
 class AXText:
     """Utilities for obtaining information about accessible text."""
 
+    CACHED_TEXT_SELECTION: dict[int, tuple[str, int, int]] = {}
+
     @staticmethod
     def get_character_at_offset(obj, offset=None):
         """Returns the character, start, and end for the current or specified offset."""
@@ -600,6 +602,22 @@ class AXText:
         tokens = ["AXText:", obj, f"reports selected ranges: {selections}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return selections
+
+    @staticmethod
+    def get_cached_selected_text(obj):
+        """Returns the last known selected string, start, and end for obj."""
+
+        string, start, end = AXText.CACHED_TEXT_SELECTION.get(hash(obj), ("", 0, 0))
+        debug_string = string.replace("\n", "\\n")
+        tokens = ["AXText: Cached selection for", obj, f"is '{debug_string}' ({start}, {end})"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return string, start, end
+
+    @staticmethod
+    def update_cached_selected_text(obj):
+        """Updates the last known selected string, start, and end for obj."""
+
+        AXText.CACHED_TEXT_SELECTION[hash(obj)] = AXText.get_selected_text(obj)
 
     @staticmethod
     def get_selected_text(obj):
