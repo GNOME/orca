@@ -504,7 +504,7 @@ class InputEventManager:
             rv = False
         else:
             focus = focus_manager.get_manager().get_locus_of_focus()
-            rv = not AXObject.find_ancestor(focus, AXUtilities.is_combo_box)
+            rv = not AXUtilities.is_widget_controlled_by_line_navigation(focus)
 
         msg = f"INPUT EVENT MANAGER: Last event was line navigation: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -559,7 +559,7 @@ class InputEventManager:
             rv = False
         else:
             focus = focus_manager.get_manager().get_locus_of_focus()
-            rv = not AXObject.find_ancestor(focus, AXUtilities.is_combo_box)
+            rv = not AXUtilities.is_widget_controlled_by_line_navigation(focus)
 
         msg = f"INPUT EVENT MANAGER: Last event was page navigation: {rv}"
         debug.print_message(debug.LEVEL_INFO, msg, True)

@@ -2251,6 +2251,33 @@ class AXUtilitiesRole:
         return role in AXUtilitiesRole.get_widget_roles()
 
     @staticmethod
+    def is_widget_controlled_by_line_navigation(obj, role=None):
+        """Returns True if obj is a widget controlled by line navigation"""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        roles = [Atspi.Role.COMBO_BOX,
+                 Atspi.Role.LIST_BOX,
+                 Atspi.Role.MENU,
+                 Atspi.Role.SPIN_BUTTON,
+                 Atspi.Role.TREE,
+                 Atspi.Role.TREE_TABLE]
+        if role in roles:
+            return True
+
+        if AXUtilitiesState.is_editable(obj) or AXUtilitiesState.is_selectable(obj):
+            return AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in roles)
+
+        if not AXUtilitiesState.is_vertical(obj):
+            return False
+
+        return role in [Atspi.Role.SCROLL_BAR,
+                        Atspi.Role.SEPARATOR,
+                        Atspi.Role.SLIDER,
+                        Atspi.Role.SPLIT_PANE]
+
+    @staticmethod
     def is_window(obj, role=None):
         """Returns True if obj has the window role"""
 

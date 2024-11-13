@@ -904,6 +904,9 @@ class AXUtilities:
     def is_widget(obj, role=None): ...
 
     @staticmethod
+    def is_widget_controlled_by_line_navigation(obj, role=None): ...
+
+    @staticmethod
     def is_web_element(obj, exclude_pseudo_elements=True): ...
 
     @staticmethod
