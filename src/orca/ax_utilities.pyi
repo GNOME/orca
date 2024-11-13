@@ -120,6 +120,9 @@ class AXUtilities:
     def get_last_known_name(obj): ...
 
     @staticmethod
+    def get_text_event_reason(event): ...
+
+    @staticmethod
     def is_presentable_active_descendant_change(event): ...
 
     @staticmethod
@@ -182,6 +185,9 @@ class AXUtilities:
 
     @staticmethod
     def get_table_related_roles(include_caption=False): ...
+
+    @staticmethod
+    def get_text_ui_roles(): ...
 
     @staticmethod
     def get_tree_related_roles(): ...

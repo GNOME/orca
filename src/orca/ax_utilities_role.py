@@ -202,6 +202,16 @@ class AXUtilitiesRole:
         return roles
 
     @staticmethod
+    def get_text_ui_roles():
+        """Returns the list of roles we consider UI that displays static text"""
+
+        roles = [Atspi.Role.INFO_BAR,
+                 Atspi.Role.LABEL,
+                 Atspi.Role.PAGE_TAB,
+                 Atspi.Role.STATUS_BAR]
+        return roles
+
+    @staticmethod
     def get_tree_related_roles():
         """Returns the list of roles we consider tree related"""
 

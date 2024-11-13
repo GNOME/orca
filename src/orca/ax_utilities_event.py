@@ -21,6 +21,8 @@
 
 # pylint: disable=too-many-return-statements
 # pylint: disable=duplicate-code
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-statements
 
 """Utilities for obtaining event-related information."""
 
@@ -31,6 +33,7 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
+import enum
 import threading
 import time
 
@@ -43,6 +46,48 @@ from .ax_text import AXText
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
+class TextEventReason(enum.Enum):
+    """Enum representing the reason for an object:text- event."""
+
+    UNKNOWN = 0
+    AUTO_DELETION = 1
+    AUTO_INSERTION = 2
+    BACKSPACE = 3
+    CHILDREN_CHANGE = 4
+    CUT = 5
+    DELETE = 6
+    MOUSE_MIDDLE_BUTTON = 7
+    MOUSE_PRIMARY_BUTTON = 8
+    NAVIGATION_BY_CHARACTER = 9
+    NAVIGATION_BY_LINE = 10
+    NAVIGATION_BY_PARAGRAPH = 11
+    NAVIGATION_BY_PAGE = 12
+    NAVIGATION_BY_WORD = 13
+    NAVIGATION_TO_FILE_BOUNDARY = 14
+    NAVIGATION_TO_LINE_BOUNDARY = 15
+    PAGE_SWITCH = 16
+    PASTE = 17
+    SELECT_ALL = 18
+    SELECTED_TEXT_DELETION = 19
+    SELECTED_TEXT_INSERTION = 20
+    SELECTED_TEXT_RESTORATION = 21
+    SELECTION_BY_CHARACTER = 22
+    SELECTION_BY_LINE = 23
+    SELECTION_BY_PARAGRAPH = 24
+    SELECTION_BY_PAGE = 25
+    SELECTION_BY_WORD = 26
+    SELECTION_TO_FILE_BOUNDARY = 27
+    SELECTION_TO_LINE_BOUNDARY = 28
+    SPIN_BUTTON_VALUE_CHANGE = 29
+    TYPING = 30
+    REDO = 31
+    UI_UPDATE = 32
+    UNDO = 33
+    UNSPECIFIED_COMMAND = 34
+    UNSPECIFIED_NAVIGATION = 35
+    UNSPECIFIED_SELECTION = 36
+
+
 class AXUtilitiesEvent:
     """Utilities for obtaining event-related information."""
 
@@ -54,6 +99,8 @@ class AXUtilitiesEvent:
     LAST_KNOWN_INDETERMINATE: dict[int, bool] = {}
     LAST_KNOWN_PRESSED: dict[int, bool] = {}
     LAST_KNOWN_SELECTED: dict[int, bool] = {}
+
+    TEXT_EVENT_REASON: dict[int, TextEventReason] = {}
 
     _lock = threading.Lock()
 
@@ -78,6 +125,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.clear()
         AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
         AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
+        AXUtilitiesEvent.TEXT_EVENT_REASON.clear()
 
     @staticmethod
     def clear_cache_now(reason=""):
@@ -118,6 +166,210 @@ class AXUtilitiesEvent:
         """Returns the last known name of obj."""
 
         return AXUtilitiesEvent.LAST_KNOWN_NAME.get(hash(obj), "")
+
+    @staticmethod
+    def get_text_event_reason(event):
+        """Returns the TextEventReason for the given event."""
+
+        if event.type.startswith("object:text-changed:insert"):
+            return AXUtilitiesEvent._get_text_insertion_event_reason(event)
+        if event.type.startswith("object:text-caret-moved"):
+            return AXUtilitiesEvent._get_caret_moved_event_reason(event)
+        if event.type.startswith("object:text-changed:delete"):
+            return AXUtilitiesEvent._get_text_deletion_event_reason(event)
+        raise ValueError(f"Unexpected event type: {event.type}")
+
+    @staticmethod
+    def _get_caret_moved_event_reason(event):
+        """Returns the TextEventReason for the given event."""
+
+        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(hash(event))
+        if reason is not None:
+            return reason
+
+        reason = TextEventReason.UNKNOWN
+        mgr = input_event_manager.get_manager()
+        obj = event.source
+        if mgr.last_event_was_caret_selection():
+            if mgr.last_event_was_line_navigation():
+                reason = TextEventReason.SELECTION_BY_LINE
+            elif mgr.last_event_was_word_navigation():
+                reason = TextEventReason.SELECTION_BY_WORD
+            elif mgr.last_event_was_character_navigation():
+                reason = TextEventReason.SELECTION_BY_CHARACTER
+            elif mgr.last_event_was_page_navigation():
+                reason = TextEventReason.SELECTION_BY_PAGE
+            elif mgr.last_event_was_line_boundary_navigation():
+                reason = TextEventReason.SELECTION_TO_LINE_BOUNDARY
+            elif mgr.last_event_was_file_boundary_navigation():
+                reason = TextEventReason.SELECTION_TO_FILE_BOUNDARY
+            else:
+                reason = TextEventReason.UNSPECIFIED_SELECTION
+        elif mgr.last_event_was_caret_navigation():
+            if mgr.last_event_was_line_navigation():
+                reason = TextEventReason.NAVIGATION_BY_LINE
+            elif mgr.last_event_was_word_navigation():
+                reason = TextEventReason.NAVIGATION_BY_WORD
+            elif mgr.last_event_was_character_navigation():
+                reason = TextEventReason.NAVIGATION_BY_CHARACTER
+            elif mgr.last_event_was_page_navigation():
+                reason = TextEventReason.NAVIGATION_BY_PAGE
+            elif mgr.last_event_was_line_boundary_navigation():
+                reason = TextEventReason.NAVIGATION_TO_LINE_BOUNDARY
+            elif mgr.last_event_was_file_boundary_navigation():
+                reason = TextEventReason.NAVIGATION_TO_FILE_BOUNDARY
+            else:
+                reason = TextEventReason.UNSPECIFIED_NAVIGATION
+        elif mgr.last_event_was_select_all():
+            reason = TextEventReason.SELECT_ALL
+        elif mgr.last_event_was_primary_click_or_release():
+            reason = TextEventReason.MOUSE_PRIMARY_BUTTON
+        elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
+            if mgr.last_event_was_backspace():
+                reason = TextEventReason.BACKSPACE
+            elif mgr.last_event_was_delete():
+                reason = TextEventReason.DELETE
+            elif mgr.last_event_was_cut():
+                reason = TextEventReason.CUT
+            elif mgr.last_event_was_paste():
+                reason = TextEventReason.PASTE
+            elif mgr.last_event_was_undo():
+                reason = TextEventReason.UNDO
+            elif mgr.last_event_was_redo():
+                reason = TextEventReason.REDO
+            elif mgr.last_event_was_page_switch():
+                reason = TextEventReason.PAGE_SWITCH
+            elif mgr.last_event_was_command():
+                reason = TextEventReason.UNSPECIFIED_COMMAND
+            elif mgr.last_event_was_printable_key():
+                reason = TextEventReason.TYPING
+
+        AXUtilitiesEvent.TEXT_EVENT_REASON[hash(event)] = reason
+        msg = f"AXUtilitiesEvent: Reason for event: {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return reason
+
+    @staticmethod
+    def _get_text_deletion_event_reason(event):
+        """Returns the TextEventReason for the given event."""
+
+        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(hash(event))
+        if reason is not None:
+            return reason
+
+        reason = TextEventReason.UNKNOWN
+        mgr = input_event_manager.get_manager()
+        obj = event.source
+        if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
+            reason = TextEventReason.UI_UPDATE
+        elif mgr.last_event_was_page_switch():
+            reason = TextEventReason.PAGE_SWITCH
+        elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
+            if mgr.last_event_was_backspace():
+                reason = TextEventReason.BACKSPACE
+            elif mgr.last_event_was_delete():
+                reason = TextEventReason.DELETE
+            elif mgr.last_event_was_cut():
+                reason = TextEventReason.CUT
+            elif mgr.last_event_was_paste():
+                reason = TextEventReason.PASTE
+            elif mgr.last_event_was_undo():
+                reason = TextEventReason.UNDO
+            elif mgr.last_event_was_redo():
+                reason = TextEventReason.REDO
+            elif mgr.last_event_was_command():
+                reason = TextEventReason.UNSPECIFIED_COMMAND
+            elif mgr.last_event_was_printable_key():
+                reason = TextEventReason.TYPING
+            elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
+                if AXUtilitiesRole.is_spin_button(obj) \
+                   or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
+                    reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
+                else:
+                    reason = TextEventReason.AUTO_DELETION
+            if reason == TextEventReason.UNKNOWN:
+                selected_text, _start, _end = AXText.get_cached_selected_text(obj)
+                if selected_text and event.any_data.strip() == selected_text.strip():
+                    reason = TextEventReason.SELECTED_TEXT_DELETION
+        elif mgr.last_event_was_command():
+            reason = TextEventReason.UNSPECIFIED_COMMAND
+        elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
+            reason = TextEventReason.CHILDREN_CHANGE
+
+        AXUtilitiesEvent.TEXT_EVENT_REASON[hash(event)] = reason
+        msg = f"AXUtilitiesEvent: Reason for event: {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return reason
+
+    @staticmethod
+    def _get_text_insertion_event_reason(event):
+        """Returns the TextEventReason for the given event."""
+
+        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(hash(event))
+        if reason is not None:
+            return reason
+
+        reason = TextEventReason.UNKNOWN
+        mgr = input_event_manager.get_manager()
+        obj = event.source
+        if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
+            reason = TextEventReason.UI_UPDATE
+        elif mgr.last_event_was_page_switch():
+            reason = TextEventReason.PAGE_SWITCH
+        elif AXUtilitiesState.is_editable(obj) \
+                or AXUtilitiesRole.is_terminal(obj):
+            selected_text, _start, _end = AXText.get_selected_text(obj)
+            if selected_text and event.any_data == selected_text:
+                reason = TextEventReason.SELECTED_TEXT_INSERTION
+            if mgr.last_event_was_backspace():
+                reason = TextEventReason.BACKSPACE
+            elif mgr.last_event_was_delete():
+                reason = TextEventReason.DELETE
+            elif mgr.last_event_was_cut():
+                reason = TextEventReason.CUT
+            elif mgr.last_event_was_paste():
+                reason = TextEventReason.PASTE
+            elif mgr.last_event_was_undo():
+                if reason == TextEventReason.SELECTED_TEXT_INSERTION:
+                    reason = TextEventReason.SELECTED_TEXT_RESTORATION
+                else:
+                    reason = TextEventReason.UNDO
+            elif mgr.last_event_was_redo():
+                if reason == TextEventReason.SELECTED_TEXT_INSERTION:
+                    reason = TextEventReason.SELECTED_TEXT_RESTORATION
+                else:
+                    reason = TextEventReason.REDO
+            elif mgr.last_event_was_command():
+                reason = TextEventReason.UNSPECIFIED_COMMAND
+            elif mgr.last_event_was_printable_key():
+                if reason == TextEventReason.SELECTED_TEXT_INSERTION:
+                    reason = TextEventReason.AUTO_INSERTION
+                else:
+                    reason = TextEventReason.TYPING
+            elif mgr.last_event_was_middle_click() or mgr.last_event_was_middle_release():
+                reason = TextEventReason.MOUSE_MIDDLE_BUTTON
+            elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
+                if AXUtilitiesRole.is_spin_button(obj) \
+                   or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
+                    reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
+                else:
+                    reason = TextEventReason.AUTO_INSERTION
+            if reason == TextEventReason.UNKNOWN:
+                if len(event.any_data) == 1:
+                    pass
+                elif mgr.last_event_was_tab() and event.any_data != "\t":
+                    reason = TextEventReason.AUTO_INSERTION
+                elif mgr.last_event_was_return() and event.any_data != "\n":
+                    reason = TextEventReason.AUTO_INSERTION
+        elif mgr.last_event_was_command():
+            reason = TextEventReason.UNSPECIFIED_COMMAND
+        elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
+            reason = TextEventReason.CHILDREN_CHANGE
+
+        AXUtilitiesEvent.TEXT_EVENT_REASON[hash(event)] = reason
+        msg = f"AXUtilitiesEvent: Reason for event: {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return reason
 
     @staticmethod
     def is_presentable_active_descendant_change(event):
