@@ -3384,6 +3384,9 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_text_line(obj, **args)
         result += self._generate_text_selection(obj, **args)
+        result += self._generate_state_required(obj, **args)
+        result += self._generate_pause(obj, **args)
+        result += self._generate_state_invalid(obj, **args)
         result += self._generate_keyboard_mnemonic(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
