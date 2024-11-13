@@ -141,7 +141,7 @@ class Script(default.Script):
             parent = AXObject.get_parent(focus)
             grandparent = AXObject.get_parent(parent)
             if grandparent == event.source:
-                self._presentTextAtNewCaretPosition(event, focus)
+                self._presentTextAtNewCaretPosition(event, otherObj=focus)
                 return
 
         default.Script.on_value_changed(self, event)

@@ -58,6 +58,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_event import TextEventReason
 from orca.ax_value import AXValue
 
 class Script(script.Script):
@@ -1100,6 +1101,7 @@ class Script(script.Script):
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
+        reason = AXUtilities.get_text_event_reason(event)
         obj, offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
         if offset == event.detail1 and obj == event.source:
             msg = "DEFAULT: Event is for last saved cursor position"
@@ -1150,7 +1152,7 @@ class Script(script.Script):
 
         msg = "DEFAULT: Presenting text at new caret position"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._presentTextAtNewCaretPosition(event)
+        self._presentTextAtNewCaretPosition(event, reason=reason)
 
     def on_description_changed(self, event):
         """Callback for object:property-change:accessible-description events."""
@@ -1416,6 +1418,8 @@ class Script(script.Script):
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
+        reason = AXUtilities.get_text_event_reason(event)
+
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
@@ -1424,7 +1428,7 @@ class Script(script.Script):
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         self.update_braille(event.source)
 
-        if self.utilities.isSelectedTextDeletionEvent(event):
+        if reason == TextEventReason.SELECTED_TEXT_DELETION:
             msg = "DEFAULT: Deletion is believed to be due to deleting selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentMessage(messages.SELECTION_DELETED)
@@ -1432,11 +1436,11 @@ class Script(script.Script):
             return
 
         string = self.utilities.deletedText(event)
-        if self.utilities.isDeleteCommandTextDeletionEvent(event):
+        if reason == TextEventReason.DELETE:
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             string = AXText.get_character_at_offset(event.source)[0]
-        elif self.utilities.isBackSpaceCommandTextDeletionEvent(event):
+        elif reason == TextEventReason.BACKSPACE:
             msg = "DEFAULT: Deletion is believed to be due to BackSpace command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
@@ -1456,63 +1460,51 @@ class Script(script.Script):
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
+        reason = AXUtilities.get_text_event_reason(event)
         if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
             return
 
         self.utilities.handleUndoTextEvent(event)
 
-        if event.source == focus_manager.get_manager().get_locus_of_focus() \
-           and self.utilities.isAutoTextEvent(event):
-            self._save_focused_object_info(event.source)
-        focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.update_braille(event.source)
-
-        full, brief = "", ""
-        if self.utilities.isSelectedTextRestoredEvent(event):
+        if reason == TextEventReason.SELECTED_TEXT_RESTORATION:
             msg = "DEFAULT: Insertion is believed to be due to restoring selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            full = messages.SELECTION_RESTORED
-
-        if full or brief:
-            self.presentMessage(full, brief)
+            self.presentMessage(messages.SELECTION_RESTORED)
             AXText.update_cached_selected_text(event.source)
             return
 
-        speakString = True
-
-        # Because some implementations are broken.
-        string = self.utilities.insertedText(event)
-
-        manager = input_event_manager.get_manager()
-        if manager.last_event_was_page_switch():
+        speak_string = True
+        if reason == TextEventReason.PAGE_SWITCH:
             msg = "DEFAULT: Insertion is believed to be due to page switch"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            speakString = False
-        elif manager.last_event_was_paste():
+            speak_string = False
+        elif reason == TextEventReason.PASTE:
             msg = "DEFAULT: Insertion is believed to be due to paste"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            speakString = False
-        elif manager.last_event_was_command():
+            speak_string = False
+        elif reason == TextEventReason.UNSPECIFIED_COMMAND:
             msg = "DEFAULT: Insertion is believed to be due to command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif self.utilities.isMiddleMouseButtonTextInsertionEvent(event):
+        elif reason == TextEventReason.MOUSE_MIDDLE_BUTTON:
             msg = "DEFAULT: Insertion is believed to be due to middle mouse button"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif self.utilities.isEchoableTextInsertionEvent(event):
             msg = "DEFAULT: Insertion is believed to be echoable"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif self.utilities.isAutoTextEvent(event):
+        elif reason == TextEventReason.AUTO_INSERTION:
             msg = "DEFAULT: Insertion is believed to be auto text event"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif self.utilities.isSelectedTextInsertionEvent(event):
+        elif reason == TextEventReason.SELECTED_TEXT_INSERTION:
             msg = "DEFAULT: Insertion is also selected"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             msg = "DEFAULT: Not speaking inserted string due to lack of cause"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            speakString = False
+            speak_string = False
 
-        if speakString:
+        # Because some implementations are broken.
+        string = self.utilities.insertedText(event)
+        if speak_string:
             if len(string) == 1:
                 self.speak_character(string)
             else:
@@ -1651,7 +1643,7 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def _presentTextAtNewCaretPosition(self, event, otherObj=None):
+    def _presentTextAtNewCaretPosition(self, event, otherObj=None, reason=TextEventReason.UNKNOWN):
         """Presents text at the new position, based on heuristics. Returns True if handled."""
 
         obj = otherObj or event.source
@@ -1661,26 +1653,25 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        manager = input_event_manager.get_manager()
-        if manager.last_event_was_line_navigation():
+        if reason == TextEventReason.NAVIGATION_BY_LINE:
             self.sayLine(obj)
             return True
-        if manager.last_event_was_word_navigation():
+        if reason == TextEventReason.NAVIGATION_BY_WORD:
             self.sayWord(obj)
             return True
-        if manager.last_event_was_character_navigation():
+        if reason == TextEventReason.NAVIGATION_BY_CHARACTER:
             self.sayCharacter(obj)
             return True
-        if manager.last_event_was_page_navigation():
+        if reason == TextEventReason.NAVIGATION_BY_PAGE:
             self.sayLine(obj)
             return True
-        if manager.last_event_was_line_boundary_navigation():
+        if reason == TextEventReason.NAVIGATION_TO_LINE_BOUNDARY:
             self.sayCharacter(obj)
             return True
-        if manager.last_event_was_file_boundary_navigation():
+        if reason == TextEventReason.NAVIGATION_TO_FILE_BOUNDARY:
             self.sayLine(obj)
             return True
-        if manager.last_event_was_primary_click_or_release():
+        if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
             string, _start, _end = AXText.get_cached_selected_text(event.source)
             if not string:
                 self.sayLine(obj)
