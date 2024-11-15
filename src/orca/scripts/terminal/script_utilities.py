@@ -117,24 +117,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().isTextArea(obj)
 
-    def isAutoTextEvent(self, event):
-        if not event.type.startswith("object:text-changed:insert"):
-            return False
-
-        if not event.any_data or not event.source:
-            return False
-
-        if len(event.any_data) <= 1:
-            return False
-
-        manager = input_event_manager.get_manager()
-        if manager.last_event_was_tab():
-            return event.any_data != "\t"
-        if manager.last_event_was_return() and event.any_data.startswith("\n"):
-            return event.any_data.strip() and not event.any_data.count("\n~")
-
-        return False
-
     def treatEventAsCommand(self, event):
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             return False

@@ -1559,45 +1559,6 @@ class Utilities:
 
         return text + delimiter + newText
 
-    def isAutoTextEvent(self, event):
-        """Returns True if event is associated with text being autocompleted
-        or autoinserted or autocorrected or autosomethingelsed.
-
-        Arguments:
-        - event: the accessible event being examined
-        """
-
-        if event.type.startswith("object:text-changed:insert"):
-            if not event.any_data or not event.source:
-                return False
-
-            if not AXUtilities.is_editable(event.source):
-                return False
-            if not AXUtilities.is_showing(event.source):
-                return False
-            if AXUtilities.is_focusable(event.source):
-                AXObject.clear_cache(event.source, False, "Ensuring we have the correct state.")
-                if not AXUtilities.is_focused(event.source):
-                    return False
-
-            manager = input_event_manager.get_manager()
-            if manager.last_event_was_tab() and event.any_data != "\t":
-                return True
-            if manager.last_event_was_return() and event.any_data != "\n":
-                return True
-            if manager.last_event_was_up_or_down() or manager.last_event_was_page_up_or_page_down():
-                return self.isEditableDescendantOfComboBox(event.source)
-            if not input_event_manager.get_manager().last_event_was_printable_key():
-                return False
-
-            string = AXText.get_all_text(event.source)
-            if string.endswith(event.any_data):
-                selection, start, end = AXText.get_selected_text(event.source)
-                if selection == event.any_data:
-                    return True
-
-        return False
-
     def isSentenceDelimiter(self, currentChar, previousChar):
         """Returns True if we are positioned at the end of a sentence.
         This is determined by checking if the current character is a
@@ -2200,68 +2161,6 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def isBackSpaceCommandTextDeletionEvent(self, event):
-        if not event.type.startswith("object:text-changed:delete"):
-            return False
-
-        if self.isHidden(event.source):
-            return False
-
-        return input_event_manager.get_manager().last_event_was_backspace()
-
-    def isDeleteCommandTextDeletionEvent(self, event):
-        if not event.type.startswith("object:text-changed:delete"):
-            return False
-
-        if event.type.endswith("system"):
-            return False
-
-        return input_event_manager.get_manager().last_event_was_delete()
-
-    def isUndoCommandTextDeletionEvent(self, event):
-        if not event.type.startswith("object:text-changed:delete"):
-            return False
-
-        if not input_event_manager.get_manager().last_event_was_undo():
-            return False
-
-        string, _start, _end = AXText.get_cached_selected_text(event.source)
-        return not string
-
-    def isSelectedTextDeletionEvent(self, event):
-        if not event.type.startswith("object:text-changed:delete"):
-            return False
-
-        manager = input_event_manager.get_manager()
-        if manager.last_event_was_paste() or manager.last_event_was_cut():
-            return False
-
-        string, _start, _end = AXText.get_cached_selected_text(event.source)
-        return string and string.strip() == event.any_data.strip()
-
-    def isSelectedTextInsertionEvent(self, event):
-        if not event.type.startswith("object:text-changed:insert"):
-            return False
-
-        AXText.update_cached_selected_text(event.source)
-        string, start, _end = AXText.get_cached_selected_text(event.source)
-        return string and string == event.any_data and start == event.detail1
-
-    def isSelectedTextRestoredEvent(self, event):
-        if not input_event_manager.get_manager().last_event_was_undo():
-            return False
-
-        if self.isSelectedTextInsertionEvent(event):
-            return True
-
-        return False
-
-    def isMiddleMouseButtonTextInsertionEvent(self, event):
-        if not event.type.startswith("object:text-changed:insert"):
-            return False
-
-        return input_event_manager.get_manager().last_event_was_middle_click()
-
     def isEchoableTextInsertionEvent(self, event):
         if not event.type.startswith("object:text-changed:insert"):
             return False
@@ -2338,9 +2237,6 @@ class Utilities:
                 self._script.point_of_reference['paste'] = True
             return True
 
-        return False
-
-    def eventIsSpinnerNoise(self, event):
         return False
 
     def presentFocusChangeReason(self):

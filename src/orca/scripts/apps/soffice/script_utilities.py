@@ -116,29 +116,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def isAutoTextEvent(self, event):
-        """Returns True if event is believed to be an automatic text insertion."""
-
-        # default logic for editable comboboxes works for LibreOffice >= 24.8
-        if self.isEditableDescendantOfComboBox(event.source):
-            return super().isAutoTextEvent(event)
-
-        if not AXUtilities.is_paragraph(event.source):
-            return False
-
-        manager = input_event_manager.get_manager()
-        if event.type.startswith("object:text-changed:insert"):
-            if not event.any_data:
-                return False
-
-            if manager.last_event_was_tab() and event.any_data != "\t":
-                return True
-
-            if manager.last_event_was_backspace():
-                return True
-
-        return False
-
     def isReadOnlyTextArea(self, obj):
         """Returns True if event is believed to be a read-only text area."""
 
@@ -146,15 +123,6 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return not self.inDocumentContent(obj)
-
-    def isSelectedTextDeletionEvent(self, event):
-        """Returns True if event is believed to be deletion of selected text."""
-
-        if event.type.startswith("object:state-changed:selected") and not event.detail1:
-            return input_event_manager.get_manager().last_event_was_delete() \
-                and focus_manager.get_manager().focus_is_dead()
-
-        return super().isSelectedTextDeletionEvent(event)
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         """Returns the word in obj at the specified or current offset."""

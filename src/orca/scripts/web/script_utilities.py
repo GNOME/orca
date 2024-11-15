@@ -3360,44 +3360,11 @@ class Utilities(script_utilities.Utilities):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def textEventIsDueToDeletion(self, event):
-        if not self.inDocumentContent(event.source) \
-           or not AXUtilities.is_editable(event.source):
-            return False
-
-        if self.isDeleteCommandTextDeletionEvent(event) \
-           or self.isBackSpaceCommandTextDeletionEvent(event):
-            return True
-
-        return False
-
-    def textEventIsDueToInsertion(self, event):
-        if not event.type.startswith("object:text-"):
-            return False
-
-        if not self.inDocumentContent(event.source) \
-           or not AXUtilities.is_editable(event.source):
-            return False
-
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            return False
-
-        return input_event_manager.get_manager().last_event_was_printable_key()
-
     def textEventIsForNonNavigableTextObject(self, event):
         if not event.type.startswith("object:text-"):
             return False
 
         return self._treatObjectAsWhole(event.source)
-
-    def eventIsEOCAdded(self, event):
-        if not self.inDocumentContent(event.source):
-            return False
-
-        if event.type.startswith("object:text-changed:insert"):
-            return "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", "")
-
-        return False
 
     def caretMovedOutsideActiveGrid(self, event, old_focus=None):
         if not (event and event.type.startswith("object:text-caret-moved")):
