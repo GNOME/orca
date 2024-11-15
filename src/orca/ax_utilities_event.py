@@ -171,21 +171,30 @@ class AXUtilitiesEvent:
     def get_text_event_reason(event):
         """Returns the TextEventReason for the given event."""
 
+        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(event)
+        if reason is not None:
+            tokens = ["AXUtilitiesEvent: Cached reason for", event, f": {reason}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return reason
+
+        reason = TextEventReason.UNKNOWN
         if event.type.startswith("object:text-changed:insert"):
-            return AXUtilitiesEvent._get_text_insertion_event_reason(event)
-        if event.type.startswith("object:text-caret-moved"):
-            return AXUtilitiesEvent._get_caret_moved_event_reason(event)
-        if event.type.startswith("object:text-changed:delete"):
-            return AXUtilitiesEvent._get_text_deletion_event_reason(event)
-        raise ValueError(f"Unexpected event type: {event.type}")
+            reason = AXUtilitiesEvent._get_text_insertion_event_reason(event)
+        elif event.type.startswith("object:text-caret-moved"):
+            reason = AXUtilitiesEvent._get_caret_moved_event_reason(event)
+        elif event.type.startswith("object:text-changed:delete"):
+            reason = AXUtilitiesEvent._get_text_deletion_event_reason(event)
+        else:
+            raise ValueError(f"Unexpected event type: {event.type}")
+
+        AXUtilitiesEvent.TEXT_EVENT_REASON[event] = reason
+        tokens = ["AXUtilitiesEvent: Reason for", event, f": {reason}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return reason
 
     @staticmethod
     def _get_caret_moved_event_reason(event):
         """Returns the TextEventReason for the given event."""
-
-        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(hash(event))
-        if reason is not None:
-            return reason
 
         reason = TextEventReason.UNKNOWN
         mgr = input_event_manager.get_manager()
@@ -243,19 +252,11 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.UNSPECIFIED_COMMAND
             elif mgr.last_event_was_printable_key():
                 reason = TextEventReason.TYPING
-
-        AXUtilitiesEvent.TEXT_EVENT_REASON[hash(event)] = reason
-        msg = f"AXUtilitiesEvent: Reason for event: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
         return reason
 
     @staticmethod
     def _get_text_deletion_event_reason(event):
         """Returns the TextEventReason for the given event."""
-
-        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(hash(event))
-        if reason is not None:
-            return reason
 
         reason = TextEventReason.UNKNOWN
         mgr = input_event_manager.get_manager()
@@ -295,19 +296,11 @@ class AXUtilitiesEvent:
             reason = TextEventReason.UNSPECIFIED_COMMAND
         elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
             reason = TextEventReason.CHILDREN_CHANGE
-
-        AXUtilitiesEvent.TEXT_EVENT_REASON[hash(event)] = reason
-        msg = f"AXUtilitiesEvent: Reason for event: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
         return reason
 
     @staticmethod
     def _get_text_insertion_event_reason(event):
         """Returns the TextEventReason for the given event."""
-
-        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(hash(event))
-        if reason is not None:
-            return reason
 
         reason = TextEventReason.UNKNOWN
         mgr = input_event_manager.get_manager()
@@ -365,10 +358,6 @@ class AXUtilitiesEvent:
             reason = TextEventReason.UNSPECIFIED_COMMAND
         elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
             reason = TextEventReason.CHILDREN_CHANGE
-
-        AXUtilitiesEvent.TEXT_EVENT_REASON[hash(event)] = reason
-        msg = f"AXUtilitiesEvent: Reason for event: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
         return reason
 
     @staticmethod
