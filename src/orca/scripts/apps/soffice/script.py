@@ -517,26 +517,22 @@ class Script(default.Script):
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        full, brief = "", ""
-        if self.utilities.isSelectedTextDeletionEvent(event):
-            msg = "SOFFICE: Change is believed to be due to deleting selected text"
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=163801
+        if AXUtilities.is_paragraph(event.source):
+            msg = "SOFFICE: Ignoring event on unsupported role."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            full = messages.SELECTION_DELETED
-        elif self.utilities.isSelectedTextRestoredEvent(event):
-            msg = "SOFFICE: Selection is believed to be due to restoring selected text"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            if self.utilities.handleUndoTextEvent(event):
-                full = messages.SELECTION_RESTORED
-
-        if full or brief:
-            self.presentMessage(full, brief)
-            AXText.update_cached_selected_text(event.source)
             return
 
         super().on_selected_changed(event)
 
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
+
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=163801
+        if AXUtilities.is_paragraph(event.source):
+            msg = "SOFFICE: Ignoring event on unsupported role."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         if self.utilities.isSpreadSheetTable(event.source):
             if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
