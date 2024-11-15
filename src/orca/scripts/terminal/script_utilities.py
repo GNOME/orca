@@ -34,6 +34,7 @@ from orca import script_utilities
 from orca import settings_manager
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_event import TextEventReason
 
 
 class Utilities(script_utilities.Utilities):
@@ -55,7 +56,7 @@ class Utilities(script_utilities.Utilities):
         if len(event.any_data) == 1:
             return event.any_data
 
-        if self.isAutoTextEvent(event):
+        if AXUtilities.get_text_event_reason(event) == TextEventReason.AUTO_INSERTION:
             return event.any_data
 
         if self._script.get_clipboard_presenter().is_clipboard_text_changed_event(event):
