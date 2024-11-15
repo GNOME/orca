@@ -55,6 +55,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_event import TextEventReason
 
 from .bookmarks import Bookmarks
 from .braille_generator import BrailleGenerator
@@ -1547,11 +1548,7 @@ class Script(default.Script):
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
 
-        if not AXObject.is_valid(event.source):
-            msg = "WEB: Event source is not valid"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
+        reason = AXUtilities.get_text_event_reason(event)
         document = self.utilities.getTopLevelDocumentForObject(event.source)
         if not document:
             if self.utilities.eventIsBrowserUINoise(event):
@@ -1632,13 +1629,13 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.textEventIsDueToInsertion(event):
+        if reason == TextEventReason.TYPING:
             msg = "WEB: Event handled: Updating position due to insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._saveLastCursorPosition(event.source, event.detail1)
             return True
 
-        if self.utilities.textEventIsDueToDeletion(event):
+        if reason in (TextEventReason.DELETE, TextEventReason.BACKSPACE):
             msg = "WEB: Event handled: Updating position due to deletion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._saveLastCursorPosition(event.source, event.detail1)
@@ -1683,7 +1680,7 @@ class Script(default.Script):
         else:
             obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
 
-        if input_event_manager.get_manager().last_event_was_page_navigation():
+        if reason == TextEventReason.NAVIGATION_BY_PAGE:
             msg = "WEB: Caret moved due to scrolling."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
@@ -2235,12 +2232,8 @@ class Script(default.Script):
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 
-        if not AXObject.is_valid(event.source):
-            msg = "WEB: Event source is not valid"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if input_event_manager.get_manager().last_event_was_page_switch():
+        reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.PAGE_SWITCH:
             msg = "WEB: Deletion is believed to be due to page switch"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2250,23 +2243,24 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsBrowserUINoise(event):
-            msg = "WEB: Ignoring event believed to be browser UI noise"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+
+            if reason == TextEventReason.UI_UPDATE:
+                msg = "WEB: Ignoring event believed to be browser UI update"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
             return False
 
-        if self.utilities.eventIsSpinnerNoise(event):
-            msg = "WEB: Ignoring: Event believed to be spinner noise"
+        if reason == TextEventReason.SPIN_BUTTON_VALUE_CHANGE:
+            msg = "WEB: Ignoring: Event believed to be spin button value change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsAutocompleteNoise(event):
-            msg = "WEB: Ignoring event believed to be autocomplete noise"
+        if reason == TextEventReason.AUTO_DELETION:
+            msg = "WEB: Ignoring event believed to be auto deletion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2274,12 +2268,12 @@ class Script(default.Script):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
-        if self.utilities.textEventIsDueToDeletion(event):
+        if reason in (TextEventReason.DELETE, TextEventReason.BACKSPACE):
             msg = "WEB: Event believed to be due to editable text deletion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.utilities.textEventIsDueToInsertion(event):
+        if reason == TextEventReason.TYPING:
             msg = "WEB: Ignoring event believed to be due to text insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2332,7 +2326,8 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if input_event_manager.get_manager().last_event_was_page_switch():
+        reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.PAGE_SWITCH:
             msg = "WEB: Insertion is believed to be due to page switch"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2347,28 +2342,29 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsEOCAdded(event):
-            msg = "WEB: Ignoring: Event was for embedded object char"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.utilities.eventIsBrowserUINoise(event):
-            msg = "WEB: Ignoring event believed to be browser UI noise"
+        if reason == TextEventReason.CHILDREN_CHANGE:
+            msg = "WEB: Ignoring: Event believed to be due to children change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+
+            if reason == TextEventReason.UI_UPDATE:
+                msg = "WEB: Ignoring event believed to be browser UI update"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
             return False
 
-        if self.utilities.eventIsSpinnerNoise(event):
-            msg = "WEB: Ignoring: Event believed to be spinner noise"
+        if reason == TextEventReason.SPIN_BUTTON_VALUE_CHANGE:
+            msg = "WEB: Ignoring: Event believed to be spin button value change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.eventIsAutocompleteNoise(event):
-            msg = "WEB: Ignoring: Event believed to be autocomplete noise"
+        if reason == TextEventReason.AUTO_INSERTION:
+            msg = "WEB: Ignoring: Event believed to be auto insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
