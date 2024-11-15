@@ -3203,8 +3203,7 @@ class Utilities(script_utilities.Utilities):
         if not self.isSpinnerEntry(event.source):
             return False
 
-        return (event.type.startswith("object:text-changed") \
-           or event.type.startswith("object:text-selection-changed")) \
+        return event.type.startswith("object:text-selection-changed") \
             and input_event_manager.get_manager().last_event_was_up_or_down()
 
     def treatEventAsSpinnerValueChange(self, event):
@@ -3219,10 +3218,7 @@ class Utilities(script_utilities.Utilities):
         if self.inDocumentContent(event.source):
             return False
 
-        if event.type.startswith("object:text-") \
-           and AXUtilities.is_single_line_autocomplete_entry(event.source):
-            return input_event_manager.get_manager().last_event_was_return()
-        if event.type.startswith("object:text-") or event.type.endswith("accessible-name"):
+        if event.type.endswith("accessible-name"):
             return AXUtilities.is_status_bar(event.source) or AXUtilities.is_label(event.source) \
                 or AXUtilities.is_frame(event.source)
         if event.type.startswith("object:children-changed"):
