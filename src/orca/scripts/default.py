@@ -1466,6 +1466,8 @@ class Script(script.Script):
 
         self.utilities.handleUndoTextEvent(event)
 
+        self.update_braille(event.source)
+
         if reason == TextEventReason.SELECTED_TEXT_RESTORATION:
             msg = "DEFAULT: Insertion is believed to be due to restoring selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
