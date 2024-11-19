@@ -121,6 +121,8 @@ class EventManager:
         elif event_type == "object:state-changed:active" and \
             (AXUtilities.is_frame(event.source) or AXUtilities.is_dialog_or_alert(event.source)):
             priority = EventManager.PRIORITY_IMPORTANT
+        elif event_type.startswith("object:state-changed:focused"):
+            priority = EventManager.PRIORITY_HIGH
         else:
             priority = EventManager.PRIORITY_NORMAL
 
