@@ -2366,7 +2366,7 @@ class Script(default.Script):
         if reason == TextEventReason.AUTO_INSERTION:
             msg = "WEB: Ignoring: Event believed to be auto insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
+            return False
 
         msg = "WEB: Clearing content cache due to text insertion"
         debug.print_message(debug.LEVEL_INFO, msg, True)
