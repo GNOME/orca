@@ -1888,6 +1888,10 @@ class Script(script.Script):
 
             utterance = []
             split = self.utilities.splitSubstringByLanguage(obj, startOffset, endOffset)
+            if not split:
+                speech.speak(line)
+                return
+
             for start, end, string, language, dialect in split:
                 if not string:
                     continue
