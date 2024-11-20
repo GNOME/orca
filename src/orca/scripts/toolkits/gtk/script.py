@@ -170,26 +170,6 @@ class Script(default.Script):
 
         super().on_showing_changed(event)
 
-    def on_text_deleted(self, event):
-        """Callback for object:text-changed:delete accessibility events."""
-
-        if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
-            tokens = ["GTK:", event.source, "is not showing and visible"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        super().on_text_deleted(event)
-
-    def on_text_inserted(self, event):
-        """Callback for object:text-changed:insert accessibility events."""
-
-        if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
-            tokens = ["GTK:", event.source, "is not showing and visible"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        super().on_text_inserted(event)
-
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
