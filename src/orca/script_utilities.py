@@ -2125,37 +2125,6 @@ class Utilities:
     def getRoleDescription(self, obj, isBraille=False):
         return ""
 
-    def isPresentableTextChangedEventForLocusOfFocus(self, event):
-        if not event.type.startswith("object:text-changed:") \
-           and not event.type.startswith("object:text-attributes-changed"):
-            return False
-
-        if AXUtilities.is_menu_related(event.source) \
-           or AXUtilities.is_slider(event.source) \
-           or AXUtilities.is_spin_button(event.source) \
-           or AXUtilities.is_label(event.source):
-            msg = "SCRIPT UTILITIES: Event is not being presented due to role"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if AXUtilities.is_focused(event.source):
-            if AXUtilities.is_password_text(event.source):
-                return True
-            if focus_manager.get_manager().focus_is_dead():
-                return True
-        elif AXUtilities.is_table_cell(event.source) and not AXUtilities.is_selected(event.source):
-            msg = "SCRIPT UTILITIES: Event is not being presented due to role and states"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if focus_manager.get_manager().get_locus_of_focus() in \
-            [event.source, AXObject.get_parent(event.source)]:
-            return True
-
-        msg = "SCRIPT UTILITIES: Event is not being presented due to lack of cause"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return False
-
     def isEditableTextArea(self, obj):
         if not self.isTextArea(obj):
             return False

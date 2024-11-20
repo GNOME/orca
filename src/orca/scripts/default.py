@@ -1404,10 +1404,18 @@ class Script(script.Script):
     def on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
-        if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
+        if not AXUtilities.is_editable(event.source):
+            msg = "DEFAULT: Change is from not editable source"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if settings_manager.get_manager().get_setting('speakMisspelledIndicator'):
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != event.source and not AXUtilities.is_focused(event.source):
+            msg = "DEFAULT: Change is from unfocused source that is not the locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if settings_manager.get_manager().get_setting("speakMisspelledIndicator"):
             offset = AXText.get_caret_offset(event.source)
             if not AXText.get_substring(event.source, offset, offset + 1).isalnum():
                 offset -= 1
@@ -1420,12 +1428,18 @@ class Script(script.Script):
 
         reason = AXUtilities.get_text_event_reason(event)
 
-        if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
+        if not AXUtilities.is_editable(event.source):
+            msg = "DEFAULT: Change is from not editable source"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != event.source and not AXUtilities.is_focused(event.source):
+            msg = "DEFAULT: Change is from unfocused source that is not the locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self.utilities.handleUndoTextEvent(event)
-
-        focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         self.update_braille(event.source)
 
         if reason == TextEventReason.SELECTED_TEXT_DELETION:
@@ -1435,7 +1449,6 @@ class Script(script.Script):
             AXText.update_cached_selected_text(event.source)
             return
 
-        string = self.utilities.deletedText(event)
         if reason == TextEventReason.DELETE:
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1448,6 +1461,7 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
+        string = self.utilities.deletedText(event)
         if len(string) == 1:
             self.speak_character(string)
         else:
@@ -1461,11 +1475,19 @@ class Script(script.Script):
         """Callback for object:text-changed:insert accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
-        if not self.utilities.isPresentableTextChangedEventForLocusOfFocus(event):
+
+        if not AXUtilities.is_editable(event.source):
+            msg = "DEFAULT: Change is from not editable source"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != event.source and not AXUtilities.is_focused(event.source):
+            msg = "DEFAULT: Change is from unfocused source that is not the locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self.utilities.handleUndoTextEvent(event)
-
         self.update_braille(event.source)
 
         if reason == TextEventReason.SELECTED_TEXT_RESTORATION:
