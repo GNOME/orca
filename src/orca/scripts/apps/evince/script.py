@@ -27,12 +27,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013 The Orca Team."
 __license__   = "LGPL"
 
-from orca import focus_manager
 from orca import keybindings
 from orca import settings
 from orca import settings_manager
 from orca.scripts.toolkits import gtk
-from orca.ax_utilities import AXUtilities
 from orca.structural_navigation import StructuralNavigation
 
 class Script(gtk.Script):
@@ -82,11 +80,3 @@ class Script(gtk.Script):
                 StructuralNavigation.TABLE,
                 StructuralNavigation.UNVISITED_LINK,
                 StructuralNavigation.VISITED_LINK]
-
-    def on_caret_moved(self, event):
-        """Callback for object:text-caret-moved accessibility events."""
-
-        if AXUtilities.is_focused(event.source):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-
-        super().on_caret_moved(event)
