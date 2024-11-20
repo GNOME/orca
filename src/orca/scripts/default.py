@@ -1102,25 +1102,18 @@ class Script(script.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != event.source:
+            if not AXUtilities.is_focused(event.source):
+                msg = "DEFAULT: Change is from unfocused source that is not the locus of focus"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return
+            # TODO - JD: See if this can be removed. If it's still needed document why.
+            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+
         obj, offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
         if offset == event.detail1 and obj == event.source:
             msg = "DEFAULT: Event is for last saved cursor position"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if event.source != focus and AXUtilities.is_focused(event.source):
-            if self.utilities.topLevelObjectIsActiveWindow(event.source):
-                tokens = ["DEFAULT: Updating locusOfFocus to", event.source]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-                focus = event.source
-            else:
-                msg = "DEFAULT: Source window is not active window"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if event.source != focus:
-            msg = "DEFAULT: Source is not locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
