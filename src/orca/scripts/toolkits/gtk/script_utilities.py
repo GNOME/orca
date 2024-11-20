@@ -82,12 +82,6 @@ class Utilities(script_utilities.Utilities):
         self._isToggleDescendantOfComboBox[hash(obj)] = rv
         return rv
 
-    def isTypeahead(self, obj):
-        if not AXUtilities.is_text(obj):
-            return False
-
-        return AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
-
     def isSearchEntry(self, obj, focusedOnly=False):
         # Another example of why we need subrole support in ATK and AT-SPI2.
         if not (AXObject.get_name(obj) and AXUtilities.is_single_line(obj)):

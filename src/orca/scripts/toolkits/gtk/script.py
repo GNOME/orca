@@ -63,17 +63,11 @@ class Script(default.Script):
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.utilities.isTypeahead(focus):
-            msg = "GTK: Locus of focus believed to be typeahead. Presenting change."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.presentObject(event.any_data, interrupt=True)
-            return
-
         if AXUtilities.is_table_related(event.source):
             AXObject.clear_cache(event.any_data, True, "active-descendant-changed event.")
             AXUtilities.clear_all_cache_now(event.source, "active-descendant-changed event.")
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_table_cell(focus):
             table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
             if table is not None and table != event.source:
@@ -151,16 +145,6 @@ class Script(default.Script):
 
         isFocused = AXUtilities.is_focused(event.source)
         if AXUtilities.is_combo_box(event.source) and not isFocused:
-            return
-
-        if not isFocused and self.utilities.isTypeahead(focus):
-            msg = "GTK: locusOfFocus believed to be typeahead. Presenting change."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-            selectedChildren = self.utilities.selectedChildren(event.source)
-            for child in selectedChildren:
-                if not AXUtilities.is_layout_only(child):
-                    self.presentObject(child)
             return
 
         if AXUtilities.is_layered_pane(event.source) \

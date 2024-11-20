@@ -328,9 +328,6 @@ class Utilities:
     def isToggleDescendantOfComboBox(self, obj):
         return False
 
-    def isTypeahead(self, obj):
-        return False
-
     def isOrDescendsFrom(self, obj, ancestor):
         if obj == ancestor:
             return True
@@ -2142,8 +2139,6 @@ class Utilities:
             return False
 
         if AXUtilities.is_focused(event.source):
-            if self.isTypeahead(event.source):
-                return True
             if AXUtilities.is_password_text(event.source):
                 return True
             if focus_manager.get_manager().focus_is_dead():

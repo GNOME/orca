@@ -790,9 +790,6 @@ class SpeechGenerator(generator.Generator):
         if prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj):
             return []
 
-        if self._script.utilities.isTypeahead(prior_obj):
-            return []
-
         if AXUtilities.is_page_tab(obj):
             return []
 
