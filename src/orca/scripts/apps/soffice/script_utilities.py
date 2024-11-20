@@ -140,11 +140,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().shouldReadFullRow(obj, prevObj)
 
-    def presentEventFromNonShowingObject(self, event):
-        """Returns True if we should present this event even though the object isn't showing."""
-
-        return self.inDocumentContent(event.source)
-
     def _isTopLevelObject(self, obj):
         # https://bugs.documentfoundation.org/show_bug.cgi?id=160806
         if AXObject.get_parent(obj) is None and AXObject.get_role(obj) in self._topLevelRoles():

@@ -1108,15 +1108,6 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if not AXUtilities.is_showing(event.source):
-            msg = "DEFAULT: Event source is not showing. Clearing cache."
-            AXObject.clear_cache(obj, False, msg)
-            if not AXUtilities.is_showing(event.source):
-                msg = "DEFAULT: Event source is still not showing."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                if not self.utilities.presentEventFromNonShowingObject(event):
-                    return
-
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != focus and AXUtilities.is_focused(event.source):
             if self.utilities.topLevelObjectIsActiveWindow(event.source):
@@ -1129,7 +1120,7 @@ class Script(script.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if event.source != focus:
-            msg = "DEFAULT: Source window is not locus of focus"
+            msg = "DEFAULT: Source is not locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 

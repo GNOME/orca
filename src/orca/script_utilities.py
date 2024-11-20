@@ -280,12 +280,6 @@ class Utilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return results
 
-    def presentEventFromNonShowingObject(self, event):
-        if event.source == focus_manager.get_manager().get_locus_of_focus():
-            return True
-
-        return False
-
     def grabFocusWhenSettingCaret(self, obj):
         return AXUtilities.is_focusable(obj)
 
