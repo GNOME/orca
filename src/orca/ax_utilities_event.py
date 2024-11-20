@@ -19,6 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
 # pylint: disable=too-many-return-statements
 # pylint: disable=duplicate-code
 # pylint: disable=too-many-branches
@@ -37,6 +38,10 @@ import enum
 import threading
 import time
 
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from . import debug
 from . import focus_manager
 from . import input_event_manager
@@ -49,43 +54,43 @@ from .ax_utilities_state import AXUtilitiesState
 class TextEventReason(enum.Enum):
     """Enum representing the reason for an object:text- event."""
 
-    UNKNOWN = 0
-    AUTO_DELETION = 1
-    AUTO_INSERTION = 2
-    BACKSPACE = 3
-    CHILDREN_CHANGE = 4
-    CUT = 5
-    DELETE = 6
-    MOUSE_MIDDLE_BUTTON = 7
-    MOUSE_PRIMARY_BUTTON = 8
-    NAVIGATION_BY_CHARACTER = 9
-    NAVIGATION_BY_LINE = 10
-    NAVIGATION_BY_PARAGRAPH = 11
-    NAVIGATION_BY_PAGE = 12
-    NAVIGATION_BY_WORD = 13
-    NAVIGATION_TO_FILE_BOUNDARY = 14
-    NAVIGATION_TO_LINE_BOUNDARY = 15
-    PAGE_SWITCH = 16
-    PASTE = 17
-    SELECT_ALL = 18
-    SELECTED_TEXT_DELETION = 19
-    SELECTED_TEXT_INSERTION = 20
-    SELECTED_TEXT_RESTORATION = 21
-    SELECTION_BY_CHARACTER = 22
-    SELECTION_BY_LINE = 23
-    SELECTION_BY_PARAGRAPH = 24
-    SELECTION_BY_PAGE = 25
-    SELECTION_BY_WORD = 26
-    SELECTION_TO_FILE_BOUNDARY = 27
-    SELECTION_TO_LINE_BOUNDARY = 28
-    SPIN_BUTTON_VALUE_CHANGE = 29
-    TYPING = 30
-    REDO = 31
-    UI_UPDATE = 32
-    UNDO = 33
-    UNSPECIFIED_COMMAND = 34
-    UNSPECIFIED_NAVIGATION = 35
-    UNSPECIFIED_SELECTION = 36
+    UNKNOWN = enum.auto()
+    AUTO_DELETION = enum.auto()
+    AUTO_INSERTION = enum.auto()
+    BACKSPACE = enum.auto()
+    CHILDREN_CHANGE = enum.auto()
+    CUT = enum.auto()
+    DELETE = enum.auto()
+    MOUSE_MIDDLE_BUTTON = enum.auto()
+    MOUSE_PRIMARY_BUTTON = enum.auto()
+    NAVIGATION_BY_CHARACTER = enum.auto()
+    NAVIGATION_BY_LINE = enum.auto()
+    NAVIGATION_BY_PARAGRAPH = enum.auto()
+    NAVIGATION_BY_PAGE = enum.auto()
+    NAVIGATION_BY_WORD = enum.auto()
+    NAVIGATION_TO_FILE_BOUNDARY = enum.auto()
+    NAVIGATION_TO_LINE_BOUNDARY = enum.auto()
+    PAGE_SWITCH = enum.auto()
+    PASTE = enum.auto()
+    REDO = enum.auto()
+    SELECT_ALL = enum.auto()
+    SELECTED_TEXT_DELETION = enum.auto()
+    SELECTED_TEXT_INSERTION = enum.auto()
+    SELECTED_TEXT_RESTORATION = enum.auto()
+    SELECTION_BY_CHARACTER = enum.auto()
+    SELECTION_BY_LINE = enum.auto()
+    SELECTION_BY_PARAGRAPH = enum.auto()
+    SELECTION_BY_PAGE = enum.auto()
+    SELECTION_BY_WORD = enum.auto()
+    SELECTION_TO_FILE_BOUNDARY = enum.auto()
+    SELECTION_TO_LINE_BOUNDARY = enum.auto()
+    SPIN_BUTTON_VALUE_CHANGE = enum.auto()
+    TYPING = enum.auto()
+    UI_UPDATE = enum.auto()
+    UNDO = enum.auto()
+    UNSPECIFIED_COMMAND = enum.auto()
+    UNSPECIFIED_NAVIGATION = enum.auto()
+    UNSPECIFIED_SELECTION = enum.auto()
 
 
 class AXUtilitiesEvent:
@@ -100,7 +105,7 @@ class AXUtilitiesEvent:
     LAST_KNOWN_PRESSED: dict[int, bool] = {}
     LAST_KNOWN_SELECTED: dict[int, bool] = {}
 
-    TEXT_EVENT_REASON: dict[int, TextEventReason] = {}
+    TEXT_EVENT_REASON: dict[Atspi.Event, TextEventReason] = {}
 
     _lock = threading.Lock()
 
