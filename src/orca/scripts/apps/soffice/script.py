@@ -401,24 +401,6 @@ class Script(default.Script):
 
         super().on_caret_moved(event)
 
-    def on_checked_changed(self, event):
-        """Callback for object:state-changed:checked accessibility events."""
-
-        if not AXUtilities.is_button(event.source) \
-           or not AXUtilities.is_tool_bar(AXObject.get_parent(event.source)):
-            default.Script.on_checked_changed(self, event)
-            return
-
-        # TODO - JD: Such a situation should be caught globally. And probably is already.
-        source_window = self.utilities.topLevelObject(event.source)
-        focus_window = self.utilities.topLevelObject(
-            focus_manager.get_manager().get_locus_of_focus())
-        if source_window != focus_window:
-            return
-
-        if AXUtilities.is_focused(event.source):
-            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
-
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
 
