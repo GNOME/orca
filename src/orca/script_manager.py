@@ -267,7 +267,7 @@ class ScriptManager:
                 self.app_scripts[app] = app_script
         except Exception as error:
             tokens = ["EXCEPTION: Exception getting app script for", app, ":", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             app_script = self.get_default_script()
 
         if app_script.get_sleep_mode_manager().is_active_for_app(app):
@@ -296,7 +296,7 @@ class ScriptManager:
         """Returns the active script."""
 
         tokens = ["SCRIPT MANAGER: Active script is:", self._active_script]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._active_script
 
     def get_active_script_app(self):

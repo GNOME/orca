@@ -58,7 +58,7 @@ class AXUtilitiesDebugging:
             return string
 
         words = string.split()
-        string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
+        string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])} ({len(string)} chars.)"
         return string
 
     @staticmethod
@@ -76,10 +76,12 @@ class AXUtilitiesDebugging:
             return f"[{result}]"
 
         if isinstance(obj, Atspi.Event):
+            any_data = AXUtilitiesDebugging._format_string(
+                AXUtilitiesDebugging.as_string(obj.any_data))
             return (
                 f"{obj.type} for {AXUtilitiesDebugging.as_string(obj.source)} in "
                 f"{AXUtilitiesApplication.application_as_string(obj.source)} "
-                f"({obj.detail1}, {obj.detail2}, {AXUtilitiesDebugging.as_string(obj.any_data)})"
+                f"({obj.detail1}, {obj.detail2}, {any_data})"
             )
 
         if isinstance(obj, (Atspi.Role, Atspi.StateType, Atspi.CollectionMatchType,

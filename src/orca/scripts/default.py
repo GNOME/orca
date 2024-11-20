@@ -1129,8 +1129,8 @@ class Script(script.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if event.source != focus:
-            tokens = ["DEFAULT: Event source (", event.source, ") is not locusOfFocus"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            msg = "DEFAULT: Source window is not locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if self.get_flat_review_presenter().is_active():
