@@ -1122,6 +1122,17 @@ class Script(script.Script):
 
         offset = AXText.get_caret_offset(event.source)
         self._saveLastCursorPosition(event.source, offset)
+
+        ignore = [TextEventReason.CUT,
+                  TextEventReason.PASTE,
+                  TextEventReason.REDO,
+                  TextEventReason.UNDO]
+        if reason in ignore:
+            msg = f"DEFAULT: Ignoring event due to reason ({reason})"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXText.update_cached_selected_text(event.source)
+            return
+
         if AXText.has_selected_text(event.source):
             msg = "DEFAULT: Event source has text selections"
             debug.print_message(debug.LEVEL_INFO, msg, True)
