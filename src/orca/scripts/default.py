@@ -1536,14 +1536,13 @@ class Script(script.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
-        obj = event.source
-
         # We won't handle undo here as it can lead to double-presentation.
         # If there is an application for which text-changed events are
         # missing upon undo, handle them in an app or toolkit script.
 
-        self.utilities.handleTextSelectionChange(obj)
-        self.update_braille(obj)
+        _reason = AXUtilities.get_text_event_reason(event)
+        self.utilities.handleTextSelectionChange(event.source)
+        self.update_braille(event.source)
 
     def on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""

@@ -2398,6 +2398,7 @@ class Script(default.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
+        _reason = AXUtilities.get_text_event_reason(event)
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.print_message(debug.LEVEL_INFO, msg, True)

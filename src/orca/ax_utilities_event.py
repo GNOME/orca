@@ -191,6 +191,8 @@ class AXUtilitiesEvent:
             reason = AXUtilitiesEvent._get_caret_moved_event_reason(event)
         elif event.type.startswith("object:text-changed:delete"):
             reason = AXUtilitiesEvent._get_text_deletion_event_reason(event)
+        elif event.type.startswith("object:text-selection-changed"):
+            reason = AXUtilitiesEvent._get_text_selection_changed_event_reason(event)
         else:
             raise ValueError(f"Unexpected event type: {event.type}")
 
@@ -372,6 +374,72 @@ class AXUtilitiesEvent:
         elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
             reason = TextEventReason.CHILDREN_CHANGE
 
+        return reason
+
+    @staticmethod
+    def _get_text_selection_changed_event_reason(event):
+        """Returns the TextEventReason for the given event."""
+
+        reason = TextEventReason.UNKNOWN
+        mgr = input_event_manager.get_manager()
+        obj = event.source
+        if mgr.last_event_was_caret_selection():
+            if mgr.last_event_was_line_navigation():
+                reason = TextEventReason.SELECTION_BY_LINE
+            elif mgr.last_event_was_word_navigation():
+                reason = TextEventReason.SELECTION_BY_WORD
+            elif mgr.last_event_was_character_navigation():
+                reason = TextEventReason.SELECTION_BY_CHARACTER
+            elif mgr.last_event_was_page_navigation():
+                reason = TextEventReason.SELECTION_BY_PAGE
+            elif mgr.last_event_was_line_boundary_navigation():
+                reason = TextEventReason.SELECTION_TO_LINE_BOUNDARY
+            elif mgr.last_event_was_file_boundary_navigation():
+                reason = TextEventReason.SELECTION_TO_FILE_BOUNDARY
+            else:
+                reason = TextEventReason.UNSPECIFIED_SELECTION
+        elif mgr.last_event_was_caret_navigation():
+            if mgr.last_event_was_line_navigation():
+                reason = TextEventReason.NAVIGATION_BY_LINE
+            elif mgr.last_event_was_word_navigation():
+                reason = TextEventReason.NAVIGATION_BY_WORD
+            elif mgr.last_event_was_character_navigation():
+                reason = TextEventReason.NAVIGATION_BY_CHARACTER
+            elif mgr.last_event_was_page_navigation():
+                reason = TextEventReason.NAVIGATION_BY_PAGE
+            elif mgr.last_event_was_line_boundary_navigation():
+                reason = TextEventReason.NAVIGATION_TO_LINE_BOUNDARY
+            elif mgr.last_event_was_file_boundary_navigation():
+                reason = TextEventReason.NAVIGATION_TO_FILE_BOUNDARY
+            else:
+                reason = TextEventReason.UNSPECIFIED_NAVIGATION
+        elif mgr.last_event_was_select_all():
+            reason = TextEventReason.SELECT_ALL
+        elif mgr.last_event_was_primary_click_or_release():
+            reason = TextEventReason.MOUSE_PRIMARY_BUTTON
+        elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
+            if mgr.last_event_was_backspace():
+                reason = TextEventReason.BACKSPACE
+            elif mgr.last_event_was_delete():
+                reason = TextEventReason.DELETE
+            elif mgr.last_event_was_cut():
+                reason = TextEventReason.CUT
+            elif mgr.last_event_was_paste():
+                reason = TextEventReason.PASTE
+            elif mgr.last_event_was_undo():
+                reason = TextEventReason.UNDO
+            elif mgr.last_event_was_redo():
+                reason = TextEventReason.REDO
+            elif mgr.last_event_was_page_switch():
+                reason = TextEventReason.PAGE_SWITCH
+            elif mgr.last_event_was_command():
+                reason = TextEventReason.UNSPECIFIED_COMMAND
+            elif mgr.last_event_was_printable_key():
+                reason = TextEventReason.TYPING
+            elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
+                if AXUtilitiesRole.is_spin_button(obj) \
+                   or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
+                    reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
         return reason
 
     @staticmethod

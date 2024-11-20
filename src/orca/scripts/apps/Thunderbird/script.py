@@ -246,6 +246,7 @@ class Script(Gecko.Script):
         if event.source == self.spellcheck.get_change_to_entry():
             return
 
+        _reason = AXUtilities.get_text_event_reason(event)
         if self.utilities.isEditableMessage(event.source) and self.spellcheck.is_active():
             selection_start = AXText.get_selection_start_offset(event.source)
             if selection_start >= 0:

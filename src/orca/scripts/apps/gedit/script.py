@@ -137,6 +137,7 @@ class Script(gtk.Script):
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
 
+        _reason = AXUtilities.get_text_event_reason(event)
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source == focus:
             gtk.Script.on_text_selection_changed(self, event)
