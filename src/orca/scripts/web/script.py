@@ -1629,7 +1629,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if reason == TextEventReason.TYPING:
+        if reason in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             msg = "WEB: Event handled: Updating position due to insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._saveLastCursorPosition(event.source, event.detail1)
@@ -2273,7 +2273,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if reason == TextEventReason.TYPING:
+        if reason in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             msg = "WEB: Ignoring event believed to be due to text insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

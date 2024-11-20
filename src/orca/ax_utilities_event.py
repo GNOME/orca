@@ -45,6 +45,7 @@ from gi.repository import Atspi
 from . import debug
 from . import focus_manager
 from . import input_event_manager
+from . import settings_manager
 
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -86,6 +87,7 @@ class TextEventReason(enum.Enum):
     SELECTION_TO_LINE_BOUNDARY = enum.auto()
     SPIN_BUTTON_VALUE_CHANGE = enum.auto()
     TYPING = enum.auto()
+    TYPING_ECHOABLE = enum.auto()
     UI_UPDATE = enum.auto()
     UNDO = enum.auto()
     UNSPECIFIED_COMMAND = enum.auto()
@@ -344,6 +346,12 @@ class AXUtilitiesEvent:
                     reason = TextEventReason.AUTO_INSERTION
                 else:
                     reason = TextEventReason.TYPING
+                    if AXUtilitiesRole.is_password_text(obj):
+                        echo = settings_manager.get_manager().get_setting("enableKeyEcho")
+                    else:
+                        echo = settings_manager.get_manager().get_setting("enableEchoByCharacter")
+                    if echo:
+                        reason = TextEventReason.TYPING_ECHOABLE
             elif mgr.last_event_was_middle_click() or mgr.last_event_was_middle_release():
                 reason = TextEventReason.MOUSE_MIDDLE_BUTTON
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
@@ -363,6 +371,7 @@ class AXUtilitiesEvent:
             reason = TextEventReason.UNSPECIFIED_COMMAND
         elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
             reason = TextEventReason.CHILDREN_CHANGE
+
         return reason
 
     @staticmethod

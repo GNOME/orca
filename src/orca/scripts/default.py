@@ -1490,7 +1490,7 @@ class Script(script.Script):
         elif reason == TextEventReason.MOUSE_MIDDLE_BUTTON:
             msg = "DEFAULT: Insertion is believed to be due to middle mouse button"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif self.utilities.isEchoableTextInsertionEvent(event):
+        elif reason == TextEventReason.TYPING_ECHOABLE:
             msg = "DEFAULT: Insertion is believed to be echoable"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif reason == TextEventReason.AUTO_INSERTION:
@@ -1516,7 +1516,8 @@ class Script(script.Script):
                 string = manager.adjust_for_repeats(string)
                 self.speakMessage(string, voice)
 
-        if len(string) != 1:
+        if len(string) != 1 \
+           or reason not in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             return
 
         if settings_manager.get_manager().get_setting('enableEchoBySentence') \

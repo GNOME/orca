@@ -2161,26 +2161,6 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def isEchoableTextInsertionEvent(self, event):
-        if not event.type.startswith("object:text-changed:insert"):
-            return False
-
-        if AXUtilities.is_focusable(event.source) \
-           and not AXUtilities.is_focused(event.source) \
-           and event.source != focus_manager.get_manager().get_locus_of_focus():
-            msg = "SCRIPT UTILITIES: Not echoable text insertion event: " \
-                 "focusable source is not focused"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if AXUtilities.is_password_text(event.source):
-            return settings_manager.get_manager().get_setting("enableKeyEcho")
-
-        if len(event.any_data.strip()) == 1:
-            return settings_manager.get_manager().get_setting("enableEchoByCharacter")
-
-        return False
-
     def isEditableTextArea(self, obj):
         if not self.isTextArea(obj):
             return False
