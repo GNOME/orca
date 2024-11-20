@@ -481,10 +481,16 @@ class AXUtilitiesEvent:
             return False
 
         AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(event.source)] = new_state
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            msg = "AXUtilitiesEvent: The event is not from the locus of focus."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if event.source != focus:
+            if not AXObject.is_ancestor(event.source, focus):
+                msg = "AXUtilitiesEvent: The source is not the locus of focus or its descendant."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            if not (AXUtilitiesRole.is_list_item(focus) or AXUtilitiesRole.is_tree_item(focus)):
+                msg = "AXUtilitiesEvent: The source descends from non-interactive-item focus."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
 
         # Radio buttons normally change their state when you arrow to them, so we handle the
         # announcement of their state changes in the focus handling code.

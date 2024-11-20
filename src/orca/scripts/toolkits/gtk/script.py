@@ -93,19 +93,6 @@ class Script(default.Script):
             AXObject.clear_cache(event.source, False, "Work around possibly-missing focused state.")
         super().on_caret_moved(event)
 
-    def on_checked_changed(self, event):
-        """Callback for object:state-changed:checked accessibility events."""
-
-        if event.source == focus_manager.get_manager().get_locus_of_focus():
-            default.Script.on_checked_changed(self, event)
-            return
-
-        # Present changes of child widgets of GtkListBox items
-        if not AXObject.find_ancestor(event.source, AXUtilities.is_list_box):
-            return
-
-        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
-
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
 
