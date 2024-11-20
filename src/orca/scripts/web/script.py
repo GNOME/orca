@@ -1768,11 +1768,6 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if not AXObject.is_valid(event.any_data):
-            msg = "WEB: Ignoring because any data is not valid."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
         if self.utilities.handleEventFromContextReplicant(event, event.any_data):
             msg = "WEB: Event handled by updating locusOfFocus and context to child."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1919,11 +1914,6 @@ class Script(default.Script):
     def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
 
-        if not AXObject.is_valid(event.source):
-            msg = "WEB: Event source is not valid"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
         if not self.utilities.inDocumentContent(event.source):
             msg = "WEB: Event source is not in document content"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1945,11 +1935,6 @@ class Script(default.Script):
 
         if not event.detail1:
             msg = "WEB: Ignoring because event source lost focus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if not AXObject.is_valid(event.source):
-            msg = "WEB: Event source is not valid"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2225,7 +2210,7 @@ class Script(default.Script):
     def on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
-        msg = "WEB: Clearing cached text attributes"
+        msg = "WEB: This event is is handled by the toolkit or default script."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
@@ -2321,11 +2306,6 @@ class Script(default.Script):
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
 
-        if not AXObject.is_valid(event.source):
-            msg = "WEB: Event source is not valid"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
         reason = AXUtilities.get_text_event_reason(event)
         if reason == TextEventReason.PAGE_SWITCH:
             msg = "WEB: Insertion is believed to be due to page switch"
@@ -2417,11 +2397,6 @@ class Script(default.Script):
 
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
-
-        if not AXObject.is_valid(event.source):
-            msg = "WEB: Event source is not valid"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
 
         if self.utilities.eventIsBrowserUINoise(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
