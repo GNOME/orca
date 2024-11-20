@@ -2350,7 +2350,7 @@ class Script(script.Script):
         _player = sound.getPlayer()
         _player.play(sounds[0], interrupt)
         for i in range(1, len(sounds)):
-            sound.play(sounds[i], interrupt=False)
+            _player.play(sounds[i], interrupt=False)
 
     @staticmethod
     def addBrailleRegionToLine(region, line):
