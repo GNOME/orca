@@ -1399,8 +1399,8 @@ class Script(script.Script):
     def on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
 
-        if not AXUtilities.is_editable(event.source):
-            msg = "DEFAULT: Change is from not editable source"
+        if not (AXUtilities.is_editable(event.source) or AXUtilities.is_terminal(event.source)):
+            msg = "DEFAULT: Change is from not editable or terminal source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1423,8 +1423,8 @@ class Script(script.Script):
 
         reason = AXUtilities.get_text_event_reason(event)
 
-        if not AXUtilities.is_editable(event.source):
-            msg = "DEFAULT: Change is from not editable source"
+        if not (AXUtilities.is_editable(event.source) or AXUtilities.is_terminal(event.source)):
+            msg = "DEFAULT: Change is from not editable or terminal source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -1471,8 +1471,8 @@ class Script(script.Script):
 
         reason = AXUtilities.get_text_event_reason(event)
 
-        if not AXUtilities.is_editable(event.source):
-            msg = "DEFAULT: Change is from not editable source"
+        if not (AXUtilities.is_editable(event.source) or AXUtilities.is_terminal(event.source)):
+            msg = "DEFAULT: Change is from not editable or terminal source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
