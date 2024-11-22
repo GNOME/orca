@@ -1,3 +1,36 @@
+47.2 - 22 November 2024
+
+Web:
+
+* Report "required" and "invalid" state on password input.
+
+* Present ARIA alerts as UI; not a text container.
+
+* Fix regression in presentation of table cell content during word nav.
+
+LibreOffice:
+
+* Ensure we announce Calc sheet changes.
+
+General:
+
+* Multiple "chattiness" fixes.
+
+* Treat GTK4 groupings as panels.
+
+* Fix performance issue determining posinset and setsize in giant sets.
+
+* Try to filter out redundant description-change events
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  fa              Persian                   Danial Behzadi
+  nl              Dutch                     Nathan Follens
+  sr@latin        Serbian (Latin)           Милош Поповић
+  sr              Serbian                   Милош Поповић
+
+=========
+
 47.1 - 25 October 2024
 
 LibreOffice:
