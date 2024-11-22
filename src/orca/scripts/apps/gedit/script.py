@@ -81,7 +81,7 @@ class Script(gtk.Script):
         if event.source == self.spellcheck.get_suggestions_list():
             return
 
-        gtk.Script.on_active_descendant_changed(self, event)
+        super().on_active_descendant_changed(event)
 
     def on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
@@ -89,21 +89,13 @@ class Script(gtk.Script):
         if AXUtilities.is_multi_line(event.source):
             self.spellcheck.set_document_position(event.source, event.detail1)
 
-        gtk.Script.on_caret_moved(self, event)
-
-    def on_focused_changed(self, event):
-        """Callback for object:state-changed:focused accessibility events."""
-
-        if not event.detail1:
-            return
-
-        gtk.Script.on_focused_changed(self, event)
+        super().on_caret_moved(event)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         if not self.spellcheck.is_active():
-            gtk.Script.on_name_changed(self, event)
+            super().on_name_changed(event)
             return
 
         name = AXObject.get_name(event.source)
@@ -132,7 +124,7 @@ class Script(gtk.Script):
            and self.spellcheck.present_completion_message():
             return
 
-        gtk.Script.on_sensitive_changed(self, event)
+        super().on_sensitive_changed(event)
 
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
@@ -140,7 +132,7 @@ class Script(gtk.Script):
         _reason = AXUtilities.get_text_event_reason(event)
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source == focus:
-            gtk.Script.on_text_selection_changed(self, event)
+            super().on_text_selection_changed(event)
             return
 
         if not self.utilities.isSearchEntry(focus, True):
@@ -159,7 +151,7 @@ class Script(gtk.Script):
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
-        gtk.Script.on_window_activated(self, event)
+        super().on_window_activated(event)
         if not self.spellcheck.is_spell_check_window(event.source):
             self.spellcheck.deactivate()
             return
@@ -172,5 +164,5 @@ class Script(gtk.Script):
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
-        gtk.Script.on_window_deactivated(self, event)
+        super().on_window_deactivated(event)
         self.spellcheck.deactivate()
