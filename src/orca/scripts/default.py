@@ -1551,7 +1551,12 @@ class Script(script.Script):
         # If there is an application for which text-changed events are
         # missing upon undo, handle them in an app or toolkit script.
 
-        _reason = AXUtilities.get_text_event_reason(event)
+        reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.UNKNOWN:
+            msg = "DEFAULT: Ignoring event because reason for change is unknown"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         self.utilities.handleTextSelectionChange(event.source)
         self.update_braille(event.source)
 
