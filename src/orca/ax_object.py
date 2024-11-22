@@ -1159,6 +1159,9 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return ""
 
+        # GTK4 does this.
+        if keybinding == "<VoidSymbol>":
+            return ""
         return keybinding
 
     @staticmethod
