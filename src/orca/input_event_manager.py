@@ -520,7 +520,10 @@ class InputEventManager:
             rv = False
         else:
             focus = focus_manager.get_manager().get_locus_of_focus()
-            rv = not AXUtilities.is_widget_controlled_by_line_navigation(focus)
+            if AXUtilities.is_single_line(focus):
+                rv = False
+            else:
+                rv = not AXUtilities.is_widget_controlled_by_line_navigation(focus)
 
         if rv:
             msg = "INPUT EVENT MANAGER: Last event was line navigation"
@@ -579,7 +582,10 @@ class InputEventManager:
             rv = False
         else:
             focus = focus_manager.get_manager().get_locus_of_focus()
-            rv = not AXUtilities.is_widget_controlled_by_line_navigation(focus)
+            if AXUtilities.is_single_line(focus):
+                rv = False
+            else:
+                rv = not AXUtilities.is_widget_controlled_by_line_navigation(focus)
 
         if rv:
             msg = "INPUT EVENT MANAGER: Last event was page navigation"
