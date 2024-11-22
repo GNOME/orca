@@ -1555,6 +1555,7 @@ class Script(script.Script):
         if reason == TextEventReason.UNKNOWN:
             msg = "DEFAULT: Ignoring event because reason for change is unknown"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXText.update_cached_selected_text(event.source)
             return
 
         self.utilities.handleTextSelectionChange(event.source)
