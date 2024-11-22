@@ -135,10 +135,7 @@ class Script(gtk.Script):
             super().on_text_selection_changed(event)
             return
 
-        if not self.utilities.isSearchEntry(focus, True):
-            return
-
-        if not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
+        if not AXUtilities.is_text_input_search(focus):
             return
 
         # To avoid extreme chattiness.

@@ -82,20 +82,6 @@ class Utilities(script_utilities.Utilities):
         self._isToggleDescendantOfComboBox[hash(obj)] = rv
         return rv
 
-    def isSearchEntry(self, obj, focusedOnly=False):
-        # Another example of why we need subrole support in ATK and AT-SPI2.
-        if not (AXObject.get_name(obj) and AXUtilities.is_single_line(obj)):
-            return False
-
-        if focusedOnly and not AXUtilities.is_focused(obj):
-            return False
-
-        icons = [x for x in AXObject.iter_children(obj, AXUtilities.is_icon)]
-        if icons:
-            return True
-
-        return False
-
     def isEntryCompletionPopupItem(self, obj):
         return AXUtilities.is_table_cell(obj) \
             and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None

@@ -1800,9 +1800,6 @@ class Utilities:
 
         return None
 
-    def isEditableComboBox(self, obj):
-        return self.getEntryForEditableComboBox(obj) is not None
-
     def isEditableDescendantOfComboBox(self, obj):
         if not AXUtilities.is_editable(obj):
             return False

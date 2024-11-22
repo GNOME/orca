@@ -84,7 +84,6 @@ class Utilities(script_utilities.Utilities):
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
         self._isAnchor = {}
-        self._isEditableComboBox = {}
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
@@ -168,7 +167,6 @@ class Utilities(script_utilities.Utilities):
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
         self._isAnchor = {}
-        self._isEditableComboBox = {}
         self._isInlineIframeDescendant = {}
         self._isInlineListItem = {}
         self._isInlineListDescendant = {}
@@ -2050,15 +2048,6 @@ class Utilities(script_utilities.Utilities):
         displayStyle = self._getDisplayStyle(obj)
         return "inline" in displayStyle
 
-    def isTextField(self, obj):
-        if AXUtilities.is_text_input(obj):
-            return True
-
-        if AXUtilities.is_combo_box(obj):
-            return self.isEditableComboBox(obj)
-
-        return False
-
     def isFirstItemInInlineContentSuggestion(self, obj):
         suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
         if not (suggestion and AXObject.get_child_count(suggestion)):
@@ -2755,46 +2744,18 @@ class Utilities(script_utilities.Utilities):
         attrs = AXObject.get_attributes_dict(obj, False)
         return attrs.get("valuetext", super().getComboBoxValue(obj))
 
-    def isEditableComboBox(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isEditableComboBox(obj)
-
-        rv = self._isEditableComboBox.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = False
-        if AXUtilities.is_combo_box(obj):
-            rv = AXUtilities.is_editable(obj)
-
-        self._isEditableComboBox[hash(obj)] = rv
-        return rv
-
-    def getEditableComboBoxForItem(self, item):
-        if not AXUtilities.is_list_item(item):
-            return None
-
-        listbox = AXObject.find_ancestor(item, AXUtilities.is_list_box)
-        if listbox is None:
-            return None
-
-        targets = AXUtilities.get_is_controlled_by(listbox)
-        for target in targets:
-            if self.isEditableComboBox(target):
-                return target
-
-        return AXObject.find_ancestor(listbox, self.isEditableComboBox)
-
     def isItemForEditableComboBox(self, item, comboBox):
-        if not AXUtilities.is_list_item(item):
+        if not (AXUtilities.is_list_item(item) or AXUtilities.is_menu_item(item)):
             return False
-        if not self.isEditableComboBox(comboBox):
+        if not AXUtilities.is_editable_combo_box(comboBox):
             return False
+        if AXObject.is_ancestor(item, comboBox):
+            return True
 
-        rv = self.getEditableComboBoxForItem(item) == comboBox
-        tokens = ["WEB:", item, "is item of", comboBox, ":", rv]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return rv
+        container = AXObject.find_ancestor(
+            item, lambda x: AXUtilities.is_list_box(x) or AXUtilities.is_combo_box(x))
+        targets = AXUtilities.get_is_controlled_by(container)
+        return comboBox in targets
 
     def isFakePlaceholderForEntry(self, obj):
         if not (obj and self.inDocumentContent(obj) and AXObject.get_parent(obj)):

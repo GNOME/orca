@@ -451,6 +451,9 @@ class AXUtilities:
     def is_drawing_area(obj, role=None): ...
 
     @staticmethod
+    def is_editable_combo_box(obj, role=None): ...
+
+    @staticmethod
     def is_editbar(obj, role=None): ...
 
     @staticmethod
@@ -839,6 +842,9 @@ class AXUtilities:
 
     @staticmethod
     def is_text_input_number(obj, role=None): ...
+
+    @staticmethod
+    def is_text_input_search(obj, role=None): ...
 
     @staticmethod
     def is_text_input_telephone(obj, role=None): ...

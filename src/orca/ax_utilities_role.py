@@ -988,6 +988,18 @@ class AXUtilitiesRole:
         return role == Atspi.Role.DRAWING_AREA
 
     @staticmethod
+    def is_editable_combo_box(obj, role=None):
+        """Returns True if obj is an editable combobox"""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+        if role != Atspi.Role.COMBO_BOX:
+            return False
+        if AXUtilitiesState.is_editable(obj):
+            return True
+        return bool(AXObject.find_descendant(obj, AXUtilitiesRole.is_text_input))
+
+    @staticmethod
     def is_editbar(obj, role=None):
         """Returns True if obj has the editbar role"""
 
@@ -2025,7 +2037,13 @@ class AXUtilitiesRole:
         roles = [Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT, Atspi.Role.SPIN_BUTTON]
         if role is None:
             role = AXObject.get_role(obj)
-        return role in roles
+        if role in roles:
+            return True
+        if role == Atspi.Role.TEXT:
+            return AXUtilitiesState.is_editable(obj) and AXUtilitiesState.is_single_line(obj)
+        if AXUtilitiesRole.is_editable_combo_box(obj):
+            return True
+        return False
 
     @staticmethod
     def is_text_input_date(obj, role=None):
@@ -2056,6 +2074,34 @@ class AXUtilitiesRole:
 
         attrs = AXObject.get_attributes_dict(obj)
         return attrs.get("text-input-type") == "number"
+
+    @staticmethod
+    def is_text_input_search(obj, role=None):
+        """Returns True if obj is a telephone text input"""
+
+        if not AXUtilitiesRole.is_text_input(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        if attrs.get("text-input-type") == "search":
+            return True
+        if "searchbox" in AXUtilitiesRole._get_xml_roles(obj):
+            return True
+
+        ax_id = AXObject.get_accessible_id(obj).lower()
+        if ax_id:
+            return "search" in ax_id or "find" in ax_id
+
+        child = AXObject.get_child(obj, 0)
+        if AXUtilitiesRole.is_icon(child) or AXUtilitiesRole.is_image(child):
+            child_id = AXObject.get_accessible_id(child).lower()
+            if "search" in child_id or "find" in child_id:
+                return True
+            # Some toolkits don't localize the symbolic icon names, so it's worth a try.
+            child_name = AXObject.get_name(child).lower()
+            return "search" in child_name or "find" in child_name
+
+        return False
 
     @staticmethod
     def is_text_input_telephone(obj, role=None):
