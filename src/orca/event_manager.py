@@ -123,6 +123,10 @@ class EventManager:
             priority = EventManager.PRIORITY_IMPORTANT
         elif event_type.startswith("object:state-changed:focused"):
             priority = EventManager.PRIORITY_HIGH
+        elif event_type.startswith("object:active-descendant-changed"):
+            priority = EventManager.PRIORITY_HIGH
+        elif event_type.startswith("object:children-changed"):
+            priority = EventManager.PRIORITY_LOW
         else:
             priority = EventManager.PRIORITY_NORMAL
 
