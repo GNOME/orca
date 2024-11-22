@@ -1557,6 +1557,17 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             AXText.update_cached_selected_text(event.source)
             return
+        if reason == TextEventReason.SEARCH_PRESENTABLE:
+            msg = "DEFAULT: Presenting line believed to be search match"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.sayLine(event.source)
+            AXText.update_cached_selected_text(event.source)
+            return
+        if reason == TextEventReason.SEARCH_UNPRESENTABLE:
+            msg = "DEFAULT: Ignoring event believed to be unpresentable search results change"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXText.update_cached_selected_text(event.source)
+            return
 
         self.utilities.handleTextSelectionChange(event.source)
         self.update_braille(event.source)

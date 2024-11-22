@@ -156,11 +156,3 @@ class Script(default.Script):
             return
 
         super().on_showing_changed(event)
-
-    def on_text_selection_changed(self, event):
-        """Callback for object:text-selection-changed accessibility events."""
-
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
-            return
-
-        super().on_text_selection_changed(event)

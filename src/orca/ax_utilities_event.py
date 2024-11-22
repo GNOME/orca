@@ -74,6 +74,8 @@ class TextEventReason(enum.Enum):
     PAGE_SWITCH = enum.auto()
     PASTE = enum.auto()
     REDO = enum.auto()
+    SEARCH_PRESENTABLE = enum.auto()
+    SEARCH_UNPRESENTABLE = enum.auto()
     SELECT_ALL = enum.auto()
     SELECTED_TEXT_DELETION = enum.auto()
     SELECTED_TEXT_INSERTION = enum.auto()
@@ -208,7 +210,13 @@ class AXUtilitiesEvent:
         reason = TextEventReason.UNKNOWN
         mgr = input_event_manager.get_manager()
         obj = event.source
-        if mgr.last_event_was_caret_selection():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != obj and AXUtilitiesRole.is_text_input_search(focus):
+            if mgr.last_event_was_backspace() or mgr.last_event_was_delete():
+                reason = TextEventReason.SEARCH_UNPRESENTABLE
+            else:
+                reason = TextEventReason.SEARCH_PRESENTABLE
+        elif mgr.last_event_was_caret_selection():
             if mgr.last_event_was_line_navigation():
                 reason = TextEventReason.SELECTION_BY_LINE
             elif mgr.last_event_was_word_navigation():
@@ -383,7 +391,13 @@ class AXUtilitiesEvent:
         reason = TextEventReason.UNKNOWN
         mgr = input_event_manager.get_manager()
         obj = event.source
-        if mgr.last_event_was_caret_selection():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != obj and AXUtilitiesRole.is_text_input_search(focus):
+            if mgr.last_event_was_backspace() or mgr.last_event_was_delete():
+                reason = TextEventReason.SEARCH_UNPRESENTABLE
+            else:
+                reason = TextEventReason.SEARCH_PRESENTABLE
+        elif mgr.last_event_was_caret_selection():
             if mgr.last_event_was_line_navigation():
                 reason = TextEventReason.SELECTION_BY_LINE
             elif mgr.last_event_was_word_navigation():

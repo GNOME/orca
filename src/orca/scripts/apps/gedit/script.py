@@ -32,7 +32,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from orca import focus_manager
-from orca import input_event_manager
 from orca.scripts.toolkits import gtk
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
@@ -125,25 +124,6 @@ class Script(gtk.Script):
             return
 
         super().on_sensitive_changed(event)
-
-    def on_text_selection_changed(self, event):
-        """Callback for object:text-selection-changed accessibility events."""
-
-        _reason = AXUtilities.get_text_event_reason(event)
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if event.source == focus:
-            super().on_text_selection_changed(event)
-            return
-
-        if not AXUtilities.is_text_input_search(focus):
-            return
-
-        # To avoid extreme chattiness.
-        manager = input_event_manager.get_manager()
-        if manager.last_event_was_backspace() or manager.last_event_was_delete():
-            return
-
-        self.sayLine(event.source)
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
