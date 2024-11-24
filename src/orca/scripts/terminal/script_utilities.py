@@ -56,7 +56,7 @@ class Utilities(script_utilities.Utilities):
         if len(event.any_data) == 1:
             return event.any_data
 
-        if AXUtilities.get_text_event_reason(event) == TextEventReason.AUTO_INSERTION:
+        if AXUtilities.get_text_event_reason(event) == TextEventReason.AUTO_INSERTION_PRESENTABLE:
             return event.any_data
 
         if self._script.get_clipboard_presenter().is_clipboard_text_changed_event(event):

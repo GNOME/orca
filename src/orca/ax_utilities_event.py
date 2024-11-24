@@ -57,7 +57,8 @@ class TextEventReason(enum.Enum):
 
     UNKNOWN = enum.auto()
     AUTO_DELETION = enum.auto()
-    AUTO_INSERTION = enum.auto()
+    AUTO_INSERTION_PRESENTABLE = enum.auto()
+    AUTO_INSERTION_UNPRESENTABLE = enum.auto()
     BACKSPACE = enum.auto()
     CHILDREN_CHANGE = enum.auto()
     CUT = enum.auto()
@@ -353,7 +354,7 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.UNSPECIFIED_COMMAND
             elif mgr.last_event_was_printable_key():
                 if reason == TextEventReason.SELECTED_TEXT_INSERTION:
-                    reason = TextEventReason.AUTO_INSERTION
+                    reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
                 else:
                     reason = TextEventReason.TYPING
                     if AXUtilitiesRole.is_password_text(obj):
@@ -369,14 +370,18 @@ class AXUtilitiesEvent:
                    or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
                 else:
-                    reason = TextEventReason.AUTO_INSERTION
+                    reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
             if reason == TextEventReason.UNKNOWN:
                 if len(event.any_data) == 1:
                     pass
                 elif mgr.last_event_was_tab() and event.any_data != "\t":
-                    reason = TextEventReason.AUTO_INSERTION
+                    reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
                 elif mgr.last_event_was_return() and event.any_data != "\n":
-                    reason = TextEventReason.AUTO_INSERTION
+                    if AXUtilitiesState.is_single_line(event.source):
+                        # Example: The browser's address bar in response to return on a link.
+                        reason = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+                    else:
+                        reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
         elif mgr.last_event_was_command():
             reason = TextEventReason.UNSPECIFIED_COMMAND
         elif "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):

@@ -1510,8 +1510,8 @@ class Script(script.Script):
         elif reason == TextEventReason.TYPING_ECHOABLE:
             msg = "DEFAULT: Insertion is believed to be echoable"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif reason == TextEventReason.AUTO_INSERTION:
-            msg = "DEFAULT: Insertion is believed to be auto text event"
+        elif reason == TextEventReason.AUTO_INSERTION_PRESENTABLE:
+            msg = "DEFAULT: Insertion is believed to be presentable auto text event"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif reason == TextEventReason.SELECTED_TEXT_INSERTION:
             msg = "DEFAULT: Insertion is also selected"
