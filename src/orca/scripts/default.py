@@ -1444,6 +1444,7 @@ class Script(script.Script):
             AXText.update_cached_selected_text(event.source)
             return
 
+        string = self.utilities.deletedText(event)
         if reason == TextEventReason.DELETE:
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1456,7 +1457,6 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        string = self.utilities.deletedText(event)
         if len(string) == 1:
             self.speak_character(string)
         else:
