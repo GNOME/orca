@@ -34,7 +34,7 @@ __license__   = "LGPL"
 
 import threading
 import time
-import urllib
+import urllib.parse
 
 import gi
 gi.require_version("Atspi", "2.0")
