@@ -353,7 +353,7 @@ class AXUtilities:
             result = AXTable.is_layout_table(obj)
             if result:
                 reason = "is layout table"
-            return reason, result
+            return result, reason
 
         if AXUtilitiesRole.is_table_row(obj):
             if AXUtilitiesState.is_focusable(obj):
