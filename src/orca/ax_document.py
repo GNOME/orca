@@ -188,7 +188,7 @@ class AXDocument:
             return ""
 
         attributes = AXDocument._get_attributes_dict(document)
-        return attributes.get("Mimevent_type", "")
+        return attributes.get("MimeType", "")
 
     @staticmethod
     def is_plain_text(document):
