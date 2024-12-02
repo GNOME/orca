@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 import os
 import re
+from typing import Optional
 from urllib.parse import urlparse
 
 import gi
@@ -44,7 +45,7 @@ class AXHypertext:
     """Utilities for obtaining information about accessible hypertext and hyperlinks."""
 
     @staticmethod
-    def _get_link_count(obj):
+    def _get_link_count(obj: Atspi.Accessible) -> int:
         """Returns the number of hyperlinks in obj."""
 
         if not AXObject.supports_hypertext(obj):
@@ -62,7 +63,7 @@ class AXHypertext:
         return count
 
     @staticmethod
-    def _get_link_at_index(obj, index):
+    def _get_link_at_index(obj: Atspi.Accessible, index: int) -> Optional[Atspi.Hyperlink]:
         """Returns the hyperlink object at the specified index."""
 
         if not AXObject.supports_hypertext(obj):
@@ -78,7 +79,9 @@ class AXHypertext:
         return link
 
     @staticmethod
-    def get_all_links_in_range(obj, start_offset, end_offset):
+    def get_all_links_in_range(
+        obj: Atspi.Accessible, start_offset: int, end_offset: int
+    ) -> list[Atspi.Hyperlink]:
         """Returns all the hyperlinks in obj who started within the specified range."""
 
         links = []
@@ -94,7 +97,7 @@ class AXHypertext:
         return links
 
     @staticmethod
-    def get_all_links(obj):
+    def get_all_links(obj: Atspi.Accessible) -> list[Atspi.Hyperlink]:
         """Returns a list of all the hyperlinks in obj."""
 
         links = []
@@ -108,7 +111,7 @@ class AXHypertext:
         return links
 
     @staticmethod
-    def get_link_uri(obj, index=0):
+    def get_link_uri(obj: Atspi.Accessible, index: int = 0) -> str:
         """Returns the URI associated with obj at the specified index."""
 
         try:
@@ -124,7 +127,7 @@ class AXHypertext:
         return uri
 
     @staticmethod
-    def get_link_start_offset(obj):
+    def get_link_start_offset(obj: Atspi.Accessible) -> int:
         """Returns the start offset of obj in the associated text."""
 
         if isinstance(obj, Atspi.Hyperlink):
@@ -150,7 +153,7 @@ class AXHypertext:
         return offset
 
     @staticmethod
-    def get_link_end_offset(obj):
+    def get_link_end_offset(obj: Atspi.Accessible) -> int:
         """Returns the end offset of obj in the associated text."""
 
         if isinstance(obj, Atspi.Hyperlink):
@@ -176,7 +179,9 @@ class AXHypertext:
         return offset
 
     @staticmethod
-    def get_link_basename(obj, index=0, remove_extension=False):
+    def get_link_basename(
+        obj: Atspi.Accessible, index: int = 0, remove_extension: bool = False
+    ) -> str:
         """Strip directory and suffix off of the URL associated with obj."""
 
         uri = AXHypertext.get_link_uri(obj, index)
@@ -194,7 +199,7 @@ class AXHypertext:
         return basename
 
     @staticmethod
-    def get_child_at_offset(obj, offset):
+    def get_child_at_offset(obj: Atspi.Accessible, offset: int) -> Optional[Atspi.Accessible]:
         """Returns the embedded-object child of obj at the specified offset."""
 
         if not AXObject.supports_hypertext(obj):
@@ -226,7 +231,7 @@ class AXHypertext:
         return child
 
     @staticmethod
-    def get_character_offset_in_parent(obj):
+    def get_character_offset_in_parent(obj: Atspi.Accessible) -> int:
         """Returns the offset of the embedded-object obj in the text of its parent."""
 
         if not AXObject.supports_text(AXObject.get_parent(obj)):

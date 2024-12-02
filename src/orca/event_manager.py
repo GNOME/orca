@@ -28,6 +28,9 @@
 
 """Manager for accessible object events."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -38,9 +41,10 @@ import itertools
 import queue
 import threading
 import time
+from typing import Optional, TYPE_CHECKING
 
 import gi
-gi.require_version('Atspi', '2.0')
+gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
@@ -54,6 +58,8 @@ from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_utilities_debugging import AXUtilitiesDebugging
 
+if TYPE_CHECKING:
+    from .scripts import default
 
 class EventManager:
     """Manager for accessible object events."""
@@ -64,20 +70,22 @@ class EventManager:
     PRIORITY_NORMAL = 4
     PRIORITY_LOW = 5
 
-    def __init__(self):
-        debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Initializing', True)
-        self._script_listener_counts = {}
-        self._active = False
-        self._paused = False
+    def __init__(self) -> None:
+        debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Initializing", True)
+        self._script_listener_counts: dict[str, int] = {}
+        self._active: bool = False
+        self._paused: bool = False
         self._counter = itertools.count()
-        self._event_queue     = queue.PriorityQueue(0)
-        self._gidle_id        = 0
-        self._gidle_lock      = threading.Lock()
-        self._listener = Atspi.EventListener.new(self._enqueue_object_event)
-        self._event_history = {} # key: event type, value: (hash of app, time as float)
-        debug.print_message(debug.LEVEL_INFO, 'Event manager initialized', True)
+        self._event_queue: queue.PriorityQueue[
+            tuple[int, int, Atspi.Event]
+        ] = queue.PriorityQueue(0)
+        self._gidle_id: int = 0
+        self._gidle_lock = threading.Lock()
+        self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
+        self._event_history: dict[str, tuple[Optional[int], float]] = {}
+        debug.print_message(debug.LEVEL_INFO, "Event manager initialized", True)
 
-    def activate(self):
+    def activate(self) -> None:
         """Called when this event manager is activated."""
 
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Activating", True, True)
@@ -89,7 +97,7 @@ class EventManager:
         self._active = True
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         """Called when this event manager is deactivated."""
 
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Deactivating", True, True)
@@ -103,7 +111,9 @@ class EventManager:
         self._script_listener_counts = {}
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
 
-    def pause_queuing(self, pause=True, clear_queue=False, reason=""):
+    def pause_queuing(
+        self, pause: bool = True, clear_queue: bool = False, reason: str = ""
+    ) -> None:
         """Pauses/unpauses event queuing."""
 
         msg = f"EVENT MANAGER: Pause queueing: {pause}. Clear queue: {clear_queue}. {reason}"
@@ -112,7 +122,7 @@ class EventManager:
         if clear_queue:
             self._event_queue = queue.PriorityQueue(0)
 
-    def _get_priority(self, event):
+    def _get_priority(self, event: Atspi.Event) -> int:
         """Returns the priority associated with event."""
 
         event_type = event.type
@@ -134,7 +144,7 @@ class EventManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return priority
 
-    def _is_obsoleted_by(self, event):
+    def _is_obsoleted_by(self, event: Atspi.Event) -> Optional[Atspi.Event]:
         """Returns the event which renders this one no longer worthy of being processed."""
 
         def is_same(x):
@@ -219,7 +229,7 @@ class EventManager:
 
         return None
 
-    def _ignore(self, event):
+    def _ignore(self, event: Atspi.Event) -> bool:
         """Returns True if this event should be ignored."""
 
         debug.print_message(debug.LEVEL_INFO, '')
@@ -411,19 +421,23 @@ class EventManager:
 
         return False
 
-    def _queue_println(self, e, is_enqueue=True):
+    def _queue_println(
+        self,
+        event: input_event.InputEvent | Atspi.Event,
+        is_enqueue: bool = True
+    ) -> None:
         """Convenience method to output queue-related debugging info."""
 
         if debug.LEVEL_INFO < debug.debugLevel:
             return
 
         tokens = []
-        if isinstance(e, input_event.KeyboardEvent):
-            tokens.extend([e.event_string, e.hw_code])
-        elif isinstance(e, input_event.BrailleEvent):
-            tokens.append(e.event)
+        if isinstance(event, input_event.KeyboardEvent):
+            tokens.extend([event.event_string, event.hw_code])
+        elif isinstance(event, input_event.BrailleEvent):
+            tokens.append(event.event)
         else:
-            tokens.append(e)
+            tokens.append(event)
 
         if is_enqueue:
             tokens[0:0] = ["EVENT MANAGER: Queueing"]
@@ -431,7 +445,7 @@ class EventManager:
             tokens[0:0] = ["EVENT MANAGER: Dequeueing"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def _enqueue_object_event(self, e):
+    def _enqueue_object_event(self, e: Atspi.Event) -> None:
         """Callback for Atspi object events."""
 
         if self._ignore(e):
@@ -454,7 +468,7 @@ class EventManager:
             if not self._gidle_id:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
 
-    def _on_no_focus(self):
+    def _on_no_focus(self) -> bool:
         if focus_manager.get_manager().focus_and_window_are_unknown():
             return False
 
@@ -465,7 +479,7 @@ class EventManager:
 
         return False
 
-    def _dequeue_object_event(self):
+    def _dequeue_object_event(self) -> bool:
         """Handles all object events destined for scripts."""
 
         rerun = True
@@ -502,7 +516,7 @@ class EventManager:
 
         return rerun
 
-    def register_listener(self, event_type):
+    def register_listener(self, event_type: str) -> None:
         """Tells this module to listen for the given event type.
 
         Arguments:
@@ -518,7 +532,7 @@ class EventManager:
             self._listener.register(event_type)
             self._script_listener_counts[event_type] = 1
 
-    def deregister_listener(self, event_type):
+    def deregister_listener(self, event_type: str) -> None:
         """Tells this module to stop listening for the given event type.
 
         Arguments:
@@ -536,7 +550,7 @@ class EventManager:
             self._listener.deregister(event_type)
             del self._script_listener_counts[event_type]
 
-    def register_script_listeners(self, script):
+    def register_script_listeners(self, script: default.Script) -> None:
         """Tells the event manager to start listening for all the event types
         of interest to the script.
 
@@ -550,7 +564,7 @@ class EventManager:
         for event_type in script.listeners.keys():
             self.register_listener(event_type)
 
-    def deregister_script_listeners(self, script):
+    def deregister_script_listeners(self, script: default.Script) -> None:
         """Tells the event manager to stop listening for all the event types
         of interest to the script.
 
@@ -565,7 +579,9 @@ class EventManager:
             self.deregister_listener(event_type)
 
     @staticmethod
-    def _get_script_for_event(event, active_script=None):
+    def _get_script_for_event(
+        event: Atspi.Event, active_script: Optional[default.Script] = None
+    ) -> Optional[default.Script]:
         """Returns the script associated with event."""
 
         if event.source == focus_manager.get_manager().get_locus_of_focus():
@@ -597,7 +613,9 @@ class EventManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return script
 
-    def _is_activatable_event(self, event, script=None):
+    def _is_activatable_event(
+        self, event: Atspi.Event, script: Optional[default.Script] = None
+    ) -> tuple[bool, str]:
         """Determines if event should cause us to change the active script."""
 
         if not event.source:
@@ -646,7 +664,7 @@ class EventManager:
 
         return False, "No reason found to activate a different script."
 
-    def _event_source_is_dead(self, event):
+    def _event_source_is_dead(self, event: Atspi.Event) -> bool:
         if AXObject.is_dead(event.source):
             tokens = ["EVENT MANAGER: source of", event.type, "is dead"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -654,7 +672,9 @@ class EventManager:
 
         return False
 
-    def _should_process_event(self, event, event_script, active_script):
+    def _should_process_event(
+        self, event: Atspi.Event, event_script: default.Script, active_script: default.Script
+    ) -> bool:
         """Returns True if this event should be processed."""
 
         if event_script == active_script:
@@ -677,7 +697,7 @@ class EventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def _process_object_event(self, event):
+    def _process_object_event(self, event: Atspi.Event) -> None:
         """Handles all object events destined for scripts."""
 
         if self._is_obsoleted_by(event):
@@ -729,8 +749,15 @@ class EventManager:
                 script_mgr.set_active_script(script, reason)
                 active_script = script
 
-        if not self._should_process_event(event, script, active_script):
-            return
+        try:
+            assert active_script is not None
+        except AssertionError:
+            # TODO - JD: Under what conditions could this actually happen?
+            msg = "ERROR: Active script is None"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        else:
+            if not self._should_process_event(event, script, active_script):
+                return
 
         listener = script.listeners.get(event.type)
         # The listener can be None if the event type has a suffix such as "system".
@@ -747,8 +774,8 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             debug.print_exception(debug.LEVEL_INFO)
 
-_manager = EventManager()
+_manager: EventManager = EventManager()
 
-def get_manager():
+def get_manager() -> EventManager:
     """Returns the Event Manager singleton."""
     return _manager

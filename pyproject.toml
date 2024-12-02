@@ -10,6 +10,48 @@ ignore = [
 ]
 
 [tool.mypy]
-disable_error_code = [
-  "import-untyped",
+exclude = [
+  "gnome-shell",             # mypy doesn't like the name
+  "notification-daemon",     # mypy doesn't like the name
+  "smuxi-frontend-gnome",    # mypy doesn't like the name
+  "J2SE-access-bridge",      # mypy doesn't like the name
+  "subprojects",             # beyond our control
+  "test-historical",         # legacy and mostly not python
 ]
+
+[[tool.mypy.overrides]]
+module = [
+    "orca.settings",
+    "orca.braille",
+    "orca.spiel",
+    "orca.speechdispatcherfactory",
+]
+disable_error_code = ["var-annotated"]
+
+[[tool.mypy.overrides]]
+module = "brlapi.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "dbus.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "gi.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "louis.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "orca.orca_i18n"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "orca.orca_platform"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "speechd.*"
+ignore_missing_imports = true

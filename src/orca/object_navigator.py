@@ -18,13 +18,24 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Provides ability to navigate objects hierarchically."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 The Orca Team"
 __license__   = "LGPL"
+
+from typing import Optional, TYPE_CHECKING
+
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from . import cmdnames
 from . import debug
@@ -36,23 +47,27 @@ from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from .scripts import default
 
 class ObjectNavigator:
     """Provides ability to navigate objects hierarchically."""
 
-    def __init__(self):
-        self._navigator_focus = None
-        self._last_navigator_focus = None
-        self._last_locus_of_focus = None
-        self._simplify = True
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
+    def __init__(self) -> None:
+        self._navigator_focus: Optional[Atspi.Accessible] = None
+        self._last_navigator_focus: Optional[Atspi.Accessible] = None
+        self._last_locus_of_focus: Optional[Atspi.Accessible] = None
+        self._simplify: bool = True
+        self._handlers: dict = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the object-navigator keybindings."""
 
         if refresh:
-            msg = "OBJECT NAVIGATOR: Refreshing bindings."
+            msg = f"OBJECT NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -60,7 +75,7 @@ class ObjectNavigator:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the object-navigator handlers."""
 
         if refresh:
@@ -70,7 +85,7 @@ class ObjectNavigator:
 
         return self._handlers
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the object-navigator key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -120,7 +135,7 @@ class ObjectNavigator:
         msg = "OBJECT NAVIGATOR: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the object-navigator input event handlers."""
 
         self._handlers = {}
@@ -158,12 +173,14 @@ class ObjectNavigator:
         msg = "OBJECT NAVIGATOR: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _include_in_simple_navigation(self, obj):
+    def _include_in_simple_navigation(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj should be included in simple navigation."""
 
         return AXUtilities.is_paragraph(obj)
 
-    def _exclude_from_simple_navigation(self, script, obj):
+    def _exclude_from_simple_navigation(
+        self, _script: default.Script, obj: Atspi.Accessible
+    ) -> bool:
         """Returns True if obj should be excluded from simple navigation."""
 
         if self._include_in_simple_navigation(obj):
@@ -187,7 +204,7 @@ class ObjectNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def _children(self, script, obj):
+    def _children(self, script: default.Script, obj: Atspi.Accessible) -> list:
         """Returns a list of children for obj, taking simple navigation into account."""
 
         if not AXObject.get_child_count(obj):
@@ -207,7 +224,7 @@ class ObjectNavigator:
 
         return functional_children
 
-    def _parent(self, script, obj):
+    def _parent(self, script: default.Script, obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the parent for obj, taking simple navigation into account."""
 
         parent = AXObject.get_parent(obj)
@@ -220,13 +237,13 @@ class ObjectNavigator:
 
         return parent
 
-    def _set_navigator_focus(self, obj):
+    def _set_navigator_focus(self, obj: Atspi.Accessible) -> None:
         """Changes the navigator focus, storing the previous focus."""
 
         self._last_navigator_focus = self._navigator_focus
         self._navigator_focus = obj
 
-    def update(self):
+    def update(self) -> None:
         """Updates the navigator focus to Orca's object of interest."""
 
         mode, region = focus_manager.get_manager().get_active_mode_and_object_of_interest()
@@ -238,7 +255,7 @@ class ObjectNavigator:
         self._navigator_focus = obj
         self._last_locus_of_focus = obj
 
-    def present(self, script):
+    def present(self, script: default.Script) -> None:
         """Presents the current navigator focus to the user."""
 
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
@@ -247,7 +264,7 @@ class ObjectNavigator:
             self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
-    def up(self, script, event=None):
+    def up(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> None:
         """Moves the navigator focus to the parent of the current focus."""
 
         self.update()
@@ -258,7 +275,7 @@ class ObjectNavigator:
         else:
             script.presentMessage(messages.NAVIGATOR_NO_PARENT)
 
-    def down(self, script, event=None):
+    def down(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> None:
         """Moves the navigator focus to the first child of the current focus."""
 
         self.update()
@@ -270,7 +287,7 @@ class ObjectNavigator:
         self._set_navigator_focus(children[0])
         self.present(script)
 
-    def next(self, script, event=None):
+    def next(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> None:
         """Moves the navigator focus to the next sibling of the current focus."""
 
         self.update()
@@ -291,7 +308,9 @@ class ObjectNavigator:
             self._set_navigator_focus(parent)
             self.present(script)
 
-    def previous(self, script, event=None):
+    def previous(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> None:
         """Moves the navigator focus to the previous sibling of the current focus."""
 
         self.update()
@@ -312,7 +331,9 @@ class ObjectNavigator:
             self._set_navigator_focus(parent)
             self.present(script)
 
-    def toggle_simplify(self, script, event=None):
+    def toggle_simplify(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Toggles simplified navigation."""
 
         self._simplify = not self._simplify
@@ -322,7 +343,9 @@ class ObjectNavigator:
             script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_DISABLED)
         return True
 
-    def perform_action(self, script, event=None):
+    def perform_action(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Attempts to click on the current focus."""
         if AXEventSynthesizer.try_all_clickable_actions(self._navigator_focus):
             return True
@@ -331,8 +354,8 @@ class ObjectNavigator:
         return True
 
 
-_navigator = ObjectNavigator()
-def getNavigator():
+_navigator: ObjectNavigator = ObjectNavigator()
+def get_navigator() -> ObjectNavigator:
     """Returns the Object Navigator"""
 
     return _navigator

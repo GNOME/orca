@@ -21,6 +21,9 @@
 
 """Module for presenting system information"""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -29,12 +32,15 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
+import time
+from types import ModuleType
+from typing import Optional, TYPE_CHECKING
+
+psutil: Optional[ModuleType] = None
 try:
     import psutil
 except ModuleNotFoundError:
-    psutil = None
-
-import time
+    pass
 
 from . import cmdnames
 from . import debug
@@ -43,19 +49,23 @@ from . import keybindings
 from . import messages
 from . import settings_manager
 
+if TYPE_CHECKING:
+    from .scripts import default
 
 class SystemInformationPresenter:
     """Provides commands to present system information."""
 
-    def __init__(self):
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
+    def __init__(self) -> None:
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the system-information-presenter keybindings."""
 
         if refresh:
-            msg = "SYSTEM INFORMATION PRESENTER: Refreshing bindings."
+            msg = f"SYSTEM INFORMATION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -63,7 +73,7 @@ class SystemInformationPresenter:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the system-information-presenter handlers."""
 
         if refresh:
@@ -73,7 +83,7 @@ class SystemInformationPresenter:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the system-information-presenter input event handlers."""
 
         self._handlers = {}
@@ -101,7 +111,7 @@ class SystemInformationPresenter:
         msg = "SYSTEM INFORMATION PRESENTER: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the system-information-presenter key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -141,21 +151,27 @@ class SystemInformationPresenter:
         msg = "SYSTEM INFORMATION PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def present_time(self, script, event=None):
+    def present_time(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the current time."""
 
         time_format = settings_manager.get_manager().get_setting('presentTimeFormat')
         script.presentMessage(time.strftime(time_format, time.localtime()))
         return True
 
-    def present_date(self, script, event=None):
+    def present_date(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the current date."""
 
         data_format = settings_manager.get_manager().get_setting('presentDateFormat')
         script.presentMessage(time.strftime(data_format, time.localtime()))
         return True
 
-    def present_battery_status(self, script, event=None):
+    def present_battery_status(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the battery status."""
 
         if not (psutil and psutil.sensors_battery()):
@@ -171,7 +187,9 @@ class SystemInformationPresenter:
         script.presentMessage(msg)
         return True
 
-    def present_cpu_and_memory_usage(self, script, event=None):
+    def present_cpu_and_memory_usage(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the cpu and memory usage."""
 
         if psutil is None:
@@ -193,5 +211,6 @@ class SystemInformationPresenter:
 
 
 _presenter = SystemInformationPresenter()
-def get_presenter():
+def get_presenter() -> SystemInformationPresenter:
+    """Returns the system-information-presenter singleton."""
     return _presenter

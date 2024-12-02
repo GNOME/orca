@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import time
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -48,15 +49,16 @@ class AXCollection:
     # This function wraps Atspi.MatchRule.new which has all the arguments.
     # pylint: disable=R0913,R0914
     @staticmethod
-    def create_match_rule(states=None,
-                          state_match_type=Atspi.CollectionMatchType.ALL,
-                          attributes=None,
-                          attribute_match_type=Atspi.CollectionMatchType.ANY,
-                          roles=None,
-                          role_match_type=Atspi.CollectionMatchType.ANY,
-                          interfaces=None,
-                          interface_match_type=Atspi.CollectionMatchType.ALL,
-                          invert=False):
+    def create_match_rule(
+        states: Optional[list[str]] = None,
+        state_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
+        attributes: Optional[list[str]] = None,
+        attribute_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ANY,
+        roles: Optional[list[str]] = None,
+        role_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ANY,
+        interfaces: Optional[list[str]] = None,
+        interface_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
+        invert: bool = False) -> Optional[Atspi.MatchRule]:
         """Creates a match rule based on the supplied criteria."""
 
         if states is None:
@@ -73,7 +75,7 @@ class AXCollection:
             for state in states:
                 state_set.add(state)
 
-        attributes_dict = {}
+        attributes_dict: dict[str, str] = {}
         if attributes:
             for attr in attributes:
                 key, value = attr.split(":", 1)
@@ -102,7 +104,11 @@ class AXCollection:
     # pylint: enable=R0913,R0914
 
     @staticmethod
-    def get_all_matches(obj, rule, order=Atspi.CollectionSortOrder.CANONICAL):
+    def get_all_matches(
+        obj: Atspi.Accessible,
+        rule: Atspi.MatchRule,
+            order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL
+        ) -> list[Atspi.Accessible]:
         """Returns a list of objects matching the specified rule."""
 
         if not AXObject.supports_collection(obj):
@@ -128,7 +134,11 @@ class AXCollection:
         return matches
 
     @staticmethod
-    def get_first_match(obj, rule, order=Atspi.CollectionSortOrder.CANONICAL):
+    def get_first_match(
+        obj: Atspi.Accessible,
+        rule: Atspi.MatchRule,
+        order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL
+    ) -> Optional[Atspi.Accessible]:
         """Returns the first object matching the specified rule."""
 
         if not AXObject.supports_collection(obj):

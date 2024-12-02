@@ -34,6 +34,7 @@ __license__   = "LGPL"
 
 import threading
 import time
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -46,11 +47,11 @@ from .ax_utilities import AXUtilities
 class AXValue:
     """Utilities for obtaining value-related information about accessible objects."""
 
-    LAST_KNOWN_VALUE = {}
+    LAST_KNOWN_VALUE: dict[int, float] = {}
     _lock = threading.Lock()
 
     @staticmethod
-    def _clear_stored_data():
+    def _clear_stored_data() -> None:
         """Clears any data we have cached for objects"""
 
         while True:
@@ -60,7 +61,7 @@ class AXValue:
             AXValue.LAST_KNOWN_VALUE.clear()
 
     @staticmethod
-    def start_cache_clearing_thread():
+    def start_cache_clearing_thread() -> None:
         """Starts thread to periodically clear cached details."""
 
         thread = threading.Thread(target=AXValue._clear_stored_data)
@@ -68,7 +69,7 @@ class AXValue:
         thread.start()
 
     @staticmethod
-    def did_value_change(obj):
+    def did_value_change(obj: Atspi.Accessible) -> bool:
         """Returns True if the current value changed."""
 
         if not AXObject.supports_value(obj):
@@ -83,36 +84,36 @@ class AXValue:
         return result
 
     @staticmethod
-    def _get_current_value(obj):
+    def _get_current_value(obj: Atspi.Accessible) -> float:
         """Returns the current value of obj."""
 
         if not AXObject.supports_value(obj):
-            return 0
+            return 0.0
 
         try:
             value = Atspi.Value.get_current_value(obj)
         except Exception as error:
             msg = f"AXValue: Exception in _get_current_value: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return 0
+            return 0.0
 
         tokens = ["AXValue: Current value of", obj, f"is {value}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @staticmethod
-    def get_current_value(obj):
+    def get_current_value(obj: Atspi.Accessible) -> float:
         """Returns the current value of obj."""
 
         if not AXObject.supports_value(obj):
-            return 0
+            return 0.0
 
         value = AXValue._get_current_value(obj)
         AXValue.LAST_KNOWN_VALUE[hash(obj)] = value
         return value
 
     @staticmethod
-    def get_current_value_text(obj):
+    def get_current_value_text(obj: Atspi.Accessible) -> str:
         """Returns the app-provided text-alternative for the current value of obj."""
 
         text = AXObject.get_attribute(obj, "valuetext", False) or ""
@@ -146,7 +147,7 @@ class AXValue:
         return f"{current:.{decimal_places}f}"
 
     @staticmethod
-    def get_value_as_percent(obj):
+    def get_value_as_percent(obj: Atspi.Accessible) -> Optional[int]:
         """Returns the current value as a percent, or None if that is not applicable."""
 
         if not AXObject.supports_value(obj):
@@ -169,36 +170,36 @@ class AXValue:
         return result
 
     @staticmethod
-    def get_minimum_value(obj):
+    def get_minimum_value(obj: Atspi.Accessible) -> float:
         """Returns the minimum value of obj."""
 
         if not AXObject.supports_value(obj):
-            return 0
+            return 0.0
 
         try:
             value = Atspi.Value.get_minimum_value(obj)
         except Exception as error:
             msg = f"AXValue: Exception in get_minimum_value: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return 0
+            return 0.0
 
         tokens = ["AXValue: Minimum value of", obj, f"is {value}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @staticmethod
-    def get_maximum_value(obj):
+    def get_maximum_value(obj: Atspi.Accessible) -> float:
         """Returns the maximum value of obj."""
 
         if not AXObject.supports_value(obj):
-            return 0
+            return 0.0
 
         try:
             value = Atspi.Value.get_maximum_value(obj)
         except Exception as error:
             msg = f"AXValue: Exception in get_maximum_value: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return 0
+            return 0.0
 
         tokens = ["AXValue: Maximum value of", obj, f"is {value}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

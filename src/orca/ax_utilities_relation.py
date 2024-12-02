@@ -35,6 +35,7 @@ __license__   = "LGPL"
 
 import threading
 import time
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -47,13 +48,13 @@ from .ax_object import AXObject
 class AXUtilitiesRelation:
     """Utilities for obtaining relation-related information."""
 
-    RELATIONS = {}
-    TARGETS = {}
+    RELATIONS: dict[int, list[Atspi.Relation]] = {}
+    TARGETS: dict[int, dict[Atspi.RelationType, list[Atspi.Accessible]]] = {}
 
     _lock = threading.Lock()
 
     @staticmethod
-    def _clear_stored_data():
+    def _clear_stored_data() -> None:
         """Clears any data we have cached for objects"""
 
         while True:
@@ -61,7 +62,7 @@ class AXUtilitiesRelation:
             AXUtilitiesRelation._clear_all_dictionaries()
 
     @staticmethod
-    def _clear_all_dictionaries(reason=""):
+    def _clear_all_dictionaries(reason: str = "") -> None:
         msg = "AXUtilitiesRelation: Clearing local cache."
         if reason:
             msg += f" Reason: {reason}"
@@ -72,13 +73,13 @@ class AXUtilitiesRelation:
             AXUtilitiesRelation.TARGETS.clear()
 
     @staticmethod
-    def clear_cache_now(reason=""):
+    def clear_cache_now(reason: str = "") -> None:
         """Clears all cached information immediately."""
 
         AXUtilitiesRelation._clear_all_dictionaries(reason)
 
     @staticmethod
-    def start_cache_clearing_thread():
+    def start_cache_clearing_thread() -> None:
         """Starts thread to periodically clear cached details."""
 
         thread = threading.Thread(target=AXUtilitiesRelation._clear_stored_data)
@@ -86,7 +87,7 @@ class AXUtilitiesRelation:
         thread.start()
 
     @staticmethod
-    def get_relations(obj):
+    def get_relations(obj: Atspi.Accessible) -> list[Atspi.Relation]:
         """Returns the list of Atspi.Relation objects associated with obj"""
 
         if not AXObject.is_valid(obj):
@@ -107,7 +108,10 @@ class AXUtilitiesRelation:
         return relations
 
     @staticmethod
-    def _get_relation(obj, relation_type):
+    def _get_relation(
+        obj: Atspi.Accessible,
+        relation_type: Atspi.RelationType
+    ) -> Optional[Atspi.Relation]:
         """Returns the specified Atspi.Relation for obj"""
 
         for relation in AXUtilitiesRelation.get_relations(obj):
@@ -117,13 +121,18 @@ class AXUtilitiesRelation:
         return None
 
     @staticmethod
-    def get_relation_targets_for_debugging(obj, relation_type):
+    def get_relation_targets_for_debugging(
+        obj: Atspi.Accessible, relation_type: Atspi.RelationType
+    ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
         return AXUtilitiesRelation._get_relation_targets(obj, relation_type)
 
     @staticmethod
-    def _get_relation_targets(obj, relation_type):
+    def _get_relation_targets(
+        obj: Atspi.Accessible,
+        relation_type: Atspi.RelationType
+    ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
         cached_targets = AXUtilitiesRelation.TARGETS.get(hash(obj), {})
@@ -154,7 +163,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_controlled_by(obj):
+    def get_is_controlled_by(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is controlled by."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.CONTROLLED_BY)
@@ -163,7 +172,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_controller_for(obj):
+    def get_is_controller_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the controller for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.CONTROLLER_FOR)
@@ -172,7 +181,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_described_by(obj):
+    def get_is_described_by(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is described by."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DESCRIBED_BY)
@@ -181,7 +190,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_description_for(obj):
+    def get_is_description_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the description for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DESCRIPTION_FOR)
@@ -190,7 +199,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_details(obj):
+    def get_details(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that contain details for obj."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DETAILS)
@@ -199,7 +208,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_details_for(obj):
+    def get_is_details_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj contains details for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.DETAILS_FOR)
@@ -208,7 +217,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_embedded_by(obj):
+    def get_is_embedded_by(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is embedded by."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.EMBEDDED_BY)
@@ -217,7 +226,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_embeds(obj):
+    def get_embeds(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj embeds."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.EMBEDS)
@@ -226,7 +235,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_error_for(obj):
+    def get_is_error_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj contains an error message for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.ERROR_FOR)
@@ -235,7 +244,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_error_message(obj):
+    def get_error_message(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that contain an error message for obj."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.ERROR_MESSAGE)
@@ -244,7 +253,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_flows_from(obj):
+    def get_flows_from(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj flows from."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.FLOWS_FROM)
@@ -253,7 +262,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_flows_to(obj):
+    def get_flows_to(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj flows to."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.FLOWS_TO)
@@ -262,7 +271,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_label_for(obj):
+    def get_is_label_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the label for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.LABEL_FOR)
@@ -271,7 +280,10 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_labelled_by(obj, exclude_ancestors=True):
+    def get_is_labelled_by(
+        obj: Atspi.Accessible,
+        exclude_ancestors: bool = True
+    ) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is labelled by."""
 
         def is_not_ancestor(acc):
@@ -286,7 +298,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_member_of(obj):
+    def get_is_member_of(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is a member of."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.MEMBER_OF)
@@ -295,7 +307,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_node_child_of(obj):
+    def get_is_node_child_of(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the node child of."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.NODE_CHILD_OF)
@@ -304,7 +316,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_node_parent_of(obj):
+    def get_is_node_parent_of(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the node parent of."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.NODE_PARENT_OF)
@@ -313,7 +325,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_parent_window_of(obj):
+    def get_is_parent_window_of(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is a parent window of."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.PARENT_WINDOW_OF)
@@ -322,7 +334,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_popup_for(obj):
+    def get_is_popup_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the popup for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.POPUP_FOR)
@@ -331,7 +343,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_subwindow_of(obj):
+    def get_is_subwindow_of(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is a subwindow of."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.SUBWINDOW_OF)
@@ -340,7 +352,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def get_is_tooltip_for(obj):
+    def get_is_tooltip_for(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is the tooltip for."""
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.TOOLTIP_FOR)
@@ -349,7 +361,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def object_is_controlled_by(obj1, obj2):
+    def object_is_controlled_by(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool:
         """Returns True if obj1 is controlled by obj2."""
 
         targets = AXUtilitiesRelation._get_relation_targets(obj1, Atspi.RelationType.CONTROLLED_BY)
@@ -359,7 +371,7 @@ class AXUtilitiesRelation:
         return result
 
     @staticmethod
-    def object_is_unrelated(obj):
+    def object_is_unrelated(obj: Atspi.Accessible) -> bool:
         """Returns True if obj does not have any relations."""
 
         return not AXUtilitiesRelation.get_relations(obj)

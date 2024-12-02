@@ -25,6 +25,9 @@
 
 """Utilities related to the clipboard."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -36,6 +39,7 @@ import dbus
 import re
 import time
 from dbus.mainloop.glib import DBusGMainLoop, threads_init
+from typing import Any, Callable, Optional, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -53,42 +57,45 @@ from . import script_manager
 from . import settings_manager
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from .scripts import default
+
 class _ClipboardManager:
     """Base class for interacting with clipboard managers."""
 
-    def __init__(self, name, change_callback):
-        self._name = name
-        self._change_callback = change_callback
-        self._contents = ""
-        self._is_active = False
+    def __init__(self, name: str, change_callback: Callable[[str], None]) -> None:
+        self._name: str = name
+        self._change_callback: Callable[[str], None] = change_callback
+        self._contents: str = ""
+        self._is_active: bool = False
 
-    def is_active(self):
+    def is_active(self) -> bool:
         """Returns True if this manager is active."""
 
         return self._is_active
 
-    def connect(self):
+    def connect(self) -> None:
         """Connects to the clipboard manager."""
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
 
-    def set_contents(self, text):
+    def set_contents(self, text: str) -> None:
         """Sets the contents of the clipboard to text."""
 
-    def get_contents(self):
+    def get_contents(self) -> str:
         """Returns the pre-stored contents of the clipboard."""
 
         if not self._contents:
             self._contents = self._get_contents()
         return self._contents
 
-    def _get_contents(self):
+    def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
         return ""
 
-    def _on_contents_changed(self, *args, **kwargs):
+    def _on_contents_changed(self, *args: tuple[Any, ...], **kwargs: dict[str, Any]) -> None:
         """Notifies the registered callback that the contents changed."""
 
         msg = f"{self._name}: Contents changed. {args} {kwargs}"
@@ -99,11 +106,11 @@ class _ClipboardManager:
 class _ClipboardManagerFallback(_ClipboardManager):
     """Class for interacting with the clipboard via Gtk.Clipboard."""
 
-    def __init__(self, change_callback):
+    def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("FALLBACK", change_callback)
-        self._handler_id = None
+        self._handler_id: Optional[int] = None
 
-    def connect(self):
+    def connect(self) -> None:
         """Connects to the clipboard manager."""
 
         if self._handler_id is not None:
@@ -113,7 +120,7 @@ class _ClipboardManagerFallback(_ClipboardManager):
         self._handler_id = clipboard.connect("owner-change", self._on_contents_changed)
         self._is_active = True
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
 
         self._is_active = False
@@ -124,7 +131,7 @@ class _ClipboardManagerFallback(_ClipboardManager):
         clipboard.disconnect(self._handler_id)
         self._handler_id = None
 
-    def _get_contents(self):
+    def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
         if self._handler_id is None:
@@ -142,7 +149,7 @@ class _ClipboardManagerFallback(_ClipboardManager):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def set_contents(self, text):
+    def set_contents(self, text: str) -> None:
         """Sets the contents of the clipboard to text."""
 
         msg = f"FALLBACK: Setting clipboard contents to: {text}"
@@ -153,14 +160,14 @@ class _ClipboardManagerFallback(_ClipboardManager):
 class _ClipboardManagerGPaste(_ClipboardManager):
     """Class for interacting with the clipboard via GPaste."""
 
-    def __init__(self, change_callback):
+    def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("GPASTE", change_callback)
-        self._iface = None
-        self._props_iface = None
-        self._signal_match = None
-        self._original_active_state = None
+        self._iface: Optional[dbus.Interface] = None
+        self._props_iface: Optional[dbus.Interface] = None
+        self._signal_match: Optional[dbus.connection.SignalMatch] = None
+        self._original_active_state: Optional[bool] = None
 
-    def connect(self):
+    def connect(self) -> None:
         """Connects to the clipboard manager."""
 
         try:
@@ -188,8 +195,13 @@ class _ClipboardManagerGPaste(_ClipboardManager):
             dbus_interface="org.gnome.GPaste2")
         self._is_active = True
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
+
+        if self._iface is None or self._props_iface is None:
+            msg = "CLIPBOARD PRESENTER: Cannot disconnect due to missing interface(s)."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         if self._signal_match is not None:
             self._signal_match.remove()
@@ -207,7 +219,7 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         self._props_iface = None
         self._is_active = False
 
-    def _get_contents(self):
+    def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
         if self._iface is None:
@@ -219,7 +231,7 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def set_contents(self, text):
+    def set_contents(self, text: str) -> None:
         """Sets the contents of the clipboard to text."""
 
         if self._iface is None:
@@ -230,12 +242,12 @@ class _ClipboardManagerGPaste(_ClipboardManager):
 class _ClipboardManagerKlipper(_ClipboardManager):
     """Class for interacting with the clipboard via Klipper ."""
 
-    def __init__(self, change_callback):
+    def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("KLIPPER", change_callback)
-        self._iface = None
-        self._signal_match = None
+        self._iface: Optional[dbus.Interface] = None
+        self._signal_match: Optional[dbus.connection.SignalMatch] = None
 
-    def connect(self):
+    def connect(self) -> None:
         """Connects to the clipboard manager."""
 
         try:
@@ -253,7 +265,7 @@ class _ClipboardManagerKlipper(_ClipboardManager):
             dbus_interface="org.kde.klipper.klipper")
         self._is_active = True
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
 
         if self._signal_match is not None:
@@ -262,7 +274,7 @@ class _ClipboardManagerKlipper(_ClipboardManager):
         self._iface = None
         self._is_active = False
 
-    def _get_contents(self):
+    def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
         if self._iface is None:
@@ -274,7 +286,7 @@ class _ClipboardManagerKlipper(_ClipboardManager):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def set_contents(self, text):
+    def set_contents(self, text: str) -> None:
         """Sets the contents of the clipboard to text."""
 
         if self._iface is None:
@@ -287,17 +299,19 @@ class _ClipboardManagerKlipper(_ClipboardManager):
 class ClipboardPresenter:
     """Manages clipboard-related functionality."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         threads_init()
         dbus.set_default_main_loop(DBusGMainLoop())
-        self._event_listener = Atspi.EventListener.new(self._listener)
-        self._last_clipboard_update_text = ""
-        self._last_clipboard_update_time = time.time()
-        self._manager = None
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
+        self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
+        self._last_clipboard_update_text: str = ""
+        self._last_clipboard_update_time: float = time.time()
+        self._manager: Optional[_ClipboardManager] = None
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the clipboard-presenter keybindings."""
 
         if refresh:
@@ -309,7 +323,7 @@ class ClipboardPresenter:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the clipboard-presenter handlers."""
 
         if refresh:
@@ -319,7 +333,7 @@ class ClipboardPresenter:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up and returns the clipboard-presenter input event handlers."""
 
         self._handlers = {}
@@ -329,7 +343,7 @@ class ClipboardPresenter:
                 self._present_clipboard_contents,
                 cmdnames.CLIPBOARD_PRESENT_CONTENTS)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up and returns the clipboard-presenter key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -347,8 +361,15 @@ class ClipboardPresenter:
         self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
-    def _present_clipboard_contents(self, script, _event=None):
+    def _present_clipboard_contents(
+        self, script: default.Script, _event: Optional[Atspi.Event] = None
+    ) -> bool:
         """Presents the clipboard contents."""
+
+        if self._manager is None:
+            msg = "CLIPBOARD PRESENTER: Cannot present contents, no active manager."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         contents = self._manager.get_contents()
         if not contents or len(contents) > 5000:
@@ -356,16 +377,18 @@ class ClipboardPresenter:
         script.presentMessage(messages.CLIPBOARD_CONTAINS % contents, contents)
         return True
 
-    def _connect(self):
+    def _connect(self) -> None:
         """Connects to the clipboard manager."""
 
         if self._manager is not None:
             return
 
+        manager: Optional[_ClipboardManager] = None
+
         # If you try to connect to Klipper from a GNOME session, it will fail with a DBus
         # exception. However, if you try to connect to GPaste from a KDE session, it will
         # succeed -- or at least not throw an exception. Therefore, check for Klipper first.
-        manager = _ClipboardManagerKlipper  (self._present_clipboard_contents_change)
+        manager = _ClipboardManagerKlipper(self._present_clipboard_contents_change)
         manager.connect()
         if manager.is_active():
             self._manager = manager
@@ -387,14 +410,14 @@ class ClipboardPresenter:
         msg = "CLIPBOARD PRESENTER: Using Gtk.Clipboard as fallback."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _disconnect(self):
+    def _disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
 
         if self._manager is None:
             return
         self._manager.disconnect()
 
-    def _get_contents(self):
+    def _get_contents(self) -> str:
         """Returns the clipboard contents."""
 
         if self._manager is None:
@@ -408,7 +431,7 @@ class ClipboardPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def activate(self):
+    def activate(self) -> None:
         """Activates the presenter."""
 
         debug.print_message(debug.LEVEL_INFO, "CLIPBOARD PRESENTER: Activating", True)
@@ -416,7 +439,7 @@ class ClipboardPresenter:
         self._connect()
         debug.print_message(debug.LEVEL_INFO, "CLIPBOARD PRESENTER: Activated", True)
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         """Deactivates the presenter."""
 
         debug.print_message(debug.LEVEL_INFO, "CLIPBOARD PRESENTER: Deactivating", True)
@@ -424,7 +447,7 @@ class ClipboardPresenter:
         self._disconnect()
         debug.print_message(debug.LEVEL_INFO, "CLIPBOARD PRESENTER: Deactivated", True)
 
-    def append_text(self, text, separator="\n"):
+    def append_text(self, text: str, separator: str = "\n") -> None:
         """Appends text to the clipboard contents."""
 
         if self._manager is None:
@@ -438,7 +461,7 @@ class ClipboardPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._manager.set_contents(new_text)
 
-    def set_text(self, text):
+    def set_text(self, text: str) -> None:
         """Sets the clipboard contents to text."""
 
         if self._manager is None:
@@ -450,7 +473,7 @@ class ClipboardPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._manager.set_contents(text)
 
-    def is_clipboard_text_changed_event(self, event):
+    def is_clipboard_text_changed_event(self, event: Atspi.Event) -> bool:
         """Returns True if event is a text changed event associated with the clipboard."""
 
         if not event.type.startswith("object:text-changed"):
@@ -485,7 +508,7 @@ class ClipboardPresenter:
 
         return False
 
-    def _present_clipboard_contents_change(self, string):
+    def _present_clipboard_contents_change(self, string: str) -> None:
         """Presents the clipboard contents change."""
 
         msg = f"CLIPBOARD PRESENTER: Contents changed to: '{string}'"
@@ -519,7 +542,7 @@ class ClipboardPresenter:
         msg = "CLIPBOARD PRESENTER: Not presenting change: is not cut, copy, or paste"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _listener(self, event):
+    def _listener(self, event: Atspi.Event) -> None:
         """Generic listener for events of interest."""
 
         tokens = ["CLIPBOARD PRESENTER: Possible change event", event]
@@ -528,8 +551,8 @@ class ClipboardPresenter:
             self._present_clipboard_contents_change(event.any_data)
 
 
-_presenter = ClipboardPresenter()
-def get_presenter():
+_presenter: ClipboardPresenter = ClipboardPresenter()
+def get_presenter() -> ClipboardPresenter:
     """Returns the Clipboard Presenter singleton."""
 
     return _presenter

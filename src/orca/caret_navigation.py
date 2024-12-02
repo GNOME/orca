@@ -20,11 +20,16 @@
 
 """Provides an Orca-controlled caret for text content."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__ = "$Id$"
 __version__ = "$Revision$"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2013-2015 Igalia, S.L."
 __license__ = "LGPL"
+
+from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
@@ -33,37 +38,41 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import settings_manager
-
 from .ax_text import AXText
+
+if TYPE_CHECKING:
+    from .input_event import InputEvent
+    from .scripts import web
 
 class CaretNavigation:
     """Implements the caret navigation support available to scripts."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
-        self._suspended = False
+        self._suspended: bool = False
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._last_input_event: Optional[input_event.InputEvent] = None
 
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
-        self._last_input_event = None
-
-    def handles_navigation(self, handler):
+    def handles_navigation(self, handler: input_event.InputEventHandler) -> bool:
         """Returns True if handler is a navigation command."""
 
         if handler not in self._handlers.values():
             return False
 
-        if handler.function == self.toggle_enabled:
+        if handler.function is self.toggle_enabled:
             return False
 
         return True
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the caret-navigation keybindings."""
 
         if refresh:
-            msg = "CARET NAVIGATION: Refreshing bindings."
+            msg = f"CARET NAVIGATION: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -71,7 +80,7 @@ class CaretNavigation:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the caret-navigation handlers."""
 
         if refresh:
@@ -81,7 +90,7 @@ class CaretNavigation:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the caret-navigation input event handlers."""
 
         self._handlers = {}
@@ -158,7 +167,7 @@ class CaretNavigation:
         msg = f"CARET NAVIGATION: Handlers set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the caret-navigation key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -272,7 +281,7 @@ class CaretNavigation:
         msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def last_input_event_was_navigation_command(self):
+    def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
 
         manager = input_event_manager.get_manager()
@@ -286,7 +295,7 @@ class CaretNavigation:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def refresh_bindings_and_grabs(self, script, reason=""):
+    def refresh_bindings_and_grabs(self, script: web.Script, reason: str = "") -> None:
         """Refreshes caret navigation bindings and grabs for script."""
 
         msg = "CARET NAVIGATION: Refreshing bindings and grabs"
@@ -303,7 +312,7 @@ class CaretNavigation:
         for binding in self._bindings.key_bindings:
             script.key_bindings.add(binding, include_grabs=not self._suspended)
 
-    def toggle_enabled(self, script, event):
+    def toggle_enabled(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Toggles caret navigation."""
 
         if not event:
@@ -322,7 +331,7 @@ class CaretNavigation:
         self.refresh_bindings_and_grabs(script, "toggling caret navigation")
         return True
 
-    def suspend_commands(self, script, suspended, reason=""):
+    def suspend_commands(self, script: web.Script, suspended: bool, reason: str = "") -> None:
         """Suspends caret navigation independent of the enabled setting."""
 
         if suspended == self._suspended:
@@ -336,7 +345,7 @@ class CaretNavigation:
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
-    def _next_character(self, script, event):
+    def _next_character(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the next character."""
 
         if not event:
@@ -353,7 +362,7 @@ class CaretNavigation:
         script.sayCharacter(obj)
         return True
 
-    def _previous_character(self, script, event):
+    def _previous_character(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the previous character."""
 
         if not event:
@@ -370,7 +379,7 @@ class CaretNavigation:
         script.sayCharacter(obj)
         return True
 
-    def _next_word(self, script, event):
+    def _next_word(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the next word."""
 
         if not event:
@@ -392,7 +401,7 @@ class CaretNavigation:
         script.sayWord(obj)
         return True
 
-    def _previous_word(self, script, event):
+    def _previous_word(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the previous word."""
 
         if not event:
@@ -411,7 +420,7 @@ class CaretNavigation:
         script.sayWord(obj)
         return True
 
-    def _next_line(self, script, event):
+    def _next_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the next line."""
 
         if not event:
@@ -419,8 +428,8 @@ class CaretNavigation:
 
         if script.inSayAll():
             _settings_manager = settings_manager.get_manager()
-            if _settings_manager.get_setting('rewindAndFastForwardInSayAll'):
-                msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
+            if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
+                msg = "CARET NAVIGATION: In say all and rewind/fast-forward is enabled"
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
@@ -441,7 +450,7 @@ class CaretNavigation:
         script.displayContents(contents)
         return True
 
-    def _previous_line(self, script, event):
+    def _previous_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the previous line."""
 
         if not event:
@@ -449,11 +458,10 @@ class CaretNavigation:
 
         if script.inSayAll():
             _settings_manager = settings_manager.get_manager()
-            if _settings_manager.get_setting('rewindAndFastForwardInSayAll'):
-                msg = "CARET NAVIGATION: inSayAll and rewindAndFastforwardInSayAll is enabled"
+            if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
+                msg = "CARET NAVIGATION: In say all and rewind/fast-forward is enabled"
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
-
 
         contents = script.utilities.getPreviousLineContents()
         if not contents:
@@ -467,7 +475,7 @@ class CaretNavigation:
         script.displayContents(contents)
         return True
 
-    def _start_of_line(self, script, event):
+    def _start_of_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the start of the line."""
 
         if not event:
@@ -486,7 +494,7 @@ class CaretNavigation:
         script.displayContents(line)
         return True
 
-    def _end_of_line(self, script, event):
+    def _end_of_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the end of the line."""
 
         if not event:
@@ -508,7 +516,7 @@ class CaretNavigation:
         script.displayContents(line)
         return True
 
-    def _start_of_file(self, script, event):
+    def _start_of_file(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the start of the file."""
 
         if not event:
@@ -528,7 +536,7 @@ class CaretNavigation:
         script.displayContents(contents)
         return True
 
-    def _end_of_file(self, script, event):
+    def _end_of_file(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the end of the file."""
 
         if not event:
@@ -544,10 +552,10 @@ class CaretNavigation:
 
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:
-            lastobj, lastoffset = script.utilities.nextContext(obj, offset)
-            if not lastobj:
+            last_obj, last_offset = script.utilities.nextContext(obj, offset)
+            if not last_obj:
                 break
-            obj, offset = lastobj, lastoffset
+            obj, offset = last_obj, last_offset
 
         contents = script.utilities.getLineContentsAtOffset(obj, offset)
         if not contents:

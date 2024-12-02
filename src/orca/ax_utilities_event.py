@@ -115,7 +115,7 @@ class AXUtilitiesEvent:
     _lock = threading.Lock()
 
     @staticmethod
-    def _clear_stored_data():
+    def _clear_stored_data() -> None:
         """Clears any data we have cached for objects"""
 
         while True:
@@ -123,7 +123,7 @@ class AXUtilitiesEvent:
             AXUtilitiesEvent._clear_all_dictionaries()
 
     @staticmethod
-    def _clear_all_dictionaries(reason=""):
+    def _clear_all_dictionaries(reason: str = "") -> None:
         msg = "AXUtilitiesEvent: Clearing local cache."
         if reason:
             msg += f" Reason: {reason}"
@@ -138,13 +138,13 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.TEXT_EVENT_REASON.clear()
 
     @staticmethod
-    def clear_cache_now(reason=""):
+    def clear_cache_now(reason: str = "") -> None:
         """Clears all cached information immediately."""
 
         AXUtilitiesEvent._clear_all_dictionaries(reason)
 
     @staticmethod
-    def save_object_info_for_events(obj):
+    def save_object_info_for_events(obj: Atspi.Accessible) -> None:
         """Saves properties, states, etc. of obj for later use in event processing."""
 
         if obj is None:
@@ -164,7 +164,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(window)] = AXObject.get_description(window)
 
     @staticmethod
-    def start_cache_clearing_thread():
+    def start_cache_clearing_thread() -> None:
         """Starts thread to periodically clear cached details."""
 
         thread = threading.Thread(target=AXUtilitiesEvent._clear_stored_data)
@@ -172,13 +172,13 @@ class AXUtilitiesEvent:
         thread.start()
 
     @staticmethod
-    def get_last_known_name(obj):
+    def get_last_known_name(obj: Atspi.Accessible) -> str:
         """Returns the last known name of obj."""
 
         return AXUtilitiesEvent.LAST_KNOWN_NAME.get(hash(obj), "")
 
     @staticmethod
-    def get_text_event_reason(event):
+    def get_text_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
         reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(event)
@@ -205,7 +205,7 @@ class AXUtilitiesEvent:
         return reason
 
     @staticmethod
-    def _get_caret_moved_event_reason(event):
+    def _get_caret_moved_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
         reason = TextEventReason.UNKNOWN
@@ -273,7 +273,7 @@ class AXUtilitiesEvent:
         return reason
 
     @staticmethod
-    def _get_text_deletion_event_reason(event):
+    def _get_text_deletion_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
         reason = TextEventReason.UNKNOWN
@@ -317,7 +317,7 @@ class AXUtilitiesEvent:
         return reason
 
     @staticmethod
-    def _get_text_insertion_event_reason(event):
+    def _get_text_insertion_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
         reason = TextEventReason.UNKNOWN
@@ -390,7 +390,7 @@ class AXUtilitiesEvent:
         return reason
 
     @staticmethod
-    def _get_text_selection_changed_event_reason(event):
+    def _get_text_selection_changed_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
         reason = TextEventReason.UNKNOWN
@@ -462,7 +462,7 @@ class AXUtilitiesEvent:
         return reason
 
     @staticmethod
-    def is_presentable_active_descendant_change(event):
+    def is_presentable_active_descendant_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an active-descendant change."""
 
         if not event.any_data:
@@ -489,7 +489,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_checked_change(event):
+    def is_presentable_checked_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a checked-state change."""
 
         old_state = AXUtilitiesEvent.LAST_KNOWN_CHECKED.get(hash(event.source))
@@ -524,7 +524,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_description_change(event):
+    def is_presentable_description_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a description change."""
 
         old_description = AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.get(hash(event.source))
@@ -556,7 +556,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_expanded_change(event):
+    def is_presentable_expanded_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an expanded-state change."""
 
         old_state = AXUtilitiesEvent.LAST_KNOWN_EXPANDED.get(hash(event.source))
@@ -588,7 +588,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_indeterminate_change(event):
+    def is_presentable_indeterminate_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an indeterminate-state change."""
 
         old_state = AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.get(hash(event.source))
@@ -617,7 +617,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_name_change(event):
+    def is_presentable_name_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a name change."""
 
         old_name = AXUtilitiesEvent.LAST_KNOWN_NAME.get(hash(event.source))
@@ -666,7 +666,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_pressed_change(event):
+    def is_presentable_pressed_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a pressed-state change."""
 
         old_state = AXUtilitiesEvent.LAST_KNOWN_PRESSED.get(hash(event.source))
@@ -687,7 +687,7 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
-    def is_presentable_selected_change(event):
+    def is_presentable_selected_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a selected-state change."""
 
         old_state = AXUtilitiesEvent.LAST_KNOWN_SELECTED.get(hash(event.source))

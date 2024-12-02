@@ -25,6 +25,9 @@
 
 """Provides debugging tools."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -36,6 +39,7 @@ import faulthandler
 import os
 import subprocess
 import time
+from typing import Generator, Optional, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -53,19 +57,24 @@ from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_utilities_debugging import AXUtilitiesDebugging
 
+if TYPE_CHECKING:
+    from .scripts import default
+
 class DebuggingToolsManager:
     """Provides debugging tools."""
 
-    def __init__(self):
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
+    def __init__(self) -> None:
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
         if debug.debugFile and os.path.exists(debug.debugFile.name):
             faulthandler.enable(file=debug.debugFile, all_threads=True)
         else:
             faulthandler.enable(all_threads=False)
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the debugging-tools-manager keybindings."""
 
         if refresh:
@@ -77,7 +86,7 @@ class DebuggingToolsManager:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the debugging-tools-manager handlers."""
 
         if refresh:
@@ -87,7 +96,7 @@ class DebuggingToolsManager:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up and returns the debugging-tools-manager input event handlers."""
 
         self._handlers = {}
@@ -107,7 +116,7 @@ class DebuggingToolsManager:
                 self._capture_snapshot,
                 cmdnames.DEBUG_CAPTURE_SNAPSHOT)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up and returns the debugging-tools-manager key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -143,7 +152,9 @@ class DebuggingToolsManager:
         self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
-    def _cycle_debug_level(self, script, _event=None):
+    def _cycle_debug_level(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Cycles through the existing debug levels."""
 
         levels = {
@@ -165,7 +176,9 @@ class DebuggingToolsManager:
         script.presentMessage(f"Debug level {brief}.", brief)
         return True
 
-    def _clear_atspi_app_cache(self, script, _event=None):
+    def _clear_atspi_app_cache(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
         _mode, obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
@@ -186,7 +199,9 @@ class DebuggingToolsManager:
         AXObject.clear_cache(app, recursive=True, reason="User request.")
         return True
 
-    def _capture_snapshot(self, script, _event=None):
+    def _capture_snapshot(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
         script.presentMessage(messages.DEBUG_CAPTURE_SNAPSHOT_START)
@@ -210,7 +225,9 @@ class DebuggingToolsManager:
         debug.debugLevel = old_level
         return True
 
-    def _get_running_applications_as_string_iter(self, is_command_line):
+    def _get_running_applications_as_string_iter(
+        self, is_command_line: bool
+    ) -> Generator[str, None, None]:
         """Generator providing strings with basic details about the running accessible apps."""
 
         applications = AXUtilities.get_all_applications(is_debug=True)
@@ -239,7 +256,9 @@ class DebuggingToolsManager:
             msg = f"{prefix} pid: {pid:<10} {name:<25} {cmdline}"
             yield msg
 
-    def print_running_applications(self, force=False, is_command_line=False):
+    def print_running_applications(
+        self, force: bool = False, is_command_line: bool = False
+    ) -> None:
         """Prints basic details about the running accessible applications."""
 
         if force:
@@ -256,7 +275,7 @@ class DebuggingToolsManager:
             else:
                 debug.print_message(level, app_string, True)
 
-    def print_session_details(self, is_command_line=False):
+    def print_session_details(self, is_command_line: bool = False) -> None:
         """Prints basic details about the current session."""
 
         msg = f"Orca version {orca_platform.version}"
@@ -277,8 +296,9 @@ class DebuggingToolsManager:
             msg = f"DEBUGGING TOOLS MANAGER: {msg}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-_manager = DebuggingToolsManager()
-def get_manager():
+_manager: DebuggingToolsManager = DebuggingToolsManager()
+
+def get_manager() -> DebuggingToolsManager:
     """Returns the debugging tools manager."""
 
     return _manager

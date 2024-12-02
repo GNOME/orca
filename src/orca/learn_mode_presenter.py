@@ -18,7 +18,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Module for learn mode"""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -28,13 +33,12 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import time
+from typing import Optional, TYPE_CHECKING
 
 import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk
-from gi.repository import GObject
-from gi.repository import Gtk
+from gi.repository import Gdk, GObject, Gtk
 
 from . import cmdnames
 from . import debug
@@ -48,26 +52,31 @@ from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 
+if TYPE_CHECKING:
+    from .scripts import default
+
 
 class LearnModePresenter:
     """Provides implementation of learn mode"""
 
-    def __init__(self):
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
-        self._is_active = False
-        self._gui = None
+    def __init__(self) -> None:
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._is_active: bool = False
+        self._gui: CommandListGUI | None = None
 
-    def is_active(self):
+    def is_active(self) -> bool:
         """Returns True if we're in learn mode"""
 
         return self._is_active
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the learn-mode-presenter keybindings."""
 
         if refresh:
-            msg = "LEARN MODE PRESENTER: Refreshing bindings."
+            msg = f"LEARN MODE PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -75,7 +84,7 @@ class LearnModePresenter:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the learn-mode-presenter handlers."""
 
         if refresh:
@@ -85,7 +94,7 @@ class LearnModePresenter:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the learn-mode-presenter input event handlers."""
 
         self._handlers = {}
@@ -98,7 +107,7 @@ class LearnModePresenter:
         msg = "LEARN MODE PRESENTER: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the learn-mode-presenter key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -113,7 +122,11 @@ class LearnModePresenter:
         msg = "LEARN MODE PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def start(self, script=None, event=None):
+    def start(
+        self,
+        script: Optional[default.Script] = None,
+        _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Starts learn mode."""
 
         if self._is_active:
@@ -135,7 +148,11 @@ class LearnModePresenter:
         self._is_active = True
         return True
 
-    def quit(self, script=None, event=None):
+    def quit(
+        self,
+        script: Optional[default.Script] = None,
+        _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Quits learn mode."""
 
         if not self._is_active:
@@ -155,7 +172,7 @@ class LearnModePresenter:
         self._is_active = False
         return True
 
-    def handle_event(self, event=None):
+    def handle_event(self, event: Optional[input_event.InputEvent] = None) -> bool:
         """Handles the event if learn mode is active."""
 
         if not self._is_active:
@@ -165,13 +182,16 @@ class LearnModePresenter:
             return False
 
         script = script_manager.get_manager().get_active_script()
+        if script is None:
+            return False
+
         script.speak_key_event(event)
         if event.is_printable_key() and event.get_click_count() == 2 \
            and event.get_handler() is None:
             script.phoneticSpellCurrentItem(event.event_string)
 
         if event.event_string == "Escape":
-            self.quit(script=None, event=event)
+            self.quit(script, event)
             return True
 
         if event.event_string == "F1" and not event.modifiers:
@@ -185,7 +205,7 @@ class LearnModePresenter:
         self.present_command(event)
         return True
 
-    def present_command(self, event=None):
+    def present_command(self, event: Optional[input_event.InputEvent] = None) -> bool:
         """Presents the command bound to event."""
 
         if not isinstance(event, input_event.KeyboardEvent):
@@ -197,11 +217,13 @@ class LearnModePresenter:
 
         if handler.learn_mode_enabled and handler.description:
             script = script_manager.get_manager().get_active_script()
+            if script is None:
+                return True
             script.presentMessage(handler.description)
 
         return True
 
-    def list_orca_shortcuts(self, script, event):
+    def list_orca_shortcuts(self, script: default.Script, event: input_event.KeyboardEvent) -> bool:
         """Shows a simple gui listing Orca's bound commands."""
 
         layout = settings_manager.get_manager().get_setting("keyboardLayout")
@@ -308,7 +330,12 @@ class LearnModePresenter:
         self._gui.show_gui()
         return True
 
-    def show_help(self, script=None, event=None, page=""):
+    def show_help(
+        self,
+        script: Optional[default.Script],
+        event: Optional[input_event.InputEvent] = None,
+        page: str = ""
+    ) -> bool:
         """Displays Orca's documentation."""
 
         self.quit(script, event)
@@ -321,12 +348,23 @@ class LearnModePresenter:
 class CommandListGUI:
     """Shows a list of commands and their bindings."""
 
-    def __init__(self, script, title, column_headers, bindings_dict):
-        self._script = script
-        self._model = None
-        self._gui = self._create_dialog(title, column_headers, bindings_dict)
+    def __init__(
+        self,
+        script: default.Script,
+        title: str,
+        column_headers: list[str],
+        bindings_dict: dict[str, list[keybindings.KeyBinding]]
+    ) -> None:
+        self._script: default.Script = script
+        self._model: Gtk.TreeStore | None = None
+        self._gui: Gtk.Dialog = self._create_dialog(title, column_headers, bindings_dict)
 
-    def _create_dialog(self, title, column_headers, bindings_dict):
+    def _create_dialog(
+        self,
+        title: str,
+        column_headers: list[str],
+        bindings_dict: dict[str, list[keybindings.KeyBinding]]
+    ) -> Gtk.Dialog:
         """Creates the commands-list dialog."""
 
         dialog = Gtk.Dialog(title,
@@ -369,22 +407,22 @@ class CommandListGUI:
         dialog.connect("response", self.on_response)
         return dialog
 
-    def on_response(self, dialog, response):
+    def on_response(self, _dialog: Gtk.Dialog, response: int) -> None:
         """Handler for the 'response' signal."""
 
         if response == Gtk.ResponseType.CLOSE:
             self._gui.destroy()
             return
 
-    def show_gui(self):
+    def show_gui(self) -> None:
         """Shows the dialog."""
 
         self._gui.show_all()
         self._gui.present_with_time(time.time())
 
 
-_presenter = LearnModePresenter()
-def get_presenter():
+_presenter: LearnModePresenter = LearnModePresenter()
+def get_presenter() -> LearnModePresenter:
     """Returns the Learn Mode Presenter"""
 
     return _presenter

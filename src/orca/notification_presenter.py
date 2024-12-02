@@ -21,7 +21,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Module for notification messages"""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -31,6 +36,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L." \
 __license__   = "LGPL"
 
 import time
+from typing import Callable, Optional, TYPE_CHECKING
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -44,27 +50,32 @@ from . import input_event
 from . import keybindings
 from . import messages
 
+if TYPE_CHECKING:
+    from .scripts import default
+
 class NotificationPresenter:
     """Provides access to the notification history."""
 
-    def __init__(self):
-        self._gui = None
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
-        self._max_size = 55
+    def __init__(self) -> None:
+        self._gui: Optional[NotificationListGUI] = None
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._max_size: int = 55
 
         # The list is arranged with the most recent message being at the end of
         # the list. The current index is relative to, and used directly, with the
         # python list, i.e. self._notifications[-3] would return the third-to-last
         # notification message.
-        self._notifications = []
-        self._current_index = -1
+        self._notifications: list[tuple[str, float]] = []
+        self._current_index: int = -1
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+            self, refresh: bool = False, is_desktop: bool = True
+        ) -> keybindings.KeyBindings:
         """Returns the notification-presenter keybindings."""
 
         if refresh:
-            msg = "NOTIFICATION PRESENTER: Refreshing bindings."
+            msg = f"NOTIFICATION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -72,7 +83,7 @@ class NotificationPresenter:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the notification-presenter handlers."""
 
         if refresh:
@@ -82,16 +93,16 @@ class NotificationPresenter:
 
         return self._handlers
 
-    def save_notification(self, message):
+    def save_notification(self, message: str) -> None:
         """Adds message to the list of notification messages."""
 
         tokens = ["NOTIFICATION PRESENTER: Adding '", message, "'."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         to_remove = max(len(self._notifications) - self._max_size + 1, 0)
         self._notifications = self._notifications[to_remove:]
-        self._notifications.append([message, time.time()])
+        self._notifications.append((message, time.time()))
 
-    def clear_list(self):
+    def clear_list(self) -> None:
         """Clears the notifications list."""
 
         msg = "NOTIFICATION PRESENTER: Clearing list."
@@ -99,7 +110,7 @@ class NotificationPresenter:
         self._notifications = []
         self._current_index = -1
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the notification-presenter input event handlers."""
 
         self._handlers = {}
@@ -127,7 +138,7 @@ class NotificationPresenter:
         msg = "NOTIFICATION PRESENTER: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the notification-presenter key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -163,7 +174,7 @@ class NotificationPresenter:
         msg = "NOTIFICATION PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _timestamp_to_string(self, timestamp):
+    def _timestamp_to_string(self, timestamp: float) -> str:
         diff = time.time() - timestamp
         if diff < 60:
             return messages.secondsAgo(diff)
@@ -179,7 +190,11 @@ class NotificationPresenter:
         days = round(diff / 86400)
         return messages.daysAgo(days)
 
-    def _present_last_notification(self, script, event=None):
+    def _present_last_notification(
+        self,
+        script: default.Script,
+        _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the last notification."""
 
         if not self._notifications:
@@ -195,7 +210,11 @@ class NotificationPresenter:
         self._current_index = -1
         return True
 
-    def _present_previous_notification(self, script, event=None):
+    def _present_previous_notification(
+        self,
+        script: default.Script,
+        _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the previous notification."""
 
         if not self._notifications:
@@ -227,7 +246,11 @@ class NotificationPresenter:
         script.presentMessage(string)
         return True
 
-    def _present_next_notification(self, script, event=None):
+    def _present_next_notification(
+        self,
+        script: default.Script,
+        _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Presents the next notification."""
 
         if not self._notifications:
@@ -259,7 +282,9 @@ class NotificationPresenter:
         script.presentMessage(string)
         return True
 
-    def _show_notification_list(self, script, event=None):
+    def _show_notification_list(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Opens a dialog with a list of the notifications."""
 
         if not self._notifications:
@@ -285,7 +310,7 @@ class NotificationPresenter:
         self._gui.show_gui()
         return True
 
-    def on_dialog_destroyed(self, _dialog):
+    def on_dialog_destroyed(self, _dialog: Gtk.Dialog) -> None:
         """Handler for the 'destroyed' signal of the dialog."""
 
         self._gui = None
@@ -293,13 +318,25 @@ class NotificationPresenter:
 class NotificationListGUI:
     """The dialog containing the notifications list."""
 
-    def __init__(self, script, title, column_headers, rows, destroyed_callback):
-        self._script = script
-        self._model = None
-        self._gui = self._create_dialog(title, column_headers, rows)
+    def __init__(
+        self,
+        script: default.Script,
+        title: str,
+        column_headers: list[str],
+        rows: list[tuple[str, str]],
+        destroyed_callback: Callable[[Gtk.Dialog], None]
+    ):
+        self._script: default.Script = script
+        self._model: Optional[Gtk.ListStore] = None
+        self._gui: Gtk.Dialog = self._create_dialog(title, column_headers, rows)
         self._gui.connect("destroy", destroyed_callback)
 
-    def _create_dialog(self, title, column_headers, rows):
+    def _create_dialog(
+            self,
+            title: str,
+            column_headers: list[str],
+            rows: list[tuple[str, str]]
+        ) -> Gtk.Dialog:
         dialog = Gtk.Dialog(title,
                             None,
                             Gtk.DialogFlags.MODAL,
@@ -337,7 +374,7 @@ class NotificationListGUI:
         dialog.connect("response", self.on_response)
         return dialog
 
-    def on_response(self, dialog, response):
+    def on_response(self, _dialog: Gtk.Dialog, response: int) -> None:
         """The handler for the 'response' signal."""
 
         if response == Gtk.ResponseType.CLOSE:
@@ -351,14 +388,15 @@ class NotificationListGUI:
             time.sleep(1)
             self._gui.destroy()
 
-    def show_gui(self):
+    def show_gui(self) -> None:
         """Shows the notifications list dialog."""
 
         self._gui.show_all()
         self._gui.present_with_time(time.time())
 
-_presenter = NotificationPresenter()
-def get_presenter():
+_presenter: NotificationPresenter = NotificationPresenter()
+
+def get_presenter() -> NotificationPresenter:
     """Returns the Notification Presenter"""
 
     return _presenter

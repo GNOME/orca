@@ -32,6 +32,7 @@ import traceback
 import re
 import sys
 from datetime import datetime
+from typing import Any, Optional, TextIO
 
 from .ax_utilities_debugging import AXUtilitiesDebugging
 
@@ -43,19 +44,20 @@ LEVEL_ALL = 0
 
 # Leave these as-is for now so as not to break debugging for anyone using orca-customizations.py
 # pylint: disable=invalid-name
-debugLevel = LEVEL_SEVERE
-debugFile = None
+debugLevel: int = LEVEL_SEVERE
+debugFile: Optional[TextIO] = None
 # pylint: enable=invalid-name
 
-def print_exception(level):
+def print_exception(level: int) -> None:
     """Prints out information regarding the current exception."""
-
     if level >= debugLevel:
         _print_text(level)
         traceback.print_exc(100, debugFile)
         _print_text(level)
 
-def print_tokens(level, tokens, timestamp=False, stack=False):
+def print_tokens(
+    level: int, tokens: list[Any], timestamp: bool = False, stack: bool = False
+) -> None:
     """Prints out each token as a human-consumable string."""
 
     if level < debugLevel:
@@ -66,7 +68,7 @@ def print_tokens(level, tokens, timestamp=False, stack=False):
     text = re.sub(r" (?=[,.:)])(?![\n])", "", text)
     _print_text(level, text, timestamp, stack)
 
-def print_message(level, text, timestamp=False, stack=False):
+def print_message(level: int, text: str, timestamp: bool = False, stack: bool = False) -> None:
     """Prints out text."""
 
     if level < debugLevel:
@@ -74,7 +76,7 @@ def print_message(level, text, timestamp=False, stack=False):
 
     _print_text(level, text, timestamp, stack)
 
-def _stack_as_string(max_frames=4):
+def _stack_as_string(max_frames: int = 4) -> str:
     callers = []
     current_module = inspect.getmodule(inspect.currentframe())
     stack = inspect.stack()
@@ -94,7 +96,7 @@ def _stack_as_string(max_frames=4):
     callers.reverse()
     return " > ".join(map(AXUtilitiesDebugging.as_string, callers))
 
-def _print_text(level, text="", timestamp=False, stack=False):
+def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool = False) -> None:
     if level < debugLevel:
         return
 

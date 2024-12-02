@@ -21,12 +21,17 @@
 
 """Provides means to pass keyboard events to the app being used."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
+
+from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
@@ -36,20 +41,25 @@ from . import messages
 from . import orca_modifier_manager
 from . import settings_manager
 
+if TYPE_CHECKING:
+    from .scripts import default
+
 
 class BypassModeManager:
     """Provides means to pass keyboard events to the app being used."""
 
-    def __init__(self):
-        self._is_active = False
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
+    def __init__(self) -> None:
+        self._is_active: bool = False
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the bypass-mode-manager keybindings."""
 
         if refresh:
-            msg = "BYPASS MODE MANAGER: Refreshing bindings."
+            msg = f"BYPASS MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -57,7 +67,7 @@ class BypassModeManager:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the bypass-mode-manager handlers."""
 
         if refresh:
@@ -67,17 +77,16 @@ class BypassModeManager:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up and returns the bypass-mode-manager input event handlers."""
 
         self._handlers = {}
 
-        self._handlers["bypass_mode_toggle"] = \
-            input_event.InputEventHandler(
-                self.toggle_enabled,
-                cmdnames.BYPASS_MODE_TOGGLE)
+        self._handlers["bypass_mode_toggle"] = input_event.InputEventHandler(
+            self.toggle_enabled, cmdnames.BYPASS_MODE_TOGGLE
+        )
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up and returns the bypass-mode-manager key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -89,18 +98,23 @@ class BypassModeManager:
                 keybindings.ALT_MODIFIER_MASK,
                 self._handlers.get("bypass_mode_toggle"),
                 1,
-                True))
+                True,
+            )
+        )
 
         # This pulls in the user's overrides to alternative keys.
         self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
+            self._handlers, self._bindings, False
+        )
 
-    def is_active(self):
+    def is_active(self) -> bool:
         """Returns True if bypass mode is active."""
 
         return self._is_active
 
-    def toggle_enabled(self, script, event=None):
+    def toggle_enabled(
+        self, script: default.Script, event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Toggles bypass mode."""
 
         self._is_active = not self._is_active
@@ -123,6 +137,9 @@ class BypassModeManager:
 
         return True
 
-_manager = BypassModeManager()
-def get_manager():
+_manager: BypassModeManager = BypassModeManager()
+
+def get_manager() -> BypassModeManager:
+    """Returns the bypass-mode-manager singleton."""
+
     return _manager

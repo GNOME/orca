@@ -65,8 +65,6 @@ def setPronunciation(word, replacementString, pronunciations=None):
     else:
         pronunciation_dict[key] = [ word, replacementString ]
 
-# pronunciation_dict is a dictionary where the keys are words and the
-# values represent word the pronunciation of that word (in other words,
-# what the word sounds like).
-#
-pronunciation_dict = {}
+# pronunciation_dict is a dictionary where the keys are words and the value is a word
+# written to match the desired pronunciation of that word.
+pronunciation_dict: dict[str, str] = {}

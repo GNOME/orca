@@ -32,6 +32,7 @@ __copyright__ = "Copyright (c) 2023-2024 Igalia, S.L." \
 __license__   = "LGPL"
 
 import subprocess
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -44,7 +45,7 @@ class AXUtilitiesApplication:
     """Utilities for obtaining information about accessible applications."""
 
     @staticmethod
-    def application_as_string(obj):
+    def application_as_string(obj: Atspi.Accessible) -> str:
         """Returns the application details of obj as a string."""
 
         app = AXUtilitiesApplication.get_application(obj)
@@ -59,14 +60,18 @@ class AXUtilitiesApplication:
         return string
 
     @staticmethod
-    def get_all_applications(must_have_window=False, exclude_unresponsive=False, is_debug=False):
+    def get_all_applications(
+        must_have_window: bool = False,
+        exclude_unresponsive: bool = False,
+        is_debug: bool = False
+    ) -> list[Atspi.Accessible]:
         """Returns a list of running applications known to Atspi."""
 
         desktop = AXUtilitiesApplication.get_desktop()
         if desktop is None:
             return []
 
-        def pred(obj):
+        def pred(obj: Atspi.Accessible) -> bool:
             if exclude_unresponsive and AXUtilitiesApplication.is_application_unresponsive(obj):
                 return False
             if AXObject.get_name(obj) == "mutter-x11-frames":
@@ -78,7 +83,7 @@ class AXUtilitiesApplication:
         return list(AXObject.iter_children(desktop, pred))
 
     @staticmethod
-    def get_application(obj):
+    def get_application(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the accessible application associated with obj"""
 
         if obj is None:
@@ -93,7 +98,7 @@ class AXUtilitiesApplication:
         return app
 
     @staticmethod
-    def get_application_toolkit_name(obj):
+    def get_application_toolkit_name(obj: Atspi.Accessible) -> str:
         """Returns the toolkit name reported for obj's application."""
 
         app = AXUtilitiesApplication.get_application(obj)
@@ -110,7 +115,7 @@ class AXUtilitiesApplication:
         return name
 
     @staticmethod
-    def get_application_toolkit_version(obj):
+    def get_application_toolkit_version(obj: Atspi.Accessible) -> str:
         """Returns the toolkit version reported for obj's application."""
 
         app = AXUtilitiesApplication.get_application(obj)
@@ -127,7 +132,7 @@ class AXUtilitiesApplication:
         return version
 
     @staticmethod
-    def get_application_with_pid(pid):
+    def get_application_with_pid(pid: int) -> Optional[Atspi.Accessible]:
         """Returns the accessible application with the specified pid"""
 
         applications = AXUtilitiesApplication.get_all_applications()
@@ -140,7 +145,7 @@ class AXUtilitiesApplication:
         return None
 
     @staticmethod
-    def get_desktop():
+    def get_desktop() -> Optional[Atspi.Accessible]:
         """Returns the accessible desktop"""
 
         try:
@@ -153,7 +158,7 @@ class AXUtilitiesApplication:
         return desktop
 
     @staticmethod
-    def get_process_id(obj):
+    def get_process_id(obj: Atspi.Accessible) -> int:
         """Returns the process id associated with obj"""
 
         try:
@@ -166,7 +171,7 @@ class AXUtilitiesApplication:
         return pid
 
     @staticmethod
-    def is_application_in_desktop(app):
+    def is_application_in_desktop(app: Atspi.Accessible) -> bool:
         """Returns true if app is known to Atspi"""
 
         applications = AXUtilitiesApplication.get_all_applications()
@@ -179,7 +184,7 @@ class AXUtilitiesApplication:
         return False
 
     @staticmethod
-    def is_application_unresponsive(app):
+    def is_application_unresponsive(app: Atspi.Accessible) -> bool:
         """Returns true if app's process is known to be unresponsive."""
 
         pid = AXUtilitiesApplication.get_process_id(app)

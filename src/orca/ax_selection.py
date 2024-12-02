@@ -30,8 +30,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
+from typing import Optional
 
+import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -44,7 +45,7 @@ class AXSelection:
     """Utilities for obtaining information about containers supporting selection."""
 
     @staticmethod
-    def get_selected_child_count(obj):
+    def get_selected_child_count(obj: Atspi.Accessible) -> int:
         """Returns the selected child count of obj"""
 
         if not AXObject.supports_selection(obj):
@@ -62,7 +63,7 @@ class AXSelection:
         return count
 
     @staticmethod
-    def get_selected_child(obj, index):
+    def get_selected_child(obj: Atspi.Accessible, index: int) -> Optional[Atspi.Accessible]:
         """Returns the nth selected child of obj."""
 
         n_children = AXSelection.get_selected_child_count(obj)
@@ -92,7 +93,7 @@ class AXSelection:
         return child
 
     @staticmethod
-    def get_selected_children(obj):
+    def get_selected_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of all the selected children of obj."""
 
         if obj is None:

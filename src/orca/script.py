@@ -214,7 +214,7 @@ class Script:
     def get_flat_review_finder(self):
         """Returns the flat review finder for this script."""
 
-        return flat_review_finder.getFinder()
+        return flat_review_finder.get_finder()
 
     def get_flat_review_presenter(self):
         """Returns the flat review presenter for this script."""
@@ -229,12 +229,12 @@ class Script:
     def get_object_navigator(self):
         """Returns the object navigator for this script."""
 
-        return object_navigator.getNavigator()
+        return object_navigator.get_navigator()
 
     def get_table_navigator(self):
         """Returns the table navigator for this script."""
 
-        return table_navigator.getNavigator()
+        return table_navigator.get_navigator()
 
     def get_speech_and_verbosity_manager(self):
         """Returns the speech and verbosity manager for this script."""

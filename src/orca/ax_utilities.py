@@ -36,6 +36,7 @@ import functools
 import inspect
 import threading
 import time
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -65,7 +66,7 @@ class AXUtilities:
     _lock = threading.Lock()
 
     @staticmethod
-    def start_cache_clearing_thread():
+    def start_cache_clearing_thread() -> None:
         """Starts thread to periodically clear cached details."""
 
         thread = threading.Thread(target=AXUtilities._clear_stored_data)
@@ -73,7 +74,7 @@ class AXUtilities:
         thread.start()
 
     @staticmethod
-    def _clear_stored_data():
+    def _clear_stored_data() -> None:
         """Clears any data we have cached for objects"""
 
         while True:
@@ -81,7 +82,7 @@ class AXUtilities:
             AXUtilities._clear_all_dictionaries()
 
     @staticmethod
-    def _clear_all_dictionaries(reason=""):
+    def _clear_all_dictionaries(reason: str = "") -> None:
         msg = "AXUtilities: Clearing cache."
         if reason:
             msg += f" Reason: {reason}"
@@ -92,7 +93,7 @@ class AXUtilities:
             AXUtilities.IS_LAYOUT_ONLY.clear()
 
     @staticmethod
-    def clear_all_cache_now(obj=None, reason=""):
+    def clear_all_cache_now(obj: Optional[Atspi.Accessible] = None, reason: str = "") -> None:
         """Clears all cached information immediately."""
 
         AXUtilities._clear_all_dictionaries(reason)
@@ -103,7 +104,7 @@ class AXUtilities:
             AXTable.clear_cache_now(reason)
 
     @staticmethod
-    def can_be_active_window(window):
+    def can_be_active_window(window: Atspi.Accessible) -> bool:
         """Returns True if window can be the active window based on its state."""
 
         if window is None:
@@ -147,7 +148,7 @@ class AXUtilities:
         return True
 
     @staticmethod
-    def find_active_window():
+    def find_active_window() -> Optional[Atspi.Accessible]:
         """Tries to locate the active window; may or may not succeed."""
 
         candidates = []
@@ -187,18 +188,21 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return filtered[0]
 
-        guess = None
+        guess: Optional[Atspi.Accessible] = None
         if filtered:
             tokens = ["AXUtilities: Still have multiple active windows:", filtered]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             guess = filtered[0]
 
-        tokens = ["AXUtilities: Returning", guess, "as active window"]
+        if guess is not None:
+            tokens = ["AXUtilities: Returning", guess, "as active window"]
+        else:
+            tokens = ["AXUtilities: No active window found"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return guess
 
     @staticmethod
-    def is_unfocused_alert_or_dialog(obj):
+    def is_unfocused_alert_or_dialog(obj: Atspi.Accessible) -> bool:
         """Returns True if obj is an unfocused alert or dialog with presentable items."""
 
         if not AXUtilitiesRole.is_dialog_or_alert(obj):
@@ -210,7 +214,7 @@ class AXUtilities:
         return not AXUtilities.can_be_active_window(obj)
 
     @staticmethod
-    def get_unfocused_alerts_and_dialogs(obj):
+    def get_unfocused_alerts_and_dialogs(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of all the unfocused alerts and dialogs in the app and window of obj."""
 
         app = AXUtilitiesApplication.get_application(obj)
@@ -225,7 +229,11 @@ class AXUtilities:
         return result
 
     @staticmethod
-    def get_all_widgets(obj, must_be_showing_and_visible=True, exclude_push_button=False):
+    def get_all_widgets(
+        obj: Atspi.Accessible,
+        must_be_showing_and_visible: bool = True,
+        exclude_push_button: bool = False
+    ) -> list[Atspi.Accessible]:
         """Returns all the descendants of obj with a widget role"""
 
         roles = AXUtilitiesRole.get_widget_roles()
@@ -254,7 +262,7 @@ class AXUtilities:
         return AXObject.find_all_descendants(obj, is_match)
 
     @staticmethod
-    def get_default_button(obj):
+    def get_default_button(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the default button descendant of obj"""
 
         result = None
@@ -266,7 +274,7 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
 
     @staticmethod
-    def get_focused_object(obj):
+    def get_focused_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the focused descendant of obj"""
 
         result = None
@@ -278,7 +286,7 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesState.is_focused)
 
     @staticmethod
-    def get_status_bar(obj):
+    def get_status_bar(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the status bar descendant of obj"""
 
         result = None
@@ -290,7 +298,7 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
 
     @staticmethod
-    def _is_layout_only(obj):
+    def _is_layout_only(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True and a string reason if obj is believed to serve only for layout."""
 
         reason = ""
@@ -323,7 +331,7 @@ class AXUtilities:
             described_by = AXUtilitiesRelation.get_is_described_by(obj)
             if not (name or description or labelled_by or described_by):
                 return True, "lacks name, description, and relations"
-            if name == AXObject.get_name(AXUtilities.get_application(obj)):
+            if name == AXObject.get_name(AXUtilitiesApplication.get_application(obj)):
                 return True, "has same name as app"
             if AXObject.get_child_count(obj) == 1:
                 child = AXObject.get_child(obj, 0)
@@ -379,11 +387,11 @@ class AXUtilities:
         return False, reason
 
     @staticmethod
-    def is_layout_only(obj):
+    def is_layout_only(obj: Atspi.Accessible) -> bool:
         """Returns True if obj is believed to serve only for layout."""
 
         if hash(obj) in AXUtilities.IS_LAYOUT_ONLY:
-            result, reason = AXUtilities.IS_LAYOUT_ONLY.get(hash(obj))
+            result, reason = AXUtilities.IS_LAYOUT_ONLY.get(hash(obj), (None, None))
         else:
             result, reason = AXUtilities._is_layout_only(obj)
             AXUtilities.IS_LAYOUT_ONLY[hash(obj)] = result, reason
@@ -395,7 +403,7 @@ class AXUtilities:
         return result
 
     @staticmethod
-    def is_message_dialog(obj):
+    def is_message_dialog(obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a dialog that should be treated as a message dialog"""
 
         if not AXUtilitiesRole.is_dialog_or_alert(obj):
@@ -435,7 +443,7 @@ class AXUtilities:
         return True
 
     @staticmethod
-    def is_redundant_object(obj1, obj2):
+    def is_redundant_object(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool:
         """Returns True if obj2 is redundant to obj1."""
 
         if obj1 == obj2:
@@ -450,7 +458,7 @@ class AXUtilities:
         return True
 
     @staticmethod
-    def _sort_by_child_index(object_list):
+    def _sort_by_child_index(object_list: list[Atspi.Accessible]) -> list[Atspi.Accessible]:
         """Returns the list of objects sorted according to child index."""
 
         def cmp(x, y):
@@ -466,7 +474,9 @@ class AXUtilities:
         return result
 
     @staticmethod
-    def _get_set_members(obj, container):
+    def _get_set_members(
+        obj: Atspi.Accessible, container: Atspi.Accessible
+    ) -> list[Atspi.Accessible]:
         """Returns the members of the container of obj"""
 
         if container is None:
@@ -487,7 +497,6 @@ class AXUtilities:
             return AXUtilities._sort_by_child_index(result)
 
         if AXUtilitiesRole.is_description_value(obj):
-            result = []
             previous_sibling = AXObject.get_previous_sibling(obj)
             while previous_sibling and AXUtilitiesRole.is_description_value(previous_sibling):
                 result.append(previous_sibling)
@@ -514,13 +523,13 @@ class AXUtilities:
         return result
 
     @staticmethod
-    def get_set_members(obj):
+    def get_set_members(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns the members of the container of obj."""
 
-        result = []
+        result: list[Atspi.Accessible] = []
         container = AXObject.get_parent_checked(obj)
         if hash(container) in AXUtilities.SET_MEMBERS:
-            result = AXUtilities.SET_MEMBERS.get(hash(container))
+            result = AXUtilities.SET_MEMBERS.get(hash(container), [])
 
         if obj not in result:
             if result:
@@ -543,7 +552,7 @@ class AXUtilities:
         return filtered
 
     @staticmethod
-    def get_set_size(obj):
+    def get_set_size(obj: Atspi.Accessible) -> int:
         """Returns the total number of objects in this container."""
 
         result = AXObject.get_attribute(obj, "setsize", False)
@@ -573,7 +582,7 @@ class AXUtilities:
         return len(members)
 
     @staticmethod
-    def get_position_in_set(obj):
+    def get_position_in_set(obj: Atspi.Accessible) -> int:
         """Returns the position of obj with respect to the number of items in its container."""
 
         result = AXObject.get_attribute(obj, "posinset", False)
@@ -615,7 +624,7 @@ class AXUtilities:
         return members.index(obj)
 
     @staticmethod
-    def has_explicit_name(obj):
+    def has_explicit_name(obj: Atspi.Accessible) -> bool:
         """Returns True if obj has an author/app-provided name as opposed to a calculated name."""
 
         return AXObject.get_attribute(obj, "explicit-name") == "true"

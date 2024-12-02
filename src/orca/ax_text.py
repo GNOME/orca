@@ -37,6 +37,7 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
 __license__   = "LGPL"
 
 import re
+from typing import Generator, Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -53,7 +54,9 @@ class AXText:
     CACHED_TEXT_SELECTION: dict[int, tuple[str, int, int]] = {}
 
     @staticmethod
-    def get_character_at_offset(obj, offset=None):
+    def get_character_at_offset(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> tuple[str, int, int]:
         """Returns the character, start, and end for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
@@ -89,7 +92,7 @@ class AXText:
         return result.content, result.start_offset, result.end_offset
 
     @staticmethod
-    def get_character_at_point(obj, x, y):
+    def get_character_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
         """Returns the character, start, and end at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
@@ -99,7 +102,9 @@ class AXText:
         return AXText.get_character_at_offset(obj, offset)
 
     @staticmethod
-    def iter_character(obj, offset=None):
+    def iter_character(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by character in obj starting with the character at offset."""
 
         if offset is None:
@@ -117,7 +122,9 @@ class AXText:
             last_result = character, start, end
 
     @staticmethod
-    def get_word_at_offset(obj, offset=None):
+    def get_word_at_offset(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> tuple[str, int, int]:
         """Returns the word, start, and end for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
@@ -149,7 +156,7 @@ class AXText:
         return result.content, result.start_offset, result.end_offset
 
     @staticmethod
-    def get_word_at_point(obj, x, y):
+    def get_word_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
         """Returns the word, start, and end at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
@@ -159,7 +166,9 @@ class AXText:
         return AXText.get_word_at_offset(obj, offset)
 
     @staticmethod
-    def iter_word(obj, offset=None):
+    def iter_word(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by word in obj starting with the word at offset."""
 
         if offset is None:
@@ -177,7 +186,9 @@ class AXText:
             last_result = word, start, end
 
     @staticmethod
-    def get_line_at_offset(obj, offset=None):
+    def get_line_at_offset(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> tuple[str, int, int]:
         """Returns the line, start, and end for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
@@ -222,7 +233,7 @@ class AXText:
         return result.content, result.start_offset, result.end_offset
 
     @staticmethod
-    def get_line_at_point(obj, x, y):
+    def get_line_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
         """Returns the line, start, and end at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
@@ -232,7 +243,9 @@ class AXText:
         return AXText.get_line_at_offset(obj, offset)
 
     @staticmethod
-    def iter_line(obj, offset=None):
+    def iter_line(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by line in obj starting with the line at offset."""
 
         if offset is None:
@@ -250,7 +263,9 @@ class AXText:
             last_result = line, start, end
 
     @staticmethod
-    def get_sentence_at_offset(obj, offset=None):
+    def get_sentence_at_offset(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> tuple[str, int, int]:
         """Returns the sentence, start, and end for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
@@ -282,7 +297,7 @@ class AXText:
         return result.content, result.start_offset, result.end_offset
 
     @staticmethod
-    def get_sentence_at_point(obj, x, y):
+    def get_sentence_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
         """Returns the sentence, start, and end at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
@@ -292,7 +307,9 @@ class AXText:
         return AXText.get_sentence_at_offset(obj, offset)
 
     @staticmethod
-    def iter_sentence(obj, offset=None):
+    def iter_sentence(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by sentence in obj starting with the sentence at offset."""
 
         if offset is None:
@@ -310,7 +327,7 @@ class AXText:
             last_result = sentence, start, end
 
     @staticmethod
-    def supports_sentence_iteration(obj):
+    def supports_sentence_iteration(obj: Atspi.Accessible) -> bool:
         """Returns True if sentence iteration is supported on obj."""
 
         if not AXObject.supports_text(obj):
@@ -320,10 +337,12 @@ class AXText:
         result = string and 0 <= start < end
         tokens = ["AXText: Sentence iteration supported on", obj, f": {result}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result
+        return bool(result)
 
     @staticmethod
-    def get_paragraph_at_offset(obj, offset=None):
+    def get_paragraph_at_offset(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> tuple[str, int, int]:
         """Returns the paragraph, start, and end for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
@@ -347,7 +366,7 @@ class AXText:
         return result.content, result.start_offset, result.end_offset
 
     @staticmethod
-    def get_paragraph_at_point(obj, x, y):
+    def get_paragraph_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
         """Returns the paragraph, start, and end at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
@@ -357,7 +376,9 @@ class AXText:
         return AXText.get_paragraph_at_offset(obj, offset)
 
     @staticmethod
-    def iter_paragraph(obj, offset=None):
+    def iter_paragraph(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by paragraph in obj starting with the paragraph at offset."""
 
         if offset is None:
@@ -375,7 +396,7 @@ class AXText:
             last_result = paragraph, start, end
 
     @staticmethod
-    def supports_paragraph_iteration(obj):
+    def supports_paragraph_iteration(obj: Atspi.Accessible) -> bool:
         """Returns True if paragraph iteration is supported on obj."""
 
         if not AXObject.supports_text(obj):
@@ -385,10 +406,10 @@ class AXText:
         result = string and 0 <= start < end
         tokens = ["AXText: Paragraph iteration supported on", obj, f": {result}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result
+        return bool(result)
 
     @staticmethod
-    def get_character_count(obj):
+    def get_character_count(obj: Atspi.Accessible) -> int:
         """Returns the character count of obj."""
 
         if not AXObject.supports_text(obj):
@@ -406,7 +427,7 @@ class AXText:
         return count
 
     @staticmethod
-    def get_caret_offset(obj):
+    def get_caret_offset(obj: Atspi.Accessible) -> int:
         """Returns the caret offset of obj."""
 
         if not AXObject.supports_text(obj):
@@ -424,7 +445,7 @@ class AXText:
         return offset
 
     @staticmethod
-    def set_caret_offset(obj, offset):
+    def set_caret_offset(obj: Atspi.Accessible, offset: int) -> bool:
         """Returns False if we definitely failed to set the offset. True cannot be trusted."""
 
         if not AXObject.supports_text(obj):
@@ -442,19 +463,19 @@ class AXText:
         return result
 
     @staticmethod
-    def set_caret_offset_to_start(obj):
+    def set_caret_offset_to_start(obj: Atspi.Accessible) -> bool:
         """Returns False if we definitely failed to set the offset. True cannot be trusted."""
 
         return AXText.set_caret_offset(obj, 0)
 
     @staticmethod
-    def set_caret_offset_to_end(obj):
+    def set_caret_offset_to_end(obj: Atspi.Accessible) -> bool:
         """Returns False if we definitely failed to set the offset. True cannot be trusted."""
 
         return AXText.set_caret_offset(obj, AXText.get_character_count(obj))
 
     @staticmethod
-    def get_substring(obj, start_offset, end_offset):
+    def get_substring(obj: Atspi.Accessible, start_offset: int, end_offset: int) -> str:
         """Returns the text of obj within the specified offsets."""
 
         if not AXObject.supports_text(obj):
@@ -476,7 +497,7 @@ class AXText:
         return result
 
     @staticmethod
-    def get_all_text(obj):
+    def get_all_text(obj: Atspi.Accessible) -> str:
         """Returns the text content of obj."""
 
         length = AXText.get_character_count(obj)
@@ -502,7 +523,7 @@ class AXText:
         return result
 
     @staticmethod
-    def _get_n_selections(obj):
+    def _get_n_selections(obj: Atspi.Accessible) -> int:
         """Returns the number of reported selected substrings in obj."""
 
         if not AXObject.supports_text(obj):
@@ -520,7 +541,7 @@ class AXText:
         return result
 
     @staticmethod
-    def _remove_selection(obj, selection_number):
+    def _remove_selection(obj: Atspi.Accessible, selection_number: int) -> None:
         """Attempts to remove the specified selection."""
 
         if not AXObject.supports_text(obj):
@@ -534,13 +555,13 @@ class AXText:
             return
 
     @staticmethod
-    def has_selected_text(obj):
+    def has_selected_text(obj: Atspi.Accessible) -> bool:
         """Returns True if obj has selected text."""
 
         return bool(AXText.get_selected_ranges(obj))
 
     @staticmethod
-    def is_all_text_selected(obj):
+    def is_all_text_selected(obj: Atspi.Accessible) -> bool:
         """Returns True of all the text in obj is selected."""
 
         length = AXText.get_character_count(obj)
@@ -554,14 +575,14 @@ class AXText:
         return ranges[0][0] == 0 and ranges[-1][1] == length
 
     @staticmethod
-    def clear_all_selected_text(obj):
+    def clear_all_selected_text(obj: Atspi.Accessible) -> None:
         """Attempts to clear the selected text."""
 
         for i in range(AXText._get_n_selections(obj)):
             AXText._remove_selection(obj, i)
 
     @staticmethod
-    def get_selection_start_offset(obj):
+    def get_selection_start_offset(obj: Atspi.Accessible) -> int:
         """Returns the leftmost offset of the selected text."""
 
         ranges = AXText.get_selected_ranges(obj)
@@ -571,7 +592,7 @@ class AXText:
         return -1
 
     @staticmethod
-    def get_selection_end_offset(obj):
+    def get_selection_end_offset(obj: Atspi.Accessible) -> int:
         """Returns the rightmost offset of the selected text."""
 
         ranges = AXText.get_selected_ranges(obj)
@@ -581,7 +602,7 @@ class AXText:
         return -1
 
     @staticmethod
-    def get_selected_ranges(obj):
+    def get_selected_ranges(obj: Atspi.Accessible) -> list[tuple[int, int]]:
         """Returns a list of (start_offset, end_offset) tuples reflecting the selected text."""
 
         count = AXText._get_n_selections(obj)
@@ -604,7 +625,7 @@ class AXText:
         return selections
 
     @staticmethod
-    def get_cached_selected_text(obj):
+    def get_cached_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]:
         """Returns the last known selected string, start, and end for obj."""
 
         string, start, end = AXText.CACHED_TEXT_SELECTION.get(hash(obj), ("", 0, 0))
@@ -614,13 +635,13 @@ class AXText:
         return string, start, end
 
     @staticmethod
-    def update_cached_selected_text(obj):
+    def update_cached_selected_text(obj: Atspi.Accessible) -> None:
         """Updates the last known selected string, start, and end for obj."""
 
         AXText.CACHED_TEXT_SELECTION[hash(obj)] = AXText.get_selected_text(obj)
 
     @staticmethod
-    def get_selected_text(obj):
+    def get_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]:
         """Returns the selected string, start, and end for obj."""
 
         selections = AXText.get_selected_ranges(obj)
@@ -628,12 +649,12 @@ class AXText:
             return "", 0, 0
 
         strings = []
-        start_offset = None
-        end_offset = None
+        start_offset = -1
+        end_offset = -1
         for selection in sorted(set(selections)):
             strings.append(AXText.get_substring(obj, *selection))
             end_offset = selection[1]
-            if start_offset is None:
+            if start_offset == -1:
                 start_offset = selection[0]
 
         text = " ".join(strings)
@@ -649,7 +670,7 @@ class AXText:
         return text, start_offset, end_offset
 
     @staticmethod
-    def _add_new_selection(obj, start_offset, end_offset):
+    def _add_new_selection(obj: Atspi.Accessible, start_offset: int, end_offset: int) -> bool:
         """Creates a new selection for the specified range in obj."""
 
         if not AXObject.supports_text(obj):
@@ -665,7 +686,9 @@ class AXText:
         return result
 
     @staticmethod
-    def _update_existing_selection(obj, start_offset, end_offset, selection_number=0):
+    def _update_existing_selection(
+        obj: Atspi.Accessible, start_offset: int, end_offset: int, selection_number: int = 0
+    ) -> bool:
         """Modifies specified selection in obj to the specified range."""
 
         if not AXObject.supports_text(obj):
@@ -681,7 +704,7 @@ class AXText:
         return result
 
     @staticmethod
-    def set_selected_text(obj, start_offset, end_offset):
+    def set_selected_text(obj: Atspi.Accessible, start_offset: int, end_offset: int) -> bool:
         """Returns False if we definitely failed to set the selection. True cannot be trusted."""
 
         # TODO - JD: For now we always assume and operate on the first selection.
@@ -702,7 +725,9 @@ class AXText:
         return result
 
     @staticmethod
-    def get_text_attributes_at_offset(obj, offset=None):
+    def get_text_attributes_at_offset(
+        obj: Atspi.Accessible, offset: Optional[int] = None
+    ) -> tuple[dict[str, str], int, int]:
         """Returns a (dict, start, end) tuple for attributes at offset in obj."""
 
         if not AXObject.supports_text(obj):
@@ -723,7 +748,9 @@ class AXText:
         return result[0] or {}, result[1] or 0, result[2] or AXText.get_character_count(obj)
 
     @staticmethod
-    def get_all_text_attributes(obj, start_offset=0, end_offset=-1):
+    def get_all_text_attributes(
+        obj: Atspi.Accessible, start_offset: int = 0, end_offset: int = -1
+    ) -> list[tuple[int, int, dict[str, str]]]:
         """Returns a list of (start, end, attrs dict) tuples for obj."""
 
         if not AXObject.supports_text(obj):
@@ -752,7 +779,7 @@ class AXText:
         return rv
 
     @staticmethod
-    def get_offset_at_point(obj, x, y):
+    def get_offset_at_point(obj: Atspi.Accessible, x: int, y: int) -> int:
         """Returns the character offset in obj at the specified point."""
 
         if not AXObject.supports_text(obj):
@@ -770,7 +797,7 @@ class AXText:
         return offset
 
     @staticmethod
-    def get_character_rect(obj, offset=None):
+    def get_character_rect(obj: Atspi.Accessible, offset: Optional[int] = None) -> Atspi.Rect:
         """Returns the Atspi rect of the character at the specified offset in obj."""
 
         if not AXObject.supports_text(obj):
@@ -791,7 +818,7 @@ class AXText:
         return rect
 
     @staticmethod
-    def get_range_rect(obj, start, end):
+    def get_range_rect(obj: Atspi.Accessible, start: int, end: int) -> Atspi.Rect:
         """Returns the Atspi rect of the string at the specified range in obj."""
 
         if not AXObject.supports_text(obj):
@@ -809,7 +836,7 @@ class AXText:
         return rect
 
     @staticmethod
-    def _rect_is_fully_contained_in(rect1, rect2):
+    def _rect_is_fully_contained_in(rect1: Atspi.Rect, rect2: Atspi.Rect) -> bool:
         """Returns true if rect1 is fully contained in rect2"""
 
         return rect2.x <= rect1.x and rect2.y <= rect1.y \
@@ -817,7 +844,7 @@ class AXText:
             and rect2.y + rect2.height >= rect1.y + rect1.height
 
     @staticmethod
-    def _line_comparison(line_rect, clip_rect):
+    def _line_comparison(line_rect: Atspi.Rect, clip_rect: Atspi.Rect) -> int:
         """Returns -1 (line above), 1 (line below), or 0 (line inside) clip_rect."""
 
         # https://gitlab.gnome.org/GNOME/gtk/-/issues/6419
@@ -832,7 +859,9 @@ class AXText:
         return 0
 
     @staticmethod
-    def get_visible_lines(obj, clip_rect):
+    def get_visible_lines(
+        obj: Atspi.Accessible, clip_rect: Atspi.Rect
+    ) -> list[tuple[str, int, int]]:
         """Returns a list of (string, start, end) for lines of obj inside clip_rect."""
 
         tokens = ["AXText: Getting visible lines for", obj, "inside", clip_rect]
@@ -858,7 +887,9 @@ class AXText:
         return result
 
     @staticmethod
-    def find_first_visible_line(obj, clip_rect):
+    def find_first_visible_line(
+        obj: Atspi.Accessible, clip_rect: Atspi.Rect
+    ) -> tuple[str, int, int]:
         """Returns the first (string, start, end) visible line of obj inside clip_rect."""
 
         result = "", 0, 0
@@ -900,7 +931,9 @@ class AXText:
         return result
 
     @staticmethod
-    def find_last_visible_line(obj, clip_rect):
+    def find_last_visible_line(
+        obj: Atspi.Accessible, clip_rect: Atspi.Rect
+    ) -> tuple[str, int, int]:
         """Returns the last (string, start, end) visible line of obj inside clip_rect."""
 
         result = "", 0, 0
@@ -942,7 +975,7 @@ class AXText:
         return result
 
     @staticmethod
-    def is_word_misspelled(obj, offset=None):
+    def is_word_misspelled(obj: Atspi.Accessible, offset: Optional[int] = None) -> bool:
         """Returns True if the text attributes indicate a spelling error."""
 
         attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
@@ -955,19 +988,20 @@ class AXText:
         return False
 
     @staticmethod
-    def is_eoc(character):
+    def is_eoc(character: str) -> bool:
         """Returns True if character is an embedded object character (\ufffc)."""
 
         return character == "\ufffc"
 
     @staticmethod
-    def character_at_offset_is_eoc(obj, offset):
+    def character_at_offset_is_eoc(obj: Atspi.Accessible, offset: int) -> bool:
         """Returns True if character in obj is an embedded object character (\ufffc)."""
 
-        return AXText.is_eoc(AXText.get_character_at_offset(obj, offset))
+        character, _start, _end = AXText.get_character_at_offset(obj, offset)
+        return AXText.is_eoc(character)
 
     @staticmethod
-    def is_whitespace_or_empty(obj):
+    def is_whitespace_or_empty(obj: Atspi.Accessible) -> bool:
         """Returns True if obj lacks text, or contains only whitespace."""
 
         if not AXObject.supports_text(obj):
@@ -976,13 +1010,16 @@ class AXText:
         return not AXText.get_all_text(obj).strip()
 
     @staticmethod
-    def has_presentable_text(obj):
+    def has_presentable_text(obj: Atspi.Accessible) -> bool:
         """Returns True if obj has presentable text."""
 
         return bool(re.search(r"\w+", AXText.get_all_text(obj)))
 
     @staticmethod
-    def scroll_substring_to_point(obj, x, y, start_offset, end_offset):
+    def scroll_substring_to_point(
+        obj: Atspi.Accessible, x: int, y: int,
+        start_offset: Optional[int] = None, end_offset: Optional[int] = None
+    ) -> bool:
         """Attempts to scroll obj to the specified point."""
 
         length = AXText.get_character_count(obj)
@@ -1008,7 +1045,10 @@ class AXText:
         return result
 
     @staticmethod
-    def scroll_substring_to_location(obj, location, start_offset, end_offset):
+    def scroll_substring_to_location(
+        obj: Atspi.Accessible, location: Atspi.ScrollType,
+        start_offset: Optional[int] = None, end_offset: Optional[int] = None
+    ) -> bool:
         """Attempts to scroll the substring to the specified Atspi.ScrollType location."""
 
         length = AXText.get_character_count(obj)

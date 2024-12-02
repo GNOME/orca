@@ -38,6 +38,7 @@ __license__   = "LGPL"
 import inspect
 import pprint
 import types
+from typing import Any
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -52,7 +53,7 @@ class AXUtilitiesDebugging:
     """Utilities for obtaining accessibility information for debugging."""
 
     @staticmethod
-    def _format_string(string=""):
+    def _format_string(string: str = "") -> str:
         string = string.replace("\n", "\\n").replace("\ufffc", "[OBJ]")
         if len(string) < 100:
             return string
@@ -62,7 +63,7 @@ class AXUtilitiesDebugging:
         return string
 
     @staticmethod
-    def as_string(obj):
+    def as_string(obj: Any) -> str:
         """Turns obj into a human-consumable string."""
 
         if isinstance(obj, Atspi.Accessible):
@@ -120,7 +121,7 @@ class AXUtilitiesDebugging:
         return str(obj)
 
     @staticmethod
-    def actions_as_string(obj):
+    def actions_as_string(obj: Atspi.Accessible) -> str:
         """Returns information about the actions as a string."""
 
         results = []
@@ -134,7 +135,7 @@ class AXUtilitiesDebugging:
         return "; ".join(results)
 
     @staticmethod
-    def attributes_as_string(obj):
+    def attributes_as_string(obj: Atspi.Accessible) -> str:
         """Returns the object attributes of obj as a string."""
 
         def as_string(attribute):
@@ -143,7 +144,7 @@ class AXUtilitiesDebugging:
         return ", ".join(map(as_string, AXObject.get_attributes_dict(obj).items()))
 
     @staticmethod
-    def interfaces_as_string(obj):
+    def interfaces_as_string(obj: Atspi.Accessible) -> str:
         """Returns the supported interfaces of obj as a string."""
 
         if not AXObject.is_valid(obj):
@@ -169,7 +170,7 @@ class AXUtilitiesDebugging:
         return ", ".join(ifaces)
 
     @staticmethod
-    def relations_as_string(obj):
+    def relations_as_string(obj: Atspi.Accessible) -> str:
         """Returns the relations associated with obj as a string."""
 
         if not AXObject.is_valid(obj):
@@ -198,7 +199,7 @@ class AXUtilitiesDebugging:
         return "; ".join(results)
 
     @staticmethod
-    def state_set_as_string(obj):
+    def state_set_as_string(obj: Atspi.Accessible) -> str:
         """Returns the state set associated with obj as a string."""
 
         if not AXObject.is_valid(obj):
@@ -210,7 +211,7 @@ class AXUtilitiesDebugging:
         return ", ".join(map(as_string, AXObject.get_state_set(obj).get_states()))
 
     @staticmethod
-    def text_for_debugging(obj):
+    def text_for_debugging(obj: Atspi.Accessible) -> str:
         """Returns the text content of obj for debugging."""
 
         if not AXObject.supports_text(obj):
@@ -224,7 +225,11 @@ class AXUtilitiesDebugging:
         return AXUtilitiesDebugging._format_string(result)
 
     @staticmethod
-    def object_details_as_string(obj, indent="", include_app=True):
+    def object_details_as_string(
+        obj: Atspi.Accessible,
+        indent: str = "",
+        include_app: bool = True
+    ) -> str:
         """Returns a string, suitable for printing, that describes details about obj."""
 
         if not isinstance(obj, Atspi.Accessible):
@@ -257,7 +262,7 @@ class AXUtilitiesDebugging:
         return string
 
     @staticmethod
-    def object_event_details_as_string(event, indent=""):
+    def object_event_details_as_string(event: Atspi.Event, indent: str = "") -> str:
         """Returns a string, suitable for printing, with details about event."""
 
         if event.type.startswith("mouse:"):

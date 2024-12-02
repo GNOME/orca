@@ -31,6 +31,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2018-2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -50,7 +51,7 @@ class AXEventSynthesizer:
     """Provides support for synthesizing accessible input events."""
 
     @staticmethod
-    def _window_coordinates_to_screen_coordinates(x, y):
+    def _window_coordinates_to_screen_coordinates(x: int, y: int) -> tuple[int, int]:
         # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
         active_window = focus_manager.get_manager().get_active_window()
         if active_window is None:
@@ -84,13 +85,18 @@ class AXEventSynthesizer:
         return new_x, new_y
 
     @staticmethod
-    def _highest_ancestor(obj):
-        """Returns the highest obtainable ancestor of obj, stopping before the application."""
+    def _highest_ancestor(obj: Atspi.Accessible) -> bool:
+        """Returns True if the parent of obj is the application or None."""
+
         parent = AXObject.get_parent(obj)
         return parent is None or AXUtilitiesRole.is_application(parent)
 
     @staticmethod
-    def _is_scrolled_off_screen(obj, offset=None, ancestor=None):
+    def _is_scrolled_off_screen(
+        obj: Atspi.Accessible,
+        offset: Optional[int] = None,
+        ancestor: Optional[Atspi.Accessible] = None
+    ) -> bool:
         """Returns true if obj, or the caret offset therein, is scrolled off-screen."""
 
         tokens = ["AXEventSynthesizer: Checking if", obj, "is scrolled offscreen"]
@@ -130,7 +136,9 @@ class AXEventSynthesizer:
         return False
 
     @staticmethod
-    def _generate_mouse_event_new(obj, relative_x, relative_y, event):
+    def _generate_mouse_event_new(
+        obj: Atspi.Accessible, relative_x: int, relative_y: int, event: str
+    ) -> bool:
         tokens = ["AXEventSynthesizer: Attempting to generate new mouse event on", obj,
                   f"at relative coordinates {relative_x},{relative_y}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -149,7 +157,9 @@ class AXEventSynthesizer:
         return True
 
     @staticmethod
-    def _generate_mouse_event_legacy(obj, screen_x, screen_y, event):
+    def _generate_mouse_event_legacy(
+        obj: Atspi.Accessible, screen_x: int, screen_y: int, event: str
+    ) -> bool:
         # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
         tokens = ["AXEventSynthesizer: Attempting to generate legacy mouse event on", obj,
                   f"at screen coordinates {screen_x},{screen_y}"]
@@ -164,7 +174,9 @@ class AXEventSynthesizer:
         return success
 
     @staticmethod
-    def _generate_mouse_event(obj, relative_x, relative_y, event):
+    def _generate_mouse_event(
+        obj: Atspi.Accessible, relative_x: int, relative_y: int, event: str
+    ) -> bool:
         """Synthesize a mouse event at a specific screen coordinate."""
 
         if not AXEventSynthesizer._generate_mouse_event_new(obj, relative_x, relative_y, event):
@@ -175,7 +187,7 @@ class AXEventSynthesizer:
         return True
 
     @staticmethod
-    def _mouse_event_on_character(obj, offset, event):
+    def _mouse_event_on_character(obj: Atspi.Accessible, offset: Optional[int], event: str) -> bool:
         """Performs the specified mouse event on the current character in obj."""
 
         if offset is None:
@@ -204,7 +216,7 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._generate_mouse_event(obj, relative_x, relative_y, event)
 
     @staticmethod
-    def _mouse_event_on_object(obj, event):
+    def _mouse_event_on_object(obj: Atspi.Accessible, event: str) -> bool:
         """Performs the specified mouse event on obj."""
 
         if AXEventSynthesizer._is_scrolled_off_screen(obj):
@@ -220,7 +232,7 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._generate_mouse_event(obj, relative_x, relative_y, event)
 
     @staticmethod
-    def route_to_character(obj, offset=None):
+    def route_to_character(obj: Atspi.Accessible, offset: Optional[int] = None) -> bool:
         """Routes the pointer to the current character in obj."""
 
         tokens = [f"AXEventSynthesizer: Attempting to route to offset {offset} in", obj]
@@ -228,7 +240,7 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_character(obj, offset, "abs")
 
     @staticmethod
-    def route_to_object(obj):
+    def route_to_object(obj: Atspi.Accessible) -> bool:
         """Moves the mouse pointer to the center of obj."""
 
         tokens = ["AXEventSynthesizer: Attempting to route to", obj]
@@ -236,7 +248,9 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_object(obj, "abs")
 
     @staticmethod
-    def click_character(obj, offset=None, button=1):
+    def click_character(
+        obj: Atspi.Accessible, offset: Optional[int] = None, button: int = 1
+    ) -> bool:
         """Single click on the current character in obj using the specified button."""
 
         tokens = [f"AXEventSynthesizer: Attempting to click at offset {offset} in", obj]
@@ -244,13 +258,16 @@ class AXEventSynthesizer:
         return AXEventSynthesizer._mouse_event_on_character(obj, offset, f"b{button}c")
 
     @staticmethod
-    def click_object(obj, button=1):
+    def click_object(obj: Atspi.Accessible, button: int = 1) -> bool:
         """Single click on obj using the specified button."""
 
         return AXEventSynthesizer._mouse_event_on_object(obj, f"b{button}c")
 
     @staticmethod
-    def _scroll_to_location(obj, location, start_offset=None, end_offset=None):
+    def _scroll_to_location(
+        obj: Atspi.Accessible, location: Atspi.ScrollType,
+        start_offset: Optional[int] = None, end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll to the specified location."""
 
         before = AXComponent.get_position(obj)
@@ -269,7 +286,10 @@ class AXEventSynthesizer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
-    def _scroll_to_point(obj, x_coord, y_coord, start_offset=None, end_offset=None):
+    def _scroll_to_point(
+        obj: Atspi.Accessible, x_coord: int, y_coord: int,
+        start_offset: Optional[int] = None, end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the specified point."""
 
         before = AXComponent.get_position(obj)
@@ -288,14 +308,22 @@ class AXEventSynthesizer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     @staticmethod
-    def scroll_into_view(obj, start_offset=None, end_offset=None):
+    def scroll_into_view(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj into view."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.ANYWHERE, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_center(obj, start_offset=None, end_offset=None):
+    def scroll_to_center(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the center of its window."""
 
         ancestor = AXObject.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
@@ -310,49 +338,73 @@ class AXEventSynthesizer:
         AXEventSynthesizer._scroll_to_point(obj, x_coord, y_coord, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_top_edge(obj, start_offset=None, end_offset=None):
+    def scroll_to_top_edge(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the top edge."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.TOP_EDGE, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_top_left(obj, start_offset=None, end_offset=None):
+    def scroll_to_top_left(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the top left."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.TOP_LEFT, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_left_edge(obj, start_offset=None, end_offset=None):
+    def scroll_to_left_edge(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the left edge."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.LEFT_EDGE, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_bottom_edge(obj, start_offset=None, end_offset=None):
+    def scroll_to_bottom_edge(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the bottom edge."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.BOTTOM_EDGE, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_bottom_right(obj, start_offset=None, end_offset=None):
+    def scroll_to_bottom_right(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the bottom right."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.BOTTOM_RIGHT, start_offset, end_offset)
 
     @staticmethod
-    def scroll_to_right_edge(obj, start_offset=None, end_offset=None):
+    def scroll_to_right_edge(
+        obj: Atspi.Accessible,
+        start_offset: Optional[int] = None,
+        end_offset: Optional[int] = None
+    ) -> None:
         """Attempts to scroll obj to the right edge."""
 
         AXEventSynthesizer._scroll_to_location(
             obj, Atspi.ScrollType.RIGHT_EDGE, start_offset, end_offset)
 
     @staticmethod
-    def try_all_clickable_actions(obj):
+    def try_all_clickable_actions(obj: Atspi.Accessible) -> bool:
         """Attempts to perform a click-like action if one is available."""
 
         actions = ["click", "press", "jump", "open", "activate"]
@@ -371,7 +423,7 @@ class AXEventSynthesizer:
         return False
 
 _synthesizer = AXEventSynthesizer()
-def get_synthesizer():
+def get_synthesizer() -> AXEventSynthesizer:
     """Returns the Event Synthesizer."""
 
     return _synthesizer

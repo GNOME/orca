@@ -18,9 +18,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=unused-argument
-
 """Configures speech and verbosity settings and adjusts strings accordingly."""
+
+# This must be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -30,6 +31,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import re
+from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
@@ -44,14 +46,24 @@ from .ax_hypertext import AXHypertext
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from .scripts import default
+    from .speechserver import SpeechServer
+
 class SpeechAndVerbosityManager:
     """Configures speech and verbosity settings and adjusts strings accordingly."""
 
-    def __init__(self):
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
+    def __init__(self) -> None:
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the speech and verbosity manager keybindings."""
 
         if refresh:
@@ -63,7 +75,7 @@ class SpeechAndVerbosityManager:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the speech and verbosity manager handlers."""
 
         if refresh:
@@ -73,7 +85,7 @@ class SpeechAndVerbosityManager:
 
         return self._handlers
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the speech and verbosity input event handlers."""
 
         self._handlers = {}
@@ -156,7 +168,7 @@ class SpeechAndVerbosityManager:
         msg = "SPEECH AND VERBOSITY MANAGER: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the speech and verbosity key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -269,10 +281,12 @@ class SpeechAndVerbosityManager:
         msg = "SPEECH AND VERBOSITY MANAGER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _get_server(self):
+    def _get_server(self) -> Optional[SpeechServer]:
         return speech.get_speech_server()
 
-    def decrease_rate(self, script, event=None):
+    def decrease_rate(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Decreases the speech rate"""
 
         server = self._get_server()
@@ -284,7 +298,9 @@ class SpeechAndVerbosityManager:
         server.decreaseSpeechRate()
         return True
 
-    def increase_rate(self, script, event=None):
+    def increase_rate(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Increases the speech rate"""
 
         server = self._get_server()
@@ -296,7 +312,9 @@ class SpeechAndVerbosityManager:
         server.increaseSpeechRate()
         return True
 
-    def decrease_pitch(self, script, event=None):
+    def decrease_pitch(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Decreases the speech pitch"""
 
         server = self._get_server()
@@ -308,7 +326,9 @@ class SpeechAndVerbosityManager:
         server.decreaseSpeechPitch()
         return True
 
-    def increase_pitch(self, script, event=None):
+    def increase_pitch(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Increase the speech pitch"""
 
         server = self._get_server()
@@ -320,7 +340,9 @@ class SpeechAndVerbosityManager:
         server.increaseSpeechPitch()
         return True
 
-    def decrease_volume(self, script, event=None):
+    def decrease_volume(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Decreases the speech volume"""
 
         server = self._get_server()
@@ -332,7 +354,9 @@ class SpeechAndVerbosityManager:
         server.decreaseSpeechVolume()
         return True
 
-    def increase_volume(self, script, event=None):
+    def increase_volume(
+        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Increases the speech volume"""
 
         server = self._get_server()
@@ -344,7 +368,7 @@ class SpeechAndVerbosityManager:
         server.increaseSpeechVolume()
         return True
 
-    def update_capitalization_style(self):
+    def update_capitalization_style(self) -> bool:
         """Updates the capitalization style based on the value in settings."""
 
         server = self._get_server()
@@ -356,7 +380,7 @@ class SpeechAndVerbosityManager:
         server.updateCapitalizationStyle()
         return True
 
-    def update_punctuation_level(self):
+    def update_punctuation_level(self) -> bool:
         """Updates the punctuation level based on the value in settings."""
 
         server = self._get_server()
@@ -368,7 +392,9 @@ class SpeechAndVerbosityManager:
         server.updatePunctuationLevel()
         return True
 
-    def cycle_synthesizer(self, script, event=None):
+    def cycle_synthesizer(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Cycle through the speech-dispatcher's available output modules."""
 
         server = self._get_server()
@@ -397,7 +423,9 @@ class SpeechAndVerbosityManager:
         script.presentMessage(available[index])
         return True
 
-    def cycle_capitalization_style(self, script, event=None):
+    def cycle_capitalization_style(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Cycle through the speech-dispatcher capitalization styles."""
 
         manager = settings_manager.get_manager()
@@ -420,7 +448,9 @@ class SpeechAndVerbosityManager:
         self.update_capitalization_style()
         return True
 
-    def cycle_punctuation_level(self, script, event=None):
+    def cycle_punctuation_level(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Cycle through the punctuation levels for speech."""
 
         manager = settings_manager.get_manager()
@@ -447,7 +477,9 @@ class SpeechAndVerbosityManager:
         self.update_punctuation_level()
         return True
 
-    def cycle_key_echo(self, script, event=None):
+    def cycle_key_echo(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Cycle through the key echo levels."""
 
         manager = settings_manager.get_manager()
@@ -487,7 +519,9 @@ class SpeechAndVerbosityManager:
         script.presentMessage(full, brief)
         return True
 
-    def change_number_style(self, script, event=None):
+    def change_number_style(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Changes spoken number style between digits and words."""
 
         manager = settings_manager.get_manager()
@@ -503,7 +537,9 @@ class SpeechAndVerbosityManager:
         script.presentMessage(full, brief)
         return True
 
-    def toggle_speech(self, script, event=None):
+    def toggle_speech(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Toggles speech."""
 
         manager = settings_manager.get_manager()
@@ -520,7 +556,9 @@ class SpeechAndVerbosityManager:
             manager.set_setting('silenceSpeech', True)
         return True
 
-    def toggle_verbosity(self, script, event=None):
+    def toggle_verbosity(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Toggles speech verbosity level between verbose and brief."""
 
         manager = settings_manager.get_manager()
@@ -533,7 +571,9 @@ class SpeechAndVerbosityManager:
             manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
         return True
 
-    def toggle_indentation_and_justification(self, script, event=None):
+    def toggle_indentation_and_justification(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Toggles the speaking of indentation and justification."""
 
         manager = settings_manager.get_manager()
@@ -548,7 +588,9 @@ class SpeechAndVerbosityManager:
         script.presentMessage(full, brief)
         return True
 
-    def toggle_table_cell_reading_mode(self, script, event=None):
+    def toggle_table_cell_reading_mode(
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Toggles between speak cell and speak row."""
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
@@ -576,7 +618,7 @@ class SpeechAndVerbosityManager:
         return True
 
     @staticmethod
-    def adjust_for_digits(obj, string):
+    def adjust_for_digits(obj: Atspi.Accessible, string: str) -> str:
         """Adjusts string to present numbers as digits."""
 
         def _convert(word):
@@ -590,7 +632,7 @@ class SpeechAndVerbosityManager:
         return "".join(map(_convert, string.split()))
 
     @staticmethod
-    def adjust_for_links(obj, line, start_offset):
+    def adjust_for_links(obj: Atspi.Accessible, line: str, start_offset: int) -> str:
         """Adjust line to include the word "link" after any hypertext links."""
 
         end_offset = start_offset + len(line)
@@ -606,7 +648,7 @@ class SpeechAndVerbosityManager:
         return "".join(tokens)
 
     @staticmethod
-    def adjust_for_repeats(string):
+    def adjust_for_repeats(string: str) -> str:
         """Adjust line to include a description of repeated symbols."""
 
         def replacement(match):
@@ -622,8 +664,9 @@ class SpeechAndVerbosityManager:
         pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(settings.repeatCharacterLimit - 1) + ",}")
         return re.sub(pattern, replacement, string)
 
-_manager = SpeechAndVerbosityManager()
-def get_manager():
+_manager: SpeechAndVerbosityManager = SpeechAndVerbosityManager()
+
+def get_manager() -> SpeechAndVerbosityManager:
     """Returns the Speech and Verbosity Manager"""
 
     return _manager

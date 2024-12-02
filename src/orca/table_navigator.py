@@ -22,6 +22,9 @@
 
 """Provides Orca-controlled navigation for tabular content."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -29,6 +32,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2011-2023 Igalia, S.L." \
                 "Copyright (c) 2023 GNOME Foundation Inc."
 __license__   = "LGPL"
+
+from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
@@ -43,28 +48,36 @@ from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from .input_event import InputEvent
+    from .scripts import default
 
 class TableNavigator:
     """Provides Orca-controlled navigation for tabular content."""
 
-    def __init__(self):
-        self._previous_reported_row = None
-        self._previous_reported_col = None
-        self._last_input_event = None
-        self._enabled = True
+    def __init__(self) -> None:
+        self._previous_reported_row: Optional[int] = None
+        self._previous_reported_col: Optional[int] = None
+        self._last_input_event: Optional[InputEvent] = None
+        self._enabled: bool = True
 
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
-        self._suspended = False
+        self._suspended: bool = False
+        self._handlers: dict = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
 
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
-
-    def get_bindings(self, refresh=False, is_desktop=True):
+    def get_bindings(
+        self, refresh: bool = False, is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the table-navigator keybindings."""
 
         if refresh:
-            msg = "TABLE NAVIGATOR: Refreshing bindings."
+            msg = f"TABLE NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
@@ -72,7 +85,7 @@ class TableNavigator:
 
         return self._bindings
 
-    def get_handlers(self, refresh=False):
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
         """Returns the table-navigator handlers."""
 
         if refresh:
@@ -82,12 +95,12 @@ class TableNavigator:
 
         return self._handlers
 
-    def is_enabled(self):
+    def is_enabled(self) -> bool:
         """Returns true if table-navigation support is enabled."""
 
         return self._enabled
 
-    def last_input_event_was_navigation_command(self):
+    def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
 
         manager = input_event_manager.get_manager()
@@ -101,7 +114,7 @@ class TableNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def _setup_bindings(self):
+    def _setup_bindings(self) -> None:
         """Sets up the table-navigation key bindings."""
 
         self._bindings = keybindings.KeyBindings()
@@ -248,7 +261,7 @@ class TableNavigator:
         msg = f"TABLE NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Sets up the table-navigator input event handlers."""
 
         self._handlers = {}
@@ -257,96 +270,96 @@ class TableNavigator:
             input_event.InputEventHandler(
                 self._toggle_enabled,
                 cmdnames.TABLE_NAVIGATION_TOGGLE,
-                enabled = not self._suspended)
+                enabled=not self._suspended)
 
         self._handlers["table_cell_left"] = \
             input_event.InputEventHandler(
                 self._table_cell_left,
                 cmdnames.TABLE_CELL_LEFT,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_right"] = \
             input_event.InputEventHandler(
                 self._table_cell_right,
                 cmdnames.TABLE_CELL_RIGHT,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_up"] = \
             input_event.InputEventHandler(
                 self._table_cell_up,
                 cmdnames.TABLE_CELL_UP,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_down"] = \
             input_event.InputEventHandler(
                 self._table_cell_down,
                 cmdnames.TABLE_CELL_DOWN,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_first"] = \
             input_event.InputEventHandler(
                 self._table_cell_first,
                 cmdnames.TABLE_CELL_FIRST,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_last"] = \
             input_event.InputEventHandler(
                 self._table_cell_last,
                 cmdnames.TABLE_CELL_LAST,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_beginning_of_row"] = \
             input_event.InputEventHandler(
                 self._table_cell_beginning_of_row,
                 cmdnames.TABLE_CELL_BEGINNING_OF_ROW,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_end_of_row"] = \
             input_event.InputEventHandler(
                 self._table_cell_end_of_row,
                 cmdnames.TABLE_CELL_END_OF_ROW,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_top_of_column"] = \
             input_event.InputEventHandler(
                 self._table_cell_top_of_column,
                 cmdnames.TABLE_CELL_TOP_OF_COLUMN,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_bottom_of_column"] = \
             input_event.InputEventHandler(
                 self._table_cell_bottom_of_column,
                 cmdnames.TABLE_CELL_BOTTOM_OF_COLUMN,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["set_dynamic_column_headers_row"] = \
             input_event.InputEventHandler(
                 self._set_dynamic_column_headers_row,
                 cmdnames.DYNAMIC_COLUMN_HEADER_SET,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["clear_dynamic_column_headers_row"] = \
             input_event.InputEventHandler(
                 self._clear_dynamic_column_headers_row,
                 cmdnames.DYNAMIC_COLUMN_HEADER_CLEAR,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["set_dynamic_row_headers_column"] = \
             input_event.InputEventHandler(
                 self._set_dynamic_row_headers_column,
                 cmdnames.DYNAMIC_ROW_HEADER_SET,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         self._handlers["clear_dynamic_row_headers_column"] = \
             input_event.InputEventHandler(
                 self._clear_dynamic_row_headers_column,
                 cmdnames.DYNAMIC_ROW_HEADER_CLEAR,
-                enabled = self._enabled and not self._suspended)
+                enabled=self._enabled and not self._suspended)
 
         msg = f"TABLE NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def refresh_bindings_and_grabs(self, script, reason=""):
+    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
         """Refreshes table navigation bindings and grabs for script."""
 
         msg = "TABLE NAVIGATOR: Refreshing bindings and grabs"
@@ -363,7 +376,7 @@ class TableNavigator:
         for binding in self._bindings.key_bindings:
             script.key_bindings.add(binding, include_grabs=not self._suspended)
 
-    def _toggle_enabled(self, script, event=None):
+    def _toggle_enabled(self, script: default.Script, _event: Optional[InputEvent] = None) -> bool:
         """Toggles table navigation."""
 
         self._enabled = not self._enabled
@@ -377,7 +390,7 @@ class TableNavigator:
         self.refresh_bindings_and_grabs(script, "toggling table navigation")
         return True
 
-    def suspend_commands(self, script, suspended, reason=""):
+    def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
         """Suspends table navigation independent of the enabled setting."""
 
         if suspended == self._suspended:
@@ -390,7 +403,7 @@ class TableNavigator:
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
-    def _is_blank(self, obj):
+    def _is_blank(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is empty or consists of only whitespace."""
 
         if AXUtilities.is_focusable(obj):
@@ -420,7 +433,7 @@ class TableNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
-    def _get_current_cell(self):
+    def _get_current_cell(self) -> Atspi.Accessible:
         """Returns the current cell."""
 
         cell = focus_manager.get_manager().get_locus_of_focus()
@@ -442,11 +455,11 @@ class TableNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return cell
 
-    def _get_cell_coordinates(self, cell):
+    def _get_cell_coordinates(self, cell: Atspi.Accessible) -> tuple:
         """Returns the coordinates of cell, possibly adjusted for linear movement."""
 
         row, col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
-        if self._previous_reported_row is None or self._previous_reported_row is None:
+        if self._previous_reported_row is None or self._previous_reported_col is None:
             return row, col
 
         # If we're in a cell that spans multiple rows and/or columns, the coordinates will refer to
@@ -460,7 +473,7 @@ class TableNavigator:
 
         return row, col
 
-    def _table_cell_left(self, script, event=None):
+    def _table_cell_left(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the cell on the left."""
 
         self._last_input_event = event
@@ -483,7 +496,7 @@ class TableNavigator:
         self._present_cell(script, cell, row, col - 1, current)
         return True
 
-    def _table_cell_right(self, script, event=None):
+    def _table_cell_right(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the cell on the right."""
 
         self._last_input_event = event
@@ -506,7 +519,7 @@ class TableNavigator:
         self._present_cell(script, cell, row, col + 1, current)
         return True
 
-    def _table_cell_up(self, script, event=None):
+    def _table_cell_up(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the cell above."""
 
         self._last_input_event = event
@@ -529,7 +542,7 @@ class TableNavigator:
         self._present_cell(script, cell, row - 1, col, current)
         return True
 
-    def _table_cell_down(self, script, event=None):
+    def _table_cell_down(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the cell below."""
 
         self._last_input_event = event
@@ -552,7 +565,7 @@ class TableNavigator:
         self._present_cell(script, cell, row + 1, col, current)
         return True
 
-    def _table_cell_first(self, script, event=None):
+    def _table_cell_first(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the first cell."""
 
         self._last_input_event = event
@@ -566,7 +579,7 @@ class TableNavigator:
         self._present_cell(script, cell, 0, 0, current)
         return True
 
-    def _table_cell_last(self, script, event=None):
+    def _table_cell_last(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
         """Moves to the last cell."""
 
         self._last_input_event = event
@@ -581,7 +594,9 @@ class TableNavigator:
             script, cell, AXTable.get_row_count(table), AXTable.get_column_count(table), current)
         return True
 
-    def _table_cell_beginning_of_row(self, script, event=None):
+    def _table_cell_beginning_of_row(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Moves to the beginning of the row."""
 
         self._last_input_event = event
@@ -599,7 +614,9 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _table_cell_end_of_row(self, script, event=None):
+    def _table_cell_end_of_row(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Moves to the end of the row."""
 
         self._last_input_event = event
@@ -617,7 +634,9 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _table_cell_top_of_column(self, script, event=None):
+    def _table_cell_top_of_column(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Moves to the top of the column."""
 
         self._last_input_event = event
@@ -636,7 +655,9 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _table_cell_bottom_of_column(self, script, event=None):
+    def _table_cell_bottom_of_column(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Moves to the bottom of the column."""
 
         self._last_input_event = event
@@ -655,7 +676,9 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _set_dynamic_column_headers_row(self, script, event=None):
+    def _set_dynamic_column_headers_row(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Sets the row for the dynamic header columns."""
 
         self._last_input_event = event
@@ -672,7 +695,9 @@ class TableNavigator:
 
         return True
 
-    def _clear_dynamic_column_headers_row(self, script, event=None):
+    def _clear_dynamic_column_headers_row(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Clears the row for the dynamic column headers."""
 
         self._last_input_event = event
@@ -689,7 +714,9 @@ class TableNavigator:
 
         return True
 
-    def _set_dynamic_row_headers_column(self, script, event=None):
+    def _set_dynamic_row_headers_column(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Sets the column for the dynamic row headers."""
 
         self._last_input_event = event
@@ -707,7 +734,9 @@ class TableNavigator:
 
         return True
 
-    def _clear_dynamic_row_headers_column(self, script, event=None):
+    def _clear_dynamic_row_headers_column(
+        self, script: default.Script, event: Optional[InputEvent] = None
+    ) -> bool:
         """Clears the column for the dynamic row headers."""
 
         self._last_input_event = event
@@ -724,7 +753,14 @@ class TableNavigator:
 
         return True
 
-    def _present_cell(self, script, cell, row, col, previous_cell):
+    def _present_cell(
+        self,
+        script: default.Script,
+        cell: Atspi.Accessible,
+        row: int,
+        col: int,
+        previous_cell: Atspi.Accessible
+    ) -> None:
         """Presents cell to the user."""
 
         if not AXUtilities.is_table_cell_or_header(cell):
@@ -757,7 +793,7 @@ class TableNavigator:
                 script.presentMessage(messages.cellSpan(rowspan, colspan))
 
 _navigator = TableNavigator()
-def getNavigator():
+def get_navigator() -> TableNavigator:
     """Returns the Table Navigator"""
 
     return _navigator

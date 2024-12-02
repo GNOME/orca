@@ -25,6 +25,9 @@
 
 """Manages the Orca modifier key."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -35,6 +38,7 @@ __license__   = "LGPL"
 import os
 import re
 import subprocess
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -48,18 +52,20 @@ from . import keybindings
 from . import input_event_manager
 from . import settings_manager
 
+if TYPE_CHECKING:
+    from .input_event import KeyboardEvent
 
 class OrcaModifierManager:
     """Manages the Orca modifier."""
 
-    def __init__(self):
-        self._grabbed_modifiers = {}
-        self._is_pressed = False
+    def __init__(self) -> None:
+        self._grabbed_modifiers: dict = {}
+        self._is_pressed: bool = False
 
         # Related to hacks which will soon die.
-        self._original_xmodmap = ""
-        self._caps_lock_cleared = False
-        self._need_to_restore_orca_modifier = False
+        self._original_xmodmap: bytes = b""
+        self._caps_lock_cleared: bool = False
+        self._need_to_restore_orca_modifier: bool = False
 
         # Event handlers for input devices being plugged in/unplugged.
         display = Gdk.Display.get_default()
@@ -71,7 +77,7 @@ class OrcaModifierManager:
             msg = "ORCA MODIFIER MANAGER: Cannot listen for input device changes."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _on_device_changed(self, _device_manager, device):
+    def _on_device_changed(self, _device_manager, device: Gdk.Device) -> None:
         """Handles device-* signals."""
 
         source = device.get_source()
@@ -80,7 +86,7 @@ class OrcaModifierManager:
         if source == Gdk.InputSource.KEYBOARD:
             self.refresh_orca_modifiers("Keyboard change detected.")
 
-    def is_orca_modifier(self, modifier):
+    def is_orca_modifier(self, modifier: str) -> bool:
         """Returns True if modifier is one of the user's Orca modifier keys."""
 
         if modifier not in settings_manager.get_manager().get_setting("orcaModifierKeys"):
@@ -91,24 +97,24 @@ class OrcaModifierManager:
 
         return True
 
-    def get_pressed_state(self):
+    def get_pressed_state(self) -> bool:
         """Returns True if the Orca modifier has been pressed but not yet released."""
 
         return self._is_pressed
 
-    def set_pressed_state(self, is_pressed):
+    def set_pressed_state(self, is_pressed: bool) -> None:
         """Updates the pressed state of the modifier based on event."""
 
         msg = f"ORCA MODIFIER MANAGER: Setting pressed state to {is_pressed}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_pressed = is_pressed
 
-    def is_modifier_grabbed(self, modifier):
+    def is_modifier_grabbed(self, modifier: str) -> bool:
         """Returns True if there is an existing grab for modifier."""
 
         return modifier in self._grabbed_modifiers
 
-    def add_grabs_for_orca_modifiers(self):
+    def add_grabs_for_orca_modifiers(self) -> None:
         """Adds grabs for all of the user's Orca modifier keys."""
 
         for modifier in settings_manager.get_manager().get_setting("orcaModifierKeys"):
@@ -117,7 +123,7 @@ class OrcaModifierManager:
             if modifier in ["Insert", "KP_Insert"]:
                 self.add_modifier_grab(modifier)
 
-    def remove_grabs_for_orca_modifiers(self):
+    def remove_grabs_for_orca_modifiers(self) -> None:
         """Removes grabs for all of the user's Orca modifier keys."""
 
         for modifier in settings_manager.get_manager().get_setting("orcaModifierKeys"):
@@ -130,7 +136,7 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_pressed = False
 
-    def add_modifier_grab(self, modifier):
+    def add_modifier_grab(self, modifier: str) -> None:
         """Adds a grab for modifier."""
 
         if modifier in self._grabbed_modifiers:
@@ -141,7 +147,7 @@ class OrcaModifierManager:
         if grab_id != -1:
             self._grabbed_modifiers[modifier] = grab_id
 
-    def remove_modifier_grab(self, modifier):
+    def remove_modifier_grab(self, modifier: str) -> None:
         """Removes the grab for modifier."""
 
         grab_id = self._grabbed_modifiers.get(modifier)
@@ -151,7 +157,7 @@ class OrcaModifierManager:
         input_event_manager.get_manager().remove_grab_for_modifier(modifier, grab_id)
         del self._grabbed_modifiers[modifier]
 
-    def toggle_modifier(self, keyboard_event):
+    def toggle_modifier(self, keyboard_event: KeyboardEvent) -> None:
         """Toggles the modifier to enable double-clicking causing normal behavior."""
 
         if keyboard_event.keyval_name in ["Caps_Lock", "Shift_Lock"]:
@@ -160,7 +166,7 @@ class OrcaModifierManager:
 
         self._toggle_modifier_grab(keyboard_event)
 
-    def _toggle_modifier_grab(self, keyboard_event):
+    def _toggle_modifier_grab(self, keyboard_event: KeyboardEvent) -> None:
         """Toggles the grab for a modifier to enable double-clicking causing normal behavior."""
 
         # Because we will synthesize another press and release, wait until the real release.
@@ -187,7 +193,7 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(500, restore_grab, keyboard_event.keyval_name)
 
-    def _toggle_modifier_lock(self, keyboard_event):
+    def _toggle_modifier_lock(self, keyboard_event: KeyboardEvent) -> None:
         """Toggles the lock for a modifier to enable double-clicking causing normal behavior."""
 
         if not keyboard_event.is_pressed_key():
@@ -215,7 +221,7 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(1, toggle, keyboard_event.modifiers, modifier)
 
-    def refresh_orca_modifiers(self, reason=""):
+    def refresh_orca_modifiers(self, reason: str = "") -> None:
         """Refreshes the Orca modifier keys."""
 
         msg = "ORCA MODIFIER MANAGER: Refreshing Orca modifiers"
@@ -229,7 +235,7 @@ class OrcaModifierManager:
             self._original_xmodmap, _ = p.communicate()
         self._create_orca_xmodmap()
 
-    def _create_orca_xmodmap(self):
+    def _create_orca_xmodmap(self) -> None:
         """Makes an Orca-specific Xmodmap so that the Orca modifier works."""
 
         msg = "ORCA MODIFIER MANAGER: Creating Orca xmodmap"
@@ -242,7 +248,7 @@ class OrcaModifierManager:
             self.set_caps_lock_as_orca_modifier(False)
             self._caps_lock_cleared = False
 
-    def unset_orca_modifiers(self, reason=""):
+    def unset_orca_modifiers(self, reason: str = "") -> None:
         """Turns the Orca modifiers back into their original purpose."""
 
         msg = "ORCA MODIFIER MANAGER: Attempting to restore original xmodmap"
@@ -263,7 +269,7 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Original xmodmap restored"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def set_caps_lock_as_orca_modifier(self, enable):
+    def set_caps_lock_as_orca_modifier(self, enable: bool) -> None:
         """Enable or disable use of the caps lock key as an Orca modifier key."""
 
         msg = "ORCA MODIFIER MANAGER: Setting caps lock as the Orca modifier"
@@ -327,8 +333,9 @@ class OrcaModifierManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
 
-_manager = OrcaModifierManager()
-def get_manager():
+_manager: OrcaModifierManager = OrcaModifierManager()
+
+def get_manager() -> OrcaModifierManager:
     """Returns the OrcaModifierManager singleton."""
 
     return _manager

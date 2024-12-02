@@ -38,21 +38,21 @@ SPEAK_ALWAYS = 2
 SPEAK_FOR_CHARS = 3
 speakStyle = SPEAK_ALWAYS
 
-_all = {}
-_alnum = {}
-_arrows = {}
-_operators = {}
-_shapes = {}
-_combining = {}
+_all: dict[str, str] = {}
+_alnum: dict[str, str] = {}
+_arrows: dict[str, str] = {}
+_operators: dict[str, str] = {}
+_shapes: dict[str, str] = {}
+_combining: dict[str, str] = {}
 
 # Note that the following are to help us identify what is likely a math symbol
 # (as opposed to one serving the function of an image in "This way up.")
-_arrows.update(dict.fromkeys(map(chr, range(0x2190, 0x2200))))
-_arrows.update(dict.fromkeys(map(chr, range(0x2750, 0x2800))))
-_arrows.update(dict.fromkeys(map(chr, range(0x2b30, 0x2b50))))
-_operators.update(dict.fromkeys(map(chr, range(0x2220, 0x2300))))
-_operators.update(dict.fromkeys(map(chr, range(0x2a00, 0x2b00))))
-_shapes.update(dict.fromkeys(map(chr, range(0x25a0, 0x2600))))
+_arrows.update(dict.fromkeys(map(chr, range(0x2190, 0x2200)), ""))
+_arrows.update(dict.fromkeys(map(chr, range(0x2750, 0x2800)), ""))
+_arrows.update(dict.fromkeys(map(chr, range(0x2b30, 0x2b50)), ""))
+_operators.update(dict.fromkeys(map(chr, range(0x2220, 0x2300)), ""))
+_operators.update(dict.fromkeys(map(chr, range(0x2a00, 0x2b00)), ""))
+_shapes.update(dict.fromkeys(map(chr, range(0x25a0, 0x2600)), ""))
 
 # Unicode has a huge number of individual symbols to include styles, such as
 # bold, italic, double-struck, etc. These are so far not supported by speech

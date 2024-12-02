@@ -248,3 +248,15 @@ class SpeechServer(object):
     def reset(self, text=None, acss=None):
         """Resets the speech engine."""
         pass
+
+    def getOutputModule(self):
+        """Returns the output module associated with this speech server."""
+        return None
+
+    def setOutputModule(self, module):
+        """Sets the output module associated with this speech server."""
+        pass
+
+    def list_output_modules(self):
+        """Return names of available output modules as a tuple of strings."""
+        return ()
