@@ -62,6 +62,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_role import AXUtilitiesRole
 from .ax_value import AXValue
 
 class Pause:
@@ -2080,7 +2081,7 @@ class SpeechGenerator(generator.Generator):
         string = result[0].strip()
         if len(string) == 1 and AXUtilities.is_math_related(obj):
             charname = mathsymbols.getCharacterName(string)
-            if charname != string:
+            if charname and charname != string:
                 result[0] = charname
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -3578,6 +3579,11 @@ class SpeechGenerator(generator.Generator):
     def _generate_section(self, obj, **args):
         """Generates speech for the section role."""
 
+        # In Chromium, math content specified inside <semantics> is getting assigned the section role,
+        # so we need to pass off its first child to the math handling
+        if AXUtilitiesRole._get_tag(obj) == "semantics":
+            child = AXObject.get_child(obj, 0)
+            return self._generate_math(child, **args)
         format_type = args.get("formatType", "unfocused")
         result = self._generate_default_prefix(obj, **args)
         if AXUtilities.is_focusable(obj) or AXUtilities.has_explicit_name(obj):
