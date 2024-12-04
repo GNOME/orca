@@ -2076,7 +2076,7 @@ class SpeechGenerator(generator.Generator):
         string = result[0].strip()
         if len(string) == 1 and AXUtilities.is_math_related(obj):
             charname = mathsymbols.getCharacterName(string)
-            if charname != string:
+            if charname and charname != string:
                 result[0] = charname
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
