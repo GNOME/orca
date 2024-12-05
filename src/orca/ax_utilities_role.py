@@ -1416,7 +1416,8 @@ class AXUtilitiesRole:
     def is_math_layout_only(obj):
         """Returns True if obj has a layout-only math role"""
 
-        return AXUtilitiesRole._get_tag(obj) in ["mrow", "mstyle", "merror", "mpadded", "none"]
+        return AXUtilitiesRole._get_tag(obj) \
+            in ["mrow", "mstyle", "merror", "mpadded", "none", "semantics"]
 
     @staticmethod
     def is_math_multi_script(obj):
