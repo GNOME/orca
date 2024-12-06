@@ -38,6 +38,7 @@ class Utilities(script_utilities.Utilities):
         if event.any_data:
             return event.any_data
 
+        # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/8092
         if event.detail1 == -1:
             msg = "GNOME SHELL: Broken text insertion event"
             debug.print_message(debug.LEVEL_INFO, msg, True)
