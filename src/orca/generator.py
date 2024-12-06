@@ -523,8 +523,6 @@ class Generator:
             if AXUtilities.is_landmark_region(obj):
                 return "ROLE_REGION"
             return Atspi.Role.LANDMARK
-        if self._script.utilities.isFocusableLabel(obj):
-            return Atspi.Role.LIST_ITEM
         if self._script.utilities.isDocument(obj) and AXObject.supports_image(obj):
             return Atspi.Role.IMAGE
 

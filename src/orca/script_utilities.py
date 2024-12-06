@@ -563,9 +563,6 @@ class Utilities:
 
         return settings_manager.get_manager().get_setting('readFullRowInDocumentTable')
 
-    def isFocusableLabel(self, obj):
-        return AXUtilities.is_label(obj) and AXUtilities.is_focusable(obj)
-
     def getNotificationContent(self, obj):
         if not AXUtilities.is_notification(obj):
             return ""
