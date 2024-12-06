@@ -346,35 +346,6 @@ class Utilities:
     def getMathNestingLevel(self, obj, test=None):
         return 0
 
-    def getLandmarkTypes(self):
-        return ["banner",
-                "complementary",
-                "contentinfo",
-                "doc-acknowledgments",
-                "doc-afterword",
-                "doc-appendix",
-                "doc-bibliography",
-                "doc-chapter",
-                "doc-conclusion",
-                "doc-credits",
-                "doc-endnotes",
-                "doc-epilogue",
-                "doc-errata",
-                "doc-foreword",
-                "doc-glossary",
-                "doc-index",
-                "doc-introduction",
-                "doc-pagelist",
-                "doc-part",
-                "doc-preface",
-                "doc-prologue",
-                "doc-toc",
-                "form",
-                "main",
-                "navigation",
-                "region",
-                "search"]
-
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False
