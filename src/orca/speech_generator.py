@@ -1016,7 +1016,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        accelerator = self._script.utilities.mnemonicShortcutAccelerator(obj)[-1]
+        accelerator = AXObject.get_accelerator(obj)
         if accelerator:
             result.append(accelerator)
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1031,14 +1031,9 @@ class SpeechGenerator(generator.Generator):
         result = []
         if settings_manager.get_manager().get_setting("enableMnemonicSpeaking") \
            or args.get("forceMnemonic", False):
-            mnemonic, shortcut, _accelerator = \
-                self._script.utilities.mnemonicShortcutAccelerator(obj)
+            mnemonic = AXObject.get_mnemonic(obj)
             if mnemonic:
-                mnemonic = mnemonic[-1] # we just want a single character
-            if not mnemonic and shortcut:
-                mnemonic = shortcut
-            if mnemonic:
-                result = [mnemonic]
+                result = [mnemonic[-1]] # we just want a single character
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
 
         return result
@@ -3033,6 +3028,9 @@ class SpeechGenerator(generator.Generator):
             or self._generate_text_content(obj, **args))
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_state_expanded(obj, **args)
+        result += self._generate_keyboard_mnemonic(obj, **args)
+        result += self._generate_pause(obj, **args)
+        result += self._generate_keyboard_accelerator(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -3441,6 +3439,8 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_state_sensitive(obj, **args)
         result += self._generate_keyboard_mnemonic(obj, **args)
+        result += self._generate_pause(obj, **args)
+        result += self._generate_keyboard_accelerator(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 

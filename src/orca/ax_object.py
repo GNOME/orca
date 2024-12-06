@@ -40,9 +40,12 @@ from typing import Callable, Generator, Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
+gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
+from gi.repository import Gtk
 
 from . import debug
+from . import keynames
 
 
 class AXObject:
@@ -1250,6 +1253,105 @@ class AXObject:
         if keybinding == "<VoidSymbol>":
             return ""
         return keybinding
+
+    @staticmethod
+    def _get_label_for_key_sequence(sequence: str) -> str:
+        """Returns the human consumable label for the key sequence."""
+
+        if not sequence:
+            return ""
+
+        # We get all sorts of variations in the keybinding string. Try to normalize it.
+        if len(sequence) > 1 and not sequence.startswith("<") and "," not in sequence:
+            tokens = sequence.split("+")
+            sequence = "".join(f"<{part}>" for part in tokens[:-1]) + tokens[-1]
+
+        # We use Gtk for conversion to handle things like <Primary>.
+        try:
+            key, mods = Gtk.accelerator_parse(sequence)
+            result = Gtk.accelerator_get_label(key, mods)
+        except Exception as error:
+            msg = f"AXObject: Exception in _get_label_for_key_sequence: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            sequence = sequence.replace("<", "").replace(">", " ").strip()
+        else:
+            if result and not result.endswith("+"):
+                sequence = result
+
+        return keynames.localizeKeySequence(sequence)
+
+    @staticmethod
+    def get_accelerator(obj: Atspi.Accessible) -> str:
+        """Returns the accelerator/shortcut associated with obj."""
+
+        attrs = AXObject.get_attributes_dict(obj)
+        # The ARIA spec suggests a given shortcut's components should be separated by a "+".
+        # Multiple shortcuts are apparently allowed and separated by a space.
+        shortcuts = attrs.get("keyshortcuts", "").split(" ")
+        if shortcuts and shortcuts[0]:
+            result = " ".join(map(AXObject._get_label_for_key_sequence, shortcuts)).strip()
+            # Accelerators are typically modified and thus more than one character.
+            if len(result) > 1:
+                return result
+
+        index = AXObject._find_first_action_with_keybinding(obj)
+        if index == -1:
+            return ""
+
+        # This should be a string separated by semicolons and in the form:
+        #     <mnemonic>;<full sequence>;<accelerator/shortcut> (optional)
+        # In practice we get all sorts of variations.
+
+        # If there's a third item, it's probably the accelerator.
+        strings = AXObject.get_action_key_binding(obj, index).split(";")
+        if len(strings) == 3:
+            return AXObject._get_label_for_key_sequence(strings[2])
+
+        # If the last thing has Ctrl in it, it's probably the accelerator.
+        result = AXObject._get_label_for_key_sequence(strings[-1])
+        if "Ctrl" in result:
+            return result
+
+        return ""
+
+    @staticmethod
+    def get_mnemonic(obj: Atspi.Accessible) -> str:
+        """Returns the mnemonic associated with obj."""
+
+        attrs = AXObject.get_attributes_dict(obj)
+        # The ARIA spec suggests a given shortcut's components should be separated by a "+".
+        # Multiple shortcuts are apparently allowed and separated by a space.
+        shortcuts = attrs.get("keyshortcuts", "").split(" ")
+        if shortcuts and shortcuts[0]:
+            result = " ".join(map(AXObject._get_label_for_key_sequence, shortcuts)).strip()
+            # If it's not a single letter it's probably not the mnemonic.
+            if len(result) == 1:
+                return result
+
+        index = AXObject._find_first_action_with_keybinding(obj)
+        if index == -1:
+            return ""
+
+        # This should be a string separated by semicolons and in the form:
+        #     <mnemonic>;<full sequence>;<accelerator/shortcut> (optional)
+        # In practice we get all sorts of variations.
+
+        strings = AXObject.get_action_key_binding(obj, index).split(";")
+        result = AXObject._get_label_for_key_sequence(strings[0])
+        # If Ctrl is in the result, it's probably the accelerator rather than the mnemonic.
+        if "Ctrl" in result or "Control" in result:
+            return ""
+
+        return result
+
+    @staticmethod
+    def _find_first_action_with_keybinding(obj: Atspi.Accessible) -> int:
+        """Returns the index of the first action with a keybinding on obj."""
+
+        for i in range(AXObject.get_n_actions(obj)):
+            if AXObject.get_action_key_binding(obj, i):
+                return i
+        return -1
 
     @staticmethod
     def has_action(obj: Atspi.Accessible, action_name: str) -> bool:

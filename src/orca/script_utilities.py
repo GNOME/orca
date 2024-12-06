@@ -34,15 +34,11 @@ import re
 from difflib import SequenceMatcher
 
 gi.require_version("Atspi", "2.0")
-gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gtk
-
 
 from . import colornames
 from . import debug
 from . import focus_manager
-from . import keynames
 from . import keybindings
 from . import input_event_manager
 from . import mathsymbols
@@ -1473,69 +1469,6 @@ class Utilities:
         return character in self._script.whitespace \
                or character in r'!*+,-./:;<=>?@[\]^_{|}' \
                or character == self._script.NO_BREAK_SPACE_CHARACTER
-
-    @staticmethod
-    def labelFromKeySequence(sequence):
-        """Turns a key sequence into a user-presentable label."""
-
-        try:
-            key, mods = Gtk.accelerator_parse(sequence)
-            newSequence = Gtk.accelerator_get_label(key, mods)
-            if newSequence and \
-               (not newSequence.endswith('+') or newSequence.endswith('++')):
-                sequence = newSequence
-        except Exception:
-            sequence = sequence.replace("<", "")
-            sequence = sequence.replace(">", " ").strip()
-
-        return keynames.localizeKeySequence(sequence)
-
-    def mnemonicShortcutAccelerator(self, obj):
-        """Gets the mnemonic, accelerator string and possibly shortcut
-        for the given object.  These are based upon the first accessible
-        action for the object.
-
-        Arguments:
-        - obj: the Accessible object
-
-        Returns: list containing strings: [mnemonic, shortcut, accelerator]
-        """
-
-        keybinding = AXObject.get_action_key_binding(obj, 0)
-        if not keybinding:
-            return ["", "", ""]
-
-        # Action is a string in the format, where the mnemonic and/or
-        # accelerator can be missing.
-        #
-        # <mnemonic>;<full-path>;<accelerator>
-        #
-        # The keybindings in <full-path> should be separated by ":"
-        #
-
-        bindingStrings = keybinding.split(';')
-        if len(bindingStrings) == 3:
-            mnemonic       = bindingStrings[0]
-            fullShortcut   = bindingStrings[1]
-            accelerator    = bindingStrings[2]
-        elif len(bindingStrings) > 0:
-            mnemonic       = ""
-            fullShortcut   = bindingStrings[0]
-            try:
-                accelerator = bindingStrings[1]
-            except Exception:
-                accelerator = ""
-        else:
-            mnemonic       = ""
-            fullShortcut   = ""
-            accelerator    = ""
-
-        fullShortcut = fullShortcut.replace(":", " ").strip()
-        fullShortcut = self.labelFromKeySequence(fullShortcut)
-        mnemonic = self.labelFromKeySequence(mnemonic)
-        accelerator = self.labelFromKeySequence(accelerator)
-
-        return [mnemonic, fullShortcut, accelerator]
 
     @staticmethod
     def stringToKeysAndDict(string):

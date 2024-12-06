@@ -255,7 +255,7 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = []
-        accelerator = self._script.utilities.mnemonicShortcutAccelerator(obj)[-1]
+        accelerator = AXObject.get_accelerator(obj)
         if accelerator:
             result.append("(" + accelerator + ")")
         return result
