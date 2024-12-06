@@ -1,5 +1,4 @@
 subdir('Chromium')
-subdir('clutter')
 subdir('Gecko')
 subdir('gtk')
 subdir('J2SE-access-bridge')

@@ -30,14 +30,14 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import focus_manager
-from orca.scripts.toolkits import clutter
+from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 from .script_utilities import Utilities
 
 
-class Script(clutter.Script):
+class Script(default.Script):
     """Custom script for gnome-shell."""
 
     def get_utilities(self):
@@ -85,13 +85,13 @@ class Script(clutter.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, descendant)
                 return
 
-        clutter.Script.on_focused_changed(self, event)
+        super().on_focused_changed(event)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
         if not AXUtilities.is_label(event.source):
-            clutter.Script.on_name_changed(self, event)
+            super().on_name_changed(event)
             return
 
         # If we're already in a dialog, and a label inside that dialog changes its name,
@@ -114,4 +114,4 @@ class Script(clutter.Script):
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return
 
-        clutter.Script.on_selected_changed(self, event)
+        super().on_selected_changed(event)

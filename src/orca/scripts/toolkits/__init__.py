@@ -1,5 +1,4 @@
-__all__ = ['clutter',
-           'Chromium',
+__all__ = ['Chromium',
            'gtk',
            'Gecko',
            'J2SE-access-bridge',
