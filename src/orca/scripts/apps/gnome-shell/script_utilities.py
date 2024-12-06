@@ -29,9 +29,6 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import script_utilities
-from orca.ax_object import AXObject
-from orca.ax_utilities import AXUtilities
-
 from orca.ax_text import AXText
 
 class Utilities(script_utilities.Utilities):
@@ -55,19 +52,3 @@ class Utilities(script_utilities.Utilities):
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         return ""
-
-    def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
-        if not root:
-            return []
-
-        def has_role(x):
-            return AXUtilities.is_dialog(x) \
-                or AXUtilities.is_notification(x) \
-                or AXUtilities.is_menu_item(x)
-
-        if not has_role(root) and AXObject.find_ancestor(root, has_role) is None:
-            tokens = ["GNOME SHELL: Not seeking unrelated labels for", root]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        return super().unrelatedLabels(root, onlyShowing, minimumWords)
