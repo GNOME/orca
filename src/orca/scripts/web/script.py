@@ -1414,7 +1414,7 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_document_web(event.source) \
-           and not self.utilities.isOrDescendsFrom(focus, event.source):
+           and not AXObject.is_ancestor(focus, event.source, True):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2183,7 +2183,7 @@ class Script(default.Script):
             return True
 
         obj, offset = self.utilities.getCaretContext()
-        ancestor = self.utilities.commonAncestor(obj, event.source)
+        ancestor = AXObject.get_common_ancestor(obj, event.source)
         if ancestor and self.utilities.isTextBlockElement(ancestor):
             msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
             debug.print_message(debug.LEVEL_INFO, msg, True)

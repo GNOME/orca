@@ -126,7 +126,7 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.isComboBoxWithToggleDescendant(event.source) \
-            and self.utilities.isOrDescendsFrom(focus, event.source):
+           and AXObject.is_ancestor(focus, event.source, True):
             super().on_selection_changed(event)
             return
 

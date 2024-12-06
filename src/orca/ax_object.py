@@ -497,6 +497,46 @@ class AXObject:
         return parent
 
     @staticmethod
+    def _get_ancestors(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
+        """Returns a list of the ancestors of obj, starting with its parent."""
+
+        ancestors = []
+        parent = AXObject.get_parent_checked(obj)
+        while parent:
+            ancestors.append(parent)
+            parent = AXObject.get_parent_checked(parent)
+        ancestors.reverse()
+        return ancestors
+
+    @staticmethod
+    def get_common_ancestor(
+        obj1: Atspi.Accessible,
+        obj2: Atspi.Accessible
+    ) -> Optional[Atspi.Accessible]:
+        """Returns the common ancestor of obj1 and obj2."""
+
+        tokens = ["AXObject: Looking for common ancestor of", obj1, "and", obj2]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if not (obj1 and obj2):
+            return None
+
+        if obj1 == obj2:
+            return obj1
+
+        obj1_ancestors = AXObject._get_ancestors(obj1)
+        obj2_ancestors = AXObject._get_ancestors(obj2)
+        result = None
+        for a1, a2 in zip(obj1_ancestors, obj2_ancestors):
+            if a1 == a2:
+                result = a1
+            else:
+                break
+
+        tokens = ["AXObject: Common ancestor of", obj1, "and", obj2, "is", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
     def find_ancestor(
         obj: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool]
@@ -525,14 +565,21 @@ class AXObject:
         return None
 
     @staticmethod
-    def is_ancestor(obj: Atspi.Accessible, ancestor: Atspi.Accessible) -> bool:
-        """Returns true if ancestor is an ancestor of obj"""
+    def is_ancestor(
+        obj: Atspi.Accessible,
+        ancestor: Atspi.Accessible,
+        inclusive: bool = False
+    ) -> bool:
+        """Returns true if ancestor is an ancestor of obj or, if inclusive, obj is ancestor."""
 
         if not AXObject.is_valid(obj):
             return False
 
         if not AXObject.is_valid(ancestor):
             return False
+
+        if obj == ancestor and inclusive:
+            return True
 
         return AXObject.find_ancestor(obj, lambda x: x == ancestor) is not None
 

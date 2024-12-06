@@ -135,51 +135,6 @@ class Utilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return nodes
 
-    def commonAncestor(self, a, b):
-        """Finds the common ancestor between Accessible a and Accessible b.
-
-        Arguments:
-        - a: Accessible
-        - b: Accessible
-        """
-
-        tokens = ["SCRIPT UTILITIES: Looking for common ancestor of", a, "and", b]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not (a and b):
-            return None
-
-        if a == b:
-            return a
-
-        aParents = [a]
-        parent = AXObject.get_parent_checked(a)
-        while parent:
-            aParents.append(parent)
-            parent = AXObject.get_parent_checked(parent)
-        aParents.reverse()
-
-        bParents = [b]
-        parent = AXObject.get_parent_checked(b)
-        while parent:
-            bParents.append(parent)
-            parent = AXObject.get_parent_checked(parent)
-        bParents.reverse()
-
-        commonAncestor = None
-        maxSearch = min(len(aParents), len(bParents))
-        i = 0
-        while i < maxSearch:
-            if aParents[i] == bParents[i]:
-                commonAncestor = aParents[i]
-                i += 1
-            else:
-                break
-
-        tokens = ["SCRIPT UTILITIES: Common ancestor of", a, "and", b, "is", commonAncestor]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return commonAncestor
-
     def displayedLabel(self, obj):
         """If there is an object labelling the given object, return the
         text being displayed for the object labelling this object.
@@ -321,12 +276,6 @@ class Utilities:
 
     def isToggleDescendantOfComboBox(self, obj):
         return False
-
-    def isOrDescendsFrom(self, obj, ancestor):
-        if obj == ancestor:
-            return True
-
-        return AXObject.find_ancestor(obj, lambda x: x and x == ancestor)
 
     def isContentError(self, obj):
         return False

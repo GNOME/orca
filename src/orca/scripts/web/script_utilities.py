@@ -2641,7 +2641,7 @@ class Utilities(script_utilities.Utilities):
             if not self.isLabelDescendant(acc) or self.isTextBlockElement(acc):
                 continue
 
-            if AXUtilities.is_label_or_caption(self.commonAncestor(acc, obj)):
+            if AXUtilities.is_label_or_caption(AXObject.get_common_ancestor(acc, obj)):
                 return True
 
         return False

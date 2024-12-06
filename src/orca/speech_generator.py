@@ -796,7 +796,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_tool_tip(obj):
             return []
 
-        common_ancestor = self._script.utilities.commonAncestor(prior_obj, obj)
+        common_ancestor = AXObject.get_common_ancestor(prior_obj, obj)
         if obj == common_ancestor:
             return []
 
