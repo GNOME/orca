@@ -2295,18 +2295,6 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant[hash(obj)] = rv
         return rv
 
-    def isSorted(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        return attrs.get("sort") not in ("none", None)
-
-    def isAscending(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        return attrs.get("sort") == "ascending"
-
-    def isDescending(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        return attrs.get("sort") == "descending"
-
     def isCellWithNameFromHeader(self, obj):
         if not AXUtilities.is_table_cell(obj):
             return False

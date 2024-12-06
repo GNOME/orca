@@ -1182,7 +1182,7 @@ class Generator:
 
     @log_generator_output
     def _generate_table_sort_order(self, obj, **_args):
-        description = self._script.utilities.getSortOrderDescription(obj)
+        description = AXTable.get_presentable_sort_order_from_header(obj)
         if not description:
             return []
 

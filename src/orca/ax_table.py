@@ -44,6 +44,7 @@ from gi.repository import Atspi
 
 from . import debug
 from . import messages
+from . import object_properties
 from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 
@@ -892,6 +893,34 @@ class AXTable:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PRESENTABLE_COORDINATES[hash(cell)] = row_index, col_index
         return row_index, col_index
+
+    @staticmethod
+    def get_presentable_sort_order_from_header(
+        obj: Atspi.Accessible,
+        include_name: bool = False
+    ) -> str:
+        """Returns the end-user-consumable row/column sort order from its header."""
+
+        if not AXUtilitiesRole.is_table_header(obj):
+            return ""
+
+        sort_order = AXObject.get_attribute(obj, "sort", False)
+        if not sort_order or sort_order == "none":
+            return ""
+
+        if sort_order == "ascending":
+            result = object_properties.SORT_ORDER_ASCENDING
+        elif sort_order == "descending":
+            result = object_properties.SORT_ORDER_DESCENDING
+        else:
+            result = object_properties.SORT_ORDER_OTHER
+
+        if include_name:
+            name = AXObject.get_name(obj)
+            if name:
+                result = f"{name}. {result}"
+
+        return result
 
     @staticmethod
     def get_table(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:

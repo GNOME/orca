@@ -563,31 +563,6 @@ class Utilities:
 
         return settings_manager.get_manager().get_setting('readFullRowInDocumentTable')
 
-    def isSorted(self, obj):
-        return False
-
-    def isAscending(self, obj):
-        return False
-
-    def isDescending(self, obj):
-        return False
-
-    def getSortOrderDescription(self, obj, includeName=False):
-        if not (obj and self.isSorted(obj)):
-            return ""
-
-        if self.isAscending(obj):
-            result = object_properties.SORT_ORDER_ASCENDING
-        elif self.isDescending(obj):
-            result = object_properties.SORT_ORDER_DESCENDING
-        else:
-            result = object_properties.SORT_ORDER_OTHER
-
-        if includeName and AXObject.get_name(obj):
-            result = f"{AXObject.get_name(obj)}. {result}"
-
-        return result
-
     def isFocusableLabel(self, obj):
         return AXUtilities.is_label(obj) and AXUtilities.is_focusable(obj)
 

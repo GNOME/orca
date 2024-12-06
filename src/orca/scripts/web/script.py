@@ -1865,9 +1865,9 @@ class Script(default.Script):
 
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
         header = self.utilities.containingTableHeader(focus)
-        if header:
-            self.presentMessage(self.utilities.getSortOrderDescription(header, True))
-
+        msg = AXTable.get_presentable_sort_order_from_header(header, True)
+        if msg:
+            self.presentMessage(msg)
         return True
 
     def on_document_load_complete(self, event):
@@ -2100,9 +2100,9 @@ class Script(default.Script):
 
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
         header = self.utilities.containingTableHeader(focus)
-        if header:
-            self.presentMessage(self.utilities.getSortOrderDescription(header, True))
-
+        msg = AXTable.get_presentable_sort_order_from_header(header, True)
+        if msg:
+            self.presentMessage(msg)
         return True
 
     def on_selected_changed(self, event):
