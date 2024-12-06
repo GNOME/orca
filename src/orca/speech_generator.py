@@ -996,7 +996,7 @@ class SpeechGenerator(generator.Generator):
 
         string = object_properties.GROUP_INDEX_SPEECH
         if total < 0:
-            if not self._script.utilities.setSizeUnknown(obj):
+            if not AXUtilities.get_set_size_is_unknown(obj):
                 return []
             string = object_properties.GROUP_INDEX_TOTAL_UNKNOWN_SPEECH
 
@@ -1926,7 +1926,7 @@ class SpeechGenerator(generator.Generator):
 
         rows = AXTable.get_row_count(obj)
         cols = AXTable.get_column_count(obj)
-        if (rows < 0 or cols < 0) and not self._script.utilities.rowOrColumnCountUnknown(obj):
+        if (rows < 0 or cols < 0) and not AXUtilities.get_set_size_is_unknown(obj):
             return []
 
         result = [messages.tableSize(rows, cols)]

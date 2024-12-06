@@ -2327,20 +2327,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def setSizeUnknown(self, obj):
-        if super().setSizeUnknown(obj):
-            return True
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('setsize') == '-1'
-
-    def rowOrColumnCountUnknown(self, obj):
-        if super().rowOrColumnCountUnknown(obj):
-            return True
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('rowcount') == '-1' or attrs.get('colcount') == '-1'
-
     def shouldReadFullRow(self, obj, prevObj=None):
         if not (obj and self.inDocumentContent(obj)):
             return super().shouldReadFullRow(obj, prevObj)

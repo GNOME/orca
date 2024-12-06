@@ -1866,12 +1866,6 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, AXUtilities.is_table_header)
 
-    def setSizeUnknown(self, obj):
-        return AXUtilities.is_indeterminate(obj)
-
-    def rowOrColumnCountUnknown(self, obj):
-        return AXUtilities.is_indeterminate(obj)
-
     def treatAsEntry(self, obj):
         return False
 

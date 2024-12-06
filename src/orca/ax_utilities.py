@@ -582,6 +582,22 @@ class AXUtilities:
         return len(members)
 
     @staticmethod
+    def get_set_size_is_unknown(obj: Atspi.Accessible) -> bool:
+        """Returns True if the total number of objects in this container is unknown."""
+
+        if AXUtilitiesState.is_indeterminate(obj):
+            return True
+
+        attrs = AXObject.get_attributes_dict(obj, False)
+        if attrs.get("setsize") == "-1":
+            return True
+
+        if AXUtilitiesRole.is_table(obj):
+            return attrs.get("rowcount") == "-1" or attrs.get("colcount") == "-1"
+
+        return False
+
+    @staticmethod
     def get_position_in_set(obj: Atspi.Accessible) -> int:
         """Returns the position of obj with respect to the number of items in its container."""
 

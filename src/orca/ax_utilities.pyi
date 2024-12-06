@@ -107,6 +107,9 @@ class AXUtilities:
     def get_set_size(obj: Atspi.Accessible) -> int: ...
 
     @staticmethod
+    def get_set_size_is_unknown(obj: Atspi.Accessible) -> bool: ...
+
+    @staticmethod
     def get_position_in_set(obj: Atspi.Accessible) -> int: ...
 
     @staticmethod
