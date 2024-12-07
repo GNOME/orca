@@ -74,7 +74,6 @@ class Utilities(script_utilities.Utilities):
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
         self._isFocusableWithMathChild = {}
-        self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._labelIsAncestorOfLabelled = {}
         self._elementLinesAreSingleChars= {}
@@ -157,7 +156,6 @@ class Utilities(script_utilities.Utilities):
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
         self._isFocusableWithMathChild = {}
-        self._mathNestingLevel = {}
         self._isOffScreenLabel = {}
         self._labelIsAncestorOfLabelled = {}
         self._elementLinesAreSingleChars= {}
@@ -2067,131 +2065,6 @@ class Utilities(script_utilities.Utilities):
             return obj
 
         return AXObject.find_ancestor(obj, AXUtilities.is_math)
-
-    def getMathDenominator(self, obj):
-        return AXObject.get_child(obj, 1)
-
-    def getMathNumerator(self, obj):
-        return AXObject.get_child(obj, 0)
-
-    def getMathRootBase(self, obj):
-        if AXUtilities.is_math_square_root(obj):
-            return obj
-
-        return AXObject.get_child(obj, 0)
-
-    def getMathRootIndex(self, obj):
-        return AXObject.get_child(obj, 1)
-
-    def getMathScriptBase(self, obj):
-        if AXUtilities.is_math_sub_or_super_script(obj) \
-           or AXUtilities.is_math_under_or_over_script(obj) \
-           or AXUtilities.is_math_multi_script(obj):
-            return AXObject.get_child(obj, 0)
-
-        return None
-
-    def getMathScriptSubscript(self, obj):
-        if self._getTag(obj) in ["msub", "msubsup"]:
-            return AXObject.get_child(obj, 1)
-
-        return None
-
-    def getMathScriptSuperscript(self, obj):
-        tag = self._getTag(obj)
-        if tag == "msup":
-            return AXObject.get_child(obj, 1)
-
-        if tag == "msubsup":
-            return AXObject.get_child(obj, 2)
-
-        return None
-
-    def getMathScriptUnderscript(self, obj):
-        if self._getTag(obj) in ["munder", "munderover"]:
-            return AXObject.get_child(obj, 1)
-
-        return None
-
-    def getMathScriptOverscript(self, obj):
-        tag = self._getTag(obj)
-        if tag == "mover":
-            return AXObject.get_child(obj, 1)
-
-        if tag == "munderover":
-            return AXObject.get_child(obj, 2)
-
-        return None
-
-    def _getMathPrePostScriptSeparator(self, obj):
-        for child in AXObject.iter_children(obj):
-            if self._getTag(child) == "mprescripts":
-                return child
-
-        return None
-
-    def getMathPrescripts(self, obj):
-        separator = self._getMathPrePostScriptSeparator(obj)
-        if not separator:
-            return []
-
-        children = []
-        child = AXObject.get_next_sibling(separator)
-        while child:
-            children.append(child)
-            child = AXObject.get_next_sibling(child)
-
-        return children
-
-    def getMathPostscripts(self, obj):
-        separator = self._getMathPrePostScriptSeparator(obj)
-        children = []
-        child = AXObject.get_child(obj, 1)
-        while child and child != separator:
-            children.append(child)
-            child = AXObject.get_next_sibling(child)
-
-        return children
-
-    def getMathEnclosures(self, obj):
-        if not AXUtilities.is_math_enclose(obj):
-            return []
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('notation', 'longdiv').split()
-
-    def getMathFencedSeparators(self, obj):
-        if not AXUtilities.is_math_fenced(obj):
-            return ['']
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return list(attrs.get('separators', ','))
-
-    def getMathFences(self, obj):
-        if not AXUtilities.is_math_fenced(obj):
-            return ['', '']
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return [attrs.get('open', '('), attrs.get('close', ')')]
-
-    def getMathNestingLevel(self, obj, test=None):
-        rv = self._mathNestingLevel.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        def pred(x):
-            if test is not None:
-                return test(x)
-            return self._getTag(x) == self._getTag(obj)
-
-        rv = -1
-        ancestor = obj
-        while ancestor:
-            ancestor = AXObject.find_ancestor(ancestor, pred)
-            rv += 1
-
-        self._mathNestingLevel[hash(obj)] = rv
-        return rv
 
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):

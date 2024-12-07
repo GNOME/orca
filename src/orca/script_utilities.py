@@ -297,51 +297,6 @@ class Utilities:
     def isInMath(self):
         return False
 
-    def getMathDenominator(self, obj):
-        return None
-
-    def getMathNumerator(self, obj):
-        return None
-
-    def getMathRootBase(self, obj):
-        return None
-
-    def getMathRootIndex(self, obj):
-        return None
-
-    def getMathScriptBase(self, obj):
-        return None
-
-    def getMathScriptSubscript(self, obj):
-        return None
-
-    def getMathScriptSuperscript(self, obj):
-        return None
-
-    def getMathScriptUnderscript(self, obj):
-        return None
-
-    def getMathScriptOverscript(self, obj):
-        return None
-
-    def getMathPrescripts(self, obj):
-        return []
-
-    def getMathPostscripts(self, obj):
-        return []
-
-    def getMathEnclosures(self, obj):
-        return []
-
-    def getMathFencedSeparators(self, obj):
-        return ['']
-
-    def getMathFences(self, obj):
-        return ['', '']
-
-    def getMathNestingLevel(self, obj, test=None):
-        return 0
-
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False

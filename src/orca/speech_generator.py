@@ -1157,7 +1157,8 @@ class SpeechGenerator(generator.Generator):
     @log_generator_output
     def _generate_math_enclosed_enclosures(self, obj, **args):
         strings = []
-        enclosures = self._script.utilities.getMathEnclosures(obj)
+        attrs = AXObject.get_attributes_dict(obj)
+        enclosures = attrs.get("notation", "longdiv").split()
         if "actuarial" in enclosures:
             strings.append(messages.MATH_ENCLOSURE_ACTUARIAL)
         if "box" in enclosures:
@@ -1212,7 +1213,8 @@ class SpeechGenerator(generator.Generator):
     @log_generator_output
     def _generate_math_fenced_contents(self, obj, **args):
         result = []
-        separators = self._script.utilities.getMathFencedSeparators(obj)
+        attrs = AXObject.get_attributes_dict(obj)
+        separators = list(attrs.get("separators", ","))
         child_count = AXObject.get_child_count(obj)
         separators.extend(separators[-1] for _ in range(len(separators), child_count - 1))
         separators.append("")
@@ -1229,7 +1231,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_fraction_numerator(self, obj, **_args):
-        numerator = self._script.utilities.getMathNumerator(obj)
+        numerator = AXObject.get_child(obj, 0)
         if AXUtilities.is_math_layout_only(numerator):
             return self._generate_math_contents(numerator)
 
@@ -1238,7 +1240,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_fraction_denominator(self, obj, **_args):
-        denominator = self._script.utilities.getMathDenominator(obj)
+        denominator = AXObject.get_child(obj, 1)
         if AXUtilities.is_math_layout_only(denominator):
             return self._generate_math_contents(denominator)
 
@@ -1253,12 +1255,15 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_root_base(self, obj, **args):
-        base = self._script.utilities.getMathRootBase(obj)
+        is_square_root = AXUtilities.is_math_square_root(obj)
+        if is_square_root:
+            base = obj
+        else:
+            base = AXObject.get_child(obj, 0)
         if not base:
             return []
 
-        if AXUtilities.is_math_square_root(obj) \
-           or AXUtilities.is_math_token(base) \
+        if is_square_root or AXUtilities.is_math_token(base) \
            or AXUtilities.is_math_layout_only(base):
             return self._generate_math_contents(base)
 
@@ -1268,7 +1273,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_base(self, obj, **_args):
-        base = self._script.utilities.getMathScriptBase(obj)
+        base = AXObject.get_child(obj, 0)
         if not base:
             return []
 
@@ -1284,7 +1289,10 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_subscript(self, obj, **args):
-        subscript = self._script.utilities.getMathScriptSubscript(obj)
+        if AXObject.get_attribute(obj, "tag") == "msup":
+            return []
+
+        subscript = AXObject.get_child(obj, 1)
         if not subscript:
             return []
 
@@ -1295,8 +1303,12 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_superscript(self, obj, **args):
-        superscript = self._script.utilities.getMathScriptSuperscript(obj)
-        if not superscript:
+        tag = AXObject.get_attribute(obj, "tag")
+        if tag == "msup":
+            superscript = AXObject.get_child(obj, 1)
+        elif tag == "msubsup":
+            superscript = AXObject.get_child(obj, 2)
+        else:
             return []
 
         result = [messages.MATH_SUPERSCRIPT]
@@ -1306,7 +1318,10 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_underscript(self, obj, **args):
-        underscript = self._script.utilities.getMathScriptUnderscript(obj)
+        if AXObject.get_attribute(obj, "tag") == "mover":
+            return []
+
+        underscript = AXObject.get_child(obj, 1)
         if not underscript:
             return []
 
@@ -1317,8 +1332,12 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_overscript(self, obj, **args):
-        overscript = self._script.utilities.getMathScriptOverscript(obj)
-        if not overscript:
+        tag = AXObject.get_attribute(obj, "tag")
+        if tag == "mover":
+            overscript = AXObject.get_child(obj, 1)
+        elif tag == "munderover":
+            overscript = AXObject.get_child(obj, 2)
+        else:
             return []
 
         result = [messages.MATH_OVERSCRIPT]
@@ -1328,8 +1347,16 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_prescripts(self, obj, **args):
+        prescripts = []
+        found_separator = False
+        for child in AXObject.iter_children(obj):
+            if AXObject.get_attribute(child, "tag") == "mprescripts":
+                found_separator = True
+                continue
+            if found_separator:
+                prescripts.append(child)
+
         result = []
-        prescripts = self._script.utilities.getMathPrescripts(obj)
         for i, script in enumerate(prescripts):
             if AXUtilities.is_math_layout_only(script):
                 continue
@@ -1345,8 +1372,13 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_script_postscripts(self, obj, **args):
+        postscripts = []
+        child = AXObject.get_child(obj, 1)
+        while child and AXObject.get_attribute(child, "tag") != "mprescripts":
+            postscripts.append(child)
+            child = AXObject.get_next_sibling(child)
+
         result = []
-        postscripts = self._script.utilities.getMathPostscripts(obj)
         for i, script in enumerate(postscripts):
             if AXUtilities.is_math_layout_only(script):
                 continue
@@ -1500,26 +1532,22 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        fence_start, _fence_end = self._script.utilities.getMathFences(obj)
-        if fence_start:
-            result = [mathsymbols.getCharacterName(fence_start)]
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
-            return result
-
-        return []
+        attrs = AXObject.get_attributes_dict(obj)
+        fence_start = attrs.get("open", "(")
+        result = [mathsymbols.getCharacterName(fence_start)]
+        result.extend(self.voice(DEFAULT, obj=obj, **args))
+        return result
 
     @log_generator_output
     def _generate_end_of_math_fenced(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        _fence_start, fence_end = self._script.utilities.getMathFences(obj)
-        if fence_end:
-            result = [mathsymbols.getCharacterName(fence_end)]
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
-            return result
-
-        return []
+        attrs = AXObject.get_attributes_dict(obj)
+        fence_end = attrs.get("close", ")")
+        result = [mathsymbols.getCharacterName(fence_end)]
+        result.extend(self.voice(DEFAULT, obj=obj, **args))
+        return result
 
     @log_generator_output
     def _generate_start_of_math_fraction(self, obj, **args):
@@ -1551,7 +1579,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_math_square_root(obj):
             result = [messages.MATH_SQUARE_ROOT_OF]
         else:
-            index = self._script.utilities.getMathRootIndex(obj)
+            index = AXObject.get_child(obj, 1)
             string = AXText.get_all_text(index)
             if string == "2":
                 result = [messages.MATH_SQUARE_ROOT_OF]
@@ -1591,7 +1619,7 @@ class SpeechGenerator(generator.Generator):
 
         rows = AXTable.get_row_count(obj)
         columns = AXTable.get_column_count(obj)
-        nesting_level = self._script.utilities.getMathNestingLevel(obj)
+        nesting_level = self._script.utilities.nestingLevel(obj)
         if nesting_level > 0:
             result = [messages.mathNestedTableSize(rows, columns)]
         else:
@@ -1604,7 +1632,7 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        nesting_level = self._script.utilities.getMathNestingLevel(obj)
+        nesting_level = self._script.utilities.nestingLevel(obj)
         if nesting_level > 0:
             result = [messages.MATH_NESTED_TABLE_END]
         else:
