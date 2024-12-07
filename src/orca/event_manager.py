@@ -293,6 +293,14 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if event_type.startswith("obect:active-descendant-changed"):
+            child = event.any_data
+            if child is None or AXObject.is_dead(child):
+                msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/dead event.any_data"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            return False
+
         if event_type.startswith("object:children-changed"):
             if "remove" in event_type and focus and AXObject.is_dead(focus):
                 return False
