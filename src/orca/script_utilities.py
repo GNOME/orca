@@ -294,9 +294,6 @@ class Utilities:
     def speakMathSymbolNames(self, obj=None):
         return False
 
-    def isInMath(self):
-        return False
-
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False
@@ -1345,7 +1342,8 @@ class Utilities:
         if self.speakMathSymbolNames():
             line = mathsymbols.adjustForSpeech(line)
 
-        if len(line) == 1 and not self._script.inSayAll() and self.isInMath():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if len(line) == 1 and not self._script.inSayAll() and AXUtilities.is_math_related(focus):
             charname = mathsymbols.getCharacterName(line)
             if charname != line:
                 return charname

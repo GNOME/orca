@@ -2054,9 +2054,6 @@ class Utilities(script_utilities.Utilities):
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         return AXUtilities.is_math_related(obj)
 
-    def isInMath(self):
-        return AXUtilities.is_math_related(focus_manager.get_manager().get_locus_of_focus())
-
     def getMathAncestor(self, obj):
         if not AXUtilities.is_math_related(obj):
             return None
