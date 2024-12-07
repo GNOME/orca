@@ -260,22 +260,48 @@ class EventManager:
                 msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         # Text insertions in the text role are typically something we want to handle.
         if AXUtilities.is_text(event.source):
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
+
         # Notifications and alerts are things we want to handle.
         if AXUtilities.is_notification(event.source) or AXUtilities.is_alert(event.source):
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         # Keep these checks early in the process so we can assume them throughout
         # the rest of our checks.
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus == event.source \
-           or AXUtilities.is_focused(event.source) or AXUtilities.is_selected(event.source):
+        if focus == event.source:
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
+
         if focus == event.any_data:
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to any_data being locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilities.is_selected(event.source):
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being selected"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # We see an unbelievable number of active-descendant-changed and selection changed from Caja
+        # when the user navigates from one giant folder to another. We need the spam filtering
+        # below to catch this bad behavior coming from a focused object, so only return early here
+        # if the focused object doesn't manage descendants.
+        if AXUtilities.is_focused(event.source) \
+           and not AXUtilities.manages_descendants(event.source):
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         last_app, last_time = self._event_history.get(event_type, (None, 0))
