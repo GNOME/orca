@@ -1375,38 +1375,6 @@ class Utilities:
 
         return result
 
-    def isSentenceDelimiter(self, currentChar, previousChar):
-        """Returns True if we are positioned at the end of a sentence.
-        This is determined by checking if the current character is a
-        white space character and the previous character is one of the
-        normal end-of-sentence punctuation characters.
-
-        Arguments:
-        - currentChar:  the current character
-        - previousChar: the previous character
-
-        Returns True if the given character is a sentence delimiter.
-        """
-
-        if currentChar == '\r' or currentChar == '\n':
-            return True
-
-        return currentChar in self._script.whitespace \
-               and previousChar in '!.?:;'
-
-    def isWordDelimiter(self, character):
-        """Returns True if the given character is a word delimiter.
-
-        Arguments:
-        - character: the character in question
-
-        Returns True if the given character is a word delimiter.
-        """
-
-        return character in self._script.whitespace \
-               or character in r'!*+,-./:;<=>?@[\]^_{|}' \
-               or character == self._script.NO_BREAK_SPACE_CHARACTER
-
     @staticmethod
     def stringToKeysAndDict(string):
         """Converts a string made up of a series of <key>:<value>; pairs

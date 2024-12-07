@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import re
+import string
 import time
 
 from orca import braille
@@ -64,7 +65,6 @@ from orca.ax_value import AXValue
 class Script(script.Script):
 
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
-    NO_BREAK_SPACE_CHARACTER  = '\u00a0'
 
     def __init__(self, app):
         super().__init__(app)
@@ -72,9 +72,6 @@ class Script(script.Script):
         self.targetCursorCell = None
 
         self.justEnteredFlatReviewMode = False
-
-        self.digits = '0123456789'
-        self.whitespace = ' \t\n\r\v\f'
 
         # A dictionary of non-standardly-named text attributes and their
         # Atk equivalents.
@@ -1801,12 +1798,14 @@ class Script(script.Script):
 
         offset = AXText.get_caret_offset(obj)
         char, start = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
-        previousChar, previousStart = AXText.get_character_at_offset(obj, start - 1)[0:-1]
-        if not (previousChar and self.utilities.isSentenceDelimiter(char, previousChar)):
+        previous_char, previous_start = AXText.get_character_at_offset(obj, start - 1)[0:-1]
+        if not (char in string.whitespace + "\u00a0" and previous_char in "!.?:;"):
             return False
 
-        sentence = AXText.get_sentence_at_offset(obj, previousStart)[0]
+        sentence = AXText.get_sentence_at_offset(obj, previous_start)[0]
         if not sentence:
+            msg = "DEFAULT: At a sentence boundary, but no sentence found. Missing implementation?"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=sentence)
@@ -1826,16 +1825,17 @@ class Script(script.Script):
         if offset <= 0:
             return False
 
-        previousChar, previousStart = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
-        if not self.utilities.isWordDelimiter(previousChar):
+        # If the previous character is not a word delimiter, there's nothing to echo.
+        prev_char, prev_start = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
+        if prev_char not in string.punctuation + string.whitespace + "\u00a0":
             return False
 
         # Two back-to-back delimiters should not result in a re-echo.
-        previousChar, previousStart = AXText.get_character_at_offset(obj, previousStart - 1)[0:-1]
-        if self.utilities.isWordDelimiter(previousChar):
+        prev_char, prev_start = AXText.get_character_at_offset(obj, prev_start - 1)[0:-1]
+        if prev_char in string.punctuation + string.whitespace + "\u00a0":
             return False
 
-        word = AXText.get_word_at_offset(obj, previousStart)[0]
+        word = AXText.get_word_at_offset(obj, prev_start)[0]
         if not word:
             return False
 
@@ -1920,27 +1920,27 @@ class Script(script.Script):
                 speech.speak(line)
                 return
 
-            for start, end, string, language, dialect in split:
-                if not string:
+            for start, _end, text, language, dialect in split:
+                if not text:
                     continue
 
                 # TODO - JD: This needs to be done in the generators.
                 voice = self.speech_generator.voice(
-                    obj=obj, string=string, language=language, dialect=dialect)
+                    obj=obj, string=text, language=language, dialect=dialect)
                 # TODO - JD: Can we combine all the adjusting?
                 manager = speech_and_verbosity_manager.get_manager()
-                string = manager.adjust_for_links(obj, string, start)
-                string = manager.adjust_for_digits(obj, string)
-                string = manager.adjust_for_repeats(string)
+                text = manager.adjust_for_links(obj, text, start)
+                text = manager.adjust_for_digits(obj, text)
+                text = manager.adjust_for_repeats(text)
                 if self.utilities.shouldVerbalizeAllPunctuation(obj):
-                    string = self.utilities.verbalizeAllPunctuation(string)
+                    text = self.utilities.verbalizeAllPunctuation(text)
 
                 # Some synthesizers will verbalize the whitespace, so if we've already
                 # described it, prevent double-presentation by stripping it off.
                 if not utterance and indentationDescription:
-                    string = string.lstrip()
+                    text = text.lstrip()
 
-                result = [string]
+                result = [text]
                 result.extend(voice)
                 utterance.append(result)
             speech.speak(utterance)
@@ -2151,14 +2151,14 @@ class Script(script.Script):
 
         self._sayAllIsInterrupted = False
         self._inSayAll = True
-        priorObj = obj
+        prior_obj = obj
         document = self.utilities.getDocumentForObject(obj)
 
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
         while obj:
-            speech.speak(self.speech_generator.generate_context(obj, priorObj=priorObj))
+            speech.speak(self.speech_generator.generate_context(obj, priorObj=prior_obj))
 
             style = settings_manager.get_manager().get_setting('sayAllStyle')
             if style == settings.SAYALL_STYLE_SENTENCE and AXText.supports_sentence_iteration(obj):
@@ -2166,18 +2166,18 @@ class Script(script.Script):
             else:
                 iterator = AXText.iter_line
 
-            for string, start, end in iterator(obj, offset):
-                voice = self.speech_generator.voice(obj=obj, string=string)
+            for text, start, end in iterator(obj, offset):
+                voice = self.speech_generator.voice(obj=obj, string=text)
                 if voice and isinstance(voice, list):
                     voice = voice[0]
 
                 # TODO - JD: Can we combine all the adjusting?
                 manager = speech_and_verbosity_manager.get_manager()
-                string = manager.adjust_for_links(obj, string, start)
-                string = manager.adjust_for_digits(obj, string)
-                string = manager.adjust_for_repeats(string)
+                text = manager.adjust_for_links(obj, text, start)
+                text = manager.adjust_for_digits(obj, text)
+                text = manager.adjust_for_repeats(text)
 
-                context = speechserver.SayAllContext(obj, string, start, end)
+                context = speechserver.SayAllContext(obj, text, start, end)
                 tokens = ["DEFAULT:", context]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -2185,7 +2185,7 @@ class Script(script.Script):
                 self.get_event_synthesizer().scroll_into_view(obj, start, end)
                 yield [context, voice]
 
-            priorObj = obj
+            prior_obj = obj
             offset = 0
             obj = self.utilities.findNextObject(obj)
             if document != self.utilities.getDocumentForObject(obj):
@@ -2242,9 +2242,9 @@ class Script(script.Script):
         if not settings_manager.get_manager().get_setting('speakMisspelledIndicator'):
             return
 
-        # If we're on whitespace, we cannot be on a misspelled word.
+        # If we're on whitespace or punctuation, we cannot be on a misspelled word.
         char = AXText.get_character_at_offset(obj, offset)[0]
-        if not char.strip() or self.utilities.isWordDelimiter(char):
+        if char in string.punctuation + string.whitespace + "\u00a0":
             self._lastWordCheckedForSpelling = char
             return
 
