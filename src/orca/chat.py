@@ -580,9 +580,9 @@ class Chat:
             text = messages.CHAT_MESSAGE_FROM_ROOM % chatRoomName
 
         if not settings.presentChatRoomLast:
-            text = self._script.utilities.appendString(text, message)
+            text = f"{text} {message}"
         else:
-            text = self._script.utilities.appendString(message, text)
+            text = f"{message} {text}"
 
         if len(text.strip()):
             voice = self._script.speech_generator.voice(string=text)

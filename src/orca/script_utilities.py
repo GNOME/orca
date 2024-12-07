@@ -1375,19 +1375,6 @@ class Utilities:
 
         return result
 
-    @staticmethod
-    def appendString(text, newText, delimiter=" "):
-        """Appends the newText to the given text with the delimiter in between
-        and returns the new string.  Edge cases, such as no initial text or
-        no newText, are handled gracefully."""
-
-        if not newText:
-            return text
-        if not text:
-            return newText
-
-        return text + delimiter + newText
-
     def isSentenceDelimiter(self, currentChar, previousChar):
         """Returns True if we are positioned at the end of a sentence.
         This is determined by checking if the current character is a
