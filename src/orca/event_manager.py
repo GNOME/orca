@@ -295,8 +295,8 @@ class EventManager:
 
         if event_type.startswith("obect:active-descendant-changed"):
             child = event.any_data
-            if child is None or AXObject.is_dead(child):
-                msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/dead event.any_data"
+            if child is None or AXUtilities.is_invalid_role(child):
+                msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/invalid event.any_data"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             return False
