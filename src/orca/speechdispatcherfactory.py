@@ -30,14 +30,15 @@ from gi.repository import GLib
 import time
 
 from . import debug
+from . import focus_manager
 from . import guilabels
 from . import mathsymbols
 from . import messages
 from . import speechserver
 from . import settings
-from . import script_manager
 from . import settings_manager
 from .acss import ACSS
+from .ax_utilities import AXUtilities
 from .ssml import SSML, SSMLCapabilities
 
 try:
@@ -478,8 +479,8 @@ class SpeechServer(speechserver.SpeechServer):
         self._apply_acss(acss)
 
         name = character
-        script = script_manager.get_manager().get_active_script()
-        if script and script.utilities.speakMathSymbolNames():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXUtilities.is_math_related(focus):
             name = mathsymbols.getCharacterName(character)
 
         if not name or name == character:

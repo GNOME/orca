@@ -2050,10 +2050,6 @@ class Utilities(script_utilities.Utilities):
 
         return suggestion[-1] == obj
 
-    def speakMathSymbolNames(self, obj=None):
-        obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        return AXUtilities.is_math_related(obj)
-
     def getMathAncestor(self, obj):
         if not AXUtilities.is_math_related(obj):
             return None

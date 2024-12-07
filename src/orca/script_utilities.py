@@ -291,9 +291,6 @@ class Utilities:
     def isHidden(self, obj):
         return False
 
-    def speakMathSymbolNames(self, obj=None):
-        return False
-
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False
@@ -1339,10 +1336,10 @@ class Utilities:
         # both types of spaces.
         line = line.replace("\u00a0", " ")
 
-        if self.speakMathSymbolNames():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXUtilities.is_math_related(focus):
             line = mathsymbols.adjustForSpeech(line)
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
         if len(line) == 1 and not self._script.inSayAll() and AXUtilities.is_math_related(focus):
             charname = mathsymbols.getCharacterName(line)
             if charname != line:
