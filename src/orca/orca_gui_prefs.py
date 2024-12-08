@@ -1055,9 +1055,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                     model.set_value(thisIter, IS_SPOKEN, state)
                     model.set_value(thisIter, VALUE, localizedValue)
                     if moveToTop:
-                        thisIter = model.get_iter(path)
-                        otherIter = model.get_iter(i)
-                        model.move_before(thisIter, otherIter)
+                        try:
+                            thisIter = model.get_iter(path)
+                            otherIter = model.get_iter(i)
+                        except ValueError:
+                            pass
+                        else:
+                            model.move_before(thisIter, otherIter)
                     break
 
         view.set_model(model)
