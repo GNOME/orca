@@ -167,7 +167,10 @@ class BrailleGenerator(generator.Generator):
                     prior = None
                 else:
                     prior = self._as_string(element)
-                    combined = f"{combined}{delimiter}{prior}"
+                    if combined and prior:
+                        combined = f"{combined}{delimiter}{prior}"
+                    elif not combined:
+                        combined = prior
         return combined
 
     def _generate_result_separator(self, _obj, **_args):
