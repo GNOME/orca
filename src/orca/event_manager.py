@@ -304,6 +304,14 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if event_type.startswith("object:text-changed:insert") \
+           and AXUtilities.is_section(event.source):
+            live = AXObject.get_attribute(event.source, "live")
+            if live and live != "off":
+                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being live region"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+
         last_app, last_time = self._event_history.get(event_type, (None, 0))
         app = AXUtilities.get_application(event.source)
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
