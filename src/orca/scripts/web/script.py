@@ -1607,15 +1607,10 @@ class Script(default.Script):
             focus_manager.get_manager().set_locus_of_focus(event, event.source, notify, True)
             return True
 
-        if input_event_manager.get_manager().last_event_was_tab_navigation():
-            if self.utilities.isDocument(event.source):
-                msg = "WEB: Event ignored: Caret moved in document due to Tab."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            if self.utilities.isLink(event.source):
-                msg = "WEB: Event ignored: Caret moved in link due to Tab."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
+        if reason == TextEventReason.FOCUS_CHANGE:
+            msg = "WEB: Event ignored: Caret moved due to focus change."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         if self.utilities.inFindContainer():
             msg = "WEB: Event handled: Presenting find results"

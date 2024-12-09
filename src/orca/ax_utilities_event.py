@@ -63,6 +63,7 @@ class TextEventReason(enum.Enum):
     CHILDREN_CHANGE = enum.auto()
     CUT = enum.auto()
     DELETE = enum.auto()
+    FOCUS_CHANGE = enum.auto()
     MOUSE_MIDDLE_BUTTON = enum.auto()
     MOUSE_PRIMARY_BUTTON = enum.auto()
     NAVIGATION_BY_CHARACTER = enum.auto()
@@ -270,6 +271,8 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.UNSPECIFIED_COMMAND
             elif mgr.last_event_was_printable_key():
                 reason = TextEventReason.TYPING
+        elif mgr.last_event_was_tab_navigation():
+            reason = TextEventReason.FOCUS_CHANGE
         return reason
 
     @staticmethod
