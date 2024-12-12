@@ -83,9 +83,11 @@ NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
                                  1 << MODIFIER_ORCA)
 DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
 
-def get_keycode(keysym):
+CAN_USE_KEYSYMS = Atspi.get_version() >= (2, 55, 0)
+
+def get_keycodes(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
-    should match the event.hw_code for key events.
+    should match the event.hw_code for key events and to the corresponding event.keysym for newer AT-SPI2.
 
     This whole situation is caused by the fact that Solaris chooses
     to give us different keycodes for the same key, and the keypad
@@ -110,7 +112,7 @@ def get_keycode(keysym):
     """
 
     if not keysym:
-        return 0
+        return (0, 0)
 
     if keysym not in _keycodeCache:
         keymap = Gdk.Keymap.get_default()
@@ -119,22 +121,22 @@ def get_keycode(keysym):
         #
         keyval = Gdk.keyval_from_name(keysym)
         if keyval == 0:
-            return 0
+            return (0, 0)
 
         # Now find the keycodes for the keysym.   Since a keysym can
         # be associated with more than one key, we'll shoot for the
         # keysym that's in group 0, regardless of shift level (each
         # entry is of the form [keycode, group, level]).
         #
-        _keycodeCache[keysym] = 0
+        _keycodeCache[keysym] = (keyval, 0)
         _success, entries = keymap.get_entries_for_keyval(keyval)
 
         for entry in entries:
             if entry.group == 0:
-                _keycodeCache[keysym] = entry.keycode
+                _keycodeCache[keysym] = (keyval, entry.keycode)
                 break
-            if _keycodeCache[keysym] == 0:
-                _keycodeCache[keysym] = entries[0].keycode
+            if _keycodeCache[keysym] == (0, 0):
+                _keycodeCache[keysym] = (keyval, entries[0].keycode)
 
         #print keysym, keyval, entries, _keycodeCache[keysym]
 
@@ -258,7 +260,7 @@ class KeyBinding:
             f"grab ids={self._grab_ids}"
         )
 
-    def matches(self, keycode, modifiers):
+    def matches(self, keyval, keycode, modifiers):
         """Returns true if this key binding matches the given keycode and
         modifier state.
         """
@@ -268,9 +270,9 @@ class KeyBinding:
         # keybindings in the user's preferences file.
         #
         if not self.keycode:
-            self.keycode = get_keycode(self.keysymstring)
+            self.keyval, self.keycode = get_keycodes(self.keysymstring)
 
-        if self.keycode == keycode:
+        if self.keycode == keycode or self.keyval == keyval:
             result = modifiers & self.modifier_mask
             return result == self.modifiers
 
@@ -314,24 +316,30 @@ class KeyBinding:
 
         ret = []
         if not self.keycode:
-            self.keycode = get_keycode(self.keysymstring)
+            self.keyval, self.keycode = get_keycodes(self.keysymstring)
 
         if self.modifiers & ORCA_MODIFIER_MASK:
             modifier_list = []
             other_modifiers = self.modifiers & ~ORCA_MODIFIER_MASK
             manager = input_event_manager.get_manager()
             for key in settings.orcaModifierKeys:
-                keycode = get_keycode(key)
+                keyval, keycode = get_keycodes(key)
                 if keycode == 0 and key == "Shift_Lock":
-                    keycode = get_keycode("Caps_Lock")
-                mod = manager.map_keycode_to_modifier(keycode)
+                    keyval, keycode = get_keycodes("Caps_Lock")
+                if CAN_USE_KEYSYMS:
+                    mod = manager.map_keysym_to_modifier(keyval)
+                else:
+                    mod = manager.map_keycode_to_modifier(keycode)
                 if mod:
                     modifier_list.append(mod | other_modifiers)
         else:
             modifier_list = [self.modifiers]
         for mod in modifier_list:
             kd = Atspi.KeyDefinition()
-            kd.keycode = self.keycode
+            if CAN_USE_KEYSYMS:
+                kd.keysym = self.keyval
+            else:
+                kd.keycode = self.keycode
             kd.modifiers = mod
             ret.append(kd)
         return ret
@@ -554,7 +562,7 @@ class KeyBindings:
         candidates = []
         click_count = event.get_click_count()
         for binding in self.key_bindings:
-            if binding.matches(event.hw_code, event.modifiers):
+            if binding.matches(event.id, event.hw_code, event.modifiers):
                 # Checking the modifier mask ensures we don't consume flat review commands
                 # when NumLock is on.
                 if binding.modifier_mask == event.modifiers and binding.click_count == click_count:

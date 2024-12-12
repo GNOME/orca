@@ -118,7 +118,17 @@ class InputEventManager:
 
         return self._device.map_modifier(keycode)
 
-    def add_grab_for_modifier(self, modifier, keycode):
+    def map_keysym_to_modifier(self, keysym):
+        """Maps keysym as a modifier, returns the newly-mapped modifier."""
+
+        if self._device is None:
+            msg = f"INPUT EVENT MANAGER: No device to map keysym {keysym} to modifier"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        return self._device.map_keysym_modifier(keysym)
+
+    def add_grab_for_modifier(self, modifier, keysym, keycode):
         """Adds grab for modifier, returns grab id."""
 
         if self._device is None:
@@ -127,6 +137,7 @@ class InputEventManager:
             return -1
 
         kd = Atspi.KeyDefinition()
+        kd.keysym = keysym
         kd.keycode = keycode
         kd.modifiers = 0
         grab_id = self._device.add_key_grab(kd)
