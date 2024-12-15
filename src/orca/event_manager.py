@@ -297,12 +297,16 @@ class EventManager:
         # We see an unbelievable number of active-descendant-changed and selection changed from Caja
         # when the user navigates from one giant folder to another. We need the spam filtering
         # below to catch this bad behavior coming from a focused object, so only return early here
-        # if the focused object doesn't manage descendants.
-        if AXUtilities.is_focused(event.source) \
-           and not AXUtilities.manages_descendants(event.source):
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+        # if the focused object doesn't manage descendants, or the event is not a focus claim.
+        if AXUtilities.is_focused(event.source):
+            if not AXUtilities.manages_descendants(event.source):
+                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            if event_type.startswith("object:state-changed:focused") and event.detail1:
+                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
 
         if event_type.startswith("object:text-changed:insert") \
            and AXUtilities.is_section(event.source):
