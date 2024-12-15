@@ -109,17 +109,6 @@ def init():
 
     debug.print_message(debug.LEVEL_INFO, 'SPEECH: Initialized', True)
 
-def check_speech_setting():
-    """Starts up or shuts down speech based on the current setting."""
-
-    msg = "SPEECH: Checking speech setting."
-    debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    if not settings.enableSpeech:
-        shutdown()
-    else:
-        init()
-
 def __resolve_acss(acss=None):
     if isinstance(acss, ACSS):
         family = acss.get(acss.FAMILY)
@@ -260,31 +249,13 @@ def speak_character(character, acss=None):
     if _speechserver:
         _speechserver.speak_character(character, acss=acss)
 
-def get_info():
-    """Returns the speech server info."""
-
-    info = None
-    if _speechserver:
-        info = _speechserver.get_info()
-
-    return info
-
-def stop():
-    """Stops the speech server."""
-
-    if _speechserver:
-        _speechserver.stop()
-
-def shutdown():
-    """Shuts down the speech server."""
-
-    debug.print_message(debug.LEVEL_INFO, 'SPEECH: Shutting down', True)
-    global _speechserver
-    if _speechserver:
-        _speechserver.shutdownActiveServers()
-        _speechserver = None
-
 def get_speech_server():
     """Returns the current speech server."""
 
     return _speechserver
+
+def deprecated_clear_server():
+    """This is a sad workaround for the current global _speechserver."""
+
+    global _speechserver
+    _speechserver = None

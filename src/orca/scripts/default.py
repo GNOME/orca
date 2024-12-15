@@ -1023,9 +1023,7 @@ class Script(script.Script):
         settings_manager.get_manager().set_profile(profileID, updateLocale=True)
 
         braille.checkBrailleSetting()
-
-        speech.shutdown()
-        speech.init()
+        speech_and_verbosity_manager.get_manager().refresh_speech()
 
         # TODO: This is another "too close to code freeze" hack to cause the
         # command names to be presented in the correct language.
@@ -2273,7 +2271,7 @@ class Script(script.Script):
 
         msg = "DEFAULT: Interrupting presentation"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        speech.stop()
+        speech_and_verbosity_manager.get_manager().interrupt_speech()
         if killFlash:
             braille.killFlash()
 

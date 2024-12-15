@@ -55,7 +55,7 @@ from . import input_event
 from . import keybindings
 from . import pronunciation_dict
 from . import braille
-from . import speech
+from . import speech_and_verbosity_manager
 from . import speechserver
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
@@ -833,8 +833,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # We'll fallback to whatever we happen to be using in the event
         # that this preference has never been set.
         #
-        if not serverInfo:
-            serverInfo = speech.get_info()
+        if not (serverInfo and serverInfo[0]):
+            serverInfo = speech_and_verbosity_manager.get_manager().get_current_speech_server_info()
 
         valueSet = False
         i = 0
@@ -1004,7 +1004,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechFamiliesChoice = None
             return
 
-        speech.init()
+        speech_and_verbosity_manager.get_manager().start_speech()
 
         # This cascades into systems->servers->voice_type->families...
         #
@@ -2949,7 +2949,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                       text, new_text,
                       click_count, str(clickCount),
                       MODIF, modified)
-        speech.stop()
         if new_text:
             message = messages.KB_CAPTURED_CONFIRMATION % new_text
             description = treeModel.get_value(myiter, DESCRIP)

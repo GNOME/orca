@@ -53,7 +53,7 @@ from . import orca_modifier_manager
 from . import script_manager
 from . import settings
 from . import settings_manager
-from . import speech
+from . import speech_and_verbosity_manager
 from . import sound
 from .ax_utilities import AXUtilities
 
@@ -81,7 +81,7 @@ def loadUserSettings(script=None, skipReloadMessage=False):
 
     player = sound.getPlayer()
     player.shutdown()
-    speech.shutdown()
+    speech_and_verbosity_manager.get_manager().shutdown_speech()
     braille.shutdown()
     mouse_review.get_reviewer().deactivate()
 
@@ -102,7 +102,7 @@ def loadUserSettings(script=None, skipReloadMessage=False):
     settings_manager.get_manager().load_app_settings(script)
 
     if settings_manager.get_manager().get_setting('enableSpeech'):
-        speech.init()
+        speech_and_verbosity_manager.get_manager().start_speech()
         if reloaded and not skipReloadMessage:
             script.speakMessage(messages.SETTINGS_RELOADED)
 
@@ -158,7 +158,7 @@ def shutdown(script=None, inputEvent=None, signum=None):
     # Shutdown all the other support.
     #
     if settings.enableSpeech:
-        speech.shutdown()
+        speech_and_verbosity_manager.get_manager().shutdown_speech()
     if settings.enableBraille:
         braille.shutdown()
     if settings.enableSound:

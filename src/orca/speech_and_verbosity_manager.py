@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-public-methods
+
 """Configures speech and verbosity settings and adjusts strings accordingly."""
 
 # This must be the first non-docstring line in the module to make linters happy.
@@ -282,7 +284,61 @@ class SpeechAndVerbosityManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _get_server(self) -> Optional[SpeechServer]:
-        return speech.get_speech_server()
+        result = speech.get_speech_server()
+        tokens = ["SPEECH AND VERBOSITY MANAGER: Speech server is", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    def get_current_speech_server_info(self) -> tuple[str, str]:
+        """Returns the name and ID of the current speech server."""
+
+        server = self._get_server()
+        if server is None:
+            return ("", "")
+
+        server_name, server_id = server.get_info()
+        msg = f"SPEECH AND VERBOSITY MANAGER: Speech server info: {server_name}, {server_id}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return server_name, server_id
+
+    def check_speech_setting(self) -> None:
+        """Checks the speech setting and initializes speech if necessary."""
+
+        manager = settings_manager.get_manager()
+        if manager.get_setting("enableSpeech"):
+            self.start_speech()
+        else:
+            self.shutdown_speech()
+
+    def start_speech(self) -> None:
+        """Starts the speech server."""
+
+        speech.init()
+
+    def interrupt_speech(self) -> None:
+        """Interrupts the speech server."""
+
+        server = self._get_server()
+        if server is None:
+            return
+
+        server.stop()
+
+    def shutdown_speech(self) -> None:
+        """Shuts down the speech server."""
+
+        server = self._get_server()
+        if server is None:
+            return
+
+        server.shutdownActiveServers()
+        speech.deprecated_clear_server()
+
+    def refresh_speech(self) -> None:
+        """Shuts down and re-initializes speech."""
+
+        self.shutdown_speech()
+        self.start_speech()
 
     def decrease_rate(
         self, _script: default.Script, _event: Optional[input_event.InputEvent] = None

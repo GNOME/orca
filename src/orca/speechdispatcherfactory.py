@@ -457,8 +457,7 @@ class SpeechServer(speechserver.SpeechServer):
         # will be needed to ensure multiple utterances sent to speech.speak
         # do not result in the intial utterances getting cut off before they
         # can be heard by the user. Anyone needing to interrupt speech can
-        # do so via speech.stop -- or better yet, by using the default script
-        # method's presentationInterrupt.
+        # do so by using the default script's method presentationInterrupt.
         #if interrupt:
         #    self._cancel()
 
