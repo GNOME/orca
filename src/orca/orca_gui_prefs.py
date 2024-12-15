@@ -1004,18 +1004,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechFamiliesChoice = None
             return
 
-        try:
-            speech.init()
-        except Exception:
-            self.workingFactories = []
-            self.speechSystemsChoice = None
-            self.speechServersChoices = []
-            self.speechServersChoice = None
-            self.speechLanguagesChoices = []
-            self.speechLanguagesChoice = None
-            self.speechFamiliesChoices = []
-            self.speechFamiliesChoice = None
-            return
+        speech.init()
 
         # This cascades into systems->servers->voice_type->families...
         #
