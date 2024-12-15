@@ -98,7 +98,6 @@ lib_sources = [
   'label_inference.py',
   'learn_mode_presenter.py',
   'liveregions.py',
-  'logger.py',
   'mathsymbols.py',
   'messages.py',
   'mouse_review.py',

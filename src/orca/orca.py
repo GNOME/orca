@@ -210,7 +210,7 @@ def main():
         _a11y_applications_gsetting = Settings(schema_id="org.gnome.desktop.a11y.applications")
         connection = _a11y_applications_gsetting.connect("changed", onEnabledChanged)
         msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+        debug.print_message(debug.LEVEL_INFO, msg, True)
     except Exception as error:
         msg = f"ORCA: Exception connecting to a11y applications gsetting: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)

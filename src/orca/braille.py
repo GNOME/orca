@@ -40,7 +40,6 @@ from gi.repository import GLib
 from . import brltablenames
 from . import cmdnames
 from . import debug
-from . import logger
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -51,8 +50,6 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .orca_platform import tablesdir
 
-_logger = logger.getLogger()
-log = _logger.newLog("braille")
 _monitor = None
 
 try:
@@ -1411,11 +1408,8 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
 
     logLine = f"BRAILLE LINE:  '{string}'"
     debug.print_message(debug.LEVEL_INFO, logLine, True)
-    log.info(logLine)
-
     logLine = f"     VISIBLE:  '{string[startPos:endPos]}', cursor={cursorCell}"
     debug.print_message(debug.LEVEL_INFO, logLine, True)
-    log.info(logLine)
 
     substring = string[startPos:endPos]
     if attributeMask:

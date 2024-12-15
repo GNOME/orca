@@ -31,15 +31,10 @@ __license__   = "LGPL"
 import importlib
 
 from . import debug
-from . import logger
 from . import settings
 from . import speech_generator
-from .speechserver import VoiceFamily
-
 from .acss import ACSS
-
-_logger = logger.getLogger()
-log = _logger.newLog("speech")
+from .speechserver import VoiceFamily
 
 # The speech server to use for all speech operations.
 #
@@ -152,7 +147,6 @@ def say_all(utterance_iterator, progress_callback):
         for [context, _acss] in utterance_iterator:
             log_line = f"SPEECH OUTPUT: '{context.utterance}'"
             debug.print_message(debug.LEVEL_INFO, log_line, True)
-            log.info(log_line)
 
 def _speak(text, acss, interrupt):
     """Speaks the individual string using the given ACSS."""
@@ -160,7 +154,6 @@ def _speak(text, acss, interrupt):
     if not _speechserver:
         log_line = f"SPEECH OUTPUT: '{text}' {acss}"
         debug.print_message(debug.LEVEL_INFO, log_line, True)
-        log.info(log_line)
         return
 
     voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
@@ -251,8 +244,6 @@ def speak_key_event(event, acss=None):
     msg = f"{key_name} {event.get_locking_state_string()}"
     log_line = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
     debug.print_message(debug.LEVEL_INFO, log_line, True)
-    log.info(log_line)
-
     if _speechserver:
         _speechserver.speak_key_event(event, acss)
 
@@ -266,8 +257,6 @@ def speak_character(character, acss=None):
     log_line = f"SPEECH OUTPUT: '{character}'"
     tokens = [log_line, acss]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-    log.info(log_line)
-
     if _speechserver:
         _speechserver.speak_character(character, acss=acss)
 
