@@ -3078,59 +3078,6 @@
                             <property name="hexpand">True</property>
                             <property name="vexpand">True</property>
                             <child>
-                              <object class="GtkGrid" id="textAttributesButtonGrid">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <child>
-                                  <object class="GtkButton" id="textSelectAllButton">
-                                    <property name="label" translatable="yes">_Speak all</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="border_width">5</property>
-                                    <property name="use_underline">True</property>
-                                    <signal name="clicked" handler="textSelectAllButtonClicked" swapped="no"/>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">0</property>
-                                    <property name="top_attach">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="textUnselectAllButton">
-                                    <property name="label" translatable="yes">Speak _none</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="border_width">5</property>
-                                    <property name="use_underline">True</property>
-                                    <signal name="clicked" handler="textUnselectAllButtonClicked" swapped="no"/>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">1</property>
-                                    <property name="top_attach">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="textResetButton">
-                                    <property name="label" translatable="yes">_Reset</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="border_width">5</property>
-                                    <property name="use_underline">True</property>
-                                    <signal name="clicked" handler="textResetButtonClicked" swapped="no"/>
-                                  </object>
-                                  <packing>
-                                    <property name="left_attach">2</property>
-                                    <property name="top_attach">0</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">1</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkScrolledWindow" id="textAttributesScrolledWindow">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>

@@ -548,12 +548,6 @@ class Utilities(script_utilities.Utilities):
 
         return attrs
 
-    def localizeTextAttribute(self, key, value):
-        if key == "justification" and value == "justify":
-            value = "fill"
-
-        return super().localizeTextAttribute(key, value)
-
     def adjustContentsForLanguage(self, contents):
         rv = []
         for content in contents:

@@ -41,7 +41,7 @@ from . import messages
 from . import settings_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
-from .ax_text import AXText
+from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
@@ -296,6 +296,21 @@ class WhereAmIPresenter:
         msg = "WHERE AM I PRESENTER: Laptop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def _localize_text_attribute(self, key, value):
+        if value is None:
+            return ""
+
+        if key == "weight" and (value == "bold" or int(value) > 400):
+            return messages.BOLD
+
+        if key.endswith("spelling") or value == "spelling":
+            return messages.MISSPELLED
+
+        ax_text_attribute = AXTextAttribute.from_string(key)
+        localized_key = ax_text_attribute.get_localized_name()
+        localized_value = ax_text_attribute.get_localized_value(value)
+        return f"{localized_key}: {localized_value}"
+
     def present_character_attributes(
         self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
@@ -304,21 +319,19 @@ class WhereAmIPresenter:
         focus = focus_manager.get_manager().get_locus_of_focus()
         attrs = AXText.get_text_attributes_at_offset(focus)[0]
 
-        # Get a dictionary of text attributes that the user cares about.
-        [user_attr_list, user_attr_dict] = script.utilities.stringToKeysAndDict(
-            settings_manager.get_manager().get_setting('enabledSpokenTextAttributes'))
+        # Get a dictionary of text attributes that the user cares about, falling back on the
+        # default presentable attributes if the user has not specified any.
+        attr_list = list(filter(None, map(
+            AXTextAttribute.from_string,
+            settings_manager.get_manager().get_setting("textAttributesToSpeak"))))
+        if not attr_list:
+            attr_list = AXText.get_all_supported_text_attributes()
 
-        null_values = ['0', '0mm', 'none', 'false']
-        for key in user_attr_list:
-            # Convert the standard key into the non-standard implementor variant.
-            app_key = script.utilities.getAppNameForAttribute(key)
-            value = attrs.get(app_key)
-            ignore_if_value = user_attr_dict.get(key)
-            if value in null_values and ignore_if_value in null_values:
-                continue
-
-            if value and value != ignore_if_value:
-                script.speakMessage(script.utilities.localizeTextAttribute(key, value))
+        for ax_text_attr in attr_list:
+            key = ax_text_attr.get_attribute_name()
+            value = attrs.get(key)
+            if not ax_text_attr.value_is_default(value):
+                script.speakMessage(self._localize_text_attribute(key, value))
 
         return True
 

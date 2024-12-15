@@ -215,9 +215,5 @@ class Utilities(web.Utilities):
         AXObject.clear_cache(label, False, "Ensuring we have correct name for find results.")
         return AXObject.get_name(label)
 
-    def localizeTextAttribute(self, key, value):
-        value = value.replace("-moz-", "")
-        return super().localizeTextAttribute(key, value)
-
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
         return super().unrelatedLabels(root, onlyShowing, minimumWords=1)

@@ -36,6 +36,8 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
+import enum
+import locale
 import re
 from typing import Generator, Optional
 
@@ -43,10 +45,140 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from . import colornames
 from . import debug
+from . import messages
+from . import settings
+from . import text_attribute_names
 from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
+class AXTextAttribute(enum.Enum):
+    """Enum representing an accessible text attribute."""
+
+    # Note: Anything added here should also have an entry in text_attribute_names.py.
+    # The tuple is (non-localized name, enable by default).
+    BG_COLOR = ("bg-color", True)
+    BG_FULL_HEIGHT = ("bg-full-height", False)
+    BG_STIPPLE = ("bg-stipple", False)
+    DIRECTION = ("direction", False)
+    EDITABLE = ("editable", False)
+    FAMILY_NAME = ("family-name", True)
+    FG_COLOR = ("fg-color", True)
+    FG_STIPPLE = ("fg-stipple", False)
+    FONT_EFFECT = ("font-effect", True)
+    INDENT = ("indent", True)
+    INVALID = ("invalid", True)
+    INVISIBLE = ("invisible", False)
+    JUSTIFICATION = ("justification", True)
+    LANGUAGE = ("language", False)
+    LEFT_MARGIN = ("left-margin", False)
+    LINE_HEIGHT = ("line-height", False)
+    PARAGRAPH_STYLE = ("paragraph-style", True)
+    PIXELS_ABOVE_LINES = ("pixels-above-lines", False)
+    PIXELS_BELOW_LINES = ("pixels-below-lines", False)
+    PIXELS_INSIDE_WRAP = ("pixels-inside-wrap", False)
+    RIGHT_MARGIN = ("right-margin", False)
+    RISE = ("rise", False)
+    SCALE = ("scale", False)
+    SIZE = ("size", True)
+    STRETCH = ("stretch", False)
+    STRIKETHROUGH = ("strikethrough", True)
+    STYLE = ("style", True)
+    TEXT_DECORATION = ("text-decoration", True)
+    TEXT_POSITION = ("text-position", False)
+    TEXT_ROTATION = ("text-rotation", True)
+    TEXT_SHADOW = ("text-shadow", False)
+    UNDERLINE = ("underline", True)
+    VARIANT = ("variant", False)
+    VERTICAL_ALIGN = ("vertical-align", False)
+    WEIGHT = ("weight", True)
+    WRAP_MODE = ("wrap-mode", False)
+    WRITING_MODE = ("writing-mode", False)
+
+    @classmethod
+    def from_string(cls, string: str) -> Optional["AXTextAttribute"]:
+        """Returns the AXTextAttribute for the specified string."""
+
+        for attribute in cls:
+            if attribute.get_attribute_name() == string:
+                return attribute
+
+        return None
+
+    @classmethod
+    def from_localized_string(cls, string: str) -> Optional["AXTextAttribute"]:
+        """Returns the AXTextAttribute for the specified localized string."""
+
+        for attribute in cls:
+            if attribute.get_localized_name() == string:
+                return attribute
+
+        return None
+
+    def get_attribute_name(self) -> str:
+        """Returns the non-localized name of the attribute."""
+
+        return self.value[0]
+
+    def get_localized_name(self) -> str:
+        """Returns the localized name of the attribute."""
+
+        name = self.value[0]
+        return text_attribute_names.attribute_names.get(name, name)
+
+    def get_localized_value(self, value) -> str:
+        """Returns the localized value of the attribute."""
+
+        if value is None:
+            return ""
+
+        if value.endswith("px"):
+            value = value.split("px")[0]
+            if locale.localeconv()["decimal_point"] in value:
+                return messages.pixelCount(float(value))
+            return messages.pixelCount(int(value))
+
+        if self in [AXTextAttribute.BG_COLOR, AXTextAttribute.FG_COLOR]:
+            if settings.useColorNames:
+                return colornames.rgb_string_to_color_name(value)
+            return colornames.normalize_rgb_string(value)
+
+        # TODO - JD: Is this still needed?
+        value = value.replace("-moz", "")
+
+        # TODO - JD: Are these still needed?
+        if self == AXTextAttribute.JUSTIFICATION:
+            value = value.replace("justify", "fill")
+        elif self == AXTextAttribute.FAMILY_NAME:
+            value = value.split(",")[0].strip().strip('"')
+
+        return text_attribute_names.attribute_values.get(value, value)
+
+    def should_present_by_default(self) -> bool:
+        """Returns True if the attribute should be presented by default."""
+
+        return self.value[1]
+
+    def value_is_default(self, value) -> bool:
+        """Returns True if value should be treated as the default value for this attribute."""
+
+        null_values = ["0", "0mm", "0px", "none", "false", "normal", "", None]
+        if value in null_values:
+            return True
+
+        if self == AXTextAttribute.SCALE:
+            return float(value) == 1.0
+        if self == AXTextAttribute.TEXT_POSITION:
+            return value == "baseline"
+        if self == AXTextAttribute.WEIGHT:
+            return value == "400"
+        if self == AXTextAttribute.LANGUAGE:
+            loc = locale.getlocale()[0] or ""
+            return value == loc[:2]
+
+        return False
 
 class AXText:
     """Utilities for obtaining information about accessible text."""
@@ -724,6 +856,7 @@ class AXText:
 
         return result
 
+    # TODO - JD: This should be converted to return AXTextAttribute values.
     @staticmethod
     def get_text_attributes_at_offset(
         obj: Atspi.Accessible, offset: Optional[int] = None
@@ -747,6 +880,7 @@ class AXText:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result[0] or {}, result[1] or 0, result[2] or AXText.get_character_count(obj)
 
+    # TODO - JD: This should be converted to return AXTextAttribute values.
     @staticmethod
     def get_all_text_attributes(
         obj: Atspi.Accessible, start_offset: int = 0, end_offset: int = -1
@@ -777,6 +911,12 @@ class AXText:
         msg = f"AXText: {len(rv)} attribute ranges found."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
+
+    @staticmethod
+    def get_all_supported_text_attributes() -> list[AXTextAttribute]:
+        """Returns a set of all supported text attribute names."""
+
+        return list(AXTextAttribute)
 
     @staticmethod
     def get_offset_at_point(obj: Atspi.Accessible, x: int, y: int) -> int:

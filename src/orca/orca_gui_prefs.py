@@ -57,8 +57,8 @@ from . import pronunciation_dict
 from . import braille
 from . import speech
 from . import speechserver
-from . import text_attribute_names
 from .ax_object import AXObject
+from .ax_text import AXText, AXTextAttribute
 
 try:
     import louis
@@ -1023,8 +1023,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setupSpeechSystems(factories)
         self.initializingSpeech = False
 
-    def _setSpokenTextAttributes(self, view, setAttributes,
-                                 state, moveToTop=False):
+    def _setSpokenTextAttributes(self, view, setAttributes, state, moveToTop=False):
         """Given a set of spoken text attributes, update the model used by the
         text attribute tree view.
 
@@ -1037,23 +1036,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         model = view.get_model()
         view.set_model(None)
-
-        [attrList, attrDict] = \
-           self.script.utilities.stringToKeysAndDict(setAttributes)
-        [allAttrList, allAttrDict] = self.script.utilities.stringToKeysAndDict(
-            settings_manager.get_manager().get_setting('allTextAttributes'))
-
-        for i in range(0, len(attrList)):
-            for path in range(0, len(allAttrList)):
-                localizedKey = text_attribute_names.getTextAttributeName(
-                    attrList[i], self.script)
-                localizedValue = text_attribute_names.getTextAttributeName(
-                    attrDict[attrList[i]], self.script)
+        allAttrList = AXText.get_all_supported_text_attributes()
+        for i, key in enumerate(setAttributes):
+            for path in range(len(allAttrList)):
+                attribute = AXTextAttribute.from_string(key)
+                if attribute is None:
+                    continue
+                localizedKey = attribute.get_localized_name()
                 if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
                     model.set_value(thisIter, NAME, localizedKey)
                     model.set_value(thisIter, IS_SPOKEN, state)
-                    model.set_value(thisIter, VALUE, localizedValue)
                     if moveToTop:
                         try:
                             thisIter = model.get_iter(path)
@@ -1078,16 +1071,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         model = view.get_model()
         view.set_model(None)
-
-        [attrList, attrDict] = \
-            self.script.utilities.stringToKeysAndDict(setAttributes)
-        [allAttrList, allAttrDict] = self.script.utilities.stringToKeysAndDict(
-                settings_manager.get_manager().get_setting('allTextAttributes'))
-
-        for i in range(0, len(attrList)):
-            for path in range(0, len(allAttrList)):
-                localizedKey = text_attribute_names.getTextAttributeName(
-                    attrList[i], self.script)
+        allAttrList = AXText.get_all_supported_text_attributes()
+        for key in setAttributes:
+            for path in range(len(allAttrList)):
+                attribute = AXTextAttribute.from_string(key)
+                if attribute is None:
+                    continue
+                localizedKey = attribute.get_localized_name()
                 if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
                     model.set_value(thisIter, IS_BRAILLED, state)
@@ -1095,51 +1085,29 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         view.set_model(model)
 
-    def _getAppNameForAttribute(self, attributeName):
-        """Converts the given Atk attribute name into the application's
-        equivalent. This is necessary because an application or toolkit
-        (e.g. Gecko) might invent entirely new names for the same text
-        attributes.
-
-        Arguments:
-        - attribName: The name of the text attribute
-
-        Returns the application's equivalent name if found or attribName
-        otherwise.
-        """
-
-        return self.script.utilities.getAppNameForAttribute(attributeName)
-
     def _updateTextDictEntry(self):
         """The user has updated the text attribute list in some way. Update
-        the "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
-        preference strings to reflect the current state of the corresponding
+        the preferences to reflect the current state of the corresponding
         text attribute lists.
         """
 
         model = self.getTextAttributesView.get_model()
-        spokenAttrStr = ""
-        brailledAttrStr = ""
+        spoken_attributes = []
+        brailled_attributes = []
         noRows = model.iter_n_children(None)
         for path in range(0, noRows):
             localizedKey = model[path][NAME]
-            key = text_attribute_names.getTextAttributeKey(localizedKey)
-
-            # Convert the normalized, Atk attribute name back into what
-            # the app/toolkit uses.
-            #
-            key = self._getAppNameForAttribute(key)
-
-            localizedValue = model[path][VALUE]
-            value = text_attribute_names.getTextAttributeKey(localizedValue)
-
+            attribute = AXTextAttribute.from_localized_string(localizedKey)
+            if attribute is None:
+                continue
+            key = attribute.get_attribute_name()
             if model[path][IS_SPOKEN]:
-                spokenAttrStr += key + ":" + value + "; "
+                spoken_attributes.append(key)
             if model[path][IS_BRAILLED]:
-                brailledAttrStr += key + ":" + value + "; "
+                brailled_attributes.append(key)
 
-        self.prefsDict["enabledSpokenTextAttributes"] = spokenAttrStr
-        self.prefsDict["enabledBrailledTextAttributes"] = brailledAttrStr
+        self.prefsDict["textAttributesToSpeak"] = spoken_attributes
+        self.prefsDict["textAttributesToBraille"] = brailled_attributes
 
     def contractedBrailleToggled(self, checkbox):
         grid = self.get_widget('contractionTableGrid')
@@ -1159,7 +1127,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def textAttributeSpokenToggled(self, cell, path, model):
         """The user has toggled the state of one of the text attribute
         checkboxes to be spoken. Update our model to reflect this, then
-        update the "enabledSpokenTextAttributes" preference string.
+        update the preference.
 
         Arguments:
         - cell: the cell that changed.
@@ -1174,7 +1142,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def textAttributeBrailledToggled(self, cell, path, model):
         """The user has toggled the state of one of the text attribute
         checkboxes to be brailled. Update our model to reflect this,
-        then update the "enabledBrailledTextAttributes" preference string.
+        then update the preference.
 
         Arguments:
         - cell: the cell that changed.
@@ -1184,23 +1152,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         thisIter = model.get_iter(path)
         model.set(thisIter, IS_BRAILLED, not model[path][IS_BRAILLED])
-        self._updateTextDictEntry()
-
-    def textAttrValueEdited(self, cell, path, new_text, model):
-        """The user has edited the value of one of the text attributes.
-        Update our model to reflect this, then update the
-        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
-        preference strings.
-
-        Arguments:
-        - cell: the cell that changed.
-        - path: the path of that cell.
-        - new_text: the new text attribute value string.
-        - model: the model that the cell is part of.
-        """
-
-        thisIter = model.get_iter(path)
-        model.set(thisIter, VALUE, new_text)
         self._updateTextDictEntry()
 
     def textAttrCursorChanged(self, widget):
@@ -1242,19 +1193,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # Initially setup the list store model based on the values of all
         # the known text attributes.
-        #
-        [allAttrList, allAttrDict] = self.script.utilities.stringToKeysAndDict(
-            settings_manager.get_manager().get_setting('allTextAttributes'))
-        for i in range(0, len(allAttrList)):
+        for attribute in AXText.get_all_supported_text_attributes():
             thisIter = model.append()
-            localizedKey = text_attribute_names.getTextAttributeName(
-                allAttrList[i], self.script)
-            localizedValue = text_attribute_names.getTextAttributeName(
-                allAttrDict[allAttrList[i]], self.script)
-            model.set_value(thisIter, NAME, localizedKey)
+            model.set_value(thisIter, NAME, attribute.get_localized_name())
             model.set_value(thisIter, IS_SPOKEN, False)
             model.set_value(thisIter, IS_BRAILLED, False)
-            model.set_value(thisIter, VALUE, localizedValue)
 
         self.getTextAttributesView.set_model(model)
 
@@ -1291,35 +1234,23 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.getTextAttributesView.insert_column(column, 2)
         column.clicked()
 
-        # Attribute Value column (VALUE)
-        column = Gtk.TreeViewColumn(guilabels.PRESENTATION_PRESENT_UNLESS)
-        renderer = Gtk.CellRendererText()
-        renderer.set_property('editable', True)
-        column.pack_end(renderer, True)
-        column.add_attribute(renderer, 'text', VALUE)
-        renderer.connect("edited", self.textAttrValueEdited, model)
+        # Get a dictionary of text attributes that the user cares about, falling back on the
+        # default presentable attributes if the user has not specified any.
+        attr_list = settings_manager.get_manager().get_setting("textAttributesToSpeak")
+        if not attr_list:
+            attr_list = [
+                attr.get_attribute_name()
+                for attr in AXText.get_all_supported_text_attributes()
+                if attr.should_present_by_default()
+            ]
+        self._setSpokenTextAttributes(self.getTextAttributesView, attr_list, True, True)
 
-        self.getTextAttributesView.insert_column(column, 4)
+        # For braille none should be enabled by default. So only set those the user chose.
+        attr_list = settings_manager.get_manager().get_setting("textAttributesToBraille")
+        self._setBrailledTextAttributes(self.getTextAttributesView, attr_list, True)
 
-        # Check all the enabled (spoken) text attributes.
-        #
-        self._setSpokenTextAttributes(
-            self.getTextAttributesView,
-            settings_manager.get_manager().get_setting('enabledSpokenTextAttributes'),
-            True, True)
-
-        # Check all the enabled (brailled) text attributes.
-        #
-        self._setBrailledTextAttributes(
-            self.getTextAttributesView,
-            settings_manager.get_manager().get_setting('enabledBrailledTextAttributes'),
-            True)
-
-        # Connect a handler for when the user changes columns within the
-        # view, so that we can adjust the search column for item lookups.
-        #
-        self.getTextAttributesView.connect("cursor_changed",
-                                           self.textAttrCursorChanged)
+        # TODO - JD: Is this still needed (for the purpose of the search column)?
+        self.getTextAttributesView.connect("cursor_changed", self.textAttrCursorChanged)
 
     def pronActualValueEdited(self, cell, path, new_text, model):
         """The user has edited the value of one of the actual strings in
@@ -1941,7 +1872,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # items are consistently at the top.
         self._setSpokenTextAttributes(
                 self.getTextAttributesView,
-                settings_manager.get_manager().get_setting('enabledSpokenTextAttributes'),
+                settings_manager.get_manager().get_setting("textAttributesToSpeak"),
                 True, True)
 
         if self.script.app:
@@ -3114,77 +3045,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model, oldIter = self.pronunciationView.get_selection().get_selected()
         model.remove(oldIter)
 
-    def textSelectAllButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the
-        textSelectAllButton GtkButton widget. The user has clicked
-        the Speak all button.  Check all the text attributes and
-        then update the "enabledSpokenTextAttributes" and
-        "enabledBrailledTextAttributes" preference strings.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        attributes = settings_manager.get_manager().get_setting('allTextAttributes')
-        self._setSpokenTextAttributes(
-            self.getTextAttributesView, attributes, True)
-        self._setBrailledTextAttributes(
-            self.getTextAttributesView, attributes, True)
-        self._updateTextDictEntry()
-
-    def textUnselectAllButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the
-        textUnselectAllButton GtkButton widget. The user has clicked
-        the Speak none button. Uncheck all the text attributes and
-        then update the "enabledSpokenTextAttributes" and
-        "enabledBrailledTextAttributes" preference strings.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        attributes = settings_manager.get_manager().get_setting('allTextAttributes')
-        self._setSpokenTextAttributes(
-            self.getTextAttributesView, attributes, False)
-        self._setBrailledTextAttributes(
-            self.getTextAttributesView, attributes, False)
-        self._updateTextDictEntry()
-
-    def textResetButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the
-        textResetButton GtkButton widget. The user has clicked
-        the Reset button. Reset all the text attributes to their
-        initial state and then update the "enabledSpokenTextAttributes"
-        and "enabledBrailledTextAttributes" preference strings.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        attributes = settings_manager.get_manager().get_setting('allTextAttributes')
-        self._setSpokenTextAttributes(
-            self.getTextAttributesView, attributes, False)
-        self._setBrailledTextAttributes(
-            self.getTextAttributesView, attributes, False)
-
-        attributes = settings_manager.get_manager().get_setting('enabledSpokenTextAttributes')
-        self._setSpokenTextAttributes(
-            self.getTextAttributesView, attributes, True)
-
-        attributes = \
-            settings_manager.get_manager().get_setting('enabledBrailledTextAttributes')
-        self._setBrailledTextAttributes(
-            self.getTextAttributesView, attributes, True)
-
-        self._updateTextDictEntry()
-
     def textMoveToTopButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the
         textMoveToTopButton GtkButton widget. The user has clicked
         the Move to top button. Move the selected rows in the text
         attribute view to the very top of the list and then update
-        the "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
-        preference strings.
+        the preferences.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -3202,8 +3068,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         textMoveUpOneButton GtkButton widget. The user has clicked
         the Move up one button. Move the selected rows in the text
         attribute view up one row in the list and then update the
-        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
-        preference strings.
+        preferences.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -3224,8 +3089,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         textMoveDownOneButton GtkButton widget. The user has clicked
         the Move down one button. Move the selected rows in the text
         attribute view down one row in the list and then update the
-        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
-        preference strings.
+        preferences.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -3247,8 +3111,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         textMoveToBottomButton GtkButton widget. The user has clicked
         the Move to bottom button. Move the selected rows in the text
         attribute view to the bottom of the list and then update the
-        "enabledSpokenTextAttributes" and "enabledBrailledTextAttributes"
-        preference strings.
+        preferences.
 
         Arguments:
         - widget: the component that generated the signal.

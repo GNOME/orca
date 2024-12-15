@@ -29,14 +29,12 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 import gi
-import locale
 import re
 from difflib import SequenceMatcher
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import colornames
 from . import debug
 from . import focus_manager
 from . import keybindings
@@ -48,7 +46,6 @@ from . import pronunciation_dict
 from . import script_manager
 from . import settings
 from . import settings_manager
-from . import text_attribute_names
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -1158,69 +1155,9 @@ class Utilities:
         # TODO - JD. Remove this function if the web override can be adjusted
         AXText.set_caret_offset(obj, offset)
 
-    def getAppNameForAttribute(self, attribName):
-        """Converts the given Atk attribute name into the application's
-        equivalent. This is necessary because an application or toolkit
-        (e.g. Gecko) might invent entirely new names for the same text
-        attributes.
-
-        Arguments:
-        - attribName: The name of the text attribute
-
-        Returns the application's equivalent name if found or attribName
-        otherwise.
-        """
-
-        for key, value in self._script.attributeNamesDict.items():
-            if value == attribName:
-                return key
-
-        return attribName
-
-    def getAtkNameForAttribute(self, attribName):
-        """Converts the given attribute name into the Atk equivalent. This
-        is necessary because an application or toolkit (e.g. Gecko) might
-        invent entirely new names for the same attributes.
-
-        Arguments:
-        - attribName: The name of the text attribute
-
-        Returns the Atk equivalent name if found or attribName otherwise.
-        """
-
-        return self._script.attributeNamesDict.get(attribName, attribName)
-
     def textAttributes(self, acc, offset=None, get_defaults=False):
         # TODO - JD: Replace all calls to this function with the one below
         return AXText.get_text_attributes_at_offset(acc, offset)
-
-    def localizeTextAttribute(self, key, value):
-        if key == "weight" and (value == "bold" or int(value) > 400):
-            return messages.BOLD
-
-        if key.endswith("spelling") or value == "spelling":
-            return messages.MISSPELLED
-
-        localizedKey = text_attribute_names.getTextAttributeName(key, self._script)
-
-        if key == "family-name":
-            localizedValue = value.split(",")[0].strip().strip('"')
-        elif value and value.endswith("px"):
-            value = value.split("px")[0]
-            if locale.localeconv()["decimal_point"] in value:
-                localizedValue = messages.pixelCount(float(value))
-            else:
-                localizedValue = messages.pixelCount(int(value))
-        elif key.endswith("color"):
-            r, g, b = self.rgbFromString(value)
-            if settings.useColorNames:
-                localizedValue = colornames.rgbToName(r, g, b)
-            else:
-                localizedValue = "%i %i %i" % (r, g, b)
-        else:
-            localizedValue = text_attribute_names.getTextAttributeName(value, self._script)
-
-        return f"{localizedKey}: {localizedValue}"
 
     def splitSubstringByLanguage(self, obj, start, end):
         """Returns a list of (start, end, string, language, dialect) tuples."""
@@ -1375,31 +1312,6 @@ class Utilities:
 
         return result
 
-    @staticmethod
-    def stringToKeysAndDict(string):
-        """Converts a string made up of a series of <key>:<value>; pairs
-        into a dictionary of keys and values. Text before the colon is the
-        key and text afterwards is the value. The final semi-colon, if
-        found, is ignored.
-
-        Arguments:
-        - string: the string of tokens containing <key>:<value>; pairs.
-
-        Returns a list containing two items:
-        A list of the keys in the order they were extracted from the
-        string and a dictionary of key/value items.
-        """
-
-        try:
-            items = [s.strip() for s in string.split(";")]
-            items = [item for item in items if len(item.split(':')) == 2]
-            keys = [item.split(':')[0].strip() for item in items]
-            dictionary = dict([item.split(':') for item in items])
-        except Exception:
-            return [], {}
-
-        return [keys, dictionary]
-
     def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
         return []
 
@@ -1550,13 +1462,6 @@ class Utilities:
             return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
 
         return AXObject.get_name(obj) or AXText.get_all_text(obj)
-
-    def rgbFromString(self, attributeValue):
-        regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)
-        string = re.sub(regex, "", attributeValue)
-        red, green, blue = string.split(",")
-
-        return int(red), int(green), int(blue)
 
     def isClickableElement(self, obj):
         return False

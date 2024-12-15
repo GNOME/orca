@@ -47,7 +47,7 @@ from . import settings_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
-from .ax_text import AXText
+from .ax_text import AXText, AXTextAttribute
 from .orca_platform import tablesdir
 
 _monitor = None
@@ -743,9 +743,7 @@ class Text(Region):
                   regionMask[i] |= linkIndicator
 
         if attrIndicator:
-            keys, enabledAttributes = script.utilities.stringToKeysAndDict(
-                settings.enabledBrailledTextAttributes)
-
+            enabled = settings.textAttributesToBraille
             offset = self.lineOffset
             while offset < lineEndOffset:
                 attributes, startOffset, endOffset = \
@@ -755,10 +753,12 @@ class Text(Region):
                 mask = settings.BRAILLE_UNDERLINE_NONE
                 offset = endOffset
                 for attrib in attributes:
-                    if enabledAttributes.get(attrib, '') != '':
-                        if enabledAttributes[attrib] != attributes[attrib]:
-                            mask = attrIndicator
-                            break
+                    if attrib not in enabled:
+                        continue
+                    ax_text_attr = AXTextAttribute.from_string(attrib)
+                    if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
+                        mask = attrIndicator
+                        break
                 if mask != settings.BRAILLE_UNDERLINE_NONE:
                     maskStart = max(startOffset - self.lineOffset, 0)
                     maskEnd = min(endOffset - self.lineOffset, stringLength)

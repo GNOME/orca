@@ -25,8 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2013-2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import re
-
 from orca import script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -85,10 +83,3 @@ class Utilities(script_utilities.Utilities):
     def isEntryCompletionPopupItem(self, obj):
         return AXUtilities.is_table_cell(obj) \
             and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
-
-    def rgbFromString(self, attributeValue):
-        regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)
-        string = re.sub(regex, "", attributeValue)
-        red, green, blue = string.split(",")
-
-        return int(red) >> 8, int(green) >> 8, int(blue) >> 8

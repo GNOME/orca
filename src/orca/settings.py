@@ -78,8 +78,8 @@ userCustomizableSettings = [
     "speakBlankLines",
     "speakNumbersAsDigits",
     "speakMisspelledIndicator",
-    "enabledSpokenTextAttributes",
-    "enabledBrailledTextAttributes",
+    "textAttributesToSpeak",
+    "textAttributesToBraille",
     "textAttributesBrailleIndicator",
     "profile",
     "speakProgressBarUpdates",
@@ -341,41 +341,8 @@ FIND_SPEAK_ALL = 2
 findResultsVerbosity = FIND_SPEAK_ALL
 findResultsMinimumLength = 4
 
-# The complete list of possible text attributes.
-allTextAttributes = \
-    "bg-color:; bg-full-height:; bg-stipple:; direction:; editable:; " \
-    "family-name:; fg-color:; fg-stipple:; font-effect:none; indent:0; " \
-    "invisible:; justification:left; language:; left-margin:; " \
-    "line-height:100%; paragraph-style:Default; pixels-above-lines:; " \
-    "pixels-below-lines:; pixels-inside-wrap:; right-margin:; rise:; " \
-    "scale:; size:; stretch:; strikethrough:false; style:normal; " \
-    "text-decoration:none; text-rotation:0; text-shadow:none; " \
-    "text-spelling:none; underline:none; variant:; " \
-    "vertical-align:baseline; weight:400; wrap-mode:; writing-mode:lr-tb;"
-
-# The default set of text attributes to speak to the user. Specific
-# application scripts (or individual users can override these values if
-# so desired. Each of these text attributes is of the form <key>:<value>;
-# The <value> part will be the "default" value for that attribute. In
-# other words, if the attribute for a given piece of text has that value,
-# it won't be spoken. If no value part is given, then that attribute will
-# always be spoken.
-enabledSpokenTextAttributes = \
-    "size:; family-name:; weight:400; indent:0; underline:none; " \
-    "strikethrough:false; justification:left; style:normal; " \
-    "paragraph-style:; text-spelling:none; fg-color:; bg-color:;"
-
-# The default set of text attributes to be brailled for the user. Specific
-# application scripts (or individual users can override these values if
-# so desired. Each of these text attributes is of the form <key>:<value>;
-# The <value> part will be the "default" value for that attribute. In
-# other words, if the attribute for a given piece of text has that value,
-# it won't be spoken. If no value part is given, then that attribute will
-# always be brailled.
-enabledBrailledTextAttributes = \
-    "size:; family-name:; weight:400; indent:0; underline:none; " \
-    "strikethrough:false; justification:left; style:normal; " \
-    "text-spelling:none;"
+textAttributesToSpeak = []
+textAttributesToBraille = []
 
 # Latent support to allow the user to override/define keybindings
 # and braille bindings. Unsupported and undocumented for now.
