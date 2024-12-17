@@ -3494,6 +3494,9 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_state_selected_for_radio_button(obj, **args)
         result += self._generate_accessible_role(obj, **args)
+        if not AXUtilities.is_focused(obj):
+            return result
+
         result += self._generate_state_sensitive(obj, **args)
         result += self._generate_keyboard_mnemonic(obj, **args)
         result += self._generate_pause(obj, **args)
