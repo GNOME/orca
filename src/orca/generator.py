@@ -602,10 +602,14 @@ class Generator:
         if labels:
             radio_group_label = labels[0]
         if radio_group_label:
-            return [AXObject.get_name(radio_group_label)]
+            name = AXObject.get_name(radio_group_label)
+            if name and name != AXObject.get_name(obj):
+                return [name]
 
         parent = AXObject.get_parent_checked(obj)
         while parent:
+            if AXUtilities.is_list(parent):
+                break
             if AXUtilities.is_panel(parent) or AXUtilities.is_filler(parent):
                 label = self._generate_accessible_label_and_name(parent)
                 if label:
