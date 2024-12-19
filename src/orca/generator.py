@@ -554,8 +554,11 @@ class Generator:
                 continue
 
             child_name = AXObject.get_name(child)
-            if AXUtilities.is_button(child) and child_name in obj_name:
-                continue
+            if AXUtilities.is_button(child):
+                if child_name in obj_name:
+                    continue
+                if AXUtilities.has_popup(child):
+                    continue
 
             if AXUtilities.is_label(child):
                 if not AXText.has_presentable_text(child):
