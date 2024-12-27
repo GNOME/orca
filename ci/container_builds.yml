@@ -1,5 +1,5 @@
 include:
-  - remote: "https://gitlab.freedesktop.org/freedesktop/ci-templates/-/raw/80f87b3058efb75a1faae11826211375fba77e7f/templates/opensuse.yml"
+  - remote: "https://gitlab.gnome.org/Infrastructure/freedesktop-ci-templates/-/raw/80f87b3058efb75a1faae11826211375fba77e7f/templates/opensuse.yml"
 
 variables:
   # When branching change the suffix to avoid conflicts with images
