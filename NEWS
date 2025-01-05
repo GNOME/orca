@@ -1,3 +1,22 @@
+47.3 - 5 January 2025
+
+Web:
+
+* Add handling for the "semantics" MathML element which is not being
+  pruned from the accessibility tree by Chromium.
+
+* Fix bug related to presentation of a character name in MathML.
+
+* Fix bug in obtaining the fragment portion of a URI.
+
+* Fix bug in obtaining the document's MIME type.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+
+=========
+
 47.2 - 22 November 2024
 
 Web:
