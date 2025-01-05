@@ -3,11 +3,7 @@ maintainers how to make a release.
 
 The general instructions for a release are here:
 
-  https://wiki.gnome.org/MaintainersCorner/Releasing
-
-See also:
-
-  https://discourse.gnome.org/t/new-gnome-versioning-scheme/4235
+  https://handbook.gnome.org/maintainers/making-a-release.html
 
 Here's a summary for Orca:
 
@@ -45,26 +41,13 @@ Short list of non-translation commits:
 NOTE: You should also make sure the external dependencies listed in
 meson.build and README.md are accurate.
 
-COMMIT RELEASE CHANGES AND TAG THE RELEASE:
--------------------------------------------
+COMMIT RELEASE CHANGES AND TAG THE RELEASE, TRIGGERING A RELEASE BUILD:
+-----------------------------------------------------------------------
 
 git commit -a
 git push
 git tag -a -s ORCA_40_RC
 git push origin ORCA_40_RC
-
-BUILD THE RELEASE:
------------------
-
-meson setup builddir
-meson dist -C builddir
-
-UPLOAD THE RELEASE:
-------------------
-
-scp builddir/meson-dist/orca-40.rc.tar.xz yourusername@master.gnome.org:
-ssh master.gnome.org
-ftpadmin install orca-40.rc.tar.xz
 
 BUMP THE VERSION:
 -----------------
