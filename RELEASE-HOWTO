@@ -18,17 +18,17 @@ Make sure you are up to date:
 Update ./NEWS with changes from the last tagged release. You can use
 commands like the following:
 
-Detailed commits since the ORCA_40_BETA tag:
+Detailed commits since the 48.beta tag:
 
-  git log ORCA_40_BETA..
+  git log 48.beta..
 
 Short list of translation changes with author names and files:
 
-  git log ORCA_40_BETA.. --grep translation --pretty=format:"%s - %an" --name-only
+  git log 48.beta.. --grep translation --pretty=format:"%s - %an" --name-only
 
 Quick-and-dirty formatted list of translation changes:
 
-  git log ORCA_40_BETA.. --grep translation --pretty=format:"%s,%an" --name-only |
+  git log 48.beta.. --grep translation --pretty=format:"%s,%an" --name-only |
     awk -F/ '/\.po/ {gsub("\\.po", "", $NF); printf(",%s",$NF); next;}
     {gsub("(Updated* |Add(ed)* | translation| help)", "", $0); printf("\n%s",$0);}' |
     awk -F, '!seen[$0]++ {if (NF == 3) printf("  %-15s %-25s %s\n", $3, $1, $2);}' |
@@ -36,7 +36,7 @@ Quick-and-dirty formatted list of translation changes:
 
 Short list of non-translation commits:
 
-  git log ORCA_40_BETA.. --grep translation --invert-grep --pretty=format:" * %s%n"
+  git log 48.beta.. --grep translation --invert-grep --pretty=format:" * %s%n"
 
 NOTE: You should also make sure the external dependencies listed in
 meson.build and README.md are accurate.
@@ -46,17 +46,17 @@ COMMIT RELEASE CHANGES AND TAG THE RELEASE, TRIGGERING A RELEASE BUILD:
 
 git commit -a
 git push
-git tag -a -s ORCA_40_RC
-git push origin ORCA_40_RC
+git tag -a -s 48.rc
+git push origin 48.rc
 
 BUMP THE VERSION:
 -----------------
 
 Modify this line in ./meson.build:
 
-    version: '40.rc'
+    version: '48.rc'
 
-The major version (40) increments by 1 each new GNOME release cycle.
+The major version (48) increments by 1 each new GNOME release cycle.
 The minor version proceeds as follows: alpha, beta, rc, 0, 1, 2, 3, etc.
 
 Modify ./README.md to make sure it has the right Orca version.
