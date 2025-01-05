@@ -36,7 +36,7 @@ workflow:
 
 variables:
   MESON_BUILD_DIR: _build
-  TARBALL_ARTIFACT_PATH: "${MESON_BUILD_DIR}/meson-dist/${CI_PROJECT_NAME}-${CI_COMMIT_TAG}.tar.xz"
+  TARBALL_ARTIFACT_PATH: "${MESON_BUILD_DIR}/meson-dist/${CI_PROJECT_NAME}-*.tar.xz"
 
 # Main build job; installs at-spi2-core and builds/installs Orca.
 #
