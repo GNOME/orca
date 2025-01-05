@@ -1,3 +1,155 @@
+48.alpha - 5 January 2025
+
+Event Processing:
+
+* Replace flood handling with flood protection to remain responsive when
+  an application emits too many events.
+
+* Switch to a priority queue so that scripts get events in a predictable
+  order and important events get handled first.
+
+* Simplify and centralize logic related to identifying if and how an
+  event should be presented to the user.
+
+Clipboard:
+
+* Use gpaste/klipper if possible to increase likelihood that clipboard
+  event presentation works in Wayland.
+
+* Add new unbound command to present clipboard contents.
+
+Spellcheck:
+
+* Prefer the accessible id over other heuristics when attempting to
+  identify components of a spellcheck dialog.
+
+Web:
+
+* Speak digits for telephone number inputs independent of user setting.
+
+* Fix false positive in which different table cells were treated as the
+  same word.
+
+* Don't speak name of non-focusable section unless we know it's author
+  specified. (Eliminates double-presentation of content in Chromium.)
+
+* Fix double-presentation of contents when using the object navigator.
+
+* Support aria-disabled on grid cells.
+
+* Add handling for the "semantics" MathML element which is not being
+  pruned from the accessibility tree by Chromium.
+
+* Fix bug related to presentation of a character name in MathML.
+
+General:
+
+* Improve reliability and simplify options related to text attribute
+  presentation.
+
+* Don't announce "<VoidSymbol>" as a keybinding (GTK4 exposes that).
+
+* Fix double execution for a newly-bound command.
+
+* Improve presentation when generating descendants of list items.
+
+* Simplify logic related to determining if an object is layout only.
+
+* Ongoing code cleanup, technical-debt elimination, removal of obsolete
+  workarounds for application issues, etc.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+  bg              Bulgarian                 Alexander Shopov
+  ca              Catalan                   Jordi Mas i Hernandez
+  da              Danish                    Alan Mortensen
+  de              German                    Jürgen Benvenuti
+  en_GB           British English           Andi Chandler
+  es              Spanish                   Daniel
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  fr              French                    Irénée THIRION
+  gl              Galician                  Fran Dieguez
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Andika Triwidada
+  ka              Georgian                  Ekaterine Papava
+  nl              Dutch                     Nathan Follens
+  pl              Polish                    Piotr Drąg
+  pt              Portuguese                Hugo Carvalho
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Martin
+  sr@latin        Serbian (Latin)           Милош Поповић
+  sr              Serbian                   Милош Поповић
+  sv              Swedish                   Anders Jonsson
+  th              Thai                      Aefgh Threenine
+  tr              Turkish                   Emin Tufan Çetin
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
+47.2 - 22 November 2024
+
+Web:
+
+* Report "required" and "invalid" state on password input.
+
+* Present ARIA alerts as UI; not a text container.
+
+* Fix regression in presentation of table cell content during word nav.
+
+LibreOffice:
+
+* Ensure we announce Calc sheet changes.
+
+General:
+
+* Multiple "chattiness" fixes.
+
+* Treat GTK4 groupings as panels.
+
+* Fix performance issue determining posinset and setsize in giant sets.
+
+* Try to filter out redundant description-change events
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  fa              Persian                   Danial Behzadi
+  nl              Dutch                     Nathan Follens
+  sr@latin        Serbian (Latin)           Милош Поповић
+  sr              Serbian                   Милош Поповић
+
+=========
+
+47.1 - 25 October 2024
+
+LibreOffice:
+
+* Fix bug causing navigation in Calc sheets to not be presented.
+
+Web:
+
+* Fix presentation of heading role in Google docs.
+
+* Fix bug in presenting link ancestors
+
+* Fix several chattiness issues.
+
+General:
+
+* Fix bug causing Orca's help window to not be displayed.
+
+* Make string-redundancy check slightly more conservative
+  so that descriptions are not incorrectly filtered out.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  th              Thai                      Aefgh Threenine
+
+=========
+
 47.0 - 17 September 2024
 
 General:
