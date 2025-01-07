@@ -40,12 +40,18 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from . import debug
 from . import object_properties
 from .ax_object import AXObject
 from .ax_utilities_state import AXUtilitiesState
 
 class AXUtilitiesRole:
     """Utilities for obtaining role-related information."""
+
+    @staticmethod
+    def _get_display_style(obj: Atspi.Accessible) -> str:
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("display", "")
 
     @staticmethod
     def _get_tag(obj: Atspi.Accessible) -> Optional[str]:
@@ -376,6 +382,12 @@ class AXUtilitiesRole:
         return Atspi.role_get_localized_name(role)
 
     @staticmethod
+    def has_role_from_aria(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj's role comes from ARIA"""
+
+        return bool(AXUtilitiesRole._get_xml_roles(obj))
+
+    @staticmethod
     def have_same_role(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool:
         """Returns True if obj1 and obj2 have the same role"""
 
@@ -391,11 +403,27 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_alert(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
-        """Returns True if obj has the alert role"""
+        """Returns True if obj has the alert (a type of dialog) role"""
 
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.ALERT
+
+    @staticmethod
+    def is_aria_alert(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj is an ARIA alert (should have notification role)"""
+
+        if "alert" not in AXUtilitiesRole._get_xml_roles(obj):
+            return False
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        if role != Atspi.Role.NOTIFICATION:
+            tokens = ["AXUtilitiesRole: Unexpected role for ARIA alert", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return True
 
     @staticmethod
     def is_animation(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
@@ -1258,6 +1286,33 @@ class AXUtilitiesRole:
         return role == Atspi.Role.INFO_BAR
 
     @staticmethod
+    def is_inline_internal_frame(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj has the internal frame role and is inline."""
+
+        if not AXUtilitiesRole.is_internal_frame(obj, role):
+            return False
+
+        return "inline" in AXUtilitiesRole._get_display_style(obj)
+
+    @staticmethod
+    def is_inline_list_item(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj has the list item role and is inline."""
+
+        if not AXUtilitiesRole.is_list_item(obj, role):
+            return False
+
+        return "inline" in AXUtilitiesRole._get_display_style(obj)
+
+    @staticmethod
+    def is_inline_suggestion(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj has the suggestion role and is inline."""
+
+        if not AXUtilitiesRole.is_suggestion(obj, role):
+            return False
+
+        return "inline" in AXUtilitiesRole._get_display_style(obj)
+
+    @staticmethod
     def is_input_method_window(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
         """Returns True if obj has the input method window role"""
 
@@ -1406,6 +1461,14 @@ class AXUtilitiesRole:
         return role == Atspi.Role.LIST_BOX
 
     @staticmethod
+    def is_list_box_item(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj is an item in a list box"""
+
+        if not AXUtilitiesRole.is_list_item(obj, role):
+            return False
+        return AXObject.find_ancestor(obj, AXUtilitiesRole.is_list_box) is not None
+
+    @staticmethod
     def is_list_item(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
         """Returns True if obj has the list item role"""
 
@@ -1420,6 +1483,13 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.LOG
+
+    @staticmethod
+    def is_live_region(obj: Atspi.Accessible, _role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj is a live region."""
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return "container-live" in attrs
 
     @staticmethod
     def is_mark(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
@@ -2312,6 +2382,13 @@ class AXUtilitiesRole:
             return True
         exclude = ["::before", "::after", "::marker"]
         return tag not in exclude
+
+    @staticmethod
+    def is_web_element_custom(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a custom web element"""
+
+        tag = AXUtilitiesRole._get_tag(obj)
+        return tag is not None and "-" in tag
 
     @staticmethod
     def is_widget(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:

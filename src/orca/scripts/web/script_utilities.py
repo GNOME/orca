@@ -82,9 +82,6 @@ class Utilities(script_utilities.Utilities):
         self._hasVisibleCaption = {}
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
-        self._isAnchor = {}
-        self._isInlineIframeDescendant = {}
-        self._isInlineListItem = {}
         self._isInlineListDescendant = {}
         self._isLink = {}
         self._isListDescendant = {}
@@ -97,7 +94,6 @@ class Utilities(script_utilities.Utilities):
         self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._inferredLabels = {}
-        self._displayedLabelText = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
@@ -164,9 +160,6 @@ class Utilities(script_utilities.Utilities):
         self._hasVisibleCaption = {}
         self._isNonInteractiveDescendantOfControl = {}
         self._isClickableElement = {}
-        self._isAnchor = {}
-        self._isInlineIframeDescendant = {}
-        self._isInlineListItem = {}
         self._isInlineListDescendant = {}
         self._isLink = {}
         self._isListDescendant = {}
@@ -179,7 +172,6 @@ class Utilities(script_utilities.Utilities):
         self._hasNameAndActionAndNoUsefulChildren = {}
         self._isNonNavigableEmbeddedDocument = {}
         self._inferredLabels = {}
-        self._displayedLabelText = {}
         self._preferDescriptionOverName = {}
         self._shouldFilter = {}
         self._shouldInferLabelFor = {}
@@ -225,12 +217,9 @@ class Utilities(script_utilities.Utilities):
         self._inDocumentContent[hash(obj)] = rv
         return rv
 
-    def _getDocumentsEmbeddedBy(self, frame):
-        return list(filter(self.isDocument, AXUtilities.get_embeds(frame)))
-
     def activeDocument(self, window=None):
         window = window or focus_manager.get_manager().get_active_window()
-        documents = self._getDocumentsEmbeddedBy(window)
+        documents = list(filter(self.isDocument, AXUtilities.get_embeds(window)))
         documents = list(filter(AXUtilities.is_showing, documents))
         if len(documents) == 1:
             return documents[0]
@@ -309,45 +298,6 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
-    def getLastObjectInDocument(self, documentFrame):
-        return AXObject.find_deepest_descendant(documentFrame)
-
-    def getRoleDescription(self, obj, isBraille=False):
-        attrs = AXObject.get_attributes_dict(obj)
-        rv = attrs.get('roledescription', '')
-        if isBraille:
-            rv = attrs.get('brailleroledescription', rv)
-
-        return rv
-
-    def nodeLevel(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().nodeLevel(obj)
-
-        rv = -1
-        if not (self.inMenu(obj) or AXUtilities.is_heading(obj)):
-            attrs = AXObject.get_attributes_dict(obj)
-            # ARIA levels are 1-based; non-web content is 0-based. Be consistent.
-            rv = int(attrs.get('level', 0)) -1
-
-        return rv
-
-    def _getID(self, obj):
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('id')
-
-    def _getDisplayStyle(self, obj):
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('display', '')
-
-    def _getTag(self, obj):
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('tag')
-
-    def _get_xml_roles(self, obj):
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('xml-roles', '').split()
-
     def inFindContainer(self, obj=None):
         if not obj:
             obj = focus_manager.get_manager().get_locus_of_focus()
@@ -365,19 +315,6 @@ class Utilities(script_utilities.Utilities):
             return False
 
         return not self.treatAsTextObject(obj, False)
-
-    def isHidden(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        return attrs.get('hidden', False)
-
-    def _isOrIsIn(self, child, parent):
-        if not (child and parent):
-            return False
-
-        if child == parent:
-            return True
-
-        return AXObject.find_ancestor(child, lambda x: x == parent)
 
     def isTextArea(self, obj):
         if not self.inDocumentContent(obj):
@@ -680,7 +617,7 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
 
-        elif rv and not self.isLiveRegion(obj):
+        elif rv and not AXUtilities.is_live_region(obj):
             doNotQuery = [Atspi.Role.LIST_BOX]
             role = AXObject.get_role(obj)
             if rv and role in doNotQuery:
@@ -1802,12 +1739,10 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        if AXUtilities.is_list_item(obj, role):
-            rv = AXObject.find_ancestor(obj, AXUtilities.is_list_box)
-            if rv:
-                tokens = ["WEB:", obj, "is focus mode widget because it's a listbox descendant"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return rv
+        if AXUtilities.is_list_box_item(obj, role):
+            tokens = ["WEB:", obj, "is focus mode widget because it's a listbox item"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
 
         if AXUtilities.is_button_with_popup(obj, role):
             tokens = ["WEB:", obj, "is focus mode widget because it's a button with popup"]
@@ -1984,9 +1919,6 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv[hash(obj)] = rv
         return rv
 
-    def isAriaAlert(self, obj):
-        return 'alert' in self._get_xml_roles(obj)
-
     def isContentError(self, obj):
         if not (obj and self.inDocumentContent(obj)):
             return super().isContentError(obj)
@@ -1996,49 +1928,19 @@ class Utilities(script_utilities.Utilities):
 
         return AXUtilities.is_invalid_entry(obj)
 
-    def isCustomElement(self, obj):
-        tag = self._getTag(obj)
-        return tag and '-' in tag
-
-    def isInlineIframe(self, obj):
-        if not AXUtilities.is_internal_frame(obj):
-            return False
-
-        displayStyle = self._getDisplayStyle(obj)
-        if "inline" not in displayStyle:
-            return False
-
-        return self.getDocumentForObject(obj) is not None
-
     def isInlineIframeDescendant(self, obj):
-        if not obj:
-            return False
-
-        rv = self._isInlineIframeDescendant.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        ancestor = AXObject.find_ancestor(obj, self.isInlineIframe)
-        rv = ancestor is not None
-        self._isInlineIframeDescendant[hash(obj)] = rv
-        return rv
-
-    def isInlineSuggestion(self, obj):
-        if not AXUtilities.is_suggestion(obj):
-            return False
-
-        displayStyle = self._getDisplayStyle(obj)
-        return "inline" in displayStyle
+        ancestor = AXObject.find_ancestor(obj, AXUtilities.is_inline_iframe)
+        return ancestor is not None
 
     def isFirstItemInInlineContentSuggestion(self, obj):
-        suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
+        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if not (suggestion and AXObject.get_child_count(suggestion)):
             return False
 
         return suggestion[0] == obj
 
     def isLastItemInInlineContentSuggestion(self, obj):
-        suggestion = AXObject.find_ancestor(obj, self.isInlineSuggestion)
+        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if not (suggestion and AXObject.get_child_count(suggestion)):
             return False
 
@@ -2485,22 +2387,8 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def isAnchor(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isAnchor.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = False
-        if AXUtilities.is_link(obj) \
-           and not AXUtilities.is_focusable(obj) \
-           and not AXObject.has_action(obj, "jump") \
-           and not self._get_xml_roles(obj):
-            rv = True
-
-        self._isAnchor[hash(obj)] = rv
-        return rv
+        return AXUtilities.is_link(obj) and not AXUtilities.is_focusable(obj) \
+           and not AXObject.has_action(obj, "jump") and not AXUtilities.has_role_from_aria(obj)
 
     def isEmptyAnchor(self, obj):
         return self.isAnchor(obj) and not self.treatAsTextObject(obj)
@@ -2564,10 +2452,6 @@ class Utilities(script_utilities.Utilities):
         self._isCodeDescendant[hash(obj)] = rv
         return rv
 
-    def getComboBoxValue(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        return attrs.get("valuetext", super().getComboBoxValue(obj))
-
     def isItemForEditableComboBox(self, item, comboBox):
         if not (AXUtilities.is_list_item(item) or AXUtilities.is_menu_item(item)):
             return False
@@ -2603,23 +2487,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXObject.find_descendant(obj, _isMatch) is not None
 
-    def isInlineListItem(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        rv = self._isInlineListItem.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        if not AXUtilities.is_list_item(obj):
-            rv = False
-        else:
-            displayStyle = self._getDisplayStyle(obj)
-            rv = displayStyle and "inline" in displayStyle
-
-        self._isInlineListItem[hash(obj)] = rv
-        return rv
-
     def isBlockListDescendant(self, obj):
         if not self.isListDescendant(obj):
             return False
@@ -2647,10 +2514,10 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
-        if self.isInlineListItem(obj):
+        if AXUtilities.is_inline_list_item(obj):
             rv = True
         else:
-            ancestor = AXObject.find_ancestor(obj, self.isInlineListItem)
+            ancestor = AXObject.find_ancestor(obj, AXUtilities.is_inline_list_item)
             rv = ancestor is not None
 
         self._isInlineListDescendant[hash(obj)] = rv
@@ -2661,13 +2528,6 @@ class Utilities(script_utilities.Utilities):
             return None
 
         return AXObject.find_ancestor(obj, AXUtilities.is_list)
-
-    def isLiveRegion(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return False
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return 'container-live' in attrs
 
     def isLink(self, obj):
         if not obj:
@@ -2760,7 +2620,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = False
-        if self.isCustomElement(obj) and AXUtilities.has_explicit_name(obj) \
+        if AXUtilities.is_web_element_custom(obj) and AXUtilities.has_explicit_name(obj) \
            and AXUtilities.is_section(obj) \
            and AXObject.supports_text(obj) \
            and not re.search(r'[^\s\ufffc]', AXText.get_all_text(obj)):
@@ -2849,7 +2709,7 @@ class Utilities(script_utilities.Utilities):
                  Atspi.Role.STATIC,
                  Atspi.Role.TABLE_ROW]
         role = AXObject.get_role(obj)
-        if role not in roles and not self.isAriaAlert(obj):
+        if role not in roles and not AXUtilities.is_aria_alert(obj):
             rv = False
         elif AXUtilities.is_focusable(obj):
             rv = False
@@ -2904,13 +2764,6 @@ class Utilities(script_utilities.Utilities):
         self._hasVisibleCaption[hash(obj)] = rv
         return rv
 
-    def popupType(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return 'false'
-
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('haspopup', 'false').lower()
-
     def inferLabelFor(self, obj):
         if not self.shouldInferLabelFor(obj):
             return None, []
@@ -2937,7 +2790,7 @@ class Utilities(script_utilities.Utilities):
         name = AXObject.get_name(obj)
         if name:
             rv = False
-        elif self._get_xml_roles(obj):
+        elif AXUtilities.has_role_from_aria(obj):
             rv = False
         elif not rv:
             roles = [Atspi.Role.CHECK_BOX,
@@ -2954,22 +2807,6 @@ class Utilities(script_utilities.Utilities):
            and role not in [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]:
             return False
 
-        return rv
-
-    def displayedLabel(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().displayedLabel(obj)
-
-        rv = self._displayedLabelText.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        labels = AXUtilities.get_is_labelled_by(obj)
-        strings = [AXObject.get_name(label)
-                   or AXText.get_all_text(label) for label in labels if label is not None]
-        rv = " ".join(strings)
-
-        self._displayedLabelText[hash(obj)] = rv
         return rv
 
     def isSpinnerEntry(self, obj):
@@ -3172,7 +3009,7 @@ class Utilities(script_utilities.Utilities):
         if not fragment:
             return False
 
-        sourceID = self._getID(event.source)
+        sourceID = AXObject.get_attribute(event.source, "id")
         if sourceID and fragment == sourceID:
             return True
 
@@ -3190,7 +3027,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         def isSameFragment(x):
-            return self._getID(x) == fragment
+            return AXObject.get_attribute(x, "id") == fragment
 
         return AXObject.find_ancestor(obj, isSameFragment) is not None
 
@@ -3207,7 +3044,7 @@ class Utilities(script_utilities.Utilities):
             return AXObject.get_role(x) in self._textBlockElementRoles() \
                 and not self.isFakePlaceholderForEntry(x) and AXUtilities.is_web_element(x)
 
-        if self._getTag(obj) in ["input", "textarea"]:
+        if AXUtilities.is_text_input(obj):
             rv = False
         elif AXUtilities.is_multi_line_entry(obj):
             rv = AXObject.find_descendant(obj, hasTextBlockRole)
@@ -3228,48 +3065,6 @@ class Utilities(script_utilities.Utilities):
         start = AXHypertext.get_link_start_offset(obj)
         end = AXHypertext.get_link_end_offset(obj)
         return start, end, AXText.get_character_count(parent)
-
-    def getError(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().getError(obj)
-
-        if not AXUtilities.is_invalid_entry(obj):
-            return False
-
-        attrs, start, end = self.textAttributes(obj, 0, True)
-        error = attrs.get("invalid")
-        if error == "false":
-            return False
-        if error not in ["spelling", "grammar"]:
-            return True
-
-        return error
-
-    def _getErrorMessageContainer(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return None
-
-        if not self.getError(obj):
-            return None
-
-        targets = AXUtilities.get_error_message(obj)
-        if targets:
-            return targets[0]
-
-        return None
-
-    def getErrorMessage(self, obj):
-        return self.expandEOCs(self._getErrorMessageContainer(obj))
-
-    def isErrorForContents(self, obj, contents=[]):
-        if not self.isErrorMessage(obj):
-            return False
-
-        for acc, start, end, string in contents:
-            if self._getErrorMessageContainer(acc) == obj:
-                return True
-
-        return False
 
     def _canHaveCaretContext(self, obj):
         rv = self._canHaveCaretContextDecision.get(hash(obj))
@@ -3922,7 +3717,7 @@ class Utilities(script_utilities.Utilities):
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             return False
 
-        if not self.isLiveRegion(event.source):
+        if not AXUtilities.is_live_region(event.source):
             return False
 
         if not settings_manager.get_manager().get_setting('presentLiveRegionFromInactiveTab') \
@@ -3931,7 +3726,7 @@ class Utilities(script_utilities.Utilities):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        alert = AXObject.find_ancestor(event.source, self.isAriaAlert)
+        alert = AXObject.find_ancestor(event.source, AXUtilities.is_aria_alert)
         if alert and AXUtilities.get_focused_object(alert) == event.source:
             msg = "WEB: Focused source will be presented as part of alert"
             debug.print_message(debug.LEVEL_INFO, msg, True)

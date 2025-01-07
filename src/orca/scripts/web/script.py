@@ -1719,9 +1719,9 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        isLiveRegion = self.utilities.isLiveRegion(event.source)
+        is_live_region = AXUtilities.is_live_region(event.source)
         document = self.utilities.getTopLevelDocumentForObject(event.source)
-        if document and not isLiveRegion:
+        if document and not is_live_region:
             focus = focus_manager.get_manager().get_locus_of_focus()
             if event.source == focus:
                 msg = "WEB: Dumping cache: source is focus"
@@ -1739,7 +1739,7 @@ class Script(default.Script):
                 msg = "WEB: Not dumping full cache"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.clearCachedObjects()
-        elif isLiveRegion:
+        elif is_live_region:
             msg = "WEB: Ignoring event from live region."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1808,7 +1808,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.isLiveRegion(event.source):
+        if AXUtilities.is_live_region(event.source):
             if self.utilities.handleEventForRemovedChild(event):
                 msg = "WEB: Event handled for removed live-region child."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2218,7 +2218,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.isLiveRegion(event.source):
+        if AXUtilities.is_live_region(event.source):
             msg = "WEB: Ignoring deletion from live region"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2307,7 +2307,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.isLiveRegion(event.source):
+        if AXUtilities.is_live_region(event.source):
             if self.utilities.handleAsLiveRegion(event):
                 msg = "WEB: Event to be handled as live region"
                 debug.print_message(debug.LEVEL_INFO, msg, True)

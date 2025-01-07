@@ -38,6 +38,7 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import settings_manager
+from .ax_object import AXObject
 from .ax_text import AXText
 
 if TYPE_CHECKING:
@@ -546,7 +547,7 @@ class CaretNavigation:
         tokens = ["CARET NAVIGATION: Go to end of", document]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        obj = script.utilities.getLastObjectInDocument(document)
+        obj = AXObject.find_deepest_descendant(document)
         tokens = ["CARET NAVIGATION: Last object in", document, "is", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

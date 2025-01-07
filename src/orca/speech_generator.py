@@ -762,7 +762,7 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.CONTENT_INSERTION_END)
         elif role == Atspi.Role.MARK:
             result.append(messages.CONTENT_MARK_END)
-        elif role == Atspi.Role.SUGGESTION and not self._script.utilities.isInlineSuggestion(obj):
+        elif role == Atspi.Role.SUGGESTION and not AXUtilities.is_inline_suggestion(obj, role):
             result.append(messages.LEAVING_SUGGESTION)
         else:
             result = ['']

@@ -141,7 +141,9 @@ class Utilities:
         """
 
         labels = AXUtilities.get_is_labelled_by(obj)
-        return " ".join(AXText.get_all_text(label) or AXObject.get_name(label) for label in labels)
+        strings = [AXObject.get_name(label)
+                   or AXText.get_all_text(label) for label in labels if label is not None]
+        return " ".join(strings)
 
     def preferDescriptionOverName(self, obj):
         return False
@@ -273,9 +275,6 @@ class Utilities:
     def isContentError(self, obj):
         return False
 
-    def isInlineSuggestion(self, obj):
-        return False
-
     def isFirstItemInInlineContentSuggestion(self, obj):
         return False
 
@@ -286,7 +285,8 @@ class Utilities:
         return False
 
     def isHidden(self, obj):
-        return False
+        attrs = AXObject.get_attributes_dict(obj, False)
+        return attrs.get("hidden", False)
 
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
@@ -624,6 +624,11 @@ class Utilities:
 
         if not self.isTreeDescendant(obj):
             return -1
+
+        attrs = AXObject.get_attributes_dict(obj)
+        if "level" in attrs:
+            # ARIA levels are 1-based.
+            return int(attrs.get("level", 0)) - 1
 
         nodes = []
         node = obj
@@ -1108,10 +1113,45 @@ class Utilities:
         return result
 
     def getError(self, obj):
-        return AXUtilities.is_invalid_entry(obj)
+        if not AXUtilities.is_invalid_entry(obj):
+            return False
+
+        attrs, _start, _end = self.textAttributes(obj, 0, True)
+        error = attrs.get("invalid")
+        if error == "false":
+            return False
+        if error not in ["spelling", "grammar"]:
+            return True
+
+        return error
+
+    def _getErrorMessageContainer(self, obj):
+        if not self.getError(obj):
+            return None
+
+        targets = AXUtilities.get_error_message(obj)
+        if targets:
+            return targets[0]
+
+        return None
+
+    def isErrorForContents(self, obj, contents=None):
+        """Returns True of obj is an error message for the contents."""
+
+        if not contents:
+            return False
+
+        if not self.isErrorMessage(obj):
+            return False
+
+        for acc, _start, _end, _string in contents:
+            if self._getErrorMessageContainer(acc) == obj:
+                return True
+
+        return False
 
     def getErrorMessage(self, obj):
-        return ""
+        return self.expandEOCs(self._getErrorMessageContainer(obj))
 
     def isErrorMessage(self, obj):
         return bool(AXUtilities.get_is_error_for(obj))
@@ -1449,6 +1489,10 @@ class Utilities:
         return AXObject.find_ancestor(obj, AXUtilities.is_combo_box) is not None
 
     def getComboBoxValue(self, obj):
+        attrs = AXObject.get_attributes_dict(obj, False)
+        if "valuetext" in attrs:
+            return attrs.get("valuetext")
+
         if not AXObject.get_child_count(obj):
             return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
@@ -1473,7 +1517,8 @@ class Utilities:
         return False
 
     def popupType(self, obj):
-        return ''
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("haspopup", "false").lower()
 
     def headingLevel(self, obj):
         if not AXUtilities.is_heading(obj):
@@ -1743,7 +1788,11 @@ class Utilities:
         return values
 
     def getRoleDescription(self, obj, isBraille=False):
-        return ""
+        attrs = AXObject.get_attributes_dict(obj)
+        rv = attrs.get("roledescription", "")
+        if isBraille:
+            rv = attrs.get("brailleroledescription", rv)
+        return rv
 
     def isEditableTextArea(self, obj):
         if not self.isTextArea(obj):

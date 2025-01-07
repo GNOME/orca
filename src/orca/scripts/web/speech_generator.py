@@ -190,7 +190,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return []
 
         format_type = args.get("formatType")
-        if format_type == "basicWhereAmI" and self._script.utilities.isLiveRegion(obj):
+        if format_type == "basicWhereAmI" and AXUtilities.is_live_region(obj):
             return self._script.live_region_manager.generateLiveRegionDescription(obj, **args)
 
         if AXUtilities.is_text(obj, args.get("role")) and format_type != "basicWhereAmI":

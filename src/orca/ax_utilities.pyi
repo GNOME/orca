@@ -220,6 +220,9 @@ class AXUtilities:
 
     # From ax_utilities_role.py
     @staticmethod
+    def _get_display_style(obj: Atspi.Accessible) -> str: ...
+
+    @staticmethod
     def _get_tag(obj: Atspi.Accessible) -> Optional[str]: ...
 
     @staticmethod
@@ -282,6 +285,9 @@ class AXUtilities:
     ) -> str: ...
 
     @staticmethod
+    def has_role_from_aria(obj: Atspi.Accessible) -> bool: ...
+
+    @staticmethod
     def have_same_role(
         obj1: Atspi.Accessible, obj2: Atspi.Accessible
     ) -> bool: ...
@@ -293,6 +299,11 @@ class AXUtilities:
 
     @staticmethod
     def is_alert(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
+    def is_aria_alert(
         obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
     ) -> bool: ...
 
@@ -867,6 +878,21 @@ class AXUtilities:
     ) -> bool: ...
 
     @staticmethod
+    def is_inline_internal_frame(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
+    def is_inline_list_item(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
+    def is_inline_suggestion(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
     def is_input_method_window(
         obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
     ) -> bool: ...
@@ -967,6 +993,11 @@ class AXUtilities:
     ) -> bool: ...
 
     @staticmethod
+    def is_list_box_item(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
     def is_list_item(
         obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
     ) -> bool: ...
@@ -974,6 +1005,11 @@ class AXUtilities:
     @staticmethod
     def is_log(
         obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
+    def is_live_region(
+        obj: Atspi.Accessible, _role: Optional[Atspi.Role] = None
     ) -> bool: ...
 
     @staticmethod
@@ -1465,6 +1501,9 @@ class AXUtilities:
     def is_web_element(
         obj: Atspi.Accessible, exclude_pseudo_elements: bool = True
     ) -> bool: ...
+
+    @staticmethod
+    def is_web_element_custom(obj: Atspi.Accessible) -> bool: ...
 
     @staticmethod
     def is_window(
