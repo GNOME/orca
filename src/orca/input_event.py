@@ -713,8 +713,7 @@ class KeyboardEvent(InputEvent):
 
             if self._script.get_learn_mode_presenter().is_active():
                 self._consumer = self._script.get_learn_mode_presenter().handle_event
-                # tokens = ["CONSUMER:", cast(Any, self._consumer)]
-                tokens = ["CONSUMER:", self._consumer]
+                tokens = ["CONSUMER:", cast(Any, self._consumer)]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._did_consume, self._result_reason = self._process()
