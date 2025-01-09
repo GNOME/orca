@@ -110,7 +110,7 @@ class ActionPresenter:
                 "a",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers.get("show_actions_menu")))
+                self._handlers["show_actions_menu"]))
 
         msg = "ACTION PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

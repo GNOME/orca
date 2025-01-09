@@ -264,7 +264,7 @@ class ObjectNavigator:
             self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
-    def up(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> None:
+    def up(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> bool:
         """Moves the navigator focus to the parent of the current focus."""
 
         self.update()
@@ -274,27 +274,29 @@ class ObjectNavigator:
             self.present(script)
         else:
             script.presentMessage(messages.NAVIGATOR_NO_PARENT)
+        return True
 
-    def down(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> None:
+    def down(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> bool:
         """Moves the navigator focus to the first child of the current focus."""
 
         self.update()
         children = self._children(script, self._navigator_focus)
         if not children:
             script.presentMessage(messages.NAVIGATOR_NO_CHILDREN)
-            return
+            return True
 
         self._set_navigator_focus(children[0])
         self.present(script)
+        return True
 
-    def next(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> None:
+    def next(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> bool:
         """Moves the navigator focus to the next sibling of the current focus."""
 
         self.update()
         parent = self._parent(script, self._navigator_focus)
         if parent is None:
             script.presentMessage(messages.NAVIGATOR_NO_NEXT)
-            return
+            return True
 
         siblings = self._children(script, parent)
         if self._navigator_focus in siblings:
@@ -307,17 +309,18 @@ class ObjectNavigator:
         else:
             self._set_navigator_focus(parent)
             self.present(script)
+        return True
 
     def previous(
         self, script: default.Script, _event: Optional[input_event.InputEvent] = None
-    ) -> None:
+    ) -> bool:
         """Moves the navigator focus to the previous sibling of the current focus."""
 
         self.update()
         parent = self._parent(script, self._navigator_focus)
         if parent is None:
             script.presentMessage(messages.NAVIGATOR_NO_PREVIOUS)
-            return
+            return True
 
         siblings = self._children(script, parent)
         if self._navigator_focus in siblings:
@@ -330,6 +333,7 @@ class ObjectNavigator:
         else:
             self._set_navigator_focus(parent)
             self.present(script)
+        return True
 
     def toggle_simplify(
         self, script: default.Script, _event: Optional[input_event.InputEvent] = None
