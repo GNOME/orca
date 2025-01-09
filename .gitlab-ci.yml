@@ -61,10 +61,10 @@ build-opensuse-x86_64:
       - _build/help
     expire_in: 1 day
 
-# Ruff linter for Python.
+# Linters: Ruff and Mypy
 #
-# The configuration is in pyproject.toml.
-ruff lint:
+# The configurations are in pyproject.toml.
+linters:
   stage: lint
   extends:
     - '.orca_opensuse_tumbleweed_x86_64'
@@ -75,6 +75,7 @@ ruff lint:
   script:
     - source ci/env.sh
     - ruff check src/orca
+    - mypy src/orca
   allow_failure: true
 
 # Build a tarball for the release if we have a tag.
