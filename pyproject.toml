@@ -33,6 +33,10 @@ module = "brlapi.*"
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
+module = "cairo.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
 module = "dbus.*"
 ignore_missing_imports = true
 
