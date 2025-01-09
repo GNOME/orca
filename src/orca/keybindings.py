@@ -87,7 +87,8 @@ CAN_USE_KEYSYMS = Atspi.get_version() >= (2, 55, 0)
 
 def get_keycodes(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
-    should match the event.hw_code for key events and to the corresponding event.keysym for newer AT-SPI2.
+    should match the event.hw_code for key events and to the corresponding
+    event.keysym for newer AT-SPI2.
 
     This whole situation is caused by the fact that Solaris chooses
     to give us different keycodes for the same key, and the keypad
