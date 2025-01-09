@@ -156,28 +156,28 @@ class WhereAmIPresenter:
                 "f",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("readCharAttributesHandler")))
+                self._handlers["readCharAttributesHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "e",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("present_default_button")))
+                self._handlers["present_default_button"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("presentSizeAndPositionHandler")))
+                self._handlers["presentSizeAndPositionHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("getTitleHandler"),
+                self._handlers["getTitleHandler"],
                 1))
 
         self._desktop_bindings.add(
@@ -185,7 +185,7 @@ class WhereAmIPresenter:
                 "KP_Enter",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("getStatusBarHandler"),
+                self._handlers["getStatusBarHandler"],
                 2))
 
         self._desktop_bindings.add(
@@ -193,7 +193,7 @@ class WhereAmIPresenter:
                 "KP_Enter",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("whereAmIBasicHandler"),
+                self._handlers["whereAmIBasicHandler"],
                 1))
 
         self._desktop_bindings.add(
@@ -201,7 +201,7 @@ class WhereAmIPresenter:
                 "KP_Enter",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("whereAmIDetailedHandler"),
+                self._handlers["whereAmIDetailedHandler"],
                 2))
 
         self._desktop_bindings.add(
@@ -209,14 +209,14 @@ class WhereAmIPresenter:
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("whereAmILinkHandler")))
+                self._handlers["whereAmILinkHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers.get("whereAmISelectionHandler")))
+                self._handlers["whereAmISelectionHandler"]))
 
         msg = "WHERE AM I PRESENTER: Desktop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -231,28 +231,28 @@ class WhereAmIPresenter:
                 "f",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("readCharAttributesHandler")))
+                self._handlers["readCharAttributesHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "e",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("present_default_button")))
+                self._handlers["present_default_button"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("presentSizeAndPositionHandler")))
+                self._handlers["presentSizeAndPositionHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "slash",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("getTitleHandler"),
+                self._handlers["getTitleHandler"],
                 1))
 
         self._laptop_bindings.add(
@@ -260,7 +260,7 @@ class WhereAmIPresenter:
                 "slash",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("getStatusBarHandler"),
+                self._handlers["getStatusBarHandler"],
                 2))
 
         self._laptop_bindings.add(
@@ -268,7 +268,7 @@ class WhereAmIPresenter:
                 "Return",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("whereAmIBasicHandler"),
+                self._handlers["whereAmIBasicHandler"],
                 1))
 
         self._laptop_bindings.add(
@@ -276,7 +276,7 @@ class WhereAmIPresenter:
                 "Return",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("whereAmIDetailedHandler"),
+                self._handlers["whereAmIDetailedHandler"],
                 2))
 
         self._laptop_bindings.add(
@@ -284,14 +284,14 @@ class WhereAmIPresenter:
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("whereAmILinkHandler")))
+                self._handlers["whereAmILinkHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Up",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers.get("whereAmISelectionHandler")))
+                self._handlers["whereAmISelectionHandler"]))
 
         msg = "WHERE AM I PRESENTER: Laptop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

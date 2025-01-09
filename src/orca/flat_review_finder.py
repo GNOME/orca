@@ -163,21 +163,21 @@ class FlatReviewFinder:
                 "KP_Delete",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("findHandler")))
+                self._handlers["findHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("findNextHandler")))
+                self._handlers["findNextHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers.get("findPreviousHandler")))
+                self._handlers["findPreviousHandler"]))
 
         msg = "FLAT REVIEW FINDER: Desktop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -192,21 +192,21 @@ class FlatReviewFinder:
                 "bracketleft",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("findHandler")))
+                self._handlers["findHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketright",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("findNextHandler")))
+                self._handlers["findNextHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketright",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers.get("findPreviousHandler")))
+                self._handlers["findPreviousHandler"]))
 
         msg = "FLAT REVIEW FINDER: Laptop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

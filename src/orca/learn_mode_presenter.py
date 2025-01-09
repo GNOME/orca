@@ -117,7 +117,7 @@ class LearnModePresenter:
                 "h",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("enterLearnModeHandler")))
+                self._handlers["enterLearnModeHandler"]))
 
         msg = "LEARN MODE PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

@@ -124,7 +124,7 @@ class TableNavigator:
                 "t",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers.get("table_navigator_toggle_enabled"),
+                self._handlers["table_navigator_toggle_enabled"],
                 1,
                 not self._suspended))
 
@@ -133,7 +133,7 @@ class TableNavigator:
                 "Left",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers.get("table_cell_left"),
+                self._handlers["table_cell_left"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -142,7 +142,7 @@ class TableNavigator:
                 "Right",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers.get("table_cell_right"),
+                self._handlers["table_cell_right"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -151,7 +151,7 @@ class TableNavigator:
                 "Up",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers.get("table_cell_up"),
+                self._handlers["table_cell_up"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -160,7 +160,7 @@ class TableNavigator:
                 "Down",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers.get("table_cell_down"),
+                self._handlers["table_cell_down"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -169,7 +169,7 @@ class TableNavigator:
                 "Home",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers.get("table_cell_first"),
+                self._handlers["table_cell_first"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -178,7 +178,7 @@ class TableNavigator:
                 "End",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers.get("table_cell_last"),
+                self._handlers["table_cell_last"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -187,7 +187,7 @@ class TableNavigator:
                 "Left",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers.get("table_cell_beginning_of_row"),
+                self._handlers["table_cell_beginning_of_row"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -196,7 +196,7 @@ class TableNavigator:
                 "Right",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers.get("table_cell_end_of_row"),
+                self._handlers["table_cell_end_of_row"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -205,7 +205,7 @@ class TableNavigator:
                 "Up",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers.get("table_cell_top_of_column"),
+                self._handlers["table_cell_top_of_column"],
                 1,
                 self._enabled and not self._suspended))
 
@@ -214,7 +214,7 @@ class TableNavigator:
                 "Down",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers.get("table_cell_bottom_of_column"),
+                self._handlers["table_cell_bottom_of_column"],
                 1,
                 self._enabled and not self._suspended))
 

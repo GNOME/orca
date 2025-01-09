@@ -353,7 +353,7 @@ class ClipboardPresenter:
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("present_clipboard_contents"),
+                self._handlers["present_clipboard_contents"],
                 1,
                 True))
 

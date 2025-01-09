@@ -121,7 +121,7 @@ class SystemInformationPresenter:
                 "t",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("presentTimeHandler"),
+                self._handlers["presentTimeHandler"],
                 1))
 
         self._bindings.add(
@@ -129,7 +129,7 @@ class SystemInformationPresenter:
                 "t",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("presentDateHandler"),
+                self._handlers["presentDateHandler"],
                 2))
 
         self._bindings.add(
@@ -137,7 +137,7 @@ class SystemInformationPresenter:
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("present_battery_status"),
+                self._handlers["present_battery_status"],
                 1))
 
         self._bindings.add(
@@ -145,7 +145,7 @@ class SystemInformationPresenter:
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("present_cpu_and_memory_usage"),
+                self._handlers["present_cpu_and_memory_usage"],
                 1))
 
         msg = "SYSTEM INFORMATION PRESENTER: Bindings set up."

@@ -180,105 +180,105 @@ class SpeechAndVerbosityManager:
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("cycleCapitalizationStyleHandler")))
+                self._handlers["cycleCapitalizationStyleHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("cycleSpeakingPunctuationLevelHandler")))
+                self._handlers["cycleSpeakingPunctuationLevelHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("cycleSynthesizerHandler")))
+                self._handlers["cycleSynthesizerHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("cycleKeyEchoHandler")))
+                self._handlers["cycleKeyEchoHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("changeNumberStyleHandler")))
+                self._handlers["changeNumberStyleHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("decreaseSpeechRateHandler")))
+                self._handlers["decreaseSpeechRateHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("increaseSpeechRateHandler")))
+                self._handlers["increaseSpeechRateHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("decreaseSpeechPitchHandler")))
+                self._handlers["decreaseSpeechPitchHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("increaseSpeechPitchHandler")))
+                self._handlers["increaseSpeechPitchHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("decreaseSpeechVolumeHandler")))
+                self._handlers["decreaseSpeechVolumeHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("increaseSpeechVolumeHandler")))
+                self._handlers["increaseSpeechVolumeHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("toggleSpeakingIndentationJustificationHandler")))
+                self._handlers["toggleSpeakingIndentationJustificationHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "s",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("toggleSilenceSpeechHandler")))
+                self._handlers["toggleSilenceSpeechHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "v",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("toggleSpeechVerbosityHandler")))
+                self._handlers["toggleSpeechVerbosityHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "F11",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("toggleTableCellReadModeHandler")))
+                self._handlers["toggleTableCellReadModeHandler"]))
 
         msg = "SPEECH AND VERBOSITY MANAGER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

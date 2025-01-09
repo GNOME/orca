@@ -96,7 +96,7 @@ class BypassModeManager:
                 "BackSpace",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ALT_MODIFIER_MASK,
-                self._handlers.get("bypass_mode_toggle"),
+                self._handlers["bypass_mode_toggle"],
                 1,
                 True,
             )

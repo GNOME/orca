@@ -112,7 +112,7 @@ class SleepModeManager:
                 "q",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK,
-                self._handlers.get("toggle_sleep_mode")))
+                self._handlers["toggle_sleep_mode"]))
 
         msg = "SLEEP MODE MANAGER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

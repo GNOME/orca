@@ -178,7 +178,7 @@ class CaretNavigation:
                 "F12",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
-                self._handlers.get("toggle_enabled"),
+                self._handlers["toggle_enabled"],
                 1,
                 not self._suspended))
 
@@ -190,7 +190,7 @@ class CaretNavigation:
                 "Right",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("next_character"),
+                self._handlers["next_character"],
                 1,
                 enabled))
 
@@ -199,7 +199,7 @@ class CaretNavigation:
                 "Left",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("previous_character"),
+                self._handlers["previous_character"],
                 1,
                 enabled))
 
@@ -208,7 +208,7 @@ class CaretNavigation:
                 "Right",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("next_word"),
+                self._handlers["next_word"],
                 1,
                 enabled))
 
@@ -217,7 +217,7 @@ class CaretNavigation:
                 "Left",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("previous_word"),
+                self._handlers["previous_word"],
                 1,
                 enabled))
 
@@ -226,7 +226,7 @@ class CaretNavigation:
                 "Down",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("next_line"),
+                self._handlers["next_line"],
                 1,
                 enabled))
 
@@ -235,7 +235,7 @@ class CaretNavigation:
                 "Up",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("previous_line"),
+                self._handlers["previous_line"],
                 1,
                 enabled))
 
@@ -244,7 +244,7 @@ class CaretNavigation:
                 "End",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("end_of_line"),
+                self._handlers["end_of_line"],
                 1,
                 enabled))
 
@@ -253,7 +253,7 @@ class CaretNavigation:
                 "Home",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self._handlers.get("start_of_line"),
+                self._handlers["start_of_line"],
                 1,
                 enabled))
 
@@ -262,7 +262,7 @@ class CaretNavigation:
                 "End",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("end_of_file"),
+                self._handlers["end_of_file"],
                 1,
                 enabled))
 
@@ -271,7 +271,7 @@ class CaretNavigation:
                 "Home",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.CTRL_MODIFIER_MASK,
-                self._handlers.get("start_of_file"),
+                self._handlers["start_of_file"],
                 1,
                 enabled))
 
