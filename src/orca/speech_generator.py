@@ -1749,8 +1749,7 @@ class SpeechGenerator(generator.Generator):
         if not obj:
             return []
 
-        parent = AXObject.get_parent(obj)
-        if not AXObject.supports_selection(parent):
+        if not AXUtilities.is_selectable(obj):
             return []
 
         if AXUtilities.is_selected(obj):
@@ -1764,6 +1763,7 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(STATE, obj=obj, **args))
             return result
 
+        parent = AXObject.get_parent(obj)
         table = AXTable.get_table(obj)
         if table:
             if input_event_manager.get_manager().last_event_was_left_or_right():
