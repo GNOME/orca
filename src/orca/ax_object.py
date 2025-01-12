@@ -1342,6 +1342,10 @@ class AXObject:
         if "Ctrl" in result or "Control" in result:
             return ""
 
+        # Don't treat space as a mnemonic.
+        if result.lower() in [" ", "space", "<space>"]:
+            return ""
+
         return result
 
     @staticmethod
