@@ -560,6 +560,8 @@ class Generator:
             if AXUtilities.is_label(child):
                 if not AXText.has_presentable_text(child):
                     continue
+                if AXUtilities.get_is_label_for(obj):
+                    continue
                 if self._script.utilities.stringsAreRedundant(obj_name, child_name):
                     continue
                 if self._script.utilities.stringsAreRedundant(obj_desc, child_name):
