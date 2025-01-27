@@ -220,6 +220,37 @@ def get_click_count_string(count: int) -> str:
         return _("triple click")
     return ""
 
+
+def create_key_definitions(keycode: int, keyval: int, modifiers: int) -> list[Atspi.KeyDefinition]:
+    """Returns a list of Atspi key definitions for the given keycode, keyval, and modifiers."""
+
+    ret = []
+    if modifiers & ORCA_MODIFIER_MASK:
+        modifier_list = []
+        other_modifiers = modifiers & ~ORCA_MODIFIER_MASK
+        manager = input_event_manager.get_manager()
+        for key in settings.orcaModifierKeys:
+            keyval, keycode = get_keycodes(key)
+            if keycode == 0 and key == "Shift_Lock":
+                keyval, keycode = get_keycodes("Caps_Lock")
+            if CAN_USE_KEYSYMS:
+                mod = manager.map_keysym_to_modifier(keyval)
+            else:
+                mod = manager.map_keycode_to_modifier(keycode)
+            if mod:
+                modifier_list.append(mod | other_modifiers)
+    else:
+        modifier_list = [modifiers]
+    for mod in modifier_list:
+        kd = Atspi.KeyDefinition()
+        if CAN_USE_KEYSYMS:
+            kd.keysym = keyval
+        else:
+            kd.keycode = keycode
+        kd.modifiers = mod
+        ret.append(kd)
+    return ret
+
 class KeyBinding:
     """A single key binding, consisting of a keycode, modifier mask, and InputEventHandler."""
 
@@ -324,31 +355,12 @@ class KeyBinding:
         ret = []
         if not self.keycode:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
-
-        if self.modifiers & ORCA_MODIFIER_MASK:
-            modifier_list = []
-            other_modifiers = self.modifiers & ~ORCA_MODIFIER_MASK
-            manager = input_event_manager.get_manager()
-            for key in settings.orcaModifierKeys:
-                keyval, keycode = get_keycodes(key)
-                if keycode == 0 and key == "Shift_Lock":
-                    keyval, keycode = get_keycodes("Caps_Lock")
-                if CAN_USE_KEYSYMS:
-                    mod = manager.map_keysym_to_modifier(keyval)
-                else:
-                    mod = manager.map_keycode_to_modifier(keycode)
-                if mod:
-                    modifier_list.append(mod | other_modifiers)
-        else:
-            modifier_list = [self.modifiers]
-        for mod in modifier_list:
-            kd = Atspi.KeyDefinition()
-            if CAN_USE_KEYSYMS:
-                kd.keysym = self.keyval
-            else:
-                kd.keycode = self.keycode
-            kd.modifiers = mod
-            ret.append(kd)
+        ret.extend(create_key_definitions(self.keycode, self.keyval, self.modifiers))
+        # If we are using keysyms, we need to bind the uppercase keysyms if requested,
+        # as well as the lowercase ones, because keysyms represent characters, not key locations.
+        if CAN_USE_KEYSYMS and self.modifiers & SHIFT_MODIFIER_MASK:
+            if (upper_keyval := Gdk.keyval_to_upper(self.keyval)) != self.keyval:
+                ret.extend(create_key_definitions(self.keycode, upper_keyval, self.modifiers))
         return ret
 
     def get_grab_ids(self) -> list[int]:
