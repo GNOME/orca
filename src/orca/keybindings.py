@@ -230,13 +230,13 @@ def create_key_definitions(keycode: int, keyval: int, modifiers: int) -> list[At
         other_modifiers = modifiers & ~ORCA_MODIFIER_MASK
         manager = input_event_manager.get_manager()
         for key in settings.orcaModifierKeys:
-            keyval, keycode = get_keycodes(key)
-            if keycode == 0 and key == "Shift_Lock":
-                keyval, keycode = get_keycodes("Caps_Lock")
+            mod_keyval, mod_keycode = get_keycodes(key)
+            if mod_keycode == 0 and key == "Shift_Lock":
+                mod_keyval, mod_keycode = get_keycodes("Caps_Lock")
             if CAN_USE_KEYSYMS:
-                mod = manager.map_keysym_to_modifier(keyval)
+                mod = manager.map_keysym_to_modifier(mod_keyval)
             else:
-                mod = manager.map_keycode_to_modifier(keycode)
+                mod = manager.map_keycode_to_modifier(mod_keycode)
             if mod:
                 modifier_list.append(mod | other_modifiers)
     else:
