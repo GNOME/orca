@@ -321,7 +321,7 @@ def localizeKeySequence(keys):
 
     keyList = keys.split()
     for key in keyList:
-        keyName = get_key_name(key)
+        keyName = get_key_name(key) or key
         keys = keys.replace(key, keyName)
 
     return keys
