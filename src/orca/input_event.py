@@ -172,8 +172,8 @@ class KeyboardEvent(InputEvent):
              + f"                 id={keyid}\n" \
              + f"                 hw_code={hw_code}\n" \
              + f"                 modifiers={modifiers}\n" \
-             + f"                 text={text}\n" \
-             + f"                 keyval_name={keyval_name}\n" \
+             + f"                 text='{text}'\n" \
+             + f"                 keyval_name='{keyval_name}'\n" \
              + f"                 timestamp={self.timestamp}\n" \
              + f"                 clickCount={self._click_count}"
 
@@ -573,11 +573,11 @@ class KeyboardEvent(InputEvent):
     def get_key_name(self) -> str:
         """Returns the string to be used for presenting the key."""
 
-        if self._text and self._text.isprintable():
+        if self._text.strip() and self._text.isprintable():
             return self._text
 
         name = keynames.get_key_name(self.keyval_name)
-        if name and name != self.keyval_name:
+        if name is not None:
             return name
 
         char = chr(self.id)

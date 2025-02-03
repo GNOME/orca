@@ -26,6 +26,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from typing import Optional
+
 from .orca_i18n import _
 from .orca_i18n import C_
 
@@ -301,17 +303,10 @@ __keynames["minus"]      = _("minus")
 __keynames["plus"]      = _("plus")
 
 
-def get_key_name(key):
-    """Given a keyboard key, return its name as people might refer to it
-    in ordinary conversation.
+def get_key_name(key: str) -> Optional[str]:
+    """Return the localized name for the key."""
 
-    Arguments:
-    - key: the key to get the name for
-
-    Returns a string representing the name for the key
-    """
-
-    return __keynames.get(key, key)
+    return __keynames.get(key)
 
 def localizeKeySequence(keys):
     """Given a sequence of keys, such as 'Shift Control A', localize the
