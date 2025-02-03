@@ -234,71 +234,11 @@ class KeyboardEvent(InputEvent):
     def is_alphabetic_key(self) -> bool:
         """Return True if this is an alphabetic key."""
 
-        # For non-accented characters, the keyval_name is the character itself.
-        # For accented characters, the keyval_name is a name (e.g. "egrave").
-        keys = [
-            Gdk.KEY_Aacute,
-            Gdk.KEY_aacute,
-            Gdk.KEY_Acircumflex,
-            Gdk.KEY_acircumflex,
-            Gdk.KEY_Adiaeresis,
-            Gdk.KEY_adiaeresis,
-            Gdk.KEY_Agrave,
-            Gdk.KEY_agrave,
-            Gdk.KEY_Aring,
-            Gdk.KEY_aring,
-            Gdk.KEY_Atilde,
-            Gdk.KEY_atilde,
-            Gdk.KEY_Ccedilla,
-            Gdk.KEY_ccedilla,
-            Gdk.KEY_Eacute,
-            Gdk.KEY_eacute,
-            Gdk.KEY_Ecircumflex,
-            Gdk.KEY_ecircumflex,
-            Gdk.KEY_Ediaeresis,
-            Gdk.KEY_ediaeresis,
-            Gdk.KEY_Egrave,
-            Gdk.KEY_egrave,
-            Gdk.KEY_Iacute,
-            Gdk.KEY_iacute,
-            Gdk.KEY_Icircumflex,
-            Gdk.KEY_icircumflex,
-            Gdk.KEY_Idiaeresis,
-            Gdk.KEY_idiaeresis,
-            Gdk.KEY_Igrave,
-            Gdk.KEY_igrave,
-            Gdk.KEY_Ntilde,
-            Gdk.KEY_ntilde,
-            Gdk.KEY_Oacute,
-            Gdk.KEY_oacute,
-            Gdk.KEY_Ocircumflex,
-            Gdk.KEY_ocircumflex,
-            Gdk.KEY_Odiaeresis,
-            Gdk.KEY_odiaeresis,
-            Gdk.KEY_Ograve,
-            Gdk.KEY_ograve,
-            Gdk.KEY_Ooblique,
-            Gdk.KEY_ooblique,
-            Gdk.KEY_Otilde,
-            Gdk.KEY_otilde,
-            Gdk.KEY_Uacute,
-            Gdk.KEY_uacute,
-            Gdk.KEY_Ucircumflex,
-            Gdk.KEY_ucircumflex,
-            Gdk.KEY_Udiaeresis,
-            Gdk.KEY_udiaeresis,
-            Gdk.KEY_Ugrave,
-            Gdk.KEY_ugrave,
-            Gdk.KEY_Yacute,
-            Gdk.KEY_yacute,
-        ]
-        if self.id in keys:
-            return True
-
-        if not len(self.keyval_name) == 1:
+        name = self.get_key_name()
+        if not len(name) == 1:
             return False
 
-        return self.keyval_name.isalpha()
+        return name.isalpha()
 
     def is_diacritical_key(self) -> bool:
         """Return True if this is a non-spacing diacritical key."""
