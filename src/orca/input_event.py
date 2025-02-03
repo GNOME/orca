@@ -520,9 +520,11 @@ class KeyboardEvent(InputEvent):
         if name is not None:
             return name
 
-        char = chr(self.id)
-        if char.isprintable():
-            return char
+        unicode_codepoint = Gdk.keyval_to_unicode(self.id)
+        if unicode_codepoint:
+            char = chr(unicode_codepoint)
+            if char.isprintable():
+                return char
 
         return self.keyval_name
 
