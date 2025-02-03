@@ -479,7 +479,7 @@ class EventManager:
 
         tokens = []
         if isinstance(event, input_event.KeyboardEvent):
-            tokens.extend([event.event_string, event.hw_code])
+            tokens.extend([event.keyval_name, event.hw_code])
         elif isinstance(event, input_event.BrailleEvent):
             tokens.append(event.event)
         else:

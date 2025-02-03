@@ -188,17 +188,17 @@ class LearnModePresenter:
         script.speak_key_event(event)
         if event.is_printable_key() and event.get_click_count() == 2 \
            and event.get_handler() is None:
-            script.phoneticSpellCurrentItem(event.event_string)
+            script.phoneticSpellCurrentItem(event.keyval_name)
 
-        if event.event_string == "Escape":
+        if event.keyval_name == "Escape":
             self.quit(script, event)
             return True
 
-        if event.event_string == "F1" and not event.modifiers:
+        if event.keyval_name == "F1" and not event.modifiers:
             self.show_help(script, event)
             return True
 
-        if event.event_string in ["F2", "F3"] and not event.modifiers:
+        if event.keyval_name in ["F2", "F3"] and not event.modifiers:
             self.list_orca_shortcuts(script, event)
             return True
 
@@ -231,7 +231,7 @@ class LearnModePresenter:
 
         items = 0
         bindings = {}
-        if event is None or event.event_string == "F2":
+        if event is None or event.keyval_name == "F2":
             bound = script.getDefaultKeyBindings().get_bound_bindings()
             bindings[guilabels.KB_GROUP_DEFAULT] = bound
             items += len(bound)

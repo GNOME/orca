@@ -92,135 +92,7 @@ class InputEvent:
 class KeyboardEvent(InputEvent):
     """Provides support for handling keyboard events."""
 
-    TYPE_UNKNOWN          = "unknown"
-    TYPE_PRINTABLE        = "printable"
-    TYPE_MODIFIER         = "modifier"
-    TYPE_LOCKING          = "locking"
-    TYPE_FUNCTION         = "function"
-    TYPE_ACTION           = "action"
-    TYPE_NAVIGATION       = "navigation"
-    TYPE_DIACRITICAL      = "diacritical"
-    TYPE_ALPHABETIC       = "alphabetic"
-    TYPE_NUMERIC          = "numeric"
-    TYPE_PUNCTUATION      = "punctuation"
-    TYPE_SPACE            = "space"
-
-    GDK_PUNCTUATION_KEYS = [Gdk.KEY_acute,
-                            Gdk.KEY_ampersand,
-                            Gdk.KEY_apostrophe,
-                            Gdk.KEY_asciicircum,
-                            Gdk.KEY_asciitilde,
-                            Gdk.KEY_asterisk,
-                            Gdk.KEY_at,
-                            Gdk.KEY_backslash,
-                            Gdk.KEY_bar,
-                            Gdk.KEY_braceleft,
-                            Gdk.KEY_braceright,
-                            Gdk.KEY_bracketleft,
-                            Gdk.KEY_bracketright,
-                            Gdk.KEY_brokenbar,
-                            Gdk.KEY_cedilla,
-                            Gdk.KEY_cent,
-                            Gdk.KEY_colon,
-                            Gdk.KEY_comma,
-                            Gdk.KEY_copyright,
-                            Gdk.KEY_currency,
-                            Gdk.KEY_degree,
-                            Gdk.KEY_diaeresis,
-                            Gdk.KEY_dollar,
-                            Gdk.KEY_EuroSign,
-                            Gdk.KEY_equal,
-                            Gdk.KEY_exclam,
-                            Gdk.KEY_exclamdown,
-                            Gdk.KEY_grave,
-                            Gdk.KEY_greater,
-                            Gdk.KEY_guillemotleft,
-                            Gdk.KEY_guillemotright,
-                            Gdk.KEY_hyphen,
-                            Gdk.KEY_less,
-                            Gdk.KEY_macron,
-                            Gdk.KEY_minus,
-                            Gdk.KEY_notsign,
-                            Gdk.KEY_numbersign,
-                            Gdk.KEY_paragraph,
-                            Gdk.KEY_parenleft,
-                            Gdk.KEY_parenright,
-                            Gdk.KEY_percent,
-                            Gdk.KEY_period,
-                            Gdk.KEY_periodcentered,
-                            Gdk.KEY_plus,
-                            Gdk.KEY_plusminus,
-                            Gdk.KEY_question,
-                            Gdk.KEY_questiondown,
-                            Gdk.KEY_quotedbl,
-                            Gdk.KEY_quoteleft,
-                            Gdk.KEY_quoteright,
-                            Gdk.KEY_registered,
-                            Gdk.KEY_section,
-                            Gdk.KEY_semicolon,
-                            Gdk.KEY_slash,
-                            Gdk.KEY_sterling,
-                            Gdk.KEY_underscore,
-                            Gdk.KEY_yen]
-
-    GDK_ACCENTED_LETTER_KEYS = [Gdk.KEY_Aacute,
-                                Gdk.KEY_aacute,
-                                Gdk.KEY_Acircumflex,
-                                Gdk.KEY_acircumflex,
-                                Gdk.KEY_Adiaeresis,
-                                Gdk.KEY_adiaeresis,
-                                Gdk.KEY_Agrave,
-                                Gdk.KEY_agrave,
-                                Gdk.KEY_Aring,
-                                Gdk.KEY_aring,
-                                Gdk.KEY_Atilde,
-                                Gdk.KEY_atilde,
-                                Gdk.KEY_Ccedilla,
-                                Gdk.KEY_ccedilla,
-                                Gdk.KEY_Eacute,
-                                Gdk.KEY_eacute,
-                                Gdk.KEY_Ecircumflex,
-                                Gdk.KEY_ecircumflex,
-                                Gdk.KEY_Ediaeresis,
-                                Gdk.KEY_ediaeresis,
-                                Gdk.KEY_Egrave,
-                                Gdk.KEY_egrave,
-                                Gdk.KEY_Iacute,
-                                Gdk.KEY_iacute,
-                                Gdk.KEY_Icircumflex,
-                                Gdk.KEY_icircumflex,
-                                Gdk.KEY_Idiaeresis,
-                                Gdk.KEY_idiaeresis,
-                                Gdk.KEY_Igrave,
-                                Gdk.KEY_igrave,
-                                Gdk.KEY_Ntilde,
-                                Gdk.KEY_ntilde,
-                                Gdk.KEY_Oacute,
-                                Gdk.KEY_oacute,
-                                Gdk.KEY_Ocircumflex,
-                                Gdk.KEY_ocircumflex,
-                                Gdk.KEY_Odiaeresis,
-                                Gdk.KEY_odiaeresis,
-                                Gdk.KEY_Ograve,
-                                Gdk.KEY_ograve,
-                                Gdk.KEY_Ooblique,
-                                Gdk.KEY_ooblique,
-                                Gdk.KEY_Otilde,
-                                Gdk.KEY_otilde,
-                                Gdk.KEY_Uacute,
-                                Gdk.KEY_uacute,
-                                Gdk.KEY_Ucircumflex,
-                                Gdk.KEY_ucircumflex,
-                                Gdk.KEY_Udiaeresis,
-                                Gdk.KEY_udiaeresis,
-                                Gdk.KEY_Ugrave,
-                                Gdk.KEY_ugrave,
-                                Gdk.KEY_Yacute,
-                                Gdk.KEY_yacute]
-
     # pylint:disable=too-many-arguments
-    # pylint:disable=too-many-branches
-    # pylint:disable=too-many-statements
     # pylint:disable=too-many-positional-arguments
     def __init__(
         self,
@@ -246,13 +118,11 @@ class KeyboardEvent(InputEvent):
             Atspi.EventType.KEY_PRESSED_EVENT if pressed else Atspi.EventType.KEY_RELEASED_EVENT
         )
         self.hw_code: int = keycode
+        self._text: str = text
         self.modifiers: int = modifiers & Gdk.ModifierType.MODIFIER_MASK
         if modifiers & (1 << Atspi.ModifierType.NUMLOCK):
             self.modifiers |= (1 << Atspi.ModifierType.NUMLOCK)
-        self.event_string: str = text
         self.keyval_name: str = Gdk.keyval_name(keysym)
-        if self.event_string in ("", " "):
-            self.event_string = self.keyval_name
         self.timestamp: float = time.time()
         self._script: Optional[default.Script] = None
         self._window: Optional[Atspi.Accessible] = None
@@ -263,18 +133,6 @@ class KeyboardEvent(InputEvent):
         self._result_reason: str = ""
         self._is_kp_with_numlock: bool = False
 
-        # Some implementors don't populate this field at all. More often than not,
-        # the event_string and the keyval_name coincide for input events.
-        if not self.event_string:
-            self.event_string = self.keyval_name
-
-        # Some implementors do populate the field, but with the keyname rather than
-        # the printable character. This messes us up with punctuation and other symbols.
-        if len(self.event_string) > 1 \
-           and (self.id in KeyboardEvent.GDK_PUNCTUATION_KEYS or \
-                self.id in KeyboardEvent.GDK_ACCENTED_LETTER_KEYS):
-            self.event_string = chr(self.id)
-
         # Some implementors don't include numlock in the modifiers. Unfortunately,
         # trying to heuristically hack around this just by looking at the event
         # is not reliable. Ditto regarding asking Gdk for the numlock state.
@@ -283,39 +141,12 @@ class KeyboardEvent(InputEvent):
                 self._is_kp_with_numlock = True
 
         modifier_manager = orca_modifier_manager.get_manager()
-
-        self.key_type = None
-        if self.is_navigation_key():
-            self.key_type = KeyboardEvent.TYPE_NAVIGATION
-        elif self.is_action_key():
-            self.key_type = KeyboardEvent.TYPE_ACTION
-        elif self.is_modifier_key():
-            self.key_type = KeyboardEvent.TYPE_MODIFIER
-            if self.is_orca_modifier():
-                modifier_manager.set_pressed_state(pressed)
-        elif self.is_function_key():
-            self.key_type = KeyboardEvent.TYPE_FUNCTION
-        elif self.is_diacritical_key():
-            self.key_type = KeyboardEvent.TYPE_DIACRITICAL
-        elif self.is_locking_key():
-            self.key_type = KeyboardEvent.TYPE_LOCKING
-        elif self.is_alphabetic_key():
-            self.key_type = KeyboardEvent.TYPE_ALPHABETIC
-        elif self.is_numeric_key():
-            self.key_type = KeyboardEvent.TYPE_NUMERIC
-        elif self.is_punctuation_key():
-            self.key_type = KeyboardEvent.TYPE_PUNCTUATION
-        elif self.is_space():
-            self.key_type = KeyboardEvent.TYPE_SPACE
-        else:
-            self.key_type = KeyboardEvent.TYPE_UNKNOWN
-
+        if self.is_orca_modifier():
+            modifier_manager.set_pressed_state(pressed)
         if modifier_manager.get_pressed_state():
             self.modifiers |= keybindings.ORCA_MODIFIER_MASK
 
     # pylint:enable=too-many-arguments
-    # pylint:enable=too-many-branches
-    # pylint:enable=too-many-statements
     # pylint:enable=too-many-positional-arguments
 
     def __eq__(self, other: object) -> bool:
@@ -329,25 +160,22 @@ class KeyboardEvent(InputEvent):
 
     def __str__(self) -> str:
         if self._should_obscure():
-            keyid = hw_code = modifiers = event_string = keyval_name = key_type = "*"
+            keyid = hw_code = modifiers = text = keyval_name = "*"
         else:
             keyid = str(self.id)
             hw_code = str(self.hw_code)
             modifiers = str(self.modifiers)
-            event_string = self.event_string
             keyval_name = self.keyval_name
-            key_type = self.key_type if self.key_type is not None else "None"
+            text = self._text
 
-        return (f"KEYBOARD_EVENT:  type={self.type.value_name.upper()}\n") \
+        return f"KEYBOARD_EVENT:  type={self.type.value_name.upper()}\n" \
              + f"                 id={keyid}\n" \
              + f"                 hw_code={hw_code}\n" \
              + f"                 modifiers={modifiers}\n" \
-             + f"                 event_string=({event_string})\n" \
-             + f"                 keyval_name=({keyval_name})\n" \
+             + f"                 text={text}\n" \
+             + f"                 keyval_name={keyval_name}\n" \
              + f"                 timestamp={self.timestamp}\n" \
-             + f"                 time={time.time():f}\n" \
-             + f"                 key_type={key_type}\n" \
-             + f"                 clickCount={self._click_count}\n"
+             + f"                 clickCount={self._click_count}"
 
     def as_single_line_string(self) -> str:
         """Returns a single-line string representation of this event."""
@@ -379,88 +207,225 @@ class KeyboardEvent(InputEvent):
     def is_navigation_key(self) -> bool:
         """Return True if this is a navigation key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_NAVIGATION
-
-        return self.event_string in ["Left", "Right", "Up", "Down", "Home", "End"]
+        keys = [
+            Gdk.KEY_Down,
+            Gdk.KEY_End,
+            Gdk.KEY_Home,
+            Gdk.KEY_Left,
+            Gdk.KEY_Right,
+            Gdk.KEY_Up,
+        ]
+        return self.id in keys
 
     def is_action_key(self) -> bool:
         """Return True if this is an action key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_ACTION
-
-        return self.event_string in ["Return", "Escape", "Tab", "BackSpace", "Delete",
-                                     "Page_Up", "Page_Down"]
+        keys = [
+            Gdk.KEY_BackSpace,
+            Gdk.KEY_Delete,
+            Gdk.KEY_Escape,
+            Gdk.KEY_Page_Down,
+            Gdk.KEY_Page_Up,
+            Gdk.KEY_Return,
+            Gdk.KEY_Tab,
+        ]
+        return self.id in keys
 
     def is_alphabetic_key(self) -> bool:
         """Return True if this is an alphabetic key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_ALPHABETIC
+        # For non-accented characters, the keyval_name is the character itself.
+        # For accented characters, the keyval_name is a name (e.g. "egrave").
+        keys = [
+            Gdk.KEY_Aacute,
+            Gdk.KEY_aacute,
+            Gdk.KEY_Acircumflex,
+            Gdk.KEY_acircumflex,
+            Gdk.KEY_Adiaeresis,
+            Gdk.KEY_adiaeresis,
+            Gdk.KEY_Agrave,
+            Gdk.KEY_agrave,
+            Gdk.KEY_Aring,
+            Gdk.KEY_aring,
+            Gdk.KEY_Atilde,
+            Gdk.KEY_atilde,
+            Gdk.KEY_Ccedilla,
+            Gdk.KEY_ccedilla,
+            Gdk.KEY_Eacute,
+            Gdk.KEY_eacute,
+            Gdk.KEY_Ecircumflex,
+            Gdk.KEY_ecircumflex,
+            Gdk.KEY_Ediaeresis,
+            Gdk.KEY_ediaeresis,
+            Gdk.KEY_Egrave,
+            Gdk.KEY_egrave,
+            Gdk.KEY_Iacute,
+            Gdk.KEY_iacute,
+            Gdk.KEY_Icircumflex,
+            Gdk.KEY_icircumflex,
+            Gdk.KEY_Idiaeresis,
+            Gdk.KEY_idiaeresis,
+            Gdk.KEY_Igrave,
+            Gdk.KEY_igrave,
+            Gdk.KEY_Ntilde,
+            Gdk.KEY_ntilde,
+            Gdk.KEY_Oacute,
+            Gdk.KEY_oacute,
+            Gdk.KEY_Ocircumflex,
+            Gdk.KEY_ocircumflex,
+            Gdk.KEY_Odiaeresis,
+            Gdk.KEY_odiaeresis,
+            Gdk.KEY_Ograve,
+            Gdk.KEY_ograve,
+            Gdk.KEY_Ooblique,
+            Gdk.KEY_ooblique,
+            Gdk.KEY_Otilde,
+            Gdk.KEY_otilde,
+            Gdk.KEY_Uacute,
+            Gdk.KEY_uacute,
+            Gdk.KEY_Ucircumflex,
+            Gdk.KEY_ucircumflex,
+            Gdk.KEY_Udiaeresis,
+            Gdk.KEY_udiaeresis,
+            Gdk.KEY_Ugrave,
+            Gdk.KEY_ugrave,
+            Gdk.KEY_Yacute,
+            Gdk.KEY_yacute,
+        ]
+        if self.id in keys:
+            return True
 
-        if not len(self.event_string) == 1:
+        if not len(self.keyval_name) == 1:
             return False
 
-        return self.event_string.isalpha()
+        return self.keyval_name.isalpha()
 
     def is_diacritical_key(self) -> bool:
         """Return True if this is a non-spacing diacritical key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_DIACRITICAL
-
-        return self.event_string.startswith("dead_")
+        keys = [
+            Gdk.KEY_dead_A,
+            Gdk.KEY_dead_a,
+            Gdk.KEY_dead_abovecomma,
+            Gdk.KEY_dead_abovedot,
+            Gdk.KEY_dead_abovereversedcomma,
+            Gdk.KEY_dead_abovering,
+            Gdk.KEY_dead_aboveverticalline,
+            Gdk.KEY_dead_acute,
+            Gdk.KEY_dead_belowbreve,
+            Gdk.KEY_dead_belowcircumflex,
+            Gdk.KEY_dead_belowcomma,
+            Gdk.KEY_dead_belowdiaeresis,
+            Gdk.KEY_dead_belowdot,
+            Gdk.KEY_dead_belowmacron,
+            Gdk.KEY_dead_belowring,
+            Gdk.KEY_dead_belowtilde,
+            Gdk.KEY_dead_belowverticalline,
+            Gdk.KEY_dead_breve,
+            Gdk.KEY_dead_capital_schwa,
+            Gdk.KEY_dead_caron,
+            Gdk.KEY_dead_cedilla,
+            Gdk.KEY_dead_circumflex,
+            Gdk.KEY_dead_currency,
+            Gdk.KEY_dead_dasia,
+            Gdk.KEY_dead_diaeresis,
+            Gdk.KEY_dead_doubleacute,
+            Gdk.KEY_dead_doublegrave,
+            Gdk.KEY_dead_E,
+            Gdk.KEY_dead_e,
+            Gdk.KEY_dead_grave,
+            Gdk.KEY_dead_greek,
+            Gdk.KEY_dead_hook,
+            Gdk.KEY_dead_horn,
+            Gdk.KEY_dead_I,
+            Gdk.KEY_dead_i,
+            Gdk.KEY_dead_invertedbreve,
+            Gdk.KEY_dead_iota,
+            Gdk.KEY_dead_longsolidusoverlay,
+            Gdk.KEY_dead_lowline,
+            Gdk.KEY_dead_macron,
+            Gdk.KEY_dead_O,
+            Gdk.KEY_dead_o,
+            Gdk.KEY_dead_ogonek,
+            Gdk.KEY_dead_perispomeni,
+            Gdk.KEY_dead_psili,
+            Gdk.KEY_dead_semivoiced_sound,
+            Gdk.KEY_dead_small_schwa,
+            Gdk.KEY_dead_stroke,
+            Gdk.KEY_dead_tilde,
+            Gdk.KEY_dead_U,
+            Gdk.KEY_dead_u,
+            Gdk.KEY_dead_voiced_sound,
+        ]
+        return self.id in keys
 
     def is_function_key(self) -> bool:
         """Return True if this is a function key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_FUNCTION
-
-        return self.event_string in ["F1", "F2", "F3", "F4", "F5", "F6",
-                                     "F7", "F8", "F9", "F10", "F11", "F12"]
+        keys = [
+            Gdk.KEY_F1,
+            Gdk.KEY_F2,
+            Gdk.KEY_F3,
+            Gdk.KEY_F4,
+            Gdk.KEY_F5,
+            Gdk.KEY_F6,
+            Gdk.KEY_F7,
+            Gdk.KEY_F8,
+            Gdk.KEY_F9,
+            Gdk.KEY_F10,
+            Gdk.KEY_F11,
+            Gdk.KEY_F12,
+        ]
+        return self.id in keys
 
     def is_locking_key(self) -> bool:
         """Return True if this is a locking key."""
 
-        if self.key_type:
-            return self.key_type in KeyboardEvent.TYPE_LOCKING
-
-        locking_keys = ["Caps_Lock", "Shift_Lock", "Num_Lock", "Scroll_Lock"]
-        if self.event_string not in locking_keys:
-            return False
-
-        return True
+        keys = [
+            Gdk.KEY_Caps_Lock,
+            Gdk.KEY_Num_Lock,
+            Gdk.KEY_Scroll_Lock,
+            Gdk.KEY_Shift_Lock,
+        ]
+        return self.id in keys
 
     def is_modifier_key(self) -> bool:
         """Return True if this is a modifier key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_MODIFIER
-
-        if self.is_orca_modifier():
-            return True
-
-        return self.event_string in ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
-                                     'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
-                                     'ISO_Level3_Shift']
+        keys = [
+            Gdk.KEY_Alt_L,
+            Gdk.KEY_Alt_R,
+            Gdk.KEY_Control_L,
+            Gdk.KEY_Control_R,
+            Gdk.KEY_Meta_L,
+            Gdk.KEY_Meta_R,
+            Gdk.KEY_Shift_L,
+            Gdk.KEY_Shift_R,
+            Gdk.KEY_ISO_Level3_Shift,
+        ]
+        return self.id in keys or self.is_orca_modifier()
 
     def is_numeric_key(self) -> bool:
         """Return True if this is a numeric key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_NUMERIC
-
-        if not len(self.event_string) == 1:
-            return False
-
-        return self.event_string.isnumeric()
+        keys = [
+            Gdk.KEY_0,
+            Gdk.KEY_1,
+            Gdk.KEY_2,
+            Gdk.KEY_3,
+            Gdk.KEY_4,
+            Gdk.KEY_5,
+            Gdk.KEY_6,
+            Gdk.KEY_7,
+            Gdk.KEY_8,
+            Gdk.KEY_9,
+        ]
+        return self.id in keys
 
     def is_orca_modifier(self) -> bool:
         """Return True if this is the Orca modifier key."""
 
-        if self.keyval_name == "KP_0" and self.modifiers & keybindings.SHIFT_MODIFIER_MASK:
+        if self.id == Gdk.KEY_KP_0 and self.modifiers & keybindings.SHIFT_MODIFIER_MASK:
             return orca_modifier_manager.get_manager().is_orca_modifier("KP_Insert")
 
         return orca_modifier_manager.get_manager().is_orca_modifier(self.keyval_name)
@@ -481,13 +446,13 @@ class KeyboardEvent(InputEvent):
     def is_printable_key(self) -> bool:
         """Return True if this is a printable key."""
 
-        if self.event_string in ["space", " "]:
+        if self.id == Gdk.KEY_space:
             return True
 
-        if not len(self.event_string) == 1:
+        if not len(self.keyval_name) == 1:
             return False
 
-        return self.event_string.isprintable()
+        return self.keyval_name.isprintable()
 
     def is_pressed_key(self) -> bool:
         """Returns True if the key is pressed"""
@@ -497,24 +462,71 @@ class KeyboardEvent(InputEvent):
     def is_punctuation_key(self) -> bool:
         """Return True if this is a punctuation key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_PUNCTUATION
-
-        if not len(self.event_string) == 1:
-            return False
-
-        if self.is_alphabetic_key() or self.is_numeric_key():
-            return False
-
-        return self.event_string.isprintable() and not self.event_string.isspace()
+        keys = [
+            Gdk.KEY_acute,
+            Gdk.KEY_ampersand,
+            Gdk.KEY_apostrophe,
+            Gdk.KEY_asciicircum,
+            Gdk.KEY_asciitilde,
+            Gdk.KEY_asterisk,
+            Gdk.KEY_at,
+            Gdk.KEY_backslash,
+            Gdk.KEY_bar,
+            Gdk.KEY_braceleft,
+            Gdk.KEY_braceright,
+            Gdk.KEY_bracketleft,
+            Gdk.KEY_bracketright,
+            Gdk.KEY_brokenbar,
+            Gdk.KEY_cedilla,
+            Gdk.KEY_cent,
+            Gdk.KEY_colon,
+            Gdk.KEY_comma,
+            Gdk.KEY_copyright,
+            Gdk.KEY_currency,
+            Gdk.KEY_degree,
+            Gdk.KEY_diaeresis,
+            Gdk.KEY_dollar,
+            Gdk.KEY_EuroSign,
+            Gdk.KEY_equal,
+            Gdk.KEY_exclam,
+            Gdk.KEY_exclamdown,
+            Gdk.KEY_grave,
+            Gdk.KEY_greater,
+            Gdk.KEY_guillemotleft,
+            Gdk.KEY_guillemotright,
+            Gdk.KEY_hyphen,
+            Gdk.KEY_less,
+            Gdk.KEY_macron,
+            Gdk.KEY_minus,
+            Gdk.KEY_notsign,
+            Gdk.KEY_numbersign,
+            Gdk.KEY_paragraph,
+            Gdk.KEY_parenleft,
+            Gdk.KEY_parenright,
+            Gdk.KEY_percent,
+            Gdk.KEY_period,
+            Gdk.KEY_periodcentered,
+            Gdk.KEY_plus,
+            Gdk.KEY_plusminus,
+            Gdk.KEY_question,
+            Gdk.KEY_questiondown,
+            Gdk.KEY_quotedbl,
+            Gdk.KEY_quoteleft,
+            Gdk.KEY_quoteright,
+            Gdk.KEY_registered,
+            Gdk.KEY_section,
+            Gdk.KEY_semicolon,
+            Gdk.KEY_slash,
+            Gdk.KEY_sterling,
+            Gdk.KEY_underscore,
+            Gdk.KEY_yen,
+        ]
+        return self.id in keys
 
     def is_space(self) -> bool:
         """Return True if this is the space key."""
 
-        if self.key_type:
-            return self.key_type == KeyboardEvent.TYPE_SPACE
-
-        return self.event_string in ["space", " "]
+        return self.id == Gdk.KEY_space
 
     def is_character_echoable(self) -> bool:
         """Returns True if the script will echo this event as part of character echo."""
@@ -532,11 +544,11 @@ class KeyboardEvent(InputEvent):
         if not self.is_locking_key():
             return None
 
-        if self.event_string == "Caps_Lock":
+        if self.id == Gdk.KEY_Caps_Lock:
             mod = Atspi.ModifierType.SHIFTLOCK
-        elif self.event_string == "Shift_Lock":
+        elif self.id == Gdk.KEY_Shift_Lock:
             mod = Atspi.ModifierType.SHIFT
-        elif self.event_string == "Num_Lock":
+        elif self.id == Gdk.KEY_Num_Lock:
             mod = Atspi.ModifierType.NUMLOCK
         else:
             return None
@@ -558,7 +570,18 @@ class KeyboardEvent(InputEvent):
     def get_key_name(self) -> str:
         """Returns the string to be used for presenting the key."""
 
-        return keynames.get_key_name(self.event_string)
+        if self._text and self._text.isprintable():
+            return self._text
+
+        name = keynames.get_key_name(self.keyval_name)
+        if name and name != self.keyval_name:
+            return name
+
+        char = chr(self.id)
+        if char.isprintable():
+            return char
+
+        return self.keyval_name
 
     def get_object(self) -> Optional[Atspi.Accessible]:
         """Returns the object believed to be associated with this key event."""
@@ -687,7 +710,7 @@ class KeyboardEvent(InputEvent):
 
         start_time = time.time()
         if not self._should_obscure():
-            data = f"'{self.event_string}' ({self.hw_code})"
+            data = f"'{self.keyval_name}' ({self.hw_code})"
         else:
             data = "(obscured)"
 
@@ -733,8 +756,6 @@ class KeyboardEvent(InputEvent):
 
         if self.is_orca_modifier() and self._click_count == 2:
             orca_modifier_manager.get_manager().toggle_modifier(self)
-            if self.keyval_name in ["Caps_Lock", "Shift_Lock"]:
-                self.key_type = KeyboardEvent.TYPE_LOCKING
 
         self._present()
 
@@ -757,7 +778,7 @@ class KeyboardEvent(InputEvent):
         """Consumes this input event after a timeout. Returns False to stop the timeout."""
 
         start_time = time.time()
-        data = f"'{self.event_string}' ({self.hw_code})"
+        data = f"'{self.keyval_name}' ({self.hw_code})"
         msg = f"\nvvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 

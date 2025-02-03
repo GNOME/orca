@@ -527,12 +527,12 @@ class Chat:
         - inputEvent: if not None, the input event that caused this action.
         - index: The index of the message to read -- by default, the most
           recent message. If we get an inputEvent, however, the value of
-          index is ignored and the index of the event_string with respect
+          index is ignored and the index of the keyval_name with respect
           to self.messageKeys is used instead.
         """
 
         try:
-            index = self.messageKeys.index(inputEvent.event_string)
+            index = self.messageKeys.index(inputEvent.keyval_name)
         except Exception:
             pass
 

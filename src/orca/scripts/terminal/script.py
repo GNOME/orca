@@ -116,7 +116,7 @@ class Script(default.Script):
         # a terminal -- other than the fact that the text typed isn't there.
         char, start = AXText.get_character_at_offset(event.get_object())[0:2]
         prevChar = AXText.get_character_at_offset(event.get_object(), start - 1)[0]
-        string = event.event_string
+        string = event.keyval_name
         if string not in [prevChar, "space", char]:
             return False
 

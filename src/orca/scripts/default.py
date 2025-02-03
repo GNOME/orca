@@ -2603,11 +2603,11 @@ class Script(script.Script):
         """Method to speak a keyboard event. Scripts should use this method
         rather than calling speech.speakKeyEvent directly."""
 
-        string = None
+        key_name = None
         if event.is_printable_key():
-            string = event.event_string
+            key_name = event.get_key_name()
 
-        voice = self.speech_generator.voice(string=string)
+        voice = self.speech_generator.voice(string=key_name)
         speech.speak_key_event(event, voice)
 
     def spell_item(self, string):

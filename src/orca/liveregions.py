@@ -415,7 +415,7 @@ class LiveRegionManager:
     def reviewLiveAnnouncement(self, script, inputEvent):
         """Speak the given number cached message"""
 
-        msgnum = int(inputEvent.event_string[1:])
+        msgnum = int(inputEvent.keyval_name[1:])
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             self._script.presentMessage(messages.LIVE_REGIONS_OFF)
             return

@@ -163,8 +163,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         # TODO - JD: What case is the modifier check handling?
-        if len(event.event_string) != 1 \
-           or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
+        if len(event.keyval_name) != 1 or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
             return False
 
         return True
