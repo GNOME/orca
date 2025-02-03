@@ -381,6 +381,9 @@ class KeyboardEvent(InputEvent):
     def is_locking_key(self) -> bool:
         """Return True if this is a locking key."""
 
+        if self.is_orca_modifier():
+            return self._click_count == 2
+
         keys = [
             Gdk.KEY_Caps_Lock,
             Gdk.KEY_Num_Lock,
