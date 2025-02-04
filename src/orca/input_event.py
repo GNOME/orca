@@ -389,13 +389,11 @@ class KeyboardEvent(InputEvent):
     def is_printable_key(self) -> bool:
         """Return True if this is a printable key."""
 
-        if self.id == Gdk.KEY_space:
-            return True
-
-        if not len(self.keyval_name) == 1:
+        name = self.get_key_name()
+        if not len(name) == 1:
             return False
 
-        return self.keyval_name.isprintable()
+        return name.isprintable()
 
     def is_pressed_key(self) -> bool:
         """Returns True if the key is pressed"""
