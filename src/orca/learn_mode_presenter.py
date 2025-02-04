@@ -188,7 +188,7 @@ class LearnModePresenter:
         script.speak_key_event(event)
         if event.is_printable_key() and event.get_click_count() == 2 \
            and event.get_handler() is None:
-            script.phoneticSpellCurrentItem(event.keyval_name)
+            script.phoneticSpellCurrentItem(event.get_key_name())
 
         if event.keyval_name == "Escape":
             self.quit(script, event)
