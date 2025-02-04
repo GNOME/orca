@@ -1257,7 +1257,7 @@ class Utilities:
         if not focus or not settings.enableEchoByCharacter:
             return False
 
-        if len(event.keyval_name) != 1 or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
+        if len(event.get_key_name()) != 1 or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
             return False
 
         if AXUtilities.is_password_text(focus):
