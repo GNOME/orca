@@ -64,6 +64,48 @@ class AXUtilitiesRole:
         return attrs.get("xml-roles", "").split()
 
     @staticmethod
+    def children_are_presentational(
+        obj: Atspi.Accessible,
+        role: Optional[Atspi.Role] = None
+    ) -> bool:
+        """Returns True if the descendants of obj should be ignored. See ARIA spec."""
+
+        # Note: We are deliberately leaving out listbox options because they can be complex,
+        # both in ARIA and in GTK.
+
+        roles = [
+            Atspi.Role.CHECK_BOX,
+            Atspi.Role.CHECK_MENU_ITEM,
+            Atspi.Role.IMAGE,
+            Atspi.Role.LEVEL_BAR,
+            Atspi.Role.PAGE_TAB,
+            Atspi.Role.PROGRESS_BAR,
+            Atspi.Role.PUSH_BUTTON,
+            Atspi.Role.RADIO_BUTTON,
+            Atspi.Role.RADIO_MENU_ITEM,
+            Atspi.Role.SCROLL_BAR,
+            Atspi.Role.SEPARATOR,
+            Atspi.Role.SLIDER,
+        ]
+
+        # TODO - JD: Remove this check when dependencies are bumped to v2.56.
+        try:
+            roles.append(Atspi.Role.SWITCH)
+        except AttributeError:
+            pass
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        # TODO - JD: The is_switch() call be be removed as part of the removal above.
+        if role in roles or AXUtilitiesRole.is_switch(obj, role):
+            tokens = ["AXUtilitiesRole:", obj, "has presentational children."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
+
+    @staticmethod
     def get_dialog_roles(include_alert_as_dialog: bool = True) -> list[Atspi.Role]:
         """Returns the list of roles we consider documents"""
 

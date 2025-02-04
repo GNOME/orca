@@ -1624,6 +1624,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if reason == TextEventReason.UI_UPDATE:
+            msg = "WEB: Event ignored: Caret moved due to UI update."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if reason in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             msg = "WEB: Event handled: Updating position due to insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)

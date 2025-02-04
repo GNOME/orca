@@ -273,6 +273,8 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.TYPING
         elif mgr.last_event_was_tab_navigation():
             reason = TextEventReason.FOCUS_CHANGE
+        elif AXObject.find_ancestor(obj, AXUtilitiesRole.children_are_presentational):
+            reason = TextEventReason.UI_UPDATE
         return reason
 
     @staticmethod

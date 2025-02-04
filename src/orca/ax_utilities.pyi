@@ -231,6 +231,12 @@ class AXUtilities:
     ) -> list[str]: ...
 
     @staticmethod
+    def children_are_presentational(
+        obj: Atspi.Accessible,
+        role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
     def get_dialog_roles(
         include_alert_as_dialog: bool = True
     ) -> list[Atspi.Role]: ...
