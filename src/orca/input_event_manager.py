@@ -207,10 +207,16 @@ class InputEventManager:
         if pressed:
             window = manager.get_active_window()
             if not AXUtilities.can_be_active_window(window):
-                window = AXUtilities.find_active_window()
-                tokens = ["INPUT EVENT MANAGER: Updating window and active window to", window]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                manager.set_active_window(window)
+                new_window = AXUtilities.find_active_window()
+                if new_window is not None:
+                    window = new_window
+                    tokens = ["INPUT EVENT MANAGER: Updating window and active window to", window]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    manager.set_active_window(window)
+                else:
+                    # One example: Brave's popup menus live in frames which lack the active state.
+                    tokens = ["WARNING:", window, "cannot be active window. No alternative found."]
+                    debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             event.set_window(window)
             event.set_object(manager.get_locus_of_focus())
             event.set_script(script_manager.get_manager().get_active_script())
