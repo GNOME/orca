@@ -28,10 +28,8 @@ import re
 
 from orca import debug
 from orca import focus_manager
-from orca import keybindings
 from orca import input_event_manager
 from orca import script_utilities
-from orca import settings_manager
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
@@ -157,13 +155,3 @@ class Utilities(script_utilities.Utilities):
                 return True
 
         return False
-
-    def willEchoCharacter(self, event):
-        if not settings_manager.get_manager().get_setting("enableEchoByCharacter"):
-            return False
-
-        # TODO - JD: What case is the modifier check handling?
-        if len(event.keyval_name) != 1 or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
-            return False
-
-        return True

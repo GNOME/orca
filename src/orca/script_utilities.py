@@ -1263,7 +1263,7 @@ class Utilities:
         if AXUtilities.is_password_text(focus):
             return False
 
-        if AXUtilities.is_editable(focus):
+        if AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus):
             return True
 
         return False
