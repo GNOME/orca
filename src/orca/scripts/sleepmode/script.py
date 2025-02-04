@@ -40,7 +40,6 @@ from orca.ax_utilities import AXUtilities
 
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
-from .script_utilities import Utilities
 
 class Script(default.Script):
     """The sleep-mode script."""
@@ -70,11 +69,6 @@ class Script(default.Script):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
-
-    def get_utilities(self):
-        """Returns the utilities for this script."""
-
-        return Utilities(self)
 
     def get_braille_bindings(self):
         """Returns the braille bindings for this script."""
