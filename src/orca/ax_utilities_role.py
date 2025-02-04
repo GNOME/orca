@@ -243,6 +243,13 @@ class AXUtilitiesRole:
                  Atspi.Role.SPIN_BUTTON,
                  Atspi.Role.TEXT, # predicate recommended to check it is editable
                  Atspi.Role.TOGGLE_BUTTON]
+
+        # TODO - JD: Remove this check when dependencies are bumped to v2.56.
+        try:
+            roles.append(Atspi.Role.SWITCH)
+        except AttributeError:
+            pass
+
         return roles
 
     @staticmethod
