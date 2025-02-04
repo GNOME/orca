@@ -2016,8 +2016,18 @@ class AXUtilitiesRole:
         return AXUtilitiesRole._get_tag(obj) == "svg"
 
     @staticmethod
-    def is_switch(obj: Atspi.Accessible, _role: Optional[Atspi.Role] = None) -> bool:
+    def is_switch(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
         """Returns True if obj has the switch role."""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        # TODO - JD: Remove this check when dependencies are bumped to v2.56.
+        try:
+            if role == Atspi.Role.SWITCH:
+                return True
+        except AttributeError:
+            pass
 
         return "switch" in AXUtilitiesRole._get_xml_roles(obj)
 

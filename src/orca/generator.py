@@ -168,6 +168,7 @@ class Generator:
             Atspi.Role.SUBSCRIPT: self._generate_subscript,
             Atspi.Role.SUGGESTION: self._generate_suggestion,
             Atspi.Role.SUPERSCRIPT: self._generate_superscript,
+            # TODO - JD: Replace this with the real role once dependencies are bumped to v2.56.
             "ROLE_SWITCH": self._generate_switch,
             Atspi.Role.TABLE: self._generate_table,
             Atspi.Role.TABLE_CELL: self._generate_table_cell_in_row,

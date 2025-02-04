@@ -1292,7 +1292,7 @@ class AXUtilities:
 
     @staticmethod
     def is_switch(
-        obj: Atspi.Accessible, _role: Optional[Atspi.Role] = None
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
     ) -> bool: ...
 
     @staticmethod
