@@ -37,7 +37,6 @@ from gi.repository import Atspi
 
 from . import debug
 from . import focus_manager
-from . import keybindings
 from . import input_event_manager
 from . import mathsymbols
 from . import messages
@@ -1247,26 +1246,6 @@ class Utilities:
             lastLanguage, lastDialect = language, dialect
 
         return rv
-
-    def willEchoCharacter(self, event):
-        """Given a keyboard event containing an alphanumeric key,
-        determine if the script is likely to echo it as a character.
-        """
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if not focus or not settings.enableEchoByCharacter:
-            return False
-
-        if len(event.get_key_name()) != 1 or event.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
-            return False
-
-        if AXUtilities.is_password_text(focus):
-            return False
-
-        if AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus):
-            return True
-
-        return False
 
     #########################################################################
     #                                                                       #

@@ -472,11 +472,35 @@ class KeyboardEvent(InputEvent):
     def is_character_echoable(self) -> bool:
         """Returns True if the script will echo this event as part of character echo."""
 
-        if not self.is_printable_key():
+        if not settings.enableEchoByCharacter:
+            msg = "KEYBOARD EVENT: Not character echoable, setting disabled."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        script = script_manager.get_manager().get_active_script()
-        return bool(script and script.utilities.willEchoCharacter(self))
+        if not self.is_printable_key():
+            msg = "KEYBOARD EVENT: Not character echoable, is not printable key."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        # TODO - JD: What is this check handling specifically?
+        if self.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
+            msg = "KEYBOARD EVENT: Not character echoable due to modifier mask."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilities.is_password_text(self._obj):
+            msg = "KEYBOARD EVENT: Not character echoable, is password text."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj):
+            msg = "KEYBOARD EVENT: Character echoable, is editable or terminal."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        msg = "KEYBOARD EVENT: Not character echoable, no reason to echo."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return False
 
     def get_locking_state(self) -> Optional[bool]:
         """Returns True if the event locked a locking key, False if the event unlocked it, and None
