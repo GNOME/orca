@@ -78,6 +78,12 @@ class Script(default.Script):
         if AXUtilities.is_window(event.source):
             return
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXUtilities.is_panel(event.source) and AXObject.is_ancestor(focus, event.source):
+            msg = "GNOME SHELL: Event ignored: Source is panel ancestor of current focus."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         if not AXObject.get_name(event.source) and AXUtilities.is_menu_item(event.source) \
            and not AXUtilities.get_is_labelled_by(event.source):
             descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
