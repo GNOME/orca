@@ -1,3 +1,43 @@
+48.beta - 5 February 2025
+
+Web:
+
+* Work around Brave popup menu bug which causes Orca to not present
+  selection changes.
+
+* Ignore caret-moved events from children-presentational roles because
+  they cause Orca to incorrectly update the current location.
+
+* Fix ValueError during table navigation.
+
+General:
+
+* Add support for the new "switch" role.
+
+* Refactor, and improve presentation of, KeyboardEvent events.
+
+* When supported by AT-SPI2, use XKB keysyms for grabbing and matching
+  keys.
+
+* Do not shadow function arguments when computing modifier mask for the
+  Orca modifiers.
+
+* Eliminate speaking "not selected" after every GTK4 list item. (Note
+  that this fix also requires a GTK4 update.)
+
+* Prune labels with label-for relation when generating descendants
+  (eliminates some "chattiness").
+
+* Don't treat "space" as a mnemonic; insert pause before speaking
+  mnemonic.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ru              Russian                   Artur S0
+  sk              Slovak                    Peter Vágner
+
+=========
+
 48.alpha - 5 January 2025
 
 Event Processing:
