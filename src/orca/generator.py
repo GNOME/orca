@@ -36,6 +36,7 @@ __license__   = "LGPL"
 
 import time
 import threading
+from difflib import SequenceMatcher
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -226,6 +227,23 @@ class Generator:
         thread.daemon = True
         thread.start()
 
+    def _strings_are_redundant(self, str1, str2, threshold=0.7):
+        if not (str1 and str2):
+            return False
+
+        if (str1 in str2 and len(str1.split()) > 3) or (str2 in str1 and len(str2.split()) > 3):
+            msg = f"GENERATOR: Treating '{str2}' as redundant to '{str1}'"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
+        msg = (
+            f"GENERATOR: Similarity between '{str1}', '{str2}': {similarity} "
+            f"(threshold: {threshold})"
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return similarity >= threshold
+
     def generate_contents(self, _contents, **_args):
         """Returns presentation for a list of [obj, start, end, string]."""
 
@@ -329,7 +347,7 @@ class Generator:
             Generator.CACHED_DESCRIPTION[hash(obj)] = []
             return []
 
-        if self._script.utilities.stringsAreRedundant(AXObject.get_name(obj), description):
+        if self._strings_are_redundant(AXObject.get_name(obj), description):
             Generator.CACHED_DESCRIPTION[hash(obj)] = []
             return []
 
@@ -391,7 +409,7 @@ class Generator:
         if not name:
             return result
 
-        if self._script.utilities.stringsAreRedundant(name[0], label[0]):
+        if self._strings_are_redundant(name[0], label[0]):
             if len(name[0]) < len(label[0]):
                 return label
             return name
@@ -565,9 +583,9 @@ class Generator:
                     continue
                 if AXUtilities.get_is_label_for(obj):
                     continue
-                if self._script.utilities.stringsAreRedundant(obj_name, child_name):
+                if self._strings_are_redundant(obj_name, child_name):
                     continue
-                if self._script.utilities.stringsAreRedundant(obj_desc, child_name):
+                if self._strings_are_redundant(obj_desc, child_name):
                     used_description_as_static_text = True
 
             child_result = self.generate(child, includeContext=False, omitDescription=True)
@@ -908,7 +926,7 @@ class Generator:
         text = self._script.utilities.expandEOCs(
             obj, args.get("startOffset", 0), args.get("endOffset", -1))
         if text.strip() and self._script.EMBEDDED_OBJECT_CHARACTER not in text \
-           and not self._script.utilities.stringsAreRedundant(AXObject.get_name(obj), text):
+           and not self._strings_are_redundant(AXObject.get_name(obj), text):
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT_EXPANDING_EOCS[hash(obj), start, end] = [text]
             return [text]

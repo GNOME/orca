@@ -28,10 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import gi
 import re
-from difflib import SequenceMatcher
 
+import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -1977,20 +1976,3 @@ class Utilities:
             return False
 
         return True
-
-    def stringsAreRedundant(self, str1, str2, threshold=0.7):
-        if not (str1 and str2):
-            return False
-
-        if (str1 in str2 and len(str1.split()) > 3) or (str2 in str1 and len(str2.split()) > 3):
-            msg = f"SCRIPT UTILITIES: Treating '{str2}' as redundant to '{str1}'"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
-        msg = (
-            f"SCRIPT UTILITIES: Similarity between '{str1}', '{str2}': {similarity} "
-            f"(threshold: {threshold})"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return similarity >= threshold
