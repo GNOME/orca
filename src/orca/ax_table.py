@@ -410,8 +410,8 @@ class AXTable:
             return AXTable.PRESENTABLE_SPANS.get(hash(cell), (None, None))
 
         attrs = AXObject.get_attributes_dict(cell)
-        row_span = attrs.get("rowspan", "")
-        col_span = attrs.get("colspan", "")
+        row_span = attrs.get("rowspan", None)
+        col_span = attrs.get("colspan", None)
 
         tokens = ["AXTable: Row and col span attributes for", cell, ":", row_span, ",", col_span]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
