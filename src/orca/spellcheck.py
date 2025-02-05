@@ -275,7 +275,7 @@ class SpellCheck:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        label = self._script.utilities.displayedLabel(entry) or AXObject.get_name(entry)
+        label = AXUtilities.get_displayed_label(entry) or AXObject.get_name(entry)
         string = AXText.get_substring(entry, 0, -1)
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
@@ -306,8 +306,7 @@ class SpellCheck:
             return False
 
         if include_label:
-            label = self._script.utilities.displayedLabel(suggestions) \
-                or AXObject.get_name(suggestions)
+            label = AXUtilities.get_displayed_label(suggestions) or AXObject.get_name(suggestions)
         else:
             label = ""
         string = AXObject.get_name(items[0])

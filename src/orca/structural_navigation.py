@@ -1023,7 +1023,7 @@ class StructuralNavigation:
     def _getLabel(self, obj):
         # Another case where we'll do this for now, and clean it up when
         # object presentation is refactored.
-        label = self._script.utilities.displayedLabel(obj)
+        label = AXUtilities.get_displayed_label(obj)
         if not label:
             label, objects = self._script.label_inference.infer(
                 obj, focusedOnly=False)

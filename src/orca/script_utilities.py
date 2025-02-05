@@ -127,23 +127,6 @@ class Utilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return nodes
 
-    def displayedLabel(self, obj):
-        """If there is an object labelling the given object, return the
-        text being displayed for the object labelling this object.
-        Otherwise, return None.
-
-        Argument:
-        - obj: the object in question
-
-        Returns the string of the object labelling this object, or None
-        if there is nothing of interest here.
-        """
-
-        labels = AXUtilities.get_is_labelled_by(obj)
-        strings = [AXObject.get_name(label)
-                   or AXText.get_all_text(label) for label in labels if label is not None]
-        return " ".join(strings)
-
     def preferDescriptionOverName(self, obj):
         return False
 
@@ -168,12 +151,6 @@ class Utilities:
                 detail, lambda x: not AXText.is_whitespace_or_empty(x)))
 
         return textObjects
-
-    def displayedDescription(self, obj):
-        """Returns the text being displayed for the object describing obj."""
-
-        descriptions = AXUtilities.get_is_described_by(obj)
-        return " ".join(AXText.get_all_text(d) or AXObject.get_name(d) for d in descriptions)
 
     def documentFrame(self, obj=None):
         """Returns the document frame which is displaying the content.

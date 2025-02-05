@@ -2799,7 +2799,7 @@ class Utilities(script_utilities.Utilities):
                      Atspi.Role.LIST_BOX,
                      Atspi.Role.PASSWORD_TEXT,
                      Atspi.Role.RADIO_BUTTON]
-            rv = role in roles and not self.displayedLabel(obj)
+            rv = role in roles and not AXUtilities.get_displayed_label(obj)
 
         self._shouldInferLabelFor[hash(obj)] = rv
 

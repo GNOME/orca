@@ -324,8 +324,7 @@ class Generator:
             Generator.CACHED_DESCRIPTION[hash(obj)] = []
             return []
 
-        description = AXObject.get_description(obj) \
-            or self._script.utilities.displayedDescription(obj) or ""
+        description = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
         if not description:
             Generator.CACHED_DESCRIPTION[hash(obj)] = []
             return []
@@ -359,7 +358,7 @@ class Generator:
     @log_generator_output
     def _generate_accessible_label(self, obj, **_args):
         result = []
-        label = self._script.utilities.displayedLabel(obj)
+        label = AXUtilities.get_displayed_label(obj)
         if label:
             result.append(label)
         return result
@@ -532,8 +531,8 @@ class Generator:
     @log_generator_output
     def _generate_descendants(self, obj, **args):
         result = []
-        obj_name = AXObject.get_name(obj) or self._script.utilities.displayedLabel(obj)
-        obj_desc = AXObject.get_description(obj) or self._script.utilities.displayedDescription(obj)
+        obj_name = AXObject.get_name(obj) or AXUtilities.get_displayed_label(obj)
+        obj_desc = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
         descendants = self._script.utilities.getOnScreenObjects(obj)
         used_description_as_static_text = False
         for child in descendants:

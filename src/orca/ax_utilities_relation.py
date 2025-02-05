@@ -148,7 +148,8 @@ class AXUtilitiesRelation:
 
         targets = set()
         for i in range(relation.get_n_targets()):
-            targets.add(relation.get_target(i))
+            if target := relation.get_target(i):
+                targets.add(target)
 
         # We want to avoid self-referential relationships.
         type_includes_object = [Atspi.RelationType.MEMBER_OF]

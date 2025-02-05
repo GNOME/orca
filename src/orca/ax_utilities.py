@@ -46,6 +46,7 @@ from . import debug
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_event import AXUtilitiesEvent
@@ -60,8 +61,10 @@ class AXUtilities:
     COMPARE_COLLECTION_PERFORMANCE = False
 
     # Things we cache.
-    SET_MEMBERS: dict = {}
-    IS_LAYOUT_ONLY: dict = {}
+    SET_MEMBERS: dict[int, list[Atspi.Accessible]] = {}
+    IS_LAYOUT_ONLY: dict[int, tuple[bool, str]] = {}
+    DISPLAYED_DESCRIPTION: dict[int, str] = {}
+    DISPLAYED_LABEL: dict[int, str] = {}
 
     _lock = threading.Lock()
 
@@ -91,6 +94,8 @@ class AXUtilities:
         with AXUtilities._lock:
             AXUtilities.SET_MEMBERS.clear()
             AXUtilities.IS_LAYOUT_ONLY.clear()
+            AXUtilities.DISPLAYED_DESCRIPTION.clear()
+            AXUtilities.DISPLAYED_LABEL.clear()
 
     @staticmethod
     def clear_all_cache_now(obj: Optional[Atspi.Accessible] = None, reason: str = "") -> None:
@@ -391,7 +396,7 @@ class AXUtilities:
         """Returns True if obj is believed to serve only for layout."""
 
         if hash(obj) in AXUtilities.IS_LAYOUT_ONLY:
-            result, reason = AXUtilities.IS_LAYOUT_ONLY.get(hash(obj), (None, None))
+            result, reason = AXUtilities.IS_LAYOUT_ONLY.get(hash(obj), (False, ""))
         else:
             result, reason = AXUtilities._is_layout_only(obj)
             AXUtilities.IS_LAYOUT_ONLY[hash(obj)] = result, reason
@@ -644,6 +649,32 @@ class AXUtilities:
         """Returns True if obj has an author/app-provided name as opposed to a calculated name."""
 
         return AXObject.get_attribute(obj, "explicit-name") == "true"
+
+    @staticmethod
+    def get_displayed_label(obj: Atspi.Accessible) -> str:
+        """Returns the displayed label of obj."""
+
+        if hash(obj) in AXUtilities.DISPLAYED_LABEL:
+            return AXUtilities.DISPLAYED_LABEL.get(hash(obj), "")
+
+        labels = AXUtilitiesRelation.get_is_labelled_by(obj)
+        strings = [AXObject.get_name(label) or AXText.get_all_text(label) for label in labels]
+        result = " ".join(strings)
+        AXUtilities.DISPLAYED_LABEL[hash(obj)] = result
+        return result
+
+    @staticmethod
+    def get_displayed_description(obj: Atspi.Accessible) -> str:
+        """Returns the displayed description of obj."""
+
+        if hash(obj) in AXUtilities.DISPLAYED_DESCRIPTION:
+            return AXUtilities.DISPLAYED_DESCRIPTION.get(hash(obj), "")
+
+        descriptions = AXUtilitiesRelation.get_is_described_by(obj)
+        strings = [AXObject.get_name(desc) or AXText.get_all_text(desc) for desc in descriptions]
+        result = " ".join(strings)
+        AXUtilities.DISPLAYED_DESCRIPTION[hash(obj)] = result
+        return result
 
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):
