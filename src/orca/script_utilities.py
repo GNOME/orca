@@ -1599,7 +1599,7 @@ class Utilities:
         cell_rect = AXComponent.get_rect(cell)
         cell = AXComponent.get_descendant_at_point(
             obj, table_rect.x, table_rect.y + cell_rect.height + 1)
-        row, AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
         nextIndex = max(startIndex, row)
         tokens = ["SCRIPT UTILITIES: Next cell:", cell, f"(row: {row})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
