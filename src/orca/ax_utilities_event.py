@@ -357,6 +357,8 @@ class AXUtilitiesEvent:
                     reason = TextEventReason.REDO
             elif mgr.last_event_was_command():
                 reason = TextEventReason.UNSPECIFIED_COMMAND
+            elif mgr.last_event_was_return_tab_or_space():
+                reason = TextEventReason.TYPING
             elif mgr.last_event_was_printable_key():
                 if reason == TextEventReason.SELECTED_TEXT_INSERTION:
                     reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
