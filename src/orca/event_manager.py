@@ -264,11 +264,20 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        # Text insertions in the text role are typically something we want to handle.
+        # Events from the text role are typically something we want to handle.
+        # One exception is a huge text insertion. For instance when a huge plain text document
+        # is loaded in a text editor, the text view in some versions of GTK fires a ton of text
+        # insertions of several thousand characters each, along with caret moved events. Ignore
+        # the former and let our flood protection handle the latter.
         if AXUtilities.is_text(event.source):
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+            if event_type.startswith("object:text-changed:insert") and event.detail2 > 5000:
+                msg = f"EVENT_MANAGER: Ignoring {event_type} due to size of inserted text"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            if not event_type.startswith("object:text-caret-moved"):
+                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
 
         # Notifications and alerts are things we want to handle.
         if AXUtilities.is_notification(event.source) or AXUtilities.is_alert(event.source):
