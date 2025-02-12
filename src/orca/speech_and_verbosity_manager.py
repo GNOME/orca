@@ -292,6 +292,7 @@ class SpeechAndVerbosityManager:
     def get_current_speech_server_info(self) -> tuple[str, str]:
         """Returns the name and ID of the current speech server."""
 
+        # TODO - JD: The result is not in sync with the current output module. Should it be?
         server = self._get_server()
         if server is None:
             return ("", "")
@@ -305,10 +306,15 @@ class SpeechAndVerbosityManager:
         """Checks the speech setting and initializes speech if necessary."""
 
         manager = settings_manager.get_manager()
-        if manager.get_setting("enableSpeech"):
-            self.start_speech()
-        else:
+        if not manager.get_setting("enableSpeech"):
+            msg = "SPEECH AND VERBOSITY MANAGER: Speech is not enabled. Shutting down speech."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self.shutdown_speech()
+            return
+
+        msg = "SPEECH AND VERBOSITY MANAGER: Speech is enabled."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self.start_speech()
 
     def start_speech(self) -> None:
         """Starts the speech server."""
@@ -447,6 +453,28 @@ class SpeechAndVerbosityManager:
 
         server.updatePunctuationLevel()
         return True
+
+    def update_synthesizer(self, server_id: Optional[str] = "") -> None:
+        """Updates the synthesizer to the specified id or value from settings."""
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        active_id = server.getOutputModule()
+        info = settings.speechServerInfo or ["", ""]
+        if not server_id and len(info) == 2:
+            server_id = info[1]
+
+        if server_id and server_id != active_id:
+            msg = (
+                f"SPEECH AND VERBOSITY MANAGER: Updating synthesizer from {active_id} "
+                f"to {server_id}."
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            server.setOutputModule(server_id)
 
     def cycle_synthesizer(
         self, script: default.Script, _event: Optional[input_event.InputEvent] = None

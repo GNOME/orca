@@ -684,8 +684,11 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         settings_manager.get_manager().load_app_settings(self)
+
+        # TODO - JD: Should these be moved into check_speech_setting?
         self.get_speech_and_verbosity_manager().update_punctuation_level()
         self.get_speech_and_verbosity_manager().update_capitalization_style()
+        self.get_speech_and_verbosity_manager().update_synthesizer()
 
         self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]

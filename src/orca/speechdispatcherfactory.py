@@ -608,6 +608,9 @@ class SpeechServer(speechserver.SpeechServer):
         return self._client.get_output_module()
 
     def setOutputModule(self, module):
+        # TODO - JD: This updates the output module, but not the the value of self._id.
+        # That might be desired (e.g. self._id impacts what is shown in Orca preferences),
+        # but it can be confusing.
         self._client.set_output_module(module)
 
     def stop(self):
