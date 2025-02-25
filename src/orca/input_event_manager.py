@@ -59,7 +59,10 @@ class InputEventManager:
 
         msg = "INPUT EVENT MANAGER: Starting key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._device = Atspi.Device.new()
+        if Atspi.get_version() >= (2, 55, 2):
+            self._device = Atspi.Device.new_full("org.gnome.Orca")
+        else:
+            self._device = Atspi.Device.new()
         self._device.add_key_watcher(self.process_keyboard_event)
 
     def stop_key_watcher(self):
