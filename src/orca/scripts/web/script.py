@@ -944,7 +944,24 @@ class Script(default.Script):
             priorObj, priorOffset = self.utilities.getPriorContext()
             args["priorObj"] = priorObj
 
+        # Objects might be destroyed as a consequence of scrolling, such as in an infinite scroll
+        # list. Therefore, store its name and role beforehand. Objects in the process of being
+        # destroyed typically lose their name even if they lack the defunct state. If the name of
+        # the object is different after scrolling, we'll try to find a child with the same name and
+        # role.
+        parent = AXObject.get_parent(obj)
+        name = AXObject.get_name(obj)
+        role = AXObject.get_role(obj)
         AXEventSynthesizer.scroll_to_center(obj, start_offset=0)
+        if name and AXObject.get_name(obj) != name:
+            tokens = ["WEB:", obj, "believed to be destroyed after scroll."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            replicant = AXObject.find_descendant(
+                parent, lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role)
+            if replicant:
+                obj = replicant
+                tokens = ["WEB: Replacing destroyed object with", obj]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilities.is_entry(obj):
             if not self._inFocusMode:
