@@ -1971,9 +1971,13 @@ class Script(default.Script):
             return False
 
         if AXUtilities.is_dialog_or_alert(event.source):
-            msg = "WEB: Event handled: Setting locusOfFocus to event source"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            focus_manager.get_manager().set_locus_of_focus(event, event.source)
+            if AXObject.is_ancestor(focus, event.source, True):
+                msg = "WEB: Ignoring event from ancestor of focus"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+            else:
+                msg = "WEB: Event handled: Setting locusOfFocus to event source"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
 
         if self.utilities.handleEventFromContextReplicant(event, event.source):
