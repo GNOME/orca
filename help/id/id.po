@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-help main\n"
 "POT-Creation-Date: 2025-02-13 04:44+0000\n"
-"PO-Revision-Date: 2025-02-25 19:36+0700\n"
+"PO-Revision-Date: 2025-02-26 12:39+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -220,15 +220,13 @@ msgstr "Tinjau kata di bawah ini: line down"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:30
-#, fuzzy
 msgid "Review bottom left: Bottom Right"
-msgstr "Tinjau kiri bawah: kanan bawah"
+msgstr "Tinjau kiri bawah: Kanan Bawah"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:31
-#, fuzzy
 msgid "Review the home position: Top Left"
-msgstr "Tinjau posisi rumah: kiri atas"
+msgstr "Tinjau posisi rumah: Kiri Atas"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:32
@@ -238,15 +236,13 @@ msgstr "Braille kontrak: enam titik"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:33
-#, fuzzy
 msgid "Marks the beginning of a text selection: Cut Begin"
-msgstr "Menandai awal dari pilihan teks: cut Begin"
+msgstr "Menandai awal dari pilihan teks: Mulai Potong"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:34
-#, fuzzy
 msgid "Marks the end of a text selection: Cut Line"
-msgstr "Menandai akhir dari pilihan teks: cut Line"
+msgstr "Menandai akhir dari pilihan teks: Potong Baris"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:35
@@ -328,17 +324,15 @@ msgstr "Mengaktifkan/menonaktifkan riwayat khusus Ruangan: (tidak terikat)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
-#, fuzzy
 msgctxt "sort"
 msgid "1. Controlling and Learning to Use Orca"
-msgstr "1. mengontrol dan belajar menggunakan Orca"
+msgstr "1. Mengontrol dan Belajar Menggunakan Orca"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:6
-#, fuzzy
 msgctxt "link"
 msgid "Controlling and Learning to Use Orca"
-msgstr "Mengontrol dan belajar menggunakan Orca"
+msgstr "Mengontrol dan Belajar Menggunakan Orca"
 
 #. (itstool) path: info/desc
 #: C/commands_controlling_orca.page:7
@@ -357,14 +351,13 @@ msgstr "Perintah untuk Mengendalikan <app>Orca</app>"
 
 #. (itstool) path: section/p
 #: C/commands_controlling_orca.page:21
-#, fuzzy
 msgid ""
 "The following commands can be used to get into <app>Orca</app>'s Preferences "
 "dialogs, toggle <app>Orca</app> on and off, and bypass <app>Orca</app> "
 "commands to avoid shortcut conflicts within the application being accessed."
 msgstr ""
-"Perintah berikut dapat digunakan untuk masuk ke dialog preferensi <app>Orca</"
-"app>, mengaktifkan dan menonaktifkan <app>Orca</app> , dan memotong perintah "
+"Perintah berikut dapat digunakan untuk masuk ke dialog Preferensi <app>Orca</"
+"app>, menyalakan dan mematikan <app>Orca</app>, dan melewati perintah "
 "<app>Orca</app> untuk menghindari konflik pintasan dalam aplikasi yang "
 "diakses."
 
@@ -505,29 +498,25 @@ msgstr "Siklus ke tingkat debug berikutnya: (Unbound)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
-#, fuzzy
 msgctxt "sort"
 msgid "2. Orca Find"
 msgstr "2. Orca Cari"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:7
-#, fuzzy
 msgctxt "link"
 msgid "Orca Find"
 msgstr "Orca Cari"
 
 #. (itstool) path: info/desc
 #: C/commands_find.page:8
-#, fuzzy
 msgid "Commands for searching window contents"
 msgstr "Perintah untuk mencari isi jendela"
 
 #. (itstool) path: page/title
 #: C/commands_find.page:19
-#, fuzzy
 msgid "Orca Find Commands"
-msgstr "Orca Cari perintah"
+msgstr "Perintah Cari Orca"
 
 #. (itstool) path: page/p
 #: C/commands_find.page:20
@@ -665,17 +654,15 @@ msgstr "Baris pertama (posisi \"Beranda\"):"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:34
-#, fuzzy
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
-msgstr "Desktop: <keyseq> <key>Pengubah Orca</key><key>KP 7</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP 7</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:35
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq>"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>Ctrl</key><key>U</key></keyseq>"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Ctrl</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:39
@@ -689,9 +676,8 @@ msgstr "Desktop: <keyseq><key>KP 7</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:42
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>U</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>U</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:46
@@ -705,9 +691,8 @@ msgstr "Desktop: <keyseq><key>KP 8</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:49 C/commands_reading.page:54
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>I</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>I</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:52
@@ -716,19 +701,16 @@ msgstr "Eja baris ini:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:54
-#, fuzzy
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
-msgstr "Desktop: <keyseq><key>KP 8</key></keyseq> (diklik-ganda)"
+msgstr "Desktop: <keyseq><key>KP 8</key></keyseq> (klik-ganda)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:55
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>I</key> </keyseq> (diklik-"
-"ganda)"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>I</key></keyseq> (klik-ganda)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:58
@@ -766,7 +748,6 @@ msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>O</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:70
-#, fuzzy
 msgid "Last line (The \"end\" position):"
 msgstr "Baris terakhir (posisi \"akhir\"):"
 
@@ -905,9 +886,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:126
-#, fuzzy
 msgid "Commands for Reviewing by Character"
-msgstr "Perintah untuk ditinjau oleh karakter"
+msgstr "Perintah untuk Meninjau per Karakter"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:128
@@ -941,9 +921,8 @@ msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>Koma</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:140
-#, fuzzy
 msgid "Phonetically speak current character:"
-msgstr "Fonetik berbicara karakter saat ini:"
+msgstr "Ucapkan karakter saat ini secara fonetik:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:142 C/commands_reading.page:126
@@ -961,25 +940,22 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:146
-#, fuzzy
 msgid "Speak Unicode value of current character:"
 msgstr "Ucapkan nilai Unicode karakter saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:148 C/commands_reading.page:142
-#, fuzzy
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
-msgstr "Desktop: <keyseq><key>KP 2</key></keyseq> (diklik-tiga-kali)"
+msgstr "Desktop: <keyseq><key>KP 2</key></keyseq> (klik-tiga-kali)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:149 C/commands_reading.page:147
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>Koma</key> </keyseq> (diklik-"
-"tiga-kali)"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Koma</key> </keyseq> (klik-tiga-"
+"kali)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:152
@@ -993,29 +969,25 @@ msgstr "Desktop: <keyseq><key>KP 3</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:155
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>Titik</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>Titik</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:158
-#, fuzzy
 msgid "Last character on current line:"
 msgstr "Karakter terakhir pada baris saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:160
-#, fuzzy
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
-msgstr "Desktop: <keyseq> <key>Pengubah Orca</key><key>KP 1</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP 1</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:161
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>Ctrl</key><key>M</key></keyseq>"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Ctrl</key><key>M</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_flat_review.page:167
@@ -1030,17 +1002,15 @@ msgstr "Beralih Tinjauan datar (menyegarkan konteks tinjauan datar):"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:171
-#, fuzzy
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
 msgstr ""
-"Desktop: <keyseq> <key>Pengubah Orca</key><key>KP Kurangi</key></keyseq>"
+"Desktop: <keyseq><key>Pengubah Orca</key><key>KP Kurangi</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:172
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>P</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>P</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:175
@@ -1050,17 +1020,15 @@ msgstr "Tinjau item/widget saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:177
-#, fuzzy
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
-msgstr "Desktop: <keyseq> <key>Pengubah Orca</key><key>KP 5</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP 5</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:178
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq>"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>Ctrl</key><key>K</key></keyseq>"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Ctrl</key><key>K</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:181
@@ -1070,19 +1038,17 @@ msgstr "Gunakan ucapkan semua untuk meninjau dialog atau jendela saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:183
-#, fuzzy
 msgid "Desktop: <key>KP Plus</key> (double-clicked)"
-msgstr "Desktop: <key>KP Plus</key> (diklik ganda)"
+msgstr "Desktop: <key>KP Plus</key> (klik ganda)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:184
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq> "
 "(double-clicked)"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>Titik Koma</key> </keyseq> "
-"(diklik ganda)"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Titik Koma</key></keyseq> (klik "
+"ganda)"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:188
@@ -1287,16 +1253,13 @@ msgstr "Route pointer ke item saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:57
-#, fuzzy
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq> <key>Pengubah Orca</key><key>KP Divide</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP Bagi</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:58
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>9</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>9</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:62
@@ -1307,17 +1270,14 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:64
-#, fuzzy
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq> <key>Pengubah Orca</key><key>KP Multiply</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP Kali</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:65
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Pengubah Orca</key><key>0</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>0</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:69
@@ -1359,15 +1319,13 @@ msgstr "Membaca Halaman Web dan Dokumen Lainnya"
 
 #. (itstool) path: section/title
 #: C/commands.page:26 C/index.page:41
-#, fuzzy
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Meninjau dan Berinteraksi dengan Isi Layar"
 
 #. (itstool) path: section/title
 #: C/commands.page:29
-#, fuzzy
 msgid "Accessing Dynamic Information"
-msgstr "Mengakses informasi dinamis"
+msgstr "Mengakses Informasi Dinamis"
 
 #. (itstool) path: section/title
 #: C/commands.page:32
@@ -1388,7 +1346,6 @@ msgstr "Profil"
 
 #. (itstool) path: info/desc
 #: C/commands_profiles.page:8
-#, fuzzy
 msgid "Commands to access saved configurations"
 msgstr "Perintah untuk mengakses konfigurasi yang disimpan"
 
@@ -1462,7 +1419,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
-#, fuzzy
 msgid "Reading Your Current Location"
 msgstr "Membaca Lokasi Anda Saat Ini"
 
@@ -1499,7 +1455,6 @@ msgstr "Fonetik mengeja kata saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:108
-#, fuzzy
 msgid "Read the current character:"
 msgstr "Membaca karakter saat ini:"
 
@@ -1745,10 +1700,9 @@ msgstr "Beralih antara mode tata letak dan mode objek: (tidak terikat)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
-#, fuzzy
 msgctxt "sort"
 msgid "2. Speech Settings"
-msgstr "2. pengaturan ucapan"
+msgstr "2. Pengaturan Ucapan"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:7 C/preferences_speech.page:6
@@ -3107,7 +3061,6 @@ msgstr "5. Mengisi formulir"
 
 #. (itstool) path: info/desc
 #: C/howto_forms.page:6
-#, fuzzy
 msgid "Accessing widgets embedded in documents"
 msgstr "Mengakses widget yang disematkan dalam dokumen"
 
@@ -3257,9 +3210,8 @@ msgstr "8. Pengikatan Tombol"
 
 #. (itstool) path: info/desc
 #: C/howto_key_bindings.page:6
-#, fuzzy
 msgid "Binding, rebinding, and unbinding commands"
-msgstr "Perintah pengikatan, rebinding, dan unbinding"
+msgstr "Perintah pengikatan, pengikatan ulang, dan melepas pengikatan"
 
 #. (itstool) path: page/title
 #: C/howto_key_bindings.page:15
@@ -3423,9 +3375,8 @@ msgstr "6. Tata Letak Papan Tik"
 
 #. (itstool) path: info/desc
 #: C/howto_keyboard_layout.page:6
-#, fuzzy
 msgid "Selecting the Desktop or Laptop layout"
-msgstr "Memilih tata letak desktop atau laptop"
+msgstr "Memilih tata letak Desktop atau Laptop"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
@@ -3504,7 +3455,6 @@ msgstr "5. Mode Belajar"
 
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
-#, fuzzy
 msgid "Discovering <app>Orca</app>'s commands"
 msgstr "Menemukan perintah <app>Orca</app>"
 
@@ -3914,7 +3864,6 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_orca_find.page:5
-#, fuzzy
 msgctxt "sort"
 msgid "3. Orca Find"
 msgstr "3. Orca Cari"
@@ -4102,9 +4051,8 @@ msgstr "9. Profil"
 
 #. (itstool) path: info/desc
 #: C/howto_profiles.page:6
-#, fuzzy
 msgid "Maintaining multiple configurations"
-msgstr "Mempertahankan beberapa konfigurasi"
+msgstr "Memelihara beberapa konfigurasi"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
@@ -4269,10 +4217,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:6
-#, fuzzy
 msgctxt "sort"
 msgid "4. Orca Configuration"
-msgstr "4. konfigurasi Orca"
+msgstr "4. Konfigurasi Orca"
 
 #. (itstool) path: info/title
 #: C/howto_setting_up_orca.page:7
@@ -4282,7 +4229,6 @@ msgstr "Konfigurasi"
 
 #. (itstool) path: info/desc
 #: C/howto_setting_up_orca.page:8
-#, fuzzy
 msgid "Setting up <app>Orca</app>"
 msgstr "Menyiapkan <app>Orca</app>"
 
@@ -4311,16 +4257,14 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/howto_structural_navigation.page:7
-#, fuzzy
 msgctxt "sort"
 msgid "3. Structural Navigation"
-msgstr "3. navigasi struktural"
+msgstr "3. Navigasi Struktural"
 
 #. (itstool) path: info/desc
 #: C/howto_structural_navigation.page:8
-#, fuzzy
 msgid "Moving by heading and other elements"
-msgstr "Bergerak dengan judul dan elemen lainnya"
+msgstr "Bergerak dengan tajuk dan elemen lainnya"
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
@@ -4536,7 +4480,6 @@ msgstr "4. Tabel"
 
 #. (itstool) path: info/desc
 #: C/howto_tables.page:6
-#, fuzzy
 msgid "Navigating and setting dynamic headers"
 msgstr "Menavigasi dan menetapkan header dinamis"
 
@@ -4934,7 +4877,6 @@ msgstr "3. Pengubah Orca"
 
 #. (itstool) path: info/desc
 #: C/howto_the_orca_modifier.page:6
-#, fuzzy
 msgid ""
 "A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
 msgstr ""
@@ -5040,9 +4982,8 @@ msgstr "7. CapsLock dalam Tata Letak Laptop"
 
 #. (itstool) path: info/desc
 #: C/howto_toggling_caps_lock.page:6
-#, fuzzy
 msgid "Toggling it when it is the <key>Orca Modifier</key>"
-msgstr "Toggling ketika itu adalah <key>Orca Modifier</key>"
+msgstr "Menjungkitkannya ketika itu adalah <key>Pengubah Orca</key>"
 
 #. (itstool) path: page/title
 #: C/howto_toggling_caps_lock.page:15
@@ -5316,26 +5257,23 @@ msgstr "<_:media-1></_:media-1><app>Orca</app> Pembaca layar"
 
 #. (itstool) path: note/title
 #: C/index.page:27
-#, fuzzy
 msgid "Before You Begin"
-msgstr "Sebelum Anda Mulai"
+msgstr "Sebelum Anda Memulai"
 
 #. (itstool) path: note/p
 #: C/index.page:28
-#, fuzzy
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
 msgstr ""
 "Jika Anda belum terbiasa dengan perintah navigasi yang disediakan oleh "
-"lingkungan desktop Anda, Anda dianjurkan untuk membaca dokumentasi yang "
-"pertama."
+"lingkungan desktop Anda, Anda dianjurkan untuk membaca dokumentasi itu "
+"terlebih dahulu."
 
 #. (itstool) path: section/title
 #: C/index.page:38
-#, fuzzy
 msgid "Reading Documents and Web Pages"
-msgstr "Membaca dokumen dan halaman web"
+msgstr "Membaca Dokumen dan Halaman Web"
 
 #. (itstool) path: section/title
 #: C/index.page:44
@@ -5344,20 +5282,17 @@ msgstr "Rujukan Cepat"
 
 #. (itstool) path: info/title
 #: C/introduction.page:5
-#, fuzzy
 msgctxt "sort"
 msgid "1. Welcome to Orca"
-msgstr "1. Selamat datang di Orca"
+msgstr "1. Selamat Datang di Orca"
 
 #. (itstool) path: info/desc
 #: C/introduction.page:6
-#, fuzzy
 msgid "Introducing the <app>Orca</app> screen reader"
-msgstr "Memperkenalkan <app>Orca</app> Screen Reader"
+msgstr "Memperkenalkan pembaca layar <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/introduction.page:17
-#, fuzzy
 msgid "Welcome to Orca"
 msgstr "Selamat datang di Orca"
 
@@ -5560,10 +5495,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_braille.page:3
-#, fuzzy
 msgctxt "sort"
 msgid "3. Braille"
-msgstr "3. Huruf Braille"
+msgstr "3. Braille"
 
 #. (itstool) path: info/desc
 #: C/preferences_braille.page:5
@@ -5849,9 +5783,8 @@ msgstr ""
 #: C/preferences_web.page:35 C/preferences_web.page:78
 #: C/preferences_web.page:123 C/preferences_web.page:165
 #: C/preferences_web.page:193
-#, fuzzy
 msgid "Default value: checked"
-msgstr "Nilai default: Diperiksa"
+msgstr "Nilai baku: dicentang"
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:146
@@ -5878,9 +5811,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:159
-#, fuzzy
 msgid "Messages are persistent"
-msgstr "Pesan tetap"
+msgstr "Pesan persisten"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:160
@@ -5898,7 +5830,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:171
-#, fuzzy
 msgid "Duration (secs)"
 msgstr "Durasi (detik)"
 
@@ -5918,16 +5849,14 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:178
-#, fuzzy
 msgid "Default value: 5"
-msgstr "Nilai asali: 5"
+msgstr "Nilai baku: 5"
 
 #. (itstool) path: info/title
 #: C/preferences_chat.page:5
-#, fuzzy
 msgctxt "sort"
 msgid "3. Chat"
-msgstr "3. obrolan"
+msgstr "3. Obrolan"
 
 #. (itstool) path: info/desc
 #: C/preferences_chat.page:7
@@ -5937,9 +5866,8 @@ msgstr "Mengonfigurasi dukungan <app>Orca</app>untuk im dan IRC"
 
 #. (itstool) path: page/title
 #: C/preferences_chat.page:18
-#, fuzzy
 msgid "Chat Preferences"
-msgstr "Preferensi obrolan"
+msgstr "Preferensi Obrolan"
 
 #. (itstool) path: page/p
 #: C/preferences_chat.page:19
@@ -6026,15 +5954,13 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_chat.page:66
-#, fuzzy
 msgid "<gui>All channels</gui>"
-msgstr "<gui>Semua saluran</gui>"
+msgstr "<gui>Semua kanal</gui>"
 
 #. (itstool) path: item/p
 #: C/preferences_chat.page:69
-#, fuzzy
 msgid "<gui>A channel only if its window is active</gui>"
-msgstr "<gui>Saluran hanya jika jendela aktif</gui>"
+msgstr "<gui>Kanal hanya jika jendelanya aktif</gui>"
 
 #. (itstool) path: item/p
 #: C/preferences_chat.page:72
@@ -6044,9 +5970,8 @@ msgstr "<gui>Semua saluran ketika ada jendela obrolan aktif</gui>"
 
 #. (itstool) path: section/p
 #: C/preferences_chat.page:75
-#, fuzzy
 msgid "Default value: all channels"
-msgstr "Nilai default: semua saluran"
+msgstr "Nilai baku: semua kanal"
 
 #. (itstool) path: info/title
 #: C/preferences_general.page:3
@@ -6099,9 +6024,8 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:33
-#, fuzzy
 msgid "Default value: <gui>Desktop</gui>"
-msgstr "Nilai asali: <gui>desktop</gui>"
+msgstr "Nilai baku: <gui>Desktop</gui>"
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:39
@@ -6147,39 +6071,35 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:63
-#, fuzzy
 msgid "Speak Object Under Mouse"
-msgstr "Berbicara objek di bawah mouse"
+msgstr "Bicarakan objek di bawah tetikus"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:64
-#, fuzzy
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
 "about the object under the mouse pointer as you move it around the screen "
 "using <app>Orca</app>'s <link xref=\"howto_mouse_review\">Mouse Review</"
 "link> feature."
 msgstr ""
-"Ketika diperiksa, opsi ini akan memberitahu <app>Orca</app> untuk menyajikan "
-"informasi tentang objek di bawah penunjuk mouse saat Anda memindahkannya di "
-"sekitar layar menggunakan <app></app> <link xref=\"howto_mouse_review\"> "
-"fitur peninjauan mouse Orca."
+"Ketika dicentang, opsi ini akan memberitahu <app>Orca</app> untuk menyajikan "
+"informasi tentang objek di bawah penunjuk tetikus saat Anda memindahkannya "
+"di sekitar layar menggunakan fitur <link "
+"xref=\"howto_mouse_review\">Peninjauan Tetikus</link> <app>Orca</app>."
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:76
-#, fuzzy
 msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
 msgstr ""
-"Pilihan kotak dialog preferensi untuk menyesuaikan format waktu dan tanggal "
+"Opsi kotak dialog preferensi untuk menyesuaikan format waktu dan tanggal "
 "yang digunakan oleh <app>Orca</app>."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:81
-#, fuzzy
 msgid "Time Format and Date Format"
-msgstr "Format waktu dan tanggal format"
+msgstr "Format Waktu dan Format Tanggal"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:82
@@ -6210,9 +6130,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:98
-#, fuzzy
 msgid "Navigation in Say All"
-msgstr "Navigasi di Katakanlah semua"
+msgstr "Navigasi dalam Katakan Semua"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:99
@@ -6361,9 +6280,8 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:165
-#, fuzzy
 msgid "Default value: <gui>Sentence</gui>"
-msgstr "Nilai default: <gui>kalimat</gui>"
+msgstr "Nilai baku: <gui>Kalimat</gui>"
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:171
@@ -6447,7 +6365,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:222
-#, fuzzy
 msgid "Braille updates"
 msgstr "Pembaruan Braille"
 
@@ -6465,9 +6382,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:233
-#, fuzzy
 msgid "Beep updates"
-msgstr "Update bunyi bip"
+msgstr "Pembaruan bunyi bip"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:234
@@ -6483,7 +6399,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:244
-#, fuzzy
 msgid "Frequency (secs)"
 msgstr "Frekuensi (detik):"
 
@@ -6495,15 +6410,13 @@ msgstr "Tombol putar ini menentukan seberapa sering pembaruan disajikan."
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:248
-#, fuzzy
 msgid "Default value: 10"
-msgstr "Nilai asali: 10"
+msgstr "Nilai baku: 10"
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:253
-#, fuzzy
 msgid "Applies to"
-msgstr "Properti ini hanya berlaku bagi ikon bernama"
+msgstr "Berlaku bagi"
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:254
@@ -6553,16 +6466,14 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_general.page:274
-#, fuzzy
 msgid "Default value: <gui>Application</gui>"
-msgstr "Nilai asali: <gui>aplikasi</gui>"
+msgstr "Nilai baku: <gui>Aplikasi</gui>"
 
 #. (itstool) path: info/title
 #: C/preferences_introduction.page:3
-#, fuzzy
 msgctxt "sort"
 msgid "0. Introduction to <app>Orca</app>'s Preferences"
-msgstr "0. Pengantar preferensi <app>Orca</app>"
+msgstr "0. Perkenalan ke Preferensi <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/preferences_introduction.page:4
@@ -6661,10 +6572,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_bindings.page:6
-#, fuzzy
 msgctxt "sort"
 msgid "6. Key Bindings"
-msgstr "6. pengikatan kunci"
+msgstr "6. Pengikatan Tombol"
 
 #. (itstool) path: info/title
 #: C/preferences_key_bindings.page:7
@@ -6680,15 +6590,13 @@ msgstr "Mengonfigurasi pintasan keyboard <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/preferences_key_bindings.page:19
-#, fuzzy
 msgid "Key Bindings Preferences"
-msgstr "Preferensi pengikatan kunci"
+msgstr "Preferensi Pengikatan Tombol"
 
 #. (itstool) path: section/title
 #: C/preferences_key_bindings.page:21
-#, fuzzy
 msgid "Orca Modifier Keys"
-msgstr "Tombol pengubah Orca"
+msgstr "Tombol Pengubah Orca"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:22
@@ -6727,9 +6635,8 @@ msgstr "<gui>Caps_Lock</gui>"
 
 #. (itstool) path: section/title
 #: C/preferences_key_bindings.page:38
-#, fuzzy
 msgid "The Key Bindings Table"
-msgstr "Tabel kunci Bindings"
+msgstr "Tabel Pengikatan Tombol"
 
 #. (itstool) path: section/p
 #: C/preferences_key_bindings.page:39
@@ -6798,17 +6705,15 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:3
-#, fuzzy
 msgctxt "link"
 msgid "Echo"
 msgstr "Gema"
 
 #. (itstool) path: info/title
 #: C/preferences_key_echo.page:4
-#, fuzzy
 msgctxt "sort"
 msgid "4. Echo"
-msgstr "4. Echo"
+msgstr "4. Gema"
 
 #. (itstool) path: info/desc
 #: C/preferences_key_echo.page:5
@@ -6818,9 +6723,8 @@ msgstr "Mengonfigurasi apa yang diucapkan saat Anda mengetik"
 
 #. (itstool) path: page/title
 #: C/preferences_key_echo.page:18
-#, fuzzy
 msgid "Echo Preferences"
-msgstr "Preferensi Echo"
+msgstr "Preferensi Gema"
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:20
@@ -6894,9 +6798,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:62
-#, fuzzy
 msgid "Enable space"
-msgstr "Mengaktifkan Ruang"
+msgstr "Fungsikan spasi"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:63
@@ -6910,9 +6813,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:72
-#, fuzzy
 msgid "Enable modifier keys"
-msgstr "Fungsikan to_mbol pengubah"
+msgstr "Fungsikan tombol pengubah"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:73
@@ -6926,9 +6828,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_key_echo.page:82
-#, fuzzy
 msgid "Enable function keys"
-msgstr "Fungsikan tombol _fungsi"
+msgstr "Fungsikan tombol fungsi"
 
 #. (itstool) path: section/p
 #: C/preferences_key_echo.page:83
@@ -7107,10 +7008,9 @@ msgstr "Dialog preferensi <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/preferences_pronunciation.page:6
-#, fuzzy
 msgctxt "sort"
 msgid "7. Pronunciation"
-msgstr "7. pengucapan bahasa"
+msgstr "7. Pengucapan"
 
 #. (itstool) path: info/title
 #: C/preferences_pronunciation.page:7
@@ -7262,10 +7162,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_speech.page:5
-#, fuzzy
 msgctxt "sort"
 msgid "2.1 Speech"
-msgstr "2,1 pidato"
+msgstr "2.1 Ucapan"
 
 #. (itstool) path: info/desc
 #: C/preferences_speech.page:7
@@ -7275,15 +7174,13 @@ msgstr "Mengonfigurasi apa yang akan diucapkan"
 
 #. (itstool) path: page/title
 #: C/preferences_speech.page:18
-#, fuzzy
 msgid "Speech Preferences"
-msgstr "Preferensi ucapan"
+msgstr "Preferensi Ucapan"
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:20
-#, fuzzy
 msgid "Enable speech"
-msgstr "Fungsik_an ucapan"
+msgstr "Fungsikan ucapan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:21
@@ -7847,10 +7744,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:4
-#, fuzzy
 msgctxt "sort"
 msgid "4. Spell Check"
-msgstr "4. Periksa ejaan"
+msgstr "4. Periksa Ejaan"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:5
@@ -7866,9 +7762,8 @@ msgstr "Mengonfigurasi dukungan <app>Orca</app>untuk pemeriksaan ejaan"
 
 #. (itstool) path: page/title
 #: C/preferences_spellcheck.page:17
-#, fuzzy
 msgid "Spell Check Preferences"
-msgstr "Preferensi Pemeriksaan ejaan"
+msgstr "Preferensi Pemeriksaan Ejaan"
 
 #. (itstool) path: page/p
 #: C/preferences_spellcheck.page:18
@@ -7911,9 +7806,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:36
-#, fuzzy
 msgid "Spell error"
-msgstr "Salah _eja"
+msgstr "Salah eja"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:37
@@ -7927,9 +7821,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:46
-#, fuzzy
 msgid "Spell suggestion"
-msgstr "_Saran ejaan"
+msgstr "Saran ejaan"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:47
@@ -7959,10 +7852,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_table_navigation.page:8
-#, fuzzy
 msgctxt "sort"
 msgid "2. Table Navigation"
-msgstr "2. tabel navigasi"
+msgstr "2. Navigasi Tabel"
 
 #. (itstool) path: info/desc
 #: C/preferences_table_navigation.page:10
@@ -7972,9 +7864,8 @@ msgstr "Mengonfigurasi navigasi <app>Orca</app>dalam tabel"
 
 #. (itstool) path: page/title
 #: C/preferences_table_navigation.page:21
-#, fuzzy
 msgid "Table Navigation Preferences"
-msgstr "Preferensi navigasi tabel"
+msgstr "Preferensi Navigasi Tabel"
 
 #. (itstool) path: page/p
 #: C/preferences_table_navigation.page:22
@@ -7992,9 +7883,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_table_navigation.page:29
-#, fuzzy
 msgid "Speak cell coordinates"
-msgstr "U_capkan koordinat sel"
+msgstr "Ucapkan koordinat sel"
 
 #. (itstool) path: section/p
 #: C/preferences_table_navigation.page:30
@@ -8025,9 +7915,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_table_navigation.page:49
-#, fuzzy
 msgid "Announce cell header"
-msgstr "Umumkan _tajuk sel"
+msgstr "Umumkan kepala sel"
 
 #. (itstool) path: section/p
 #: C/preferences_table_navigation.page:50
@@ -8041,9 +7930,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_table_navigation.page:59
-#, fuzzy
 msgid "Skip blank cells"
-msgstr "A_baikan sel kosong"
+msgstr "Lewati sel kosong"
 
 #. (itstool) path: section/p
 #: C/preferences_table_navigation.page:60
@@ -8077,9 +7965,8 @@ msgstr "Mengonfigurasi format apa yang disajikan"
 
 #. (itstool) path: page/title
 #: C/preferences_text_attributes.page:20
-#, fuzzy
 msgid "Text Attributes Preferences"
-msgstr "Preferensi atribut teks"
+msgstr "Preferensi Atribut Teks"
 
 #. (itstool) path: page/p
 #: C/preferences_text_attributes.page:21
@@ -8101,7 +7988,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:30
-#, fuzzy
 msgid "The text attributes table"
 msgstr "Tabel atribut teks"
 
@@ -8175,9 +8061,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:74
-#, fuzzy
 msgid "Undoing changes"
-msgstr "Membatalkan perubahan"
+msgstr "Mengurungkan perubahan"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:75
@@ -8193,9 +8078,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:83
-#, fuzzy
 msgid "Rearranging the order of presentation"
-msgstr "Menata ulang susunan presentasi"
+msgstr "Menata ulang urutan presentasi"
 
 #. (itstool) path: section/p
 #: C/preferences_text_attributes.page:84
@@ -8301,10 +8185,9 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/preferences_voice.page:5
-#, fuzzy
 msgctxt "sort"
 msgid "2.0 Voice"
-msgstr "2,0 suara"
+msgstr "2.0 Suara"
 
 #. (itstool) path: info/title
 #: C/preferences_voice.page:6
@@ -8365,7 +8248,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:39
-#, fuzzy
 msgid "Speech system"
 msgstr "Sistem ucapan"
 
@@ -8383,7 +8265,7 @@ msgstr ""
 #: C/preferences_voice.page:46
 #, fuzzy
 msgid "Speech synthesizer"
-msgstr "Pidato synthesizer"
+msgstr "Sintesizer ucapan"
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:47
@@ -8438,28 +8320,24 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
-#, fuzzy
 msgid "<gui>Icon</gui>: Plays a tone"
 msgstr "<gui>Ikon</gui>: Memutar nada"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
-#, fuzzy
 msgid "<gui>Spell</gui>: Speaks the word \"capital\""
-msgstr "<gui>Ejaan</gui>: Mengucapkan kata \"modal\""
+msgstr "<gui>Ejaan</gui>: Mengucapkan kata \"kapital\""
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
-#, fuzzy
 msgid "<gui>None</gui>"
-msgstr "<gui>Tidak</gui>"
+msgstr "<gui>Nihil</gui>"
 
 #. (itstool) path: note/title
 #: C/preferences_voice.page:76 C/preferences_web.page:39
 #: C/preferences_web.page:82
-#, fuzzy
 msgid "This setting can be toggled on the fly"
-msgstr "Pengaturan ini dapat toggled on the fly"
+msgstr "Pengaturan ini dapat dijungkitkan sambil berjalan"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
@@ -8475,9 +8353,8 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_voice.page:83
-#, fuzzy
 msgid "Default value: none"
-msgstr "Nilai asali: tidak ada"
+msgstr "Nilai baku: nihil"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:88
@@ -8525,7 +8402,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:112
-#, fuzzy
 msgid "Speak numbers as digits"
 msgstr "Ucapkan angka sebagai digit"
 
@@ -8663,9 +8539,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:71
-#, fuzzy
 msgid "Enable structural navigation"
-msgstr "Fungsikan navigasi _struktural"
+msgstr "Fungsikan navigasi struktural"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:72
@@ -8810,9 +8685,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_web.page:171
-#, fuzzy
 msgid "Table Options"
-msgstr "Opsi tabel"
+msgstr "Opsi Tabel"
 
 #. (itstool) path: note/p
 #: C/preferences_web.page:173
@@ -8902,6 +8776,5 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:218
-#, fuzzy
 msgid "Default value: 4"
-msgstr "Nilai asali: 4"
+msgstr "Nilai baku: 4"
