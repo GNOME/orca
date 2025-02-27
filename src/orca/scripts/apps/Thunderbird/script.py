@@ -199,21 +199,6 @@ class Script(Gecko.Script):
 
         super().on_sensitive_changed(event)
 
-    def on_showing_changed(self, event):
-        """Callback for object:state-changed:showing accessibility events."""
-
-        # TODO - JD: Once there are separate scripts for the Gecko toolkit
-        # and the Firefox browser, this method can be deleted. It's here
-        # right now just to prevent the Gecko script from presenting non-
-        # existent browsery autocompletes for Thunderbird.
-
-        if event.detail1 and self.utilities.isMenuWithNoSelectedChild(event.source) \
-           and self.utilities.topLevelObjectIsActiveWindow(event.source):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source, True)
-            return
-
-        default.Script.on_showing_changed(self, event)
-
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
 

@@ -1407,9 +1407,6 @@ class Utilities:
 
         return name == AXObject.get_name(focus)
 
-    def isMenuWithNoSelectedChild(self, obj):
-        return AXUtilities.is_menu(obj) and not self.selectedChildCount(obj)
-
     def inMenu(self, obj=None):
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
