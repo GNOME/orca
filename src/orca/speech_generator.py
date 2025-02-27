@@ -1502,7 +1502,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        role_description = self._script.utilities.getRoleDescription(obj)
+        role_description = AXObject.get_role_description(obj)
         if role_description:
             result.append(role_description)
             result.extend(self.voice(SYSTEM, obj=obj, **args))

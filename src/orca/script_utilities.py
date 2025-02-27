@@ -196,10 +196,7 @@ class Utilities:
             def isDialog(x):
                 return AXObject.get_role(x) in dialog_roles
 
-            if isDialog(obj):
-                results[1] = obj
-            else:
-                results[1] = AXObject.find_ancestor(obj, isDialog)
+            results[1] = AXObject.find_ancestor_inclusive(obj, isDialog)
 
         tokens = ["SCRIPT UTILITIES:", obj, "is in frame", results[0], "and dialog", results[1]]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -337,34 +334,10 @@ class Utilities:
         return self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
 
     def getTopLevelDocumentForObject(self, obj):
-        if self.isTopLevelDocument(obj):
-            return obj
-
-        return AXObject.find_ancestor(obj, self.isTopLevelDocument)
+        return AXObject.find_ancestor_inclusive(obj, self.isTopLevelDocument)
 
     def getDocumentForObject(self, obj):
-        if not obj:
-            return None
-
-        if self.isDocument(obj):
-            return obj
-
-        return AXObject.find_ancestor(obj, self.isDocument)
-
-    def getModalDialog(self, obj):
-        if not obj:
-            return False
-
-        if AXUtilities.is_modal_dialog(obj):
-            return obj
-
-        return AXObject.find_ancestor(obj, AXUtilities.is_modal_dialog)
-
-    def isModalDialogDescendant(self, obj):
-        if not obj:
-            return False
-
-        return self.getModalDialog(obj) is not None
+        return AXObject.find_ancestor_inclusive(obj, self.isDocument)
 
     def columnConvert(self, column):
         return column
@@ -706,10 +679,7 @@ class Utilities:
         def inSelectedMenu(x):
             return x == selectedMenu
 
-        if inSelectedMenu(obj):
-            return True
-
-        return AXObject.find_ancestor(obj, inSelectedMenu) is not None
+        return AXObject.find_ancestor_inclusive(obj, inSelectedMenu) is not None
 
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
@@ -831,16 +801,6 @@ class Utilities:
                  Atspi.Role.ALERT]
         return roles
 
-    def _locusOfFocusIsTopLevelObject(self):
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if not focus:
-            return False
-
-        rv = focus == self.topLevelObject(focus)
-        tokens = ["SCRIPT UTILITIES:", focus, "is top-level object:", rv]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
     def _findWindowWithDescendant(self, child):
         """Searches each frame/window/dialog of an application to find the one
         which contains child. This is extremely non-performant and should only
@@ -875,11 +835,7 @@ class Utilities:
         - obj: the Accessible object
         """
 
-        if self._isTopLevelObject(obj):
-            rv = obj
-        else:
-            rv = AXObject.find_ancestor(obj, self._isTopLevelObject)
-
+        rv = AXObject.find_ancestor_inclusive(obj, self._isTopLevelObject)
         tokens = ["SCRIPT UTILITIES:", rv, "is top-level object for:", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -1000,12 +956,6 @@ class Utilities:
             labels_filtered.append(label)
 
         return AXComponent.sort_objects_by_position(labels_filtered)
-
-    #########################################################################
-    #                                                                       #
-    # Utilities for working with the accessible text interface              #
-    #                                                                       #
-    #########################################################################
 
     def findPreviousObject(self, obj):
         """Finds the object before this one."""
@@ -1157,11 +1107,6 @@ class Utilities:
         offset = AXText.get_caret_offset(obj)
         return obj, offset
 
-    def getFirstCaretPosition(self, obj):
-        # TODO - JD: Do we still need this function? We need to audit callers,
-        # mainly in structural navigation.
-        return obj, 0
-
     def setCaretPosition(self, obj, offset, documentFrame=None):
         focus_manager.get_manager().set_locus_of_focus(None, obj, False)
         self.setCaretOffset(obj, offset)
@@ -1222,12 +1167,6 @@ class Utilities:
             lastLanguage, lastDialect = language, dialect
 
         return rv
-
-    #########################################################################
-    #                                                                       #
-    # Miscellaneous Utilities                                               #
-    #                                                                       #
-    #########################################################################
 
     def shouldVerbalizeAllPunctuation(self, obj):
         if not (AXUtilities.is_code(obj) or self.isCodeDescendant(obj)):
@@ -1407,19 +1346,6 @@ class Utilities:
 
         return name == AXObject.get_name(focus)
 
-    def inMenu(self, obj=None):
-        obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        if obj is None:
-            return False
-
-        if AXUtilities.is_menu_item_of_any_kind(obj) or AXUtilities.is_menu(obj):
-            return True
-
-        if AXUtilities.is_panel(obj) or AXUtilities.is_separator(obj):
-            return AXObject.find_ancestor(obj, AXUtilities.is_menu) is not None
-
-        return False
-
     def isEntryCompletionPopupItem(self, obj):
         return False
 
@@ -1467,10 +1393,6 @@ class Utilities:
     def hasVisibleCaption(self, obj):
         return False
 
-    def popupType(self, obj):
-        attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get("haspopup", "false").lower()
-
     def headingLevel(self, obj):
         if not AXUtilities.is_heading(obj):
             return 0
@@ -1490,12 +1412,6 @@ class Utilities:
     def hasMeaningfulToggleAction(self, obj):
         return AXObject.has_action(obj, "toggle") \
             or AXObject.has_action(obj, object_properties.ACTION_TOGGLE)
-
-    def containingTableHeader(self, obj):
-        if AXUtilities.is_table_header(obj):
-            return obj
-
-        return AXObject.find_ancestor(obj, AXUtilities.is_table_header)
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         word, start, end = AXText.get_word_at_offset(obj, offset)
@@ -1735,13 +1651,6 @@ class Utilities:
 
         return values
 
-    def getRoleDescription(self, obj, isBraille=False):
-        attrs = AXObject.get_attributes_dict(obj)
-        rv = attrs.get("roledescription", "")
-        if isBraille:
-            rv = attrs.get("brailleroledescription", rv)
-        return rv
-
     def isEditableTextArea(self, obj):
         if not self.isTextArea(obj):
             return False
@@ -1770,7 +1679,8 @@ class Utilities:
         return False
 
     def handleUndoLocusOfFocusChange(self):
-        if self._locusOfFocusIsTopLevelObject():
+        # TODO - JD: Is this still needed?
+        if focus_manager.get_manager().focus_is_active_window():
             return False
 
         if input_event_manager.get_manager().last_event_was_undo():
@@ -1788,7 +1698,8 @@ class Utilities:
         return False
 
     def handlePasteLocusOfFocusChange(self):
-        if self._locusOfFocusIsTopLevelObject():
+        # TODO - JD: Is this still needed?
+        if focus_manager.get_manager().focus_is_active_window():
             return False
 
         if input_event_manager.get_manager().last_event_was_paste():

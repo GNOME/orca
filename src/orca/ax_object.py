@@ -540,6 +540,18 @@ class AXObject:
         return result
 
     @staticmethod
+    def find_ancestor_inclusive(
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool]
+    ) -> Optional[Atspi.Accessible]:
+        """Returns obj, or the ancestor of obj, for which the function pred is true"""
+
+        if pred(obj):
+            return obj
+
+        return AXObject.find_ancestor(obj, pred)
+
+    @staticmethod
     def find_ancestor(
         obj: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool]
@@ -786,6 +798,19 @@ class AXObject:
             return ""
 
         return role_name
+
+    @staticmethod
+    def get_role_description(obj: Atspi.Accessible, is_braille: bool = False) -> str:
+        """Returns the accessible role description of obj"""
+
+        if not AXObject.is_valid(obj):
+            return ""
+
+        attrs = AXObject.get_attributes_dict(obj)
+        rv = attrs.get("roledescription", "")
+        if is_braille:
+            rv = attrs.get("brailleroledescription", rv)
+        return rv
 
     @staticmethod
     def get_accessible_id(obj: Atspi.Accessible) -> str:

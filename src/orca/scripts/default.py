@@ -1051,7 +1051,8 @@ class Script(script.Script):
 
             sourceIsActiveWindow = window == focus_manager.get_manager().get_active_window()
             if sourceIsActiveWindow and not event.detail1:
-                if self.utilities.inMenu():
+                focus = focus_manager.get_manager().get_locus_of_focus()
+                if AXObject.find_ancestor_inclusive(focus, AXUtilities.is_menu):
                     msg = "DEFAULT: Ignoring event. In menu."
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     return
@@ -1650,7 +1651,8 @@ class Script(script.Script):
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
 
-        if self.utilities.inMenu():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXObject.find_ancestor_inclusive(focus, AXUtilities.is_menu):
             msg = "DEFAULT: Ignoring event. In menu."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return

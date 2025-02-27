@@ -1881,7 +1881,7 @@ class Script(default.Script):
             return False
 
         self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
-        header = self.utilities.containingTableHeader(focus)
+        header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXTable.get_presentable_sort_order_from_header(header, True)
         if msg:
             self.presentMessage(msg)
@@ -2120,7 +2120,7 @@ class Script(default.Script):
             return False
 
         self.presentMessage(messages.TABLE_REORDERED_ROWS)
-        header = self.utilities.containingTableHeader(focus)
+        header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXTable.get_presentable_sort_order_from_header(header, True)
         if msg:
             self.presentMessage(msg)

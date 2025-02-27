@@ -65,7 +65,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super().get_localized_role_name(obj, **args)
 
-        role_description = self._script.utilities.getRoleDescription(obj, True)
+        role_description = AXObject.get_role_description(obj, True)
         if role_description:
             return role_description
 
@@ -78,7 +78,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_role(obj, **args)
 
-        role_description = self._script.utilities.getRoleDescription(obj, True)
+        role_description = AXObject.get_role_description(obj, True)
         if role_description:
             return [role_description]
 

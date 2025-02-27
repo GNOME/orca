@@ -133,7 +133,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         result = []
-        popup_type = self._script.utilities.popupType(obj)
+        attrs = AXObject.get_attributes_dict(obj)
+        popup_type = attrs.get("haspopup", "false").lower()
         if popup_type == "dialog":
             result = [messages.HAS_POPUP_DIALOG]
         elif popup_type == "grid":
@@ -448,7 +449,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super().get_localized_role_name(obj, **args)
 
-        role_description = self._script.utilities.getRoleDescription(obj)
+        role_description = AXObject.get_role_description(obj)
         if role_description:
             return role_description
 
@@ -471,7 +472,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXUtilities.is_editable(obj) and obj == args.get("priorObj"):
             return []
 
-        roledescription = self._script.utilities.getRoleDescription(obj)
+        roledescription = AXObject.get_role_description(obj)
         if roledescription:
             result = [roledescription]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))

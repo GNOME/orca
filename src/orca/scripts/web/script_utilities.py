@@ -68,7 +68,6 @@ class Utilities(script_utilities.Utilities):
         self._hasGridDescendant = {}
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
-        self._isModalDialogDescendant = {}
         self._isMenuDescendant = {}
         self._isNavigableToolTipDescendant = {}
         self._isToolBarDescendant = {}
@@ -147,7 +146,6 @@ class Utilities(script_utilities.Utilities):
         self._isGridDescendant = {}
         self._isLabelDescendant = {}
         self._isMenuDescendant = {}
-        self._isModalDialogDescendant = {}
         self._isNavigableToolTipDescendant = {}
         self._isToolBarDescendant = {}
         self._isWebAppDescendant = {}
@@ -2122,18 +2120,6 @@ class Utilities(script_utilities.Utilities):
 
         rv = AXObject.find_ancestor(obj, AXUtilities.is_menu) is not None
         self._isMenuDescendant[hash(obj)] = rv
-        return rv
-
-    def isModalDialogDescendant(self, obj):
-        if not obj:
-            return False
-
-        rv = self._isModalDialogDescendant.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = super().isModalDialogDescendant(obj)
-        self._isModalDialogDescendant[hash(obj)] = rv
         return rv
 
     def isNavigableToolTipDescendant(self, obj):
