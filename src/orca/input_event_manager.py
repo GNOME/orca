@@ -233,7 +233,7 @@ class InputEventManager:
             event.set_script(script_manager.get_manager().get_active_script())
 
         event.set_click_count(self._determine_keyboard_event_click_count(event))
-        result = event.process()
+        event.process()
 
         if event.is_modifier_key():
             if self.is_release_for(event, self._last_input_event):
@@ -243,7 +243,7 @@ class InputEventManager:
         else:
             self._last_non_modifier_key_event = event
         self._last_input_event = event
-        return result
+
     # pylint: enable=too-many-arguments
     # pylint: enable=too-many-positional-arguments
 

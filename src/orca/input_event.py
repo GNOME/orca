@@ -129,8 +129,6 @@ class KeyboardEvent(InputEvent):
         self._obj: Optional[Atspi.Accessible] = None
         self._handler: Optional[InputEventHandler] = None
         self._consumer: Optional[Callable[..., bool]] = None
-        self._did_consume: bool = False
-        self._result_reason: str = ""
         self._is_kp_with_numlock: bool = False
 
         # Some implementors don't include numlock in the modifiers. Unfortunately,
@@ -672,7 +670,7 @@ class KeyboardEvent(InputEvent):
     # pylint:enable=too-many-branches
     # pylint:enable=too-many-return-statements
 
-    def process(self) -> bool:
+    def process(self) -> None:
         """Processes this input event."""
 
         start_time = time.time()
@@ -706,40 +704,21 @@ class KeyboardEvent(InputEvent):
                 tokens = ["CONSUMER:", cast(Any, self._consumer)]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self._did_consume, self._result_reason = self._process()
-        msg = f"CONSUMED: {self._did_consume}, {self._result_reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self.is_orca_modifier() and self._click_count == 2:
+            orca_modifier_manager.get_manager().toggle_modifier(self)
+
+        self._present()
+
+        if self.is_pressed_key() and (self._consumer \
+           or (self._handler and self._handler.function is not None \
+           and self._handler.is_enabled())):
+            GLib.timeout_add(1, self._consume)
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         msg = f"^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n"
         debug.print_message(debug.LEVEL_INFO, msg, False)
-
-        return self._did_consume
-
-    def _process(self) -> tuple[bool, str]:
-        """Processes this input event."""
-
-        if self.is_orca_modifier() and self._click_count == 2:
-            orca_modifier_manager.get_manager().toggle_modifier(self)
-
-        self._present()
-
-        if self.is_orca_modifier():
-            return True, "Orca modifier"
-
-        if not (self._consumer or self._handler):
-            return False, "No consumer or handler"
-
-        if self._consumer or (
-            self._handler and self._handler.function is not None and self._handler.is_enabled()):
-            if self.is_pressed_key():
-                GLib.timeout_add(1, self._consume)
-                return True, "Will be consumed"
-            return True, "Is release for consumed handler"
-
-        return False, "Unaddressed case"
 
     def _consume(self) -> bool:
         """Consumes this input event after a timeout. Returns False to stop the timeout."""
