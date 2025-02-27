@@ -24,12 +24,17 @@
 
 """Provides utilities for managing input events."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -45,16 +50,18 @@ from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from . import keybindings
 
 class InputEventManager:
     """Provides utilities for managing input events."""
 
-    def __init__(self):
-        self._last_input_event = None
-        self._last_non_modifier_key_event = None
-        self._device = None
+    def __init__(self) -> None:
+        self._last_input_event: input_event.InputEvent | None = None
+        self._last_non_modifier_key_event: input_event.KeyboardEvent | None = None
+        self._device: Atspi.Device | None = None
 
-    def start_key_watcher(self):
+    def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
 
         msg = "INPUT EVENT MANAGER: Starting key watcher."
@@ -65,14 +72,14 @@ class InputEventManager:
             self._device = Atspi.Device.new()
         self._device.add_key_watcher(self.process_keyboard_event)
 
-    def stop_key_watcher(self):
+    def stop_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
 
         msg = "INPUT EVENT MANAGER: Stopping key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._device = None
 
-    def add_grabs_for_keybinding(self, binding):
+    def add_grabs_for_keybinding(self, binding: keybindings.KeyBinding) -> list[int]:
         """Adds grabs for binding if it is enabled, returns grab IDs."""
 
         if not (binding.is_enabled() and binding.is_bound()):
@@ -94,7 +101,7 @@ class InputEventManager:
 
         return grab_ids
 
-    def remove_grabs_for_keybinding(self, binding):
+    def remove_grabs_for_keybinding(self, binding: keybindings.KeyBinding) -> None:
         """Removes grabs for binding."""
 
         if self._device is None:
@@ -111,7 +118,7 @@ class InputEventManager:
         for grab_id in grab_ids:
             self._device.remove_key_grab(grab_id)
 
-    def map_keycode_to_modifier(self, keycode):
+    def map_keycode_to_modifier(self, keycode: int) -> int:
         """Maps keycode as a modifier, returns the newly-mapped modifier."""
 
         if self._device is None:
@@ -121,7 +128,7 @@ class InputEventManager:
 
         return self._device.map_modifier(keycode)
 
-    def map_keysym_to_modifier(self, keysym):
+    def map_keysym_to_modifier(self, keysym: int) -> int:
         """Maps keysym as a modifier, returns the newly-mapped modifier."""
 
         if self._device is None:
@@ -131,12 +138,12 @@ class InputEventManager:
 
         return self._device.map_keysym_modifier(keysym)
 
-    def add_grab_for_modifier(self, modifier, keysym, keycode):
+    def add_grab_for_modifier(self, modifier: str, keysym: int, keycode: int) -> int:
         """Adds grab for modifier, returns grab id."""
 
         if self._device is None:
-            tokens = ["INPUT EVENT MANAGER: No device to add grab for", modifier]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"INPUT EVENT MANAGER: No device to add grab for {modifier}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
 
         kd = Atspi.KeyDefinition()
@@ -145,23 +152,23 @@ class InputEventManager:
         kd.modifiers = 0
         grab_id = self._device.add_key_grab(kd)
 
-        tokens = ["INPUT EVENT MANAGER: Grab id for", modifier, ":", grab_id]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        msg = f"INPUT EVENT MANAGER: Grab id for {modifier}: {grab_id}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return grab_id
 
-    def remove_grab_for_modifier(self, modifier, grab_id):
+    def remove_grab_for_modifier(self, modifier: str, grab_id: int) -> None:
         """Removes grab for modifier."""
 
         if self._device is None:
-            tokens = ["INPUT EVENT MANAGER: No device to remove grab from", modifier]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            msg = f"INPUT EVENT MANAGER: No device to remove grab from {modifier}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self._device.remove_key_grab(grab_id)
-        tokens = ["INPUT EVENT MANAGER: Grab ID removed for", modifier, ":", grab_id]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        msg = f"INPUT EVENT MANAGER: Grab id removed for {modifier}: {grab_id}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def grab_keyboard(self, reason=""):
+    def grab_keyboard(self, reason: str = "") -> None:
         """Grabs the keyboard, e.g. when entering learn mode."""
 
         msg = "INPUT EVENT MANAGER: Grabbing keyboard"
@@ -170,7 +177,7 @@ class InputEventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         Atspi.Device.grab_keyboard(self._device)
 
-    def ungrab_keyboard(self, reason=""):
+    def ungrab_keyboard(self, reason: str = "") -> None:
         """Removes keyboard grab, e.g. when exiting learn mode."""
 
         msg = "INPUT EVENT MANAGER: Ungrabbing keyboard"
@@ -179,7 +186,7 @@ class InputEventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         Atspi.Device.ungrab_keyboard(self._device)
 
-    def process_braille_event(self, event):
+    def process_braille_event(self, event: Atspi.Event) -> bool:
         """Processes this Braille event."""
 
         braille_event = input_event.BrailleEvent(event)
@@ -188,7 +195,7 @@ class InputEventManager:
         self._last_non_modifier_key_event = None
         return result
 
-    def process_mouse_button_event(self, event):
+    def process_mouse_button_event(self, event: Atspi.Event) -> None:
         """Processes this Mouse event."""
 
         mouse_event = input_event.MouseButtonEvent(event)
@@ -197,7 +204,15 @@ class InputEventManager:
 
     # pylint: disable=too-many-arguments
     # pylint: disable=too-many-positional-arguments
-    def process_keyboard_event(self, _device, pressed, keycode, keysym, modifiers, text):
+    def process_keyboard_event(
+        self,
+        _device: Atspi.Device,
+        pressed: bool,
+        keycode: int,
+        keysym: int,
+        modifiers: int,
+        text: str
+    ) -> bool:
         """Processes this Atspi keyboard event."""
 
         event = input_event.KeyboardEvent(pressed, keycode, keysym, modifiers, text)
@@ -224,6 +239,7 @@ class InputEventManager:
             event.set_object(manager.get_locus_of_focus())
             event.set_script(script_manager.get_manager().get_active_script())
         elif self.last_event_was_keyboard():
+            assert isinstance(self._last_input_event, input_event.KeyboardEvent)
             event.set_window(self._last_input_event.get_window())
             event.set_object(self._last_input_event.get_object())
             event.set_script(self._last_input_event.get_script())
@@ -243,11 +259,12 @@ class InputEventManager:
         else:
             self._last_non_modifier_key_event = event
         self._last_input_event = event
+        return True
 
     # pylint: enable=too-many-arguments
     # pylint: enable=too-many-positional-arguments
 
-    def _determine_keyboard_event_click_count(self, event):
+    def _determine_keyboard_event_click_count(self, event: input_event.KeyboardEvent) -> int:
         """Determines the click count of event."""
 
         if not self.last_event_was_keyboard():
@@ -258,6 +275,7 @@ class InputEventManager:
         else:
             last_event = self._last_non_modifier_key_event or self._last_input_event
 
+        assert isinstance(last_event, input_event.KeyboardEvent)
         if (event.time - last_event.time > settings.doubleClickTimeout) or \
            (event.keyval_name != last_event.keyval_name) or \
            (event.get_object() != last_event.get_object()):
@@ -272,11 +290,13 @@ class InputEventManager:
             return 1
         return last_count + 1
 
-    def _determine_mouse_event_click_count(self, event):
+    def _determine_mouse_event_click_count(self, event: input_event.MouseButtonEvent) -> int:
         """Determines the click count of event."""
 
         if not self.last_event_was_mouse_button():
             return 1
+
+        assert isinstance(self._last_input_event, input_event.MouseButtonEvent)
         if not event.pressed:
             return self._last_input_event.get_click_count()
         if self._last_input_event.button != event.button:
@@ -286,12 +306,12 @@ class InputEventManager:
 
         return self._last_input_event.get_click_count() + 1
 
-    def last_event_was_keyboard(self):
+    def last_event_was_keyboard(self) -> bool:
         """Returns True if the last event is a keyboard event."""
 
         return isinstance(self._last_input_event, input_event.KeyboardEvent)
 
-    def last_event_was_mouse_button(self):
+    def last_event_was_mouse_button(self) -> bool:
         """Returns True if the last event is a mouse button event."""
 
         return isinstance(self._last_input_event, input_event.MouseButtonEvent)
