@@ -32,7 +32,6 @@ from orca import cmdnames
 from orca import debug
 from orca import focus_manager
 from orca import input_event
-from orca.scripts import default
 from orca import settings_manager
 from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
