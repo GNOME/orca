@@ -526,8 +526,8 @@ class AXObject:
         if obj1 == obj2:
             return obj1
 
-        obj1_ancestors = AXObject._get_ancestors(obj1)
-        obj2_ancestors = AXObject._get_ancestors(obj2)
+        obj1_ancestors = AXObject._get_ancestors(obj1) + [obj1]
+        obj2_ancestors = AXObject._get_ancestors(obj2) + [obj2]
         result = None
         for a1, a2 in zip(obj1_ancestors, obj2_ancestors):
             if a1 == a2:
