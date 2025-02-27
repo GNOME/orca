@@ -222,8 +222,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             args["role"] = Atspi.Role.STATIC
         elif self._script.utilities.treatAsDiv(obj, offset=args.get('startOffset')):
             args["role"] = Atspi.Role.SECTION
-        elif self._script.utilities.treatAsEntry(obj):
-            args["role"] = Atspi.Role.ENTRY
 
         if AXUtilities.is_menu_item(obj):
             combo_box = AXObject.find_ancestor(obj, AXUtilities.is_combo_box)

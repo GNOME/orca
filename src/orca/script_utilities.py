@@ -1500,9 +1500,6 @@ class Utilities:
 
         return AXObject.find_ancestor(obj, AXUtilities.is_table_header)
 
-    def treatAsEntry(self, obj):
-        return False
-
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         word, start, end = AXText.get_word_at_offset(obj, offset)
         prevObj, prevOffset = self._script.point_of_reference.get(

@@ -92,28 +92,6 @@ class Utilities(web.Utilities):
 
         return False
 
-    def treatAsEntry(self, obj):
-        if not obj or self.inDocumentContent(obj):
-            return super().treatAsEntry(obj)
-
-        # Firefox seems to have turned its accessible location widget into a
-        # childless editable combobox.
-        if not AXUtilities.is_combo_box(obj):
-            return False
-
-        if AXObject.get_child_count(obj):
-            return False
-
-        if not AXUtilities.is_focused(obj):
-            return False
-
-        if not AXObject.supports_editable_text(obj):
-            return False
-
-        tokens = ["GECKO: Treating", obj, "as entry"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return True
-
     def _isQuickFind(self, obj):
         if not obj or self.inDocumentContent(obj):
             return False
