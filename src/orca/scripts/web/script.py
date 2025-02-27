@@ -949,7 +949,7 @@ class Script(default.Script):
         # destroyed typically lose their name even if they lack the defunct state. If the name of
         # the object is different after scrolling, we'll try to find a child with the same name and
         # role.
-        parent = AXObject.get_parent(obj)
+        document = self.utilities.getDocumentForObject(obj)
         name = AXObject.get_name(obj)
         role = AXObject.get_role(obj)
         AXEventSynthesizer.scroll_to_center(obj, start_offset=0)
@@ -957,7 +957,7 @@ class Script(default.Script):
             tokens = ["WEB:", obj, "believed to be destroyed after scroll."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             replicant = AXObject.find_descendant(
-                parent, lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role)
+                document, lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role)
             if replicant:
                 obj = replicant
                 tokens = ["WEB: Replacing destroyed object with", obj]
