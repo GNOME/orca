@@ -159,6 +159,8 @@ class SpeechGenerator(generator.Generator):
 
         if dialog:
             result.append(self._generate_accessible_label_and_name(dialog))
+        elif spreadsheet := AXObject.find_ancestor(obj, self._script.utilities.isSpreadSheetTable):
+            result.append(self._generate_accessible_label_and_name(spreadsheet))
 
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
