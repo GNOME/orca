@@ -953,7 +953,7 @@ class Script(default.Script):
         name = AXObject.get_name(obj)
         role = AXObject.get_role(obj)
         AXEventSynthesizer.scroll_to_center(obj, start_offset=0)
-        if name and AXObject.get_name(obj) != name:
+        if (name and AXObject.get_name(obj) != name) or AXObject.get_index_in_parent(obj) < 0:
             tokens = ["WEB:", obj, "believed to be destroyed after scroll."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             replicant = AXObject.find_descendant(
