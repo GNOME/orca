@@ -926,7 +926,7 @@ class Script(default.Script):
             return
 
         mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
-        if mode == focus_manager.OBJECT_NAVIGATOR:
+        if mode in [focus_manager.OBJECT_NAVIGATOR, focus_manager.MOUSE_REVIEW]:
             super().presentObject(obj, **args)
             return
 
