@@ -36,7 +36,7 @@ __license__   = "LGPL"
 
 import threading
 import time
-from typing import Optional
+from typing import Generator, Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -46,6 +46,7 @@ from . import debug
 from . import messages
 from . import object_properties
 from .ax_object import AXObject
+from .ax_component import AXComponent
 from .ax_utilities_role import AXUtilitiesRole
 
 
@@ -1232,6 +1233,50 @@ class AXTable:
             return
 
         AXTable.DYNAMIC_COLUMN_HEADERS_ROW.pop(hash(table))
+
+    @staticmethod
+    def _get_visible_cell_range(table: Atspi.Accessible) -> tuple[tuple[int, int], tuple[int, int]]:
+        """Returns the (row, col) of the first and last visible cells in table."""
+
+        if not AXObject.supports_table(table):
+            return (-1, -1), (-1, -1)
+
+        rect = AXComponent.get_rect(table)
+        tokens = ["AXTable: Rect for", table, "is", rect]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        first_cell = AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y + 1)
+        tokens = ["AXTable: First visible cell for", table, "is", first_cell]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        start = AXTable.get_cell_coordinates(first_cell, prefer_attribute=False)
+        tokens = ["AXTable: First visible cell is at row", start[0], "column", start[1]]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        last_cell = AXComponent.get_descendant_at_point(
+            table, rect.x + rect.width - 1, rect.y + rect.height - 1)
+        tokens = ["AXTable: Last visible cell for", table, "is", last_cell]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        end = AXTable.get_cell_coordinates(last_cell, prefer_attribute=False)
+        tokens = ["AXTable: Last visible cell is at row", end[0], "column", end[1]]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return start, end
+
+    @staticmethod
+    def iter_visible_cells(table: Atspi.Accessible) -> Generator[Atspi.Accessible, None, None]:
+        """Yields the visible cells in table."""
+
+        start, end = AXTable._get_visible_cell_range(table)
+        if start[0] < 0 or start[1] < 0 or end[0] < 0 or end[1] < 0:
+            return
+
+        for row in range(start[0], end[0] + 1):
+            for col in range(start[1], end[1] + 1):
+                cell = AXTable.get_cell_at(table, row, col)
+                if cell is not None:
+                    yield cell
 
 
 AXTable.start_cache_clearing_thread()
