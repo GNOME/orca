@@ -1340,7 +1340,7 @@ class Utilities:
         if not AXUtilities.is_combo_box(obj):
             return None
 
-        children = [x for x in AXObject.iter_children(obj, self.isEditableTextArea)]
+        children = [x for x in AXObject.iter_children(obj, AXUtilities.is_text_input)]
         if len(children) == 1:
             return children[0]
 
@@ -1567,11 +1567,6 @@ class Utilities:
             obj = AXObject.get_next_sibling(obj)
 
         return values
-
-    def isEditableTextArea(self, obj):
-        if not self.isTextArea(obj):
-            return False
-        return AXUtilities.is_editable(obj)
 
     def clearCachedCommandState(self):
         self._script.point_of_reference['undo'] = False

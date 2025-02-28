@@ -325,7 +325,7 @@ class _ItemContext:
             self._script.presentObject(self._obj, priorObj=prior_obj, inMouseReview=True)
             if self._string.get_string() == AXObject.get_name(self._obj):
                 return True
-            if not self._script.utilities.isEditableTextArea(self._obj):
+            if not (AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj)):
                 return True
             if AXUtilities.is_table_cell(self._obj):
                 text = AXText.get_all_text(self._obj) or AXObject.get_name(self._obj)

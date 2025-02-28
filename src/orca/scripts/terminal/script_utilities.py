@@ -103,12 +103,6 @@ class Utilities(script_utilities.Utilities):
     def insertionEndsAtCaret(self, event):
         return AXText.get_caret_offset(event.source) == event.detail1 + event.detail2
 
-    def isEditableTextArea(self, obj):
-        if AXUtilities.is_terminal(obj):
-            return True
-
-        return super().isEditableTextArea(obj)
-
     def isTextArea(self, obj):
         if AXUtilities.is_terminal(obj):
             return True
