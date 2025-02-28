@@ -2107,9 +2107,6 @@ class Utilities(script_utilities.Utilities):
         self._isLabelDescendant[hash(obj)] = rv
         return rv
 
-    def isMenuInCollapsedSelectElement(self, obj):
-        return False
-
     def isMenuDescendant(self, obj):
         if not obj:
             return False

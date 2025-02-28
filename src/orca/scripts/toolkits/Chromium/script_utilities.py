@@ -50,16 +50,6 @@ class Utilities(web.Utilities):
         super().clearCachedObjects()
         self._topLevelObject = {}
 
-    def isMenuInCollapsedSelectElement(self, obj):
-        if not AXUtilities.is_menu(obj):
-            return False
-
-        parent = AXObject.get_parent(obj)
-        if self._getTag(parent) != 'select':
-            return False
-
-        return not AXUtilities.is_expanded(parent)
-
     def treatAsMenu(self, obj):
         # Unlike other apps and toolkits, submenus in Chromium have the menu item
         # role rather than the menu role, but we can identify them as submenus via
@@ -255,15 +245,6 @@ class Utilities(web.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
-
-    def isHidden(self, obj):
-        if not super().isHidden(obj):
-            return False
-
-        if self.isMenuInCollapsedSelectElement(obj):
-            return False
-
-        return True
 
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
         if not root:
