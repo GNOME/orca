@@ -91,14 +91,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def isReadOnlyTextArea(self, obj):
-        """Returns True if event is believed to be a read-only text area."""
-
-        if not super().isReadOnlyTextArea(obj):
-            return False
-
-        return not self.inDocumentContent(obj)
-
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         """Returns the word in obj at the specified or current offset."""
 

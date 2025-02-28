@@ -778,7 +778,7 @@ class Generator:
 
     @log_generator_output
     def _generate_state_read_only(self, obj, **_args):
-        if not (AXUtilities.is_read_only(obj) or self._script.utilities.isReadOnlyTextArea(obj)):
+        if not AXUtilities.is_read_only(obj):
             return []
 
         if self._mode == "braille":

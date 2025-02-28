@@ -333,16 +333,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().isTextArea(obj)
 
-    def isReadOnlyTextArea(self, obj):
-        # NOTE: This method is deliberately more conservative than isTextArea.
-        if not AXUtilities.is_entry(obj):
-            return False
-
-        if AXUtilities.is_read_only(obj):
-            return True
-
-        return AXUtilities.is_focusable(obj) and not AXUtilities.is_editable(obj)
-
     def setCaretOffset(self, obj, characterOffset):
         self.setCaretPosition(obj, characterOffset)
         self._script.update_braille(obj)

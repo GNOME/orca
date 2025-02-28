@@ -461,17 +461,6 @@ class Utilities:
 
         return AXUtilities.is_link(obj)
 
-    def isReadOnlyTextArea(self, obj):
-        """Returns True if obj is a text entry area that is read only."""
-
-        if not self.isTextArea(obj):
-            return False
-
-        if AXUtilities.is_read_only(obj):
-            return True
-
-        return AXUtilities.is_focusable(obj) and not AXUtilities.is_editable(obj)
-
     def getObjectFromPath(self, path):
         start = self._script.app
         rv = None
