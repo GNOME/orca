@@ -1443,7 +1443,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: First context on line is: ", firstObj, ", ", firstOffset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        skipSpace = not AXUtilities.is_code(firstObj)
+        skipSpace = not settings_manager.get_manager().get_setting("speakBlankLines")
         obj, offset = self.previousContext(firstObj, firstOffset, skipSpace)
         if not obj and firstObj:
             tokens = ["WEB: Previous context is: ", obj, ", ", offset, ". Trying again."]
@@ -1506,7 +1506,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Last context on line is: ", lastObj, ", ", lastOffset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        skipSpace = not AXUtilities.is_code(lastObj)
+        skipSpace = not settings_manager.get_manager().get_setting("speakBlankLines")
         obj, offset = self.nextContext(lastObj, lastOffset, skipSpace)
         if not obj and lastObj:
             tokens = ["WEB: Next context is: ", obj, ", ", offset, ". Trying again."]
