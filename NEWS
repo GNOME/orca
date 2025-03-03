@@ -1,3 +1,63 @@
+48.rc - 3 March 2025
+
+Web:
+
+* Speak/skip blank lines based on the "speak blank lines" setting.
+
+* Improve presentation with mouse review.
+
+* Improve recovery in response to object destruction in scrollable
+  lists.
+
+* Fix looping/getting stuck in Discord inbox.
+
+LibreOffice:
+
+* Fix non-responsiveness when using flat review in Calc.
+
+* Don't announce "blank" as text for non-text objects.
+
+GNOME Shell:
+
+* Handle/ignore focus claim which was causing speech to be cut off
+  in certain dialogs.
+
+General:
+
+* Fix double-presentation of common ancestor.
+
+* Fix bug causing app-specific voice to not be used.
+
+* Handle event floods from GTK3 text views.
+
+* Fix regression in word echo after whitespace insertion.
+
+* Pass Orca's app id to AT-SPI2.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 twlvnn kraftwerk
+  ca              Catalan                   Jordi Mas i Hernandez
+  eu              Basque                    Asier Sarasua Garmendia
+  fa              Persian                   Danial Behzadi
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Alexandre Franke
+  fr              French                    Irénée THIRION
+  gl              Galician                  Fran Dieguez
+  id              Indonesian                Andika Triwidada
+  ka              Georgian                  Ekaterine Papava
+  lt              Lithuanian                Aurimas Černius
+  ne              Nepali                    Pawan Chitrakar
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Jhonata Fernandes
+  pt              Portuguese                Hugo Carvalho
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Sabri Ünal
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
 48.beta - 5 February 2025
 
 Web:
