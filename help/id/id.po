@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-help main\n"
 "POT-Creation-Date: 2025-02-13 04:44+0000\n"
-"PO-Revision-Date: 2025-02-26 12:39+0700\n"
+"PO-Revision-Date: 2025-03-05 18:32+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -169,9 +169,8 @@ msgstr "Braille"
 
 #. (itstool) path: info/desc
 #: C/commands_braille.page:8
-#, fuzzy
 msgid "Commands executable on braille displays"
-msgstr "Perintah executable pada tampilan Braille"
+msgstr "Executable perintah pada tampilan Braille"
 
 #. (itstool) path: page/title
 #: C/commands_braille.page:19
@@ -180,13 +179,12 @@ msgstr "Perintah Braille"
 
 #. (itstool) path: page/p
 #: C/commands_braille.page:20
-#, fuzzy
 msgid ""
 "The following commands allow you to control <app>Orca</app> from your "
 "refreshable braille display rather than your keyboard:"
 msgstr ""
 "Perintah berikut memungkinkan Anda mengontrol <app>Orca</app> dari layar "
-"Braille yang dapat dimuat ulang, bukan keyboard:"
+"Braille yang dapat dimuat ulang, bukan papan ketik:"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:25
@@ -279,7 +277,6 @@ msgstr "Perintah Obrolan"
 
 #. (itstool) path: page/p
 #: C/commands_chat.page:20
-#, fuzzy
 msgid ""
 "The following commands can be used to access information in the instant "
 "messaging and internet relay chat clients supported by <app>Orca</app>. You "
@@ -287,21 +284,20 @@ msgid ""
 "xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
 "how to bind these commands to keystrokes."
 msgstr ""
-"Perintah berikut dapat digunakan untuk mengakses informasi dalam instant "
-"messaging dan Internet Relay Chat klien didukung oleh <app>Orca</app>. Anda "
-"akan melihat bahwa beberapa dari perintah ini adalah \"Unbound.\" Silakan "
-"lihat <link xref=\"howto_key_bindings\"> memodifikasi Keybindings untuk "
-"informasi tentang cara mengikat perintah ini untuk penekanan tombol."
+"Perintah berikut dapat digunakan untuk mengakses informasi dalam klien pesan "
+"instan dan Internet Relay Chat yang didukung oleh <app>Orca</app>. Anda akan "
+"melihat bahwa beberapa dari perintah ini \"tidak diikat.\" Silakan lihat "
+"<link xref=\"howto_key_bindings\"> Memodifikasi Pengikatan Tombol</link> "
+"untuk informasi tentang cara mengikat perintah ini ke penekanan tombol."
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-#, fuzzy
 msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
-"Hadir sebelumnya chat room pesan: <keyseq> <key>Orca Modifier</key><key>F1</"
-"key> </keyseq> melalui <key>F9</key>"
+"Menyajikan pesan ruang obrolan sebelumnya: <keyseq><key>Pengubah Orca</"
+"key><key>F1</key></keyseq> sampai <key>F9</key>"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:36
@@ -420,35 +416,31 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_controlling_orca.page:64
-#, fuzzy
 msgid "Commands for Learning to Use <app>Orca</app>"
-msgstr "Perintah untuk belajar menggunakan <app>Orca</app>"
+msgstr "Perintah untuk Belajar Menggunakan <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
 #: C/commands_controlling_orca.page:65 C/howto_learn_modes.page:18
-#, fuzzy
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
 "to. In this mode, you can also get a list of shortcuts containing all the "
 "<app>Orca</app> commands you can use."
 msgstr ""
-"Dalam mode belajar, <app>Orca</app> akan mengumumkan setiap penekanan yang "
-"Anda tekan bersama dengan perintah <app>Orca</app> yang terkait yang "
-"keystroke terikat. Dalam mode ini, Anda juga bisa mendapatkan daftar "
-"pintasan yang berisi semua perintah <app>Orca</app> yang dapat Anda gunakan."
+"Dalam Mode Belajar, <app>Orca</app> akan mengumumkan setiap tombol yang Anda "
+"tekan bersama dengan perintah <app>Orca</app> terkait yang tombol itu "
+"terikat padanya. Dalam mode ini, Anda juga bisa mendapatkan daftar pintasan "
+"yang berisi semua perintah <app>Orca</app> yang dapat Anda gunakan."
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:73
-#, fuzzy
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Memasuki Mode Belajar: <keyseq><key>Pengubah Orca</key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:79
-#, fuzzy
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Keluar Mode Belajar: <keyseq><key>Esc</key></keyseq>"
 
@@ -532,9 +524,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_find.page:27
-#, fuzzy
 msgid "Open the <app>Orca</app> Find dialog:"
-msgstr "Buka dialog pencarian <app>Orca</app> :"
+msgstr "Buka dialog Pencarian <app>Orca</app>:"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:30 C/howto_orca_find.page:30
@@ -543,11 +534,10 @@ msgstr "Desktop: <keyseq><key>KP Delete</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:33 C/howto_orca_find.page:33
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
 msgstr ""
-"Laptop: <keyseq> <key>Orca Modifier</key><key>Left bracket</key></keyseq>"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Kurung Siku Buka</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:38
@@ -557,17 +547,15 @@ msgstr "Pindahkan Flat review ke contoh berikutnya dari string:"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:41
-#, fuzzy
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
-msgstr "Desktop: <keyseq> <key>Pengubah Orca</key><key>KP Hapus</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP Hapus</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:47
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
 msgstr ""
-"Laptop: <keyseq> <key>Orca Modifier</key><key>Right bracket</key></keyseq>"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Kurung Siku Tutup</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:55
@@ -577,23 +565,21 @@ msgstr "Pindahkan Flat review ke contoh sebelumnya dari string:"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:58
-#, fuzzy
 msgid ""
 "Desktop: <keyseq> <key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key> </keyseq>"
 msgstr ""
-"Desktop: <keyseq> <key>Pengubah Orca</key><key>Shift</key><key>KP Hapus</"
-"key> </keyseq>"
+"Desktop: <keyseq><key>Pengubah Orca</key><key>Shift</key><key>KP Hapus</key> "
+"</keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_find.page:66
-#, fuzzy
 msgid ""
 "Laptop: <keyseq> <key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</"
 "key> </keyseq>"
 msgstr ""
-"Laptop: <keyseq> <key>Orca Modifier</key><key>Ctrl</key><key>braket kanan</"
-"key> </keyseq>"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Ctrl</key><key>Kurung Siku "
+"Kanan</key> </keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_flat_review.page:6
@@ -1231,7 +1217,6 @@ msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>7</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_mouse.page:48
-#, fuzzy
 msgid "Right-click on current item:"
 msgstr "Klik kanan pada butir saat ini:"
 
@@ -1449,9 +1434,8 @@ msgstr "Eja kata saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:92
-#, fuzzy
 msgid "Phonetically spell the current word:"
-msgstr "Fonetik mengeja kata saat ini:"
+msgstr "Eja secara fonetik kata saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:108
@@ -1460,13 +1444,11 @@ msgstr "Membaca karakter saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:123
-#, fuzzy
 msgid "Phonetically speak the current character:"
-msgstr "Fonetik berbicara karakter saat ini:"
+msgstr "Ucapkan secara fonetik karakter saat ini:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:139
-#, fuzzy
 msgid "Speak the Unicode value of current character:"
 msgstr "Ucapkan nilai Unicode karakter saat ini:"
 
@@ -1477,13 +1459,12 @@ msgstr "Katakan Semua"
 
 #. (itstool) path: section/p
 #: C/commands_reading.page:158
-#, fuzzy
 msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
 msgstr ""
-"' S say semua perintah akan menyebabkan <app>Orca</app> untuk berbicara "
-"seluruh dokumen mulai dari lokasi Anda saat ini."
+"Perintah Orca Ucapkan Semua akan menyebabkan <app>Orca</app> untuk "
+"membacakan seluruh dokumen mulai dari lokasi Anda saat ini."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:164
@@ -1492,13 +1473,11 @@ msgstr "Desktop: <key>KP Plus</key>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:167
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Orca pengubah</key><key>semicolon</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>Titik koma</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:174
-#, fuzzy
 msgid "Text Attributes and Selected Text"
 msgstr "Atribut Teks dan Teks Terpilih"
 
@@ -1531,9 +1510,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:191 C/commands_where_am_i.page:31
-#, fuzzy
 msgid "Perform basic Where Am I:"
-msgstr "Lakukan dasar Di Mana Saya:"
+msgstr "Lakukan Di Mana Saya dasar:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:194 C/commands_where_am_i.page:34
@@ -1542,30 +1520,26 @@ msgstr "Desktop: <key>KP Enter</key>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:199 C/commands_where_am_i.page:37
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Orca pengubah</key><key>kembali</key></keyseq>"
+msgstr "Laptop: <keyseq><key>Pengubah Orca</key><key>Return</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:206 C/commands_where_am_i.page:42
-#, fuzzy
 msgid "Perform detailed Where Am I:"
-msgstr "Lakukan rinci Di mana Saya:"
+msgstr "Lakukan Di Mana Saya terrinci:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:209 C/commands_where_am_i.page:45
-#, fuzzy
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
-msgstr "Desktop: <key>KP Enter</key> (diklik ganda)"
+msgstr "Desktop: <key>KP Enter</key> (klik ganda)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:214 C/commands_where_am_i.page:48
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Laptop: <keyseq> <key>Pengubah Orca</key><key>Return</key> </keyseq> (diklik-"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Return</key></keyseq> (klik-"
 "ganda)"
 
 #. (itstool) path: item/p
@@ -1657,7 +1631,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:273
-#, fuzzy
 msgid "Toggling Layout Mode"
 msgstr "Menjungkitkan Mode Tata Letak"
 
@@ -1718,9 +1691,8 @@ msgstr "Perintah untuk menyesuaikan output <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-#, fuzzy
 msgid "Speech Settings Commands"
-msgstr "Perintah pengaturan ucapan"
+msgstr "Perintah Pengaturan Ucapan"
 
 #. (itstool) path: page/p
 #: C/commands_speech_settings.page:20
@@ -1862,13 +1834,12 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:27
-#, fuzzy
 msgid ""
 "Enable/disable Structural Navigation keys: <keyseq><key>Orca Modifier</"
 "key><key>Z</key></keyseq>"
 msgstr ""
-"Mengaktifkan/menonaktifkan tombol navigasi struktural: <keyseq> <key>Orca "
-"Modifier</key><key>Z</key></keyseq>"
+"Mengaktifkan/menonaktifkan tombol Navigasi Struktural: <keyseq> "
+"<key>Pengubah Orca</key><key>Z</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:34
@@ -1877,13 +1848,12 @@ msgstr "Tajuk"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:37
-#, fuzzy
 msgid ""
 "Next and previous heading: <keyseq><key>H</key></keyseq> and "
 "<keyseq><key>Shift</key><key>H</key></keyseq>"
 msgstr ""
-"Tajuk berikutnya dan sebelumnya: <keyseq><key>h</key></keyseq> dan <keyseq> "
-"<key>Shift</key><key>h</key> </keyseq>"
+"Tajuk berikutnya dan sebelumnya: <keyseq><key>H</key></keyseq> dan <keyseq> "
+"<key>Shift</key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:44
@@ -2652,9 +2622,8 @@ msgstr "Menampilkan pesan pemberitahuan sebelumnya: (tidak terikat)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:59
-#, fuzzy
 msgid "Present list of all notification messages: (Unbound)"
-msgstr "Menampilkan daftar semua pesan pemberitahuan: (tidak terikat)"
+msgstr "Sajikan daftar semua pesan pemberitahuan: (Tidak terikat)"
 
 #. (itstool) path: info/title
 #: C/commands_where_am_i.page:6
@@ -2716,48 +2685,42 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
-#, fuzzy
 msgid "Present the title bar:"
-msgstr "Sajikan Bar judul:"
+msgstr "Sajikan bilah judul:"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:65
-#, fuzzy
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
-msgstr ""
-"Desktop: <keyseq> <key>Orca Modifier</key><key>KP masukkan</key></keyseq>"
+msgstr "Desktop: <keyseq><key>Pengubah Orca</key><key>KP Enter</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:70
-#, fuzzy
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>"
-msgstr "Laptop: <keyseq> <key>Orca Modifier</key><key>slash</key></keyseq>"
+msgstr ""
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Garis Miring</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:77
-#, fuzzy
 msgid "Present the status bar:"
-msgstr "Sajikan status bar:"
+msgstr "Sajikan bilah status:"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:80
-#, fuzzy
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> "
 "(double-clicked)"
 msgstr ""
-"Desktop: <keyseq> <key>Orca Modifier</key><key>KP Enter</key> </keyseq> "
-"(klik dua kali)"
+"Desktop: <keyseq><key>Pengubah Orca</key><key>KP Enter</key></keyseq> (klik "
+"dua kali)"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:86
-#, fuzzy
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
 "clicked)"
 msgstr ""
-"Laptop: <keyseq> <key>Orca Modifier</key><key>slash</key> </keyseq> (klik "
-"dua kali)"
+"Laptop: <keyseq><key>Pengubah Orca</key><key>Garis Miring</key></keyseq> "
+"(klik dua kali)"
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:92
@@ -3276,7 +3239,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:44 C/howto_key_bindings.page:75
-#, fuzzy
 msgid "Press the desired key combination."
 msgstr "Tekan kombinasi tombol yang dikehendaki."
 
@@ -3297,9 +3259,8 @@ msgstr ""
 #: C/howto_key_bindings.page:54 C/howto_key_bindings.page:86
 #: C/howto_key_bindings.page:107 C/howto_key_bindings.page:138
 #: C/howto_keyboard_layout.page:59 C/howto_the_orca_modifier.page:73
-#, fuzzy
 msgid "Press the <gui>Apply</gui> button."
-msgstr "Tekan tombol <gui>Apply</gui> ."
+msgstr "Tekan tombol <gui>Terapkan</gui>."
 
 #. (itstool) path: steps/title
 #: C/howto_key_bindings.page:58
@@ -3431,9 +3392,8 @@ msgstr ""
 
 #. (itstool) path: steps/title
 #: C/howto_keyboard_layout.page:41
-#, fuzzy
 msgid "Changing Your Keyboard Layout"
-msgstr "Mengubah tata letak keyboard Anda"
+msgstr "Mengubah Tata Letak Papan Tik Anda"
 
 #. (itstool) path: item/p
 #: C/howto_keyboard_layout.page:51
@@ -3786,9 +3746,8 @@ msgstr "Sajikan pesan pemberitahuan sebelumnya."
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:41
-#, fuzzy
 msgid "Present list of all notification messages"
-msgstr "Menampilkan daftar semua pesan pemberitahuan"
+msgstr "Sajikan daftar semua pesan pemberitahuan"
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:44
@@ -3870,9 +3829,8 @@ msgstr "3. Orca Cari"
 
 #. (itstool) path: info/desc
 #: C/howto_orca_find.page:6
-#, fuzzy
 msgid "Searching a window for objects"
-msgstr "Mencari jendela untuk objek"
+msgstr "Mencari suatu jendela untuk objek"
 
 #. (itstool) path: page/title
 #: C/howto_orca_find.page:15
@@ -4130,9 +4088,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:62
-#, fuzzy
 msgid "Press the <gui>Load</gui> button."
-msgstr "Tekan tombol <gui>load</gui> ."
+msgstr "Tekan tombol <gui>Muat</gui>."
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:65
@@ -4142,9 +4099,8 @@ msgstr "Anda akan diminta untuk mengkonfirmasi. Tekan tombol <gui>Yes</gui> ."
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:70 C/howto_structural_navigation.page:117
-#, fuzzy
 msgid "Press the <gui>OK</gui> button."
-msgstr "Tekan tombol <gui>OK</gui> ."
+msgstr "Tekan tombol <gui>OK</gui>."
 
 #. (itstool) path: steps/title
 #: C/howto_profiles.page:74
@@ -5219,24 +5175,21 @@ msgstr ""
 
 #. (itstool) path: info/title
 #: C/index.page:6
-#, fuzzy
 msgctxt "text"
 msgid "<app>Orca</app> Screen Reader"
-msgstr "<_:media-1></_:media-1><app>Orca</app> Pembaca layar"
+msgstr "<app>Orca</app> Pembaca Layar"
 
 #. (itstool) path: info/title
 #: C/index.page:7
-#, fuzzy
 msgctxt "link:trail"
 msgid "<app>Orca</app> Screen Reader"
-msgstr "<_:media-1></_:media-1><app>Orca</app> Pembaca layar"
+msgstr "<app>Orca</app> Pembaca Layar"
 
 #. (itstool) path: info/title
 #: C/index.page:8
-#, fuzzy
 msgctxt "link"
 msgid "<app>Orca</app> Screen Reader"
-msgstr "<_:media-1></_:media-1><app>Orca</app> Pembaca layar"
+msgstr "<app>Orca</app> Pembaca Layar"
 
 #. (itstool) path: info/desc
 #: C/index.page:17
@@ -5251,9 +5204,8 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/index.page:22
-#, fuzzy
 msgid "<_:media-1/> <app>Orca</app> Screen Reader"
-msgstr "<_:media-1></_:media-1><app>Orca</app> Pembaca layar"
+msgstr "<_:media-1/> <app>Orca</app> Pembaca Layar"
 
 #. (itstool) path: note/title
 #: C/index.page:27
@@ -5332,7 +5284,6 @@ msgstr "Peluncuran <app>Orca</app>"
 
 #. (itstool) path: section/p
 #: C/introduction.page:32
-#, fuzzy
 msgid "To launch <app>Orca</app>:"
 msgstr "Untuk meluncurkan <app>Orca</app>:"
 
@@ -5610,9 +5561,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:67
-#, fuzzy
 msgid "Abbreviated Role Names"
-msgstr "N_ama-nama peran yang disingkat"
+msgstr "Nama-nama Peran yang Disingkat"
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:68
@@ -5704,9 +5654,8 @@ msgstr "Nilai default: <gui>titik 7 dan 8</gui>"
 
 #. (itstool) path: note/title
 #: C/preferences_braille.page:116
-#, fuzzy
 msgid "Text Attribute Indicators"
-msgstr "Indikator atribut teks"
+msgstr "Indikator Atribut Teks"
 
 #. (itstool) path: note/p
 #: C/preferences_braille.page:117
@@ -6029,13 +5978,12 @@ msgstr "Nilai baku: <gui>Desktop</gui>"
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:39
-#, fuzzy
 msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
 msgstr ""
-"Preferensi kotak dialog pilihan untuk mengaktifkan presentasi tooltips yang "
-"muncul sebagai hasil dari mouse melayang."
+"Opsi kotak dialog preferensi untuk memfungsikan presentasi tooltip yang "
+"muncul sebagai hasil dari tetikus mengapung."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:44
@@ -6061,13 +6009,12 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:58
-#, fuzzy
 msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
 msgstr ""
-"Pilihan kotak dialog preferensi untuk mengaktifkan presentasi objek di bawah "
-"penunjuk mouse."
+"Opsi kotak dialog preferensi untuk memfungsikan presentasi objek di bawah "
+"penunjuk tetikus."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:63
@@ -6252,13 +6199,12 @@ msgstr ""
 
 #. (itstool) path: info/desc
 #: C/preferences_general.page:154
-#, fuzzy
 msgid ""
 "Preferences dialog box option for customizing <app>Orca</app>'s Say All "
 "presentation."
 msgstr ""
-"Preferensi kotak dialog pilihan untuk menyesuaikan <app>Orca</app>mengatakan "
-"semua presentasi."
+"Opsi kotak dialog preferensi untuk menyesuaikan presentasi Katakan Semua "
+"<app>Orca</app>."
 
 #. (itstool) path: section/title
 #: C/preferences_general.page:159
@@ -7002,9 +6948,8 @@ msgstr "Preferensi"
 
 #. (itstool) path: page/title
 #: C/preferences.page:14
-#, fuzzy
 msgid "<app>Orca</app>'s Preferences Dialogs"
-msgstr "Dialog preferensi <app>Orca</app>"
+msgstr "Dialog Preferensi <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/preferences_pronunciation.page:6
@@ -7070,9 +7015,8 @@ msgstr ""
 
 #. (itstool) path: steps/title
 #: C/preferences_pronunciation.page:37
-#, fuzzy
 msgid "Adding a new dictionary entry"
-msgstr "Menambahkan entri Kamus baru"
+msgstr "Menambahkan entri baru kamus"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:39
@@ -7490,9 +7434,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:200
-#, fuzzy
 msgid "System messages are detailed"
-msgstr "Pesan sistem rinci"
+msgstr "Pesan sistem dirinci"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:201
@@ -7836,9 +7779,8 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:56
-#, fuzzy
 msgid "Present context of error"
-msgstr "Sajikan _konteks kesalahan"
+msgstr "Sajikan konteks kesalahan"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:57
