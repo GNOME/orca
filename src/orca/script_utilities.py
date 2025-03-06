@@ -52,6 +52,7 @@ from .ax_value import AXValue
 
 class Utilities:
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
+    ZERO_WIDTH_NO_BREAK_SPACE = '\ufeff'
 
     def __init__(self, script):
         """Creates an instance of the Utilities class.
