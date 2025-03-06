@@ -1903,11 +1903,11 @@ class Script(script.Script):
             offset = AXText.get_caret_offset(obj)
 
         line, startOffset = AXText.get_line_at_offset(obj, offset)[0:2]
-        if len(line) and line != "\n":
-            # TODO - JD: This needs to be done in the generators.
-            indentationDescription = self.utilities.indentationDescription(line)
-            if indentationDescription:
-                self.speakMessage(indentationDescription)
+        if line and line != "\n":
+            manager = speech_and_verbosity_manager.get_manager()
+            indentation_description = manager.get_indentation_description(line)
+            if indentation_description:
+                self.speakMessage(indentation_description)
 
             endOffset = startOffset + len(line)
             focus_manager.get_manager().emit_region_changed(
@@ -1926,12 +1926,11 @@ class Script(script.Script):
                 # TODO - JD: This needs to be done in the generators.
                 voice = self.speech_generator.voice(
                     obj=obj, string=text, language=language, dialect=dialect)
-                manager = speech_and_verbosity_manager.get_manager()
                 text = manager.adjust_for_presentation(obj, text, start)
 
                 # Some synthesizers will verbalize the whitespace, so if we've already
                 # described it, prevent double-presentation by stripping it off.
-                if not utterance and indentationDescription:
+                if not utterance and indentation_description:
                     text = text.lstrip()
 
                 result = [text]
@@ -1959,7 +1958,8 @@ class Script(script.Script):
             return
 
         if len(phrase) > 1 or phrase.isalnum():
-            result = self.utilities.indentationDescription(phrase)
+            manager = speech_and_verbosity_manager.get_manager()
+            result = manager.get_indentation_description(phrase)
             if result:
                 self.speakMessage(result)
 
@@ -1967,7 +1967,6 @@ class Script(script.Script):
                 obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
 
             voice = self.speech_generator.voice(obj=obj, string=phrase)
-            manager = speech_and_verbosity_manager.get_manager()
             phrase = manager.adjust_for_presentation(obj, phrase)
             utterance = [phrase]
             utterance.extend(voice)

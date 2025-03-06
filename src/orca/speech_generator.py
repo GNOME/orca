@@ -2125,7 +2125,14 @@ class SpeechGenerator(generator.Generator):
             return []
 
         line = AXText.get_line_at_offset(obj)[0]
-        description = self._script.utilities.indentationDescription(line)
+
+        format_type = args.get("formatType", "unfocused")
+        only_if_changed = None
+        if format_type.endswith("WhereAmI"):
+            only_if_changed = True
+
+        description = speech_and_verbosity_manager.get_manager().get_indentation_description(
+            line, only_if_changed)
         if not description:
             return []
 

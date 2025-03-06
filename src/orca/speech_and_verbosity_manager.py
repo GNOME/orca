@@ -65,6 +65,7 @@ class SpeechAndVerbosityManager:
     def __init__(self) -> None:
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._last_indentation_description: str = ""
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -796,6 +797,38 @@ class SpeechAndVerbosityManager:
 
         words = re.split(r"(\W+)", text)
         return "".join(map(pronunciation_dict.getPronunciation, words))
+
+    def get_indentation_description(
+        self,
+        line: str,
+        only_if_changed: Optional[bool] = False
+    ) -> str:
+        """Returns a description of the indentation in the given line."""
+
+        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
+           or not settings_manager.get_manager().get_setting("enableSpeechIndentation"):
+            return ""
+
+        line = line.replace("\u00a0", " ")
+        end = re.search("[^ \t]", line)
+        if end:
+            line = line[:end.start()]
+
+        result = ""
+        spaces = [m.span() for m in re.finditer(" +", line)]
+        tabs = [m.span() for m in re.finditer("\t+", line)]
+        spans = sorted(spaces + tabs)
+        for span in spans:
+            if span in spaces:
+                result += f"{messages.spacesCount(span[1] - span[0])} "
+            else:
+                result += f"{messages.tabsCount(span[1] - span[0])} "
+
+        if self._last_indentation_description == result and only_if_changed:
+            return ""
+
+        self._last_indentation_description = result
+        return result
 
     def adjust_for_presentation(
         self,

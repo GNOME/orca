@@ -28,7 +28,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-import re
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -1145,28 +1144,6 @@ class Utilities:
             lastLanguage, lastDialect = language, dialect
 
         return rv
-
-    def indentationDescription(self, line):
-        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \
-           or not settings_manager.get_manager().get_setting('enableSpeechIndentation'):
-            return ""
-
-        line = line.replace("\u00a0", " ")
-        end = re.search("[^ \t]", line)
-        if end:
-            line = line[:end.start()]
-
-        result = ""
-        spaces = [m.span() for m in re.finditer(" +", line)]
-        tabs = [m.span() for m in re.finditer("\t+", line)]
-        spans = sorted(spaces + tabs)
-        for (start, end) in spans:
-            if (start, end) in spaces:
-                result += f"{messages.spacesCount(end - start)} "
-            else:
-                result += f"{messages.tabsCount(end - start)} "
-
-        return result
 
     def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
         return []
