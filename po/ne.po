@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gnome Nepali Translation Project\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-02-13 04:44+0000\n"
-"PO-Revision-Date: 2025-03-02 20:31+0545\n"
+"PO-Revision-Date: 2025-03-06 11:21+0545\n"
 "Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
 "Language-Team: Nepali Translation Team <chautari@gmail.com>\n"
 "Language: ne\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -614,17 +614,15 @@ msgstr "हालको वस्तुमा सूचक राउट गर�
 #. describes the Orca command to generate a left mouse button click on the
 #. current item, typically a widget.
 #: src/orca/cmdnames.py:42
-#| msgid "Perform left click on current flat review item"
 msgid "Perform left click on current item"
-msgstr ""
+msgstr "हालको वस्तुमा बायाँ क्लिक प्रदर्शन गर्नुहोस्"
 
 #. Translators: Orca has a command to synthesize mouse events. This string
 #. describes the Orca command to generate a right mouse button click on the
 #. current item, typically a widget.
 #: src/orca/cmdnames.py:47
-#| msgid "Perform right click on current flat review item"
 msgid "Perform right click on current item"
-msgstr ""
+msgstr "हालको वस्तुमा दायाँ क्लिक गर्नुहोस्"
 
 #. Translators: the Orca "SayAll" command allows the user to press a key and have
 #. the entire document in a window be automatically spoken to the user. If the
@@ -681,21 +679,19 @@ msgstr "लिङ्क विवरण वाचन गर्नुहोस्
 #. box.
 #: src/orca/cmdnames.py:90
 msgid "Present the default button"
-msgstr ""
+msgstr "पूर्वनिर्धारित बटन प्रस्तुत गर्नुहोस्"
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken and displayed in braille.
 #: src/orca/cmdnames.py:94
-#| msgid "Speak the status bar"
 msgid "Present the status bar"
-msgstr ""
+msgstr "स्थिति पट्टी प्रस्तुत गर्नुहोस्"
 
 #. Translators: This command will cause the window's title to be spoken and
 #. displayed in braille.
 #: src/orca/cmdnames.py:98
-#| msgid "Speak the title bar"
 msgid "Present the title bar"
-msgstr ""
+msgstr "शीर्षक पट्टी प्रस्तुत गर्नुहोस्"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -707,27 +703,24 @@ msgstr "खोज्ने संवाद खोल्नुहोस्"
 #. Translators: Orca has a command which presents a menu with accessible actions
 #. that can be performed on the current object. This is the name of that command.
 #: src/orca/cmdnames.py:107
-#| msgid "fraction end"
 msgid "Show actions menu"
-msgstr ""
+msgstr "कार्य मेनु देखाउनुहोस्"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button. This string is used for finding the next occurrence of a
 #. string.
 #: src/orca/cmdnames.py:113
-#| msgid "Searches for the next instance of a string."
 msgid "Search for the next instance of a string"
-msgstr ""
+msgstr "स्ट्रिङको पछिल्लो उदाहरणका लागि खोजी गर्नुहोस्"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button. This string is used for finding the previous occurrence of a
 #. string.
 #: src/orca/cmdnames.py:119
-#| msgid "Searches for the previous instance of a string."
 msgid "Search for the previous instance of a string"
-msgstr ""
+msgstr "स्ट्रिङको अघिल्लो उदाहरणका लागि खोजी गर्नुहोस्"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -745,9 +738,8 @@ msgstr "समतल पुनरावलोकन मोड प्रविष
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This switch allows the user to restrict the flat review function to a specific object.
 #: src/orca/cmdnames.py:134
-#| msgid "Move flat review to the end position"
 msgid "Toggle restricting flat review to the current object"
-msgstr ""
+msgstr "हालको वस्तुमा समतल समीक्षा प्रतिबन्धित टगल गर्नुहोस्"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1013,9 +1005,8 @@ msgstr "क्लिपबोर्डमा समतल पुनरावल�
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:357
-#| msgid "Move flat review to the end position"
 msgid "Show flat review contents"
-msgstr ""
+msgstr "समतल समीक्षा सामग्री देखाउनुहोस्"
 
 #. Translators: when users are navigating a table, they sometimes want the
 #. entire row of a table read; other times they just want the current cell
@@ -1057,26 +1048,23 @@ msgstr "दाँयामा ब्रेल प्रदर्शन प्य
 #. changing which object in the window which has focus. The feature used here
 #. will return the flat review to the object with focus.
 #: src/orca/cmdnames.py:392
-#| msgid "Returns to object with keyboard focus."
 msgid "Return to object with keyboard focus"
-msgstr ""
+msgstr "कुञ्जीपाटी फोकससँग वस्तुमा फर्कनुहोस्"
 
 #. Translators: braille can be displayed in many ways. Contracted braille
 #. provides a more efficient means to represent text, especially long
 #. documents. The feature used here is an option to toggle between contracted
 #. and uncontracted.
 #: src/orca/cmdnames.py:398
-#| msgid "Turns contracted braille on and off."
 msgid "Turn contracted braille on and off"
-msgstr ""
+msgstr "करार गरिएको ब्रेल लिपि चालू र बन्द गर्नुहोस्"
 
 #. Translators: hardware braille displays often have buttons near each braille
 #. cell. These are called cursor routing keys and are a way for a user to tell
 #. the machine they are interested in a particular character on the display.
 #: src/orca/cmdnames.py:403
-#| msgid "Processes a cursor routing key."
 msgid "Process a cursor routing key"
-msgstr ""
+msgstr "कर्सर मार्ग कुञ्जी प्रक्रिया गर्नुहोस्"
 
 #. Translators: this is used to indicate the start point of a text selection.
 #: src/orca/cmdnames.py:406
@@ -1136,9 +1124,8 @@ msgstr "वाचन भोल्युम घटाउनुहोस्"
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
 #: src/orca/cmdnames.py:444
-#| msgid "Toggles the silencing of speech."
 msgid "Toggle the silencing of speech"
-msgstr ""
+msgstr "भाषणको मौनता टगल गर्नुहोस्"
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -1153,9 +1140,8 @@ msgstr ""
 #. resume working. This string is the command which toggles sleep mode on/off
 #. for the app being used at the time the command is given.
 #: src/orca/cmdnames.py:458
-#| msgid "Pass the next command on to the current application"
 msgid "Toggle sleep mode for the current application"
-msgstr ""
+msgstr "हालको अनुप्रयोगका लागि निद्रा मोड टगल गर्नुहोस्"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -1202,22 +1188,20 @@ msgstr "बोलिने नम्बर शैली परिवर्तन
 #. string is the description of that command.
 #: src/orca/cmdnames.py:493
 msgid "Present clipboard contents"
-msgstr ""
+msgstr "हालको क्लिपबोर्ड सामग्री"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
 #: src/orca/cmdnames.py:497
-#| msgid "Cycles to the next speaking of punctuation level."
 msgid "Cycle to the next speaking of punctuation level"
-msgstr ""
+msgstr "विराम चिन्ह स्तरको अर्को बोल्ने चक्र"
 
 #. Translators: Orca allows users to cycle through the speech synthesizers
 #. available on their system, such as espeak, voxin, mbrola, etc. This string
 #. is the description of the command.
 #: src/orca/cmdnames.py:502
-#| msgid "Cycle to the next key echo level"
 msgid "Cycle to the next speech synthesizer"
-msgstr ""
+msgstr "अर्को भाषण सिन्थेसाइज़रमा चक्र"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -1237,9 +1221,8 @@ msgstr "पछिल्लो सेटिङ प्रोफाइलमा च
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: src/orca/cmdnames.py:519
-#| msgid "Cycles to the next capitalization style."
 msgid "Cycle to the next capitalization style"
-msgstr ""
+msgstr "पछिल्लो पूँजीकरण शैलीमा चक्र"
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -1268,9 +1251,8 @@ msgstr "चालु समयमा त्रुटि सच्याउने
 #. fail to notify AT-SPI when something changes resulting in AT-SPI having stale
 #. information which impacts Orca's logic and/or presentation to users.
 #: src/orca/cmdnames.py:544
-#| msgid "Pass the next command on to the current application"
 msgid "Clear the AT-SPI cache for the current application"
-msgstr ""
+msgstr "हालको अनुप्रयोगका लागि एटी-एसपीआई क्यास खाली गर्नुहोस्"
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -1278,7 +1260,7 @@ msgstr ""
 #. applications, etc.
 #: src/orca/cmdnames.py:550
 msgid "Capture snapshot for debugging"
-msgstr ""
+msgstr "डिबगिङको लागि स्न्यापसट क्याप्चर गरियो"
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
@@ -1332,15 +1314,14 @@ msgstr "माउस समीक्षा मोड टगल गर्नु�
 #. Translators: Orca has a command to present the battery status (e.g. level, whether
 #. or not it is plugged in, etc.). This string is the name of that command.
 #: src/orca/cmdnames.py:590
-#| msgid "Present Unless"
 msgid "Present battery status"
-msgstr ""
+msgstr "हालको ब्याट्री स्थिति"
 
 #. Translators: Orca has a command to present the CPU and memory usage as percents.
 #. This string is the name of that command.
 #: src/orca/cmdnames.py:594
 msgid "Present CPU and memory usage"
-msgstr ""
+msgstr "हालको सीपीयू र स्मृति प्रयोग"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
@@ -1370,7 +1351,7 @@ msgstr "हालको वस्तुको साइज र स्थान"
 #. expected in the editor.
 #: src/orca/cmdnames.py:616
 msgid "Toggle all Orca command keys"
-msgstr ""
+msgstr "सबै ओर्का आदेश कुञ्जीहरू टगल गर्नुहोस्"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
@@ -1396,9 +1377,8 @@ msgstr "हाम्रा साथीहरूले टाइप गर्द
 #. translated is associated with the command to toggle specific room history on
 #. or off.
 #: src/orca/cmdnames.py:639
-#| msgid "Toggle whether we provide chat room specific message histories."
 msgid "Toggle whether we provide chat room specific message histories"
-msgstr ""
+msgstr "हामी च्याट कोठा विशिष्ट सन्देश इतिहास प्रदान गर्दछौं कि गर्दैनौं टगल गर्नुहोस्"
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -1522,9 +1502,8 @@ msgstr "अघिल्लो सूचना सन्देश प्रस्
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
 #: src/orca/cmdnames.py:733
-#| msgid "Present last notification message"
 msgid "Present next notification message"
-msgstr ""
+msgstr "पछिल्लो सूचना सन्देश प्रस्तुत गर्नुहोस्"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:736
@@ -1589,9 +1568,8 @@ msgstr "अघिल्लो वस्तुमा जानुहोस्"
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
 #: src/orca/cmdnames.py:774
-#| msgid "Causes the current combo box to be expanded."
 msgid "Cause the current combo box to be expanded"
-msgstr ""
+msgstr "हालको कम्बो बाकस विस्तार गर्न कारण"
 
 #. Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 #. itself controls how the arrow keys move the caret around HTML content. It's
@@ -1702,9 +1680,8 @@ msgstr "संरचनागत नेभिगेसन कुञ्जीह�
 #. next cell in a given direction. This string is the description of the command
 #. which enables/disables this support.
 #: src/orca/cmdnames.py:862
-#| msgid "Toggle structural navigation keys"
 msgid "Toggle table navigation keys"
-msgstr ""
+msgstr "तालिका नेभिगेसन कुञ्जीहरू टगल गर्नुहोस्"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:865
@@ -1866,21 +1843,18 @@ msgstr "तह %d मा शीर्षकहरूको सुची प्�
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:962
-#| msgid "Go to previous table"
 msgid "Go to previous internal frame"
-msgstr ""
+msgstr "अघिल्लो आन्तरिक फ्रेममा जानुहोस्"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:965
-#| msgid "Go to next table"
 msgid "Go to next internal frame"
-msgstr ""
+msgstr "पछिल्लो आन्तरिक फ्रेममा जानुहोस्"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:968
-#| msgid "Display a list of tables"
 msgid "Display a list of internal frames"
-msgstr ""
+msgstr "आन्तरिक फ्रेमको सूची प्रदर्शन गर्नुहोस्"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:971
@@ -2009,40 +1983,38 @@ msgstr "घोषणा गरेको अन्तिम जीवन्त �
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1053
 msgid "Go to the parent of the object with navigator focus."
-msgstr ""
+msgstr "नेभिगेटर फोकसको साथ वस्तुको अभिभावकमा जानुहोस् ।."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1057
 msgid "Go to the first child of the object with navigator focus."
-msgstr ""
+msgstr "नेभिगेटर फोकसको साथ वस्तुको पहिलो बच्चामा जानुहोस्।."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1061
 msgid "Go to the next sibling of the object with navigator focus."
-msgstr ""
+msgstr "नेभिगेटर फोकसको साथ वस्तुको अर्को भाइबहिनीमा जानुहोस्।."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1065
 msgid "Go to the previous sibling of the object with navigator focus."
-msgstr ""
+msgstr "नेभिगेटर फोकसको साथ वस्तुको अघिल्लो भाइबहिनीमा जानुहोस् ।."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
 #: src/orca/cmdnames.py:1069
-#| msgid "Returns to object with keyboard focus."
 msgid "Click on the object with navigator focus."
-msgstr ""
+msgstr "नेभिगेटर फोकसको साथ वस्तुमा क्लिक गर्नुहोस्।."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
 #. toggled on and off.
 #: src/orca/cmdnames.py:1074
-#| msgid "Toggle structural navigation keys"
 msgid "Toggle simplified object navigation."
-msgstr ""
+msgstr "सरलीकृत वस्तु नेभिगेसन टगल गर्नुहोस् ।."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1077
@@ -2133,27 +2105,23 @@ msgstr "एक कक्ष माथि जानुहोस्"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1130
-#| msgid "Go to the beginning of the line"
 msgid "Go to the beginning of the row"
-msgstr ""
+msgstr "पङ्क्तिको सुरुआतमा जानुहोस्"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1133
-#| msgid "Go to the end of the line"
 msgid "Go to the end of the row"
-msgstr ""
+msgstr "पङ्क्तिको अन्त्यमा जानुहोस्"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1136
-#| msgid "Go to the top of the file"
 msgid "Go to the top of the column"
-msgstr ""
+msgstr "स्तम्भको शीर्षमा जानुहोस्"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1139
-#| msgid "Go to the bottom of the file"
 msgid "Go to the bottom of the column"
-msgstr ""
+msgstr "स्तम्भको तल जानुहोस्"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -2185,9 +2153,8 @@ msgstr "सजावट मोड टगल गर्नुहोस्"
 #. This string is associated with the Orca command to manually switch
 #. between these two modes.
 #: src/orca/cmdnames.py:1168
-#| msgid "Switches between browse mode and focus mode."
 msgid "Switch between browse mode and focus mode"
-msgstr ""
+msgstr "ब्राउज मोड र फोकस मोडबीच स्विच गर्नुहोस्"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3405,7 +3372,7 @@ msgstr "संरचना विचरणमा स्वचालित के
 #. of the entry.
 #: src/orca/guilabels.py:76
 msgid "Automatic focus mode during caret navigation"
-msgstr "caret को गति अनुसार स्वचालित केन्द्रीयता मुद्रा"
+msgstr "स्वचालित केन्द्रीयता अनुसार caret को गति मुद्रा"
 
 #. Translators: Orca has a number of commands that override the default behavior
 #. within an application. For instance, if you are at the bottom of an entry and
@@ -3421,9 +3388,8 @@ msgstr "caret को गति अनुसार स्वचालित क�
 #. as the Tab key, or it might be a web page behavior, such as the search field
 #. automatically gaining focus when the page loads.
 #: src/orca/guilabels.py:91
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic focus mode during native navigation"
-msgstr ""
+msgstr "नेटिभ नेभिगेसनको क्रममा स्वचालित फोकस मोड"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -3520,7 +3486,7 @@ msgstr "गफगाफ कोठा विशेष _सन्देश इत�
 #. any channel, but only if the chat application has focus.
 #: src/orca/guilabels.py:158
 msgid "Speak messages from"
-msgstr "सन्देश बताउ मार्फत "
+msgstr "सन्देश बताउ मार्फत"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. speak all new chat messages as they appear irrespective of whether or not the
@@ -3535,7 +3501,7 @@ msgstr "सबै च्यानेल"
 #: src/orca/guilabels.py:168
 #, python-format
 msgid "All channels when an_y %s window is active"
-msgstr "सबै च्यानेलहरू जब एउटा _y %s विन्डो सक्रिय हुँदा "
+msgstr "सबै च्यानेलहरू जब एउटा _y %s विन्डो सक्रिय हुँदा"
 
 #. Translators: This is the label of a radio button. If it is selected, Orca will
 #. only speak new chat messages for the currently active channel, irrespective of
@@ -3694,9 +3660,8 @@ msgstr "_बिटो मार्ने "
 #. with a group of options related to what constitutes a match. The options are
 #. to match case and to match the entire word only.
 #: src/orca/guilabels.py:285
-#| msgid "Options:"
 msgid "Match options:"
-msgstr ""
+msgstr "मिलान विकल्पहरू:"
 
 #. Translators: Orca has a "find" feature which allows the user to search the
 #. active application for on screen text and widgets. This label is associated
@@ -3768,17 +3733,15 @@ msgstr "निर्धारित कुञ्जीवद्धता"
 #: src/orca/guilabels.py:335
 msgctxt "keybindings"
 msgid "Debugging Tools"
-msgstr ""
+msgstr "डिबगिङ उपकरण"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to its "learn mode". Please use the same translation as done
 #. in cmdnames.py
 #: src/orca/guilabels.py:340
-#, fuzzy
-#| msgid "Layout mode."
 msgctxt "keybindings"
 msgid "Learn mode"
-msgstr "सिकाई मुद्रामा जान्छ ।  यस मुद्राबाट बाहिरिन escape दबाउनु होस् ।"
+msgstr "सिकाई मुद्रा"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting and performing the accessible actions associated
@@ -3810,8 +3773,6 @@ msgstr "क्लिपबोर्ड"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the date and time.
 #: src/orca/guilabels.py:363
-#, fuzzy
-#| msgid "Time and Date"
 msgid "Date and time"
 msgstr "मिति र समय"
 
@@ -3828,10 +3789,8 @@ msgstr "मिति र समय"
 #. resume working. This string is a label for the group of Orca commands which
 #. are related to sleep mode.
 #: src/orca/guilabels.py:377
-#| msgctxt "textattr"
-#| msgid "wrap mode"
 msgid "Sleep mode"
-msgstr ""
+msgstr "निद्रा मोड"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the object under the mouse pointer in speech
@@ -3844,10 +3803,8 @@ msgstr "माउस समीक्षा"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
 #: src/orca/guilabels.py:387
-#| msgctxt "role"
-#| msgid "navigation"
 msgid "Object navigation"
-msgstr ""
+msgstr "वस्तु नेभिगेसन"
 
 #. Translators: This string is a label for a group of Orca commands which are
 #. related to presenting information about the system, such as date, time,
@@ -3869,10 +3826,8 @@ msgstr "तालिका विचरण"
 #. name, role, and location of the currently-focused object; the selected
 #. text in the currently-focused object; etc.
 #: src/orca/guilabels.py:404
-#, fuzzy
-#| msgid "Object mode."
 msgid "Object details"
-msgstr "वस्तुहरूको विवरण"
+msgstr "वस्तु विवरण"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's "flat review" feature. This feature allows the blind
@@ -3882,10 +3837,8 @@ msgstr "वस्तुहरूको विवरण"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:413
-#, fuzzy
-#| msgid "Leaving flat review."
 msgid "Flat review"
-msgstr "समतल पुनरावलोकन मोड प्रविष्ट गर्नुहोस् र अन्त्य गर्नुहोस्"
+msgstr "फ्ल्याट समीक्षा"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's speech and verbosity settings. This group of commands
@@ -3893,9 +3846,8 @@ msgstr "समतल पुनरावलोकन मोड प्रविष
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
 #: src/orca/guilabels.py:420
-#| msgid "Toggle speech verbosity level"
 msgid "Speech and verbosity"
-msgstr ""
+msgstr "भाषण र क्रियात्मकता"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3907,10 +3859,8 @@ msgstr ""
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:431
-#| msgctxt "role"
-#| msgid "main content"
 msgid "Flat review contents"
-msgstr ""
+msgstr "समतल समीक्षा सामग्री"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -3946,14 +3896,13 @@ msgstr "सूचना"
 #: src/orca/guilabels.py:456
 msgctxt "notification presenter"
 msgid "Received"
-msgstr "प्राप्त गर्यो"
+msgstr "प्राप्त भयो"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
 #: src/orca/guilabels.py:460
-#| msgid "Notification"
 msgid "Notification presenter"
-msgstr ""
+msgstr "अधिसूचना प्रस्तुतोता"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -4464,11 +4413,9 @@ msgstr "शिर्षकहरू"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:810
-#| msgctxt "math symbol"
-#| msgid "intercalate"
 msgctxt "structural navigation"
 msgid "Internal Frames"
-msgstr ""
+msgstr "आन्तरिक फ्रेमहरू"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4657,7 +4604,7 @@ msgstr "वाचन प्रेषक"
 #. system. (https://github.com/eeejay/spiel)
 #: src/orca/guilabels.py:935
 msgid "Spiel"
-msgstr ""
+msgstr "भाषण"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
@@ -4781,11 +4728,10 @@ msgstr "छोटकरी"
 #. substitution is for the number of messages in the list.
 #: src/orca/guilabels.py:1027
 #, python-format
-#| msgid "Notification"
 msgid "%d notification"
 msgid_plural "%d notifications"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d अधिसूचना"
+msgstr[1] "%d अधिसूचनाहरू"
 
 #. Translators: this is how someone would speak the name of the shift key
 #.
@@ -5418,14 +5364,13 @@ msgstr "बायाँ बाँण "
 #: src/orca/mathsymbols.py:1294
 msgctxt "math symbol"
 msgid "up arrow from bar"
-msgstr ""
+msgstr "पट्टीबाट बाण माथि"
 
 #. Translators: this is the spoken representation for the character '↦' (U+21a6)
 #: src/orca/mathsymbols.py:1297
-#| msgid "right arrow"
 msgctxt "math symbol"
 msgid "right arrow from bar"
-msgstr ""
+msgstr "पट्टीबाट दायाँ बाण"
 
 #. Translators: this is the spoken representation for the character '↧' (U+21a7)
 #: src/orca/mathsymbols.py:1300
@@ -5970,17 +5915,15 @@ msgstr "घटाउ टिल्ड"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
 #: src/orca/mathsymbols.py:1575
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "asymptotically equal to"
-msgstr ""
+msgstr "एसिम्प्टोटिक रूपसंग बराबर"
 
 #. Translators: this is the spoken representation for the character '≄' (U+2244)
 #: src/orca/mathsymbols.py:1578
-#| msgid "almost equal to"
 msgctxt "math symbol"
 msgid "not asymptotically equal to"
-msgstr ""
+msgstr "एसिम्प्टोटिक रूपसंग बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '≅' (U+2245)
 #: src/orca/mathsymbols.py:1581
@@ -6040,7 +5983,7 @@ msgstr "बराबरी"
 #: src/orca/mathsymbols.py:1608
 msgctxt "math symbol"
 msgid "geometrically equivalent to"
-msgstr ""
+msgstr "ज्यामितीय रूपसंग समतुल्य"
 
 #. Translators: this is the spoken representation for the character '≏' (U+224f)
 #: src/orca/mathsymbols.py:1611
@@ -6052,26 +5995,25 @@ msgstr "बीच भिन्नता"
 #: src/orca/mathsymbols.py:1614
 msgctxt "math symbol"
 msgid "approaches the limit"
-msgstr ""
+msgstr "सीमा नजिक पुग्छ"
 
 #. Translators: this is the spoken representation for the character '≑' (U+2251)
 #: src/orca/mathsymbols.py:1617
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "geometrically equal to"
-msgstr ""
+msgstr "ज्यामितीय रूपसंग बराबर"
 
 #. Translators: this is the spoken representation for the character '≒' (U+2252)
 #: src/orca/mathsymbols.py:1620
 msgctxt "math symbol"
 msgid "approximately equal to or the image of"
-msgstr ""
+msgstr "को छवि को लगभग बराबर वा"
 
 #. Translators: this is the spoken representation for the character '≓' (U+2253)
 #: src/orca/mathsymbols.py:1623
 msgctxt "math symbol"
 msgid "image of or approximately equal to"
-msgstr ""
+msgstr "को छवि वा लगभग बराबर"
 
 #. Translators: this is the spoken representation for the character '≔' (U+2254)
 #: src/orca/mathsymbols.py:1626
@@ -6087,17 +6029,15 @@ msgstr "बराबर बिराम"
 
 #. Translators: this is the spoken representation for the character '≖' (U+2256)
 #: src/orca/mathsymbols.py:1632
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "ring in equal to"
-msgstr ""
+msgstr "बराबर मा रिंग"
 
 #. Translators: this is the spoken representation for the character '≗' (U+2257)
 #: src/orca/mathsymbols.py:1635
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "ring equal to"
-msgstr ""
+msgstr "बराबर रिंग"
 
 #. Translators: this is the spoken representation for the character '≘' (U+2258)
 #: src/orca/mathsymbols.py:1638
@@ -6113,17 +6053,15 @@ msgstr "लगभग"
 
 #. Translators: this is the spoken representation for the character '≚' (U+225a)
 #: src/orca/mathsymbols.py:1644
-#| msgid "triangular bullet"
 msgctxt "math symbol"
 msgid "equiangular to"
-msgstr ""
+msgstr "मा समकोणीय"
 
 #. Translators: this is the spoken representation for the character '≛' (U+225b)
 #: src/orca/mathsymbols.py:1647
-#| msgid "equals"
 msgctxt "math symbol"
 msgid "star equals"
-msgstr ""
+msgstr "तारा बराबर"
 
 #. Translators: this is the spoken representation for the character '≜' (U+225c)
 #: src/orca/mathsymbols.py:1650
@@ -6135,7 +6073,7 @@ msgstr "डेल्टा बराबर"
 #: src/orca/mathsymbols.py:1653
 msgctxt "math symbol"
 msgid "equal to by definition"
-msgstr ""
+msgstr "परिभाषा अनुसार बराबर"
 
 #. Translators: this is the spoken representation for the character '≞' (U+225e)
 #: src/orca/mathsymbols.py:1656
@@ -6145,40 +6083,33 @@ msgstr "यसद्वारा मापन गरिएको"
 
 #. Translators: this is the spoken representation for the character '≟' (U+225f)
 #: src/orca/mathsymbols.py:1659
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "questioned equal to"
-msgstr ""
+msgstr "को बराबर प्रश्न"
 
 #. Translators: this is the spoken representation for the character '≠' (U+2260)
 #: src/orca/mathsymbols.py:1662
-#, fuzzy
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "not equal to"
-msgstr "यससँग बराबर छ"
+msgstr "बराबर नभएको"
 
 #. Translators: this is the spoken representation for the character '≡' (U+2261)
 #: src/orca/mathsymbols.py:1665
-#, fuzzy
-#| msgid "vertical"
 msgctxt "math symbol"
 msgid "identical to"
-msgstr "पहिचायक देखाउनुहोस्"
+msgstr "को समान"
 
 #. Translators: this is the spoken representation for the character '≢' (U+2262)
 #: src/orca/mathsymbols.py:1668
-#, fuzzy
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "not identical to"
-msgstr "पहिचायक देखाउनुहोस्"
+msgstr "सँग समान छैन"
 
 #. Translators: this is the spoken representation for the character '≣' (U+2263)
 #: src/orca/mathsymbols.py:1671
 msgctxt "math symbol"
 msgid "strictly equivalent to"
-msgstr ""
+msgstr "कडाई को बराबर"
 
 #. Translators: this is the spoken representation for the character '≤' (U+2264)
 #: src/orca/mathsymbols.py:1674
@@ -6188,24 +6119,21 @@ msgstr "कम वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≥' (U+2265)
 #: src/orca/mathsymbols.py:1677
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than or equal to"
-msgstr ""
+msgstr "भन्दा ठूलो वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≦' (U+2266)
 #: src/orca/mathsymbols.py:1680
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than over equal to"
-msgstr ""
+msgstr "भन्दा सानो वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≧' (U+2267)
 #: src/orca/mathsymbols.py:1683
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than over equal to"
-msgstr ""
+msgstr "बराबर भन्दा बढी भन्दा ठूलो"
 
 #. Translators: this is the spoken representation for the character '≨' (U+2268)
 #: src/orca/mathsymbols.py:1686
@@ -6215,22 +6143,21 @@ msgstr "कम तर बराबर नहुने"
 
 #. Translators: this is the spoken representation for the character '≩' (U+2269)
 #: src/orca/mathsymbols.py:1689
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than but not equal to"
-msgstr ""
+msgstr "भन्दा ठूलो तर बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '≪' (U+226a)
 #: src/orca/mathsymbols.py:1692
 msgctxt "math symbol"
 msgid "much less than"
-msgstr ""
+msgstr "यो भन्दा धेरै कम"
 
 #. Translators: this is the spoken representation for the character '≫' (U+226b)
 #: src/orca/mathsymbols.py:1695
 msgctxt "math symbol"
 msgid "much greater than"
-msgstr ""
+msgstr "यो भन्दा धेरै बेसि"
 
 #. Translators: this is the spoken representation for the character '≬' (U+226c)
 #: src/orca/mathsymbols.py:1698
@@ -6240,93 +6167,81 @@ msgstr "बीचमा"
 
 #. Translators: this is the spoken representation for the character '≭' (U+226d)
 #: src/orca/mathsymbols.py:1701
-#, fuzzy
-#| msgid "not equal to"
 msgctxt "math symbol"
 msgid "not equivalent to"
-msgstr "बराबरी"
+msgstr "बराबरी नभएको"
 
 #. Translators: this is the spoken representation for the character '≮' (U+226e)
 #: src/orca/mathsymbols.py:1704
 msgctxt "math symbol"
 msgid "not less than"
-msgstr "भन्दा सानो छ"
+msgstr "भन्दा सानो छैन"
 
 #. Translators: this is the spoken representation for the character '≯' (U+226f)
 #: src/orca/mathsymbols.py:1707
 msgctxt "math symbol"
 msgid "not greater than"
-msgstr "भन्दा ठूलो छ"
+msgstr "भन्दा ठूलो छैन"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
 #: src/orca/mathsymbols.py:1710
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr ""
+msgstr "न त भन्दा कम न त बराबर"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: src/orca/mathsymbols.py:1713
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
-msgstr ""
+msgstr "न त भन्दा ठूलो न त बराबर"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
 #: src/orca/mathsymbols.py:1716
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than or equivalent to"
-msgstr ""
+msgstr "भन्दा कम वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
 #: src/orca/mathsymbols.py:1719
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than or equivalent to"
-msgstr ""
+msgstr "भन्दा ठूलो वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≴' (U+2274)
 #: src/orca/mathsymbols.py:1722
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "neither less than nor equivalent to"
-msgstr ""
+msgstr "न त भन्दा कम न त बराबर"
 
 #. Translators: this is the spoken representation for the character '≵' (U+2275)
 #: src/orca/mathsymbols.py:1725
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither greater than nor equivalent to"
-msgstr ""
+msgstr "न त भन्दा ठूलो न त बराबर"
 
 #. Translators: this is the spoken representation for the character '≶' (U+2276)
 #: src/orca/mathsymbols.py:1728
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than or greater than"
-msgstr ""
+msgstr "न त भन्दा ठूलो न त बराबर"
 
 #. Translators: this is the spoken representation for the character '≷' (U+2277)
 #: src/orca/mathsymbols.py:1731
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than or less than"
-msgstr ""
+msgstr "भन्दा ठूलो वा त्यो भन्दा कम"
 
 #. Translators: this is the spoken representation for the character '≸' (U+2278)
 #: src/orca/mathsymbols.py:1734
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "neither less than nor greater than"
-msgstr ""
+msgstr "न त भन्दा कम न त भन्दा ठूलो"
 
 #. Translators: this is the spoken representation for the character '≹' (U+2279)
 #: src/orca/mathsymbols.py:1737
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither greater than nor less than"
-msgstr ""
+msgstr "न त भन्दा ठूलो, न त भन्दा कम"
 
 #. Translators: this is the spoken representation for the character '≺' (U+227a)
 #: src/orca/mathsymbols.py:1740
@@ -6342,17 +6257,15 @@ msgstr "पछि आउने"
 
 #. Translators: this is the spoken representation for the character '≼' (U+227c)
 #: src/orca/mathsymbols.py:1746
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "precedes or equal to"
-msgstr ""
+msgstr "अगाडि वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≽' (U+227d)
 #: src/orca/mathsymbols.py:1749
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "succeeds or equal to"
-msgstr ""
+msgstr "सफल वा बराबर"
 
 #. Translators: this is the spoken representation for the character '≾' (U+227e)
 #: src/orca/mathsymbols.py:1752
@@ -6362,10 +6275,9 @@ msgstr "यससँग अगाडि वा बराबर हुन्छ"
 
 #. Translators: this is the spoken representation for the character '≿' (U+227f)
 #: src/orca/mathsymbols.py:1755
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "succeeds or equivalent to"
-msgstr ""
+msgstr "सफल वा समतुल्य"
 
 #. Translators: this is the spoken representation for the character '⊀' (U+2280)
 #: src/orca/mathsymbols.py:1758
@@ -6381,97 +6293,81 @@ msgstr "सफल हुँदैन"
 
 #. Translators: this is the spoken representation for the character '⊂' (U+2282)
 #: src/orca/mathsymbols.py:1764
-#, fuzzy
-#| msgid "subscript 0"
 msgctxt "math symbol"
 msgid "subset of"
 msgstr "सबसेट"
 
 #. Translators: this is the spoken representation for the character '⊃' (U+2283)
 #: src/orca/mathsymbols.py:1767
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math symbol"
 msgid "superset of"
-msgstr "डबल सुपरसेट"
+msgstr "सुपरसेट"
 
 #. Translators: this is the spoken representation for the character '⊄' (U+2284)
 #: src/orca/mathsymbols.py:1770
-#, fuzzy
 msgctxt "math symbol"
 msgid "not a subset of"
-msgstr "सबसेट"
+msgstr "सबसेट होईन"
 
 #. Translators: this is the spoken representation for the character '⊅' (U+2285)
 #: src/orca/mathsymbols.py:1773
-#, fuzzy
 msgctxt "math symbol"
 msgid "not a superset of"
-msgstr "डबल सुपरसेट"
+msgstr "सुपरसेट होईन"
 
 #. Translators: this is the spoken representation for the character '⊆' (U+2286)
 #: src/orca/mathsymbols.py:1776
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "subset of or equal to"
-msgstr ""
+msgstr "यसको उपसमुच्चय वा बराबर"
 
 #. Translators: this is the spoken representation for the character '⊇' (U+2287)
 #: src/orca/mathsymbols.py:1779
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "superset of or equal to"
-msgstr ""
+msgstr "को सुपरसेट वा बराबर"
 
 #. Translators: this is the spoken representation for the character '⊈' (U+2288)
 #: src/orca/mathsymbols.py:1782
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither a subset of nor equal to"
-msgstr ""
+msgstr "न त को एक उपसमुच्चय न त बराबर"
 
 #. Translators: this is the spoken representation for the character '⊉' (U+2289)
 #: src/orca/mathsymbols.py:1785
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "neither a superset of nor equal to"
-msgstr ""
+msgstr "न त सुपरसेट को न त बराबर"
 
 #. Translators: this is the spoken representation for the character '⊊' (U+228a)
 #: src/orca/mathsymbols.py:1788
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "subset of with not equal to"
-msgstr ""
+msgstr "सँग बराबर नभएको को उपसमुच्चय"
 
 #. Translators: this is the spoken representation for the character '⊋' (U+228b)
 #: src/orca/mathsymbols.py:1791
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "superset of with not equal to"
-msgstr ""
+msgstr "को बराबर छैन संग को सुपरसेट"
 
 #. Translators: this is the spoken representation for the character '⊌' (U+228c)
 #: src/orca/mathsymbols.py:1794
-#| msgid "multi-select"
 msgctxt "math symbol"
 msgid "multiset"
-msgstr ""
+msgstr "मल्टीसेट"
 
 #. Translators: this is the spoken representation for the character '⊍' (U+228d)
 #: src/orca/mathsymbols.py:1797
-#| msgctxt "textattr"
-#| msgid "justification"
 msgctxt "math symbol"
 msgid "multiset multiplication"
-msgstr ""
+msgstr "मल्टीसेट गुणन"
 
 #. Translators: this is the spoken representation for the character '⊎' (U+228e)
 #: src/orca/mathsymbols.py:1800
-#| msgid "multi-select"
 msgctxt "math symbol"
 msgid "multiset union"
-msgstr ""
+msgstr "मल्टिसेट युनियन"
 
 #. Translators: this is the spoken representation for the character '⊏' (U+228f)
 #: src/orca/mathsymbols.py:1803
@@ -6487,116 +6383,107 @@ msgstr "मुल को वर्ग"
 
 #. Translators: this is the spoken representation for the character '⊑' (U+2291)
 #: src/orca/mathsymbols.py:1809
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "square image of or equal to"
-msgstr ""
+msgstr "को वर्गाकार छवि वा बराबर"
 
 #. Translators: this is the spoken representation for the character '⊒' (U+2292)
 #: src/orca/mathsymbols.py:1812
 msgctxt "math symbol"
 msgid "square original of or equal to"
-msgstr ""
+msgstr "को वर्ग मूल वा बराबर"
 
 #. Translators: this is the spoken representation for the character '⊓' (U+2293)
 #: src/orca/mathsymbols.py:1815
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "square cap"
-msgstr ""
+msgstr "वर्ग क्याप"
 
 #. Translators: this is the spoken representation for the character '⊔' (U+2294)
 #: src/orca/mathsymbols.py:1818
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "square cup"
-msgstr ""
+msgstr "वर्ग कप"
 
 #. Translators: this is the spoken representation for the character '⊕' (U+2295)
 #. Translators: this is the spoken representation for the character '⨁' (U+2a01)
 #: src/orca/mathsymbols.py:1821 src/orca/mathsymbols.py:2172
 msgctxt "math symbol"
 msgid "circled plus"
-msgstr ""
+msgstr "गोलाकार प्लस"
 
 #. Translators: this is the spoken representation for the character '⊖' (U+2296)
 #: src/orca/mathsymbols.py:1824
 msgctxt "math symbol"
 msgid "circled minus"
-msgstr ""
+msgstr "गोलाकार माइनस"
 
 #. Translators: this is the spoken representation for the character '⊗' (U+2297)
 #. Translators: this is the spoken representation for the character '⨂' (U+2a02)
 #: src/orca/mathsymbols.py:1827 src/orca/mathsymbols.py:2175
 msgctxt "math symbol"
 msgid "circled times"
-msgstr ""
+msgstr "वृत्ताकार समय"
 
 #. Translators: this is the spoken representation for the character '⊘' (U+2298)
 #: src/orca/mathsymbols.py:1830
 msgctxt "math symbol"
 msgid "circled division slash"
-msgstr ""
+msgstr "वृत्ताकार विभाजन स्ल्याश"
 
 #. Translators: this is the spoken representation for the character '⊙' (U+2299)
 #: src/orca/mathsymbols.py:1833
 msgctxt "math symbol"
 msgid "circled dot operator"
-msgstr ""
+msgstr "वृत्ताकार  डट अपरेटर"
 
 #. Translators: this is the spoken representation for the character '⊚' (U+229a)
 #: src/orca/mathsymbols.py:1836
 msgctxt "math symbol"
 msgid "circled ring operator"
-msgstr ""
+msgstr "वृत्ताकार रिङ अपरेटर"
 
 #. Translators: this is the spoken representation for the character '⊛' (U+229b)
 #: src/orca/mathsymbols.py:1839
 msgctxt "math symbol"
 msgid "circled asterisk operator"
-msgstr ""
+msgstr "वृत्ताकार एस्टेरिस्क अपरेटर"
 
 #. Translators: this is the spoken representation for the character '⊜' (U+229c)
 #: src/orca/mathsymbols.py:1842
-#| msgid "subscript equals"
 msgctxt "math symbol"
 msgid "circled equals"
-msgstr ""
+msgstr "वृत्ताकार बराबर"
 
 #. Translators: this is the spoken representation for the character '⊝' (U+229d)
 #: src/orca/mathsymbols.py:1845
-#| msgid "en dash"
 msgctxt "math symbol"
 msgid "circled dash"
-msgstr ""
+msgstr "वृत्ताकार ड्यास"
 
 #. Translators: this is the spoken representation for the character '⊞' (U+229e)
 #: src/orca/mathsymbols.py:1848
-#| msgid "subscript plus"
 msgctxt "math symbol"
 msgid "squared plus"
-msgstr ""
+msgstr "वर्ग प्लस"
 
 #. Translators: this is the spoken representation for the character '⊟' (U+229f)
 #: src/orca/mathsymbols.py:1851
-#| msgid "subscript minus"
 msgctxt "math symbol"
 msgid "squared minus"
-msgstr ""
+msgstr "वर्ग माइनस"
 
 #. Translators: this is the spoken representation for the character '⊠' (U+22a0)
 #: src/orca/mathsymbols.py:1854
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "squared times"
-msgstr ""
+msgstr "वर्ग समय"
 
 #. Translators: this is the spoken representation for the character '⊡' (U+22a1)
 #: src/orca/mathsymbols.py:1857
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "squared dot operator"
-msgstr ""
+msgstr "वर्ग डट अपरेटर"
 
 #. Translators: this is the spoken representation for the character '⊢' (U+22a2)
 #: src/orca/mathsymbols.py:1860
@@ -6650,13 +6537,13 @@ msgstr "बलहरू"
 #: src/orca/mathsymbols.py:1884
 msgctxt "math symbol"
 msgid "triple vertical bar right turnstile"
-msgstr ""
+msgstr "ट्रिपल ठाडो पट्टी दायाँ टर्नस्टाइल"
 
 #. Translators: this is the spoken representation for the character '⊫' (U+22ab)
 #: src/orca/mathsymbols.py:1887
 msgctxt "math symbol"
 msgid "double vertical bar double right turnstile"
-msgstr ""
+msgstr "डबल ठाडो पट्टी डबल दायाँ टर्नस्टाइल"
 
 #. Translators: this is the spoken representation for the character '⊬' (U+22ac)
 #: src/orca/mathsymbols.py:1890
@@ -6680,7 +6567,7 @@ msgstr "जोड गर्दैन"
 #: src/orca/mathsymbols.py:1899
 msgctxt "math symbol"
 msgid "negated double vertical bar double right turnstile"
-msgstr ""
+msgstr "अस्वीकार गरिएको डबल ठाडो पट्टी डबल दायाँ टर्नस्टाइल"
 
 #. Translators: this is the spoken representation for the character '⊰' (U+22b0)
 #: src/orca/mathsymbols.py:1902
@@ -6692,14 +6579,13 @@ msgstr "सम्बन्ध अन्तर्गत पूर्वावद 
 #: src/orca/mathsymbols.py:1905
 msgctxt "math symbol"
 msgid "succeeds under relation"
-msgstr ""
+msgstr "सम्बन्ध अन्तर्गत सफल हुन्छ"
 
 #. Translators: this is the spoken representation for the character '⊲' (U+22b2)
 #: src/orca/mathsymbols.py:1908
-#, fuzzy
 msgctxt "math symbol"
 msgid "normal subgroup of"
-msgstr "सामान्य उपसमूहको रूपमा समाविष्ट गर्दछ"
+msgstr "सामान्य उपसमूह हो"
 
 #. Translators: this is the spoken representation for the character '⊳' (U+22b3)
 #: src/orca/mathsymbols.py:1911
@@ -6711,13 +6597,13 @@ msgstr "सामान्य उपसमूहको रूपमा समा
 #: src/orca/mathsymbols.py:1914
 msgctxt "math symbol"
 msgid "normal subgroup of or equal to"
-msgstr ""
+msgstr "को सामान्य उपसमूह वा बराबर"
 
 #. Translators: this is the spoken representation for the character '⊵' (U+22b5)
 #: src/orca/mathsymbols.py:1917
 msgctxt "math symbol"
 msgid "contains as normal subgroup of or equal to"
-msgstr ""
+msgstr "को सामान्य उपसमूह वा बराबर को रूपमा समावेश गर्दछ"
 
 #. Translators: this is the spoken representation for the character '⊶' (U+22b6)
 #: src/orca/mathsymbols.py:1920
@@ -6733,16 +6619,15 @@ msgstr "छवि "
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
 #: src/orca/mathsymbols.py:1926
-#| msgid "multi"
 msgctxt "math symbol"
 msgid "multimap"
-msgstr ""
+msgstr "बहुनक्सा"
 
 #. Translators: this is the spoken representation for the character '⊹' (U+22b9)
 #: src/orca/mathsymbols.py:1929
 msgctxt "math symbol"
 msgid "hermitian conjugate matrix"
-msgstr ""
+msgstr "हर्मिटियन कन्जुगेट म्याट्रिक्स"
 
 #. Translators: this is the spoken representation for the character '⊺' (U+22ba)
 #: src/orca/mathsymbols.py:1932
@@ -6760,13 +6645,13 @@ msgstr "एक्स ओ आर"
 #: src/orca/mathsymbols.py:1938
 msgctxt "math symbol"
 msgid "nand"
-msgstr "NAND"
+msgstr "nand"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
 #: src/orca/mathsymbols.py:1941
 msgctxt "math symbol"
 msgid "nor"
-msgstr "NOR"
+msgstr "nor"
 
 #. Translators: this is the spoken representation for the character '⊾' (U+22be)
 #: src/orca/mathsymbols.py:1944
@@ -6808,51 +6693,49 @@ msgstr "विभाजन पटक"
 #: src/orca/mathsymbols.py:1974
 msgctxt "math symbol"
 msgid "bowtie"
-msgstr ""
+msgstr "bowtie"
 
 #. Translators: this is the spoken representation for the character '⋉' (U+22c9)
 #: src/orca/mathsymbols.py:1977
 msgctxt "math symbol"
 msgid "left normal factor semidirect product"
-msgstr ""
+msgstr "बायाँ सामान्य कारक अर्ध-प्रत्यक्ष उत्पादन"
 
 #. Translators: this is the spoken representation for the character '⋊' (U+22ca)
 #: src/orca/mathsymbols.py:1980
 msgctxt "math symbol"
 msgid "right normal factor semidirect product"
-msgstr ""
+msgstr "दायाँ सामान्य कारक अर्ध-प्रत्यक्ष उत्पादन"
 
 #. Translators: this is the spoken representation for the character '⋋' (U+22cb)
 #: src/orca/mathsymbols.py:1983
 msgctxt "math symbol"
 msgid "left semidirect product"
-msgstr ""
+msgstr "बायाँ अर्ध-प्रत्यक्ष उत्पादन"
 
 #. Translators: this is the spoken representation for the character '⋌' (U+22cc)
 #: src/orca/mathsymbols.py:1986
 msgctxt "math symbol"
 msgid "right semidirect product"
-msgstr ""
+msgstr "दायाँ अर्धडाइरेक्ट उत्पादन"
 
 #. Translators: this is the spoken representation for the character '⋍' (U+22cd)
 #: src/orca/mathsymbols.py:1989
 msgctxt "math symbol"
 msgid "reversed tilde equals"
-msgstr ""
+msgstr "उल्टो टिल्ड बराबर"
 
 #. Translators: this is the spoken representation for the character '⋎' (U+22ce)
 #: src/orca/mathsymbols.py:1992
-#| msgid "logical not"
 msgctxt "math symbol"
 msgid "curly logical or"
-msgstr ""
+msgstr "घुमाउरो तार्किक वा"
 
 #. Translators: this is the spoken representation for the character '⋏' (U+22cf)
 #: src/orca/mathsymbols.py:1995
-#| msgid "logical not"
 msgctxt "math symbol"
 msgid "curly logical and"
-msgstr ""
+msgstr "घुमाउरो तार्किक र"
 
 #. Translators: this is the spoken representation for the character '⋐' (U+22d0)
 #: src/orca/mathsymbols.py:1998
@@ -6882,7 +6765,7 @@ msgstr "डबल युनियन"
 #: src/orca/mathsymbols.py:2010
 msgctxt "math symbol"
 msgid "pitchfork"
-msgstr ""
+msgstr "पिचफोर्क"
 
 #. Translators: this is the spoken representation for the character '⋕' (U+22d5)
 #: src/orca/mathsymbols.py:2013
@@ -6892,43 +6775,39 @@ msgstr "बराबर र समानान्तर"
 
 #. Translators: this is the spoken representation for the character '⋖' (U+22d6)
 #: src/orca/mathsymbols.py:2016
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than with dot"
-msgstr ""
+msgstr "बिन्दुसँग भन्दा कम"
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
 #: src/orca/mathsymbols.py:2019
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than with dot"
-msgstr ""
+msgstr "बिन्दुसँग भन्दा ठूलो"
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
 #: src/orca/mathsymbols.py:2022
 msgctxt "math symbol"
 msgid "very much less than"
-msgstr ""
+msgstr "यो भन्दा धेरै कम"
 
 #. Translators: this is the spoken representation for the character '⋙' (U+22d9)
 #: src/orca/mathsymbols.py:2025
 msgctxt "math symbol"
 msgid "very much greater than"
-msgstr ""
+msgstr "यो भन्दा धेरै ठूलो"
 
 #. Translators: this is the spoken representation for the character '⋚' (U+22da)
 #: src/orca/mathsymbols.py:2028
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than equal to or greater than"
-msgstr ""
+msgstr "बराबर भन्दा कम वा त्यो भन्दा ठूलो"
 
 #. Translators: this is the spoken representation for the character '⋛' (U+22db)
 #: src/orca/mathsymbols.py:2031
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than equal to or less than"
-msgstr ""
+msgstr "बराबर भन्दा ठूलो वा त्यो भन्दा कम"
 
 #. Translators: this is the spoken representation for the character '⋜' (U+22dc)
 #: src/orca/mathsymbols.py:2034
@@ -6968,43 +6847,39 @@ msgstr "सफल वा बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋢' (U+22e2)
 #: src/orca/mathsymbols.py:2052
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "not square image of or equal to"
-msgstr ""
+msgstr "को वर्ग छवि वा बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋣' (U+22e3)
 #: src/orca/mathsymbols.py:2055
 msgctxt "math symbol"
 msgid "not square original of or equal to"
-msgstr ""
+msgstr "को वर्ग मूल वा बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋤' (U+22e4)
 #: src/orca/mathsymbols.py:2058
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "square image of or not equal to"
-msgstr ""
+msgstr "को वर्गाकार छवि वा बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋥' (U+22e5)
 #: src/orca/mathsymbols.py:2061
 msgctxt "math symbol"
 msgid "square original of or not equal to"
-msgstr ""
+msgstr "को वर्ग मूल वा बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋦' (U+22e6)
 #: src/orca/mathsymbols.py:2064
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
-msgstr ""
+msgstr "भन्दा कम तर बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
 #: src/orca/mathsymbols.py:2067
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
-msgstr ""
+msgstr "भन्दा ठूलो तर बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
 #: src/orca/mathsymbols.py:2070
@@ -7016,14 +6891,13 @@ msgstr "अगाडि छ तर यससँग बराबर छैन"
 #: src/orca/mathsymbols.py:2073
 msgctxt "math symbol"
 msgid "succeeds but not equivalent to"
-msgstr ""
+msgstr "सफल हुन्छ तर बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋪' (U+22ea)
 #: src/orca/mathsymbols.py:2076
-#, fuzzy
 msgctxt "math symbol"
 msgid "not normal subgroup of"
-msgstr "सामान्य उपसमूहको रूपमा समाविष्ट गर्दछ"
+msgstr "सामान्य उपसमूहको होईन"
 
 #. Translators: this is the spoken representation for the character '⋫' (U+22eb)
 #: src/orca/mathsymbols.py:2079
@@ -7035,55 +6909,53 @@ msgstr "सामान्य उपसमूह को रूपमा सम�
 #: src/orca/mathsymbols.py:2082
 msgctxt "math symbol"
 msgid "not normal subgroup of or equal to"
-msgstr ""
+msgstr "को सामान्य उपसमूह वा बराबर छैन"
 
 #. Translators: this is the spoken representation for the character '⋭' (U+22ed)
 #: src/orca/mathsymbols.py:2085
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup or equal"
-msgstr ""
+msgstr "यसले सामान्य उपसमूह वा बराबरको रूपमा समावेश गर्दैन"
 
 #. Translators: this is the spoken representation for the character '⋮' (U+22ee)
 #: src/orca/mathsymbols.py:2088
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgctxt "math symbol"
 msgid "vertical ellipsis"
-msgstr ""
+msgstr "ऊर्ध्वाधर एलिप्सिस"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
 #: src/orca/mathsymbols.py:2091
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
-msgstr ""
+msgstr "मिडलाइन तेर्सो एलिप्सिस"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
 #: src/orca/mathsymbols.py:2094
 msgctxt "math symbol"
 msgid "up right diagonal ellipsis"
-msgstr ""
+msgstr "दायाँ तिरछे एलिप्सिस माथि"
 
 #. Translators: this is the spoken representation for the character '⋱' (U+22f1)
 #: src/orca/mathsymbols.py:2097
 msgctxt "math symbol"
 msgid "down right diagonal ellipsis"
-msgstr ""
+msgstr "तल दायाँ विकर्ण एलिप्सिस"
 
 #. Translators: this is the spoken representation for the character '⋲' (U+22f2)
 #: src/orca/mathsymbols.py:2100
 msgctxt "math symbol"
 msgid "element of with long horizontal stroke"
-msgstr ""
+msgstr "लामो तेर्सो स्ट्रोकको साथ तत्व"
 
 #: src/orca/mathsymbols.py:2104
 msgctxt "math symbol"
 msgid "element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "तेर्सो स्ट्रोकको अन्त्यमा ठाडो पट्टीको तत्व"
 
 #: src/orca/mathsymbols.py:2108
 msgctxt "math symbol"
 msgid "small element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "तेर्सो स्ट्रोकको अन्त्यमा ठाडो पट्टीको साथको सानो तत्व"
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
 #: src/orca/mathsymbols.py:2111
@@ -7101,36 +6973,36 @@ msgstr "अधिपण्डासँग तत्व"
 #: src/orca/mathsymbols.py:2117
 msgctxt "math symbol"
 msgid "small element of with overbar"
-msgstr ""
+msgstr "ओभरबारसँगको सानो तत्व"
 
 #. Translators: this is the spoken representation for the character '⋸' (U+22f8)
 #: src/orca/mathsymbols.py:2120
 msgctxt "math symbol"
 msgid "element of with underbar"
-msgstr ""
+msgstr "अन्डरबारसँग तत्व"
 
 #. Translators: this is the spoken representation for the character '⋹' (U+22f9)
 #: src/orca/mathsymbols.py:2123
 msgctxt "math symbol"
 msgid "element of with two horizontal strokes"
-msgstr ""
+msgstr "दुई तेर्सो स्ट्रोकको साथ तत्व"
 
 #. Translators: this is the spoken representation for the character '⋺' (U+22fa)
 #: src/orca/mathsymbols.py:2126
 msgctxt "math symbol"
 msgid "contains with long horizontal stroke"
-msgstr ""
+msgstr "लामो तेर्सो स्ट्रोकसँग समावेश गर्दछ"
 
 #. Translators: this is the spoken representation for the character '⋻' (U+22fb)
 #: src/orca/mathsymbols.py:2129
 msgctxt "math symbol"
 msgid "contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "तेर्सो स्ट्रोकको अन्त्यमा ठाडो पट्टीसँग समावेश गर्दछ"
 
 #: src/orca/mathsymbols.py:2133
 msgctxt "math symbol"
 msgid "small contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "सानोले तेर्सो स्ट्रोकको अन्त्यमा ठाडो पट्टीसँग समाविष्ट गर्दछ"
 
 #. Translators: this is the spoken representation for the character '⋽' (U+22fd)
 #: src/orca/mathsymbols.py:2136
@@ -7148,7 +7020,7 @@ msgstr "अधिपण्डासँग समाविष्ट गर्द�
 #: src/orca/mathsymbols.py:2142
 msgctxt "math symbol"
 msgid "z notation bag membership"
-msgstr ""
+msgstr "जेड नोटेशन ब्याग सदस्यता"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: src/orca/mathsymbols.py:2145
@@ -7208,7 +7080,7 @@ msgstr "थोप्लो को गोलाकार"
 #: src/orca/mathsymbols.py:2177
 msgctxt "math symbol"
 msgid "union with dot"
-msgstr ""
+msgstr "बिन्दुसँग युनियन"
 
 #. Translators: this is the spoken representation for the character '⨄' (U+2a04)
 #: src/orca/mathsymbols.py:2179
@@ -7218,17 +7090,15 @@ msgstr "युनियन जोड"
 
 #. Translators: this is the spoken representation for the character '⨅' (U+2a05)
 #: src/orca/mathsymbols.py:2181
-#| msgid "Search direction:"
 msgctxt "math symbol"
 msgid "square intersection"
-msgstr ""
+msgstr "वर्ग प्रतिच्छेदन"
 
 #. Translators: this is the spoken representation for the character '⨆' (U+2a06)
 #: src/orca/mathsymbols.py:2183
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "square union"
-msgstr ""
+msgstr "वर्ग युनियन"
 
 #. Translators: this is the spoken representation for the character '■' (U+25a0)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -7254,10 +7124,9 @@ msgstr "कालो हिरा"
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2199
-#| msgid "white circle"
 msgctxt "math symbol"
 msgid "white circle"
-msgstr ""
+msgstr "सेतो वृत्त"
 
 #. Translators: this is the spoken representation for the character '●' (U+25cf)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
@@ -7323,14 +7192,14 @@ msgstr "अनुप्रयोग"
 #. retrieve any information about the battery.
 #: src/orca/messages.py:45
 msgid "Battery status unknown"
-msgstr "ब्याट्रीको वस्तुस्थिति अज्ञात"
+msgstr "ब्याट्री स्थिति अज्ञात छ"
 
 #. Translators: Orca has a command to report the battery status. This message
 #. presents the battery level as a percent.
 #: src/orca/messages.py:49
 #, python-format
 msgid "Battery: %d%%"
-msgstr ""
+msgstr "ब्याट्री: %d%%"
 
 #. Translators: Orca has a command to report the battery status. This message
 #. presents the plugged-in status to the user.
@@ -7344,7 +7213,7 @@ msgstr "जडान भएको बेला"
 #: src/orca/messages.py:57
 msgctxt "Battery"
 msgid "not plugged in"
-msgstr "जडान भएको बेला"
+msgstr "जडान नभएको बेला"
 
 #. Translators: This is presented when the user has navigated to an empty line.
 #: src/orca/messages.py:60
@@ -7389,9 +7258,8 @@ msgstr "चिनो बचत गर्न सकिएन ।"
 #. presented to the user when they try to go to a bookmark, but don't have
 #. any bookmarks.
 #: src/orca/messages.py:91
-#| msgid "No landmark found."
 msgid "No bookmarks found."
-msgstr ""
+msgstr "पुस्तकचिनो फेला परेन ।."
 
 #. Translators: Orca has a feature in which users can store/save a particular
 #. location in an application window and return to it later by pressing a
@@ -7400,9 +7268,8 @@ msgstr ""
 #. index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
 #. that index.
 #: src/orca/messages.py:99
-#| msgid "No landmark found."
 msgid "Bookmark not found."
-msgstr ""
+msgstr "पुस्तकचिनो फेला परेन ।."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -7413,9 +7280,8 @@ msgstr ""
 #. editor. This string is what Orca presents to the user when Orca's commands are
 #. being toggled off.
 #: src/orca/messages.py:109
-#| msgid "Structural navigation keys off."
 msgid "Orca command keys off."
-msgstr ""
+msgstr "ओर्का आदेश कुञ्जीहरू बन्द छन् ।."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -7427,7 +7293,7 @@ msgstr ""
 #. being toggled back on.
 #: src/orca/messages.py:119
 msgid "Orca command keys on."
-msgstr ""
+msgstr "ओर्का आदेश कुञ्जीहरू चालू छन् ।."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -7452,7 +7318,7 @@ msgstr "प्रतिमा"
 #. to get into a GUI.
 #: src/orca/messages.py:139
 msgid "Capitalization style set to icon."
-msgstr "Capitalization शैली प्रतिमामा कायम गरियो ।"
+msgstr "Capitalization शैली प्रतिमामा कायम गरियो ।."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -7477,7 +7343,7 @@ msgstr "none"
 #. to get into a GUI.
 #: src/orca/messages.py:159
 msgid "Capitalization style set to none."
-msgstr "Capitalization शैली कुनैमा कायम गरिएको छैन ।"
+msgstr "Capitalization शैली कुनैमा कायम गरिएको छैन ।."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -7502,7 +7368,7 @@ msgstr "हिज्जे"
 #. to get into a GUI.
 #: src/orca/messages.py:179
 msgid "Capitalization style set to spell."
-msgstr "Capitalization शैली हिज्जेमा कायम गरियो ।"
+msgstr "Capitalization शैली हिज्जेमा कायम गरियो ।."
 
 #. Translators: Native application caret navigation does not always work as the
 #. Orca user wants. As such, Orca offers the user the ability to toggle between
@@ -7519,7 +7385,7 @@ msgstr "केरेटलाई अनुप्रयोगले नियन�
 #. the user the ability to toggle which application is controlling the caret.
 #: src/orca/messages.py:192
 msgid "The screen reader is controlling the caret."
-msgstr "caret लाई दृष्टिवाचकले नियन्त्रण गरेको छ ।"
+msgstr "caret लाई दृष्टिवाचकले नियन्त्रण गरेको छ ।."
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #: src/orca/messages.py:195
@@ -7567,7 +7433,7 @@ msgstr "“%s” देखि “%s” चयन हटाइयो"
 #, python-format
 msgctxt "cell"
 msgid "%s unselected"
-msgstr "%s चयन हट्यो"
+msgstr "%s चयन हट्यो ।"
 
 #. Translators: This is the description of command line option '-d, --disable'
 #. which allows the user to specify an option to disable as Orca is started.
@@ -7681,8 +7547,6 @@ msgstr "DIR"
 #. various synthesizers with different voices and languages.
 #. This option can be used to override the configured default speech system.
 #: src/orca/messages.py:302
-#, fuzzy
-#| msgid "Speech _system:"
 msgid "Speech system"
 msgstr "वाचन प्रणाली"
 
@@ -7694,7 +7558,7 @@ msgstr "वाचन प्रणाली"
 #: src/orca/messages.py:309
 #, python-format
 msgid "Speech system “%s” is unavailable (available: %s)"
-msgstr ""
+msgstr "वाक् प्रणाली \"%s\" अनुपलब्ध छ (उपलब्ध: %s)"
 
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
@@ -7755,7 +7619,7 @@ msgstr "उपभोक्ता प्राथमिकता पातो स
 #. from the command line and the help text is displayed.
 #: src/orca/messages.py:356
 msgid "Report bugs on https://gitlab.gnome.org/GNOME/orca/-/issues."
-msgstr ""
+msgstr "https://gitlab.gnome.org/GNOME/orca/-/issues मा बगहरू रिपोर्ट गर्नुहोस्।."
 
 #. Translators: Orca has a command to present the contents of the clipboard without
 #. the user having to switch to a clipboard manager. This message is spoken by Orca
@@ -7764,7 +7628,7 @@ msgstr ""
 #: src/orca/messages.py:362
 #, python-format
 msgid "Clipboard contains: %s"
-msgstr ""
+msgstr "क्लिपबोर्डले समावेश गर्दछ: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -7921,10 +7785,9 @@ msgstr "मेट्न समाप्त"
 #. be said is content marked for insertion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:497
-#| msgid "fraction start"
 msgctxt "content"
 msgid "insertion start"
-msgstr ""
+msgstr "प्रविष्टि सुरु गर्नुहोस्"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
@@ -7990,32 +7853,29 @@ msgstr "सबै वस्तुहरू चयन गरियो"
 #. retrieve this information.
 #: src/orca/messages.py:543
 msgid "CPU and memory usage unknown"
-msgstr ""
+msgstr "सीपीयू र स्मृति प्रयोग अज्ञात"
 
 #. Translators: Orca has a command to report CPU and memory usage levels. This
 #. message presents the levels to the user.
 #: src/orca/messages.py:547
 #, python-format
 msgid "CPU: %d%%. Memory: %d%%"
-msgstr ""
+msgstr "सीपीयू: %d%%. स्मृति: %d%%"
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user tried to clear the cache but
 #. an error occurred.
 #: src/orca/messages.py:553
-#| msgid "leaving details."
 msgid "Clearing cache failed."
-msgstr ""
+msgstr "क्यास खाली गर्न असफल भयो ।."
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user performs the command.
 #: src/orca/messages.py:558
-#| msgctxt "role"
-#| msgid "leaving search."
 msgid "Clearing cache."
-msgstr ""
+msgstr "क्यास खाली गर्दैछ ।."
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -8025,7 +7885,7 @@ msgstr ""
 #. capture has begun.
 #: src/orca/messages.py:566
 msgid "Capturing debugging snapshot"
-msgstr ""
+msgstr "डिबगिङ स्न्यापसट क्याप्चर गरियो"
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -8035,7 +7895,7 @@ msgstr ""
 #. capture has begun.
 #: src/orca/messages.py:574
 msgid "Debugging snapshot captured"
-msgstr ""
+msgstr "डिबगिङ स्न्यापसट क्याप्चर गरियो"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. The string
@@ -8053,18 +7913,16 @@ msgstr "निर्धारित टाँक %s हो ।"
 #. the same word used for the string in object_properties.py.
 #: src/orca/messages.py:587
 #, python-format
-#| msgid "Default button is %s"
 msgid "Default button is %s. Grayed"
-msgstr ""
+msgstr "पूर्वनिर्धारित बटन %s हो । खैरो भयो"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
 #. a command to present the default button. This is the message Orca will
 #. present if it could not find the default button.
 #: src/orca/messages.py:593
-#| msgid "Default button is %s"
 msgid "Default button not found"
-msgstr ""
+msgstr "पूर्वनिर्धारित बटन फेला परेन"
 
 #. Translators: This string is part of the presentation of an item that includes
 #. one or several consecutive subscripted characters. For example, 'X' followed
@@ -8088,10 +7946,8 @@ msgstr " टाउकोमा %s"
 #. specific to dialog boxes, such as presenting the default button, but is not in
 #. a dialog.
 #: src/orca/messages.py:610
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a dialog"
-msgstr "वार्तालाप"
+msgstr "संवाद छैन"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8222,9 +8078,8 @@ msgstr "पुर्ण समीक्षा छोड्दै छु ।"
 #. let the user know that flat review is being restricted to the current
 #. object of interest.
 #: src/orca/messages.py:706
-#| msgid "Move flat review to the word above the current word"
 msgid "Flat review restricted to the current object"
-msgstr ""
+msgstr "समतल समीक्षा हालको वस्तुमा सीमित छ"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8234,7 +8089,7 @@ msgstr ""
 #. that is, the entire window can be explored.
 #: src/orca/messages.py:714
 msgid "Flat review unrestricted"
-msgstr ""
+msgstr "समतल समीक्षा निर्बाध"
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -8277,9 +8132,8 @@ msgstr "ट्रि खोल्नुहोस्"
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a popup to appear if activated.
 #: src/orca/messages.py:744
-#| msgid "opens menu"
 msgid "opens popup"
-msgstr ""
+msgstr "पपअप खोल्छ"
 
 #. Translators: The following string is spoken to let the user know that he/she
 #. is on a link within an image map. An image map is an image/graphic which has
@@ -8547,7 +8401,7 @@ msgstr "यसद्वारा संलग्न गरियो: %s"
 #: src/orca/messages.py:958
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
-msgstr ""
+msgstr "एक बीमांकीय प्रतीक"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9012,10 +8866,8 @@ msgstr "फारम छोडियो"
 #. panel and then navigates out of it. A grouping is a container of related
 #. widgets.
 #: src/orca/messages.py:1303
-#| msgctxt "role"
-#| msgid "leaving region."
 msgid "leaving grouping."
-msgstr ""
+msgstr "समूहीकरण छोड्दै।."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9164,10 +9016,9 @@ msgstr "अध्याय छोडियो"
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1404
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving colophon."
-msgstr ""
+msgstr "कोलोफोन छोड्दै।."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9203,7 +9054,7 @@ msgstr "श्रयहरू छोडियो ।"
 #: src/orca/messages.py:1428
 msgctxt "role"
 msgid "leaving dedication."
-msgstr "समर्पण छोहियो"
+msgstr "समर्पण छोडियो."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9212,7 +9063,7 @@ msgstr "समर्पण छोहियो"
 #: src/orca/messages.py:1434
 msgctxt "role"
 msgid "leaving endnotes."
-msgstr "अन्तिम टिप्पणीहरू छोडियो."
+msgstr "अन्तिम टिप्पणीहरू छोडियो"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9228,20 +9079,18 @@ msgstr "इपिग्राफ छाडियो"
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1446
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving epilogue."
-msgstr ""
+msgstr "उपसंहार छोड्दै।."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1452
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
-msgstr ""
+msgstr "इराटा छोड्दै।."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9320,20 +9169,18 @@ msgstr "भूमिका छोडियो"
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1506
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving prologue."
-msgstr ""
+msgstr "प्रस्तावना छोड्दै।."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1512
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr ""
+msgstr "पुलकोट छोड्दै।."
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9595,7 +9442,7 @@ msgstr "हिज्जे गल्ती शब्द : %s"
 #: src/orca/messages.py:1705
 #, python-format
 msgid "Context is %s"
-msgstr "सन्दर्भ %s हो ।"
+msgstr "सन्दर्भ %s हो"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -9713,9 +9560,8 @@ msgstr "वस्तु मुद्रा"
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
 #: src/orca/messages.py:1807
-#| msgid "No more large objects."
 msgid "Pointer moved to object."
-msgstr ""
+msgstr "सूचक वस्तुमा सारिएको छ ।."
 
 #. Translators: Hovering the mouse over certain objects on a web page causes a
 #. new object to appear such as a pop-up menu. Orca has a command will move the
@@ -9752,50 +9598,43 @@ msgstr "त्रुटी: वस्तुको सुची सिर्ज�
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no children.
 #: src/orca/messages.py:1835
-#, fuzzy
 msgid "No children."
-msgstr "शाखाहरु"
+msgstr "उपशाखा छैन."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no next sibling.
 #: src/orca/messages.py:1840
-#, fuzzy
 msgid "No next."
-msgstr "_पछिल्लो"
+msgstr "पछिल्लो छैन"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no parent.
 #: src/orca/messages.py:1845
-#, fuzzy
-#| msgid "%d percent."
-#| msgid_plural "%d percent."
 msgid "No parent."
-msgstr "पारेन्ट"
+msgstr "प्रमुल नभ एको."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
 #: src/orca/messages.py:1850
-#, fuzzy
-#| msgid "Go to previous word"
 msgid "No previous."
-msgstr "_अघिल्लो"
+msgstr "अघिल्लो छैन."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is enabled.
 #: src/orca/messages.py:1855
 msgid "Simplified navigation enabled."
-msgstr ""
+msgstr "सरलीकृत नेभिगेसन सक्षम पारिएको छ ।."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
 #: src/orca/messages.py:1860
 msgid "Simplified navigation disabled."
-msgstr ""
+msgstr "सरलीकृत नेभिगेसन अक्षम पारिएको छ ।"
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -9819,9 +9658,8 @@ msgstr "नया सामाग्री थपिएका छन् ।"
 #. localized rolename if it does not.
 #: src/orca/messages.py:1877
 #, python-format
-#| msgid "No application has focus."
 msgid "No actions found on: %s"
-msgstr ""
+msgstr "यसमा कुनै कार्य फेला परेन: %s"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
@@ -9876,7 +9714,7 @@ msgstr "अरू किटिक्क स्थान छैनन् ।"
 #. user if no more combo boxes can be found.
 #: src/orca/messages.py:1916
 msgid "No more combo boxes."
-msgstr "अरू कम्बो बाकस छैनन् ।."
+msgstr "अरू कम्बो बाकस छैनन् ।"
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
@@ -9912,9 +9750,8 @@ msgstr "%d तहमा अरू शीर्षकहरू छैनन् �
 #. to iframe. This is a detailed message which will be presented to the user
 #. if no more iframes can be found.
 #: src/orca/messages.py:1942
-#| msgid "No more tables."
 msgid "No more internal frames."
-msgstr ""
+msgstr "थप आन्तरिक फ्रेमहरू छैनन् ।."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
@@ -9966,7 +9803,7 @@ msgstr "अरू जीवन्त क्षेत्रहरू छैनन
 #. if no more paragraphs can be found.
 #: src/orca/messages.py:1980
 msgid "No more paragraphs."
-msgstr "अरू अनुच्छेदहरू छैनन् ।."
+msgstr "अरू अनुच्छेदहरू छैनन् ।"
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
@@ -10060,7 +9897,7 @@ msgstr "संख्याहरु"
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:2045
 msgid "Speak numbers as digits."
-msgstr "सङ्ख्याहरू अङ्कमा बताउँछ"
+msgstr "सङ्ख्याहरू अङ्कमा बताउँछ."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -10079,7 +9916,7 @@ msgstr "शब्दहरू"
 #. the user has enabled speaking numbers as words.
 #: src/orca/messages.py:2059
 msgid "Speak numbers as words."
-msgstr "सङ्ख्याहरू शब्दमा बताउँछ"
+msgstr "सङ्ख्याहरू शब्दमा बताउँछ."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
@@ -10345,9 +10182,8 @@ msgstr "वाचन सक्षम बनाउ ।"
 #. For example "Sleep mode disabled for VirtualBox."
 #: src/orca/messages.py:2246
 #, python-format
-#| msgid "Speech disabled."
 msgid "Sleep mode disabled for %s."
-msgstr ""
+msgstr "%s का लागि निद्रा मोड असक्षम पारिएको छ ।."
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -10364,9 +10200,8 @@ msgstr ""
 #. For example "Sleep mode enabled for VirtualBox."
 #: src/orca/messages.py:2261
 #, python-format
-#| msgid "Bypass mode enabled."
 msgid "Sleep mode enabled for %s."
-msgstr ""
+msgstr "%s का लागि निद्रा मोड सक्षम पारिएको छ ।."
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2264
@@ -10430,10 +10265,8 @@ msgstr " थोप्लो थोप्लो थोप्लो"
 #. command specific to a spreadsheet, such as reading the input line, but is
 #. not in a spreadsheet.
 #: src/orca/messages.py:2304
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a spreadsheet."
-msgstr "स्प्रेडसिट"
+msgstr "स्प्रेडसिटमा छैन."
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: src/orca/messages.py:2307
@@ -10548,17 +10381,15 @@ msgstr "Not in a table."
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
 #: src/orca/messages.py:2385
-#| msgid "Table Navigation"
 msgid "Table navigation disabled."
-msgstr ""
+msgstr "तालिका नेभिगेसन अक्षम पारिएको छ ।."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
 #: src/orca/messages.py:2390
-#| msgid "Table Navigation"
 msgid "Table navigation enabled."
-msgstr ""
+msgstr "तालिका नेभिगेसन सक्षम पारिएको छ ।."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
@@ -10674,7 +10505,7 @@ msgstr "हरफ मेटियो ।"
 #. deleted the last row of a table.
 #: src/orca/messages.py:2466
 msgid "Last row deleted."
-msgstr "अन्तिम हरफ मेटियो ।."
+msgstr "अन्तिम हरफ मेटियो ।"
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
@@ -10839,35 +10670,29 @@ msgstr[1] "कोशीका वृद्धि %d महलहरू"
 
 #. Translators: This message describes the number of characters in a string.
 #: src/orca/messages.py:2594
-#, fuzzy, python-format
-#| msgid "%d character too long"
-#| msgid_plural "%d characters too long"
+#, python-format
 msgid "%d characters"
 msgid_plural "%d characters"
-msgstr[0] "अधिकतम %d वर्णहरू हुनुपर्दछ"
-msgstr[1] "अधिकतम %d वर्णहरू हुनुपर्दछ"
+msgstr[0] "%d वर्णहरू"
+msgstr[1] "%d वर्णहरू"
 
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
 #: src/orca/messages.py:2599
 #, python-format
-#| msgid "%d character too long"
-#| msgid_plural "%d characters too long"
 msgid "%d character selected"
 msgid_plural "%d characters selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d वर्ण चयन गरियो"
+msgstr[1] "%d वर्णहरू चयन गरियो"
 
 #. Translators: This message describes the number of characters that were just
 #. unselected in a body of text.
 #: src/orca/messages.py:2604
 #, python-format
-#| msgctxt "cell"
-#| msgid "%s unselected"
 msgid "%d character unselected"
 msgid_plural "%d characters unselected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d वर्ण चयन नगरिएको"
+msgstr[1] "%d वर्णहरू चयन नगरिएको"
 
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
@@ -10968,8 +10793,8 @@ msgstr[1] "%d सामाग्रीहरू पाइयो"
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] "%d बाक्लो उद्धरण बाहिर."
-msgstr[1] "%d बाक्लो उद्धरणहरू बाहिर."
+msgstr[0] "%d बाक्लो उद्धरण बाहिर"
+msgstr[1] "%d बाक्लो उद्धरणहरू बाहिर"
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
@@ -10977,8 +10802,8 @@ msgstr[1] "%d बाक्लो उद्धरणहरू बाहिर."
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] "%d सूची छोड्दैछ."
-msgstr[1] "%d सूचीहरु छोड्दैछ ।."
+msgstr[0] "%d सूची छोड्दैछ ।"
+msgstr[1] "%d सूचीहरु छोड्दैछ ।"
 
 #. Translators: This message describes a list in web content for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -10988,7 +10813,7 @@ msgstr[1] "%d सूचीहरु छोड्दैछ ।."
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2688
 msgid "List of unknown size"
-msgstr ""
+msgstr "अज्ञात साइजको सूची"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2691
@@ -11002,12 +10827,10 @@ msgstr[1] "List with %d items"
 #. that is inside of another list.
 #: src/orca/messages.py:2696
 #, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d वस्तुसँग नेस्टेड सूची"
+msgstr[1] "%d वस्तुसँग नेस्टेड सूची"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -11016,7 +10839,7 @@ msgstr[1] ""
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2705
 msgid "Feed of unknown size"
-msgstr ""
+msgstr "अज्ञात साइजको फिड"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
@@ -11024,31 +10847,27 @@ msgstr ""
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d लेखसँग फिड गर्नुहोस्"
+msgstr[1] "%d लेखसँग फिड गर्नुहोस्"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
 #: src/orca/messages.py:2715
 #, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d शब्दसँग वर्णन सूची"
+msgstr[1] "%d शब्दसँग वर्णन सूची"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
 #: src/orca/messages.py:2721
 #, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ट्याबसँग ट्याब सूची"
+msgstr[1] "%d ट्याबहरूसँग ट्याब सूची"
 
 #. Translators: This message describes a description list.
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
@@ -11056,12 +10875,10 @@ msgstr[1] ""
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #: src/orca/messages.py:2728
 #, python-format
-#| msgctxt "structural navigation"
-#| msgid "Value"
 msgid "%d value"
 msgid_plural "%d values"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d मान"
+msgstr[1] "%d मान"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11148,8 +10965,8 @@ msgstr[1] "%(count)d %(repeatChar)s वर्णहरू"
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
-msgstr[0] "%(total)d मध्ये %(index)d सामाग्री चय नित ।"
-msgstr[1] "%(total)d मध्ये %(index)d सामाग्रीहरू चय नित ।"
+msgstr[0] "%(total)d मध्ये %(index)d सामाग्री चयनित"
+msgstr[1] "%(total)d मध्ये %(index)d सामाग्रीहरू चय.नित"
 
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands which are not specific to the
@@ -11169,8 +10986,8 @@ msgstr[1] "%d Orca default shortcuts found."
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
-msgstr[0] "%(count)d %(application)s का लागि दृष्टिवाचक द्रुत मार्ग पाइयो ।"
-msgstr[1] "%(count)d %(application)s हरुका लागि दृष्टिवाचक द्रुत मार्ग पाइयो ।"
+msgstr[0] "%(count)d %(application)s का लागि दृष्टिवाचक द्रुत मार्ग पाइयो ।."
+msgstr[1] "%(count)d %(application)s हरुका लागि दृष्टिवाचक द्रुत मार्ग पाइयो ।."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -11240,8 +11057,8 @@ msgstr[1] "table with %d rows"
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
-msgstr[0] ""
-msgstr[1] "%d सेकेण्ड अगाडि"
+msgstr[0] "%d सेकेन्ड पहिले"
+msgstr[1] "%d सेकेन्ड पहिले"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
@@ -11579,7 +11396,7 @@ msgstr "इपिग्राफ"
 #: src/orca/object_properties.py:240
 msgctxt "role"
 msgid "epilogue"
-msgstr ""
+msgstr "उपसंहार"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11588,7 +11405,7 @@ msgstr ""
 #: src/orca/object_properties.py:246
 msgctxt "role"
 msgid "errata"
-msgstr ""
+msgstr "इरेटा"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11678,7 +11495,7 @@ msgstr "भूमिका"
 #: src/orca/object_properties.py:306
 msgctxt "role"
 msgid "prologue"
-msgstr ""
+msgstr "प्रस्तावना"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11735,7 +11552,7 @@ msgstr "h%d"
 #, python-format
 #| msgid "%(role)s level %(level)d"
 msgid "%(role)s %(level)d"
-msgstr ""
+msgstr "%(role)s %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12213,7 +12030,7 @@ msgstr "_Present औजार टिपोट"
 
 #: src/orca/orca-setup.ui:481
 msgid "Speak object under mo_use"
-msgstr "mo_use मा वस्तु बताउ ।"
+msgstr "वस्तु mo_use मा बताउ ।"
 
 #: src/orca/orca-setup.ui:504
 msgid "Mouse"
@@ -12221,11 +12038,11 @@ msgstr "सुलसुले"
 
 #: src/orca/orca-setup.ui:538
 msgid "_Time format:"
-msgstr "समय ढाँचा"
+msgstr "समय ढाँचा:"
 
 #: src/orca/orca-setup.ui:555
 msgid "Dat_e format:"
-msgstr "Dat_e स्वरूप"
+msgstr "मिति स्वरूपः"
 
 #: src/orca/orca-setup.ui:611
 msgid "Time and Date"
@@ -12415,7 +12232,7 @@ msgstr "वस्तुको mnemonics बताउ ।"
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., item 6 of 7).
 #: src/orca/orca-setup.ui:1709
 msgid "Speak child p_osition"
-msgstr "सन्तानको स्थान बताउ ।"
+msgstr "सन्तानको स्थान बताउ"
 
 #: src/orca/orca-setup.ui:1725
 msgid "Speak tutorial messages"
@@ -12509,11 +12326,11 @@ msgstr "लाइन प्रतिमाको अन्त्य अक्ष
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille contractions get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for ing (dots 3-4-6), and the letter e (dots 1-5) all by itself represents the word every. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in tables provided by liblouis.
 #: src/orca/orca-setup.ui:2112
 msgid "Contraction _Table:"
-msgstr "संक्षेपित तालिका"
+msgstr "संक्षेपित तालिकाः"
 
 #: src/orca/orca-setup.ui:2143
 msgid "_Enable Contracted Braille"
-msgstr "_संक्षेपित ब्रेललाई सक्षम बनाउ ।"
+msgstr "_संक्षेपित ब्रेललाई सक्षम बनाउ"
 
 #. Translators: If this option is enabled, Orca will adjust the text shown on the braille display so that only full words are shown. If it is not enabled, Orca uses all of the cells on the display, but some words might not be fully shown requiring the user to scroll to see the remainder.
 #: src/orca/orca-setup.ui:2158
@@ -12651,7 +12468,7 @@ msgstr "पुछारमा जाउ ।"
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: src/orca/orca-setup.ui:3161
 msgid "Move _down one"
-msgstr "१ तल सर"
+msgstr "१ तल सर ।"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: src/orca/orca-setup.ui:3176
