@@ -801,7 +801,7 @@ class SpeechAndVerbosityManager:
     def get_indentation_description(
         self,
         line: str,
-        only_if_changed: Optional[bool] = False
+        only_if_changed: Optional[bool] = None
     ) -> str:
         """Returns a description of the indentation in the given line."""
 
@@ -823,6 +823,10 @@ class SpeechAndVerbosityManager:
                 result += f"{messages.spacesCount(span[1] - span[0])} "
             else:
                 result += f"{messages.tabsCount(span[1] - span[0])} "
+
+        if only_if_changed is None:
+            only_if_changed = settings_manager.get_manager().get_setting(
+                "speakIndentationOnlyIfChanged")
 
         if self._last_indentation_description == result and only_if_changed:
             return ""

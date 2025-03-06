@@ -364,3 +364,4 @@ structNavInSayAll = False
 enableSadPidginHack = False
 presentChatRoomLast = False
 presentLiveRegionFromInactiveTab = False
+speakIndentationOnlyIfChanged = False
