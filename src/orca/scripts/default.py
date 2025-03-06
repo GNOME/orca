@@ -1461,8 +1461,7 @@ class Script(script.Script):
         else:
             voice = self.speech_generator.voice(string=string)
             manager = speech_and_verbosity_manager.get_manager()
-            string = manager.adjust_for_digits(event.source, string)
-            string = manager.adjust_for_repeats(string)
+            string = manager.adjust_for_presentation(event.source, string)
             self.speakMessage(string, voice)
 
     def on_text_inserted(self, event):
@@ -1528,8 +1527,7 @@ class Script(script.Script):
             else:
                 voice = self.speech_generator.voice(obj=event.source, string=string)
                 manager = speech_and_verbosity_manager.get_manager()
-                string = manager.adjust_for_digits(event.source, string)
-                string = manager.adjust_for_repeats(string)
+                string = manager.adjust_for_presentation(event.source, string)
                 self.speakMessage(string, voice)
 
         if len(string) != 1 \
@@ -1813,8 +1811,7 @@ class Script(script.Script):
 
         voice = self.speech_generator.voice(obj=obj, string=sentence)
         manager = speech_and_verbosity_manager.get_manager()
-        sentence = manager.adjust_for_digits(obj, sentence)
-        sentence = manager.adjust_for_repeats(sentence)
+        sentence = manager.adjust_for_presentation(obj, sentence)
         self.speakMessage(sentence, voice)
         return True
 
@@ -1844,8 +1841,7 @@ class Script(script.Script):
 
         voice = self.speech_generator.voice(obj=obj, string=word)
         manager = speech_and_verbosity_manager.get_manager()
-        word = manager.adjust_for_digits(obj, word)
-        word = manager.adjust_for_repeats(word)
+        word = manager.adjust_for_presentation(obj, word)
         self.speakMessage(word, voice)
         return True
 
@@ -1930,13 +1926,8 @@ class Script(script.Script):
                 # TODO - JD: This needs to be done in the generators.
                 voice = self.speech_generator.voice(
                     obj=obj, string=text, language=language, dialect=dialect)
-                # TODO - JD: Can we combine all the adjusting?
                 manager = speech_and_verbosity_manager.get_manager()
-                text = manager.adjust_for_links(obj, text, start)
-                text = manager.adjust_for_digits(obj, text)
-                text = manager.adjust_for_repeats(text)
-                if self.utilities.shouldVerbalizeAllPunctuation(obj):
-                    text = self.utilities.verbalizeAllPunctuation(text)
+                text = manager.adjust_for_presentation(obj, text, start)
 
                 # Some synthesizers will verbalize the whitespace, so if we've already
                 # described it, prevent double-presentation by stripping it off.
@@ -1977,11 +1968,7 @@ class Script(script.Script):
 
             voice = self.speech_generator.voice(obj=obj, string=phrase)
             manager = speech_and_verbosity_manager.get_manager()
-            phrase = manager.adjust_for_digits(obj, phrase)
-            phrase = manager.adjust_for_repeats(phrase)
-            if self.utilities.shouldVerbalizeAllPunctuation(obj):
-                phrase = self.utilities.verbalizeAllPunctuation(phrase)
-
+            phrase = manager.adjust_for_presentation(obj, phrase)
             utterance = [phrase]
             utterance.extend(voice)
             speech.speak(utterance)
@@ -2174,12 +2161,8 @@ class Script(script.Script):
                 if voice and isinstance(voice, list):
                     voice = voice[0]
 
-                # TODO - JD: Can we combine all the adjusting?
                 manager = speech_and_verbosity_manager.get_manager()
-                text = manager.adjust_for_links(obj, text, start)
-                text = manager.adjust_for_digits(obj, text)
-                text = manager.adjust_for_repeats(text)
-
+                text = manager.adjust_for_presentation(obj, text, start)
                 context = speechserver.SayAllContext(obj, text, start, end)
                 tokens = ["DEFAULT:", context]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)

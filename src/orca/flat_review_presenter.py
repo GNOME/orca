@@ -1108,7 +1108,8 @@ class FlatReviewPresenter:
                 script.phoneticSpellCurrentItem(line_string)
             else:
                 manager = speech_and_verbosity_manager.get_manager()
-                line_string = manager.adjust_for_repeats(line_string)
+                line_string = manager.adjust_for_presentation(
+                    self._context.getCurrentAccessible(), line_string)
                 script.speakMessage(line_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
@@ -1140,7 +1141,8 @@ class FlatReviewPresenter:
                     script.phoneticSpellCurrentItem(word_string)
                 elif speech_type == 1:
                     manager = speech_and_verbosity_manager.get_manager()
-                    word_string = manager.adjust_for_repeats(word_string)
+                    word_string = manager.adjust_for_presentation(
+                        self._context.getCurrentAccessible(), word_string)
                     script.speakMessage(word_string, voice)
 
         focus_manager.get_manager().emit_region_changed(

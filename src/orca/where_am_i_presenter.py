@@ -39,6 +39,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import settings_manager
+from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
@@ -497,9 +498,8 @@ class WhereAmIPresenter:
             script.speakMessage(messages.NO_SELECTED_TEXT)
             return True
 
-        if script.utilities.shouldVerbalizeAllPunctuation(obj):
-            text = script.utilities.verbalizeAllPunctuation(text)
-
+        manager = speech_and_verbosity_manager.get_manager()
+        text = manager.adjust_for_presentation(obj, text)
         msg = messages.SELECTED_TEXT_IS % text
         script.speakMessage(msg)
         return True

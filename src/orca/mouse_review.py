@@ -159,8 +159,7 @@ class _StringContext:
 
         voice = self._script.speech_generator.voice(obj=self._obj, string=self._string)
         manager = speech_and_verbosity_manager.get_manager()
-        string = manager.adjust_for_digits(self._obj, self._string)
-        string = manager.adjust_for_repeats(string)
+        string = manager.adjust_for_presentation(self._obj, self._string)
 
         focus_manager.get_manager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW)

@@ -149,8 +149,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.isTextBlockElement(obj):
             return []
 
-        if AXUtilities.is_editable(obj) \
-           and self._script.utilities.isCodeDescendant(obj):
+        if AXUtilities.is_editable(obj) and AXObject.find_ancestor(obj, AXUtilities.is_code):
             return []
 
         role = args.get('role', AXObject.get_role(obj))

@@ -40,11 +40,14 @@ from . import debug
 from . import focus_manager
 from . import input_event
 from . import keybindings
+from . import mathsymbols
 from . import messages
+from . import pronunciation_dict
 from . import settings
 from . import settings_manager
 from . import speech
 from .ax_hypertext import AXHypertext
+from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 
@@ -702,8 +705,8 @@ class SpeechAndVerbosityManager:
         return True
 
     @staticmethod
-    def adjust_for_digits(obj: Atspi.Accessible, string: str) -> str:
-        """Adjusts string to present numbers as digits."""
+    def adjust_for_digits(obj: Atspi.Accessible, text: str) -> str:
+        """Adjusts text to present numbers as digits."""
 
         def _convert(word):
             if word.isnumeric():
@@ -711,13 +714,19 @@ class SpeechAndVerbosityManager:
             return word
 
         if not (settings.speakNumbersAsDigits or AXUtilities.is_text_input_telephone(obj)):
-            return string
+            return text
 
-        return "".join(map(_convert, string.split()))
+        return "".join(map(_convert, text.split()))
 
     @staticmethod
-    def adjust_for_links(obj: Atspi.Accessible, line: str, start_offset: int) -> str:
+    def _adjust_for_links(obj: Atspi.Accessible, line: str, start_offset: int) -> str:
         """Adjust line to include the word "link" after any hypertext links."""
+
+        # This adjustment should only be made in cases where there is only presentable text.
+        # In content where embedded objects are present, "link" is presented as the role of any
+        # embedded link children.
+        if "\ufffc" in line:
+            return line
 
         end_offset = start_offset + len(line)
         links = AXHypertext.get_all_links_in_range(obj, start_offset, end_offset)
@@ -725,28 +734,96 @@ class SpeechAndVerbosityManager:
         offsets = sorted([offset - start_offset for offset in offsets], reverse=True)
         tokens = list(line)
         for o in offsets:
-            string = f" {messages.LINK}"
+            text = f" {messages.LINK}"
             if o < len(tokens) and tokens[o].isalnum():
-                string += " "
-            tokens[o:o] = string
+                text += " "
+            tokens[o:o] = text
         return "".join(tokens)
 
     @staticmethod
-    def adjust_for_repeats(string: str) -> str:
+    def _adjust_for_repeats(text: str) -> str:
         """Adjust line to include a description of repeated symbols."""
 
         def replacement(match):
             char = match.group(1)
             count = len(match.group(0))
-            if match.start() > 0 and string[match.start() - 1].isalnum():
+            if match.start() > 0 and text[match.start() - 1].isalnum():
                 return f" {messages.repeatedCharCount(char, count)}"
             return messages.repeatedCharCount(char, count)
 
-        if len(string) < 4 or settings.repeatCharacterLimit < 4:
-            return string
+        if len(text) < 4 or settings.repeatCharacterLimit < 4:
+            return text
 
         pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(settings.repeatCharacterLimit - 1) + ",}")
-        return re.sub(pattern, replacement, string)
+        return re.sub(pattern, replacement, text)
+
+    @staticmethod
+    def _should_verbalize_punctuation(obj: Atspi.Accessible) -> bool:
+        """Returns True if punctuation should be verbalized."""
+
+        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_code) is None:
+            return False
+
+        # If the user has set their punctuation level to All, then the synthesizer will
+        # do the work for us. If the user has set their punctuation level to None, then
+        # they really don't want punctuation and we mustn't override that.
+        style = settings_manager.get_manager().get_setting("verbalizePunctuationStyle")
+        if style in [settings.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_NONE]:
+            return False
+
+        return True
+
+    @staticmethod
+    def _adjust_for_verbalized_punctuation(obj: Atspi.Accessible, text: str) -> str:
+        """Surrounds punctuation symbols with spaces to increase the likelihood of presentation."""
+
+        if not SpeechAndVerbosityManager._should_verbalize_punctuation(obj):
+            return text
+
+        result = text
+        punctuation = set(re.findall(r"[^\w\s]", result))
+        for symbol in punctuation:
+            result = result.replace(symbol, f" {symbol} ")
+
+        return result
+
+    @staticmethod
+    def _apply_pronunciation_dictionary(text: str) -> str:
+        """Applies the pronunciation dictionary to the text."""
+
+        if not settings_manager.get_manager().get_setting("usePronunciationDictionary"):
+            return text
+
+        words = re.split(r"(\W+)", text)
+        return "".join(map(pronunciation_dict.getPronunciation, words))
+
+    def adjust_for_presentation(
+        self,
+        obj: Atspi.Accessible,
+        text: str,
+        start_offset: Optional[int] = None
+    ) -> str:
+        """Adjusts text for spoken presentation."""
+
+        tokens = [f"SPEECH AND VERBOSITY MANAGER: Adjusting '{text}' from",
+                  obj, f"start_offset: {start_offset}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if AXUtilities.is_math_related(obj):
+            text = mathsymbols.adjustForSpeech(text)
+
+        if start_offset is not None:
+            text = self._adjust_for_links(obj, text, start_offset)
+
+        text = self.adjust_for_digits(obj, text)
+        text = self._adjust_for_repeats(text)
+        text = self._adjust_for_verbalized_punctuation(obj, text)
+        text = self._apply_pronunciation_dictionary(text)
+
+        msg = F"SPEECH AND VERBOSITY MANAGER: Adjusted text: '{text}'"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return text
+
 
 _manager: SpeechAndVerbosityManager = SpeechAndVerbosityManager()
 

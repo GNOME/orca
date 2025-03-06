@@ -63,7 +63,6 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
-        self._isCodeDescendant = {}
         self._isEntryDescendant = {}
         self._hasGridDescendant = {}
         self._isGridDescendant = {}
@@ -140,7 +139,6 @@ class Utilities(script_utilities.Utilities):
         self._inTopLevelWebApp = {}
         self._isTextBlockElement = {}
         self._isContentEditableWithEmbeddedObjects = {}
-        self._isCodeDescendant = {}
         self._isEntryDescendant = {}
         self._hasGridDescendant = {}
         self._isGridDescendant = {}
@@ -2411,18 +2409,6 @@ class Utilities(script_utilities.Utilities):
                 rv = not (AXUtilities.is_static(obj) or AXUtilities.is_link(obj))
 
         self._isClickableElement[hash(obj)] = rv
-        return rv
-
-    def isCodeDescendant(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isCodeDescendant(obj)
-
-        rv = self._isCodeDescendant.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = AXObject.find_ancestor(obj, AXUtilities.is_code) is not None
-        self._isCodeDescendant[hash(obj)] = rv
         return rv
 
     def isItemForEditableComboBox(self, item, comboBox):

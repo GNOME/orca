@@ -37,10 +37,8 @@ from gi.repository import Atspi
 from . import debug
 from . import focus_manager
 from . import input_event_manager
-from . import mathsymbols
 from . import messages
 from . import object_properties
-from . import pronunciation_dict
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -55,10 +53,6 @@ from .ax_value import AXValue
 
 class Utilities:
     EMBEDDED_OBJECT_CHARACTER = '\ufffc'
-    ZERO_WIDTH_NO_BREAK_SPACE = '\ufeff'
-    flags = re.UNICODE
-    WORDS_RE = re.compile(r"(\W+)", flags)
-    PUNCTUATION = re.compile(r"[^\w\s]", flags)
 
     def __init__(self, script):
         """Creates an instance of the Utilities class.
@@ -233,9 +227,6 @@ class Utilities:
         return ""
 
     def isAnchor(self, obj):
-        return False
-
-    def isCodeDescendant(self, obj):
         return False
 
     def isComboBoxWithToggleDescendant(self, obj):
@@ -1154,61 +1145,6 @@ class Utilities:
             lastLanguage, lastDialect = language, dialect
 
         return rv
-
-    def shouldVerbalizeAllPunctuation(self, obj):
-        if not (AXUtilities.is_code(obj) or self.isCodeDescendant(obj)):
-            return False
-
-        # If the user has set their punctuation level to All, then the synthesizer will
-        # do the work for us. If the user has set their punctuation level to None, then
-        # they really don't want punctuation and we mustn't override that.
-        style = settings_manager.get_manager().get_setting("verbalizePunctuationStyle")
-        if style in [settings.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_NONE]:
-            return False
-
-        return True
-
-    def verbalizeAllPunctuation(self, string):
-        result = string
-        for symbol in set(re.findall(self.PUNCTUATION, result)):
-            charName = f" {symbol} "
-            result = re.sub(r"\%s" % symbol, charName, result)
-
-        return result
-
-    def adjustForPronunciation(self, line):
-        """Adjust the line to replace words in the pronunciation dictionary,
-        with what those words actually sound like.
-
-        Arguments:
-        - line: the string to adjust for words in the pronunciation dictionary.
-
-        Returns: a new line adjusted for words found in the pronunciation
-        dictionary.
-        """
-
-        # TODO - JD: We had been making this change in response to bgo#591734.
-        # It may or may not still be needed or wanted to replace no-break-space
-        # characters with plain spaces. Surely modern synthesizers can cope with
-        # both types of spaces.
-        line = line.replace("\u00a0", " ")
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_math_related(focus):
-            line = mathsymbols.adjustForSpeech(line)
-
-        if len(line) == 1 and not self._script.inSayAll() and AXUtilities.is_math_related(focus):
-            charname = mathsymbols.getCharacterName(line)
-            if charname != line:
-                return charname
-
-        if not settings.usePronunciationDictionary:
-            return line
-
-        newLine = ""
-        words = self.WORDS_RE.split(line)
-        newLine = ''.join(map(pronunciation_dict.getPronunciation, words))
-        return newLine
 
     def indentationDescription(self, line):
         if settings_manager.get_manager().get_setting('onlySpeakDisplayedText') \

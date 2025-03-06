@@ -36,7 +36,6 @@ __license__   = "LGPL"
 from enum import Enum, auto
 
 from . import debug
-from . import script_manager
 
 class SSMLCapabilities(Enum):
     """Enumeration of SSML capabilities."""
@@ -155,11 +154,6 @@ class SSML(dict):
 
         # Annotate the text with U+E000 (private use) and record the offsets
         (text, offsets) = SSML._mark_words(text)
-
-        # Apply scripted formatting (must not change the U+E000 marks!)
-        script = script_manager.get_manager().get_active_script()
-        if script is not None:
-            text = script.utilities.adjustForPronunciation(text)
 
         # Transcribe to SSML, translating U+E000 into marks
         # Note: we need to do this after all mangling otherwise the ssml markup

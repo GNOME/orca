@@ -2041,9 +2041,8 @@ class SpeechGenerator(generator.Generator):
            and args.get("formatType") != "ancestor":
             result[0] = messages.BLANK
 
-        if self._script.utilities.shouldVerbalizeAllPunctuation(obj):
-            result[0] = self._script.utilities.verbalizeAllPunctuation(result[0])
-
+        manager = speech_and_verbosity_manager.get_manager()
+        result[0] = manager.adjust_for_presentation(obj, result[0])
         return result
 
     @log_generator_output
@@ -2077,11 +2076,8 @@ class SpeechGenerator(generator.Generator):
                 args.pop("string")
 
             voice = self.voice(string=string, obj=obj, **args)
-            # TODO - JD: Can we combine all the adjusting?
             manager = speech_and_verbosity_manager.get_manager()
-            string = manager.adjust_for_links(obj, string, start)
-            string = manager.adjust_for_digits(obj, string)
-            rv = [manager.adjust_for_repeats(string)]
+            rv = [manager.adjust_for_presentation(obj, string, start)]
             rv.extend(voice)
 
             # TODO - JD: speech.speak() has a bug which causes a list of utterances to
