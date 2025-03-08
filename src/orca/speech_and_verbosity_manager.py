@@ -828,8 +828,13 @@ class SpeechAndVerbosityManager:
             only_if_changed = settings_manager.get_manager().get_setting(
                 "speakIndentationOnlyIfChanged")
 
-        if self._last_indentation_description == result and only_if_changed:
-            return ""
+        if only_if_changed:
+            if self._last_indentation_description == result:
+                return ""
+
+            if not result and self._last_indentation_description:
+                self._last_indentation_description = ""
+                return messages.spacesCount(0)
 
         self._last_indentation_description = result
         return result
