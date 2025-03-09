@@ -2771,6 +2771,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_state_read_only(obj, **args)
         result += self._generate_accessible_role(obj, **args)
+        result += self._generate_text_indentation(obj, **args)
         result += (self._generate_text_line(obj, **args) \
             or self._generate_accessible_placeholder_text(obj, **args))
         result += self._generate_text_selection(obj, **args)
