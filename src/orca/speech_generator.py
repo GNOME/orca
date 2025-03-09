@@ -2129,7 +2129,7 @@ class SpeechGenerator(generator.Generator):
         format_type = args.get("formatType", "unfocused")
         only_if_changed = None
         if format_type.endswith("WhereAmI"):
-            only_if_changed = True
+            only_if_changed = False
 
         description = speech_and_verbosity_manager.get_manager().get_indentation_description(
             line, only_if_changed)
