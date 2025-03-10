@@ -1559,12 +1559,12 @@ msgstr "Ves a la línia anterior"
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:754
 msgid "Go to the top of the file"
-msgstr "Ves a dalt de tot de la fila"
+msgstr "Ves a dalt de tot del fitxer"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:757
 msgid "Go to the bottom of the file"
-msgstr "Ves a baix de tot de la fila"
+msgstr "Ves a baix de tot del fitxer"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:760
