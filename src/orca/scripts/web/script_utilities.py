@@ -3571,12 +3571,11 @@ class Utilities(script_utilities.Utilities):
         if self.isTopLevelDocument(obj):
             return None, -1
 
-        while obj and AXObject.get_parent(obj):
-            if self.isDetachedDocument(AXObject.get_parent(obj)):
-                obj = self.iframeForDetachedDocument(AXObject.get_parent(obj))
+        while obj and (parent := AXObject.get_parent(obj)):
+            if self.isDetachedDocument(parent):
+                obj = self.iframeForDetachedDocument(parent)
                 continue
 
-            parent = AXObject.get_parent(obj)
             if not AXObject.is_valid(parent):
                 msg = "WEB: Finding next caret in order. Parent is not valid."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3643,12 +3642,11 @@ class Utilities(script_utilities.Utilities):
         if self.isTopLevelDocument(obj):
             return None, -1
 
-        while obj and AXObject.get_parent(obj):
-            if self.isDetachedDocument(AXObject.get_parent(obj)):
-                obj = self.iframeForDetachedDocument(AXObject.get_parent(obj))
+        while obj and (parent := AXObject.get_parent(obj)):
+            if self.isDetachedDocument(parent):
+                obj = self.iframeForDetachedDocument(parent)
                 continue
 
-            parent = AXObject.get_parent(obj)
             if not AXObject.is_valid(parent):
                 msg = "WEB: Finding previous caret in order. Parent is not valid."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
