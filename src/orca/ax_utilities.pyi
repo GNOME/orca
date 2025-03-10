@@ -175,11 +175,6 @@ class AXUtilities:
     ) -> None: ...
 
     @staticmethod
-    def get_last_known_name(
-        obj: Atspi.Accessible
-    ) -> str: ...
-
-    @staticmethod
     def get_text_event_reason(
         event: Atspi.Event
     ) -> TextEventReason: ...

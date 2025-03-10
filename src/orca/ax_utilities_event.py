@@ -173,12 +173,6 @@ class AXUtilitiesEvent:
         thread.start()
 
     @staticmethod
-    def get_last_known_name(obj: Atspi.Accessible) -> str:
-        """Returns the last known name of obj."""
-
-        return AXUtilitiesEvent.LAST_KNOWN_NAME.get(hash(obj), "")
-
-    @staticmethod
     def get_text_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
