@@ -78,19 +78,6 @@ class Utilities(script_utilities.Utilities):
 
         return name.strip()
 
-    @staticmethod
-    def flows_from_or_to_selection(obj):
-        """Returns True if obj flows to or from another object with selected text."""
-
-        # TODO - JD: 1) Is this still needed? 2) If so, move it to AXUtilities.
-        targets = AXUtilities.get_flows_from(obj)
-        targets.extend(AXUtilities.get_flows_to(obj))
-        for target in targets:
-            if AXText.has_selected_text(target):
-                return True
-
-        return False
-
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         """Returns the word in obj at the specified or current offset."""
 

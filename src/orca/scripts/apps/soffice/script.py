@@ -385,9 +385,6 @@ class Script(default.Script):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self.utilities.flows_from_or_to_selection(event.source):
-            return
-
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -457,10 +454,6 @@ class Script(default.Script):
             if combobox:
                 focus_manager.get_manager().set_locus_of_focus(event, combobox, True)
                 return
-
-        # TODO - JD: Is this still needed?
-        if self.utilities.flows_from_or_to_selection(event.source):
-            return
 
         if AXUtilities.is_paragraph(event.source):
             obj, _offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
