@@ -456,11 +456,6 @@ class Script(default.Script):
                 return
 
         if AXUtilities.is_paragraph(event.source):
-            obj, _offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
-            _string, start, end = AXText.get_cached_selected_text(obj)
-            if start != end:
-                return
-
             manager = input_event_manager.get_manager()
             if manager.last_event_was_left() or manager.last_event_was_right():
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
