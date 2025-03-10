@@ -37,17 +37,6 @@ from .speech_generator import SpeechGenerator
 
 class Script(default.Script):
 
-    def __init__(self, app):
-        super().__init__(app)
-
-        # Some objects which issue descendant changed events lack
-        # STATE_MANAGES_DESCENDANTS. As a result, on_selection_changed
-        # doesn't ignore these objects. That in turn causes Orca to
-        # double-speak some items and/or set the locusOfFocus to a
-        # parent it shouldn't. See bgo#616582. [[[TODO - JD: remove
-        # this hack if and when we get a fix for that bug]]]
-        #
-        self.lastDescendantChangedSource = None
 
     def get_speech_generator(self):
         """Returns the speech generator for this script."""
@@ -77,9 +66,6 @@ class Script(default.Script):
 
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
-
-        if event.source == self.lastDescendantChangedSource:
-            return
 
         # We treat selected children as the locus of focus. When the
         # selection changes in a list we want to update the locus of

@@ -45,7 +45,7 @@ class Utilities(script_utilities.Utilities):
 
         newObj = obj
         if newObj and not AXObject.is_valid(newObj):
-            newObj = self.findReplicant(self._script.lastDescendantChangedSource, obj)
+            newObj = self.findReplicant(AXObject.get_parent(obj), obj)
 
         if not newObj:
             return script_utilities.Utilities.nodeLevel(self, obj)
