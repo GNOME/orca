@@ -53,7 +53,7 @@ class Script(default.Script):
         if self.utilities.isToggleDescendantOfComboBox(new_focus):
             new_focus = AXObject.find_ancestor(new_focus, AXUtilities.is_combo_box) or new_focus
             manager.set_locus_of_focus(event, new_focus, False)
-        elif self.utilities.isInOpenMenuBarMenu(new_focus):
+        elif AXObject.find_ancestor(new_focus, AXUtilities.is_menu_bar):
             window = self.utilities.topLevelObject(new_focus)
             if window and manager.get_active_window() != window:
                 manager.set_active_window(window)

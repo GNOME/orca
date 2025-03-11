@@ -181,7 +181,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not AXObject.is_valid(obj):
             return []
 
-        if self._script.utilities.preferDescriptionOverName(obj):
+        # TODO - JD: Can this logic be moved into the default speech generator?
+        if self._prefer_description_over_name(obj):
             return []
 
         if obj != focus_manager.get_manager().get_locus_of_focus():
@@ -356,7 +357,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         # TODO - JD: Can this logic be moved to the default speech generator?
         if AXObject.get_name(obj):
-            if self._script.utilities.preferDescriptionOverName(obj):
+            if self._prefer_description_over_name(obj):
                 result = [AXObject.get_description(obj)]
             else:
                 name = AXObject.get_name(obj)
@@ -512,7 +513,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         elif role == Atspi.Role.HEADING:
             if index == total - 1 or not self._script.utilities.isFocusableWithMathChild(obj):
-                level = self._script.utilities.headingLevel(obj)
+                level = AXUtilities.get_heading_level(obj)
                 if level:
                     result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
                         "role": self.get_localized_role_name(obj, **args),

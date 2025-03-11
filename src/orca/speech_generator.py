@@ -405,14 +405,13 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
 
-        if AXUtilities.is_heading(obj):
-            level = self._script.utilities.headingLevel(obj)
-            if level:
-                result = [object_properties.ROLE_HEADING_LEVEL_SPEECH % {
-                    "role": self.get_localized_role_name(obj, **args),
-                    "level": level}]
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
-                return result
+        level = AXUtilities.get_heading_level(obj)
+        if level:
+            result = [object_properties.ROLE_HEADING_LEVEL_SPEECH % {
+                "role": self.get_localized_role_name(obj, **args),
+                "level": level}]
+            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            return result
 
         result = [self.get_localized_role_name(obj, **args)]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -476,13 +475,9 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_term_value_count(self, obj, **args):
-        count = len(self._script.utilities.valuesForTerm(obj))
-        # If we have a simple 1-term, 1-value situation, this announcment is chatty.
-        if count in (-1, 1):
-            return []
-
-        result = [messages.valueCountForTerm(count)]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result = super()._generate_term_value_count(obj, **args)
+        if result:
+            result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
@@ -492,7 +487,7 @@ class SpeechGenerator(generator.Generator):
                == settings.VERBOSITY_LEVEL_BRIEF:
             return []
 
-        if self._script.utilities.isTreeDescendant(obj):
+        if AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
             child_nodes = self._script.utilities.childNodes(obj)
             if child_nodes:
                 result = [messages.itemCount(len(child_nodes))]
@@ -1621,7 +1616,7 @@ class SpeechGenerator(generator.Generator):
 
         rows = AXTable.get_row_count(obj)
         columns = AXTable.get_column_count(obj)
-        nesting_level = self._script.utilities.nestingLevel(obj)
+        nesting_level = self._get_nesting_level(obj)
         if nesting_level > 0:
             result = [messages.mathNestedTableSize(rows, columns)]
         else:
@@ -1634,7 +1629,7 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        nesting_level = self._script.utilities.nestingLevel(obj)
+        nesting_level = self._get_nesting_level(obj)
         if nesting_level > 0:
             result = [messages.MATH_NESTED_TABLE_END]
         else:

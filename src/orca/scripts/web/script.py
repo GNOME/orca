@@ -1620,7 +1620,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Last command was mouse button"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.setCaretContext(event.source, event.detail1)
-            notify = not self.utilities.isEntryDescendant(event.source)
+            notify = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_entry) is None
             focus_manager.get_manager().set_locus_of_focus(event, event.source, notify, True)
             return True
 

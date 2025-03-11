@@ -135,9 +135,7 @@ class Utilities(script_utilities.Utilities):
         # Writer implements the selection interface on the document and all its
         # children. The former is interesting, but interferes with our presentation
         # of selected text. The latter is just weird.
-        if AXUtilities.is_document_text(obj):
-            return None
-        if AXObject.find_ancestor(obj, AXUtilities.is_document_text):
+        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_document_text):
             return None
         return super().getSelectionContainer(obj)
 

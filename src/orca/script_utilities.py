@@ -62,13 +62,31 @@ class Utilities:
         """
 
         self._script = script
-        self._selectedMenuBarMenu = {}
 
-    #########################################################################
-    #                                                                       #
-    # Utilities for finding, identifying, and comparing accessibles         #
-    #                                                                       #
-    #########################################################################
+    def nodeLevel(self, obj):
+        """Determines the node level of this object if it is in a tree
+        relation, with 0 being the top level node.  If this object is
+        not in a tree relation, then -1 will be returned.
+
+        Arguments:
+        -obj: the Accessible object
+        """
+
+        if not AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
+            return -1
+
+        attrs = AXObject.get_attributes_dict(obj)
+        if "level" in attrs:
+            # ARIA levels are 1-based.
+            return int(attrs.get("level", 0)) - 1
+
+        nodes = []
+        node = obj
+        while node and (targets := AXUtilities.get_is_node_child_of(node)):
+            node = targets[0]
+            nodes.append(node)
+
+        return len(nodes) - 1
 
     def childNodes(self, obj):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
@@ -83,13 +101,10 @@ class Utilities:
         if not AXUtilities.is_expanded(obj):
             return []
 
-        parent = AXTable.get_table(obj)
-        if parent is None:
+        table = AXTable.get_table(obj)
+        if table is None:
             return []
 
-        # First see if this accessible implements RELATION_NODE_PARENT_OF.
-        # If it does, the full target list are the nodes. If it doesn't
-        # we'll do an old-school, row-by-row search for child nodes.
         nodes = AXUtilities.get_is_node_parent_of(obj)
         tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-parent-of"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -104,8 +119,8 @@ class Utilities:
         row, col = AXTable.get_cell_coordinates(obj, prefer_attribute=False)
         nodeLevel = self.nodeLevel(obj)
 
-        for i in range(row + 1, AXTable.get_row_count(parent, prefer_attribute=False)):
-            cell = AXTable.get_cell_at(parent, i, col)
+        for i in range(row + 1, AXTable.get_row_count(table, prefer_attribute=False)):
+            cell = AXTable.get_cell_at(table, i, col)
             targets = AXUtilities.get_is_node_child_of(cell)
             if not targets:
                 continue
@@ -119,9 +134,6 @@ class Utilities:
         tokens = ["SCRIPT UTILITIES:", len(nodes), "child nodes for", obj, "via node-child-of"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return nodes
-
-    def preferDescriptionOverName(self, obj):
-        return False
 
     def detailsContentForObject(self, obj):
         details = self.detailsForObject(obj)
@@ -438,15 +450,6 @@ class Utilities:
 
         return " ".join(tokens)
 
-    def isTreeDescendant(self, obj):
-        if obj is None:
-            return False
-
-        if AXUtilities.is_tree_item(obj):
-            return True
-
-        return AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table) is not None
-
     def isLink(self, obj):
         """Returns True if obj is a link."""
 
@@ -511,79 +514,16 @@ class Utilities:
         if self.isLink(obj):
             return False
 
+        if AXUtilities.is_combo_box(obj) and AXUtilities.is_editable(obj) \
+           and not AXObject.get_child_count(obj):
+            return True
+
         # TODO - JD: This might have been enough way back when, but additional
         # checks are needed now.
         return AXUtilities.is_text_input(obj) \
             or AXUtilities.is_text(obj) \
+            or AXUtilities.is_terminal(obj) \
             or AXUtilities.is_paragraph(obj)
-
-    def nestingLevel(self, obj):
-        """Determines the nesting level of this object.
-
-        Arguments:
-        -obj: the Accessible object
-        """
-
-        if obj is None:
-            return 0
-        def pred(x):
-            if AXUtilities.is_block_quote(obj):
-                return AXUtilities.is_block_quote(x)
-            if AXUtilities.is_list_item(obj):
-                return AXUtilities.is_list(AXObject.get_parent(x))
-            return AXUtilities.have_same_role(obj, x)
-
-        ancestors = []
-        ancestor = AXObject.find_ancestor(obj, pred)
-        while ancestor:
-            ancestors.append(ancestor)
-            ancestor = AXObject.find_ancestor(ancestor, pred)
-
-        return len(ancestors)
-
-    def nodeLevel(self, obj):
-        """Determines the node level of this object if it is in a tree
-        relation, with 0 being the top level node.  If this object is
-        not in a tree relation, then -1 will be returned.
-
-        Arguments:
-        -obj: the Accessible object
-        """
-
-        if not self.isTreeDescendant(obj):
-            return -1
-
-        attrs = AXObject.get_attributes_dict(obj)
-        if "level" in attrs:
-            # ARIA levels are 1-based.
-            return int(attrs.get("level", 0)) - 1
-
-        nodes = []
-        node = obj
-        done = False
-        while not done:
-            targets = AXUtilities.get_is_node_child_of(node)
-            node = None
-            if targets:
-                node = targets[0]
-
-            # We want to avoid situations where something gives us an
-            # infinite cycle of nodes.  Bon Echo has been seen to do
-            # this (see bug 351847).
-            if nodes.count(node):
-                tokens = ["SCRIPT UTILITIES:", node, "is already in the list of nodes for", obj]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                done = True
-            if len(nodes) > 100:
-                tokens = ["SCRIPT UTILITIES: More than 100 nodes found for", obj]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                done = True
-            elif node:
-                nodes.append(node)
-            else:
-                done = True
-
-        return len(nodes) - 1
 
     def isOnScreen(self, obj, boundingbox=None):
         if AXObject.is_dead(obj):
@@ -623,44 +563,6 @@ class Utilities:
 
         return True
 
-    def selectedMenuBarMenu(self, menubar):
-        if not AXUtilities.is_menu_bar(menubar):
-            return None
-
-        if AXObject.supports_selection(menubar):
-            selected = self.selectedChildren(menubar)
-            if selected:
-                return selected[0]
-            return None
-
-        for menu in AXObject.iter_children(menubar):
-            # TODO - JD: Can we remove this?
-            AXObject.clear_cache(menu, False, "Ensuring we have the correct state.")
-            if AXUtilities.is_expanded(menu) or AXUtilities.is_selected(menu):
-                return menu
-
-        return None
-
-    def isInOpenMenuBarMenu(self, obj):
-        if obj is None:
-            return False
-
-        menubar = AXObject.find_ancestor(obj, AXUtilities.is_menu_bar)
-        if menubar is None:
-            return False
-
-        selectedMenu = self._selectedMenuBarMenu.get(hash(menubar))
-        if selectedMenu is None:
-            selectedMenu = self.selectedMenuBarMenu(menubar)
-
-        if selectedMenu is None:
-            return False
-
-        def inSelectedMenu(x):
-            return x == selectedMenu
-
-        return AXObject.find_ancestor_inclusive(obj, inSelectedMenu) is not None
-
     def getOnScreenObjects(self, root, extents=None):
         if not self.isOnScreen(root, extents):
             return []
@@ -669,13 +571,6 @@ class Utilities:
             return []
 
         if AXUtilities.is_button(root) or AXUtilities.is_combo_box(root):
-            return [root]
-
-        if AXUtilities.is_menu_bar(root):
-            self._selectedMenuBarMenu[hash(root)] = self.selectedMenuBarMenu(root)
-
-        if AXUtilities.is_menu_bar(AXObject.get_parent(root)) \
-           and not self.isInOpenMenuBarMenu(root):
             return [root]
 
         if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
@@ -702,9 +597,6 @@ class Utilities:
 
         for child in AXObject.iter_children(root):
             objects.extend(self.getOnScreenObjects(child, extents))
-
-        if AXUtilities.is_menu_bar(root):
-            self._selectedMenuBarMenu[hash(root)] = None
 
         if objects:
             return objects
@@ -1294,22 +1186,6 @@ class Utilities:
     def hasVisibleCaption(self, obj):
         return False
 
-    def headingLevel(self, obj):
-        if not AXUtilities.is_heading(obj):
-            return 0
-
-        use_cache = not AXUtilities.is_editable(obj)
-        attrs = AXObject.get_attributes_dict(obj, use_cache)
-
-        try:
-            value = int(attrs.get('level', '0'))
-        except ValueError:
-            tokens = ["SCRIPT UTILITIES: Exception getting value for", obj, "(", attrs, ")"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return 0
-
-        return value
-
     def hasMeaningfulToggleAction(self, obj):
         return AXObject.has_action(obj, "toggle") \
             or AXObject.has_action(obj, object_properties.ACTION_TOGGLE)
@@ -1469,18 +1345,6 @@ class Utilities:
         tokens = ["HACK: Returning", replicant, "as replicant for invalid object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return replicant
-
-    def valuesForTerm(self, obj):
-        if not AXUtilities.is_description_term(obj):
-            return []
-
-        values = []
-        obj = AXObject.get_next_sibling(obj)
-        while obj and AXUtilities.is_description_value(obj):
-            values.append(obj)
-            obj = AXObject.get_next_sibling(obj)
-
-        return values
 
     def clearCachedCommandState(self):
         self._script.point_of_reference['undo'] = False

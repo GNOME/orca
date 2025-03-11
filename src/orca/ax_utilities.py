@@ -676,6 +676,42 @@ class AXUtilities:
         AXUtilities.DISPLAYED_DESCRIPTION[hash(obj)] = result
         return result
 
+    @staticmethod
+    def get_heading_level(obj: Atspi.Accessible) -> int:
+        """Returns the heading level of obj."""
+
+        if not AXUtilitiesRole.is_heading(obj):
+            return 0
+
+        use_cache = not AXUtilitiesState.is_editable(obj)
+        attrs = AXObject.get_attributes_dict(obj, use_cache)
+
+        try:
+            value = int(attrs.get("level", "0"))
+        except ValueError:
+            tokens = ["AXUtilities: Exception getting value for", obj, "(", attrs, ")"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return 0
+
+        return value
+
+    @staticmethod
+    def get_nesting_level(obj: Atspi.Accessible) -> int:
+        """Returns the nesting level of obj."""
+
+        def pred(x: Atspi.Accessible) -> bool:
+            if AXUtilitiesRole.is_list_item(obj):
+                return AXUtilitiesRole.is_list(AXObject.get_parent(x))
+            return AXUtilitiesRole.have_same_role(obj, x)
+
+        ancestors = []
+        ancestor = AXObject.find_ancestor(obj, pred)
+        while ancestor:
+            ancestors.append(ancestor)
+            ancestor = AXObject.find_ancestor(ancestor, pred)
+
+        return len(ancestors)
+
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)

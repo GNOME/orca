@@ -45,6 +45,7 @@ from gi.repository import Atspi
 from . import braille
 from . import debug
 from . import focus_manager
+from . import messages
 from . import object_properties
 from . import settings
 from . import settings_manager
@@ -325,6 +326,23 @@ class Generator:
         return []
 
     ################################# BASIC DETAILS #################################
+
+    def _prefer_description_over_name(self, obj):
+        if not AXObject.get_description(obj):
+            return False
+
+        name = AXObject.get_name(obj)
+        if len(name) == 1:
+            if ord(name) in range(0xe000, 0xf8ff):
+                tokens = ["GENERATOR: Name of", obj, "is in unicode private use area."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return True
+            if AXUtilities.is_push_button(obj):
+                tokens = ["GENERATOR: Preferring description over name of", obj]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return True
+
+        return False
 
     @log_generator_output
     def _generate_accessible_description(self, obj, **args):
@@ -640,6 +658,26 @@ class Generator:
             parent = AXObject.get_parent_checked(parent)
         return []
 
+    def _get_values_for_term(self, obj):
+        if not AXUtilities.is_description_term(obj):
+            return []
+
+        values = []
+        obj = AXObject.get_next_sibling(obj)
+        while obj and AXUtilities.is_description_value(obj):
+            values.append(obj)
+            obj = AXObject.get_next_sibling(obj)
+
+        return values
+
+    @log_generator_output
+    def _generate_term_value_count(self, obj, **_args):
+        count = len(self._get_values_for_term(obj))
+        if count in (-1, 1):
+            return []
+
+        return [f"({messages.valueCountForTerm(count)})"]
+
     ##################################### STATE #####################################
 
     @log_generator_output
@@ -941,7 +979,7 @@ class Generator:
     def _get_nesting_level(self, obj):
         level = Generator.CACHED_NESTING_LEVEL.get(hash(obj))
         if level is None:
-            level = self._script.utilities.nestingLevel(obj)
+            level = AXUtilities.get_nesting_level(obj)
             Generator.CACHED_NESTING_LEVEL[hash(obj)] = level
         return level
 

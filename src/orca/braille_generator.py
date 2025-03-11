@@ -202,8 +202,8 @@ class BrailleGenerator(generator.Generator):
         if verbosity_level == settings.VERBOSITY_LEVEL_BRIEF:
             do_not_present.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
-        if role == Atspi.Role.HEADING:
-            level = self._script.utilities.headingLevel(obj)
+        level = AXUtilities.get_heading_level(obj)
+        if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
         elif verbosity_level == settings.VERBOSITY_LEVEL_VERBOSE \
            and not args.get('readingRow', False) and role not in do_not_present:
@@ -241,13 +241,6 @@ class BrailleGenerator(generator.Generator):
             parent = AXObject.get_parent_checked(parent)
         result.reverse()
         return result
-
-    @log_generator_output
-    def _generate_term_value_count(self, obj, **_args):
-        count = len(self._script.utilities.valuesForTerm(obj))
-        if count < 0:
-            return []
-        return [f"({messages.valueCountForTerm(count)})"]
 
     ################################### KEYBOARD ###################################
 

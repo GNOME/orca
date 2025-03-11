@@ -103,12 +103,6 @@ class Utilities(script_utilities.Utilities):
     def insertionEndsAtCaret(self, event):
         return AXText.get_caret_offset(event.source) == event.detail1 + event.detail2
 
-    def isTextArea(self, obj):
-        if AXUtilities.is_terminal(obj):
-            return True
-
-        return super().isTextArea(obj)
-
     def treatEventAsCommand(self, event):
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             return False

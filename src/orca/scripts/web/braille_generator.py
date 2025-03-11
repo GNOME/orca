@@ -104,8 +104,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result = []
         role = args.get('role', AXObject.get_role(obj))
 
-        if AXUtilities.is_heading(obj, args.get("role")):
-            level = self._script.utilities.headingLevel(obj)
+        level = AXUtilities.get_heading_level(obj)
+        if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
             return result
 
@@ -163,7 +163,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_description(obj, **args)
 
-        if self._script.utilities.preferDescriptionOverName(obj):
+        # TODO - JD: Can this logic be moved into the default braille generator?
+        if self._prefer_description_over_name(obj):
             return []
 
         return super()._generate_accessible_description(obj, **args)
@@ -177,7 +178,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if braille_label:
             return [braille_label]
 
-        if self._script.utilities.preferDescriptionOverName(obj):
+        # TODO - JD: Can this logic be moved into the default braille generator?
+        if self._prefer_description_over_name(obj):
             return [AXObject.get_description(obj)]
 
         if AXObject.get_name(obj) and not self._script.utilities.hasValidName(obj):

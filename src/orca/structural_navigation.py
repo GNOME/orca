@@ -907,7 +907,7 @@ class StructuralNavigation:
         if AXUtilities.is_list(obj):
             children = list(AXObject.iter_children(obj, AXUtilities.is_list_item))
             if children:
-                if self._script.utilities.nestingLevel(obj):
+                if AXUtilities.get_nesting_level(obj):
                     return messages.nestedListItemCount(len(children))
                 else:
                     return messages.listItemCount(len(children))
@@ -1493,8 +1493,7 @@ class StructuralNavigation:
             columnHeaders.append(guilabels.SN_HEADER_LEVEL)
 
             def rowData(obj):
-                return [self._getText(obj),
-                        str(self._script.utilities.headingLevel(obj))]
+                return [self._getText(obj), str(AXUtilities.get_heading_level(obj))]
 
         else:
             title = guilabels.SN_TITLE_HEADING_AT_LEVEL % arg
