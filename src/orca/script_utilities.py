@@ -470,40 +470,6 @@ class Utilities:
 
         return rv
 
-    def _hasSamePath(self, obj1, obj2):
-        path1 = AXObject.get_path(obj1)
-        path2 = AXObject.get_path(obj2)
-        if len(path1) != len(path2):
-            return False
-
-        if not (path1 and path2):
-            return False
-
-        # The first item in all paths, even valid ones, is -1.
-        path1 = path1[1:]
-        path2 = path2[1:]
-
-        # If the object is being destroyed and the replacement is too, which
-        # sadly can happen in at least Firefox, both will have an index of -1.
-        # If the rest of the paths are valid and match, it's probably ok.
-        if path1[-1] == -1 and path2[-1] == -1:
-            path1 = path1[:-1]
-            path2 = path2[:-1]
-
-        # If both have invalid child indices, all bets are off.
-        if path1.count(-1) and path2.count(-1):
-            return False
-
-        try:
-            index = path1.index(-1)
-        except ValueError:
-            try:
-                index = path2.index(-1)
-            except ValueError:
-                index = len(path2)
-
-        return path1[0:index] == path2[0:index]
-
     def isTextArea(self, obj):
         """Returns True if obj is a GUI component that is for entering text.
 
@@ -1312,39 +1278,6 @@ class Utilities:
                 cells.append(cell)
 
         return cells
-
-    def findReplicant(self, root, obj):
-        tokens = ["SCRIPT UTILITIES: Searching for replicant for", obj, "in", root]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if not (root and obj):
-            return None
-
-        if AXUtilities.is_table(root) or AXUtilities.is_embedded(root):
-            return None
-
-        def isSame(x):
-            if x == obj:
-                return True
-            if x is None:
-                return False
-            if not AXUtilities.have_same_role(obj, x):
-                return False
-            if self._hasSamePath(obj, x):
-                return True
-            # Objects which claim to be different and which are in different
-            # locations are almost certainly not recreated objects.
-            if not AXComponent.objects_have_same_rect(obj, x):
-                return False
-            return not AXComponent.has_no_size(x)
-
-        if isSame(root):
-            replicant = root
-        else:
-            replicant = AXObject.find_descendant(root, isSame)
-
-        tokens = ["HACK: Returning", replicant, "as replicant for invalid object", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return replicant
 
     def clearCachedCommandState(self):
         self._script.point_of_reference['undo'] = False

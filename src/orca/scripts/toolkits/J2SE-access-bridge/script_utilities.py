@@ -44,12 +44,6 @@ class Utilities(script_utilities.Utilities):
         """
 
         newObj = obj
-        if newObj and not AXObject.is_valid(newObj):
-            newObj = self.findReplicant(AXObject.get_parent(obj), obj)
-
-        if not newObj:
-            return script_utilities.Utilities.nodeLevel(self, obj)
-
         count = 0
         while newObj:
             if AXUtilities.is_expandable(newObj) or AXUtilities.is_collapsed(newObj):

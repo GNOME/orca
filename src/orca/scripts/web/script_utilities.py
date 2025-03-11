@@ -3477,10 +3477,7 @@ class Utilities(script_utilities.Utilities):
             if not AXObject.is_valid(parent):
                 msg = "WEB: Finding next caret in order. Parent is not valid."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                replicant = self.findReplicant(self.documentFrame(), parent)
-                if AXObject.is_valid(replicant):
-                    parent = replicant
-                elif AXObject.get_parent(parent):
+                if AXObject.get_parent(parent):
                     obj = parent
                     continue
                 else:
@@ -3548,10 +3545,7 @@ class Utilities(script_utilities.Utilities):
             if not AXObject.is_valid(parent):
                 msg = "WEB: Finding previous caret in order. Parent is not valid."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                replicant = self.findReplicant(self.documentFrame(), parent)
-                if AXObject.is_valid(replicant):
-                    parent = replicant
-                elif AXObject.get_parent(parent):
+                if AXObject.get_parent(parent):
                     obj = parent
                     continue
                 else:
