@@ -499,8 +499,9 @@ class WhereAmIPresenter:
             return True
 
         manager = speech_and_verbosity_manager.get_manager()
+        indentation = manager.get_indentation_description(text, only_if_changed=False)
         text = manager.adjust_for_presentation(obj, text)
-        msg = messages.SELECTED_TEXT_IS % text
+        msg = messages.SELECTED_TEXT_IS % f"{indentation} {text}"
         script.speakMessage(msg)
         return True
 
