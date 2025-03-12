@@ -76,6 +76,7 @@ class TextEventReason(enum.Enum):
     PAGE_SWITCH = enum.auto()
     PASTE = enum.auto()
     REDO = enum.auto()
+    SAY_ALL = enum.auto()
     SEARCH_PRESENTABLE = enum.auto()
     SEARCH_UNPRESENTABLE = enum.auto()
     SELECT_ALL = enum.auto()
@@ -206,8 +207,10 @@ class AXUtilitiesEvent:
         reason = TextEventReason.UNKNOWN
         mgr = input_event_manager.get_manager()
         obj = event.source
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus != obj and AXUtilitiesRole.is_text_input_search(focus):
+        mode, focus = focus_manager.get_manager().get_active_mode_and_object_of_interest()
+        if mode == focus_manager.SAY_ALL:
+            reason = TextEventReason.SAY_ALL
+        elif focus != obj and AXUtilitiesRole.is_text_input_search(focus):
             if mgr.last_event_was_backspace() or mgr.last_event_was_delete():
                 reason = TextEventReason.SEARCH_UNPRESENTABLE
             else:

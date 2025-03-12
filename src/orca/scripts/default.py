@@ -1443,11 +1443,11 @@ class Script(script.Script):
             AXText.update_cached_selected_text(event.source)
             return
 
-        string = self.utilities.deletedText(event)
+        text = self.utilities.deletedText(event)
         if reason == TextEventReason.DELETE:
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            string = AXText.get_character_at_offset(event.source)[0]
+            text = AXText.get_character_at_offset(event.source)[0]
         elif reason == TextEventReason.BACKSPACE:
             msg = "DEFAULT: Deletion is believed to be due to BackSpace command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1456,13 +1456,13 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if len(string) == 1:
-            self.speak_character(string)
+        if len(text) == 1:
+            self.speak_character(text)
         else:
-            voice = self.speech_generator.voice(string=string)
+            voice = self.speech_generator.voice(string=text)
             manager = speech_and_verbosity_manager.get_manager()
-            string = manager.adjust_for_presentation(event.source, string)
-            self.speakMessage(string, voice)
+            text = manager.adjust_for_presentation(event.source, text)
+            self.speakMessage(text, voice)
 
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
@@ -1520,17 +1520,17 @@ class Script(script.Script):
             speak_string = False
 
         # Because some implementations are broken.
-        string = self.utilities.insertedText(event)
+        text = self.utilities.insertedText(event)
         if speak_string:
-            if len(string) == 1:
-                self.speak_character(string)
+            if len(text) == 1:
+                self.speak_character(text)
             else:
-                voice = self.speech_generator.voice(obj=event.source, string=string)
+                voice = self.speech_generator.voice(obj=event.source, string=text)
                 manager = speech_and_verbosity_manager.get_manager()
-                string = manager.adjust_for_presentation(event.source, string)
-                self.speakMessage(string, voice)
+                text = manager.adjust_for_presentation(event.source, text)
+                self.speakMessage(text, voice)
 
-        if len(string) != 1 \
+        if len(text) != 1 \
            or reason not in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             return
 
@@ -1682,11 +1682,10 @@ class Script(script.Script):
 
         obj = otherObj or event.source
         self.updateBrailleForNewCaretPosition(obj)
-        if self._inSayAll:
+        if reason == TextEventReason.SAY_ALL:
             msg = "DEFAULT: Not presenting text because SayAll is active"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
-
         if reason == TextEventReason.NAVIGATION_BY_LINE:
             self.sayLine(obj)
             return True
@@ -1706,8 +1705,8 @@ class Script(script.Script):
             self.sayLine(obj)
             return True
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
-            string, _start, _end = AXText.get_cached_selected_text(event.source)
-            if not string:
+            text, _start, _end = AXText.get_cached_selected_text(event.source)
+            if not text:
                 self.sayLine(obj)
                 return True
         return False
@@ -2002,9 +2001,9 @@ class Script(script.Script):
             endOffset -= len(word) - matches[-1].end()
             word = AXText.get_substring(obj, startOffset, endOffset)
 
-        string = word.replace("\n", "\\n")
+        text = word.replace("\n", "\\n")
         msg = (
-            f"DEFAULT: Final word at offset {offset} is '{string}' "
+            f"DEFAULT: Final word at offset {offset} is '{text}' "
             f"({startOffset}-{endOffset})"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
