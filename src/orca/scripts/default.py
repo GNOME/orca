@@ -2140,8 +2140,6 @@ class Script(script.Script):
         self._sayAllIsInterrupted = False
         self._inSayAll = True
         prior_obj = obj
-        document = self.utilities.getDocumentForObject(obj)
-
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
@@ -2172,8 +2170,6 @@ class Script(script.Script):
             prior_obj = obj
             offset = 0
             obj = self.utilities.findNextObject(obj)
-            if document != self.utilities.getDocumentForObject(obj):
-                break
 
         self._inSayAll = False
         self._sayAllContexts = []

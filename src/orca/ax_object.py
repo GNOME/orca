@@ -1005,56 +1005,6 @@ class AXObject:
         return sibling
 
     @staticmethod
-    def get_next_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
-        """Returns the next object (depth first) in the accessibility tree"""
-
-        if not AXObject.is_valid(obj):
-            return None
-
-        index = AXObject.get_index_in_parent(obj) + 1
-        parent = AXObject.get_parent(obj)
-        while parent and not 0 < index < AXObject.get_child_count(parent):
-            obj = parent
-            index = AXObject.get_index_in_parent(obj) + 1
-            parent = AXObject.get_parent(obj)
-
-        if parent is None:
-            return None
-
-        next_object = AXObject.get_child(parent, index)
-        if next_object == obj:
-            tokens = ["AXObject:", obj, "claims to be its own next object"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        return next_object
-
-    @staticmethod
-    def get_previous_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
-        """Returns the previous object (depth first) in the accessibility tree"""
-
-        if not AXObject.is_valid(obj):
-            return None
-
-        index = AXObject.get_index_in_parent(obj) - 1
-        parent = AXObject.get_parent(obj)
-        while parent and not 0 <= index < AXObject.get_child_count(parent) - 1:
-            obj = parent
-            index = AXObject.get_index_in_parent(obj) - 1
-            parent = AXObject.get_parent(obj)
-
-        if parent is None:
-            return None
-
-        previous_object = AXObject.get_child(parent, index)
-        if previous_object == obj:
-            tokens = ["AXObject:", obj, "claims to be its own previous object"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        return previous_object
-
-    @staticmethod
     def get_state_set(obj: Atspi.Accessible) -> Atspi.StateSet:
         """Returns the state set associated with obj"""
 

@@ -793,29 +793,36 @@ class Utilities:
 
         return AXComponent.sort_objects_by_position(labels_filtered)
 
-    def findPreviousObject(self, obj):
+    def findPreviousObject(self, obj, restrict_to=None):
         """Finds the object before this one."""
 
-        if not AXObject.is_valid(obj):
+        if restrict_to is None:
+            restrict_to = self.getTopLevelDocumentForObject(obj)
+
+        result = AXUtilities.get_previous_object(obj)
+        tokens = ["SCRIPT UTILITIES: Previous object for", obj, "is", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if restrict_to is not None and not AXObject.is_ancestor(result, restrict_to, True):
+            tokens = ["SCRIPT UTILITIES:", result, "is not a descendant of", restrict_to]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        targets = AXUtilities.get_flows_from(obj)
-        if targets:
-            return targets[0]
+        return result
 
-        return AXObject.get_previous_object(obj)
-
-    def findNextObject(self, obj):
+    def findNextObject(self, obj, restrict_to=None):
         """Finds the object after this one."""
 
-        if not AXObject.is_valid(obj):
+        if restrict_to is None:
+            restrict_to = self.getTopLevelDocumentForObject(obj)
+
+        result = AXUtilities.get_next_object(obj)
+        tokens = ["SCRIPT UTILITIES: Next object for", obj, "is", result, "."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if restrict_to is not None and not AXObject.is_ancestor(result, restrict_to, True):
+            tokens = ["SCRIPT UTILITIES:", result, "is not a descendant of", restrict_to]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
-
-        targets = AXUtilities.get_flows_to(obj)
-        if targets:
-            return targets[0]
-
-        return AXObject.get_next_object(obj)
+        return result
 
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS

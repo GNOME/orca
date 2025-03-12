@@ -20,6 +20,7 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=too-many-branches
+# pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
 # pylint: disable=wrong-import-position
@@ -711,6 +712,64 @@ class AXUtilities:
             ancestor = AXObject.find_ancestor(ancestor, pred)
 
         return len(ancestors)
+
+    @staticmethod
+    def get_next_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+        """Returns the next object (depth first, unless there's a flows-to relation)"""
+
+        if not AXObject.is_valid(obj):
+            return None
+
+        targets = AXUtilitiesRelation.get_flows_to(obj)
+        if targets:
+            return targets[0]
+
+        index = AXObject.get_index_in_parent(obj) + 1
+        parent = AXObject.get_parent(obj)
+        while parent and not 0 < index < AXObject.get_child_count(parent):
+            obj = parent
+            index = AXObject.get_index_in_parent(obj) + 1
+            parent = AXObject.get_parent(obj)
+
+        if parent is None:
+            return None
+
+        next_object = AXObject.get_child(parent, index)
+        if next_object == obj:
+            tokens = ["AXObject:", obj, "claims to be its own next object"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        return next_object
+
+    @staticmethod
+    def get_previous_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+        """Returns the previous object (depth first, unless there's a flows-from relation)"""
+
+        if not AXObject.is_valid(obj):
+            return None
+
+        targets = AXUtilitiesRelation.get_flows_from(obj)
+        if targets:
+            return targets[0]
+
+        index = AXObject.get_index_in_parent(obj) - 1
+        parent = AXObject.get_parent(obj)
+        while parent and not 0 <= index < AXObject.get_child_count(parent) - 1:
+            obj = parent
+            index = AXObject.get_index_in_parent(obj) - 1
+            parent = AXObject.get_parent(obj)
+
+        if parent is None:
+            return None
+
+        previous_object = AXObject.get_child(parent, index)
+        if previous_object == obj:
+            tokens = ["AXObject:", obj, "claims to be its own previous object"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        return previous_object
 
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):

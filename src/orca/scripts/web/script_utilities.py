@@ -498,36 +498,6 @@ class Utilities(script_utilities.Utilities):
 
         return -1
 
-    def findPreviousObject(self, obj):
-        result = super().findPreviousObject(obj)
-        if not (obj and self.inDocumentContent(obj)):
-            return result
-
-        if not (result and self.inDocumentContent(result)):
-            return None
-
-        if self.getTopLevelDocumentForObject(result) != self.getTopLevelDocumentForObject(obj):
-            return None
-
-        tokens = ["WEB: Previous object for", obj, "is", result, "."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result
-
-    def findNextObject(self, obj):
-        result = super().findNextObject(obj)
-        if not (obj and self.inDocumentContent(obj)):
-            return result
-
-        if not (result and self.inDocumentContent(result)):
-            return None
-
-        if self.getTopLevelDocumentForObject(result) != self.getTopLevelDocumentForObject(obj):
-            return None
-
-        tokens = ["WEB: Next object for", obj, "is", result, "."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result
-
     def isNonEntryTextWidget(self, obj):
         rv = self._isNonEntryTextWidget.get(hash(obj))
         if rv is not None:
