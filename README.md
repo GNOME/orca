@@ -1,19 +1,21 @@
-# Orca UX & AI Research  
+# Orca UX & AI Research
 
-## Overview  
-This is a **UI/UX research project** focused on the **Orca screen reader**, analyzing its accessibility features and exploring potential AI enhancements.
+-> Overview
 
-## 🔍 Research Focus  
-- **User Experience (UX) & Accessibility**: Evaluating how Orca improves interaction for visually impaired users.  
-- **AI Integration**: Exploring how machine learning can enhance speech synthesis and UI navigation.  
-- **Usability & Design**: Studying how Orca adheres to accessibility standards like WCAG.
+This repository contains a UI/UX research project on the Orca screen reader. The focus of this research is on accessibility features, user experience (UX) design, and potential AI enhancements to improve usability for visually impaired users. This project is part of a semester research assignment.
 
-## 📌 Key Findings  
-- [Add insights you find from your research here]  
-- [Example: "Orca uses speech synthesis but could benefit from AI-based voice recognition."]  
+-> Research Focus
 
-## 📂 Project Setup  
-To explore this repository:  
-```bash
-git clone https://github.com/rozalinekozly/orca-ux-research.git
-cd orca-ux-research
+User Experience (UX) & Accessibility: Analyzing how Orca improves interaction for visually impaired users and evaluating its usability challenges.
+
+AI Integration: Exploring how machine learning could enhance speech synthesis, adaptive UI elements, and predictive text input.
+
+Usability & Design: Reviewing how Orca adheres to accessibility standards such as WCAG and how its design could be optimized for a better user experience.
+
+-> Key Findings
+
+Orca provides essential screen reading capabilities but could benefit from AI-powered natural language processing for more adaptive speech output.
+
+The interface relies heavily on keyboard shortcuts, which can be improved with AI-driven predictive input assistance.
+
+AI integration could enhance contextual awareness, making navigation smoother for users with disabilities.
