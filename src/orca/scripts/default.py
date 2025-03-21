@@ -640,7 +640,7 @@ class Script(script.Script):
         if AXUtilities.is_defunct(new_focus):
             return
 
-        if old_focus == new_focus:
+        if old_focus == new_focus and not event.type.endswith("accessible-name"):
             msg = 'DEFAULT: old focus == new focus'
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -1209,8 +1209,16 @@ class Script(script.Script):
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
 
-        if AXUtilities.is_presentable_name_change(event):
-            self.presentMessage(event.any_data)
+        if not AXUtilities.is_presentable_name_change(event):
+            return
+
+        manager = focus_manager.get_manager()
+        if event.source == manager.get_locus_of_focus():
+            # Force the update so that braille is refreshed.
+            manager.set_locus_of_focus(event, event.source, True, True)
+            return
+
+        self.presentMessage(event.any_data)
 
     def on_object_attributes_changed(self, event):
         """Callback for object:attributes-changed accessibility events."""
