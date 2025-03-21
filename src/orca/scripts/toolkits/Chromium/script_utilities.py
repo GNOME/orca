@@ -137,9 +137,6 @@ class Utilities(web.Utilities):
         if obj == self._findContainer:
             return True
 
-        if not AXUtilities.is_dialog(obj):
-            return False
-
         result = self.getFindResultsCount(obj)
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (", result, ")"]
@@ -181,7 +178,7 @@ class Utilities(web.Utilities):
         if self.inDocumentContent(obj):
             return False
 
-        result = self.isFindContainer(AXObject.find_ancestor(obj, AXUtilities.is_dialog))
+        result = AXObject.find_ancestor(obj, self.isFindContainer)
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page widget"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
