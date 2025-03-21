@@ -292,6 +292,18 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesState.is_focused)
 
     @staticmethod
+    def get_info_bar(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+        """Returns the info bar descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_info_bar(obj)
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_info_bar)
+
+    @staticmethod
     def get_status_bar(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the status bar descendant of obj"""
 

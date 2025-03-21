@@ -167,16 +167,3 @@ class Utilities(web.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
-
-    def findAllDescendants(self, root, includeIf=None, excludeIf=None):
-        if not root:
-            return []
-
-        # Don't bother if the root is a 'pre' or 'code' element. Those often have
-        # nothing but a TON of static text leaf nodes, which we want to ignore.
-        if AXUtilities.is_code(root):
-            tokens = ["CHROMIUM: Returning 0 descendants for pre/code", root]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return []
-
-        return super().findAllDescendants(root, includeIf, excludeIf)

@@ -410,7 +410,7 @@ class WhereAmIPresenter:
     def present_status_bar(
         self, script: default.Script, event: Optional[input_event.InputEvent] = None
     ) -> bool:
-        """Presents the status bar of the current window."""
+        """Presents the status bar and info bar of the current window."""
 
         obj = focus_manager.get_manager().get_locus_of_focus()
         frame, dialog = script.utilities.frameAndDialog(obj)
@@ -423,8 +423,8 @@ class WhereAmIPresenter:
                 brief = messages.STATUS_BAR_NOT_FOUND_BRIEF
                 script.presentMessage(full, brief)
 
-            infobar = script.utilities.infoBar(frame)
-            if infobar:
+            infobar = AXUtilities.get_info_bar(frame)
+            if infobar and AXUtilities.is_showing(infobar) and AXUtilities.is_visible(infobar):
                 script.presentObject(infobar, interrupt=statusbar is None)
 
         # TODO - JD: Pending user feedback, this should be removed.

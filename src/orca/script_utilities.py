@@ -242,10 +242,14 @@ class Utilities:
         return False
 
     def isComboBoxWithToggleDescendant(self, obj):
-        return False
+        if not AXUtilities.is_combo_box(obj):
+            return False
+        return AXObject.find_descendant(obj, AXUtilities.is_toggle_button) is not None
 
     def isToggleDescendantOfComboBox(self, obj):
-        return False
+        if not AXUtilities.is_toggle_button(obj):
+            return False
+        return AXObject.find_ancestor(obj, AXUtilities.is_combo_box) is not None
 
     def isContentError(self, obj):
         return False
@@ -715,6 +719,16 @@ class Utilities:
         return 0
 
     def findAllDescendants(self, root, includeIf=None, excludeIf=None):
+        if root is None:
+            return []
+
+        # Don't bother if the root is a 'pre' or 'code' element. Those often have
+        # nothing but a TON of static text leaf nodes, which we want to ignore.
+        if AXUtilities.is_code(root):
+            tokens = ["SCRIPUT UTILITIES: Returning 0 descendants for pre/code", root]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
         return AXObject.find_all_descendants(root, includeIf, excludeIf)
 
     def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
@@ -1113,7 +1127,8 @@ class Utilities:
         return name == AXObject.get_name(focus)
 
     def isEntryCompletionPopupItem(self, obj):
-        return False
+        return AXUtilities.is_table_cell(obj) \
+            and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
 
     def getEntryForEditableComboBox(self, obj):
         if not AXUtilities.is_combo_box(obj):

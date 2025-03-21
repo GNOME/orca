@@ -27,12 +27,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-from orca.scripts.toolkits import gtk
+from orca import script_utilities
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
-class Utilities(gtk.Utilities):
+class Utilities(script_utilities.Utilities):
     """Custom script utilities for pidgin."""
 
     def get_expander_cell_for(self, obj):

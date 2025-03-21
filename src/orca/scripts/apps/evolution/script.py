@@ -35,7 +35,6 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-
 class Script(WebKitGTK.Script, gtk.Script):
     """Custom script for Evolution."""
     def get_braille_generator(self):
@@ -79,6 +78,11 @@ class Script(WebKitGTK.Script, gtk.Script):
 
     def on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
+
+        if self.utilities.is_ignorable_event_from_document_preview(event):
+            msg = "EVOLUTION: Ignoring event from document preview"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         # TODO - JD: Figure out what's causing this in Evolution or WebKit and file a bug.
         # When the selected message changes and the preview panel is showing, a panel with the

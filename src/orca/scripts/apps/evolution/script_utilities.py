@@ -29,15 +29,15 @@ __license__   = "LGPL"
 
 from orca import input_event_manager
 from orca import focus_manager
-from orca.scripts.toolkits import gtk
 from orca.scripts.toolkits import WebKitGTK
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 
-class Utilities(WebKitGTK.Utilities, gtk.Utilities):
+class Utilities(WebKitGTK.Utilities):
     """Custom script utilities for Evolution."""
+
     def is_message_list_status_cell(self, obj):
         """Returns True if obj is a message list status cell."""
 
@@ -56,13 +56,10 @@ class Utilities(WebKitGTK.Utilities, gtk.Utilities):
         if self.isWebKitGTK(obj):
             return False
 
-        if not gtk.Utilities.hasMeaningfulToggleAction(self, obj):
-            return False
-
         if not AXObject.get_name(obj):
             return False
 
-        return True
+        return self.hasMeaningfulToggleAction(obj)
 
     def is_ignorable_event_from_document_preview(self, event):
         """Returns True if event is from a document preview and can be ignored."""

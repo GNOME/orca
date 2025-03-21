@@ -83,6 +83,11 @@ class AXUtilities:
     ) -> Optional[Atspi.Accessible]: ...
 
     @staticmethod
+    def get_info_bar(
+        obj: Atspi.Accessible
+    ) -> Optional[Atspi.Accessible]: ...
+
+    @staticmethod
     def get_status_bar(
         obj: Atspi.Accessible
     ) -> Optional[Atspi.Accessible]: ...
@@ -2765,6 +2770,11 @@ class AXUtilities:
 
     @staticmethod
     def find_focused_object(
+        root: Atspi.Accessible
+    ) -> Optional[Atspi.Accessible]: ...
+
+    @staticmethod
+    def find_info_bar(
         root: Atspi.Accessible
     ) -> Optional[Atspi.Accessible]: ...
 

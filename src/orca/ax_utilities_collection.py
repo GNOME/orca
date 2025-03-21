@@ -2296,6 +2296,15 @@ class AXUtilitiesCollection:
         return AXCollection.get_first_match(root, rule)
 
     @staticmethod
+    def find_info_bar(root: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+        """Returns the info bar inside root"""
+
+        roles = [Atspi.Role.INFO_BAR]
+        states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        return AXCollection.get_first_match(root, rule)
+
+    @staticmethod
     def find_status_bar(root: Atspi.Accessible) -> Optional[Atspi.Accessible]:
         """Returns the status bar inside root"""
 

@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script for GTK."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -30,21 +32,9 @@ from orca import focus_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-from .script_utilities import Utilities
-
 
 class Script(default.Script):
-
-    def get_utilities(self):
-        """Returns the utilities for this script."""
-
-        return Utilities(self)
-
-    def deactivate(self):
-        """Called when this script is deactivated."""
-
-        self.utilities.clearCachedObjects()
-        super().deactivate()
+    """Custom script for GTK."""
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Handles changes of focus of interest to the script."""
@@ -130,8 +120,8 @@ class Script(default.Script):
             super().on_selection_changed(event)
             return
 
-        isFocused = AXUtilities.is_focused(event.source)
-        if AXUtilities.is_combo_box(event.source) and not isFocused:
+        is_focused = AXUtilities.is_focused(event.source)
+        if AXUtilities.is_combo_box(event.source) and not is_focused:
             return
 
         if AXUtilities.is_layered_pane(event.source) \
