@@ -20,6 +20,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-return-statements
 # pylint: disable=duplicate-code
 
 """Utilities for obtaining state-related information."""
@@ -35,11 +36,34 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
+from . import messages
 from .ax_object import AXObject
 
 
 class AXUtilitiesState:
     """Utilities for obtaining state-related information."""
+
+    @staticmethod
+    def get_current_item_status_string(obj: Atspi.Accessible) -> str:
+        """Returns the current item status string of obj."""
+
+        if not AXUtilitiesState.is_active(obj):
+            return ""
+
+        result = AXObject.get_attribute(obj, "current")
+        if not result:
+            return ""
+        if result == "date":
+            return messages.CURRENT_DATE
+        if result == "time":
+            return messages.CURRENT_TIME
+        if result == "location":
+            return messages.CURRENT_LOCATION
+        if result == "page":
+            return messages.CURRENT_PAGE
+        if result == "step":
+            return messages.CURRENT_STEP
+        return messages.CURRENT_ITEM
 
     @staticmethod
     def has_no_state(obj: Atspi.Accessible) -> bool:

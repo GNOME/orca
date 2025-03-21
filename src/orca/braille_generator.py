@@ -351,6 +351,10 @@ class BrailleGenerator(generator.Generator):
         if description:
             result += [braille.Region(" ")]
             result += [braille.Component(obj, self._as_string(description))]
+        current = self._generate_state_current(obj, **args)
+        if current:
+            result += [braille.Region(" ")]
+            result += [braille.Component(obj, self._as_string(current))]
 
         return result
 

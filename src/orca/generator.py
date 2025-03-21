@@ -681,6 +681,13 @@ class Generator:
     ##################################### STATE #####################################
 
     @log_generator_output
+    def _generate_state_current(self, obj, **_args):
+        result = AXUtilities.get_current_item_status_string(obj)
+        if not result:
+            return []
+        return [f"({result})"]
+
+    @log_generator_output
     def _generate_state_checked(self, obj, **_args):
         if self._mode == "braille":
             indicators = object_properties.CHECK_BOX_INDICATORS_BRAILLE

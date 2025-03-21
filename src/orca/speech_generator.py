@@ -1640,6 +1640,16 @@ class SpeechGenerator(generator.Generator):
     ##################################### STATE #####################################
 
     @log_generator_output
+    def _generate_state_current(self, obj, **args):
+        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+            return []
+
+        result = super()._generate_state_current(obj, **args)
+        if result:
+            result.extend(self.voice(STATE, obj=obj, **args))
+        return result
+
+    @log_generator_output
     def _generate_state_checked(self, obj, **args):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
@@ -2212,6 +2222,9 @@ class SpeechGenerator(generator.Generator):
             if result and not isinstance(result[-1], Pause):
                 result += self._generate_pause(obj, **args)
 
+        result += self._generate_state_current(obj, **args)
+        if result and not isinstance(result[-1], Pause):
+            result += self._generate_pause(obj, **args)
         result += self._generate_has_click_action(obj, **args)
         if result and not isinstance(result[-1], Pause):
             result += self._generate_pause(obj, **args)

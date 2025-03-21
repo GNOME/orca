@@ -1536,6 +1536,9 @@ class AXUtilities:
 
     # From ax_utilities_state.py
     @staticmethod
+    def get_current_item_status_string(obj: Atspi.Accessible) -> str: ...
+
+    @staticmethod
     def has_no_state(obj: Atspi.Accessible) -> bool: ...
 
     @staticmethod
