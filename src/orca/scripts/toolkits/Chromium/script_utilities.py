@@ -77,23 +77,6 @@ class Utilities(web.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return menu
 
-    def autocompleteForPopup(self, obj):
-        targets = AXUtilities.get_is_popup_for(obj)
-        if not targets:
-            return None
-
-        target = targets[0]
-        if AXUtilities.is_autocomplete(target):
-            return target
-
-        return None
-
-    def isBrowserAutocompletePopup(self, obj):
-        if not obj or self.inDocumentContent(obj):
-            return False
-
-        return self.autocompleteForPopup(obj) is not None
-
     def isRedundantAutocompleteEvent(self, event):
         if not AXUtilities.is_autocomplete(event.source):
             return False
