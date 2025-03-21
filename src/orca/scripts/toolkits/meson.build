@@ -1,7 +1,6 @@
 subdir('Chromium')
 subdir('Gecko')
 subdir('gtk')
-subdir('J2SE-access-bridge')
 subdir('Qt')
 subdir('WebKitGTK')
 
