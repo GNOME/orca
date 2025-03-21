@@ -92,11 +92,6 @@ class Script(web.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if self.utilities.isRedundantAutocompleteEvent(event):
-            msg = "CHROMIUM: Ignoring redundant autocomplete event"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
         if super().on_caret_moved(event):
             return
 

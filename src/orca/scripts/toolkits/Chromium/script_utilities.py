@@ -34,7 +34,6 @@ import re
 
 from orca import debug
 from orca import focus_manager
-from orca import input_event_manager
 from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -76,15 +75,6 @@ class Utilities(web.Utilities):
         tokens = ["CHROMIUM: Popup menu for", obj, ":", menu]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return menu
-
-    def isRedundantAutocompleteEvent(self, event):
-        if not AXUtilities.is_autocomplete(event.source):
-            return False
-
-        if event.type.startswith("object:text-caret-moved"):
-            return input_event_manager.get_manager().last_event_was_up_or_down()
-
-        return False
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
         super().setCaretPosition(obj, offset, documentFrame)
