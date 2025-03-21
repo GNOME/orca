@@ -42,14 +42,6 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(web.Utilities):
 
-    def __init__(self, script):
-        super().__init__(script)
-        self._topLevelObject = {}
-
-    def clearCachedObjects(self):
-        super().clearCachedObjects()
-        self._topLevelObject = {}
-
     def treatAsMenu(self, obj):
         # Unlike other apps and toolkits, submenus in Chromium have the menu item
         # role rather than the menu role, but we can identify them as submenus via
@@ -84,56 +76,6 @@ class Utilities(web.Utilities):
         tokens = ["CHROMIUM: Popup menu for", obj, ":", menu]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return menu
-
-    def topLevelObject(self, obj, useFallbackSearch=False):
-        if not obj:
-            return None
-
-        result = super().topLevelObject(obj)
-        if AXObject.get_role(result) in self._topLevelRoles():
-            if not self.isFindContainer(result):
-                return result
-            else:
-                parent = AXObject.get_parent(result)
-                tokens = ["CHROMIUM: Top level object for", obj, "is", parent]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return parent
-
-        cached = self._topLevelObject.get(hash(obj))
-        if cached is not None:
-            return cached
-
-        tokens = ["CHROMIUM: WARNING: Top level object for", obj, "is", result]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # The only (known) object giving us a broken ancestry is the omnibox popup.
-        if not (AXUtilities.is_list_item(obj or AXUtilities.is_list_box(obj))):
-            return result
-
-        listbox = obj
-        if AXUtilities.is_list_item(obj):
-            listbox = AXObject.get_parent(listbox)
-
-        if listbox is None:
-            return result
-
-        # The listbox sometimes claims to be a redundant object rather than a listbox.
-        # Clearing the AT-SPI2 cache seems to be the trigger.
-        if not AXUtilities.is_list_box(listbox):
-            if AXUtilities.is_redundant_object(listbox):
-                tokens = ["CHROMIUM: WARNING: Suspected bogus role on listbox", listbox]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            else:
-                return result
-
-        autocomplete = self.autocompleteForPopup(listbox)
-        if autocomplete:
-            result = self.topLevelObject(autocomplete)
-            tokens = ["CHROMIUM: Top level object for", autocomplete, "is", result]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self._topLevelObject[hash(obj)] = result
-        return result
 
     def autocompleteForPopup(self, obj):
         targets = AXUtilities.get_is_popup_for(obj)
