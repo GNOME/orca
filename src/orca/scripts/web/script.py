@@ -1415,12 +1415,12 @@ class Script(default.Script):
         if AXComponent.has_no_size(event.source):
             msg = "WEB: Ignoring event from page with no size."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
         if not AXDocument.get_uri(event.source):
             msg = "WEB: Ignoring event from page with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
         AXUtilities.clear_all_cache_now(event.source, "busy-changed event.")
 
@@ -1904,18 +1904,18 @@ class Script(default.Script):
         if AXComponent.has_no_size(event.source):
             msg = "WEB: Ignoring event from page with no size."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
         uri = AXDocument.get_uri(event.source)
         if not uri:
             msg = "WEB: Ignoring event from page with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
         if uri.startswith("moz-extension"):
             msg = f"WEB: Ignoring event from page with URI: {uri}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
         AXUtilities.clear_all_cache_now(event.source, "load-complete event.")
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
