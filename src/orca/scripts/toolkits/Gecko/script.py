@@ -78,11 +78,6 @@ class Script(web.Script):
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
-        if self.utilities.isNotRealDocument(event.source):
-            msg = "GECKO: Ignoring: Event source is not real document"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
         if super().on_busy_changed(event):
             return
 
@@ -142,11 +137,6 @@ class Script(web.Script):
 
     def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
-
-        if self.utilities.isNotRealDocument(event.source):
-            msg = "GECKO: Ignoring: Event source is not real document"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
 
         if super().on_document_load_complete(event):
             return

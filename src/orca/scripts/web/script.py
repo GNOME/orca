@@ -49,6 +49,7 @@ from orca import speechserver
 from orca import structural_navigation
 from orca.acss import ACSS
 from orca.scripts import default
+from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
@@ -1411,6 +1412,16 @@ class Script(default.Script):
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
 
+        if AXComponent.has_no_size(event.source):
+            msg = "WEB: Ignoring event from page with no size."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if not AXDocument.get_uri(event.source):
+            msg = "WEB: Ignoring event from page with no URI."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         AXUtilities.clear_all_cache_now(event.source, "busy-changed event.")
 
         if event.detail1 and self._loadingDocumentContent:
@@ -1889,6 +1900,22 @@ class Script(default.Script):
 
     def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
+
+        if AXComponent.has_no_size(event.source):
+            msg = "WEB: Ignoring event from page with no size."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        uri = AXDocument.get_uri(event.source)
+        if not uri:
+            msg = "WEB: Ignoring event from page with no URI."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if uri.startswith("moz-extension"):
+            msg = f"WEB: Ignoring event from page with URI: {uri}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         AXUtilities.clear_all_cache_now(event.source, "load-complete event.")
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):

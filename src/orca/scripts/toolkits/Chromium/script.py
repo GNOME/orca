@@ -29,7 +29,6 @@ __license__   = "LGPL"
 
 from orca import debug
 from orca import focus_manager
-from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -76,16 +75,6 @@ class Script(web.Script):
 
     def on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
-
-        if AXComponent.has_no_size(event.source):
-            msg = "CHROMIUM: Ignoring event from page with no size."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        if not AXDocument.get_uri(event.source):
-            msg = "CHROMIUM: Ignoring event from page with no URI."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
 
         if super().on_busy_changed(event):
             return
@@ -169,11 +158,6 @@ class Script(web.Script):
 
     def on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
-
-        if not AXDocument.get_uri(event.source):
-            msg = "CHROMIUM: Ignoring event from page with no URI."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
 
         if super().on_document_load_complete(event):
             return

@@ -38,7 +38,6 @@ import re
 from orca import debug
 from orca import focus_manager
 from orca.scripts import web
-from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -73,23 +72,6 @@ class Utilities(web.Utilities):
 
         tokens = ["GECKO: Editable", obj, "not in an editable document"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return False
-
-    def isNotRealDocument(self, obj):
-        name = AXObject.get_name(obj)
-        if name.startswith("moz-extension"):
-            return True
-
-        if "self-repair.mozilla.org" in name:
-            return True
-
-        uri = AXDocument.get_uri(obj)
-        if uri.startswith("moz-extension"):
-            return True
-
-        if not uri and "pixels" in name:
-            return True
-
         return False
 
     def _isQuickFind(self, obj):
