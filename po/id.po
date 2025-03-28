@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca gnome-48\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-03-22 12:53+0000\n"
-"PO-Revision-Date: 2025-03-28 19:26+0700\n"
+"PO-Revision-Date: 2025-03-28 19:27+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -1267,7 +1267,7 @@ msgstr "Bersihkan singgahan AT-SPI untuk aplikasi saat ini"
 #. applications, etc.
 #: src/orca/cmdnames.py:550
 msgid "Capture snapshot for debugging"
-msgstr ""
+msgstr "Tangkap snapshot untuk pengawakutuan"
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
