@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-02-13 04:44+0000\n"
-"PO-Revision-Date: 2025-02-27 22:42+0100\n"
+"POT-Creation-Date: 2025-03-22 10:29+0000\n"
+"PO-Revision-Date: 2025-03-22 13:22+0100\n"
 "Last-Translator: Bàrbara Vidal <barbara@barbara.cat>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: orca-autostart.desktop.in:4
 msgid "Orca Screen Reader"
@@ -8904,9 +8904,8 @@ msgstr "s'està sortint del formulari."
 #. panel and then navigates out of it. A grouping is a container of related
 #. widgets.
 #: src/orca/messages.py:1303
-#, fuzzy
 msgid "leaving grouping."
-msgstr "s'està deixant l"
+msgstr "s'està sortint del grup."
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
