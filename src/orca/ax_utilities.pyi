@@ -139,12 +139,15 @@ class AXUtilities:
     def get_previous_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]: ...
 
     @staticmethod
-    def is_on_screen(obj: Atspi.Accessible, bounding_box=Optional[Atspi.Rect]) -> bool: ...
+    def is_on_screen(
+        obj: Atspi.Accessible,
+        bounding_box: Optional[Atspi.Rect] = None
+    ) -> bool: ...
 
     @staticmethod
     def get_on_screen_objects(
         root: Atspi.Accessible,
-        bounding_box=Optional[Atspi.Rect]
+        bounding_box: Optional[Atspi.Rect] = None
     ) -> list: ...
 
     # From ax_utilities_application.py
