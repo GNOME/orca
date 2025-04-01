@@ -251,12 +251,6 @@ class Utilities:
             return False
         return AXObject.find_ancestor(obj, AXUtilities.is_combo_box) is not None
 
-    def isFirstItemInInlineContentSuggestion(self, obj):
-        return False
-
-    def isLastItemInInlineContentSuggestion(self, obj):
-        return False
-
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False

@@ -1830,20 +1830,6 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv[hash(obj)] = rv
         return rv
 
-    def isFirstItemInInlineContentSuggestion(self, obj):
-        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
-        if not (suggestion and AXObject.get_child_count(suggestion)):
-            return False
-
-        return suggestion[0] == obj
-
-    def isLastItemInInlineContentSuggestion(self, obj):
-        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
-        if not (suggestion and AXObject.get_child_count(suggestion)):
-            return False
-
-        return suggestion[-1] == obj
-
     def getMathAncestor(self, obj):
         if not AXUtilities.is_math_related(obj):
             return None
