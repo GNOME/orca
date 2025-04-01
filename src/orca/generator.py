@@ -760,8 +760,12 @@ class Generator:
 
     @log_generator_output
     def _generate_state_invalid(self, obj, **_args):
-        error = self._script.utilities.getError(obj)
-        if not error:
+        if not AXUtilities.is_invalid_entry(obj):
+            return []
+
+        attrs, _start, _end = AXText.get_text_attributes_at_offset(obj)
+        error = attrs.get("invalid")
+        if not error or error == "false":
             return []
 
         if self._mode == "braille":
@@ -774,14 +778,15 @@ class Generator:
             return []
 
         result = []
-        if error == 'spelling':
+        if error == "spelling":
             indicator = indicators[1]
-        elif error == 'grammar':
+        elif error == "grammar":
             indicator = indicators[2]
         else:
             indicator = indicators[0]
 
-        error_message = self._script.utilities.getErrorMessage(obj)
+        targets = AXUtilities.get_error_message(obj)
+        error_message = "\n".join(map(self._script.utilities.expandEOCs, targets))
         if error_message:
             result.append(f"{indicator}: {error_message}")
         else:

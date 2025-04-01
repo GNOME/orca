@@ -791,49 +791,21 @@ class Utilities:
 
         return result
 
-    def getError(self, obj):
-        if not AXUtilities.is_invalid_entry(obj):
-            return False
-
-        attrs, _start, _end = self.textAttributes(obj, 0, True)
-        error = attrs.get("invalid")
-        if error == "false":
-            return False
-        if error not in ["spelling", "grammar"]:
-            return True
-
-        return error
-
-    def _getErrorMessageContainer(self, obj):
-        if not self.getError(obj):
-            return None
-
-        targets = AXUtilities.get_error_message(obj)
-        if targets:
-            return targets[0]
-
-        return None
-
     def isErrorForContents(self, obj, contents=None):
         """Returns True of obj is an error message for the contents."""
 
         if not contents:
             return False
 
-        if not self.isErrorMessage(obj):
+        if not AXUtilities.get_is_error_for(obj):
             return False
 
         for acc, _start, _end, _string in contents:
-            if self._getErrorMessageContainer(acc) == obj:
+            targets = AXUtilities.get_error_message(acc)
+            if obj in targets:
                 return True
 
         return False
-
-    def getErrorMessage(self, obj):
-        return self.expandEOCs(self._getErrorMessageContainer(obj))
-
-    def isErrorMessage(self, obj):
-        return bool(AXUtilities.get_is_error_for(obj))
 
     def deletedText(self, event):
         return event.any_data
