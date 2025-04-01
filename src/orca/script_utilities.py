@@ -841,10 +841,6 @@ class Utilities:
         # TODO - JD. Remove this function if the web override can be adjusted
         AXText.set_caret_offset(obj, offset)
 
-    def textAttributes(self, acc, offset=None, get_defaults=False):
-        # TODO - JD: Replace all calls to this function with the one below
-        return AXText.get_text_attributes_at_offset(acc, offset)
-
     def splitSubstringByLanguage(self, obj, start, end):
         """Returns a list of (start, end, string, language, dialect) tuples."""
 

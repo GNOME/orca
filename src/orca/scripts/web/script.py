@@ -107,10 +107,6 @@ class Script(default.Script):
         self._autoFocusModeNativeNavCheckButton = None
         self._layoutModeCheckButton = None
 
-        self.attributeNamesDict["invalid"] = "text-spelling"
-        self.attributeNamesDict["text-align"] = "justification"
-        self.attributeNamesDict["text-indent"] = "indent"
-
     def activate(self):
         """Called when this script is activated."""
 

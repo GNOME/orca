@@ -73,11 +73,6 @@ class Script(script.Script):
 
         self.justEnteredFlatReviewMode = False
 
-        # A dictionary of non-standardly-named text attributes and their
-        # Atk equivalents.
-        #
-        self.attributeNamesDict = {}
-
         # Keep track of the last time we issued a mouse routing command
         # so that we can guess if a change resulted from our moving the
         # pointer.

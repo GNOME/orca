@@ -878,6 +878,19 @@ class AXText:
 
         tokens = ["AXText: Attributes for", obj, f"at offset {offset} : {result}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        # Adjust for web browsers that report indentation and justification at object attributes
+        # rather than text attributes.
+        obj_attributes = AXObject.get_attributes_dict(obj, False)
+        if not result[0].get("justification"):
+            alternative = obj_attributes.get("text-align")
+            if alternative:
+                result[0]["justification"] = alternative
+        if not result[0].get("indent"):
+            alternative = obj_attributes.get("text-indent")
+            if alternative:
+                result[0]["indent"] = alternative
+
         return result[0] or {}, result[1] or 0, result[2] or AXText.get_character_count(obj)
 
     # TODO - JD: This should be converted to return AXTextAttribute values.

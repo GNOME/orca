@@ -427,16 +427,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().expandEOCs(obj, startOffset, endOffset).strip()
 
-    def textAttributes(self, acc, offset=None, get_defaults=False):
-        attrs = super().textAttributes(acc, offset, get_defaults)
-        objAttributes = AXObject.get_attributes_dict(acc, False)
-        for key in self._script.attributeNamesDict.keys():
-            value = objAttributes.get(key)
-            if value is not None:
-                attrs[0][key] = value
-
-        return attrs
-
     def adjustContentsForLanguage(self, contents):
         rv = []
         for content in contents:
