@@ -247,12 +247,6 @@ class Utilities:
     def isContentError(self, obj):
         return False
 
-    def isFirstItemInInlineContentSuggestion(self, obj):
-        return False
-
-    def isLastItemInInlineContentSuggestion(self, obj):
-        return False
-
     def is_empty(self, obj):
         return False
 

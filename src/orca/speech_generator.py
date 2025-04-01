@@ -1414,7 +1414,8 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if self._script.utilities.isFirstItemInInlineContentSuggestion(obj):
+        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        if suggestion and obj == AXObject.get_child(suggestion, 0):
             result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             result.extend(self._generate_pause(obj, **args))
@@ -1437,7 +1438,9 @@ class SpeechGenerator(generator.Generator):
         result = [messages.CONTENT_DELETION_END]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-        if self._script.utilities.isLastItemInInlineContentSuggestion(obj):
+        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        if suggestion and obj == AXObject.get_child(
+                suggestion, AXObject.get_child_count(suggestion) - 1):
             result.extend(self._generate_pause(obj, **args))
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1459,7 +1462,8 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if self._script.utilities.isFirstItemInInlineContentSuggestion(obj):
+        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        if suggestion and obj == AXObject.get_child(suggestion, 0):
             result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
             result.extend(self._generate_pause(obj, **args))
@@ -1482,7 +1486,9 @@ class SpeechGenerator(generator.Generator):
         result = [messages.CONTENT_INSERTION_END]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-        if self._script.utilities.isLastItemInInlineContentSuggestion(obj):
+        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        if suggestion and obj == AXObject.get_child(
+                suggestion, AXObject.get_child_count(suggestion) - 1):
             result.extend(self._generate_pause(obj, **args))
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
