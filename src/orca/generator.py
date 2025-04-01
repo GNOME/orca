@@ -93,7 +93,6 @@ class Generator:
             Atspi.Role.COMBO_BOX: self._generate_combo_box,
             Atspi.Role.COMMENT: self._generate_comment,
             Atspi.Role.CONTENT_DELETION: self._generate_content_deletion,
-            "ROLE_CONTENT_ERROR": self._generate_content_error,
             Atspi.Role.CONTENT_INSERTION: self._generate_content_insertion,
             Atspi.Role.DEFINITION: self._generate_definition,
             Atspi.Role.DESCRIPTION_LIST: self._generate_description_list,
@@ -543,8 +542,6 @@ class Generator:
             return Atspi.Role.BLOCK_QUOTE
         if AXUtilities.is_comment(obj, role):
             return Atspi.Role.COMMENT
-        if self._script.utilities.isContentError(obj):
-            return "ROLE_CONTENT_ERROR"
         if AXUtilities.is_description_list(obj, role):
             return Atspi.Role.DESCRIPTION_LIST
         if AXUtilities.is_description_term(obj, role):
@@ -1391,11 +1388,6 @@ class Generator:
 
     def _generate_content_deletion(self, _obj, **_args):
         """Generates presentation for the content-deletion role."""
-
-        return []
-
-    def _generate_content_error(self, _obj, **_args):
-        """Generates presentation for a role with a content-related error."""
 
         return []
 

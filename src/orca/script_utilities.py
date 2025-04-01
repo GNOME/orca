@@ -251,9 +251,6 @@ class Utilities:
             return False
         return AXObject.find_ancestor(obj, AXUtilities.is_combo_box) is not None
 
-    def isContentError(self, obj):
-        return False
-
     def isFirstItemInInlineContentSuggestion(self, obj):
         return False
 

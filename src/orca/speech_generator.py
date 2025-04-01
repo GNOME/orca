@@ -2506,16 +2506,6 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_content_error(self, obj, **args):
-        """Generates speech for a role with a content-related error."""
-
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
-        return result
-
     def _generate_content_insertion(self, obj, **args):
         """Generates speech for the content-insertion role."""
 

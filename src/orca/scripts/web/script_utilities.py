@@ -1840,15 +1840,6 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv[hash(obj)] = rv
         return rv
 
-    def isContentError(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().isContentError(obj)
-
-        if AXObject.get_role(obj) not in self._textBlockElementRoles():
-            return False
-
-        return AXUtilities.is_invalid_entry(obj)
-
     def isFirstItemInInlineContentSuggestion(self, obj):
         suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if not (suggestion and AXObject.get_child_count(suggestion)):

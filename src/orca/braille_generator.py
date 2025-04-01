@@ -577,11 +577,6 @@ class BrailleGenerator(generator.Generator):
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_content_error(self, obj, **args):
-        """Generates braille for a role with a content-related error."""
-
-        return self._generate_default_presentation(obj, **args)
-
     def _generate_content_insertion(self, obj, **args):
         """Generates braille for the content-insertion role."""
 
