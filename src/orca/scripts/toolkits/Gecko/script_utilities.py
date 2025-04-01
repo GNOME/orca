@@ -44,20 +44,6 @@ from orca.ax_utilities import AXUtilities
 
 class Utilities(web.Utilities):
 
-    def getOnScreenObjects(self, root, extents=None):
-        objects = super().getOnScreenObjects(root, extents)
-
-        # For things like Thunderbird's "Select columns to display" button
-        if AXUtilities.is_tree_table(root) and AXObject.get_child_count(root):
-
-            def isExtra(x):
-                return not AXUtilities.is_column_header(x)
-
-            child = AXObject.get_child(root, 0)
-            objects.extend([x for x in AXObject.iter_children(child, isExtra)])
-
-        return objects
-
     def isEditableMessage(self, obj):
         """Returns True if this is an editable message."""
 

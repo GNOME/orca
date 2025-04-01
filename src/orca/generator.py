@@ -569,7 +569,7 @@ class Generator:
         result = []
         obj_name = AXObject.get_name(obj) or AXUtilities.get_displayed_label(obj)
         obj_desc = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
-        descendants = self._script.utilities.getOnScreenObjects(obj)
+        descendants = AXUtilities.get_on_screen_objects(obj)
         used_description_as_static_text = False
         for child in descendants:
             if child == obj:

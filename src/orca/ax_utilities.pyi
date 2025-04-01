@@ -138,6 +138,15 @@ class AXUtilities:
     @staticmethod
     def get_previous_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]: ...
 
+    @staticmethod
+    def is_on_screen(obj: Atspi.Accessible, bounding_box=Optional[Atspi.Rect]) -> bool: ...
+
+    @staticmethod
+    def get_on_screen_objects(
+        root: Atspi.Accessible,
+        bounding_box=Optional[Atspi.Rect]
+    ) -> list: ...
+
     # From ax_utilities_application.py
     @staticmethod
     def application_as_string(obj: Atspi.Accessible) -> str: ...
@@ -1591,6 +1600,9 @@ class AXUtilities:
 
     @staticmethod
     def is_focused(obj: Atspi.Accessible) -> bool: ...
+
+    @staticmethod
+    def is_hidden(obj: Atspi.Accessible) -> bool: ...
 
     @staticmethod
     def is_horizontal(obj: Atspi.Accessible) -> bool: ...

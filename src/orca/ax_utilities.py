@@ -44,6 +44,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
+from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
@@ -748,7 +749,7 @@ class AXUtilities:
 
         next_object = AXObject.get_child(parent, index)
         if next_object == obj:
-            tokens = ["AXObject:", obj, "claims to be its own next object"]
+            tokens = ["AXUtilities:", obj, "claims to be its own next object"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
@@ -777,11 +778,76 @@ class AXUtilities:
 
         previous_object = AXObject.get_child(parent, index)
         if previous_object == obj:
-            tokens = ["AXObject:", obj, "claims to be its own previous object"]
+            tokens = ["AXUtilities:", obj, "claims to be its own previous object"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return previous_object
+
+    @staticmethod
+    def is_on_screen(obj: Atspi.Accessible, bounding_box=Optional[Atspi.Rect]) -> bool:
+        """Returns true if obj should be treated as being on screen."""
+
+        AXObject.clear_cache(obj, False, "Updating to check if object is on screen.")
+        if not (AXUtilitiesState.is_showing(obj) and AXUtilitiesState.is_visible(obj)):
+            tokens = ["AXUtilities:", obj, "is not showing and visible. Treating as offscreen."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXUtilitiesState.is_hidden(obj):
+            tokens = ["AXUtilities:", obj, "is reports being hidden. Treating as offscreen."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if AXComponent.has_no_size_or_invalid_rect(obj):
+            tokens = ["AXUtilities: Rect of", obj, "is unhelpful. Treating as onscreen."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        if AXComponent.object_is_off_screen(obj):
+            tokens = ["AXUtilities:", obj, "is believed to be off screen."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        if bounding_box is not None and not AXComponent.object_intersects_rect(obj, bounding_box):
+            tokens = ["AXUtilities", obj, "not in", bounding_box, ". Treating as offscreen."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        return True
+
+    @staticmethod
+    def get_on_screen_objects(root: Atspi.Accessible, bounding_box=Optional[Atspi.Rect]) -> list:
+        """Returns a list of onscreen objects in the given root."""
+
+        if not AXUtilities.is_on_screen(root, bounding_box):
+            return []
+
+        # TODO - JD: There are presumably other such cases.
+        if AXUtilitiesRole.is_button(root) or AXUtilitiesRole.is_combo_box(root):
+            return [root]
+
+        if bounding_box is None:
+            bounding_box = AXComponent.get_rect(root)
+
+        if AXObject.supports_table(root) and AXObject.supports_selection(root):
+            return list(AXTable.iter_visible_cells(root))
+
+        objects = []
+        if AXObject.get_name(root) or AXObject.get_description(root) \
+           or AXText.has_presentable_text(root):
+            objects.append(root)
+
+        for child in AXObject.iter_children(root):
+            objects.extend(AXUtilities.get_on_screen_objects(child, bounding_box))
+
+        if objects:
+            return objects
+
+        if AXUtilitiesState.is_focusable(root) or AXObject.has_action(root, "click"):
+            return [root]
+
+        return []
 
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):

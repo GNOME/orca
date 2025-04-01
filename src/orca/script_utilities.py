@@ -260,13 +260,6 @@ class Utilities:
     def isLastItemInInlineContentSuggestion(self, obj):
         return False
 
-    def is_empty(self, obj):
-        return False
-
-    def isHidden(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        return attrs.get("hidden", False)
-
     def isProgressBar(self, obj):
         if not AXUtilities.is_progress_bar(obj):
             return False
@@ -494,99 +487,6 @@ class Utilities:
             or AXUtilities.is_text(obj) \
             or AXUtilities.is_terminal(obj) \
             or AXUtilities.is_paragraph(obj)
-
-    def isOnScreen(self, obj, boundingbox=None):
-        if AXObject.is_dead(obj):
-            return False
-
-        if self.isHidden(obj):
-            return False
-
-        if not (AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj)):
-            tokens = ["SCRIPT UTILITIES:", obj, "is not showing and visible"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-            if AXUtilities.is_filler(obj):
-                AXObject.clear_cache(obj, False, "Suspecting filler might have wrong state")
-                if AXUtilities.is_showing(obj) and AXUtilities.is_visible(obj):
-                    tokens = ["WARNING: Now", obj, "is showing and visible"]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    return True
-
-            return False
-
-        if AXComponent.has_no_size_or_invalid_rect(obj):
-            tokens = ["SCRIPT UTILITIES: Rect of", obj, "is unhelpful. Treating as onscreen"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if AXComponent.object_is_off_screen(obj):
-            return False
-
-        if boundingbox is None:
-            return True
-
-        if not AXComponent.object_intersects_rect(obj, boundingbox):
-            tokens = ["SCRIPT UTILITIES:", obj, "not in", boundingbox]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        return True
-
-    def getOnScreenObjects(self, root, extents=None):
-        if not self.isOnScreen(root, extents):
-            return []
-
-        if AXObject.get_role(root) == Atspi.Role.INVALID:
-            return []
-
-        if AXUtilities.is_button(root) or AXUtilities.is_combo_box(root):
-            return [root]
-
-        if AXUtilities.is_filler(root) and not AXObject.get_child_count(root):
-            AXObject.clear_cache(root, True, "Root is empty filler.")
-            count = AXObject.get_child_count(root)
-            tokens = ["SCRIPT UTILITIES:", root, f"now reports {count} children"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            if not count:
-                tokens = ["WARNING: unexpectedly empty filler", root]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if extents is None:
-            extents = AXComponent.get_rect(root)
-
-        if AXObject.supports_table(root) and AXObject.supports_selection(root):
-            return list(AXTable.iter_visible_cells(root))
-
-        objects = []
-        hasNameOrDesc = AXObject.get_name(root) or AXObject.get_description(root)
-        if hasNameOrDesc and (AXUtilities.is_page_tab(root) or AXUtilities.is_image(root)):
-            objects.append(root)
-        elif AXText.has_presentable_text(root):
-            objects.append(root)
-
-        for child in AXObject.iter_children(root):
-            objects.extend(self.getOnScreenObjects(child, extents))
-
-        if objects:
-            return objects
-
-        if AXUtilities.is_label(root) and not hasNameOrDesc and AXText.is_whitespace_or_empty(root):
-            return []
-
-        containers = [Atspi.Role.CANVAS,
-                      Atspi.Role.FILLER,
-                      Atspi.Role.IMAGE,
-                      Atspi.Role.LINK,
-                      Atspi.Role.LIST_BOX,
-                      Atspi.Role.PANEL,
-                      Atspi.Role.SECTION,
-                      Atspi.Role.SCROLL_PANE,
-                      Atspi.Role.VIEWPORT]
-        if AXObject.get_role(root) in containers and not hasNameOrDesc:
-            return []
-
-        return [root]
 
     def realActiveAncestor(self, obj):
         if AXUtilities.is_focused(obj):

@@ -751,7 +751,7 @@ class Context:
         if boundingbox is None:
             boundingbox = self.bounds
 
-        objs = self.script.utilities.getOnScreenObjects(root, boundingbox)
+        objs = AXUtilities.get_on_screen_objects(root, boundingbox)
         tokens = ["FLAT REVIEW:", len(objs), "on-screen objects found for", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

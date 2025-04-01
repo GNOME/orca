@@ -289,15 +289,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().inFindContainer(obj)
 
-    def is_empty(self, obj):
-        if not self.isTextBlockElement(obj):
-            return False
-
-        if AXObject.get_name(obj):
-            return False
-
-        return not self.treatAsTextObject(obj, False)
-
     def isTextArea(self, obj):
         if AXObject.get_role(obj) in self._textBlockElementRoles():
             document = self.getDocumentForObject(obj)
@@ -559,7 +550,7 @@ class Utilities(script_utilities.Utilities):
                 tokens = ["WEB: Treating", obj, "as non-text: is non-entry text widget."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 rv = False
-            if rv and (self.isHidden(obj) or self.isOffScreenLabel(obj)):
+            if rv and (AXUtilities.is_hidden(obj) or self.isOffScreenLabel(obj)):
                 tokens = ["WEB: Treating", obj, "as non-text: is hidden or off-screen label."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 rv = False
@@ -1890,11 +1881,12 @@ class Utilities(script_utilities.Utilities):
 
             text = string or AXObject.get_name(obj)
             rv = True
+            # TODO - JD: Audit this to see if they are now redundant.
             if ((self.isTextBlockElement(obj) or self.isLink(obj)) and not text) \
                or (self.isContentEditableWithEmbeddedObjects(obj) and not string.strip()) \
                or self.isEmptyAnchor(obj) \
                or (AXComponent.has_no_size(obj) and not text) \
-               or self.isHidden(obj) \
+               or AXUtilities.is_hidden(obj) \
                or self.isOffScreenLabel(obj) \
                or self.isUselessImage(obj) \
                or self.isErrorForContents(obj, contents) \
@@ -2959,7 +2951,7 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Non interactive descendant of control cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
-        elif self.isHidden(obj):
+        elif AXUtilities.is_hidden(obj):
             # We try to do this check only if needed because getting object attributes is
             # not as performant, and we cannot use the cached attribute because aria-hidden
             # can change frequently depending on the app.
@@ -2998,7 +2990,7 @@ class Utilities(script_utilities.Utilities):
                 else:
                     break
 
-        if contextObj and not self.isHidden(contextObj):
+        if contextObj and not AXUtilities.is_hidden(contextObj):
             return self.findNextCaretInOrder(contextObj, max(-1, contextOffset - 1))
 
         if self.isDocument(container):

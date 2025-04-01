@@ -267,13 +267,7 @@ class StructuralNavigationObject:
         """Show a list of all the items with this object type."""
 
         objects = self.structural_navigation._getAll(self)
-
-        def _isValidMatch(x):
-            if AXObject.is_dead(x):
-                return False
-            return not (script.utilities.isHidden(x) or script.utilities.is_empty(x))
-
-        objects = list(filter(_isValidMatch, objects))
+        objects = list(filter(lambda x: not AXUtilities.is_hidden(x), objects))
 
         if self.predicate is not None:
             objects = list(filter(self.predicate, objects))
@@ -340,11 +334,7 @@ class StructuralNavigationObject:
 
         def showListAtLevel(script, inputEvent):
             objects = self.structural_navigation._getAll(self, arg=level)
-
-            def _isValidMatch(x):
-                return not (script.utilities.isHidden(x) or script.utilities.is_empty(x))
-
-            objects = list(filter(_isValidMatch, objects))
+            objects = list(filter(lambda x: not AXUtilities.is_hidden(x), objects))
             if self.predicate is not None:
                 objects = list(filter(self.predicate, objects))
 
@@ -839,9 +829,7 @@ class StructuralNavigation:
             matches.reverse()
 
         def _isValidMatch(obj):
-            if AXObject.is_dead(obj):
-                return False
-            if self._script.utilities.isHidden(obj) or self._script.utilities.is_empty(obj):
+            if AXUtilities.is_hidden(obj):
                 return False
             if structuralNavigationObject.predicate is None:
                 return True
