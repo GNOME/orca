@@ -785,7 +785,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if self._inFocusMode and self.utilities.isWebAppDescendant(obj):
+        if self._inFocusMode and AXObject.find_ancestor(obj, AXUtilities.is_embedded):
             if self.utilities.forceBrowseModeForWebAppDescendant(obj):
                 tokens = ["WEB: Forcing browse mode for web app descendant", obj]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1990,9 +1990,9 @@ class Script(default.Script):
             tokens = ["WEB: document changed from", prevDocument, "to", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if self.utilities.isWebAppDescendant(event.source):
+        if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
             if self._browseModeIsSticky:
-                msg = "WEB: Web app descendant claimed focus, but browse mode is sticky"
+                msg = "WEB: Embedded descendant claimed focus, but browse mode is sticky"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_tool_tip(event.source) \
               and AXObject.find_ancestor(focus, lambda x: x == event.source):
@@ -2000,7 +2000,7 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             else:
-                msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
+                msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return True
@@ -2206,18 +2206,18 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.isWebAppDescendant(event.source):
+        if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
             if self._inFocusMode:
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.
                 AXObject.clear_cache(event.source,
                                      True,
                                      "Workaround for missing events on descendants.")
-                msg = "WEB: Event source is web app descendant and we're in focus mode"
+                msg = "WEB: Event source is embedded descendant and we're in focus mode"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-            msg = "WEB: Event source is web app descendant and we're in browse mode"
+            msg = "WEB: Event source is embedded descendant and we're in browse mode"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

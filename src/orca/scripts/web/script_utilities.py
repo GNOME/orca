@@ -400,15 +400,6 @@ class Utilities(script_utilities.Utilities):
 
         return [ext.x, ext.y, ext.width, ext.height]
 
-    def _preserveTree(self, obj):
-        if not (obj and AXObject.get_child_count(obj)):
-            return False
-
-        if AXUtilities.is_math(obj):
-            return True
-
-        return False
-
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
         if not self.inDocumentContent(obj):
             return super().expandEOCs(obj, startOffset, endOffset)
@@ -421,7 +412,7 @@ class Utilities(script_utilities.Utilities):
         if not self.treatAsTextObject(obj):
             return ""
 
-        if self._preserveTree(obj):
+        if AXUtilities.is_math(obj) and AXObject.get_child_count(obj):
             utterances = self._script.speech_generator.generate_speech(obj)
             return self._script.speech_generator.utterances_to_string(utterances)
 
@@ -778,10 +769,7 @@ class Utilities(script_utilities.Utilities):
 
         if granularity == Atspi.TextGranularity.LINE:
             if AXUtilities.is_math_related(obj):
-                if AXUtilities.is_math(obj):
-                    math = obj
-                else:
-                    math = self.getMathAncestor(obj)
+                math = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_math)
                 return [[math, 0, 1, '']]
 
             treatAsText = self.treatAsTextObject(obj)
@@ -1237,7 +1225,7 @@ class Utilities(script_utilities.Utilities):
 
             if AXUtilities.is_math(xObj) or AXUtilities.is_math_related(obj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, extents[3])
-            elif self.isTextSubscriptOrSuperscript(xObj):
+            elif AXUtilities.is_subscript_or_superscript_text(xObj):
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents, xExtents[3])
             else:
                 onSameLine = self.extentsAreOnSameLine(extents, xExtents)
@@ -1423,7 +1411,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         lastObj, lastOffset = line[-1][0], line[-1][2] - 1
-        math = self.getMathAncestor(lastObj)
+        math = AXObject.find_ancestor_inclusive(lastObj, AXUtilities.is_math)
         if math:
             lastObj, lastOffset = self.lastContext(math)
 
@@ -1599,7 +1587,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def forceBrowseModeForWebAppDescendant(self, obj):
-        if not self.isWebAppDescendant(obj):
+        if not AXObject.find_ancestor(obj, AXUtilities.is_embedded):
             return False
 
         if AXUtilities.is_tool_tip(obj):
@@ -1830,12 +1818,6 @@ class Utilities(script_utilities.Utilities):
         self._treatAsDiv[hash(obj)] = rv
         return rv
 
-    def getMathAncestor(self, obj):
-        if not AXUtilities.is_math_related(obj):
-            return None
-
-        return AXObject.find_ancestor_inclusive(obj, AXUtilities.is_math)
-
     def filterContentsForPresentation(self, contents, inferLabels=False):
         def _include(x):
             obj, start, end, string = x
@@ -1970,9 +1952,6 @@ class Utilities(script_utilities.Utilities):
         rv = ancestor and not self.isNonNavigablePopup(ancestor)
         self._isNavigableToolTipDescendant[hash(obj)] = rv
         return rv
-
-    def isWebAppDescendant(self, obj):
-        return AXObject.find_ancestor(obj, AXUtilities.is_embedded) is not None
 
     def elementLinesAreSingleWords(self, obj):
         if not (obj and self.inDocumentContent(obj)):
@@ -2352,12 +2331,6 @@ class Utilities(script_utilities.Utilities):
     def hasUselessCanvasDescendant(self, obj):
         return len(AXUtilities.find_all_canvases(obj, self.isUselessImage)) > 0
 
-    def isTextSubscriptOrSuperscript(self, obj):
-        if AXUtilities.is_math_related(obj):
-            return False
-
-        return AXUtilities.is_subscript_or_superscript(obj)
-
     def isNonNavigableEmbeddedDocument(self, obj):
         rv = self._isNonNavigableEmbeddedDocument.get(hash(obj))
         if rv is not None:
@@ -2563,7 +2536,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def shouldInferLabelFor(self, obj):
-        if not self.inDocumentContent() or self.isWebAppDescendant(obj):
+        if not self.inDocumentContent() or AXObject.find_ancestor(obj, AXUtilities.is_embedded):
             return False
 
         rv = self._shouldInferLabelFor.get(hash(obj))

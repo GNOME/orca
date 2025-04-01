@@ -2042,6 +2042,16 @@ class AXUtilitiesRole:
         return role in [Atspi.Role.SUBSCRIPT, Atspi.Role.SUPERSCRIPT]
 
     @staticmethod
+    def is_subscript_or_superscript_text(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool:
+        """Returns True if obj has the subscript or superscript role and is not math-related"""
+
+        if AXUtilitiesRole.is_math_related(obj, role):
+            return False
+        return AXUtilitiesRole.is_subscript_or_superscript(obj, role)
+
+    @staticmethod
     def is_suggestion(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
         """Returns True if obj has the suggestion role"""
 

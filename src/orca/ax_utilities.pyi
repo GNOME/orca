@@ -1311,6 +1311,11 @@ class AXUtilities:
     ) -> bool: ...
 
     @staticmethod
+    def is_subscript_or_superscript_text(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
     def is_suggestion(
         obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
     ) -> bool: ...
