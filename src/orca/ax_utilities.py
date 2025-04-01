@@ -785,7 +785,10 @@ class AXUtilities:
         return previous_object
 
     @staticmethod
-    def is_on_screen(obj: Atspi.Accessible, bounding_box=Optional[Atspi.Rect]) -> bool:
+    def is_on_screen(
+        obj: Atspi.Accessible,
+        bounding_box: Optional[Atspi.Rect] = None
+    ) -> bool:
         """Returns true if obj should be treated as being on screen."""
 
         AXObject.clear_cache(obj, False, "Updating to check if object is on screen.")
@@ -817,7 +820,10 @@ class AXUtilities:
         return True
 
     @staticmethod
-    def get_on_screen_objects(root: Atspi.Accessible, bounding_box=Optional[Atspi.Rect]) -> list:
+    def get_on_screen_objects(
+        root: Atspi.Accessible,
+        bounding_box: Optional[Atspi.Rect] = None
+    ) -> list:
         """Returns a list of onscreen objects in the given root."""
 
         if not AXUtilities.is_on_screen(root, bounding_box):
