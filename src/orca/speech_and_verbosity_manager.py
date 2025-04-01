@@ -33,6 +33,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import re
+import string
 from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
@@ -42,6 +43,7 @@ from . import input_event
 from . import keybindings
 from . import mathsymbols
 from . import messages
+from . import object_properties
 from . import pronunciation_dict
 from . import settings
 from . import settings_manager
@@ -49,6 +51,7 @@ from . import speech
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
@@ -66,6 +69,7 @@ class SpeechAndVerbosityManager:
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_indentation_description: str = ""
+        self._last_error_description: str = ""
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -838,6 +842,35 @@ class SpeechAndVerbosityManager:
 
         self._last_indentation_description = result
         return result
+
+    def get_error_description(
+        self,
+        obj: Atspi.Accessible,
+        offset: Optional[int] = None,
+        only_if_changed: Optional[bool] = True
+    ) -> str:
+        """Returns a description of the error at the current offset."""
+
+        if not settings_manager.get_manager().get_setting('speakMisspelledIndicator'):
+            return ""
+
+        # If we're on whitespace or punctuation, we cannot be on an error.
+        char = AXText.get_character_at_offset(obj, offset)[0]
+        if char in string.punctuation + string.whitespace + "\u00a0":
+            return ""
+
+        msg = ""
+        if AXText.string_has_spelling_error(obj, offset):
+            # TODO - JD: We're using the message here to preserve existing behavior.
+            msg = messages.MISSPELLED
+        elif AXText.string_has_grammar_error(obj, offset):
+            msg = object_properties.STATE_INVALID_GRAMMAR_SPEECH
+
+        if only_if_changed and msg == self._last_error_description:
+            return ""
+
+        self._last_error_description = msg
+        return msg
 
     def adjust_for_presentation(
         self,

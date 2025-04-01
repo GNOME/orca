@@ -1115,7 +1115,7 @@ class AXText:
         return result
 
     @staticmethod
-    def is_word_misspelled(obj: Atspi.Accessible, offset: Optional[int] = None) -> bool:
+    def string_has_spelling_error(obj: Atspi.Accessible, offset: Optional[int] = None) -> bool:
         """Returns True if the text attributes indicate a spelling error."""
 
         attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
@@ -1124,6 +1124,17 @@ class AXText:
         if attributes.get("text-spelling") == "misspelled":
             return True
         if attributes.get("underline") in ["error", "spelling"]:
+            return True
+        return False
+
+    @staticmethod
+    def string_has_grammar_error(obj: Atspi.Accessible, offset: Optional[int] = None) -> bool:
+        """Returns True if the text attributes indicate a grammar error."""
+
+        attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        if attributes.get("invalid") == "grammar":
+            return True
+        if attributes.get("underline") in ["error", "grammar"]:
             return True
         return False
 

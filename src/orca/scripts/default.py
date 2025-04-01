@@ -84,8 +84,6 @@ class Script(script.Script):
         #
         self.lastMouseRoutingTime = None
 
-        self._lastWordCheckedForSpelling = ""
-
         self._inSayAll = False
         self._sayAllIsInterrupted = False
         self._sayAllContexts = []
@@ -1417,13 +1415,7 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if settings_manager.get_manager().get_setting("speakMisspelledIndicator"):
-            offset = AXText.get_caret_offset(event.source)
-            if not AXText.get_substring(event.source, offset, offset + 1).isalnum():
-                offset -= 1
-            if AXText.is_word_misspelled(event.source, offset - 1) \
-               or AXText.is_word_misspelled(event.source, offset + 1):
-                self.speakMessage(messages.MISSPELLED)
+        self.speakMisspelledIndicator(event.source)
 
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
@@ -2218,35 +2210,12 @@ class Script(script.Script):
 
         print("\a")
 
-    def speakMisspelledIndicator(self, obj, offset):
-        """Speaks an announcement indicating that a given word is misspelled.
-
-        Arguments:
-        - obj: An accessible which implements the accessible text interface.
-        - offset: Offset in the accessible's text for which to retrieve the
-          attributes.
-        """
-
-        if not settings_manager.get_manager().get_setting('speakMisspelledIndicator'):
-            return
-
-        # If we're on whitespace or punctuation, we cannot be on a misspelled word.
-        char = AXText.get_character_at_offset(obj, offset)[0]
-        if char in string.punctuation + string.whitespace + "\u00a0":
-            self._lastWordCheckedForSpelling = char
-            return
-
-        if not AXText.is_word_misspelled(obj, offset):
-            return
-
-        word = AXText.get_word_at_offset(obj, offset)[0]
-        if word != self._lastWordCheckedForSpelling:
-            self.speakMessage(messages.MISSPELLED)
-
-        # Store this word so that we do not continue to present the
-        # presence of the red squiggly as the user arrows amongst
-        # the characters.
-        self._lastWordCheckedForSpelling = word
+    def speakMisspelledIndicator(self, obj, offset=None):
+        # TODO - JD: Remove this and have callers use the speech-adjustment logic.
+        manager = speech_and_verbosity_manager.get_manager()
+        error = manager.get_error_description(obj, offset)
+        if error:
+            self.speakMessage(error)
 
     ############################################################################
     #                                                                          #
