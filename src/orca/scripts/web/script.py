@@ -761,8 +761,8 @@ class Script(default.Script):
 
         lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
         if not settings_manager.get_manager().get_setting('caretNavTriggersFocusMode') \
-           and  lastCommandWasCaretNav \
-           and not self.utilities.isNavigableToolTipDescendant(prevObj):
+           and lastCommandWasCaretNav \
+           and AXObject.find_ancestor_inclusive(prevObj, AXUtilities.is_tool_tip) is None:
             msg = "WEB: Not using focus mode due to caret nav settings"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False

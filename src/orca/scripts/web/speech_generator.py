@@ -76,7 +76,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_new_ancestors(self, obj, **args):
-        if args.get("index", 0) > 0 and not self._script.utilities.isListDescendant(obj):
+        if args.get("index", 0) > 0 and AXObject.find_ancestor(obj, AXUtilities.is_list) is None:
             return []
 
         return super()._generate_new_ancestors(obj, **args)
