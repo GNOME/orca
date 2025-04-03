@@ -3669,7 +3669,8 @@ class SpeechGenerator(generator.Generator):
             return result
 
         result += self._generate_pause(obj, **args)
-        result += self._generate_descendants(obj, **args)
+        result += self._generate_descendants(obj, **args) \
+            or self._generate_text_content(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
