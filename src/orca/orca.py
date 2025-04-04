@@ -131,9 +131,6 @@ def shutdown(script=None, inputEvent=None, signum=None):
         script.presentationInterrupt()
         script.presentMessage(messages.STOP_ORCA, resetStyles=False)
 
-    if signum == signal.SIGSEGV:
-        sys.exit(1)
-
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
     # as key grabs. Finally deactivate the event manager, which will also cause the
@@ -183,11 +180,6 @@ def main():
     signal.signal(signal.SIGINT, shutdownOnSignal)
     signal.signal(signal.SIGTERM, shutdownOnSignal)
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
-
-    # TODO - JD: Handling was added for this signal so that we could restore CapsLock during a
-    # crash. But handling this signal is generally not recommended. If there's a crash, fixing
-    # that seems more important than cleaning up CapsLock.
-    signal.signal(signal.SIGSEGV, shutdownOnSignal)
 
     debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not settings_manager.get_manager().is_accessibility_enabled():
