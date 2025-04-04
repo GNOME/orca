@@ -112,6 +112,10 @@ def loadUserSettings(script=None, skipReloadMessage=False):
     event_manager.get_manager().pause_queuing(False, False, "User settings loaded.")
     debug.print_message(debug.LEVEL_INFO, "ORCA: User Settings Loaded", True)
 
+    manager = debugging_tools_manager.get_manager()
+    manager.print_session_details()
+    manager.print_running_applications(force=False)
+
 def timeout(signum=None, frame=None):
     msg = 'TIMEOUT: something has hung. Aborting.'
     debug.print_message(debug.LEVEL_SEVERE, msg, True)
@@ -171,10 +175,6 @@ def main():
     signal used to terminate Orca (if a signal was used).  Otherwise,
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
-
-    manager = debugging_tools_manager.get_manager()
-    manager.print_session_details()
-    manager.print_running_applications(force=False)
 
     signal.signal(signal.SIGHUP, shutdownOnSignal)
     signal.signal(signal.SIGINT, shutdownOnSignal)
