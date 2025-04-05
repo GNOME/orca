@@ -1269,6 +1269,8 @@ class Utilities:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
             if AXUtilities.is_dialog_or_window(old_focus):
+                if AXUtilities.is_menu(new_focus):
+                    return True
                 msg += "old locusOfFocus is ancestor dialog or window of the new locusOfFocus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
