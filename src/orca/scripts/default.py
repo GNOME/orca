@@ -1922,11 +1922,8 @@ class Script(script.Script):
                     obj=obj, string=text, language=language, dialect=dialect)
                 text = manager.adjust_for_presentation(obj, text, start)
 
-                # Some synthesizers will verbalize the whitespace, so if we've already
-                # described it, prevent double-presentation by stripping it off.
-                if not utterance and indentation_description:
-                    text = text.lstrip()
-
+                # Some synthesizers will verbalize initial whitespace.
+                text = text.lstrip()
                 result = [text]
                 result.extend(voice)
                 utterance.append(result)
