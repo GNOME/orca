@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 
 """Manages Orca's scripts."""
@@ -170,12 +169,12 @@ class ScriptManager:
             tokens = ["SCRIPT MANAGER: Found", module_name]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             try:
-                if hasattr(module, "getScript"):
+                if hasattr(module, "get_script"):
                     script = module.get_script(app)
                 else:
                     script = module.Script(app)
                 break
-            except Exception as error:
+            except (AttributeError, TypeError, ImportError) as error:
                 tokens = ["EXCEPTION: Could not load", module_name, ":", error]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
@@ -268,7 +267,7 @@ class ScriptManager:
             else:
                 app_script = self._create_script(app, None)
                 self.app_scripts[app] = app_script
-        except Exception as error:
+        except (KeyError, AttributeError, ImportError) as error:
             tokens = ["EXCEPTION: Exception getting app script for", app, ":", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             app_script = self.get_default_script()

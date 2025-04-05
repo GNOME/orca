@@ -19,7 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 
 """Utilities for obtaining information about accessible applications."""
@@ -37,6 +36,7 @@ from typing import Optional
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -91,7 +91,7 @@ class AXUtilitiesApplication:
 
         try:
             app = Atspi.Accessible.get_application(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_application: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
@@ -107,7 +107,7 @@ class AXUtilitiesApplication:
 
         try:
             name = Atspi.Accessible.get_toolkit_name(app)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_application_toolkit_name: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
@@ -124,7 +124,7 @@ class AXUtilitiesApplication:
 
         try:
             version = Atspi.Accessible.get_toolkit_version(app)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_application_toolkit_version: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
@@ -150,7 +150,7 @@ class AXUtilitiesApplication:
 
         try:
             desktop = Atspi.get_desktop(0)
-        except Exception as error:
+        except GLib.GError as error:
             tokens = ["ERROR: Exception getting desktop from Atspi:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -163,7 +163,7 @@ class AXUtilitiesApplication:
 
         try:
             pid = Atspi.Accessible.get_process_id(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_process_id: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
@@ -191,7 +191,7 @@ class AXUtilitiesApplication:
         try:
             state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
             state = state.split()[1]
-        except Exception as error:
+        except GLib.GError as error:
             tokens = [f"AXUtilitiesApplication: Exception checking state of pid {pid}: {error}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False

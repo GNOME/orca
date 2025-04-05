@@ -21,7 +21,6 @@
 # pylint: disable=too-many-lines
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-return-statements
-# pylint: disable=broad-exception-caught
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
 

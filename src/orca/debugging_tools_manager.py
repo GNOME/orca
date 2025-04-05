@@ -20,7 +20,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
-# pylint: disable=broad-exception-caught
 # pylint: disable=no-name-in-module
 
 """Provides debugging tools."""
@@ -244,7 +243,7 @@ class DebuggingToolsManager:
                 name = AXObject.get_name(app) or "[DEAD]"
             try:
                 cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
-            except Exception as error:
+            except subprocess.SubprocessError as error:
                 cmdline = f"EXCEPTION: {error}"
             else:
                 cmdline = cmdline.replace("\x00", " ")

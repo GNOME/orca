@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 
 """Utilities for obtaining information about accessible hypertext and hyperlinks."""
@@ -37,6 +36,7 @@ from urllib.parse import urlparse
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -53,7 +53,7 @@ class AXHypertext:
 
         try:
             count = Atspi.Hypertext.get_n_links(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in _get_link_count: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
@@ -71,7 +71,7 @@ class AXHypertext:
 
         try:
             link = Atspi.Hypertext.get_link(obj, index)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in _get_link_at_index: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
@@ -117,7 +117,7 @@ class AXHypertext:
         try:
             link = Atspi.Accessible.get_hyperlink(obj)
             uri = Atspi.Hyperlink.get_uri(link, index)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in get_link_uri: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
@@ -143,7 +143,7 @@ class AXHypertext:
 
         try:
             offset = Atspi.Hyperlink.get_start_index(link)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in get_link_start_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
@@ -169,7 +169,7 @@ class AXHypertext:
 
         try:
             offset = Atspi.Hyperlink.get_end_index(link)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in get_link_end_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1
@@ -207,7 +207,7 @@ class AXHypertext:
 
         try:
             index = Atspi.Hypertext.get_link_index(obj, offset)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in get_child_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
@@ -221,7 +221,7 @@ class AXHypertext:
 
         try:
             child = Atspi.Hyperlink.get_object(link, 0)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXHypertext: Exception in get_child_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None

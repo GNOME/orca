@@ -19,7 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=duplicate-code
 
@@ -39,6 +38,7 @@ from typing import Optional
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -92,7 +92,7 @@ class AXValue:
 
         try:
             value = Atspi.Value.get_current_value(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXValue: Exception in _get_current_value: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0.0
@@ -127,7 +127,7 @@ class AXValue:
 
         try:
             value = Atspi.Value.get_text(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXValue: Exception in get_current_value_text: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             value = ""
@@ -178,7 +178,7 @@ class AXValue:
 
         try:
             value = Atspi.Value.get_minimum_value(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXValue: Exception in get_minimum_value: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0.0
@@ -196,7 +196,7 @@ class AXValue:
 
         try:
             value = Atspi.Value.get_maximum_value(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXValue: Exception in get_maximum_value: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0.0

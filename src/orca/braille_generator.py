@@ -19,7 +19,6 @@
 
 # pylint: disable=too-many-lines
 # pylint: disable=wrong-import-position
-# pylint: disable=broad-exception-caught
 # pylint: disable=too-few-public-methods
 # pylint: disable=duplicate-code
 
@@ -105,7 +104,7 @@ class BrailleGenerator(generator.Generator):
         #
         try:
             focused_region = result[0]
-        except Exception:
+        except IndexError:
             focused_region = None
 
         for region in result:

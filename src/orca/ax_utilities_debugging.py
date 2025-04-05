@@ -22,7 +22,6 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-public-methods
-# pylint: disable=broad-exception-caught
 # pylint: disable=too-many-return-statements
 # pylint: disable=duplicate-code
 
@@ -43,6 +42,7 @@ from typing import Any
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from .ax_object import AXObject
 from .ax_utilities_application import AXUtilitiesApplication
@@ -219,7 +219,7 @@ class AXUtilitiesDebugging:
 
         try:
             result = Atspi.Text.get_text(obj, 0, Atspi.Text.get_character_count(obj))
-        except Exception:
+        except GLib.GError:
             return ""
 
         return AXUtilitiesDebugging._format_string(result)

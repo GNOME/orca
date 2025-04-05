@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-branches
@@ -198,7 +197,7 @@ class EventManager:
         with self._event_queue.mutex:
             try:
                 events = list(reversed(self._event_queue.queue))
-            except Exception as error:
+            except queue.Empty as error:
                 msg = f"EVENT MANAGER: Exception in _isObsoletedBy: {error}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 events = []
@@ -560,14 +559,11 @@ class EventManager:
                     GLib.timeout_add(2500, self._on_no_focus)
                     self._gidle_id = 0
                     rerun = False  # destroy and don't call again
-
         except queue.Empty:
             msg = 'EVENT MANAGER: Attempted dequeue, but the event queue is empty'
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
             self._gidle_id = 0
             rerun = False # destroy and don't call again
-        except Exception:
-            debug.print_exception(debug.LEVEL_SEVERE)
 
         return rerun
 
@@ -821,13 +817,12 @@ class EventManager:
                 if event.type.startswith(key):
                     listener = value
                     break
-
-        try:
-            listener(event)
-        except Exception as error:
-            msg = f"EVENT MANAGER: Exception processing {event.type}: {error}"
+        if listener is None:
+            msg = f"EVENT MANAGER: No listener for event type {event.type}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            debug.print_exception(debug.LEVEL_INFO)
+            return
+
+        listener(event)
 
 _manager: EventManager = EventManager()
 

@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-return-statements
@@ -42,6 +41,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 from gi.repository import Gtk
 
 from . import debug
@@ -191,7 +191,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_action_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_action_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -207,7 +207,7 @@ class AXObject:
 
         try:
             app = Atspi.Accessible.get_application(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in supports_collection: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -220,7 +220,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_collection_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_collection_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -236,7 +236,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_component_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_component_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -253,7 +253,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_document_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_document_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -269,7 +269,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_editable_text_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_editable_text_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -285,7 +285,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_hyperlink(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_hyperlink on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -301,7 +301,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_hypertext_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_hypertext_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -317,7 +317,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_image_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_image_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -333,7 +333,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_selection_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_selection_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -349,7 +349,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_table_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_table_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -365,7 +365,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_table_cell(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_table_cell on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -381,7 +381,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_text_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_text_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -396,7 +396,7 @@ class AXObject:
 
         try:
             iface = Atspi.Accessible.get_value_iface(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception calling get_value_iface on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -415,7 +415,7 @@ class AXObject:
         while acc:
             try:
                 path.append(Atspi.Accessible.get_index_in_parent(acc))
-            except Exception as error:
+            except GLib.GError as error:
                 msg = f"AXObject: Exception getting index in parent for {acc}: {error}"
                 AXObject.handle_error(acc, error, msg)
                 return []
@@ -433,7 +433,7 @@ class AXObject:
 
         try:
             index = Atspi.Accessible.get_index_in_parent(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_index_in_parent: {error}"
             AXObject.handle_error(obj, error, msg)
             return -1
@@ -449,7 +449,7 @@ class AXObject:
 
         try:
             parent = Atspi.Accessible.get_parent(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_parent: {error}"
             AXObject.handle_error(obj, error, msg)
             return None
@@ -617,7 +617,7 @@ class AXObject:
 
         try:
             child = Atspi.Accessible.get_child_at_index(obj, index)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_child: {error}"
             AXObject.handle_error(obj, error, msg)
             return None
@@ -662,7 +662,7 @@ class AXObject:
         index = AXObject.get_index_in_parent(reported_child)
         try:
             real_child = Atspi.Accessible.get_child_at_index(container, index)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_active_descendant_checked: {error}"
             AXObject.handle_error(container, error, msg)
             return reported_child
@@ -772,7 +772,7 @@ class AXObject:
 
         try:
             role = Atspi.Accessible.get_role(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_role: {error}"
             AXObject.handle_error(obj, error, msg)
             return Atspi.Role.INVALID
@@ -792,7 +792,7 @@ class AXObject:
                 role_name = Atspi.Accessible.get_role_name(obj)
             else:
                 role_name = Atspi.Accessible.get_localized_role_name(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_role_name: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -821,7 +821,7 @@ class AXObject:
 
         try:
             result = Atspi.Accessible.get_accessible_id(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_accessible_id: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -838,7 +838,7 @@ class AXObject:
 
         try:
             name = Atspi.Accessible.get_name(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_name: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -865,7 +865,7 @@ class AXObject:
 
         try:
             description = Atspi.Accessible.get_description(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_description: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -881,7 +881,7 @@ class AXObject:
 
         try:
             description = Atspi.Image.get_image_description(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_image_description: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -897,7 +897,7 @@ class AXObject:
 
         try:
             result = Atspi.Image.get_image_size(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_image_size: {error}"
             AXObject.handle_error(obj, error, msg)
             return 0, 0
@@ -915,7 +915,7 @@ class AXObject:
         try:
             # Added in Atspi 2.52.
             text = Atspi.Accessible.get_help_text(obj) or ""
-        except Exception:
+        except GLib.GError:
             # This is for prototyping in the meantime.
             text = AXObject.get_attribute(obj, "helptext") or ""
 
@@ -930,7 +930,7 @@ class AXObject:
 
         try:
             count = Atspi.Accessible.get_child_count(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_child_count: {error}"
             AXObject.handle_error(obj, error, msg)
             return 0
@@ -1013,7 +1013,7 @@ class AXObject:
 
         try:
             state_set = Atspi.Accessible.get_state_set(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_state_set: {error}"
             AXObject.handle_error(obj, error, msg)
             return Atspi.StateSet()
@@ -1049,14 +1049,14 @@ class AXObject:
         if not recursive:
             try:
                 Atspi.Accessible.clear_cache_single(obj)
-            except Exception as error:
+            except GLib.GError as error:
                 msg = f"AXObject: Exception in clear_cache_single: {error}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         try:
             Atspi.Accessible.clear_cache(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in clear_cache: {error}"
             AXObject.handle_error(obj, error, msg)
 
@@ -1069,7 +1069,7 @@ class AXObject:
 
         try:
             pid = Atspi.Accessible.get_process_id(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_process_id: {error}"
             AXObject.handle_error(obj, error, msg)
             return -1
@@ -1090,7 +1090,7 @@ class AXObject:
             # We use the Atspi function rather than the AXObject function because the
             # latter intentionally handles exceptions.
             Atspi.Accessible.get_name(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Accessible is dead: {error}"
             AXObject.handle_error(obj, error, msg)
             return True
@@ -1115,7 +1115,7 @@ class AXObject:
 
         try:
             attributes = Atspi.Accessible.get_attributes(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_attributes_dict: {error}"
             AXObject.handle_error(obj, error, msg)
             return {}
@@ -1149,7 +1149,7 @@ class AXObject:
 
         try:
             count = Atspi.Action.get_n_actions(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_n_actions: {error}"
             AXObject.handle_error(obj, error, msg)
             return 0
@@ -1176,7 +1176,7 @@ class AXObject:
 
         try:
             name = Atspi.Action.get_action_name(obj, i)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_action_name: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -1203,7 +1203,7 @@ class AXObject:
 
         try:
             description = Atspi.Action.get_action_description(obj, i)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_action_description: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -1219,7 +1219,7 @@ class AXObject:
 
         try:
             keybinding = Atspi.Action.get_key_binding(obj, i)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in get_action_key_binding: {error}"
             AXObject.handle_error(obj, error, msg)
             return ""
@@ -1245,7 +1245,7 @@ class AXObject:
         try:
             key, mods = Gtk.accelerator_parse(sequence)
             result = Gtk.accelerator_get_label(key, mods)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in _get_label_for_key_sequence: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             sequence = sequence.replace("<", "").replace(">", " ").strip()
@@ -1360,7 +1360,7 @@ class AXObject:
 
         try:
             result = Atspi.Action.do_action(obj, i)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in do_action: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
@@ -1390,7 +1390,7 @@ class AXObject:
 
         try:
             result = Atspi.Component.grab_focus(obj)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXObject: Exception in grab_focus: {error}"
             AXObject.handle_error(obj, error, msg)
             return False

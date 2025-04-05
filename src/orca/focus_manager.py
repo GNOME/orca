@@ -20,7 +20,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 
 """Module to manage the focused object, window, etc."""
@@ -129,12 +128,7 @@ class FocusManager:
         if mode is None:
             mode = FOCUS_TRACKING
 
-        try:
-            obj.emit("mode-changed::" + mode, 1, "")
-        except Exception as error:
-            msg = f"FOCUS MANAGER: Exception emitting mode-changed notification: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
+        obj.emit("mode-changed::" + mode, 1, "")
         if mode != self._active_mode:
             tokens = ["FOCUS MANAGER: Switching mode from", self._active_mode, "to", mode]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -144,13 +138,9 @@ class FocusManager:
             else:
                 braille.setBrlapiPriority()
 
-        try:
-            tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            obj.emit("region-changed", start_offset, end_offset)
-        except Exception as error:
-            msg = f"FOCUS MANAGER: Exception emitting region-changed notification: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        obj.emit("region-changed", start_offset, end_offset)
 
         if obj != self._object_of_interest:
             tokens = ["FOCUS MANAGER: Switching object of interest from",

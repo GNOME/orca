@@ -19,7 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=duplicate-code
 
@@ -38,6 +37,7 @@ from typing import Optional
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -63,7 +63,7 @@ class AXComponent:
 
         try:
             point = Atspi.Component.get_position(obj, Atspi.CoordType.WINDOW)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in get_position: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
@@ -79,7 +79,7 @@ class AXComponent:
 
         try:
             rect = Atspi.Component.get_extents(obj, Atspi.CoordType.WINDOW)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in get_rect: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return Atspi.Rect()
@@ -119,7 +119,7 @@ class AXComponent:
 
         try:
             point = Atspi.Component.get_size(obj, Atspi.CoordType.WINDOW)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in get_position: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
@@ -184,7 +184,7 @@ class AXComponent:
 
         try:
             result = Atspi.Component.contains(obj, x, y, Atspi.CoordType.WINDOW)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in object_contains_point: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -283,7 +283,7 @@ class AXComponent:
 
         try:
             result = Atspi.Component.get_accessible_at_point(obj, x, y, Atspi.CoordType.WINDOW)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in get_child_at_point: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
@@ -330,7 +330,7 @@ class AXComponent:
 
         try:
             result = Atspi.Component.scroll_to_point(obj, Atspi.CoordType.WINDOW, x, y)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in scroll_object_to_point: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -348,7 +348,7 @@ class AXComponent:
 
         try:
             result = Atspi.Component.scroll_to(obj, location)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXComponent: Exception in scroll_object_to_location: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False

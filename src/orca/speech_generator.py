@@ -22,7 +22,6 @@
 # pylint: disable=too-many-statements
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-return-statements
-# pylint: disable=broad-exception-caught
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-boolean-expressions

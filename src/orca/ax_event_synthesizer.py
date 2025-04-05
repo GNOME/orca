@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 
@@ -37,6 +36,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 from gi.repository import Gtk
 
 from . import debug
@@ -61,7 +61,7 @@ class AXEventSynthesizer:
 
         try:
             point = Atspi.Component.get_position(active_window, Atspi.CoordType.SCREEN)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXEventSynthesizer: Exception in calling get_position: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return x, y
@@ -150,7 +150,7 @@ class AXEventSynthesizer:
             message = "AXEventSynthesizer: Atspi.Device.generate_mouse_event requires v2.52."
             debug.print_message(debug.LEVEL_INFO, message, True)
             return False
-        except Exception as error:
+        except GLib.GError as error:
             message = f"AXEventSynthesizer: Exception in _generate_mouse_event_new: {error}"
             debug.print_message(debug.LEVEL_INFO, message, True)
             return False
@@ -167,7 +167,7 @@ class AXEventSynthesizer:
 
         try:
             success = Atspi.generate_mouse_event(screen_x, screen_y, event)
-        except Exception as error:
+        except GLib.GError as error:
             message = f"AXEventSynthesizer: Exception in _generate_mouse_event_legacy: {error}"
             debug.print_message(debug.LEVEL_INFO, message, True)
             return False

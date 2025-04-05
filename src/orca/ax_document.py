@@ -19,7 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=duplicate-code
 
@@ -39,6 +38,7 @@ import urllib.parse
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from . import messages
@@ -96,7 +96,7 @@ class AXDocument:
 
         try:
             page = Atspi.Document.get_current_page_number(document)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXDocument: Exception in _get_current_page: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
@@ -125,7 +125,7 @@ class AXDocument:
 
         try:
             count = Atspi.Document.get_page_count(document)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXDocument: Exception in get_page_count: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
@@ -143,7 +143,7 @@ class AXDocument:
 
         try:
             result = Atspi.Document.get_locale(document)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXDocument: Exception in get_locale: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
@@ -161,7 +161,7 @@ class AXDocument:
 
         try:
             result = Atspi.Document.get_document_attributes(document)
-        except Exception as error:
+        except GLib.GError as error:
             msg = f"AXDocument: Exception in _get_attributes_dict: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return {}

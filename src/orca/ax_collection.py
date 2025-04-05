@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=duplicate-code
@@ -37,6 +36,7 @@ from typing import Optional
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -95,7 +95,7 @@ class AXCollection:
                                        interfaces,
                                        interface_match_type,
                                        invert)
-        except Exception as error:
+        except GLib.GError as error:
             tokens = ["AXCollection: Exception in create_match_rule:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -124,7 +124,7 @@ class AXCollection:
             # 0 means no limit on the number of results
             # The final argument, traverse, is not supported but is expected.
             matches = Atspi.Collection.get_matches(obj, rule, order, 0, True)
-        except Exception as error:
+        except GLib.GError as error:
             tokens = ["AXCollection: Exception in get_all_matches:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
@@ -154,7 +154,7 @@ class AXCollection:
             # 1 means limit the number of results to 1
             # The final argument, traverse, is not supported but is expected.
             matches = Atspi.Collection.get_matches(obj, rule, order, 1, True)
-        except Exception as error:
+        except GLib.GError as error:
             tokens = ["AXCollection: Exception in get_first_match:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
