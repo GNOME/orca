@@ -40,7 +40,7 @@ class Script(default.Script):
         """Handles changes of focus of interest to the script."""
 
         manager = focus_manager.get_manager()
-        if self.utilities.isToggleDescendantOfComboBox(new_focus):
+        if AXUtilities.is_toggle_button(new_focus):
             new_focus = AXObject.find_ancestor(new_focus, AXUtilities.is_combo_box) or new_focus
             manager.set_locus_of_focus(event, new_focus, False)
         elif AXObject.find_ancestor(new_focus, AXUtilities.is_menu_bar):
@@ -97,7 +97,9 @@ class Script(default.Script):
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
 
-        if self.utilities.isEntryCompletionPopupItem(event.source):
+        # Handle changes within an entry completion popup.
+        if AXUtilities.is_table_cell(event.source) \
+           and AXObject.find_ancestor(event.source, AXUtilities.is_window) is not None:
             if event.detail1:
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return
@@ -115,8 +117,8 @@ class Script(default.Script):
         """Callback for object:selection-changed accessibility events."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.utilities.isComboBoxWithToggleDescendant(event.source) \
-           and AXObject.is_ancestor(focus, event.source, True):
+        if AXUtilities.is_toggle_button(focus) and AXUtilities.is_combo_box(event.source) \
+           and AXObject.is_ancestor(focus, event.source):
             super().on_selection_changed(event)
             return
 

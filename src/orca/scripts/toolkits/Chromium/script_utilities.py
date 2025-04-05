@@ -40,41 +40,7 @@ from orca.ax_utilities import AXUtilities
 
 
 class Utilities(web.Utilities):
-
-    def treatAsMenu(self, obj):
-        # Unlike other apps and toolkits, submenus in Chromium have the menu item
-        # role rather than the menu role, but we can identify them as submenus via
-        # the has-popup state.
-        return AXUtilities.is_menu_item(obj) and AXUtilities.has_popup(obj)
-
-    def isPopupMenuForCurrentItem(self, obj):
-        # When a submenu is closed, it has role menu item. But when that submenu
-        # is opened/expanded, a menu with that same name appears. It would be
-        # nice if there were a connection (parent/child or an accessible relation)
-        # between the two....
-        return self.treatAsMenu(focus_manager.get_manager().get_locus_of_focus()) \
-            and super().isPopupMenuForCurrentItem(obj)
-
-    def isFrameForPopupMenu(self, obj):
-        # The ancestry of a popup menu appears to be a menu bar (even though
-        # one is not actually showing) contained in a nameless frame. It would
-        # be nice if these things were pruned from the accessibility tree....
-        if not AXUtilities.is_frame(obj):
-            return False
-        if AXObject.get_name(obj):
-            return False
-        if AXObject.get_child_count(obj) != 1:
-            return False
-        return AXUtilities.is_menu_bar(AXObject.get_child(obj, 0))
-
-    def popupMenuForFrame(self, obj):
-        if not self.isFrameForPopupMenu(obj):
-            return None
-
-        menu = AXObject.find_descendant(obj, AXUtilities.is_menu)
-        tokens = ["CHROMIUM: Popup menu for", obj, ":", menu]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return menu
+    """Custom script utilities for Chromium"""
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
         super().setCaretPosition(obj, offset, documentFrame)

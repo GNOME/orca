@@ -665,6 +665,21 @@ class AXUtilities:
         return AXObject.get_attribute(obj, "explicit-name") == "true"
 
     @staticmethod
+    def has_visible_caption(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj has a visible caption."""
+
+        if not (AXUtilitiesRole.is_figure(obj) or AXObject.supports_table(obj)):
+            return False
+
+        labels = AXUtilitiesRelation.get_is_labelled_by(obj)
+        for label in labels:
+            if AXUtilitiesRole.is_caption(label) \
+               and AXUtilitiesState.is_showing(label) and AXUtilitiesState.is_visible(label):
+                return True
+
+        return False
+
+    @staticmethod
     def get_displayed_label(obj: Atspi.Accessible) -> str:
         """Returns the displayed label of obj."""
 

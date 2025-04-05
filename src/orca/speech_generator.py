@@ -128,8 +128,7 @@ class SpeechGenerator(generator.Generator):
         return ""
 
     def get_localized_role_name(self, obj, **args):
-        if AXUtilities.is_editable_combo_box(obj) \
-           or self._script.utilities.isEditableDescendantOfComboBox(obj):
+        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_editable_combo_box):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         if AXUtilities.is_link(obj, args.get("role")) and AXUtilities.is_visited(obj):

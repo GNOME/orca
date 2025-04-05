@@ -241,21 +241,6 @@ class Utilities:
     def isAnchor(self, obj):
         return False
 
-    def isComboBoxWithToggleDescendant(self, obj):
-        if not AXUtilities.is_combo_box(obj):
-            return False
-        return AXObject.find_descendant(obj, AXUtilities.is_toggle_button) is not None
-
-    def isToggleDescendantOfComboBox(self, obj):
-        if not AXUtilities.is_toggle_button(obj):
-            return False
-        return AXObject.find_ancestor(obj, AXUtilities.is_combo_box) is not None
-
-    def isProgressBar(self, obj):
-        if not AXUtilities.is_progress_bar(obj):
-            return False
-        return AXValue.get_value_as_percent(obj) is not None
-
     def topLevelObjectIsActiveWindow(self, obj):
         return self.topLevelObject(obj) == focus_manager.get_manager().get_active_window()
 
@@ -265,8 +250,11 @@ class Utilities:
            and not settings_manager.get_manager().get_setting('beepProgressBarUpdates'):
             return False, "Updates not enabled"
 
-        if not self.isProgressBar(obj):
+        if not AXUtilities.is_progress_bar(obj):
             return False, "Is not progress bar"
+
+        if not AXValue.get_value_as_percent(obj):
+            return False, "Could not obtain value"
 
         if AXComponent.has_no_size(obj):
             return False, "Has no size"
@@ -520,9 +508,6 @@ class Utilities:
             return child
 
         return obj
-
-    def infoBar(self, root):
-        return None
 
     def _topLevelRoles(self):
         roles = [Atspi.Role.DIALOG,
@@ -972,65 +957,20 @@ class Utilities:
         return AXSelection.get_selected_child_count(obj)
 
     def isPopupMenuForCurrentItem(self, obj):
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if obj == focus:
-            return False
-
         if not AXUtilities.is_menu(obj):
             return False
 
-        name = AXObject.get_name(obj)
-        if not name:
-            return False
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if AXUtilities.is_menu_item(focus) and AXUtilities.has_popup(focus):
+            name = AXObject.get_name(obj)
+            return name and name == AXObject.get_name(focus)
 
-        return name == AXObject.get_name(focus)
-
-    def isEntryCompletionPopupItem(self, obj):
-        return AXUtilities.is_table_cell(obj) \
-            and AXObject.find_ancestor(obj, AXUtilities.is_window) is not None
-
-    def getEntryForEditableComboBox(self, obj):
-        if not AXUtilities.is_combo_box(obj):
-            return None
-
-        children = [x for x in AXObject.iter_children(obj, AXUtilities.is_text_input)]
-        if len(children) == 1:
-            return children[0]
-
-        return None
-
-    def isEditableDescendantOfComboBox(self, obj):
-        if not AXUtilities.is_editable(obj):
-            return False
-
-        return AXObject.find_ancestor(obj, AXUtilities.is_combo_box) is not None
-
-    def getComboBoxValue(self, obj):
-        attrs = AXObject.get_attributes_dict(obj, False)
-        if "valuetext" in attrs:
-            return attrs.get("valuetext")
-
-        if not AXObject.get_child_count(obj):
-            return AXObject.get_name(obj) or AXText.get_all_text(obj)
-
-        entry = self.getEntryForEditableComboBox(obj)
-        if entry:
-            return AXText.get_all_text(entry)
-
-        selected = self._script.utilities.selectedChildren(obj)
-        selected = selected or self._script.utilities.selectedChildren(AXObject.get_child(obj, 0))
-        if len(selected) == 1:
-            return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
-
-        return AXObject.get_name(obj) or AXText.get_all_text(obj)
+        return False
 
     def isClickableElement(self, obj):
         return False
 
     def hasLongDesc(self, obj):
-        return False
-
-    def hasVisibleCaption(self, obj):
         return False
 
     def hasMeaningfulToggleAction(self, obj):

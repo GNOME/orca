@@ -1261,10 +1261,29 @@ class Generator:
 
     ##################################### VALUE #####################################
 
+    def _get_combo_box_value(self, obj):
+        attrs = AXObject.get_attributes_dict(obj, False)
+        if "valuetext" in attrs:
+            return attrs.get("valuetext")
+
+        if not AXObject.get_child_count(obj):
+            return AXObject.get_name(obj) or AXText.get_all_text(obj)
+
+        children = [x for x in AXObject.iter_children(obj, AXUtilities.is_text_input)]
+        if len(children) == 1:
+            return AXText.get_all_text(children[0])
+
+        selected = self._script.utilities.selectedChildren(obj)
+        selected = selected or self._script.utilities.selectedChildren(AXObject.get_child(obj, 0))
+        if len(selected) == 1:
+            return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
+
+        return AXObject.get_name(obj) or AXText.get_all_text(obj)
+
     @log_generator_output
     def _generate_value(self, obj, **args):
         if AXUtilities.is_combo_box(obj, args.get("role")):
-            value = self._script.utilities.getComboBoxValue(obj)
+            value = self._get_combo_box_value(obj)
             return [value]
 
         if AXUtilities.is_separator(obj, args.get("role")) and not AXUtilities.is_focused(obj):

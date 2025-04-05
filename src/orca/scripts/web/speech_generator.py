@@ -119,7 +119,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                              Atspi.Role.TEXT]
         args["stop_after_roles"] = [Atspi.Role.TOOL_BAR]
 
-        if self._script.utilities.isEditableDescendantOfComboBox(obj):
+        if AXObject.find_ancestor(obj, AXUtilities.is_editable_combo_box):
             args["skipRoles"].append(Atspi.Role.COMBO_BOX)
 
         result.extend(super()._generate_ancestors(obj, **args))
@@ -345,7 +345,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXUtilities.is_link(obj) and args.get("string"):
             return []
 
-        if self._script.utilities.hasVisibleCaption(obj):
+        if AXUtilities.has_visible_caption(obj):
             return []
 
         if AXUtilities.is_figure(obj, args.get("role")) and args.get("ancestorOf"):

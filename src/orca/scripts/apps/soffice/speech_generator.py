@@ -62,8 +62,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_text_line(self, obj, **args):
         if AXUtilities.is_combo_box(obj):
-            entry = self._script.utilities.getEntryForEditableComboBox(obj)
-            if entry:
+            if entry := AXObject.find_descendant(obj, AXUtilities.is_text_input):
                 return super()._generate_text_line(entry)
             return []
 

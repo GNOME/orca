@@ -1297,7 +1297,8 @@ class Script(script.Script):
             return
 
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
-            if AXUtilities.is_focused(self.utilities.getEntryForEditableComboBox(event.source)):
+            if AXUtilities.is_focused(
+                 AXObject.find_descendant(event.source, AXUtilities.is_text_input)):
                 return
         elif AXUtilities.is_page_tab_list(event.source) \
             and self.get_flat_review_presenter().is_active():
@@ -1629,6 +1630,9 @@ class Script(script.Script):
         focus_manager.get_manager().set_active_window(event.source)
         if AXObject.get_child_count(event.source) == 1:
             child = AXObject.get_child(event.source, 0)
+            # Popup menus in Chromium live in a menu bar whose first child is a panel.
+            if AXUtilities.is_menu_bar(child):
+                child = AXObject.find_descendant(child, AXUtilities.is_menu)
             if AXUtilities.is_menu(child):
                 focus_manager.get_manager().set_locus_of_focus(event, child)
                 return

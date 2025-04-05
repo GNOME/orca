@@ -121,6 +121,9 @@ class AXUtilities:
     def has_explicit_name(obj: Atspi.Accessible) -> bool: ...
 
     @staticmethod
+    def has_visible_caption(obj: Atspi.Accessible) -> bool: ...
+
+    @staticmethod
     def get_displayed_label(obj: Atspi.Accessible) -> str: ...
 
     @staticmethod

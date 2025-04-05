@@ -28,7 +28,6 @@ __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import debug
-from orca import focus_manager
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -328,33 +327,6 @@ class Script(web.Script):
 
         if not AXUtilities.can_be_active_window(event.source):
             return
-
-        # If this is a frame for a popup menu, we don't want to treat
-        # it like a proper window:activate event because it's not as
-        # far as the end-user experience is concerned.
-        menu = self.utilities.popupMenuForFrame(event.source)
-        if menu:
-            focus_manager.get_manager().set_active_window(event.source)
-
-            activeItem = None
-            selected = self.utilities.selectedChildren(menu)
-            if len(selected) == 1:
-                activeItem = selected[0]
-
-            if activeItem:
-                # If this is the popup menu for the locusOfFocus, we don't want to
-                # present the popup menu as part of the new ancestry of activeItem.
-                if self.utilities.isPopupMenuForCurrentItem(menu):
-                    focus_manager.get_manager().set_locus_of_focus(event, menu, False)
-
-                tokens = ["CHROMIUM: Setting locusOfFocus to active item", activeItem]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                focus_manager.get_manager().set_locus_of_focus(event, activeItem)
-                return
-
-            tokens = ["CHROMIUM: Setting locusOfFocus to popup menu", menu]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            focus_manager.get_manager().set_locus_of_focus(event, menu)
 
         if super().on_window_activated(event):
             return

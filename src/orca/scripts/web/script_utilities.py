@@ -70,7 +70,6 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
         self._hasLongDesc = {}
-        self._hasVisibleCaption = {}
         self._isClickableElement = {}
         self._isLink = {}
         self._isNonEntryTextWidget = {}
@@ -134,7 +133,6 @@ class Utilities(script_utilities.Utilities):
         self._elementLinesAreSingleChars= {}
         self._elementLinesAreSingleWords= {}
         self._hasLongDesc = {}
-        self._hasVisibleCaption = {}
         self._isClickableElement = {}
         self._isLink = {}
         self._isNonEntryTextWidget = {}
@@ -2398,27 +2396,6 @@ class Utilities(script_utilities.Utilities):
 
         rv = AXObject.has_action(obj, "showlongdesc")
         self._hasLongDesc[hash(obj)] = rv
-        return rv
-
-    def hasVisibleCaption(self, obj):
-        if not (obj and self.inDocumentContent(obj)):
-            return super().hasVisibleCaption(obj)
-
-        if not (AXUtilities.is_figure(obj) or AXObject.supports_table(obj)):
-            return False
-
-        rv = self._hasVisibleCaption.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        labels = AXUtilities.get_is_labelled_by(obj)
-
-        def isVisibleCaption(x):
-            return AXUtilities.is_caption(x) \
-                and AXUtilities.is_showing(x) and AXUtilities.is_visible(x)
-
-        rv = bool(list(filter(isVisibleCaption, labels)))
-        self._hasVisibleCaption[hash(obj)] = rv
         return rv
 
     def inferLabelFor(self, obj):
