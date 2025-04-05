@@ -1132,14 +1132,14 @@ class Generator:
         if not present_all:
             return self._generate_real_table_cell(obj, **args)
 
-        args["readingRow"] = True
-        result = []
-        cells = self._script.utilities.getShowingCellsInSameRow(
-            obj, forceFullRow=not self._script.utilities.isSpreadSheetCell(obj))
-
         row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
         if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
             return self.generate(row)
+
+        args["readingRow"] = True
+        result = []
+        cells = AXTable.get_showing_cells_in_same_row(
+            obj, clip_to_window=self._script.utilities.isSpreadSheetCell(obj))
 
         # Remove any pre-calculated values which only apply to obj and not row cells.
         do_not_include = ["startOffset", "endOffset", "string"]
@@ -1158,7 +1158,6 @@ class Generator:
 
         result.extend(self._generate_position_in_list(obj, **args))
         return result
-
 
     # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.
     @log_generator_output

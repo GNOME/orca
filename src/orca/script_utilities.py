@@ -1116,50 +1116,6 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
-    def _getTableRowRange(self, obj):
-        table = AXTable.get_table(obj)
-        if table is None:
-            return -1, -1
-
-        columnCount = AXTable.get_column_count(table, False)
-        startIndex, endIndex = 0, columnCount
-        if not self.isSpreadSheetTable(table):
-            return startIndex, endIndex
-
-        rect = AXComponent.get_rect(table)
-        cell = AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y)
-        if cell:
-            column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
-            startIndex = column
-
-        cell = AXComponent.get_descendant_at_point(table, rect.x + rect.width - 1, rect.y)
-        if cell:
-            column = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
-            endIndex = column + 1
-
-        return startIndex, endIndex
-
-    def getShowingCellsInSameRow(self, obj, forceFullRow=False):
-        row = AXTable.get_cell_coordinates(obj, prefer_attribute=False)[0]
-        if row == -1:
-            return []
-
-        table = AXTable.get_table(obj)
-        if forceFullRow:
-            startIndex, endIndex = 0, AXTable.get_column_count(table)
-        else:
-            startIndex, endIndex = self._getTableRowRange(obj)
-        if startIndex == endIndex:
-            return []
-
-        cells = []
-        for i in range(startIndex, endIndex):
-            cell = AXTable.get_cell_at(table, row, i)
-            if AXUtilities.is_showing(cell):
-                cells.append(cell)
-
-        return cells
-
     def clearCachedCommandState(self):
         self._script.point_of_reference['undo'] = False
         self._script.point_of_reference['redo'] = False

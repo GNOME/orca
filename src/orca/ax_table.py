@@ -48,6 +48,7 @@ from . import object_properties
 from .ax_object import AXObject
 from .ax_component import AXComponent
 from .ax_utilities_role import AXUtilitiesRole
+from .ax_utilities_state import AXUtilitiesState
 
 
 class AXTable:
@@ -1277,6 +1278,47 @@ class AXTable:
                 cell = AXTable.get_cell_at(table, row, col)
                 if cell is not None:
                     yield cell
+
+    @staticmethod
+    def get_showing_cells_in_same_row(
+        cell: Atspi.Accessible,
+        clip_to_window: bool = False
+    ) -> list[Atspi.Accessible]:
+        """Returns a list of all the cells in the same row as obj that are showing."""
+
+        row = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[0]
+        if row == -1:
+            return []
+
+        table = AXTable.get_table(cell)
+        start_index, end_index = 0, AXTable.get_column_count(table, False)
+        if clip_to_window:
+            rect = AXComponent.get_rect(table)
+            if (cell := AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y)):
+                start_index = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
+            if (cell := AXComponent.get_descendant_at_point(
+                    table, rect.x + rect.width - 1, rect.y)):
+                end_index = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1] + 1
+
+        if start_index == end_index:
+            return []
+
+        cells = []
+        for i in range(start_index, end_index):
+            cell = AXTable.get_cell_at(table, row, i)
+            if AXUtilitiesState.is_showing(cell):
+                cells.append(cell)
+
+        if not cells:
+            tokens = ["AXTable: No visible cells found in row with", cell]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
+        tokens = ["AXTable: First visible cell in row with", cell, "is", cells[0]]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        tokens = ["AXTable: Last visible cell in row with", cell, "is", cells[-1]]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return cells
 
 
 AXTable.start_cache_clearing_thread()
