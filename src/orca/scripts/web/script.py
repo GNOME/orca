@@ -826,7 +826,7 @@ class Script(default.Script):
 
         contents = None
         if self.utilities.treatAsEndOfLine(obj, offset) and AXObject.supports_text(obj):
-            char = AXText.get_character_at_offset(offset)[0]
+            char = AXText.get_character_at_offset(obj, offset)[0]
             if char == self.EMBEDDED_OBJECT_CHARACTER:
                 char = ""
             contents = [[obj, offset, offset + 1, char]]
