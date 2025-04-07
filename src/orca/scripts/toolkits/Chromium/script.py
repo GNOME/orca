@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import debug
+from orca import focus_manager
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -251,6 +252,17 @@ class Script(web.Script):
 
         if super().on_selected_changed(event):
             return
+
+        if event.detail1 and not self.utilities.inDocumentContent(event.source):
+            # The popup for an input with autocomplete on is a listbox child of a nameless frame.
+            # It lives outside of the document and also doesn't fire selection-changed events.
+            if listbox := AXObject.find_ancestor(event.source, AXUtilities.is_list_box):
+                parent = AXObject.get_parent(listbox)
+                if AXUtilities.is_frame(parent) and not AXObject.get_name(parent):
+                    msg = "CHROMIUM: Event source believed to be in autocomplete popup"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    focus_manager.get_manager().set_locus_of_focus(event, event.source)
+                    return
 
         msg = "CHROMIUM: Passing along event to default script"
         debug.print_message(debug.LEVEL_INFO, msg, True)
