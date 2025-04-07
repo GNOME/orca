@@ -1930,7 +1930,8 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not AXUtilities.is_editable(obj) and len(tokens) > 1
+        rv = len(tokens) > 1 \
+            and not (AXUtilities.is_editable(obj) or AXUtilities.is_text_input(obj))
         if rv:
             i = 0
             while i < nChars:
@@ -1974,7 +1975,7 @@ class Utilities(script_utilities.Utilities):
 
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not AXUtilities.is_editable(obj)
+        rv = not (AXUtilities.is_editable(obj) or AXUtilities.is_text_input(obj))
         if rv:
             for i in range(nChars):
                 char = AXText.get_character_at_offset(obj, i)[0]
