@@ -47,6 +47,8 @@ from . import settings_manager
 from . import settings
 from . import speech_and_verbosity_manager
 from .ax_event_synthesizer import AXEventSynthesizer
+from .ax_object import AXObject
+from .ax_text import AXText
 
 
 class FlatReviewPresenter:
@@ -1154,14 +1156,17 @@ class FlatReviewPresenter:
     def _character_presentation(self, script, event, speech_type=1):
         """Presents the current character."""
 
-        self._context = self.get_or_create_context(script)
-        char_string = self._context.getCurrent(flat_review.Context.CHAR)[0] or ""
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if not self._context and AXObject.supports_text(focus):
+            char_string = AXText.get_character_at_offset(focus)[0]
+        else:
+            self._context = self.get_or_create_context(script)
+            char_string = self._context.getCurrent(flat_review.Context.CHAR)[0] or ""
         if not isinstance(event, input_event.BrailleEvent):
             if not char_string:
                 script.speakMessage(messages.BLANK)
             else:
-                line_string = self._context.getCurrent(flat_review.Context.LINE)[0] or ""
-                if line_string == "\n" and speech_type != 3:
+                if char_string == "\n" and speech_type != 3:
                     script.speakMessage(messages.BLANK)
                 elif speech_type == 3:
                     script.speakMessage(messages.UNICODE % f"{ord(char_string):04x}")
@@ -1169,6 +1174,9 @@ class FlatReviewPresenter:
                     script.phoneticSpellCurrentItem(char_string)
                 else:
                     script.speak_character(char_string)
+
+        if not self._context:
+            return True
 
         focus_manager.get_manager().emit_region_changed(
             self._context.getCurrentAccessible(), mode=focus_manager.FLAT_REVIEW)
