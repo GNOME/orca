@@ -128,7 +128,9 @@ class FocusManager:
         if mode is None:
             mode = FOCUS_TRACKING
 
-        obj.emit("mode-changed::" + mode, 1, "")
+        if obj is not None:
+            obj.emit("mode-changed::" + mode, 1, "")
+
         if mode != self._active_mode:
             tokens = ["FOCUS MANAGER: Switching mode from", self._active_mode, "to", mode]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -140,7 +142,8 @@ class FocusManager:
 
         tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        obj.emit("region-changed", start_offset, end_offset)
+        if obj is not None:
+            obj.emit("region-changed", start_offset, end_offset)
 
         if obj != self._object_of_interest:
             tokens = ["FOCUS MANAGER: Switching object of interest from",
