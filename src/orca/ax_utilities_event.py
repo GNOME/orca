@@ -531,6 +531,11 @@ class AXUtilitiesEvent:
     def is_presentable_description_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a description change."""
 
+        if not isinstance(event.any_data, str):
+            msg = "AXUtilitiesEvent: The any_data is not a string."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         old_description = AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.get(hash(event.source))
         new_description = event.any_data
         if old_description == new_description:
@@ -623,6 +628,11 @@ class AXUtilitiesEvent:
     @staticmethod
     def is_presentable_name_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a name change."""
+
+        if not isinstance(event.any_data, str):
+            msg = "AXUtilitiesEvent: The any_data is not a string."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         old_name = AXUtilitiesEvent.LAST_KNOWN_NAME.get(hash(event.source))
         new_name = event.any_data
