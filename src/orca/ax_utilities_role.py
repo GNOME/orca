@@ -2242,14 +2242,14 @@ class AXUtilitiesRole:
         if "searchbox" in AXUtilitiesRole._get_xml_roles(obj):
             return True
 
-        ax_id = AXObject.get_accessible_id(obj).lower()
+        ax_id = AXObject.get_accessible_id(obj) or ""
         if ax_id:
-            return "search" in ax_id or "find" in ax_id
+            return "search" in ax_id.lower() or "find" in ax_id.lower()
 
         child = AXObject.get_child(obj, 0)
         if AXUtilitiesRole.is_icon(child) or AXUtilitiesRole.is_image(child):
-            child_id = AXObject.get_accessible_id(child).lower()
-            if "search" in child_id or "find" in child_id:
+            child_id = AXObject.get_accessible_id(child) or ""
+            if "search" in child_id.lower() or "find" in child_id.lower():
                 return True
             # Some toolkits don't localize the symbolic icon names, so it's worth a try.
             child_name = AXObject.get_name(child).lower()
