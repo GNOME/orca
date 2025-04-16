@@ -90,6 +90,27 @@ class AXObject:
         thread.start()
 
     @staticmethod
+    def _get_toolkit_name(obj: Atspi.Accessible) -> str:
+        """Returns the toolkit name of obj as a lowercase string"""
+
+        try:
+            name = Atspi.Accessible.get_toolkit_name(obj)
+        except GLib.GError as error:
+            msg = f"AXObject: Exception calling _get_toolkit_name on {obj}: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return ""
+        if name is None:
+            try:
+                app = Atspi.Accessible.get_application(obj)
+                name = Atspi.Accessible.get_toolkit_name(app) or ""
+            except GLib.GError as error:
+                msg = f"AXObject: Exception calling _get_toolkit_name on {app}: {error}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return ""
+
+        return name.lower()
+
+    @staticmethod
     def is_bogus(obj: Atspi.Accessible) -> bool:
         """Hack to ignore certain objects. All entries must have a bug."""
 
@@ -99,7 +120,7 @@ class AXObject:
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1879750
         if AXObject.get_role(obj) == Atspi.Role.SECTION \
            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME \
-           and Atspi.Accessible.get_toolkit_name(obj).lower() == "gecko":
+           and AXObject._get_toolkit_name(obj) == "gecko":
             tokens = ["AXObject:", obj, "is bogus. See mozilla bug 1879750."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             return True
@@ -114,8 +135,8 @@ class AXObject:
             return False
 
         # https://bugreports.qt.io/browse/QTBUG-130116
-        toolkit_name = Atspi.Accessible.get_toolkit_name(obj) or ""
-        if not toolkit_name.lower().startswith("qt"):
+        toolkit_name = AXObject._get_toolkit_name(obj)
+        if not toolkit_name.startswith("qt"):
             return False
 
         reached_app = False
