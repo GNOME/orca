@@ -52,6 +52,7 @@ from . import script_manager
 from . import settings
 from . import settings_manager
 from . import input_event
+from . import input_event_manager
 from . import keybindings
 from . import pronunciation_dict
 from . import braille
@@ -2806,6 +2807,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self._presentMessage(messages.KB_ENTER_NEW_KEY)
         script_manager.get_manager().get_active_script().remove_key_grabs("Capturing keys")
+        input_event_manager.get_manager().unmap_all_modifiers()
         editable.connect('key-press-event', self.kbKeyPressed)
         return
 

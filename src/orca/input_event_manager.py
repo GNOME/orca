@@ -60,6 +60,8 @@ class InputEventManager:
         self._last_input_event: input_event.InputEvent | None = None
         self._last_non_modifier_key_event: input_event.KeyboardEvent | None = None
         self._device: Atspi.Device | None = None
+        self._mapped_keycodes: list[int] = []
+        self._mapped_keysyms: list[int] = []
 
     def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
@@ -126,6 +128,7 @@ class InputEventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
+        self._mapped_keycodes.append(keycode)
         return self._device.map_modifier(keycode)
 
     def map_keysym_to_modifier(self, keysym: int) -> int:
@@ -136,7 +139,25 @@ class InputEventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
+        self._mapped_keysyms.append(keysym)
         return self._device.map_keysym_modifier(keysym)
+
+    def unmap_all_modifiers(self) -> None:
+        """Unmaps all previously mapped modifiers."""
+
+        if self._device is None:
+            msg = "INPUT EVENT MANAGER: No device to unmap all modifiers from"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        for keycode in self._mapped_keycodes:
+            self._device.unmap_modifier(keycode)
+
+        for keysym in self._mapped_keysyms:
+            self._device.unmap_keysym_modifier(keysym)
+
+        self._mapped_keycodes.clear()
+        self._mapped_keysyms.clear()
 
     def add_grab_for_modifier(self, modifier: str, keysym: int, keycode: int) -> int:
         """Adds grab for modifier, returns grab id."""
