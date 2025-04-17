@@ -3759,9 +3759,13 @@ class SpeechGenerator(generator.Generator):
         if format_type in ["focused", "ancestor"]:
             return result
 
-        result += self._generate_pause(obj, **args)
-        result += self._generate_descendants(obj, **args) \
+        content = self._generate_descendants(obj, **args) \
             or self._generate_text_content(obj, **args)
+        if not content and AXObject.get_child_count(obj) == 1:
+            content = self._generate_text_content(AXObject.get_child(obj, 0), **args)
+        if content:
+            result += self._generate_pause(obj, **args) + content
+
         result += self._generate_default_suffix(obj, **args)
         return result
 
