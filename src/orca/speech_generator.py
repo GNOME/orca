@@ -2568,8 +2568,12 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = self._generate_default_prefix(obj, **args)
-        result += (self._generate_accessible_label_and_name(obj, **args) or \
-            self._generate_text_line(obj, **args))
+
+        if self._generate_text_substring(obj, **args):
+            result += self._generate_text_line(obj, **args)
+        else:
+            result += (self._generate_accessible_label_and_name(obj, **args) or \
+                self._generate_text_line(obj, **args))
 
         if settings_manager.get_manager().get_setting("speakContextList"):
             if args.get("index", 0) + 1 < args.get("total", 1):
