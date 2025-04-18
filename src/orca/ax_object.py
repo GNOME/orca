@@ -94,19 +94,12 @@ class AXObject:
         """Returns the toolkit name of obj as a lowercase string"""
 
         try:
-            name = Atspi.Accessible.get_toolkit_name(obj)
+            app = Atspi.Accessible.get_application(obj)
+            name = Atspi.Accessible.get_toolkit_name(app) or ""
         except GLib.GError as error:
-            msg = f"AXObject: Exception calling _get_toolkit_name on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
+            msg = f"AXObject: Exception calling _get_toolkit_name on {app}: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
-        if name is None:
-            try:
-                app = Atspi.Accessible.get_application(obj)
-                name = Atspi.Accessible.get_toolkit_name(app) or ""
-            except GLib.GError as error:
-                msg = f"AXObject: Exception calling _get_toolkit_name on {app}: {error}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return ""
 
         return name.lower()
 
