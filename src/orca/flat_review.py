@@ -636,7 +636,7 @@ class Context:
 
         if len(zones) == 1 and isinstance(zones[0], TextZone):
             textZone = zones[0]
-            textToLeftEdge = textZone.x - extents.x
+            textToLeftEdge = textZone.x - extents[0]
             textToRightEdge = (extents[0] + extents[2]) - (textZone.x + textZone.width)
             stateOnLeft = textToLeftEdge > 20
             if stateOnLeft:
