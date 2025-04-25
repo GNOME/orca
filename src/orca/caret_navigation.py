@@ -391,6 +391,15 @@ class CaretNavigation:
         if not contents:
             return False
 
+        # If the "word" to the right consists of the content of the last word in an embedded
+        # object followed by the space of the parent object, the normal space-adjustment we
+        # do will cause us to set the caret to the offset with the embedded child and then
+        # present the first word in that child.
+        if len(contents) > 1 and contents[-1][3].isspace():
+            msg = "CARET NAVIGATION: Adjusting next word contents to eliminate trailing space."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            contents = contents[:-1]
+
         obj, end, string = contents[-1][0], contents[-1][2], contents[-1][3]
         if string and string[-1].isspace():
             end -= 1
