@@ -42,6 +42,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
+from gi.repository import GLib
 from gi.repository import Gtk
 
 from . import debug
