@@ -258,7 +258,13 @@ class AXUtilitiesState:
     def is_read_only(obj: Atspi.Accessible) -> bool:
         """Returns true if obj has the read-only state"""
 
-        return AXObject.has_state(obj, Atspi.StateType.READ_ONLY)
+        if AXObject.has_state(obj, Atspi.StateType.READ_ONLY):
+            return True
+        if AXUtilitiesState.is_editable(obj):
+            return False
+
+        # We cannot count on GTK to set the read-only state on text objects.
+        return AXObject.get_role(obj) == Atspi.Role.TEXT
 
     @staticmethod
     def is_required(obj: Atspi.Accessible) -> bool:
