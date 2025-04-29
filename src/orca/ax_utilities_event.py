@@ -357,7 +357,13 @@ class AXUtilitiesEvent:
                     reason = TextEventReason.REDO
             elif mgr.last_event_was_command():
                 reason = TextEventReason.UNSPECIFIED_COMMAND
-            elif mgr.last_event_was_return_tab_or_space():
+            elif mgr.last_event_was_space():
+                # Gecko inserts a newline at the offset past the space in contenteditables.
+                if event.any_data == "\n":
+                    reason = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+                else:
+                    reason = TextEventReason.TYPING
+            elif mgr.last_event_was_tab() or mgr.last_event_was_return():
                 reason = TextEventReason.TYPING
             elif mgr.last_event_was_printable_key():
                 if reason == TextEventReason.SELECTED_TEXT_INSERTION:
