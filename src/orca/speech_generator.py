@@ -293,7 +293,8 @@ class SpeechGenerator(generator.Generator):
         if result:
             manager = speech_and_verbosity_manager.get_manager()
             result[0] = manager.adjust_for_presentation(obj, result[0])
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            if len(result) == 1:
+                result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
     @log_generator_output
