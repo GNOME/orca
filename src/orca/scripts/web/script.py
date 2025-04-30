@@ -1161,8 +1161,13 @@ class Script(default.Script):
         self._lastMouseOverObject = None
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
+        mode_browse_is_sticky = {"duration": 0.25, "frequency": 349.2}
+
         if not self._browseModeIsSticky or forceMessage:
-            self.presentMessage(messages.MODE_BROWSE_IS_STICKY)
+            if settings_manager.get_manager().get_setting('speakPresentationMode'):
+                self.presentMessage(messages.MODE_BROWSE_IS_STICKY)
+            if settings_manager.get_manager().get_setting('beepPresentationMode'):
+                self._playTone(**mode_browse_is_sticky)
 
         self._inFocusMode = False
         self._focusModeIsSticky = False
@@ -1174,8 +1179,13 @@ class Script(default.Script):
         self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
+        mode_focus_is_sticky = {"duration": 0.25, "frequency": 440}
+
         if not self._focusModeIsSticky or forceMessage:
-            self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
+            if settings_manager.get_manager().get_setting('speakPresentationMode'):
+                self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
+            if settings_manager.get_manager().get_setting('beepPresentationMode'):
+                self._playTone(**mode_focus_is_sticky)
 
         self._inFocusMode = True
         self._focusModeIsSticky = True
@@ -1195,6 +1205,8 @@ class Script(default.Script):
         settings_manager.get_manager().set_setting('layoutMode', layoutMode)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
+        mode_focus_tone = {"duration": 0.1, "frequency": 440}
+        mode_browse_tone = {"duration": 0.1, "frequency": 349.2}
         [obj, characterOffset] = self.utilities.getCaretContext(documentFrame)
         if self._inFocusMode:
             parent = AXObject.get_parent(obj)
@@ -1203,7 +1215,10 @@ class Script(default.Script):
             elif AXUtilities.is_menu(parent):
                 self.utilities.setCaretContext(AXObject.get_parent(parent), -1)
             if not self._loadingDocumentContent:
-                self.presentMessage(messages.MODE_BROWSE)
+                if settings_manager.get_manager().get_setting('speakPresentationMode'):
+                    self.presentMessage(messages.MODE_BROWSE)
+                if settings_manager.get_manager().get_setting('beepPresentationMode'):
+                    self._playTone(**mode_browse_tone)
         else:
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
                and (self.caret_navigation.last_input_event_was_navigation_command() \
@@ -1212,7 +1227,10 @@ class Script(default.Script):
                     or inputEvent):
                 AXObject.grab_focus(obj)
 
-            self.presentMessage(messages.MODE_FOCUS)
+            if settings_manager.get_manager().get_setting('speakPresentationMode'):
+                self.presentMessage(messages.MODE_FOCUS)
+            if settings_manager.get_manager().get_setting('beepPresentationMode'):
+                self._playTone(**mode_focus_tone)
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False

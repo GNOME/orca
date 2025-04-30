@@ -50,6 +50,7 @@ from orca import script_manager
 from orca import settings
 from orca import settings_manager
 from orca import sound
+from orca.sound_generator import Tone
 from orca import speech
 from orca import speech_and_verbosity_manager
 from orca import speechserver
@@ -2205,6 +2206,13 @@ class Script(script.Script):
         """
 
         print("\a")
+
+    def _playTone(self, duration, frequency, volume_multiplier=1,
+                 wave=sound.Tone.SINE_WAVE):
+        """Generate a tone"""
+        tone = Tone(duration, frequency,
+                                         volume_multiplier, wave)
+        self.__play(tone)
 
     def speakMisspelledIndicator(self, obj, offset=None):
         # TODO - JD: Remove this and have callers use the speech-adjustment logic.

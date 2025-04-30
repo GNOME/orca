@@ -365,3 +365,5 @@ enableSadPidginHack = False
 presentChatRoomLast = False
 presentLiveRegionFromInactiveTab = False
 speakIndentationOnlyIfChanged = False
+speakPresentationMode = True
+beepPresentationMode = False
