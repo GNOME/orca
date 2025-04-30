@@ -1808,9 +1808,7 @@ class Script(script.Script):
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=sentence)
-        manager = speech_and_verbosity_manager.get_manager()
-        sentence = manager.adjust_for_presentation(obj, sentence)
-        self.speakMessage(sentence, voice)
+        self.speakMessage(sentence, voice, obj=obj)
         return True
 
     def echoPreviousWord(self, obj):
@@ -1838,9 +1836,7 @@ class Script(script.Script):
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=word)
-        manager = speech_and_verbosity_manager.get_manager()
-        word = manager.adjust_for_presentation(obj, word)
-        self.speakMessage(word, voice)
+        self.speakMessage(word, voice, obj=obj)
         return True
 
     def sayCharacter(self, obj):
@@ -2578,7 +2574,8 @@ class Script(script.Script):
         voice = self.speech_generator.voice(string=character)
         speech.speak_character(character, voice)
 
-    def speakMessage(self, string, voice=None, interrupt=True, resetStyles=True, force=False):
+    def speakMessage(
+        self, text, voice=None, interrupt=True, resetStyles=True, force=False, obj=None):
         """Method to speak a single string. Scripts should use this
         method rather than calling speech.speak directly.
 
@@ -2607,7 +2604,8 @@ class Script(script.Script):
             manager.set_setting('verbalizePunctuationStyle', settings.PUNCTUATION_STYLE_NONE)
             self.get_speech_and_verbosity_manager().update_punctuation_level()
 
-        speech.speak(string, voice, interrupt)
+        text = speech_and_verbosity_manager.get_manager().adjust_for_presentation(obj, text)
+        speech.speak(text, voice, interrupt)
 
         if voice == systemVoice and resetStyles:
             manager.set_setting('capitalizationStyle', capStyle)

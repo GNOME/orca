@@ -250,6 +250,8 @@ class SpeechGenerator(generator.Generator):
 
         result = super()._generate_accessible_description(obj, **args)
         if result:
+            manager = speech_and_verbosity_manager.get_manager()
+            result[0] = manager.adjust_for_presentation(obj, result[0])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -286,9 +288,20 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
+    def _generate_accessible_label_and_name(self, obj, **args):
+        result = super()._generate_accessible_label_and_name(obj, **args)
+        if result:
+            manager = speech_and_verbosity_manager.get_manager()
+            result[0] = manager.adjust_for_presentation(obj, result[0])
+            result.extend(self.voice(DEFAULT, obj=obj, **args))
+        return result
+
+    @log_generator_output
     def _generate_accessible_placeholder_text(self, obj, **args):
         result = super()._generate_accessible_placeholder_text(obj, **args)
         if result:
+            manager = speech_and_verbosity_manager.get_manager()
+            result[0] = manager.adjust_for_presentation(obj, result[0])
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
@@ -2113,6 +2126,8 @@ class SpeechGenerator(generator.Generator):
             if charname and charname != string:
                 result[0] = charname
 
+        manager = speech_and_verbosity_manager.get_manager()
+        result[0] = manager.adjust_for_presentation(obj, result[0])
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
