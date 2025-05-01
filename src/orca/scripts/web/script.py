@@ -2162,6 +2162,8 @@ class Script(default.Script):
             msg = "WEB: Event believed to be browser UI page switch"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if event.detail1:
+                # https://bugzilla.mozilla.org/show_bug.cgi?id=1867044
+                AXObject.clear_cache(event.source, False, "Work around Gecko bug.")
                 AXUtilities.clear_all_cache_now(reason=msg)
                 self.presentObject(event.source, priorObj=focus, interrupt=True)
             return True
