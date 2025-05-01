@@ -315,7 +315,8 @@ class BrailleGenerator(generator.Generator):
 
         # For multiline text areas, we only show the context if we are on the very first line,
         # and there is text on that line.
-        if self._script.utilities.isTextArea(obj) or AXUtilities.is_label(obj):
+        is_text_area = AXUtilities.is_editable(obj) or AXUtilities.is_terminal(obj)
+        if is_text_area or AXUtilities.is_label(obj):
             string, start, _end = AXText.get_line_at_offset(obj)
             if start != 0 or not string.strip():
                 return []

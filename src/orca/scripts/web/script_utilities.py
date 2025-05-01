@@ -277,14 +277,6 @@ class Utilities(script_utilities.Utilities):
 
         return super().inFindContainer(obj)
 
-    def isTextArea(self, obj):
-        if AXObject.get_role(obj) in self._textBlockElementRoles():
-            document = self.getDocumentForObject(obj)
-            if AXUtilities.is_editable(document):
-                return True
-
-        return super().isTextArea(obj)
-
     def setCaretOffset(self, obj, characterOffset):
         self.setCaretPosition(obj, characterOffset)
         self._script.update_braille(obj)

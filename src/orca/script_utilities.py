@@ -446,27 +446,6 @@ class Utilities:
 
         return rv
 
-    def isTextArea(self, obj):
-        """Returns True if obj is a GUI component that is for entering text.
-
-        Arguments:
-        - obj: an accessible
-        """
-
-        if self.isLink(obj):
-            return False
-
-        if AXUtilities.is_combo_box(obj) and AXUtilities.is_editable(obj) \
-           and not AXObject.get_child_count(obj):
-            return True
-
-        # TODO - JD: This might have been enough way back when, but additional
-        # checks are needed now.
-        return AXUtilities.is_text_input(obj) \
-            or AXUtilities.is_text(obj) \
-            or AXUtilities.is_terminal(obj) \
-            or AXUtilities.is_paragraph(obj)
-
     def realActiveAncestor(self, obj):
         if AXUtilities.is_focused(obj):
             return obj
@@ -906,7 +885,9 @@ class Utilities:
         if not obj:
             return None
 
-        if self.isTextArea(obj):
+        # LO Writer implements the selection interface on paragraphs and possibly
+        # other things.
+        if AXUtilities.is_paragraph(obj) or AXUtilities.is_editable(obj):
             return None
 
         if AXObject.supports_selection(obj):

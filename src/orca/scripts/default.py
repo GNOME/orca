@@ -779,7 +779,8 @@ class Script(script.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.isBrailleBeginningShowing() and self.utilities.isTextArea(focus):
+        is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
+        if self.isBrailleBeginningShowing() and is_text_area:
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -841,7 +842,8 @@ class Script(script.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.isBrailleEndShowing() and self.utilities.isTextArea(focus):
+        is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
+        if self.isBrailleEndShowing() and is_text_area:
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
             # assumption here is that we're currently viewing the line that

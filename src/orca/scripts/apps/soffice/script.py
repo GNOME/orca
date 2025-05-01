@@ -222,7 +222,7 @@ class Script(default.Script):
         if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleBeginningShowing() \
            or self.utilities.isSpreadSheetCell(focus) \
-           or not self.utilities.isTextArea(focus):
+           or not AXUtilities.is_paragraph(focus):
             return super().pan_braille_left(event, pan_amount)
 
         start_offset = AXText.get_line_at_offset(focus)[1]
@@ -245,7 +245,7 @@ class Script(default.Script):
         if self.get_flat_review_presenter().is_active() \
            or not self.isBrailleEndShowing() \
            or self.utilities.isSpreadSheetCell(focus) \
-           or not self.utilities.isTextArea(focus):
+           or not AXUtilities.is_paragraph(focus):
             return super().pan_braille_right(event, pan_amount)
 
         end_offset = AXText.get_line_at_offset(focus)[2]
