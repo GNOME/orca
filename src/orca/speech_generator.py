@@ -2500,7 +2500,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_state_invalid(obj, **args)
         result += self._generate_keyboard_mnemonic(obj, **args)
         result += self._generate_default_suffix(obj, **args)
-        return result
+        return self._generate_default_prefix(obj, **args) + result
 
     def _generate_comment(self, obj, **args):
         """Generates speech for the comment role."""
