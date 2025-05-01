@@ -983,8 +983,8 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         obj = self._context.getCurrentAccessible()
         offset = self._context.getCurrentTextOffset()
-        if offset >= 0:
-            return AXEventSynthesizer.click_character(obj, offset, 1)
+        if offset >= 0 and AXEventSynthesizer.click_character(obj, offset, 1):
+            return True
         return AXEventSynthesizer.click_object(obj, 1)
 
     def right_click_on_object(self, script, event=None):
@@ -993,8 +993,8 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         obj = self._context.getCurrentAccessible()
         offset = self._context.getCurrentTextOffset()
-        if offset >= 0:
-            return AXEventSynthesizer.click_character(obj, offset, 3)
+        if offset >= 0 and AXEventSynthesizer.click_character(obj, offset, 3):
+            return True
         return AXEventSynthesizer.click_object(obj, 3)
 
     def route_pointer_to_object(self, script, event=None):
@@ -1003,8 +1003,8 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         obj = self._context.getCurrentAccessible()
         offset = self._context.getCurrentTextOffset()
-        if offset >= 0:
-            return AXEventSynthesizer.route_to_character(obj, offset)
+        if offset >= 0 and AXEventSynthesizer.route_to_character(obj, offset):
+            return True
         return AXEventSynthesizer.route_to_object(obj)
 
     def get_braille_regions(self, script, event=None):
