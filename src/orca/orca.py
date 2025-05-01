@@ -207,25 +207,20 @@ def main():
     script.presentMessage(messages.START_ORCA)
 
     event_manager.get_manager().activate()
+    script_manager.get_manager().activate()
     window = AXUtilities.find_active_window()
     if window and not focus_manager.get_manager().get_locus_of_focus():
         app = AXUtilities.get_application(window)
-
-        # TODO - JD: Consider having the focus tracker update the active script.
-        script = script_manager.get_manager().get_script(app, window)
-        script_manager.get_manager().set_active_script(script, "Launching.")
         focus_manager.get_manager().set_active_window(
             window, app, set_window_as_focus=True, notify_script=True)
 
-        # TODO - JD: Consider having the focus tracker update the active script.
-        focusedObject = focus_manager.get_manager().find_focused_object()
-        if focusedObject:
-            focus_manager.get_manager().set_locus_of_focus(None, focusedObject)
-            script = script_manager.get_manager().get_script(
-                AXUtilities.get_application(focusedObject), focusedObject)
-            script_manager.get_manager().set_active_script(script, "Found focused object.")
+        focused_object = focus_manager.get_manager().find_focused_object()
+        if focused_object:
+            focus_manager.get_manager().set_locus_of_focus(None, focused_object)
 
-    script_manager.get_manager().activate()
+        script = script_manager.get_manager().get_script(app, focused_object or window)
+        script_manager.get_manager().set_active_script(script, "Launching.")
+
     clipboard.get_presenter().activate()
     Gdk.notify_startup_complete()
 
