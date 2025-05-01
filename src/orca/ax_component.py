@@ -308,7 +308,10 @@ class AXComponent:
         if child == obj or not AXObject.get_child_count(child):
             return child
 
-        return AXComponent._get_descendant_at_point(child, x, y)
+        result = AXComponent._get_descendant_at_point(child, x, y)
+        if result and not AXObject.is_dead(result):
+            return result
+        return child
 
     @staticmethod
     def get_descendant_at_point(
