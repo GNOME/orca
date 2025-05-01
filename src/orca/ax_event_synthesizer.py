@@ -37,10 +37,8 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
 from gi.repository import GLib
-from gi.repository import Gtk
 
 from . import debug
-from . import focus_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -49,40 +47,6 @@ from .ax_utilities_role import AXUtilitiesRole
 
 class AXEventSynthesizer:
     """Provides support for synthesizing accessible input events."""
-
-    @staticmethod
-    def _window_coordinates_to_screen_coordinates(x: int, y: int) -> tuple[int, int]:
-        # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
-        active_window = focus_manager.get_manager().get_active_window()
-        if active_window is None:
-            msg = "AXEventSynthesizer: Could not get active window to adjust coordinates"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return x, y
-
-        try:
-            point = Atspi.Component.get_position(active_window, Atspi.CoordType.SCREEN)
-        except GLib.GError as error:
-            msg = f"AXEventSynthesizer: Exception in calling get_position: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return x, y
-
-        msg = f"AXEventSynthesizer: Active window position: {point.x}, {point.y}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        # Unfortunately, the position we get does not seem to include window decorations.
-        # So we have to do more work to adjust. This is why we cannot have nice things.
-        gdk_window = Gtk.Window().get_screen().get_active_window()
-        frame_extents = gdk_window.get_frame_extents()
-        title_bar_height = frame_extents.height - gdk_window.get_height()
-        msg = f"AXEventSynthesizer: Title bar height believed to be: {title_bar_height}px"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        new_x = x + point.x
-        new_y = y + point.y + title_bar_height
-
-        msg = f"AXEventSynthesizer: x: {x}->{new_x}, y: {y}->{new_y}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return new_x, new_y
 
     @staticmethod
     def _highest_ancestor(obj: Atspi.Accessible) -> bool:
@@ -136,54 +100,20 @@ class AXEventSynthesizer:
         return False
 
     @staticmethod
-    def _generate_mouse_event_new(
+    def _generate_mouse_event(
         obj: Atspi.Accessible, relative_x: int, relative_y: int, event: str
     ) -> bool:
-        tokens = ["AXEventSynthesizer: Attempting to generate new mouse event on", obj,
+        tokens = ["AXEventSynthesizer: Attempting to generate mouse event on", obj,
                   f"at relative coordinates {relative_x},{relative_y}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         try:
             device = Atspi.Device.new()
             Atspi.Device.generate_mouse_event(device, obj, relative_x, relative_y, event)
-        except AttributeError:
-            message = "AXEventSynthesizer: Atspi.Device.generate_mouse_event requires v2.52."
-            debug.print_message(debug.LEVEL_INFO, message, True)
-            return False
         except GLib.GError as error:
             message = f"AXEventSynthesizer: Exception in _generate_mouse_event_new: {error}"
             debug.print_message(debug.LEVEL_INFO, message, True)
             return False
-        return True
-
-    @staticmethod
-    def _generate_mouse_event_legacy(
-        obj: Atspi.Accessible, screen_x: int, screen_y: int, event: str
-    ) -> bool:
-        # TODO - JD: Remove this when we bump dependencies to AT-SPI 2.52.
-        tokens = ["AXEventSynthesizer: Attempting to generate legacy mouse event on", obj,
-                  f"at screen coordinates {screen_x},{screen_y}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        try:
-            success = Atspi.generate_mouse_event(screen_x, screen_y, event)
-        except GLib.GError as error:
-            message = f"AXEventSynthesizer: Exception in _generate_mouse_event_legacy: {error}"
-            debug.print_message(debug.LEVEL_INFO, message, True)
-            return False
-        return success
-
-    @staticmethod
-    def _generate_mouse_event(
-        obj: Atspi.Accessible, relative_x: int, relative_y: int, event: str
-    ) -> bool:
-        """Synthesize a mouse event at a specific screen coordinate."""
-
-        if not AXEventSynthesizer._generate_mouse_event_new(obj, relative_x, relative_y, event):
-            rect = AXComponent.get_rect(obj)
-            screen_x, screen_y = AXEventSynthesizer._window_coordinates_to_screen_coordinates(
-                rect.x + relative_x, rect.y + relative_y)
-            AXEventSynthesizer._generate_mouse_event_legacy(obj, screen_x, screen_y, event)
         return True
 
     @staticmethod

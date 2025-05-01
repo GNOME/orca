@@ -206,16 +206,9 @@ class AXText:
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.CHAR)
         except GLib.GError as error:
-            try:
-                result = Atspi.Text.get_text_at_offset(obj, offset, Atspi.TextBoundaryType.CHAR)
-            except GLib.GError as error2:
-                msg = f"AXText: Exception in get_character_at_offset: {error2}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return "", 0, 0
-
-            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            msg = f"AXText: Exception in get_character_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [f"AXText: Character at offset {offset} in", obj,
@@ -270,17 +263,9 @@ class AXText:
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.WORD)
         except GLib.GError as error:
-            try:
-                result = Atspi.Text.get_text_at_offset(
-                    obj, offset, Atspi.TextBoundaryType.WORD_START)
-            except GLib.GError as error2:
-                msg = f"AXText: Exception in get_word_at_offset: {error2}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return "", 0, 0
-
-            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            msg = f"AXText: Exception in get_word_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
 
         tokens = [f"AXText: Word at offset {offset} in", obj,
                   f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
@@ -338,25 +323,18 @@ class AXText:
             offset = min(max(0, offset), length - 1)
         else:
             offset = max(0, offset)
+
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
         except GLib.GError as error:
-            try:
-                result = Atspi.Text.get_text_at_offset(
-                    obj, offset, Atspi.TextBoundaryType.LINE_START)
-            except GLib.GError as error2:
-                msg = f"AXText: Exception in get_line_at_offset: {error2}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return "", 0, 0
-
-            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            msg = f"AXText: Exception in get_line_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        else:
-            # Try again, e.g. Chromium returns "", -1, -1.
-            if result.start_offset == result.end_offset == -1 and offset == length:
-                offset -= 1
-                result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
+            return "", 0, 0
+
+        # Try again, e.g. Chromium returns "", -1, -1.
+        if result.start_offset == result.end_offset == -1 and offset == length:
+            offset -= 1
+            result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
 
         debug_string = result.content.replace("\n", "\\n")
         tokens = [f"AXText: Line at offset {offset} in", obj,
@@ -411,17 +389,9 @@ class AXText:
         try:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.SENTENCE)
         except GLib.GError as error:
-            try:
-                result = Atspi.Text.get_text_at_offset(
-                    obj, offset, Atspi.TextBoundaryType.SENTENCE_START)
-            except GLib.GError as error2:
-                msg = f"AXText: Exception in get_sentence_at_offset: {error2}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return "", 0, 0
-
-            # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/161
-            msg = f"WARNING: String at offset failed; text at offset succeeded: {error}"
+            msg = f"AXText: Exception in get_sentence_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
 
         tokens = [f"AXText: Sentence at offset {offset} in", obj,
                   f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
