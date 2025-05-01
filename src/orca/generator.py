@@ -1198,9 +1198,13 @@ class Generator:
 
         tokens = []
         for header in headers:
-            token = AXObject.get_name(header).strip() or AXText.get_all_text(header).strip()
-            if token:
-                tokens.append(token)
+            name = self._generate_accessible_name(header)
+            if name and name[0].strip():
+                tokens.append(name[0])
+            else:
+                text = self._generate_text_content(header)
+                if text and text[0].strip():
+                    tokens.append(text[0])
 
         if not tokens:
             return result
@@ -1231,9 +1235,13 @@ class Generator:
 
         tokens = []
         for header in headers:
-            token = AXObject.get_name(header).strip() or AXText.get_all_text(header).strip()
-            if token:
-                tokens.append(token)
+            name = self._generate_accessible_name(header)
+            if name and name[0].strip():
+                tokens.append(name[0])
+            else:
+                text = self._generate_text_content(header)
+                if text and text[0].strip():
+                    tokens.append(text[0])
 
         if not tokens:
             return result
