@@ -1922,6 +1922,10 @@ class SpeechGenerator(generator.Generator):
         if self._script.inSayAll():
             return []
 
+        if not self._script.utilities.cellColumnChanged(obj, args.get("priorObj")) \
+           and not args.get("formatType", "").endswith("WhereAmI"):
+            return []
+
         args["newOnly"] = not self._get_is_nameless_toggle(obj)
         result = super()._generate_table_cell_column_header(obj, **args)
         if result:
@@ -1939,7 +1943,8 @@ class SpeechGenerator(generator.Generator):
         if self._script.inSayAll():
             return []
 
-        if not self._script.utilities.cellRowChanged(obj, args.get("priorObj")):
+        if not self._script.utilities.cellRowChanged(obj, args.get("priorObj")) \
+           and not args.get("formatType", "").endswith("WhereAmI"):
             return []
 
         args["newOnly"] = True
