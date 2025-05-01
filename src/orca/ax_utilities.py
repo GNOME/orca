@@ -345,8 +345,9 @@ class AXUtilities:
                 if not AXUtilitiesRole.is_label(child) and child in labelled_by:
                     return True, "is labelled by non-label only child"
             set_roles = AXUtilitiesRole.get_set_container_roles()
-            if AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles):
-                return True, "is in set container"
+            ancestor = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles)
+            if ancestor and AXObject.get_name(ancestor) == name:
+                return True, "is in set container with same name"
             return False, reason
 
         if AXUtilitiesRole.is_section(obj, role) or AXUtilitiesRole.is_document(obj, role):
