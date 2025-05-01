@@ -1,3 +1,21 @@
+47.4 - 1 May 2025
+
+Web:
+
+* Fix presentation of status bars in Firefox and Tor Browser.
+
+* Fix Mouse Review failing when web content scrolls.
+
+General:
+
+* Fix Orca saying "not selected" in every GTK4 list item.
+
+* Fix bug causing flat review to sometimes fail.
+
+* Fix chattiness issue related to descendant labels.
+
+=========
+
 47.3 - 5 January 2025
 
 Web:
