@@ -2586,6 +2586,14 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
+        try:
+            assert isinstance(text, str)
+        except AssertionError:
+            tokens = ["DEFAULT: speakMessage called with non-string:", text]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+            debug.print_exception(debug.LEVEL_WARNING)
+            return
+
         manager = settings_manager.get_manager()
         if not manager.get_setting('enableSpeech') \
            or (manager.get_setting('onlySpeakDisplayedText') and not force):

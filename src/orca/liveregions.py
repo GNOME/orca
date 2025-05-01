@@ -342,6 +342,8 @@ class LiveRegionManager:
                 utts = message['labels'] + message['content']
 
             if self.monitoring:
+                if isinstance(utts, list):
+                    utts = " ".join(utts)
                 self._script.presentMessage(utts)
             else:
                 msg = "INFO: Not presenting message because monitoring is off"
