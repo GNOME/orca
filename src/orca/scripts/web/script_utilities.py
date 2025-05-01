@@ -396,7 +396,7 @@ class Utilities(script_utilities.Utilities):
             utterances = self._script.speech_generator.generate_speech(obj)
             return self._script.speech_generator.utterances_to_string(utterances)
 
-        return super().expandEOCs(obj, startOffset, endOffset).strip()
+        return super().expandEOCs(obj, startOffset, endOffset)
 
     def adjustContentsForLanguage(self, contents):
         rv = []
