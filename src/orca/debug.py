@@ -64,7 +64,6 @@ def print_tokens(
         return
 
     text = " ".join(map(AXUtilitiesDebugging.as_string, tokens))
-    text = re.sub(r"[ \u00A0]+", " ", text)
     text = re.sub(r" (?=[,.:)])(?![\n])", "", text)
     _print_text(level, text, timestamp, stack)
 

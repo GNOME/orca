@@ -644,7 +644,7 @@ class AXText:
             return ""
 
         words = result.split()
-        if len(words) > 10:
+        if len(words) > 20:
             debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
         else:
             debug_string = result
@@ -791,7 +791,7 @@ class AXText:
 
         text = " ".join(strings)
         words = text.split()
-        if len(text) > 10:
+        if len(words) > 20:
             debug_string = f"{' '.join(words[:5])} ... {' '.join(words[-5:])}"
         else:
             debug_string = text
