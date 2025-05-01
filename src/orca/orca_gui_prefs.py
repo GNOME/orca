@@ -3187,7 +3187,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         settings_manager.get_manager().set_starting_profile(startingProfile)
 
         self.writeUserPreferences()
-        orca.loadUserSettings(self.script)
+        orca.load_user_settings(self.script)
         braille.checkBrailleSetting()
         self._initSpeechState()
         self._populateKeyBindings()
@@ -3439,7 +3439,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         settings_manager.get_manager().set_profile(profile[1])
         self.prefsDict = settings_manager.get_manager().get_general_settings(profile[1])
 
-        orca.loadUserSettings(skipReloadMessage=True)
+        orca.load_user_settings(skip_reload_message=True)
 
         self._initGUIState()
 
