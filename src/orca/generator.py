@@ -1276,7 +1276,7 @@ class Generator:
         if not AXObject.get_child_count(obj):
             return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
-        children = [x for x in AXObject.iter_children(obj, AXUtilities.is_text_input)]
+        children = list(AXObject.iter_children(obj, AXUtilities.is_text_input))
         if len(children) == 1:
             return AXText.get_all_text(children[0])
 
