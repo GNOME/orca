@@ -347,7 +347,7 @@ class Script(default.Script):
         generalGrid.attach(self._autoFocusModeCaretNavCheckButton, 0, 1, 1, 1)
 
         label = guilabels.USE_STRUCTURAL_NAVIGATION
-        value = self.structural_navigation.enabled
+        value = settings_manager.get_manager().get_setting('structuralNavigationEnabled')
         self._structuralNavigationCheckButton = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._structuralNavigationCheckButton.set_active(value)
