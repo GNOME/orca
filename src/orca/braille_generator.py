@@ -1375,7 +1375,18 @@ class BrailleGenerator(generator.Generator):
     def _generate_table_row(self, obj, **args):
         """Generates braille for the table-row role."""
 
-        return self._generate_default_presentation(obj, **args)
+        result = self._generate_default_prefix(obj, **args)
+        result += [braille.Component(
+            obj, self._as_string(
+                self._generate_accessible_label_and_name(obj, **args) +
+                self._generate_text_content(obj, **args) +
+                self._generate_value(obj, **args) +
+                self._generate_accessible_role(obj, **args) +
+                self._generate_state_required(obj, **args) +
+                self._generate_state_invalid(obj, **args) +
+                self._generate_state_expanded(obj, **args)))]
+        result += self._generate_default_suffix(obj, **args)
+        return result
 
     def _generate_table_row_header(self, obj, **args):
         """Generates braille for the table-row-header role."""
