@@ -122,7 +122,7 @@ class KeyboardEvent(InputEvent):
         self.modifiers: int = modifiers & Gdk.ModifierType.MODIFIER_MASK
         if modifiers & (1 << Atspi.ModifierType.NUMLOCK):
             self.modifiers |= (1 << Atspi.ModifierType.NUMLOCK)
-        self.keyval_name: str = Gdk.keyval_name(keysym)
+        self.keyval_name: str = Gdk.keyval_name(keysym) or ""
         self.timestamp: float = time.time()
         self._script: Optional[default.Script] = None
         self._window: Optional[Atspi.Accessible] = None
