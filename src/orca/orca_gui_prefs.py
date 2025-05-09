@@ -156,6 +156,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._capturedKey = []
         self.script = script
         self.init()
+        self._pending_already_bound_message_id = None
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current
@@ -2907,8 +2908,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if description:
             msg = messages.KB_ALREADY_BOUND % description
             delay = int(1000 * settings.doubleClickTimeout)
-            GLib.timeout_add(delay, self._presentMessage, msg)
+            self._pending_already_bound_message_id = GLib.timeout_add(
+                delay, self._presentMessage, msg)
+
         else:
+            if self._pending_already_bound_message_id is not None:
+                GLib.source_remove(self._pending_already_bound_message_id)
+                self._pending_already_bound_message_id = None
             msg = messages.KB_CAPTURED % newString
             editable.set_text(newString)
             self._presentMessage(msg)
