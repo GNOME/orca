@@ -1452,11 +1452,12 @@ class Script(script.Script):
             return
 
         string = self.utilities.deletedText(event)
+        selected_text, _start, _end = AXText.get_cached_selected_text(event.source)
         if reason == TextEventReason.DELETE:
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             string = AXText.get_character_at_offset(event.source)[0]
-        elif reason == TextEventReason.BACKSPACE:
+        elif reason == TextEventReason.BACKSPACE and string != selected_text:
             msg = "DEFAULT: Deletion is believed to be due to BackSpace command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
@@ -1572,6 +1573,11 @@ class Script(script.Script):
             return
         if reason == TextEventReason.SEARCH_UNPRESENTABLE:
             msg = "DEFAULT: Ignoring event believed to be unpresentable search results change"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXText.update_cached_selected_text(event.source)
+            return
+        if reason in [TextEventReason.CUT, TextEventReason.BACKSPACE, TextEventReason.DELETE]:
+            msg = "DEFAULT: Ignoring event believed to be text removal"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             AXText.update_cached_selected_text(event.source)
             return
