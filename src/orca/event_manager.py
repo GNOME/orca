@@ -241,7 +241,7 @@ class EventManager:
             return True
 
         event_type = event.type
-        if event_type.startswith('window') or event_type.startswith('mouse:button'):
+        if event_type.startswith(('window', 'mouse:button')):
             return False
 
         # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher

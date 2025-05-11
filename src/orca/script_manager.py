@@ -114,9 +114,9 @@ class ScriptManager:
                      "pluma": "gedit",
                      "xfce4-notifyd": "notification-daemon"}
         alt_names = list(app_names.keys())
-        if name.endswith(".py") or name.endswith(".bin"):
+        if name.endswith((".py", ".bin")):
             name = name.split(".")[0]
-        elif name.startswith("org.") or name.startswith("com."):
+        elif name.startswith(("org.", "com.")):
             name = name.split(".")[-1]
 
         names = [n for n in alt_names if n.lower() == name.lower()]
