@@ -168,7 +168,7 @@ class AXDocument:
 
         tokens = ["AXDocument: Attributes of", document, "are:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result
+        return result or {}
 
     @staticmethod
     def get_uri(document: Atspi.Accessible) -> str:
