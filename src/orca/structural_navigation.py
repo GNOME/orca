@@ -859,6 +859,14 @@ class StructuralNavigation:
         if not obj:
             obj, offset = self._script.utilities.getCaretContext()
         thisObj, index = _getMatchingObjAndIndex(obj)
+
+        # Check again because weird authoring, e.g. an ARIA heading descendant of a native heading.
+        if thisObj:
+            ancestorMatch, ancestorIndex = _getMatchingObjAndIndex(AXObject.get_parent(thisObj))
+            if ancestorMatch:
+                thisObj = ancestorMatch
+                index = ancestorIndex
+
         if thisObj:
             matches = matches[index:]
             obj = thisObj
