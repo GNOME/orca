@@ -20,7 +20,7 @@
 
 # pylint: disable=wrong-import-position
 
-"""Module for performing accessible actions via a menu"""
+"""Module for performing accessible actions via a list"""
 
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
@@ -42,6 +42,7 @@ from gi.repository import Gdk, GLib, Gtk
 from . import cmdnames
 from . import debug
 from . import focus_manager
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
@@ -54,7 +55,7 @@ if TYPE_CHECKING:
 
 
 class ActionPresenter:
-    """Provides menu for performing accessible actions on an object."""
+    """Provides a list for performing accessible actions on an object."""
 
     def __init__(self):
         self._handlers = self.get_handlers(True)
@@ -92,10 +93,10 @@ class ActionPresenter:
 
         self._handlers = {}
 
-        self._handlers["show_actions_menu"] = \
+        self._handlers["show_actions_list"] = \
             input_event.InputEventHandler(
-                self.show_actions_menu,
-                cmdnames.SHOW_ACTIONS_MENU)
+                self.show_actions_list,
+                cmdnames.SHOW_ACTIONS_LIST)
 
         msg = "ACTION PRESENTER: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -110,19 +111,18 @@ class ActionPresenter:
                 "a",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["show_actions_menu"]))
+                self._handlers["show_actions_list"]))
 
         msg = "ACTION PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _restore_focus(self) -> None:
-        """Restores focus to the object associated with the actions menu."""
+        """Restores focus to the object associated with the actions list."""
 
         tokens = ["ACTION PRESENTER: Restoring focus to", self._obj, "in", self._window]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        # TODO - JD: Consider having set_locus_of_focus always update the active script.
-        reason = "Action Presenter menu is being destroyed"
+        reason = "Action Presenter list is being destroyed"
         app = AXUtilities.get_application(self._obj)
         script = script_manager.get_manager().get_script(app, self._obj)
         script_manager.get_manager().set_active_script(script, reason)
@@ -132,18 +132,30 @@ class ActionPresenter:
         manager.set_active_window(self._window)
         manager.set_locus_of_focus(None, self._obj)
 
+    def _clear_gui_and_restore_focus(self) -> None:
+        """Clears the GUI reference and then restores focus."""
+
+        self._gui = None
+        self._restore_focus()
+
     def _perform_action(self, action: str) -> None:
         """Attempts to perform the named action."""
 
+        if self._gui is None:
+            msg = "ACTION PRESENTER: _perform_action called when self._gui is None."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        self._gui.hide()
         result = AXObject.do_named_action(self._obj, action)
         tokens = ["ACTION PRESENTER: Performing", action, "on", self._obj, "succeeded:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._gui = None
+        GLib.idle_add(self._gui.destroy)
 
-    def show_actions_menu(
+    def show_actions_list(
         self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
-        """Shows a menu with all the available accessible actions."""
+        """Shows a list with all the available accessible actions."""
 
         manager = focus_manager.get_manager()
         obj = manager.get_active_mode_and_object_of_interest()[1] or manager.get_locus_of_focus()
@@ -169,16 +181,13 @@ class ActionPresenter:
 
         self._obj = obj
         self._window = manager.get_active_window()
-        self._gui = ActionMenu(actions, self._perform_action, self._restore_focus)
-        timeout = 500
-        msg = f"ACTION PRESENTER: Delaying popup {timeout}ms due to GtkMenu grab conflict."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        GLib.timeout_add(timeout, self._gui.show_gui)
+        self._gui = ActionList(actions, self._perform_action, self._clear_gui_and_restore_focus)
+        self._gui.show_gui()
         return True
 
 
-class ActionMenu(Gtk.Menu):
-    """A simple Gtk.Menu containing a list of accessible actions."""
+class ActionList(Gtk.Window):
+    """A Gtk.Window containing a Gtk.ListBox of accessible actions."""
 
     def __init__(
         self,
@@ -186,61 +195,61 @@ class ActionMenu(Gtk.Menu):
         action_handler: Callable[[str], None],
         cleanup_handler: Callable[[], None]
     ) -> None:
-        super().__init__()
-        self.connect("popped-up", self._on_popped_up)
-        self.connect("hide", self._on_hidden)
+        super().__init__(window_position=Gtk.WindowPosition.MOUSE, transient_for=None)
+        self.set_title(guilabels.ACTIONS_LIST)
+        self.set_decorated(False)
+
+        self.connect("destroy", self._on_hidden)
         self.on_option_selected = action_handler
-        self.on_menu_hidden = cleanup_handler
+        self.on_list_hidden = cleanup_handler
+
+        self._list_box = Gtk.ListBox()
+        self._list_box.set_selection_mode(Gtk.SelectionMode.SINGLE)
+        self._list_box.connect("row-activated", self._on_row_activated)
+        self._list_box.set_margin_top(5)
+        self._list_box.set_margin_bottom(5)
+
         for name, description in actions.items():
-            menu_item = Gtk.MenuItem(label=description)
-            menu_item.connect("activate", self._on_activate, name)
-            self.append(menu_item)
+            row = Gtk.ListBoxRow()
+            label = Gtk.Label(label=description, xalign=0)
+            label.set_margin_start(10)
+            label.set_margin_end(10)
+            row.add(label) # pylint: disable=no-member
+            setattr(row, "_action_name", name)
+            self._list_box.add(row) # pylint: disable=no-member
 
-    def _on_activate(self, _widget: Gtk.Widget, option: str) -> None:
-        """Handler for the 'activate' menuitem signal"""
+        self.add(self._list_box) # pylint: disable=no-member
 
-        self.on_option_selected(option)
+        self.connect("key-press-event", self._on_key_press)
 
-    def _on_popped_up(self, *_args: tuple[Any, ...]) -> None:
-        """Handler for the 'popped-up' menu signal"""
+    def _on_key_press(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
+        """Handles key presses for the window, e.g. Escape to close."""
 
-        msg = "ACTION PRESENTER: ActionMenu popped up"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if event.keyval == Gdk.KEY_Escape:
+            self.destroy()
+            return True
+        return False
+
+    def _on_row_activated(self, _list_box: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
+        """Handler for the 'row-activated' signal of the Gtk.ListBox"""
+
+        action_name = getattr(row, "_action_name", None)
+        if action_name:
+            self.on_option_selected(action_name)
 
     def _on_hidden(self, *_args: tuple[Any, ...]) -> None:
-        """Handler for the 'hide' menu signal"""
+        """Handler for the 'destroy' window signal"""
 
-        msg = "ACTION PRESENTER: ActionMenu hidden"
+        msg = "ACTION PRESENTER: ActionList destroyed"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.on_menu_hidden()
+        self.on_list_hidden()
 
     def show_gui(self) -> None:
-        """Shows the menu"""
+        """Shows the window"""
 
-        self.show_all()
-        display = Gdk.Display.get_default()
-        seat = display.get_default_seat()
-        device = seat.get_pointer()
-        screen, x, y = device.get_position()
-
-        # There is indeed a "new" member in the Gdk.Event class.
-        # pylint: disable=no-member
-        event = Gdk.Event.new(Gdk.EventType.BUTTON_PRESS)
-        # pylint: enable-no-member
-        event.set_screen(screen)
-        event.set_device(device)
-        event.time = time.time()
-        event.x = x
-        event.y = y
-
-        rect = Gdk.Rectangle()
-        rect.x = x
-        rect.y = y
-        rect.width = 1
-        rect.height = 1
-
-        window = Gdk.get_default_root_window()
-        self.popup_at_rect(window, rect, Gdk.Gravity.NORTH_WEST, Gdk.Gravity.NORTH_WEST, event)
+        self.show_all() # pylint: disable=no-member
+        self.present_with_time(time.time())
+        self._list_box.grab_focus()
 
 
 _presenter = ActionPresenter()

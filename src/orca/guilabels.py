@@ -343,6 +343,7 @@ KB_GROUP_LEARN_MODE = C_("keybindings", "Learn mode")
 # are related to presenting and performing the accessible actions associated
 # with the current object.
 KB_GROUP_ACTIONS = _("Actions")
+ACTIONS_LIST = KB_GROUP_ACTIONS
 
 # Translators: An external braille device has buttons on it that permit the
 # user to create input gestures from the braille device. The braille bindings
