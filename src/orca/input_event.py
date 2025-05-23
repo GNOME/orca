@@ -825,6 +825,8 @@ class BrailleEvent(InputEvent):
 class MouseButtonEvent(InputEvent):
     """Provides support for handling mouse button events."""
 
+    # TODO - JD: Remove this and the validation logic once we have a fix for
+    # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/194.
     try:
         display = Gdk.Display.get_default()
         seat = Gdk.Display.get_default_seat(display)
