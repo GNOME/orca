@@ -172,16 +172,17 @@ def setProcessName(name):
 def inGraphicalDesktop():
     """Returns True if we are in a graphical desktop."""
 
-    # TODO - JD: Make this desktop environment agnostic
-    try:
-        import gi
-        gi.require_version("Gdk", "3.0")
-        from gi.repository import Gdk
-        display = Gdk.Display.get_default()
-    except Exception:
-        return False
+    session_type = os.environ.get("XDG_SESSION_TYPE") or ""
+    if session_type.lower() in ("x11", "wayland"):
+      return True
 
-    return display is not None
+    if display := os.environ.get("DISPLAY"):
+      return True
+
+    if wayland_display := os.environ.get("WAYLAND_DISPLAY"):
+      return True
+
+    return False
 
 def otherOrcas():
     """Returns the pid of any other instances of Orca owned by this user."""
