@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-02-19 19:12+0000\n"
-"PO-Revision-Date: 2025-02-23 00:19+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-05-23 16:43+0000\n"
+"PO-Revision-Date: 2025-05-24 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -717,11 +717,11 @@ msgstr "Başlık çubuğunu sun"
 msgid "Open the Find dialog"
 msgstr "Bul penceresini aç"
 
-#. Translators: Orca has a command which presents a menu with accessible actions
+#. Translators: Orca has a command which presents a list with accessible actions
 #. that can be performed on the current object. This is the name of that command.
 #: src/orca/cmdnames.py:107
-msgid "Show actions menu"
-msgstr "Eylemler menüsünü göster"
+msgid "Show actions list"
+msgstr "Eylemler listesini göster"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -3559,7 +3559,7 @@ msgstr "İçerik için düzen kipini etkinleştir"
 #. dialog after a keybinding which requires a double click.
 #. Translators: Orca keybindings support double and triple "clicks" or key presses, similar
 #. to using a mouse.
-#: src/orca/guilabels.py:194 src/orca/keybindings.py:216
+#: src/orca/guilabels.py:194 src/orca/keybindings.py:215
 msgid "double click"
 msgstr "çift tıklama"
 
@@ -3568,7 +3568,7 @@ msgstr "çift tıklama"
 #. dialog after a keybinding which requires a triple click.
 #. Translators: Orca keybindings support double and triple "clicks" or key presses, similar
 #. to using a mouse.
-#: src/orca/guilabels.py:199 src/orca/keybindings.py:220
+#: src/orca/guilabels.py:199 src/orca/keybindings.py:219
 msgid "triple click"
 msgstr "üç tıklama"
 
@@ -3778,25 +3778,25 @@ msgstr "Eylemler"
 #. user to create input gestures from the braille device. The braille bindings
 #. are what determine the actions Orca will take when the user presses these
 #. buttons.
-#: src/orca/guilabels.py:351
+#: src/orca/guilabels.py:352
 msgid "Braille Bindings"
 msgstr "Braille Bağları"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to saving and jumping among objects via "bookmarks".
-#: src/orca/guilabels.py:355
+#: src/orca/guilabels.py:356
 msgid "Bookmarks"
 msgstr "Yer imleri"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to the clipboard.
-#: src/orca/guilabels.py:359
+#: src/orca/guilabels.py:360
 msgid "Clipboard"
 msgstr "Pano"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the date and time.
-#: src/orca/guilabels.py:363
+#: src/orca/guilabels.py:364
 msgid "Date and time"
 msgstr "Tarih ve saat"
 
@@ -3812,7 +3812,7 @@ msgstr "Tarih ve saat"
 #. another application window, Orca commands, speech, and braille immediately
 #. resume working. This string is a label for the group of Orca commands which
 #. are related to sleep mode.
-#: src/orca/guilabels.py:377
+#: src/orca/guilabels.py:378
 msgid "Sleep mode"
 msgstr "Uyku kipi"
 
@@ -3820,27 +3820,27 @@ msgstr "Uyku kipi"
 #. are related to presenting the object under the mouse pointer in speech
 #. and/or braille. The translation should be consistent with the string
 #. used in cmdnames.py.
-#: src/orca/guilabels.py:383
+#: src/orca/guilabels.py:384
 msgid "Mouse review"
 msgstr "Fare bakışı"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
-#: src/orca/guilabels.py:387
+#: src/orca/guilabels.py:388
 msgid "Object navigation"
 msgstr "Nesne gezintisi"
 
 #. Translators: This string is a label for a group of Orca commands which are
 #. related to presenting information about the system, such as date, time,
 #. battery status, CPU status, etc.
-#: src/orca/guilabels.py:392
+#: src/orca/guilabels.py:393
 msgid "System information"
 msgstr "Sistem bilgisi"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to table navigation, such as moving to the next cell in a
 #. given direction.
-#: src/orca/guilabels.py:397
+#: src/orca/guilabels.py:398
 msgid "Table navigation"
 msgstr "Tablo dolaşımı"
 
@@ -3849,7 +3849,7 @@ msgstr "Tablo dolaşımı"
 #. the title, status bar, and default button of the current window; the
 #. name, role, and location of the currently-focused object; the selected
 #. text in the currently-focused object; etc.
-#: src/orca/guilabels.py:404
+#: src/orca/guilabels.py:405
 msgid "Object details"
 msgstr "Nesne ayrıntıları"
 
@@ -3860,7 +3860,7 @@ msgstr "Nesne ayrıntıları"
 #. a sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
-#: src/orca/guilabels.py:413
+#: src/orca/guilabels.py:414
 msgid "Flat review"
 msgstr "Düz bakış"
 
@@ -3869,7 +3869,7 @@ msgstr "Düz bakış"
 #. allows on-the-fly configuration of how much (or little) Orca says about a
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
-#: src/orca/guilabels.py:420
+#: src/orca/guilabels.py:421
 msgid "Speech and verbosity"
 msgstr "Konuşma ve ayrıntı düzeyi"
 
@@ -3882,7 +3882,7 @@ msgstr "Konuşma ve ayrıntı düzeyi"
 #. reviewed. There is a command which will place the entire contents of the
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
-#: src/orca/guilabels.py:431
+#: src/orca/guilabels.py:432
 msgid "Flat review contents"
 msgstr "Düz bakış içerikleri"
 
@@ -3890,13 +3890,13 @@ msgstr "Düz bakış içerikleri"
 #. This column contains a checkbox which indicates whether a key binding
 #. for an Orca command has been changed by the user to something other than its
 #. default value.
-#: src/orca/guilabels.py:437
+#: src/orca/guilabels.py:438
 msgctxt "keybindings"
 msgid "Modified"
 msgstr "Değiştirildi"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
-#: src/orca/guilabels.py:440 src/orca/orca-setup.ui:242
+#: src/orca/guilabels.py:441 src/orca/orca-setup.ui:242
 msgid "_Desktop"
 msgstr "_Masaüstü"
 
@@ -3906,7 +3906,7 @@ msgstr "_Masaüstü"
 #. with two columns, one column for the text of the notification and one
 #. column for the time of the notification. This string is a column header
 #. for the text of the notifications.
-#: src/orca/guilabels.py:448
+#: src/orca/guilabels.py:449
 msgctxt "notification presenter"
 msgid "Notifications"
 msgstr "Bildirimler"
@@ -3917,14 +3917,14 @@ msgstr "Bildirimler"
 #. with two columns, one column for the text of the notification and one
 #. column for the time of the notification. This string is a column header
 #. for the time, which will be relative (e.g. "10 minutes ago") or absolute.
-#: src/orca/guilabels.py:456
+#: src/orca/guilabels.py:457
 msgctxt "notification presenter"
 msgid "Received"
 msgstr "Alındı"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
-#: src/orca/guilabels.py:460
+#: src/orca/guilabels.py:461
 msgid "Notification presenter"
 msgstr "Bildirim sunucu"
 
@@ -3934,7 +3934,7 @@ msgstr "Bildirim sunucu"
 #. title of Orca's application-specific preferences dialog for an application.
 #. The string substituted in is the accessible name of the application (e.g.
 #. "Gedit", "Firefox", etc.
-#: src/orca/guilabels.py:468
+#: src/orca/guilabels.py:469
 #, python-format
 msgid "Screen Reader Preferences for %s"
 msgstr "%s için Ekran Okuyucusu Tercihleri"
@@ -3944,7 +3944,7 @@ msgstr "%s için Ekran Okuyucusu Tercihleri"
 #. or attribute by "marking" it in braille. "Marking" is not the same as writing
 #. out the word; instead marking refers to adding some other indicator, e.g.
 #. "underlining" with braille dots 7-8 a word that is bold.
-#: src/orca/guilabels.py:475
+#: src/orca/guilabels.py:476
 msgid "Mark in braille"
 msgstr "Braille içinde işaretle"
 
@@ -3958,7 +3958,7 @@ msgstr "Braille içinde işaretle"
 #. stating that he/she would like to have underlined text announced for all cases
 #. (single, double, low, etc.) except when the value of underline is none (i.e.
 #. when it's not underlined). "Present" here is being used as a verb.
-#: src/orca/guilabels.py:487
+#: src/orca/guilabels.py:488
 msgid "Present Unless"
 msgstr "Yalnızca Mevcut"
 
@@ -3967,7 +3967,7 @@ msgstr "Yalnızca Mevcut"
 #. item or attribute (e.g. saying "Bold" as part of the information presented
 #. when the user gives the Orca command to obtain the format and font details of
 #. the current text).
-#: src/orca/guilabels.py:494
+#: src/orca/guilabels.py:495
 msgid "Speak"
 msgstr "Seslendir"
 
@@ -3976,7 +3976,7 @@ msgstr "Seslendir"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: src/orca/guilabels.py:501
+#: src/orca/guilabels.py:502
 msgid "Save Profile As Conflict"
 msgstr "Profili Farklı Kaydetme Çakışması"
 
@@ -3985,7 +3985,7 @@ msgstr "Profili Farklı Kaydetme Çakışması"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: src/orca/guilabels.py:508
+#: src/orca/guilabels.py:509
 msgid "User Profile Conflict!"
 msgstr "Kullanıcı Profili Çakışması!"
 
@@ -3994,7 +3994,7 @@ msgstr "Kullanıcı Profili Çakışması!"
 #. A "user profile" is a collection of settings which apply to a given task, such
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
-#: src/orca/guilabels.py:515
+#: src/orca/guilabels.py:516
 #, python-format
 msgid ""
 "Profile %s already exists.\n"
@@ -4009,7 +4009,7 @@ msgstr ""
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: src/orca/guilabels.py:525
+#: src/orca/guilabels.py:526
 msgid "Load user profile"
 msgstr "Kullanıcı profilini yükle"
 
@@ -4019,7 +4019,7 @@ msgstr "Kullanıcı profilini yükle"
 #. collection of settings which apply to a given task such as a "Spanish" profile
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
-#: src/orca/guilabels.py:534
+#: src/orca/guilabels.py:535
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -4039,7 +4039,7 @@ msgstr ""
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the title of a dialog in which users can save a newly-
 #. defined profile.
-#: src/orca/guilabels.py:545
+#: src/orca/guilabels.py:546
 msgid "Save Profile As"
 msgstr "Profili Farklı Kaydet"
 
@@ -4049,7 +4049,7 @@ msgstr "Profili Farklı Kaydet"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for a text entry in which the user enters the
 #. name of a new settings profile being saved via the 'Save Profile As' dialog.
-#: src/orca/guilabels.py:553
+#: src/orca/guilabels.py:554
 msgid "_Profile Name:"
 msgstr "_Profil Adı:"
 
@@ -4059,7 +4059,7 @@ msgstr "_Profil Adı:"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text.
 #. The following is a label in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
-#: src/orca/guilabels.py:561
+#: src/orca/guilabels.py:562
 msgid "Remove user profile"
 msgstr "Kullanıcı profilini kaldır"
 
@@ -4069,7 +4069,7 @@ msgstr "Kullanıcı profilini kaldır"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text.
 #. The following is a message in a dialog informing the user that he/she
 #. is about to remove a user profile, an action that cannot be undone.
-#: src/orca/guilabels.py:569
+#: src/orca/guilabels.py:570
 #, python-format
 msgid ""
 "You are about to remove profile %s. All unsaved settings and settings saved "
@@ -4084,7 +4084,7 @@ msgstr ""
 #. should be announced. Choosing "All" means that Orca will present progress bar
 #. updates regardless of what application and window they happen to be in.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: src/orca/guilabels.py:577 src/orca/orca-setup.ui:63
+#: src/orca/guilabels.py:578 src/orca/orca-setup.ui:63
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Tümü"
@@ -4093,7 +4093,7 @@ msgstr "Tümü"
 #. should be announced. Choosing "Application" means that Orca will present
 #. progress bar updates as long as the progress bar is in the active application
 #. (but not necessarily in the current window).
-#: src/orca/guilabels.py:583
+#: src/orca/guilabels.py:584
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Uygulama"
@@ -4101,7 +4101,7 @@ msgstr "Uygulama"
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. Choosing "Window" means that Orca will present progress
 #. bar updates as long as the progress bar is in the active window.
-#: src/orca/guilabels.py:588
+#: src/orca/guilabels.py:589
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Pencere"
@@ -4109,7 +4109,7 @@ msgstr "Pencere"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: src/orca/guilabels.py:592 src/orca/orca-setup.ui:1531
+#: src/orca/guilabels.py:593 src/orca/orca-setup.ui:1531
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Hiçbiri"
@@ -4117,25 +4117,25 @@ msgstr "_Hiçbiri"
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
-#: src/orca/guilabels.py:597 src/orca/orca-setup.ui:1547
+#: src/orca/guilabels.py:598 src/orca/orca-setup.ui:1547
 msgid "So_me"
 msgstr "Ba_zı"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
-#: src/orca/guilabels.py:601 src/orca/orca-setup.ui:1563
+#: src/orca/guilabels.py:602 src/orca/orca-setup.ui:1563
 msgid "M_ost"
 msgstr "En ç_ok"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
-#: src/orca/guilabels.py:605 src/orca/orca-setup.ui:49
+#: src/orca/guilabels.py:606 src/orca/orca-setup.ui:49
 msgid "Line"
 msgstr "Satır"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each sentence.
-#: src/orca/guilabels.py:609 src/orca/orca-setup.ui:52
+#: src/orca/guilabels.py:610 src/orca/orca-setup.ui:52
 msgid "Sentence"
 msgstr "Tümce"
 
@@ -4143,7 +4143,7 @@ msgstr "Tümce"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a blockquote.
-#: src/orca/guilabels.py:615
+#: src/orca/guilabels.py:616
 msgctxt "structural navigation"
 msgid "Blockquote"
 msgstr "Blok Alıntı"
@@ -4152,7 +4152,7 @@ msgstr "Blok Alıntı"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a button.
-#: src/orca/guilabels.py:621
+#: src/orca/guilabels.py:622
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Düğme"
@@ -4161,7 +4161,7 @@ msgstr "Düğme"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the caption of a table.
-#: src/orca/guilabels.py:627
+#: src/orca/guilabels.py:628
 msgctxt "structural navigation"
 msgid "Caption"
 msgstr "Başlık"
@@ -4170,7 +4170,7 @@ msgstr "Başlık"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a check box.
-#: src/orca/guilabels.py:633
+#: src/orca/guilabels.py:634
 msgctxt "structural navigation"
 msgid "Check Box"
 msgstr "Onay Kutusu"
@@ -4179,7 +4179,7 @@ msgstr "Onay Kutusu"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text displayed for a web element with an "onClick" handler.
-#: src/orca/guilabels.py:639
+#: src/orca/guilabels.py:640
 msgctxt "structural navigation"
 msgid "Clickable"
 msgstr "Tıklanabilir"
@@ -4188,7 +4188,7 @@ msgstr "Tıklanabilir"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item in a combo box.
-#: src/orca/guilabels.py:645
+#: src/orca/guilabels.py:646
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Açılır Kutu"
@@ -4197,7 +4197,7 @@ msgstr "Açılır Kutu"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the description of an element.
-#: src/orca/guilabels.py:651
+#: src/orca/guilabels.py:652
 msgctxt "structural navigation"
 msgid "Description"
 msgstr "Açıklama"
@@ -4206,7 +4206,7 @@ msgstr "Açıklama"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a heading.
-#: src/orca/guilabels.py:657
+#: src/orca/guilabels.py:658
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Başlık"
@@ -4215,7 +4215,7 @@ msgstr "Başlık"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the title associated with an iframe.
-#: src/orca/guilabels.py:663
+#: src/orca/guilabels.py:664
 msgctxt "structural navigation"
 msgid "Internal Frame"
 msgstr "Dahili Kare"
@@ -4224,7 +4224,7 @@ msgstr "Dahili Kare"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text (alt text, title, etc.) associated with an image.
-#: src/orca/guilabels.py:669
+#: src/orca/guilabels.py:670
 msgctxt "structural navigation"
 msgid "Image"
 msgstr "Resim"
@@ -4233,7 +4233,7 @@ msgstr "Resim"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a form field.
-#: src/orca/guilabels.py:675
+#: src/orca/guilabels.py:676
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Etiket"
@@ -4244,7 +4244,7 @@ msgstr "Etiket"
 #. contains the text of a landmark. ARIA role landmarks are the W3C defined HTML
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
-#: src/orca/guilabels.py:683
+#: src/orca/guilabels.py:684
 msgctxt "structural navigation"
 msgid "Landmark"
 msgstr "Sınır İşareti"
@@ -4254,7 +4254,7 @@ msgstr "Sınır İşareti"
 #. could with native keyboard navigation. This is the title of a column which
 #. contains the level of a heading. Level will be a "1" for <h1>, a "2" for <h2>,
 #. and so on.
-#: src/orca/guilabels.py:690
+#: src/orca/guilabels.py:691
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Düzey"
@@ -4263,7 +4263,7 @@ msgstr "Düzey"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a link.
-#: src/orca/guilabels.py:696
+#: src/orca/guilabels.py:697
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Bağlantı"
@@ -4272,7 +4272,7 @@ msgstr "Bağlantı"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list.
-#: src/orca/guilabels.py:702
+#: src/orca/guilabels.py:703
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Liste"
@@ -4281,7 +4281,7 @@ msgstr "Liste"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a list item.
-#: src/orca/guilabels.py:708
+#: src/orca/guilabels.py:709
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Liste Ögesi"
@@ -4290,7 +4290,7 @@ msgstr "Liste Ögesi"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an object.
-#: src/orca/guilabels.py:714
+#: src/orca/guilabels.py:715
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Nesne"
@@ -4299,7 +4299,7 @@ msgstr "Nesne"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of a paragraph.
-#: src/orca/guilabels.py:720
+#: src/orca/guilabels.py:721
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Paragraf"
@@ -4308,7 +4308,7 @@ msgstr "Paragraf"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the label of a radio button.
-#: src/orca/guilabels.py:726
+#: src/orca/guilabels.py:727
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Radyo Düğmesi"
@@ -4318,7 +4318,7 @@ msgstr "Radyo Düğmesi"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the role of a widget. Examples include "heading", "paragraph",
 #. "table", "combo box", etc.
-#: src/orca/guilabels.py:733
+#: src/orca/guilabels.py:734
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Rol"
@@ -4327,7 +4327,7 @@ msgstr "Rol"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item of a form field.
-#: src/orca/guilabels.py:739
+#: src/orca/guilabels.py:740
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Seçili Öge"
@@ -4337,7 +4337,7 @@ msgstr "Seçili Öge"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the state of a widget. Examples include "checked"/"not checked",
 #. "selected"/"not selected", "visited/not visited", etc.
-#: src/orca/guilabels.py:746
+#: src/orca/guilabels.py:747
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Durum"
@@ -4346,7 +4346,7 @@ msgstr "Durum"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the text of an entry.
-#: src/orca/guilabels.py:752
+#: src/orca/guilabels.py:753
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Metin"
@@ -4355,7 +4355,7 @@ msgstr "Metin"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the URI of a link.
-#: src/orca/guilabels.py:758
+#: src/orca/guilabels.py:759
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -4364,7 +4364,7 @@ msgstr "URI"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the value of a form field.
-#: src/orca/guilabels.py:764
+#: src/orca/guilabels.py:765
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Değer"
@@ -4372,7 +4372,7 @@ msgstr "Değer"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:769
+#: src/orca/guilabels.py:770
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Blok Alıntılar"
@@ -4380,7 +4380,7 @@ msgstr "Blok Alıntılar"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:774
+#: src/orca/guilabels.py:775
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Düğmeler"
@@ -4388,7 +4388,7 @@ msgstr "Düğmeler"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:779
+#: src/orca/guilabels.py:780
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Onay Kutuları"
@@ -4397,7 +4397,7 @@ msgstr "Onay Kutuları"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
-#: src/orca/guilabels.py:785
+#: src/orca/guilabels.py:786
 msgctxt "structural navigation"
 msgid "Clickables"
 msgstr "Tıklanabilirler"
@@ -4405,7 +4405,7 @@ msgstr "Tıklanabilirler"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:790
+#: src/orca/guilabels.py:791
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Açılır Kutular"
@@ -4413,7 +4413,7 @@ msgstr "Açılır Kutular"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:795
+#: src/orca/guilabels.py:796
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Girişler"
@@ -4421,7 +4421,7 @@ msgstr "Girişler"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:800
+#: src/orca/guilabels.py:801
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Form Alanları"
@@ -4429,7 +4429,7 @@ msgstr "Form Alanları"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:805
+#: src/orca/guilabels.py:806
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Başlıklar"
@@ -4437,7 +4437,7 @@ msgstr "Başlıklar"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:810
+#: src/orca/guilabels.py:811
 msgctxt "structural navigation"
 msgid "Internal Frames"
 msgstr "Dahili Kareler"
@@ -4445,7 +4445,7 @@ msgstr "Dahili Kareler"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:815
+#: src/orca/guilabels.py:816
 msgctxt "structural navigation"
 msgid "Images"
 msgstr "Resimler"
@@ -4454,7 +4454,7 @@ msgstr "Resimler"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
-#: src/orca/guilabels.py:821
+#: src/orca/guilabels.py:822
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -4465,7 +4465,7 @@ msgstr "%d Düzeyindeki Başlıklar"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/guilabels.py:828
+#: src/orca/guilabels.py:829
 msgctxt "structural navigation"
 msgid "Landmarks"
 msgstr "Sınır İşareti"
@@ -4475,7 +4475,7 @@ msgstr "Sınır İşareti"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: src/orca/guilabels.py:835
+#: src/orca/guilabels.py:836
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Büyük Nesneler"
@@ -4483,7 +4483,7 @@ msgstr "Büyük Nesneler"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:840
+#: src/orca/guilabels.py:841
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Bağlantılar"
@@ -4491,7 +4491,7 @@ msgstr "Bağlantılar"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:845
+#: src/orca/guilabels.py:846
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Listeler"
@@ -4499,7 +4499,7 @@ msgstr "Listeler"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:850
+#: src/orca/guilabels.py:851
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Liste Ögeleri"
@@ -4507,7 +4507,7 @@ msgstr "Liste Ögeleri"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:855
+#: src/orca/guilabels.py:856
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Paragraflar"
@@ -4515,7 +4515,7 @@ msgstr "Paragraflar"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:860
+#: src/orca/guilabels.py:861
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Radyo Düğmeleri"
@@ -4523,7 +4523,7 @@ msgstr "Radyo Düğmeleri"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:865
+#: src/orca/guilabels.py:866
 msgctxt "structural navigation"
 msgid "Tables"
 msgstr "Tablolar"
@@ -4531,7 +4531,7 @@ msgstr "Tablolar"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:870
+#: src/orca/guilabels.py:871
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Ziyaret Edilmemiş Bağlantılar"
@@ -4539,7 +4539,7 @@ msgstr "Ziyaret Edilmemiş Bağlantılar"
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
-#: src/orca/guilabels.py:875
+#: src/orca/guilabels.py:876
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Ziyaret Edilmiş Bağlantılar"
@@ -4547,21 +4547,21 @@ msgstr "Ziyaret Edilmiş Bağlantılar"
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
 #. navigation, etc.).
-#: src/orca/guilabels.py:880
+#: src/orca/guilabels.py:881
 msgid "Page Navigation"
 msgstr "Sayfa Dolaşımı"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically start reading the page from beginning to end. This is the label
 #. of a checkbox in which users can indicate their preference.
-#: src/orca/guilabels.py:886
+#: src/orca/guilabels.py:887
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Bir sayfa i_lk kez yüklendiğinde otomatik olarak seslendirmeye başla"
 
 #. Translators: When the user loads a new web page, they can optionally have Orca
 #. automatically summarize details about the page, such as the number of elements
 #. (landmarks, forms, links, tables, etc.).
-#: src/orca/guilabels.py:891
+#: src/orca/guilabels.py:892
 msgid "_Present summary of a page when it is first loaded"
 msgstr "İlk kez yüklendiğinde sayfanın özetini _sun"
 
@@ -4572,7 +4572,7 @@ msgstr "İlk kez yüklendiğinde sayfanın özetini _sun"
 #. queued up and sent to the speech synthesis system once the entire set of
 #. utterances has been calculated.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is encountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: src/orca/guilabels.py:899 src/orca/orca-setup.ui:1342
+#: src/orca/guilabels.py:900 src/orca/orca-setup.ui:1342
 msgid "Break speech into ch_unks between pauses"
 msgstr "Duraklamalar arasında konuşmaları par_çalara ayır"
 
@@ -4582,21 +4582,21 @@ msgstr "Duraklamalar arasında konuşmaları par_çalara ayır"
 #. to the default voice configured for given speech engine within the speech
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
-#: src/orca/guilabels.py:907
+#: src/orca/guilabels.py:908
 #, python-format
 msgid "%s default voice"
 msgstr "%s öntanımlı ses"
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
-#: src/orca/guilabels.py:911
+#: src/orca/guilabels.py:912
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Öntanımlı"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
-#: src/orca/guilabels.py:915
+#: src/orca/guilabels.py:916
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Bağlantı"
@@ -4607,34 +4607,34 @@ msgstr "Bağlantı"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: src/orca/guilabels.py:923
+#: src/orca/guilabels.py:924
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Sistem"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: src/orca/guilabels.py:927
+#: src/orca/guilabels.py:928
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Büyük Harf"
 
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
-#: src/orca/guilabels.py:931
+#: src/orca/guilabels.py:932
 msgid "Speech Dispatcher"
 msgstr "Konuşma Sentezleyici"
 
 # Seslendirme sisteminin adı.
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (https://github.com/eeejay/spiel)
-#: src/orca/guilabels.py:935
+#: src/orca/guilabels.py:936
 msgid "Spiel"
 msgstr "Spiel"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
-#: src/orca/guilabels.py:939
+#: src/orca/guilabels.py:940
 msgctxt "OptionGroup"
 msgid "Spell Check"
 msgstr "Yazım Denetimi"
@@ -4643,7 +4643,7 @@ msgstr "Yazım Denetimi"
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
-#: src/orca/guilabels.py:945
+#: src/orca/guilabels.py:946
 msgid "Spell _error"
 msgstr "Yazım _hatası"
 
@@ -4652,21 +4652,21 @@ msgstr "Yazım _hatası"
 #. addition to speaking it. For example, if the misspelled word is "foo," and
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
-#: src/orca/guilabels.py:952
+#: src/orca/guilabels.py:953
 msgid "Spell _suggestion"
 msgstr "Yazım _önerisi"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
-#: src/orca/guilabels.py:957
+#: src/orca/guilabels.py:958
 msgid "Present _context of error"
 msgstr "Hatanın _içeriğini sun"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
 #. the row and column position within the spreadsheet (i.e. A1, B1, C2 ...)
-#: src/orca/guilabels.py:962
+#: src/orca/guilabels.py:963
 msgid "Speak spreadsheet cell coordinates"
 msgstr "Hesap çizelgesi hücre koordinatlarını seslendir"
 
@@ -4677,51 +4677,51 @@ msgstr "Hesap çizelgesi hücre koordinatlarını seslendir"
 #. Some users, however, prefer to have Orca always announce the entire selected range,
 #. i.e. in the same scenario say "A1 through A9 selected." Those users should enable
 #. this option.
-#: src/orca/guilabels.py:971
+#: src/orca/guilabels.py:972
 msgid "Always speak selected spreadsheet range"
 msgstr "Seçilen hesap çizelgesi aralığını her zaman seslendir"
 
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
-#: src/orca/guilabels.py:975
+#: src/orca/guilabels.py:976
 msgid "Announce cell _header"
 msgstr "_Hücre başlığını duyur"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
-#: src/orca/guilabels.py:979
+#: src/orca/guilabels.py:980
 msgid "Table Navigation"
 msgstr "Tablo Dolaşımı"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
-#: src/orca/guilabels.py:983
+#: src/orca/guilabels.py:984
 msgid "Skip _blank cells"
 msgstr "_Boş hücreleri atla"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
-#: src/orca/guilabels.py:988
+#: src/orca/guilabels.py:989
 msgid "Speak _cell"
 msgstr "H_ücreyi seslendir"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
-#: src/orca/guilabels.py:992
+#: src/orca/guilabels.py:993
 msgid "Speak _cell coordinates"
 msgstr "Hü_cre koordinatlarını seslendir"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
-#: src/orca/guilabels.py:997
+#: src/orca/guilabels.py:998
 msgid "Speak _multiple cell spans"
 msgstr "_Çoklu hücre aralığını seslendir"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
-#: src/orca/guilabels.py:1001
+#: src/orca/guilabels.py:1002
 msgid "Attribute Name"
 msgstr "Öznitelik Adı"
 
@@ -4730,20 +4730,20 @@ msgstr "Öznitelik Adı"
 #. Orca needs to provide its own support. As such, Orca offers the user the
 #. ability to switch between the Firefox mode and the Orca mode. This is the
 #. label of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:1008
+#: src/orca/guilabels.py:1009
 msgid "Control caret navigation"
 msgstr "Düzeltme imi dolaşımını denetle"
 
 #. Translators: Orca provides keystrokes to navigate HTML content in a structural
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
-#: src/orca/guilabels.py:1013
+#: src/orca/guilabels.py:1014
 msgid "Enable _structural navigation"
 msgstr "_Yapısal dolaşımı etkinleştir"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:1017 src/orca/orca-setup.ui:1464
+#: src/orca/guilabels.py:1018 src/orca/orca-setup.ui:1464
 #: src/orca/orca-setup.ui:2208
 msgid "Brie_f"
 msgstr "Ö_zet"
@@ -4753,7 +4753,7 @@ msgstr "Ö_zet"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:1027
+#: src/orca/guilabels.py:1028
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
@@ -5075,7 +5075,7 @@ msgstr "artı"
 
 #. Translators: this is presented in a GUI to represent the
 #. "insert" key when used as the Orca modifier.
-#: src/orca/keybindings.py:162
+#: src/orca/keybindings.py:161
 msgid "Insert"
 msgstr "Insert"
 
@@ -5084,49 +5084,49 @@ msgstr "Insert"
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: src/orca/keybindings.py:166 src/orca/keybindings.py:171
+#: src/orca/keybindings.py:165 src/orca/keybindings.py:170
 msgid "Caps_Lock"
 msgstr "Büyük _Harf Kilidi"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: src/orca/keybindings.py:178
+#: src/orca/keybindings.py:177
 msgid "Alt_R"
 msgstr "Alt_R"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: src/orca/keybindings.py:183
+#: src/orca/keybindings.py:182
 msgid "Super"
 msgstr "Süper"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: src/orca/keybindings.py:188
+#: src/orca/keybindings.py:187
 msgid "Meta2"
 msgstr "Meta2"
 
 #. Translators: this is presented in a GUI to represent the
 #. "alt" modifier.
 #.
-#: src/orca/keybindings.py:195
+#: src/orca/keybindings.py:194
 msgid "Alt"
 msgstr "Alt"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: src/orca/keybindings.py:200
+#: src/orca/keybindings.py:199
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: src/orca/keybindings.py:205
+#: src/orca/keybindings.py:204
 msgid "Shift"
 msgstr "Shift"
 
@@ -7877,16 +7877,53 @@ msgstr "Bir taşıyıcıda değil."
 msgid "all items selected"
 msgstr "tüm ögeler seçildi"
 
+#. Translators: This message is presented when the user is in a date picker and
+#. navigates to the item which reflects the current date.
+#: src/orca/messages.py:542
+msgid "Current date"
+msgstr "Şimdiki tarih"
+
+#. Translators: This message is presented wwhen the user is in a time picker/schedule
+#. and navigates to the item which reflects the current time.
+#: src/orca/messages.py:546
+msgid "Current time"
+msgstr "Şimdiki saat"
+
+#. Translators: This message is presented when the user is in a map or flow chart and
+#. navigates to the item which reflects the current location.
+#: src/orca/messages.py:550
+msgid "Current location"
+msgstr "Şimdiki konum"
+
+#. Translators: This message is presented when the user is in a table of contents or
+#. other set of pagination links and navigates to the item which reflects the current
+#. page.
+#: src/orca/messages.py:555
+msgid "Current page"
+msgstr "Şimdiki sayfa"
+
+#. Translators: This message is presented when the user is in a wizard or other
+#. step-based interface and navigates to the item which reflects the current step.
+#: src/orca/messages.py:559
+msgid "Current step"
+msgstr "Şimdiki adım"
+
+#. Translators: This message is presented when the user is in a list of generic or
+#. unspecified items and navigates to the link/object which reflects the current item.
+#: src/orca/messages.py:563
+msgid "Current item"
+msgstr "Şimdiki öge"
+
 #. Translators: Orca has a command to report CPU and memory usage. This message
 #. is presented to the user when they use this command but Orca was unable to
 #. retrieve this information.
-#: src/orca/messages.py:543
+#: src/orca/messages.py:568
 msgid "CPU and memory usage unknown"
 msgstr "İşlemci ve bellek kullanımı bilinmiyor"
 
 #. Translators: Orca has a command to report CPU and memory usage levels. This
 #. message presents the levels to the user.
-#: src/orca/messages.py:547
+#: src/orca/messages.py:572
 #, python-format
 msgid "CPU: %d%%. Memory: %d%%"
 msgstr "İşlemci: %%%d. Bellek: %%%d"
@@ -7895,14 +7932,14 @@ msgstr "İşlemci: %%%d. Bellek: %%%d"
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user tried to clear the cache but
 #. an error occurred.
-#: src/orca/messages.py:553
+#: src/orca/messages.py:578
 msgid "Clearing cache failed."
 msgstr "Ön bellek temizleme başarısız."
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user performs the command.
-#: src/orca/messages.py:558
+#: src/orca/messages.py:583
 msgid "Clearing cache."
 msgstr "Ön bellek temizleniyor."
 
@@ -7912,7 +7949,7 @@ msgstr "Ön bellek temizleniyor."
 #. accessibility tree of the current window, a list of all the running accessible
 #. objects, etc. This message is presented to confirm to the user that the snapshot
 #. capture has begun.
-#: src/orca/messages.py:566
+#: src/orca/messages.py:591
 msgid "Capturing debugging snapshot"
 msgstr "Hata ayıklama anlık görüntüsü yakalanıyor"
 
@@ -7922,14 +7959,14 @@ msgstr "Hata ayıklama anlık görüntüsü yakalanıyor"
 #. accessibility tree of the current window, a list of all the running accessible
 #. objects, etc. This message is presented to confirm to the user that the snapshot
 #. capture has begun.
-#: src/orca/messages.py:574
+#: src/orca/messages.py:599
 msgid "Debugging snapshot captured"
 msgstr "Hata ayıklama anlık görüntüsü yakalandı"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. The string
 #. substitution is the name of the button (e.g. "OK" or "Close").
-#: src/orca/messages.py:579
+#: src/orca/messages.py:604
 #, python-format
 msgid "Default button is %s"
 msgstr "Öntanımlı düğme %s"
@@ -7940,7 +7977,7 @@ msgstr "Öntanımlı düğme %s"
 #. grayed out / cannot be activated. The string substitution is the name of
 #. the button (e.g. "OK" or "Close"). When translating "Grayed," please use
 #. the same word used for the string in object_properties.py.
-#: src/orca/messages.py:587
+#: src/orca/messages.py:612
 #, python-format
 msgid "Default button is %s. Grayed"
 msgstr "Öntanımlı düğme %s. Soluk"
@@ -7949,7 +7986,7 @@ msgstr "Öntanımlı düğme %s. Soluk"
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
 #. a command to present the default button. This is the message Orca will
 #. present if it could not find the default button.
-#: src/orca/messages.py:593
+#: src/orca/messages.py:618
 msgid "Default button not found"
 msgstr "Öntanımlı düğme bulunamadı"
 
@@ -7957,7 +7994,7 @@ msgstr "Öntanımlı düğme bulunamadı"
 #. one or several consecutive subscripted characters. For example, 'X' followed
 #. by 'subscript 2' followed by 'subscript 3' should be presented to the user as
 #. 'X subscript 23'.
-#: src/orca/messages.py:599
+#: src/orca/messages.py:624
 #, python-format
 msgid " subscript %s"
 msgstr " altsimge %s"
@@ -7966,7 +8003,7 @@ msgstr " altsimge %s"
 #. one or several consecutive superscripted characters. For example, 'X' followed
 #. by 'superscript 2' followed by 'superscript 3' should be presented to the user
 #. as 'X superscript 23'.
-#: src/orca/messages.py:605
+#: src/orca/messages.py:630
 #, python-format
 msgid " superscript %s"
 msgstr " üstsimge %s"
@@ -7974,7 +8011,7 @@ msgstr " üstsimge %s"
 #. Translators: this message is presented when the user tries to perform a command
 #. specific to dialog boxes, such as presenting the default button, but is not in
 #. a dialog.
-#: src/orca/messages.py:610
+#: src/orca/messages.py:635
 msgid "Not in a dialog"
 msgstr "İletişim kutusunda değil"
 
@@ -7982,7 +8019,7 @@ msgstr "İletişim kutusunda değil"
 #. document, Orca will speak information about what they have selected or
 #. unselected. This message is presented when the user selects the entire
 #. document by pressing Ctrl+A.
-#: src/orca/messages.py:616
+#: src/orca/messages.py:641
 msgid "entire document selected"
 msgstr "tüm belge seçildi"
 
@@ -7991,14 +8028,14 @@ msgstr "tüm belge seçildi"
 #. unselected. This message is presented when the entire document had been
 #. selected but the user presses a key (e.g. an arrow key) causing the
 #. selection to be completely removed.
-#: src/orca/messages.py:623
+#: src/orca/messages.py:648
 msgid "entire document unselected"
 msgstr "tüm belge seçimi kaldırıldı"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
 #. presented when the user sets the row to a particular row number.
-#: src/orca/messages.py:628
+#: src/orca/messages.py:653
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "%d satırı için dinamik sütun başlığı kümesi"
@@ -8007,7 +8044,7 @@ msgstr "%d satırı için dinamik sütun başlığı kümesi"
 #. or table should be treated as containing column headers. This message is
 #. presented when the user unsets the row so it is no longer treated as if it
 #. contained column headers.
-#: src/orca/messages.py:634
+#: src/orca/messages.py:659
 msgid "Dynamic column header cleared."
 msgstr "Dinamik sütun başlığı temizlendi."
 
@@ -8015,7 +8052,7 @@ msgstr "Dinamik sütun başlığı temizlendi."
 #. spreadsheet or table should be treated as containing column headers. This
 #. message is presented when the user sets the column to a particular column
 #. number.
-#: src/orca/messages.py:640
+#: src/orca/messages.py:665
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "%s sütunu için dinamik satır başlığı kümesi"
@@ -8024,31 +8061,31 @@ msgstr "%s sütunu için dinamik satır başlığı kümesi"
 #. spreadsheet or table should be treated as containing column headers. This
 #. message is presented when the user unsets the column so it is no longer
 #. treated as if it contained row headers.
-#: src/orca/messages.py:646
+#: src/orca/messages.py:671
 msgid "Dynamic row header cleared."
 msgstr "Dinamik satır başlığı temizlendi."
 
 #. Translators: this is used to announce that the current input line in a
 #. spreadsheet is blank/empty.
-#: src/orca/messages.py:650
+#: src/orca/messages.py:675
 msgid "empty"
 msgstr "boş"
 
 #. Translators: This is the size of a file in kilobytes
-#: src/orca/messages.py:653
+#: src/orca/messages.py:678
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobayt"
 
 #. Translators: This is the size of a file in megabytes
-#: src/orca/messages.py:656
+#: src/orca/messages.py:681
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabayt"
 
 #. Translators: This message is presented to the user after performing a file
 #. search to indicate there were no matches.
-#: src/orca/messages.py:660
+#: src/orca/messages.py:685
 msgid "No files found."
 msgstr "Hiçbir dosya bulunamadı."
 
@@ -8058,7 +8095,7 @@ msgstr "Hiçbir dosya bulunamadı."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she successfully appended the contents under
 #. flat review onto the existing contents of the clipboard.
-#: src/orca/messages.py:668
+#: src/orca/messages.py:693
 msgid "Appended contents to clipboard."
 msgstr "Panoya eklenmiş içerikler."
 
@@ -8068,7 +8105,7 @@ msgstr "Panoya eklenmiş içerikler."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she successfully copied the contents under flat
 #. review to the clipboard.
-#: src/orca/messages.py:676
+#: src/orca/messages.py:701
 msgid "Copied contents to clipboard."
 msgstr "Panoya kopyalanmış içerikler."
 
@@ -8078,7 +8115,7 @@ msgstr "Panoya kopyalanmış içerikler."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that he/she attempted to use a flat review command when
 #. not using flat review.
-#: src/orca/messages.py:684
+#: src/orca/messages.py:709
 msgid "Not using flat review."
 msgstr "Düz bakış kullanılamıyor."
 
@@ -8087,7 +8124,7 @@ msgstr "Düz bakış kullanılamıyor."
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
-#: src/orca/messages.py:691
+#: src/orca/messages.py:716
 msgid "Entering flat review."
 msgstr "Düz bakışa giriliyor."
 
@@ -8096,7 +8133,7 @@ msgstr "Düz bakışa giriliyor."
 #. the text from all objects in a window (e.g., buttons, labels, etc.) as a
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
-#: src/orca/messages.py:698
+#: src/orca/messages.py:723
 msgid "Leaving flat review."
 msgstr "Düz bakıştan çıkılıyor."
 
@@ -8106,7 +8143,7 @@ msgstr "Düz bakıştan çıkılıyor."
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that flat review is being restricted to the current
 #. object of interest.
-#: src/orca/messages.py:706
+#: src/orca/messages.py:731
 msgid "Flat review restricted to the current object"
 msgstr "Düz bakış geçerli nesneye kısıtlandı"
 
@@ -8116,38 +8153,38 @@ msgstr "Düz bakış geçerli nesneye kısıtlandı"
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know that flat review is unrestricted,
 #. that is, the entire window can be explored.
-#: src/orca/messages.py:714
+#: src/orca/messages.py:739
 msgid "Flat review unrestricted"
 msgstr "Sınırsız düz bakış"
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
-#: src/orca/messages.py:718
+#: src/orca/messages.py:743
 msgid "has formula"
 msgstr "formülü"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a dialog to appear if activated.
-#: src/orca/messages.py:722
+#: src/orca/messages.py:747
 msgid "opens dialog"
 msgstr "ietişim penceresini açar"
 
 # Kılavuzu da açabilir. Lakin kullanım yerinden emin olamıyorum.
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a grid to appear if activated. A grid is an interactive table.
-#: src/orca/messages.py:726
+#: src/orca/messages.py:751
 msgid "opens grid"
 msgstr "ızgarayı açar"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a listbox to appear if activated.
-#: src/orca/messages.py:730
+#: src/orca/messages.py:755
 msgid "opens listbox"
 msgstr "liste kutusu açar"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a menu to appear if activated.
-#: src/orca/messages.py:734
+#: src/orca/messages.py:759
 msgid "opens menu"
 msgstr "menüyü açar"
 
@@ -8155,13 +8192,13 @@ msgstr "menüyü açar"
 #. will cause a tree to appear if activated. A tree is a list with sub-levels
 #. which can be expanded or collapsed, similar to the list of folders in an
 #. email client.
-#: src/orca/messages.py:740
+#: src/orca/messages.py:765
 msgid "opens tree"
 msgstr "ağacı açar"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a popup to appear if activated.
-#: src/orca/messages.py:744
+#: src/orca/messages.py:769
 msgid "opens popup"
 msgstr "açılır pencereyi açar"
 
@@ -8170,7 +8207,7 @@ msgstr "açılır pencereyi açar"
 #. been divided into regions. Each region can be clicked on and has an associated
 #. link. Please see http://en.wikipedia.org/wiki/Imagemap for more information
 #. and examples.
-#: src/orca/messages.py:751
+#: src/orca/messages.py:776
 msgid "image map link"
 msgstr "grafik haritası bağı"
 
@@ -8178,7 +8215,7 @@ msgstr "grafik haritası bağı"
 #. that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
 #. bound to another command and is thus unavailable. The string substituted in is
 #. the name of the command which already has the binding.
-#: src/orca/messages.py:757
+#: src/orca/messages.py:782
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Girilen tuş zaten %s ile bağlı"
@@ -8186,7 +8223,7 @@ msgstr "Girilen tuş zaten %s ile bağlı"
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has recorded a new key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input. The string substituted in is the new key combination.
-#: src/orca/messages.py:762
+#: src/orca/messages.py:787
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Tuş alındı: %s. Onaylamak için giriş tuşuna basın."
@@ -8194,7 +8231,7 @@ msgstr "Tuş alındı: %s. Onaylamak için giriş tuşuna basın."
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that Orca has assigned a new key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input. The string substituted in is the new key combination.
-#: src/orca/messages.py:767
+#: src/orca/messages.py:792
 #, python-format
 msgid "The new key is: %s"
 msgstr "Yeni tuş: %s"
@@ -8202,21 +8239,21 @@ msgstr "Yeni tuş: %s"
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca is about to delete an existing key combination (e.g. Alt+Ctrl+g) as a
 #. result of their input.
-#: src/orca/messages.py:772
+#: src/orca/messages.py:797
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Kısayol tuşu silindi. Onaylamak için enter’e basın."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input.
-#: src/orca/messages.py:777
+#: src/orca/messages.py:802
 msgid "The keybinding has been removed."
 msgstr "Kısayol kaydedildi."
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
 #. Orca command.
-#: src/orca/messages.py:782
+#: src/orca/messages.py:807
 msgid "enter new key"
 msgstr "yeni kısayol tuşlarına basın"
 
@@ -8232,7 +8269,7 @@ msgstr "yeni kısayol tuşlarına basın"
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:796
+#: src/orca/messages.py:821
 msgctxt "key echo"
 msgid "key"
 msgstr "tuş"
@@ -8247,7 +8284,7 @@ msgstr "tuş"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:808
+#: src/orca/messages.py:833
 msgid "Echo set to key."
 msgstr "Geri bildirim tuş olarak ayarlandı."
 
@@ -8263,7 +8300,7 @@ msgstr "Geri bildirim tuş olarak ayarlandı."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:822
+#: src/orca/messages.py:847
 msgctxt "key echo"
 msgid "None"
 msgstr "Hiçbiri"
@@ -8278,7 +8315,7 @@ msgstr "Hiçbiri"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:834
+#: src/orca/messages.py:859
 msgid "Echo set to None."
 msgstr "Geri bildirim hiçbiri olarak ayarlandı."
 
@@ -8294,7 +8331,7 @@ msgstr "Geri bildirim hiçbiri olarak ayarlandı."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:848
+#: src/orca/messages.py:873
 msgctxt "key echo"
 msgid "key and word"
 msgstr "tuş ve sözcük"
@@ -8309,7 +8346,7 @@ msgstr "tuş ve sözcük"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:860
+#: src/orca/messages.py:885
 msgid "Echo set to key and word."
 msgstr "Geri bildirim tuş ve sözcük olarak ayarlandı."
 
@@ -8325,7 +8362,7 @@ msgstr "Geri bildirim tuş ve sözcük olarak ayarlandı."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:874
+#: src/orca/messages.py:899
 msgctxt "key echo"
 msgid "sentence"
 msgstr "tümce"
@@ -8340,7 +8377,7 @@ msgstr "tümce"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:886
+#: src/orca/messages.py:911
 msgid "Echo set to sentence."
 msgstr "Geri bildirim tümce olarak ayarlandı."
 
@@ -8356,7 +8393,7 @@ msgstr "Geri bildirim tümce olarak ayarlandı."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:900
+#: src/orca/messages.py:925
 msgctxt "key echo"
 msgid "word"
 msgstr "sözcük"
@@ -8371,7 +8408,7 @@ msgstr "sözcük"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:912
+#: src/orca/messages.py:937
 msgid "Echo set to word."
 msgstr "Geri bildirim sözcük olarak ayarlandı."
 
@@ -8387,7 +8424,7 @@ msgstr "Geri bildirim sözcük olarak ayarlandı."
 #. echo and can cycle through the various levels quickly via a command. The
 #. following string is a brief message which will be presented to the user who
 #. is cycling amongst the various echo options.
-#: src/orca/messages.py:926
+#: src/orca/messages.py:951
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "sözcük ve tümce"
@@ -8402,7 +8439,7 @@ msgstr "sözcük ve tümce"
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
-#: src/orca/messages.py:938
+#: src/orca/messages.py:963
 msgid "Echo set to word and sentence."
 msgstr "Geri bildirim sözcük ve tümce olarak ayarlandı."
 
@@ -8416,7 +8453,7 @@ msgstr "Geri bildirim sözcük ve tümce olarak ayarlandı."
 #. substitution is for that list of enclosure types. For more information
 #. about the MathML 'menclose' element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:950
+#: src/orca/messages.py:975
 #, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
@@ -8428,7 +8465,7 @@ msgstr "Çevreleyen: %s"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:958
+#: src/orca/messages.py:983
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
 msgstr "aktüeryal bir sembol"
@@ -8439,7 +8476,7 @@ msgstr "aktüeryal bir sembol"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:966
+#: src/orca/messages.py:991
 msgctxt "math enclosure"
 msgid "a box"
 msgstr "bir kutu"
@@ -8450,7 +8487,7 @@ msgstr "bir kutu"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:974
+#: src/orca/messages.py:999
 msgctxt "math enclosure"
 msgid "a circle"
 msgstr "bir daire"
@@ -8461,7 +8498,7 @@ msgstr "bir daire"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:982
+#: src/orca/messages.py:1007
 msgctxt "math enclosure"
 msgid "a long division sign"
 msgstr "bir uzun bölme işareti"
@@ -8472,7 +8509,7 @@ msgstr "bir uzun bölme işareti"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:990
+#: src/orca/messages.py:1015
 msgctxt "math enclosure"
 msgid "a radical"
 msgstr "bir radikal"
@@ -8483,7 +8520,7 @@ msgstr "bir radikal"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:998
+#: src/orca/messages.py:1023
 msgctxt "math enclosure"
 msgid "a rounded box"
 msgstr "bir yuvarlak köşeli kutu"
@@ -8494,7 +8531,7 @@ msgstr "bir yuvarlak köşeli kutu"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1006
+#: src/orca/messages.py:1031
 msgctxt "math enclosure"
 msgid "a horizontal strike"
 msgstr "bir yatak çizgi"
@@ -8505,7 +8542,7 @@ msgstr "bir yatak çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1014
+#: src/orca/messages.py:1039
 msgctxt "math enclosure"
 msgid "a vertical strike"
 msgstr "bir dikey çizgi"
@@ -8516,7 +8553,7 @@ msgstr "bir dikey çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1022
+#: src/orca/messages.py:1047
 msgctxt "math enclosure"
 msgid "a down diagonal strike"
 msgstr "bir aşağı çapraz çizgi"
@@ -8527,7 +8564,7 @@ msgstr "bir aşağı çapraz çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1030
+#: src/orca/messages.py:1055
 msgctxt "math enclosure"
 msgid "an up diagonal strike"
 msgstr "bir yukarı çapraz çizgi"
@@ -8538,7 +8575,7 @@ msgstr "bir yukarı çapraz çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1038
+#: src/orca/messages.py:1063
 msgctxt "math enclosure"
 msgid "a northeast arrow"
 msgstr "bir kuzeydoğu oku"
@@ -8549,7 +8586,7 @@ msgstr "bir kuzeydoğu oku"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1046
+#: src/orca/messages.py:1071
 msgctxt "math enclosure"
 msgid "a line at the bottom"
 msgstr "altta bir çizgi"
@@ -8560,7 +8597,7 @@ msgstr "altta bir çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1054
+#: src/orca/messages.py:1079
 msgctxt "math enclosure"
 msgid "a line on the left"
 msgstr "solda bir çizgi"
@@ -8571,7 +8608,7 @@ msgstr "solda bir çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1062
+#: src/orca/messages.py:1087
 msgctxt "math enclosure"
 msgid "a line on the right"
 msgstr "sağda bir çizgi"
@@ -8582,7 +8619,7 @@ msgstr "sağda bir çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1070
+#: src/orca/messages.py:1095
 msgctxt "math enclosure"
 msgid "a line at the top"
 msgstr "üstte bir çizgi"
@@ -8593,7 +8630,7 @@ msgstr "üstte bir çizgi"
 #. line on the left, vertical strike), we present them as a list of notations.
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1078
+#: src/orca/messages.py:1103
 msgctxt "math enclosure"
 msgid "a phasor angle"
 msgstr "bir fazör açısı"
@@ -8605,7 +8642,7 @@ msgstr "bir fazör açısı"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #. This particular string is for the "madruwb" notation type.
-#: src/orca/messages.py:1087
+#: src/orca/messages.py:1112
 msgctxt "math enclosure"
 msgid "an arabic factorial symbol"
 msgstr "bir arapça faktöryel sembolü"
@@ -8621,7 +8658,7 @@ msgstr "bir arapça faktöryel sembolü"
 #. one enclosure notation. For more information about the MathML 'menclose'
 #. element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
-#: src/orca/messages.py:1100
+#: src/orca/messages.py:1125
 msgctxt "math enclosure"
 msgid "and"
 msgstr "ve"
@@ -8629,7 +8666,7 @@ msgstr "ve"
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would say "fraction start, x+1 over y+2, fraction end."
-#: src/orca/messages.py:1105
+#: src/orca/messages.py:1130
 msgid "fraction start"
 msgstr "kesir başlangıcı"
 
@@ -8642,14 +8679,14 @@ msgstr "kesir başlangıcı"
 #. the pause which results is not needed. You should be able to test this with
 #. "spd-say <your text here>" in a terminal on a machine where speech-dispatcher
 #. is installed.
-#: src/orca/messages.py:1116
+#: src/orca/messages.py:1141
 msgid "fraction without bar, start"
 msgstr "çubuksuz kesir, başlangıç"
 
 #. Translators: This word refers to the line separating the numerator from the
 #. denominator in a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would would say "fraction start, x+1 over y+2, fraction end."
-#: src/orca/messages.py:1121
+#: src/orca/messages.py:1146
 msgctxt "math fraction"
 msgid "over"
 msgstr "altı"
@@ -8657,7 +8694,7 @@ msgstr "altı"
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
 #. Orca would would say "fraction start, x+1 over y+2, fraction end."
-#: src/orca/messages.py:1126
+#: src/orca/messages.py:1151
 msgid "fraction end"
 msgstr "kesir sonu"
 
@@ -8667,7 +8704,7 @@ msgstr "kesir sonu"
 #. be spoken). Note that the radicand, which follows the "of", is unknown and
 #. might not even be a simple string; it might be the square root of another
 #. expression such as a fraction.
-#: src/orca/messages.py:1134
+#: src/orca/messages.py:1159
 msgid "square root of"
 msgstr "karekök"
 
@@ -8677,7 +8714,7 @@ msgstr "karekök"
 #. endings should  be spoken). Note that the radicand, which follows the "of",
 #. is unknown and might not even be a simple string; it might be the cube root
 #. of another expression such as a fraction.
-#: src/orca/messages.py:1142
+#: src/orca/messages.py:1167
 msgid "cube root of"
 msgstr "küpkök"
 
@@ -8687,7 +8724,7 @@ msgstr "küpkök"
 #. the user settings indicate that root endings should be spoken). Note that the
 #. index, which precedes this string, is unknown and might not even be a simple
 #. expression like "fourth"; the index might instead be a fraction.
-#: src/orca/messages.py:1150
+#: src/orca/messages.py:1175
 msgid "root of"
 msgstr "kök"
 
@@ -8698,7 +8735,7 @@ msgstr "kök"
 #. "fourth root of 9" may be sufficient for the user. But if the index is not
 #. 4, but instead the fraction x/4, beginning the phrase with "root start" can
 #. help the user better understand that x/4 is the index of the root.
-#: src/orca/messages.py:1159
+#: src/orca/messages.py:1184
 msgid "root start"
 msgstr "kök başlangıcı"
 
@@ -8706,7 +8743,7 @@ msgstr "kök başlangıcı"
 #. phrase is the end of a mathematical root (square root, cube root, nth root).
 #. For instance, for the cube root of 9, Orca would say "cube root of 9, root
 #. end" (assuming the user settings indicate that root endings should be spoken).
-#: src/orca/messages.py:1165
+#: src/orca/messages.py:1190
 msgid "root end"
 msgstr "kök bitişi"
 
@@ -8715,7 +8752,7 @@ msgstr "kök bitişi"
 #. subscript might be simple text or may itself be a mathematical expression,
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
-#: src/orca/messages.py:1172
+#: src/orca/messages.py:1197
 msgctxt "math script generic"
 msgid "subscript"
 msgstr "altsimge"
@@ -8725,7 +8762,7 @@ msgstr "altsimge"
 #. superscript might be simple text or may itself be a mathematical expression,
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
-#: src/orca/messages.py:1179
+#: src/orca/messages.py:1204
 msgctxt "math script generic"
 msgid "superscript"
 msgstr "üstsimge"
@@ -8735,7 +8772,7 @@ msgstr "üstsimge"
 #. expression. See, for instance, the MathML mmultiscripts element:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
-#: src/orca/messages.py:1186
+#: src/orca/messages.py:1211
 msgctxt "math script"
 msgid "pre-subscript"
 msgstr "ön-altsimge"
@@ -8745,7 +8782,7 @@ msgstr "ön-altsimge"
 #. expression. See, for instance, the MathML mmultiscripts element:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
-#: src/orca/messages.py:1193
+#: src/orca/messages.py:1218
 msgctxt "math script"
 msgid "pre-superscript"
 msgstr "ön-üstsimge"
@@ -8757,7 +8794,7 @@ msgstr "ön-üstsimge"
 #. friendly word or phrase can reliably be chosen. Examples of underscripts:
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.munder
 #. https://reference.wolfram.com/language/ref/Underscript.html
-#: src/orca/messages.py:1202
+#: src/orca/messages.py:1227
 msgctxt "math script generic"
 msgid "underscript"
 msgstr "altından simge"
@@ -8769,14 +8806,14 @@ msgstr "altından simge"
 #. friendly word or phrase can reliably be chosen. Examples of overscripts:
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.mover
 #. https://reference.wolfram.com/language/ref/Overscript.html
-#: src/orca/messages.py:1211
+#: src/orca/messages.py:1236
 msgctxt "math script generic"
 msgid "overscript"
 msgstr "üzerinden simge"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table.
-#: src/orca/messages.py:1215
+#: src/orca/messages.py:1240
 msgctxt "math table"
 msgid "table end"
 msgstr "tablo sonu"
@@ -8784,7 +8821,7 @@ msgstr "tablo sonu"
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table which is nested inside another
 #. mathematical table.
-#: src/orca/messages.py:1220
+#: src/orca/messages.py:1245
 msgctxt "math table"
 msgid "nested table end"
 msgstr "iç içe tablo sonu"
@@ -8792,33 +8829,33 @@ msgstr "iç içe tablo sonu"
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
 #. infrastructure.
-#: src/orca/messages.py:1225
+#: src/orca/messages.py:1250
 msgid "inaccessible"
 msgstr "erişilemez"
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
-#: src/orca/messages.py:1230
+#: src/orca/messages.py:1255
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Devre dışı bırakıldı"
 
 #. Translators: This detailed message indicates that indentation and
 #. justification will not be spoken.
-#: src/orca/messages.py:1235
+#: src/orca/messages.py:1260
 msgid "Speaking of indentation and justification disabled."
 msgstr "Girinti ve yaslamanın okunması devre dışı bırakıldı."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
-#: src/orca/messages.py:1240
+#: src/orca/messages.py:1265
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Etkinleştirildi"
 
 #. Translators: This detailed message indicates that indentation and
 #. justification will be spoken.
-#: src/orca/messages.py:1245
+#: src/orca/messages.py:1270
 msgid "Speaking of indentation and justification enabled."
 msgstr "Girinti ve yaslamanın okunması etkinleştirildi."
 
@@ -8828,7 +8865,7 @@ msgstr "Girinti ve yaslamanın okunması etkinleştirildi."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented on the braille display when
 #. entering Learn Mode.
-#: src/orca/messages.py:1253
+#: src/orca/messages.py:1278
 msgid "Learn mode.  Press escape to exit."
 msgstr "Öğrenme kipi. Çıkış için kaçış tuşuna basın."
 
@@ -8838,7 +8875,7 @@ msgstr "Öğrenme kipi. Çıkış için kaçış tuşuna basın."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is spoken to the user when entering Learn
 #. Mode.
-#: src/orca/messages.py:1262
+#: src/orca/messages.py:1287
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To view the "
 "screen reader’s documentation, press F1. To get a list of the screen "
@@ -8854,7 +8891,7 @@ msgstr ""
 
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
-#: src/orca/messages.py:1271
+#: src/orca/messages.py:1296
 msgid "leaving blockquote."
 msgstr "blok alıntıdan çıkılıyor."
 
@@ -8867,7 +8904,7 @@ msgstr "blok alıntıdan çıkılıyor."
 #. This message is presented when a user just navigated out of a container holding
 #. detailed information about another object.
 #. See https://w3c.github.io/aria/#aria-details
-#: src/orca/messages.py:1282
+#: src/orca/messages.py:1307
 msgid "leaving details."
 msgstr "ayrıntılardan çıkılıyor."
 
@@ -8875,7 +8912,7 @@ msgstr "ayrıntılardan çıkılıyor."
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1288
+#: src/orca/messages.py:1313
 msgctxt "role"
 msgid "leaving feed."
 msgstr "beslemeden çıkılıyor."
@@ -8884,21 +8921,21 @@ msgstr "beslemeden çıkılıyor."
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1294
+#: src/orca/messages.py:1319
 msgctxt "role"
 msgid "leaving figure."
 msgstr "figürden çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
-#: src/orca/messages.py:1298
+#: src/orca/messages.py:1323
 msgid "leaving form."
 msgstr "formdan çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A grouping is a container of related
 #. widgets.
-#: src/orca/messages.py:1303
+#: src/orca/messages.py:1328
 msgid "leaving grouping."
 msgstr "gruplamadan çıkılıyor."
 
@@ -8906,7 +8943,7 @@ msgstr "gruplamadan çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1309
+#: src/orca/messages.py:1334
 msgctxt "role"
 msgid "leaving banner."
 msgstr "afişten çıkılıyor."
@@ -8915,7 +8952,7 @@ msgstr "afişten çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1315
+#: src/orca/messages.py:1340
 msgctxt "role"
 msgid "leaving complementary content."
 msgstr "tamamlayıcı içerikten çıkılıyor."
@@ -8924,7 +8961,7 @@ msgstr "tamamlayıcı içerikten çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1321
+#: src/orca/messages.py:1346
 msgctxt "role"
 msgid "leaving information."
 msgstr "bilgiden çıkılıyor."
@@ -8933,7 +8970,7 @@ msgstr "bilgiden çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1327
+#: src/orca/messages.py:1352
 msgctxt "role"
 msgid "leaving main content."
 msgstr "ana içerikten çıkılıyor."
@@ -8942,7 +8979,7 @@ msgstr "ana içerikten çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1333
+#: src/orca/messages.py:1358
 msgctxt "role"
 msgid "leaving navigation."
 msgstr "gezintiden çıkılıyor."
@@ -8951,7 +8988,7 @@ msgstr "gezintiden çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1339
+#: src/orca/messages.py:1364
 msgctxt "role"
 msgid "leaving region."
 msgstr "bölgeden çıkılıyor."
@@ -8960,33 +8997,33 @@ msgstr "bölgeden çıkılıyor."
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1345
+#: src/orca/messages.py:1370
 msgctxt "role"
 msgid "leaving search."
 msgstr "aramadan çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
-#: src/orca/messages.py:1349
+#: src/orca/messages.py:1374
 msgid "leaving list."
 msgstr "listeden çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
-#: src/orca/messages.py:1354
+#: src/orca/messages.py:1379
 msgid "leaving panel."
 msgstr "panelden çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
-#: src/orca/messages.py:1358
+#: src/orca/messages.py:1383
 msgid "leaving table."
 msgstr "tablodan çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. tooltip in a web application and then navigates out of it.
-#: src/orca/messages.py:1362
+#: src/orca/messages.py:1387
 msgid "leaving tooltip."
 msgstr "ipucundan çıkılıyor."
 
@@ -8994,7 +9031,7 @@ msgstr "ipucundan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1368
+#: src/orca/messages.py:1393
 msgctxt "role"
 msgid "leaving abstract."
 msgstr "soyuttan çıkılıyor."
@@ -9003,7 +9040,7 @@ msgstr "soyuttan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1374
+#: src/orca/messages.py:1399
 msgctxt "role"
 msgid "leaving acknowledgments."
 msgstr "teşekkürlerden çıkılıyor."
@@ -9012,7 +9049,7 @@ msgstr "teşekkürlerden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1380
+#: src/orca/messages.py:1405
 msgctxt "role"
 msgid "leaving afterword."
 msgstr "son sözden çıkılıyor."
@@ -9021,7 +9058,7 @@ msgstr "son sözden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1386
+#: src/orca/messages.py:1411
 msgctxt "role"
 msgid "leaving appendix."
 msgstr "eklentilerden çıkılıyor."
@@ -9030,7 +9067,7 @@ msgstr "eklentilerden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1392
+#: src/orca/messages.py:1417
 msgctxt "role"
 msgid "leaving bibliography."
 msgstr "kaynakçadan çıkılıyor."
@@ -9039,7 +9076,7 @@ msgstr "kaynakçadan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1398
+#: src/orca/messages.py:1423
 msgctxt "role"
 msgid "leaving chapter."
 msgstr "bölümden çıkılıyor."
@@ -9048,7 +9085,7 @@ msgstr "bölümden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1404
+#: src/orca/messages.py:1429
 msgctxt "role"
 msgid "leaving colophon."
 msgstr "baskı bilgisinden çıkılıyor."
@@ -9057,7 +9094,7 @@ msgstr "baskı bilgisinden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1410
+#: src/orca/messages.py:1435
 msgctxt "role"
 msgid "leaving conclusion."
 msgstr "sonuçtan çıkılıyor."
@@ -9066,7 +9103,7 @@ msgstr "sonuçtan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1416
+#: src/orca/messages.py:1441
 msgctxt "role"
 msgid "leaving credit."
 msgstr "jenerikten çıkılıyor."
@@ -9075,7 +9112,7 @@ msgstr "jenerikten çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1422
+#: src/orca/messages.py:1447
 msgctxt "role"
 msgid "leaving credits."
 msgstr "jeneriklerden çıkılıyor."
@@ -9084,7 +9121,7 @@ msgstr "jeneriklerden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1428
+#: src/orca/messages.py:1453
 msgctxt "role"
 msgid "leaving dedication."
 msgstr "ithaftan çıkılıyor."
@@ -9093,7 +9130,7 @@ msgstr "ithaftan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1434
+#: src/orca/messages.py:1459
 msgctxt "role"
 msgid "leaving endnotes."
 msgstr "son notlardan çıkılıyor."
@@ -9102,7 +9139,7 @@ msgstr "son notlardan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1440
+#: src/orca/messages.py:1465
 msgctxt "role"
 msgid "leaving epigraph."
 msgstr "yazıttan çıkılıyor."
@@ -9111,7 +9148,7 @@ msgstr "yazıttan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1446
+#: src/orca/messages.py:1471
 msgctxt "role"
 msgid "leaving epilogue."
 msgstr "son yazıdan çıkılıyor."
@@ -9120,7 +9157,7 @@ msgstr "son yazıdan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1452
+#: src/orca/messages.py:1477
 msgctxt "role"
 msgid "leaving errata."
 msgstr "düzeltmelerden çıkılıyor."
@@ -9129,7 +9166,7 @@ msgstr "düzeltmelerden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1458
+#: src/orca/messages.py:1483
 msgctxt "role"
 msgid "leaving example."
 msgstr "örnekten çıkılıyor."
@@ -9138,7 +9175,7 @@ msgstr "örnekten çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1464
+#: src/orca/messages.py:1489
 msgctxt "role"
 msgid "leaving foreword."
 msgstr "ön sözden çıkılıyor."
@@ -9147,7 +9184,7 @@ msgstr "ön sözden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1470
+#: src/orca/messages.py:1495
 msgctxt "role"
 msgid "leaving glossary."
 msgstr "sözlükten çıkılıyor."
@@ -9156,7 +9193,7 @@ msgstr "sözlükten çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1476
+#: src/orca/messages.py:1501
 msgctxt "role"
 msgid "leaving index."
 msgstr "indeksten çıkılıyor."
@@ -9165,7 +9202,7 @@ msgstr "indeksten çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1482
+#: src/orca/messages.py:1507
 msgctxt "role"
 msgid "leaving introduction."
 msgstr "girişten çıkılıyor."
@@ -9174,7 +9211,7 @@ msgstr "girişten çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1488
+#: src/orca/messages.py:1513
 msgctxt "role"
 msgid "leaving page list."
 msgstr "sayfa listesinden çıkılıyor."
@@ -9183,7 +9220,7 @@ msgstr "sayfa listesinden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1494
+#: src/orca/messages.py:1519
 msgctxt "role"
 msgid "leaving part."
 msgstr "bölümden çıkılıyor."
@@ -9192,7 +9229,7 @@ msgstr "bölümden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1500
+#: src/orca/messages.py:1525
 msgctxt "role"
 msgid "leaving preface."
 msgstr "ön sözden çıkılıyor."
@@ -9201,7 +9238,7 @@ msgstr "ön sözden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1506
+#: src/orca/messages.py:1531
 msgctxt "role"
 msgid "leaving prologue."
 msgstr "girizgâhtan çıkılıyor."
@@ -9210,7 +9247,7 @@ msgstr "girizgâhtan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1512
+#: src/orca/messages.py:1537
 msgctxt "role"
 msgid "leaving pullquote."
 msgstr "tanıtımdan çıkılıyor."
@@ -9219,7 +9256,7 @@ msgstr "tanıtımdan çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1518
+#: src/orca/messages.py:1543
 msgctxt "role"
 msgid "leaving QNA."
 msgstr "QNA’dan çıkılıyor."
@@ -9229,7 +9266,7 @@ msgstr "QNA’dan çıkılıyor."
 #. a proposed change. This change can include the insertion and/or deletion
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
-#: src/orca/messages.py:1525
+#: src/orca/messages.py:1550
 msgctxt "role"
 msgid "leaving suggestion."
 msgstr "öneriden çıkılıyor."
@@ -9238,7 +9275,7 @@ msgstr "öneriden çıkılıyor."
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
-#: src/orca/messages.py:1531
+#: src/orca/messages.py:1556
 msgctxt "role"
 msgid "leaving table of contents."
 msgstr "içerikler tablosundan çıkılıyor."
@@ -9249,50 +9286,50 @@ msgstr "içerikler tablosundan çıkılıyor."
 #. combination, or they might just be to echo the name of the key if Orca doesn't
 #. have a handler. This message is what is presented in speech and braille when
 #. exiting Learn Mode.
-#: src/orca/messages.py:1539
+#: src/orca/messages.py:1564
 msgid "Exiting learn mode."
 msgstr "Öğrenme kipinden çıkıyor."
 
 #. Translators: this indicates that this piece of text is a hypertext link.
-#: src/orca/messages.py:1542
+#: src/orca/messages.py:1567
 msgid "link"
 msgstr "bağlantı"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is on the same page.
-#: src/orca/messages.py:1546
+#: src/orca/messages.py:1571
 msgid "same page"
 msgstr "aynı sayfa"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at the same site (but not on the same page as the link).
-#: src/orca/messages.py:1550
+#: src/orca/messages.py:1575
 msgid "same site"
 msgstr "aynı site"
 
 #. Translators: this is an indication that a given link points to an object
 #. that is at a different site than that of the link.
-#: src/orca/messages.py:1554
+#: src/orca/messages.py:1579
 msgid "different site"
 msgstr "başka site"
 
 #. Translators: this refers to a link to a file, where the first item is the
 #. protocol (ftp, ftps, or file) and the second item the name of the file being
 #. linked to.
-#: src/orca/messages.py:1559
+#: src/orca/messages.py:1584
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s, %(file)s dosyasına bağlanır"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
-#: src/orca/messages.py:1562
+#: src/orca/messages.py:1587
 #, python-format
 msgid "%s link"
 msgstr "%s bağlantısı"
 
 #. Translators: this message conveys the protocol of a link eg. http, mailto.
 #. along with the visited state of that link.
-#: src/orca/messages.py:1566
+#: src/orca/messages.py:1591
 #, python-format
 msgid "visited %s link"
 msgstr "ziyaret edilmiş %s bağlantısı"
@@ -9300,7 +9337,7 @@ msgstr "ziyaret edilmiş %s bağlantısı"
 #. Translators: The following string instructs the user how to navigate amongst
 #. the list of commands presented in learn mode, as well as how to exit the list
 #. when finished.
-#: src/orca/messages.py:1572
+#: src/orca/messages.py:1597
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Listede gezinmek için Yukarı ve Aşağı Ok tuşlarını kullanın. Çıkmak için Esc "
@@ -9314,7 +9351,7 @@ msgstr ""
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed to
 #. "off" for all of the live regions.
-#: src/orca/messages.py:1582
+#: src/orca/messages.py:1607
 msgid "All live regions set to off"
 msgstr "Tüm canlı bölgeler kapatıldı"
 
@@ -9326,7 +9363,7 @@ msgstr "Tüm canlı bölgeler kapatıldı"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level for all live
 #. regions has been restored to their original values.
-#: src/orca/messages.py:1592
+#: src/orca/messages.py:1617
 msgid "live regions politeness levels restored"
 msgstr "canlı bölgelerin yumuşaklık düzeyleri geri alındı"
 
@@ -9337,7 +9374,7 @@ msgstr "canlı bölgelerin yumuşaklık düzeyleri geri alındı"
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user of the "politeness" level for the current live region.
-#: src/orca/messages.py:1601
+#: src/orca/messages.py:1626
 #, python-format
 msgid "politeness level %s"
 msgstr "yumuşaklık düzeyi %s"
@@ -9350,7 +9387,7 @@ msgstr "yumuşaklık düzeyi %s"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1611
+#: src/orca/messages.py:1636
 msgid "setting live region to assertive"
 msgstr "canlı bölge iddialı olarak belirleniyor"
 
@@ -9362,7 +9399,7 @@ msgstr "canlı bölge iddialı olarak belirleniyor"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1621
+#: src/orca/messages.py:1646
 msgid "setting live region to off"
 msgstr "canlı bölge kapalı belirleniyor"
 
@@ -9374,7 +9411,7 @@ msgstr "canlı bölge kapalı belirleniyor"
 #. features to facilitate accessing live regions. This message is presented to
 #. inform the user that Orca's live region's "politeness" level has changed for
 #. the current live region.
-#: src/orca/messages.py:1631
+#: src/orca/messages.py:1656
 msgid "setting live region to polite"
 msgstr "canlı bölge sert olarak belirleniyor"
 
@@ -9387,7 +9424,7 @@ msgstr "canlı bölge sert olarak belirleniyor"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: src/orca/messages.py:1642
+#: src/orca/messages.py:1667
 msgid "Live regions monitoring off"
 msgstr "Canlı bölgeleri izleme kapalı"
 
@@ -9400,7 +9437,7 @@ msgstr "Canlı bölgeleri izleme kapalı"
 #. opt to have no notifications presented (politeness level of "off") and still
 #. manually review recent updates to live regions via Orca commands for doing so
 #. -- as long as the monitoring of live regions is enabled.
-#: src/orca/messages.py:1653
+#: src/orca/messages.py:1678
 msgid "Live regions monitoring on"
 msgstr "Canlı bölgeleri izleme açık"
 
@@ -9409,7 +9446,7 @@ msgstr "Canlı bölgeleri izleme açık"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that a cached message is not available for the
 #. the current live region.
-#: src/orca/messages.py:1660
+#: src/orca/messages.py:1685
 msgid "no live message saved"
 msgstr "kayıtlı canlı ileti yok"
 
@@ -9418,14 +9455,14 @@ msgstr "kayıtlı canlı ileti yok"
 #. Orca has several features to facilitate accessing live regions. This message
 #. is presented to inform the user that Orca's live region features have been
 #. turned off.
-#: src/orca/messages.py:1667
+#: src/orca/messages.py:1692
 msgid "Live region support is off"
 msgstr "Canlı bölge desteği kapalı"
 
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a brief message which will be presented if for
 #. some reason Orca cannot identify/find the current location.
-#: src/orca/messages.py:1672
+#: src/orca/messages.py:1697
 msgctxt "location"
 msgid "Not found"
 msgstr "Bulunamadı"
@@ -9433,7 +9470,7 @@ msgstr "Bulunamadı"
 #. Translators: Orca has a command that allows the user to move the mouse pointer
 #. to the current object. This is a detailed message which will be presented if
 #. for some reason Orca cannot identify/find the current location.
-#: src/orca/messages.py:1677
+#: src/orca/messages.py:1702
 msgid "Could not find current location."
 msgstr "Geçerli konum bulunamadı."
 
@@ -9442,7 +9479,7 @@ msgstr "Geçerli konum bulunamadı."
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: src/orca/messages.py:1684
+#: src/orca/messages.py:1709
 msgctxt "locking key state"
 msgid "off"
 msgstr "kapalı"
@@ -9452,21 +9489,21 @@ msgstr "kapalı"
 #. lowercase; if Caps Lock is "on", they will instead appear in uppercase. This
 #. string is also applied to Num Lock and potentially will be applied to similar
 #. keys in the future.
-#: src/orca/messages.py:1691
+#: src/orca/messages.py:1716
 msgctxt "locking key state"
 msgid "on"
 msgstr "açık"
 
 #. Translators: This is to inform the user of the presence of the red squiggly
 #. line which indicates that a given word is not spelled correctly.
-#: src/orca/messages.py:1695
+#: src/orca/messages.py:1720
 msgid "misspelled"
 msgstr "yazım hatalı"
 
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The first thing it does is let the user know
 #. what the misspelled word is.
-#: src/orca/messages.py:1700
+#: src/orca/messages.py:1725
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Yanlış yazılmış sözcük: %s"
@@ -9474,7 +9511,7 @@ msgstr "Yanlış yazılmış sözcük: %s"
 #. Translators: Orca tries to provide more compelling output of the spell check
 #. dialog in some applications. The second thing it does is give the phrase
 #. containing the misspelled word in the document. This is known as the context.
-#: src/orca/messages.py:1705
+#: src/orca/messages.py:1730
 #, python-format
 msgid "Context is %s"
 msgstr "İçerik %s"
@@ -9492,7 +9529,7 @@ msgstr "İçerik %s"
 #. key presses as commands to read the content; in focus mode, Orca treats
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to browse mode.
-#: src/orca/messages.py:1720
+#: src/orca/messages.py:1745
 msgid "Browse mode"
 msgstr "Göz atma kipi"
 
@@ -9509,7 +9546,7 @@ msgstr "Göz atma kipi"
 #. key presses as commands to read the content; in focus mode, Orca treats
 #. key presses as something that should be handled by the focused widget.
 #. This string is the message presented when Orca switches to focus mode.
-#: src/orca/messages.py:1735
+#: src/orca/messages.py:1760
 msgid "Focus mode"
 msgstr "Odak kipi"
 
@@ -9530,7 +9567,7 @@ msgstr "Odak kipi"
 #. they must press to enable focus mode for the purposes of interacting
 #. with the widget. The substituted string is a human-consumable keybinding
 #. such as "Alt+Shift+A."
-#: src/orca/messages.py:1754
+#: src/orca/messages.py:1779
 #, python-format
 msgid "To enable focus mode press %s."
 msgstr "Odak kipini etkinleştirmek için %s tuşuna basın."
@@ -9544,7 +9581,7 @@ msgstr "Odak kipini etkinleştirmek için %s tuşuna basın."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is the message presented when Orca switches to sticky focus mode.
-#: src/orca/messages.py:1765
+#: src/orca/messages.py:1790
 msgid "Focus mode is sticky."
 msgstr "Odak kipi yapışkan."
 
@@ -9557,7 +9594,7 @@ msgstr "Odak kipi yapışkan."
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is the message presented when Orca switches to sticky browse mode.
-#: src/orca/messages.py:1776
+#: src/orca/messages.py:1801
 msgid "Browse mode is sticky."
 msgstr "Gözatma kipi yapışkan."
 
@@ -9572,7 +9609,7 @@ msgstr "Gözatma kipi yapışkan."
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation. This string is presented when the user
 #. switches to layout mode via an Orca command.
-#: src/orca/messages.py:1789
+#: src/orca/messages.py:1814
 msgid "Layout mode."
 msgstr "Düzen kipi."
 
@@ -9588,13 +9625,13 @@ msgstr "Düzen kipi."
 #. both for presentation and navigation. This string is presented when the user
 #. toggles layout mode off via an Orca command and switches to the aforementioned
 #. object-based presentation.
-#: src/orca/messages.py:1803
+#: src/orca/messages.py:1828
 msgid "Object mode."
 msgstr "Nesne kipi."
 
 #. Translators: This message is presented to the user when the command to move
 #. the mouse pointer to a particular object is believed to have succeeded.
-#: src/orca/messages.py:1807
+#: src/orca/messages.py:1832
 msgid "Pointer moved to object."
 msgstr "İmleç nesneye taşındı."
 
@@ -9602,21 +9639,21 @@ msgstr "İmleç nesneye taşındı."
 #. new object to appear such as a pop-up menu. Orca has a command will move the
 #. user to the object which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
-#: src/orca/messages.py:1813
+#: src/orca/messages.py:1838
 msgid "Mouse over object not found."
 msgstr "Nesne üzerinde fare bulunamadı."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled off via command.
-#: src/orca/messages.py:1818
+#: src/orca/messages.py:1843
 msgid "Mouse review disabled."
 msgstr "Fare bakışı devre dışı."
 
 #. Translators: Orca has a feature to speak the item under the pointer. This feature,
 #. known as mouse review, can be enabled and disabled via command. The following is
 #. the message which Orca will present when mouse review is toggled on via command.
-#: src/orca/messages.py:1823
+#: src/orca/messages.py:1848
 msgid "Mouse review enabled."
 msgstr "Fare bakışı etkin."
 
@@ -9625,56 +9662,56 @@ msgstr "Fare bakışı etkin."
 #. could with native keyboard navigation. This is a message that will be
 #. presented to the user when an error (such as the operation timing out) kept us
 #. from getting these objects.
-#: src/orca/messages.py:1830
+#: src/orca/messages.py:1855
 msgid "Error: Could not create list of objects."
 msgstr "Hata: Nesnelerin listesi oluşturulamıyor."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no children.
-#: src/orca/messages.py:1835
+#: src/orca/messages.py:1860
 msgid "No children."
 msgstr "Alt yok."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no next sibling.
-#: src/orca/messages.py:1840
+#: src/orca/messages.py:1865
 msgid "No next."
 msgstr "Metin yok."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no parent.
-#: src/orca/messages.py:1845
+#: src/orca/messages.py:1870
 msgid "No parent."
 msgstr "Üst yok."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
-#: src/orca/messages.py:1850
+#: src/orca/messages.py:1875
 msgid "No previous."
 msgstr "Önceki yok."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is enabled.
-#: src/orca/messages.py:1855
+#: src/orca/messages.py:1880
 msgid "Simplified navigation enabled."
 msgstr "Basitleştirilmiş gezinti etkinleştirildi."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
-#: src/orca/messages.py:1860
+#: src/orca/messages.py:1885
 msgid "Simplified navigation disabled."
 msgstr "Basitleştirilmiş gezinti devre dışı bırakıldı."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list).
-#: src/orca/messages.py:1865 src/orca/object_properties.py:60
+#: src/orca/messages.py:1890 src/orca/object_properties.py:60
 #, python-format
 msgid "Nesting level %d"
 msgstr "Dallanma düzeyi %d"
@@ -9682,7 +9719,7 @@ msgstr "Dallanma düzeyi %d"
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
-#: src/orca/messages.py:1870
+#: src/orca/messages.py:1895
 msgid "New item has been added"
 msgstr "Yeni öge eklendi"
 
@@ -9691,41 +9728,41 @@ msgstr "Yeni öge eklendi"
 #. presents when the object has no actions. The string substitution will be the
 #. name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
 #. localized rolename if it does not.
-#: src/orca/messages.py:1877
+#: src/orca/messages.py:1902
 #, python-format
 msgid "No actions found on: %s"
 msgstr "%s üstünde hiçbir eylem bulunamadı"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
-#: src/orca/messages.py:1881
+#: src/orca/messages.py:1906
 msgid "No focus"
 msgstr "Odak yok"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
-#: src/orca/messages.py:1885
+#: src/orca/messages.py:1910
 msgid "No application has focus."
 msgstr "Herhangi bir uygulama odakta değil."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
-#: src/orca/messages.py:1890
+#: src/orca/messages.py:1915
 msgid "No more blockquotes."
 msgstr "Başka blok alıntı yok."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
-#: src/orca/messages.py:1895
+#: src/orca/messages.py:1920
 msgid "No more buttons."
 msgstr "Başka düğme yok."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
-#: src/orca/messages.py:1900
+#: src/orca/messages.py:1925
 msgid "No more check boxes."
 msgstr "Başka onay kutusu yok."
 
@@ -9733,42 +9770,42 @@ msgstr "Başka onay kutusu yok."
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
 #. such as a paragraph, a list, a table, etc. This is a detailed message which
 #. will be presented to the user if no more check boxes can be found.
-#: src/orca/messages.py:1906
+#: src/orca/messages.py:1931
 msgid "No more large objects."
 msgstr "Başka büyük nesne yok."
 
 #. Translators: This is for navigating document content by moving amongst web
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
-#: src/orca/messages.py:1911
+#: src/orca/messages.py:1936
 msgid "No more clickables."
 msgstr "Tıklanabilecek başka bir şey yok."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
 #. user if no more combo boxes can be found.
-#: src/orca/messages.py:1916
+#: src/orca/messages.py:1941
 msgid "No more combo boxes."
 msgstr "Başka açılır kutu yok."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
 #. if no more entries can be found.
-#: src/orca/messages.py:1921
+#: src/orca/messages.py:1946
 msgid "No more entries."
 msgstr "Başka giriş yok."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
 #. the user if no more form fields can be found.
-#: src/orca/messages.py:1926
+#: src/orca/messages.py:1951
 msgid "No more form fields."
 msgstr "Başka form alanı yok."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
-#: src/orca/messages.py:1931
+#: src/orca/messages.py:1956
 msgid "No more headings."
 msgstr "Başka başlık yok."
 
@@ -9776,7 +9813,7 @@ msgstr "Başka başlık yok."
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
 #. is a detailed message which will be presented to the user if no more headings
 #. at the desired level can be found.
-#: src/orca/messages.py:1937
+#: src/orca/messages.py:1962
 #, python-format
 msgid "No more headings at level %d."
 msgstr "%d düzeyinde başka başlık yok."
@@ -9784,14 +9821,14 @@ msgstr "%d düzeyinde başka başlık yok."
 #. Translators: This is for navigating document content by moving from iframe
 #. to iframe. This is a detailed message which will be presented to the user
 #. if no more iframes can be found.
-#: src/orca/messages.py:1942
+#: src/orca/messages.py:1967
 msgid "No more internal frames."
 msgstr "Başka dahili kare yok."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
-#: src/orca/messages.py:1947
+#: src/orca/messages.py:1972
 msgid "No more images."
 msgstr "Başka bir grafik yok."
 
@@ -9799,28 +9836,28 @@ msgstr "Başka bir grafik yok."
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #. This is an indication that one was not found.
-#: src/orca/messages.py:1953
+#: src/orca/messages.py:1978
 msgid "No landmark found."
 msgstr "Sınır işareti bulunamadı."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
-#: src/orca/messages.py:1958
+#: src/orca/messages.py:1983
 msgid "No more links."
 msgstr "Başka bir bağlantı yok."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
-#: src/orca/messages.py:1963
+#: src/orca/messages.py:1988
 msgid "No more lists."
 msgstr "Başka liste yok."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
-#: src/orca/messages.py:1968
+#: src/orca/messages.py:1993
 msgid "No more list items."
 msgstr "Başka liste ögesi yok."
 
@@ -9829,89 +9866,89 @@ msgstr "Başka liste ögesi yok."
 #. periodically updated, e.g. stock ticker. This is a detailed message which
 #. will be presented to the user if no more live regions can be found. For
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
-#: src/orca/messages.py:1975
+#: src/orca/messages.py:2000
 msgid "No more live regions."
 msgstr "Başka canlı bölge yok."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
 #. if no more paragraphs can be found.
-#: src/orca/messages.py:1980
+#: src/orca/messages.py:2005
 msgid "No more paragraphs."
 msgstr "Başka paragraf yok."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
 #. the user if no more radio buttons can be found.
-#: src/orca/messages.py:1985
+#: src/orca/messages.py:2010
 msgid "No more radio buttons."
 msgstr "Başka radyo düğmesi yok."
 
 #. Translators: This is for navigating document content by moving from separator
 #. to separator (e.g. <hr> tags). This is a detailed message which will be
 #. presented to the user if no more separators can be found.
-#: src/orca/messages.py:1990
+#: src/orca/messages.py:2015
 msgid "No more separators."
 msgstr "Başka ayraç yok."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
-#: src/orca/messages.py:1995
+#: src/orca/messages.py:2020
 msgid "No more tables."
 msgstr "Başka tablo yok."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
-#: src/orca/messages.py:2000
+#: src/orca/messages.py:2025
 msgid "No more unvisited links."
 msgstr "Başka ziyaret edilmemiş bağlantı yok."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
-#: src/orca/messages.py:2005
+#: src/orca/messages.py:2030
 msgid "No more visited links."
 msgstr "Başka ziyaret edilmiş bağlantı yok."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is what Orca will present if the user performs this
 #. command when no text is selected.
-#: src/orca/messages.py:2010
+#: src/orca/messages.py:2035
 msgid "No selected text."
 msgstr "Seçili metin yok."
 
 #. Translators: Orca has a dedicated command to speak detailed information
 #. about the currently-focused link. This message is what Orca will present
 #. if the user performs this command when not on a link.
-#: src/orca/messages.py:2015
+#: src/orca/messages.py:2040
 msgid "Not on a link."
 msgstr "Bir bağlantı üzerinde değilsiniz."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
-#: src/orca/messages.py:2019
+#: src/orca/messages.py:2044
 msgid "Notification"
 msgstr "Bildirim"
 
 #. Translators: This is a brief message presented to the user when the bottom of
 #. the list of notifications is reached.
-#: src/orca/messages.py:2023
+#: src/orca/messages.py:2048
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Alt"
 
 #. Translators: This is a brief message presented to the user when the top of the
 #. list of notifications is reached.
-#: src/orca/messages.py:2027
+#: src/orca/messages.py:2052
 msgctxt "notification"
 msgid "Top"
 msgstr "Üst"
 
 #. Translators: This message is presented to the user when the notifications list
 #. is empty.
-#: src/orca/messages.py:2031
+#: src/orca/messages.py:2056
 msgid "No notification messages"
 msgstr "Bildirim iletisi yok"
 
@@ -9920,7 +9957,7 @@ msgstr "Bildirim iletisi yok"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as digits.
-#: src/orca/messages.py:2038
+#: src/orca/messages.py:2063
 msgctxt "number style"
 msgid "digits"
 msgstr "rakamlar"
@@ -9930,7 +9967,7 @@ msgstr "rakamlar"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as digits.
-#: src/orca/messages.py:2045
+#: src/orca/messages.py:2070
 msgid "Speak numbers as digits."
 msgstr "Sayıları rakam olarak seslendir."
 
@@ -9939,7 +9976,7 @@ msgstr "Sayıları rakam olarak seslendir."
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as words.
-#: src/orca/messages.py:2052
+#: src/orca/messages.py:2077
 msgctxt "number style"
 msgid "words"
 msgstr "sözcükler"
@@ -9949,40 +9986,40 @@ msgstr "sözcükler"
 #. three"). There is an associated Orca command for quickly toggling between the
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as words.
-#: src/orca/messages.py:2059
+#: src/orca/messages.py:2084
 msgid "Speak numbers as words."
 msgstr "Sayıları sözcük olarak seslendir."
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: src/orca/messages.py:2064
+#: src/orca/messages.py:2089
 msgid "off"
 msgstr "seçili değil"
 
 #. Translators: This brief message is presented to indicate the state of widgets
 #. (checkboxes, push buttons, toggle buttons) on a toolbar which are associated
 #. with text formatting (bold, italics, underlining, justification, etc.).
-#: src/orca/messages.py:2069
+#: src/orca/messages.py:2094
 msgid "on"
 msgstr "seçili"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has started loading.
-#: src/orca/messages.py:2073
+#: src/orca/messages.py:2098
 msgid "Loading.  Please wait."
 msgstr "Yükleniyor.  Lütfen bekleyin."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
-#: src/orca/messages.py:2077
+#: src/orca/messages.py:2102
 msgid "Finished loading."
 msgstr "Yükleme bitti."
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
 #. object which has just finished loading (most likely the page's title).
-#: src/orca/messages.py:2082
+#: src/orca/messages.py:2107
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s yüklemesi bitti."
@@ -9990,7 +10027,7 @@ msgstr "%s yüklemesi bitti."
 #. Translators: This message is presented to the user when the page of the
 #. current document changes, e.g. as a result of navigation or scrolling.
 #. The string substitution is the number of the current page.
-#: src/orca/messages.py:2087
+#: src/orca/messages.py:2112
 #, python-format
 msgid "Page %d"
 msgstr "%d. sayfa"
@@ -10000,7 +10037,7 @@ msgstr "%d. sayfa"
 #. (landmarks, forms, links, tables, etc.). The following string precedes the
 #. presentation of the summary. The string substitution is a list of items, such
 #. as "10 headings, 1 form, 52 links".
-#: src/orca/messages.py:2094
+#: src/orca/messages.py:2119
 #, python-format
 msgid "Page has %s."
 msgstr "Sayfada %s var."
@@ -10008,7 +10045,7 @@ msgstr "Sayfada %s var."
 #. Translators: This message appears in a warning dialog when the user performs
 #. the command to get into Orca's preferences dialog when the preferences dialog
 #. is already open.
-#: src/orca/messages.py:2100
+#: src/orca/messages.py:2125
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -10018,7 +10055,7 @@ msgstr ""
 
 #. Translators: This message is an indication of the position of the focused
 #. slide and the total number of slides in the presentation.
-#: src/orca/messages.py:2105
+#: src/orca/messages.py:2130
 #, python-format
 msgid "slide %(position)d of %(count)d"
 msgstr "slayt %(position)d / %(count)d"
@@ -10028,7 +10065,7 @@ msgstr "slayt %(position)d / %(count)d"
 #. which apply to a given task, such as a "Spanish" profile which would use
 #. Spanish text-to-speech and Spanish braille and selected when reading Spanish
 #. content. The string representing the profile name is created by the user.
-#: src/orca/messages.py:2112
+#: src/orca/messages.py:2137
 #, python-format
 msgid "Profile set to %s."
 msgstr "Profil %s olarak ayarlandı."
@@ -10038,14 +10075,14 @@ msgstr "Profil %s olarak ayarlandı."
 #. is a collection of settings which apply to a given task, such as a "Spanish"
 #. profile which would use Spanish text-to-speech and Spanish braille and
 #. selected when reading Spanish content.
-#: src/orca/messages.py:2119
+#: src/orca/messages.py:2144
 msgid "No profiles found."
 msgstr "Hiçbir profil bulunamadı."
 
 #. Translators: this is an index value so that we can present value changes
 #. regarding a specific progress bar in environments where there are multiple
 #. progress bars (e.g. in the Firefox downloads dialog).
-#: src/orca/messages.py:2124
+#: src/orca/messages.py:2149
 #, python-format
 msgid "Progress bar %d."
 msgstr "İlerleme çubuğu %d."
@@ -10054,7 +10091,7 @@ msgstr "İlerleme çubuğu %d."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2130
+#: src/orca/messages.py:2155
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Tümü"
@@ -10063,7 +10100,7 @@ msgstr "Tümü"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2136
+#: src/orca/messages.py:2161
 msgid "Punctuation level set to all."
 msgstr "Noktalama düzeyi tümü olarak ayarlandı."
 
@@ -10071,7 +10108,7 @@ msgstr "Noktalama düzeyi tümü olarak ayarlandı."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2142
+#: src/orca/messages.py:2167
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "Çoğu"
@@ -10080,7 +10117,7 @@ msgstr "Çoğu"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2148
+#: src/orca/messages.py:2173
 msgid "Punctuation level set to most."
 msgstr "Noktalama düzeyi çoğu olarak ayarlandı."
 
@@ -10088,7 +10125,7 @@ msgstr "Noktalama düzeyi çoğu olarak ayarlandı."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2154
+#: src/orca/messages.py:2179
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Hiçbiri"
@@ -10097,7 +10134,7 @@ msgstr "Hiçbiri"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2160
+#: src/orca/messages.py:2185
 msgid "Punctuation level set to none."
 msgstr "Noktalama düzeyi hiç olarak ayarlandı."
 
@@ -10105,7 +10142,7 @@ msgstr "Noktalama düzeyi hiç olarak ayarlandı."
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2166
+#: src/orca/messages.py:2191
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Birazı"
@@ -10114,32 +10151,32 @@ msgstr "Birazı"
 #. through the different levels of spoken punctuation. The options are:
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
-#: src/orca/messages.py:2172
+#: src/orca/messages.py:2197
 msgid "Punctuation level set to some."
 msgstr "Noktalama düzeyi birazı olarak ayarlandı."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
-#: src/orca/messages.py:2176
+#: src/orca/messages.py:2201
 msgid "Searching."
 msgstr "Arıyor."
 
 #. Translators: This message is presented to indicate a search executed by the
 #. user has been completed.
-#: src/orca/messages.py:2180
+#: src/orca/messages.py:2205
 msgid "Search complete."
 msgstr "Arama tamamlandı."
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
-#: src/orca/messages.py:2184
+#: src/orca/messages.py:2209
 msgid "Screen reader settings reloaded."
 msgstr "Ekran okuyucusu ayarları yeniden yüklendi."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is spoken by Orca before speaking the text which is
 #. selected. The string substitution is for the selected text.
-#: src/orca/messages.py:2189
+#: src/orca/messages.py:2214
 #, python-format
 msgid "Selected text is: %s"
 msgstr "Seçili metin şudur: %s"
@@ -10149,7 +10186,7 @@ msgstr "Seçili metin şudur: %s"
 #. large string. Therefore, if the text which has just been deleted from a
 #. document matches the previously-selected contents, Orca will indicate that
 #. fact instead of presenting the full string which was just deleted.
-#: src/orca/messages.py:2196
+#: src/orca/messages.py:2221
 msgid "Selection deleted."
 msgstr "Seçim silindi."
 
@@ -10161,14 +10198,14 @@ msgstr "Seçim silindi."
 #. and then pressed Ctrl+Z to undo that deletion). In this instance, Orca
 #. will indicate the restoration rather than presenting the full string
 #. which was just inserted.
-#: src/orca/messages.py:2206
+#: src/orca/messages.py:2231
 msgid "Selection restored."
 msgstr "Seçim geri yüklendi."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
-#: src/orca/messages.py:2211
+#: src/orca/messages.py:2236
 msgid "Text unselected."
 msgstr "Metin seçimi kaldırıldı."
 
@@ -10176,7 +10213,7 @@ msgstr "Metin seçimi kaldırıldı."
 #. current object in pixels. This string refers to the brief/non-verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2217
+#: src/orca/messages.py:2242
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
 msgstr "Boyut: %d, %d. Konum: %d, %d."
@@ -10185,20 +10222,20 @@ msgstr "Boyut: %d, %d. Konum: %d, %d."
 #. current object in pixels. This string refers to the full/verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
-#: src/orca/messages.py:2223
+#: src/orca/messages.py:2248
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
 msgstr "Genişlik: %d. Yükseklik: %d. %d soldan. %d üstten."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
-#: src/orca/messages.py:2227
+#: src/orca/messages.py:2252
 msgid "Speech disabled."
 msgstr "Konuşma kapatıldı."
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been turned back on.
-#: src/orca/messages.py:2231
+#: src/orca/messages.py:2256
 msgid "Speech enabled."
 msgstr "Konuşma etkin."
 
@@ -10215,7 +10252,7 @@ msgstr "Konuşma etkin."
 #. resume working. This string is the message Orca presents when sleep mode is
 #. disabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode disabled for VirtualBox."
-#: src/orca/messages.py:2246
+#: src/orca/messages.py:2271
 #, python-format
 msgid "Sleep mode disabled for %s."
 msgstr "%s için uyku kipi devre dışı bırakıldı."
@@ -10233,38 +10270,38 @@ msgstr "%s için uyku kipi devre dışı bırakıldı."
 #. resume working. This string is the message Orca presents when sleep mode is
 #. enabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode enabled for VirtualBox."
-#: src/orca/messages.py:2261
+#: src/orca/messages.py:2286
 #, python-format
 msgid "Sleep mode enabled for %s."
 msgstr "%s için uyku kipi etkinleştirildi."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2264
+#: src/orca/messages.py:2289
 msgid "faster."
 msgstr "daha hızlı."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2267
+#: src/orca/messages.py:2292
 msgid "slower."
 msgstr "daha yavaş."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2270
+#: src/orca/messages.py:2295
 msgid "higher."
 msgstr "daha yüksek."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2273
+#: src/orca/messages.py:2298
 msgid "lower."
 msgstr "daha düşük."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2276
+#: src/orca/messages.py:2301
 msgid "louder."
 msgstr "daha sesli."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2279
+#: src/orca/messages.py:2304
 msgid "softer."
 msgstr "daha yumuşak."
 
@@ -10273,7 +10310,7 @@ msgstr "daha yumuşak."
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2286
+#: src/orca/messages.py:2311
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr "Ayrıntı düzeyi: kısa ve öz"
@@ -10283,7 +10320,7 @@ msgstr "Ayrıntı düzeyi: kısa ve öz"
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2293
+#: src/orca/messages.py:2318
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "Ayrıntı düzeyi: ayrıntılı"
@@ -10292,36 +10329,36 @@ msgstr "Ayrıntı düzeyi: ayrıntılı"
 #. string. The extra space you see at the beginning is because we need the
 #. speech synthesis engine to speak the new string well. For example, "Open..."
 #. turns into "Open dot dot dot".
-#: src/orca/messages.py:2299
+#: src/orca/messages.py:2324
 msgid " dot dot dot"
 msgstr " nokta nokta nokta"
 
 #. Translators: This message is presented when the user attempts to use a
 #. command specific to a spreadsheet, such as reading the input line, but is
 #. not in a spreadsheet.
-#: src/orca/messages.py:2304
+#: src/orca/messages.py:2329
 msgid "Not in a spreadsheet."
 msgstr "Bir çalışma belgesinde değil."
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: src/orca/messages.py:2307
+#: src/orca/messages.py:2332
 msgid "Screen reader on."
 msgstr "Ekran okuyucusu açık."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: src/orca/messages.py:2310
+#: src/orca/messages.py:2335
 msgid "Screen reader off."
 msgstr "Ekran okuyucusu kapalı."
 
 #. Translators: This message means speech synthesis is not installed or working.
-#: src/orca/messages.py:2313
+#: src/orca/messages.py:2338
 msgid "Speech is unavailable."
 msgstr "Konuşma kullanılamaz."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2318
+#: src/orca/messages.py:2343
 msgctxt "status bar"
 msgid "Not found"
 msgstr "Bulunamadı"
@@ -10329,7 +10366,7 @@ msgstr "Bulunamadı"
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2323
+#: src/orca/messages.py:2348
 msgid "Status bar not found"
 msgstr "Durum çubuğu bulunamadı"
 
@@ -10337,7 +10374,7 @@ msgstr "Durum çubuğu bulunamadı"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: src/orca/messages.py:2329
+#: src/orca/messages.py:2354
 msgid "string not found"
 msgstr "dizge bulunamadı"
 
@@ -10347,7 +10384,7 @@ msgstr "dizge bulunamadı"
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2337
+#: src/orca/messages.py:2362
 msgid "Structural navigation keys off."
 msgstr "Yapısal dolaşım tuşları kapalı."
 
@@ -10357,7 +10394,7 @@ msgstr "Yapısal dolaşım tuşları kapalı."
 #. prefer to turn this off to use Firefox's search when typing feature. This
 #. message is presented when the user toggles the structural navigation feature
 #. of Orca. It should be a brief informative message.
-#: src/orca/messages.py:2345
+#: src/orca/messages.py:2370
 msgid "Structural navigation keys on."
 msgstr "Yapısal dolaşım tuşları açık."
 
@@ -10367,87 +10404,87 @@ msgstr "Yapısal dolaşım tuşları açık."
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: src/orca/messages.py:2353
+#: src/orca/messages.py:2378
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Bulunamadı"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: src/orca/messages.py:2356
+#: src/orca/messages.py:2381
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Satır %(row)d, sütun %(column)d."
 
 #. Translators: This message is presented to indicate the user is in the last
 #. cell of a table in a document.
-#: src/orca/messages.py:2360
+#: src/orca/messages.py:2385
 msgid "End of table"
 msgstr "Tablonun sonu"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2365
+#: src/orca/messages.py:2390
 msgid "Speak cell"
 msgstr "Sütunu seslendir"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2370
+#: src/orca/messages.py:2395
 msgid "Speak row"
 msgstr "Satırı seslendir"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: src/orca/messages.py:2375
+#: src/orca/messages.py:2400
 msgid "Non-uniform"
 msgstr "Düzensiz"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: src/orca/messages.py:2380
+#: src/orca/messages.py:2405
 msgid "Not in a table."
 msgstr "Bir tabloda değil."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
-#: src/orca/messages.py:2385
+#: src/orca/messages.py:2410
 msgid "Table navigation disabled."
 msgstr "Tablo dolaşımı devre dışı bırakıldı."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
-#: src/orca/messages.py:2390
+#: src/orca/messages.py:2415
 msgid "Table navigation enabled."
 msgstr "Tablo dolaşımı etkinleştirildi."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: src/orca/messages.py:2394
+#: src/orca/messages.py:2419
 msgid "Columns reordered"
 msgstr "Sütunlar yeniden sıralandı"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: src/orca/messages.py:2398
+#: src/orca/messages.py:2423
 msgid "Rows reordered"
 msgstr "Satırlar yeniden sıralandı"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: src/orca/messages.py:2402
+#: src/orca/messages.py:2427
 #, python-format
 msgid "column %d"
 msgstr "sütun %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: src/orca/messages.py:2406
+#: src/orca/messages.py:2431
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "kolon %(index)d / %(total)d"
@@ -10455,21 +10492,21 @@ msgstr "kolon %(index)d / %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: src/orca/messages.py:2411
+#: src/orca/messages.py:2436
 msgid "Bottom of column."
 msgstr "Sütun sonu."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: src/orca/messages.py:2416
+#: src/orca/messages.py:2441
 msgid "Top of column."
 msgstr "Sütun başı."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2421
+#: src/orca/messages.py:2446
 #, python-format
 msgid "Column %s selected"
 msgstr "Sütun %s seçildi"
@@ -10479,7 +10516,7 @@ msgstr "Sütun %s seçildi"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: src/orca/messages.py:2428
+#: src/orca/messages.py:2453
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr "%s ile %s sütunları arası seçildi"
@@ -10489,7 +10526,7 @@ msgstr "%s ile %s sütunları arası seçildi"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: src/orca/messages.py:2435
+#: src/orca/messages.py:2460
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr "%s ile %s sütunları arası seçimi kaldırıldı"
@@ -10497,21 +10534,21 @@ msgstr "%s ile %s sütunları arası seçimi kaldırıldı"
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2440
+#: src/orca/messages.py:2465
 #, python-format
 msgid "Column %s unselected"
 msgstr "Sütun %s seçimi kaldırıldı"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: src/orca/messages.py:2444
+#: src/orca/messages.py:2469
 #, python-format
 msgid "row %d"
 msgstr "satır %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: src/orca/messages.py:2448
+#: src/orca/messages.py:2473
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "satır %(index)d / %(total)d"
@@ -10519,46 +10556,46 @@ msgstr "satır %(index)d / %(total)d"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: src/orca/messages.py:2453
+#: src/orca/messages.py:2478
 msgid "Beginning of row."
 msgstr "Satır başlangıcı."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: src/orca/messages.py:2458
+#: src/orca/messages.py:2483
 msgid "End of row."
 msgstr "Satır sonu."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: src/orca/messages.py:2462
+#: src/orca/messages.py:2487
 msgid "Row deleted."
 msgstr "Satır silindi."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: src/orca/messages.py:2466
+#: src/orca/messages.py:2491
 msgid "Last row deleted."
 msgstr "Son satır silindi."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: src/orca/messages.py:2470
+#: src/orca/messages.py:2495
 msgid "Row inserted."
 msgstr "Satır eklendi."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: src/orca/messages.py:2475
+#: src/orca/messages.py:2500
 msgid "Row inserted at the end of the table."
 msgstr "Tablonun sonuna satır eklendi."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: src/orca/messages.py:2480
+#: src/orca/messages.py:2505
 #, python-format
 msgid "Row %s selected"
 msgstr "Satır %s seçildi"
@@ -10568,7 +10605,7 @@ msgstr "Satır %s seçildi"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: src/orca/messages.py:2487
+#: src/orca/messages.py:2512
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr "%s ile %s satırları arası seçildi"
@@ -10578,7 +10615,7 @@ msgstr "%s ile %s satırları arası seçildi"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: src/orca/messages.py:2494
+#: src/orca/messages.py:2519
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr "%s ile %s satırları arası seçimi kaldırıldı"
@@ -10586,21 +10623,21 @@ msgstr "%s ile %s satırları arası seçimi kaldırıldı"
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: src/orca/messages.py:2499
+#: src/orca/messages.py:2524
 #, python-format
 msgid "Row %s unselected"
 msgstr "Satır %s seçimi kaldırıldı"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: src/orca/messages.py:2503
+#: src/orca/messages.py:2528
 msgctxt "text"
 msgid "selected"
 msgstr "seçilmiş"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: src/orca/messages.py:2507
+#: src/orca/messages.py:2532
 msgctxt "text"
 msgid "unselected"
 msgstr "seçilmemiş"
@@ -10608,47 +10645,47 @@ msgstr "seçilmemiş"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2518
+#: src/orca/messages.py:2543
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%H saat, %M dakika ve %S saniye"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2523
+#: src/orca/messages.py:2548
 msgid "%H hours and %M minutes"
 msgstr "%H saat ve %M dakika"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: src/orca/messages.py:2527
+#: src/orca/messages.py:2552
 #, python-format
 msgid "Unicode %s"
 msgstr "Unikod %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2531
+#: src/orca/messages.py:2556
 msgctxt "command"
 msgid "undo"
 msgstr "geri al"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2535
+#: src/orca/messages.py:2560
 msgctxt "command"
 msgid "redo"
 msgstr "yinele"
 
 #. Translators: This message presents the Orca version number.
-#: src/orca/messages.py:2538
+#: src/orca/messages.py:2563
 #, python-format
 msgid "Screen reader version %s."
 msgstr "Ekran okuyucusu sürümü %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: src/orca/messages.py:2542
+#: src/orca/messages.py:2567
 msgid "white space"
 msgstr "beyaz boşluk"
 
@@ -10656,7 +10693,7 @@ msgstr "beyaz boşluk"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: src/orca/messages.py:2548
+#: src/orca/messages.py:2573
 msgid "Wrapping to bottom."
 msgstr "En alta kaydırılıyor."
 
@@ -10664,28 +10701,28 @@ msgstr "En alta kaydırılıyor."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: src/orca/messages.py:2554
+#: src/orca/messages.py:2579
 msgid "Wrapping to top."
 msgstr "En üste kaydırılıyor."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: src/orca/messages.py:2559
+#: src/orca/messages.py:2584
 msgid "0 items"
 msgstr "0 öge"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2567 src/orca/messages.py:2586
+#: src/orca/messages.py:2592 src/orca/messages.py:2611
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
 msgstr[0] "Hücre %d satırı kapsıyor"
 
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2572
+#: src/orca/messages.py:2597
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -10694,14 +10731,14 @@ msgstr[0] " %d sütun"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2579
+#: src/orca/messages.py:2604
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
 msgstr[0] "Hücre %d sütunu kapsıyor"
 
 #. Translators: This message describes the number of characters in a string.
-#: src/orca/messages.py:2594
+#: src/orca/messages.py:2619
 #, python-format
 msgid "%d characters"
 msgid_plural "%d characters"
@@ -10709,7 +10746,7 @@ msgstr[0] "%d karakter"
 
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
-#: src/orca/messages.py:2599
+#: src/orca/messages.py:2624
 #, python-format
 msgid "%d character selected"
 msgid_plural "%d characters selected"
@@ -10717,7 +10754,7 @@ msgstr[0] "%d karakter seçildi"
 
 #. Translators: This message describes the number of characters that were just
 #. unselected in a body of text.
-#: src/orca/messages.py:2604
+#: src/orca/messages.py:2629
 #, python-format
 msgid "%d character unselected"
 msgid_plural "%d characters unselected"
@@ -10726,7 +10763,7 @@ msgstr[0] "%d karakter seçimi kaldırıldı"
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: src/orca/messages.py:2610
+#: src/orca/messages.py:2635
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -10735,7 +10772,7 @@ msgstr[0] "%d karakter çok uzun"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: src/orca/messages.py:2618
+#: src/orca/messages.py:2643
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -10744,14 +10781,14 @@ msgstr[0] "(%d pencere)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: src/orca/messages.py:2624
+#: src/orca/messages.py:2649
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
 msgstr[0] "%d odaksız pencere"
 
 #. Translators: This is the size of a file in bytes
-#: src/orca/messages.py:2628
+#: src/orca/messages.py:2653
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -10759,21 +10796,21 @@ msgstr[0] "%d bayt"
 
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
-#: src/orca/messages.py:2633
+#: src/orca/messages.py:2658
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d dosya bulundu"
 
 #. Translators: This message presents the number of forms in a document.
-#: src/orca/messages.py:2640
+#: src/orca/messages.py:2665
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
 msgstr[0] "%d form"
 
 #. Translators: This message presents the number of headings in a document.
-#: src/orca/messages.py:2647
+#: src/orca/messages.py:2672
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -10781,7 +10818,7 @@ msgstr[0] "%d başlık"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: src/orca/messages.py:2652
+#: src/orca/messages.py:2677
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -10790,7 +10827,7 @@ msgstr[0] "%d öge"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2661
+#: src/orca/messages.py:2686
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -10799,7 +10836,7 @@ msgstr[0] "%d sınır işareti"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: src/orca/messages.py:2667
+#: src/orca/messages.py:2692
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -10808,7 +10845,7 @@ msgstr[0] "%d öge bulundu"
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: src/orca/messages.py:2673
+#: src/orca/messages.py:2698
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -10816,7 +10853,7 @@ msgstr[0] "%d blok alıntıdan çıkılıyor."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: src/orca/messages.py:2678
+#: src/orca/messages.py:2703
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
@@ -10828,12 +10865,12 @@ msgstr[0] "%d listeden çıkılıyor."
 #. you're currently viewing messages 1-100 out of some huge, unspecified
 #. number. Normally Orca announces "list with n items" when the count is
 #. known. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2688
+#: src/orca/messages.py:2713
 msgid "List of unknown size"
 msgstr "Bilinmeyen boyutlu liste"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2691
+#: src/orca/messages.py:2716
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -10841,7 +10878,7 @@ msgstr[0] "%d ögeli liste"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
-#: src/orca/messages.py:2696
+#: src/orca/messages.py:2721
 #, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
@@ -10852,13 +10889,13 @@ msgstr[0] "%d ögeli iç içe liste"
 #. scrolling, adding and/or removing items as the user moves up or down.
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2705
+#: src/orca/messages.py:2730
 msgid "Feed of unknown size"
 msgstr "Bilinmeyen boyutlu besleme"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
-#: src/orca/messages.py:2709
+#: src/orca/messages.py:2734
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
@@ -10867,7 +10904,7 @@ msgstr[0] "%d maddeli besleme"
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
-#: src/orca/messages.py:2715
+#: src/orca/messages.py:2740
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -10875,7 +10912,7 @@ msgstr[0] "%d terimli açıklama listesi"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
-#: src/orca/messages.py:2721
+#: src/orca/messages.py:2746
 #, python-format
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
@@ -10885,7 +10922,7 @@ msgstr[0] "%d sekmeli sekme listesi"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2728
+#: src/orca/messages.py:2753
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -10893,7 +10930,7 @@ msgstr[0] "%d değer"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2733
+#: src/orca/messages.py:2758
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -10905,8 +10942,8 @@ msgstr[0] "%d satırlı matematik tablosu"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2738 src/orca/messages.py:2754
-#: src/orca/messages.py:2862
+#: src/orca/messages.py:2763 src/orca/messages.py:2779
+#: src/orca/messages.py:2887
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -10915,7 +10952,7 @@ msgstr[0] "%d sütun"
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2748
+#: src/orca/messages.py:2773
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -10923,7 +10960,7 @@ msgstr[0] "%d satırlı iç içe matematik tablosu"
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2763
+#: src/orca/messages.py:2788
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -10931,7 +10968,7 @@ msgstr[0] "%d ileti.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2768
+#: src/orca/messages.py:2793
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -10940,7 +10977,7 @@ msgstr[0] "yüzde %d."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2774
+#: src/orca/messages.py:2799
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -10948,7 +10985,7 @@ msgstr[0] "Belgenin yüzde %d kadarı okundu"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2781
+#: src/orca/messages.py:2806
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
@@ -10957,7 +10994,7 @@ msgstr[0] "%d piksel"
 #. Translators: Orca will tell you how many characters are repeated on a line
 #. of text. For example: "22 space characters". The %d is the number and the
 #. %s is the spoken word for the character.
-#: src/orca/messages.py:2787
+#: src/orca/messages.py:2812
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -10965,7 +11002,7 @@ msgstr[0] "%(count)d %(repeatChar)s karakter"
 
 #. Translators: This message is presented to indicate the number of selected
 #. objects (e.g. icons) and the total number of those objects.
-#: src/orca/messages.py:2794
+#: src/orca/messages.py:2819
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -10975,7 +11012,7 @@ msgstr[0] "%(total)d ögeden %(index)d tanesi seçildi"
 #. shortcuts associated with Orca commands which are not specific to the
 #. current application. It appears as the title of the dialog containing
 #. the list.
-#: src/orca/messages.py:2803
+#: src/orca/messages.py:2828
 #, python-format
 msgid "%d Screen reader default shortcut found."
 msgid_plural "%d Screen reader default shortcuts found."
@@ -10984,7 +11021,7 @@ msgstr[0] "%d ekran okuyucusu öntanımlı kısayolu bulundu."
 #. Translators: This message is presented when the user is in a list of
 #. shortcuts associated with Orca commands specific to the current
 #. application. It appears as the title of the dialog containing the list.
-#: src/orca/messages.py:2811
+#: src/orca/messages.py:2836
 #, python-format
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
@@ -10992,7 +11029,7 @@ msgstr[0] "%(application)s için %(count)d ekran okuyucusu kısayolu bulundu."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2818
+#: src/orca/messages.py:2843
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -11000,14 +11037,14 @@ msgstr[0] "%d boşluk"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2823
+#: src/orca/messages.py:2848
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d sekme karakteri"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2830
+#: src/orca/messages.py:2855
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -11017,14 +11054,14 @@ msgstr[0] "%d tablo"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2839
+#: src/orca/messages.py:2864
 msgid "table of unknown size"
 msgstr "bilinmeyen boyutlu tablo"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
 #. in a vertically infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2844
+#: src/orca/messages.py:2869
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
@@ -11033,14 +11070,14 @@ msgstr[0] "%d sütunlu tablo, satır sayısı bilinmiyor"
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
 #. in a horizontally infinitely scrollable table or grid on the web.
-#: src/orca/messages.py:2852
+#: src/orca/messages.py:2877
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
 msgstr[0] "%d satırlı tablo, sütun sayısı bilinmiyor"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2857
+#: src/orca/messages.py:2882
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -11048,7 +11085,7 @@ msgstr[0] "%d satırlı tablo"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
-#: src/orca/messages.py:2871
+#: src/orca/messages.py:2896
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -11056,7 +11093,7 @@ msgstr[0] "%d saniye önce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
-#: src/orca/messages.py:2876
+#: src/orca/messages.py:2901
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
@@ -11064,7 +11101,7 @@ msgstr[0] "%d dakika önce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
-#: src/orca/messages.py:2881
+#: src/orca/messages.py:2906
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
@@ -11072,7 +11109,7 @@ msgstr[0] "%d saat önce"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
-#: src/orca/messages.py:2886
+#: src/orca/messages.py:2911
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -11080,7 +11117,7 @@ msgstr[0] "%d gün önce"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2904
+#: src/orca/messages.py:2929
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -11088,7 +11125,7 @@ msgstr[0] "%d ziyaret edilmemiş bağlantı"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2912
+#: src/orca/messages.py:2937
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
