@@ -117,7 +117,7 @@ inside the script. Some examples of features imported by scripts include:
 
 * `src/orca/system_information_presenter.py`
 * `src/orca/flat_review_presenter.py`
-* `src/orca/notification-presenter.py`
+* `src/orca/notification_presenter.py`
 * `src/orca/object_navigator.py`
 
 Please note: Historically features were implemented directly inside the scripts.
