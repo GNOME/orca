@@ -568,7 +568,7 @@ class Chat:
         verbosity = settings_manager.get_manager().get_app_setting(
             self._script.app, 'chatMessageVerbosity')
         script = script_manager.get_manager().get_active_script()
-        if script.name != self._script.name \
+        if script is not None and script.name != self._script.name \
            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED:
             return
         elif not focused and verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL:
