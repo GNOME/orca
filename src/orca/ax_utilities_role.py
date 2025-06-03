@@ -86,6 +86,7 @@ class AXUtilitiesRole:
             Atspi.Role.SCROLL_BAR,
             Atspi.Role.SEPARATOR,
             Atspi.Role.SLIDER,
+            Atspi.Role.TOGGLE_BUTTON,
         ]
 
         # TODO - JD: Remove this check when dependencies are bumped to v2.56.

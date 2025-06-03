@@ -79,7 +79,7 @@ class Script:
         self.app = app
         self.name = f"{AXObject.get_name(self.app) or 'default'} (module={self.__module__})"
         self.present_if_inactive = True
-        self.run_find_command = False
+        self.run_find_command_on = None
         self.input_event_handlers = {}
         self.point_of_reference = {}
         self.event_cache = {}

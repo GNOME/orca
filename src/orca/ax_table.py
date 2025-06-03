@@ -1263,6 +1263,34 @@ class AXTable:
         tokens = ["AXTable: Last visible cell is at row", end[0], "column", end[1]]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        if end == (-1, -1):
+            last_cell = AXTable.get_last_cell(table)
+            tokens = ["AXTable: Adjusted lasat visible cell for", table, "is", last_cell]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+            end = AXTable.get_cell_coordinates(last_cell, prefer_attribute=False)
+            tokens = ["AXTable: Adjusted last cell is at row", end[0], "column", end[1]]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if AXUtilitiesRole.is_table_cell(last_cell) \
+           and not AXUtilitiesRole.is_table_cell_or_header(first_cell):
+            candidate = AXTable.get_cell_above(last_cell)
+            while candidate and AXComponent.object_intersects_rect(candidate, rect):
+                first_cell = candidate
+                candidate = AXTable.get_cell_above(first_cell)
+
+            candidate = AXTable.get_cell_on_left(first_cell)
+            while candidate and AXComponent.object_intersects_rect(candidate, rect):
+                first_cell = candidate
+                candidate = AXTable.get_cell_on_left(first_cell)
+
+            tokens = ["AXTable: Adjusted first visible cell for", table, "is", first_cell]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+            start = AXTable.get_cell_coordinates(first_cell, prefer_attribute=False)
+            tokens = ["AXTable: Adjusted first cell is at row", start[0], "column", start[1]]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         return start, end
 
     @staticmethod
@@ -1276,8 +1304,13 @@ class AXTable:
         for row in range(start[0], end[0] + 1):
             for col in range(start[1], end[1] + 1):
                 cell = AXTable.get_cell_at(table, row, col)
-                if cell is not None:
-                    yield cell
+                if cell is None:
+                    continue
+                for child in AXObject.iter_children(cell, AXUtilitiesRole.is_table_cell):
+                    if AXObject.get_name(child):
+                        cell = child
+                        break
+                yield cell
 
     @staticmethod
     def get_showing_cells_in_same_row(

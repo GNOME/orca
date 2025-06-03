@@ -25,6 +25,7 @@ import urllib.parse
 
 from . import cmdnames
 from . import debug
+from . import flat_review_presenter
 from . import keybindings
 from . import input_event
 from . import messages
@@ -155,8 +156,8 @@ class Bookmarks:
         # establish the _bookmarks index
         index = index or inputEvent.hw_code
 
+        context = self._get_context()
         try:
-            context = self._script.getFlatReviewContext()
             context_info = self._bookmarks[index]
             context.setCurrent(context_info['line'], context_info['zone'], \
                                 context_info['word'], context_info['char'])
@@ -165,15 +166,14 @@ class Bookmarks:
             self._script.presentMessage(messages.BOOKMARK_NOT_FOUND)
             return
 
-        self._script.get_flat_review_presenter().present_item(script, inputEvent)
+        flat_review_presenter.get_presenter().present_item(script, inputEvent)
 
         # update the currentbookmark
         self._currentbookmarkindex = index
 
     def addBookmark(self, script, inputEvent):
         """ Add an in-page accessible object bookmark for this key. """
-        context = self._script.getFlatReviewContext()
-        self._bookmarks[inputEvent.hw_code] = self._contextToBookmark(context)
+        self._bookmarks[inputEvent.hw_code] = self._contextToBookmark(self._get_context())
         self._script.presentMessage(messages.BOOKMARK_ENTERED)
 
     def saveBookmarks(self, script, inputEvent):
@@ -278,17 +278,21 @@ class Bookmarks:
     def _contextToBookmark(self, context):
         """Converts a flat_review.Context object into a bookmark."""
         context_info = {}
-        context_info['zone'] = context.zoneIndex
-        context_info['char'] = context.charIndex
-        context_info['word'] = context.wordIndex
-        context_info['line'] = context.lineIndex
+        line, zone, word, char = context.getCurrent()
+        context_info['zone'] = zone
+        context_info['char'] = char
+        context_info['word'] = word
+        context_info['line'] = line
         return context_info
+
+    def _get_context(self):
+        return flat_review_presenter.get_presenter().get_or_create_context(self._script)
 
     def _bookmarkToContext(self, bookmark):
         """Converts a bookmark into a flat_review.Context object."""
-        context = self._script.getFlatReviewContext()
-        context.setCurrent(bookmark['line'], bookmark['zone'], \
-                           bookmark['word'], bookmark['char'])
+        context = self._get_context()
+        location = bookmark['line'], bookmark['zone'], bookmark['word'], bookmark['char']
+        context.set_current_location(location)
         return context
 
     def getURIKey(self):

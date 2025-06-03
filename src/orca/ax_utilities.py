@@ -835,6 +835,28 @@ class AXUtilities:
         return True
 
     @staticmethod
+    def treat_as_leaf_node(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj should be treated as a leaf node."""
+
+        if AXUtilitiesRole.children_are_presentational(obj):
+            # In GTK, the contents of the page tab descends from the page tab.
+            if AXUtilitiesRole.is_page_tab(obj):
+                return False
+            return True
+
+        role = AXObject.get_role(obj)
+        if AXUtilitiesRole.is_combo_box(obj, role):
+            return not AXUtilitiesState.is_expanded(obj)
+
+        if AXUtilitiesRole.is_menu(obj, role) and not AXUtilitiesRole.has_role_from_aria(obj):
+            return not AXUtilitiesState.is_expanded(obj)
+
+        if AXObject.get_name(obj):
+            return AXUtilitiesRole.is_link(obj, role) or AXUtilitiesRole.is_label(obj, role)
+
+        return False
+
+    @staticmethod
     def get_on_screen_objects(
         root: Atspi.Accessible,
         bounding_box: Optional[Atspi.Rect] = None
@@ -844,23 +866,25 @@ class AXUtilities:
         if not AXUtilities.is_on_screen(root, bounding_box):
             return []
 
-        # TODO - JD: There are presumably other such cases.
-        if AXUtilitiesRole.is_button(root) or AXUtilitiesRole.is_combo_box(root):
+        if AXUtilities.treat_as_leaf_node(root):
             return [root]
-
-        if bounding_box is None:
-            bounding_box = AXComponent.get_rect(root)
 
         if AXObject.supports_table(root) and AXObject.supports_selection(root):
             return list(AXTable.iter_visible_cells(root))
 
         objects = []
-        if AXObject.get_name(root) or AXObject.get_description(root) \
-           or AXText.has_presentable_text(root):
+        root_name = AXObject.get_name(root)
+        if root_name or AXObject.get_description(root) or AXText.has_presentable_text(root):
             objects.append(root)
 
+        if bounding_box is None:
+            bounding_box = AXComponent.get_rect(root)
+
         for child in AXObject.iter_children(root):
-            objects.extend(AXUtilities.get_on_screen_objects(child, bounding_box))
+            children = AXUtilities.get_on_screen_objects(child, bounding_box)
+            objects.extend(children)
+            if root_name and children and root in objects and root_name == AXObject.get_name(child):
+                objects.remove(root)
 
         if objects:
             return objects

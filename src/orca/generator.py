@@ -705,6 +705,7 @@ class Generator:
         result = []
         if self._script.utilities.hasMeaningfulToggleAction(obj):
             args["role"] = Atspi.Role.CHECK_BOX
+            args["includeContext"] = False
             result.extend(self.generate(obj, **args))
 
         return result

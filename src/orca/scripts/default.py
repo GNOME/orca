@@ -36,7 +36,6 @@ from orca import cmdnames
 from orca import debug
 from orca import event_manager
 from orca import focus_manager
-from orca import flat_review
 from orca import input_event_manager
 from orca import input_event
 from orca import keybindings
@@ -68,10 +67,6 @@ class Script(script.Script):
 
     def __init__(self, app):
         super().__init__(app)
-
-        self.targetCursorCell = None
-
-        self.justEnteredFlatReviewMode = False
 
         # Keep track of the last time we issued a mouse routing command
         # so that we can guess if a change resulted from our moving the
@@ -638,14 +633,11 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        try:
-            if self.run_find_command:
-                # Then the Orca Find dialog has just given up focus
-                # to the original window.  We don't want to speak
-                # the window title, current line, etc.
-                return
-        except Exception:
-            pass
+        if self.run_find_command_on:
+            if self.run_find_command_on == new_focus:
+                self.run_find_command_on = None
+                self.get_flat_review_finder().find(self)
+            return
 
         if self.get_flat_review_presenter().is_active():
             self.get_flat_review_presenter().quit()
@@ -767,16 +759,7 @@ class Script(script.Script):
             return True
 
         if self.get_flat_review_presenter().is_active():
-            if self.isBrailleBeginningShowing():
-                self.get_flat_review_presenter().go_start_of_line(self, event)
-                self.get_flat_review_presenter().go_previous_character(self, event)
-            else:
-                self.panBrailleInDirection(pan_amount, panToLeft=True)
-
-            self._setFlatReviewContextToBeginningOfBrailleDisplay()
-            self.targetCursorCell = 1
-            self.updateBrailleReview(self.targetCursorCell)
-            return True
+            return self.get_flat_review_presenter().pan_braille_left(self, event, pan_amount)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
@@ -799,8 +782,7 @@ class Script(script.Script):
             # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
             #
             if not movedCaret and AXUtilities.is_terminal(focus):
-                context = self.getFlatReviewContext()
-                context.goBegin(flat_review.Context.LINE)
+                self.get_flat_review_presenter().go_start_of_line(self, event)
                 self.get_flat_review_presenter().go_previous_character(self, event)
         else:
             self.panBrailleInDirection(pan_amount, panToLeft=True)
@@ -829,17 +811,7 @@ class Script(script.Script):
             return True
 
         if self.get_flat_review_presenter().is_active():
-            if self.isBrailleEndShowing():
-                self.get_flat_review_presenter().go_end_of_line(self, event)
-                # Reviewing the next character also updates the braille output
-                # and refreshes the display.
-                self.get_flat_review_presenter().go_next_character(self, event)
-                return True
-            self.panBrailleInDirection(pan_amount, panToLeft=False)
-            self._setFlatReviewContextToBeginningOfBrailleDisplay()
-            self.targetCursorCell = 1
-            self.updateBrailleReview(self.targetCursorCell)
-            return True
+            return self.get_flat_review_presenter().pan_braille_right(self, event, pan_amount)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
@@ -1062,10 +1034,6 @@ class Script(script.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_active_window(
                     window, set_window_as_focus=True, notify_script=True)
-
-        if self.run_find_command:
-            self.run_find_command = False
-            self.get_flat_review_finder().find(self)
 
     def on_active_descendant_changed(self, event):
         """Callback for object:active-descendant-changed accessibility events."""
@@ -2022,109 +1990,6 @@ class Script(script.Script):
         utterances = self.speech_generator.generate_speech(obj, **args)
         speech.speak(utterances, interrupt=interrupt)
 
-    def getFlatReviewContext(self):
-        """Returns the flat review context, creating one if necessary."""
-
-        return self.get_flat_review_presenter().get_or_create_context(self)
-
-    def updateBrailleReview(self, targetCursorCell=0):
-        """Obtains the braille regions for the current flat review line
-        and displays them on the braille display.  If the targetCursorCell
-        is non-0, then an attempt will be made to position the review cursor
-        at that cell.  Otherwise, we will pan in display-sized increments
-        to show the review cursor."""
-
-        if not settings_manager.get_manager().get_setting('enableBraille') \
-           and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
-            return
-
-        [regions, regionWithFocus] = self.get_flat_review_presenter().get_braille_regions(self)
-        if not regions:
-            regions = []
-            regionWithFocus = None
-
-        line = self.getNewBrailleLine()
-        self.addBrailleRegionsToLine(regions, line)
-        braille.setLines([line])
-        self.setBrailleFocus(regionWithFocus, False)
-        if regionWithFocus and not targetCursorCell:
-            offset = regionWithFocus.brailleOffset + regionWithFocus.cursorOffset
-            tokens = ["DEFAULT: Update to", offset, "in", regionWithFocus]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self.panBrailleToOffset(offset)
-
-        if self.justEnteredFlatReviewMode:
-            self.refreshBraille(True, self.targetCursorCell)
-            self.justEnteredFlatReviewMode = False
-        else:
-            self.refreshBraille(True, targetCursorCell)
-
-    def _setFlatReviewContextToBeginningOfBrailleDisplay(self):
-        """Sets the character of interest to be the first character showing
-        at the beginning of the braille display."""
-
-        # The first character on the flat review line has to be in object with text.
-        def isTextOrComponent(x):
-            return isinstance(x, (braille.ReviewText, braille.ReviewComponent))
-
-        regions = self.get_flat_review_presenter().get_braille_regions(self)[0]
-        regions = list(filter(isTextOrComponent, regions))
-        tokens = ["DEFAULT: Text/Component regions on line:"]
-        for region in regions:
-            tokens.extend(["\n", region])
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # TODO - JD: The current code was stopping on the first region which met the
-        # following condition. Is that definitely the right thing to do? Assume so for now.
-        # Also: Should the default script be accessing things like the viewport directly??
-        def isMatch(x):
-            return x is not None and x.brailleOffset + len(x.string) > braille.viewport[0]
-
-        regions = list(filter(isMatch, regions))
-        if not regions:
-            msg = "DEFAULT: Could not find review region to move to start of display"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        tokens = ["DEFAULT: Candidates for start of display:"]
-        for region in regions:
-            tokens.extend(["\n", region])
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-
-        # TODO - JD: Again, for now we're preserving the original behavior of choosing the first.
-        region = regions[0]
-        position = max(region.brailleOffset, braille.viewport[0])
-        if region.contracted:
-            offset = region.inPos[position - region.brailleOffset]
-        else:
-            offset = position - region.brailleOffset
-        if isinstance(region.zone, flat_review.TextZone):
-            offset += region.zone.startOffset
-        msg = f"DEFAULT: Offset for region: {offset}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        [word, charOffset] = region.zone.getWordAtOffset(offset)
-        if word:
-            tokens = ["DEFAULT: Setting start of display to", word, ", ", charOffset]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            context = self.getFlatReviewContext()
-            context.setCurrent(
-                word.zone.line.index,
-                word.zone.index,
-                word.index,
-                charOffset)
-        else:
-            tokens = ["DEFAULT: Setting start of display to", region.zone]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            context = self.getFlatReviewContext()
-            context.setCurrent(
-                region.zone.line.index,
-                region.zone.index,
-                0, # word index
-                0) # character index
-
     def textLines(self, obj, offset=None):
         """Creates a generator that can be used to iterate over each line
         of a text object, starting at the caret offset.
@@ -2408,13 +2273,6 @@ class Script(script.Script):
         """
 
         return braille.getCaretContext(event)
-
-    @staticmethod
-    def getBrailleCursorCell():
-        """Returns the value of position of the braille cell which has the
-        cursor. A value of 0 means no cell has the cursor."""
-
-        return braille.cursorCell
 
     @staticmethod
     def getNewBrailleLine(clearBraille=False, addLine=False):

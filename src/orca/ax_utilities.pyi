@@ -148,6 +148,9 @@ class AXUtilities:
     ) -> bool: ...
 
     @staticmethod
+    def treat_as_leaf_node(obj: Atspi.Accessible) -> bool: ...
+
+    @staticmethod
     def get_on_screen_objects(
         root: Atspi.Accessible,
         bounding_box: Optional[Atspi.Rect] = None

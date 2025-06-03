@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2016 Igalia, S.L.
+# Copyright 2016-2025 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -18,19 +18,29 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-instance-attributes
+
 """Provides the default implementation for flat review for Orca."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
-                "Copyright (c) 2016 Igalia, S.L."
+                "Copyright (c) 2016-2025 Igalia, S.L."
 __license__   = "LGPL"
+
+import re
+from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-import re
 
 from . import braille
 from . import debug
@@ -42,222 +52,315 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
-
-EMBEDDED_OBJECT_CHARACTER = '\ufffc'
-
 class Char:
     """A character's worth of presentable information."""
 
-    def __init__(self, word, index, startOffset, string, x, y, width, height):
+    def __init__(self, word: "Word", start_offset: int, string: str):
         """Creates a new char.
 
         Arguments:
         - word: the Word instance this belongs to
-        - startOffset: the start offset with respect to the accessible
-        - string: the actual char
-        - x, y, width, height: the extents of this Char on the screen
+        - start_offset: the start offset with respect to the accessible object
+        - string: the char string
         """
 
-        self.word = word
-        self.index = index
-        self.startOffset = startOffset
-        self.endOffset = startOffset + 1
-        self.string = string
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+        self._word: "Word" = word
+        self._start_offset: int = start_offset
+        self._string: str = string
+        self._rect: Optional[Atspi.Rect] = None
 
-    def __str__(self):
-        return "CHAR: '%s' (%i-%i)" % \
-            (self.string.replace("\n", "\\n"),
-             self.startOffset,
-             self.endOffset)
+    def __str__(self) -> str:
+        text = self._string.replace("\n", "\\n")
+        rect = self.get_rect()
+        rect_string = f"({rect.x}, {rect.y}, {rect.width}, {rect.height})"
+        return (
+            f"CHAR: '{text}' ({self._start_offset}-{self._start_offset + 1}) "
+            f"rect: {rect_string}"
+        )
+
+    def get_string(self) -> str:
+        """Returns the string being displayed for this Char."""
+
+        return self._string
+
+    def get_start_offset(self) -> int:
+        """Returns the start offset of this Char with respect to the accessible object."""
+
+        return self._start_offset
+
+    def get_rect(self) -> Atspi.Rect:
+        """Returns the Atspi.Rect instance representing the extents of this Char."""
+
+        if self._rect is None:
+            obj = self._word.get_object()
+            self._rect = AXText.get_character_rect(obj, self._start_offset)
+
+        return self._rect
 
 class Word:
     """A single chunk (word or object) of presentable information."""
 
-    def __init__(self, zone, index, startOffset, string, x, y, width, height):
+    def __init__(self, zone: "Zone", start_offset: int, string: str):
         """Creates a new Word.
 
         Arguments:
         - zone: the Zone instance this belongs to
-        - index: the index of this Word in the Zone
-        - startOffset: the start offset with respect to the accessible
-        - string: the actual string
-        - x, y, width, height: the extents of this Word on the screen
+        - start_offset: the start offset with respect to the accessible object
+        - string: the word string
         """
 
-        self.zone = zone
-        self.index = index
-        self.startOffset = startOffset
-        self.string = string
-        self.length = len(string)
-        self.endOffset = self.startOffset + len(string)
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.chars = []
+        self._zone: "Zone" = zone
+        self._start_offset: int = start_offset
+        self._string: str = string
+        self._rect: Optional[Atspi.Rect] = None
+        self._characters: dict[int, Char] = {}
 
-    def __str__(self):
-        return "WORD: '%s' (%i-%i) %s" % \
-            (self.string.replace("\n", "\\n"),
-             self.startOffset,
-             self.endOffset,
-             self.zone.accessible)
+    def __str__(self) -> str:
+        text = self._string.replace("\n", "\\n")
+        rect = self.get_rect()
+        rect_string = f"({rect.x}, {rect.y}, {rect.width}, {rect.height})"
+        return (
+            f"WORD: '{text}' ({self._start_offset}-{self._start_offset + len(self._string)}) "
+            f"rect: {rect_string}"
+        )
 
-    def __getattribute__(self, attr):
-        if attr != "chars":
-            return super().__getattribute__(attr)
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Word):
+            return False
 
-        chars = []
-        for i, char in enumerate(self.string):
-            start = i + self.startOffset
-            rect1 = AXText.get_character_rect(self.zone.accessible, start)
-            extents = rect1.x, rect1.y, rect1.width, rect1.height
-            chars.append(Char(self, i, start, char, *extents))
+        if self._zone != other._zone or self._start_offset != other._start_offset or \
+           self._string != other._string:
+            return False
 
-        return chars
+        this_rect = self.get_rect()
+        other_rect = other.get_rect()
+        return this_rect.x == other_rect.x and this_rect.y == other_rect.y and \
+               this_rect.width == other_rect.width and this_rect.height == other_rect.height
 
-    def getRelativeOffset(self, offset):
+    def get_characters(self) -> list[Char]:
+        """Returns a list of Char instances for this Word."""
+
+        for i, char_str in enumerate(self._string):
+            if i not in self._characters:
+                start = i + self._start_offset
+                self._characters[i] = Char(self, start, char_str)
+
+        return [self._characters[i] for i in range(len(self._string))]
+
+    def get_character_at_index(self, index: int) -> Optional[Char]:
+        """Returns the Char at the specified index with respect to this Word."""
+
+        if not 0 <= index < len(self._string):
+            return None
+
+        if index not in self._characters:
+            char_str = self._string[index]
+            start = index + self._start_offset
+            self._characters[index] = Char(self, start, char_str)
+
+        return self._characters[index]
+
+    def get_start_offset(self) -> int:
+        """Returns the start offset of this Word with respect to the accessible object."""
+
+        return self._start_offset
+
+    def get_relative_offset(self, offset: int) -> int:
         """Returns the char offset with respect to this word or -1."""
 
-        if self.startOffset <= offset < self.startOffset + len(self.string):
-            return offset - self.startOffset
+        if self._start_offset <= offset < self._start_offset + len(self._string):
+            return offset - self._start_offset
 
         return -1
 
+    def get_string(self) -> str:
+        """Returns the string being displayed for this Word."""
+
+        return self._string
+
+    def get_rect(self) -> Atspi.Rect:
+        """Returns the Atspi.Rect instance representing the extents of this Word."""
+
+        if self._rect is None:
+            self._rect = self._zone.get_word_rect(self._start_offset, self._string)
+        return self._rect
+
+    def get_object(self) -> Atspi.Accessible:
+        """Returns the accessible object associated with this Word's zone."""
+
+        return self._zone.get_object()
 
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
 
-    WORDS_RE = re.compile(r"(\S+\s*)", re.UNICODE)
+    WORDS_RE = re.compile(r"(\S+\s*)")
 
-    def __init__(self, accessible, string, x, y, width, height, role=None):
+    def __init__(self, obj: Atspi.Accessible, string: str, rect: Atspi.Rect) -> None:
         """Creates a new Zone.
 
         Arguments:
-        - accessible: the Accessible associated with this Zone
+        - obj: the Accessible associated with this Zone
         - string: the string being displayed for this Zone
-        - extents: x, y, width, height in screen coordinates
-        - role: Role to override accessible's role.
+        - rect: an Atspi.Rect instance representing the extents of this Zone
         """
 
-        self.accessible = accessible
-        self.startOffset = 0
-        self._string = string
-        self.length = len(string)
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.role = role or AXObject.get_role(accessible)
-        self._words = []
+        self._obj: Atspi.Accessible = obj
+        self._start_offset: int = 0
+        self._string: str = string
+        self._rect: Atspi.Rect = rect
+        self._words: list[Word] = []
+        self.line: Optional['Line'] = None
+        self._braille_region: Optional[braille.Region] = None
+        self._word_rect_cache: dict[tuple[int, int], Atspi.Rect] = {}
+        self._word_index_map: dict[tuple[int, str], int] = {}  # (start_offset, string) -> index
 
-    def __str__(self):
-        return "ZONE: '%s' %s" % (self._string.replace("\n", "\\n"), self.accessible)
+    def __str__(self) -> str:
+        text = self._string.replace("\n", "\\n")
+        return f"ZONE: '{text}' {AXObject.get_role_name(self._obj)}"
 
-    def __getattribute__(self, attr):
-        """To ensure we update the content."""
+    def _can_cache_braille_region(self) -> bool:
+        """Returns True if we can cache the braille region for this Zone."""
 
-        if attr not in ["words", "string"]:
-            return super().__getattribute__(attr)
-
-        if attr == "string":
-            return self._string
-
-        if not self._shouldFakeText():
-            return self._words
-
-        # TODO - JD: For now, don't fake character and word extents.
-        # The main goal is to improve reviewability.
-        extents = self.x, self.y, self.width, self.height
-
-        words = []
-        for i, word in enumerate(re.finditer(self.WORDS_RE, self._string)):
-            words.append(Word(self, i, word.start(), word.group(), *extents))
-
-        self._words = words
-        return words
-
-    def _shouldFakeText(self):
-        """Returns True if we should try to fake the text interface"""
-
-        textRoles = [Atspi.Role.LABEL,
-                     Atspi.Role.MENU,
-                     Atspi.Role.MENU_ITEM,
-                     Atspi.Role.CHECK_MENU_ITEM,
-                     Atspi.Role.RADIO_MENU_ITEM,
-                     Atspi.Role.PAGE_TAB,
-                     Atspi.Role.PUSH_BUTTON,
-                     Atspi.Role.TABLE_CELL]
-
-        if self.role in textRoles:
-            return True
-
-        return False
-
-    def _extentsAreOnSameLine(self, zone, pixelDelta=5):
-        """Returns True if this Zone is physically on the same line as zone."""
-
-        if self.width == 0 and self.height == 0:
-            return zone.y <= self.y <= zone.y + zone.height
-
-        if zone.width == 0 and self.height == 0:
-            return self.y <= zone.y <= self.y + self.height
-
-        highestBottom = min(self.y + self.height, zone.y + zone.height)
-        lowestTop = max(self.y, zone.y)
-        if lowestTop >= highestBottom:
+        if AXUtilities.is_editable(self._obj):
             return False
 
-        middle = self.y + self.height / 2
-        zoneMiddle = zone.y + zone.height / 2
-        if abs(middle - zoneMiddle) > pixelDelta:
+        if AXObject.supports_value(self._obj):
             return False
 
         return True
 
-    def onSameLine(self, zone):
+    def get_braille_region(self) -> Optional[braille.Region]:
+        """Returns the braille region for this Zone."""
+
+        if self._braille_region is not None:
+            return self._braille_region
+
+        region = braille.ReviewComponent(self._obj, self._string, 0, self)
+        if self._can_cache_braille_region():
+            self._braille_region = region
+        return region
+
+    def get_string(self) -> str:
+        """Returns the string being displayed for this Zone."""
+
+        return self._string
+
+    def get_words(self) -> list[Word]:
+        """Returns the list of Words in this Zone."""
+
+        if self._words:
+            return self._words
+
+        # TODO - JD: For now, don't fake character and word extents.
+        # The main goal is to improve reviewability.
+        for i, word in enumerate(re.finditer(self.WORDS_RE, self._string)):
+            word_obj = Word(self, word.start(), word.group())
+            self._words.append(word_obj)
+            key = (word_obj.get_start_offset(), word_obj.get_string())
+            self._word_index_map[key] = i
+
+        return self._words
+
+    def get_word_at_index(self, index: int) -> Optional[Word]:
+        """Returns the Word at the specified index with respect to this Zone."""
+
+        words = self.get_words()
+        if 0 <= index < len(words):
+            return words[index]
+
+        return None
+
+    def get_index_of_word(self, word: Word) -> int:
+        """Returns the index of the specified Word with respect to this Zone."""
+
+        # Ensure words are initialized
+        self.get_words()
+        key = (word.get_start_offset(), word.get_string())
+        return self._word_index_map.get(key, -1)
+
+    def get_object(self) -> Atspi.Accessible:
+        """Returns the accessible object associated with this Zone."""
+
+        return self._obj
+
+    def get_rect(self) -> Atspi.Rect:
+        """Returns the Atspi.Rect instance representing the extents of this Zone."""
+
+        return self._rect
+
+    def get_word_rect(self, start_offset: int, string: str) -> Atspi.Rect:
+        """Returns the rectangle for a word within this zone."""
+
+        cache_key = (start_offset, len(string))
+        if cache_key in self._word_rect_cache:
+            return self._word_rect_cache[cache_key]
+
+        # TODO - JD: For now, don't fake character and word extents.
+        # The main goal is to improve reviewability.
+        rect = self._rect
+        self._word_rect_cache[cache_key] = rect
+        return rect
+
+    def on_same_line(self, zone: "Zone", pixel_delta: int = 5) -> bool:
         """Returns True if we treat this Zone and zone as being on one line."""
 
-        if Atspi.Role.SCROLL_BAR in [self.role, zone.role]:
-            return self.accessible == zone.accessible
+        if AXUtilities.is_scroll_bar(self._obj) or AXUtilities.is_scroll_bar(zone.get_object()):
+            return self._obj == zone.get_object()
 
-        thisParent = AXObject.get_parent(self.accessible)
-        thisParentRole = AXObject.get_role(thisParent)
-        zoneParent = AXObject.get_parent(zone.accessible)
-        zoneParentRole = AXObject.get_role(zoneParent)
-        if Atspi.Role.MENU_BAR in [thisParentRole, zoneParentRole]:
-            return thisParent == zoneParent
+        this_parent = AXObject.get_parent(self._obj)
+        zone_parent = AXObject.get_parent(zone.get_object())
+        if AXUtilities.is_menu(this_parent) or AXUtilities.is_menu(zone_parent):
+            return this_parent == zone_parent
 
-        return self._extentsAreOnSameLine(zone)
+        this_rect = self._rect
+        zone_rect = zone.get_rect()
+        if this_rect.width == 0 and this_rect.height == 0:
+            return zone_rect.y <= this_rect.y <= zone_rect.y + zone_rect.height
 
-    def getWordAtOffset(self, charOffset):
-        msg = f"FLAT REVIEW: Searching for word at offset {charOffset}"
+        if zone_rect.width == 0 and zone_rect.height == 0:
+            return this_rect.y <= zone_rect.y <= this_rect.y + this_rect.height
+
+        highest_bottom = min(this_rect.y + this_rect.height, zone_rect.y + zone_rect.height)
+        lowest_top = max(this_rect.y, zone_rect.y)
+        if lowest_top >= highest_bottom:
+            return False
+
+        this_middle = this_rect.y + this_rect.height / 2
+        zone_middle = zone_rect.y + zone_rect.height / 2
+        return abs(this_middle - zone_middle) <= pixel_delta
+
+    def get_start_offset(self) -> int:
+        """Returns the start offset of this Zone with respect to the accessible object."""
+
+        return self._start_offset
+
+    def get_word_at_offset(self, char_offset: int) -> tuple[Optional[Word], int]:
+        """Returns the Word at the specified offset with respect to the accessible object."""
+
+        msg = f"FLAT REVIEW: Searching for word at offset {char_offset}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        for word in self.words:
+        words = self.get_words()
+        for word in words:
             tokens = ["FLAT REVIEW: Checking", word]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            offset = word.getRelativeOffset(charOffset)
+            offset = word.get_relative_offset(char_offset)
             if offset >= 0:
                 return word, offset
 
-        if self.length == charOffset and self.words:
-            lastWord = self.words[-1]
-            return lastWord, lastWord.length
+        if len(self._string) == char_offset and words:
+            last_word = words[-1]
+            return last_word, len(last_word.get_string())
 
         return None, -1
 
-    def hasCaret(self):
+    def has_caret(self) -> bool:
         """Returns True if this Zone contains the caret."""
 
         return False
 
-    def wordWithCaret(self):
+    def word_with_caret(self) -> tuple[Optional[Word], int]:
         """Returns the Word and relative offset with the caret."""
 
         return None, -1
@@ -265,321 +368,351 @@ class Zone:
 class TextZone(Zone):
     """A Zone whose purpose is to display text of an object."""
 
-    def __init__(self, accessible, startOffset, string, x, y, width, height, role=None):
-        super().__init__(accessible, string, x, y, width, height, role)
+    def __init__(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        string: str,
+        rect: Atspi.Rect
+    ) -> None:
+        """Creates a new TextZone.
 
-        self.startOffset = startOffset
-        self.endOffset = self.startOffset + len(string)
+        Arguments:
+        - obj: the Accessible associated with this Zone
+        - string: the string being displayed for this Zone
+        - rect: an Atspi.Rect instance representing the extents of this Zone
+        """
 
-    def __getattribute__(self, attr):
-        """To ensure we update the content."""
+        super().__init__(obj, string, rect)
+        self._start_offset: int = start_offset
+        self._word_rect_cache: dict[tuple[int, int], Atspi.Rect] = {}
 
-        if attr not in ["words", "string"]:
-            return super().__getattribute__(attr)
+    def __str__(self) -> str:
+        text = self._string.replace("\n", "\\n")
+        return f"TEXT ZONE: '{text}' {AXObject.get_role_name(self._obj)}"
 
-        string = AXText.get_substring(self.accessible, self.startOffset, self.endOffset)
+    def _can_cache_braille_region(self) -> bool:
+        """Returns True if we can cache the braille region for this Zone."""
+
+        if AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj):
+            return False
+
+        if AXUtilities.is_label(self._obj):
+            return False
+
+        return True
+
+    def get_braille_region(self) -> Optional[braille.Region]:
+        """Returns the braille region for this Zone."""
+
+        if self._braille_region is not None:
+            return self._braille_region
+
+        region = braille.ReviewText(self._obj, self._string, self._start_offset, self)
+        if self._can_cache_braille_region():
+            self._braille_region = region
+
+        return region
+
+    def get_string(self) -> str:
+        """Returns the string being displayed for this Zone."""
+
+        end_offset = self._start_offset + len(self._string)
+        self._string = AXText.get_substring(self._obj, self._start_offset, end_offset)
+        return self._string
+
+    def get_words(self) -> list[Word]:
+        """Returns the list of Words in this Zone."""
+
         words = []
-        for i, word in enumerate(re.finditer(self.WORDS_RE, string)):
-            start, end = map(lambda x: x + self.startOffset, word.span())
-            rect = AXText.get_range_rect(self.accessible, start, end)
-            extents = rect.x, rect.y, rect.width, rect.height
-            words.append(Word(self, i, start, word.group(), *extents))
+        self._word_index_map.clear()  # Clear any existing mapping
+        for i, word in enumerate(re.finditer(self.WORDS_RE, self.get_string())):
+            start = word.start() + self._start_offset
+            word_obj = Word(self, start, word.group())
+            words.append(word_obj)
+            key = (word_obj.get_start_offset(), word_obj.get_string())
+            self._word_index_map[key] = i
 
-        self._string = string
         self._words = words
-        return super().__getattribute__(attr)
+        return self._words
 
-    def hasCaret(self):
+    def get_word_rect(self, start_offset: int, string: str) -> Atspi.Rect:
+        """Returns the precise rectangle for a word within this TextZone."""
+
+        cache_key = (start_offset, len(string))
+        if cache_key in self._word_rect_cache:
+            return self._word_rect_cache[cache_key]
+
+        end_offset = start_offset + len(string)
+        rect = AXText.get_range_rect(self._obj, start_offset, end_offset)
+        self._word_rect_cache[cache_key] = rect
+        return rect
+
+    def has_caret(self) -> bool:
         """Returns True if this Zone contains the caret."""
 
-        if self.startOffset <= AXText.get_caret_offset(self.accessible) < self.endOffset:
+        end_offset = self._start_offset + len(self._string)
+        if self._start_offset <= AXText.get_caret_offset(self._obj) < end_offset:
             return True
 
-        return self.endOffset == AXText.get_character_count(self.accessible)
+        return end_offset == AXText.get_character_count(self._obj)
 
-    def wordWithCaret(self):
+    def word_with_caret(self) -> tuple[Optional[Word], int]:
         """Returns the Word and relative offset with the caret."""
 
-        if not self.hasCaret():
+        if not self.has_caret():
             return None, -1
 
-        return self.getWordAtOffset(AXText.get_caret_offset(self.accessible))
+        return self.get_word_at_offset(AXText.get_caret_offset(self._obj))
 
 
 class StateZone(Zone):
     """A Zone whose purpose is to display the state of an object."""
 
-    def __init__(self, accessible, x, y, width, height, role=None):
-        super().__init__(accessible, "", x, y, width, height, role)
+    def __init__(self, obj: Atspi.Accessible, rect: Atspi.Rect) -> None:
+        super().__init__(obj, "", rect)
 
-    def __getattribute__(self, attr):
-        """To ensure we update the state."""
+    def __str__(self) -> str:
+        text = self.get_string().replace("\n", "\\n")
+        return f"STATE ZONE: '{text}' {AXObject.get_role_name(self._obj)}"
 
-        if attr not in ["string", "brailleString"]:
-            return super().__getattribute__(attr)
+    def _can_cache_braille_region(self) -> bool:
+        """Returns True if we can cache the braille region for this Zone."""
+
+        return False
+
+    def get_braille_region(self) -> Optional[braille.Region]:
+        """Returns the braille region for this Zone."""
 
         script = script_manager.get_manager().get_active_script()
-        if attr == "string":
-            generator = script.speech_generator
-        else:
-            generator = script.braille_generator
+        if script is None:
+            return None
 
-        result = generator.get_state_indicator(self.accessible, role=self.role)
-        if result:
+        result = script.braille_generator.get_state_indicator(self._obj)
+        if result and result[0]:
+            if isinstance(result[0], str):
+                return braille.ReviewComponent(self._obj, result[0], 0, self)
             return result[0]
+        return None
 
-        return ""
+    def get_string(self) -> str:
+        """Returns the string being displayed for this Zone."""
 
+        script = script_manager.get_manager().get_active_script()
+        if script is None:
+            return ""
 
+        result = script.speech_generator.get_state_indicator(self._obj)
+        return " ".join([r for r in result if isinstance(r, str)])
 class ValueZone(Zone):
     """A Zone whose purpose is to display the value of an object."""
 
-    def __init__(self, accessible, x, y, width, height, role=None):
-        super().__init__(accessible, "", x, y, width, height, role)
+    def __init__(self, obj: Atspi.Accessible, rect: Atspi.Rect) -> None:
+        super().__init__(obj, "", rect)
 
-    def __getattribute__(self, attr):
-        """To ensure we update the value."""
+    def __str__(self) -> str:
+        text = self.get_string().replace("\n", "\\n")
+        return f"VALUE ZONE: '{text}' {AXObject.get_role_name(self._obj)}"
 
-        if attr not in ["string", "brailleString"]:
-            return super().__getattribute__(attr)
+    def _can_cache_braille_region(self) -> bool:
+        """Returns True if we can cache the braille region for this Zone."""
+
+        return False
+
+    def get_braille_region(self) -> Optional[braille.Region]:
+        """Returns the braille region for this Zone."""
 
         script = script_manager.get_manager().get_active_script()
-        if attr == "string":
-            generator = script.speech_generator
-        else:
-            generator = script.braille_generator
+        if script is None:
+            return None
 
-        result = ""
-
-        # TODO - JD: This cobbling together beats what we had, but the
-        # generators should also be doing the assembly.
-        rolename = generator.get_localized_role_name(self.accessible)
-        value = generator.get_value(self.accessible)
+        rolename = script.braille_generator.get_localized_role_name(self._obj)
+        value = script.braille_generator.get_value(self._obj)
         if rolename and value:
             result = f"{rolename} {value[0]}"
+            return braille.ReviewComponent(self._obj, result, 0, self)
+        return None
 
+    def get_string(self) -> str:
+        """Returns the string being displayed for this Zone."""
+
+        script = script_manager.get_manager().get_active_script()
+        if script is None:
+            return ""
+
+        rolename = script.speech_generator.get_localized_role_name(self._obj)
+        value = script.speech_generator.get_value(self._obj)
+        result = ""
+        if rolename and value:
+            result = f"{rolename} {value[0]}"
         return result
 
 
 class Line:
     """A Line is a single line across a window and is composed of Zones."""
 
-    def __init__(self,
-                 index,
-                 zones):
+    def __init__(self, line_number: int, zones: list[Zone]) -> None:
         """Creates a new Line, which is a horizontal region of text.
 
         Arguments:
-        - index: the index of this Line in the window
+        - line_number: the line number of this Line in the window
         - zones: the Zones that make up this line
         """
-        self.index = index
-        self.zones = zones
-        self.brailleRegions = None
 
-    def __getattribute__(self, attr):
-        if attr == "string":
-            return " ".join([zone.string for zone in self.zones])
+        self._line_number: int = line_number
+        self._zones: list[Zone] = zones
+        self._zone_index_map: dict[Zone, int] = {zone: i for i, zone in enumerate(zones)}
 
-        if attr == "x":
-            return min([zone.x for zone in self.zones])
+    def get_line_number(self) -> int:
+        """Returns the index of this Line in the window."""
 
-        if attr == "y":
-            return min([zone.y for zone in self.zones])
+        return self._line_number
 
-        if attr == "width":
-            return sum([zone.width for zone in self.zones])
+    def get_zones(self) -> list[Zone]:
+        """Returns the list of Zones in this Line."""
 
-        if attr == "height":
-            return max([zone.height for zone in self.zones])
+        return self._zones
 
-        return super().__getattribute__(attr)
+    def get_zone_at_index(self, index: int) -> Optional[Zone]:
+        """Returns the Zone at the specified index with respect to this Line."""
 
-    def getBrailleRegions(self):
-        # [[[WDW - We'll always compute the braille regions.  This
-        # allows us to handle StateZone and ValueZone zones whose
-        # states might be changing on us.]]]
-        #
-        if True or not self.brailleRegions:
-            self.brailleRegions = []
-            brailleOffset = 0
-            for zone in self.zones:
-                # The 'isinstance(zone, TextZone)' test is a sanity check
-                # to handle problems with Java text. See Bug 435553.
-                if isinstance(zone, TextZone) and \
-                   ((AXObject.get_role(zone.accessible) in \
-                         (Atspi.Role.TEXT,
-                          Atspi.Role.PASSWORD_TEXT,
-                          Atspi.Role.TERMINAL)) or \
-                    # [[[TODO: Eitan - HACK:
-                    # This is just to get FF3 cursor key routing support.
-                    # We really should not be determining all this stuff here,
-                    # it should be in the scripts.
-                    # Same applies to roles above.]]]
-                    (AXObject.get_role(zone.accessible) in \
-                         (Atspi.Role.PARAGRAPH,
-                          Atspi.Role.HEADING,
-                          Atspi.Role.LINK))):
-                    region = braille.ReviewText(zone.accessible,
-                                                zone.string,
-                                                zone.startOffset,
-                                                zone)
-                else:
-                    try:
-                        brailleString = zone.brailleString
-                    except Exception:
-                        brailleString = zone.string
-                    region = braille.ReviewComponent(zone.accessible,
-                                                     brailleString,
-                                                     0, # cursor offset
-                                                     zone)
-                if len(self.brailleRegions):
-                    pad = braille.Region(" ")
-                    pad.brailleOffset = brailleOffset
-                    self.brailleRegions.append(pad)
-                    brailleOffset += 1
+        if 0 <= index < len(self._zones):
+            return self._zones[index]
 
-                zone.brailleRegion = region
-                region.brailleOffset = brailleOffset
-                self.brailleRegions.append(region)
+        return None
 
-                regionString = region.string
-                brailleOffset += len(regionString)
+    def get_index_of_zone(self, zone: Zone) -> int:
+        """Returns the index of the specified Zone with respect to this Line."""
 
-            if not settings.disableBrailleEOL:
-                if len(self.brailleRegions):
-                    pad = braille.Region(" ")
-                    pad.brailleOffset = brailleOffset
-                    self.brailleRegions.append(pad)
-                    brailleOffset += 1
-                eol = braille.Region("$l")
-                eol.brailleOffset = brailleOffset
-                self.brailleRegions.append(eol)
+        return self._zone_index_map.get(zone, -1)
 
-        return self.brailleRegions
+    def get_string(self) -> str:
+        """Returns the string of this Line, which is the concatenation of all Zones."""
+
+        return " ".join([zone.get_string() for zone in self._zones])
+
+    def get_braille_regions(self) -> list[braille.Region]:
+        """Returns a list of braille regions for this Line."""
+
+        regions: list[braille.Region] = []
+        for zone in self._zones:
+            region = zone.get_braille_region()
+            if region is not None:
+                if regions:
+                    regions.append(braille.Region(" "))
+                regions.append(region)
+
+        if not settings.disableBrailleEOL:
+            if regions:
+                regions.append(braille.Region(" "))
+            regions.append(braille.Region("$l"))
+
+        return regions
 
 class Context:
     """Contains the flat review regions for the current top-level object."""
 
-    ZONE   = 0
-    CHAR   = 1
-    WORD   = 2
-    LINE   = 3 # includes all zones on same line
+    CHAR   = 0
+    WORD   = 1
+    ZONE   = 2
+    LINE   = 3
     WINDOW = 4
 
-    WRAP_NONE       = 0
-    WRAP_LINE       = 1 << 0
-    WRAP_TOP_BOTTOM = 1 << 1
-    WRAP_ALL        = (WRAP_LINE | WRAP_TOP_BOTTOM)
-
-    def __init__(self, script, root=None):
+    def __init__(self, script, root: Optional[Atspi.Accessible] = None) -> None:
         """Create a new Context for script."""
 
-        self.script = script
-        self.zones = []
-        self.lines = []
-        self.lineIndex = 0
-        self.zoneIndex = 0
-        self.wordIndex = 0
-        self.charIndex = 0
-        self.targetCharInfo = None
-        self.focusZone = None
-        self.container = None
-        self.focusObj = focus_manager.get_manager().get_locus_of_focus()
-        self.topLevel = None
-        self.bounds = Atspi.Rect()
+        self._script = script
+        self._zones: list[Zone] = []
+        self._lines: list[Line] = []
+        self._line_index: int = 0
+        self._zone_index: int = 0
+        self._word_index: int = 0
+        self._char_index: int = 0
+        self._focus_zone: Optional[Zone] = None
+        self._container: Optional[Atspi.Accessible] = None
+        self._object_to_zone_map: dict[Atspi.Accessible, list[Zone]] = {}
+        self._focus_obj: Optional[Atspi.Accessible] = \
+            focus_manager.get_manager().get_locus_of_focus()
+        self._top_level: Optional[Atspi.Accessible] = None
+        self._rect: Atspi.Rect = Atspi.Rect()
 
-        frame, dialog = script.utilities.frameAndDialog(self.focusObj)
+        frame, dialog = script.utilities.frameAndDialog(self._focus_obj)
         if root is not None:
-            self.topLevel = root
+            self._top_level = root
             tokens = ["FLAT REVIEW: Restricting flat review to", root]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
-            self.topLevel = dialog or frame
-        tokens = ["FLAT REVIEW: Frame:", frame, "Dialog:", dialog, ". Top level:", self.topLevel]
+            self._top_level = dialog or frame
+        tokens = ["FLAT REVIEW: Frame:", frame, "Dialog:", dialog, ". Top level:", self._top_level]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        self._rect = AXComponent.get_rect(self._top_level)
 
-        self.bounds = AXComponent.get_rect(self.topLevel)
+        container = AXObject.find_ancestor_inclusive(self._focus_obj, AXUtilities.is_menu)
+        self._container = container or self._top_level
 
-        containerRoles = [Atspi.Role.MENU]
+        self._zones = self._get_showing_zones(self._container)
+        for zone in self._zones:
+            obj = zone.get_object()
+            if obj not in self._object_to_zone_map:
+                self._object_to_zone_map[obj] = []
+            self._object_to_zone_map[obj].append(zone)
+        self._focus_zone = self._find_zone_with_object(self._focus_obj)
 
-        def isContainer(x):
-            return AXObject.get_role(x) in containerRoles
-
-        container = AXObject.find_ancestor(self.focusObj, isContainer)
-        if not container and isContainer(self.focusObj):
-            container = self.focusObj
-
-        self.container = container or self.topLevel
-
-        self.zones, self.focusZone = self.getShowingZones(self.container)
-        self.lines = self.clusterZonesByLine(self.zones)
-        if not (self.lines and self.focusZone):
+        self._lines = self._cluster_zones_by_line(self._zones)
+        if not (self._lines and self._focus_zone):
             return
 
-        for i, line in enumerate(self.lines):
-            if self.focusZone in line.zones:
-                self.lineIndex = i
-                self.zoneIndex = line.zones.index(self.focusZone)
-                word, offset = self.focusZone.wordWithCaret()
-                if word:
-                    self.wordIndex = word.index
-                    self.charIndex = offset
-                break
+        for i, line in enumerate(self._lines):
+            index = line.get_index_of_zone(self._focus_zone)
+            if index < 0:
+                continue
+
+            self._line_index = i
+            self._zone_index = index
+            word, offset = self._focus_zone.word_with_caret()
+            if word:
+                self._word_index = self._focus_zone.get_index_of_word(word)
+                self._char_index = offset
+            break
 
         msg = (
-            f"FLAT REVIEW: On line {self.lineIndex}, zone {self.zoneIndex} "
-            f"word {self.wordIndex}, char {self.charIndex}"
+            f"FLAT REVIEW: On line {self._line_index}, zone {self._zone_index} "
+            f"word {self._word_index}, char {self._char_index}"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def splitTextIntoZones(self, accessible, string, startOffset, cliprect):
-        """Traverses the string, splitting it up into separate zones if the
-        string contains the EMBEDDED_OBJECT_CHARACTER, which is used by apps
-        such as Firefox to handle containment of things such as links in
-        paragraphs.
+    def _split_text_into_zones(
+        self,
+        obj: Atspi.Accessible,
+        string: str,
+        start_offset: int,
+        cliprect: Atspi.Rect
+    ) -> list[TextZone]:
+        """Returns a list of TextZones with embedded object characters removed."""
 
-        Arguments:
-        - accessible: the accessible
-        - string: a substring from the accessible's text specialization
-        - startOffset: the starting character offset of the string
-        - cliprect: the extents that the Zones must fit inside.
-
-        Returns a list of Zones for the visible text.
-        """
-
-        zones = []
-        substrings = [(*m.span(), m.group(0))  for m in re.finditer(r"[^\ufffc]+", string)]
-        substrings = list(map(lambda x: (x[0] + startOffset, x[1] + startOffset, x[2]), substrings))
-        for (start, end, substring) in substrings:
-            rect = AXText.get_range_rect(accessible, start, end)
+        zones: list[TextZone] = []
+        ranges = [(*m.span(), m.group(0)) for m in re.finditer(r"[^\ufffc]+", string)]
+        ranges = list(map(lambda x: (x[0] + start_offset, x[1] + start_offset, x[2]), ranges))
+        for (start, end, substring) in ranges:
+            rect = AXText.get_range_rect(obj, start, end)
             intersection = AXComponent.get_rect_intersection(rect, cliprect)
             if not AXComponent.is_empty_rect(intersection):
-                clipping = intersection.x, intersection.y, intersection.width, intersection.height
-                zones.append(TextZone(accessible, start, substring, *clipping))
+                zones.append(TextZone(obj, start, substring, intersection))
 
         return zones
 
-    def getZonesFromText(self, accessible, cliprect):
-        """Gets a list of Zones from an object that implements the
-        AccessibleText specialization.
+    def _get_zones_from_text(self, obj: Atspi.Accessible, cliprect: Atspi.Rect) -> list[TextZone]:
+        """Returns a list of TextZones for the given object."""
 
-        Arguments:
-        - accessible: the accessible
-        - cliprect: the extents that the Zones must fit inside.
-
-        Returns a list of Zones.
-        """
-
-        if not AXText.has_presentable_text(accessible):
+        if not AXText.has_presentable_text(obj):
             return []
 
-        zones = []
+        zones: list[TextZone] = []
 
-        def _is_container(x):
+        def _is_container(x: Atspi.Accessible) -> bool:
             return AXUtilities.is_scroll_pane(x) or AXUtilities.is_document(x)
 
-        container = AXObject.find_ancestor(accessible, _is_container)
+        container = AXObject.find_ancestor(obj, _is_container)
         if container:
             rect = AXComponent.get_rect(container)
             intersection = AXComponent.get_rect_intersection(rect, cliprect)
@@ -588,770 +721,522 @@ class Context:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 cliprect = rect
 
-        if AXObject.supports_editable_text(accessible) and AXUtilities.is_single_line(accessible):
-            rect = AXComponent.get_rect(accessible)
-            extents = rect.x, rect.y, rect.width, rect.height
-            return [TextZone(accessible, 0, AXText.get_all_text(accessible), *extents)]
+        if AXObject.supports_editable_text(obj) and AXUtilities.is_single_line(obj):
+            rect = AXComponent.get_rect(obj)
+            return [TextZone(obj, 0, AXText.get_all_text(obj), rect)]
 
-        tokens = ["FLAT REVIEW: Getting lines for", accessible]
+        tokens = ["FLAT REVIEW: Getting lines for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        lines = AXText.get_visible_lines(accessible, cliprect)
-        tokens = ["FLAT REVIEW:", len(lines), "lines found for", accessible]
+        lines = AXText.get_visible_lines(obj, cliprect)
+        tokens = ["FLAT REVIEW:", len(lines), "lines found for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        for string, startOffset, endOffset in lines:
-            zones.extend(self.splitTextIntoZones(accessible, string, startOffset, cliprect))
+        for string, start_offset, _end_offset in lines:
+            zones.extend(self._split_text_into_zones(obj, string, start_offset, cliprect))
 
         return zones
 
-    def _insertStateZone(self, zones, accessible, extents):
-        """If the accessible presents non-textual state, such as a
-        checkbox or radio button, insert a StateZone representing
-        that state."""
+    def _get_zones_from_object(self, obj: Atspi.Accessible, cliprect: Atspi.Rect) -> list[Zone]:
+        """Returns a list of Zones for the given object."""
 
-        # TODO - JD: This whole thing is pretty hacky. Either do it
-        # right or nuke it.
-
-        indicatorExtents = [extents[0], extents[1], 1, extents[3]]
-        role = AXObject.get_role(accessible)
-        if role == Atspi.Role.TOGGLE_BUTTON:
-            zone = StateZone(accessible, *indicatorExtents, role=role)
-            if zone:
-                zones.insert(0, zone)
-            return
-
-        if role == Atspi.Role.TABLE_CELL \
-           and self.script.utilities.hasMeaningfulToggleAction(accessible):
-            role = Atspi.Role.CHECK_BOX
-
-        if role not in [Atspi.Role.CHECK_BOX,
-                        Atspi.Role.CHECK_MENU_ITEM,
-                        Atspi.Role.RADIO_BUTTON,
-                        Atspi.Role.RADIO_MENU_ITEM]:
-            return
-
-        zone = None
-        stateOnLeft = True
-
-        if len(zones) == 1 and isinstance(zones[0], TextZone):
-            textZone = zones[0]
-            textToLeftEdge = textZone.x - extents[0]
-            textToRightEdge = (extents[0] + extents[2]) - (textZone.x + textZone.width)
-            stateOnLeft = textToLeftEdge > 20
-            if stateOnLeft:
-                indicatorExtents[2] = textToLeftEdge
+        rect = AXComponent.get_rect(obj)
+        zones: list[Zone] = list(self._get_zones_from_text(obj, cliprect))
+        if not zones:
+            if AXObject.supports_value(obj):
+                zones.append(ValueZone(obj, rect))
             else:
-                indicatorExtents[0] = textZone.x + textZone.width
-                indicatorExtents[2] = textToRightEdge
+                string = ""
+                if not AXUtilities.is_table_row(obj):
+                    string = self._script.speech_generator.get_name(obj, inFlatReview=True)
+                if not string:
+                    string = self._script.speech_generator.get_role_name(obj)
+                if string:
+                    zones.append(Zone(obj, string, rect))
 
-        zone = StateZone(accessible, *indicatorExtents, role=role)
-        if zone:
-            if stateOnLeft:
-                zones.insert(0, zone)
-            else:
-                zones.append(zone)
-
-    def getZonesFromAccessible(self, accessible, cliprect):
-        """Returns a list of Zones for the given accessible."""
-
-        rect = AXComponent.get_rect(accessible)
-        extents = rect.x, rect.y, rect.width, rect.height
-        role = AXObject.get_role(accessible)
-        zones = self.getZonesFromText(accessible, cliprect)
-        if not zones and role in [Atspi.Role.SCROLL_BAR,
-                                  Atspi.Role.SLIDER,
-                                  Atspi.Role.PROGRESS_BAR]:
-            zones.append(ValueZone(accessible, *extents))
-        elif not zones:
-            string = ""
-            redundant = [Atspi.Role.TABLE_ROW]
-            if role not in redundant:
-                string = self.script.speech_generator.get_name(accessible, inFlatReview=True)
-
-            useless = [Atspi.Role.TABLE_CELL, Atspi.Role.LABEL]
-            if not string and role not in useless:
-                string = self.script.speech_generator.get_role_name(accessible)
-            if string:
-                zones.append(Zone(accessible, string, *extents))
-
-        self._insertStateZone(zones, accessible, extents)
+        zone = StateZone(obj, rect)
+        if zone.get_string():
+            zones.insert(0, zone)
 
         return zones
 
-    def _isOrIsIn(self, child, parent):
-        if not (child and parent):
-            return False
-
-        if child == parent:
-            return True
-
-        return AXObject.find_ancestor(child, lambda x: x == parent)
-
-    def setCurrentToZoneWithObject(self, obj):
+    def set_current_to_zone_with_object(self, obj: Atspi.Accessible) -> bool:
         """Attempts to set the current zone to obj, if obj is in the current context."""
 
-        tokens = ["FLAT REVIEW: Current", self.getCurrentAccessible(),
-                  f"line: {self.lineIndex}, zone: {self.zoneIndex},",
-                  f"word: {self.wordIndex}, char: {self.charIndex})"]
+        tokens = ["FLAT REVIEW: Current", self.get_current_object(),
+                  f"line: {self._line_index}, zone: {self._zone_index},",
+                  f"word: {self._word_index}, char: {self._char_index})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        zone = self._findZoneWithObject(obj)
+        zone = self._find_zone_with_object(obj)
         tokens = ["FLAT REVIEW: Zone with", obj, "is", zone]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if zone is None:
             return False
 
-        for i, line in enumerate(self.lines):
-            if zone in line.zones:
-                self.lineIndex = i
-                self.zoneIndex = line.zones.index(zone)
-                word, offset = zone.wordWithCaret()
-                if word:
-                    self.wordIndex = word.index
-                    self.charIndex = offset
-                msg = "FLAT REVIEW: Updated current zone."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                break
+        for i, line in enumerate(self._lines):
+            index = line.get_index_of_zone(zone)
+            if index < 0:
+                continue
+
+            self._line_index = i
+            self._zone_index = index
+            word, offset = zone.word_with_caret()
+            if word:
+                self._word_index = zone.get_index_of_word(word)
+                self._char_index = offset
+            msg = "FLAT REVIEW: Updated current zone."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            break
         else:
             msg = "FLAT REVIEW: Failed to update current zone."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        tokens = ["FLAT REVIEW: Updated", self.getCurrentAccessible(),
-                  f"line: {self.lineIndex}, zone: {self.zoneIndex},",
-                  f"word: {self.wordIndex}, char: {self.charIndex})"]
+        tokens = ["FLAT REVIEW: Updated", self.get_current_object(),
+                  f"line: {self._line_index}, zone: {self._zone_index},",
+                  f"word: {self._word_index}, char: {self._char_index})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
-    def _findZoneWithObject(self, obj):
+    def _find_zone_with_object(self, obj: Optional[Atspi.Accessible]) -> Optional[Zone]:
         """Returns the existing zone which contains obj."""
 
         if obj is None:
             return None
 
-        for zone in self.zones:
-            if zone.accessible == obj:
-                return zone
+        if matching_zones := self._object_to_zone_map.get(obj, []):
+            for zone in matching_zones:
+                if zone.has_caret():
+                    return zone
+            return matching_zones[0]
 
-            # Some items get pruned from the flat review tree. For instance, a
-            # tree item which has a descendant section whose text is the displayed
-            # text of the tree item, that section will be in the flat review tree
-            # but the ancestor item might not.
-            if AXObject.is_ancestor(zone.accessible, obj):
-                tokens = ["FLAT REVIEW:", zone.accessible, "is ancestor of zone accessible", obj]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return zone
+        # Items can be pruned from the flat review context. When this happens, usually the parent
+        # or one of its children will still be in the context.
+        if parent := AXObject.get_parent(obj):
+            if parent_zones := self._object_to_zone_map.get(parent, []):
+                return parent_zones[0]
+
+        for child in AXObject.iter_children(obj):
+            if child_zones := self._object_to_zone_map.get(child, []):
+                return child_zones[0]
 
         return None
 
-    def getShowingZones(self, root, boundingbox=None):
-        """Returns an unsorted list of all the zones under root and the focusZone."""
+    def _get_showing_zones(self,
+        root: Atspi.Accessible,
+        boundingbox: Optional[Atspi.Rect] = None
+    ) -> list[Zone]:
+        """Returns an unsorted list of all the zones under root."""
 
         if boundingbox is None:
-            boundingbox = self.bounds
+            boundingbox = self._rect
 
         objs = AXUtilities.get_on_screen_objects(root, boundingbox)
         tokens = ["FLAT REVIEW:", len(objs), "on-screen objects found for", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        allZones, focusZone = [], None
+        all_zones: list[Zone] = []
+        obj_set = set(objs)
         for o in objs:
-            zones = self.getZonesFromAccessible(o, boundingbox)
-            if not zones:
-                descendant = self.script.utilities.realActiveDescendant(o)
-                if descendant:
-                    zones = self.getZonesFromAccessible(descendant, boundingbox)
-
-            if not zones:
+            if obj_set.intersection(AXUtilities.get_is_label_for(o)):
                 continue
 
-            allZones.extend(zones)
-            if not focusZone and zones and self.focusObj and self._isOrIsIn(o, self.focusObj):
-                zones = list(filter(lambda z: z.hasCaret(), zones)) or zones
-                focusZone = zones[0]
+            zones = self._get_zones_from_object(o, boundingbox)
+            if not zones:
+                descendant = self._script.utilities.realActiveDescendant(o)
+                if descendant:
+                    zones = self._get_zones_from_object(descendant, boundingbox)
+            all_zones.extend(zones)
 
-        tokens = ["FLAT REVIEW:", len(allZones), "zones found for", root]
+        tokens = ["FLAT REVIEW:", len(all_zones), "zones found for", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return allZones, focusZone
+        return all_zones
 
-    def clusterZonesByLine(self, zones):
+    def _cluster_zones_by_line(self, zones: list[Zone]) -> list[Line]:
         """Returns a sorted list of Line clusters containing sorted Zones."""
 
         if not zones:
             return []
 
-        lineClusters = []
-        sortedZones = sorted(zones, key=lambda z: z.y)
-        newCluster = [sortedZones.pop(0)]
-        for zone in sortedZones:
-            if zone.onSameLine(newCluster[-1]):
-                newCluster.append(zone)
+        zones.sort(key=lambda zone: zone.get_rect().y)
+        line_clusters: list[list[Zone]] = []
+        current_cluster = [zones[0]]
+        for zone in zones[1:]:
+            if zone.on_same_line(current_cluster[-1]):
+                current_cluster.append(zone)
             else:
-                lineClusters.append(sorted(newCluster, key=lambda z: z.x))
-                newCluster = [zone]
+                current_cluster.sort(key=lambda z: z.get_rect().x)
+                line_clusters.append(current_cluster)
+                current_cluster = [zone]
 
-        if newCluster:
-            lineClusters.append(sorted(newCluster, key=lambda z: z.x))
+        if current_cluster:
+            current_cluster.sort(key=lambda z: z.get_rect().x)
+            line_clusters.append(current_cluster)
 
-        lines = []
-        for lineIndex, lineCluster in enumerate(lineClusters):
-            lines.append(Line(lineIndex, lineCluster))
-            for zoneIndex, zone in enumerate(lineCluster):
-                zone.line = lines[lineIndex]
-                zone.index = zoneIndex
+        lines: list[Line] = []
+        for line_index, zones_in_line in enumerate(line_clusters):
+            line = Line(line_index, zones_in_line)
+            lines.append(line)
+            for zone in zones_in_line:
+                zone.line = line
 
         tokens = ["FLAT REVIEW: Zones clustered into", len(lines), "lines"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return lines
 
-    def getCurrent(self, flatReviewType=ZONE):
-        """Returns the current string, offset, and extent information."""
+    def get_current_line_string(self) -> str:
+        """Returns the string of the current line."""
 
-        # TODO - JD: This method has not (yet) been renamed. But we have a
-        # getter and setter which do totally different things....
+        if zone := self._get_current_zone():
+            if zone.line:
+                return zone.line.get_string()
+        return ""
 
-        zone = self._getCurrentZone()
+    def get_current_zone_string(self) -> str:
+        """Returns the string of the current zone."""
+
+        if zone := self._get_current_zone():
+            return zone.get_string()
+        return ""
+
+    def get_current_word_string(self) -> str:
+        """Returns the string of the current word."""
+
+        zone = self._get_current_zone()
         if not zone:
-            return None, -1, -1, -1, -1
+            return ""
 
-        current = zone
-        if flatReviewType == Context.LINE:
-            current = zone.line
-        elif flatReviewType != Context.ZONE and zone.words:
-            current = zone.words[self.wordIndex]
-            if flatReviewType == Context.CHAR and current.chars:
-                try:
-                    current = current.chars[self.charIndex]
-                except Exception:
-                    return None, -1, -1, -1, -1
+        if words := zone.get_words():
+            return words[self._word_index].get_string()
 
-        return current.string, current.x, current.y, current.width, current.height
+        return zone.get_string()
 
-    def setCurrent(self, lineIndex, zoneIndex, wordIndex, charIndex):
-        """Sets the current character of interest.
+    def get_current_character_string(self) -> str:
+        """Returns the string of the current character."""
 
-        Arguments:
-        - lineIndex: index into lines
-        - zoneIndex: index into lines[lineIndex].zones
-        - wordIndex: index into lines[lineIndex].zones[zoneIndex].words
-        - charIndex: index lines[lineIndex].zones[zoneIndex].words[wordIndex].chars
-        """
+        zone = self._get_current_zone()
+        if not zone:
+            return ""
 
-        self.lineIndex = lineIndex
-        self.zoneIndex = zoneIndex
-        self.wordIndex = wordIndex
-        self.charIndex = charIndex
-        self.targetCharInfo = self.getCurrent(Context.CHAR)
+        words = zone.get_words()
+        if not words:
+            return ""
 
-    def _getCurrentZone(self):
-        if not (self.lines and 0 <= self.lineIndex < len(self.lines)):
+        word = words[self._word_index]
+        if char := word.get_character_at_index(self._char_index):
+            return char.get_string()
+        return ""
+
+    def _get_current_character_rect(self) -> Atspi.Rect:
+        """Returns the extents of the current character."""
+
+        zone = self._get_current_zone()
+        if not zone:
+            return Atspi.Rect()
+
+        words = zone.get_words()
+        if not words:
+            return Atspi.Rect()
+
+        word = words[self._word_index]
+        if char := word.get_character_at_index(self._char_index):
+            return char.get_rect()
+
+        return Atspi.Rect()
+
+    def get_current_location(self) -> tuple[int, int, int, int]:
+        """Returns the location as a (lineIndex, zoneIndex, wordIndex, charIndex) tuple."""
+
+        return self._line_index, self._zone_index, self._word_index, self._char_index
+
+    def set_current_location(self, location: tuple[int, int, int, int]) -> None:
+        """Sets the location to the specified (lineIndex, zoneIndex, wordIndex, charIndex)."""
+
+        self._line_index, self._zone_index, self._word_index, self._char_index = location
+
+    def set_current_zone(self, zone: Zone, offset_in_zone: int = 0) -> None:
+        """Sets zone as the current zone."""
+
+        if zone is None or zone.line is None:
+            return
+
+        self._line_index = zone.line.get_line_number()
+        self._zone_index = self._lines[self._line_index].get_index_of_zone(zone)
+        self._word_index = 0
+        self._char_index = 0
+
+        text_offset = zone.get_start_offset()
+        word, character_offset = zone.get_word_at_offset(text_offset + offset_in_zone)
+        if word:
+            self._word_index = zone.get_index_of_word(word)
+            self._char_index = character_offset
+
+    def _get_current_zone(self) -> Optional[Zone]:
+        """Returns the current Zone."""
+
+        if not (self._lines and 0 <= self._line_index < len(self._lines)):
             return None
 
-        line = self.lines[self.lineIndex]
-        if not (line and 0 <= self.zoneIndex < len(line.zones)):
+        line = self._lines[self._line_index]
+        zones = line.get_zones()
+        if not (line and 0 <= self._zone_index < len(zones)):
             return None
 
-        return line.zones[self.zoneIndex]
+        return zones[self._zone_index]
 
-    def getCurrentTextOffset(self):
-        """Returns the current text offset in the current accessible."""
+    def get_current_text_offset(self) -> int:
+        """Returns the current text offset in the current object."""
 
-        zone = self._getCurrentZone()
+        zone = self._get_current_zone()
         if zone is None:
             return -1
-        if not zone.words:
+        words = zone.get_words()
+        if not words:
             return -1
-        word = zone.words[self.wordIndex]
-        if not word.chars:
-            return -1
-        char = word.chars[self.charIndex]
-        return char.startOffset
+        word = words[self._word_index]
+        if char := word.get_character_at_index(self._char_index):
+            return char.get_start_offset()
+        return -1
 
-    def getCurrentAccessible(self):
-        """Returns the current accessible."""
+    def get_current_object(self) -> Optional[Atspi.Accessible]:
+        """Returns the current object."""
 
-        zone = self._getCurrentZone()
+        zone = self._get_current_zone()
         if not zone:
             return None
 
-        return zone.accessible
+        return zone.get_object()
 
-    def getCurrentBrailleRegions(self):
-        """Gets the braille for the entire current line.
+    def get_current_braille_regions(self) -> tuple[list[braille.Region], Optional[braille.Region]]:
+        """Returns a (regions, focused-region) tuple."""
 
-        Returns [regions, regionWithFocus]
-        """
+        if not self._lines:
+            return [], None
 
-        if (not self.lines) \
-           or (not self.lines[self.lineIndex].zones):
-            return [None, None]
+        focused_region = None
+        line = self._lines[self._line_index]
+        regions = line.get_braille_regions()
 
-        regionWithFocus = None
-        line = self.lines[self.lineIndex]
-        regions = line.getBrailleRegions()
+        zone = self._get_current_zone()
+        if zone is None:
+            return regions, None
 
-        # Now find the current region and the current character offset
-        # into that region.
-        #
-        for zone in line.zones:
-            if zone.index == self.zoneIndex:
-                regionWithFocus = zone.brailleRegion
-                regionWithFocus.cursorOffset = 0
-                if zone.words:
-                    regionWithFocus.cursorOffset += zone.words[0].startOffset - zone.startOffset
-                    for wordIndex in range(0, self.wordIndex):
-                        regionWithFocus.cursorOffset += \
-                            len(zone.words[wordIndex].string)
-                regionWithFocus.cursorOffset += self.charIndex
-                regionWithFocus.repositionCursor()
+        focused_region = zone.get_braille_region()
+        if focused_region is None:
+            return regions, None
+
+        focused_region.cursorOffset = 0
+        if words := zone.get_words():
+            focused_region.cursorOffset += words[0].get_start_offset() - zone.get_start_offset()
+            for word_index in range(self._word_index):
+                focused_region.cursorOffset += len(words[word_index].get_string())
+        focused_region.cursorOffset += self._char_index
+        # This is related to contracted braille.
+        focused_region.repositionCursor()
+        return regions, focused_region
+
+    def go_to_start_of(self, review_type: int = WINDOW) -> bool:
+        """Returns True if moving to the start of the specified type succeeded."""
+
+        before = [self._line_index, self._zone_index, self._word_index, self._char_index]
+        self._char_index = 0
+        self._word_index = 0
+        if review_type == Context.WINDOW:
+            self._zone_index = 0
+            self._line_index = 0
+        elif review_type == Context.LINE:
+            self._zone_index = 0
+
+        return before != [self._line_index, self._zone_index, self._word_index, self._char_index]
+
+    def go_to_end_of(self, review_type: int = WINDOW) -> bool:
+        """Returns True if moving to the end of the specified type succeeded."""
+
+        before = [self._line_index, self._zone_index, self._word_index, self._char_index]
+        if review_type == Context.WINDOW:
+            self._line_index  = len(self._lines) - 1
+        elif review_type == Context.LINE:
+            self._zone_index = len(self._lines[self._line_index].get_zones()) - 1
+
+        zone = self._get_current_zone()
+        if zone is None:
+            return False
+        if words := zone.get_words():
+            self._word_index = len(words) - 1
+            word = words[self._word_index]
+            chars = word.get_characters()
+            self._char_index = max(len(chars) - 1, 0)
+        else:
+            self._word_index = 0
+            self._char_index = 0
+
+        return before != [self._line_index, self._zone_index, self._word_index, self._char_index]
+
+    def go_previous_line(self, wrap: bool = False) -> bool:
+        """Returns True if moving to the previous line succeeded."""
+
+        if self._line_index > 0:
+            self._line_index -= 1
+            self._zone_index = 0
+            self._word_index = 0
+            self._char_index = 0
+            return True
+
+        if not wrap:
+            return False
+
+        self._line_index = max(0, len(self._lines) - 1)
+        self._zone_index = 0
+        self._word_index = 0
+        self._char_index = 0
+        return True
+
+    def go_next_line(self, wrap: bool = False) -> bool:
+        """Returns True if moving to the next line succeeded."""
+
+        if self._line_index < (len(self._lines) - 1):
+            self._line_index += 1
+            self._zone_index = 0
+            self._word_index = 0
+            self._char_index = 0
+            return True
+
+        if not wrap:
+            return False
+
+        self._line_index = 0
+        self._zone_index = 0
+        self._word_index = 0
+        self._char_index = 0
+        return True
+
+    def go_previous_zone(self) -> bool:
+        """Returns True if moving to the previous zone succeeded."""
+
+        if self._zone_index > 0:
+            self._zone_index -= 1
+            self._word_index = 0
+            self._char_index = 0
+            return True
+
+        if not self.go_previous_line():
+            return False
+
+        zones = self._lines[self._line_index].get_zones()
+        self._zone_index = max(len(zones) - 1, 0)
+        self._word_index = 0
+        self._char_index = 0
+        return True
+
+    def go_next_zone(self) -> bool:
+        """Returns True if moving to the next zone succeeded."""
+
+        zones = self._lines[self._line_index].get_zones()
+        if self._zone_index < len(zones) - 1:
+            self._zone_index += 1
+            self._word_index = 0
+            self._char_index = 0
+            return True
+
+        return self.go_next_line()
+
+    def go_previous_word(self) -> bool:
+        """Returns True if moving to the previous word succeeded."""
+
+        if self._word_index > 0:
+            self._word_index -= 1
+            self._char_index = 0
+            return True
+
+        if not self.go_previous_zone():
+            return False
+
+        self.go_to_end_of(Context.ZONE)
+        return True
+
+    def go_next_word(self) -> bool:
+        """Returns True if moving to the next word succeeded."""
+
+        zone = self._get_current_zone()
+        if zone is None:
+            return False
+        words = zone.get_words()
+        if self._word_index < len(words) - 1:
+            self._word_index += 1
+            self._char_index = 0
+            return True
+
+        return self.go_next_zone()
+
+    def go_previous_character(self) -> bool:
+        """Returns True if moving to the previous character succeeded."""
+
+        if self._char_index > 0:
+            self._char_index -= 1
+            return True
+
+        if not self.go_previous_word():
+            return False
+
+        zone = self._get_current_zone()
+        if zone is None:
+            return False
+        if words := zone.get_words():
+            chars = words[self._word_index].get_characters()
+            self._char_index = max(len(chars) - 1, 0)
+        else:
+            self._char_index = 0
+        return True
+
+    def go_next_character(self) -> bool:
+        """Returns True if moving to the next character succeeded."""
+
+        zone = self._get_current_zone()
+        if zone is None:
+            return False
+        if words := zone.get_words():
+            chars = words[self._word_index].get_characters()
+            if self._char_index < (len(chars) - 1):
+                self._char_index += 1
+                return True
+
+        return self.go_next_word()
+
+    def go_up(self) -> bool:
+        """Returns True if moving up succeeded."""
+
+        rect = self._get_current_character_rect()
+        target_x = rect.x + (rect.width / 2)
+        if not self.go_previous_line():
+            return False
+
+        rect = self._get_current_character_rect()
+        if rect.x + rect.width >= target_x:
+            return True
+
+        while self.go_next_character():
+            rect = self._get_current_character_rect()
+            if rect.x + rect.width >= target_x:
                 break
 
-        return [regions, regionWithFocus]
+        return True
 
-    def goBegin(self, flatReviewType=WINDOW):
-        """Moves this context's locus of interest to the first char
-        of the first relevant zone.
+    def go_down(self) -> bool:
+        """Returns True if moving down succeeded."""
 
-        Arguments:
-        - flatReviewType: one of ZONE, LINE or WINDOW
-
-        Returns True if the locus of interest actually changed.
-        """
-
-        if (flatReviewType == Context.LINE) or (flatReviewType == Context.ZONE):
-            lineIndex = self.lineIndex
-        elif flatReviewType == Context.WINDOW:
-            lineIndex = 0
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
-
-        if flatReviewType == Context.ZONE:
-            zoneIndex = self.zoneIndex
-        else:
-            zoneIndex = 0
-
-        wordIndex = 0
-        charIndex = 0
-
-        moved = (self.lineIndex != lineIndex) \
-                or (self.zoneIndex != zoneIndex) \
-                or (self.wordIndex != wordIndex) \
-                or (self.charIndex != charIndex) \
-
-        if moved:
-            self.lineIndex = lineIndex
-            self.zoneIndex = zoneIndex
-            self.wordIndex = wordIndex
-            self.charIndex = charIndex
-            self.targetCharInfo = self.getCurrent(Context.CHAR)
-
-        return moved
-
-    def goEnd(self, flatReviewType=WINDOW):
-        """Moves this context's locus of interest to the last char
-        of the last relevant zone.
-
-        Arguments:
-        - flatReviewType: one of ZONE, LINE, or WINDOW
-
-        Returns True if the locus of interest actually changed.
-        """
-
-        if (flatReviewType == Context.LINE) or (flatReviewType == Context.ZONE):
-            lineIndex = self.lineIndex
-        elif flatReviewType == Context.WINDOW:
-            lineIndex  = len(self.lines) - 1
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
-
-        if flatReviewType == Context.ZONE:
-            zoneIndex = self.zoneIndex
-        else:
-            zoneIndex = len(self.lines[lineIndex].zones) - 1
-
-        zone = self.lines[lineIndex].zones[zoneIndex]
-        if zone.words:
-            wordIndex = len(zone.words) - 1
-            chars = zone.words[wordIndex].chars
-            if chars:
-                charIndex = len(chars) - 1
-            else:
-                charIndex = 0
-        else:
-            wordIndex = 0
-            charIndex = 0
-
-        moved = (self.lineIndex != lineIndex) \
-                or (self.zoneIndex != zoneIndex) \
-                or (self.wordIndex != wordIndex) \
-                or (self.charIndex != charIndex) \
-
-        if moved:
-            self.lineIndex = lineIndex
-            self.zoneIndex = zoneIndex
-            self.wordIndex = wordIndex
-            self.charIndex = charIndex
-            self.targetCharInfo = self.getCurrent(Context.CHAR)
-
-        return moved
-
-    def goPrevious(self, flatReviewType=ZONE,
-                   wrap=WRAP_ALL, omitWhitespace=True):
-        """Moves this context's locus of interest to the first char
-        of the previous type.
-
-        Arguments:
-        - flatReviewType: one of ZONE, CHAR, WORD, LINE
-        - wrap: if True, will cross boundaries, including top and
-                bottom; if False, will stop on boundaries.
-
-        Returns True if the locus of interest actually changed.
-        """
-
-        if not self.lines:
-            debug.print_message(debug.LEVEL_INFO, 'goPrevious(): no lines in context')
+        rect = self._get_current_character_rect()
+        target_x = rect.x + (rect.width / 2)
+        if not self.go_next_line():
             return False
 
-        moved = False
+        rect = self._get_current_character_rect()
+        if rect.x + rect.width >= target_x:
+            return True
 
-        if flatReviewType == Context.ZONE:
-            if self.zoneIndex > 0:
-                self.zoneIndex -= 1
-                self.wordIndex = 0
-                self.charIndex = 0
-                moved = True
-            elif wrap & Context.WRAP_LINE:
-                if self.lineIndex > 0:
-                    self.lineIndex -= 1
-                    self.zoneIndex = len(self.lines[self.lineIndex].zones) - 1
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-                elif wrap & Context.WRAP_TOP_BOTTOM:
-                    self.lineIndex = len(self.lines) - 1
-                    self.zoneIndex = len(self.lines[self.lineIndex].zones) - 1
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-        elif flatReviewType == Context.CHAR:
-            if self.charIndex > 0:
-                self.charIndex -= 1
-                moved = True
-            else:
-                moved = self.goPrevious(Context.WORD, wrap, False)
-                if moved:
-                    zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-                    if zone.words:
-                        chars = zone.words[self.wordIndex].chars
-                        if chars:
-                            self.charIndex = len(chars) - 1
-        elif flatReviewType == Context.WORD:
-            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            accessible = zone.accessible
-            lineIndex = self.lineIndex
-            zoneIndex = self.zoneIndex
-            wordIndex = self.wordIndex
-            charIndex = self.charIndex
+        while self.go_next_character():
+            rect= self._get_current_character_rect()
+            if rect.x + rect.width >= target_x:
+                break
 
-            if self.wordIndex > 0:
-                self.wordIndex -= 1
-                self.charIndex = 0
-                moved = True
-            else:
-                moved = self.goPrevious(Context.ZONE, wrap)
-                if moved:
-                    zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-                    if zone.words:
-                        self.wordIndex = len(zone.words) - 1
-
-            # If we landed on a whitespace word or something with no words,
-            # we might need to move some more.
-            #
-            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            if omitWhitespace \
-               and moved \
-               and ((len(zone.string) == 0) \
-                    or (len(zone.words) \
-                        and zone.words[self.wordIndex].string.isspace())):
-
-                hasMoreText = False
-                if self.lineIndex > 0 and isinstance(zone, TextZone):
-                    prevZone = self.lines[self.lineIndex - 1].zones[-1]
-                    if prevZone.accessible == zone.accessible:
-                        hasMoreText = True
-
-                # If we're on whitespace in the same zone, then let's
-                # try to move on.  If not, we've definitely moved
-                # across accessibles.  If that's the case, let's try
-                # to find the first 'real' word in the accessible.
-                # If we cannot, then we're just stuck on an accessible
-                # with no words and we should do our best to announce
-                # this to the user (e.g., "whitespace" or "blank").
-                #
-                if zone.accessible == accessible or hasMoreText:
-                    moved = self.goPrevious(Context.WORD, wrap)
-                else:
-                    wordIndex = self.wordIndex - 1
-                    while wordIndex >= 0:
-                        if (not zone.words[wordIndex].string) \
-                            or not len(zone.words[wordIndex].string) \
-                            or zone.words[wordIndex].string.isspace():
-                            wordIndex -= 1
-                        else:
-                            break
-                    if wordIndex >= 0:
-                        self.wordIndex = wordIndex
-
-            if not moved:
-                self.lineIndex = lineIndex
-                self.zoneIndex = zoneIndex
-                self.wordIndex = wordIndex
-                self.charIndex = charIndex
-
-        elif flatReviewType == Context.LINE:
-            if wrap & Context.WRAP_LINE:
-                if self.lineIndex > 0:
-                    self.lineIndex -= 1
-                    self.zoneIndex = 0
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-                elif (wrap & Context.WRAP_TOP_BOTTOM) \
-                     and (len(self.lines) != 1):
-                    self.lineIndex = len(self.lines) - 1
-                    self.zoneIndex = 0
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
-
-        if moved and (flatReviewType != Context.LINE):
-            self.targetCharInfo = self.getCurrent(Context.CHAR)
-
-        return moved
-
-    def goNext(self, flatReviewType=ZONE, wrap=WRAP_ALL, omitWhitespace=True):
-        """Moves this context's locus of interest to first char of
-        the next type.
-
-        Arguments:
-        - flatReviewType: one of ZONE, CHAR, WORD, LINE
-        - wrap: if True, will cross boundaries, including top and
-                bottom; if False, will stop on boundaries.
-        """
-
-        if not self.lines:
-            debug.print_message(debug.LEVEL_INFO, 'goNext(): no lines in context')
-            return False
-
-        moved = False
-
-        if flatReviewType == Context.ZONE:
-            if self.zoneIndex < (len(self.lines[self.lineIndex].zones) - 1):
-                self.zoneIndex += 1
-                self.wordIndex = 0
-                self.charIndex = 0
-                moved = True
-            elif wrap & Context.WRAP_LINE:
-                if self.lineIndex < (len(self.lines) - 1):
-                    self.lineIndex += 1
-                    self.zoneIndex  = 0
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-                    braille.clear()
-                elif wrap & Context.WRAP_TOP_BOTTOM:
-                    self.lineIndex  = 0
-                    self.zoneIndex  = 0
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-                    braille.clear()
-        elif flatReviewType == Context.CHAR:
-            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            if zone.words:
-                chars = zone.words[self.wordIndex].chars
-                if chars:
-                    if self.charIndex < (len(chars) - 1):
-                        self.charIndex += 1
-                        moved = True
-                    else:
-                        moved = self.goNext(Context.WORD, wrap, False)
-                else:
-                    moved = self.goNext(Context.WORD, wrap)
-            else:
-                moved = self.goNext(Context.ZONE, wrap)
-        elif flatReviewType == Context.WORD:
-            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            accessible = zone.accessible
-            lineIndex = self.lineIndex
-            zoneIndex = self.zoneIndex
-            wordIndex = self.wordIndex
-            charIndex = self.charIndex
-
-            if zone.words:
-                if self.wordIndex < (len(zone.words) - 1):
-                    self.wordIndex += 1
-                    self.charIndex = 0
-                    moved = True
-                else:
-                    moved = self.goNext(Context.ZONE, wrap)
-            else:
-                moved = self.goNext(Context.ZONE, wrap)
-
-            # If we landed on a whitespace word or something with no words,
-            # we might need to move some more.
-            #
-            zone = self.lines[self.lineIndex].zones[self.zoneIndex]
-            if omitWhitespace \
-               and moved \
-               and ((len(zone.string) == 0) \
-                    or (len(zone.words) \
-                        and zone.words[self.wordIndex].string.isspace())):
-
-                # If we're on whitespace in the same zone, then let's
-                # try to move on.  If not, we've definitely moved
-                # across accessibles.  If that's the case, let's try
-                # to find the first 'real' word in the accessible.
-                # If we cannot, then we're just stuck on an accessible
-                # with no words and we should do our best to announce
-                # this to the user (e.g., "whitespace" or "blank").
-                #
-                if zone.accessible == accessible:
-                    moved = self.goNext(Context.WORD, wrap)
-                else:
-                    wordIndex = self.wordIndex + 1
-                    while wordIndex < len(zone.words):
-                        if (not zone.words[wordIndex].string) \
-                            or not len(zone.words[wordIndex].string) \
-                            or zone.words[wordIndex].string.isspace():
-                            wordIndex += 1
-                        else:
-                            break
-                    if wordIndex < len(zone.words):
-                        self.wordIndex = wordIndex
-
-            if not moved:
-                self.lineIndex = lineIndex
-                self.zoneIndex = zoneIndex
-                self.wordIndex = wordIndex
-                self.charIndex = charIndex
-
-        elif flatReviewType == Context.LINE:
-            if wrap & Context.WRAP_LINE:
-                if self.lineIndex < (len(self.lines) - 1):
-                    self.lineIndex += 1
-                    self.zoneIndex = 0
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-                elif (wrap & Context.WRAP_TOP_BOTTOM) \
-                     and (self.lineIndex != 0):
-                    self.lineIndex = 0
-                    self.zoneIndex = 0
-                    self.wordIndex = 0
-                    self.charIndex = 0
-                    moved = True
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
-
-        if moved and (flatReviewType != Context.LINE):
-            self.targetCharInfo = self.getCurrent(Context.CHAR)
-
-        return moved
-
-    def goAbove(self, flatReviewType=LINE, wrap=WRAP_ALL):
-        """Moves this context's locus of interest to first char
-        of the type that's closest to and above the current locus of
-        interest.
-
-        Arguments:
-        - flatReviewType: LINE
-        - wrap: if True, will cross top/bottom boundaries; if False, will
-                stop on top/bottom boundaries.
-
-        Returns: [string, startOffset, endOffset, x, y, width, height]
-        """
-
-        moved = False
-        if flatReviewType == Context.CHAR:
-            # We want to shoot for the closest character, which we've
-            # saved away as self.targetCharInfo, which is the list
-            # [string, x, y, width, height].
-            #
-            if not self.targetCharInfo:
-                self.targetCharInfo = self.getCurrent(Context.CHAR)
-            target = self.targetCharInfo
-
-            [string, x, y, width, height] = target
-            middleTargetX = x + (width / 2)
-
-            moved = self.goPrevious(Context.LINE, wrap)
-            if moved:
-                while True:
-                    [string, bx, by, bwidth, bheight] = \
-                             self.getCurrent(Context.CHAR)
-                    if (bx + width) >= middleTargetX:
-                        break
-                    elif not self.goNext(Context.CHAR, Context.WRAP_NONE):
-                        break
-
-            # Moving around might have reset the current targetCharInfo,
-            # so we reset it to our saved value.
-            #
-            self.targetCharInfo = target
-        elif flatReviewType == Context.LINE:
-            return self.goPrevious(flatReviewType, wrap)
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
-
-        return moved
-
-    def goBelow(self, flatReviewType=LINE, wrap=WRAP_ALL):
-        """Moves this context's locus of interest to the first
-        char of the type that's closest to and below the current
-        locus of interest.
-
-        Arguments:
-        - flatReviewType: one of WORD, LINE
-        - wrap: if True, will cross top/bottom boundaries; if False, will
-                stop on top/bottom boundaries.
-
-        Returns: [string, startOffset, endOffset, x, y, width, height]
-        """
-
-        moved = False
-        if flatReviewType == Context.CHAR:
-            # We want to shoot for the closest character, which we've
-            # saved away as self.targetCharInfo, which is the list
-            # [string, x, y, width, height].
-            #
-            if not self.targetCharInfo:
-                self.targetCharInfo = self.getCurrent(Context.CHAR)
-            target = self.targetCharInfo
-
-            [string, x, y, width, height] = target
-            middleTargetX = x + (width / 2)
-
-            moved = self.goNext(Context.LINE, wrap)
-            if moved:
-                while True:
-                    [string, bx, by, bwidth, bheight] = \
-                             self.getCurrent(Context.CHAR)
-                    if (bx + width) >= middleTargetX:
-                        break
-                    elif not self.goNext(Context.CHAR, Context.WRAP_NONE):
-                        break
-
-            # Moving around might have reset the current targetCharInfo,
-            # so we reset it to our saved value.
-            #
-            self.targetCharInfo = target
-        elif flatReviewType == Context.LINE:
-            moved = self.goNext(flatReviewType, wrap)
-        else:
-            raise Exception("Invalid type: %d" % flatReviewType)
-
-        return moved
+        return True

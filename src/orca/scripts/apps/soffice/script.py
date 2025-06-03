@@ -279,11 +279,8 @@ class Script(default.Script):
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes."""
 
-        # Check to see if this is this is for the find command. See comment #18 of bug #354463.
-        if self.run_find_command and \
-           event.type.startswith("object:state-changed:focused"):
-            self.run_find_command = False
-            self.get_flat_review_finder().find(self)
+        if self.run_find_command_on:
+            super().locus_of_focus_changed(event, old_focus, new_focus)
             return
 
         if self.get_flat_review_presenter().is_active():
@@ -326,11 +323,6 @@ class Script(default.Script):
         if not AXObject.get_parent(event.source):
             msg = "SOFFICE: Event source lacks parent"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        # Prevent this events from activating the find operation.
-        # See comment #18 of bug #354463.
-        if self.run_find_command:
             return
 
         super().on_active_changed(event)
