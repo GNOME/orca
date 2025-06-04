@@ -849,7 +849,7 @@ class StructuralNavigation:
         thisObj, index = _getMatchingObjAndIndex(obj)
 
         # Check again because weird authoring, e.g. an ARIA heading descendant of a native heading.
-        if thisObj:
+        if thisObj and AXUtilities.is_heading(thisObj):
             ancestorMatch, ancestorIndex = _getMatchingObjAndIndex(AXObject.get_parent(thisObj))
             if ancestorMatch:
                 thisObj = ancestorMatch
