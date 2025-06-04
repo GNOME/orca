@@ -739,10 +739,11 @@ class SpeechAndVerbosityManager:
         offsets = sorted([offset - start_offset for offset in offsets], reverse=True)
         tokens = list(line)
         for o in offsets:
-            text = f" {messages.LINK}"
-            if o < len(tokens) and tokens[o].isalnum():
-                text += " "
-            tokens[o:o] = text
+            if 0 <= o <= len(tokens):
+                text = f" {messages.LINK}"
+                if o < len(tokens) and tokens[o].isalnum():
+                    text += " "
+                tokens[o:o] = text
         return "".join(tokens)
 
     @staticmethod
