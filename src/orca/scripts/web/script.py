@@ -1360,6 +1360,9 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
+        if self.utilities.shouldInterruptForLocusOfFocusChange(old_focus, new_focus, event):
+            self.presentationInterrupt()
+
         if contents:
             self.speakContents(contents, **args)
         else:
