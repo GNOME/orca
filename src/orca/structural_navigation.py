@@ -820,6 +820,9 @@ class StructuralNavigation:
         """
 
         self._last_input_event = event
+        if event is None:
+            self._script.presentationInterrupt()
+
         matches = self._getAll(structuralNavigationObject, arg)
         if not matches:
             structuralNavigationObject.present(None, arg)
