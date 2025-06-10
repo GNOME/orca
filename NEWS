@@ -1,3 +1,40 @@
+48.2 - 10 June 2025
+
+Web:
+
+* Fix two instances of Orca failing to interrupt speech during
+  navigation.
+
+* Handle structural navigation among headings with broken ARIA
+  authoring.
+
+* Fix population of the enable-structural-navigation checkbox.
+
+Flat Review:
+
+* Fall back to clicking on object when clicking on character fails.
+
+* Work around issue causing objects with "dead"/missing children to
+  not be included in the collection of objects.
+
+General:
+
+* Fix several unhandled exceptions.
+
+* Fix chattiness related to deleting selected text.
+
+* Include state expanded when generating braille for table rows.
+
+* Include ancestors when generating speech for focused combo boxes.
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  en_GB           British English           Andi Chandler
+  uz              Uzbek (Latin)             Baxrom Raxmatov
+
+=========
+
 48.1 - 1 May 2025
 
 Web:
