@@ -972,8 +972,8 @@ class StructuralNavigation:
         self._script.sayLine(obj, offset)
 
     def _presentWithSayAll(self, obj, offset):
-        if self._script.inSayAll() \
-           and settings_manager.get_manager().get_setting('structNavInSayAll'):
+        if focus_manager.get_manager().in_say_all() \
+           and settings_manager.get_manager().get_setting("structNavInSayAll"):
             self._script.say_all(None, obj, offset)
             return True
 

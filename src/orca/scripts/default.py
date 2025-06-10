@@ -74,8 +74,6 @@ class Script(script.Script):
         #
         self.lastMouseRoutingTime = None
 
-        self._inSayAll = False
-        self._sayAllIsInterrupted = False
         self._sayAllContexts = []
         self.grab_ids = []
 
@@ -539,8 +537,6 @@ class Script(script.Script):
     def deactivate(self):
         """Called when this script is deactivated."""
 
-        self._inSayAll = False
-        self._sayAllIsInterrupted = False
         self.point_of_reference = {}
 
         if self.get_bypass_mode_manager().is_active():
@@ -1732,32 +1728,15 @@ class Script(script.Script):
         if progressType == speechserver.SayAllContext.INTERRUPTED:
             manager = input_event_manager.get_manager()
             if manager.last_event_was_keyboard():
-                self._sayAllIsInterrupted = True
                 if manager.last_event_was_down() and self._fastForwardSayAll(context):
                     return
                 if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
 
-        self._inSayAll = False
         self._sayAllContexts = []
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
         focus_manager.get_manager().emit_region_changed(context.obj, context.currentOffset)
         AXText.set_caret_offset(context.obj, context.currentOffset)
-
-    def inSayAll(self, treatInterruptedAsIn=True):
-        if self._inSayAll:
-            msg = "DEFAULT: In SayAll"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self._sayAllIsInterrupted:
-            msg = "DEFAULT: SayAll is interrupted"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return treatInterruptedAsIn
-
-        msg = "DEFAULT: Not in SayAll"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return False
 
     def echoPreviousSentence(self, obj):
         """Speaks the sentence prior to the caret if at a sentence boundary."""
@@ -1993,8 +1972,6 @@ class Script(script.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
-        self._sayAllIsInterrupted = False
-        self._inSayAll = True
         prior_obj = obj
         if offset is None:
             offset = AXText.get_caret_offset(obj)
@@ -2027,12 +2004,7 @@ class Script(script.Script):
             offset = 0
             obj = self.utilities.findNextObject(obj)
 
-        self._inSayAll = False
         self._sayAllContexts = []
-
-        msg = "DEFAULT: textLines complete. Verifying SayAll status"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.inSayAll()
 
     def phoneticSpellCurrentItem(self, itemString):
         """Phonetically spell the current flat review word or line.
@@ -2095,7 +2067,6 @@ class Script(script.Script):
         if we fully present the event; False otherwise."""
 
         if not event.is_pressed_key():
-            self._sayAllIsInterrupted = False
             self.utilities.clearCachedCommandState()
 
         if not event.should_echo() or event.is_orca_modified():

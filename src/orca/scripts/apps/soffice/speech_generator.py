@@ -28,6 +28,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 from orca import debug
+from orca import focus_manager
 from orca import messages
 from orca import settings_manager
 from orca import speech_generator
@@ -140,7 +141,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_real_table_cell(self, obj, **args):
-        if self._script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             return []
 
         result = super()._generate_real_table_cell(obj, **args)

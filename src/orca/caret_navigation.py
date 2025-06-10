@@ -33,6 +33,7 @@ from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
+from . import focus_manager
 from . import input_event
 from . import input_event_manager
 from . import keybindings
@@ -436,7 +437,7 @@ class CaretNavigation:
         if not event:
             return False
 
-        if script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             _settings_manager = settings_manager.get_manager()
             if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
                 msg = "CARET NAVIGATION: In say all and rewind/fast-forward is enabled"
@@ -466,7 +467,7 @@ class CaretNavigation:
         if not event:
             return False
 
-        if script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             _settings_manager = settings_manager.get_manager()
             if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
                 msg = "CARET NAVIGATION: In say all and rewind/fast-forward is enabled"

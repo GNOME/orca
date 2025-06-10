@@ -382,7 +382,7 @@ class Utilities:
         return row != lastRow
 
     def shouldReadFullRow(self, obj, prevObj=None):
-        if self._script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             return False
 
         if self._script.get_table_navigator().last_input_event_was_navigation_command():

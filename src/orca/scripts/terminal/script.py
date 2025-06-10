@@ -107,7 +107,6 @@ class Script(default.Script):
         if event.is_pressed_key():
             return False
 
-        self._sayAllIsInterrupted = False
         self.utilities.clearCachedCommandState()
         if not event.should_echo() or event.is_orca_modified() or event.is_character_echoable():
             return False

@@ -598,7 +598,7 @@ class SpeechGenerator(generator.Generator):
                     Atspi.Role.TOOL_TIP]
 
         enabled, disabled = [], []
-        if self._script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             if settings_manager.get_manager().get_setting('sayAllContextBlockquote'):
                 enabled.append(Atspi.Role.BLOCK_QUOTE)
             if settings_manager.get_manager().get_setting('sayAllContextLandmark'):
@@ -1919,7 +1919,7 @@ class SpeechGenerator(generator.Generator):
         if not settings_manager.get_manager().get_setting("speakCellHeaders"):
             return []
 
-        if self._script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             return []
 
         if not self._script.utilities.cellColumnChanged(obj, args.get("priorObj")) \
@@ -1940,7 +1940,7 @@ class SpeechGenerator(generator.Generator):
         if not settings_manager.get_manager().get_setting("speakCellHeaders"):
             return []
 
-        if self._script.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             return []
 
         if not self._script.utilities.cellRowChanged(obj, args.get("priorObj")) \
@@ -2064,7 +2064,8 @@ class SpeechGenerator(generator.Generator):
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         if result[0] in ['\n', ''] \
            and settings_manager.get_manager().get_setting("speakBlankLines") \
-           and not self._script.inSayAll() and args.get('total', 1) == 1 \
+           and not focus_manager.get_manager().in_say_all() \
+           and args.get("total", 1) == 1 \
            and not AXUtilities.is_table_cell_or_header(obj) \
            and args.get("formatType") != "ancestor":
             result[0] = messages.BLANK
@@ -2084,7 +2085,8 @@ class SpeechGenerator(generator.Generator):
 
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]
         if text == '\n' and settings_manager.get_manager().get_setting("speakBlankLines") \
-           and not self._script.inSayAll() and args.get('total', 1) == 1 \
+           and not focus_manager.get_manager().in_say_all() \
+           and args.get("total", 1) == 1 \
            and not AXUtilities.is_table_cell_or_header(obj) \
            and args.get("formatType") != "ancestor":
             result = [messages.BLANK]

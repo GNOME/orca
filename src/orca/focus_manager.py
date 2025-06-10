@@ -151,6 +151,11 @@ class FocusManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._object_of_interest = obj
 
+    def in_say_all(self) -> bool:
+        """Returns True if we are in say-all mode."""
+
+        return self._active_mode == SAY_ALL
+
     def get_active_mode_and_object_of_interest(
         self
     ) -> tuple[Optional[str], Optional[Atspi.Accessible]]:

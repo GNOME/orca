@@ -2409,7 +2409,7 @@ class Utilities(script_utilities.Utilities):
 
         rv = self._shouldInferLabelFor.get(hash(obj))
         if rv and not self._script.caret_navigation.last_input_event_was_navigation_command():
-            return not self._script.inSayAll()
+            return not focus_manager.get_manager().in_say_all()
         if rv is False:
             return rv
 

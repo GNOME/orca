@@ -427,10 +427,10 @@ class Script(default.Script):
         if not event.detail1:
             return
 
-        if self._inSayAll:
+        manager = focus_manager.get_manager()
+        if manager.in_say_all():
             return
 
-        manager = focus_manager.get_manager()
         focus = manager.get_locus_of_focus()
         if AXUtilities.is_root_pane(event.source) and AXObject.is_ancestor(focus, event.source):
             msg = "SOFFICE: Event ignored: Source is root pane ancestor of current focus."

@@ -70,8 +70,6 @@ class Script(default.Script):
         super().__init__(app)
 
         self._sayAllContents = []
-        self._inSayAll = False
-        self._sayAllIsInterrupted = False
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
         self._lastMouseButtonContext = None, -1
@@ -517,8 +515,6 @@ class Script(default.Script):
             super().textLines(obj, offset)
             return
 
-        self._sayAllIsInterrupted = False
-
         sayAllStyle = settings_manager.get_manager().get_setting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
         if offset is None:
@@ -544,7 +540,6 @@ class Script(default.Script):
                     voices.append(u)
             return elements, voices
 
-        self._inSayAll = True
         done = False
         while not done:
             if sayAllBySentence:
@@ -599,13 +594,8 @@ class Script(default.Script):
 
             done = obj is None
 
-        self._inSayAll = False
         self._sayAllContents = []
         self._sayAllContexts = []
-
-        msg = "WEB: textLines complete. Verifying SayAll status"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.inSayAll()
 
     def presentFindResults(self, obj, offset):
         """Updates the context and presents the find results if appropriate."""
@@ -688,30 +678,26 @@ class Script(default.Script):
             super().__sayAllProgressCallback(context, progressType)
             return
 
+        if progressType == speechserver.SayAllContext.PROGRESS:
+            focus_manager.get_manager().emit_region_changed(
+                context.obj, context.currentOffset, context.currentEndOffset, focus_manager.SAY_ALL)
+            return
+
         if progressType == speechserver.SayAllContext.INTERRUPTED:
             manager = input_event_manager.get_manager()
             if manager.last_event_was_keyboard():
-                self._sayAllIsInterrupted = True
                 if manager.last_event_was_down() and self._fastForwardSayAll(context):
                     return
                 if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
-                if not self.structural_navigation.last_input_event_was_navigation_command() \
-                   and not self.get_table_navigator().last_input_event_was_navigation_command():
-                    focus_manager.get_manager().emit_region_changed(
-                        context.obj, context.currentOffset)
-                    self.utilities.setCaretPosition(context.obj, context.currentOffset)
-                    self.update_braille(context.obj)
+                if settings_manager.get_manager().get_setting("structNavInSayAll") \
+                   and self.structural_navigation.last_input_event_was_navigation_command():
+                    return
 
-            self._inSayAll = False
-            self._sayAllContents = []
-            self._sayAllContexts = []
-            return
-
+        self._sayAllContents = []
+        self._sayAllContexts = []
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-        focus_manager.get_manager().emit_region_changed(
-            context.obj, context.currentOffset, context.currentEndOffset,
-            focus_manager.SAY_ALL)
+        focus_manager.get_manager().emit_region_changed(context.obj, context.currentOffset)
         self.utilities.setCaretContext(context.obj, context.currentOffset)
 
     def inFocusMode(self):
@@ -742,7 +728,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.inSayAll():
+        if focus_manager.get_manager().in_say_all():
             msg = "WEB: Not using focus mode because we're in SayAll."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
