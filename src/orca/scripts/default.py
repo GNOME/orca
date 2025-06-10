@@ -1738,20 +1738,11 @@ class Script(script.Script):
                 if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
 
-            self._inSayAll = False
-            self._sayAllContexts = []
-            focus_manager.get_manager().emit_region_changed(context.obj, context.currentOffset)
-            AXText.set_caret_offset(context.obj, context.currentOffset)
-        elif progressType == speechserver.SayAllContext.COMPLETED:
-            focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-            focus_manager.get_manager().emit_region_changed(
-                context.obj, context.currentOffset, mode=focus_manager.SAY_ALL)
-            AXText.set_caret_offset(context.obj, context.currentOffset)
-
-        # TODO - JD: This was in place for bgo#489504. But setting the caret should cause
-        # the selection to be cleared by the implementation. Find out where that's not the
-        # case and see if they'll fix it.
-        AXText.clear_all_selected_text(context.obj)
+        self._inSayAll = False
+        self._sayAllContexts = []
+        focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
+        focus_manager.get_manager().emit_region_changed(context.obj, context.currentOffset)
+        AXText.set_caret_offset(context.obj, context.currentOffset)
 
     def inSayAll(self, treatInterruptedAsIn=True):
         if self._inSayAll:
