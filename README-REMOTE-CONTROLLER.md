@@ -16,6 +16,13 @@ Orca exposes a D-Bus service at:
 - **Module Object Paths**: `/org/gnome/Orca/Service/ModuleName`
   (e.g., `/org/gnome/Orca/Service/SpeechAndVerbosityManager`)
 
+## Dependencies
+
+The D-Bus interface requires:
+
+- **dasbus** - Python D-Bus library used by Orca for the remote controller implementation.
+  ([Installation instructions](https://dasbus.readthedocs.io/en/latest/index.html))
+
 ## Service-Level Commands
 
 Commands available directly on the main service (`/org/gnome/Orca/Service`):

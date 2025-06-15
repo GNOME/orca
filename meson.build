@@ -38,6 +38,7 @@ endif
 # Optional python modules with their descriptions
 optional_modules = {
   'brlapi': 'braille output',
+  'dasbus': 'D-Bus remote controller interface',
   'louis': 'contracted braille',
   'psutil': 'system information commands',
   'gi.repository.Wnck': 'mouse review',
