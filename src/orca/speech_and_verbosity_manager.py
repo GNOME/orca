@@ -355,7 +355,7 @@ class SpeechAndVerbosityManager:
         self.start_speech()
 
     def decrease_rate(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Decreases the speech rate"""
 
@@ -366,10 +366,13 @@ class SpeechAndVerbosityManager:
             return True
 
         server.decreaseSpeechRate()
+        if script is not None:
+            script.presentMessage(messages.SPEECH_SLOWER)
+
         return True
 
     def increase_rate(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Increases the speech rate"""
 
@@ -380,10 +383,12 @@ class SpeechAndVerbosityManager:
             return True
 
         server.increaseSpeechRate()
+        if script is not None:
+            script.presentMessage(messages.SPEECH_FASTER)
         return True
 
     def decrease_pitch(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Decreases the speech pitch"""
 
@@ -394,10 +399,13 @@ class SpeechAndVerbosityManager:
             return True
 
         server.decreaseSpeechPitch()
+        if script is not None:
+            script.presentMessage(messages.SPEECH_LOWER)
+
         return True
 
     def increase_pitch(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Increase the speech pitch"""
 
@@ -408,10 +416,13 @@ class SpeechAndVerbosityManager:
             return True
 
         server.increaseSpeechPitch()
+        if script is not None:
+            script.presentMessage(messages.SPEECH_HIGHER)
+
         return True
 
     def decrease_volume(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Decreases the speech volume"""
 
@@ -422,10 +433,13 @@ class SpeechAndVerbosityManager:
             return True
 
         server.decreaseSpeechVolume()
+        if script is not None:
+            script.presentMessage(messages.SPEECH_SOFTER)
+
         return True
 
     def increase_volume(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Increases the speech volume"""
 
@@ -436,6 +450,8 @@ class SpeechAndVerbosityManager:
             return True
 
         server.increaseSpeechVolume()
+        if script is not None:
+            script.presentMessage(messages.SPEECH_LOUDER)
         return True
 
     def update_capitalization_style(self) -> bool:

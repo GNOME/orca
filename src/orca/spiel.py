@@ -32,7 +32,6 @@ import gi
 
 from . import debug
 from . import guilabels
-from . import messages
 from . import speechserver
 from . import settings
 from . import settings_manager
@@ -557,8 +556,6 @@ class SpeechServer(speechserver.SpeechServer):
         acss[ACSS.RATE] = max(0, min(99, rate + delta))
         msg = f"SPIEL: Rate set to {rate}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.speak(decrease and messages.SPEECH_SLOWER \
-                   or messages.SPEECH_FASTER, acss=acss)
 
     def _change_default_speech_pitch(self, step, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
@@ -570,8 +567,6 @@ class SpeechServer(speechserver.SpeechServer):
         acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
         msg = f"SPIEL: Pitch set to {pitch}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.speak(decrease and messages.SPEECH_LOWER \
-                   or messages.SPEECH_HIGHER, acss=acss)
 
     def _change_default_speech_volume(self, step, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
@@ -583,8 +578,6 @@ class SpeechServer(speechserver.SpeechServer):
         acss[ACSS.GAIN] = max(0, min(9, volume + delta))
         msg = f"SPIEL: Volume set to {volume}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.speak(decrease and messages.SPEECH_SOFTER \
-                   or messages.SPEECH_LOUDER, acss=acss)
 
     def _maybe_shutdown(self):
         # We're the last speaker, wrap things up
