@@ -44,6 +44,7 @@ from gi.repository import Gio
 
 from . import braille
 from . import clipboard
+from . import dbus_service
 from . import debug
 from . import debugging_tools_manager
 from . import event_manager
@@ -116,6 +117,8 @@ def shutdown(script=None, _event=None, _signum=None):
     signal.signal(signal.SIGALRM, _timeout)
     signal.alarm(5)
 
+    dbus_service.get_remote_controller().shutdown()
+
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
     script = script_manager.get_manager().get_active_script()
     if script is not None:
@@ -186,6 +189,7 @@ def main():
         msg = f"ORCA: Exception connecting to a11y applications gsetting: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
+    dbus_service.get_remote_controller().start()
     script = script_manager.get_manager().get_default_script()
     script.presentMessage(messages.START_ORCA)
 

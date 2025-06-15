@@ -59,3 +59,7 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "speechd.*"
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "dasbus.*"
+ignore_missing_imports = true

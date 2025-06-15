@@ -39,6 +39,7 @@ from typing import Optional, TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
+from . import dbus_service
 from . import focus_manager
 from . import input_event
 from . import keybindings
@@ -71,6 +72,11 @@ class SpeechAndVerbosityManager:
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_indentation_description: str = ""
         self._last_error_description: str = ""
+
+        msg = "SPEECH AND VERBOSITY MANAGER: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("SpeechAndVerbosityManager", self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -325,6 +331,7 @@ class SpeechAndVerbosityManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.start_speech()
 
+    @dbus_service.command
     def start_speech(
         self,
         script: Optional[default.Script] = None,
@@ -339,6 +346,7 @@ class SpeechAndVerbosityManager:
         speech.init()
         return True
 
+    @dbus_service.command
     def interrupt_speech(
         self,
         script: Optional[default.Script] = None,
@@ -356,6 +364,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def shutdown_speech(
         self,
         script: Optional[default.Script] = None,
@@ -374,6 +383,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def refresh_speech(
         self,
         script: Optional[default.Script] = None,
@@ -390,6 +400,7 @@ class SpeechAndVerbosityManager:
         self.start_speech()
         return True
 
+    @dbus_service.command
     def decrease_rate(
         self,
         script: Optional[default.Script] = None,
@@ -414,6 +425,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def increase_rate(
         self,
         script: Optional[default.Script] = None,
@@ -438,6 +450,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def decrease_pitch(
         self,
         script: Optional[default.Script] = None,
@@ -462,6 +475,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def increase_pitch(
         self,
         script: Optional[default.Script] = None,
@@ -486,6 +500,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def decrease_volume(
         self,
         script: Optional[default.Script] = None,
@@ -510,6 +525,7 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.command
     def increase_volume(
         self,
         script: Optional[default.Script] = None,
@@ -580,6 +596,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             server.setOutputModule(server_id)
 
+    @dbus_service.command
     def cycle_synthesizer(
         self,
         script: Optional[default.Script] = None,
@@ -619,6 +636,7 @@ class SpeechAndVerbosityManager:
             script.presentMessage(available[index])
         return True
 
+    @dbus_service.command
     def cycle_capitalization_style(
         self,
         script: Optional[default.Script] = None,
@@ -652,6 +670,7 @@ class SpeechAndVerbosityManager:
         self.update_capitalization_style()
         return True
 
+    @dbus_service.command
     def cycle_punctuation_level(
         self,
         script: Optional[default.Script] = None,
@@ -689,6 +708,7 @@ class SpeechAndVerbosityManager:
         self.update_punctuation_level()
         return True
 
+    @dbus_service.command
     def cycle_key_echo(
         self,
         script: Optional[default.Script] = None,
@@ -739,6 +759,7 @@ class SpeechAndVerbosityManager:
             script.presentMessage(full, brief)
         return True
 
+    @dbus_service.command
     def change_number_style(
         self,
         script: Optional[default.Script] = None,
@@ -765,6 +786,7 @@ class SpeechAndVerbosityManager:
             script.presentMessage(full, brief)
         return True
 
+    @dbus_service.command
     def toggle_speech(
         self,
         script: Optional[default.Script] = None,
@@ -795,6 +817,7 @@ class SpeechAndVerbosityManager:
             manager.set_setting("silenceSpeech", True)
         return True
 
+    @dbus_service.command
     def toggle_verbosity(
         self,
         script: Optional[default.Script] = None,
@@ -819,6 +842,7 @@ class SpeechAndVerbosityManager:
             manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_BRIEF)
         return True
 
+    @dbus_service.command
     def toggle_indentation_and_justification(
         self,
         script: Optional[default.Script] = None,
@@ -844,6 +868,7 @@ class SpeechAndVerbosityManager:
             script.presentMessage(full, brief)
         return True
 
+    @dbus_service.command
     def toggle_table_cell_reading_mode(
         self,
         script: Optional[default.Script] = None,

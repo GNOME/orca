@@ -389,6 +389,11 @@ time.sleep(0.5)
 print("Done announcing Hello, world!")
 ```
 
+**New in Orca v49.0:** For headless applications, Orca now provides a much simpler D-Bus API
+called `PresentMessage` that eliminates the need for the complex AT-SPI2 setup shown above.
+See [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md) for details on using this
+streamlined interface.
+
 **Please note:** Because "assertive" messages can be disruptive if presented at the wrong
 time, Orca *currently* treats an "assertive" notification from non-web applications the
 same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web

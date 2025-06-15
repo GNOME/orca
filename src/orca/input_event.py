@@ -63,6 +63,7 @@ if TYPE_CHECKING:
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
 MOUSE_BUTTON_EVENT = "mouse:button"
+REMOTE_CONTROLLER_EVENT = "remote controller"
 
 class InputEvent:
     """Provides support for handling input events."""
@@ -872,6 +873,12 @@ class MouseButtonEvent(InputEvent):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.x, self.y = x, y
+
+class RemoteControllerEvent(InputEvent):
+    """A simple input event whose main purpose is identification of the origin."""
+
+    def __init__(self):
+        super().__init__(REMOTE_CONTROLLER_EVENT)
 
 class InputEventHandler:
     """A handler for an input event."""
