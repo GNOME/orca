@@ -27,10 +27,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from typing import Any, Optional
+
 from . import messages
 from .acss import ACSS
 
-userCustomizableSettings = [
+userCustomizableSettings: list[str] = [
     "orcaModifierKeys",
     "enableSpeech",
     "onlySpeakDisplayedText",
@@ -142,49 +144,49 @@ userCustomizableSettings = [
     "sayAllContextTable"
 ]
 
-GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
-GENERAL_KEYBOARD_LAYOUT_LAPTOP  = 2
+GENERAL_KEYBOARD_LAYOUT_DESKTOP: int = 1
+GENERAL_KEYBOARD_LAYOUT_LAPTOP: int = 2
 
-DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
-LAPTOP_MODIFIER_KEYS  = ["Caps_Lock", "Shift_Lock"]
+DESKTOP_MODIFIER_KEYS: list[str] = ["Insert", "KP_Insert"]
+LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
 
-VERBOSITY_LEVEL_BRIEF   = 0
-VERBOSITY_LEVEL_VERBOSE = 1
+VERBOSITY_LEVEL_BRIEF: int = 0
+VERBOSITY_LEVEL_VERBOSE: int = 1
 
-BRAILLE_UNDERLINE_NONE = 0x00 # 00000000
-BRAILLE_UNDERLINE_7    = 0x40 # 01000000
-BRAILLE_UNDERLINE_8    = 0x80 # 10000000
-BRAILLE_UNDERLINE_BOTH = 0xc0 # 11000000
+BRAILLE_UNDERLINE_NONE: int = 0x00 # 00000000
+BRAILLE_UNDERLINE_7: int = 0x40 # 01000000
+BRAILLE_UNDERLINE_8: int = 0x80 # 10000000
+BRAILLE_UNDERLINE_BOTH: int = 0xc0 # 11000000
 
-BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
-BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
+BRAILLE_ROLENAME_STYLE_SHORT: int = 0 # three letter abbreviations
+BRAILLE_ROLENAME_STYLE_LONG: int = 1 # full rolename
 
-PUNCTUATION_STYLE_NONE = 3
-PUNCTUATION_STYLE_SOME = 2
-PUNCTUATION_STYLE_MOST = 1
-PUNCTUATION_STYLE_ALL  = 0
+PUNCTUATION_STYLE_NONE: int = 3
+PUNCTUATION_STYLE_SOME: int = 2
+PUNCTUATION_STYLE_MOST: int = 1
+PUNCTUATION_STYLE_ALL: int = 0
 
-CAPITALIZATION_STYLE_NONE  = "none"
-CAPITALIZATION_STYLE_SPELL = "spell"
-CAPITALIZATION_STYLE_ICON = "icon"
+CAPITALIZATION_STYLE_NONE: str = "none"
+CAPITALIZATION_STYLE_SPELL: str = "spell"
+CAPITALIZATION_STYLE_ICON: str = "icon"
 
-SAYALL_STYLE_LINE     = 0
-SAYALL_STYLE_SENTENCE = 1
+SAYALL_STYLE_LINE: int = 0
+SAYALL_STYLE_SENTENCE: int = 1
 
-PROGRESS_BAR_ALL         = 0
-PROGRESS_BAR_APPLICATION = 1
-PROGRESS_BAR_WINDOW      = 2
+PROGRESS_BAR_ALL: int = 0
+PROGRESS_BAR_APPLICATION: int = 1
+PROGRESS_BAR_WINDOW: int = 2
 
-CHAT_SPEAK_ALL             = 0
-CHAT_SPEAK_ALL_IF_FOCUSED  = 1
-CHAT_SPEAK_FOCUSED_CHANNEL = 2
+CHAT_SPEAK_ALL: int = 0
+CHAT_SPEAK_ALL_IF_FOCUSED: int = 1
+CHAT_SPEAK_FOCUSED_CHANNEL: int = 2
 
-DEFAULT_VOICE           = "default"
-UPPERCASE_VOICE         = "uppercase"
-HYPERLINK_VOICE         = "hyperlink"
-SYSTEM_VOICE            = "system"
+DEFAULT_VOICE: str = "default"
+UPPERCASE_VOICE: str = "uppercase"
+HYPERLINK_VOICE: str = "hyperlink"
+SYSTEM_VOICE: str = "system"
 
-voicesKeys = {
+voicesKeys: dict[str, str] = {
 "DEFAULT_VOICE"     : "default",
 "UPPERCASE_VOICE"   : "uppercase",
 "HYPERLINK_VOICE"   : "hyperlink",
@@ -192,7 +194,7 @@ voicesKeys = {
 }
 
 
-voices = {
+voices: dict[str, ACSS] = {
     DEFAULT_VOICE: ACSS({}),
     UPPERCASE_VOICE: ACSS({ACSS.AVERAGE_PITCH : 7.0}),
     HYPERLINK_VOICE: ACSS({}),
@@ -200,168 +202,168 @@ voices = {
 }
 
 # Profiles
-startingProfile = ['Default', 'default']
-activeProfile   = ['Default', 'default']
-profile         = ['Default', 'default']
+startingProfile: list[str] = ['Default', 'default']
+activeProfile: list[str] = ['Default', 'default']
+profile: list[str] = ['Default', 'default']
 
 # Speech
-speechFactoryModules         = ["speechdispatcherfactory", "spiel"]
-speechServerFactory          = "speechdispatcherfactory"
-speechServerInfo             = None # None means let the factory decide.
-speechSystemOverride         = None
-enableSpeech                 = True
-silenceSpeech                = False
-enableTutorialMessages       = True
-enableMnemonicSpeaking       = False
-enablePositionSpeaking       = False
-enableSpeechIndentation      = False
-onlySpeakDisplayedText       = False
-presentToolTips              = False
-speakBlankLines              = True
-repeatCharacterLimit         = 4
-readFullRowInGUITable        = True
-readFullRowInDocumentTable   = True
-readFullRowInSpreadSheet     = False
-speakCellCoordinates         = True
-speakCellSpan                = True
-speakCellHeaders             = True
-speakSpreadsheetCoordinates  = True
-alwaysSpeakSelectedSpreadsheetRange = False
-speakNumbersAsDigits         = False
-speakMisspelledIndicator     = True
-useColorNames                = True
-usePronunciationDictionary   = True
-sayAllStyle                  = SAYALL_STYLE_SENTENCE
-capitalizationStyle          = CAPITALIZATION_STYLE_NONE
-verbalizePunctuationStyle    = PUNCTUATION_STYLE_MOST
-speechVerbosityLevel         = VERBOSITY_LEVEL_VERBOSE
-messagesAreDetailed          = True
-enablePauseBreaks            = True
-speakDescription             = True
-speakContextBlockquote       = True
-speakContextPanel            = True
-speakContextNonLandmarkForm  = True
-speakContextLandmark         = True
-speakContextList             = True
-speakContextTable            = True
-sayAllContextBlockquote      = True
-sayAllContextPanel           = True
-sayAllContextNonLandmarkForm = True
-sayAllContextLandmark        = True
-sayAllContextList            = True
-sayAllContextTable           = True
+speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
+speechServerFactory: str = "speechdispatcherfactory"
+speechServerInfo: Optional[list[str]] = None # None means let the factory decide.
+speechSystemOverride: Optional[str] = None
+enableSpeech: bool = True
+silenceSpeech: bool = False
+enableTutorialMessages: bool = True
+enableMnemonicSpeaking: bool = False
+enablePositionSpeaking: bool = False
+enableSpeechIndentation: bool = False
+onlySpeakDisplayedText: bool = False
+presentToolTips: bool = False
+speakBlankLines: bool = True
+repeatCharacterLimit: int = 4
+readFullRowInGUITable: bool = True
+readFullRowInDocumentTable: bool = True
+readFullRowInSpreadSheet: bool = False
+speakCellCoordinates: bool = True
+speakCellSpan: bool = True
+speakCellHeaders: bool = True
+speakSpreadsheetCoordinates: bool = True
+alwaysSpeakSelectedSpreadsheetRange: bool = False
+speakNumbersAsDigits: bool = False
+speakMisspelledIndicator: bool = True
+useColorNames: bool = True
+usePronunciationDictionary: bool = True
+sayAllStyle: int = SAYALL_STYLE_SENTENCE
+capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
+verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
+speechVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
+messagesAreDetailed: bool = True
+enablePauseBreaks: bool = True
+speakDescription: bool = True
+speakContextBlockquote: bool = True
+speakContextPanel: bool = True
+speakContextNonLandmarkForm: bool = True
+speakContextLandmark: bool = True
+speakContextList: bool = True
+speakContextTable: bool = True
+sayAllContextBlockquote: bool = True
+sayAllContextPanel: bool = True
+sayAllContextNonLandmarkForm: bool = True
+sayAllContextLandmark: bool = True
+sayAllContextList: bool = True
+sayAllContextTable: bool = True
 
 # Braille
-enableBraille                  = True
-enableBrailleMonitor           = False
-enableFlashMessages            = True
-brailleFlashTime               = 5000
-flashIsPersistent              = False
-flashIsDetailed                = True
-enableBrailleWordWrap          = False
-enableContractedBraille        = False
-brailleContractionTable        = ''
-disableBrailleEOL              = False
-brailleRolenameStyle           = BRAILLE_ROLENAME_STYLE_LONG
-brailleSelectorIndicator       = BRAILLE_UNDERLINE_BOTH
-brailleLinkIndicator           = BRAILLE_UNDERLINE_BOTH
-textAttributesBrailleIndicator = BRAILLE_UNDERLINE_NONE
-brailleVerbosityLevel          = VERBOSITY_LEVEL_VERBOSE
+enableBraille: bool = True
+enableBrailleMonitor: bool = False
+enableFlashMessages: bool = True
+brailleFlashTime: int = 5000
+flashIsPersistent: bool = False
+flashIsDetailed: bool = True
+enableBrailleWordWrap: bool = False
+enableContractedBraille: bool = False
+brailleContractionTable: str = ''
+disableBrailleEOL: bool = False
+brailleRolenameStyle: int = BRAILLE_ROLENAME_STYLE_LONG
+brailleSelectorIndicator: int = BRAILLE_UNDERLINE_BOTH
+brailleLinkIndicator: int = BRAILLE_UNDERLINE_BOTH
+textAttributesBrailleIndicator: int = BRAILLE_UNDERLINE_NONE
+brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
 
 # Sound
-enableSound = True
-soundVolume = 0.5
-playSoundForRole = False
-playSoundForState = False
-playSoundForPositionInSet = False
-playSoundForValue = False
+enableSound: bool = True
+soundVolume: float = 0.5
+playSoundForRole: bool = False
+playSoundForState: bool = False
+playSoundForPositionInSet: bool = False
+playSoundForValue: bool = False
 
 # Keyboard and Echo
-keyboardLayout               = GENERAL_KEYBOARD_LAYOUT_DESKTOP
-orcaModifierKeys             = DESKTOP_MODIFIER_KEYS
-doubleClickTimeout           = 0.5
-enableKeyEcho                = True
-enableAlphabeticKeys         = True
-enableNumericKeys            = True
-enablePunctuationKeys        = True
-enableSpace                  = True
-enableModifierKeys           = True
-enableFunctionKeys           = True
-enableActionKeys             = True
-enableNavigationKeys         = False
-enableDiacriticalKeys        = False
-enableEchoByCharacter        = False
-enableEchoByWord             = False
-enableEchoBySentence         = False
-presentLockingKeys           = None
+keyboardLayout: int = GENERAL_KEYBOARD_LAYOUT_DESKTOP
+orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
+doubleClickTimeout: float = 0.5
+enableKeyEcho: bool = True
+enableAlphabeticKeys: bool = True
+enableNumericKeys: bool = True
+enablePunctuationKeys: bool = True
+enableSpace: bool = True
+enableModifierKeys: bool = True
+enableFunctionKeys: bool = True
+enableActionKeys: bool = True
+enableNavigationKeys: bool = False
+enableDiacriticalKeys: bool = False
+enableEchoByCharacter: bool = False
+enableEchoByWord: bool = False
+enableEchoBySentence: bool = False
+presentLockingKeys: Optional[bool] = None
 
 # Mouse review
-enableMouseReview          = False
+enableMouseReview: bool = False
 
 # Flat review
-flatReviewIsRestricted = False
+flatReviewIsRestricted: bool = False
 
 # Progressbars
-speakProgressBarUpdates    = True
-brailleProgressBarUpdates  = False
-beepProgressBarUpdates     = False
-progressBarUpdateInterval  = 10
-progressBarSpeechInterval  = None
-progressBarBrailleInterval = None
-progressBarBeepInterval    = 0
-progressBarVerbosity       = PROGRESS_BAR_APPLICATION
-ignoreStatusBarProgressBars = True
+speakProgressBarUpdates: bool = True
+brailleProgressBarUpdates: bool = False
+beepProgressBarUpdates: bool = False
+progressBarUpdateInterval: int = 10
+progressBarSpeechInterval: Optional[int] = None
+progressBarBrailleInterval: Optional[int] = None
+progressBarBeepInterval: int = 0
+progressBarVerbosity: int = PROGRESS_BAR_APPLICATION
+ignoreStatusBarProgressBars: bool = True
 
 # Structural navigation
-structuralNavigationEnabled = True
-skipBlankCells              = False
-largeObjectTextLength       = 75
-wrappedStructuralNavigation = True
-inferLiveRegions            = True
+structuralNavigationEnabled: bool = True
+skipBlankCells: bool = False
+largeObjectTextLength: int = 75
+wrappedStructuralNavigation: bool = True
+inferLiveRegions: bool = True
 
 # Chat
-chatMessageVerbosity       = CHAT_SPEAK_ALL
-chatSpeakRoomName          = False
-chatAnnounceBuddyTyping    = False
-chatRoomHistories          = False
+chatMessageVerbosity: int = CHAT_SPEAK_ALL
+chatSpeakRoomName: bool = False
+chatAnnounceBuddyTyping: bool = False
+chatRoomHistories: bool = False
 
 # Spellcheck
-spellcheckSpellError = True
-spellcheckSpellSuggestion = True
-spellcheckPresentContext = True
+spellcheckSpellError: bool = True
+spellcheckSpellSuggestion: bool = True
+spellcheckPresentContext: bool = True
 
 # Day and time
-presentDateFormat = messages.DATE_FORMAT_LOCALE
-presentTimeFormat = messages.TIME_FORMAT_LOCALE
+presentDateFormat: str = messages.DATE_FORMAT_LOCALE
+presentTimeFormat: str = messages.TIME_FORMAT_LOCALE
 
 # App search support
-FIND_SPEAK_NONE = 0
-FIND_SPEAK_IF_LINE_CHANGED  = 1
-FIND_SPEAK_ALL = 2
-findResultsVerbosity = FIND_SPEAK_ALL
-findResultsMinimumLength = 4
+FIND_SPEAK_NONE: int = 0
+FIND_SPEAK_IF_LINE_CHANGED: int = 1
+FIND_SPEAK_ALL: int = 2
+findResultsVerbosity: int = FIND_SPEAK_ALL
+findResultsMinimumLength: int = 4
 
-textAttributesToSpeak = []
-textAttributesToBraille = []
+textAttributesToSpeak: list[str] = []
+textAttributesToBraille: list[str] = []
 
 # Latent support to allow the user to override/define keybindings
 # and braille bindings. Unsupported and undocumented for now.
 # Use at your own risk.
 #
-keyBindingsMap          = {}
-brailleBindingsMap      = {}
+keyBindingsMap: dict[str, Any] = {}
+brailleBindingsMap: dict[str, Any] = {}
 
-structNavTriggersFocusMode = False
-caretNavTriggersFocusMode = False
-nativeNavTriggersFocusMode = True
+structNavTriggersFocusMode: bool = False
+caretNavTriggersFocusMode: bool = False
+nativeNavTriggersFocusMode: bool = True
 
-layoutMode = True
+layoutMode: bool = True
 
-rewindAndFastForwardInSayAll = False
-structNavInSayAll = False
+rewindAndFastForwardInSayAll: bool = False
+structNavInSayAll: bool = False
 
 # N.B. The following are experimental and may change or go away at any time.
-enableSadPidginHack = False
-presentChatRoomLast = False
-presentLiveRegionFromInactiveTab = False
-speakIndentationOnlyIfChanged = False
+enableSadPidginHack: bool = False
+presentChatRoomLast: bool = False
+presentLiveRegionFromInactiveTab: bool = False
+speakIndentationOnlyIfChanged: bool = False
