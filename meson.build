@@ -18,6 +18,12 @@ dependency('atspi-2', version: '>= 2.52.0')
 dependency('atk-bridge-2.0', version: '>= 2.50.0')
 dependency('pygobject-3.0', version: '>= 3.18')
 
+# Hard Python module dependencies
+dasbus_result = python.find_installation('python3', modules:['dasbus'], required: false)
+if not dasbus_result.found()
+  error('dasbus is required for D-Bus remote controller interface')
+endif
+
 # End users might not have the Gtk development libraries installed, making pkg-config fail.
 # Therefore, check this dependency via python.
 gtk_major_version = '3'
@@ -38,7 +44,6 @@ endif
 # Optional python modules with their descriptions
 optional_modules = {
   'brlapi': 'braille output',
-  'dasbus': 'D-Bus remote controller interface',
   'louis': 'contracted braille',
   'psutil': 'system information commands',
   'gi.repository.Wnck': 'mouse review',
