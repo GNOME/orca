@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2011-2023 Igalia, S.L.
+# Copyright 2011-2025 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
 
 """Configures speech and verbosity settings and adjusts strings accordingly."""
 
@@ -29,7 +30,7 @@ __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
-                "Copyright (c) 2016-2023 Igalia, S.L."
+                "Copyright (c) 2016-2025 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
@@ -324,40 +325,76 @@ class SpeechAndVerbosityManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.start_speech()
 
-    def start_speech(self) -> None:
+    def start_speech(
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Starts the speech server."""
 
+        tokens = ["SPEECH AND VERBOSITY MANAGER: start_speech. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         speech.init()
+        return True
 
-    def interrupt_speech(self) -> None:
+    def interrupt_speech(
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Interrupts the speech server."""
 
-        server = self._get_server()
-        if server is None:
-            return
+        tokens = ["SPEECH AND VERBOSITY MANAGER: interrupt_speech. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if server := self._get_server():
+            server.stop()
 
-        server.stop()
+        return True
 
-    def shutdown_speech(self) -> None:
+    def shutdown_speech(
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Shuts down the speech server."""
 
-        server = self._get_server()
-        if server is None:
-            return
+        tokens = ["SPEECH AND VERBOSITY MANAGER: shutdown_speech. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        server.shutdownActiveServers()
-        speech.deprecated_clear_server()
+        if server := self._get_server():
+            server.shutdownActiveServers()
+            speech.deprecated_clear_server()
 
-    def refresh_speech(self) -> None:
+        return True
+
+    def refresh_speech(
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
+    ) -> bool:
         """Shuts down and re-initializes speech."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: refresh_speech. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.shutdown_speech()
         self.start_speech()
+        return True
 
     def decrease_rate(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Decreases the speech rate"""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_rate. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
         if server is None:
@@ -372,9 +409,15 @@ class SpeechAndVerbosityManager:
         return True
 
     def increase_rate(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
-        """Increases the speech rate"""
+        """Increases the speech rate."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: increase_rate. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
         if server is None:
@@ -385,12 +428,19 @@ class SpeechAndVerbosityManager:
         server.increaseSpeechRate()
         if script is not None:
             script.presentMessage(messages.SPEECH_FASTER)
+
         return True
 
     def decrease_pitch(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Decreases the speech pitch"""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_pitch. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
         if server is None:
@@ -405,9 +455,17 @@ class SpeechAndVerbosityManager:
         return True
 
     def increase_pitch(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Increase the speech pitch"""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: increase_pitch. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if event is not None:
+            print(*tokens)
 
         server = self._get_server()
         if server is None:
@@ -422,9 +480,15 @@ class SpeechAndVerbosityManager:
         return True
 
     def decrease_volume(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Decreases the speech volume"""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_volume. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
         if server is None:
@@ -439,9 +503,15 @@ class SpeechAndVerbosityManager:
         return True
 
     def increase_volume(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Increases the speech volume"""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: increase_volume. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
         if server is None:
@@ -452,6 +522,7 @@ class SpeechAndVerbosityManager:
         server.increaseSpeechVolume()
         if script is not None:
             script.presentMessage(messages.SPEECH_LOUDER)
+
         return True
 
     def update_capitalization_style(self) -> bool:
@@ -501,9 +572,15 @@ class SpeechAndVerbosityManager:
             server.setOutputModule(server_id)
 
     def cycle_synthesizer(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
-        """Cycle through the speech-dispatcher's available output modules."""
+        """Cycles through available speech synthesizers."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_synthesizer. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
         if server is None:
@@ -528,16 +605,23 @@ class SpeechAndVerbosityManager:
             index = 0
 
         server.setOutputModule(available[index])
-        script.presentMessage(available[index])
+        if script is not None:
+            script.presentMessage(available[index])
         return True
 
     def cycle_capitalization_style(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Cycle through the speech-dispatcher capitalization styles."""
 
+        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_capitalization_style. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         manager = settings_manager.get_manager()
-        current_style = manager.get_setting('capitalizationStyle')
+        current_style = manager.get_setting("capitalizationStyle")
         if current_style == settings.CAPITALIZATION_STYLE_NONE:
             new_style = settings.CAPITALIZATION_STYLE_SPELL
             full = messages.CAPITALIZATION_SPELL_FULL
@@ -551,18 +635,25 @@ class SpeechAndVerbosityManager:
             full = messages.CAPITALIZATION_NONE_FULL
             brief = messages.CAPITALIZATION_NONE_BRIEF
 
-        manager.set_setting('capitalizationStyle', new_style)
-        script.presentMessage(full, brief)
+        manager.set_setting("capitalizationStyle", new_style)
+        if script is not None:
+            script.presentMessage(full, brief)
         self.update_capitalization_style()
         return True
 
     def cycle_punctuation_level(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
-        """Cycle through the punctuation levels for speech."""
+        """Cycles through punctuation levels for speech."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_punctuation_level. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         manager = settings_manager.get_manager()
-        current_level = manager.get_setting('verbalizePunctuationStyle')
+        current_level = manager.get_setting("verbalizePunctuationStyle")
         if current_level == settings.PUNCTUATION_STYLE_NONE:
             new_level = settings.PUNCTUATION_STYLE_SOME
             full = messages.PUNCTUATION_SOME_FULL
@@ -580,21 +671,28 @@ class SpeechAndVerbosityManager:
             full = messages.PUNCTUATION_NONE_FULL
             brief = messages.PUNCTUATION_NONE_BRIEF
 
-        manager.set_setting('verbalizePunctuationStyle', new_level)
-        script.presentMessage(full, brief)
+        manager.set_setting("verbalizePunctuationStyle", new_level)
+        if script is not None:
+            script.presentMessage(full, brief)
         self.update_punctuation_level()
         return True
 
     def cycle_key_echo(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Cycle through the key echo levels."""
 
+        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_key_echo. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         manager = settings_manager.get_manager()
         (new_key, new_word, new_sentence) = (False, False, False)
-        key = manager.get_setting('enableKeyEcho')
-        word = manager.get_setting('enableEchoByWord')
-        sentence = manager.get_setting('enableEchoBySentence')
+        key = manager.get_setting("enableKeyEcho")
+        word = manager.get_setting("enableEchoByWord")
+        sentence = manager.get_setting("enableEchoBySentence")
 
         if (key, word, sentence) == (False, False, False):
             (new_key, new_word, new_sentence) = (True, False, False)
@@ -621,19 +719,26 @@ class SpeechAndVerbosityManager:
             full = messages.KEY_ECHO_NONE_FULL
             brief = messages.KEY_ECHO_NONE_BRIEF
 
-        manager.set_setting('enableKeyEcho', new_key)
-        manager.set_setting('enableEchoByWord', new_word)
-        manager.set_setting('enableEchoBySentence', new_sentence)
-        script.presentMessage(full, brief)
+        manager.set_setting("enableKeyEcho", new_key)
+        manager.set_setting("enableEchoByWord", new_word)
+        manager.set_setting("enableEchoBySentence", new_sentence)
+        if script is not None:
+            script.presentMessage(full, brief)
         return True
 
     def change_number_style(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Changes spoken number style between digits and words."""
 
+        tokens = ["SPEECH AND VERBOSITY MANAGER: change_number_style. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         manager = settings_manager.get_manager()
-        speak_digits = manager.get_setting('speakNumbersAsDigits')
+        speak_digits = manager.get_setting("speakNumbersAsDigits")
         if speak_digits:
             brief = messages.NUMBER_STYLE_WORDS_BRIEF
             full = messages.NUMBER_STYLE_WORDS_FULL
@@ -641,65 +746,103 @@ class SpeechAndVerbosityManager:
             brief = messages.NUMBER_STYLE_DIGITS_BRIEF
             full = messages.NUMBER_STYLE_DIGITS_FULL
 
-        manager.set_setting('speakNumbersAsDigits', not speak_digits)
-        script.presentMessage(full, brief)
+        manager.set_setting("speakNumbersAsDigits", not speak_digits)
+        if script is not None:
+            script.presentMessage(full, brief)
         return True
 
     def toggle_speech(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
-        """Toggles speech."""
+        """Toggles speech on and off."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_speech. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         manager = settings_manager.get_manager()
-        script.presentationInterrupt()
-        if manager.get_setting('silenceSpeech'):
-            manager.set_setting('silenceSpeech', False)
-            script.presentMessage(messages.SPEECH_ENABLED)
-        elif not manager.get_setting('enableSpeech'):
-            manager.set_setting('enableSpeech', True)
+        if script is not None:
+            script.presentationInterrupt()
+        if manager.get_setting("silenceSpeech"):
+            manager.set_setting("silenceSpeech", False)
+            if script is not None:
+                script.presentMessage(messages.SPEECH_ENABLED)
+        elif not manager.get_setting("enableSpeech"):
+            manager.set_setting("enableSpeech", True)
             speech.init()
-            script.presentMessage(messages.SPEECH_ENABLED)
+            if script is not None:
+                script.presentMessage(messages.SPEECH_ENABLED)
         else:
-            script.presentMessage(messages.SPEECH_DISABLED)
-            manager.set_setting('silenceSpeech', True)
+            if script is not None:
+                script.presentMessage(messages.SPEECH_DISABLED)
+            manager.set_setting("silenceSpeech", True)
         return True
 
     def toggle_verbosity(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Toggles speech verbosity level between verbose and brief."""
 
+        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_verbosity. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         manager = settings_manager.get_manager()
-        value = manager.get_setting('speechVerbosityLevel')
+        value = manager.get_setting("speechVerbosityLevel")
         if value == settings.VERBOSITY_LEVEL_BRIEF:
-            script.presentMessage(messages.SPEECH_VERBOSITY_VERBOSE)
-            manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_VERBOSE)
+            if script is not None:
+                script.presentMessage(messages.SPEECH_VERBOSITY_VERBOSE)
+            manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_VERBOSE)
         else:
-            script.presentMessage(messages.SPEECH_VERBOSITY_BRIEF)
-            manager.set_setting('speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
+            if script is not None:
+                script.presentMessage(messages.SPEECH_VERBOSITY_BRIEF)
+            manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_BRIEF)
         return True
 
     def toggle_indentation_and_justification(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Toggles the speaking of indentation and justification."""
 
+        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_indentation_and_justification. ",
+                  "Script:", script, "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         manager = settings_manager.get_manager()
-        value = manager.get_setting('enableSpeechIndentation')
-        manager.set_setting('enableSpeechIndentation', not value)
-        if manager.get_setting('enableSpeechIndentation'):
+        value = manager.get_setting("enableSpeechIndentation")
+        manager.set_setting("enableSpeechIndentation", not value)
+        if manager.get_setting("enableSpeechIndentation"):
             full = messages.INDENTATION_JUSTIFICATION_ON_FULL
             brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
         else:
             full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
             brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
-        script.presentMessage(full, brief)
+        if script is not None:
+            script.presentMessage(full, brief)
         return True
 
     def toggle_table_cell_reading_mode(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: Optional[default.Script] = None,
+        event: Optional[input_event.InputEvent] = None
     ) -> bool:
         """Toggles between speak cell and speak row."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_table_cell_reading_mode. Script:", script,
+                  "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        # TODO - JD: This is due to the requirement on script utilities.
+        if script is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Toggling table cell reading mode requires script."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table is None:
@@ -707,11 +850,11 @@ class SpeechAndVerbosityManager:
             return True
 
         if not script.utilities.getDocumentForObject(table):
-            setting_name = 'readFullRowInGUITable'
+            setting_name = "readFullRowInGUITable"
         elif script.utilities.isSpreadSheetTable(table):
-            setting_name = 'readFullRowInSpreadSheet'
+            setting_name = "readFullRowInSpreadSheet"
         else:
-            setting_name = 'readFullRowInDocumentTable'
+            setting_name = "readFullRowInDocumentTable"
 
         manager = settings_manager.get_manager()
         speak_row = manager.get_setting(setting_name)
@@ -868,7 +1011,7 @@ class SpeechAndVerbosityManager:
     ) -> str:
         """Returns a description of the error at the current offset."""
 
-        if not settings_manager.get_manager().get_setting('speakMisspelledIndicator'):
+        if not settings_manager.get_manager().get_setting("speakMisspelledIndicator"):
             return ""
 
         # If we're on whitespace or punctuation, we cannot be on an error.
