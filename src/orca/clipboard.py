@@ -1,6 +1,6 @@
 # Utilities related to the clipboard
 #
-# Copyright 2024 Igalia, S.L.
+# Copyright 2024-2025 Igalia, S.L.
 # Copyright 2024 GNOME Foundation Inc.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -31,14 +31,14 @@ from __future__ import annotations
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2024 Igalia, S.L." \
+__copyright__ = "Copyright (c) 2024-2025 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
-import dbus
 import re
 import time
-from dbus.mainloop.glib import DBusGMainLoop, threads_init
+from dasbus.connection import SessionMessageBus
+from dasbus.error import DBusError
 from typing import Any, Callable, Optional, TYPE_CHECKING
 
 import gi
@@ -162,70 +162,80 @@ class _ClipboardManagerGPaste(_ClipboardManager):
 
     def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("GPASTE", change_callback)
-        self._iface: Optional[dbus.Interface] = None
-        self._props_iface: Optional[dbus.Interface] = None
-        self._signal_match: Optional[dbus.connection.SignalMatch] = None
+        self._bus: Optional[SessionMessageBus] = None
+        self._gpaste_proxy: Any = None
+        self._props_proxy: Any = None
+        self._signal_subscription: Any = None
         self._original_active_state: Optional[bool] = None
 
     def connect(self) -> None:
         """Connects to the clipboard manager."""
 
         try:
-            bus = dbus.SessionBus()
-            gpaste = bus.get_object("org.gnome.GPaste", "/org/gnome/GPaste")
-            self._iface = dbus.Interface(gpaste, "org.gnome.GPaste2")
-        except dbus.exceptions.DBusException as error:
+            self._bus = SessionMessageBus()
+            self._gpaste_proxy = self._bus.get_proxy("org.gnome.GPaste", "/org/gnome/GPaste")
+
+            # Test if the service is actually available by checking properties
+            self._props_proxy = self._bus.get_proxy(
+                "org.gnome.GPaste", "/org/gnome/GPaste", "org.freedesktop.DBus.Properties"
+            )
+            self._original_active_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
+        except DBusError as error:
             msg = f"CLIPBOARD PRESENTER: Could not access GPaste interface: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        self._props_iface = dbus.Interface(gpaste, dbus_interface="org.freedesktop.DBus.Properties")
-        self._original_active_state = self._props_iface.Get("org.gnome.GPaste2", "Active")
-        if not self._original_active_state:
-            msg = "CLIPBOARD PRESENTER: GPaste is not active. Enabling Tracking."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._iface.Track(True)
-            new_state = self._props_iface.Get("org.gnome.GPaste2", "Active")
-            msg = f"CLIPBOARD PRESENTER: Is active now: {bool(new_state)}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        try:
+            self._original_active_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
+            if not self._original_active_state:
+                msg = "CLIPBOARD PRESENTER: GPaste is not active. Enabling Tracking."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                self._gpaste_proxy.Track(True)
+                new_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
+                msg = f"CLIPBOARD PRESENTER: Is active now: {bool(new_state)}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self._signal_match = self._iface.connect_to_signal(
-            "Update",
-            self._on_contents_changed,
-            dbus_interface="org.gnome.GPaste2")
-        self._is_active = True
+            self._signal_subscription = self._gpaste_proxy.Update.connect(self._on_contents_changed)
+            self._is_active = True
+        except DBusError as error:
+            msg = f"CLIPBOARD PRESENTER: Could not connect to GPaste signals: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._gpaste_proxy = None
+            self._props_proxy = None
+            self._bus = None
 
     def disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
 
-        if self._iface is None or self._props_iface is None:
+        if self._gpaste_proxy is None or self._props_proxy is None:
             msg = "CLIPBOARD PRESENTER: Cannot disconnect due to missing interface(s)."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if self._signal_match is not None:
-            self._signal_match.remove()
-            self._signal_match = None
+        if self._signal_subscription is not None:
+            self._signal_subscription.disconnect()
+            self._signal_subscription = None
 
         if not self._original_active_state:
             msg = "CLIPBOARD PRESENTER: Restoring inactive state by disabling tracking."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._iface.Track(False)
-            new_state = self._props_iface.Get("org.gnome.GPaste2", "Active")
+            self._gpaste_proxy.Track(False)
+            new_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
             msg = f"CLIPBOARD PRESENTER: Is active now: {bool(new_state)}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self._iface = None
-        self._props_iface = None
+        self._gpaste_proxy = None
+        self._props_proxy = None
+        self._bus = None
         self._is_active = False
 
     def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
-        if self._iface is None:
+        if self._gpaste_proxy is None:
             return ""
 
-        result = self._iface.GetElementAtIndex(0)[1]
+        result = self._gpaste_proxy.GetElementAtIndex(0)[1]
         debug_string = result.replace("\n", "\\n")
         msg = f"GPASTE: Clipboard contents: {debug_string}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -234,53 +244,62 @@ class _ClipboardManagerGPaste(_ClipboardManager):
     def set_contents(self, text: str) -> None:
         """Sets the contents of the clipboard to text."""
 
-        if self._iface is None:
+        if self._gpaste_proxy is None:
             return
 
-        self._iface.Add(text)
+        self._gpaste_proxy.Add(text)
 
 class _ClipboardManagerKlipper(_ClipboardManager):
     """Class for interacting with the clipboard via Klipper ."""
 
     def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("KLIPPER", change_callback)
-        self._iface: Optional[dbus.Interface] = None
-        self._signal_match: Optional[dbus.connection.SignalMatch] = None
+        self._bus: Optional[SessionMessageBus] = None
+        self._klipper_proxy: Any = None
+        self._signal_subscription: Any = None
 
     def connect(self) -> None:
         """Connects to the clipboard manager."""
 
         try:
-            bus = dbus.SessionBus()
-            klipper = bus.get_object("org.kde.klipper", "/klipper")
-            self._iface = dbus.Interface(klipper, "org.kde.klipper.klipper")
-        except dbus.exceptions.DBusException as error:
+            self._bus = SessionMessageBus()
+            self._klipper_proxy = self._bus.get_proxy("org.kde.klipper", "/klipper")
+
+            # Test if the service is actually available by calling a simple method
+            self._klipper_proxy.getClipboardContents()
+        except DBusError as error:
             msg = f"CLIPBOARD PRESENTER: Could not access klipper interface: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        self._signal_match = self._iface.connect_to_signal(
-            "clipboardHistoryUpdated",
-            self._on_contents_changed,
-            dbus_interface="org.kde.klipper.klipper")
-        self._is_active = True
+        try:
+            self._signal_subscription = self._klipper_proxy.clipboardHistoryUpdated.connect(
+                self._on_contents_changed
+            )
+            self._is_active = True
+        except DBusError as error:
+            msg = f"CLIPBOARD PRESENTER: Could not connect to klipper signal: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._klipper_proxy = None
+            self._bus = None
 
     def disconnect(self) -> None:
         """Disconnects from the clipboard manager."""
 
-        if self._signal_match is not None:
-            self._signal_match.remove()
-        self._signal_match = None
-        self._iface = None
+        if self._signal_subscription is not None:
+            self._signal_subscription.disconnect()
+        self._signal_subscription = None
+        self._klipper_proxy = None
+        self._bus = None
         self._is_active = False
 
     def _get_contents(self) -> str:
         """Obtains and returns the contents of the clipboard."""
 
-        if self._iface is None:
+        if self._klipper_proxy is None:
             return ""
 
-        result = self._iface.getClipboardContents()
+        result = self._klipper_proxy.getClipboardContents()
         debug_string = result.replace("\n", "\\n")
         msg = f"KLIPPER: Clipboard contents: {debug_string}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -289,19 +308,17 @@ class _ClipboardManagerKlipper(_ClipboardManager):
     def set_contents(self, text: str) -> None:
         """Sets the contents of the clipboard to text."""
 
-        if self._iface is None:
+        if self._klipper_proxy is None:
             return
 
         msg = f"KLIPPER: Setting clipboard contents to: {text}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._iface.setClipboardContents(text)
+        self._klipper_proxy.setClipboardContents(text)
 
 class ClipboardPresenter:
     """Manages clipboard-related functionality."""
 
     def __init__(self) -> None:
-        threads_init()
-        dbus.set_default_main_loop(DBusGMainLoop())
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
         self._last_clipboard_update_text: str = ""
         self._last_clipboard_update_time: float = time.time()
@@ -457,7 +474,7 @@ class ClipboardPresenter:
 
         old_text = self._manager.get_contents()
         new_text = f"{old_text}{separator}{text}"
-        msg = f"CLIPBOARD PRESENTER: Appending '{text}'. New contents: '{new_text}."
+        msg = f"CLIPBOARD PRESENTER: Appending '{text}'. New contents: '{new_text}'."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._manager.set_contents(new_text)
 
