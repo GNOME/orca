@@ -163,13 +163,19 @@ def main():
         if key == "screen-reader-enabled" and not enabled:
             shutdown()
 
+    def _reload_on_signal(signum, frame):
+        signal_string = f'({signal.strsignal(signum)})'
+        tokens = [f"ORCA: Reloading due to signal={signum} {signal_string}", frame]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        load_user_settings()
+
     def _shutdown_on_signal(signum, frame):
-        signalString = f'({signal.strsignal(signum)})'
-        tokens = [f"ORCA: Shutting down and exiting due to signal={signum} {signalString}", frame]
+        signal_string = f'({signal.strsignal(signum)})'
+        tokens = [f"ORCA: Shutting down and exiting due to signal={signum} {signal_string}", frame]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         shutdown()
 
-    signal.signal(signal.SIGHUP, _shutdown_on_signal)
+    signal.signal(signal.SIGHUP, _reload_on_signal)
     signal.signal(signal.SIGINT, _shutdown_on_signal)
     signal.signal(signal.SIGTERM, _shutdown_on_signal)
     signal.signal(signal.SIGQUIT, _shutdown_on_signal)
