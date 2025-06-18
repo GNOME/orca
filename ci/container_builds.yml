@@ -21,8 +21,6 @@ opensuse-container@x86_64:
     - .fdo.container-build@opensuse@x86_64
   stage: "container-build"
   variables:
-    # To prevent a timeout when building the container image.
-    FDO_DISTRIBUTION_NO_UPGRADE: "true"
     FDO_DISTRIBUTION_PACKAGES: >-
       dbus-1
       dbus-1-devel
