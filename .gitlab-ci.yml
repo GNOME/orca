@@ -100,12 +100,12 @@ build-release-tarball:
     paths:
       - "${TARBALL_ARTIFACT_PATH}"
 
-# Renders the documentation from Mallard into HTML, and publishes to GitLab pages.
+# Renders the documentation from Mallard into HTML, and puts it in public/
 #
-# Assumes that a previous job put the translated docs in _build/help/{language_name}
+# Assumes that a previous build job put the translated docs in _build/help/{language_name}
 # for all available languages.
-pages:
-  stage: pages
+render-mallard-docs:
+  stage: build
   extends:
     - '.orca_opensuse_tumbleweed_x86_64'
     - '.fdo.distribution-image@opensuse'
@@ -115,6 +115,23 @@ pages:
     - job: build-opensuse-x86_64   # this one puts the translated docs in _build/help
   script:
     - bash -x ci/render_mallard_docs.sh
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 day
+
+# Takes the public/ generated in the render-mallard-docs job and publishes it via GitLab pages.
+pages:
+  stage: pages
+  extends:
+    - '.orca_opensuse_tumbleweed_x86_64'
+    - '.fdo.distribution-image@opensuse'
+  needs:
+    - job: render-mallard-docs
+  script:
+    # This is so that GitLab will see that there is something to do, as the job
+    # needs nothing except the artifacts from the render-mallard-docs job.
+    - echo
   artifacts:
     paths:
       - public
