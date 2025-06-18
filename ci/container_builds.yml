@@ -1,10 +1,10 @@
 include:
-  - remote: "https://gitlab.gnome.org/Infrastructure/freedesktop-ci-templates/-/raw/80f87b3058efb75a1faae11826211375fba77e7f/templates/opensuse.yml"
+  - remote: "https://gitlab.gnome.org/Infrastructure/freedesktop-ci-templates/-/raw/3cd5fdf6dcfbef9a75514256d210db5178bd9c2a/templates/opensuse.yml"
 
 variables:
   # When branching change the suffix to avoid conflicts with images
   # from the main branch
-  BASE_TAG: "2025-06-18.3-main"
+  BASE_TAG: "2025-06-18.4-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
