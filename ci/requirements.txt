@@ -1,3 +1,10 @@
+# These are Python packages that are just used during the CI: linters, type checkers, etc.
+#
+# These are installed in a separate Python environment (see
+# ci/install-python-tools.sh), not as packages from the system's
+# installation of Python, because not all of the following packages
+# are available as distro RPMS.
+
 ruff
 mypy
 types-psutil
