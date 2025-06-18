@@ -42,7 +42,6 @@ opensuse-container@x86_64:
       ninja
       python3
       python3-brlapi
-      python3-dasbus
       python3-louis
       python3-pip
       python3-psutil
