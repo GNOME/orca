@@ -4,7 +4,7 @@ include:
 variables:
   # When branching change the suffix to avoid conflicts with images
   # from the main branch
-  BASE_TAG: "2025-06-18.2-main"
+  BASE_TAG: "2025-06-18.3-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:
@@ -18,6 +18,8 @@ opensuse-container@x86_64:
     - .fdo.container-build@opensuse@x86_64
   stage: "container-build"
   variables:
+    # To prevent a timeout when building the container image.
+    FDO_DISTRIBUTION_NO_UPGRADE: "true"
     FDO_DISTRIBUTION_PACKAGES: >-
       dbus-1
       dbus-1-devel
@@ -42,11 +44,11 @@ opensuse-container@x86_64:
       ninja
       python3
       python3-brlapi
+      python3-dasbus
       python3-louis
       python3-pip
       python3-psutil
       python3-speechd
-      python311-dasbus
       python311-gobject-devel
       python311-lxml
       python311-simplejson
