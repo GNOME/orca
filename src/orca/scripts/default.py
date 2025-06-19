@@ -1580,6 +1580,9 @@ class Script(script.Script):
         if AXUtilities.is_spin_button(event.source):
             self._save_focused_object_info(event.source)
 
+        if not isProgressBarUpdate:
+            self.presentationInterrupt()
+
         self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speech_generator.generate_speech(
             event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
