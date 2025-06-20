@@ -332,7 +332,7 @@ class LearnModePresenter:
 
     def show_help(
         self,
-        script: Optional[default.Script],
+        script: Optional[default.Script] = None,
         event: Optional[input_event.InputEvent] = None,
         page: str = ""
     ) -> bool:
