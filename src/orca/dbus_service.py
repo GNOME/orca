@@ -35,6 +35,7 @@ from dasbus.error import DBusError
 
 from . import debug
 from . import input_event
+from . import orca_platform # pylint: disable=no-name-in-module
 from . import script_manager
 
 def command(func):
@@ -220,6 +221,17 @@ class OrcaDBusServiceInterface(Publishable):
 
         script.presentMessage(message)
         return True
+
+    def GetVersion(self) -> str: # pylint: disable=invalid-name
+        """Returns Orca's version and revision if available."""
+
+        result = orca_platform.version
+        if orca_platform.revision:
+            result += f" (rev {orca_platform.revision})"
+
+        msg = f"DBUS SERVICE: GetVersion called, returning: {result}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
 
     def shutdown_service(self, bus: SessionMessageBus, object_path_base: str) -> None:
         """Releases D-Bus resources held by this service and its modules."""

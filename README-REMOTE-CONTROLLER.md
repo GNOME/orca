@@ -27,9 +27,17 @@ The D-Bus interface requires:
 
 Commands available directly on the main service (`/org/gnome/Orca/Service`):
 
-### Present a Custom Message
+### Get Orca's Version
 
-Present a message using Orca's speech and/or braille output:
+```bash
+gdbus call --session --dest org.gnome.Orca.Service \
+    --object-path /org/gnome/Orca/Service \
+    --method org.gnome.Orca.Service.GetVersion
+```
+
+**Returns:** String containing the version (and revision if available)
+
+### Present a Custom Message in Speech and/or Braille
 
 ```bash
 gdbus call --session --dest org.gnome.Orca.Service \
@@ -45,8 +53,6 @@ gdbus call --session --dest org.gnome.Orca.Service \
 
 ### List Available Service Commands
 
-Get a list of all commands available on the main service:
-
 ```bash
 gdbus call --session --dest org.gnome.Orca.Service \
     --object-path /org/gnome/Orca/Service \
@@ -56,8 +62,6 @@ gdbus call --session --dest org.gnome.Orca.Service \
 **Returns:** List of (command_name, description) tuples
 
 ### List Registered Modules
-
-Get a list of all registered Orca modules:
 
 ```bash
 gdbus call --session --dest org.gnome.Orca.Service \
@@ -73,8 +77,6 @@ Each registered module exposes its own set of commands:
 
 ### List Commands for a Module
 
-Get available commands for a specific module:
-
 ```bash
 gdbus call --session --dest org.gnome.Orca.Service \
     --object-path /org/gnome/Orca/Service/ModuleName \
@@ -86,8 +88,6 @@ Replace `ModuleName` with an actual module name from `ListModules`.
 **Returns:** List of (command_name, description) tuples
 
 ### Execute a Module Command
-
-Execute a command on a module:
 
 ```bash
 # With user notification
