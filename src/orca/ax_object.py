@@ -969,6 +969,11 @@ class AXObject:
 
         for index in range(child_count):
             child = AXObject.get_child(obj, index)
+            if child is None and not AXObject.is_valid(obj):
+                tokens = ["AXObject:", obj, "is no longer valid"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return
+
             if child is not None and (pred is None or pred(child)):
                 yield child
 

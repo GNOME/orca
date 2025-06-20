@@ -863,6 +863,9 @@ class AXUtilities:
     ) -> list:
         """Returns a list of onscreen objects in the given root."""
 
+        tokens = ["AXUtilities: Getting on-screen objects in", root, f"({hex(id(root))})"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if not AXUtilities.is_on_screen(root, bounding_box):
             return []
 
@@ -880,7 +883,10 @@ class AXUtilities:
         if bounding_box is None:
             bounding_box = AXComponent.get_rect(root)
 
-        for child in AXObject.iter_children(root):
+        for i, child in enumerate(AXObject.iter_children(root)):
+            tokens = [f"AXUtilities: Child {i} is", child, f"({hex(id(child))})"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
             children = AXUtilities.get_on_screen_objects(child, bounding_box)
             objects.extend(children)
             if root_name and children and root in objects and root_name == AXObject.get_name(child):
