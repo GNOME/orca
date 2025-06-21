@@ -1770,8 +1770,12 @@ class Utilities:
             return False
 
         if AXObject.is_ancestor(new_focus, old_focus):
-            if AXObject.get_name(old_focus):
-                msg += "old locusOfFocus is ancestor with name of new locusOfFocus"
+            if old_name := AXObject.get_name(old_focus):
+                if old_name == AXObject.get_name(new_focus):
+                    msg += "old locusOfFocus is ancestor with same name as new locusOfFocus"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    return True
+                msg += "old locusOfFocus is ancestor of new locusOfFocus, and has a name"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
             if AXUtilities.is_dialog_or_window(old_focus):
