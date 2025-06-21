@@ -1,5 +1,5 @@
 project('orca',
-  version: '48.4',
+  version: '48.5',
   meson_version: '>= 1.0.0',
 )
 
