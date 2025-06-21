@@ -126,7 +126,7 @@ def get_name(obj: Atspi.Accessible, fallback_on_labelled_by: bool = True) -> str
         if relation.get_relation_type() != Atspi.RelationType.LABELLED_BY:
             continue
         targets = [relation.get_target(i) for i in range(relation.get_n_targets())]
-        result = " ".join([target.name for target in targets])
+        result = " ".join([get_name(target, False) for target in targets])
         if result:
             result += " (from labelled-by relation)"
 
@@ -157,7 +157,7 @@ def get_description(obj: Atspi.Accessible, fallback_on_described_by: bool = True
         if relation.get_relation_type() != Atspi.RelationType.DESCRIBED_BY:
             continue
         targets = [relation.get_target(i) for i in range(relation.get_n_targets())]
-        result = " ".join([target.name for target in targets])
+        result = " ".join([get_name(target, False) for target in targets])
         if result:
             result += " (from described-by relation)"
 
