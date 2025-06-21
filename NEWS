@@ -1,3 +1,15 @@
+48.4 - 21 June 2025
+
+Web:
+
+* Interrupt speech sooner when focus changes in a web app.
+
+General:
+
+* Fix bug causing the Help button to fail in the Preferences dialog.
+
+=========
+
 48.3 - 19 June 2025
 
 General:
