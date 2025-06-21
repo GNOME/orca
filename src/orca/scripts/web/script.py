@@ -1982,6 +1982,9 @@ class Script(default.Script):
             else:
                 msg = "WEB: Event handled: Setting locusOfFocus to web app descendant"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
+                if self.utilities.shouldInterruptForLocusOfFocusChange(focus, event.source, event):
+                    self.presentationInterrupt()
+
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return True
 
