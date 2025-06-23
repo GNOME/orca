@@ -137,7 +137,7 @@ class AXValue:
         if value:
             return value
 
-        current = AXValue._get_current_value(obj)
+        current = AXValue.get_current_value(obj)
         if abs(current) < 1 and current != 0:
             str_current = str(current)
             decimal_places = len(str_current.split('.')[1])
@@ -153,7 +153,7 @@ class AXValue:
         if not AXObject.supports_value(obj):
             return None
 
-        value = AXValue._get_current_value(obj)
+        value = AXValue.get_current_value(obj)
         if AXUtilities.is_indeterminate(obj) and value <= 0:
             tokens = ["AXValue:", obj, "has state indeterminate"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
