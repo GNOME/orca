@@ -54,6 +54,9 @@ class AXUtilitiesDebugging:
 
     @staticmethod
     def _format_string(string: str = "") -> str:
+        if not string:
+            return ""
+
         string = string.replace("\n", "\\n").replace("\ufffc", "[OBJ]")
         if len(string) < 100:
             return string
