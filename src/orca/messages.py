@@ -1269,6 +1269,14 @@ INDENTATION_JUSTIFICATION_ON_BRIEF = \
 INDENTATION_JUSTIFICATION_ON_FULL = \
     _("Speaking of indentation and justification enabled.")
 
+# Translators: Orca announces when a widget has an associated error, such as
+# disallowed characters in an input, or a must-check box that is not checked
+# (e.g. "I read and agree to the terms of service."). When this error message
+# goes away as a consequence of the user fixing the error, Orca will present
+# this string. When translating this string please use language similar to
+# that used for `C_("error", "invalid entry")` in object_properties.py.
+INVALID_ENTRY_FIXED = C_("error", "Entry valid.")
+
 # Translators: Orca has a "Learn Mode" that will allow the user to type any key
 # on the keyboard and hear what the effects of that key would be.  The effects
 # might be what Orca would do if it had a handler for the particular key

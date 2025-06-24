@@ -160,8 +160,6 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(obj)] = AXUtilitiesState.is_expanded(obj)
         AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(obj)] = \
             AXUtilitiesState.is_indeterminate(obj)
-        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(obj)] = \
-            AXUtilitiesState.is_invalid_entry(obj)
         AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(obj)] = AXUtilitiesState.is_pressed(obj)
         AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(obj)] = AXUtilitiesState.is_selected(obj)
 

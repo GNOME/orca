@@ -1158,8 +1158,15 @@ class Script(script.Script):
     def on_invalid_entry_changed(self, event):
         """Callback for object:state-changed:invalid-entry accessibility events."""
 
-        if AXUtilities.is_presentable_invalid_entry_change(event):
-            self.presentMessage(self.speech_generator.get_error_message(event.source))
+        if not AXUtilities.is_presentable_invalid_entry_change(event):
+            return
+
+        if event.detail1:
+            msg = self.speech_generator.get_error_message(event.source)
+        else:
+            msg = messages.INVALID_ENTRY_FIXED
+        self.speakMessage(msg)
+        self.update_braille(event.source)
 
     def on_mouse_button(self, event):
         """Callback for mouse:button events."""
