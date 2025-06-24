@@ -765,7 +765,7 @@ class Generator:
 
         attrs, _start, _end = AXText.get_text_attributes_at_offset(obj)
         error = attrs.get("invalid")
-        if not error or error == "false":
+        if error == "false":
             return []
 
         if self._mode == "braille":
