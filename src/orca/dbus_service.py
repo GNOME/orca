@@ -29,12 +29,12 @@ __license__   = "LGPL"
 import enum
 from typing import Callable
 
-from gi.repository import GLib
 from dasbus.connection import SessionMessageBus
+from dasbus.error import DBusError
+from dasbus.loop import EventLoop
 from dasbus.server.interface import dbus_interface
 from dasbus.server.publishable import Publishable
-from dasbus.loop import EventLoop
-from dasbus.error import DBusError
+from gi.repository import GLib
 
 from . import debug
 from . import input_event
