@@ -924,7 +924,7 @@ class SpeechAndVerbosityManager:
         if not (settings.speakNumbersAsDigits or AXUtilities.is_text_input_telephone(obj)):
             return text
 
-        return "".join(map(_convert, text.split()))
+        return " ".join(map(_convert, text.split()))
 
     @staticmethod
     def _adjust_for_links(obj: Atspi.Accessible, line: str, start_offset: int) -> str:
