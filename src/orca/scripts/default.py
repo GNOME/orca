@@ -200,6 +200,7 @@ class Script(script.Script):
         listeners["object:state-changed:expanded"] = self.on_expanded_changed
         listeners["object:state-changed:focused"] = self.on_focused_changed
         listeners["object:state-changed:indeterminate"] = self.on_indeterminate_changed
+        listeners["object:state-changed:invalid-entry"] = self.on_invalid_entry_changed
         listeners["object:state-changed:pressed"] = self.on_pressed_changed
         listeners["object:state-changed:selected"] = self.on_selected_changed
         listeners["object:state-changed:sensitive"] = self.on_sensitive_changed
@@ -1153,6 +1154,12 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_indeterminate_change(event):
             self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+
+    def on_invalid_entry_changed(self, event):
+        """Callback for object:state-changed:invalid-entry accessibility events."""
+
+        if AXUtilities.is_presentable_invalid_entry_change(event):
+            self.presentMessage(self.speech_generator.get_error_message(event.source))
 
     def on_mouse_button(self, event):
         """Callback for mouse:button events."""

@@ -126,6 +126,14 @@ class SpeechGenerator(generator.Generator):
             return generated[0]
         return ""
 
+    def get_error_message(self, obj, **args):
+        """Returns the generated error message for obj as a string."""
+
+        generated = self._generate_state_invalid(obj, **args)
+        if generated:
+            return generated[0]
+        return ""
+
     def get_localized_role_name(self, obj, **args):
         if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_editable_combo_box):
             return object_properties.ROLE_EDITABLE_COMBO_BOX

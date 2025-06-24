@@ -109,6 +109,7 @@ class AXUtilitiesEvent:
     LAST_KNOWN_CHECKED: dict[int, bool] = {}
     LAST_KNOWN_EXPANDED: dict[int, bool] = {}
     LAST_KNOWN_INDETERMINATE: dict[int, bool] = {}
+    LAST_KNOWN_INVALID_ENTRY: dict[int, bool] = {}
     LAST_KNOWN_PRESSED: dict[int, bool] = {}
     LAST_KNOWN_SELECTED: dict[int, bool] = {}
 
@@ -135,6 +136,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
         AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.clear()
+        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.clear()
         AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
         AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
         AXUtilitiesEvent.TEXT_EVENT_REASON.clear()
@@ -158,6 +160,8 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(obj)] = AXUtilitiesState.is_expanded(obj)
         AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(obj)] = \
             AXUtilitiesState.is_indeterminate(obj)
+        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(obj)] = \
+            AXUtilitiesState.is_invalid_entry(obj)
         AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(obj)] = AXUtilitiesState.is_pressed(obj)
         AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(obj)] = AXUtilitiesState.is_selected(obj)
 
@@ -622,6 +626,27 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if event.source != focus_manager.get_manager().get_locus_of_focus():
+            msg = "AXUtilitiesEvent: The event is not from the locus of focus."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "AXUtilitiesEvent: Event is presentable."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
+    def is_presentable_invalid_entry_change(event: Atspi.Event) -> bool:
+        """Returns True if this event should be presented as an invalid-entry-state change."""
+
+        old_state = AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.get(hash(event.source))
+        new_state = AXUtilitiesState.is_invalid_entry(event.source)
+        if old_state == new_state:
+            msg = "AXUtilitiesEvent: The new state matches the old state."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(event.source)] = new_state
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "AXUtilitiesEvent: The event is not from the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)

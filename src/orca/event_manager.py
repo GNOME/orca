@@ -67,7 +67,8 @@ class EventManager:
     PRIORITY_IMPORTANT = 2
     PRIORITY_HIGH = 3
     PRIORITY_NORMAL = 4
-    PRIORITY_LOW = 5
+    PRIORITY_LOWER = 5
+    PRIORITY_LOW = 6
 
     def __init__(self) -> None:
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Initializing", True)
@@ -134,6 +135,10 @@ class EventManager:
             priority = EventManager.PRIORITY_HIGH
         elif event_type.startswith("object:active-descendant-changed"):
             priority = EventManager.PRIORITY_HIGH
+        elif event_type.startswith("object:state-changed:invalid-entry"):
+            # Setting this to lower ensures we present the state and/or text changes that triggered
+            # the invalid state prior to presenting the invalid state.
+            priority = EventManager.PRIORITY_LOWER
         elif event_type.startswith("object:children-changed"):
             priority = EventManager.PRIORITY_LOW
         else:
