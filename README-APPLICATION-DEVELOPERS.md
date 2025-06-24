@@ -160,9 +160,10 @@ Orca only presents the name of ancestors and description changes on the object o
 
 The `details`/`details-for` and `error-message`/`error-for` relation types were created for ARIA,
 and there was no indication that they might be of interest to developers of native applications.
-As a result, support in Orca for these new relation types was implemented only for web apps.
-[There are plans to support these relation types globally](https://gitlab.gnome.org/GNOME/orca/-/issues/514),
-hopefully during the v48 release cycle.
+As a result, support in Orca for these new relation types had been implemented only for web apps.
+
+Orca v49 has global support for `error-message`/`error-for`. Global support for `details`/`details-for`
+is still pending. See [issue #514](https://gitlab.gnome.org/GNOME/orca/-/issues/514).
 
 ### Why Is Orca Speaking My Labels As Static Text?
 
