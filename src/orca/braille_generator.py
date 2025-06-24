@@ -512,7 +512,9 @@ class BrailleGenerator(generator.Generator):
         result += [braille.Component(
             obj, self._as_string(
                 self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)),
+                self._generate_accessible_role(obj, **args) +
+                self._generate_state_required(obj, **args) +
+                self._generate_state_invalid(obj, **args)),
             indicator=self._as_string(self._generate_state_checked(obj, **args)))]
         result += self._generate_default_suffix(obj, **args)
         return result
