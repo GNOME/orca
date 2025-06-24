@@ -26,7 +26,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2025 Valve Corporation."
 __license__   = "LGPL"
 
+import enum
 from typing import Callable
+
+from gi.repository import GLib
 from dasbus.connection import SessionMessageBus
 from dasbus.server.interface import dbus_interface
 from dasbus.server.publishable import Publishable
@@ -37,6 +40,13 @@ from . import debug
 from . import input_event
 from . import orca_platform # pylint: disable=no-name-in-module
 from . import script_manager
+
+class HandlerType(enum.Enum):
+    """Enumeration of handler types for D-Bus methods."""
+
+    COMMAND = enum.auto()
+    GETTER = enum.auto()
+    SETTER = enum.auto()
 
 def command(func):
     """Decorator to mark a method as a D-Bus command using its docstring.
@@ -51,13 +61,47 @@ def command(func):
     func.dbus_command_description = description
     return func
 
-class InputEventHandlerInfo:
-    """Stores processed information about an input event handler for D-Bus exposure."""
+def getter(func):
+    """Decorator to mark a method as a D-Bus getter using its docstring.
 
-    def __init__(self, python_function_name: str, description: str, action: Callable[..., bool]):
+    Usage:
+        @getter
+        def get_rate(self):
+            '''Returns the current speech rate.'''
+            # method implementation
+    """
+    description = func.__doc__ or f"D-Bus getter: {func.__name__}"
+    func.dbus_getter_description = description
+    return func
+
+def setter(func):
+    """Decorator to mark a method as a D-Bus setter using its docstring.
+
+    Usage:
+        @setter
+        def set_rate(self, value):
+            '''Sets the current speech rate.'''
+            # method implementation
+    """
+    description = func.__doc__ or f"D-Bus setter: {func.__name__}"
+    func.dbus_setter_description = description
+    return func
+
+class _HandlerInfo:
+    """Stores processed information about a function exposed via D-Bus."""
+
+    def __init__(
+        self,
+        python_function_name: str,
+        description: str,
+        action: Callable[..., bool],
+        handler_type: 'HandlerType' = HandlerType.COMMAND
+    ):
         self.python_function_name: str = python_function_name
         self.description: str = description
         self.action: Callable[..., bool] = action
+        self.handler_type: HandlerType = handler_type
+
 
 @dbus_interface("org.gnome.Orca.Module")
 class OrcaModuleDBusInterface(Publishable):
@@ -65,38 +109,82 @@ class OrcaModuleDBusInterface(Publishable):
 
     def __init__(self,
                  module_name: str,
-                 handlers_info: list[InputEventHandlerInfo]):
+                 handlers_info: list[_HandlerInfo]):
         super().__init__()
         self._module_name = module_name
-        self._commands: dict[str, InputEventHandlerInfo] = {}
+        self._commands: dict[str, _HandlerInfo] = {}
+        self._getters: dict[str, _HandlerInfo] = {}
+        self._setters: dict[str, _HandlerInfo] = {}
 
         for info in handlers_info:
-            camel_case_name = self._to_camel_case(info.python_function_name)
-            self._commands[camel_case_name] = info
+            handler_type = getattr(info, "handler_type", HandlerType.COMMAND)
+            normalized_name = self._normalize_handler_name(info.python_function_name)
+            if handler_type == HandlerType.GETTER:
+                self._getters[normalized_name] = info
+            elif handler_type == HandlerType.SETTER:
+                self._setters[normalized_name] = info
+            else:
+                self._commands[normalized_name] = info
 
         msg = (
             f"DBUS SERVICE: OrcaModuleDBusInterface for {module_name} initialized "
-            f"with {len(self._commands)} commands."
+            f"with {len(self._commands)} commands, {len(self._getters)} getters, "
+            f"{len(self._setters)} setters."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def for_publication(self):
-        """Returns the D-Bus interface XML for publication."""
+    def ExecuteRuntimeGetter(self, getter_name: str) -> GLib.Variant: # pylint: disable=invalid-name
+        """Executes the named getter returning the value as a GLib.Variant for D-Bus marshalling."""
 
-        return self.__dbus_xml__ # pylint: disable=no-member
+        handler_info = self._getters.get(getter_name)
+        if not handler_info:
+            msg = f"DBUS SERVICE: Unknown getter '{getter_name}' for '{self._module_name}'."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return GLib.Variant("v", GLib.Variant("s", ""))
 
-    @staticmethod
-    def _to_camel_case(snake_str: str) -> str:
-        parts = snake_str.split("_")
-        return "".join(word.capitalize() if word else "" for word in parts)
+        result = handler_info.action()
+        msg = f"DBUS SERVICE: Getter '{getter_name}' returned: {result}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return self._to_variant(result)
+
+    def ExecuteRuntimeSetter(self, setter_name: str, value: GLib.Variant) -> bool: # pylint: disable=invalid-name
+        """Executes the named setter, returning True if succeeded."""
+
+        handler_info = self._setters.get(setter_name)
+        if handler_info is None:
+            msg = f"DBUS SERVICE: Unknown setter '{setter_name}' for '{self._module_name}'."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        unpacked = value.unpack()
+        result = handler_info.action(unpacked)
+        msg = f"DBUS SERVICE: Setter '{setter_name}' with value '{unpacked}' returned: {result}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
 
     def ListCommands(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
-        """Returns a list of (command_name, description) for this module."""
+        """Returns a list of (command_name, description) for this module (commands only)."""
 
         command_list = []
         for camel_case_name, info in self._commands.items():
             command_list.append((camel_case_name, info.description))
         return command_list
+
+    def ListRuntimeGetters(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
+        """Returns a list of (getter_name, description) for this module."""
+
+        getter_list = []
+        for camel_case_name, info in self._getters.items():
+            getter_list.append((camel_case_name, info.description))
+        return getter_list
+
+    def ListRuntimeSetters(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
+        """Returns a list of (setter_name, description) for this module."""
+
+        setter_list = []
+        for camel_case_name, info in self._setters.items():
+            setter_list.append((camel_case_name, info.description))
+        return setter_list
 
     def ExecuteCommand(self, command_name: str, notify_user: bool) -> bool: # pylint: disable=invalid-name
         """Executes the named command and returns True if the command succeeded."""
@@ -114,6 +202,49 @@ class OrcaModuleDBusInterface(Publishable):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
+
+    def for_publication(self):
+        """Returns the D-Bus interface XML for publication."""
+
+        return self.__dbus_xml__ # pylint: disable=no-member
+
+
+    @staticmethod
+    def _normalize_handler_name(function_name: str) -> str:
+        """Normalizes a Python function name for D-Bus exposure (getter/setter/command)."""
+
+        if function_name.startswith("get_") or function_name.startswith("set_"):
+            function_name = function_name[4:]
+        return "".join(word.capitalize() for word in function_name.split("_"))
+
+    @staticmethod
+    def _to_variant(result):
+        """Converts a Python value to a correctly-typed GLib.Variant for D-Bus marshalling."""
+        if isinstance(result, bool):
+            return GLib.Variant("b", result)
+        elif isinstance(result, int):
+            return GLib.Variant("i", result)
+        elif isinstance(result, float):
+            return GLib.Variant("d", result)
+        elif isinstance(result, str):
+            return GLib.Variant("s", result)
+        elif isinstance(result, dict):
+            return GLib.Variant(
+                "a{sv}", {str(k): GLib.Variant("v", v) for k, v in result.items()})
+        elif isinstance(result, list) or isinstance(result, tuple):
+            if all(isinstance(x, str) for x in result):
+                return GLib.Variant("as", list(result))
+            elif all(isinstance(x, int) for x in result):
+                return GLib.Variant("ax", list(result))
+            elif all(isinstance(x, bool) for x in result):
+                return GLib.Variant("ab", list(result))
+            else:
+                return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
+        elif result is None:
+            return GLib.Variant("v", GLib.Variant("s", ""))
+        else:
+            return GLib.Variant("s", str(result))
+
 
 @dbus_interface("org.gnome.Orca.Service")
 class OrcaDBusServiceInterface(Publishable):
@@ -133,7 +264,7 @@ class OrcaDBusServiceInterface(Publishable):
     def add_module_interface(
         self,
         module_name: str,
-        handlers_info: list[InputEventHandlerInfo],
+        handlers_info: list[_HandlerInfo],
         bus: SessionMessageBus,
         object_path_base: str
     ) -> None:
@@ -361,6 +492,7 @@ class OrcaRemoteController:
         handlers_info = []
         for attr_name in dir(module_instance):
             attr = getattr(module_instance, attr_name)
+            # Command
             if callable(attr) and hasattr(attr, "dbus_command_description"):
                 description = attr.dbus_command_description
                 def _create_wrapper(method=attr):
@@ -369,15 +501,46 @@ class OrcaRemoteController:
                         script = script_manager.get_manager().get_active_script()
                         return method(script=script, event=event, notify_user=notify_user)
                     return _wrapper
-
-                handler_info = InputEventHandlerInfo(
+                handler_info = _HandlerInfo(
                     python_function_name=attr_name,
                     description=description,
-                    action=_create_wrapper()
+                    action=_create_wrapper(),
+                    handler_type=HandlerType.COMMAND
                 )
                 handlers_info.append(handler_info)
-
-                msg = f"REMOTE CONTROLLER: Found decorated method '{attr_name}': {description}"
+                msg = f"REMOTE CONTROLLER: Found decorated command '{attr_name}': {description}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+            # Getter
+            elif callable(attr) and hasattr(attr, "dbus_getter_description"):
+                description = attr.dbus_getter_description
+                def _create_getter_wrapper(method=attr):
+                    def _wrapper(_notify_user=None):
+                        return method()
+                    return _wrapper
+                handler_info = _HandlerInfo(
+                    python_function_name=attr_name,
+                    description=description,
+                    action=_create_getter_wrapper(),
+                    handler_type=HandlerType.GETTER
+                )
+                handlers_info.append(handler_info)
+                msg = f"REMOTE CONTROLLER: Found decorated getter '{attr_name}': {description}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+            # Setter
+            elif callable(attr) and hasattr(attr, "dbus_setter_description"):
+                description = attr.dbus_setter_description
+                def _create_setter_wrapper(method=attr):
+                    def _wrapper(value):
+                        return method(value)
+                    return _wrapper
+                handler_info = _HandlerInfo(
+                    python_function_name=attr_name,
+                    description=description,
+                    action=_create_setter_wrapper(),
+                    handler_type=HandlerType.SETTER
+                )
+                handlers_info.append(handler_info)
+                msg = f"REMOTE CONTROLLER: Found decorated setter '{attr_name}': {description}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not handlers_info:
@@ -387,7 +550,7 @@ class OrcaRemoteController:
             module_name, handlers_info, self._bus, self.OBJECT_PATH)
         msg = (
             f"REMOTE CONTROLLER: Successfully registered {len(handlers_info)} "
-            f"decorated commands for module {module_name}."
+            f"decorated commands/getters/setters for module {module_name}."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 

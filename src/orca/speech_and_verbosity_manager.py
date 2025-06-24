@@ -50,6 +50,7 @@ from . import pronunciation_dict
 from . import settings
 from . import settings_manager
 from . import speech
+from .acss import ACSS
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -400,6 +401,34 @@ class SpeechAndVerbosityManager:
         self.start_speech()
         return True
 
+    @dbus_service.getter
+    def get_rate(self) -> int:
+        """Returns the current speech rate."""
+
+        result = 50
+        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
+        if default_voice and ACSS.RATE in default_voice:
+            result = default_voice[ACSS.RATE]
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Current rate is: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.setter
+    def set_rate(self, value: int) -> bool:
+        """Sets the current speech rate."""
+
+        if not isinstance(value, (int, float)):
+            return False
+
+        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
+        if default_voice and ACSS.RATE in default_voice:
+            default_voice[ACSS.RATE] = value
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Set rate to: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
     @dbus_service.command
     def decrease_rate(
         self,
@@ -407,7 +436,7 @@ class SpeechAndVerbosityManager:
         event: Optional[input_event.InputEvent] = None,
         notify_user: bool = True
     ) -> bool:
-        """Decreases the speech rate"""
+        """Decreases the speech rate."""
 
         tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_rate. Script:", script,
                   "Event:", event, "notify_user:", notify_user]
@@ -448,6 +477,34 @@ class SpeechAndVerbosityManager:
         if notify_user and script is not None:
             script.presentMessage(messages.SPEECH_FASTER)
 
+        return True
+
+    @dbus_service.getter
+    def get_pitch(self) -> float:
+        """Returns the current speech pitch."""
+
+        result = 5.0
+        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
+        if default_voice and ACSS.AVERAGE_PITCH in default_voice:
+            result = default_voice[ACSS.AVERAGE_PITCH]
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Current pitch is: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.setter
+    def set_pitch(self, value: float) -> bool:
+        """Sets the current speech pitch."""
+
+        if not isinstance(value, (int, float)):
+            return False
+
+        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
+        if default_voice and ACSS.AVERAGE_PITCH in default_voice:
+            default_voice[ACSS.AVERAGE_PITCH] = value
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Set pitch to: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
     @dbus_service.command
@@ -498,6 +555,34 @@ class SpeechAndVerbosityManager:
         if notify_user and script is not None:
             script.presentMessage(messages.SPEECH_HIGHER)
 
+        return True
+
+    @dbus_service.getter
+    def get_volume(self) -> float:
+        """Returns the current speech volume."""
+
+        result = 10.0
+        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
+        if default_voice and ACSS.GAIN in default_voice:
+            result = default_voice[ACSS.GAIN]
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Current volume is: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.setter
+    def set_volume(self, value: float) -> bool:
+        """Sets the current speech volume."""
+
+        if not isinstance(value, (int, float)):
+            return False
+
+        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
+        if default_voice and ACSS.GAIN in default_voice:
+            default_voice[ACSS.GAIN] = value
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Set volume to: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
     @dbus_service.command
