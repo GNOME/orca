@@ -788,7 +788,14 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if self._inFocusMode and self.utilities.isWebAppDescendant(obj):
+        was_in_app = AXObject.find_ancestor(prevObj, AXUtilities.is_embedded)
+        is_in_app = self.utilities.isWebAppDescendant(obj)
+        if not was_in_app and is_in_app:
+            msg = "WEB: Using focus mode because we just entered a web application"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self._inFocusMode and is_in_app:
             if self.utilities.forceBrowseModeForWebAppDescendant(obj):
                 tokens = ["WEB: Forcing browse mode for web app descendant", obj]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
