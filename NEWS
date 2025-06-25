@@ -1,3 +1,21 @@
+48.6 - 25 June 2025
+
+Web:
+
+* Enter focus mode when focus moves inside descendant of web app.
+
+General:
+
+* Fix bug in adjust_for_digits() that could cause the space between
+  words to be removed.
+
+* Fix bug that could lead to the double-presentation of value-change
+  events.
+
+* Fix traceback from debugging utilities.
+
+=========
+
 48.5 - 21 June 2025
 
 General:
@@ -6,7 +24,6 @@ General:
   name.
 
 =========
-
 
 48.4 - 21 June 2025
 
