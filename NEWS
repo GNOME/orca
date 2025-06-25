@@ -1,3 +1,141 @@
+48.6 - 25 June 2025
+
+Web:
+
+* Enter focus mode when focus moves inside descendant of web app.
+
+General:
+
+* Fix bug in adjust_for_digits() that could cause the space between
+  words to be removed.
+
+* Fix bug that could lead to the double-presentation of value-change
+  events.
+
+* Fix traceback from debugging utilities.
+
+=========
+
+48.5 - 21 June 2025
+
+General:
+
+* Interrupt speech when the old focus and the new focus have the same
+  name.
+
+=========
+
+48.4 - 21 June 2025
+
+Web:
+
+* Interrupt speech sooner when focus changes in a web app.
+
+General:
+
+* Fix bug causing the Help button to fail in the Preferences dialog.
+
+=========
+
+48.3 - 19 June 2025
+
+General:
+
+* Interrupt speech when value changes on non-progressbar widgets.
+
+=========
+
+48.2 - 10 June 2025
+
+Web:
+
+* Fix two instances of Orca failing to interrupt speech during
+  navigation.
+
+* Handle structural navigation among headings with broken ARIA
+  authoring.
+
+* Fix population of the enable-structural-navigation checkbox.
+
+Flat Review:
+
+* Fall back to clicking on object when clicking on character fails.
+
+* Work around issue causing objects with "dead"/missing children to
+  not be included in the collection of objects.
+
+General:
+
+* Fix several unhandled exceptions.
+
+* Fix chattiness related to deleting selected text.
+
+* Include state expanded when generating braille for table rows.
+
+* Include ancestors when generating speech for focused combo boxes.
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  en_GB           British English           Andi Chandler
+  uz              Uzbek (Latin)             Baxrom Raxmatov
+
+=========
+
+48.1 - 1 May 2025
+
+Web:
+
+* Fix bug causing failure to present suggestions in Google Docs.
+
+* Fix chattiness related to description terms with embedded objects.
+
+* Fix incorrect word presentation when navigating out of an embedded
+  child.
+
+* Fix presentation of value of readonly ARIA spin buttons.
+
+* Chromium: Update heuristic to identify the find-in-page widget.
+
+* Work around Gecko bug causing us to present state page tab names.
+
+* Work around one of Gecko's broken text-insertion events causing
+  double-presentation or lack of presentation in contenteditables
+  and Thunderbird.
+
+General:
+
+* Fix changing shortcuts if the a11y manager is used by at-spi2.
+
+* Fix bug causing ancestor panels/groupings to not be announced.
+
+* Work around GTK failing to set the read-only state on read-only text.
+
+* Fix bug causing flat review to sometimes fail.
+
+* Fix braille sometimes displaying stale information after the focused
+  object changes names.
+
+* Don't try to clean up in response to SIGSEGV.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Daniel Rusek
+  de              German                    Philipp Kiemle
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Saratsua Garmendia
+  id              Indonesian                Andika Triwidada
+  ro              Romanian                  Antonio Marin
+
+=========
+
+48.0 - 17 March 2025
+
+(No updates since the RC release.)
+
+=========
+
 48.rc - 3 March 2025
 
 Web:
