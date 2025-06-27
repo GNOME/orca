@@ -227,8 +227,13 @@ class AXObject:
             return False
 
         app_name = AXObject.get_name(app)
-        if app_name in ["soffice"]:
-            tokens = ["AXObject: Treating", app_name, "as not supporting collection."]
+        if app_name == "soffice":
+            if AXObject.find_ancestor_inclusive(
+               obj, lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT):
+                return True
+
+            tokens = ["AXObject: Treating soffice as not supporting collection:",
+                      obj, "is not in a text document"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
