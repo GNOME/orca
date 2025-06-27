@@ -502,14 +502,6 @@ class StructuralNavigation:
         self._handlers = self.get_handlers(True)
         self._bindings = keybindings.KeyBindings()
 
-        # When navigating in a non-uniform table, one can move to a
-        # cell which spans multiple rows and/or columns.  When moving
-        # beyond that cell, into a cell that does NOT span multiple
-        # rows/columns, we want to be sure we land in the right place.
-        # Therefore, we'll store the coordinates from "our perspective."
-        #
-        self.lastTableCell = [-1, -1]
-
         self._objectCache = {}
 
         self._inModalDialog = False
@@ -1910,7 +1902,6 @@ class StructuralNavigation:
                 tokens = ["STRUCTURAL NAVIGATION: Located", cell, "for first cell"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self.lastTableCell = [0, 0]
         if self._presentWithSayAll(cell, 0):
             return
 
