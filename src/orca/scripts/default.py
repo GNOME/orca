@@ -166,6 +166,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_system_information_presenter().get_handlers())
         self.input_event_handlers.update(self.bookmarks.get_handlers())
         self.input_event_handlers.update(self.get_object_navigator().get_handlers())
+        self.input_event_handlers.update(self.get_structural_navigator().get_handlers())
         self.input_event_handlers.update(self.get_table_navigator().get_handlers())
         self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
         self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
@@ -349,6 +350,11 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.get_object_navigator().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.get_structural_navigator().get_bindings(
             refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
@@ -667,6 +673,8 @@ class Script(script.Script):
         self.get_speech_and_verbosity_manager().update_punctuation_level()
         self.get_speech_and_verbosity_manager().update_capitalization_style()
         self.get_speech_and_verbosity_manager().update_synthesizer()
+
+        self.get_structural_navigator().set_mode(self, self._default_sn_mode)
 
         self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]
@@ -1826,6 +1834,8 @@ class Script(script.Script):
 
         if offset is None:
             offset = AXText.get_caret_offset(obj)
+        else:
+            AXText.set_caret_offset(obj, offset)
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
@@ -1939,6 +1949,10 @@ class Script(script.Script):
         interrupt = args.get("interrupt", False)
         tokens = ["DEFAULT: Presenting object", obj, ". Interrupt:", interrupt]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        offset = args.get("offset")
+        if offset is not None:
+            AXText.set_caret_offset(obj, offset)
 
         if not args.get("speechonly", False):
             self.update_braille(obj, **args)

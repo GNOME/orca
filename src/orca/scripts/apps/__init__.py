@@ -1,7 +1,6 @@
 """Orca's application scripts."""
 
-__all__ = ['evince',
-           'evolution',
+__all__ = ['evolution',
            'gajim',
            'gedit',
            'gnome-shell',

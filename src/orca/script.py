@@ -59,12 +59,11 @@ from . import mouse_review
 from . import notification_presenter
 from . import object_navigator
 from . import script_utilities
-from . import settings_manager
 from . import sleep_mode_manager
 from . import sound_generator
 from . import speech_and_verbosity_manager
 from . import speech_generator
-from . import structural_navigation
+from . import structural_navigator
 from . import system_information_presenter
 from . import table_navigator
 from . import bookmarks
@@ -94,7 +93,6 @@ class Script:
 
         self.bookmarks = self.get_bookmarks()
         self.label_inference = self.get_label_inference()
-        self.structural_navigation = self.get_structural_navigation()
 
         # pylint:disable=assignment-from-none
         self.caret_navigation = self.get_caret_navigation()
@@ -104,6 +102,8 @@ class Script:
 
         self.setup_input_event_handlers()
         self.braille_bindings = self.get_braille_bindings()
+
+        self._default_sn_mode = structural_navigator.NavigationMode.OFF
 
         msg = f"SCRIPT: {self.name} initialized"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -184,17 +184,10 @@ class Script:
 
         return label_inference.LabelInference(self)
 
-    def get_enabled_structural_navigation_types(self):
-        """Returns a list of structural navigation objects enabled for this script."""
+    def get_structural_navigator(self):
+        """Returns the 'structural navigator' class for this script."""
 
-        return []
-
-    def get_structural_navigation(self):
-        """Returns the 'structural navigation' class for this script."""
-
-        types = self.get_enabled_structural_navigation_types()
-        enable = settings_manager.get_manager().get_setting('structuralNavigationEnabled')
-        return structural_navigation.StructuralNavigation(self, types, enable)
+        return structural_navigator.get_navigator()
 
     def get_live_region_manager(self):
         """Returns the live region manager for this script."""

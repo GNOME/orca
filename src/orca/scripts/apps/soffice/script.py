@@ -386,6 +386,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
+        if self.get_structural_navigator().last_input_event_was_navigation_command():
+            msg = "SOFFICE: Event ignored: Last input event was structural navigation."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         if self.utilities.isSpreadSheetCell(focus_manager.get_manager().get_locus_of_focus()):
             if not self.utilities.is_cell_being_edited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
@@ -443,6 +448,10 @@ class Script(default.Script):
 
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self.get_structural_navigator().last_input_event_was_navigation_command():
+            msg = "SOFFICE: Event ignored: Last input event was structural navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
