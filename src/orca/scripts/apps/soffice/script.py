@@ -335,6 +335,9 @@ class Script(default.Script):
         if event.any_data == focus:
             return
 
+        if AXUtilities.is_paragraph(focus):
+            return super().on_active_descendant_changed(event)
+
         if event.source == self.spellcheck.get_suggestions_list():
             if AXUtilities.is_focused(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
