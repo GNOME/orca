@@ -1195,6 +1195,16 @@ class AXUtilitiesCollection:
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
+    def find_all_large_containers(
+        root: Atspi.Accessible,
+        pred: Optional[Callable[[Atspi.Accessible], bool]] = None
+    ) -> list[Atspi.Accessible]:
+        """Returns all descendants of root that we consider a large container"""
+
+        roles = AXUtilitiesRole.get_large_container_roles()
+        return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
+
+    @staticmethod
     def find_all_layered_panes(
         root: Atspi.Accessible,
         pred: Optional[Callable[[Atspi.Accessible], bool]] = None

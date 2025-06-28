@@ -111,7 +111,6 @@ class Utilities(script_utilities.Utilities):
                   "Preserving context:", preserveContext, "Context:", context]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self._script.structural_navigation.clearCache(documentFrame)
         self.clearCaretContext(documentFrame)
         self.clearCachedObjects()
 

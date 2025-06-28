@@ -284,6 +284,9 @@ class AXUtilities:
     def get_form_field_roles() -> list[Atspi.Role]: ...
 
     @staticmethod
+    def get_large_container_roles() -> list[Atspi.Role]: ...
+
+    @staticmethod
     def get_layout_only_roles() -> list[Atspi.Role]: ...
 
     @staticmethod
@@ -1006,6 +1009,11 @@ class AXUtilities:
 
     @staticmethod
     def is_landmark_without_type(
+        obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
+    ) -> bool: ...
+
+    @staticmethod
+    def is_large_container(
         obj: Atspi.Accessible, role: Optional[Atspi.Role] = None
     ) -> bool: ...
 
@@ -2221,6 +2229,12 @@ class AXUtilities:
     ) -> list[Atspi.Accessible]: ...
 
     @staticmethod
+    def find_all_large_containers(
+        root: Atspi.Accessible,
+        pred: Optional[Callable[[Atspi.Accessible], bool]] = None
+    ) -> list[Atspi.Accessible]: ...
+
+    @staticmethod
     def find_all_layered_panes(
         root: Atspi.Accessible,
         pred: Optional[Callable] = None
@@ -2240,7 +2254,10 @@ class AXUtilities:
 
     @staticmethod
     def find_all_lists(
-        root: Atspi.Accessible, pred: Optional[Callable] = None
+        root: Atspi.Accessible,
+        pred: Optional[Callable[[Atspi.Accessible], bool]] = None,
+        include_description_lists: bool = False,
+        include_tab_lists: bool = False
     ) -> list[Atspi.Accessible]: ...
 
     @staticmethod
@@ -2250,7 +2267,10 @@ class AXUtilities:
 
     @staticmethod
     def find_all_list_items(
-        root: Atspi.Accessible, pred: Optional[Callable] = None
+        root: Atspi.Accessible,
+        pred: Optional[Callable[[Atspi.Accessible], bool]] = None,
+        include_description_terms: bool = False,
+        include_tabs: bool = False
     ) -> list[Atspi.Accessible]: ...
 
     @staticmethod

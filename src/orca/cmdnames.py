@@ -849,12 +849,14 @@ DYNAMIC_ROW_HEADER_CLEAR = _("Clear the dynamic row headers")
 # to the place where one enters formulas for a spreadsheet.
 PRESENT_INPUT_LINE = _("Present the contents of the input line")
 
-# Translators: the structural navigation keys are designed to move the caret
-# around the document content by object type. Thus H moves you to the next
-# heading, Shift H to the previous heading, T to the next table, and so on.
-# This feature needs to be toggle-able so that it does not interfere with normal
-# writing functions.
-STRUCTURAL_NAVIGATION_TOGGLE = _("Toggle structural navigation keys")
+# Translators: the structural navigation keys are designed to move around in a
+# document or container by object type. Thus H moves you to the next heading, Shift+H
+# to the previous heading, T to the next table, and so on. This feature needs to be
+# toggle-able so that it does not interfere with normal writing functions. In addition,
+# the navigation can be restricted to the current document or to non-document/GUI
+# objects. This string is the description of the command which switches among the
+# available modes: off, document, and GUI.
+STRUCTURAL_NAVIGATION_MODE_CYCLE = _("Cycles to the next structural navigation mode")
 
 # Translators: Orca has commands for navigating within a table, e.g. to the
 # next cell in a given direction. This string is the description of the command

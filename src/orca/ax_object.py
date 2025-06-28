@@ -213,6 +213,21 @@ class AXObject:
         return iface is not None
 
     @staticmethod
+    def _has_document_spreadsheet(obj: Atspi.Accessible) -> bool:
+        # To avoid circular import. pylint: disable=import-outside-toplevel
+        from .ax_collection import AXCollection
+        rule = AXCollection.create_match_rule(roles=[Atspi.Role.DOCUMENT_SPREADSHEET])
+        if rule is None:
+            return False
+
+        frame = AXObject.find_ancestor_inclusive(
+            obj, lambda x: AXObject.get_role(x) == Atspi.Role.FRAME)
+        if frame is None:
+            return False
+        return bool(Atspi.Collection.get_matches(
+            frame, rule, Atspi.CollectionSortOrder.CANONICAL, 1, True))
+
+    @staticmethod
     def supports_collection(obj: Atspi.Accessible) -> bool:
         """Returns True if the collection interface is supported on obj"""
 
@@ -226,17 +241,6 @@ class AXObject:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        app_name = AXObject.get_name(app)
-        if app_name == "soffice":
-            if AXObject.find_ancestor_inclusive(
-               obj, lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT):
-                return True
-
-            tokens = ["AXObject: Treating soffice as not supporting collection:",
-                      obj, "is not in a text document"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
         try:
             iface = Atspi.Accessible.get_collection_iface(obj)
         except GLib.GError as error:
@@ -244,7 +248,20 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return False
 
-        return iface is not None
+        app_name = AXObject.get_name(app)
+        if app_name != "soffice":
+            return iface is not None
+
+        if AXObject.find_ancestor_inclusive(
+            obj, lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT):
+            return True
+
+        if AXObject._has_document_spreadsheet(obj):
+            msg = "AXObject: Treating soffice as not supporting collection due to spreadsheet."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
 
     @staticmethod
     def supports_component(obj: Atspi.Accessible) -> bool:

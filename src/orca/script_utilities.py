@@ -793,6 +793,8 @@ class Utilities:
 
     def setCaretPosition(self, obj, offset, documentFrame=None):
         focus_manager.get_manager().set_locus_of_focus(None, obj, False)
+        if self.grabFocusWhenSettingCaret(obj):
+            AXObject.grab_focus(obj)
         self.setCaretOffset(obj, offset)
 
     def setCaretOffset(self, obj, offset):

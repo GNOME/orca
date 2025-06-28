@@ -42,16 +42,6 @@ from orca.ax_utilities import AXUtilities
 class Utilities(web.Utilities):
     """Custom script utilities for Chromium"""
 
-    def setCaretPosition(self, obj, offset, documentFrame=None):
-        super().setCaretPosition(obj, offset, documentFrame)
-
-        # TODO - JD: Is this hack still needed?
-        link = AXObject.find_ancestor(obj, AXUtilities.is_link)
-        if link is not None:
-            tokens = ["CHROMIUM: HACK: Grabbing focus on", obj, "'s ancestor", link]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.grab_focus(link)
-
     def getFindResultsCount(self, root=None):
         root = root or self._findContainer
         if not root:

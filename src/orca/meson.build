@@ -129,7 +129,7 @@ lib_sources = [
   'speechserver.py',
   'spiel.py',
   'ssml.py',
-  'structural_navigation.py',
+  'structural_navigator.py',
   'system_information_presenter.py',
   'table_navigator.py',
   'text_attribute_names.py',

@@ -46,7 +46,6 @@ from orca import settings
 from orca import settings_manager
 from orca import speech
 from orca import speechserver
-from orca import structural_navigation
 from orca.acss import ACSS
 from orca.scripts import default
 from orca.ax_component import AXComponent
@@ -57,6 +56,7 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
+from orca.structural_navigator import NavigationMode
 
 from .bookmarks import Bookmarks
 from .braille_generator import BrailleGenerator
@@ -68,6 +68,8 @@ class Script(default.Script):
 
     def __init__(self, app):
         super().__init__(app)
+
+        self._default_sn_mode = NavigationMode.DOCUMENT
 
         self._sayAllContents = []
         self._loadingDocumentContent = False
@@ -110,11 +112,10 @@ class Script(default.Script):
 
         tokens = ["WEB: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
         in_doc = self.utilities.inDocumentContent()
         reason = f"script activation, in document content: {in_doc}"
         self.caret_navigation.suspend_commands(self, not in_doc, reason)
-        self.structural_navigation.suspend_commands(self, not in_doc, reason)
+        self.get_structural_navigator().suspend_commands(self, not in_doc, reason)
         self.live_region_manager.suspend_commands(self, not in_doc, reason)
         self.get_table_navigator().suspend_commands(self, not in_doc, reason)
         super().activate()
@@ -132,7 +133,7 @@ class Script(default.Script):
         self.utilities.clearCachedObjects()
         reason = "script deactivation"
         self.caret_navigation.suspend_commands(self, False, reason)
-        self.structural_navigation.suspend_commands(self, False, reason)
+        self.get_structural_navigator().suspend_commands(self, False, reason)
         self.live_region_manager.suspend_commands(self, False, reason)
         self.get_table_navigator().suspend_commands(self, False, reason)
         super().deactivate()
@@ -144,11 +145,6 @@ class Script(default.Script):
 
         layout = settings_manager.get_manager().get_setting('keyboardLayout')
         isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-
-        structNavBindings = self.structural_navigation.get_bindings(
-            refresh=True, is_desktop=isDesktop)
-        for keyBinding in structNavBindings.key_bindings:
-            keyBindings.add(keyBinding)
 
         caretNavBindings = self.caret_navigation.get_bindings(
             refresh=True, is_desktop=isDesktop)
@@ -210,7 +206,6 @@ class Script(default.Script):
         """Defines the input event handlers for this script."""
 
         super().setup_input_event_handlers()
-        self.input_event_handlers.update(self.structural_navigation.get_handlers(True))
         self.input_event_handlers.update(self.caret_navigation.get_handlers(True))
         self.input_event_handlers.update(self.live_region_manager.get_handlers(True))
 
@@ -269,33 +264,6 @@ class Script(default.Script):
         """Returns the caret navigation support for this script."""
 
         return caret_navigation.CaretNavigation()
-
-    def get_enabled_structural_navigation_types(self):
-        """Returns the structural navigation object types for this script."""
-
-        return [structural_navigation.StructuralNavigation.BLOCKQUOTE,
-                structural_navigation.StructuralNavigation.BUTTON,
-                structural_navigation.StructuralNavigation.CHECK_BOX,
-                structural_navigation.StructuralNavigation.CHUNK,
-                structural_navigation.StructuralNavigation.CLICKABLE,
-                structural_navigation.StructuralNavigation.COMBO_BOX,
-                structural_navigation.StructuralNavigation.CONTAINER,
-                structural_navigation.StructuralNavigation.ENTRY,
-                structural_navigation.StructuralNavigation.FORM_FIELD,
-                structural_navigation.StructuralNavigation.HEADING,
-                structural_navigation.StructuralNavigation.IFRAME,
-                structural_navigation.StructuralNavigation.IMAGE,
-                structural_navigation.StructuralNavigation.LANDMARK,
-                structural_navigation.StructuralNavigation.LINK,
-                structural_navigation.StructuralNavigation.LIST,
-                structural_navigation.StructuralNavigation.LIST_ITEM,
-                structural_navigation.StructuralNavigation.LIVE_REGION,
-                structural_navigation.StructuralNavigation.PARAGRAPH,
-                structural_navigation.StructuralNavigation.RADIO_BUTTON,
-                structural_navigation.StructuralNavigation.SEPARATOR,
-                structural_navigation.StructuralNavigation.TABLE,
-                structural_navigation.StructuralNavigation.UNVISITED_LINK,
-                structural_navigation.StructuralNavigation.VISITED_LINK]
 
     def get_live_region_manager(self):
         """Returns the live region support for this script."""
@@ -691,7 +659,7 @@ class Script(default.Script):
                 if manager.last_event_was_up() and self._rewindSayAll(context):
                     return
                 if settings_manager.get_manager().get_setting("structNavInSayAll") \
-                   and self.structural_navigation.last_input_event_was_navigation_command():
+                   and self.get_structural_navigator().last_input_event_was_navigation_command():
                     return
 
         self._sayAllContents = []
@@ -734,7 +702,7 @@ class Script(default.Script):
             return False
 
         lastCommandWasStructNav = \
-            self.structural_navigation.last_input_event_was_navigation_command() \
+            self.get_structural_navigator().last_input_event_was_navigation_command() \
             or self.get_table_navigator().last_input_event_was_navigation_command()
         if not settings_manager.get_manager().get_setting('structNavTriggersFocusMode') \
            and lastCommandWasStructNav:
@@ -928,7 +896,7 @@ class Script(default.Script):
 
         priorObj = args.get("priorObj")
         if self.caret_navigation.last_input_event_was_navigation_command() \
-           or self.structural_navigation.last_input_event_was_navigation_command() \
+           or self.get_structural_navigator().last_input_event_was_navigation_command() \
            or self.get_table_navigator().last_input_event_was_navigation_command() \
            or args.get("includeContext") or AXTable.get_table(obj):
             priorObj, priorOffset = self.utilities.getPriorContext()
@@ -1010,7 +978,7 @@ class Script(default.Script):
         isContentEditable = self.utilities.isContentEditableWithEmbeddedObjects(obj)
 
         if not self.caret_navigation.last_input_event_was_navigation_command() \
-           and not self.structural_navigation.last_input_event_was_navigation_command() \
+           and not self.get_structural_navigator().last_input_event_was_navigation_command() \
            and not self.get_table_navigator().last_input_event_was_navigation_command() \
            and not isContentEditable \
            and not AXDocument.is_plain_text(document) \
@@ -1162,7 +1130,7 @@ class Script(default.Script):
         self._browseModeIsSticky = True
         reason = "enable sticky browse mode"
         self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
-        self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.get_structural_navigator().suspend_commands(self, self._inFocusMode, reason)
         self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
         self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
@@ -1175,7 +1143,7 @@ class Script(default.Script):
         self._browseModeIsSticky = False
         reason = "enable sticky focus mode"
         self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
-        self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.get_structural_navigator().suspend_commands(self, self._inFocusMode, reason)
         self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
         self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
@@ -1200,7 +1168,7 @@ class Script(default.Script):
         else:
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
                and (self.caret_navigation.last_input_event_was_navigation_command() \
-                    or self.structural_navigation.last_input_event_was_navigation_command() \
+                    or self.get_structural_navigator().last_input_event_was_navigation_command() \
                     or self.get_table_navigator().last_input_event_was_navigation_command() \
                     or inputEvent):
                 AXObject.grab_focus(obj)
@@ -1212,7 +1180,7 @@ class Script(default.Script):
 
         reason = "toggling focus/browse mode"
         self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
-        self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+        self.get_structural_navigator().suspend_commands(self, self._inFocusMode, reason)
         self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
         self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
@@ -1252,7 +1220,7 @@ class Script(default.Script):
 
             reason = "locus of focus no longer in document"
             self.caret_navigation.suspend_commands(self, True, reason)
-            self.structural_navigation.suspend_commands(self, True, reason)
+            self.get_structural_navigator().suspend_commands(self, True, reason)
             self.live_region_manager.suspend_commands(self, True, reason)
             self.get_table_navigator().suspend_commands(self, True, reason)
             return False
@@ -1285,7 +1253,7 @@ class Script(default.Script):
         args = {}
         lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
         lastCommandWasStructNav = \
-            self.structural_navigation.last_input_event_was_navigation_command() \
+            self.get_structural_navigator().last_input_event_was_navigation_command() \
             or self.get_table_navigator().last_input_event_was_navigation_command()
         manager = input_event_manager.get_manager()
         lastCommandWasLineNav = manager.last_event_was_line_navigation() \
@@ -1374,7 +1342,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent(old_focus):
             reason = "locus of focus now in document"
             self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
-            self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+            self.get_structural_navigator().suspend_commands(self, self._inFocusMode, reason)
             self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
             self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
@@ -1438,8 +1406,6 @@ class Script(default.Script):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
-
-        self.structural_navigation.clearCache()
 
         if self.utilities.getDocumentForObject(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
@@ -1594,7 +1560,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.structural_navigation.last_input_event_was_navigation_command():
+        if self.get_structural_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2042,7 +2008,7 @@ class Script(default.Script):
                 if not notify and prevDocument is None:
                     reason = "updating locus of focus without notification"
                     self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
-                    self.structural_navigation.suspend_commands(self, self._inFocusMode, reason)
+                    self.get_structural_navigator().suspend_commands(self, self._inFocusMode, reason)
                     self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
                     self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
                 self.utilities.setCaretContext(obj, offset)
@@ -2055,7 +2021,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.structural_navigation.last_input_event_was_navigation_command():
+        if self.get_structural_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2329,12 +2295,6 @@ class Script(default.Script):
             msg = "WEB: Unable to get valid context object"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        document = self.utilities.getDocumentForObject(event.source)
-        if document:
-            tokens = ["WEB: Clearing structural navigation cache for", document]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self.structural_navigation.clearCache(document)
-
         if not AXUtilities.is_editable(event.source) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
             if self._inMouseOverObject and not AXObject.is_valid(self._lastMouseOverObject):
@@ -2408,11 +2368,6 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(None, event.source, force=True)
                 return True
-
-        else:
-            tokens = ["WEB: Clearing structural navigation cache for", document]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self.structural_navigation.clearCache(document)
 
         if not self.utilities.treatAsTextObject(event.source):
             msg = "WEB: Ignoring: Event source is not a text object"
@@ -2491,8 +2446,13 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.structural_navigation.last_input_event_was_navigation_command():
+        if self.get_structural_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Ignoring: Last input event was structural navigation command."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.get_table_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Ignoring: Last input event was table navigation command."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

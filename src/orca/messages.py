@@ -1936,7 +1936,7 @@ NO_MORE_CHECK_BOXES = _("No more check boxes.")
 # object' to 'large object'. A 'large object' is a logical chunk of text,
 # such as a paragraph, a list, a table, etc. This is a detailed message which
 # will be presented to the user if no more check boxes can be found.
-NO_MORE_CHUNKS = _("No more large objects.")
+NO_MORE_LARGE_OBJECTS = _("No more large objects.")
 
 # Translators: This is for navigating document content by moving amongst web
 # elements which have an "onClick" action. This is a detailed message which
@@ -2046,6 +2046,15 @@ NO_SELECTED_TEXT = _("No selected text.")
 # about the currently-focused link. This message is what Orca will present
 # if the user performs this command when not on a link.
 NOT_ON_A_LINK = _("Not on a link.")
+
+# Translators: Orca has commands to navigate among objects by object type.
+# When the user moves to a focusable object, such as a button, Orca grabs
+# focus on the object. This should update the focus in the GUI, e.g. so the
+# user could then use native application keyboard shortcuts (Tab, Space, Enter)
+# to interact with the application. Unfortunately, not all apps support
+# updating the focus in response to a grab. Therefore Orca will present this
+# message to indicate that the focus was not updated.
+NOT_FOCUSED = _("Not focused.")
 
 # Translators: This message alerts the user to the fact that what will be
 # presented next came from a notification.
@@ -2361,29 +2370,55 @@ STATUS_BAR_NOT_FOUND_FULL = _("Status bar not found")
 # for was not found.
 STRING_NOT_FOUND = _("string not found")
 
-# Translators: The structural navigation keys are designed to move the caret
-# around document content by object type. H moves you to the next heading,
-# Shift H to the previous heading, T to the next table, and so on. Some users
-# prefer to turn this off to use Firefox's search when typing feature. This
-# message is presented when the user toggles the structural navigation feature
-# of Orca. It should be a brief informative message.            
-STRUCTURAL_NAVIGATION_KEYS_OFF = _("Structural navigation keys off.")
+# Translators: The structural navigation keys are designed to move around in
+# a document or other container by object type. H moves you to the next heading,
+# Shift H to the previous heading, T to the next table, and so on. This message
+# is presented when the user disables the structural navigation feature of Orca.
+STRUCTURAL_NAVIGATION_KEYS_OFF = _("Structural navigation disabled")
 
-# Translators: The structural navigation keys are designed to move the caret
-# around document content by object type. H moves you to the next heading,
-# Shift H to the previous heading, T to the next table, and so on. Some users
-# prefer to turn this off to use Firefox's search when typing feature. This
-# message is presented when the user toggles the structural navigation feature
-# of Orca. It should be a brief informative message.            
-STRUCTURAL_NAVIGATION_KEYS_ON = _("Structural navigation keys on.")
+# Translators: The structural navigation keys are designed to move around in
+# a document or other container by object type. H moves you to the next heading,
+# Shift H to the previous heading, T to the next table, and so on. This message
+# is presented when the user enables the structural navigation feature for
+# navigating within the current document.
+STRUCTURAL_NAVIGATION_KEYS_DOCUMENT = _("Document mode")
+
+# Translators: The structural navigation keys are designed to move around in
+# a document or other container by object type. H moves you to the next heading,
+# Shift H to the previous heading, T to the next table, and so on. This message
+# is presented when the user enables the structural navigation feature for
+# navigating within the GUI of the current application.
+STRUCTURAL_NAVIGATION_KEYS_GUI = _("GUI mode")
 
 # Translators: Orca has a command that allows the user to move to the next
 # structural navigation object. In Orca, "structural navigation" refers to
-# quickly moving through a document by jumping amongst objects of a given
+# quickly moving through a container by jumping amongst objects of a given
 # type, such as from link to link, or from heading to heading, or from form
 # field to form field. This is a brief message which will be presented to the
 # user if the desired structural navigation object could not be found.
 STRUCTURAL_NAVIGATION_NOT_FOUND = C_("structural navigation", "Not found")
+
+# Translators: Orca has a command that allows the user to move to the next
+# structural navigation object. In Orca, "structural navigation" refers to
+# quickly moving through a container by jumping amongst objects of a given
+# type, such as from link to link, or from heading to heading, or from form
+# field to form field. In order for this functionality to work, Orca uses
+# the AtspiCollection interface. If an object claims to not support that
+# interface, Orca will present this message to the user to indicate that
+# structural navigation is not available. This is the detailed version.
+STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL = \
+    _("Not supported for this location.")
+
+# Translators: Orca has a command that allows the user to move to the next
+# structural navigation object. In Orca, "structural navigation" refers to
+# quickly moving through a container by jumping amongst objects of a given
+# type, such as from link to link, or from heading to heading, or from form
+# field to form field. In order for this functionality to work, Orca uses
+# the AtspiCollection interface. If an object claims to not support that
+# interface, Orca will present this message to the user to indicate that
+# structural navigation is not available. This is the brief version.
+STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF = \
+    C_("structural navigation", "Not supported")
 
 # Translators: This message describes the (row, col) position of a table cell.
 TABLE_CELL_COORDINATES = _("Row %(row)d, column %(column)d.")

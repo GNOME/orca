@@ -1,4 +1,3 @@
-subdir('evince')
 subdir('evolution')
 subdir('gajim')
 subdir('gedit')

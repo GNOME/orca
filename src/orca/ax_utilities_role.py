@@ -147,6 +147,32 @@ class AXUtilitiesRole:
         return roles
 
     @staticmethod
+    def get_large_container_roles() -> list[Atspi.Role]:
+        """Returns the list of roles we consider a large container."""
+
+        # Note: We are deliberately leaving out sections because those are often DIVs
+        # which are generic and often not large. The primary consumer of this function
+        # is structural navigation which uses it for the jump-to-edge functionality.
+        roles = [Atspi.Role.ARTICLE,
+                 Atspi.Role.BLOCK_QUOTE,
+                 Atspi.Role.DESCRIPTION_LIST,
+                 Atspi.Role.FORM,
+                 Atspi.Role.FOOTER,
+                 Atspi.Role.GROUPING,
+                 Atspi.Role.HEADER,
+                 Atspi.Role.HTML_CONTAINER,
+                 Atspi.Role.LANDMARK,
+                 Atspi.Role.LOG,
+                 Atspi.Role.LIST,
+                 Atspi.Role.MARQUEE,
+                 Atspi.Role.PANEL,
+                 Atspi.Role.TABLE,
+                 Atspi.Role.TREE,
+                 Atspi.Role.TREE_TABLE]
+
+        return roles
+
+    @staticmethod
     def get_layout_only_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider are for layout only"""
 
@@ -1469,6 +1495,15 @@ class AXUtilitiesRole:
 
         roles = AXUtilitiesRole._get_xml_roles(obj)
         return not roles
+
+    @staticmethod
+    def is_large_container(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
+        """Returns True if obj has a large container role"""
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        return role in AXUtilitiesRole.get_large_container_roles()
 
     @staticmethod
     def is_layered_pane(obj: Atspi.Accessible, role: Optional[Atspi.Role] = None) -> bool:
