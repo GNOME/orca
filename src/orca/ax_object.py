@@ -97,8 +97,8 @@ class AXObject:
             app = Atspi.Accessible.get_application(obj)
             name = Atspi.Accessible.get_toolkit_name(app) or ""
         except GLib.GError as error:
-            msg = f"AXObject: Exception calling _get_toolkit_name on {app}: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens = ["AXObject: Exception calling _get_toolkit_name_on", app, f": {error}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return ""
 
         return name.lower()
