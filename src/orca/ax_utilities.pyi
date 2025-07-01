@@ -240,6 +240,11 @@ class AXUtilities:
     ) -> bool: ...
 
     @staticmethod
+    def is_presentable_invalid_entry_change(
+        event: Atspi.Event
+    ) -> bool: ...
+
+    @staticmethod
     def is_presentable_name_change(
         event: Atspi.Event
     ) -> bool: ...
