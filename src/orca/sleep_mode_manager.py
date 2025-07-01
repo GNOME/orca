@@ -33,6 +33,7 @@ __license__   = "LGPL"
 
 from typing import Optional, TYPE_CHECKING
 
+from . import braille
 from . import cmdnames
 from . import debug
 from . import input_event
@@ -136,7 +137,7 @@ class SleepModeManager:
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
-        script.clearBraille()
+        braille.clear()
         script.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
         _script_manager.set_active_script(
             _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on")

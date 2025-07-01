@@ -32,6 +32,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+from orca import braille
 from orca import caret_navigation
 from orca import cmdnames
 from orca import keybindings
@@ -1044,7 +1045,10 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, "WEB: Braille disabled", True)
             return
 
-        line = self.getNewBrailleLine(clearBraille=True, addLine=True)
+        braille.clear()
+        line = braille.Line()
+        braille.addLine(line)
+
         document = args.get("documentFrame")
         result = self.braille_generator.generate_contents(contents, documentFrame=document)
         if not result:
@@ -1056,21 +1060,22 @@ class Script(default.Script):
         tokens = ["WEB: Generated result", regions, "focused region", focusedRegion]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        # Each "region" is a list.
         for region in regions:
-            self.addBrailleRegionsToLine(region, line)
+            line.addRegions(region)
 
         if line.regions:
             line.regions[-1].string = line.regions[-1].string.rstrip(" ")
 
-        self.setBrailleFocus(focusedRegion, getLinkMask=False)
-        self.refreshBraille(panToCursor=True, getLinkMask=False)
+        braille.setFocus(focusedRegion, getLinkMask=False)
+        braille.refresh(panToCursor=True, getLinkMask=False)
 
     def pan_braille_left(self, inputEvent=None, pan_amount=0):
         """Pans braille to the left."""
 
         if self.get_flat_review_presenter().is_active() \
            or not self.utilities.inDocumentContent() \
-           or not self.isBrailleBeginningShowing():
+           or not braille.beginningIsShowing:
             super().pan_braille_left(inputEvent, pan_amount)
             return
 
@@ -1085,10 +1090,10 @@ class Script(default.Script):
         # Hack: When panning to the left in a document, we want to start at
         # the right/bottom of each new object. For now, we'll pan there.
         # When time permits, we'll give our braille code some smarts.
-        while self.panBrailleInDirection(panToLeft=False):
+        while braille.panRight(0):
             pass
 
-        self.refreshBraille(False)
+        braille.refresh(False)
         return True
 
     def pan_braille_right(self, inputEvent=None, pan_amount=0):
@@ -1096,7 +1101,7 @@ class Script(default.Script):
 
         if self.get_flat_review_presenter().is_active() \
            or not self.utilities.inDocumentContent() \
-           or not self.isBrailleEndShowing():
+           or not braille.endIsShowing:
             super().pan_braille_right(inputEvent, pan_amount)
             return
 
@@ -1111,10 +1116,10 @@ class Script(default.Script):
         # Hack: When panning to the right in a document, we want to start at
         # the left/top of each new object. For now, we'll pan there. When time
         # permits, we'll give our braille code some smarts.
-        while self.panBrailleInDirection(panToLeft=True):
+        while braille.panLeft(0):
             pass
 
-        self.refreshBraille(False)
+        braille.refresh(False)
         return True
 
     def moveToMouseOver(self, inputEvent):

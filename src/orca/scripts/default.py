@@ -691,19 +691,19 @@ class Script(script.Script):
         if not result:
             return
 
-        self.clearBraille()
-        line = self.getNewBrailleLine()
+        braille.clear()
+        line = braille.Line()
         braille.addLine(line)
-        self.addBrailleRegionsToLine(result, line)
+        line.addRegions(result)
 
         extraRegion = args.get('extraRegion')
         if extraRegion:
-            self.addBrailleRegionToLine(extraRegion, line)
-            self.setBrailleFocus(extraRegion)
+            line.addRegion(extraRegion)
+            braille.setFocus(extraRegion)
         else:
-            self.setBrailleFocus(focusedRegion)
+            braille.setFocus(focusedRegion)
 
-        self.refreshBraille(True)
+        braille.refresh(True)
 
     ########################################################################
     #                                                                      #
@@ -760,7 +760,7 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
-        if self.isBrailleBeginningShowing() and is_text_area:
+        if braille.beginningIsShowing and is_text_area:
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -769,10 +769,10 @@ class Script(script.Script):
             # caret position, we will get a caret event, which will
             # then update the braille.
             #
-            startOffset = AXText.get_line_at_offset(focus)[1]
+            start_offset = AXText.get_line_at_offset(focus)[1]
             movedCaret = False
-            if startOffset > 0:
-                movedCaret = AXText.set_caret_offset(focus, startOffset - 1)
+            if start_offset > 0:
+                movedCaret = AXText.set_caret_offset(focus, start_offset - 1)
 
             # If we didn't move the caret and we're in a terminal, we
             # jump into flat review to review the text.  See
@@ -782,11 +782,10 @@ class Script(script.Script):
                 self.get_flat_review_presenter().go_start_of_line(self, event)
                 self.get_flat_review_presenter().go_previous_character(self, event)
         else:
-            self.panBrailleInDirection(pan_amount, panToLeft=True)
+            braille.panLeft(pan_amount)
             # We might be panning through a flashed message.
-            #
             braille.resetFlashTimer()
-            self.refreshBraille(False, stopFlash=False)
+            braille.refresh(False, stopFlash=False)
 
         return True
 
@@ -812,7 +811,7 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
-        if self.isBrailleEndShowing() and is_text_area:
+        if braille.endIsShowing and is_text_area:
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
             # assumption here is that we're currently viewing the line that
@@ -820,15 +819,14 @@ class Script(script.Script):
             # tacking mode.  When we set the caret position, we will get a
             # caret event, which will then update the braille.
             #
-            endOffset = AXText.get_line_at_offset(focus)[2]
-            if endOffset < AXText.get_character_count(focus):
-                AXText.set_caret_offset(focus, endOffset)
+            end_offset = AXText.get_line_at_offset(focus)[2]
+            if end_offset < AXText.get_character_count(focus):
+                AXText.set_caret_offset(focus, end_offset)
         else:
-            self.panBrailleInDirection(pan_amount, panToLeft=False)
+            braille.panRight(pan_amount)
             # We might be panning through a flashed message.
-            #
             braille.resetFlashTimer()
-            self.refreshBraille(False, stopFlash=False)
+            braille.refresh(False, stopFlash=False)
 
         return True
 
@@ -845,7 +843,7 @@ class Script(script.Script):
     def set_contracted_braille(self, event=None):
         """Toggles contracted braille."""
 
-        self._set_contracted_braille(event)
+        braille.set_contracted_braille(event)
         return True
 
     def process_routing_key(self, event=None):
@@ -863,7 +861,7 @@ class Script(script.Script):
         active text area.
         """
 
-        obj, offset = self.getBrailleCaretContext(event)
+        obj, offset = braille.getCaretContext(event)
         if offset < 0:
             return True
 
@@ -876,19 +874,19 @@ class Script(script.Script):
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
 
-        obj, offset = self.getBrailleCaretContext(event)
+        obj, offset = braille.getCaretContext(event)
         if offset < 0:
             return True
 
         self.presentationInterrupt()
-        startOffset = AXText.get_selection_start_offset(obj)
-        endOffset = AXText.get_selection_end_offset(obj)
-        if (startOffset < 0 or endOffset < 0):
+        start_offset = AXText.get_selection_start_offset(obj)
+        end_offset = AXText.get_selection_end_offset(obj)
+        if (start_offset < 0 or end_offset < 0):
             caretOffset = AXText.get_caret_offset(obj)
-            startOffset = min(offset, caretOffset)
-            endOffset = max(offset, caretOffset)
+            start_offset = min(offset, caretOffset)
+            end_offset = max(offset, caretOffset)
 
-        AXText.set_selected_text(obj, startOffset, endOffset)
+        AXText.set_selected_text(obj, start_offset, end_offset)
         text = AXText.get_selected_text(obj)[0]
         self.get_clipboard_presenter().set_text(text)
         return True
@@ -1707,14 +1705,14 @@ class Script(script.Script):
         self._sayAllContexts = self._sayAllContexts[0:index]
         while self._sayAllContexts:
             context = self._sayAllContexts.pop()
-            if context.endOffset - context.startOffset > minCharCount:
+            if context.end_offset - context.start_offset > minCharCount:
                 break
 
         # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.startOffset):
+        if AXText.set_caret_offset(context.obj, context.start_offset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.say_all(None, context.obj, context.startOffset)
+        self.say_all(None, context.obj, context.start_offset)
         return True
 
     def _fastForwardSayAll(self, context):
@@ -1722,10 +1720,10 @@ class Script(script.Script):
             return False
 
         # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.endOffset):
+        if AXText.set_caret_offset(context.obj, context.end_offset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.say_all(None, context.obj, context.endOffset)
+        self.say_all(None, context.obj, context.end_offset)
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
@@ -1818,9 +1816,9 @@ class Script(script.Script):
         if input_event_manager.get_manager().last_event_was_forward_caret_selection():
             offset -= 1
 
-        character, startOffset, endOffset = AXText.get_character_at_offset(obj, offset)
+        character, start_offset, end_offset = AXText.get_character_at_offset(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
+            obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
 
         if not character or character == '\r':
             character = "\n"
@@ -1859,19 +1857,19 @@ class Script(script.Script):
         if offset is None:
             offset = AXText.get_caret_offset(obj)
 
-        line, startOffset = AXText.get_line_at_offset(obj, offset)[0:2]
+        line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
             manager = speech_and_verbosity_manager.get_manager()
             indentation_description = manager.get_indentation_description(line)
             if indentation_description:
                 self.speakMessage(indentation_description)
 
-            endOffset = startOffset + len(line)
+            end_offset = start_offset + len(line)
             focus_manager.get_manager().emit_region_changed(
-                obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
+                obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
 
             utterance = []
-            split = self.utilities.splitSubstringByLanguage(obj, startOffset, endOffset)
+            split = self.utilities.splitSubstringByLanguage(obj, start_offset, end_offset)
             if not split:
                 speech.speak(line)
                 return
@@ -1896,18 +1894,18 @@ class Script(script.Script):
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
-    def sayPhrase(self, obj, startOffset, endOffset):
+    def sayPhrase(self, obj, start_offset, end_offset):
         """Speaks the text of an Accessible object between the start and
         end offsets, unless the phrase is empty in which case it's ignored.
 
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
                interface
-        - startOffset: the start text offset.
-        - endOffset: the end text offset.
+        - start_offset: the start text offset.
+        - end_offset: the end text offset.
         """
 
-        phrase = self.utilities.expandEOCs(obj, startOffset, endOffset)
+        phrase = self.utilities.expandEOCs(obj, start_offset, end_offset)
         if not phrase:
             return
 
@@ -1918,7 +1916,7 @@ class Script(script.Script):
                 self.speakMessage(result)
 
             focus_manager.get_manager().emit_region_changed(
-                obj, startOffset, endOffset, focus_manager.CARET_TRACKING)
+                obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
 
             voice = self.speech_generator.voice(obj=obj, string=phrase)
             phrase = manager.adjust_for_presentation(obj, phrase)
@@ -1935,7 +1933,7 @@ class Script(script.Script):
 
 
         offset = AXText.get_caret_offset(obj)
-        word, startOffset, endOffset = \
+        word, start_offset, end_offset = \
             self.utilities.getWordAtOffsetAdjustedForNavigation(obj, offset)
 
         # Announce when we cross a hard line boundary.
@@ -1943,28 +1941,28 @@ class Script(script.Script):
             if settings_manager.get_manager().get_setting('enableSpeechIndentation'):
                 self.speak_character("\n")
             if word.startswith("\n"):
-                startOffset += 1
+                start_offset += 1
             elif word.endswith("\n"):
-                endOffset -= 1
-            word = AXText.get_substring(obj, startOffset, endOffset)
+                end_offset -= 1
+            word = AXText.get_substring(obj, start_offset, end_offset)
 
         # sayPhrase is useful because it handles punctuation verbalization, but we don't want
         # to trigger its whitespace presentation.
         matches = list(re.finditer(r"\S+", word))
         if matches:
-            startOffset += matches[0].start()
-            endOffset -= len(word) - matches[-1].end()
-            word = AXText.get_substring(obj, startOffset, endOffset)
+            start_offset += matches[0].start()
+            end_offset -= len(word) - matches[-1].end()
+            word = AXText.get_substring(obj, start_offset, end_offset)
 
         text = word.replace("\n", "\\n")
         msg = (
             f"DEFAULT: Final word at offset {offset} is '{text}' "
-            f"({startOffset}-{endOffset})"
+            f"({start_offset}-{end_offset})"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self.speakMisspelledIndicator(obj, startOffset)
-        self.sayPhrase(obj, startOffset, endOffset)
+        self.speakMisspelledIndicator(obj, start_offset)
+        self.sayPhrase(obj, start_offset, end_offset)
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def presentObject(self, obj, **args):
@@ -2166,12 +2164,6 @@ class Script(script.Script):
 
             braille.displayMessage(message, flashTime=duration)
 
-    def idleMessage(self):
-        """Convenience method to tell speech and braille engines to hand off
-        control to other screen readers."""
-
-        braille.disableBraille()
-
     @staticmethod
     def __play(sounds, interrupt=True):
         if not sounds:
@@ -2184,38 +2176,6 @@ class Script(script.Script):
         _player.play(sounds[0], interrupt)
         for i in range(1, len(sounds)):
             _player.play(sounds[i], interrupt=False)
-
-    @staticmethod
-    def addBrailleRegionToLine(region, line):
-        """Adds the braille region to the line.
-
-        Arguments:
-        - region: a braille.Region (e.g. what is returned by the braille
-          generator's generate_braille() method.
-        - line: a braille.Line
-        """
-
-        line.addRegion(region)
-
-    @staticmethod
-    def addBrailleRegionsToLine(regions, line):
-        """Adds the braille region to the line.
-
-        Arguments:
-        - regions: a series of braille.Region instances (a single instance
-          being what is returned by the braille generator's generate_braille()
-          method.
-        - line: a braille.Line
-        """
-
-        line.addRegions(regions)
-
-    @staticmethod
-    def clearBraille():
-        """Clears the logical structure, but keeps the Braille display as is
-        (until a refresh operation)."""
-
-        braille.clear()
 
     @staticmethod
     def displayBrailleMessage(message, cursor=-1, flashTime=0):
@@ -2240,77 +2200,6 @@ class Script(script.Script):
 
         braille.displayMessage(message, cursor, flashTime)
 
-    @staticmethod
-    def getBrailleCaretContext(event):
-        """Gets the accesible and caret offset associated with the given
-        event.  The event should have a BrlAPI event that contains an
-        argument value that corresponds to a cell on the display.
-
-        Arguments:
-        - event: an instance of input_event.BrailleEvent.  event.event is
-          the dictionary form of the expanded BrlAPI event.
-        """
-
-        return braille.getCaretContext(event)
-
-    @staticmethod
-    def getNewBrailleLine(clearBraille=False, addLine=False):
-        """Creates a new braille Line.
-
-        Arguments:
-        - clearBraille: Whether the display should be cleared.
-        - addLine: Whether the line should be added to the logical display
-          for painting.
-
-        Returns the new Line.
-        """
-
-        if clearBraille:
-            braille.clear()
-        line = braille.Line()
-        if addLine:
-            braille.addLine(line)
-
-        return line
-
-    @staticmethod
-    def isBrailleBeginningShowing():
-        """If True, the beginning of the line is showing on the braille
-        display."""
-
-        return braille.beginningIsShowing
-
-    @staticmethod
-    def isBrailleEndShowing():
-        """If True, the end of the line is showing on the braille display."""
-
-        return braille.endIsShowing
-
-    @staticmethod
-    def panBrailleInDirection(pan_amount=0, panToLeft=True):
-        """Pans the display to the left, limiting the pan to the beginning
-        of the line being displayed.
-
-        Arguments:
-        - pan_amount: the amount to pan.  A value of 0 means the entire
-          width of the physical display.
-        - panToLeft: if True, pan to the left; otherwise to the right
-
-        Returns True if a pan actually happened.
-        """
-
-        if panToLeft:
-            return braille.panLeft(pan_amount)
-        else:
-            return braille.panRight(pan_amount)
-
-    @staticmethod
-    def panBrailleToOffset(offset):
-        """Automatically pan left or right to make sure the current offset
-        is showing."""
-
-        braille.panToOffset(offset)
-
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
 
@@ -2324,69 +2213,12 @@ class Script(script.Script):
         for region in line.regions:
             if isinstance(region, braille.Text) and region.accessible == obj:
                 if region.repositionCursor():
-                    self.refreshBraille(True)
+                    braille.refresh(True)
                     brailleNeedsRepainting = False
                 break
 
         if brailleNeedsRepainting:
             self.update_braille(obj)
-
-    @staticmethod
-    def refreshBraille(panToCursor=True, targetCursorCell=0, getLinkMask=True,
-                       stopFlash=True):
-        """This is the method scripts should use to refresh braille rather
-        than calling self.refreshBraille() directly. The intent is to centralize
-        such calls into as few places as possible so that we can easily and
-        safely not perform braille-related functions for users who do not
-        have braille and/or the braille monitor enabled.
-
-        Arguments:
-
-        - panToCursor: if True, will adjust the viewport so the cursor is
-          showing.
-        - targetCursorCell: Only effective if panToCursor is True.
-          0 means automatically place the cursor somewhere on the display so
-          as to minimize movement but show as much of the line as possible.
-          A positive value is a 1-based target cell from the left side of
-          the display and a negative value is a 1-based target cell from the
-          right side of the display.
-        - getLinkMask: Whether or not we should take the time to get the
-          attributeMask for links. Reasons we might not want to include
-          knowing that we will fail and/or it taking an unreasonable
-          amount of time (AKA Gecko).
-        - stopFlash: if True, kill any flashed message that may be showing.
-        """
-
-        braille.refresh(panToCursor, targetCursorCell, getLinkMask, stopFlash)
-
-    @staticmethod
-    def setBrailleFocus(region, panToFocus=True, getLinkMask=True):
-        """Specififes the region with focus.  This region will be positioned
-        at the home position if panToFocus is True.
-
-        Arguments:
-        - region: the given region, which much be in a line that has been
-          added to the logical display
-        - panToFocus: whether or not to position the region at the home
-          position
-        - getLinkMask: Whether or not we should take the time to get the
-          attributeMask for links. Reasons we might not want to include
-          knowing that we will fail and/or it taking an unreasonable
-          amount of time (AKA Gecko).
-        """
-
-        braille.setFocus(region, panToFocus, getLinkMask)
-
-    @staticmethod
-    def _set_contracted_braille(event):
-        """Turns contracted braille on or off based upon the event.
-
-        Arguments:
-        - event: an instance of input_event.BrailleEvent.  event.event is
-          the dictionary form of the expanded BrlAPI event.
-        """
-
-        braille.set_contracted_braille(event)
 
     ########################################################################
     #                                                                      #

@@ -1142,14 +1142,14 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         regions, focused_region = self._context.get_current_braille_regions()
         if not regions:
-            script.refreshBraille(True)
+            braille.refresh(True)
             return
 
-        line = script.getNewBrailleLine()
-        script.addBrailleRegionsToLine(regions, line)
+        line = braille.Line()
+        line.addRegions(regions)
         braille.setLines([line])
-        script.setBrailleFocus(focused_region)
-        script.refreshBraille(True)
+        braille.setFocus(focused_region)
+        braille.refresh(True)
 
     def pan_braille_left(
         self,

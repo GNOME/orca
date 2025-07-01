@@ -30,6 +30,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from orca import braille
 from orca import debug
 from orca import focus_manager
 from orca import messages
@@ -117,7 +118,7 @@ class Script(default.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-            self.clearBraille()
+            braille.clear()
             self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
             return
 
@@ -261,7 +262,7 @@ class Script(default.Script):
         """Callback for window:activate accessibility events."""
 
         focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-        self.clearBraille()
+        braille.clear()
         self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
 
     def on_window_deactivated(self, event):

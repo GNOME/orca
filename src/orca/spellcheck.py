@@ -41,6 +41,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+from orca import braille
 from orca import debug
 from orca import focus_manager
 from orca import guilabels
@@ -214,7 +215,7 @@ class SpellCheck:
         if not (self.is_active() and self.is_complete()):
             return False
 
-        self._script.clearBraille()
+        braille.clear()
         msg = self.get_completion_message()
         voice = self._script.speech_generator.voice(string=msg)
         self._script.presentMessage(msg, voice=voice)

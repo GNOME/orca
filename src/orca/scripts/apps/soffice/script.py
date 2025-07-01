@@ -36,6 +36,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+from orca import braille
 from orca import cmdnames
 from orca import debug
 from orca import focus_manager
@@ -220,7 +221,7 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.get_flat_review_presenter().is_active() \
-           or not self.isBrailleBeginningShowing() \
+           or not braille.beginningIsShowing \
            or self.utilities.isSpreadSheetCell(focus) \
            or not AXUtilities.is_paragraph(focus):
             return super().pan_braille_left(event, pan_amount)
@@ -243,7 +244,7 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.get_flat_review_presenter().is_active() \
-           or not self.isBrailleEndShowing() \
+           or not braille.endIsShowing \
            or self.utilities.isSpreadSheetCell(focus) \
            or not AXUtilities.is_paragraph(focus):
             return super().pan_braille_right(event, pan_amount)
