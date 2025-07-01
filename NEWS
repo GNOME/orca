@@ -1,3 +1,65 @@
+49.alpha - 1 July 2025
+
+Updated Dependencies:
+
+* The minimum version of AT-SPI2 is now 2.52.
+
+* Dasbus is now a required dependency.
+
+New Features:
+
+* Orca now has a very basic, very work-in-progress and unstable D-Bus
+  "Remote Controller". Support for executing commands and adjusting
+  settings is currently quite limited. But now that the plumbing is
+  in place, support can be increased and should be quite extensive
+  by the 49.0 release. Documentation: README-REMOTE-CONTROLLER.md.
+
+* Orca's support for the error-message/error-for relations is now
+  global (before it was just for web apps).
+
+* Orca will announce grammar errors similar to what is done for
+  spelling errors. Note: this requires app/toolkit exposure of
+  the presence of the error.
+
+* Orca now has an "experimental" setting to only speak indentation
+  if it changed. To enable this, add the following lines to
+  $HOME/.local/share/orca/orca_customizations.py:
+
+    import orca.settings
+    orca.settings.speakIndentationOnlyIfChanged = True
+
+Other Changes:
+
+* The flat review code was significantly refactored and bugs found
+  in the process fixed.
+
+* Fix bug causing the default script to become activated when it
+  should not.
+
+* Fix several chattiness issues.
+
+* General code clean up, fixes for tracebacks, etc.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Daniel Rusek
+  da              Danish                    Alan Mortensen
+  de              German                    Jürgen Benvenuti
+  en_GB           British English           Andi Chandler
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Saratsua Garmendia
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Andika Triwidada
+  it              Italian                   Davide Ferracin
+  ne              Nepali                    Pawan Chitrakar
+  ro              Romanian                  Antonio Marin
+  sk              Slovak                    Peter Vágner
+  sl              Slovenian                 Martin
+  tr              Turkish                   Emin Tufan Çetin
+
+=========
+
 48.6 - 25 June 2025
 
 Web:

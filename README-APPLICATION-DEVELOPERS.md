@@ -156,7 +156,7 @@ If the static text should not be presented last, a different technique might be 
 any changes to that description, on *ancestors* of the object of interest. In Orca v46 and earlier,
 Orca only presents the name of ancestors and description changes on the object of interest.
 
-### Can I Use Details/Details-For And Error-Message/Errors-For Relations?
+### Can I Use Details/Details-For And Error-Message/Error-For Relations?
 
 The `details`/`details-for` and `error-message`/`error-for` relation types were created for ARIA,
 and there was no indication that they might be of interest to developers of native applications.
