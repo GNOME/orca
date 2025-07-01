@@ -315,7 +315,6 @@ class LearnModePresenter:
         else:
             app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME
             bound = script.get_app_key_bindings().get_bound_bindings()
-            bound.extend(script.get_toolkit_key_bindings().get_bound_bindings())
             if bound:
                 bindings[app_name] = bound
             title = messages.shortcutsFoundApp(len(bound), app_name)

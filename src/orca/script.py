@@ -124,11 +124,6 @@ class Script:
 
         return keybindings.KeyBindings()
 
-    def get_toolkit_key_bindings(self):
-        """Returns the toolkit-specific keybindings for this script."""
-
-        return keybindings.KeyBindings()
-
     def get_app_key_bindings(self):
         """Returns the application-specific keybindings for this script."""
 

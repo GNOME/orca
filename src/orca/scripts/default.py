@@ -392,10 +392,6 @@ class Script(script.Script):
         for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
 
-        bindings = self.get_toolkit_key_bindings()
-        for keyBinding in bindings.key_bindings:
-            keyBindings.add(keyBinding)
-
         bindings = self.get_app_key_bindings()
         for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
