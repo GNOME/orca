@@ -32,7 +32,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import time
-from typing import Any, Callable, Optional, TYPE_CHECKING
+from typing import Any, Callable, TYPE_CHECKING
 
 import gi
 gi.require_version("Gdk", "3.0")
@@ -40,6 +40,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
 
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import guilabels
@@ -51,22 +52,32 @@ from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
     from .scripts import default
 
 
 class ActionPresenter:
     """Provides a list for performing accessible actions on an object."""
 
-    def __init__(self):
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
-        self._gui = None
-        self._obj = None
-        self._window = None
+    def __init__(self) -> None:
+        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
+        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._gui: ActionList | None = None
+        self._obj: Atspi.Accessible | None = None
+        self._window: Atspi.Accessible | None = None
 
-    def get_bindings(self,
-                     refresh: bool = False,
-                     is_desktop: bool = True) -> keybindings.KeyBindings:
+        msg = "ACTION PRESENTER: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("ActionPresenter", self)
+
+    def get_bindings(
+        self,
+        refresh: bool = False,
+        is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
         """Returns the action-presenter keybindings."""
 
         if refresh:
@@ -152,10 +163,18 @@ class ActionPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         GLib.idle_add(self._gui.destroy)
 
+    @dbus_service.command
     def show_actions_list(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Shows a list with all the available accessible actions."""
+
+        tokens = ["ACTION PRESENTER: show_actions_list. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         manager = focus_manager.get_manager()
         obj = manager.get_active_mode_and_object_of_interest()[1] or manager.get_locus_of_focus()

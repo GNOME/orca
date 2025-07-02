@@ -35,11 +35,11 @@ __license__   = "LGPL"
 
 import re
 import string
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from . import cmdnames
-from . import debug
 from . import dbus_service
+from . import debug
 from . import focus_manager
 from . import input_event
 from . import keybindings
@@ -299,7 +299,7 @@ class SpeechAndVerbosityManager:
         msg = "SPEECH AND VERBOSITY MANAGER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _get_server(self) -> Optional[SpeechServer]:
+    def _get_server(self) -> SpeechServer | None:
         result = speech.get_speech_server()
         tokens = ["SPEECH AND VERBOSITY MANAGER: Speech server is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -335,8 +335,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def start_speech(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = False
     ) -> bool:
         """Starts the speech server."""
@@ -350,8 +350,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def interrupt_speech(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = False
     ) -> bool:
         """Interrupts the speech server."""
@@ -368,8 +368,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def shutdown_speech(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = False
     ) -> bool:
         """Shuts down the speech server."""
@@ -387,8 +387,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def refresh_speech(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = False
     ) -> bool:
         """Shuts down and re-initializes speech."""
@@ -432,8 +432,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def decrease_rate(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Decreases the speech rate."""
@@ -457,8 +457,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def increase_rate(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Increases the speech rate."""
@@ -510,8 +510,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def decrease_pitch(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Decreases the speech pitch"""
@@ -535,8 +535,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def increase_pitch(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Increase the speech pitch"""
@@ -588,8 +588,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def decrease_volume(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Decreases the speech volume"""
@@ -613,8 +613,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def increase_volume(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Increases the speech volume"""
@@ -659,7 +659,7 @@ class SpeechAndVerbosityManager:
         server.updatePunctuationLevel()
         return True
 
-    def update_synthesizer(self, server_id: Optional[str] = "") -> None:
+    def update_synthesizer(self, server_id: str | None = "") -> None:
         """Updates the synthesizer to the specified id or value from settings."""
 
         server = self._get_server()
@@ -684,8 +684,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def cycle_synthesizer(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Cycles through available speech synthesizers."""
@@ -724,8 +724,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def cycle_capitalization_style(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Cycle through the speech-dispatcher capitalization styles."""
@@ -758,8 +758,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def cycle_punctuation_level(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Cycles through punctuation levels for speech."""
@@ -796,8 +796,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def cycle_key_echo(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Cycle through the key echo levels."""
@@ -847,8 +847,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def change_number_style(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Changes spoken number style between digits and words."""
@@ -874,8 +874,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def toggle_speech(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Toggles speech on and off."""
@@ -905,8 +905,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def toggle_verbosity(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Toggles speech verbosity level between verbose and brief."""
@@ -930,8 +930,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def toggle_indentation_and_justification(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Toggles the speaking of indentation and justification."""
@@ -956,8 +956,8 @@ class SpeechAndVerbosityManager:
     @dbus_service.command
     def toggle_table_cell_reading_mode(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
         """Toggles between speak cell and speak row."""
@@ -1094,7 +1094,7 @@ class SpeechAndVerbosityManager:
     def get_indentation_description(
         self,
         line: str,
-        only_if_changed: Optional[bool] = None
+        only_if_changed: bool | None = None
     ) -> str:
         """Returns a description of the indentation in the given line."""
 
@@ -1135,8 +1135,8 @@ class SpeechAndVerbosityManager:
     def get_error_description(
         self,
         obj: Atspi.Accessible,
-        offset: Optional[int] = None,
-        only_if_changed: Optional[bool] = True
+        offset: int | None = None,
+        only_if_changed: bool | None = True
     ) -> str:
         """Returns a description of the error at the current offset."""
 
@@ -1165,7 +1165,7 @@ class SpeechAndVerbosityManager:
         self,
         obj: Atspi.Accessible,
         text: str,
-        start_offset: Optional[int] = None
+        start_offset: int | None = None
     ) -> str:
         """Adjusts text for spoken presentation."""
 

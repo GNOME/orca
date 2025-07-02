@@ -31,10 +31,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2024 Igalia, S.L."
 __license__   = "LGPL"
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from . import braille
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import input_event
 from . import keybindings
@@ -56,6 +57,11 @@ class SleepModeManager:
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._apps: list[int] = []
+
+        msg = "SLEEP MODE MANAGER: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("SleepModeManager", self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -118,12 +124,18 @@ class SleepModeManager:
         msg = "SLEEP MODE MANAGER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    @dbus_service.command
     def toggle_sleep_mode(
         self,
-        script: default.Script,
-        _event: Optional[input_event.InputEvent] = None
+        script: default.Script | None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
-        """Toggles sleep mode."""
+        """Toggles sleep mode for the active application."""
+
+        tokens = ["SLEEP MODE MANAGER: toggle_sleep_mode. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (script and script.app):
             return True
@@ -132,13 +144,15 @@ class SleepModeManager:
         if self.is_active_for_app(script.app):
             self._apps.remove(hash(script.app))
             new_script = _script_manager.get_script(script.app)
-            new_script.presentMessage(
-                messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app))
+            if notify_user:
+                new_script.presentMessage(
+                    messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app))
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
         braille.clear()
-        script.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
+        if notify_user:
+            script.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
         _script_manager.set_active_script(
             _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on")
         self._apps.append(hash(script.app))

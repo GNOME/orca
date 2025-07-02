@@ -33,9 +33,10 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2023 GNOME Foundation Inc."
 __license__   = "LGPL"
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import input_event
@@ -60,9 +61,9 @@ class TableNavigator:
     """Provides Orca-controlled navigation for tabular content."""
 
     def __init__(self) -> None:
-        self._previous_reported_row: Optional[int] = None
-        self._previous_reported_col: Optional[int] = None
-        self._last_input_event: Optional[InputEvent] = None
+        self._previous_reported_row: int | None = None
+        self._previous_reported_col: int | None = None
+        self._last_input_event: InputEvent | None = None
         self._enabled: bool = True
 
         # To make it possible for focus mode to suspend this navigation without
@@ -70,6 +71,11 @@ class TableNavigator:
         self._suspended: bool = False
         self._handlers: dict = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+
+        msg = "TABLE NAVIGATOR: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("TableNavigator", self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -268,91 +274,91 @@ class TableNavigator:
 
         self._handlers["table_navigator_toggle_enabled"] = \
             input_event.InputEventHandler(
-                self._toggle_enabled,
+                self.toggle_enabled,
                 cmdnames.TABLE_NAVIGATION_TOGGLE,
                 enabled=not self._suspended)
 
         self._handlers["table_cell_left"] = \
             input_event.InputEventHandler(
-                self._table_cell_left,
+                self.move_left,
                 cmdnames.TABLE_CELL_LEFT,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_right"] = \
             input_event.InputEventHandler(
-                self._table_cell_right,
+                self.move_right,
                 cmdnames.TABLE_CELL_RIGHT,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_up"] = \
             input_event.InputEventHandler(
-                self._table_cell_up,
+                self.move_up,
                 cmdnames.TABLE_CELL_UP,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_down"] = \
             input_event.InputEventHandler(
-                self._table_cell_down,
+                self.move_down,
                 cmdnames.TABLE_CELL_DOWN,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_first"] = \
             input_event.InputEventHandler(
-                self._table_cell_first,
+                self.move_to_first_cell,
                 cmdnames.TABLE_CELL_FIRST,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_last"] = \
             input_event.InputEventHandler(
-                self._table_cell_last,
+                self.move_to_last_cell,
                 cmdnames.TABLE_CELL_LAST,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_beginning_of_row"] = \
             input_event.InputEventHandler(
-                self._table_cell_beginning_of_row,
+                self.move_to_beginning_of_row,
                 cmdnames.TABLE_CELL_BEGINNING_OF_ROW,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_end_of_row"] = \
             input_event.InputEventHandler(
-                self._table_cell_end_of_row,
+                self.move_to_end_of_row,
                 cmdnames.TABLE_CELL_END_OF_ROW,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_top_of_column"] = \
             input_event.InputEventHandler(
-                self._table_cell_top_of_column,
+                self.move_to_top_of_column,
                 cmdnames.TABLE_CELL_TOP_OF_COLUMN,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["table_cell_bottom_of_column"] = \
             input_event.InputEventHandler(
-                self._table_cell_bottom_of_column,
+                self.move_to_bottom_of_column,
                 cmdnames.TABLE_CELL_BOTTOM_OF_COLUMN,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["set_dynamic_column_headers_row"] = \
             input_event.InputEventHandler(
-                self._set_dynamic_column_headers_row,
+                self.set_dynamic_column_headers_row,
                 cmdnames.DYNAMIC_COLUMN_HEADER_SET,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["clear_dynamic_column_headers_row"] = \
             input_event.InputEventHandler(
-                self._clear_dynamic_column_headers_row,
+                self.clear_dynamic_column_headers_row,
                 cmdnames.DYNAMIC_COLUMN_HEADER_CLEAR,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["set_dynamic_row_headers_column"] = \
             input_event.InputEventHandler(
-                self._set_dynamic_row_headers_column,
+                self.set_dynamic_row_headers_column,
                 cmdnames.DYNAMIC_ROW_HEADER_SET,
                 enabled=self._enabled and not self._suspended)
 
         self._handlers["clear_dynamic_row_headers_column"] = \
             input_event.InputEventHandler(
-                self._clear_dynamic_row_headers_column,
+                self.clear_dynamic_row_headers_column,
                 cmdnames.DYNAMIC_ROW_HEADER_CLEAR,
                 enabled=self._enabled and not self._suspended)
 
@@ -376,15 +382,26 @@ class TableNavigator:
         for binding in self._bindings.key_bindings:
             script.key_bindings.add(binding, include_grabs=not self._suspended)
 
-    def _toggle_enabled(self, script: default.Script, _event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def toggle_enabled(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Toggles table navigation."""
 
         self._enabled = not self._enabled
 
-        if self._enabled:
-            script.presentMessage(messages.TABLE_NAVIGATION_ENABLED)
-        else:
-            script.presentMessage(messages.TABLE_NAVIGATION_DISABLED)
+        tokens = ["TABLE NAVIGATOR: toggle_enabled. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if notify_user:
+            if self._enabled:
+                script.presentMessage(messages.TABLE_NAVIGATION_ENABLED)
+            else:
+                script.presentMessage(messages.TABLE_NAVIGATION_DISABLED)
 
         self._last_input_event = None
         self.refresh_bindings_and_grabs(script, "toggling table navigation")
@@ -473,17 +490,29 @@ class TableNavigator:
 
         return row, col
 
-    def _table_cell_left(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_left(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the cell on the left."""
+
+        tokens = ["TABLE NAVIGATOR: move_left. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_start_of_row(current):
-            script.presentMessage(messages.TABLE_ROW_BEGINNING)
+            if notify_user:
+                script.presentMessage(messages.TABLE_ROW_BEGINNING)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -496,17 +525,29 @@ class TableNavigator:
         self._present_cell(script, cell, row, col - 1, current)
         return True
 
-    def _table_cell_right(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_right(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the cell on the right."""
+
+        tokens = ["TABLE NAVIGATOR: move_right. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_end_of_row(current):
-            script.presentMessage(messages.TABLE_ROW_END)
+            if notify_user:
+                script.presentMessage(messages.TABLE_ROW_END)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -519,17 +560,29 @@ class TableNavigator:
         self._present_cell(script, cell, row, col + 1, current)
         return True
 
-    def _table_cell_up(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_up(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the cell above."""
+
+        tokens = ["TABLE NAVIGATOR: move_up. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_top_of_column(current):
-            script.presentMessage(messages.TABLE_COLUMN_TOP)
+            if notify_user:
+                script.presentMessage(messages.TABLE_COLUMN_TOP)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -542,17 +595,29 @@ class TableNavigator:
         self._present_cell(script, cell, row - 1, col, current)
         return True
 
-    def _table_cell_down(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_down(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the cell below."""
+
+        tokens = ["TABLE NAVIGATOR: move_down. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_bottom_of_column(current):
-            script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
+            if notify_user:
+                script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -565,13 +630,24 @@ class TableNavigator:
         self._present_cell(script, cell, row + 1, col, current)
         return True
 
-    def _table_cell_first(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_to_first_cell(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the first cell."""
+
+        tokens = ["TABLE NAVIGATOR: move_to_first_cell. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
@@ -579,13 +655,24 @@ class TableNavigator:
         self._present_cell(script, cell, 0, 0, current)
         return True
 
-    def _table_cell_last(self, script: default.Script, event: Optional[InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_to_last_cell(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the last cell."""
+
+        tokens = ["TABLE NAVIGATOR: move_to_last_cell. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
@@ -594,19 +681,29 @@ class TableNavigator:
             script, cell, AXTable.get_row_count(table), AXTable.get_column_count(table), current)
         return True
 
-    def _table_cell_beginning_of_row(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def move_to_beginning_of_row(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Moves to the beginning of the row."""
+
+        tokens = ["TABLE NAVIGATOR: move_to_beginning_of_row. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_start_of_row(current):
-            script.presentMessage(messages.TABLE_ROW_BEGINNING)
+            if notify_user:
+                script.presentMessage(messages.TABLE_ROW_BEGINNING)
             return True
 
         cell = AXTable.get_start_of_row(current)
@@ -614,19 +711,29 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _table_cell_end_of_row(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def move_to_end_of_row(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Moves to the end of the row."""
+
+        tokens = ["TABLE NAVIGATOR: move_to_end_of_row. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_end_of_row(current):
-            script.presentMessage(messages.TABLE_ROW_END)
+            if notify_user:
+                script.presentMessage(messages.TABLE_ROW_END)
             return True
 
         cell = AXTable.get_end_of_row(current)
@@ -634,19 +741,29 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _table_cell_top_of_column(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def move_to_top_of_column(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Moves to the top of the column."""
+
+        tokens = ["TABLE NAVIGATOR: move_to_top_of_column. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_top_of_column(current):
-            script.presentMessage(messages.TABLE_COLUMN_TOP)
+            if notify_user:
+                script.presentMessage(messages.TABLE_COLUMN_TOP)
             return True
 
         row = self._get_cell_coordinates(current)[0]
@@ -655,19 +772,29 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _table_cell_bottom_of_column(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def move_to_bottom_of_column(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Moves to the bottom of the column."""
+
+        tokens = ["TABLE NAVIGATOR: move_to_bottom_of_column. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_bottom_of_column(current):
-            script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
+            if notify_user:
+                script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
             return True
 
         row = self._get_cell_coordinates(current)[0]
@@ -676,80 +803,120 @@ class TableNavigator:
         self._present_cell(script, cell, row, col, current)
         return True
 
-    def _set_dynamic_column_headers_row(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def set_dynamic_column_headers_row(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
-        """Sets the row for the dynamic header columns."""
+        """Sets the row for the dynamic header columns to the current row."""
+
+        tokens = ["TABLE NAVIGATOR: set_dynamic_column_headers_row. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
         if table:
             row = AXTable.get_cell_coordinates(current)[0]
             AXTable.set_dynamic_column_headers_row(table, row)
-            script.presentMessage(messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1))
+            if notify_user:
+                script.presentMessage(messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1))
 
         return True
 
-    def _clear_dynamic_column_headers_row(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def clear_dynamic_column_headers_row(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Clears the row for the dynamic column headers."""
+
+        tokens = ["TABLE NAVIGATOR: clear_dynamic_column_headers_row. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table:
-            script.presentationInterrupt()
             AXTable.clear_dynamic_column_headers_row(table)
-            script.presentMessage(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
+            if notify_user:
+                script.presentationInterrupt()
+                script.presentMessage(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
 
         return True
 
-    def _set_dynamic_row_headers_column(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def set_dynamic_row_headers_column(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
-        """Sets the column for the dynamic row headers."""
+        """Sets the column for the dynamic row headers to the current column."""
+
+        tokens = ["TABLE NAVIGATOR: set_dynamic_row_headers_column. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
         if table:
             column = AXTable.get_cell_coordinates(current)[1]
             AXTable.set_dynamic_row_headers_column(table, column)
-            script.presentMessage(
-                messages.DYNAMIC_ROW_HEADER_SET % script.utilities.columnConvert(column + 1))
+            if notify_user:
+                script.presentMessage(
+                    messages.DYNAMIC_ROW_HEADER_SET % script.utilities.columnConvert(column + 1))
 
         return True
 
-    def _clear_dynamic_row_headers_column(
-        self, script: default.Script, event: Optional[InputEvent] = None
+    @dbus_service.command
+    def clear_dynamic_row_headers_column(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Clears the column for the dynamic row headers."""
+
+        tokens = ["TABLE NAVIGATOR: clear_dynamic_row_headers_column. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         current = self._get_current_cell()
         if current is None:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            if notify_user:
+                script.presentMessage(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table:
-            script.presentationInterrupt()
             AXTable.clear_dynamic_row_headers_column(table)
-            script.presentMessage(messages.DYNAMIC_ROW_HEADER_CLEARED)
+            if notify_user:
+                script.presentationInterrupt()
+                script.presentMessage(messages.DYNAMIC_ROW_HEADER_CLEARED)
 
         return True
 

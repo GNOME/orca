@@ -118,7 +118,7 @@ class OrcaModuleDBusInterface(Publishable):
 
         for info in handlers_info:
             handler_type = getattr(info, "handler_type", HandlerType.COMMAND)
-            normalized_name = self._normalize_handler_name(info.python_function_name)
+            normalized_name = self._normalize_handler_name(info.python_function_name, handler_type)
             if handler_type == HandlerType.GETTER:
                 self._getters[normalized_name] = info
             elif handler_type == HandlerType.SETTER:
@@ -210,16 +210,22 @@ class OrcaModuleDBusInterface(Publishable):
 
 
     @staticmethod
-    def _normalize_handler_name(function_name: str) -> str:
+    def _normalize_handler_name(
+        function_name: str,
+        handler_type: HandlerType = HandlerType.COMMAND
+    ) -> str:
         """Normalizes a Python function name for D-Bus exposure (getter/setter/command)."""
 
-        if function_name.startswith("get_") or function_name.startswith("set_"):
-            function_name = function_name[4:]
+        # Only strip prefixes for getters and setters, not for commands
+        if handler_type in (HandlerType.GETTER, HandlerType.SETTER):
+            if function_name.startswith("get_") or function_name.startswith("set_"):
+                function_name = function_name[4:]
         return "".join(word.capitalize() for word in function_name.split("_"))
 
     @staticmethod
     def _to_variant(result):
         """Converts a Python value to a correctly-typed GLib.Variant for D-Bus marshalling."""
+
         if isinstance(result, bool):
             return GLib.Variant("b", result)
         elif isinstance(result, int):
@@ -396,6 +402,10 @@ class OrcaRemoteController:
         self._bus: SessionMessageBus | None = None
         self._event_loop: EventLoop | None = None
         self._pending_registrations: dict[str, object] = {}
+        self._total_commands: int = 0
+        self._total_getters: int = 0
+        self._total_setters: int = 0
+        self._total_modules: int = 0
 
     def start(self) -> bool:
         """Starts the D-Bus service."""
@@ -444,6 +454,7 @@ class OrcaRemoteController:
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._process_pending_registrations()
+        self._print_registration_summary()
         return True
 
     def _process_pending_registrations(self) -> None:
@@ -490,6 +501,10 @@ class OrcaRemoteController:
             return
 
         handlers_info = []
+        commands_count = 0
+        getters_count = 0
+        setters_count = 0
+
         for attr_name in dir(module_instance):
             attr = getattr(module_instance, attr_name)
             # Command
@@ -508,6 +523,7 @@ class OrcaRemoteController:
                     handler_type=HandlerType.COMMAND
                 )
                 handlers_info.append(handler_info)
+                commands_count += 1
                 msg = f"REMOTE CONTROLLER: Found decorated command '{attr_name}': {description}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             # Getter
@@ -524,6 +540,7 @@ class OrcaRemoteController:
                     handler_type=HandlerType.GETTER
                 )
                 handlers_info.append(handler_info)
+                getters_count += 1
                 msg = f"REMOTE CONTROLLER: Found decorated getter '{attr_name}': {description}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             # Setter
@@ -540,11 +557,17 @@ class OrcaRemoteController:
                     handler_type=HandlerType.SETTER
                 )
                 handlers_info.append(handler_info)
+                setters_count += 1
                 msg = f"REMOTE CONTROLLER: Found decorated setter '{attr_name}': {description}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not handlers_info:
             return
+
+        self._total_commands += commands_count
+        self._total_getters += getters_count
+        self._total_setters += setters_count
+        self._total_modules += 1
 
         self._dbus_service_interface.add_module_interface(
             module_name, handlers_info, self._bus, self.OBJECT_PATH)
@@ -606,11 +629,45 @@ class OrcaRemoteController:
         msg = "REMOTE CONTROLLER: D-Bus service shut down."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._pending_registrations.clear()
+        self._total_commands = 0
+        self._total_getters = 0
+        self._total_setters = 0
+        self._total_modules = 0
 
     def is_running(self) -> bool:
         """Checks if the D-Bus service is currently running."""
 
         return self._is_running
+
+    def _count_system_commands(self) -> int:
+        """Counts the system-wide D-Bus commands available on the main service interface."""
+
+        if not self._dbus_service_interface:
+            return 0
+
+        system_commands = 0
+        for attr_name in dir(self._dbus_service_interface):
+            if not attr_name.startswith('_') and attr_name[0].isupper():
+                attr = getattr(self._dbus_service_interface, attr_name)
+                if callable(attr) and hasattr(attr, '__doc__'):
+                    system_commands += 1
+        return system_commands
+
+    def _print_registration_summary(self) -> None:
+        """Prints a summary of all registered D-Bus handlers."""
+
+        system_commands_count = self._count_system_commands()
+        total_handlers = self._total_commands + self._total_getters + self._total_setters
+        msg = (
+            f"REMOTE CONTROLLER: Registration complete. Summary: "
+            f"{self._total_modules} modules, "
+            f"{self._total_commands} module commands, "
+            f"{self._total_getters} module getters, "
+            f"{self._total_setters} module setters, "
+            f"{system_commands_count} system commands. "
+            f"Total handlers: {total_handlers + system_commands_count}."
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
 _remote_controller: OrcaRemoteController = OrcaRemoteController()
 
