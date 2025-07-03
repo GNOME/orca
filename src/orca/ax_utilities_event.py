@@ -764,6 +764,14 @@ class AXUtilitiesEvent:
         if focus != event.source and not AXUtilitiesState.is_focused(event.source):
             msg = "AXUtilitiesEvent: The source is neither focused, nor the locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+
+            # This can happen in web content where the focus is a contenteditable element and a
+            # new child element is created for new or changed text.
+            if AXObject.is_ancestor(event.source, focus):
+                msg = "AXUtilitiesEvent: The locus of focus is an ancestor of the source."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
             return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
