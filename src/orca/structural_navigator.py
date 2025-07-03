@@ -1427,7 +1427,8 @@ class StructuralNavigator:
             return len(text) > minimum_length and text.count("\ufffc")/len(text) < 0.05
 
         root = self._determine_root_container(script)
-        roles = AXUtilities.get_large_container_roles() + [Atspi.Role.PARAGRAPH, Atspi.Role.SECTION]
+        roles = AXUtilities.get_large_container_roles() + \
+            [Atspi.Role.HEADING, Atspi.Role.PARAGRAPH, Atspi.Role.SECTION]
         return AXUtilities.find_all_with_role(root, roles, pred=_is_large)
 
     def prev_large_object(self, script: default.Script, event: InputEvent) -> bool:
