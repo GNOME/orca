@@ -1205,6 +1205,9 @@ class Script(default.Script):
         if not document and self.utilities.isDocument(new_focus):
             document = new_focus
 
+        sn_navigator = self.get_structural_navigator()
+        lastCommandWasStructNav = sn_navigator.last_input_event_was_navigation_command()
+
         if not document:
             msg = "WEB: Locus of focus changed to non-document obj"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1217,6 +1220,11 @@ class Script(default.Script):
 
             if old_focus and not oldDocument:
                 msg = "WEB: Not refreshing grabs because we weren't in a document before"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+
+            if lastCommandWasStructNav and sn_navigator.get_mode(self) == NavigationMode.GUI:
+                msg = "WEB: Not refreshing grabs: Last command was GUI structural navigation"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
@@ -1257,8 +1265,7 @@ class Script(default.Script):
         contents = None
         args = {}
         lastCommandWasCaretNav = self.caret_navigation.last_input_event_was_navigation_command()
-        lastCommandWasStructNav = \
-            self.get_structural_navigator().last_input_event_was_navigation_command() \
+        lastCommandWasStructNav = lastCommandWasStructNav \
             or self.get_table_navigator().last_input_event_was_navigation_command()
         manager = input_event_manager.get_manager()
         lastCommandWasLineNav = manager.last_event_was_line_navigation() \
@@ -1345,9 +1352,10 @@ class Script(default.Script):
             self.togglePresentationMode(None, document)
 
         if not self.utilities.inDocumentContent(old_focus):
+            sn_navigator.set_mode(self, NavigationMode.DOCUMENT)
             reason = "locus of focus now in document"
             self.caret_navigation.suspend_commands(self, self._inFocusMode, reason)
-            self.get_structural_navigator().suspend_commands(self, self._inFocusMode, reason)
+            sn_navigator.suspend_commands(self, self._inFocusMode, reason)
             self.live_region_manager.suspend_commands(self, self._inFocusMode, reason)
             self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
