@@ -2282,13 +2282,36 @@ class StructuralNavigator:
         root = self._determine_root_container(script)
         return AXUtilities.find_all_tables(root, pred=pred)
 
+    def _get_first_table_cell(self, table: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+        # The reason we present the cell rather than the full table are twofold:
+        # 1. Given a huge table, navigating to the cell and presenting the ancestor table is more
+        #    performant.
+        # 2. When we calculate what's on the same line, it should be based on the cell's bounding
+        #    box; not the table's.
+        # TODO - JD: Handle the second issue in the utilities which calculate the line.
+        if not AXUtilities.is_table(table):
+            return None
+
+        if cell := AXTable.get_cell_at(table, 0, 0):
+            return cell
+
+        tokens = ["STRUCTURAL NAVIGATOR: Broken table interface for", table]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        cell = AXObject.find_descendant(table, AXUtilities.is_table_cell)
+        if cell:
+            tokens = ["STRUCTURAL NAVIGATOR: Located", cell, "for first cell"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return None
+
     def prev_table(self, script: default.Script, event: InputEvent) -> bool:
         """Goes to the previous table."""
 
         self._last_input_event = event
         matches = self._get_all_tables(script)
         result = self._get_object_in_direction(script, matches, False)
-        self._present_object(script, result, messages.NO_MORE_TABLES)
+        obj = self._get_first_table_cell(result) or result
+        self._present_object(script, obj, messages.NO_MORE_TABLES)
         return True
 
     def next_table(self, script: default.Script, event: InputEvent) -> bool:
@@ -2297,7 +2320,8 @@ class StructuralNavigator:
         self._last_input_event = event
         matches = self._get_all_tables(script)
         result = self._get_object_in_direction(script, matches, True)
-        self._present_object(script, result, messages.NO_MORE_TABLES)
+        obj = self._get_first_table_cell(result) or result
+        self._present_object(script, obj, messages.NO_MORE_TABLES)
         return True
 
     def list_tables(self, script: default.Script, event: InputEvent) -> bool:
