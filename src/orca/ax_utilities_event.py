@@ -750,5 +750,43 @@ class AXUtilitiesEvent:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
+    @staticmethod
+    def _is_presentable_text_event(event: Atspi.Event) -> bool:
+        """Returns True if this text event should be presented."""
+
+        if not (AXUtilitiesState.is_editable(event.source) or \
+               AXUtilitiesRole.is_terminal(event.source)):
+            msg = "AXUtilitiesEvent: The source is neither editable nor a terminal."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus != event.source and not AXUtilitiesState.is_focused(event.source):
+            msg = "AXUtilitiesEvent: The source is neither focused, nor the locus of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "AXUtilitiesEvent: Event is presentable."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
+    def is_presentable_text_attributes_change(event: Atspi.Event) -> bool:
+        """Returns True if this text-attributes-change event should be presented."""
+
+        return AXUtilitiesEvent._is_presentable_text_event(event)
+
+    @staticmethod
+    def is_presentable_text_deletion(event: Atspi.Event) -> bool:
+        """Returns True if this text-deletion event should be presented."""
+
+        return AXUtilitiesEvent._is_presentable_text_event(event)
+
+    @staticmethod
+    def is_presentable_text_insertion(event: Atspi.Event) -> bool:
+        """Returns True if this text-insertion event should be presented."""
+
+        return AXUtilitiesEvent._is_presentable_text_event(event)
+
 
 AXUtilitiesEvent.start_cache_clearing_thread()
