@@ -113,12 +113,15 @@ class Script(default.Script):
 
         tokens = ["WEB: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        in_doc = self.utilities.inDocumentContent()
-        reason = f"script activation, in document content: {in_doc}"
-        self.caret_navigation.suspend_commands(self, not in_doc, reason)
-        self.get_structural_navigator().suspend_commands(self, not in_doc, reason)
-        self.live_region_manager.suspend_commands(self, not in_doc, reason)
-        self.get_table_navigator().suspend_commands(self, not in_doc, reason)
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        in_app = AXUtilities.get_application(focus) == self.app
+        in_doc = self.utilities.inDocumentContent(focus)
+        suspend = not (in_doc and in_app)
+        reason = f"script activation, not in document content in this app: {suspend}"
+        self.caret_navigation.suspend_commands(self, suspend, reason)
+        self.get_structural_navigator().suspend_commands(self, suspend, reason)
+        self.live_region_manager.suspend_commands(self, suspend, reason)
+        self.get_table_navigator().suspend_commands(self, suspend, reason)
         super().activate()
 
     def deactivate(self):

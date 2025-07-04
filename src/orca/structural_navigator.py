@@ -50,6 +50,7 @@ from . import keybindings
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
+from . import script_manager
 from . import settings_manager
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -280,7 +281,7 @@ class StructuralNavigator:
 
         if refresh:
             msg = f"STRUCTURAL NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -942,6 +943,15 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def _is_active_script(self, script):
+        active_script = script_manager.get_manager().get_active_script()
+        if active_script == script:
+            return True
+
+        tokens = ["STRUCTURAL NAVIGATOR:", script, "is not the active script", active_script]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return False
+
     def get_mode(self, script: default.Script) -> NavigationMode:
         """Returns the current structural-navigator mode associated with script."""
 
@@ -956,6 +966,9 @@ class StructuralNavigator:
         tokens = ["STRUCTURAL NAVIGATOR: Setting mode for", script, f"to {mode}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._mode_for_script[script] = mode
+
+        if not (script and self._is_active_script(script)):
+            return
 
         enabled = mode != NavigationMode.OFF
         settings_manager.get_manager().set_setting("structuralNavigationEnabled", enabled)
@@ -981,15 +994,15 @@ class StructuralNavigator:
         tokens = ["STRUCTURAL NAVIGATOR: Adding bindings for", script]
         if reason:
             tokens.append(f": {reason}")
-        tokens.append(f"Suspended: {self._suspended}")
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if script is None:
+        if not (script and self._is_active_script(script)):
             return
 
         if debug.LEVEL_INFO >= debug.debugLevel:
             has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["STRUCTURAL NAVIGATOR:", script, f"had {len(has_grabs)} key grabs."]
+            tokens = ["STRUCTURAL NAVIGATOR:", script,
+                      f"had {len(has_grabs)} key grabs prior to adding bindings."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._handlers = self.get_handlers(True)
@@ -1009,15 +1022,15 @@ class StructuralNavigator:
         tokens = ["STRUCTURAL NAVIGATOR: Removing bindings for", script]
         if reason:
             tokens.append(f": {reason}")
-        tokens.append(f"Suspended: {self._suspended}")
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if script is None:
+        if not (script and self._is_active_script(script)):
             return
 
         if debug.LEVEL_INFO >= debug.debugLevel:
             has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["STRUCTURAL NAVIGATOR:", script, f"had {len(has_grabs)} key grabs."]
+            tokens = ["STRUCTURAL NAVIGATOR:", script,
+                      f"had {len(has_grabs)} key grabs prior to removing bindings."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for binding in self._bindings.key_bindings:
@@ -1032,11 +1045,17 @@ class StructuralNavigator:
         """Refreshes structural navigation bindings and grabs for script."""
 
         reason = " ".join([reason, "(refreshing)"])
+        if not (script and self._is_active_script(script)):
+            return
+
         self.remove_bindings(script, reason)
         self.add_bindings(script, reason)
 
     def _cycle_mode(self, script: default.Script, _event: InputEvent) -> bool:
         """Cycles the structural navigation modes."""
+
+        if not (script and self._is_active_script(script)):
+            return False
 
         self._last_input_event = None
         previous_mode = self.get_mode(script)
@@ -1063,6 +1082,9 @@ class StructuralNavigator:
 
     def suspend_commands(self, script, suspended, reason=""):
         """Suspends structural navigation independent of the enabled setting."""
+
+        if not (script and self._is_active_script(script)):
+            return
 
         msg = f"STRUCTURAL NAVIGATOR: Suspended: {suspended}"
         if reason:
