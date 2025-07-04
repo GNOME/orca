@@ -975,22 +975,65 @@ class StructuralNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
-        """Refreshes structural navigation bindings and grabs for script."""
+    def add_bindings(self, script: default.Script, reason: str = "") -> None:
+        """Adds structural navigation bindings for script."""
 
-        msg = "STRUCTURAL NAVIGATOR: Refreshing bindings and grabs"
+        tokens = ["STRUCTURAL NAVIGATOR: Adding bindings for", script]
         if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            tokens.append(f": {reason}")
+        tokens.append(f"Suspended: {self._suspended}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, include_grabs=True)
+        if script is None:
+            return
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["STRUCTURAL NAVIGATOR:", script, f"had {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
         for binding in self._bindings.key_bindings:
             script.key_bindings.add(binding, include_grabs=not self._suspended)
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["STRUCTURAL NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+    def remove_bindings(self, script: default.Script, reason: str = "") -> None:
+        """Removes structural navigation bindings for script."""
+
+        tokens = ["STRUCTURAL NAVIGATOR: Removing bindings for", script]
+        if reason:
+            tokens.append(f": {reason}")
+        tokens.append(f"Suspended: {self._suspended}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if script is None:
+            return
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["STRUCTURAL NAVIGATOR:", script, f"had {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        for binding in self._bindings.key_bindings:
+            script.key_bindings.remove(binding, include_grabs=True)
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["STRUCTURAL NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
+        """Refreshes structural navigation bindings and grabs for script."""
+
+        reason = " ".join([reason, "(refreshing)"])
+        self.remove_bindings(script, reason)
+        self.add_bindings(script, reason)
 
     def _cycle_mode(self, script: default.Script, _event: InputEvent) -> bool:
         """Cycles the structural navigation modes."""
@@ -1020,9 +1063,6 @@ class StructuralNavigator:
 
     def suspend_commands(self, script, suspended, reason=""):
         """Suspends structural navigation independent of the enabled setting."""
-
-        if suspended == self._suspended:
-            return
 
         msg = f"STRUCTURAL NAVIGATOR: Suspended: {suspended}"
         if reason:

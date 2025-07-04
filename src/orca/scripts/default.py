@@ -550,20 +550,36 @@ class Script(script.Script):
     def add_key_grabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
-        msg = "DEFAULT: Setting up key bindings"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Adding key grabs for", self]
+        if reason:
+            tokens.append(f": {reason}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         self.key_bindings = self.get_key_bindings()
         self.key_bindings.add_key_grabs(reason)
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = self.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["DEFAULT:", self, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
     def remove_key_grabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
+
+        tokens = ["DEFAULT: Removing key grabs for", self]
+        if reason:
+            tokens.append(f": {reason}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
         self.key_bindings.remove_key_grabs(reason)
 
-        msg = "DEFAULT: Clearing key bindings"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = self.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["DEFAULT:", self, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         self.key_bindings = keybindings.KeyBindings()
 
     def refresh_key_grabs(self, reason=""):
