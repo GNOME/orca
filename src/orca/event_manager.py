@@ -136,6 +136,13 @@ class EventManager:
             priority = EventManager.PRIORITY_HIGH
         elif event_type.startswith("object:active-descendant-changed"):
             priority = EventManager.PRIORITY_HIGH
+        elif event_type.startswith("object:announcement"):
+            if event.detail1 == Atspi.Live.ASSERTIVE:
+                priority = EventManager.PRIORITY_IMPORTANT
+            elif event.detail1 == Atspi.Live.POLITE:
+                priority = EventManager.PRIORITY_HIGH
+            else:
+                priority = EventManager.PRIORITY_NORMAL
         elif event_type.startswith("object:state-changed:invalid-entry"):
             # Setting this to lower ensures we present the state and/or text changes that triggered
             # the invalid state prior to presenting the invalid state.

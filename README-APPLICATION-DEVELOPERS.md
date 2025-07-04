@@ -395,13 +395,6 @@ called `PresentMessage` that eliminates the need for the complex AT-SPI2 setup s
 See [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md) for details on using this
 streamlined interface.
 
-**Please note:** Because "assertive" messages can be disruptive if presented at the wrong
-time, Orca *currently* treats an "assertive" notification from non-web applications the
-same as a regular/"polite" notification. Adding support for "assertive" notifications from non-web
-applications is planned and depends on Orca's
-[live-region support being made global](https://gitlab.gnome.org/GNOME/orca/-/issues/431)
-so that users have full control over when and how notifications are presented to them.
-
 ## Providing Context-Sensitive Help Messages
 
 AT-SPI2/ATK v2.52 added support for setting and retrieving "help text" on accessible objects.
