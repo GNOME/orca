@@ -29,7 +29,6 @@ __license__   = "LGPL"
 
 import re
 import string
-import time
 
 from orca import braille
 from orca import cmdnames
@@ -67,13 +66,6 @@ class Script(script.Script):
 
     def __init__(self, app):
         super().__init__(app)
-
-        # Keep track of the last time we issued a mouse routing command
-        # so that we can guess if a change resulted from our moving the
-        # pointer.
-        #
-        self.lastMouseRoutingTime = None
-
         self._sayAllContexts = []
         self.grab_ids = []
 
@@ -914,7 +906,6 @@ class Script(script.Script):
     def route_pointer_to_item(self, event=None):
         """Moves the mouse pointer to the current item."""
 
-        self.lastMouseRoutingTime = time.time()
         if self.get_flat_review_presenter().is_active():
             self.get_flat_review_presenter().route_pointer_to_object(self, event)
             return True

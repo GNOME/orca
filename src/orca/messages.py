@@ -1839,12 +1839,6 @@ MODE_OBJECT = _("Object mode.")
 # the mouse pointer to a particular object is believed to have succeeded.
 MOUSE_MOVED_SUCCESS = _("Pointer moved to object.")
 
-# Translators: Hovering the mouse over certain objects on a web page causes a 
-# new object to appear such as a pop-up menu. Orca has a command will move the
-# user to the object which just appeared as a result of the user hovering the
-# mouse. If this command fails, Orca will present this message.
-MOUSE_OVER_NOT_FOUND = _("Mouse over object not found.")
-
 # Translators: Orca has a feature to speak the item under the pointer. This feature,
 # known as mouse review, can be enabled and disabled via command. The following is
 # the message which Orca will present when mouse review is toggled off via command.

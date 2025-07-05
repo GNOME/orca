@@ -27,7 +27,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import time
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -76,9 +75,6 @@ class Script(default.Script):
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
         self._lastMouseButtonContext = None, -1
-        self._lastMouseOverObject = None
-        self._preMouseOverContext = None, -1
-        self._inMouseOverObject = False
         self._inFocusMode = False
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False
@@ -131,9 +127,6 @@ class Script(default.Script):
         self._loadingDocumentContent = False
         self._madeFindAnnouncement = False
         self._lastMouseButtonContext = None, -1
-        self._lastMouseOverObject = None
-        self._preMouseOverContext = None, -1
-        self._inMouseOverObject = False
         self.utilities.clearCachedObjects()
         reason = "script deactivation"
         self.caret_navigation.suspend_commands(self, False, reason)
@@ -190,20 +183,6 @@ class Script(default.Script):
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers.get("toggleLayoutModeHandler")))
 
-
-        layout = settings_manager.get_manager().get_setting('keyboardLayout')
-        if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
-            key = "KP_Multiply"
-        else:
-            key = "0"
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                key,
-                keybindings.DEFAULT_MODIFIER_MASK,
-                keybindings.ORCA_MODIFIER_MASK,
-                self.input_event_handlers.get("moveToMouseOverHandler")))
-
         return keyBindings
 
     def setup_input_event_handlers(self):
@@ -224,11 +203,6 @@ class Script(default.Script):
                 Script.pan_braille_right,
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
-
-        self.input_event_handlers["moveToMouseOverHandler"] = \
-            input_event.InputEventHandler(
-                Script.moveToMouseOver,
-                cmdnames.MOUSE_OVER_MOVE)
 
         self.input_event_handlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
@@ -1093,42 +1067,6 @@ class Script(default.Script):
         braille.refresh(False)
         return True
 
-    def moveToMouseOver(self, inputEvent):
-        """Moves the context to/from the mouseover which has just appeared."""
-
-        if not self._lastMouseOverObject:
-            self.presentMessage(messages.MOUSE_OVER_NOT_FOUND)
-            return
-
-        if self._inMouseOverObject:
-            self.restorePreMouseOverContext()
-            return
-
-        obj = self._lastMouseOverObject
-        obj, offset = self.utilities.findFirstCaretContext(obj, 0)
-        if not obj:
-            return
-
-        if AXUtilities.is_focusable(obj):
-            AXObject.grab_focus(obj)
-
-        contents = self.utilities.getObjectContentsAtOffset(obj, offset)
-        self.utilities.setCaretPosition(obj, offset)
-        self.speakContents(contents)
-        self.update_braille(obj)
-        self._inMouseOverObject = True
-
-    def restorePreMouseOverContext(self):
-        """Cleans things up after a mouse-over object has been hidden."""
-
-        obj, offset = self._preMouseOverContext
-        self.get_event_synthesizer().route_to_object(obj)
-        self.utilities.setCaretPosition(obj, offset)
-        self.speakContents(self.utilities.getObjectContentsAtOffset(obj, offset))
-        self.update_braille(obj)
-        self._inMouseOverObject = False
-        self._lastMouseOverObject = None
-
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
         if not self._browseModeIsSticky or forceMessage:
             self.presentMessage(messages.MODE_BROWSE_IS_STICKY)
@@ -1789,15 +1727,6 @@ class Script(default.Script):
                 self.utilities.setCaretContext(focused, 0)
             return True
 
-        if self.lastMouseRoutingTime and 0 < time.time() - self.lastMouseRoutingTime < 1:
-            utterances = []
-            utterances.append(messages.NEW_ITEM_ADDED)
-            utterances.extend(self.speech_generator.generate_speech(event.any_data, force=True))
-            speech.speak(utterances)
-            self._lastMouseOverObject = event.any_data
-            self.preMouseOverContext = self.utilities.getCaretContext()
-            return True
-
         return False
 
     def on_children_removed(self, event):
@@ -2313,11 +2242,6 @@ class Script(default.Script):
 
         if not AXUtilities.is_editable(event.source) \
            and not self.utilities.isContentEditableWithEmbeddedObjects(event.source):
-            if self._inMouseOverObject and not AXObject.is_valid(self._lastMouseOverObject):
-                msg = "WEB: Restoring pre-mouseover context"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                self.restorePreMouseOverContext()
-
             msg = "WEB: Done processing non-editable source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

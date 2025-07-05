@@ -816,13 +816,6 @@ LIVE_REGIONS_REVIEW = _("Review live region announcement")
 # enabled.
 LIVE_REGIONS_MONITOR = _("Monitor live regions")
 
-# Translators: hovering the mouse over certain objects on a web page causes a
-# new object to appear such as a pop-up menu. This command will move the user
-# to the object which just appeared as a result of the user hovering the mouse.
-# If the user is already in the mouse over object, this command will hide the
-# mouse over and return the user to the object he/she was in.
-MOUSE_OVER_MOVE = _("Move focus into and away from the current mouse over")
-
 # Translators: Orca allows you to dynamically define which row of a spreadsheet
 # or table should be treated as containing column headers. This string refers to
 # the command to set the row.
