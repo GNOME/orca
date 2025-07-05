@@ -31,13 +31,14 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 The Orca Team"
 __license__   = "LGPL"
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import input_event
@@ -54,12 +55,17 @@ class ObjectNavigator:
     """Provides ability to navigate objects hierarchically."""
 
     def __init__(self) -> None:
-        self._navigator_focus: Optional[Atspi.Accessible] = None
-        self._last_navigator_focus: Optional[Atspi.Accessible] = None
-        self._last_locus_of_focus: Optional[Atspi.Accessible] = None
+        self._navigator_focus: Atspi.Accessible | None = None
+        self._last_navigator_focus: Atspi.Accessible | None = None
+        self._last_locus_of_focus: Atspi.Accessible | None = None
         self._simplify: bool = True
         self._handlers: dict = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+
+        msg = "OBJECT NAVIGATOR: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("ObjectNavigator", self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -142,22 +148,22 @@ class ObjectNavigator:
 
         self._handlers["object_navigator_up"] = \
             input_event.InputEventHandler(
-                self.up,
+                self.move_to_parent,
                 cmdnames.NAVIGATOR_UP)
 
         self._handlers["object_navigator_down"] = \
             input_event.InputEventHandler(
-                self.down,
+                self.move_to_first_child,
                 cmdnames.NAVIGATOR_DOWN)
 
         self._handlers["object_navigator_next"] = \
             input_event.InputEventHandler(
-                self.next,
+                self.move_to_next_sibling,
                 cmdnames.NAVIGATOR_NEXT)
 
         self._handlers["object_navigator_previous"] = \
             input_event.InputEventHandler(
-                self.previous,
+                self.move_to_previous_sibling,
                 cmdnames.NAVIGATOR_PREVIOUS)
 
         self._handlers["object_navigator_perform_action"] = \
@@ -224,7 +230,7 @@ class ObjectNavigator:
 
         return functional_children
 
-    def _parent(self, script: default.Script, obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def _parent(self, script: default.Script, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the parent for obj, taking simple navigation into account."""
 
         parent = AXObject.get_parent(obj)
@@ -243,7 +249,7 @@ class ObjectNavigator:
         self._last_navigator_focus = self._navigator_focus
         self._navigator_focus = obj
 
-    def update(self) -> None:
+    def _update(self) -> None:
         """Updates the navigator focus to Orca's object of interest."""
 
         mode, region = focus_manager.get_manager().get_active_mode_and_object_of_interest()
@@ -255,47 +261,84 @@ class ObjectNavigator:
         self._navigator_focus = obj
         self._last_locus_of_focus = obj
 
-    def present(self, script: default.Script) -> None:
+    def _present(self, script: default.Script, notify_user: bool = True) -> None:
         """Presents the current navigator focus to the user."""
 
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().emit_region_changed(
             self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
+        if not notify_user:
+            msg = "OBJECT NAVIGATOR: _present called with notify_user=False"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         script.presentObject(self._navigator_focus, priorObj=self._last_navigator_focus)
 
-    def up(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_to_parent(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves the navigator focus to the parent of the current focus."""
 
-        self.update()
+        tokens = ["OBJECT NAVIGATOR: move_to_parent. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._update()
         parent = self._parent(script, self._navigator_focus)
         if parent is not None:
             self._set_navigator_focus(parent)
-            self.present(script)
-        else:
+            self._present(script, notify_user)
+        elif notify_user:
             script.presentMessage(messages.NAVIGATOR_NO_PARENT)
         return True
 
-    def down(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_to_first_child(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves the navigator focus to the first child of the current focus."""
 
-        self.update()
+        tokens = ["OBJECT NAVIGATOR: move_to_first_child. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._update()
         children = self._children(script, self._navigator_focus)
         if not children:
-            script.presentMessage(messages.NAVIGATOR_NO_CHILDREN)
+            if notify_user:
+                script.presentMessage(messages.NAVIGATOR_NO_CHILDREN)
             return True
 
         self._set_navigator_focus(children[0])
-        self.present(script)
+        self._present(script, notify_user)
         return True
 
-    def next(self, script: default.Script, _event: Optional[input_event.InputEvent] = None) -> bool:
+    @dbus_service.command
+    def move_to_next_sibling(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves the navigator focus to the next sibling of the current focus."""
 
-        self.update()
+        tokens = ["OBJECT NAVIGATOR: move_to_next_sibling. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._update()
         parent = self._parent(script, self._navigator_focus)
         if parent is None:
-            script.presentMessage(messages.NAVIGATOR_NO_NEXT)
+            if notify_user:
+                script.presentMessage(messages.NAVIGATOR_NO_NEXT)
             return True
 
         siblings = self._children(script, parent)
@@ -303,23 +346,32 @@ class ObjectNavigator:
             index = siblings.index(self._navigator_focus)
             if index < len(siblings) - 1:
                 self._set_navigator_focus(siblings[index+1])
-                self.present(script)
-            else:
+                self._present(script, notify_user)
+            elif notify_user:
                 script.presentMessage(messages.NAVIGATOR_NO_NEXT)
         else:
             self._set_navigator_focus(parent)
-            self.present(script)
+            self._present(script, notify_user)
         return True
 
-    def previous(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+    @dbus_service.command
+    def move_to_previous_sibling(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Moves the navigator focus to the previous sibling of the current focus."""
 
-        self.update()
+        tokens = ["OBJECT NAVIGATOR: move_to_previous_sibling. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._update()
         parent = self._parent(script, self._navigator_focus)
         if parent is None:
-            script.presentMessage(messages.NAVIGATOR_NO_PREVIOUS)
+            if notify_user:
+                script.presentMessage(messages.NAVIGATOR_NO_PREVIOUS)
             return True
 
         siblings = self._children(script, parent)
@@ -327,30 +379,48 @@ class ObjectNavigator:
             index = siblings.index(self._navigator_focus)
             if index > 0:
                 self._set_navigator_focus(siblings[index-1])
-                self.present(script)
-            else:
+                self._present(script, notify_user)
+            elif notify_user:
                 script.presentMessage(messages.NAVIGATOR_NO_PREVIOUS)
         else:
             self._set_navigator_focus(parent)
-            self.present(script)
+            self._present(script, notify_user)
         return True
 
+    @dbus_service.command
     def toggle_simplify(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Toggles simplified navigation."""
 
+        tokens = ["OBJECT NAVIGATOR: toggle_simplify. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         self._simplify = not self._simplify
-        if self._simplify:
-            script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_ENABLED)
-        else:
-            script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_DISABLED)
+        if notify_user:
+            if self._simplify:
+                script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_ENABLED)
+            else:
+                script.presentMessage(messages.NAVIGATOR_SIMPLIFIED_DISABLED)
         return True
 
+    @dbus_service.command
     def perform_action(
-        self, _script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Attempts to click on the current focus."""
+
+        tokens = ["OBJECT NAVIGATOR: perform_action. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if AXEventSynthesizer.try_all_clickable_actions(self._navigator_focus):
             return True
 

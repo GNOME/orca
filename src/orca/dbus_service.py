@@ -128,8 +128,8 @@ class OrcaModuleDBusInterface(Publishable):
 
         msg = (
             f"DBUS SERVICE: OrcaModuleDBusInterface for {module_name} initialized "
-            f"with {len(self._commands)} commands, {len(self._getters)} getters, "
-            f"{len(self._setters)} setters."
+            f"with {len(self._commands)} command(s), {len(self._getters)} getter(s), "
+            f"{len(self._setters)} setter(s)."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -259,8 +259,6 @@ class OrcaDBusServiceInterface(Publishable):
     def __init__(self) -> None:
         super().__init__()
         self._registered_modules: set[str] = set()
-        msg = "DBUS SERVICE: OrcaDBusServiceInterface initialized."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def for_publication(self):
         """Returns the D-Bus interface XML for publication."""
@@ -524,8 +522,6 @@ class OrcaRemoteController:
                 )
                 handlers_info.append(handler_info)
                 commands_count += 1
-                msg = f"REMOTE CONTROLLER: Found decorated command '{attr_name}': {description}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
             # Getter
             elif callable(attr) and hasattr(attr, "dbus_getter_description"):
                 description = attr.dbus_getter_description
@@ -541,8 +537,6 @@ class OrcaRemoteController:
                 )
                 handlers_info.append(handler_info)
                 getters_count += 1
-                msg = f"REMOTE CONTROLLER: Found decorated getter '{attr_name}': {description}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
             # Setter
             elif callable(attr) and hasattr(attr, "dbus_setter_description"):
                 description = attr.dbus_setter_description
@@ -558,8 +552,6 @@ class OrcaRemoteController:
                 )
                 handlers_info.append(handler_info)
                 setters_count += 1
-                msg = f"REMOTE CONTROLLER: Found decorated setter '{attr_name}': {description}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not handlers_info:
             return
@@ -573,7 +565,7 @@ class OrcaRemoteController:
             module_name, handlers_info, self._bus, self.OBJECT_PATH)
         msg = (
             f"REMOTE CONTROLLER: Successfully registered {len(handlers_info)} "
-            f"decorated commands/getters/setters for module {module_name}."
+            f"commands/getters/setters for module {module_name}."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 

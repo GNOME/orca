@@ -522,7 +522,7 @@ class TableNavigator:
             while cell and self._is_blank(cell) and not AXTable.is_start_of_row(cell):
                 cell = AXTable.get_cell_on_left(cell)
 
-        self._present_cell(script, cell, row, col - 1, current)
+        self._present_cell(script, cell, row, col - 1, current, notify_user)
         return True
 
     @dbus_service.command
@@ -557,7 +557,7 @@ class TableNavigator:
             while cell and self._is_blank(cell) and not AXTable.is_end_of_row(cell):
                 cell = AXTable.get_cell_on_right(cell)
 
-        self._present_cell(script, cell, row, col + 1, current)
+        self._present_cell(script, cell, row, col + 1, current, notify_user)
         return True
 
     @dbus_service.command
@@ -592,7 +592,7 @@ class TableNavigator:
             while cell and self._is_blank(cell) and not AXTable.is_top_of_column(cell):
                 cell = AXTable.get_cell_above(cell)
 
-        self._present_cell(script, cell, row - 1, col, current)
+        self._present_cell(script, cell, row - 1, col, current, notify_user)
         return True
 
     @dbus_service.command
@@ -627,7 +627,7 @@ class TableNavigator:
             while cell and self._is_blank(cell) and not AXTable.is_bottom_of_column(cell):
                 cell = AXTable.get_cell_below(cell)
 
-        self._present_cell(script, cell, row + 1, col, current)
+        self._present_cell(script, cell, row + 1, col, current, notify_user)
         return True
 
     @dbus_service.command
@@ -652,7 +652,7 @@ class TableNavigator:
 
         table = AXTable.get_table(current)
         cell = AXTable.get_first_cell(table)
-        self._present_cell(script, cell, 0, 0, current)
+        self._present_cell(script, cell, 0, 0, current, notify_user)
         return True
 
     @dbus_service.command
@@ -678,7 +678,9 @@ class TableNavigator:
         table = AXTable.get_table(current)
         cell = AXTable.get_last_cell(table)
         self._present_cell(
-            script, cell, AXTable.get_row_count(table), AXTable.get_column_count(table), current)
+            script, cell, AXTable.get_row_count(table), AXTable.get_column_count(table),
+            current, notify_user
+        )
         return True
 
     @dbus_service.command
@@ -708,7 +710,7 @@ class TableNavigator:
 
         cell = AXTable.get_start_of_row(current)
         row, col = self._get_cell_coordinates(cell)
-        self._present_cell(script, cell, row, col, current)
+        self._present_cell(script, cell, row, col, current, notify_user)
         return True
 
     @dbus_service.command
@@ -738,7 +740,7 @@ class TableNavigator:
 
         cell = AXTable.get_end_of_row(current)
         row, col = self._get_cell_coordinates(cell)
-        self._present_cell(script, cell, row, col, current)
+        self._present_cell(script, cell, row, col, current, notify_user)
         return True
 
     @dbus_service.command
@@ -769,7 +771,7 @@ class TableNavigator:
         row = self._get_cell_coordinates(current)[0]
         cell = AXTable.get_top_of_column(current)
         col = self._get_cell_coordinates(cell)[1]
-        self._present_cell(script, cell, row, col, current)
+        self._present_cell(script, cell, row, col, current, notify_user)
         return True
 
     @dbus_service.command
@@ -800,7 +802,7 @@ class TableNavigator:
         row = self._get_cell_coordinates(current)[0]
         cell = AXTable.get_bottom_of_column(current)
         col = self._get_cell_coordinates(cell)[1]
-        self._present_cell(script, cell, row, col, current)
+        self._present_cell(script, cell, row, col, current, notify_user)
         return True
 
     @dbus_service.command
@@ -926,7 +928,8 @@ class TableNavigator:
         cell: Atspi.Accessible,
         row: int,
         col: int,
-        previous_cell: Atspi.Accessible
+        previous_cell: Atspi.Accessible,
+        notify_user: bool = True
     ) -> None:
         """Presents cell to the user."""
 
@@ -945,6 +948,11 @@ class TableNavigator:
         focus_manager.get_manager().set_locus_of_focus(None, obj, False)
         if AXObject.supports_text(obj) and not script.utilities.isGUICell(cell):
             script.utilities.setCaretPosition(obj, 0)
+
+        if not notify_user:
+            msg = "TABLE NAVIGATOR: _present_cell called with notify_user=False"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         script.presentObject(cell, offset=0, priorObj=previous_cell, interrupt=True)
 
