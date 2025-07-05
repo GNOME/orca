@@ -580,10 +580,16 @@ class AXUtilitiesEvent:
             return False
 
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(event.source)] = new_state
-        if event.source == focus_manager.get_manager().get_locus_of_focus():
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if event.source == focus:
             msg = "AXUtilitiesEvent: Event is presentable, from the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
+
+        if not event.detail1 and not AXObject.is_ancestor(focus, event.source):
+            msg = "AXUtilitiesEvent: Event is not from the locus of focus or ancestor."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         if AXUtilitiesRole.is_table_row(event.source) or AXUtilitiesRole.is_list_box(event.source):
             msg = "AXUtilitiesEvent: Event is presentable based on role."
