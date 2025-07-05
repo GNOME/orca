@@ -166,6 +166,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_system_information_presenter().get_handlers())
         self.input_event_handlers.update(self.bookmarks.get_handlers())
         self.input_event_handlers.update(self.get_object_navigator().get_handlers())
+        self.input_event_handlers.update(self.get_structural_navigator().get_handlers())
         self.input_event_handlers.update(self.get_table_navigator().get_handlers())
         self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
         self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
@@ -349,6 +350,11 @@ class Script(script.Script):
             keyBindings.add(keyBinding)
 
         bindings = self.get_object_navigator().get_bindings(
+            refresh=True, is_desktop=isDesktop)
+        for keyBinding in bindings.key_bindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.get_structural_navigator().get_bindings(
             refresh=True, is_desktop=isDesktop)
         for keyBinding in bindings.key_bindings:
             keyBindings.add(keyBinding)
@@ -544,20 +550,36 @@ class Script(script.Script):
     def add_key_grabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """
 
-        msg = "DEFAULT: Setting up key bindings"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["DEFAULT: Adding key grabs for", self]
+        if reason:
+            tokens.append(f": {reason}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         self.key_bindings = self.get_key_bindings()
         self.key_bindings.add_key_grabs(reason)
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = self.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["DEFAULT:", self, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
     def remove_key_grabs(self, reason=""):
         """ Removes this script's AT-SPI key grabs. """
+
+        tokens = ["DEFAULT: Removing key grabs for", self]
+        if reason:
+            tokens.append(f": {reason}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
         self.key_bindings.remove_key_grabs(reason)
 
-        msg = "DEFAULT: Clearing key bindings"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = self.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["DEFAULT:", self, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         self.key_bindings = keybindings.KeyBindings()
 
     def refresh_key_grabs(self, reason=""):
@@ -667,6 +689,8 @@ class Script(script.Script):
         self.get_speech_and_verbosity_manager().update_punctuation_level()
         self.get_speech_and_verbosity_manager().update_capitalization_style()
         self.get_speech_and_verbosity_manager().update_synthesizer()
+
+        self.get_structural_navigator().set_mode(self, self._default_sn_mode)
 
         self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]
@@ -1826,6 +1850,8 @@ class Script(script.Script):
 
         if offset is None:
             offset = AXText.get_caret_offset(obj)
+        else:
+            AXText.set_caret_offset(obj, offset)
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
@@ -1939,6 +1965,10 @@ class Script(script.Script):
         interrupt = args.get("interrupt", False)
         tokens = ["DEFAULT: Presenting object", obj, ". Interrupt:", interrupt]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        offset = args.get("offset")
+        if offset is not None:
+            AXText.set_caret_offset(obj, offset)
 
         if not args.get("speechonly", False):
             self.update_braille(obj, **args)

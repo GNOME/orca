@@ -393,6 +393,11 @@ KB_GROUP_OBJECT_NAVIGATION = _("Object navigation")
 KB_GROUP_SYSTEM_INFORMATION = _("System information")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to structural navigation, such as moving to the next heading,
+# paragraph, form field, etc. in a given direction.
+KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to table navigation, such as moving to the next cell in a
 # given direction.
 KB_GROUP_TABLE_NAVIGATION = _("Table navigation")
