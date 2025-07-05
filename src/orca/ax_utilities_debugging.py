@@ -77,7 +77,7 @@ class AXUtilitiesDebugging:
             if not result:
                 result = "DEAD"
 
-            return f"[{result}]"
+            return f"[{result} ({hex(id(obj))})] "
 
         if isinstance(obj, Atspi.Event):
             any_data = AXUtilitiesDebugging._format_string(
@@ -251,7 +251,8 @@ class AXUtilitiesDebugging:
         help_text = AXUtilitiesDebugging._format_string(AXObject.get_help_text(obj))
         ax_id = AXObject.get_accessible_id(obj)
         string += (
-            f"name='{name}' role='{AXObject.get_role_name(obj)}' id='{ax_id}'\n"
+            f"name='{name}' role='{AXObject.get_role_name(obj)}'"
+            f" axid='{ax_id}' id={hex(id(obj))}\n"
             f"{indent}description='{desc}'\n"
             f"{indent}help='{help_text}'\n"
             f"{indent}states='{AXUtilitiesDebugging.state_set_as_string(obj)}'\n"
