@@ -2666,6 +2666,15 @@ class StructuralNavigator:
         return AXUtilities.find_all_lists(
             root, include_description_lists=True, include_tab_lists=True, pred=pred)
 
+    def _get_first_item(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        # The reason we present the item (or first child) rather than the full list are twofold:
+        # 1. Given a huge list, navigating to the item and presenting the ancestor list is more
+        #    performant.
+        # 2. When we calculate what's on the same line, it should be based on the item's bounding
+        #    box; not the list's.
+        # TODO - JD: Handle the second issue in the utilities which calculate the line.
+        return AXObject.get_child(obj, 0)
+
     @dbus_service.command
     def previous_list(
         self,
@@ -2682,6 +2691,7 @@ class StructuralNavigator:
         self._last_input_event = event
         matches = self._get_all_lists(script)
         result = self._get_object_in_direction(script, matches, False)
+        result = self._get_first_item(result) or result
         self._present_object(script, result, messages.NO_MORE_LISTS, notify_user=notify_user)
         return True
 
@@ -2701,6 +2711,7 @@ class StructuralNavigator:
         self._last_input_event = event
         matches = self._get_all_lists(script)
         result = self._get_object_in_direction(script, matches, True)
+        result = self._get_first_item(result) or result
         self._present_object(script, result, messages.NO_MORE_LISTS, notify_user=notify_user)
         return True
 
@@ -2738,7 +2749,6 @@ class StructuralNavigator:
         pred = None
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
-
 
         root = self._determine_root_container(script)
         return AXUtilities.find_all_list_items(
