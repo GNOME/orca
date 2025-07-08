@@ -2661,7 +2661,6 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_lists(
             root, include_description_lists=True, include_tab_lists=True, pred=pred)

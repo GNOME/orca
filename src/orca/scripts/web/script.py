@@ -899,7 +899,10 @@ class Script(default.Script):
                 tokens = ["WEB: Replacing destroyed object with", obj]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if AXUtilities.is_entry(obj):
+        # Reasons we don't want to dive deep into the object include:
+        # 1. Editors like VSCode use the entry role for the code editor.
+        # 2. Giant nested lists.
+        if AXUtilities.is_entry(obj) or AXUtilities.is_list_item(obj):
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
             super().presentObject(obj, **args)
