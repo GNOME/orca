@@ -244,11 +244,24 @@ class AXComponent:
 
     @staticmethod
     def on_same_line(obj1: Atspi.Accessible, obj2: Atspi.Accessible, delta: int = 0) -> bool:
-        """Returns True if obj1 and obj2 are on the same line based on the center points."""
+        """Returns True if obj1 and obj2 are on the same line."""
 
-        y1_center = AXComponent.get_center_point(obj1)[1]
-        y2_center = AXComponent.get_center_point(obj2)[1]
-        return abs(y1_center - y2_center) <= delta
+        rect1 = AXComponent.get_rect(obj1)
+        rect2 = AXComponent.get_rect(obj2)
+        y1_center = rect1.y + rect1.height / 2
+        y2_center = rect2.y + rect2.height / 2
+
+        # If the center points differ by more than delta, they are not on the same line.
+        if abs(y1_center - y2_center) > delta:
+            return False
+
+        # If there's a significant difference in height, they are not on the same line.
+        min_height = min(rect1.height, rect2.height)
+        max_height = max(rect1.height, rect2.height)
+        if min_height > 0 and max_height / min_height > 2.0:
+            return False
+
+        return True
 
     @staticmethod
     def _object_bounds_includes_children(obj: Atspi.Accessible) -> bool:
