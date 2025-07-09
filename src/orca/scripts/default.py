@@ -1690,14 +1690,14 @@ class Script(script.Script):
         self._sayAllContexts = self._sayAllContexts[0:index]
         while self._sayAllContexts:
             context = self._sayAllContexts.pop()
-            if context.end_offset - context.start_offset > minCharCount:
+            if context.endOffset - context.startOffset > minCharCount:
                 break
 
         # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.start_offset):
+        if AXText.set_caret_offset(context.obj, context.startOffset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.say_all(None, context.obj, context.start_offset)
+        self.say_all(None, context.obj, context.startOffset)
         return True
 
     def _fastForwardSayAll(self, context):
@@ -1705,10 +1705,10 @@ class Script(script.Script):
             return False
 
         # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.end_offset):
+        if AXText.set_caret_offset(context.obj, context.endOffset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.say_all(None, context.obj, context.end_offset)
+        self.say_all(None, context.obj, context.endOffset)
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
