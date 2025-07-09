@@ -1,0 +1,24 @@
+[Unit]
+Description=Orca Screen Reader
+Documentation=man:orca(1)
+Documentation=https://orca.gnome.org/
+
+PartOf=graphical-session.target
+After=graphical-session.target
+
+# We're going to need this, so instead of waiting for it to
+# dbus activate later, let's start it in parallel with Orca
+Wants=at-spi-dbus-bus.service
+
+[Service]
+Type=exec # TODO: Works, but maybe we can switch to something better. DBus listening to org.gnome.Orca.Service? Type=notify-reload?
+ExecStart=orca --replace
+KillMode=mixed # TODO: Works, but logs about leftover processes
+# Real fix: ExecStop=busctl call org.gnome.Orca.Service /org/gnome/Orca/Service org.gnome.Orca.Service ShutDown
+# (or, for convenience if possible:) ExecStop=orca --shutdown
+# Needs to block until it's safe to kill all processes in the cgroup, including speech-dispatcher, etc
+Restart=always
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target
