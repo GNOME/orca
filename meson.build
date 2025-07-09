@@ -85,6 +85,17 @@ else
   summary += {'speech output': 'no (missing speechd, spiel)'}
 endif
 
+# Integration with session startup
+systemd = dependency('systemd', required: false)
+systemd_user_unit_dir = systemd.get_variable(
+    'systemd_user_unit_dir',
+    pkgconfig_define: ['prefix', get_option('prefix')],
+    default_value: get_option('prefix') / 'lib' / 'systemd' / 'user'
+)
+install_data(
+    'orca.service',
+    install_dir: systemd_user_unit_dir
+)
 i18n.merge_file(
   input: 'orca-autostart.desktop.in',
   output: '@BASENAME@',

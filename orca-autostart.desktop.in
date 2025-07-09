@@ -7,3 +7,4 @@ AutostartCondition=GSettings org.gnome.desktop.a11y.applications screen-reader-e
 X-GNOME-AutoRestart=true
 #X-GNOME-Autostart-Phase=Initialization
 OnlyShowIn=MATE;Unity;Cinnamon;
+X-systemd-skip=true
