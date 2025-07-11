@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-03-21 15:45+0000\n"
-"PO-Revision-Date: 2025-03-22 10:52+0100\n"
+"POT-Creation-Date: 2025-07-05 10:12+0000\n"
+"PO-Revision-Date: 2025-07-11 17:18+0200\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Gtranslator 47.1\n"
+"X-Generator: Gtranslator 48.0\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -41,7 +41,7 @@ msgstr "???"
 #. other rolenames, and they typically act like an abbreviation.
 #: src/orca/braille_rolenames.py:45
 msgid "alrt"
-msgstr "atnț"
+msgstr "alrt"
 
 #. Translators: short braille for the rolename of an animation widget.
 #: src/orca/braille_rolenames.py:48
@@ -715,7 +715,7 @@ msgstr "Deschide dialogul de căutare"
 #. that can be performed on the current object. This is the name of that command.
 #: src/orca/cmdnames.py:107
 msgid "Show actions menu"
-msgstr "Arată meniul de acțiuni"
+msgstr "Arată lista de acțiuni"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
@@ -1186,7 +1186,8 @@ msgstr "Afișează fereastra de configurație a preferințelor aplicației"
 #. and justification.
 #: src/orca/cmdnames.py:482
 msgid "Toggle the speaking of indentation and justification"
-msgstr "Comută pronunțarea indentării și alinierii"
+msgstr ""
+"Activează sau dezactivează pronunțarea alineatului și a alinierii textului"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -1194,7 +1195,7 @@ msgstr "Comută pronunțarea indentării și alinierii"
 #. toggling between the two options.
 #: src/orca/cmdnames.py:488
 msgid "Change spoken number style"
-msgstr "Schimbă stilul de pronunțare al numerelor"
+msgstr "Schimbă stilul de pronunțare a numerelor"
 
 #. Translators: Orca has a command to present the current clipboard contents to
 #. the user without them having to switch to a clipboard manager application. This
@@ -1700,22 +1701,22 @@ msgstr "Comută tastele de navigare structurală"
 #. which enables/disables this support.
 #: src/orca/cmdnames.py:862
 msgid "Toggle table navigation keys"
-msgstr "Comută tastele de navigare a tabelului"
+msgstr "Activează sau dezactivează navigarea în tabel"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:865
 msgid "Go to previous blockquote"
-msgstr "Navighează la blocul de citare anterior"
+msgstr "Navighează la citatul precedent"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:868
 msgid "Go to next blockquote"
-msgstr "Navighează la blocul de citare următor"
+msgstr "Navighează la citatul următor"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:871
 msgid "Display a list of blockquotes"
-msgstr "Afișează o listă de citate bloc"
+msgstr "Afișează o listă de citate"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:874
@@ -1797,37 +1798,37 @@ msgstr "Afișează o listă de liste de selecție"
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:923
 msgid "Go to previous entry"
-msgstr "Navighează la înregistrarea anterioară"
+msgstr "Navighează la elementul precedent"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:926
 msgid "Go to next entry"
-msgstr "Navighează la înregistrarea următoare"
+msgstr "Navighează la elementul următor"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:929
 msgid "Display a list of entries"
-msgstr "Afișează o listă de înregistrări"
+msgstr "Afișează o listă de elemente"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:932
 msgid "Go to previous form field"
-msgstr "Navighează la intrarea de formular anterioară"
+msgstr "Navighează la rubrica precedentă a formularului"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:935
 msgid "Go to next form field"
-msgstr "Navighează la intrarea de formular următoare"
+msgstr "Navighează la rubrica următoare a formularului"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:938
 msgid "Display a list of form fields"
-msgstr "Afișează o listă de câmpuri de formular"
+msgstr "Afișează o listă a rubricilor formularului"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:941
 msgid "Go to previous heading"
-msgstr "Navighează la antetul anterior"
+msgstr "Navighează la antetul precedent"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:944
@@ -1837,14 +1838,14 @@ msgstr "Navighează la antetul următor"
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:947
 msgid "Display a list of headings"
-msgstr "Afișează o listă de antete"
+msgstr "Afișează o listă cu antete"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
 #: src/orca/cmdnames.py:951
 #, python-format
 msgid "Go to previous heading at level %d"
-msgstr "Navighează la antetul anterior de nivel %d"
+msgstr "Navighează la antetul precedent de nivel %d"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
@@ -1883,7 +1884,7 @@ msgstr "Navighează la imaginea anterioară"
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:974
 msgid "Go to next image"
-msgstr "Navighează la linia următoare"
+msgstr "Navighează la imaginea următoare"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:977
@@ -4942,13 +4943,13 @@ msgstr "super dreapta"
 #.
 #: src/orca/keynames.py:199
 msgid "menu"
-msgstr "meniu"
+msgstr "opțiuni"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
 #: src/orca/keynames.py:203
 msgid "Alt Gr"
-msgstr "Alt dreapta"
+msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
@@ -7483,7 +7484,7 @@ msgstr "OPȚIUNE"
 #. optional command-line arguments.
 #: src/orca/messages.py:238
 msgid "Optional arguments"
-msgstr "Argumente opționale"
+msgstr "Argumente facultative"
 
 #. Translators: This string appears when using 'Orca -h' at the command line.
 #. It is followed by a brief list of Orca's optional command-line arguments.
@@ -7496,7 +7497,7 @@ msgstr "Utilizare: "
 #. the list of invalid items, as typed by the user, is displayed.
 #: src/orca/messages.py:247
 msgid "The following are not valid: "
-msgstr "Următoarele nu sunt valide: "
+msgstr "Următoarele nu sunt corecte: "
 
 #. Translators: This is the description of command line option '-l, --list-apps'
 #. which prints the names of running applications which can be seen by assistive
@@ -8147,7 +8148,7 @@ msgstr "deschide lista"
 #. will cause a menu to appear if activated.
 #: src/orca/messages.py:734
 msgid "opens menu"
-msgstr "deschide meniul"
+msgstr "deschide opțiunile"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a tree to appear if activated. A tree is a list with sub-levels
@@ -8161,7 +8162,7 @@ msgstr "deschide arborele"
 #. will cause a popup to appear if activated.
 #: src/orca/messages.py:744
 msgid "opens popup"
-msgstr "deschide meniul contextual"
+msgstr "deschide opțiunile contextuale"
 
 #. Translators: The following string is spoken to let the user know that he/she
 #. is on a link within an image map. An image map is an image/graphic which has
@@ -8805,7 +8806,7 @@ msgstr "Dezactivată"
 #. justification will not be spoken.
 #: src/orca/messages.py:1235
 msgid "Speaking of indentation and justification disabled."
-msgstr "Pronunțarea indentarii și alinierii este dezactivată."
+msgstr "Pronunțarea alineatului și a alinierii textului este dezactivată."
 
 #. Translators: This brief message indicates that indentation and
 #. justification will be spoken.
@@ -8818,7 +8819,7 @@ msgstr "Activată"
 #. justification will be spoken.
 #: src/orca/messages.py:1245
 msgid "Speaking of indentation and justification enabled."
-msgstr "Pronunțarea indentării și alinierii este activată."
+msgstr "Pronunțarea alineatului și a alinierii textului este activată."
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -9711,7 +9712,7 @@ msgstr "Nici o aplicație nu este focalizată."
 #. if no more blockquotes can be found.
 #: src/orca/messages.py:1890
 msgid "No more blockquotes."
-msgstr "Nu mai sunt blocuri de citare."
+msgstr "Nu mai sunt citate."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
@@ -11380,7 +11381,7 @@ msgstr "apendice"
 #: src/orca/object_properties.py:168
 msgctxt "role"
 msgid "bibliography entry"
-msgstr "intrare de bibliografie"
+msgstr "bibliografie"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11996,7 +11997,7 @@ msgstr "selecție-multiplă"
 #: src/orca/object_properties.py:593
 msgctxt "error"
 msgid "invalid entry"
-msgstr "intrare nevalidă"
+msgstr "eroare"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -12314,7 +12315,7 @@ msgstr "Pronunță rândurile goale"
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak _indentation and justification"
-msgstr "Pronunță _indentarea și alinierea"
+msgstr "Pronunță al_ineatul și alinierea textului"
 
 #: src/orca/orca-setup.ui:1693
 msgid "Spea_k object mnemonics"
@@ -12538,7 +12539,7 @@ msgstr "Dicționar de pronunție"
 
 #: src/orca/orca-setup.ui:3004
 msgid "_New entry"
-msgstr "_Intrare nouă"
+msgstr "Element _nou"
 
 #: src/orca/orca-setup.ui:3019
 msgid "_Delete"
@@ -12617,7 +12618,7 @@ msgstr ""
 "Elena, f : Florea, g : Gheorghe, h : Haralambie, i : Ion, î : î din i, j : "
 "Jean, k : Kilogram, l : Luca, m : Marin, n : Nicolae, o : Olga, p : Petre, "
 "q : Quebec, r : Radu, s : Sandu, ș : șirag, t : Tudor, ț : țară, u : Udrea, "
-"v : Vasile, w : Whiskey, x : Xenopol, y : I grec, z : Zamfir"
+"v : Vasile, w : dubluv, x : Xenopol, y : igrec, z : Zamfir"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -12649,7 +12650,7 @@ msgstr "fundal înălțime totală"
 #: src/orca/text_attribute_names.py:76
 msgctxt "textattr"
 msgid "background stipple"
-msgstr "pointilare fundal"
+msgstr "fundal punctat"
 
 #. Translators: this attribute specifies the direction of the text.
 #. Values are "none", "ltr" or "rtl".
@@ -12698,7 +12699,7 @@ msgstr "culoare prim plan"
 #: src/orca/text_attribute_names.py:110
 msgctxt "textattr"
 msgid "foreground stipple"
-msgstr "pointilare prim plan"
+msgstr "prim-plan punctat"
 
 #. Translators: this attribute specifies the effect applied to the font
 #. used by the text.
@@ -12719,7 +12720,7 @@ msgstr "efect font"
 #: src/orca/text_attribute_names.py:125
 msgctxt "textattr"
 msgid "indent"
-msgstr "indentare"
+msgstr "alineat"
 
 #. Translators: this attribute specifies there is something "wrong" with
 #. the text, such as it being a misspelled word. See:
@@ -13216,7 +13217,7 @@ msgstr "centrat"
 #: src/orca/text_attribute_names.py:488
 msgctxt "textattr"
 msgid "no justification"
-msgstr "nici o aliniere"
+msgstr "nicio aliniere"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "justification".
