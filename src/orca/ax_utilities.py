@@ -796,31 +796,50 @@ class AXUtilities:
         """Returns true if obj should be treated as being on screen."""
 
         AXObject.clear_cache(obj, False, "Updating to check if object is on screen.")
+
+        tokens = ["AXUtilities: Checking if", obj, "is showing and visible...."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if not (AXUtilitiesState.is_showing(obj) and AXUtilitiesState.is_visible(obj)):
-            tokens = ["AXUtilities:", obj, "is not showing and visible. Treating as offscreen."]
+            tokens = ["AXUtilities:", obj, "is not showing and visible. Treating as off screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
+
+        tokens = ["AXUtilities:", obj, "is showing and visible. Checking hidden..."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilitiesState.is_hidden(obj):
-            tokens = ["AXUtilities:", obj, "is reports being hidden. Treating as offscreen."]
+            tokens = ["AXUtilities:", obj, "is reports being hidden. Treating as off screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
+        tokens = ["AXUtilities:", obj, "is not hidden. Checking size and rect..."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if AXComponent.has_no_size_or_invalid_rect(obj):
-            tokens = ["AXUtilities: Rect of", obj, "is unhelpful. Treating as onscreen."]
+            tokens = ["AXUtilities: Rect of", obj, "is unhelpful. Treating as on screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
+
+        tokens = ["AXUtilities:", obj, "has size and a valid rect. Checking if off screen..."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXComponent.object_is_off_screen(obj):
             tokens = ["AXUtilities:", obj, "is believed to be off screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
+        tokens = ["AXUtilities:", obj, "is not off screen. Checking",
+                  bounding_box, "intersection..."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if bounding_box is not None and not AXComponent.object_intersects_rect(obj, bounding_box):
-            tokens = ["AXUtilities", obj, "not in", bounding_box, ". Treating as offscreen."]
+            tokens = ["AXUtilities", obj, "not in", bounding_box, ". Treating as off screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
+        tokens = ["AXUtilities:", obj, "is believed to be on screen."]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
     @staticmethod
@@ -924,6 +943,12 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
             cancellation_event.set()
             result = []
+
+            msg = "AXUtilities: Checking AT-SPI responsiveness...."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            desktop = AXUtilitiesApplication.get_desktop()
+            tokens = ["AXUtilities: Desktop is", desktop]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         worker_thread.join()
         tokens = [f"AXUtilities: {len(result)} onscreen objects found in", root]
