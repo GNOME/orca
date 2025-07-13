@@ -98,12 +98,17 @@ class SpeechServer(speechserver.SpeechServer):
         getVoiceFamilies() prepends the list with the locale default and
         the default family.
         """
+        msg = f"SPIEL: Updating voices for provider {self._id}, got {len(voices)} voices"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         voice_profiles = ()
         for voice in voices:
             for language in voice.props.languages:
                 voice_profiles += ((voice.props.name, language, None),)
 
         self._current_voice_profiles = voice_profiles
+        msg = f"SPIEL: Updated voice profiles: {len(voice_profiles)} profiles"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @classmethod
     def _get_speech_server(cls, serverId):
@@ -136,11 +141,15 @@ class SpeechServer(speechserver.SpeechServer):
     # *** Instance methods ***
 
     def __init__(self, serverId):
-        super(SpeechServer, self).__init__()
+        super().__init__()
         self._id = serverId
+        self._provider = None
         self._speaker = None
+        self._voices_id = None
+        self._default_voice_name = None
         self._current_voice_profiles = ()
         self._current_voice_properties = {}
+        self._current_voice = None
         self._acss_defaults = (
             (ACSS.RATE, 50),
             (ACSS.AVERAGE_PITCH, 5.0),
@@ -211,16 +220,30 @@ class SpeechServer(speechserver.SpeechServer):
         lang-dialect, then lang, and failing that anything available. This
         method may return None, in the rare case no voices are available.
         """
-        if len(self._speaker.props.voices) == 0:
+        # Use voices from the current provider, not all voices from the speaker
+        if self._provider is None or len(self._provider.props.voices) == 0:
+            msg = f"SPIEL: No voices available for provider {self._id}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None
 
-        acss_name = acss_family.get(speechserver.VoiceFamily.NAME)
+        # Extract voice information from ACSS family
+        acss_name = acss_family.get(speechserver.VoiceFamily.NAME) if acss_family else None
         acss_lang, acss_dialect = self._get_language_and_dialect(acss_family)
         accs_lang_dialect = f"{acss_lang}-{acss_dialect}"
 
-        fallback = self._speaker.props.voices[0]
+        # If we have a tracked voice, prioritize it over ACSS family. This allows D-Bus voice
+        # changes to take precedence.
+        if self._current_voice:
+            return self._current_voice
+
+        # If no specific voice family is requested, use first available voice.
+        voices = self._provider.props.voices
+        if not acss_name:
+            return voices[0] if voices else None
+
+        fallback = voices[0]
         fallback_lang = None
-        for voice in self._speaker.props.voices:
+        for voice in voices:
             # Prioritize the voice language, dialect and then family
             for language in voice.props.languages:
                 [lang, _, dialect] = language.partition("-")
@@ -298,15 +321,27 @@ class SpeechServer(speechserver.SpeechServer):
         self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % \
             SpeechServer._SERVER_NAMES.get(self._id, self._id)
 
+        if not SpeechServer._active_providers:
+            msg = "ERROR: No Spiel providers available."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return
+
+        self._provider = SpeechServer._active_providers.get(self._id)
+        if self._provider is None:
+            self._provider = next(iter(SpeechServer._active_providers.values()))
+
         # Load the provider voices for this server
-        if self._id != SpeechServer.DEFAULT_SERVER_ID:
-            self._provider = SpeechServer._active_providers[self._id]
-            self._voices_id = self._provider.props.voices.connect('items-changed',
-                                                                  self._updateVoices)
-            self._updateVoices(self._provider.props.voices)
-        elif len(self._speaker.props.providers) > 0:
-            provider = self._speaker.props.providers[0]
-            self._updateVoices(provider.props.voices)
+        if self._id and self._id != SpeechServer.DEFAULT_SERVER_ID:
+            self._voices_id = self._provider.props.voices.connect(
+                "items-changed", self._updateVoices)
+            msg = f"SPIEL: Connected voices signal with ID {self._voices_id} for provider {self._id}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        else:
+            self._voices_id = None
+            msg = "SPIEL: No voices signal connection for default server"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        self._updateVoices(self._provider.props.voices)
 
     def _create_utterance(self, text, acss):
         pitch = self._get_pitch(acss.get(ACSS.AVERAGE_PITCH, 5.0))
@@ -525,8 +560,17 @@ class SpeechServer(speechserver.SpeechServer):
             ]
 
             # Use the range-started signal for progress, if supported
-            voice = utterance.props.voice
-            features = voice.props.features
+
+            try:
+                # TODO - JD: This line was in the original commit.
+                # Error: 'int' object has no attribute 'props'
+                voice = utterance.props.voice
+                features = voice.props.features
+            except AttributeError as error:
+                msg = f"SPIEL: Error getting voice features: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                features = Spiel.VoiceFeature.NONE
+
             if features & Spiel.VoiceFeature.EVENTS_WORD:
                 handlers.append(self._speaker.connect('word-started',
                                                       _word_started,
@@ -614,13 +658,148 @@ class SpeechServer(speechserver.SpeechServer):
         self._speaker.cancel()
 
     def shutdown(self):
-        if self._id != SpeechServer.DEFAULT_SERVER_ID:
-            self._provider.props.voices.disconnect(self._voices_id)
+        msg = f"SPIEL: Shutting down server {self._id}, voices_id: {self._voices_id}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._id != SpeechServer.DEFAULT_SERVER_ID and self._voices_id is not None:
+            try:
+                self._provider.props.voices.disconnect(self._voices_id)
+                msg = f"SPIEL: Successfully disconnected voices signal {self._voices_id}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+            except Exception as error:
+                msg = f"SPIEL: Error disconnecting voices signal {self._voices_id}: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+
         self._maybe_shutdown()
-        del SpeechServer._active_servers[self._id]
+        if self._id in SpeechServer._active_servers:
+            del SpeechServer._active_servers[self._id]
 
     def reset(self, text=None, acss=None):
         self._speaker.cancel()
-        if self._id != SpeechServer.DEFAULT_SERVER_ID:
-            self._provider.props.voices.disconnect(self._voices_id)
+        if self._id != SpeechServer.DEFAULT_SERVER_ID and self._voices_id is not None:
+            try:
+                self._provider.props.voices.disconnect(self._voices_id)
+            except Exception as error:
+                msg = f"SPIEL: Error disconnecting voices signal in reset: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
         self._init()
+
+    def getOutputModule(self):
+        return self._id
+
+    def setOutputModule(self, module_id):
+        """Set the speech output module to the specified provider."""
+
+        if module_id not in SpeechServer._active_providers:
+            tokens = [f"SPIEL: {module_id} is not in", SpeechServer._active_providers]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        if self._id == module_id:
+            msg = f"SPIEL: Already using provider {module_id}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if self._id and self._id != SpeechServer.DEFAULT_SERVER_ID and self._voices_id is not None:
+            try:
+                self._provider.props.voices.disconnect(self._voices_id)
+                self._voices_id = None
+                msg = f"SPIEL: Disconnected voices signal for old provider {self._id}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+            except Exception as error:
+                msg = f"SPIEL: Error disconnecting voices signal: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+        old_id = self._id
+        self._id = module_id
+        self._provider = SpeechServer._active_providers.get(self._id)
+        if self._provider is None:
+            self._provider = next(iter(SpeechServer._active_providers.values()))
+
+        if old_id in SpeechServer._active_servers:
+            del SpeechServer._active_servers[old_id]
+        SpeechServer._active_servers[self._id] = self
+
+        if self._id != SpeechServer.DEFAULT_SERVER_ID:
+            self._voices_id = self._provider.props.voices.connect(
+                "items-changed", self._updateVoices)
+            msg = (
+                f"SPIEL: Connected voices signal with ID {self._voices_id} "
+                f"for new provider {self._id}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        self._updateVoices(self._provider.props.voices)
+        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % \
+            SpeechServer._SERVER_NAMES.get(self._id, self._id)
+
+        msg = f"SPIEL: Switched from {old_id} to {self._id}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def getVoiceFamily(self):
+        """Returns the current voice family as a VoiceFamily dictionary."""
+
+        voice_name = ""
+        language = ""
+        try:
+            if self._current_voice:
+                voice_name = self._current_voice.props.name
+                languages = self._current_voice.props.languages
+                language = languages[0] if languages else ""
+            else:
+                voice_name = self._default_voice_name or "spiel-default"
+        except (AttributeError, IndexError):
+            voice_name = self._default_voice_name or "spiel-default"
+
+        lang_parts = language.partition("-")
+        lang = lang_parts[0]
+        dialect = lang_parts[2]
+        return speechserver.VoiceFamily(
+            {
+               speechserver.VoiceFamily.NAME: voice_name,
+               speechserver.VoiceFamily.LANG: lang,
+               speechserver.VoiceFamily.DIALECT: dialect,
+               speechserver.VoiceFamily.VARIANT: None
+            }
+        )
+
+    def setVoiceFamily(self, family):
+        """Sets the voice family to family VoiceFamily dictionary."""
+
+        if not family:
+            return
+
+        voice_name = family.get(speechserver.VoiceFamily.NAME, "")
+        language = family.get(speechserver.VoiceFamily.LANG, "")
+        dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+        if dialect:
+            language = f"{language}-{dialect}" if language else dialect
+
+        if not voice_name:
+            return
+
+        try:
+            voices = self._provider.props.voices
+        except AttributeError as error:
+            msg = f"SPIEL: Error getting voices from provider: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return
+
+        partial_matches = []
+        for voice in voices:
+            try:
+                if voice.props.name == voice_name:
+                    if not language or (language in voice.props.languages):
+                        self._current_voice = voice
+                        return
+                    partial_matches.append(voice)
+            except AttributeError as error:
+                msg = f"SPIEL: Error accessing voice properties: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+        if partial_matches:
+            msg = (
+                f"SPIEL: {len(partial_matches)} partial matches found for voice '{voice_name}'. "
+                f"Using the first ({partial_matches[0]})"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            self._current_voice = partial_matches[0]

@@ -146,6 +146,15 @@ class SpeechServer(object):
         voice families known by the speech server."""
         pass
 
+    def getVoiceFamily(self):
+        """Returns the current voice family as a VoiceFamily dictionary."""
+        pass
+
+    def setVoiceFamily(self, family):
+        """Sets the voice family to family VoiceFamily dictionary."""
+
+        pass
+
     def speak_character(self, character, acss=None):
         """Speaks a single character immediately.
 
@@ -253,7 +262,7 @@ class SpeechServer(object):
         """Returns the output module associated with this speech server."""
         return None
 
-    def setOutputModule(self, module):
+    def setOutputModule(self, module_id):
         """Sets the output module associated with this speech server."""
         pass
 

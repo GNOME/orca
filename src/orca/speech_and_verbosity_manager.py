@@ -33,6 +33,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2025 Igalia, S.L."
 __license__   = "LGPL"
 
+import importlib
 import re
 import string
 from typing import TYPE_CHECKING
@@ -50,6 +51,7 @@ from . import pronunciation_dict
 from . import settings
 from . import settings_manager
 from . import speech
+from . import speechserver
 from .acss import ACSS
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -305,10 +307,199 @@ class SpeechAndVerbosityManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
+    def _get_available_servers(self) -> list[str]:
+        """Returns a list of available speech servers."""
+
+        return list(self._get_server_module_map().keys())
+
+    def _get_server_module_map(self) -> dict[str, str]:
+        """Returns a mapping of server names to module names."""
+
+        result = {}
+        for module_name in settings.speechFactoryModules:
+            try:
+                factory = importlib.import_module(f"orca.{module_name}")
+            except ImportError:
+                try:
+                    factory = importlib.import_module(module_name)
+                except ImportError:
+                    continue
+
+            try:
+                speech_server_class = factory.SpeechServer
+                if server_name := speech_server_class.getFactoryName():
+                    result[server_name] = module_name
+
+            except (AttributeError, TypeError, ImportError) as error:
+                tokens = [f"SPEECH AND VERBOSITY MANAGER: {module_name} not available:", error]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return result
+
+    def _switch_server(self, target_server: str) -> bool:
+        """Switches to the specified server."""
+
+        server_module_map = self._get_server_module_map()
+        target_module = server_module_map.get(target_server)
+        if not target_module:
+            return False
+
+        self.shutdown_speech()
+        settings_manager.get_manager().set_setting("speechServerFactory", target_module)
+        self.start_speech()
+        return self.get_current_server() == target_server
+
+    @dbus_service.getter
+    def get_available_servers(self) -> list[str]:
+        """Returns a list of available servers."""
+
+        result = self._get_available_servers()
+        msg = f"SPEECH AND VERBOSITY MANAGER: Available servers: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.getter
+    def get_current_server(self) -> str:
+        """Returns the name of the current speech server (Speech Dispatcher or Spiel)."""
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        name = server.getFactoryName()
+        msg = f"SPEECH AND VERBOSITY MANAGER: Server is: {name}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return name
+
+    @dbus_service.setter
+    def set_current_server(self, value: str) -> bool:
+        """Sets the current speech server (e.g. Speech Dispatcher or Spiel)."""
+
+        return self._switch_server(value)
+
+    @dbus_service.getter
+    def get_current_synthesizer(self) -> str:
+        """Returns the current synthesizer of the speech server."""
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        result = server.getOutputModule()
+        msg = f"SPEECH AND VERBOSITY MANAGER: Synthesizer is: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.setter
+    def set_current_synthesizer(self, value: str) -> bool:
+        """Sets the current synthesizer of the active speech server."""
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        available = self.get_available_synthesizers()
+        if value not in available:
+            tokens = [f"SPEECH AND VERBOSITY MANAGER: '{value}' is not in", available]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting synthesizer to: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        server.setOutputModule(value)
+        return server.getOutputModule() == value
+
+    @dbus_service.getter
+    def get_available_synthesizers(self) -> list[str]:
+        """Returns a list of available synthesizers of the speech server."""
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return []
+
+        synthesizers = server.getSpeechServers()
+        result = [s.get_info()[1] for s in synthesizers]
+        msg = f"SPEECH AND VERBOSITY MANAGER: Available synthesizers: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.getter
+    def get_available_voices(self) -> list[str]:
+        """Returns a list of available voices for the current synthesizer."""
+
+        server = self._get_server()
+        if server is None:
+            return []
+
+        voices = server.getVoiceFamilies()
+        if not voices:
+            return []
+
+        result = []
+        for voice in voices:
+            if voice_name := voice.get(speechserver.VoiceFamily.NAME, ""):
+                result.append(voice_name)
+        result = sorted(set(result))
+        return result
+
+    @dbus_service.getter
+    def get_current_voice(self) -> str:
+        """Returns the current voice name."""
+
+        server = self._get_server()
+        if server is None:
+            return ""
+
+        result = ""
+        if voice_family := server.getVoiceFamily():
+            result = voice_family.get(speechserver.VoiceFamily.NAME, "")
+
+        return result
+
+    @dbus_service.setter
+    def set_current_voice(self, voice_name: str) -> bool:
+        """Sets the current voice for the active synthesizer."""
+
+        server = self._get_server()
+        if server is None:
+            return False
+
+        available = self.get_available_voices()
+        if voice_name not in available:
+            msg = f"SPEECH AND VERBOSITY MANAGER: '{voice_name}' is not in {available}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        voices = server.getVoiceFamilies()
+        if not voices:
+            return False
+
+        result = False
+        for voice_family in voices:
+            family_name = voice_family.get(speechserver.VoiceFamily.NAME, "")
+            if family_name == voice_name:
+                server.setVoiceFamily(voice_family)
+                result = True
+                break
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Set voice to '{voice_name}': {result}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
     def get_current_speech_server_info(self) -> tuple[str, str]:
         """Returns the name and ID of the current speech server."""
 
         # TODO - JD: The result is not in sync with the current output module. Should it be?
+        # TODO - JD: The only caller is the preferences dialog. And the useful functionality is in
+        # the methods to get (and set) the output module. So why exactly do we need this?
         server = self._get_server()
         if server is None:
             return ("", "")

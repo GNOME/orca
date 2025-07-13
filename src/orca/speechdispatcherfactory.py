@@ -27,6 +27,7 @@ __copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
 __license__   = "LGPL"
 
 from gi.repository import GLib
+import gc
 import time
 
 from . import debug
@@ -107,6 +108,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._id = serverId
         self._client = None
         self._current_voice_properties = {}
+        self._current_synthesis_voice = None
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
@@ -154,7 +156,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _init(self):
         self._client = client = speechd.SSIPClient('Orca', component=self._id)
         client.set_priority(speechd.Priority.MESSAGE)
-        if self._id != self.DEFAULT_SERVER_ID:
+        if self._id and self._id != self.DEFAULT_SERVER_ID:
             client.set_output_module(self._id)
         self._current_voice_properties = {}
         mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
@@ -246,6 +248,7 @@ class SpeechServer(speechserver.SpeechServer):
             name = acss_family.get(speechserver.VoiceFamily.NAME)
             if name is not None and name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
+                self._current_synthesis_voice = name
 
     def _debug_sd_values(self, prefix=""):
         if debug.debugLevel > debug.LEVEL_INFO:
@@ -600,37 +603,127 @@ class SpeechServer(speechserver.SpeechServer):
     def getOutputModule(self):
         return self._client.get_output_module()
 
-    def setOutputModule(self, module):
-        # TODO - JD: This updates the output module, but not the the value of self._id.
-        # That might be desired (e.g. self._id impacts what is shown in Orca preferences),
-        # but it can be confusing.
-        self._client.set_output_module(module)
+    def setOutputModule(self, module_id):
+        """Sets the output module associated with this speech server."""
+
+        current_module = self.getOutputModule()
+        if current_module == module_id:
+            return
+
+        available_modules = self.list_output_modules()
+        if module_id not in available_modules and module_id != SpeechServer.DEFAULT_SERVER_ID:
+            tokens = [f"SPEECH DISPATCHER: {module_id} is not in", available_modules]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        if self._id == SpeechServer.DEFAULT_SERVER_ID:
+            self._cancel()
+            self._send_command(self._client.set_output_module, module_id)
+            self._current_synthesis_voice = None
+        else:
+            old_id = self._id
+            if old_id in SpeechServer._active_servers:
+                del SpeechServer._active_servers[old_id]
+            self._send_command(self._client.set_output_module, module_id)
+            self._id = module_id
+            self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % module_id
+            self._current_synthesis_voice = None
+            SpeechServer._active_servers[self._id] = self
 
     def stop(self):
         self._cancel()
 
     def shutdown(self):
-        self._client.close()
-        del SpeechServer._active_servers[self._id]
+        try:
+            self._cancel()
+            if self._client is not None:
+                self._client.close()
+                # Set client to None to allow immediate garbage collection.
+                self._client = None
+                # Force garbage collection to clean up Speech Dispatcher objects immediately
+                # This prevents hanging during Python's final garbage collection.
+                gc.collect()
+        except Exception as error:
+            msg = f"SPEECH DISPATCHER: Error during shutdown of server {self._id}: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+        finally:
+            if self._id in SpeechServer._active_servers:
+                del SpeechServer._active_servers[self._id]
 
     def reset(self, text=None, acss=None):
-        self._client.close()
-        self._init()
-        
-    def list_output_modules(self):
-        """Return names of available output modules as a tuple of strings.
+        try:
+            msg = f"SPEECH DISPATCHER: Resetting server {self._id}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            if self._client is not None:
+                self._client.close()
+        except Exception as error:
+            msg = f"SPEECH DISPATCHER: Error during reset of server {self._id}: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+        finally:
+            self._init()
 
-        This method is not a part of Orca speech API, but is used internally
-        by the Speech Dispatcher backend.
-        
-        The returned tuple can be empty if the information can not be
-        obtained (e.g. with an older Speech Dispatcher version).
-        
-        """
+    def list_output_modules(self):
+        """Return names of available output modules as a tuple of strings."""
+
         try:
             return self._send_command(self._client.list_output_modules)
         except AttributeError:
             return ()
         except speechd.SSIPCommandError:
             return ()
+
+    def getVoiceFamily(self):
+        """Returns the current voice family as a VoiceFamily dictionary."""
+
+        voice_name = self._current_synthesis_voice or self._default_voice_name
+        language = ""
+        try:
+            language = self._send_command(self._client.get_language)
+        except (AttributeError, speechd.SSIPCommandError) as error:
+            msg = f"SPEECH DISPATCHER: Error getting language: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+        lang_parts = language.partition("-")
+        lang = lang_parts[0]
+        dialect = lang_parts[2]
+        return speechserver.VoiceFamily(
+            {
+               speechserver.VoiceFamily.NAME: voice_name,
+               speechserver.VoiceFamily.LANG: lang,
+               speechserver.VoiceFamily.DIALECT: dialect,
+               speechserver.VoiceFamily.VARIANT: None
+            }
+        )
+
+    def setVoiceFamily(self, family):
+        """Sets the voice family to family VoiceFamily dictionary."""
+
+        if not family:
+            return
+
+        voice_name = family.get(speechserver.VoiceFamily.NAME, "")
+        language = family.get(speechserver.VoiceFamily.LANG, "")
+        dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+        if dialect:
+            language = f"{language}-{dialect}" if language else dialect
+
+        # Try to set synthesis voice (individual voice like Nathan, Federica)
+        if voice_name:
+            try:
+                self._send_command(self._client.set_synthesis_voice, voice_name)
+                self._current_synthesis_voice = voice_name
+            except AttributeError as error:
+                msg = f"SPEECH DISPATCHER: Synthesis voice not supported: {error}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                self._current_synthesis_voice = None
+            except speechd.SSIPCommandError as error:
+                msg = f"SPEECH DISPATCHER: Error setting synthesis voice {voice_name}: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+        if language:
+            try:
+                self._send_command(self._client.set_language, language)
+            except speechd.SSIPCommandError as error:
+                msg = f"SPEECH DISPATCHER: Error setting language {language}: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
 
