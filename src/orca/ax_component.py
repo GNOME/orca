@@ -92,19 +92,16 @@ class AXComponent:
 
         result = Atspi.Rect()
 
-        x_points1 = range(rect1.x, rect1.x + rect1.width + 1)
-        x_points2 = range(rect2.x, rect2.x + rect2.width + 1)
-        x_intersection = sorted(set(x_points1).intersection(set(x_points2)))
+        dest_x = max(rect1.x, rect2.x)
+        dest_y = max(rect1.y, rect2.y)
+        dest_x2 = min(rect1.x + rect1.width, rect2.x + rect2.width)
+        dest_y2 = min(rect1.y + rect1.height, rect2.y + rect2.height)
 
-        y_points1 = range(rect1.y, rect1.y + rect1.height + 1)
-        y_points2 = range(rect2.y, rect2.y + rect2.height + 1)
-        y_intersection = sorted(set(y_points1).intersection(set(y_points2)))
-
-        if x_intersection and y_intersection:
-            result.x = x_intersection[0]
-            result.y = y_intersection[0]
-            result.width = x_intersection[-1] - result.x
-            result.height = y_intersection[-1] - result.y
+        if dest_x2 > dest_x and dest_y2 > dest_y:
+            result.x = dest_x
+            result.y = dest_y
+            result.width = dest_x2 - dest_x
+            result.height = dest_y2 - dest_y
 
         tokens = ["AXComponent: The intersection of", rect1, "and", rect2, "is:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
