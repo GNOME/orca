@@ -71,6 +71,7 @@ class SleepModeManager:
         if refresh:
             msg = f"SLEEP MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("SLEEP MODE MANAGER: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()

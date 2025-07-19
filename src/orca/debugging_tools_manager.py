@@ -79,6 +79,7 @@ class DebuggingToolsManager:
         if refresh:
             msg = f"DEBUGGING TOOLS MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("DEBUGGING TOOLS MANAGER: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()

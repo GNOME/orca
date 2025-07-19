@@ -127,7 +127,8 @@ class LiveRegionManager:
 
         if refresh:
             msg = "LIVE REGION MANAGER: Refreshing bindings."
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("LIVE REGION MANAGER: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -139,7 +140,7 @@ class LiveRegionManager:
 
         if refresh:
             msg = "LIVE REGION MANAGER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers

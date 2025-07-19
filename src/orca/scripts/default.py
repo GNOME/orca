@@ -538,6 +538,7 @@ class Script(script.Script):
             self.get_bypass_mode_manager().toggle_enabled(self)
 
         self.remove_key_grabs("script deactivation")
+        input_event_manager.get_manager().check_grabbed_bindings()
 
     def add_key_grabs(self, reason=""):
         """ Sets up the key grabs currently needed by this script. """

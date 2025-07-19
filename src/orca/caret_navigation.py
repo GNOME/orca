@@ -75,7 +75,8 @@ class CaretNavigation:
 
         if refresh:
             msg = f"CARET NAVIGATION: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("CARET NAVIGATION: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -87,7 +88,7 @@ class CaretNavigation:
 
         if refresh:
             msg = "CARET NAVIGATION: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
         return self._handlers

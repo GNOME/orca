@@ -89,6 +89,7 @@ class SpeechAndVerbosityManager:
         if refresh:
             msg = f"SPEECH AND VERBOSITY MANAGER: Refreshing bindings.  Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("SPEECH AND VERBOSITY MANAGER: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()

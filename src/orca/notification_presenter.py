@@ -83,6 +83,7 @@ class NotificationPresenter:
         if refresh:
             msg = f"NOTIFICATION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("NOTIFICATION PRESENTER: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()

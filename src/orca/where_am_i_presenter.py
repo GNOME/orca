@@ -74,6 +74,8 @@ class WhereAmIPresenter:
         if refresh:
             msg = "WHERE AM I PRESENTER: Refreshing bindings."
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._desktop_bindings.remove_key_grabs("WHERE AM I PRESENTER: Refreshing bindings.")
+            self._laptop_bindings.remove_key_grabs("WHERE AM I PRESENTER: Refreshing bindings.")
             self._setup_bindings()
         elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()

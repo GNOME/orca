@@ -51,7 +51,8 @@ class Bookmarks:
 
         if refresh:
             msg = "BOOKMARKS: Refreshing bindings."
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("BOOKMARKS: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()

@@ -147,6 +147,8 @@ class FlatReviewPresenter:
         if refresh:
             msg = "FLAT REVIEW PRESENTER: Refreshing bindings."
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._laptop_bindings.remove_key_grabs("FLAT REVIEW PRESENTER: Refreshing bindings.")
+            self._desktop_bindings.remove_key_grabs("FLAT REVIEW PRESENTER: Refreshing bindings.")
             self._setup_bindings()
         elif is_desktop and self._desktop_bindings.is_empty():
             self._setup_bindings()

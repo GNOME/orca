@@ -62,6 +62,7 @@ class InputEventManager:
         self._device: Atspi.Device | None = None
         self._mapped_keycodes: list[int] = []
         self._mapped_keysyms: list[int] = []
+        self._grabbed_bindings: dict[int, keybindings.KeyBinding] = {}
 
     def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
@@ -81,6 +82,15 @@ class InputEventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._device = None
 
+    def check_grabbed_bindings(self) -> None:
+        """Checks the grabbed key bindings."""
+
+        msg = f"INPUT EVENT MANAGER: {len(self._grabbed_bindings)} grabbed key bindings."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        for grab_id, binding in self._grabbed_bindings.items():
+            msg = f"INPUT EVENT MANAGER: {grab_id} for: {binding}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
     def add_grabs_for_keybinding(self, binding: keybindings.KeyBinding) -> list[int]:
         """Adds grabs for binding if it is enabled, returns grab IDs."""
 
@@ -99,7 +109,9 @@ class InputEventManager:
 
         grab_ids = []
         for kd in binding.key_definitions():
-            grab_ids.append(self._device.add_key_grab(kd, None))
+            grab_id = self._device.add_key_grab(kd, None)
+            grab_ids.append(grab_id)
+            self._grabbed_bindings[grab_id] = binding
 
         return grab_ids
 
@@ -119,6 +131,10 @@ class InputEventManager:
 
         for grab_id in grab_ids:
             self._device.remove_key_grab(grab_id)
+            removed = self._grabbed_bindings.pop(grab_id, None)
+            if removed is None:
+                msg = f"INPUT EVENT MANAGER: No key binding for grab id {grab_id}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def map_keycode_to_modifier(self, keycode: int) -> int:
         """Maps keycode as a modifier, returns the newly-mapped modifier."""
