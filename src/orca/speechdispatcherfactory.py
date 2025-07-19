@@ -635,7 +635,8 @@ class SpeechServer(speechserver.SpeechServer):
 
     def shutdown(self):
         try:
-            self._cancel()
+            # Don't call _cancel() here because it can cut off messages we want to complete, such
+            # as "screen reader off."
             if self._client is not None:
                 self._client.close()
                 # Set client to None to allow immediate garbage collection.
