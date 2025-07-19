@@ -6,4 +6,4 @@ NoDisplay=true
 AutostartCondition=GSettings org.gnome.desktop.a11y.applications screen-reader-enabled
 X-GNOME-AutoRestart=true
 #X-GNOME-Autostart-Phase=Initialization
-OnlyShowIn=GNOME;MATE;Unity;Cinnamon;
+OnlyShowIn=MATE;Unity;Cinnamon;
