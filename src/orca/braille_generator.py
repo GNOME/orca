@@ -214,7 +214,7 @@ class BrailleGenerator(generator.Generator):
         result = []
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
-            result.append(messages.dialogCountBraille(alert_and_dialog_count))
+            result.append(messages.dialog_count_braille(alert_and_dialog_count))
 
         return result
 

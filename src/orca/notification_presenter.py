@@ -22,6 +22,9 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-locals
 
 """Module for notification messages"""
 
@@ -184,18 +187,18 @@ class NotificationPresenter:
     def _timestamp_to_string(self, timestamp: float) -> str:
         diff = time.time() - timestamp
         if diff < 60:
-            return messages.secondsAgo(diff)
+            return messages.seconds_ago(diff)
 
         if diff < 3600:
             minutes = round(diff / 60)
-            return messages.minutesAgo(minutes)
+            return messages.minutes_ago(minutes)
 
         if diff < 86400:
             hours = round(diff / 3600)
-            return messages.hoursAgo(hours)
+            return messages.hours_ago(hours)
 
         days = round(diff / 86400)
-        return messages.daysAgo(days)
+        return messages.days_ago(days)
 
     @dbus_service.command
     def present_last_notification(
@@ -370,12 +373,12 @@ class NotificationListGUI:
         content_area.add(grid)
 
         scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window)
+        grid.add(scrolled_window) # pylint: disable=no-member
 
         tree = Gtk.TreeView()
         tree.set_hexpand(True)
         tree.set_vexpand(True)
-        scrolled_window.add(tree)
+        scrolled_window.add(tree) # pylint: disable=no-member
 
         cols = len(column_headers) * [GObject.TYPE_STRING]
         for i, header in enumerate(column_headers):
@@ -412,7 +415,7 @@ class NotificationListGUI:
     def show_gui(self) -> None:
         """Shows the notifications list dialog."""
 
-        self._gui.show_all()
+        self._gui.show_all() # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
 _presenter: NotificationPresenter = NotificationPresenter()

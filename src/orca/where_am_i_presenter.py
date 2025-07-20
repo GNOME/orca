@@ -584,7 +584,7 @@ class WhereAmIPresenter:
 
         selected_count = script.utilities.selectedChildCount(container)
         child_count = script.utilities.selectableChildCount(container)
-        script.presentMessage(messages.selectedItemsCount(selected_count, child_count))
+        script.presentMessage(messages.selected_items_count(selected_count, child_count))
         if not selected_count:
             return True
 

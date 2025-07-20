@@ -20,6 +20,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
+# pylint:disable=too-many-public-methods
+
 """Provides Orca-controlled navigation for tabular content."""
 
 # This has to be the first non-docstring line in the module to make linters happy.
@@ -966,7 +970,7 @@ class TableNavigator:
         if settings_manager.get_manager().get_setting("speakCellSpan"):
             rowspan, colspan = AXTable.get_cell_spans(cell)
             if rowspan > 1 or colspan > 1:
-                script.presentMessage(messages.cellSpan(rowspan, colspan))
+                script.presentMessage(messages.cell_span(rowspan, colspan))
 
 _navigator = TableNavigator()
 def get_navigator() -> TableNavigator:

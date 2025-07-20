@@ -139,8 +139,8 @@ class AXTextAttribute(enum.Enum):
         if value.endswith("px"):
             value = value.split("px")[0]
             if locale.localeconv()["decimal_point"] in value:
-                return messages.pixelCount(float(value))
-            return messages.pixelCount(int(value))
+                return messages.pixel_count(float(value))
+            return messages.pixel_count(int(value))
 
         if self in [AXTextAttribute.BG_COLOR, AXTextAttribute.FG_COLOR]:
             if settings.useColorNames:

@@ -672,7 +672,7 @@ class Generator:
         if count in (-1, 1):
             return []
 
-        return [f"({messages.valueCountForTerm(count)})"]
+        return [f"({messages.value_count_for_term(count)})"]
 
     ##################################### STATE #####################################
 

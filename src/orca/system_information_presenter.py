@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Module for presenting system information"""
 
 # This has to be the first non-docstring line in the module to make linters happy.
@@ -33,12 +35,12 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import time
-from types import ModuleType
 from typing import TYPE_CHECKING
 
-psutil: ModuleType | None = None
+_PSUTIL_AVAILABLE = False
 try:
-    import psutil
+    import psutil  # type: ignore
+    _PSUTIL_AVAILABLE = True
 except ModuleNotFoundError:
     pass
 
@@ -205,7 +207,7 @@ class SystemInformationPresenter:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not (psutil and psutil.sensors_battery()):
+        if not (_PSUTIL_AVAILABLE and psutil.sensors_battery()):
             script.presentMessage(messages.BATTERY_STATUS_UNKNOWN)
             return True
 
@@ -231,7 +233,7 @@ class SystemInformationPresenter:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if psutil is None:
+        if not _PSUTIL_AVAILABLE:
             script.presentMessage(messages.CPU_AND_MEMORY_USAGE_UNKNOWN)
             return True
 
@@ -240,9 +242,11 @@ class SystemInformationPresenter:
         memory = psutil.virtual_memory()
         memory_percent= round(memory.percent)
         if memory.total > 1024 ** 3:
-            details = messages.memoryUsageGB(memory.used / (1024 ** 3), memory.total / (1024 ** 3))
+            details = messages.memory_usage_gb(
+                memory.used / (1024 ** 3), memory.total / (1024 ** 3))
         else:
-            details = messages.memoryUsageMB(memory.used / (1024 ** 2), memory.total / (1024 ** 2))
+            details = messages.memory_usage_mb(
+                memory.used / (1024 ** 2), memory.total / (1024 ** 2))
 
         msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_percent)}. {details}"
         script.presentMessage(msg)

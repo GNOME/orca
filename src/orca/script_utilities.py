@@ -1207,9 +1207,9 @@ class Utilities:
 
             if len(string) > 5000 and speakMessage:
                 if message == messages.TEXT_SELECTED:
-                    self._script.speakMessage(messages.selectedCharacterCount(len(string)))
+                    self._script.speakMessage(messages.selected_character_count(len(string)))
                 else:
-                    self._script.speakMessage(messages.unselectedCharacterCount(len(string)))
+                    self._script.speakMessage(messages.unselected_character_count(len(string)))
             else:
                 self._script.sayPhrase(obj, start, end)
                 if speakMessage and not endsWithChild:

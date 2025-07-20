@@ -21,6 +21,12 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
 
 """Implements structural navigation."""
 
@@ -1242,16 +1248,16 @@ class StructuralNavigator:
         if AXUtilities.is_list(obj):
             children = list(AXObject.iter_children(obj, AXUtilities.is_list_item))
             if AXUtilities.get_nesting_level(obj):
-                return messages.nestedListItemCount(len(children))
-            return messages.listItemCount(len(children))
+                return messages.nested_list_item_count(len(children))
+            return messages.list_item_count(len(children))
 
         if AXUtilities.is_description_list(obj):
             children = AXUtilities.find_all_description_terms(obj)
-            return messages.descriptionListTermCount(len(children))
+            return messages.description_list_term_count(len(children))
 
         if AXUtilities.is_page_tab_list(obj):
             children = list(AXObject.iter_children(obj, AXUtilities.is_page_tab))
-            return messages.tabListItemCount(len(children))
+            return messages.tab_list_item_count(len(children))
 
         if AXUtilities.is_image(obj):
             if result := AXObject.get_image_description(obj):
@@ -1345,7 +1351,7 @@ class StructuralNavigator:
         row_data_func: Callable,
         notify_user: bool = True
     ) -> None:
-        dialog_title = f"{dialog_title}: {messages.itemsFound(len(objects))}"
+        dialog_title = f"{dialog_title}: {messages.items_found(len(objects))}"
         if not objects:
             if notify_user:
                 script.presentMessage(dialog_title)

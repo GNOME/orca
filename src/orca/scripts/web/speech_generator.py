@@ -24,6 +24,7 @@
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
+# pylint: disable=too-many-boolean-expressions
 
 """Produces speech presentation for accessible objects."""
 
@@ -441,11 +442,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if AXUtilities.is_description_list(obj):
-            result = [messages.descriptionListTermCount(set_size)]
+            result = [messages.description_list_term_count(set_size)]
         elif role == "ROLE_FEED":
-            result = [messages.feedArticleCount(set_size)]
+            result = [messages.feed_article_count(set_size)]
         else:
-            result = [messages.listItemCount(set_size)]
+            result = [messages.list_item_count(set_size)]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 

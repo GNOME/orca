@@ -959,7 +959,7 @@ class AXTable:
         if not AXObject.supports_table(table):
             return ""
 
-        result = messages.tableSize(AXTable.get_row_count(table), AXTable.get_column_count(table))
+        result = messages.table_size(AXTable.get_row_count(table), AXTable.get_column_count(table))
         if AXTable.is_non_uniform_table(table):
             result = f"{messages.TABLE_NON_UNIFORM} {result}"
         return result

@@ -405,7 +405,7 @@ class ClipboardPresenter:
 
         contents = self._manager.get_contents()
         if not contents or len(contents) > 5000:
-            contents = messages.characterCount(len(contents))
+            contents = messages.character_count(len(contents))
         script.presentMessage(messages.CLIPBOARD_CONTAINS % contents, contents)
         return True
 

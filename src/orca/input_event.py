@@ -120,7 +120,7 @@ class KeyboardEvent(InputEvent):
         )
         self.hw_code: int = keycode
         self._text: str = text
-        self.modifiers: int = modifiers & Gdk.ModifierType.MODIFIER_MASK
+        self.modifiers: int = modifiers & Gdk.ModifierType.MODIFIER_MASK # pylint: disable=no-member
         if modifiers & (1 << Atspi.ModifierType.NUMLOCK):
             self.modifiers |= (1 << Atspi.ModifierType.NUMLOCK)
         self.keyval_name: str = Gdk.keyval_name(keysym) or ""

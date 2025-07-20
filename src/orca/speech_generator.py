@@ -170,7 +170,7 @@ class SpeechGenerator(generator.Generator):
 
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
-            dialogs = [messages.dialogCountSpeech(alert_and_dialog_count)]
+            dialogs = [messages.dialog_count_speech(alert_and_dialog_count)]
             dialogs.extend(self.voice(DEFAULT, obj=obj, **args))
             result.append(dialogs)
         return result
@@ -510,7 +510,7 @@ class SpeechGenerator(generator.Generator):
         if AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
             child_nodes = self._script.utilities.childNodes(obj)
             if child_nodes:
-                result = [messages.itemCount(len(child_nodes))]
+                result = [messages.item_count(len(child_nodes))]
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
                 return result
             return []
@@ -519,7 +519,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role):
             set_size = AXUtilities.get_set_size(obj)
             if set_size:
-                result = [messages.listItemCount(set_size)]
+                result = [messages.list_item_count(set_size)]
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
                 return result
             return []
@@ -551,7 +551,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         child_count = AXObject.get_child_count(container)
         selected_count = len(self._script.utilities.selectedChildren(container))
-        result.append(messages.selectedItemsCount(selected_count, child_count))
+        result.append(messages.selected_items_count(selected_count, child_count))
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         result.append(object_properties.ICON_INDEX_SPEECH \
                       % {"index" : AXObject.get_index_in_parent(obj) + 1,
@@ -581,7 +581,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
-            result.append(messages.dialogCountSpeech(alert_and_dialog_count))
+            result.append(messages.dialog_count_speech(alert_and_dialog_count))
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -672,13 +672,13 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.LEAVING_DETAILS)
         elif role == Atspi.Role.BLOCK_QUOTE:
             if count > 1:
-                result.append(messages.leavingNBlockquotes(count))
+                result.append(messages.leaving_n_blockquotes(count))
             else:
                 result.append(messages.LEAVING_BLOCKQUOTE)
         elif role in [Atspi.Role.LIST, Atspi.Role.DESCRIPTION_LIST] \
             and self._script.utilities.isDocumentList(obj):
             if count > 1:
-                result.append(messages.leavingNLists(count))
+                result.append(messages.leaving_n_lists(count))
             else:
                 result.append(messages.LEAVING_LIST)
         elif role == 'ROLE_FEED':
@@ -1145,7 +1145,7 @@ class SpeechGenerator(generator.Generator):
         if size_string:
             size = int(size_string)
             if size < 10000:
-                result.append(messages.fileSizeBytes(size))
+                result.append(messages.file_size_bytes(size))
             elif size < 1000000:
                 result.append(messages.FILE_SIZE_KB % (float(size) * .001))
             elif size >= 1000000:
@@ -1644,9 +1644,9 @@ class SpeechGenerator(generator.Generator):
         columns = AXTable.get_column_count(obj)
         nesting_level = self._get_nesting_level(obj)
         if nesting_level > 0:
-            result = [messages.mathNestedTableSize(rows, columns)]
+            result = [messages.math_nested_table_size(rows, columns)]
         else:
-            result = [messages.mathTableSize(rows, columns)]
+            result = [messages.math_table_size(rows, columns)]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -1990,7 +1990,7 @@ class SpeechGenerator(generator.Generator):
         if (rows < 0 or cols < 0) and not AXUtilities.get_set_size_is_unknown(obj):
             return []
 
-        result = [messages.tableSize(rows, cols)]
+        result = [messages.table_size(rows, cols)]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 

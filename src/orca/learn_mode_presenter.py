@@ -19,6 +19,9 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-return-statements
 
 """Module for learn mode"""
 
@@ -317,13 +320,13 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_DEBUGGING_TOOLS] = bound
             items += len(bound)
 
-            title = messages.shortcutsFoundOrca(items)
+            title = messages.shortcuts_found_orca(items)
         else:
             app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME
             bound = script.get_app_key_bindings().get_bound_bindings()
             if bound:
                 bindings[app_name] = bound
-            title = messages.shortcutsFoundApp(len(bound), app_name)
+            title = messages.shortcuts_found_app(len(bound), app_name)
 
         if not bindings:
             script.presentMessage(title)
@@ -383,12 +386,12 @@ class CommandListGUI:
         content_area.add(grid)
 
         scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window)
+        grid.add(scrolled_window) # pylint: disable=no-member
 
         tree = Gtk.TreeView()
         tree.set_hexpand(True)
         tree.set_vexpand(True)
-        scrolled_window.add(tree)
+        scrolled_window.add(tree) # pylint: disable=no-member
 
         cols = len(column_headers) * [GObject.TYPE_STRING]
         for i, header in enumerate(column_headers):
@@ -417,12 +420,11 @@ class CommandListGUI:
 
         if response == Gtk.ResponseType.CLOSE:
             self._gui.destroy()
-            return
 
     def show_gui(self) -> None:
         """Shows the dialog."""
 
-        self._gui.show_all()
+        self._gui.show_all() # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
 

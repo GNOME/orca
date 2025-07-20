@@ -1234,8 +1234,8 @@ class SpeechAndVerbosityManager:
             char = match.group(1)
             count = len(match.group(0))
             if match.start() > 0 and text[match.start() - 1].isalnum():
-                return f" {messages.repeatedCharCount(char, count)}"
-            return messages.repeatedCharCount(char, count)
+                return f" {messages.repeated_char_count(char, count)}"
+            return messages.repeated_char_count(char, count)
 
         if len(text) < 4 or settings.repeatCharacterLimit < 4:
             return text
@@ -1305,9 +1305,9 @@ class SpeechAndVerbosityManager:
         spans = sorted(spaces + tabs)
         for span in spans:
             if span in spaces:
-                result += f"{messages.spacesCount(span[1] - span[0])} "
+                result += f"{messages.spaces_count(span[1] - span[0])} "
             else:
-                result += f"{messages.tabsCount(span[1] - span[0])} "
+                result += f"{messages.tabs_count(span[1] - span[0])} "
 
         if only_if_changed is None:
             only_if_changed = settings_manager.get_manager().get_setting(
@@ -1319,7 +1319,7 @@ class SpeechAndVerbosityManager:
 
             if not result and self._last_indentation_description:
                 self._last_indentation_description = ""
-                return messages.spacesCount(0)
+                return messages.spaces_count(0)
 
         self._last_indentation_description = result
         return result

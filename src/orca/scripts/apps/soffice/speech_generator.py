@@ -121,7 +121,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 too_long_count += length - i
                 break
         if too_long_count > 0:
-            result = [messages.charactersTooLong(too_long_count)]
+            result = [messages.characters_too_long(too_long_count)]
         if result:
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
