@@ -20,7 +20,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining document-related information about accessible objects."""
 
@@ -262,7 +261,8 @@ class AXDocument:
         result.append(messages.formCount(counts.get("forms", 0), only_if_found))
         result.append(messages.tableCount(counts.get("tables", 0), only_if_found))
         result.append(messages.visitedLinkCount(counts.get("visited_links", 0), only_if_found))
-        result.append(messages.unvisitedLinkCount(counts.get("unvisited_links", 0), only_if_found))
+        result.append(messages.unvisitedLinkCount(
+            counts.get("unvisited_links", 0), only_if_found))
         result = list(filter(lambda x: x, result))
         if not result:
             return ""

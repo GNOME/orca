@@ -20,7 +20,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining position-related information about accessible objects."""
 
@@ -32,7 +31,6 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
 __license__   = "LGPL"
 
 import functools
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -273,7 +271,7 @@ class AXComponent:
     @staticmethod
     def _find_descendant_at_point(
         obj: Atspi.Accessible, x: int, y: int
-    ) -> Optional[Atspi.Accessible]:
+    ) -> Atspi.Accessible | None:
         """Checks each child to see if it has a descendant at the specified point."""
 
         for child in AXObject.iter_children(obj):
@@ -285,7 +283,7 @@ class AXComponent:
         return None
 
     @staticmethod
-    def _get_object_at_point(obj: Atspi.Accessible, x: int, y: int) -> Optional[Atspi.Accessible]:
+    def _get_object_at_point(obj: Atspi.Accessible, x: int, y: int) -> Atspi.Accessible | None:
         """Returns the child (or descendant?) of obj at the specified point."""
 
         if not AXObject.supports_component(obj):
@@ -305,7 +303,7 @@ class AXComponent:
     @staticmethod
     def _get_descendant_at_point(
         obj: Atspi.Accessible, x: int, y: int
-    ) -> Optional[Atspi.Accessible]:
+    ) -> Atspi.Accessible | None:
         """Returns the deepest descendant of obj at the specified point."""
 
         child = AXComponent._get_object_at_point(obj, x, y)
@@ -326,7 +324,7 @@ class AXComponent:
     @staticmethod
     def get_descendant_at_point(
         obj: Atspi.Accessible, x: int, y: int
-    ) -> Optional[Atspi.Accessible]:
+    ) -> Atspi.Accessible | None:
         """Returns the deepest descendant of obj at the specified point."""
 
         result = AXComponent._get_descendant_at_point(obj, x, y)

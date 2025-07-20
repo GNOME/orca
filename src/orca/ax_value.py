@@ -20,7 +20,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining value-related information about accessible objects."""
 
@@ -33,7 +32,6 @@ __license__   = "LGPL"
 
 import threading
 import time
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -147,7 +145,7 @@ class AXValue:
         return f"{current:.{decimal_places}f}"
 
     @staticmethod
-    def get_value_as_percent(obj: Atspi.Accessible) -> Optional[int]:
+    def get_value_as_percent(obj: Atspi.Accessible) -> int | None:
         """Returns the current value as a percent, or None if that is not applicable."""
 
         if not AXObject.supports_value(obj):

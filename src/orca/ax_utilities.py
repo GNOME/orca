@@ -37,7 +37,6 @@ import inspect
 import queue
 import threading
 import time
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -96,7 +95,7 @@ class AXUtilities:
             AXUtilities.IS_LAYOUT_ONLY.clear()
 
     @staticmethod
-    def clear_all_cache_now(obj: Optional[Atspi.Accessible] = None, reason: str = "") -> None:
+    def clear_all_cache_now(obj: Atspi.Accessible | None = None, reason: str = "") -> None:
         """Clears all cached information immediately."""
 
         AXUtilities._clear_all_dictionaries(reason)
@@ -151,7 +150,7 @@ class AXUtilities:
         return True
 
     @staticmethod
-    def find_active_window() -> Optional[Atspi.Accessible]:
+    def find_active_window() -> Atspi.Accessible | None:
         """Tries to locate the active window; may or may not succeed."""
 
         candidates = []
@@ -191,7 +190,7 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return filtered[0]
 
-        guess: Optional[Atspi.Accessible] = None
+        guess: Atspi.Accessible | None = None
         if filtered:
             tokens = ["AXUtilities: Still have multiple active windows:", filtered]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -265,7 +264,7 @@ class AXUtilities:
         return AXObject.find_all_descendants(obj, is_match)
 
     @staticmethod
-    def get_default_button(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def get_default_button(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the default button descendant of obj"""
 
         result = None
@@ -277,7 +276,7 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
 
     @staticmethod
-    def get_focused_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def get_focused_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the focused descendant of obj"""
 
         result = None
@@ -289,7 +288,7 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesState.is_focused)
 
     @staticmethod
-    def get_info_bar(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def get_info_bar(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the info bar descendant of obj"""
 
         result = None
@@ -301,7 +300,7 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_info_bar)
 
     @staticmethod
-    def get_status_bar(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def get_status_bar(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the status bar descendant of obj"""
 
         result = None
@@ -731,7 +730,7 @@ class AXUtilities:
         return len(ancestors)
 
     @staticmethod
-    def get_next_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def get_next_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the next object (depth first, unless there's a flows-to relation)"""
 
         if not AXObject.is_valid(obj):
@@ -760,7 +759,7 @@ class AXUtilities:
         return next_object
 
     @staticmethod
-    def get_previous_object(obj: Atspi.Accessible) -> Optional[Atspi.Accessible]:
+    def get_previous_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the previous object (depth first, unless there's a flows-from relation)"""
 
         if not AXObject.is_valid(obj):
@@ -791,7 +790,7 @@ class AXUtilities:
     @staticmethod
     def is_on_screen(
         obj: Atspi.Accessible,
-        bounding_box: Optional[Atspi.Rect] = None
+        bounding_box: Atspi.Rect | None = None
     ) -> bool:
         """Returns true if obj should be treated as being on screen."""
 
@@ -868,7 +867,7 @@ class AXUtilities:
     def _get_on_screen_objects(
         root: Atspi.Accessible,
         cancellation_event: threading.Event,
-        bounding_box: Optional[Atspi.Rect] = None
+        bounding_box: Atspi.Rect | None = None
     ) -> list:
 
         tokens = ["AXUtilities: Getting on-screen objects in", root, f"({hex(id(root))})"]
@@ -920,7 +919,7 @@ class AXUtilities:
     @staticmethod
     def get_on_screen_objects(
         root: Atspi.Accessible,
-        bounding_box: Optional[Atspi.Rect] = None,
+        bounding_box: Atspi.Rect | None = None,
         timeout: float = 5.0
     ) -> list:
         """Returns a list of onscreen objects in the given root."""

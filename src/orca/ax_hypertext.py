@@ -30,7 +30,6 @@ __license__   = "LGPL"
 
 import os
 import re
-from typing import Optional
 from urllib.parse import urlparse
 
 import gi
@@ -63,7 +62,7 @@ class AXHypertext:
         return count
 
     @staticmethod
-    def _get_link_at_index(obj: Atspi.Accessible, index: int) -> Optional[Atspi.Hyperlink]:
+    def _get_link_at_index(obj: Atspi.Accessible, index: int) -> Atspi.Hyperlink | None:
         """Returns the hyperlink object at the specified index."""
 
         if not AXObject.supports_hypertext(obj):
@@ -199,7 +198,7 @@ class AXHypertext:
         return basename
 
     @staticmethod
-    def get_child_at_offset(obj: Atspi.Accessible, offset: int) -> Optional[Atspi.Accessible]:
+    def get_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:
         """Returns the embedded-object child of obj at the specified offset."""
 
         if not AXObject.supports_hypertext(obj):

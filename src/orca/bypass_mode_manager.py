@@ -31,7 +31,7 @@ __copyright__ = "Copyright (c) 2024 Igalia, S.L." \
                 "Copyright (c) 2024 GNOME Foundation Inc."
 __license__   = "LGPL"
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
@@ -113,7 +113,7 @@ class BypassModeManager:
         return self._is_active
 
     def toggle_enabled(
-        self, script: default.Script, event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, event: input_event.InputEvent | None = None
     ) -> bool:
         """Toggles bypass mode."""
 

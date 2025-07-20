@@ -1,5 +1,0 @@
-[TYPECHECK]
-ignored-classes=AXUtilities # because pylint isn't seeing/using ax_utilities.pyi.
-
-[MESSAGES CONTROL]
-disable=fixme

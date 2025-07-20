@@ -21,7 +21,6 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining state-related information."""
 

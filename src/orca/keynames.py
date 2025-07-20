@@ -26,7 +26,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from typing import Optional
 
 from .orca_i18n import _
 from .orca_i18n import C_
@@ -303,7 +302,7 @@ __keynames["minus"]      = _("minus")
 __keynames["plus"]      = _("plus")
 
 
-def get_key_name(key: str) -> Optional[str]:
+def get_key_name(key: str) -> str | None:
     """Return the localized name for the key."""
 
     return __keynames.get(key)

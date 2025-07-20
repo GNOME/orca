@@ -32,7 +32,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version('Atspi', '2.0')
@@ -580,7 +580,7 @@ class KeyBindings:
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def get_input_handler(self, event: KeyboardEvent) -> Optional[InputEventHandler]:
+    def get_input_handler(self, event: KeyboardEvent) -> InputEventHandler | None:
         """Returns the input handler matching keyboardEvent)"""
 
         matches: list[KeyBinding] = []

@@ -33,7 +33,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import time
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Gdk", "3.0")
@@ -125,8 +125,8 @@ class LearnModePresenter:
 
     def start(
         self,
-        script: Optional[default.Script] = None,
-        _event: Optional[input_event.InputEvent] = None
+        script: default.Script | None = None,
+        _event: input_event.InputEvent | None = None
     ) -> bool:
         """Starts learn mode."""
 
@@ -151,8 +151,8 @@ class LearnModePresenter:
 
     def quit(
         self,
-        script: Optional[default.Script] = None,
-        _event: Optional[input_event.InputEvent] = None
+        script: default.Script | None = None,
+        _event: input_event.InputEvent | None = None
     ) -> bool:
         """Quits learn mode."""
 
@@ -173,7 +173,7 @@ class LearnModePresenter:
         self._is_active = False
         return True
 
-    def handle_event(self, event: Optional[input_event.InputEvent] = None) -> bool:
+    def handle_event(self, event: input_event.InputEvent | None = None) -> bool:
         """Handles the event if learn mode is active."""
 
         if not self._is_active:
@@ -206,7 +206,7 @@ class LearnModePresenter:
         self.present_command(event)
         return True
 
-    def present_command(self, event: Optional[input_event.InputEvent] = None) -> bool:
+    def present_command(self, event: input_event.InputEvent | None = None) -> bool:
         """Presents the command bound to event."""
 
         if not isinstance(event, input_event.KeyboardEvent):
@@ -337,8 +337,8 @@ class LearnModePresenter:
 
     def show_help(
         self,
-        script: Optional[default.Script] = None,
-        event: Optional[input_event.InputEvent] = None,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
         page: str = ""
     ) -> bool:
         """Displays Orca's documentation."""

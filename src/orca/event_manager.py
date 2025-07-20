@@ -40,7 +40,7 @@ import itertools
 import queue
 import threading
 import time
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -83,7 +83,7 @@ class EventManager:
         self._gidle_id: int = 0
         self._gidle_lock = threading.Lock()
         self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
-        self._event_history: dict[str, tuple[Optional[int], float]] = {}
+        self._event_history: dict[str, tuple[int | None, float]] = {}
         debug.print_message(debug.LEVEL_INFO, "Event manager initialized", True)
 
     def activate(self) -> None:
@@ -156,7 +156,7 @@ class EventManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return priority
 
-    def _is_obsoleted_by(self, event: Atspi.Event) -> Optional[Atspi.Event]:
+    def _is_obsoleted_by(self, event: Atspi.Event) -> Atspi.Event | None:
         """Returns the event which renders this one no longer worthy of being processed."""
 
         def is_same(x):
@@ -644,8 +644,8 @@ class EventManager:
 
     @staticmethod
     def _get_script_for_event(
-        event: Atspi.Event, active_script: Optional[default.Script] = None
-    ) -> Optional[default.Script]:
+        event: Atspi.Event, active_script: default.Script | None = None
+    ) -> default.Script | None:
         """Returns the script associated with event."""
 
         if event.source == focus_manager.get_manager().get_locus_of_focus():
@@ -678,7 +678,7 @@ class EventManager:
         return script
 
     def _is_activatable_event(
-        self, event: Atspi.Event, script: Optional[default.Script] = None
+        self, event: Atspi.Event, script: default.Script | None = None
     ) -> tuple[bool, str]:
         """Determines if event should cause us to change the active script."""
 

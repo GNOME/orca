@@ -21,7 +21,6 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining relation-related information."""
 
@@ -34,7 +33,6 @@ __license__   = "LGPL"
 
 import threading
 import time
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -111,7 +109,7 @@ class AXUtilitiesRelation:
     def _get_relation(
         obj: Atspi.Accessible,
         relation_type: Atspi.RelationType
-    ) -> Optional[Atspi.Relation]:
+    ) -> Atspi.Relation | None:
         """Returns the specified Atspi.Relation for obj"""
 
         for relation in AXUtilitiesRelation.get_relations(obj):

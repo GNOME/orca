@@ -9,6 +9,18 @@ lint.ignore = [
   "E402", # Module level import not at top of file
 ]
 
+[tool.pylint.master]
+#extension-pkg-allow-list = ["brlapi"] # this makes cli pylint crash.
+
+[tool.pylint.typecheck]
+ignored-classes = ["AXUtilities"]
+
+[tool.pylint.messages_control]
+disable = [
+    "fixme",
+    "duplicate-code",
+]
+
 [tool.mypy]
 exclude = [
   "gnome-shell",             # mypy doesn't like the name

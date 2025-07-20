@@ -38,7 +38,7 @@ import faulthandler
 import os
 import subprocess
 import time
-from typing import Generator, Optional, TYPE_CHECKING
+from typing import Generator, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -153,7 +153,7 @@ class DebuggingToolsManager:
             self._handlers, self._bindings, False)
 
     def _cycle_debug_level(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Cycles through the existing debug levels."""
 
@@ -177,7 +177,7 @@ class DebuggingToolsManager:
         return True
 
     def _clear_atspi_app_cache(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
@@ -200,7 +200,7 @@ class DebuggingToolsManager:
         return True
 
     def _capture_snapshot(
-        self, script: default.Script, _event: Optional[input_event.InputEvent] = None
+        self, script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 

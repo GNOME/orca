@@ -29,7 +29,7 @@ __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2013-2015 Igalia, S.L."
 __license__ = "LGPL"
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from . import cmdnames
 from . import debug
@@ -55,7 +55,7 @@ class CaretNavigation:
         self._suspended: bool = False
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._last_input_event: Optional[input_event.InputEvent] = None
+        self._last_input_event: input_event.InputEvent | None = None
 
     def handles_navigation(self, handler: input_event.InputEventHandler) -> bool:
         """Returns True if handler is a navigation command."""
@@ -315,7 +315,7 @@ class CaretNavigation:
         for binding in self._bindings.key_bindings:
             script.key_bindings.add(binding, include_grabs=not self._suspended)
 
-    def toggle_enabled(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def toggle_enabled(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Toggles caret navigation."""
 
         if not event:
@@ -348,7 +348,7 @@ class CaretNavigation:
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
-    def _next_character(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _next_character(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the next character."""
 
         if not event:
@@ -365,7 +365,7 @@ class CaretNavigation:
         script.sayCharacter(obj)
         return True
 
-    def _previous_character(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _previous_character(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the previous character."""
 
         if not event:
@@ -382,7 +382,7 @@ class CaretNavigation:
         script.sayCharacter(obj)
         return True
 
-    def _next_word(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _next_word(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the next word."""
 
         if not event:
@@ -413,7 +413,7 @@ class CaretNavigation:
         script.sayWord(obj)
         return True
 
-    def _previous_word(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _previous_word(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the previous word."""
 
         if not event:
@@ -432,7 +432,7 @@ class CaretNavigation:
         script.sayWord(obj)
         return True
 
-    def _next_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _next_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the next line."""
 
         if not event:
@@ -462,7 +462,7 @@ class CaretNavigation:
         script.displayContents(contents)
         return True
 
-    def _previous_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _previous_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the previous line."""
 
         if not event:
@@ -487,7 +487,7 @@ class CaretNavigation:
         script.displayContents(contents)
         return True
 
-    def _start_of_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _start_of_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the start of the line."""
 
         if not event:
@@ -506,7 +506,7 @@ class CaretNavigation:
         script.displayContents(line)
         return True
 
-    def _end_of_line(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _end_of_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the end of the line."""
 
         if not event:
@@ -528,7 +528,7 @@ class CaretNavigation:
         script.displayContents(line)
         return True
 
-    def _start_of_file(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _start_of_file(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the start of the file."""
 
         if not event:
@@ -548,7 +548,7 @@ class CaretNavigation:
         script.displayContents(contents)
         return True
 
-    def _end_of_file(self, script: web.Script, event: Optional[InputEvent] = None) -> bool:
+    def _end_of_file(self, script: web.Script, event: InputEvent | None = None) -> bool:
         """Moves to the end of the file."""
 
         if not event:

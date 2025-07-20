@@ -36,7 +36,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import re
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -67,7 +66,7 @@ class Char:
         self._word: "Word" = word
         self._start_offset: int = start_offset
         self._string: str = string
-        self._rect: Optional[Atspi.Rect] = None
+        self._rect: Atspi.Rect | None = None
 
     def __str__(self) -> str:
         text = self._string.replace("\n", "\\n")
@@ -112,7 +111,7 @@ class Word:
         self._zone: "Zone" = zone
         self._start_offset: int = start_offset
         self._string: str = string
-        self._rect: Optional[Atspi.Rect] = None
+        self._rect: Atspi.Rect | None = None
         self._characters: dict[int, Char] = {}
 
     def __str__(self) -> str:
@@ -147,7 +146,7 @@ class Word:
 
         return [self._characters[i] for i in range(len(self._string))]
 
-    def get_character_at_index(self, index: int) -> Optional[Char]:
+    def get_character_at_index(self, index: int) -> Char | None:
         """Returns the Char at the specified index with respect to this Word."""
 
         if not 0 <= index < len(self._string):
@@ -209,8 +208,8 @@ class Zone:
         self._string: str = string
         self._rect: Atspi.Rect = rect
         self._words: list[Word] = []
-        self.line: Optional['Line'] = None
-        self._braille_region: Optional[braille.Region] = None
+        self.line: 'Line' | None = None
+        self._braille_region: braille.Region | None = None
         self._word_rect_cache: dict[tuple[int, int], Atspi.Rect] = {}
         self._word_index_map: dict[tuple[int, str], int] = {}  # (start_offset, string) -> index
 
@@ -229,7 +228,7 @@ class Zone:
 
         return True
 
-    def get_braille_region(self) -> Optional[braille.Region]:
+    def get_braille_region(self) -> braille.Region | None:
         """Returns the braille region for this Zone."""
 
         if self._braille_region is not None:
@@ -261,7 +260,7 @@ class Zone:
 
         return self._words
 
-    def get_word_at_index(self, index: int) -> Optional[Word]:
+    def get_word_at_index(self, index: int) -> Word | None:
         """Returns the Word at the specified index with respect to this Zone."""
 
         words = self.get_words()
@@ -334,7 +333,7 @@ class Zone:
 
         return self._start_offset
 
-    def get_word_at_offset(self, char_offset: int) -> tuple[Optional[Word], int]:
+    def get_word_at_offset(self, char_offset: int) -> tuple[Word | None, int]:
         """Returns the Word at the specified offset with respect to the accessible object."""
 
         msg = f"FLAT REVIEW: Searching for word at offset {char_offset}"
@@ -360,7 +359,7 @@ class Zone:
 
         return False
 
-    def word_with_caret(self) -> tuple[Optional[Word], int]:
+    def word_with_caret(self) -> tuple[Word | None, int]:
         """Returns the Word and relative offset with the caret."""
 
         return None, -1
@@ -402,7 +401,7 @@ class TextZone(Zone):
 
         return True
 
-    def get_braille_region(self) -> Optional[braille.Region]:
+    def get_braille_region(self) -> braille.Region | None:
         """Returns the braille region for this Zone."""
 
         if self._braille_region is not None:
@@ -457,7 +456,7 @@ class TextZone(Zone):
 
         return end_offset == AXText.get_character_count(self._obj)
 
-    def word_with_caret(self) -> tuple[Optional[Word], int]:
+    def word_with_caret(self) -> tuple[Word | None, int]:
         """Returns the Word and relative offset with the caret."""
 
         if not self.has_caret():
@@ -481,7 +480,7 @@ class StateZone(Zone):
 
         return False
 
-    def get_braille_region(self) -> Optional[braille.Region]:
+    def get_braille_region(self) -> braille.Region | None:
         """Returns the braille region for this Zone."""
 
         script = script_manager.get_manager().get_active_script()
@@ -519,7 +518,7 @@ class ValueZone(Zone):
 
         return False
 
-    def get_braille_region(self) -> Optional[braille.Region]:
+    def get_braille_region(self) -> braille.Region | None:
         """Returns the braille region for this Zone."""
 
         script = script_manager.get_manager().get_active_script()
@@ -573,7 +572,7 @@ class Line:
 
         return self._zones
 
-    def get_zone_at_index(self, index: int) -> Optional[Zone]:
+    def get_zone_at_index(self, index: int) -> Zone | None:
         """Returns the Zone at the specified index with respect to this Line."""
 
         if 0 <= index < len(self._zones):
@@ -618,7 +617,7 @@ class Context:
     LINE   = 3
     WINDOW = 4
 
-    def __init__(self, script, root: Optional[Atspi.Accessible] = None) -> None:
+    def __init__(self, script, root: Atspi.Accessible | None = None) -> None:
         """Create a new Context for script."""
 
         self._script = script
@@ -628,12 +627,12 @@ class Context:
         self._zone_index: int = 0
         self._word_index: int = 0
         self._char_index: int = 0
-        self._focus_zone: Optional[Zone] = None
-        self._container: Optional[Atspi.Accessible] = None
+        self._focus_zone: Zone | None = None
+        self._container: Atspi.Accessible | None = None
         self._object_to_zone_map: dict[Atspi.Accessible, list[Zone]] = {}
-        self._focus_obj: Optional[Atspi.Accessible] = \
+        self._focus_obj: Atspi.Accessible | None = \
             focus_manager.get_manager().get_locus_of_focus()
-        self._top_level: Optional[Atspi.Accessible] = None
+        self._top_level: Atspi.Accessible | None = None
         self._rect: Atspi.Rect = Atspi.Rect()
 
         frame, dialog = script.utilities.frameAndDialog(self._focus_obj)
@@ -799,7 +798,7 @@ class Context:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
-    def _find_zone_with_object(self, obj: Optional[Atspi.Accessible]) -> Optional[Zone]:
+    def _find_zone_with_object(self, obj: Atspi.Accessible | None) -> Zone | None:
         """Returns the existing zone which contains obj."""
 
         if obj is None:
@@ -825,7 +824,7 @@ class Context:
 
     def _get_showing_zones(self,
         root: Atspi.Accessible,
-        boundingbox: Optional[Atspi.Rect] = None
+        boundingbox: Atspi.Rect | None = None
     ) -> list[Zone]:
         """Returns an unsorted list of all the zones under root."""
 
@@ -972,7 +971,7 @@ class Context:
             self._word_index = zone.get_index_of_word(word)
             self._char_index = character_offset
 
-    def _get_current_zone(self) -> Optional[Zone]:
+    def _get_current_zone(self) -> Zone | None:
         """Returns the current Zone."""
 
         if not (self._lines and 0 <= self._line_index < len(self._lines)):
@@ -999,7 +998,7 @@ class Context:
             return char.get_start_offset()
         return -1
 
-    def get_current_object(self) -> Optional[Atspi.Accessible]:
+    def get_current_object(self) -> Atspi.Accessible | None:
         """Returns the current object."""
 
         zone = self._get_current_zone()
@@ -1008,7 +1007,7 @@ class Context:
 
         return zone.get_object()
 
-    def get_current_braille_regions(self) -> tuple[list[braille.Region], Optional[braille.Region]]:
+    def get_current_braille_regions(self) -> tuple[list[braille.Region], braille.Region | None]:
         """Returns a (regions, focused-region) tuple."""
 
         if not self._lines:

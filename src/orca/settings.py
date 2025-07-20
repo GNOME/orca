@@ -27,7 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from typing import Any, Optional
+from typing import Any
 
 from . import messages
 from .acss import ACSS
@@ -209,8 +209,8 @@ profile: list[str] = ['Default', 'default']
 # Speech
 speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
 speechServerFactory: str = "speechdispatcherfactory"
-speechServerInfo: Optional[list[str]] = None # None means let the factory decide.
-speechSystemOverride: Optional[str] = None
+speechServerInfo: list[str] | None = None # None means let the factory decide.
+speechSystemOverride: str | None = None
 enableSpeech: bool = True
 silenceSpeech: bool = False
 enableTutorialMessages: bool = True
@@ -295,7 +295,7 @@ enableDiacriticalKeys: bool = False
 enableEchoByCharacter: bool = False
 enableEchoByWord: bool = False
 enableEchoBySentence: bool = False
-presentLockingKeys: Optional[bool] = None
+presentLockingKeys: bool | None = None
 
 # Mouse review
 enableMouseReview: bool = False
@@ -308,8 +308,8 @@ speakProgressBarUpdates: bool = True
 brailleProgressBarUpdates: bool = False
 beepProgressBarUpdates: bool = False
 progressBarUpdateInterval: int = 10
-progressBarSpeechInterval: Optional[int] = None
-progressBarBrailleInterval: Optional[int] = None
+progressBarSpeechInterval: int | None = None
+progressBarBrailleInterval: int | None = None
 progressBarBeepInterval: int = 0
 progressBarVerbosity: int = PROGRESS_BAR_APPLICATION
 ignoreStatusBarProgressBars: bool = True

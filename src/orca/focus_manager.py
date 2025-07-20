@@ -31,8 +31,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2023 Igalia, S.L."
 __license__   = "LGPL"
 
-from typing import Any, Optional
-
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -55,10 +53,10 @@ class FocusManager:
     """Manages the focused object, window, etc."""
 
     def __init__(self) -> None:
-        self._window: Optional[Atspi.Accessible] = None
-        self._focus: Optional[Atspi.Accessible] = None
-        self._object_of_interest: Optional[Atspi.Accessible] = None
-        self._active_mode: Optional[str] = None
+        self._window: Atspi.Accessible | None = None
+        self._focus: Atspi.Accessible | None = None
+        self._object_of_interest: Atspi.Accessible | None = None
+        self._active_mode: str | None = None
 
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
@@ -72,7 +70,7 @@ class FocusManager:
         self._object_of_interest = None
         self._active_mode = None
 
-    def find_focused_object(self) -> Optional[Atspi.Accessible]:
+    def find_focused_object(self) -> Atspi.Accessible | None:
         """Returns the focused object in the active window."""
 
         result = AXUtilities.get_focused_object(self._window)
@@ -115,9 +113,9 @@ class FocusManager:
 
     def emit_region_changed(
         self, obj: Atspi.Accessible,
-        start_offset: Optional[int] = None,
-        end_offset: Optional[int] = None,
-        mode: Optional[str] = None
+        start_offset: int | None = None,
+        end_offset: int | None = None,
+        mode: str | None = None
     ) -> None:
         """Notifies interested clients that the current region of interest has changed."""
 
@@ -158,7 +156,7 @@ class FocusManager:
 
     def get_active_mode_and_object_of_interest(
         self
-    ) -> tuple[Optional[str], Optional[Atspi.Accessible]]:
+    ) -> tuple[str | None, Atspi.Accessible | None]:
         """Returns the current mode and associated object of interest"""
 
         tokens = ["FOCUS MANAGER: Active mode:", self._active_mode,
@@ -166,7 +164,7 @@ class FocusManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._active_mode, self._object_of_interest
 
-    def get_locus_of_focus(self) -> Optional[Atspi.Accessible]:
+    def get_locus_of_focus(self) -> Atspi.Accessible | None:
         """Returns the current locus of focus (i.e. the object with visual focus)."""
 
         tokens = ["FOCUS MANAGER: Locus of focus is", self._focus]
@@ -175,8 +173,8 @@ class FocusManager:
 
     def set_locus_of_focus(
         self,
-        event: Optional[Any],
-        obj: Optional[Atspi.Accessible],
+        event: Atspi.Event | None,
+        obj: Atspi.Accessible | None,
         notify_script: bool = True,
         force: bool = False
     ) -> None:
@@ -249,7 +247,7 @@ class FocusManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return is_active
 
-    def get_active_window(self) -> Optional[Atspi.Accessible]:
+    def get_active_window(self) -> Atspi.Accessible | None:
         """Returns the currently-active window (i.e. without searching or verifying)."""
 
         tokens = ["FOCUS MANAGER: Active window is", self._window]
@@ -258,8 +256,8 @@ class FocusManager:
 
     def set_active_window(
         self,
-        frame: Optional[Atspi.Accessible],
-        app: Optional[Atspi.Accessible] = None,
+        frame: Atspi.Accessible | None,
+        app: Atspi.Accessible | None = None,
         set_window_as_focus: bool = False,
         notify_script: bool = False
     ) -> None:

@@ -35,7 +35,7 @@ __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -63,18 +63,18 @@ class SpellCheck:
     def __init__(self, script: default.Script, has_change_to_entry: bool = True) -> None:
         self._script: default.Script = script
         self._has_change_to_entry: bool = has_change_to_entry
-        self._window: Optional[Atspi.Accessible] = None
-        self._error_widget: Optional[Atspi.Accessible] = None
-        self._change_to_entry: Optional[Atspi.Accessible] = None
-        self._suggestions_list: Optional[Atspi.Accessible] = None
+        self._window: Atspi.Accessible | None = None
+        self._error_widget: Atspi.Accessible | None = None
+        self._change_to_entry: Atspi.Accessible | None = None
+        self._suggestions_list: Atspi.Accessible | None = None
         self._activated: bool = False
-        self._document_position: tuple[Optional[Atspi.Accessible], int] = None, -1
+        self._document_position: tuple[Atspi.Accessible | None, int] = None, -1
 
-        self.spell_error_check_button: Optional[Gtk.CheckButton] = None
-        self.spell_suggestion_check_button: Optional[Gtk.CheckButton] = None
-        self.present_context_check_button: Optional[Gtk.CheckButton] = None
+        self.spell_error_check_button: Gtk.CheckButton | None = None
+        self.spell_suggestion_check_button: Gtk.CheckButton | None = None
+        self.present_context_check_button: Gtk.CheckButton | None = None
 
-    def activate(self, window: object) -> bool:
+    def activate(self, window: Atspi.Accessible) -> bool:
         """Activates spellcheck support."""
 
         tokens = ["SPELL CHECK: Attempting activation for", window]
@@ -114,12 +114,12 @@ class SpellCheck:
 
         self._clear_state()
 
-    def set_document_position(self, obj: object, offset: int) -> None:
+    def set_document_position(self, obj: Atspi.Accessible, offset: int) -> None:
         """Sets the document position as an (obj, offset) tuple."""
 
         self._document_position = obj, offset
 
-    def get_error_widget(self) -> Optional[object]:
+    def get_error_widget(self) -> Atspi.Accessible | None:
         """Returns the widget which contains the misspelled word."""
 
         return self._error_widget
@@ -140,12 +140,12 @@ class SpellCheck:
 
         return AXText.get_all_text(self._error_widget) or AXObject.get_name(self._error_widget)
 
-    def get_change_to_entry(self) -> Optional[object]:
+    def get_change_to_entry(self) -> Atspi.Accessible | None:
         """Returns the widget, usually an entry, that displays the suggested change-to value."""
 
         return self._change_to_entry
 
-    def get_suggestions_list(self) -> Optional[object]:
+    def get_suggestions_list(self) -> Atspi.Accessible | None:
         """Returns the widget containing the list of suggestions."""
 
         return self._suggestions_list
@@ -155,7 +155,7 @@ class SpellCheck:
 
         return self._activated
 
-    def is_spell_check_window(self, window: object) -> bool:
+    def is_spell_check_window(self, window: Atspi.Accessible) -> bool:
         """Returns True if window is the window/dialog containing the spellcheck."""
 
         if window and window == self._window:
@@ -170,7 +170,7 @@ class SpellCheck:
             return not AXUtilities.is_sensitive(self._change_to_entry)
         return False
 
-    def is_suggestions_item(self, obj: object) -> bool:
+    def is_suggestions_item(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is an item in the suggestions list."""
 
         if not self._suggestions_list:
@@ -333,7 +333,7 @@ class SpellCheck:
         self._suggestions_list = None
         self._activated = False
 
-    def can_be_spell_check_window(self, window: object) -> bool:
+    def can_be_spell_check_window(self, window: Atspi.Accessible) -> bool:
         """Returns True if the window can be the spell check window."""
 
         window_id = AXObject.get_accessible_id(window)
@@ -347,12 +347,12 @@ class SpellCheck:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return window_id.lower().startswith("spelling")
 
-    def _is_candidate_window(self, _window: object) -> bool:
+    def _is_candidate_window(self, window: Atspi.Accessible) -> bool:
         """Returns True if window could be the spellcheck window pending other checks."""
 
         raise NotImplementedError("SPELL CHECK: subclasses must provide this implementation.")
 
-    def _is_change_to_entry(self, obj: object) -> bool:
+    def _is_change_to_entry(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj could be the spell check change-to entry."""
 
         obj_id = AXObject.get_accessible_id(obj)
@@ -363,7 +363,7 @@ class SpellCheck:
 
         return AXUtilities.is_single_line_entry(obj)
 
-    def _find_change_to_entry(self, root: object) -> Optional[object]:
+    def _find_change_to_entry(self, root: Atspi.Accessible) -> Atspi.Accessible | None:
         if not self._has_change_to_entry:
             return None
 
@@ -372,7 +372,7 @@ class SpellCheck:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
-    def _is_error_widget(self, obj: object) -> bool:
+    def _is_error_widget(self, obj: Atspi.Accessible) -> bool:
         obj_id = AXObject.get_accessible_id(obj)
         if obj_id.lower().startswith("error"):
             tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the error widget"]
@@ -394,13 +394,13 @@ class SpellCheck:
 
         return True
 
-    def _find_error_widget(self, root: object) -> Optional[object]:
+    def _find_error_widget(self, root: Atspi.Accessible) -> Atspi.Accessible | None:
         result = AXObject.find_descendant(root, self._is_error_widget)
         tokens = ["SPELL CHECK: Error widget for:", root, "is:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
-    def _is_suggestions_list(self, obj: object) -> bool:
+    def _is_suggestions_list(self, obj: Atspi.Accessible) -> bool:
         obj_id = AXObject.get_accessible_id(obj)
         if obj_id.lower().startswith("suggestions"):
             tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the suggestions list"]
@@ -411,13 +411,13 @@ class SpellCheck:
         return AXUtilities.is_list(obj) or AXUtilities.is_list_box(obj) \
             or AXUtilities.is_table(obj) or AXUtilities.is_tree_table(obj)
 
-    def _find_suggestions_list(self, root: object) -> Optional[object]:
+    def _find_suggestions_list(self, root: Atspi.Accessible) -> Atspi.Accessible | None:
         result = AXObject.find_descendant(root, self._is_suggestions_list)
         tokens = ["SPELL CHECK: Suggestions list for:", root, "is:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
-    def _get_suggestion_index_and_position(self, suggestion: object) -> tuple[int, int]:
+    def _get_suggestion_index_and_position(self, suggestion: Atspi.Accessible) -> tuple[int, int]:
         return AXUtilities.get_position_in_set(suggestion) + 1, AXUtilities.get_set_size(suggestion)
 
     def get_app_preferences_gui(self) -> Gtk.Frame:
@@ -430,7 +430,7 @@ class SpellCheck:
 
         alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
         alignment.set_padding(0, 0, 12, 0)
-        frame.add(alignment)
+        frame.add(alignment) # pylint: disable=no-member
 
         grid = Gtk.Grid()
         alignment.add(grid)

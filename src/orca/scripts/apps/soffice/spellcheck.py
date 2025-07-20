@@ -19,13 +19,18 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+
 """Customized support for spellcheck in LibreOffice."""
+
+from __future__ import annotations
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import messages
@@ -34,14 +39,21 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from orca.scripts import default
+
 class SpellCheck(spellcheck.SpellCheck):
     """Customized support for spellcheck in LibreOffice."""
 
-    def __init__(self, script):
+    def __init__(self, script: default.Script) -> None:
         super().__init__(script, has_change_to_entry=False)
-        self._windows = {}
+        self._windows: dict[int, bool] = {}
 
-    def _find_child_dialog(self, root):
+    def _find_child_dialog(self, root: Atspi.Accessible | None) -> Atspi.Accessible | None:
         if root is None:
             return None
 
@@ -50,7 +62,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
         return self._find_child_dialog(AXObject.get_child(root, 0))
 
-    def _is_candidate_window(self, window):
+    def _is_candidate_window(self, window: Atspi.Accessible) -> bool:
         if AXObject.is_dead(window):
             tokens = ["SOFFICE SPELL CHECK:", window, "is not spellcheck window because it's dead."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -85,7 +97,7 @@ class SpellCheck(spellcheck.SpellCheck):
         self._windows[hash(dialog)] = rv
         return rv
 
-    def _is_error_widget(self, obj):
+    def _is_error_widget(self, obj: Atspi.Accessible) -> bool:
         obj_id = AXObject.get_accessible_id(obj)
         if obj_id.lower().startswith("error"):
             tokens = ["SPELL CHECK:", obj, f"with id: '{obj_id}' is the error widget"]
@@ -96,7 +108,7 @@ class SpellCheck(spellcheck.SpellCheck):
             return False
         return AXUtilities.is_focusable(obj) and AXUtilities.is_multi_line(obj)
 
-    def get_misspelled_word(self):
+    def get_misspelled_word(self) -> str:
         length = AXText.get_character_count(self._error_widget)
         offset, string = 0, ""
         while 0 <= offset < length:
@@ -107,7 +119,7 @@ class SpellCheck(spellcheck.SpellCheck):
 
         return string
 
-    def present_context(self):
+    def present_context(self) -> bool:
         if not self.is_active():
             return False
 

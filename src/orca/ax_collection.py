@@ -20,7 +20,6 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-positional-arguments
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining objects via the collection interface."""
 
@@ -31,7 +30,6 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 import time
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -50,15 +48,15 @@ class AXCollection:
     # pylint: disable=R0913,R0914
     @staticmethod
     def create_match_rule(
-        states: Optional[list[str]] = None,
+        states: list[str] | None = None,
         state_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
-        attributes: Optional[list[str]] = None,
+        attributes: list[str] | None = None,
         attribute_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ANY,
-        roles: Optional[list[str]] = None,
+        roles: list[str] | None = None,
         role_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ANY,
-        interfaces: Optional[list[str]] = None,
+        interfaces: list[str] | None = None,
         interface_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
-        invert: bool = False) -> Optional[Atspi.MatchRule]:
+        invert: bool = False) -> Atspi.MatchRule | None:
         """Creates a match rule based on the supplied criteria."""
 
         if states is None:
@@ -138,7 +136,7 @@ class AXCollection:
         obj: Atspi.Accessible,
         rule: Atspi.MatchRule,
         order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL
-    ) -> Optional[Atspi.Accessible]:
+    ) -> Atspi.Accessible | None:
         """Returns the first object matching the specified rule."""
 
         if not AXObject.supports_collection(obj):

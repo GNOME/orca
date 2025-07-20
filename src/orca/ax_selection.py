@@ -19,7 +19,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining information about containers supporting selection."""
 
@@ -28,8 +27,6 @@ __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
-
-from typing import Optional
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -63,7 +60,7 @@ class AXSelection:
         return count
 
     @staticmethod
-    def get_selected_child(obj: Atspi.Accessible, index: int) -> Optional[Atspi.Accessible]:
+    def get_selected_child(obj: Atspi.Accessible, index: int) -> Atspi.Accessible | None:
         """Returns the nth selected child of obj."""
 
         n_children = AXSelection.get_selected_child_count(obj)

@@ -23,7 +23,6 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
-# pylint: disable=duplicate-code
 
 """Utilities for obtaining accessibility information for debugging."""
 

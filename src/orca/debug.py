@@ -32,7 +32,7 @@ import traceback
 import re
 import sys
 from datetime import datetime
-from typing import Any, Optional, TextIO
+from typing import Any, TextIO
 
 from .ax_utilities_debugging import AXUtilitiesDebugging
 
@@ -45,7 +45,7 @@ LEVEL_ALL = 0
 # Leave these as-is for now so as not to break debugging for anyone using orca-customizations.py
 # pylint: disable=invalid-name
 debugLevel: int = LEVEL_SEVERE
-debugFile: Optional[TextIO] = None
+debugFile: TextIO | None = None
 # pylint: enable=invalid-name
 
 def print_exception(level: int) -> None:

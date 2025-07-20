@@ -21,7 +21,6 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-return-statements
-# pylint: disable=duplicate-code
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
 
@@ -363,7 +362,8 @@ class AXUtilitiesEvent:
                 else:
                     reason = TextEventReason.TYPING
             elif mgr.last_event_was_tab() or mgr.last_event_was_return():
-                reason = TextEventReason.TYPING
+                if not event.any_data.strip():
+                    reason = TextEventReason.TYPING
             elif mgr.last_event_was_printable_key():
                 if reason == TextEventReason.SELECTED_TEXT_INSERTION:
                     reason = TextEventReason.AUTO_INSERTION_PRESENTABLE

@@ -38,7 +38,7 @@ __license__   = "LGPL"
 import inspect
 import math
 import time
-from typing import Any, Callable, Optional, TYPE_CHECKING, cast
+from typing import Any, Callable, TYPE_CHECKING, cast
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -125,11 +125,11 @@ class KeyboardEvent(InputEvent):
             self.modifiers |= (1 << Atspi.ModifierType.NUMLOCK)
         self.keyval_name: str = Gdk.keyval_name(keysym) or ""
         self.timestamp: float = time.time()
-        self._script: Optional[default.Script] = None
-        self._window: Optional[Atspi.Accessible] = None
-        self._obj: Optional[Atspi.Accessible] = None
-        self._handler: Optional[InputEventHandler] = None
-        self._consumer: Optional[Callable[..., bool]] = None
+        self._script: default.Script | None = None
+        self._window: Atspi.Accessible | None = None
+        self._obj: Atspi.Accessible | None = None
+        self._handler: InputEventHandler | None = None
+        self._consumer: Callable[..., bool] | None = None
         self._is_kp_with_numlock: bool = False
 
         # Some implementors don't include numlock in the modifiers. Unfortunately,
@@ -501,7 +501,7 @@ class KeyboardEvent(InputEvent):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def get_locking_state(self) -> Optional[bool]:
+    def get_locking_state(self) -> bool | None:
         """Returns True if the event locked a locking key, False if the event unlocked it, and None
         if not a locking key."""
 
@@ -549,12 +549,12 @@ class KeyboardEvent(InputEvent):
 
         return self.keyval_name
 
-    def get_object(self) -> Optional[Atspi.Accessible]:
+    def get_object(self) -> Atspi.Accessible | None:
         """Returns the object believed to be associated with this key event."""
 
         return self._obj
 
-    def set_object(self, obj: Optional[Atspi.Accessible]) -> None:
+    def set_object(self, obj: Atspi.Accessible | None) -> None:
         """Sets the object believed to be associated with this key event."""
 
         module_name = inspect.getmodulename(inspect.stack()[1].filename)
@@ -563,12 +563,12 @@ class KeyboardEvent(InputEvent):
 
         self._obj = obj
 
-    def get_window(self) -> Optional[Atspi.Accessible]:
+    def get_window(self) -> Atspi.Accessible | None:
         """Returns the window believed to be associated with this key event."""
 
         return self._window
 
-    def set_window(self, window: Optional[Atspi.Accessible]) -> None:
+    def set_window(self, window: Atspi.Accessible | None) -> None:
         """Sets the window believed to be associated with this key event."""
 
         module_name = inspect.getmodulename(inspect.stack()[1].filename)
@@ -577,12 +577,12 @@ class KeyboardEvent(InputEvent):
 
         self._window = window
 
-    def get_script(self) -> Optional[default.Script]:
+    def get_script(self) -> default.Script | None:
         """Returns the script believed to be associated with this key event."""
 
         return self._script
 
-    def set_script(self, script: Optional[default.Script]) -> None:
+    def set_script(self, script: default.Script | None) -> None:
         """Sets the script believed to be associated with this key event."""
 
         module_name = inspect.getmodulename(inspect.stack()[1].filename)
@@ -591,12 +591,12 @@ class KeyboardEvent(InputEvent):
 
         self._script = script
 
-    def get_handler(self) -> Optional[InputEventHandler]:
+    def get_handler(self) -> InputEventHandler | None:
         """Returns the handler associated with this key event."""
 
         return self._handler
 
-    def _get_user_handler(self) -> Optional[InputEventHandler]:
+    def _get_user_handler(self) -> InputEventHandler | None:
         # TODO - JD: This should go away once plugin support is in place.
         try:
             bindings = settings.keyBindingsMap.get(self._script.__module__)
@@ -755,12 +755,12 @@ class BrailleEvent(InputEvent):
     def __init__(self, event: dict) -> None:
         super().__init__(BRAILLE_EVENT)
         self.event: dict = event
-        self._script: Optional[default.Script] = script_manager.get_manager().get_active_script()
+        self._script: default.Script | None = script_manager.get_manager().get_active_script()
 
     def __str__(self) -> str:
         return f"{self.type.upper()} {self.event}"
 
-    def get_handler(self) -> Optional[InputEventHandler]:
+    def get_handler(self) -> InputEventHandler | None:
         """Returns the handler associated with this event."""
 
         try:
@@ -771,7 +771,7 @@ class BrailleEvent(InputEvent):
             return None
 
         command: str = self.event["command"]
-        user_bindings: Optional[dict] = None
+        user_bindings: dict | None = None
         user_bindings_map: dict = settings.brailleBindingsMap
         if self._script.name in user_bindings_map:
             user_bindings = user_bindings_map[self._script.name]
