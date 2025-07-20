@@ -1293,7 +1293,7 @@ class AXObject:
             if result and not result.endswith("+"):
                 sequence = result
 
-        return keynames.localizeKeySequence(sequence)
+        return keynames.localize_key_sequence(sequence)
 
     @staticmethod
     def get_accelerator(obj: Atspi.Accessible) -> str:

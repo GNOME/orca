@@ -39,7 +39,7 @@ class Script(default.Script):
             default.Script.on_text_inserted(self, event)
             return
 
-        self.presentMessage(AXObject.get_name(event.source))
+        self.present_message(AXObject.get_name(event.source))
 
     def on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""

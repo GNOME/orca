@@ -28,6 +28,9 @@
 
 """Produces speech presentation for accessible objects."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -35,6 +38,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2011 Orca Team" \
                 "Copyright (c) 2011-2015 Igalia, S.L."
 __license__   = "LGPL"
+
+from typing import Any, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -53,9 +58,15 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from . import script
+
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
+
+    # Type annotation to override the base class script type
+    _script: script.Script
 
     @staticmethod
     def log_generator_output(func):
@@ -69,20 +80,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return wrapper
 
     @log_generator_output
-    def _generate_old_ancestors(self, obj, **args):
+    def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if args.get("index", 0) > 0:
             return []
 
         return super()._generate_old_ancestors(obj, **args)
 
     @log_generator_output
-    def _generate_new_ancestors(self, obj, **args):
+    def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if args.get("index", 0) > 0 and AXObject.find_ancestor(obj, AXUtilities.is_list) is None:
             return []
 
         return super()._generate_new_ancestors(obj, **args)
 
-    def _generate_ancestors(self, obj, **args):
+    def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_ancestors(obj, **args)
 
@@ -90,7 +101,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if manager.in_say_all() and obj == manager.get_locus_of_focus():
             return []
 
-        result = []
+        result: list[Any] = []
         prior_obj = args.get("priorObj")
         if prior_obj and self._script.utilities.inDocumentContent(prior_obj):
             prior_doc = self._script.utilities.getDocumentForObject(prior_obj)
@@ -129,12 +140,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_state_has_popup(self, obj, **args):
+    def _generate_state_has_popup(self, obj: Atspi.Accessible, **args) -> list[Any]:
         # TODO - JD: Can this be merged into the default's
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        result = []
+        result: list[Any] = []
         attrs = AXObject.get_attributes_dict(obj)
         popup_type = attrs.get("haspopup", "false").lower()
         if popup_type == "dialog":
@@ -155,7 +166,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_state_has_popup(obj, **args)
 
     @log_generator_output
-    def _generate_has_click_action(self, obj, **args):
+    def _generate_has_click_action(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -168,12 +179,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.isClickableElement(obj):
             return []
 
-        result = [object_properties.STATE_CLICKABLE]
+        result: list[Any] = [object_properties.STATE_CLICKABLE]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
-    def _generate_accessible_description(self, obj, **args):
+    def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -194,9 +205,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return []
 
         format_type = args.get("formatType")
-        if format_type == "basicWhereAmI" and AXUtilities.is_live_region(obj):
-            return self._script.live_region_manager.generateLiveRegionDescription(obj, **args)
-
         if AXUtilities.is_text(obj, args.get("role")) and format_type != "basicWhereAmI":
             return []
 
@@ -207,7 +215,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_accessible_description(obj, **args)
 
     @log_generator_output
-    def _generate_has_long_description(self, obj, **args):
+    def _generate_has_long_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -217,12 +225,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.hasLongDesc(obj):
             return []
 
-        result = [object_properties.STATE_HAS_LONGDESC]
+        result: list[Any] = [object_properties.STATE_HAS_LONGDESC]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
-    def _generate_has_details(self, obj, **args):
+    def _generate_has_details(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -237,16 +245,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return str.strip(f"{AXObject.get_name(x)} {self.get_localized_role_name(x)}")
 
         to_present = ", ".join(set(map(obj_string, objs)))
-        result = [object_properties.RELATION_HAS_DETAILS % to_present]
+        result: list[Any] = [object_properties.RELATION_HAS_DETAILS % to_present]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
-    def _generate_all_details(self, obj, **args):
+    def _generate_all_details(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        objs = []
+        objs: list[Atspi.Accessible] = []
         container = obj
         while container and not objs:
             objs = AXUtilities.get_details(container)
@@ -255,7 +263,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        result = [object_properties.RELATION_HAS_DETAILS % ""]
+        result: list[Any] = [object_properties.RELATION_HAS_DETAILS % ""]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         result = []
@@ -274,7 +282,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_details_for(self, obj, **args):
+    def _generate_details_for(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -299,7 +307,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and args.get("endOffset") not in [None, AXText.get_character_count(obj)]:
             return []
 
-        result = []
+        result: list[Any] = []
         for o in objs:
             string = self._script.utilities.expandEOCs(o) or AXObject.get_name(o) \
                 or self.get_localized_role_name(o)
@@ -314,7 +322,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_accessible_label_and_name(self, obj, **args):
+    def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label_and_name(obj, **args)
 
@@ -335,7 +343,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_accessible_label_and_name(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_name(self, obj, **args):
+    def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_name(obj, **args)
 
@@ -362,7 +370,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # TODO - JD: Can this logic be moved to the default speech generator?
         if AXObject.get_name(obj):
             if self._prefer_description_over_name(obj):
-                result = [AXObject.get_description(obj)]
+                result: list[Any] = [AXObject.get_description(obj)]
             else:
                 name = AXObject.get_name(obj)
                 if not AXUtilities.has_explicit_name(obj):
@@ -375,20 +383,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_accessible_name(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_label(self, obj, **args):
+    def _generate_accessible_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label(obj, **args)
 
         label, _objects = self._script.utilities.inferLabelFor(obj)
         if label:
-            result = [label]
+            result: list[Any] = [label]
             result.extend(self.voice(speech_generator.DEFAULT, obj=obj, **args))
             return result
 
         return []
 
     @log_generator_output
-    def _generate_leaving(self, obj, **args):
+    def _generate_leaving(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
@@ -398,14 +406,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.inDocumentContent(obj) \
            and not self._script.utilities.inDocumentContent(
                focus_manager.get_manager().get_locus_of_focus()):
-            result = [""]
+            result: list[Any] = [""]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
         return super()._generate_leaving(obj, **args)
 
     @log_generator_output
-    def _generate_new_radio_button_group(self, obj, **args):
+    def _generate_new_radio_button_group(self, obj: Atspi.Accessible, **args) -> list[Any]:
         # TODO - JD: The default speech generator"s method determines group membership
         # via the member-of relation. We cannot count on that here. Plus, radio buttons
         # on the web typically live in a group which is labelled. Thus the new-ancestor
@@ -414,7 +422,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     @log_generator_output
-    def _generate_number_of_children(self, obj, **args):
+    def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
            or settings_manager.get_manager().get_setting("speechVerbosityLevel") \
                == settings.VERBOSITY_LEVEL_BRIEF:
@@ -442,7 +450,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if AXUtilities.is_description_list(obj):
-            result = [messages.description_list_term_count(set_size)]
+            result: list[Any] = [messages.description_list_term_count(set_size)]
         elif role == "ROLE_FEED":
             result = [messages.feed_article_count(set_size)]
         else:
@@ -450,7 +458,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def get_localized_role_name(self, obj, **args):
+    def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if not self._script.utilities.inDocumentContent(obj):
             return super().get_localized_role_name(obj, **args)
 
@@ -461,7 +469,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super().get_localized_role_name(obj, **args)
 
     @log_generator_output
-    def _generate_real_active_descendant_displayed_text(self, obj, **args):
+    def _generate_real_active_descendant_displayed_text(
+        self,
+        obj: Atspi.Accessible,
+        **args
+    ) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
@@ -469,7 +481,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return self._generate_text_content(rad, **args)
 
     @log_generator_output
-    def _generate_accessible_role(self, obj, **args):
+    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_role(obj, **args)
 
@@ -479,7 +491,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         roledescription = AXObject.get_role_description(obj)
         if roledescription:
-            result = [roledescription]
+            result: list[Any] = [roledescription]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
@@ -498,7 +510,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         mgr = input_event_manager.get_manager()
         is_editable = AXUtilities.is_editable(obj)
-        if is_editable and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
+        if is_editable \
+           and not self._script.utilities.isContentEditableWithEmbeddedObjects(obj):
             if focus_manager.get_manager().in_say_all() and start:
                 return []
             if mgr.last_event_was_forward_caret_navigation() and start:
@@ -537,7 +550,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if self._script.utilities.hasUselessCanvasDescendant(obj):
                     result.append(self.get_localized_role_name(obj, role=Atspi.Role.IMAGE))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-                if index == total - 1 or not self._script.utilities.isFocusableWithMathChild(obj):
+                if index == total - 1 \
+                   or not self._script.utilities.isFocusableWithMathChild(obj):
                     result.append(self.get_localized_role_name(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
@@ -551,7 +565,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_position_in_list(self, obj, **args):
+    def _generate_position_in_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if AXUtilities.is_list_item(obj):
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return []
@@ -563,7 +577,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_position_in_list(obj, **args)
 
     @log_generator_output
-    def _generate_state_unselected(self, obj, **args):
+    def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.inFocusMode():
             return []
 
@@ -572,7 +586,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     # TODO - JD: This function and its associated fake role really need to die....
     # TODO - JD: Why isn"t this logic part of normal table cell generation?
     @log_generator_output
-    def _generate_real_table_cell(self, obj, **args):
+    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_real_table_cell(obj, **args)
         if not self._script.inFocusMode():
             return result
@@ -594,7 +608,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def generate_speech(self, obj, **args):
+    def generate_speech(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default speech generator."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -603,7 +617,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         tokens = ["WEB: Generating speech for document object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        result = []
+        result: list[Any] = []
         if self._script.utilities.isLink(obj):
             args["role"] = Atspi.Role.LINK
         elif self._script.utilities.isCustomImage(obj):
@@ -629,11 +643,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
-    def generate_contents(self, contents, **args):
+    def generate_contents(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args
+    ) -> list[Any]:
         if not contents:
             return []
 
-        result = []
+        result: list[Any] = []
         contents = self._script.utilities.filterContentsForPresentation(contents, True)
         tokens = ["WEB: Generating speech contents (length:", len(contents), ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

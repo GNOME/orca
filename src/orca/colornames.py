@@ -27,7 +27,7 @@ __license__   = "LGPL"
 
 import re
 
-from .orca_i18n import C_
+from .orca_i18n import C_ # pylint: disable=import-error
 
 css_names = {}
 

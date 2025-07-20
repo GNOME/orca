@@ -106,7 +106,7 @@ class Script(gtk.Script):
 
         line = messages.CHAT_NEW_TAB % AXObject.get_name(event.any_data)
         voice = self.speech_generator.voice(obj=event.any_data, string=line)
-        self.speakMessage(line, voice=voice)
+        self.speak_message(line, voice=voice)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -168,7 +168,7 @@ class Script(gtk.Script):
         obj = event.source
         if self.chat.isInBuddyList(obj):
             obj = AXObject.get_next_sibling(obj)
-            self.presentObject(obj, alreadyFocused=True)
+            self.present_object(obj, alreadyFocused=True)
             return
 
         super().on_expanded_changed(event)

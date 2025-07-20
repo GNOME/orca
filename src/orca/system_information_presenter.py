@@ -174,7 +174,7 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         time_format = settings_manager.get_manager().get_setting('presentTimeFormat')
-        script.presentMessage(time.strftime(time_format, time.localtime()))
+        script.present_message(time.strftime(time_format, time.localtime()))
         return True
 
     @dbus_service.command
@@ -191,7 +191,7 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         data_format = settings_manager.get_manager().get_setting('presentDateFormat')
-        script.presentMessage(time.strftime(data_format, time.localtime()))
+        script.present_message(time.strftime(data_format, time.localtime()))
         return True
 
     @dbus_service.command
@@ -208,7 +208,7 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (_PSUTIL_AVAILABLE and psutil.sensors_battery()):
-            script.presentMessage(messages.BATTERY_STATUS_UNKNOWN)
+            script.present_message(messages.BATTERY_STATUS_UNKNOWN)
             return True
 
         battery = psutil.sensors_battery()
@@ -217,7 +217,7 @@ class SystemInformationPresenter:
         else:
             msg = f"{messages.BATTERY_LEVEL % battery.percent} {messages.BATTERY_PLUGGED_IN_FALSE}"
 
-        script.presentMessage(msg)
+        script.present_message(msg)
         return True
 
     @dbus_service.command
@@ -234,7 +234,7 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not _PSUTIL_AVAILABLE:
-            script.presentMessage(messages.CPU_AND_MEMORY_USAGE_UNKNOWN)
+            script.present_message(messages.CPU_AND_MEMORY_USAGE_UNKNOWN)
             return True
 
         cpu_usage = round(psutil.cpu_percent())
@@ -249,7 +249,7 @@ class SystemInformationPresenter:
                 memory.used / (1024 ** 2), memory.total / (1024 ** 2))
 
         msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_percent)}. {details}"
-        script.presentMessage(msg)
+        script.present_message(msg)
         return True
 
 

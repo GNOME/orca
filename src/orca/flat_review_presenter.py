@@ -783,7 +783,7 @@ class FlatReviewPresenter:
 
         if settings_manager.get_manager().get_setting('speechVerbosityLevel') \
            != settings.VERBOSITY_LEVEL_BRIEF:
-            script.presentMessage(messages.FLAT_REVIEW_START)
+            script.present_message(messages.FLAT_REVIEW_START)
         self._item_presentation(script, event)
 
     def quit(
@@ -809,7 +809,7 @@ class FlatReviewPresenter:
 
         if settings_manager.get_manager().get_setting('speechVerbosityLevel') \
            != settings.VERBOSITY_LEVEL_BRIEF:
-            script.presentMessage(messages.FLAT_REVIEW_STOP)
+            script.present_message(messages.FLAT_REVIEW_STOP)
         script.update_braille(focus)
 
     @dbus_service.command
@@ -1242,7 +1242,7 @@ class FlatReviewPresenter:
 
         self._context = self.get_or_create_context(script)
         if not isinstance(event, input_event.BrailleEvent):
-            script.presentObject(self._context.get_current_object(), speechonly=True)
+            script.present_object(self._context.get_current_object(), speechonly=True)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
@@ -1428,7 +1428,7 @@ class FlatReviewPresenter:
 
         for string in self._get_all_lines(script, event)[0]:
             if not string.isspace():
-                script.speakMessage(string, script.speech_generator.voice(string=string))
+                script.speak_message(string, script.speech_generator.voice(string=string))
 
         return True
 
@@ -1467,12 +1467,12 @@ class FlatReviewPresenter:
 
         if not self.is_active():
             if notify_user:
-                script.presentMessage(messages.FLAT_REVIEW_NOT_IN)
+                script.present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
         script.get_clipboard_presenter().set_text(self._current_contents.rstrip("\n"))
         if notify_user:
-            script.presentMessage(messages.FLAT_REVIEW_COPIED)
+            script.present_message(messages.FLAT_REVIEW_COPIED)
         return True
 
     @dbus_service.command
@@ -1490,12 +1490,12 @@ class FlatReviewPresenter:
 
         if not self.is_active():
             if notify_user:
-                script.presentMessage(messages.FLAT_REVIEW_NOT_IN)
+                script.present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
         script.get_clipboard_presenter().append_text(self._current_contents.rstrip("\n"))
         if notify_user:
-            script.presentMessage(messages.FLAT_REVIEW_APPENDED)
+            script.present_message(messages.FLAT_REVIEW_APPENDED)
         return True
 
     @dbus_service.command
@@ -1516,10 +1516,10 @@ class FlatReviewPresenter:
 
         if self._restrict:
             if notify_user:
-                script.presentMessage(messages.FLAT_REVIEW_RESTRICTED)
+                script.present_message(messages.FLAT_REVIEW_RESTRICTED)
         else:
             if notify_user:
-                script.presentMessage(messages.FLAT_REVIEW_UNRESTRICTED)
+                script.present_message(messages.FLAT_REVIEW_UNRESTRICTED)
         if self.is_active():
             # Reset the context
             self._context = None
@@ -1541,11 +1541,11 @@ class FlatReviewPresenter:
 
         if not isinstance(event, input_event.BrailleEvent):
             if not line_string or line_string == "\n":
-                script.speakMessage(messages.BLANK)
+                script.speak_message(messages.BLANK)
             elif line_string.isspace():
-                script.speakMessage(messages.WHITE_SPACE)
+                script.speak_message(messages.WHITE_SPACE)
             elif line_string.isupper() and (speech_type < 2 or speech_type > 3):
-                script.speakMessage(line_string, voice)
+                script.speak_message(line_string, voice)
             elif speech_type == 2:
                 script.spell_item(line_string)
             elif speech_type == 3:
@@ -1554,7 +1554,7 @@ class FlatReviewPresenter:
                 manager = speech_and_verbosity_manager.get_manager()
                 line_string = manager.adjust_for_presentation(
                     self._context.get_current_object(), line_string)
-                script.speakMessage(line_string, voice)
+                script.speak_message(line_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
@@ -1575,15 +1575,15 @@ class FlatReviewPresenter:
         voice = script.speech_generator.voice(string=word_string)
         if not isinstance(event, input_event.BrailleEvent):
             if not word_string or word_string == "\n":
-                script.speakMessage(messages.BLANK)
+                script.speak_message(messages.BLANK)
             else:
                 line_string = self._context.get_current_line_string()
                 if line_string == "\n":
-                    script.speakMessage(messages.BLANK)
+                    script.speak_message(messages.BLANK)
                 elif word_string.isspace():
-                    script.speakMessage(messages.WHITE_SPACE)
+                    script.speak_message(messages.WHITE_SPACE)
                 elif word_string.isupper() and speech_type == 1:
-                    script.speakMessage(word_string, voice)
+                    script.speak_message(word_string, voice)
                 elif speech_type == 2:
                     script.spell_item(word_string)
                 elif speech_type == 3:
@@ -1592,7 +1592,7 @@ class FlatReviewPresenter:
                     manager = speech_and_verbosity_manager.get_manager()
                     word_string = manager.adjust_for_presentation(
                         self._context.get_current_object(), word_string)
-                    script.speakMessage(word_string, voice)
+                    script.speak_message(word_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
@@ -1616,12 +1616,12 @@ class FlatReviewPresenter:
             char_string = self._context.get_current_character_string()
         if not isinstance(event, input_event.BrailleEvent):
             if not char_string:
-                script.speakMessage(messages.BLANK)
+                script.speak_message(messages.BLANK)
             else:
                 if char_string == "\n" and speech_type != 3:
-                    script.speakMessage(messages.BLANK)
+                    script.speak_message(messages.BLANK)
                 elif speech_type == 3:
-                    script.speakMessage(messages.UNICODE % f"{ord(char_string):04x}")
+                    script.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
                 elif speech_type == 2:
                     script.phoneticSpellCurrentItem(char_string)
                 else:

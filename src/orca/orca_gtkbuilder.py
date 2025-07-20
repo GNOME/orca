@@ -30,7 +30,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from .orca_i18n import _
+from .orca_i18n import _ # pylint: disable=import-error
 
 class GtkBuilderWrapper:
     """

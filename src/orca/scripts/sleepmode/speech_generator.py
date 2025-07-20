@@ -20,19 +20,29 @@
 
 """Speech Generator for Sleep Mode. Does nothing."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import Any, TYPE_CHECKING
+
 from orca import debug
 from orca import speech_generator
+
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Speech Generator for Sleep Mode. Does nothing."""
 
-    def generate_speech(self, _obj, **_args):
+    def generate_speech(self, obj: Atspi.Accessible, **args) -> list[Any]:
         msg = "SLEEP MODE SPEECH GENERATOR: Generating nothing."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return []

@@ -120,14 +120,14 @@ class BypassModeManager:
         self._is_active = not self._is_active
         if not self._is_active:
             if event is not None:
-                script.presentMessage(messages.BYPASS_MODE_DISABLED)
+                script.present_message(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
             script.add_key_grabs(reason)
             orca_modifier_manager.get_manager().refresh_orca_modifiers(reason)
             return True
 
         if event is not None:
-            script.presentMessage(messages.BYPASS_MODE_ENABLED)
+            script.present_message(messages.BYPASS_MODE_ENABLED)
 
         reason = "bypass mode enabled"
         script.remove_key_grabs(reason)

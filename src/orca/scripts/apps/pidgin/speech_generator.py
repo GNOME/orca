@@ -17,7 +17,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Produces speech presentation for accessible objects."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -25,11 +30,23 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from typing import Any, TYPE_CHECKING
+
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from orca import debug
 from orca import speech_generator
 
+if TYPE_CHECKING:
+    from . import script
+
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
+
+    # Type annotation to override the base class script type
+    _script: script.Script
 
     @staticmethod
     def log_generator_output(func):
@@ -43,11 +60,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return wrapper
 
     @log_generator_output
-    def _generate_state_expanded(self, obj, **args):
+    def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
         cell = self._script.utilities.get_expander_cell_for(obj) or obj
         return super()._generate_state_expanded(cell, **args)
 
     @log_generator_output
-    def _generate_number_of_children(self, obj, **args):
+    def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
         cell = self._script.utilities.get_expander_cell_for(obj) or obj
         return super()._generate_number_of_children(cell, **args)

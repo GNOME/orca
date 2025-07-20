@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Dictionary of abbreviated rolenames for use with braille."""
 
 __id__        = "$Id$"
@@ -29,8 +31,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from .orca_i18n import _
-from .orca_i18n import C_
+from .orca_i18n import _, C_ # pylint: disable=import-error
 
 shortRoleNames = {
     # Translators: short braille for the rolename of an invalid GUI object.

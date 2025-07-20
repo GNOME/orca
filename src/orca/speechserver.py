@@ -17,18 +17,28 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Provides an abtract class for working with speech servers.
+# pylint: disable=too-many-public-methods
+# pylint: disable=unused-argument
 
-A speech server (class SpeechServer) provides the ability to tell the
-machine to speak.  Each speech server provides a set of known
-voices (identified by name) which can be combined with various
-attributes to create aural style sheets."""
+"""Functionality for working with speech servers."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+from typing import Any, Callable, Iterator, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+    from . import input_event
+    from .acss import ACSS
 
 class VoiceFamily(dict):
     """Holds the family description for a voice."""
@@ -50,7 +60,7 @@ class VoiceFamily(dict):
         VARIANT: None,
     }
 
-    def __init__(self, props):
+    def __init__(self, props: dict[str, Any] | None) -> None:
         """Create and initialize VoiceFamily."""
         dict.__init__(self)
 
@@ -59,213 +69,160 @@ class VoiceFamily(dict):
             self.update(props)
 
 class SayAllContext:
+    """Contains information about the current state of a Say All operation."""
 
     PROGRESS    = 0
     INTERRUPTED = 1
     COMPLETED   = 2
 
-    def __init__(self, obj, utterance, startOffset=-1, endOffset=-1):
-        """Creates a new SayAllContext that will be passed to the
-        SayAll callback handler for progress updates on speech.
-        If the object does not have an accessible text specialization,
-        then startOffset and endOffset parameters are meaningless.
-        If the object does have an accessible text specialization,
-        then values >= 0 for startOffset and endOffset indicate
-        where in the text the utterance has come from.
+    def __init__(
+        self,
+        obj: Atspi.Accessible,
+        utterance: str,
+        start_offset: int = -1,
+        end_offset: int = -1
+    ) -> None:
+        self.obj = obj
+        self.utterance = utterance
+        self.start_offset = start_offset
+        self.end_offset = end_offset
+        self.current_offset = start_offset
+        self.current_end_offset = None
 
-        Arguments:
-        -obj:         the Accessible being spoken
-        -utterance:   the actual utterance being spoken
-        -startOffset: the start offset of the Accessible's text
-        -endOffset:   the end offset of the Accessible's text
-        """
-        self.obj           = obj
-        self.utterance     = utterance
-        self.startOffset   = startOffset
-        self.endOffset     = endOffset
-        self.currentOffset = startOffset
-        self.currentEndOffset = None
+    def __str__(self) -> str:
+        return (
+            f"SAY ALL: {self.obj} '{self.utterance}' ({self.start_offset}-{self.end_offset}, "
+            f"current: {self.current_offset})"
+        )
 
-    def __str__(self):
-        return "SAY ALL: %s '%s' (%i-%i, current: %i)" % \
-            (self.obj, self.utterance, self.startOffset, self.endOffset, self.currentOffset)
+    def copy(self) -> SayAllContext:
+        """Returns a copy of this SayAllContext."""
 
-    def copy(self):
-        new = SayAllContext(self.obj, self.utterance,
-                            self.startOffset, self.endOffset)
-        new.currentOffset = self.currentOffset
-        new.currentEndOffset = self.currentEndOffset
+        new = SayAllContext(self.obj, self.utterance, self.start_offset, self.end_offset)
+        new.current_offset = self.current_offset
+        new.current_end_offset = self.current_end_offset
         return new
 
-    def __eq__(self, other):
-        return (self.startOffset == other.startOffset and
-                self.endOffset == other.endOffset and
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SayAllContext):
+            return False
+        return (self.start_offset == other.start_offset and
+                self.end_offset == other.end_offset and
                 self.obj == other.obj and
                 self.utterance == other.utterance)
 
 
-class SpeechServer(object):
+class SpeechServer:
     """Provides speech server abstraction."""
 
     @staticmethod
-    def getFactoryName():
+    def get_factory_name() -> str:
         """Returns a localized name describing this factory."""
-        pass
+
+        return ""
 
     @staticmethod
-    def getSpeechServers():
-        """Gets available speech servers as a list.  The caller
-        is responsible for calling the shutdown() method of each
-        speech server returned.
-        """
-        pass
+    def get_speech_servers() -> list[Any]:
+        """Returns a list of available speech servers."""
+
+        return []
 
     @staticmethod
-    def get_speech_server(info):
-        """Gets a given SpeechServer based upon the info.
-        See SpeechServer.get_info() for more info.
-        """
-        pass
+    def get_speech_server(_info: Any) -> SpeechServer | None:
+        """Gets a given SpeechServer based upon the [name, id] info."""
 
-    @staticmethod
-    def shutdownActiveServers():
-        """Cleans up and shuts down this factory.
-        """
-        pass
-
-    def __init__(self):
-        pass
-
-    def get_info(self):
-        """Returns [name, id]
-        """
-        pass
-
-    def getVoiceFamilies(self):
-        """Returns a list of VoiceFamily instances representing all
-        voice families known by the speech server."""
-        pass
-
-    def getVoiceFamily(self):
-        """Returns the current voice family as a VoiceFamily dictionary."""
-        pass
-
-    def setVoiceFamily(self, family):
-        """Sets the voice family to family VoiceFamily dictionary."""
-
-        pass
-
-    def speak_character(self, character, acss=None):
-        """Speaks a single character immediately.
-
-        Arguments:
-        - character: text to be spoken
-        - acss:      acss.ACSS instance; if None,
-                     the default voice settings will be used.
-                     Otherwise, the acss settings will be
-                     used to augment/override the default
-                     voice settings.
-        """
-        pass
-
-    def speak_key_event(self, event, acss=None):
-        """Speaks a key event immediately.
-
-        Arguments:
-        - event: the input_event.KeyboardEvent.
-        """
-        pass
-
-    def speak(self, text=None, acss=None, interrupt=True):
-        """Speaks all queued text immediately.  If text is not None,
-        it is added to the queue before speaking.
-
-        Arguments:
-        - text:      optional text to add to the queue before speaking
-        - acss:      acss.ACSS instance; if None,
-                     the default voice settings will be used.
-                     Otherwise, the acss settings will be
-                     used to augment/override the default
-                     voice settings.
-        - interrupt: if True, stops any speech in progress before
-                     speaking the text
-        """
-        pass
-
-    def say_all(self, utterance_iterator, progress_callback):
-        """Iterates through the given utterance_iterator, speaking
-        each utterance one at a time.  Subclasses may postpone
-        getting a new element until the current element has been
-        spoken.
-
-        Arguments:
-        - utterance_iterator: iterator/generator whose next() function
-                             returns a [SayAllContext, acss] tuple
-        - progress_callback:  called as speech progress is made - has a
-                             signature of (SayAllContext, type), where
-                             type is one of PROGRESS, INTERRUPTED, or
-                             COMPLETED.
-        """
-        pass
-
-    def increaseSpeechRate(self, step=5):
-        """Increases the speech rate.
-        """
-        pass
-
-    def decreaseSpeechRate(self, step=5):
-        """Decreases the speech rate.
-        """
-        pass
-
-    def increaseSpeechPitch(self, step=0.5):
-        """Increases the speech pitch.
-        """
-        pass
-
-    def decreaseSpeechPitch(self, step=0.5):
-        """Decreases the speech pitch.
-        """
-        pass
-
-    def increaseSpeechVolume(self, step=0.5):
-        """Increases the speech volume.
-        """
-        pass
-
-    def decreaseSpeechVolume(self, step=0.5):
-        """Decreases the speech volume.
-        """
-        pass
-
-    def updateCapitalizationStyle(self):
-        """Updates the capitalization style used by the speech server."""
-        pass
-
-    def updatePunctuationLevel(self):
-        """Punctuation level changed, inform this speechServer."""
-        pass
-
-    def stop(self):
-        """Stops ongoing speech and flushes the queue."""
-        pass
-
-    def shutdown(self):
-        """Shuts down the speech engine."""
-        pass
-
-    def reset(self, text=None, acss=None):
-        """Resets the speech engine."""
-        pass
-
-    def getOutputModule(self):
-        """Returns the output module associated with this speech server."""
         return None
 
-    def setOutputModule(self, module_id):
-        """Sets the output module associated with this speech server."""
-        pass
+    @staticmethod
+    def shutdown_active_servers() -> None:
+        """Cleans up and shuts down this factory."""
 
-    def list_output_modules(self):
+    def get_info(self) -> list[str]:
+        """Returns [name, id] of the current speech server."""
+
+        return ["", ""]
+
+    def get_voice_families(self) -> list[VoiceFamily]:
+        """Returns a list of all known VoiceFamily instances provided by the server."""
+
+        return []
+
+    def get_voice_family(self) -> VoiceFamily:
+        """Returns the current voice family as a VoiceFamily dictionary."""
+
+        return VoiceFamily({})
+
+    def set_voice_family(self, family: VoiceFamily) -> None:
+        """Sets the voice family to family VoiceFamily dictionary."""
+
+    def speak_character(self, character: str, acss: ACSS | None = None) -> None:
+        """Speaks character."""
+
+    def speak_key_event(self, event: input_event.KeyboardEvent, acss: ACSS | None = None) -> None:
+        """Speaks event."""
+
+    def speak(
+        self,
+        text: str | None = None,
+        acss: ACSS | None = None,
+        interrupt: bool = True
+    ) -> None:
+        """Speaks text using the voice specified by acss."""
+
+    def say_all(
+        self,
+        utterance_iterator: Iterator[tuple[SayAllContext, ACSS]],
+        progress_callback: Callable[[SayAllContext, int], None]
+    ) -> None:
+        """Iterates through the given utterance_iterator, speaking each utterance."""
+
+    def increase_speech_rate(self, step: int = 5) -> None:
+        """Increases the speech rate."""
+
+    def decrease_speech_rate(self, step: int = 5) -> None:
+        """Decreases the speech rate."""
+
+    def increase_speech_pitch(self, step: float = 0.5) -> None:
+        """Increases the speech pitch."""
+
+    def decrease_speech_pitch(self, step: float = 0.5) -> None:
+        """Decreases the speech pitch."""
+
+    def increase_speech_volume(self, step: float = 0.5) -> None:
+        """Increases the speech volume."""
+
+    def decrease_speech_volume(self, step: float = 0.5) -> None:
+        """Decreases the speech volume."""
+
+    def update_capitalization_style(self) -> None:
+        """Updates the capitalization style used by the speech server."""
+
+    def update_punctuation_level(self) -> None:
+        """Punctuation level changed, inform this speechServer."""
+
+    def stop(self) -> None:
+        """Stops ongoing speech and flushes the queue."""
+
+    def shutdown(self) -> None:
+        """Shuts down the speech engine."""
+
+    def reset(self) -> None:
+        """Resets the speech engine."""
+
+    def get_output_module(self) -> str:
+        """Returns the output module associated with this speech server."""
+
+        return ""
+
+    def set_output_module(self, module_id: str) -> None:
+        """Sets the output module associated with this speech server."""
+
+    def list_output_modules(self) -> tuple[str, ...]:
         """Return names of available output modules as a tuple of strings."""
+
         return ()
+
+    def should_change_voice_for_language(self, language: str, dialect: str = "") -> bool:
+        """Returns True if we should change the voice for the specified language."""
+
+        return False

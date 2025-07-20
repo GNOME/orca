@@ -406,7 +406,7 @@ class ClipboardPresenter:
         contents = self._manager.get_contents()
         if not contents or len(contents) > 5000:
             contents = messages.character_count(len(contents))
-        script.presentMessage(messages.CLIPBOARD_CONTAINS % contents, contents)
+        script.present_message(messages.CLIPBOARD_CONTAINS % contents, contents)
         return True
 
     def _connect(self) -> None:
@@ -560,15 +560,15 @@ class ClipboardPresenter:
 
         manager = input_event_manager.get_manager()
         if manager.last_event_was_cut():
-            script.presentMessage(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
+            script.present_message(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
             return
 
         if manager.last_event_was_copy():
-            script.presentMessage(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
+            script.present_message(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
             return
 
         if manager.last_event_was_paste():
-            script.presentMessage(messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
+            script.present_message(messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
             return
 
         msg = "CLIPBOARD PRESENTER: Not presenting change: is not cut, copy, or paste"

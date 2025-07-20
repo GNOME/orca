@@ -25,10 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from .orca_i18n import C_
+from .orca_i18n import C_ # pylint: disable=import-error
 
 # Translators: this is a structure to assist in the generation of
-# localized strings for the various text attributes. 
+# localized strings for the various text attributes.
 #
 # Information can be found in the Atk documentation at:
 # http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
@@ -44,7 +44,7 @@ from .orca_i18n import C_
 # accordance with relevant standards such as:
 #   CSS level 2 (http://www.w3.org/TR/1998/REC-CSS2-19980512),
 #   XHTML 1.0   (http://www.w3.org/TR/2002/REC-xhtml1-20020801), and
-#   WICD        (http://www.w3.org/TR/2005/WD-WICD-20051121/). 
+#   WICD        (http://www.w3.org/TR/2005/WD-WICD-20051121/).
 #
 # Where possible, specific URL references will also be given below for
 # each text attribute.
@@ -68,7 +68,7 @@ attribute_names["bg-color"] = C_("textattr", "background color")
 #
 attribute_names["bg-full-height"] = C_("textattr", "background full height")
 
-# Translators: this attribute specifies whether a GdkBitmap is set for 
+# Translators: this attribute specifies whether a GdkBitmap is set for
 # stippling the background color. It will be a "true" or "false" value.
 # See
 # http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
@@ -109,7 +109,7 @@ attribute_names["fg-color"] = C_("textattr", "foreground color")
 #
 attribute_names["fg-stipple"] = C_("textattr", "foreground stipple")
 
-# Translators: this attribute specifies the effect applied to the font 
+# Translators: this attribute specifies the effect applied to the font
 # used by the text.
 # See:
 # http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#font-effect
@@ -169,8 +169,8 @@ attribute_names["left-margin"] = C_("textattr", "left margin")
 attribute_names["line-height"] = C_("textattr", "line height")
 
 # Translators: this attribute refers to the named style which is associated
-# with the entire paragraph and which controls the default formatting 
-# (font, text size, alignment, etc.) of that paragraph. Examples of 
+# with the entire paragraph and which controls the default formatting
+# (font, text size, alignment, etc.) of that paragraph. Examples of
 # paragraph styles include "Heading 1", "Heading 2", "Caption", "Footnote",
 # "Text Body", "Title", and "Subtitle".
 # See:
@@ -178,7 +178,7 @@ attribute_names["line-height"] = C_("textattr", "line height")
 #
 attribute_names["paragraph-style"] = C_("textattr", "paragraph style")
 
-# Translators: this attribute specifies the pixels of blank space to 
+# Translators: this attribute specifies the pixels of blank space to
 # leave above each newline-terminated line.
 # See:
 # http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
@@ -206,7 +206,7 @@ attribute_names["pixels-inside-wrap"] = C_("textattr", "pixels inside wrap")
 #
 attribute_names["right-margin"] = C_("textattr", "right margin")
 
-# Translators: this attribute specifies the number of pixels that the 
+# Translators: this attribute specifies the number of pixels that the
 # text characters are risen above the baseline.
 # See:
 # http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
@@ -245,7 +245,7 @@ attribute_names["strikethrough"] = C_("textattr", "strike through")
 
 # Translators: this attribute specifies the slant style of the text,
 # if set. Values are "normal", "oblique" or "italic".
-# See: 
+# See:
 # http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #
 attribute_names["style"] = C_("textattr", "style")
@@ -258,7 +258,7 @@ attribute_names["style"] = C_("textattr", "style")
 attribute_names["text-decoration"] = C_("textattr", "text decoration")
 
 # Translators: this attribute specifies the angle at which the text is
-# displayed (i.e. rotated from the norm) and is represented in degrees 
+# displayed (i.e. rotated from the norm) and is represented in degrees
 # of rotation.
 # See:
 # http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal

@@ -144,7 +144,7 @@ class Script(default.Script):
            or AXUtilities.is_info_bar(event.source):
             if AXUtilities.is_application(AXObject.get_parent(event.source)):
                 return
-            self.presentObject(event.source, interrupt=True)
+            self.present_object(event.source, interrupt=True)
             return
 
         super().on_showing_changed(event)

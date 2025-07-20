@@ -19,9 +19,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
 
 """Produces braille presentation for accessible objects."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -29,13 +31,25 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import Any, TYPE_CHECKING
+
 from orca import braille
 from orca import braille_generator
 from orca import debug
 from orca.scripts import web
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from . import script
+
 class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
+
+    # Type annotation to override the base class script type
+    _script: script.Script
 
     @staticmethod
     def log_generator_output(func):
@@ -47,14 +61,19 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
         return wrapper
+
     @log_generator_output
-    def _generate_real_active_descendant_displayed_text(self, obj, **args):
+    def _generate_real_active_descendant_displayed_text(
+        self,
+        obj: Atspi.Accessible,
+        **args
+    ) -> list[Any]:
         if self._script.utilities.is_message_list_status_cell(obj):
             return []
 
         return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
-    def generate_braille(self, obj, **args):
+    def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result, focused_region = super().generate_braille(obj, **args)
         if not result or focused_region != result[0]:
             return [result, focused_region]

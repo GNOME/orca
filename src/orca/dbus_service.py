@@ -354,7 +354,7 @@ class OrcaDBusServiceInterface(Publishable):
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        script.presentMessage(message)
+        script.present_message(message)
         return True
 
     def GetVersion(self) -> str: # pylint: disable=invalid-name

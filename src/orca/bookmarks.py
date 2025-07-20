@@ -164,7 +164,7 @@ class Bookmarks:
                                 context_info['word'], context_info['char'])
             self._bookmarks[index] = context_info
         except KeyError:
-            self._script.presentMessage(messages.BOOKMARK_NOT_FOUND)
+            self._script.present_message(messages.BOOKMARK_NOT_FOUND)
             return
 
         flat_review_presenter.get_presenter().present_item(script, inputEvent)
@@ -175,15 +175,15 @@ class Bookmarks:
     def addBookmark(self, script, inputEvent):
         """ Add an in-page accessible object bookmark for this key. """
         self._bookmarks[inputEvent.hw_code] = self._contextToBookmark(self._get_context())
-        self._script.presentMessage(messages.BOOKMARK_ENTERED)
+        self._script.present_message(messages.BOOKMARK_ENTERED)
 
     def saveBookmarks(self, script, inputEvent):
         """ Save the bookmarks for this script. """
         try:
             self.saveBookmarksToDisk(self._bookmarks)
-            self._script.presentMessage(messages.BOOKMARKS_SAVED)
+            self._script.present_message(messages.BOOKMARKS_SAVED)
         except IOError:
-            self._script.presentMessage(messages.BOOKMARKS_SAVED_FAILURE)
+            self._script.present_message(messages.BOOKMARKS_SAVED_FAILURE)
 
         # Notify the observers
         for o in self._saveObservers:
@@ -198,7 +198,7 @@ class Bookmarks:
 
         # no bookmarks have been entered
         if len(hwkeys) == 0:
-            self._script.presentMessage(messages.BOOKMARKS_NOT_FOUND)
+            self._script.present_message(messages.BOOKMARKS_NOT_FOUND)
             return
         # only 1 bookmark or we are just starting out
         elif len(hwkeys) == 1 or self._currentbookmarkindex is None:
@@ -219,7 +219,7 @@ class Bookmarks:
 
         # no bookmarks have been entered
         if len(hwkeys) == 0:
-            self._script.presentMessage(messages.BOOKMARKS_NOT_FOUND)
+            self._script.present_message(messages.BOOKMARKS_NOT_FOUND)
             return
         # only 1 bookmark or we are just starting out
         elif len(hwkeys) == 1 or self._currentbookmarkindex is None:

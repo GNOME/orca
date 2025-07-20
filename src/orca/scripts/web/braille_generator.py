@@ -24,6 +24,9 @@
 
 """Produces braille presentation for accessible objects."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -31,6 +34,8 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2011 Orca Team" \
                 "Copyright (c) 2011-2015 Igalia, S.L."
 __license__   = "LGPL"
+
+from typing import Any, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -46,9 +51,15 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from . import script
+
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
+
+    # Type annotation to override the base class script type
+    _script: script.Script
 
     @staticmethod
     def log_generator_output(func):
@@ -61,7 +72,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return result
         return wrapper
 
-    def get_localized_role_name(self, obj, **args):
+    def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if not self._script.utilities.inDocumentContent(obj):
             return super().get_localized_role_name(obj, **args)
 
@@ -72,7 +83,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super().get_localized_role_name(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_role(self, obj, **args):
+    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Prevents some roles from being displayed."""
 
         if not self._script.utilities.inDocumentContent(obj):
@@ -131,7 +142,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     @log_generator_output
-    def _generate_accessible_label(self, obj, **args):
+    def _generate_accessible_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label(obj, **args)
 
@@ -142,7 +153,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generate_accessible_label(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_label_and_name(self, obj, **args):
+    def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_label_and_name(obj, **args)
 
@@ -159,7 +170,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generate_accessible_label_and_name(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_description(self, obj, **args):
+    def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_description(obj, **args)
 
@@ -170,7 +181,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generate_accessible_description(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_name(self, obj, **args):
+    def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_accessible_name(obj, **args)
 
@@ -196,14 +207,18 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     @log_generator_output
-    def _generate_real_active_descendant_displayed_text(self, obj, **args):
+    def _generate_real_active_descendant_displayed_text(
+        self,
+        obj: Atspi.Accessible,
+        **args
+    ) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
         rad = self._script.utilities.realActiveDescendant(obj)
         return self._generate_text_content(rad, **args)
 
-    def generate_braille(self, obj, **args):
+    def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._script.utilities.inDocumentContent(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default braille generator."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -214,14 +229,14 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         result = []
 
-        args['includeContext'] = not self._script.utilities.inDocumentContent(obj)
+        args["includeContext"] = not self._script.utilities.inDocumentContent(obj)
         if self._script.utilities.isClickableElement(obj) or self._script.utilities.isLink(obj):
             args["role"] = Atspi.Role.LINK
         elif self._script.utilities.isCustomImage(obj):
             args["role"] = Atspi.Role.IMAGE
         elif self._script.utilities.isAnchor(obj):
             args["role"] = Atspi.Role.STATIC
-        elif self._script.utilities.treatAsDiv(obj, offset=args.get('startOffset')):
+        elif self._script.utilities.treatAsDiv(obj, offset=args.get("startOffset")):
             args["role"] = Atspi.Role.SECTION
 
         if AXUtilities.is_menu_item(obj):
@@ -229,12 +244,29 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             if combo_box and not AXUtilities.is_expanded(combo_box):
                 obj = combo_box
         result.extend(super().generate_braille(obj, **args))
-        del args['includeContext']
+        del args["includeContext"]
         return result
 
-    def generate_contents(self, contents, **args):
+    def _needs_separator(self, last_char: str, next_char: str) -> bool:
+        if last_char.isspace() or next_char.isspace():
+            return False
+
+        opening_punctuation = ["(", "[", "{", "<"]
+        closing_punctuation = [".", "?", "!", ":", ",", ";", ")", "]", "}", ">"]
+        if last_char in closing_punctuation or next_char in opening_punctuation:
+            return True
+        if last_char in opening_punctuation or next_char in closing_punctuation:
+            return False
+
+        return last_char.isalnum()
+
+    def generate_contents(  # type: ignore[override]
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args
+    ) -> tuple[list[list[Any]], Any | None]:
         if not contents:
-            return []
+            return [], None
 
         result = []
         contents = self._script.utilities.filterContentsForPresentation(contents, True)
@@ -262,7 +294,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                     last_char = last_region.string[-1]
                 if regions[0].string:
                     next_char = regions[0].string[0]
-                if self._script.utilities.needsSeparator(last_char, next_char):
+                if self._needs_separator(last_char, next_char):
                     regions.insert(0, braille.Region(" "))
 
             last_region = regions[-1]

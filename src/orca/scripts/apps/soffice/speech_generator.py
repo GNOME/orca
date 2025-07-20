@@ -17,15 +17,24 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
+# pylint: disable=wrong-import-position
 
 """Produces speech presentation for accessible objects."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING, Any
+
+import gi
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 from orca import debug
 from orca import focus_manager
@@ -38,9 +47,15 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from . import script
+
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
+
+    # Type annotation to override the base class script type
+    _script: script.Script
 
     @staticmethod
     def log_generator_output(func):
@@ -54,14 +69,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return wrapper
 
     @log_generator_output
-    def _generate_accessible_name(self, obj, **args):
+    def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.isSpreadSheetCell(obj):
             # Currently the coordinates of the cell are exposed as the name.
             return []
         return super()._generate_accessible_name(obj, **args)
 
     @log_generator_output
-    def _generate_text_line(self, obj, **args):
+    def _generate_text_line(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if AXUtilities.is_combo_box(obj):
             if entry := AXObject.find_descendant(obj, AXUtilities.is_text_input):
                 return super()._generate_text_line(entry)
@@ -73,14 +88,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXObject.supports_text(obj):
             text = AXText.get_line_at_offset(obj)[0]
             if not text:
-                result = [messages.BLANK]
+                result: list[Any] = [messages.BLANK]
                 result.extend(self.voice(string=text, obj=obj, **args))
                 return result
 
         return super()._generate_text_line(obj, **args)
 
     @log_generator_output
-    def _generate_state_pressed(self, obj, **args):
+    def _generate_state_pressed(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
 
@@ -91,13 +106,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return super()._generate_state_pressed(obj, **args)
 
         if AXUtilities.is_checked(obj):
-            result = [messages.ON]
+            result: list[Any] = [messages.ON]
         else:
             result = [messages.OFF]
         result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def _generate_too_long(self, obj, **args):
+    def _generate_too_long(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """If there is text in this spread sheet cell, compare the size of
         the text within the table cell with the size of the actual table
         cell and report back to the user if it is larger.
@@ -105,11 +120,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns an indication of how many characters are greater than the size
         of the spread sheet cell, or None if the message fits.
         """
-        if settings_manager.get_manager().get_setting('onlySpeakDisplayedText'):
+        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
         # TODO - JD: Can this be moved to AXText?
-        result = []
+        result: list[Any] = []
         length = AXText.get_character_count(obj)
         too_long_count = 0
         extents = AXComponent.get_rect(obj)
@@ -126,13 +141,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def _generate_has_formula(self, obj, **args):
+    def _generate_has_formula(self, obj: Atspi.Accessible, **args) -> list[Any]:
         formula = AXTable.get_cell_formula(obj)
         if not formula:
             return []
 
         if args.get("formatType") == "basicWhereAmI":
-            result = [f"{messages.HAS_FORMULA}. {formula}"]
+            result: list[Any] = [f"{messages.HAS_FORMULA}. {formula}"]
         else:
             result = [messages.HAS_FORMULA]
 
@@ -140,7 +155,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_real_table_cell(self, obj, **args):
+    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if focus_manager.get_manager().in_say_all():
             return []
 
@@ -181,7 +196,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_new_ancestors(self, obj, **args):
+    def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.isSpreadSheetCell(obj) \
            and self._script.utilities.isDocumentPanel(AXObject.get_parent(args.get("priorObj"))):
             return []
@@ -189,7 +204,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_new_ancestors(obj, **args)
 
     @log_generator_output
-    def _generate_old_ancestors(self, obj, **args):
+    def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.isSpreadSheetCell(args.get("priorObj")):
             return []
 

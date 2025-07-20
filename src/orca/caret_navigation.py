@@ -328,7 +328,7 @@ class CaretNavigation:
         else:
             string = messages.CARET_CONTROL_APP
 
-        script.presentMessage(string)
+        script.present_message(string)
         _settings_manager.set_setting('caretNavigationEnabled', enabled)
         self._last_input_event = None
         self.refresh_bindings_and_grabs(script, "toggling caret navigation")
@@ -360,9 +360,9 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, offset)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.update_braille(obj)
-        script.sayCharacter(obj)
+        script.say_character(obj)
         return True
 
     def _previous_character(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -377,9 +377,9 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, offset)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.update_braille(obj)
-        script.sayCharacter(obj)
+        script.say_character(obj)
         return True
 
     def _next_word(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -408,9 +408,9 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, end)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.update_braille(obj)
-        script.sayWord(obj)
+        script.say_word(obj)
         return True
 
     def _previous_word(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -427,9 +427,9 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.update_braille(obj)
-        script.sayWord(obj)
+        script.say_word(obj)
         return True
 
     def _next_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -457,7 +457,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.speakContents(contents, priorObj=line[-1][0])
         script.displayContents(contents)
         return True
@@ -482,7 +482,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, start)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.speakContents(contents)
         script.displayContents(contents)
         return True
@@ -501,8 +501,8 @@ class CaretNavigation:
         self._last_input_event = event
         obj, start = line[0][0], line[0][1]
         script.utilities.setCaretPosition(obj, start)
-        script.presentationInterrupt()
-        script.sayCharacter(obj)
+        script.presentation_interrupt()
+        script.say_character(obj)
         script.displayContents(line)
         return True
 
@@ -523,8 +523,8 @@ class CaretNavigation:
 
         self._last_input_event = event
         script.utilities.setCaretPosition(obj, end)
-        script.presentationInterrupt()
-        script.sayCharacter(obj)
+        script.presentation_interrupt()
+        script.say_character(obj)
         script.displayContents(line)
         return True
 
@@ -543,7 +543,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, offset = contents[0][0], contents[0][1]
         script.utilities.setCaretPosition(obj, offset)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.speakContents(contents)
         script.displayContents(contents)
         return True
@@ -576,7 +576,7 @@ class CaretNavigation:
         self._last_input_event = event
         obj, offset = contents[-1][0], contents[-1][2]
         script.utilities.setCaretPosition(obj, offset)
-        script.presentationInterrupt()
+        script.presentation_interrupt()
         script.speakContents(contents)
         script.displayContents(contents)
         return True

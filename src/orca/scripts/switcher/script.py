@@ -66,11 +66,11 @@ class Script(default.Script):
         msg = "SWITCHER: Treating event as selection change"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self.presentationInterrupt()
+        self.presentation_interrupt()
         focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(event.source))
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.presentMessage(self.utilities.getSelectionName(event.source),
-                            resetStyles=False, force=True)
+        self.present_message(self.utilities.getSelectionName(event.source),
+                            reset_styles=False, force=True)
         return True
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):

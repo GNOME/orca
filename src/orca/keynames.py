@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Exposes a dictionary, keynames, that maps key events
-into localized words."""
+"""A dictionary that maps key events into localized descriptions."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -27,8 +26,7 @@ __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 
-from .orca_i18n import _
-from .orca_i18n import C_
+from .orca_i18n import _, C_ # pylint: disable=import-error
 
 # __keynames is a dictionary where the keys represent a UTF-8
 # string for a keyboard key and the values represent the common
@@ -307,20 +305,12 @@ def get_key_name(key: str) -> str | None:
 
     return __keynames.get(key)
 
-def localizeKeySequence(keys):
-    """Given a sequence of keys, such as 'Shift Control A', localize the
-    full sequence.
+def localize_key_sequence(keys):
+    """Given a sequence of keys, such as 'Shift Control A', return the localized equivalent."""
 
-    Arguments:
-    - keys: the key sequence to localize
-
-    Returns a string representing the localized version to present to the
-    user
-    """
-
-    keyList = keys.split()
-    for key in keyList:
-        keyName = get_key_name(key) or key
-        keys = keys.replace(key, keyName)
+    key_list = keys.split()
+    for key in key_list:
+        key_name = get_key_name(key) or key
+        keys = keys.replace(key, key_name)
 
     return keys

@@ -163,8 +163,8 @@ class _StringContext:
 
         focus_manager.get_manager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW)
-        self._script.speakMessage(string, voice=voice, interrupt=False)
-        self._script.displayBrailleMessage(self._string, -1)
+        self._script.speak_message(string, voice=voice, interrupt=False)
+        self._script.display_message(self._string, -1)
         return True
 
 
@@ -309,10 +309,10 @@ class _ItemContext:
             or math.sqrt((self._x - prior._x)**2 + (self._y - prior._y)**2) > 25
 
         if interrupt:
-            self._script.presentationInterrupt()
+            self._script.presentation_interrupt()
 
         if self._frame and self._frame != prior._frame:
-            self._script.presentObject(self._frame,
+            self._script._object(self._frame,
                                         alreadyFocused=True,
                                         inMouseReview=True,
                                         interrupt=True)
@@ -321,7 +321,7 @@ class _ItemContext:
             prior_obj = prior._obj or self._get_container()
             focus_manager.get_manager().emit_region_changed(
                 self._obj, mode=focus_manager.MOUSE_REVIEW)
-            self._script.presentObject(self._obj, priorObj=prior_obj, inMouseReview=True)
+            self._script.present_object(self._obj, priorObj=prior_obj, inMouseReview=True)
             if self._string.get_string() == AXObject.get_name(self._obj):
                 return True
             if not (AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj)):
@@ -507,7 +507,7 @@ class MouseReviewer:
 
         script = script_manager.get_manager().get_active_script()
         if script is not None:
-            script.presentMessage(msg)
+            script.present_message(msg)
 
     def _update_workspace_windows(self):
         self._windows = [w for w in self._all_windows

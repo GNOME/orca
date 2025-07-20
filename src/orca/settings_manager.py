@@ -32,7 +32,7 @@ import os
 from gi.repository import Gio, GLib
 
 from . import debug
-from . import orca_i18n
+from . import orca_i18n # pylint: disable=no-name-in-module
 from . import settings
 from . import pronunciation_dict
 from .acss import ACSS

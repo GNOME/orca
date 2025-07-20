@@ -756,7 +756,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         combobox = self.get_widget("speechLanguages")
         combobox.set_model(None)
         self.speechLanguagesModel.clear()
-        self.speechFamilies = self.speechServersChoice.getVoiceFamilies()
+        self.speechFamilies = self.speechServersChoice.get_voice_families()
         self.speechLanguagesChoices = []
 
         if len(self.speechFamilies) == 0:
@@ -867,7 +867,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         combobox.set_model(None)
         self.speechServersModel.clear()
         self.speechServersChoices = \
-                self.speechSystemsChoice.SpeechServer.getSpeechServers()
+                self.speechSystemsChoice.SpeechServer.get_speech_servers()
         if len(self.speechServersChoices) == 0:
             include_stack = debug.debugLevel >= debug.LEVEL_INFO
             debug.print_message(debug.LEVEL_SEVERE, "Speech not available.", True, include_stack)
@@ -940,7 +940,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.workingFactories = []
         for factory in factories:
             try:
-                servers = factory.SpeechServer.getSpeechServers()
+                servers = factory.SpeechServer.get_speech_servers()
                 if len(servers):
                     self.workingFactories.append(factory)
             except Exception:
@@ -963,7 +963,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         i = 0
         for workingFactory in self.workingFactories:
             self.speechSystemsChoices.append(workingFactory)
-            name = workingFactory.SpeechServer.getFactoryName()
+            name = workingFactory.SpeechServer.get_factory_name()
             self.speechSystemsModel.append((i, name))
             i += 1
 
@@ -1926,11 +1926,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - interrupt: if True, interrupt any speech currently being spoken
         """
 
-        self.script.speakMessage(text, interrupt=interrupt)
-        try:
-            self.script.displayBrailleMessage(text, flashTime=-1)
-        except Exception:
-            pass
+        # TODO - JD: Eliminate this function.
+
+        self.script.speak_message(text, interrupt=interrupt)
+        self.script.display_message(text, flash_time=-1)
 
     def _createNode(self, appName):
         """Create a new root node in the TreeStore model with the name of the
@@ -2236,9 +2235,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         for workingFactory in self.workingFactories:
             if not (workingFactory == self.speechSystemsChoice):
-                workingFactory.SpeechServer.shutdownActiveServers()
+                workingFactory.SpeechServer.shutdown_active_servers()
             else:
-                servers = workingFactory.SpeechServer.getSpeechServers()
+                servers = workingFactory.SpeechServer.get_speech_servers()
                 for server in servers:
                     if not (server == self.speechServersChoice):
                         server.shutdown()

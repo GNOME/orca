@@ -352,7 +352,7 @@ class Script(web.Script):
         # we should store presented alerts so we don't double-present them.
         for child in AXObject.iter_children(event.source):
             if AXUtilities.is_alert(child):
-                self.presentObject(child)
+                self.present_object(child)
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""

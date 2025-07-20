@@ -328,7 +328,7 @@ class SpeechAndVerbosityManager:
 
             try:
                 speech_server_class = factory.SpeechServer
-                if server_name := speech_server_class.getFactoryName():
+                if server_name := speech_server_class.get_factory_name():
                     result[server_name] = module_name
 
             except (AttributeError, TypeError, ImportError) as error:
@@ -369,7 +369,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
-        name = server.getFactoryName()
+        name = server.get_factory_name()
         msg = f"SPEECH AND VERBOSITY MANAGER: Server is: {name}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return name
@@ -390,7 +390,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
-        result = server.getOutputModule()
+        result = server.get_output_module()
         msg = f"SPEECH AND VERBOSITY MANAGER: Synthesizer is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
@@ -413,8 +413,8 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting synthesizer to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        server.setOutputModule(value)
-        return server.getOutputModule() == value
+        server.set_output_module(value)
+        return server.get_output_module() == value
 
     @dbus_service.getter
     def get_available_synthesizers(self) -> list[str]:
@@ -426,7 +426,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
-        synthesizers = server.getSpeechServers()
+        synthesizers = server.get_speech_servers()
         result = [s.get_info()[1] for s in synthesizers]
         msg = f"SPEECH AND VERBOSITY MANAGER: Available synthesizers: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -440,7 +440,7 @@ class SpeechAndVerbosityManager:
         if server is None:
             return []
 
-        voices = server.getVoiceFamilies()
+        voices = server.get_voice_families()
         if not voices:
             return []
 
@@ -460,7 +460,7 @@ class SpeechAndVerbosityManager:
             return ""
 
         result = ""
-        if voice_family := server.getVoiceFamily():
+        if voice_family := server.get_voice_family():
             result = voice_family.get(speechserver.VoiceFamily.NAME, "")
 
         return result
@@ -479,7 +479,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        voices = server.getVoiceFamilies()
+        voices = server.get_voice_families()
         if not voices:
             return False
 
@@ -487,7 +487,7 @@ class SpeechAndVerbosityManager:
         for voice_family in voices:
             family_name = voice_family.get(speechserver.VoiceFamily.NAME, "")
             if family_name == voice_name:
-                server.setVoiceFamily(voice_family)
+                server.set_voice_family(voice_family)
                 result = True
                 break
 
@@ -571,7 +571,7 @@ class SpeechAndVerbosityManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if server := self._get_server():
-            server.shutdownActiveServers()
+            server.shutdown_active_servers()
             speech.deprecated_clear_server()
 
         return True
@@ -640,9 +640,9 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decreaseSpeechRate()
+        server.decrease_speech_rate()
         if notify_user and script is not None:
-            script.presentMessage(messages.SPEECH_SLOWER)
+            script.present_message(messages.SPEECH_SLOWER)
 
         return True
 
@@ -665,9 +665,9 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increaseSpeechRate()
+        server.increase_speech_rate()
         if notify_user and script is not None:
-            script.presentMessage(messages.SPEECH_FASTER)
+            script.present_message(messages.SPEECH_FASTER)
 
         return True
 
@@ -718,9 +718,9 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decreaseSpeechPitch()
+        server.decrease_speech_pitch()
         if notify_user and script is not None:
-            script.presentMessage(messages.SPEECH_LOWER)
+            script.present_message(messages.SPEECH_LOWER)
 
         return True
 
@@ -743,9 +743,9 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increaseSpeechPitch()
+        server.increase_speech_pitch()
         if notify_user and script is not None:
-            script.presentMessage(messages.SPEECH_HIGHER)
+            script.present_message(messages.SPEECH_HIGHER)
 
         return True
 
@@ -796,9 +796,9 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.decreaseSpeechVolume()
+        server.decrease_speech_volume()
         if notify_user and script is not None:
-            script.presentMessage(messages.SPEECH_SOFTER)
+            script.present_message(messages.SPEECH_SOFTER)
 
         return True
 
@@ -821,9 +821,9 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.increaseSpeechVolume()
+        server.increase_speech_volume()
         if notify_user and script is not None:
-            script.presentMessage(messages.SPEECH_LOUDER)
+            script.present_message(messages.SPEECH_LOUDER)
 
         return True
 
@@ -836,7 +836,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.updateCapitalizationStyle()
+        server.update_capitalization_style()
         return True
 
     def update_punctuation_level(self) -> bool:
@@ -848,7 +848,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.updatePunctuationLevel()
+        server.update_punctuation_level()
         return True
 
     def update_synthesizer(self, server_id: str | None = "") -> None:
@@ -860,7 +860,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        active_id = server.getOutputModule()
+        active_id = server.get_output_module()
         info = settings.speechServerInfo or ["", ""]
         if not server_id and len(info) == 2:
             server_id = info[1]
@@ -871,7 +871,7 @@ class SpeechAndVerbosityManager:
                 f"to {server_id}."
             )
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            server.setOutputModule(server_id)
+            server.set_output_module(server_id)
 
     @dbus_service.command
     def cycle_synthesizer(
@@ -898,7 +898,7 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        current = server.getOutputModule()
+        current = server.get_output_module()
         if not current:
             msg = "SPEECH AND VERBOSITY MANAGER: Cannot get current output module."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -908,9 +908,9 @@ class SpeechAndVerbosityManager:
         if index == len(available):
             index = 0
 
-        server.setOutputModule(available[index])
+        server.set_output_module(available[index])
         if script is not None and notify_user:
-            script.presentMessage(available[index])
+            script.present_message(available[index])
         return True
 
     @dbus_service.command
@@ -943,7 +943,7 @@ class SpeechAndVerbosityManager:
 
         manager.set_setting("capitalizationStyle", new_style)
         if script is not None and notify_user:
-            script.presentMessage(full, brief)
+            script.present_message(full, brief)
         self.update_capitalization_style()
         return True
 
@@ -981,7 +981,7 @@ class SpeechAndVerbosityManager:
 
         manager.set_setting("verbalizePunctuationStyle", new_level)
         if script is not None and notify_user:
-            script.presentMessage(full, brief)
+            script.present_message(full, brief)
         self.update_punctuation_level()
         return True
 
@@ -1033,7 +1033,7 @@ class SpeechAndVerbosityManager:
         manager.set_setting("enableEchoByWord", new_word)
         manager.set_setting("enableEchoBySentence", new_sentence)
         if script is not None and notify_user:
-            script.presentMessage(full, brief)
+            script.present_message(full, brief)
         return True
 
     @dbus_service.command
@@ -1060,7 +1060,7 @@ class SpeechAndVerbosityManager:
 
         manager.set_setting("speakNumbersAsDigits", not speak_digits)
         if script is not None and notify_user:
-            script.presentMessage(full, brief)
+            script.present_message(full, brief)
         return True
 
     @dbus_service.command
@@ -1078,19 +1078,19 @@ class SpeechAndVerbosityManager:
 
         manager = settings_manager.get_manager()
         if script is not None:
-            script.presentationInterrupt()
+            script.presentation_interrupt()
         if manager.get_setting("silenceSpeech"):
             manager.set_setting("silenceSpeech", False)
             if script is not None and notify_user:
-                script.presentMessage(messages.SPEECH_ENABLED)
+                script.present_message(messages.SPEECH_ENABLED)
         elif not manager.get_setting("enableSpeech"):
             manager.set_setting("enableSpeech", True)
             speech.init()
             if script is not None and notify_user:
-                script.presentMessage(messages.SPEECH_ENABLED)
+                script.present_message(messages.SPEECH_ENABLED)
         else:
             if script is not None and notify_user:
-                script.presentMessage(messages.SPEECH_DISABLED)
+                script.present_message(messages.SPEECH_DISABLED)
             manager.set_setting("silenceSpeech", True)
         return True
 
@@ -1111,11 +1111,11 @@ class SpeechAndVerbosityManager:
         value = manager.get_setting("speechVerbosityLevel")
         if value == settings.VERBOSITY_LEVEL_BRIEF:
             if script is not None and notify_user:
-                script.presentMessage(messages.SPEECH_VERBOSITY_VERBOSE)
+                script.present_message(messages.SPEECH_VERBOSITY_VERBOSE)
             manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_VERBOSE)
         else:
             if script is not None and notify_user:
-                script.presentMessage(messages.SPEECH_VERBOSITY_BRIEF)
+                script.present_message(messages.SPEECH_VERBOSITY_BRIEF)
             manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_BRIEF)
         return True
 
@@ -1142,7 +1142,7 @@ class SpeechAndVerbosityManager:
             full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
             brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
         if script is not None and notify_user:
-            script.presentMessage(full, brief)
+            script.present_message(full, brief)
         return True
 
     @dbus_service.command
@@ -1166,7 +1166,7 @@ class SpeechAndVerbosityManager:
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table is None and notify_user:
-            script.presentMessage(messages.TABLE_NOT_IN_A)
+            script.present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if not script.utilities.getDocumentForObject(table):
@@ -1186,7 +1186,7 @@ class SpeechAndVerbosityManager:
             msg = messages.TABLE_MODE_CELL
 
         if notify_user:
-            script.presentMessage(msg)
+            script.present_message(msg)
         return True
 
     @staticmethod

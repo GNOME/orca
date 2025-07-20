@@ -206,7 +206,7 @@ class SpellCheck:
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speakMessage(msg, voice=voice)
+        self._script.speak_message(msg, voice=voice)
         return True
 
     def present_completion_message(self) -> bool:
@@ -218,7 +218,7 @@ class SpellCheck:
         braille.clear()
         msg = self.get_completion_message()
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.presentMessage(msg, voice=voice)
+        self._script.present_message(msg, voice=voice)
         return True
 
     def present_error_details(self, detailed: bool = False) -> bool:
@@ -253,7 +253,7 @@ class SpellCheck:
 
         msg = messages.MISSPELLED_WORD % word
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speakMessage(msg, voice=voice)
+        self._script.speak_message(msg, voice=voice)
         if detailed or settings_manager.get_manager().get_setting("spellcheckSpellError"):
             self._script.spell_item(word)
 
@@ -280,7 +280,7 @@ class SpellCheck:
         string = AXText.get_substring(entry, 0, -1)
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speakMessage(msg, voice=voice)
+        self._script.speak_message(msg, voice=voice)
         if detailed or settings_manager.get_manager().get_setting("spellcheckSpellSuggestion"):
             self._script.spell_item(string)
 
@@ -314,7 +314,7 @@ class SpellCheck:
 
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speakMessage(msg.strip(), voice=voice)
+        self._script.speak_message(msg.strip(), voice=voice)
         if detailed or settings_manager.get_manager().get_setting("spellcheckSpellSuggestion"):
             self._script.spell_item(string)
 
@@ -322,7 +322,7 @@ class SpellCheck:
            and items[0] == focus_manager.get_manager().get_locus_of_focus():
             index, total = self._get_suggestion_index_and_position(items[0])
             msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}
-            self._script.speakMessage(msg)
+            self._script.speak_message(msg)
 
         return True
 

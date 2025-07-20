@@ -109,7 +109,7 @@ class Script(default.Script):
         if dialog and AXObject.is_ancestor(event.source, dialog):
             msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.presentMessage(AXObject.get_name(event.source))
+            self.present_message(AXObject.get_name(event.source))
 
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""

@@ -129,5 +129,5 @@ class SpellCheck(spellcheck.SpellCheck):
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speakMessage(msg, voice=voice)
+        self._script.speak_message(msg, voice=voice)
         return True

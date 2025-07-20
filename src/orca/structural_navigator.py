@@ -1095,12 +1095,12 @@ class StructuralNavigator:
             msg = messages.STRUCTURAL_NAVIGATION_KEYS_GUI
 
         if notify_user:
-            script.presentMessage(msg)
+            script.present_message(msg)
         self.set_mode(script, mode)
         if mode != NavigationMode.OFF:
             root = self._determine_root_container(script)
             if not AXObject.supports_collection(root) and notify_user:
-                script.presentMessage(messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL,
+                script.present_message(messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL,
                                       messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF)
         return True
 
@@ -1161,14 +1161,14 @@ class StructuralNavigator:
                 if not should_wrap:
                     return None
                 if notify_user:
-                    script.presentMessage(messages.WRAPPING_TO_TOP)
+                    script.present_message(messages.WRAPPING_TO_TOP)
                 return objects[0]
             if index > 0:
                 return objects[index - 1]
             if not should_wrap:
                 return None
             if notify_user:
-                script.presentMessage(messages.WRAPPING_TO_BOTTOM)
+                script.present_message(messages.WRAPPING_TO_BOTTOM)
             return objects[-1]
 
         # If we're not in a matching object, find the next/previous one based on the path.
@@ -1187,10 +1187,10 @@ class StructuralNavigator:
 
         if is_next:
             if notify_user:
-                script.presentMessage(messages.WRAPPING_TO_TOP)
+                script.present_message(messages.WRAPPING_TO_TOP)
         else:
             if notify_user:
-                script.presentMessage(messages.WRAPPING_TO_BOTTOM)
+                script.present_message(messages.WRAPPING_TO_BOTTOM)
         if obj != objects[0]:
             return objects[0]
 
@@ -1300,7 +1300,7 @@ class StructuralNavigator:
             return
 
         script.update_braille(obj)
-        script.sayLine(obj, offset)
+        script.say_line(obj, offset)
 
     def _present_object(
         self,
@@ -1312,7 +1312,7 @@ class StructuralNavigator:
     ) -> None:
         if obj is None:
             if notify_user:
-                script.presentMessage(not_found_message, messages.STRUCTURAL_NAVIGATION_NOT_FOUND)
+                script.present_message(not_found_message, messages.STRUCTURAL_NAVIGATION_NOT_FOUND)
             return
 
         if offset is None:
@@ -1323,7 +1323,7 @@ class StructuralNavigator:
             AXObject.grab_focus(obj)
             AXObject.clear_cache(obj, False, "Checking state after focus grab")
             if not AXUtilities.is_focused(obj) and notify_user:
-                script.presentMessage(messages.NOT_FOCUSED)
+                script.present_message(messages.NOT_FOCUSED)
             return
 
         manager = focus_manager.get_manager()
@@ -1340,7 +1340,7 @@ class StructuralNavigator:
 
             return
 
-        script.presentObject(obj, offset=offset, interrupt=True)
+        script.present_object(obj, offset=offset, interrupt=True)
 
     def _present_object_list(
         self,
@@ -1354,7 +1354,7 @@ class StructuralNavigator:
         dialog_title = f"{dialog_title}: {messages.items_found(len(objects))}"
         if not objects:
             if notify_user:
-                script.presentMessage(dialog_title)
+                script.present_message(dialog_title)
             return
 
         current_object = script.utilities.getCaretContext()[0]
@@ -2591,7 +2591,7 @@ class StructuralNavigator:
             return
 
         if notify_user:
-            script.presentMessage(AXObject.get_name(obj))
+            script.present_message(AXObject.get_name(obj))
         self._present_line(script, obj, 0)
 
     @dbus_service.command
@@ -2891,7 +2891,7 @@ class StructuralNavigator:
         if settings_manager.get_manager().get_setting("inferLiveRegions"):
             script.live_region_manager.goLastLiveRegion()
         elif notify_user:
-            script.presentMessage(messages.LIVE_REGIONS_OFF)
+            script.present_message(messages.LIVE_REGIONS_OFF)
         return True
 
     ########################
@@ -3559,7 +3559,7 @@ class StructuralNavigator:
         container = self._get_current_container(script)
         if container is None:
             if notify_user:
-                script.presentMessage(messages.CONTAINER_NOT_IN_A)
+                script.present_message(messages.CONTAINER_NOT_IN_A)
             return True
 
         obj, offset = script.utilities.nextContext(container, -1)
@@ -3583,7 +3583,7 @@ class StructuralNavigator:
         container = self._get_current_container(script)
         if container is None:
             if notify_user:
-                script.presentMessage(messages.CONTAINER_NOT_IN_A)
+                script.present_message(messages.CONTAINER_NOT_IN_A)
             return True
 
         # Unlike going to the start of the container, when we move to the next edge

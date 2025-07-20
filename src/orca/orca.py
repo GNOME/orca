@@ -83,7 +83,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     if settings_manager.get_manager().get_setting('enableSpeech'):
         speech_and_verbosity_manager.get_manager().start_speech()
         if is_reload and not skip_reload_message:
-            script.speakMessage(messages.SETTINGS_RELOADED)
+            script.speak_message(messages.SETTINGS_RELOADED)
 
     if settings_manager.get_manager().get_setting('enableBraille'):
         braille.init(input_event_manager.get_manager().process_braille_event)
@@ -122,8 +122,8 @@ def shutdown(script=None, _event=None, _signum=None):
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
     script = script_manager.get_manager().get_active_script()
     if script is not None:
-        script.presentationInterrupt()
-        script.presentMessage(messages.STOP_ORCA, resetStyles=False)
+        script.presentation_interrupt()
+        script.present_message(messages.STOP_ORCA, reset_styles=False)
 
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
@@ -197,7 +197,7 @@ def main():
 
     dbus_service.get_remote_controller().start()
     script = script_manager.get_manager().get_default_script()
-    script.presentMessage(messages.START_ORCA)
+    script.present_message(messages.START_ORCA)
 
     event_manager.get_manager().activate()
     script_manager.get_manager().activate()

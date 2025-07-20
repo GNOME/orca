@@ -480,7 +480,7 @@ class Chat:
         settings_manager.get_manager().set_setting('chatSpeakRoomName', not speakRoomName)
         if speakRoomName:
             line = messages.CHAT_ROOM_NAME_PREFIX_OFF
-        self._script.presentMessage(line)
+        self._script.present_message(line)
 
         return True
 
@@ -498,7 +498,7 @@ class Chat:
             'chatAnnounceBuddyTyping', not announceTyping)
         if announceTyping:
             line = messages.CHAT_BUDDY_TYPING_OFF
-        self._script.presentMessage(line)
+        self._script.present_message(line)
 
         return True
 
@@ -515,7 +515,7 @@ class Chat:
         settings_manager.get_manager().set_setting('chatRoomHistories', not roomHistories)
         if roomHistories:
             line = messages.CHAT_SEPARATE_HISTORIES_OFF
-        self._script.presentMessage(line)
+        self._script.present_message(line)
 
         return True
 
@@ -586,8 +586,8 @@ class Chat:
 
         if len(text.strip()):
             voice = self._script.speech_generator.voice(string=text)
-            self._script.speakMessage(text, voice=voice)
-        self._script.displayBrailleMessage(text)
+            self._script.speak_message(text, voice=voice)
+        self._script.display_message(text)
 
     def getMessageFromEvent(self, event):
         """Get the actual displayed message. This will almost always be the
@@ -625,7 +625,7 @@ class Chat:
             #
             return False
 
-        elif self.isInBuddyList(event.source):
+        if self.isInBuddyList(event.source):
             # These are status changes. What the Pidgin script currently
             # does for these is ignore them. It might be nice to add
             # some options to allow the user to customize what status
@@ -634,11 +634,11 @@ class Chat:
             #
             return True
 
-        elif self.isTypingStatusChangedEvent(event):
+        if self.isTypingStatusChangedEvent(event):
             self.presentTypingStatusChange(event, event.any_data)
             return True
 
-        elif self.isChatRoomMsg(event.source):
+        if self.isChatRoomMsg(event.source):
             if self.isNewConversation(event.source):
                 name = self.getChatRoomName(event.source)
                 conversation = Conversation(name, event.source)
@@ -659,10 +659,10 @@ class Chat:
                 self.utterMessage(name, message, focused)
             return True
 
-        elif self.isAutoCompletedTextEvent(event):
+        if self.isAutoCompletedTextEvent(event):
             text = event.any_data
             voice = self._script.speech_generator.voice(string=text)
-            self._script.speakMessage(text, voice=voice)
+            self._script.speak_message(text, voice=voice)
             return True
 
         return False
@@ -682,7 +682,7 @@ class Chat:
             conversation = self.getConversation(event.source)
             if conversation and (status != conversation.getTypingStatus()):
                 voice = self._script.speech_generator.voice(string=status)
-                self._script.speakMessage(status, voice=voice)
+                self._script.speak_message(status, voice=voice)
                 conversation.setTypingStatus(status)
                 return True
 

@@ -89,7 +89,7 @@ class Script(default.Script):
             self.speak_character(newString)
         else:
             voice = self.speech_generator.voice(obj=event.source, string=newString)
-            self.speakMessage(newString, voice=voice)
+            self.speak_message(newString, voice=voice)
 
         if self.get_flat_review_presenter().is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"
@@ -100,9 +100,9 @@ class Script(default.Script):
         self._saveLastCursorPosition(event.source, offset)
         AXText.update_cached_selected_text(event.source)
 
-    def presentKeyboardEvent(self, event):
+    def present_keyboard_event(self, event):
         if not event.is_printable_key():
-            return super().presentKeyboardEvent(event)
+            return super().present_keyboard_event(event)
 
         if event.is_pressed_key():
             return False

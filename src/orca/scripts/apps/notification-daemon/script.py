@@ -43,6 +43,6 @@ class Script(default.Script):
         text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
         voice = self.speech_generator.voice(obj=event.source, string=text)
-        self.speakMessage(text, voice=voice)
-        self.displayBrailleMessage(text, flashTime=settings.brailleFlashTime)
+        self.speak_message(text, voice=voice)
+        self.display_message(text, flash_time=settings.brailleFlashTime)
         self.get_notification_presenter().save_notification(text)

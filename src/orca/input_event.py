@@ -623,12 +623,12 @@ class KeyboardEvent(InputEvent):
             return False
 
         if self.is_pressed_key():
-            self._script.presentationInterrupt()
+            self._script.presentation_interrupt()
 
         if self._script.get_learn_mode_presenter().is_active():
             return False
 
-        return self._script.presentKeyboardEvent(self)
+        return self._script.present_keyboard_event(self)
 
     # pylint:disable=too-many-branches
     # pylint:disable=too-many-return-statements

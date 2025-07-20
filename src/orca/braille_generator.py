@@ -20,15 +20,20 @@
 # pylint: disable=too-many-lines
 # pylint: disable=wrong-import-position
 # pylint: disable=too-few-public-methods
-# pylint: disable=duplicate-code
+# pylint: disable=unused-argument
 
 """Produces braille presentation for accessible objects."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+from typing import Any, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -47,11 +52,14 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_rolenames import shortRoleNames
 
+if TYPE_CHECKING:
+    from . import script
+
 
 class Space:
     """A dummy class to indicate we want to insert a space into an
     utterance, but only if there is text prior to the space."""
-    def __init__(self, delimiter=" "):
+    def __init__(self, delimiter: str = " ") -> None:
         self.delimiter = delimiter
 
 SPACE = [Space()]
@@ -66,7 +74,7 @@ class BrailleGenerator(generator.Generator):
                           Atspi.Role.UNKNOWN,
                           Atspi.Role.COMBO_BOX)
 
-    def __init__(self, script):
+    def __init__(self, script: script.Script) -> None:
         super().__init__(script, "braille")
 
     @staticmethod
@@ -80,7 +88,7 @@ class BrailleGenerator(generator.Generator):
             return result
         return wrapper
 
-    def generate_braille(self, obj, **args):
+    def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns a [result, focused_region] list for presenting obj."""
 
         if not settings_manager.get_manager().get_setting("enableBraille") \
@@ -139,7 +147,7 @@ class BrailleGenerator(generator.Generator):
 
         return [result, focused_region]
 
-    def get_localized_role_name(self, obj, **args):
+    def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if settings_manager.get_manager().get_setting("brailleRolenameStyle") \
                 == settings.BRAILLE_ROLENAME_STYLE_SHORT:
             rv = shortRoleNames.get(args.get("role", AXObject.get_role(obj)))
@@ -148,7 +156,7 @@ class BrailleGenerator(generator.Generator):
 
         return super().get_localized_role_name(obj, **args)
 
-    def _as_string(self, content, delimiter=" "):
+    def _as_string(self, content: Any, delimiter: str = " ") -> str:
         combined = ""
         prior = None
         if isinstance(content, str):
@@ -172,13 +180,13 @@ class BrailleGenerator(generator.Generator):
                         combined = prior
         return combined
 
-    def _generate_result_separator(self, _obj, **_args):
+    def _generate_result_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
         return [braille.Region(" ")]
 
     ################################# BASIC DETAILS #################################
 
     @log_generator_output
-    def _generate_accessible_role(self, obj, **args):
+    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
 
         if args.get('isProgressBarUpdate') \
            and not settings_manager.get_manager().get_setting('brailleProgressBarUpdates'):
@@ -210,7 +218,7 @@ class BrailleGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_alert_and_dialog_count(self, obj,  **_args):
+    def _generate_alert_and_dialog_count(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = []
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
@@ -219,13 +227,13 @@ class BrailleGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_ancestors(self, obj, **args):
+    def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not settings_manager.get_manager().get_setting('enableBrailleContext'):
             return []
         if self._script.get_table_navigator().last_input_event_was_navigation_command():
             return []
 
-        result = []
+        result: list[Any] = []
         args['includeContext'] = False
         parent = AXObject.get_parent_checked(obj)
         if parent and (AXObject.get_role(parent) in self.SKIP_CONTEXT_ROLES):
@@ -243,7 +251,7 @@ class BrailleGenerator(generator.Generator):
 
     ################################### KEYBOARD ###################################
 
-    def _generate_keyboard_accelerator(self, obj, **_args):
+    def _generate_keyboard_accelerator(self, obj: Atspi.Accessible, **args) -> list[Any]:
         verbosity_level = settings_manager.get_manager().get_setting('brailleVerbosityLevel')
         if verbosity_level == settings.VERBOSITY_LEVEL_BRIEF:
             return []
@@ -257,7 +265,7 @@ class BrailleGenerator(generator.Generator):
     ################################ PROGRESS BARS ##################################
 
     @log_generator_output
-    def _generate_progress_bar_index(self, obj, **_args):
+    def _generate_progress_bar_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
         acc = self._get_most_recent_progress_bar_update()[0]
         if acc != obj:
             number = self._get_progress_bar_number_and_count(obj)[0]
@@ -266,21 +274,21 @@ class BrailleGenerator(generator.Generator):
         return []
 
     @log_generator_output
-    def _generate_progress_bar_value(self, obj, **args):
+    def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = self._generate_value_as_percentage(obj, **args)
         if obj == focus_manager.get_manager().get_locus_of_focus() and not result:
             return [""]
 
         return result
 
-    def _get_progress_bar_update_interval(self):
+    def _get_progress_bar_update_interval(self) -> int:
         interval = settings_manager.get_manager().get_setting("progressBarBrailleInterval")
         if interval is None:
             return super()._get_progress_bar_update_interval()
 
         return int(interval)
 
-    def _should_present_progress_bar_update(self, obj, **args):
+    def _should_present_progress_bar_update(self, obj: Atspi.Accessible, **args) -> bool:
         if not settings_manager.get_manager().get_setting("brailleProgressBarUpdates"):
             return False
 
@@ -289,7 +297,7 @@ class BrailleGenerator(generator.Generator):
     ##################################### TEXT ######################################
 
     @log_generator_output
-    def _generate_eol(self, obj, **_args):
+    def _generate_eol(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if settings_manager.get_manager().get_setting("disableBrailleEOL"):
             return []
 
@@ -301,7 +309,7 @@ class BrailleGenerator(generator.Generator):
 
     ################################### PER-ROLE ####################################
 
-    def _generate_default_prefix(self, obj, **args):
+    def _generate_default_prefix(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""
 
         if args.get("includeContext") is False:
@@ -328,7 +336,7 @@ class BrailleGenerator(generator.Generator):
             result += [braille.Region(" ")]
         return result
 
-    def _generate_default_presentation(self, obj, **args):
+    def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides a default/role-agnostic presentation of obj."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -343,7 +351,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_default_suffix(self, obj, **args):
+    def _generate_default_suffix(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the default/role-agnostic information to present after obj."""
 
         result = []
@@ -358,7 +366,7 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
-    def _generate_text_object(self, obj, **args):
+    def _generate_text_object(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides a default/role-agnostic generation of text objects."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -391,12 +399,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_accelerator_label(self, obj, **args):
+    def _generate_accelerator_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the accelerator-label role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_alert(self, obj, **args):
+    def _generate_alert(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the alert role."""
 
         if self._generate_text_substring(obj, **args):
@@ -410,12 +418,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_animation(self, obj, **args):
+    def _generate_animation(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the animation role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_application(self, obj, **args):
+    def _generate_application(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the application role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -426,12 +434,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_arrow(self, obj, **args):
+    def _generate_arrow(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the arrow role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_article(self, obj, **args):
+    def _generate_article(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the article role."""
 
         if self._generate_text_substring(obj, **args):
@@ -445,7 +453,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_article_in_feed(self, obj, **args):
+    def _generate_article_in_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the article role when the article is in a feed."""
 
         if self._generate_text_substring(obj, **args):
@@ -459,17 +467,17 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_audio(self, obj, **args):
+    def _generate_audio(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the audio role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_autocomplete(self, obj, **args):
+    def _generate_autocomplete(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the autocomplete role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_block_quote(self, obj, **args):
+    def _generate_block_quote(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the block-quote role."""
 
         result = self._generate_text_object(obj, **args)
@@ -478,12 +486,12 @@ class BrailleGenerator(generator.Generator):
             self._generate_nesting_level(obj, **args)))]
         return result
 
-    def _generate_calendar(self, obj, **args):
+    def _generate_calendar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the calendar role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_canvas(self, obj, **args):
+    def _generate_canvas(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the canvas role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -495,17 +503,17 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_caption(self, obj, **args):
+    def _generate_caption(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the caption role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_chart(self, obj, **args):
+    def _generate_chart(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the chart role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_check_box(self, obj, **args):
+    def _generate_check_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the check-box role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -519,7 +527,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_check_menu_item(self, obj, **args):
+    def _generate_check_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the check-menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -532,12 +540,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_color_chooser(self, obj, **args):
+    def _generate_color_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the color-chooser role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_column_header(self, obj, **args):
+    def _generate_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the column-header role."""
 
         if self._generate_text_substring(obj, **args):
@@ -552,7 +560,7 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
-    def _generate_combo_box(self, obj, **args):
+    def _generate_combo_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the combo-box role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -569,37 +577,37 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_comment(self, obj, **args):
+    def _generate_comment(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the comment role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_content_deletion(self, obj, **args):
+    def _generate_content_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the content-deletion role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_content_insertion(self, obj, **args):
+    def _generate_content_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the content-insertion role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_date_editor(self, obj, **args):
+    def _generate_date_editor(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the date-editor role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_definition(self, obj, **args):
+    def _generate_definition(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the definition role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_description_list(self, obj, **args):
+    def _generate_description_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the description-list role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_description_term(self, obj, **args):
+    def _generate_description_term(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the description-term role."""
 
         result = self._generate_text_object(obj, **args)
@@ -607,22 +615,22 @@ class BrailleGenerator(generator.Generator):
             self._generate_term_value_count(obj, **args)))]
         return result
 
-    def _generate_description_value(self, obj, **args):
+    def _generate_description_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the description-value role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_desktop_frame(self, obj, **args):
+    def _generate_desktop_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the desktop-frame role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_desktop_icon(self, obj, **args):
+    def _generate_desktop_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the desktop-icon role."""
 
         return self._generate_icon(obj, **args)
 
-    def _generate_dial(self, obj, **args):
+    def _generate_dial(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the dial role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -634,7 +642,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_dialog(self, obj, **args):
+    def _generate_dialog(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the dialog role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -646,12 +654,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_directory_pane(self, obj, **args):
+    def _generate_directory_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the directory_pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_document(self, obj, **args):
+    def _generate_document(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for document-related roles."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -662,97 +670,97 @@ class BrailleGenerator(generator.Generator):
             args.get("endOffset"))]
         return result
 
-    def _generate_document_email(self, obj, **args):
+    def _generate_document_email(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the document-email role."""
 
         return self._generate_document(obj, **args)
 
-    def _generate_document_frame(self, obj, **args):
+    def _generate_document_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the document-frame role."""
 
         return self._generate_document(obj, **args)
 
-    def _generate_document_presentation(self, obj, **args):
+    def _generate_document_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the document-presentation role."""
 
         return self._generate_document(obj, **args)
 
-    def _generate_document_spreadsheet(self, obj, **args):
+    def _generate_document_spreadsheet(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the document-spreadsheet role."""
 
         return self._generate_document(obj, **args)
 
-    def _generate_document_text(self, obj, **args):
+    def _generate_document_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the document-text role."""
 
         return self._generate_document(obj, **args)
 
-    def _generate_document_web(self, obj, **args):
+    def _generate_document_web(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the document-web role."""
 
         return self._generate_document(obj, **args)
 
-    def _generate_dpub_landmark(self, obj, **args):
+    def _generate_dpub_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the dpub section role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_dpub_section(self, obj, **args):
+    def _generate_dpub_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the dpub section role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_drawing_area(self, obj, **args):
+    def _generate_drawing_area(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the drawing-area role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_editbar(self, obj, **args):
+    def _generate_editbar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the editbar role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_embedded(self, obj, **args):
+    def _generate_embedded(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the embedded role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_entry(self, obj, **args):
+    def _generate_entry(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the entry role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_feed(self, obj, **args):
+    def _generate_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the feed role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_file_chooser(self, obj, **args):
+    def _generate_file_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the file-chooser role."""
 
         return self._generate_dialog(obj, **args)
 
-    def _generate_filler(self, obj, **args):
+    def _generate_filler(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the filler role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_font_chooser(self, obj, **args):
+    def _generate_font_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the font-chooser role."""
 
         return self._generate_dialog(obj, **args)
 
-    def _generate_footer(self, obj, **args):
+    def _generate_footer(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the footer role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_footnote(self, obj, **args):
+    def _generate_footnote(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the footnote role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_form(self, obj, **args):
+    def _generate_form(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the form role."""
 
         if self._generate_text_substring(obj, **args):
@@ -766,7 +774,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_frame(self, obj, **args):
+    def _generate_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the frame role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -778,12 +786,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_glass_pane(self, obj, **args):
+    def _generate_glass_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the glass-pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_grouping(self, obj, **args):
+    def _generate_grouping(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the grouping role."""
 
         if self._generate_text_substring(obj, **args):
@@ -797,12 +805,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_header(self, obj, **args):
+    def _generate_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the header role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_heading(self, obj, **args):
+    def _generate_heading(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the heading role."""
 
         result = self._generate_text_object(obj, **args)
@@ -810,12 +818,12 @@ class BrailleGenerator(generator.Generator):
             self._generate_accessible_role(obj, **args)))]
         return result
 
-    def _generate_html_container(self, obj, **args):
+    def _generate_html_container(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the html-container role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_icon(self, obj, **args):
+    def _generate_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the icon role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -827,7 +835,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_image(self, obj, **args):
+    def _generate_image(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the image role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -838,42 +846,42 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_image_map(self, obj, **args):
+    def _generate_image_map(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the image-map role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_info_bar(self, obj, **args):
+    def _generate_info_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the info-bar role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_input_method_window(self, obj, **args):
+    def _generate_input_method_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the input-method-window role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_internal_frame(self, obj, **args):
+    def _generate_internal_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the internal-frame role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_label(self, obj, **args):
+    def _generate_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the label role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_landmark(self, obj, **args):
+    def _generate_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the landmark role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_layered_pane(self, obj, **args):
+    def _generate_layered_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the layered-pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_level_bar(self, obj, **args):
+    def _generate_level_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the level-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -885,7 +893,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_link(self, obj, **args):
+    def _generate_link(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the link role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -901,12 +909,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_list(self, obj, **args):
+    def _generate_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the list role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_list_box(self, obj, **args):
+    def _generate_list_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the list-box role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -923,7 +931,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_list_item(self, obj, **args):
+    def _generate_list_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the list-item role."""
 
         if self._generate_text_substring(obj, **args):
@@ -952,72 +960,72 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_descendants(obj, **args)
         return result
 
-    def _generate_log(self, obj, **args):
+    def _generate_log(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the log role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_mark(self, obj, **args):
+    def _generate_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the mark role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_marquee(self, obj, **args):
+    def _generate_marquee(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the marquee role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math(self, obj, **args):
+    def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_enclosed(self, obj, **args):
+    def _generate_math_enclosed(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-enclosed role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_fenced(self, obj, **args):
+    def _generate_math_fenced(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-fenced role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_fraction(self, obj, **args):
+    def _generate_math_fraction(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-fraction role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_multiscript(self, obj, **args):
+    def _generate_math_multiscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-multiscript role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_root(self, obj, **args):
+    def _generate_math_root(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-root role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_row(self, obj, **args):
+    def _generate_math_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-row role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_script_subsuper(self, obj, **args):
+    def _generate_math_script_subsuper(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math script subsuper role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_script_underover(self, obj, **args):
+    def _generate_math_script_underover(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math script underover role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_table(self, obj, **args):
+    def _generate_math_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math-table role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_menu(self, obj, **args):
+    def _generate_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the menu role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1028,12 +1036,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_menu_bar(self, obj, **args):
+    def _generate_menu_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the menu-bar role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_menu_item(self, obj, **args):
+    def _generate_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1046,7 +1054,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_notification(self, obj, **args):
+    def _generate_notification(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the notification role."""
 
         if self._generate_text_substring(obj, **args):
@@ -1060,17 +1068,17 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_option_pane(self, obj, **args):
+    def _generate_option_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the option-pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_page(self, obj, **args):
+    def _generate_page(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the page role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_page_tab(self, obj, **args):
+    def _generate_page_tab(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the page-tab role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1082,12 +1090,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_page_tab_list(self, obj, **args):
+    def _generate_page_tab_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the page-tab-list role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_panel(self, obj, **args):
+    def _generate_panel(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the panel role."""
 
         if self._generate_text_substring(obj, **args):
@@ -1101,22 +1109,22 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_paragraph(self, obj, **args):
+    def _generate_paragraph(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the paragraph role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_password_text(self, obj, **args):
+    def _generate_password_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the password-text role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_popup_menu(self, obj, **args):
+    def _generate_popup_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the popup-menu role."""
 
         return self._generate_menu(obj, **args)
 
-    def _generate_progress_bar(self, obj, **args):
+    def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the progress-bar role."""
 
         if not args.get("isProgressBarUpdate") \
@@ -1137,7 +1145,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_push_button(self, obj, **args):
+    def _generate_push_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the push-button role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1149,12 +1157,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_push_button_menu(self, obj, **args):
+    def _generate_push_button_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the push-button-menu role."""
 
         return self._generate_push_button(obj, **args)
 
-    def _generate_radio_button(self, obj, **args):
+    def _generate_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the radio-button role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1170,7 +1178,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_radio_menu_item(self, obj, **args):
+    def _generate_radio_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the radio-menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1183,22 +1191,22 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_rating(self, obj, **args):
+    def _generate_rating(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the rating role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_region(self, obj, **args):
+    def _generate_region(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the region landmark role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_root_pane(self, obj, **args):
+    def _generate_root_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the root-pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_row_header(self, obj, **args):
+    def _generate_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the row-header role."""
 
         if self._generate_text_substring(obj, **args):
@@ -1213,12 +1221,12 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
-    def _generate_ruler(self, obj, **args):
+    def _generate_ruler(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the ruler role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_scroll_bar(self, obj, **args):
+    def _generate_scroll_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the scroll-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1230,22 +1238,22 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_scroll_pane(self, obj, **args):
+    def _generate_scroll_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the scroll-pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_section(self, obj, **args):
+    def _generate_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the section role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_separator(self, obj, **args):
+    def _generate_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the separator role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_slider(self, obj, **args):
+    def _generate_slider(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the slider role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1257,22 +1265,22 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_spin_button(self, obj, **args):
+    def _generate_spin_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the spin-button role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_split_pane(self, obj, **args):
+    def _generate_split_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the split-pane role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_static(self, obj, **args):
+    def _generate_static(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the static role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_status_bar(self, obj, **args):
+    def _generate_status_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the status-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1285,22 +1293,22 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_subscript(self, obj, **args):
+    def _generate_subscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the subscript role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_suggestion(self, obj, **args):
+    def _generate_suggestion(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the suggestion role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_superscript(self, obj, **args):
+    def _generate_superscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the superscript role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_switch(self, obj, **args):
+    def _generate_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the switch role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1312,12 +1320,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_table(self, obj, **args):
+    def _generate_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the table role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_table_cell(self, obj, **args):
+    def _generate_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the table-cell role."""
 
         suffix = []
@@ -1342,7 +1350,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_table_cell_in_row(self, obj, **args):
+    def _generate_table_cell_in_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the table-cell role in the context of its row."""
 
         if self._generate_text_substring(obj, **args):
@@ -1361,12 +1369,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_table_cell_row(obj, **args)
         return result
 
-    def _generate_table_column_header(self, obj, **args):
+    def _generate_table_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the table-column-header role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_table_row(self, obj, **args):
+    def _generate_table_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the table-row role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1382,37 +1390,37 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_table_row_header(self, obj, **args):
+    def _generate_table_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the table-row-header role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_tearoff_menu_item(self, obj, **args):
+    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the tearoff-menu-item role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_terminal(self, obj, **_args):
+    def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the terminal role."""
 
         return [braille.Text(obj)]
 
-    def _generate_text(self, obj, **args):
+    def _generate_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the text role."""
 
         return self._generate_text_object(obj, **args)
 
-    def _generate_timer(self, obj, **args):
+    def _generate_timer(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the timer role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_title_bar(self, obj, **args):
+    def _generate_title_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the title-bar role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_toggle_button(self, obj, **args):
+    def _generate_toggle_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the toggle-button role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1425,7 +1433,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_tool_bar(self, obj, **args):
+    def _generate_tool_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the tool-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1436,12 +1444,12 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_tool_tip(self, obj, **args):
+    def _generate_tool_tip(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the tool-tip role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_tree(self, obj, **args):
+    def _generate_tree(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the tree role."""
 
         result = self._generate_default_prefix(obj, **args)
@@ -1452,7 +1460,7 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_tree_item(self, obj, **args):
+    def _generate_tree_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the tree-item role."""
 
         if self._generate_text_substring(obj, **args):
@@ -1469,27 +1477,27 @@ class BrailleGenerator(generator.Generator):
 
         return result
 
-    def _generate_tree_table(self, obj, **args):
+    def _generate_tree_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the tree-table role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_unknown(self, obj, **args):
+    def _generate_unknown(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the unknown role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_video(self, obj, **args):
+    def _generate_video(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the video role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_viewport(self, obj, **args):
+    def _generate_viewport(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the viewport role."""
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_window(self, obj, **args):
+    def _generate_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the window role."""
 
         return self._generate_default_presentation(obj, **args)

@@ -181,7 +181,7 @@ class ActionPresenter:
         if obj is None:
             full = messages.LOCATION_NOT_FOUND_FULL
             brief = messages.LOCATION_NOT_FOUND_BRIEF
-            script.presentMessage(full, brief)
+            script.present_message(full, brief)
             return True
 
         actions = {}
@@ -195,7 +195,7 @@ class ActionPresenter:
 
         if not actions.items():
             name = AXObject.get_name(obj) or script.speech_generator.get_localized_role_name(obj)
-            script.presentMessage(messages.NO_ACTIONS_FOUND_ON % name)
+            script.present_message(messages.NO_ACTIONS_FOUND_ON % name)
             return True
 
         self._obj = obj

@@ -146,14 +146,14 @@ class SleepModeManager:
             self._apps.remove(hash(script.app))
             new_script = _script_manager.get_script(script.app)
             if notify_user:
-                new_script.presentMessage(
+                new_script.present_message(
                     messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app))
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
         braille.clear()
         if notify_user:
-            script.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
+            script.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
         _script_manager.set_active_script(
             _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on")
         self._apps.append(hash(script.app))

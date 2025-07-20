@@ -29,7 +29,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2013 The Orca Team"
 __license__   = "LGPL"
 
-from .orca_i18n import _, C_
+from .orca_i18n import _, C_ # pylint: disable=import-error
 
 # Translators: this is the action name for the 'toggle' action. It must be the
 # same string used in the *.po file for gail.

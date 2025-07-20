@@ -43,7 +43,7 @@ from gi.repository import Gdk
 from . import debug
 from . import input_event_manager
 from . import settings
-from .orca_i18n import _
+from .orca_i18n import _ # pylint: disable=import-error
 
 if TYPE_CHECKING:
     from .input_event import KeyboardEvent, InputEventHandler

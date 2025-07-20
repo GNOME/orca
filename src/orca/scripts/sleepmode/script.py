@@ -105,7 +105,7 @@ class Script(default.Script):
         msg = "SLEEP MODE: Not updating braille."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def presentKeyboardEvent(self, event):
+    def present_keyboard_event(self, event):
         """Presents the keyboard event to the user."""
 
         msg = "SLEEP MODE: Not presenting keyboard event."
@@ -119,7 +119,7 @@ class Script(default.Script):
         if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
             braille.clear()
-            self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
+            self.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
             return
 
         msg = "SLEEP MODE: Ignoring event."
@@ -263,7 +263,7 @@ class Script(default.Script):
 
         focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
         braille.clear()
-        self.presentMessage(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
+        self.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
 
     def on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""

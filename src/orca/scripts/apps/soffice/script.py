@@ -267,14 +267,14 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if not self.utilities.isSpreadSheetCell(focus):
-            self.presentMessage(messages.SPREADSHEET_NOT_IN_A)
+            self.present_message(messages.SPREADSHEET_NOT_IN_A)
             return True
 
         text = AXTable.get_cell_formula(focus)
         if not text:
             text = AXText.get_all_text(focus) or messages.EMPTY
 
-        self.presentMessage(text)
+        self.present_message(text)
         return True
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
@@ -299,7 +299,7 @@ class Script(default.Script):
              and AXUtilities.is_paragraph(new_focus) and AXUtilities.is_paragraph(old_focus):
             if input_event_manager.get_manager().last_event_was_return() \
                and settings_manager.get_manager().get_setting("enableEchoByWord"):
-                self.echoPreviousWord(old_focus)
+                self.echo_previous_word(old_focus)
                 return
 
             # TODO - JD: And this hack is another one that needs to be done better.
@@ -309,7 +309,7 @@ class Script(default.Script):
                 string = AXText.get_all_text(new_focus)
                 if string:
                     voice = self.speech_generator.voice(obj=new_focus, string=string)
-                    self.speakMessage(string, voice=voice)
+                    self.speak_message(string, voice=voice)
                     self.update_braille(new_focus)
                     offset = AXText.get_caret_offset(new_focus)
                     self._saveLastCursorPosition(new_focus,offset)
@@ -425,7 +425,7 @@ class Script(default.Script):
             else:
                 full = messages.TABLE_ROW_INSERTED_AT_END
                 brief = messages.TABLE_ROW_INSERTED
-            self.presentMessage(full, brief)
+            self.present_message(full, brief)
             return
 
         super().on_children_added(event)

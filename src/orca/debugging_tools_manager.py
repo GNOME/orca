@@ -173,7 +173,7 @@ class DebuggingToolsManager:
         level = keys[next_level]
         brief = levels.get(level)
         debug.debugLevel = level
-        script.presentMessage(f"Debug level {brief}.", brief)
+        script.present_message(f"Debug level {brief}.", brief)
         return True
 
     def _clear_atspi_app_cache(
@@ -185,17 +185,17 @@ class DebuggingToolsManager:
         if obj is None:
             msg = "DEBUGGING TOOLS MANAGER: Cannot clear cache on null object of interest."
             debug.print_message(debug.debugLevel, msg, True)
-            script.presentMessage(messages.DEBUG_CLEAR_CACHE_FAILED)
+            script.present_message(messages.DEBUG_CLEAR_CACHE_FAILED)
             return True
 
         app = AXUtilities.get_application(obj)
         if app is None:
             msg = "DEBUGGING TOOLS MANAGER: Cannot clear cache on null application."
             debug.print_message(debug.debugLevel, msg, True)
-            script.presentMessage(messages.DEBUG_CLEAR_CACHE_FAILED)
+            script.present_message(messages.DEBUG_CLEAR_CACHE_FAILED)
             return True
 
-        script.presentMessage(messages.DEBUG_CLEAR_CACHE)
+        script.present_message(messages.DEBUG_CLEAR_CACHE)
         AXObject.clear_cache(app, recursive=True, reason="User request.")
         return True
 
@@ -204,7 +204,7 @@ class DebuggingToolsManager:
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
-        script.presentMessage(messages.DEBUG_CAPTURE_SNAPSHOT_START)
+        script.present_message(messages.DEBUG_CAPTURE_SNAPSHOT_START)
 
         old_level = debug.debugLevel
         debug.debugLevel = debug.LEVEL_SEVERE
@@ -221,7 +221,7 @@ class DebuggingToolsManager:
         debug.print_message(debug.debugLevel, msg, True)
 
         debug.print_message(debug.debugLevel, "DEBUGGING SNAPSHOT FINISHED", True)
-        script.presentMessage(messages.DEBUG_CAPTURE_SNAPSHOT_END)
+        script.present_message(messages.DEBUG_CAPTURE_SNAPSHOT_END)
         debug.debugLevel = old_level
         return True
 

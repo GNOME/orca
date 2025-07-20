@@ -666,7 +666,7 @@ class Script(script.Script):
 
         if self.utilities.shouldInterruptForLocusOfFocusChange(
            old_focus, new_focus, event):
-            self.presentationInterrupt()
+            self.presentation_interrupt()
         speech.speak(utterances, interrupt=False)
         self._save_focused_object_info(new_focus)
 
@@ -850,7 +850,7 @@ class Script(script.Script):
             self.get_flat_review_presenter().quit()
             return True
 
-        self.presentationInterrupt()
+        self.presentation_interrupt()
         return braille.returnToRegionWithFocus(event)
 
     def set_contracted_braille(self, event=None):
@@ -865,7 +865,7 @@ class Script(script.Script):
         # Don't kill flash here because it will restore the previous contents and
         # then process the routing key. If the contents accept a click action, this
         # would result in clicking on the link instead of clearing the flash message.
-        self.presentationInterrupt(killFlash=False)
+        self.presentation_interrupt(kill_flash=False)
         braille.process_routing_key(event)
         return True
 
@@ -878,7 +878,7 @@ class Script(script.Script):
         if offset < 0:
             return True
 
-        self.presentationInterrupt()
+        self.presentation_interrupt()
         AXText.clear_all_selected_text(obj)
         self.utilities.setCaretOffset(obj, offset)
         return True
@@ -891,7 +891,7 @@ class Script(script.Script):
         if offset < 0:
             return True
 
-        self.presentationInterrupt()
+        self.presentation_interrupt()
         start_offset = AXText.get_selection_start_offset(obj)
         end_offset = AXText.get_selection_end_offset(obj)
         if (start_offset < 0 or end_offset < 0):
@@ -914,12 +914,12 @@ class Script(script.Script):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if self.get_event_synthesizer().route_to_character(focus) \
            or self.get_event_synthesizer().route_to_object(focus):
-            self.presentMessage(messages.MOUSE_MOVED_SUCCESS)
+            self.present_message(messages.MOUSE_MOVED_SUCCESS)
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
         brief = messages.LOCATION_NOT_FOUND_BRIEF
-        self.presentMessage(full, brief)
+        self.present_message(full, brief)
         return False
 
     def left_click_item(self, event=None):
@@ -944,7 +944,7 @@ class Script(script.Script):
 
         full = messages.LOCATION_NOT_FOUND_FULL
         brief = messages.LOCATION_NOT_FOUND_BRIEF
-        self.presentMessage(full, brief)
+        self.present_message(full, brief)
         return False
 
     def right_click_item(self, event=None):
@@ -963,7 +963,7 @@ class Script(script.Script):
 
         full = messages.LOCATION_NOT_FOUND_FULL
         brief = messages.LOCATION_NOT_FOUND_BRIEF
-        self.presentMessage(full, brief)
+        self.present_message(full, brief)
         return False
 
     def say_all(self, _event, obj=None, offset=None):
@@ -974,7 +974,7 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not obj or AXObject.is_dead(obj):
-            self.presentMessage(messages.LOCATION_NOT_FOUND_FULL)
+            self.present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         speech.say_all(self.textLines(obj, offset), self.__sayAllProgressCallback)
@@ -985,7 +985,7 @@ class Script(script.Script):
 
         profiles = settings_manager.get_manager().available_profiles()
         if not (profiles and profiles[0]):
-            self.presentMessage(messages.PROFILE_NOT_FOUND)
+            self.present_message(messages.PROFILE_NOT_FOUND)
             return True
 
         def isMatch(x):
@@ -1006,7 +1006,7 @@ class Script(script.Script):
         # command names to be presented in the correct language.
         self.setup_input_event_handlers()
 
-        self.presentMessage(messages.PROFILE_CHANGED % name, name)
+        self.present_message(messages.PROFILE_CHANGED % name, name)
         return True
 
     ########################################################################
@@ -1055,7 +1055,7 @@ class Script(script.Script):
         """Callback for object:state-changed:checked accessibility events."""
 
         if AXUtilities.is_presentable_checked_change(event):
-            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+            self.present_object(event.source, alreadyFocused=True, interrupt=True)
 
     def on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
@@ -1122,7 +1122,7 @@ class Script(script.Script):
         """Callback for object:property-change:accessible-description events."""
 
         if AXUtilities.is_presentable_description_change(event):
-            self.presentMessage(event.any_data)
+            self.present_message(event.any_data)
 
     def on_document_attributes_changed(self, event):
         """Callback for document:attributes-changed accessibility events."""
@@ -1145,7 +1145,7 @@ class Script(script.Script):
         if not AXDocument.did_page_change(event.source):
             return
 
-        self.presentMessage(messages.PAGE_NUMBER % event.detail1)
+        self.present_message(messages.PAGE_NUMBER % event.detail1)
 
     def on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
@@ -1154,16 +1154,16 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_expanded_change(event):
             return
 
-        self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+        self.present_object(event.source, alreadyFocused=True, interrupt=True)
         details = self.utilities.detailsContentForObject(event.source)
         for detail in details:
-            self.speakMessage(detail, interrupt=False)
+            self.speak_message(detail, interrupt=False)
 
     def on_indeterminate_changed(self, event):
         """Callback for object:state-changed:indeterminate accessibility events."""
 
         if AXUtilities.is_presentable_indeterminate_change(event):
-            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+            self.present_object(event.source, alreadyFocused=True, interrupt=True)
 
     def on_invalid_entry_changed(self, event):
         """Callback for object:state-changed:invalid-entry accessibility events."""
@@ -1175,7 +1175,7 @@ class Script(script.Script):
             msg = self.speech_generator.get_error_message(event.source)
         else:
             msg = messages.INVALID_ENTRY_FIXED
-        self.speakMessage(msg)
+        self.speak_message(msg)
         self.update_braille(event.source)
 
     def on_mouse_button(self, event):
@@ -1187,7 +1187,7 @@ class Script(script.Script):
         """Callback for object:announcement events."""
 
         if isinstance(event.any_data, str):
-            self.presentMessage(event.any_data)
+            self.present_message(event.any_data)
 
     def on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
@@ -1201,7 +1201,7 @@ class Script(script.Script):
             manager.set_locus_of_focus(event, event.source, True, True)
             return
 
-        self.presentMessage(event.any_data)
+        self.present_message(event.any_data)
 
     def on_object_attributes_changed(self, event):
         """Callback for object:attributes-changed accessibility events."""
@@ -1212,7 +1212,7 @@ class Script(script.Script):
         """Callback for object:state-changed:pressed accessibility events."""
 
         if AXUtilities.is_presentable_pressed_change(event):
-            self.presentObject(event.source, alreadyFocused=True, interrupt=True)
+            self.present_object(event.source, alreadyFocused=True, interrupt=True)
 
     def on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
@@ -1240,9 +1240,9 @@ class Script(script.Script):
         # need to gain some smarts w.r.t. state changes.
 
         if event.detail1:
-            self.speakMessage(messages.TEXT_SELECTED, interrupt=False)
+            self.speak_message(messages.TEXT_SELECTED, interrupt=False)
         else:
-            self.speakMessage(messages.TEXT_UNSELECTED, interrupt=False)
+            self.speak_message(messages.TEXT_UNSELECTED, interrupt=False)
 
     def on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
@@ -1367,9 +1367,9 @@ class Script(script.Script):
             if not event.detail1:
                 return
 
-            self.speakMessage(self.speech_generator.get_localized_role_name(obj))
+            self.speak_message(self.speech_generator.get_localized_role_name(obj))
             msg = self.utilities.getNotificationContent(obj)
-            self.presentMessage(msg, resetStyles=False)
+            self.present_message(msg, reset_styles=False)
             self.get_notification_presenter().save_notification(msg)
             return
 
@@ -1378,13 +1378,13 @@ class Script(script.Script):
             if not was_f1 and not settings_manager.get_manager().get_setting('presentToolTips'):
                 return
             if event.detail1:
-                self.presentObject(obj, interrupt=True)
+                self.present_object(obj, interrupt=True)
                 return
 
             focus = focus_manager.get_manager().get_locus_of_focus()
             if focus and was_f1:
                 obj = focus
-                self.presentObject(obj, priorObj=event.source, interrupt=True)
+                self.present_object(obj, priorObj=event.source, interrupt=True)
                 return
 
     def on_text_attributes_changed(self, event):
@@ -1408,7 +1408,7 @@ class Script(script.Script):
         if reason == TextEventReason.SELECTED_TEXT_DELETION:
             msg = "DEFAULT: Deletion is believed to be due to deleting selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.presentMessage(messages.SELECTION_DELETED)
+            self.present_message(messages.SELECTION_DELETED)
             AXText.update_cached_selected_text(event.source)
             return
 
@@ -1432,7 +1432,7 @@ class Script(script.Script):
             voice = self.speech_generator.voice(string=text)
             manager = speech_and_verbosity_manager.get_manager()
             text = manager.adjust_for_presentation(event.source, text)
-            self.speakMessage(text, voice)
+            self.speak_message(text, voice)
 
     def on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
@@ -1447,7 +1447,7 @@ class Script(script.Script):
         if reason == TextEventReason.SELECTED_TEXT_RESTORATION:
             msg = "DEFAULT: Insertion is believed to be due to restoring selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.presentMessage(messages.SELECTION_RESTORED)
+            self.present_message(messages.SELECTION_RESTORED)
             AXText.update_cached_selected_text(event.source)
             return
 
@@ -1489,18 +1489,18 @@ class Script(script.Script):
                 voice = self.speech_generator.voice(obj=event.source, string=text)
                 manager = speech_and_verbosity_manager.get_manager()
                 text = manager.adjust_for_presentation(event.source, text)
-                self.speakMessage(text, voice)
+                self.speak_message(text, voice)
 
         if len(text) != 1 \
            or reason not in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             return
 
         if settings_manager.get_manager().get_setting('enableEchoBySentence') \
-           and self.echoPreviousSentence(event.source):
+           and self.echo_previous_sentence(event.source):
             return
 
         if settings_manager.get_manager().get_setting('enableEchoByWord'):
-            self.echoPreviousWord(event.source)
+            self.echo_previous_word(event.source)
 
     def on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
@@ -1518,7 +1518,7 @@ class Script(script.Script):
         if reason == TextEventReason.SEARCH_PRESENTABLE:
             msg = "DEFAULT: Presenting line believed to be search match"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.sayLine(event.source)
+            self.say_line(event.source)
             AXText.update_cached_selected_text(event.source)
             return
         if reason == TextEventReason.SEARCH_UNPRESENTABLE:
@@ -1545,7 +1545,7 @@ class Script(script.Script):
         if event.source != AXTable.get_table(focus_manager.get_manager().get_locus_of_focus()):
             return
 
-        self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
+        self.present_message(messages.TABLE_REORDERED_COLUMNS)
 
     def on_row_reordered(self, event):
         """Callback for object:row-reordered accessibility events."""
@@ -1557,7 +1557,7 @@ class Script(script.Script):
         if event.source != AXTable.get_table(focus_manager.get_manager().get_locus_of_focus()):
             return
 
-        self.presentMessage(messages.TABLE_REORDERED_ROWS)
+        self.present_message(messages.TABLE_REORDERED_ROWS)
 
     def on_value_changed(self, event):
         """Callback for object:property-change:accessible-value accessibility events."""
@@ -1579,7 +1579,7 @@ class Script(script.Script):
             self._save_focused_object_info(event.source)
 
         if not isProgressBarUpdate:
-            self.presentationInterrupt()
+            self.presentation_interrupt()
 
         self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speech_generator.generate_speech(
@@ -1649,37 +1649,37 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def _presentTextAtNewCaretPosition(self, event, otherObj=None, reason=TextEventReason.UNKNOWN):
+    def _presentTextAtNewCaretPosition(self, event, other_obj=None, reason=TextEventReason.UNKNOWN):
         """Presents text at the new position, based on heuristics. Returns True if handled."""
 
-        obj = otherObj or event.source
+        obj = other_obj or event.source
         self.updateBrailleForNewCaretPosition(obj)
         if reason == TextEventReason.SAY_ALL:
             msg = "DEFAULT: Not presenting text because SayAll is active"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
         if reason == TextEventReason.NAVIGATION_BY_LINE:
-            self.sayLine(obj)
+            self.say_line(obj)
             return True
         if reason == TextEventReason.NAVIGATION_BY_WORD:
-            self.sayWord(obj)
+            self.say_word(obj)
             return True
         if reason == TextEventReason.NAVIGATION_BY_CHARACTER:
-            self.sayCharacter(obj)
+            self.say_character(obj)
             return True
         if reason == TextEventReason.NAVIGATION_BY_PAGE:
-            self.sayLine(obj)
+            self.say_line(obj)
             return True
         if reason == TextEventReason.NAVIGATION_TO_LINE_BOUNDARY:
-            self.sayCharacter(obj)
+            self.say_character(obj)
             return True
         if reason == TextEventReason.NAVIGATION_TO_FILE_BOUNDARY:
-            self.sayLine(obj)
+            self.say_line(obj)
             return True
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
             text, _start, _end = AXText.get_cached_selected_text(event.source)
             if not text:
-                self.sayLine(obj)
+                self.say_line(obj)
                 return True
         return False
 
@@ -1691,14 +1691,14 @@ class Script(script.Script):
         self._sayAllContexts = self._sayAllContexts[0:index]
         while self._sayAllContexts:
             context = self._sayAllContexts.pop()
-            if context.endOffset - context.startOffset > minCharCount:
+            if context.end_offset - context.start_offset > minCharCount:
                 break
 
         # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.startOffset):
+        if AXText.set_caret_offset(context.obj, context.start_offset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.say_all(None, context.obj, context.startOffset)
+        self.say_all(None, context.obj, context.start_offset)
         return True
 
     def _fastForwardSayAll(self, context):
@@ -1706,10 +1706,10 @@ class Script(script.Script):
             return False
 
         # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.endOffset):
+        if AXText.set_caret_offset(context.obj, context.end_offset):
             focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
 
-        self.say_all(None, context.obj, context.endOffset)
+        self.say_all(None, context.obj, context.end_offset)
         return True
 
     def __sayAllProgressCallback(self, context, progressType):
@@ -1717,12 +1717,12 @@ class Script(script.Script):
         # the caret?
 
         # TODO - JD: This condition shouldn't happen. Make sure of that.
-        if AXText.character_at_offset_is_eoc(context.obj, context.currentOffset):
+        if AXText.character_at_offset_is_eoc(context.obj, context.current_offset):
             return
 
         if progressType == speechserver.SayAllContext.PROGRESS:
             focus_manager.get_manager().emit_region_changed(
-                context.obj, context.currentOffset, context.currentEndOffset,
+                context.obj, context.current_offset, context.current_end_offset,
                 focus_manager.SAY_ALL)
             return
 
@@ -1736,10 +1736,10 @@ class Script(script.Script):
 
         self._sayAllContexts = []
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-        focus_manager.get_manager().emit_region_changed(context.obj, context.currentOffset)
-        AXText.set_caret_offset(context.obj, context.currentOffset)
+        focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
+        AXText.set_caret_offset(context.obj, context.current_offset)
 
-    def echoPreviousSentence(self, obj):
+    def echo_previous_sentence(self, obj):
         """Speaks the sentence prior to the caret if at a sentence boundary."""
 
         offset = AXText.get_caret_offset(obj)
@@ -1755,10 +1755,10 @@ class Script(script.Script):
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=sentence)
-        self.speakMessage(sentence, voice, obj=obj)
+        self.speak_message(sentence, voice, obj=obj)
         return True
 
-    def echoPreviousWord(self, obj):
+    def echo_previous_word(self, obj):
         """Speaks the word prior to the caret if at a word boundary."""
 
         offset = AXText.get_caret_offset(obj)
@@ -1783,16 +1783,11 @@ class Script(script.Script):
             return False
 
         voice = self.speech_generator.voice(obj=obj, string=word)
-        self.speakMessage(word, voice, obj=obj)
+        self.speak_message(word, voice, obj=obj)
         return True
 
-    def sayCharacter(self, obj):
-        """Speak the character at the caret.
-
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface
-        """
+    def say_character(self, obj):
+        """Speak the character at the caret."""
 
         offset = AXText.get_caret_offset(obj)
 
@@ -1809,36 +1804,29 @@ class Script(script.Script):
         if not character or character == '\r':
             character = "\n"
 
-        speakBlankLines = settings_manager.get_manager().get_setting('speakBlankLines')
+        speak_blank_lines = settings_manager.get_manager().get_setting("speakBlankLines")
         if character == "\n":
-            lineString = AXText.get_line_at_offset(obj, max(0, offset))[0]
-            if not lineString or lineString == "\n":
+            line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
+            if not line_string or line_string == "\n":
                 # This is a blank line. Announce it if the user requested
                 # that blank lines be spoken.
-                if speakBlankLines:
-                    self.speakMessage(messages.BLANK, interrupt=False)
+                if speak_blank_lines:
+                    self.speak_message(messages.BLANK, interrupt=False)
                 return
 
         if character in ["\n", "\r\n"]:
             # This is a blank line. Announce it if the user requested
             # that blank lines be spoken.
-            if speakBlankLines:
-                self.speakMessage(messages.BLANK, interrupt=False)
+            if speak_blank_lines:
+                self.speak_message(messages.BLANK, interrupt=False)
             return
-        else:
-            self.speakMisspelledIndicator(obj, offset)
-            self.speak_character(character)
 
+        self.speakMisspelledIndicator(obj, offset)
+        self.speak_character(character)
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
-    def sayLine(self, obj, offset=None):
-        """Speaks the line of an AccessibleText object that contains the
-        caret, unless the line is empty in which case it's ignored.
-
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface
-        """
+    def say_line(self, obj, offset=None):
+        """Speaks the line of text at the given offset or at the caret."""
 
         if offset is None:
             offset = AXText.get_caret_offset(obj)
@@ -1850,7 +1838,7 @@ class Script(script.Script):
             manager = speech_and_verbosity_manager.get_manager()
             indentation_description = manager.get_indentation_description(line)
             if indentation_description:
-                self.speakMessage(indentation_description)
+                self.speak_message(indentation_description)
 
             end_offset = start_offset + len(line)
             focus_manager.get_manager().emit_region_changed(
@@ -1878,20 +1866,12 @@ class Script(script.Script):
                 utterance.append(result)
             speech.speak(utterance)
         elif settings_manager.get_manager().get_setting("speakBlankLines"):
-            self.speakMessage(messages.BLANK, interrupt=False)
+            self.speak_message(messages.BLANK, interrupt=False)
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
-    def sayPhrase(self, obj, start_offset, end_offset):
-        """Speaks the text of an Accessible object between the start and
-        end offsets, unless the phrase is empty in which case it's ignored.
-
-        Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface
-        - start_offset: the start text offset.
-        - end_offset: the end text offset.
-        """
+    def say_phrase(self, obj, start_offset, end_offset):
+        """Speaks the text of an Accessible object between the start and end offsets."""
 
         phrase = self.utilities.expandEOCs(obj, start_offset, end_offset)
         if not phrase:
@@ -1901,7 +1881,7 @@ class Script(script.Script):
             manager = speech_and_verbosity_manager.get_manager()
             result = manager.get_indentation_description(phrase)
             if result:
-                self.speakMessage(result)
+                self.speak_message(result)
 
             focus_manager.get_manager().emit_region_changed(
                 obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
@@ -1916,7 +1896,7 @@ class Script(script.Script):
 
         self.point_of_reference["lastTextUnitSpoken"] = "phrase"
 
-    def sayWord(self, obj):
+    def say_word(self, obj):
         """Speaks the word at the caret, taking into account the previous caret position."""
 
 
@@ -1934,7 +1914,7 @@ class Script(script.Script):
                 end_offset -= 1
             word = AXText.get_substring(obj, start_offset, end_offset)
 
-        # sayPhrase is useful because it handles punctuation verbalization, but we don't want
+        # say_phrase() is useful because it handles punctuation verbalization, but we don't want
         # to trigger its whitespace presentation.
         matches = list(re.finditer(r"\S+", word))
         if matches:
@@ -1950,10 +1930,10 @@ class Script(script.Script):
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.speakMisspelledIndicator(obj, start_offset)
-        self.sayPhrase(obj, start_offset, end_offset)
+        self.say_phrase(obj, start_offset, end_offset)
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
-    def presentObject(self, obj, **args):
+    def present_object(self, obj, **args):
         interrupt = args.get("interrupt", False)
         tokens = ["DEFAULT: Presenting object", obj, ". Interrupt:", interrupt]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -2022,8 +2002,8 @@ class Script(script.Script):
 
         for (charIndex, character) in enumerate(itemString):
             voice = self.speech_generator.voice(string=character)
-            phoneticString = phonnames.getPhoneticName(character.lower())
-            self.speakMessage(phoneticString, voice)
+            phoneticString = phonnames.get_phonetic_name(character.lower())
+            self.speak_message(phoneticString, voice)
 
     def _saveLastCursorPosition(self, obj, caretOffset):
         """Save away the current text cursor position for next time.
@@ -2037,20 +2017,12 @@ class Script(script.Script):
         self.point_of_reference["penultimateCursorPosition"] = prevObj, prevOffset
         self.point_of_reference["lastCursorPosition"] = obj, caretOffset
 
-    def systemBeep(self):
-        """Rings the system bell. This is really a hack. Ideally, we want
-        a method that will present an earcon (any sound designated for the
-        purpose of representing an error, event etc)
-        """
-
-        print("\a")
-
     def speakMisspelledIndicator(self, obj, offset=None):
         # TODO - JD: Remove this and have callers use the speech-adjustment logic.
         manager = speech_and_verbosity_manager.get_manager()
         error = manager.get_error_description(obj, offset)
         if error:
-            self.speakMessage(error)
+            self.speak_message(error)
 
     ############################################################################
     #                                                                          #
@@ -2059,19 +2031,17 @@ class Script(script.Script):
     #                                                                          #
     ############################################################################
 
-    def presentationInterrupt(self, killFlash=True):
-        """Convenience method to interrupt presentation of whatever is being
-        presented at the moment."""
+    def presentation_interrupt(self, kill_flash=True):
+        """Convenience method to interrupt whatever is being presented at the moment."""
 
         msg = "DEFAULT: Interrupting presentation"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         speech_and_verbosity_manager.get_manager().interrupt_speech()
-        if killFlash:
+        if kill_flash:
             braille.killFlash()
 
-    def presentKeyboardEvent(self, event):
-        """Convenience method to present the KeyboardEvent event. Returns True
-        if we fully present the event; False otherwise."""
+    def present_keyboard_event(self, event):
+        """Presents the keyboard event to the user."""
 
         if not event.is_pressed_key():
             self.utilities.clearCachedCommandState()
@@ -2081,10 +2051,10 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_dialog_or_window(focus):
-            focusedObject = focus_manager.get_manager().find_focused_object()
-            if focusedObject:
-                focus_manager.get_manager().set_locus_of_focus(None, focusedObject, False)
-                AXObject.get_role(focusedObject)
+            focused_object = focus_manager.get_manager().find_focused_object()
+            if focused_object:
+                focus_manager.get_manager().set_locus_of_focus(None, focused_object, False)
+                AXObject.get_role(focused_object)
 
         if AXUtilities.is_password_text(focus) and not event.is_locking_key():
             return False
@@ -2093,8 +2063,8 @@ class Script(script.Script):
             return False
 
         braille.displayKeyEvent(event)
-        orcaModifierPressed = event.is_orca_modifier() and event.is_pressed_key()
-        if event.is_character_echoable() and not orcaModifierPressed:
+        orca_modifier_presssed = event.is_orca_modifier() and event.is_pressed_key()
+        if event.is_character_echoable() and not orca_modifier_presssed:
             return False
 
         msg = "DEFAULT: Presenting keyboard event"
@@ -2102,44 +2072,30 @@ class Script(script.Script):
         self.speak_key_event(event)
         return True
 
-    def presentMessage(self, fullMessage, briefMessage=None, voice=None, resetStyles=True,
-                       force=False):
-        """Convenience method to speak a message and 'flash' it in braille.
+    def present_message(self, full, brief=None, voice=None, reset_styles=True, force=False):
+        """Convenience method to speak a message and 'flash' it in braille."""
 
-        Arguments:
-        - fullMessage: This can be a string or a list. This will be presented
-          as the message for users whose flash or message verbosity level is
-          verbose.
-        - briefMessage: This can be a string or a list. This will be presented
-          as the message for users whose flash or message verbosity level is
-          brief. Note that providing no briefMessage will result in the full
-          message being used for either. Callers wishing to present nothing as
-          the briefMessage should set briefMessage to an empty string.
-        - voice: The voice to use when speaking this message. By default, the
-          "system" voice will be used.
-        """
-
-        if not fullMessage:
+        if not full:
             return
 
-        if briefMessage is None:
-            briefMessage = fullMessage
+        if brief is None:
+            brief = full
 
         if settings_manager.get_manager().get_setting('enableSpeech'):
             if not settings_manager.get_manager().get_setting('messagesAreDetailed'):
-                message = briefMessage
+                message = brief
             else:
-                message = fullMessage
+                message = full
             if message:
-                self.speakMessage(message, voice=voice, resetStyles=resetStyles, force=force)
+                self.speak_message(message, voice=voice, reset_styles=reset_styles, force=force)
 
         if (settings_manager.get_manager().get_setting('enableBraille') \
              or settings_manager.get_manager().get_setting('enableBrailleMonitor')) \
            and settings_manager.get_manager().get_setting('enableFlashMessages'):
             if not settings_manager.get_manager().get_setting('flashIsDetailed'):
-                message = briefMessage
+                message = brief
             else:
-                message = fullMessage
+                message = full
             if not message:
                 return
 
@@ -2170,33 +2126,32 @@ class Script(script.Script):
             _player.play(sounds[i], interrupt=False)
 
     @staticmethod
-    def displayBrailleMessage(message, cursor=-1, flashTime=0):
-        """Displays a single line, setting the cursor to the given position,
+    def display_message(message, cursor=-1, flash_time=0):
+        """Displays a single line, setting the cursor to the given positon
         ensuring that the cursor is in view.
 
         Arguments:
         - message: the string to display
-        - cursor: the 0-based cursor position, where -1 (default) means no
-          cursor
-        - flashTime:  if non-0, the number of milliseconds to display the
+        - cursor: the 0-based cursor position, where -1 (default) means no cursor
+        - flash_time:  if non-0, the number of milliseconds to display the
           regions before reverting back to what was there before. A 0 means
           to not do any flashing.  A negative number means to display the
           message until some other message comes along or the user presses
           a cursor routing key.
         """
 
-        if not settings_manager.get_manager().get_setting('enableBraille') \
-           and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
+        if not settings_manager.get_manager().get_setting("enableBraille") \
+           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
             debug.print_message(debug.LEVEL_INFO, "BRAILLE: display message disabled", True)
             return
 
-        braille.displayMessage(message, cursor, flashTime)
+        braille.displayMessage(message, cursor, flash_time)
 
     def updateBrailleForNewCaretPosition(self, obj):
         """Try to reposition the cursor without having to do a full update."""
 
-        if not settings_manager.get_manager().get_setting('enableBraille') \
-           and not settings_manager.get_manager().get_setting('enableBrailleMonitor'):
+        if not settings_manager.get_manager().get_setting("enableBraille") \
+           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
             debug.print_message(debug.LEVEL_INFO, "BRAILLE: update caret disabled", True)
             return
 
@@ -2237,23 +2192,14 @@ class Script(script.Script):
             self.speak_character(character)
 
     def speak_character(self, character):
-        """Method to speak a single character. Scripts should use this
-        method rather than calling speech.speakCharacter directly."""
+        """Method to speak a single character."""
 
         voice = self.speech_generator.voice(string=character)
         speech.speak_character(character, voice)
 
-    def speakMessage(
-        self, text, voice=None, interrupt=True, resetStyles=True, force=False, obj=None):
-        """Method to speak a single string. Scripts should use this
-        method rather than calling speech.speak directly.
-
-        - string: The string to be spoken.
-        - voice: The voice to use. By default, the "system" voice will
-          be used.
-        - interrupt: If True, any current speech should be interrupted
-          prior to speaking the new text.
-        """
+    def speak_message(
+        self, text, voice=None, interrupt=True, reset_styles=True, force=False, obj=None):
+        """Method to speak a single string."""
 
         try:
             assert isinstance(text, str)
@@ -2272,7 +2218,7 @@ class Script(script.Script):
         systemVoice = voices.get(settings.SYSTEM_VOICE)
 
         voice = voice or systemVoice
-        if voice == systemVoice and resetStyles:
+        if voice == systemVoice and reset_styles:
             capStyle = settings_manager.get_manager().get_setting('capitalizationStyle')
             manager.set_setting('capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
             self.get_speech_and_verbosity_manager().update_capitalization_style()
@@ -2284,7 +2230,7 @@ class Script(script.Script):
         text = speech_and_verbosity_manager.get_manager().adjust_for_presentation(obj, text)
         speech.speak(text, voice, interrupt)
 
-        if voice == systemVoice and resetStyles:
+        if voice == systemVoice and reset_styles:
             manager.set_setting('capitalizationStyle', capStyle)
             self.get_speech_and_verbosity_manager().update_capitalization_style()
 

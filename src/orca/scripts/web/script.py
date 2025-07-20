@@ -445,8 +445,8 @@ class Script(default.Script):
             'skipBlankCells': self._skipBlankCellsCheckButton.get_active()
         }
 
-    def presentationInterrupt(self, killFlash=True):
-        super().presentationInterrupt(killFlash)
+    def presentation_interrupt(self, kill_flash=True):
+        super().presentation_interrupt(kill_flash)
         msg = "WEB: Flushing live region messages"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.live_region_manager.flushMessages()
@@ -577,7 +577,7 @@ class Script(default.Script):
 
         resultsCount = self.utilities.getFindResultsCount()
         if resultsCount:
-            self.presentMessage(resultsCount)
+            self.present_message(resultsCount)
 
         self._madeFindAnnouncement = True
 
@@ -626,7 +626,8 @@ class Script(default.Script):
 
         if progressType == speechserver.SayAllContext.PROGRESS:
             focus_manager.get_manager().emit_region_changed(
-                context.obj, context.currentOffset, context.currentEndOffset, focus_manager.SAY_ALL)
+                context.obj, context.current_offset, context.current_end_offset,
+                focus_manager.SAY_ALL)
             return
 
         if progressType == speechserver.SayAllContext.INTERRUPTED:
@@ -643,8 +644,8 @@ class Script(default.Script):
         self._sayAllContents = []
         self._sayAllContexts = []
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-        focus_manager.get_manager().emit_region_changed(context.obj, context.currentOffset)
-        self.utilities.setCaretContext(context.obj, context.currentOffset)
+        focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
+        self.utilities.setCaretContext(context.obj, context.current_offset)
 
     def inFocusMode(self):
         """ Returns True if we're in focus mode."""
@@ -744,7 +745,7 @@ class Script(default.Script):
         utterances = self.speech_generator.generate_contents(contents, **args)
         speech.speak(utterances)
 
-    def sayCharacter(self, obj):
+    def say_character(self, obj):
         """Speaks the character at the current caret position."""
 
         tokens = ["WEB: Say character for", obj]
@@ -752,7 +753,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().sayCharacter(obj)
+            super().say_character(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
@@ -778,7 +779,7 @@ class Script(default.Script):
         obj, start, end, string = contents[0]
         if start > 0 and string == "\n":
             if settings_manager.get_manager().get_setting("speakBlankLines"):
-                self.speakMessage(messages.BLANK, interrupt=False)
+                self.speak_message(messages.BLANK, interrupt=False)
                 return
 
         if string:
@@ -789,7 +790,7 @@ class Script(default.Script):
 
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
-    def sayWord(self, obj):
+    def say_word(self, obj):
         """Speaks the word at the current caret position."""
 
         tokens = ["WEB: Say word for", obj]
@@ -797,7 +798,7 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().sayWord(obj)
+            super().say_word(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
@@ -816,7 +817,7 @@ class Script(default.Script):
         self.speakContents(wordContents, alreadyFocused=AXUtilities.is_text_input(textObj))
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
-    def sayLine(self, obj, offset=None):
+    def say_line(self, obj, offset=None):
         """Speaks the line at the current caret position."""
 
         tokens = ["WEB: Say line for", obj]
@@ -824,10 +825,10 @@ class Script(default.Script):
         if not self.utilities.inDocumentContent(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().sayLine(obj)
+            super().say_line(obj)
             return
 
-        # TODO - JD: We're making an exception here because the default script's sayLine()
+        # TODO - JD: We're making an exception here because the default script's say_line()
         # handles verbalized punctuation, indentation, repeats, etc. That adjustment belongs
         # in the generators, but that's another potentially non-trivial change.
         if AXUtilities.is_editable(obj) and "\ufffc" not in AXText.get_line_at_offset(obj)[0]:
@@ -835,7 +836,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
-            super().sayLine(obj)
+            super().say_line(obj)
             return
 
         document = self.utilities.getTopLevelDocumentForObject(obj)
@@ -853,23 +854,23 @@ class Script(default.Script):
         self.speakContents(contents, priorObj=priorObj)
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
-    def presentObject(self, obj, **args):
+    def present_object(self, obj, **args):
         if obj is None:
             return
 
         if not self.utilities.inDocumentContent(obj) or AXUtilities.is_document(obj):
-            super().presentObject(obj, **args)
+            super().present_object(obj, **args)
             return
 
         mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         if mode in [focus_manager.OBJECT_NAVIGATOR, focus_manager.MOUSE_REVIEW]:
-            super().presentObject(obj, **args)
+            super().present_object(obj, **args)
             return
 
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
-            super().presentObject(obj, **args)
+            super().present_object(obj, **args)
             return
 
         priorObj = args.get("priorObj")
@@ -905,7 +906,7 @@ class Script(default.Script):
         if AXUtilities.is_entry(obj) or AXUtilities.is_list_item(obj):
             if not self._inFocusMode:
                 self.utilities.setCaretPosition(obj, 0)
-            super().presentObject(obj, **args)
+            super().present_object(obj, **args)
             return
 
         interrupt = args.get("interrupt", False)
@@ -1072,7 +1073,7 @@ class Script(default.Script):
 
     def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
         if not self._browseModeIsSticky or forceMessage:
-            self.presentMessage(messages.MODE_BROWSE_IS_STICKY)
+            self.present_message(messages.MODE_BROWSE_IS_STICKY)
 
         self._inFocusMode = False
         self._focusModeIsSticky = False
@@ -1085,7 +1086,7 @@ class Script(default.Script):
 
     def enableStickyFocusMode(self, inputEvent, forceMessage=False):
         if not self._focusModeIsSticky or forceMessage:
-            self.presentMessage(messages.MODE_FOCUS_IS_STICKY)
+            self.present_message(messages.MODE_FOCUS_IS_STICKY)
 
         self._inFocusMode = True
         self._focusModeIsSticky = True
@@ -1099,9 +1100,9 @@ class Script(default.Script):
     def toggleLayoutMode(self, inputEvent):
         layoutMode = not settings_manager.get_manager().get_setting('layoutMode')
         if layoutMode:
-            self.presentMessage(messages.MODE_LAYOUT)
+            self.present_message(messages.MODE_LAYOUT)
         else:
-            self.presentMessage(messages.MODE_OBJECT)
+            self.present_message(messages.MODE_OBJECT)
         settings_manager.get_manager().set_setting('layoutMode', layoutMode)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
@@ -1113,7 +1114,7 @@ class Script(default.Script):
             elif AXUtilities.is_menu(parent):
                 self.utilities.setCaretContext(AXObject.get_parent(parent), -1)
             if not self._loadingDocumentContent:
-                self.presentMessage(messages.MODE_BROWSE)
+                self.present_message(messages.MODE_BROWSE)
         else:
             if not self.utilities.grabFocusWhenSettingCaret(obj) \
                and (self.caret_navigation.last_input_event_was_navigation_command() \
@@ -1122,7 +1123,7 @@ class Script(default.Script):
                     or inputEvent):
                 AXObject.grab_focus(obj)
 
-            self.presentMessage(messages.MODE_FOCUS)
+            self.present_message(messages.MODE_FOCUS)
         self._inFocusMode = not self._inFocusMode
         self._focusModeIsSticky = False
         self._browseModeIsSticky = False
@@ -1275,7 +1276,7 @@ class Script(default.Script):
                 return True
 
         if self.utilities.shouldInterruptForLocusOfFocusChange(old_focus, new_focus, event):
-            self.presentationInterrupt()
+            self.presentation_interrupt()
 
         if contents:
             self.speakContents(contents, **args)
@@ -1398,15 +1399,15 @@ class Script(default.Script):
 
         if shouldPresent and AXDocument.get_uri(event.source).startswith("http"):
             if event.detail1:
-                self.presentMessage(messages.PAGE_LOADING_START)
+                self.present_message(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
                 if mgr.get_setting('speechVerbosityLevel') != settings.VERBOSITY_LEVEL_VERBOSE:
                     msg = AXObject.get_name(event.source)
                 else:
                     msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
-                self.presentMessage(msg, resetStyles=False)
+                self.present_message(msg, reset_styles=False)
             else:
-                self.presentMessage(messages.PAGE_LOADING_END)
+                self.present_message(messages.PAGE_LOADING_END)
 
         self._loadingDocumentContent = event.detail1
         if event.detail1:
@@ -1428,7 +1429,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             summary = AXDocument.get_document_summary(event.source)
             if summary:
-                self.presentMessage(summary)
+                self.present_message(summary)
 
         obj, offset = self.utilities.getCaretContext()
         if not AXUtilities.is_busy(event.source) \
@@ -1719,7 +1720,7 @@ class Script(default.Script):
         if AXUtilities.is_alert(event.any_data):
             msg = "WEB: Presenting event.any_data"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.presentObject(event.any_data, interrupt=True)
+            self.present_object(event.any_data, interrupt=True)
 
             focused = AXUtilities.get_focused_object(event.any_data)
             if focused:
@@ -1797,11 +1798,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
+        self.present_message(messages.TABLE_REORDERED_COLUMNS)
         header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXTable.get_presentable_sort_order_from_header(header, True)
         if msg:
-            self.presentMessage(msg)
+            self.present_message(msg)
         return True
 
     def on_document_load_complete(self, event):
@@ -1913,7 +1914,7 @@ class Script(default.Script):
                 msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 if self.utilities.shouldInterruptForLocusOfFocusChange(focus, event.source, event):
-                    self.presentationInterrupt()
+                    self.presentation_interrupt()
 
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return True
@@ -2055,11 +2056,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.presentMessage(messages.TABLE_REORDERED_ROWS)
+        self.present_message(messages.TABLE_REORDERED_ROWS)
         header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXTable.get_presentable_sort_order_from_header(header, True)
         if msg:
-            self.presentMessage(msg)
+            self.present_message(msg)
         return True
 
     def on_selected_changed(self, event):
@@ -2078,7 +2079,7 @@ class Script(default.Script):
                 # https://bugzilla.mozilla.org/show_bug.cgi?id=1867044
                 AXObject.clear_cache(event.source, False, "Work around Gecko bug.")
                 AXUtilities.clear_all_cache_now(reason=msg)
-                self.presentObject(event.source, priorObj=focus, interrupt=True)
+                self.present_object(event.source, priorObj=focus, interrupt=True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):
@@ -2156,7 +2157,7 @@ class Script(default.Script):
         if event.detail1 and self.utilities.isBrowserUIAlert(event.source):
             msg = "WEB: Event handled: Presenting event source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.presentObject(event.source, interrupt=True)
+            self.present_object(event.source, interrupt=True)
             return True
 
         if not self.utilities.inDocumentContent(event.source):

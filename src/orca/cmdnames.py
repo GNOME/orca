@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-lines
+
 """Command names which Orca presents in speech and/or braille. These
 have been put in their own module so that we can present them in
 the correct language when users change the synthesizer language
@@ -30,7 +32,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2013 The Orca Team"
 __license__   = "LGPL"
 
-from .orca_i18n import _
+from .orca_i18n import _ # pylint: disable=import-error
 
 # Translators: this command will move the mouse pointer to the current item,
 # typically a widget, without clicking on it.

@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Provides getPhoneticName method that maps each letter of the
-alphabet into its localized phonetic equivalent."""
+"""Dictionary of phonetic names for letters of the alphabet."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -26,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from .orca_i18n import _
+from .orca_i18n import _ # pylint: disable=import-error
 
 # Translators: this is a structure to assist in the generation of
 # spoken military-style spelling.  For example, 'abc' becomes 'alpha
@@ -66,14 +65,7 @@ for __pair in __phonlist.split(','):
     __w = __pair.split(':')
     __phonnames [__w[0].strip()] = __w[1].strip()
 
-def getPhoneticName(character):
-    """Given a character, return its phonetic name, which is typically
-    the 'military' term used for the character.
-
-    Arguments:
-    - character: the character to get the military name for
-
-    Returns a string representing the military name for the character
-    """
+def get_phonetic_name(character):
+    """Given a character, return its phonetic name (e.g. 'a' -> 'alpha')."""
 
     return __phonnames.get(character, character)

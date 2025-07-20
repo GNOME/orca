@@ -345,7 +345,7 @@ class LiveRegionManager:
             if self.monitoring:
                 if isinstance(utts, list):
                     utts = " ".join(utts)
-                self._script.presentMessage(utts)
+                self._script.present_message(utts)
             else:
                 msg = "INFO: Not presenting message because monitoring is off"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -381,7 +381,7 @@ class LiveRegionManager:
         """Advance the politeness level of the given object"""
 
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
-            self._script.presentMessage(messages.LIVE_REGIONS_OFF)
+            self._script.present_message(messages.LIVE_REGIONS_OFF)
             return
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -399,13 +399,13 @@ class LiveRegionManager:
 
         if cur_priority == LIVE_OFF or cur_priority == LIVE_NONE:
             self._politenessOverrides[(uri, objectid)] = LIVE_POLITE
-            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_POLITE)
+            self._script.present_message(messages.LIVE_REGIONS_LEVEL_POLITE)
         elif cur_priority == LIVE_POLITE:
             self._politenessOverrides[(uri, objectid)] = LIVE_ASSERTIVE
-            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
+            self._script.present_message(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
         elif cur_priority == LIVE_ASSERTIVE:
             self._politenessOverrides[(uri, objectid)] = LIVE_OFF
-            self._script.presentMessage(messages.LIVE_REGIONS_LEVEL_OFF)
+            self._script.present_message(messages.LIVE_REGIONS_LEVEL_OFF)
 
     def goLastLiveRegion(self):
         """Move the caret to the last announced live region and speak the
@@ -420,20 +420,20 @@ class LiveRegionManager:
 
         msgnum = int(inputEvent.keyval_name[1:])
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
-            self._script.presentMessage(messages.LIVE_REGIONS_OFF)
+            self._script.present_message(messages.LIVE_REGIONS_OFF)
             return
 
         if msgnum > len(self.msg_cache):
-            self._script.presentMessage(messages.LIVE_REGIONS_NO_MESSAGE)
+            self._script.present_message(messages.LIVE_REGIONS_NO_MESSAGE)
         else:
-            self._script.presentMessage(self.msg_cache[-msgnum])
+            self._script.present_message(self.msg_cache[-msgnum])
 
     def setLivePolitenessOff(self, script, inputEvent):
         """User toggle to set all live regions to LIVE_OFF or back to their
         original politeness."""
 
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
-            self._script.presentMessage(messages.LIVE_REGIONS_OFF)
+            self._script.present_message(messages.LIVE_REGIONS_OFF)
             return
 
         # start at the document frame
@@ -444,7 +444,7 @@ class LiveRegionManager:
         # The user is currently monitoring live regions but now wants to
         # change all live region politeness on page to LIVE_OFF
         if self.monitoring:
-            self._script.presentMessage(messages.LIVE_REGIONS_ALL_OFF)
+            self._script.present_message(messages.LIVE_REGIONS_ALL_OFF)
             self.msg_queue.clear()
 
             # First we'll save off a copy for quick restoration
@@ -469,7 +469,7 @@ class LiveRegionManager:
         else:
             for key, value in self._restoreOverrides.items():
                 self._politenessOverrides[key] = value
-            self._script.presentMessage(messages.LIVE_REGIONS_ALL_RESTORED)
+            self._script.present_message(messages.LIVE_REGIONS_ALL_RESTORED)
             # Toggle our flag
             self.monitoring = True
 
@@ -565,8 +565,8 @@ class LiveRegionManager:
         # instantly send out notify messages
         if attrs.get('channel') == 'notify':
             utts = labels + content
-            self._script.presentationInterrupt()
-            self._script.presentMessage(utts)
+            self._script.presentation_interrupt()
+            self._script.present_message(utts)
             return None
 
         return {'content':[content], 'labels':[labels]}
@@ -662,8 +662,8 @@ class LiveRegionManager:
     def toggleMonitoring(self, script, inputEvent):
         if not settings_manager.get_manager().get_setting('inferLiveRegions'):
             settings_manager.get_manager().set_setting('inferLiveRegions', True)
-            self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_ON)
+            self._script.present_message(messages.LIVE_REGIONS_MONITORING_ON)
         else:
             settings_manager.get_manager().set_setting('inferLiveRegions', False)
             self.flushMessages()
-            self._script.presentMessage(messages.LIVE_REGIONS_MONITORING_OFF)
+            self._script.present_message(messages.LIVE_REGIONS_MONITORING_OFF)

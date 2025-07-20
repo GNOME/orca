@@ -142,9 +142,9 @@ class LearnModePresenter:
             script = script_manager.get_manager().get_active_script()
 
         if script is not None:
-            script.presentMessage(messages.VERSION)
-            script.speakMessage(messages.LEARN_MODE_START_SPEECH)
-            script.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
+            script.present_message(messages.VERSION)
+            script.speak_message(messages.LEARN_MODE_START_SPEECH)
+            script.display_message(messages.LEARN_MODE_START_BRAILLE)
 
         input_event_manager.get_manager().grab_keyboard("Entering learn mode")
         msg = "LEARN MODE PRESENTER: Is now active"
@@ -168,7 +168,7 @@ class LearnModePresenter:
             script = script_manager.get_manager().get_active_script()
 
         if script is not None:
-            script.presentMessage(messages.LEARN_MODE_STOP)
+            script.present_message(messages.LEARN_MODE_STOP)
 
         input_event_manager.get_manager().ungrab_keyboard("Exiting learn mode")
         msg = "LEARN MODE PRESENTER: Is now inactive"
@@ -223,7 +223,7 @@ class LearnModePresenter:
             script = script_manager.get_manager().get_active_script()
             if script is None:
                 return True
-            script.presentMessage(handler.description)
+            script.present_message(handler.description)
 
         return True
 
@@ -329,7 +329,7 @@ class LearnModePresenter:
             title = messages.shortcuts_found_app(len(bound), app_name)
 
         if not bindings:
-            script.presentMessage(title)
+            script.present_message(title)
             return True
 
         self.quit(script, event)
