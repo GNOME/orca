@@ -666,7 +666,7 @@ class Script(script.Script):
 
         if self.utilities.shouldInterruptForLocusOfFocusChange(
            old_focus, new_focus, event):
-            self.presentation_interrupt()
+            self.interrupt_presentation()
         speech.speak(utterances, interrupt=False)
         self._save_focused_object_info(new_focus)
 
@@ -850,7 +850,7 @@ class Script(script.Script):
             self.get_flat_review_presenter().quit()
             return True
 
-        self.presentation_interrupt()
+        self.interrupt_presentation()
         return braille.returnToRegionWithFocus(event)
 
     def set_contracted_braille(self, event=None):
@@ -865,7 +865,7 @@ class Script(script.Script):
         # Don't kill flash here because it will restore the previous contents and
         # then process the routing key. If the contents accept a click action, this
         # would result in clicking on the link instead of clearing the flash message.
-        self.presentation_interrupt(kill_flash=False)
+        self.interrupt_presentation(kill_flash=False)
         braille.process_routing_key(event)
         return True
 
@@ -878,7 +878,7 @@ class Script(script.Script):
         if offset < 0:
             return True
 
-        self.presentation_interrupt()
+        self.interrupt_presentation()
         AXText.clear_all_selected_text(obj)
         self.utilities.setCaretOffset(obj, offset)
         return True
@@ -891,7 +891,7 @@ class Script(script.Script):
         if offset < 0:
             return True
 
-        self.presentation_interrupt()
+        self.interrupt_presentation()
         start_offset = AXText.get_selection_start_offset(obj)
         end_offset = AXText.get_selection_end_offset(obj)
         if (start_offset < 0 or end_offset < 0):
@@ -1579,7 +1579,7 @@ class Script(script.Script):
             self._save_focused_object_info(event.source)
 
         if not isProgressBarUpdate:
-            self.presentation_interrupt()
+            self.interrupt_presentation()
 
         self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
         speech.speak(self.speech_generator.generate_speech(
@@ -2031,7 +2031,7 @@ class Script(script.Script):
     #                                                                          #
     ############################################################################
 
-    def presentation_interrupt(self, kill_flash=True):
+    def interrupt_presentation(self, kill_flash=True):
         """Convenience method to interrupt whatever is being presented at the moment."""
 
         msg = "DEFAULT: Interrupting presentation"
@@ -2120,7 +2120,7 @@ class Script(script.Script):
         if not isinstance(sounds, list):
             sounds = [sounds]
 
-        _player = sound.getPlayer()
+        _player = sound.get_player()
         _player.play(sounds[0], interrupt)
         for i in range(1, len(sounds)):
             _player.play(sounds[i], interrupt=False)

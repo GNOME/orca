@@ -53,7 +53,7 @@ class SpellCheck(spellcheck.SpellCheck):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        def is_non_spell_check_child(x):
+        def is_non_spell_check_child(x: Atspi.Accessible) -> bool:
             return AXUtilities.is_page_tab_list(x) or AXUtilities.is_split_pane(x)
 
         if AXObject.find_descendant(window, is_non_spell_check_child):

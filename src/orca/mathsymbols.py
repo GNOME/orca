@@ -19,24 +19,29 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
+
+"""Turns math symbols into their spoken representation."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
-import re
 import unicodedata
 
 from . import debug
-from .orca_i18n import C_
-
-fallbackOnUnicodeData = False
+from .orca_i18n import C_ # pylint: disable=import-error
 
 SPEAK_NEVER = 1
 SPEAK_ALWAYS = 2
 SPEAK_FOR_CHARS = 3
-speakStyle = SPEAK_ALWAYS
+speak_style = SPEAK_ALWAYS # pylint: disable=invalid-name
+
+fall_back_on_unicode_data = False # pylint: disable=invalid-name
 
 _all: dict[str, str] = {}
 _alnum: dict[str, str] = {}
@@ -2231,25 +2236,8 @@ _all.update(_alnum)
 _all.update(_arrows)
 _all.update(_operators)
 _all.update(_shapes)
-_RE = None
-_RE_COMBINING = None
 
-def __compileRE():
-    global _RE
-    try:
-        _RE = re.compile(f"[{''.join(list(_all.keys()))}]", re.UNICODE)
-    except Exception:
-        _RE = None
-
-def __compileRE_COMBINING():
-    global _RE_COMBINING
-    try:
-        _RE_COMBINING = re.compile(f".[{''.join(list(_combining.keys()))}]",
-                                   re.UNICODE)
-    except Exception:
-        _RE_COMBINING = None
-
-def _getStyleString(symbol):
+def _get_style_string(symbol):
     o = ord(symbol)
     if o in _bold or o in _boldGreek or o in _boldDigits:
         return BOLD
@@ -2282,51 +2270,57 @@ def _getStyleString(symbol):
 
     return "%s"
 
-def updateSymbols(symbolDict):
-    global _all
-    _all.update(symbolDict)
+def _update_symbols(symbol_dict):
+    _all.update(symbol_dict)
 
-def _getSpokenName(symbol, includeStyle):
+def _get_spokent_name(symbol, include_style):
     if symbol not in _all:
         return ""
 
     name = _all.get(symbol)
-    if not name and fallbackOnUnicodeData:
+    if not name and fall_back_on_unicode_data:
         name = unicodedata.name(symbol).lower()
-        updateSymbols({symbol: name})
+        _update_symbols({symbol: name})
         return name
 
-    if includeStyle and symbol in _alnum:
-        name = _getStyleString(symbol) % name
+    if include_style and symbol in _alnum:
+        name = _get_style_string(symbol) % name
 
     return name
 
-def getCharacterName(symbol):
-    result = _getSpokenName(symbol, speakStyle != SPEAK_NEVER)
+def get_character_name(symbol):
+    """Returns the character name of symbol."""
+
+    result = _get_spokent_name(symbol, speak_style != SPEAK_NEVER)
     msg = f"MATHSYMBOLS: Name of '{symbol}' is '{result}'"
     debug.print_message(debug.LEVEL_INFO, msg, True, True)
     return result
 
-def adjustForSpeech(string):
-    if _RE is None:
-        __compileRE()
+def adjust_for_speech(string):
+    """Adjusts string for speech by replacing math symbols with their spoken names."""
 
-    if _RE_COMBINING is None:
-        __compileRE_COMBINING()
+    # Handle combining characters first
+    # Combining characters modify the preceding character
+    result = string
+    for combining_char, name_template in _combining.items():
+        # Look for any character followed by the combining character
+        i = 0
+        while i < len(result) - 1:
+            if result[i + 1] == combining_char:
+                base_char = result[i]
+                name = name_template % base_char
+                # Replace the base char + combining char with the spoken name
+                result = result[:i] + f" {name} " + result[i + 2:]
+                i += len(f" {name} ")
+            else:
+                i += 1
 
-    if _RE_COMBINING is not None:
-        combiningPairs = set(re.findall(_RE_COMBINING, string))
-        for pair in combiningPairs:
-            name = _combining.get(pair[1])
+    # Handle regular math symbols
+    include_style = speak_style == SPEAK_ALWAYS
+    for char in _all:
+        if char in result:
+            name = _get_spokent_name(char, include_style)
             if name:
-                string = re.sub(pair, f" {name % pair[0]} ", string)
+                result = result.replace(char, f" {name} ")
 
-    if _RE is not None:
-        chars = set(re.findall(_RE, string))
-        includeStyle = speakStyle == SPEAK_ALWAYS
-        for char in chars:
-            name = _getSpokenName(char, includeStyle)
-            if name:
-                string = re.sub(char, f" {name} ", string)
-
-    return string
+    return result

@@ -29,12 +29,12 @@ import gi
 from gi.repository import GLib
 
 try:
-    gi.require_version('Gst', '1.0')
+    gi.require_version("Gst", "1.0")
     from gi.repository import Gst
-except Exception:
-    _gstreamerAvailable = False
+except (ImportError, ValueError, gi.repository.GLib.GError):
+    _GSTREAMER_AVAILABLE = False
 else:
-    _gstreamerAvailable, args = Gst.init_check(None)
+    _GSTREAMER_AVAILABLE = True
 
 from . import debug
 from .sound_generator import Icon, Tone
@@ -42,90 +42,98 @@ from .sound_generator import Icon, Tone
 class Player:
     """Plays Icons and Tones."""
 
-    def __init__(self):
-        self._initialized = False
-        self._source = None
-        self._sink = None
-        self._player = None
-        self._pipeline = None
+    def __init__(self) -> None:
+        self._initialized: bool = False
+        self._source: Gst.Element | None = None
+        self._sink: Gst.Element | None = None
+        self._player: Gst.Element | None = None
+        self._pipeline: Gst.Pipeline | None = None
+        self._gstreamer_available: bool = _GSTREAMER_AVAILABLE
 
-        if not _gstreamerAvailable:
-            msg = 'SOUND ERROR: Gstreamer is not available'
+        if not self._gstreamer_available:
+            msg = "SOUND: Gstreamer is not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         self.init()
 
-    def _onPlayerMessage(self, bus, message):
+    def _on_player_message(self, _bus: Gst.Bus, message: Gst.Message) -> None:
+        assert self._player is not None
         if message.type == Gst.MessageType.EOS:
             self._player.set_state(Gst.State.NULL)
         elif message.type == Gst.MessageType.ERROR:
             self._player.set_state(Gst.State.NULL)
-            error, info = message.parse_error()
-            msg = f'SOUND ERROR: {error}'
+            error, _info = message.parse_error()
+            msg = f"SOUND ERROR: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _onPipelineMessage(self, bus, message):
+    def _on_pipleline_message(self, _bus: Gst.Bus, message: Gst.Message) -> None:
+        assert self._pipeline is not None
         if message.type == Gst.MessageType.EOS:
             self._pipeline.set_state(Gst.State.NULL)
         elif message.type == Gst.MessageType.ERROR:
             self._pipeline.set_state(Gst.State.NULL)
-            error, info = message.parse_error()
-            msg = f'SOUND ERROR: {error}'
+            error, _info = message.parse_error()
+            msg = f"SOUND: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _onTimeout(self, element):
+    def _on_timeout(self, element: Gst.Element) -> bool:
         element.set_state(Gst.State.NULL)
         return False
 
-    def _playIcon(self, icon, interrupt=True):
+    def _play_icon(self, icon: Icon, interrupt: bool = True) -> None:
         """Plays a sound icon, interrupting the current play first unless specified."""
 
+        assert self._player is not None
         if interrupt:
             self._player.set_state(Gst.State.NULL)
 
-        self._player.set_property('uri', f'file://{icon.path}')
+        self._player.set_property("uri", f"file://{icon.path}")
         self._player.set_state(Gst.State.PLAYING)
 
-    def _playTone(self, tone, interrupt=True):
+    def _play_tone(self, tone: Tone, interrupt: bool = True) -> None:
         """Plays a tone, interrupting the current play first unless specified."""
 
+        assert self._pipeline is not None
+        assert self._source is not None
         if interrupt:
             self._pipeline.set_state(Gst.State.NULL)
 
-        self._source.set_property('volume', tone.volume)
-        self._source.set_property('freq', tone.frequency)
-        self._source.set_property('wave', tone.wave)
+        self._source.set_property("volume", tone.volume)
+        self._source.set_property("freq", tone.frequency)
+        self._source.set_property("wave", tone.wave)
         self._pipeline.set_state(Gst.State.PLAYING)
         duration = int(1000 * tone.duration)
-        GLib.timeout_add(duration, self._onTimeout, self._pipeline)
+        GLib.timeout_add(duration, self._on_timeout, self._pipeline)
 
-    def init(self):
+    def init(self) -> None:
         """(Re)Initializes the Player."""
 
         if self._initialized:
             return
 
-        if not _gstreamerAvailable:
+        if not self._gstreamer_available:
             return
 
-        self._player = Gst.ElementFactory.make('playbin', 'player')
+        Gst.init(None)
+
+        self._player = Gst.ElementFactory.make("playbin", "player")
         if self._player is None:
-            msg = 'SOUND ERROR: Gstreamer is available, but player is None'
+            msg = "SOUND: Gstreamer is available, but player is None"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         bus = self._player.get_bus()
         bus.add_signal_watch()
-        bus.connect("message", self._onPlayerMessage)
+        bus.connect("message", self._on_player_message)
 
-        self._pipeline = Gst.Pipeline(name='orca-pipeline')
+        self._pipeline = Gst.Pipeline(name="orca-pipeline")
         bus = self._pipeline.get_bus()
         bus.add_signal_watch()
-        bus.connect("message", self._onPipelineMessage)
+        bus.connect("message", self._on_pipleline_message)
 
-        self._source = Gst.ElementFactory.make('audiotestsrc', 'src')
-        self._sink = Gst.ElementFactory.make('autoaudiosink', 'output')
+        self._source = Gst.ElementFactory.make("audiotestsrc", "src")
+        self._sink = Gst.ElementFactory.make("autoaudiosink", "output")
         if self._source is None or self._sink is None:
             return
 
@@ -135,21 +143,21 @@ class Player:
 
         self._initialized = True
 
-    def play(self, item, interrupt=True):
+    def play(self, item: Icon | Tone, interrupt: bool = True) -> None:
         """Plays a sound, interrupting the current play first unless specified."""
 
         if isinstance(item, Icon):
-            self._playIcon(item, interrupt)
+            self._play_icon(item, interrupt)
         elif isinstance(item, Tone):
-            self._playTone(item, interrupt)
+            self._play_tone(item, interrupt)
         else:
-            tokens = ["SOUND ERROR:", item, "is not an Icon or Tone"]
+            tokens = ["SOUND:", item, "is not an Icon or Tone"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def stop(self, element=None):
+    def stop(self, element: Gst.Element | None = None) -> None:
         """Stops play."""
 
-        if not _gstreamerAvailable:
+        if not self._gstreamer_available:
             return
 
         if element:
@@ -162,18 +170,19 @@ class Player:
         if self._pipeline:
             self._pipeline.set_state(Gst.State.NULL)
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Shuts down the sound utilities."""
 
-        global _gstreamerAvailable
-        if not _gstreamerAvailable:
+        if not self._gstreamer_available:
             return
 
         self.stop()
         self._initialized = False
-        _gstreamerAvailable = False
+        self._gstreamer_available = False
 
-_player = Player()
+_player: Player = Player()
 
-def getPlayer():
+def get_player() -> Player:
+    """Returns the Player singleton."""
+
     return _player

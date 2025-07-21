@@ -18,7 +18,14 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
+
 """Module for drawing highlights over an area of interest."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -26,18 +33,27 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from . import debug
 
 try:
     import cairo
     import gi
-    gi.require_version('Gtk', '3.0')
+    gi.require_version("Gtk", "3.0")
     from gi.repository import Gtk
     CAIRO_AVAILABLE = True
-except Exception as error:
+except (ImportError, ModuleNotFoundError) as error:
     tokens = ["HIGHLIGHTER: GtkHighlighter unavailable:", error]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     CAIRO_AVAILABLE = False
+
+if TYPE_CHECKING:
+    from typing import Any
+    if CAIRO_AVAILABLE:
+        from gi.repository import Gtk as GtkType
+    else:
+        GtkType = Any
 
 class Highlighter:
     """Base class of all highlighters supported by Orca."""
@@ -61,7 +77,16 @@ class Highlighter:
     BLACK = (0, 0, 0)
     WHITE = (1, 1, 1)
 
-    def __init__(self, highlight_type, color, alpha, thickness, padding, fill_color, fill_alpha):
+    def __init__(
+        self,
+        highlight_type: str,
+        color: tuple[float, float, float],
+        alpha: float,
+        thickness: int,
+        padding: int,
+        fill_color: tuple[float, float, float] | None,
+        fill_alpha: float | None
+    ) -> None:
         self._highlight_type = highlight_type
         self._color = color
         self._alpha = alpha
@@ -69,53 +94,49 @@ class Highlighter:
         self._padding = padding
         self._fill_color = fill_color
         self._fill_alpha = fill_alpha
-        self._gui = self._create_gui()
+        self._gui = self._create_gui() # pylint: disable=assignment-from-none
 
-    def _create_gui(self):
+    def _create_gui(self) -> Any:
         """Creates the gui for the overlay."""
+
         return None
 
-    def _draw_highlight(self, painter):
+    def _draw_highlight(self, painter: Any) -> None:
         """Called by highlight to draw a highlight over the item."""
-        pass
 
-    def _draw_rectangle(self, painter):
+    def _draw_rectangle(self, painter: Any) -> None:
         """Called by highlight to draw a rectangle around the item."""
-        pass
 
-    def _draw_underline(self, painter):
+    def _draw_underline(self, painter: Any) -> None:
         """Called by highlight to draw an underline under the item."""
-        pass
 
-    def highlight(self, x, y, width, height):
+    def highlight(self, x: int, y: int, width: int, height: int) -> None:
         """Draws the desired indicator over the specified box."""
-        pass
 
-    def quit(self):
+    def quit(self) -> None:
         """Quits the highlighter."""
-        pass
 
 
 class GtkHighlighter(Highlighter):
     """Highlighter that uses a GtkWindow to highlight items."""
 
     def __init__(self,
-                 highlight_type=Highlighter.UNDERLINE,
-                 color=Highlighter.GREEN,
-                 alpha=1.0,
-                 thickness=5,
-                 padding=5,
-                 fill_color=None,
-                 fill_alpha=None):
+                 highlight_type: str = Highlighter.UNDERLINE,
+                 color: tuple[float, float, float] = Highlighter.GREEN,
+                 alpha: float = 1.0,
+                 thickness: int = 5,
+                 padding: int = 5,
+                 fill_color: tuple[float, float, float] | None = None,
+                 fill_alpha: float | None = None) -> None:
         if not CAIRO_AVAILABLE:
             msg = "GTK HIGHLIGHTER: Unavailable. Is Cairo installed?"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         super().__init__(highlight_type, color, alpha, thickness, padding, fill_color, fill_alpha)
-        self._drawing_area = None
+        self._drawing_area: Any = None
 
-    def _create_gui(self):
+    def _create_gui(self) -> Any:
         """Creates the gui for the overlay."""
 
         gui = Gtk.Window()
@@ -135,7 +156,7 @@ class GtkHighlighter(Highlighter):
         gui.add(self._drawing_area)
         return gui
 
-    def _on_draw(self, widget, painter):
+    def _on_draw(self, _widget: Any, painter: Any) -> None:
         """Signal handler for the 'draw' event."""
 
         if self._highlight_type == self.HIGHLIGHT:
@@ -145,7 +166,7 @@ class GtkHighlighter(Highlighter):
         elif self._highlight_type == self.UNDERLINE:
             self._draw_underline(painter)
 
-    def _draw_highlight(self, painter):
+    def _draw_highlight(self, painter: Any) -> None:
         """Called by highlight to draw a highlight over the item."""
 
         if self._fill_color is None:
@@ -155,11 +176,11 @@ class GtkHighlighter(Highlighter):
 
         fill = (*self._fill_color, self._fill_alpha)
         painter.set_source_rgba(*fill)
-        painter.set_operator(cairo.OPERATOR_SOURCE)
+        painter.set_operator(cairo.OPERATOR_SOURCE) # pylint: disable=no-member
         painter.paint()
-        painter.set_operator(cairo.OPERATOR_OVER)
+        painter.set_operator(cairo.OPERATOR_OVER) # pylint: disable=no-member
 
-    def _draw_rectangle(self, painter):
+    def _draw_rectangle(self, painter: Any) -> None:
         """Called by highlight to draw a rectangle around the item."""
 
         x = self._padding
@@ -179,7 +200,7 @@ class GtkHighlighter(Highlighter):
         painter.rectangle(x, y, width, height)
         painter.stroke()
 
-    def _draw_underline(self, painter):
+    def _draw_underline(self, painter: Any) -> None:
         """Called by highlight to draw an underline under the item."""
 
         line = (*self._color, self._alpha)
@@ -189,7 +210,7 @@ class GtkHighlighter(Highlighter):
         painter.line_to(self._gui.get_allocated_width(), self._gui.get_allocated_height() - 5)
         painter.stroke()
 
-    def highlight(self, x, y, width, height):
+    def highlight(self, x: int, y: int, width: int, height: int) -> None:
         """Draws the desired indicator over the specified box."""
 
         msg = f"GTK HIGHLIGHTER: x:{x}, y:{y}, width:{width}, height:{height}"
@@ -198,13 +219,13 @@ class GtkHighlighter(Highlighter):
         try:
             self._gui.move(x - self._padding, y - self._padding)
             self._gui.resize(width + 2 * self._padding, height + 2 * self._padding)
-        except Exception as exc:
+        except (ValueError, TypeError, AttributeError, RuntimeError) as exc:
             error_tokens = ["GTK HIGHLIGHTER: Exception:", exc]
             debug.print_tokens(debug.LEVEL_INFO, error_tokens, True)
         else:
             self._gui.show_all()
 
-    def quit(self):
+    def quit(self) -> None:
         """Quits the highlighter."""
 
         msg = "GTK HIGHLIGHTER: Quitting."

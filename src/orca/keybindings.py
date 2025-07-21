@@ -35,8 +35,8 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 import gi
-gi.require_version('Atspi', '2.0')
-gi.require_version('Gdk', '3.0')
+gi.require_version("Atspi", "2.0")
+gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import Gdk
 

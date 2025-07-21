@@ -1364,7 +1364,7 @@ class StructuralNavigator:
             index = 0
 
         rows = [[obj, -1] + row_data_func(obj) for obj in objects]
-        orca_gui_navlist.showUI(dialog_title, column_headers, rows, index)
+        orca_gui_navlist.show_ui(dialog_title, column_headers, rows, index)
 
     def _determine_root_container(self, script: default.Script) -> Atspi.Accessible:
         mode = self.get_mode(script)

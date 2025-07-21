@@ -61,9 +61,9 @@ __phonlist = _("a : alpha, b : bravo, c : charlie, "
 
 __phonnames = {}
 
-for __pair in __phonlist.split(','):
-    __w = __pair.split(':')
-    __phonnames [__w[0].strip()] = __w[1].strip()
+for __pair in __phonlist.split(","):
+    __w = __pair.split(":")
+    __phonnames[__w[0].strip()] = __w[1].strip()
 
 def get_phonetic_name(character):
     """Given a character, return its phonetic name (e.g. 'a' -> 'alpha')."""

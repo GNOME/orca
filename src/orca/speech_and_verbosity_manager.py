@@ -1078,7 +1078,7 @@ class SpeechAndVerbosityManager:
 
         manager = settings_manager.get_manager()
         if script is not None:
-            script.presentation_interrupt()
+            script.interrupt_presentation()
         if manager.get_setting("silenceSpeech"):
             manager.set_setting("silenceSpeech", False)
             if script is not None and notify_user:
@@ -1281,7 +1281,7 @@ class SpeechAndVerbosityManager:
             return text
 
         words = re.split(r"(\W+)", text)
-        return "".join(map(pronunciation_dict.getPronunciation, words))
+        return "".join(map(pronunciation_dict.get_pronunciation, words))
 
     def get_indentation_description(
         self,
@@ -1366,7 +1366,7 @@ class SpeechAndVerbosityManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilities.is_math_related(obj):
-            text = mathsymbols.adjustForSpeech(text)
+            text = mathsymbols.adjust_for_speech(text)
 
         if start_offset is not None:
             text = self._adjust_for_links(obj, text, start_offset)

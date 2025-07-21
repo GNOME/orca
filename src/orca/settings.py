@@ -17,9 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Manages the settings for Orca.  This will defer to user settings first, but
-fallback to local settings if the user settings doesn't exist (e.g., in the
-case of gdm) or doesn't have the specified attribute."""
+"""Settings managed by Orca."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"

@@ -37,9 +37,11 @@ __license__   = "LGPL"
 
 import re
 import time
+from typing import Any, Callable, TYPE_CHECKING
+
 from dasbus.connection import SessionMessageBus
 from dasbus.error import DBusError
-from typing import Any, Callable, TYPE_CHECKING
+from dasbus.client.proxy import InterfaceProxy
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -164,9 +166,9 @@ class _ClipboardManagerGPaste(_ClipboardManager):
     def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("GPASTE", change_callback)
         self._bus: SessionMessageBus | None = None
-        self._gpaste_proxy: Any = None
-        self._props_proxy: Any = None
-        self._signal_subscription: Any = None
+        self._gpaste_proxy: InterfaceProxy | None = None
+        self._props_proxy: InterfaceProxy | None = None
+        self._signal_subscription: Any | None = None
         self._original_active_state: bool | None = None
 
     def connect(self) -> None:
@@ -256,8 +258,8 @@ class _ClipboardManagerKlipper(_ClipboardManager):
     def __init__(self, change_callback: Callable[[str], None]) -> None:
         super().__init__("KLIPPER", change_callback)
         self._bus: SessionMessageBus | None = None
-        self._klipper_proxy: Any = None
-        self._signal_subscription: Any = None
+        self._klipper_proxy: InterfaceProxy | None = None
+        self._signal_subscription: Any | None = None
 
     def connect(self) -> None:
         """Connects to the clipboard manager."""

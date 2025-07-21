@@ -1386,7 +1386,7 @@ class SpeechGenerator(generator.Generator):
 
         for i, child in enumerate(AXObject.iter_children(obj)):
             result.extend(self._generate_math_contents(child, **args))
-            separator_name = mathsymbols.getCharacterName(separators[i])
+            separator_name = mathsymbols.get_character_name(separators[i])
             result.append(separator_name)
             result.extend(self.voice(DEFAULT, obj=obj, **args))
             if separator_name:
@@ -1785,7 +1785,7 @@ class SpeechGenerator(generator.Generator):
 
         attrs = AXObject.get_attributes_dict(obj)
         fence_start = attrs.get("open", "(")
-        result = [mathsymbols.getCharacterName(fence_start)]
+        result = [mathsymbols.get_character_name(fence_start)]
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
@@ -1800,7 +1800,7 @@ class SpeechGenerator(generator.Generator):
 
         attrs = AXObject.get_attributes_dict(obj)
         fence_end = attrs.get("close", ")")
-        result = [mathsymbols.getCharacterName(fence_end)]
+        result = [mathsymbols.get_character_name(fence_end)]
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
@@ -2510,7 +2510,7 @@ class SpeechGenerator(generator.Generator):
 
         string = result[0].strip()
         if len(string) == 1 and AXUtilities.is_math_related(obj):
-            charname = mathsymbols.getCharacterName(string)
+            charname = mathsymbols.get_character_name(string)
             if charname and charname != string:
                 result[0] = charname
 

@@ -565,7 +565,7 @@ class LiveRegionManager:
         # instantly send out notify messages
         if attrs.get('channel') == 'notify':
             utts = labels + content
-            self._script.presentation_interrupt()
+            self._script.interrupt_presentation()
             self._script.present_message(utts)
             return None
 

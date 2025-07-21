@@ -620,8 +620,22 @@ class WhereAmIPresenter:
         else:
             format_type = "detailedWhereAmI"
 
+        def real_object(acc: Atspi.Accessible) -> Atspi.Accessible:
+            if AXUtilities.is_focused(acc):
+                return acc
+
+            def pred(x):
+                return AXUtilities.is_table_cell_or_header(x) or AXUtilities.is_list_item(x)
+
+            ancestor = AXObject.find_ancestor(acc, pred)
+            if ancestor is not None \
+              and not AXUtilities.is_layout_only(AXObject.get_parent(ancestor)):
+                acc = ancestor
+
+            return acc
+
         script.present_object(
-            script.utilities.realActiveAncestor(obj),
+            real_object(obj),
             alreadyFocused=True,
             formatType=format_type,
             forceMnemonic=True,
@@ -662,7 +676,7 @@ class WhereAmIPresenter:
         # in response to the first click. Then we do the detailed one in
         # response to the second click. Until that's fixed, interrupt the
         # first one.
-        script.presentation_interrupt()
+        script.interrupt_presentation()
         return self._do_where_am_i(script, False, notify_user=notify_user)
 
 _presenter = WhereAmIPresenter()

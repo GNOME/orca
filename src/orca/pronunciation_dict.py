@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Exposes a dictionary, pronunciation_dict, that maps words to what
-they sound like."""
+"""Exposes a dictionary, pronunciation_dict, that maps words to what they sound like."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -26,45 +25,26 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-def getPronunciation(word, pronunciations=None):
-    """Given a word, return a string that represents what this word
-    sounds like. Note: This code does not handle the pronunciation
-    of character names. That should be handled at the speech provider
-    or synthesizer level. For instance the symbols.dic files installed
-    in /usr/share/speech-dispatcher.
+def get_pronunciation(word: str, pronunciations: dict[str, list[str]] | None = None) -> str:
+    """Returns a user-provided string that represents what the word sounds like."""
 
-    Arguments:
-    - word: the word to get the "sounds like" representation for.
-    - pronunciations: an optional dictionary used to get the pronunciation
-      from.
-
-    Returns a string that represents what this word sounds like, or 
-    the word if there is no representation.
-    """
-
-    lowerWord = word.lower()
     dictionary = pronunciations or pronunciation_dict
-    entry = dictionary.get(lowerWord, [word, word])
-
+    entry = dictionary.get(word.lower(), [word, word])
     return entry[1]
 
-def setPronunciation(word, replacementString, pronunciations=None):
-    """Given an actual word, and a replacement string, set a key/value
-    pair in a pronunciation dictionary.
-
-    Arguments:
-    - word: the word to be pronunced.
-    - replacementString: the replacement string to use instead.
-    - pronunciations: an optional dictionary used to set the pronunciation
-      into.
-    """
+def set_pronunciation(
+  word: str,
+  replacement: str,
+  pronunciations: dict[str, list[str]] | None = None
+) -> None:
+    """Adds word/replacement pair to the pronunciation dictionary."""
 
     key = word.lower()
     if pronunciations is not None:
-        pronunciations[key] = [ word, replacementString ]
+        pronunciations[key] = [word, replacement]
     else:
-        pronunciation_dict[key] = [ word, replacementString ]
+        pronunciation_dict[key] = [word, replacement]
 
-# pronunciation_dict is a dictionary where the keys are words and the value is a word
-# written to match the desired pronunciation of that word.
-pronunciation_dict: dict[str, str] = {}
+# pronunciation_dict is a dictionary where the keys are words and the value is a list
+# containing the original word and the replacement pronunciation string.
+pronunciation_dict: dict[str, list[str]] = {}

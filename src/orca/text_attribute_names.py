@@ -27,29 +27,6 @@ __license__   = "LGPL"
 
 from .orca_i18n import C_ # pylint: disable=import-error
 
-# Translators: this is a structure to assist in the generation of
-# localized strings for the various text attributes.
-#
-# Information can be found in the Atk documentation at:
-# http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
-#
-# The at-spi IDL documentation for Accessibility_Text.idl also provides
-# the following information:
-#
-# Attributes relevant to localization should be provided in accordance
-# with the w3c "Internationalization and Localization Markup Requirements",
-# http://www.w3.org/TR/2005/WD-itsreq-20051122/
-#
-# Other text attributes should choose their names and value semantics in
-# accordance with relevant standards such as:
-#   CSS level 2 (http://www.w3.org/TR/1998/REC-CSS2-19980512),
-#   XHTML 1.0   (http://www.w3.org/TR/2002/REC-xhtml1-20020801), and
-#   WICD        (http://www.w3.org/TR/2005/WD-WICD-20051121/).
-#
-# Where possible, specific URL references will also be given below for
-# each text attribute.
-#
-
 attribute_names = {}
 
 # Translators: this attribute specifies the background color of the text.

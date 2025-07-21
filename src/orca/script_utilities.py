@@ -446,20 +446,6 @@ class Utilities:
 
         return rv
 
-    def realActiveAncestor(self, obj):
-        if AXUtilities.is_focused(obj):
-            return obj
-
-        def pred(x):
-            return AXUtilities.is_table_cell_or_header(x) or AXUtilities.is_list_item(x)
-
-        ancestor = AXObject.find_ancestor(obj, pred)
-        if ancestor is not None \
-           and not AXUtilities.is_layout_only(AXObject.get_parent(ancestor)):
-            obj = ancestor
-
-        return obj
-
     def realActiveDescendant(self, obj):
         """Given an object that should be a child of an object that
         manages its descendants, return the child that is the real

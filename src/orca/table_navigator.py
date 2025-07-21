@@ -863,7 +863,7 @@ class TableNavigator:
         if table:
             AXTable.clear_dynamic_column_headers_row(table)
             if notify_user:
-                script.presentation_interrupt()
+                script.interrupt_presentation()
                 script.present_message(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
 
         return True
@@ -922,7 +922,7 @@ class TableNavigator:
         if table:
             AXTable.clear_dynamic_row_headers_column(table)
             if notify_user:
-                script.presentation_interrupt()
+                script.interrupt_presentation()
                 script.present_message(messages.DYNAMIC_ROW_HEADER_CLEARED)
 
         return True

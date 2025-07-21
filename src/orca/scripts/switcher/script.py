@@ -66,7 +66,7 @@ class Script(default.Script):
         msg = "SWITCHER: Treating event as selection change"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self.presentation_interrupt()
+        self.interrupt_presentation()
         focus_manager.get_manager().set_active_window(self.utilities.topLevelObject(event.source))
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         self.present_message(self.utilities.getSelectionName(event.source),

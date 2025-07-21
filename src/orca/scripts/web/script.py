@@ -445,8 +445,8 @@ class Script(default.Script):
             'skipBlankCells': self._skipBlankCellsCheckButton.get_active()
         }
 
-    def presentation_interrupt(self, kill_flash=True):
-        super().presentation_interrupt(kill_flash)
+    def interrupt_presentation(self, kill_flash=True):
+        super().interrupt_presentation(kill_flash)
         msg = "WEB: Flushing live region messages"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.live_region_manager.flushMessages()
@@ -1276,7 +1276,7 @@ class Script(default.Script):
                 return True
 
         if self.utilities.shouldInterruptForLocusOfFocusChange(old_focus, new_focus, event):
-            self.presentation_interrupt()
+            self.interrupt_presentation()
 
         if contents:
             self.speakContents(contents, **args)
@@ -1914,7 +1914,7 @@ class Script(default.Script):
                 msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 if self.utilities.shouldInterruptForLocusOfFocusChange(focus, event.source, event):
-                    self.presentation_interrupt()
+                    self.interrupt_presentation()
 
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return True

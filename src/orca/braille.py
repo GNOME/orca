@@ -48,7 +48,7 @@ from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
-from .orca_platform import tablesdir
+from .orca_platform import tablesdir # pylint: disable=import-error
 
 _monitor = None
 
@@ -1485,7 +1485,7 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True, stopFlash=Tr
         else:
             subMask = None
         if _monitor:
-            _monitor.writeText(cursorCell, substring, subMask)
+            _monitor.write_text(cursorCell, substring, subMask)
     elif _monitor:
         _monitor.destroy()
         _monitor = None

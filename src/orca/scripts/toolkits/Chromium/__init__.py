@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=invalid-name
+
 """Custom script for Chromium."""
 
 # https://gitlab.gnome.org/GNOME/orca/-/issues/358

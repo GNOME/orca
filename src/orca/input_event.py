@@ -38,7 +38,7 @@ __license__   = "LGPL"
 import inspect
 import math
 import time
-from typing import Any, Callable, TYPE_CHECKING, cast
+from typing import Callable, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -618,15 +618,15 @@ class KeyboardEvent(InputEvent):
 
         return handler
 
-    def _present(self) -> bool:
+    def _present(self) -> None:
         if not self._script:
-            return False
+            return
 
         if self.is_pressed_key():
-            self._script.presentation_interrupt()
+            self._script.interrupt_presentation()
 
         if self._script.get_learn_mode_presenter().is_active():
-            return False
+            return
 
         return self._script.present_keyboard_event(self)
 
@@ -697,12 +697,12 @@ class KeyboardEvent(InputEvent):
         if self._script:
             self._handler = self._get_user_handler() \
                 or self._script.key_bindings.get_input_handler(self)
-            tokens = ["HANDLER:", cast(Any, self._handler)]
+            tokens = ["HANDLER:", str(self._handler)]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if self._script.get_learn_mode_presenter().is_active():
                 self._consumer = self._script.get_learn_mode_presenter().handle_event
-                tokens = ["CONSUMER:", cast(Any, self._consumer)]
+                tokens = ["CONSUMER:", str(self._consumer)]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self.is_orca_modifier() and self._click_count == 2:
@@ -779,7 +779,7 @@ class BrailleEvent(InputEvent):
             user_bindings = user_bindings_map.get("default")
 
         if user_bindings and command in user_bindings:
-            handler: InputEventHandler = user_bindings[command]
+            handler: InputEventHandler | None = user_bindings[command]
             tokens = [f"BRAILLE EVENT: User handler for command {command} is", handler]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return handler

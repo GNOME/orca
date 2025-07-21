@@ -146,7 +146,7 @@ class Utilities(script_utilities.Utilities):
         if first_coords == (-1, -1) or last_coords == (-1, -1):
             return False
 
-        self._script.presentation_interrupt()
+        self._script.interrupt_presentation()
 
         if first_coords == last_coords:
             cell = self._get_cell_name_for_coordinates(obj, *first_coords, True)
@@ -201,7 +201,7 @@ class Utilities(script_utilities.Utilities):
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
         if msgs:
-            self._script.presentation_interrupt()
+            self._script.interrupt_presentation()
 
         for msg in msgs:
             self._script.speak_message(msg, interrupt=False)
@@ -272,7 +272,7 @@ class Utilities(script_utilities.Utilities):
             msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selected_rows[0], selected_rows[-1]))
 
         if msgs:
-            self._script.presentation_interrupt()
+            self._script.interrupt_presentation()
 
         for msg in msgs:
             self._script.speak_message(msg, interrupt=False)

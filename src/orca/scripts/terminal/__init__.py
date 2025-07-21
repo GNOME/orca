@@ -18,10 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script for terminals."""
+
 # https://gitlab.gnome.org/GNOME/orca/-/issues/358
 # ruff: noqa: F401
 from .braille_generator import BrailleGenerator
 from .script import Script
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
-

@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script for web content."""
+
 # https://gitlab.gnome.org/GNOME/orca/-/issues/358
 # ruff: noqa: F401
 from .script import Script

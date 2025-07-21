@@ -19,6 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-statements
 # pylint: disable=wrong-import-position
 
 """The main module for the Orca screen reader."""
@@ -41,6 +42,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import Gdk
 from gi.repository import Gio
+from gi.repository import GLib
 
 from . import braille
 from . import clipboard
@@ -66,7 +68,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
 
     if is_reload:
-        sound.getPlayer().shutdown()
+        sound.get_player().shutdown()
         speech_and_verbosity_manager.get_manager().shutdown_speech()
         braille.shutdown()
         mouse_review.get_reviewer().deactivate()
@@ -93,7 +95,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         mouse_review.get_reviewer().activate()
 
     if settings_manager.get_manager().get_setting('enableSound'):
-        sound.getPlayer().init()
+        sound.get_player().init()
 
     # Handle the case where a change was made in the Orca Preferences dialog.
     orca_modifier_manager.get_manager().refresh_orca_modifiers("Loading user settings.")
@@ -122,7 +124,7 @@ def shutdown(script=None, _event=None, _signum=None):
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
     script = script_manager.get_manager().get_active_script()
     if script is not None:
-        script.presentation_interrupt()
+        script.interrupt_presentation()
         script.present_message(messages.STOP_ORCA, reset_styles=False)
 
     # Pause event queuing first so that it clears its queue and will not accept new
@@ -144,7 +146,7 @@ def shutdown(script=None, _event=None, _signum=None):
     if settings.enableBraille:
         braille.shutdown()
     if settings.enableSound:
-        player = sound.getPlayer()
+        player = sound.get_player()
         player.shutdown()
 
     signal.alarm(0)
@@ -191,8 +193,11 @@ def main():
         connection = _a11y_applications_gsetting.connect("changed", _on_enabled_changed)
         msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-    except Exception as error:
-        msg = f"ORCA: Exception connecting to a11y applications gsetting: {error}"
+    except GLib.Error as error:
+        msg = f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+    except (AttributeError, TypeError) as error:
+        msg = f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility): {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     dbus_service.get_remote_controller().start()
@@ -220,7 +225,7 @@ def main():
     try:
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)
         Atspi.event_main()
-    except Exception as error:
+    except GLib.Error as error:
         msg = f"ORCA: Exception starting ATSPI registry: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
         os.kill(os.getpid(), signal.SIGKILL)

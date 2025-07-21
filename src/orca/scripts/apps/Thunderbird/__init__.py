@@ -18,7 +18,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=invalid-name
-# pylint: disable=duplicate-code
 
 """Custom script for Thunderbird."""
 

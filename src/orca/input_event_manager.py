@@ -21,6 +21,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
 
 """Provides utilities for managing input events."""
 

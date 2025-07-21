@@ -18,6 +18,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-few-public-methods
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-instance-attributes
+
 """Provides a D-Bus interface for remotely controlling Orca."""
 
 __id__        = "$Id$"
@@ -228,28 +232,26 @@ class OrcaModuleDBusInterface(Publishable):
 
         if isinstance(result, bool):
             return GLib.Variant("b", result)
-        elif isinstance(result, int):
+        if isinstance(result, int):
             return GLib.Variant("i", result)
-        elif isinstance(result, float):
+        if isinstance(result, float):
             return GLib.Variant("d", result)
-        elif isinstance(result, str):
+        if isinstance(result, str):
             return GLib.Variant("s", result)
-        elif isinstance(result, dict):
+        if isinstance(result, dict):
             return GLib.Variant(
                 "a{sv}", {str(k): GLib.Variant("v", v) for k, v in result.items()})
-        elif isinstance(result, list) or isinstance(result, tuple):
+        if isinstance(result, (list, tuple)):
             if all(isinstance(x, str) for x in result):
                 return GLib.Variant("as", list(result))
-            elif all(isinstance(x, int) for x in result):
+            if all(isinstance(x, int) for x in result):
                 return GLib.Variant("ax", list(result))
-            elif all(isinstance(x, bool) for x in result):
+            if all(isinstance(x, bool) for x in result):
                 return GLib.Variant("ab", list(result))
-            else:
-                return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
-        elif result is None:
+            return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
+        if result is None:
             return GLib.Variant("v", GLib.Variant("s", ""))
-        else:
-            return GLib.Variant("s", str(result))
+        return GLib.Variant("s", str(result))
 
 
 @dbus_interface("org.gnome.Orca.Service")

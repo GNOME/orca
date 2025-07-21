@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
 
 """Custom script for kwin."""
 
@@ -30,14 +29,12 @@ __license__   = "LGPL"
 
 from orca.scripts import switcher
 from orca.scripts.toolkits import Qt
-
 from .script_utilities import Utilities
-
 
 class Script(switcher.Script, Qt.Script):
     """Custom script for kwin."""
 
-    def get_utilities(self):
+    def get_utilities(self) -> Utilities:
         """Returns the utilities for this script."""
 
         return Utilities(self)

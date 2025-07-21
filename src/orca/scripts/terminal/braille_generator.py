@@ -18,6 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+
 """Produces braille presentation for accessible objects."""
 
 # This has to be the first non-docstring line in the module to make linters happy.

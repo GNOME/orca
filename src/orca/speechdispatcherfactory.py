@@ -532,7 +532,9 @@ class SpeechServer(speechserver.SpeechServer):
         name = character
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_math_related(focus):
-            name = mathsymbols.getCharacterName(character)
+            # TODO - JD: If we're reaching this point without the name having been adjusted, we're
+            # doing it wrong.
+            name = mathsymbols.get_character_name(character)
 
         if not name or name == character:
             msg = f"SPEECH DISPATCHER: Speaking '{character}' as char"

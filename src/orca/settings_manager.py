@@ -473,7 +473,7 @@ class SettingsManager:
         pronunciation_dict.pronunciation_dict = {}
         for key, value in pronunciationsDict.values():
             if key and value:
-                pronunciation_dict.setPronunciation(key, value)
+                pronunciation_dict.set_pronunciation(key, value)
 
     def get_general_settings(self, profile='default'):
         """Return the current general settings.
