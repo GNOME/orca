@@ -94,14 +94,16 @@ class _StringContext:
         self._end = end
         self._rect = AXText.get_range_rect(obj, start, end)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, _StringContext):
+            return False
         return other is not None \
             and self._obj == other._obj \
             and self._string == other._string \
             and self._start == other._start \
             and self._end == other._end
 
-    def is_substring_of(self, other) -> bool:
+    def is_substring_of(self, other: _StringContext | None) -> bool:
         """Returns True if this is a substring of other."""
 
         if other is None:
@@ -144,6 +146,11 @@ class _StringContext:
         """Returns the bounding box associated with this context's range."""
 
         return self._rect.x, self._rect.y, self._rect.width, self._rect.height
+
+    def get_object(self) -> Atspi.Accessible:
+        """Returns the accessible object associated with this context."""
+
+        return self._obj
 
     def get_string(self) -> str:
         """Returns the string associated with this context."""
@@ -202,7 +209,7 @@ class _ItemContext:
             and self._obj == other._obj \
             and self._string == other._string
 
-    def _treat_as_duplicate(self, prior) -> bool:
+    def _treat_as_duplicate(self, prior: _ItemContext) -> bool:
         if self._obj != prior.get_object() or self._frame != prior.get_frame():
             msg = "MOUSE REVIEW: Not a duplicate: different objects"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -260,17 +267,17 @@ class _ItemContext:
                 or AXUtilities.is_tool_bar(x)
         return AXObject.find_ancestor(self._obj, is_container)
 
-    def _is_substring_of(self, other) -> bool:
+    def _is_substring_of(self, other: _ItemContext) -> bool:
         """Returns True if this is a substring of other."""
 
-        return self._string.is_substring_of(other.get_string())
+        return self._string.is_substring_of(other.get_string_context())
 
-    def get_object(self):
+    def get_object(self) -> Atspi.Accessible | None:
         """Returns the accessible object associated with this context."""
 
         return self._obj
 
-    def get_frame(self):
+    def get_frame(self) -> Atspi.Accessible | None:
         """Returns the frame associated with this context."""
 
         return self._frame
@@ -289,12 +296,17 @@ class _ItemContext:
 
         return self._string.get_string()
 
+    def get_string_context(self) -> _StringContext:
+        """Returns the string context associated with this context."""
+
+        return self._string
+
     def get_time(self) -> float:
         """Returns the time associated with this context."""
 
         return self._time
 
-    def _is_inline_child(self, prior) -> bool:
+    def _is_inline_child(self, prior: _ItemContext) -> bool:
         prior_obj = prior.get_object()
         if not self._obj or not prior_obj:
             return False
@@ -307,7 +319,7 @@ class _ItemContext:
 
         return AXUtilities.is_link(prior_obj)
 
-    def present(self, prior) -> bool:
+    def present(self, prior: _ItemContext) -> bool:
         """Presents this context to the user."""
 
         if self == prior or self._treat_as_duplicate(prior):
@@ -344,7 +356,7 @@ class _ItemContext:
                 if self._string.get_string() == text:
                     return True
 
-        if self._string != prior.get_string() and self._string.present():
+        if self._string.get_string() != prior.get_string() and self._string.present():
             return True
 
         return True
