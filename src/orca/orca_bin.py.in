@@ -20,6 +20,13 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""The main entry point for starting Orca."""
+
+from __future__ import annotations
+
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-branches
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -28,17 +35,27 @@ __copyright__ = "Copyright (c) 2010-2012 The Orca Team" \
 __license__   = "LGPL"
 
 import argparse
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
 import os
 import signal
 import subprocess
 import sys
 import time
+from typing import Any, Sequence
 
-sys.prefix = '@prefix@'
-sys.path.insert(1, '@libdir@')
+try:
+    from setproctitle import setproctitle
+    HAS_SETPROCTITLE = True
+except ImportError:
+    HAS_SETPROCTITLE = False
+
+try:
+    from ctypes import cdll, byref, create_string_buffer
+    HAS_CTYPES = True
+except ImportError:
+    HAS_CTYPES = False
+
+sys.prefix = "@prefix@"
+sys.path.insert(1, "@libdir@")
 
 # Do not import Orca here. It is imported in main(). The reason why is that
 # start-up failures due to imports in orca.py are not getting output, making
@@ -52,48 +69,86 @@ from orca import script_manager
 from orca import settings_manager
 
 class ListApps(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
+    """Action to list all the running accessible applications."""
+
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: str | Sequence[Any] | None,
+        option_string: str | None = None
+    ) -> None:
         debugging_tools_manager.get_manager().print_running_applications(is_command_line=True)
         parser.exit()
 
 class PrintVersion(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
+    """Action to print the version of Orca."""
+
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: str | Sequence[Any] | None,
+        option_string: str | None = None
+    ) -> None:
         debugging_tools_manager.get_manager().print_session_details(is_command_line=True)
         parser.exit()
 
 class Settings(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        settingsDict = getattr(namespace, 'settings', {})
-        invalid = getattr(namespace, 'invalid', [])
-        for value in values.split(','):
-            item = str.title(value).replace('-', '')
-            try:
-                test = 'enable%s' % item
-                eval('settings.%s' % test)
-            except AttributeError:
-                try:
-                    test = 'show%s' % item
-                    eval('settings.%s' % test)
-                except AttributeError:
-                    invalid.append(value)
-                    continue
-            settingsDict[test] = self.const
-        setattr(namespace, 'settings', settingsDict)
-        setattr(namespace, 'invalid', invalid)
+    """Action to enable or disable a setting."""
+
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: str | Sequence[Any] | None,
+        option_string: str | None = None
+    ) -> None:
+        settings_dict: dict[str, bool] = getattr(namespace, "settings", {})
+        invalid: list[str] = getattr(namespace, "invalid", [])
+        if isinstance(values, str):
+            for value in values.split(","):
+                item = str.title(value).replace("-", "")
+                # Try enable version first
+                test = f"enable{item}"
+                if hasattr(settings, test):
+                    settings_dict[test] = self.const
+                else:
+                    # Try show version
+                    test = f"show{item}"
+                    if hasattr(settings, test):
+                        settings_dict[test] = self.const
+                    else:
+                        invalid.append(value)
+        setattr(namespace, "settings", settings_dict)
+        setattr(namespace, "invalid", invalid)
 
 class HelpFormatter(argparse.HelpFormatter):
-    def __init__(self, prog, indent_increment=2, max_help_position=32,
-                 width=None):
+    """Lists the available actions and usage."""
 
+    def __init__(
+        self,
+        prog: str,
+        indent_increment: int = 2,
+        max_help_position: int = 32,
+        width: int | None = None
+    ) -> None:
         super().__init__(prog, indent_increment, max_help_position, width)
 
-    def add_usage(self, usage, actions, groups, prefix=None):
+    def add_usage(
+        self,
+        usage: str | None,
+        actions: Any,
+        groups: Any,
+        prefix: str | None = None
+    ) -> None:
         super().add_usage(usage, actions, groups, messages.CLI_USAGE)
 
 class Parser(argparse.ArgumentParser):
-    def __init__(self, *args, **kwargs):
-        super(Parser, self).__init__(
-            epilog=messages.CLI_EPILOG, formatter_class=HelpFormatter, add_help=False)
+    """Parser for command line arguments."""
+
+    def __init__(self, *_args: Any, **_kwargs: Any) -> None:
+        super().__init__(epilog=messages.CLI_EPILOG, formatter_class=HelpFormatter, add_help=False)
         self.add_argument(
             "-h", "--help", action="help", help=messages.CLI_HELP)
         self.add_argument(
@@ -128,11 +183,11 @@ class Parser(argparse.ArgumentParser):
 
         self._optionals.title = messages.CLI_OPTIONAL_ARGUMENTS
 
-    def parse_known_args(self, *args, **kwargs):
-        opts, invalid = super(Parser, self).parse_known_args(*args, **kwargs)
+    def parse_known_args(self, args: Any = None, namespace: Any = None) -> Any:
+        opts, invalid = super().parse_known_args(args, namespace)
         try:
             invalid.extend(opts.invalid)
-        except Exception:
+        except AttributeError:
             pass
         if invalid:
             print((messages.CLI_INVALID_OPTIONS + " ".join(invalid)))
@@ -140,98 +195,96 @@ class Parser(argparse.ArgumentParser):
         if opts.debug_file:
             opts.debug = True
         elif opts.debug:
-            opts.debug_file = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
+            opts.debug_file = time.strftime("debug-%Y-%m-%d-%H:%M:%S.out")
 
         return opts, invalid
 
-def setProcessName(name):
+def set_process_name(name: str) -> bool:
     """Attempts to set the process name to the specified name."""
 
     sys.argv[0] = name
 
-    try:
-        from setproctitle import setproctitle
-    except ImportError:
-        pass
-    else:
+    if HAS_SETPROCTITLE:
         setproctitle(name)
         return True
 
-    try:
-        from ctypes import cdll, byref, create_string_buffer
-        libc = cdll.LoadLibrary('libc.so.6')
-        stringBuffer = create_string_buffer(len(name) + 1)
-        stringBuffer.value = bytes(name, 'UTF-8')
-        libc.prctl(15, byref(stringBuffer), 0, 0, 0)
-        return True
-    except Exception:
-        pass
+    if HAS_CTYPES:
+        try:
+            libc = cdll.LoadLibrary("libc.so.6")
+            string_buffer = create_string_buffer(len(name) + 1)
+            string_buffer.value = bytes(name, "UTF-8")
+            libc.prctl(15, byref(string_buffer), 0, 0, 0)
+            return True
+        except (OSError, AttributeError):
+            pass
 
     return False
 
-def inGraphicalDesktop():
+def in_graphical_desktop() -> bool:
     """Returns True if we are in a graphical desktop."""
 
     session_type = os.environ.get("XDG_SESSION_TYPE") or ""
     if session_type.lower() in ("x11", "wayland"):
-      return True
+        return True
 
-    if display := os.environ.get("DISPLAY"):
-      return True
+    if os.environ.get("DISPLAY"):
+        return True
 
-    if wayland_display := os.environ.get("WAYLAND_DISPLAY"):
-      return True
+    if os.environ.get("WAYLAND_DISPLAY"):
+        return True
 
     return False
 
-def otherOrcas():
+def other_orcas() -> list[int]:
     """Returns the pid of any other instances of Orca owned by this user."""
 
-    openFile = subprocess.Popen('pgrep -u %s -x orca' % os.getuid(),
-                                shell=True,
-                                stdout=subprocess.PIPE).stdout
-    pids = openFile.read()
-    openFile.close()
-    orcas = [int(p) for p in pids.split()]
+    with subprocess.Popen(f"pgrep -u {os.getuid()} -x orca",
+                          shell=True,
+                          stdout=subprocess.PIPE) as proc:
+        pids = proc.stdout.read() if proc.stdout else b""
 
+    orcas = [int(p) for p in pids.split()]
     pid = os.getpid()
     return [p for p in orcas if p != pid]
 
-def cleanup(sigval):
+def cleanup(sigval: int) -> None:
     """Tries to clean up any other running Orca instances owned by this user."""
 
-    orcasToKill = otherOrcas()
-    debug.print_message(debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
+    orcas_to_kill = other_orcas()
+    debug.print_message(debug.LEVEL_INFO, f"INFO: Cleaning up these PIDs: {orcas_to_kill}")
 
-    def onTimeout(signum, frame):
-        orcasToKill = otherOrcas()
-        debug.print_message(debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
-        for pid in orcasToKill:
+    def on_timeout(_signum: int, _frame: Any) -> None:
+        orcas_to_kill = other_orcas()
+        debug.print_message(debug.LEVEL_INFO, f"INFO: Timeout cleaning up: {orcas_to_kill}")
+        for pid in orcas_to_kill:
             os.kill(pid, signal.SIGKILL)
 
-    for pid in orcasToKill:
+    for pid in orcas_to_kill:
         os.kill(pid, sigval)
-    signal.signal(signal.SIGALRM, onTimeout)
+    signal.signal(signal.SIGALRM, on_timeout)
     signal.alarm(2)
-    while otherOrcas():
+    while other_orcas():
         time.sleep(0.5)
 
-def main():
-    setProcessName('orca')
+def main() -> int:
+    """Launches Orca."""
+
+    set_process_name("orca")
 
     parser = Parser()
-    args, invalid = parser.parse_known_args()
+    args, _invalid = parser.parse_known_args()
 
     if args.debug:
         debug.debugLevel = debug.LEVEL_ALL
-        debug.debugFile = open(args.debug_file, 'w')
+        # pylint: disable=consider-using-with
+        debug.debugFile = open(args.debug_file, "w", encoding="utf-8")
 
     if args.replace:
         cleanup(signal.SIGKILL)
 
-    settingsDict = getattr(args, 'settings', {})
+    settings_dict = getattr(args, "settings", {})
 
-    if not inGraphicalDesktop():
+    if not in_graphical_desktop():
         print(messages.CLI_NO_DESKTOP_ERROR)
         return 1
 
@@ -242,38 +295,40 @@ def main():
         return 1
 
     debug.print_message(debug.LEVEL_INFO, "INFO: About to activate settings manager.", True)
-    manager.activate(args.user_prefs, settingsDict)
+    manager.activate(args.user_prefs, settings_dict)
     sys.path.insert(0, manager.get_prefs_dir())
 
     if args.profile:
         try:
-            manager.setProfile(args.profile)
-        except Exception:
-            print(messages.CLI_LOAD_PROFILE_ERROR % args.profile)
-            manager.setProfile()
+            manager.set_profile(args.profile)
+        except (ValueError, KeyError, OSError):
+            print(messages.CLI_LOAD_PROFILE_ERROR.format(args.profile))
+            manager.set_profile()
 
     if args.speech_system:
         try:
             # Check successfully loaded factory modules ("orca.<speech system>") and get their names
-            factories = [f.__name__.removeprefix("orca.") for f in manager.get_speech_server_factories()]
+            factories = [
+                f.__name__.removeprefix("orca.") for f in manager.get_speech_server_factories()
+            ]
             if args.speech_system not in factories:
                 raise KeyError
 
-            setattr(settings, 'speechSystemOverride', args.speech_system)
-            manager.set_setting('speechServerFactory', args.speech_system)
-        except Exception:
-            print(messages.CLI_SPEECH_SYSTEM_ERROR % (args.speech_system, ', '.join(factories)))
+            setattr(settings, "speechSystemOverride", args.speech_system)
+            manager.set_setting("speechServerFactory", args.speech_system)
+        except (KeyError, AttributeError):
+            print(messages.CLI_SPEECH_SYSTEM_ERROR.format(args.speech_system, ", ".join(factories)))
 
     if args.setup:
         cleanup(signal.SIGKILL)
         script = script_manager.get_manager().get_default_script()
         script.show_preferences_gui()
 
-    if otherOrcas():
+    if other_orcas():
         print(messages.CLI_OTHER_ORCAS_ERROR)
         return 1
 
-    from orca import orca
+    from orca import orca  # pylint: disable=import-outside-toplevel
     debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
     return orca.main()
 
