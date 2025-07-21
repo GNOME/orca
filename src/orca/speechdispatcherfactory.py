@@ -310,8 +310,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: "
-            f"{styles.get(settings_manager.get_manager().get_setting(
-                "verbalizePunctuationStyle"))}\n"
+            f"{styles.get(settings_manager.get_manager().get_setting('verbalizePunctuationStyle'))}\n"
             f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
