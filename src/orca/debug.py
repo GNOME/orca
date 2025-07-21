@@ -31,6 +31,7 @@ import inspect
 import traceback
 import re
 import sys
+import threading
 from datetime import datetime
 from typing import Any, TextIO
 
@@ -47,6 +48,8 @@ LEVEL_ALL = 0
 debugLevel: int = LEVEL_SEVERE
 debugFile: TextIO | None = None
 # pylint: enable=invalid-name
+
+_printing = threading.local()
 
 def print_exception(level: int) -> None:
     """Prints out information regarding the current exception."""
@@ -99,6 +102,12 @@ def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool
     if level < debugLevel:
         return
 
+    # Prevent reentrancy.
+    if getattr(_printing, "active", False):
+        return
+
+    _printing.active = True
+
     if timestamp:
         text = text.replace("\n", f"\n{' ' * 18}")
         text = f"{datetime.now().strftime('%H:%M:%S.%f')} - {text}"
@@ -109,6 +118,7 @@ def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool
         try:
             debugFile.writelines([text, "\n"])
         except (AttributeError, OSError):
+            _printing.active = False
             return
         except (TypeError, ValueError, UnicodeEncodeError) as error:
             text = f"Exception trying to write text to file: {error}"
@@ -117,7 +127,10 @@ def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool
         try:
             sys.stderr.writelines([text, "\n"])
         except (AttributeError, OSError):
+            _printing.active = False
             return
         except (TypeError, ValueError, UnicodeEncodeError) as error:
             text = f"Exception trying to write text to stderr: {error}"
             sys.stderr.writelines([text, "\n"])
+
+    _printing.active = False
