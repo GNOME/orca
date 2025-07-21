@@ -320,7 +320,11 @@ def main() -> int:
             print(messages.CLI_SPEECH_SYSTEM_ERROR.format(args.speech_system, ", ".join(factories)))
 
     if args.setup:
-        cleanup(signal.SIGKILL)
+        if running_orcas := other_orcas():
+            # Send SIGUSR1 to the running Orca to show preferences dialog
+            for pid in running_orcas:
+                os.kill(pid, signal.SIGUSR1)
+            return 0
         script = script_manager.get_manager().get_default_script()
         script.show_preferences_gui()
 

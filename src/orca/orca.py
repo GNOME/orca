@@ -177,10 +177,20 @@ def main():
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         shutdown()
 
+    def _show_preferences_on_signal(signum, frame):
+        signal_string = f'({signal.strsignal(signum)})'
+        tokens = [f"ORCA: Showing preferences due to signal={signum} {signal_string}", frame]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        manager = script_manager.get_manager()
+        script = manager.get_active_script() or manager.get_default_script()
+        if script:
+            script.show_preferences_gui()
+
     signal.signal(signal.SIGHUP, _reload_on_signal)
     signal.signal(signal.SIGINT, _shutdown_on_signal)
     signal.signal(signal.SIGTERM, _shutdown_on_signal)
     signal.signal(signal.SIGQUIT, _shutdown_on_signal)
+    signal.signal(signal.SIGUSR1, _show_preferences_on_signal)
 
     debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not settings_manager.get_manager().is_accessibility_enabled():
