@@ -99,6 +99,26 @@ Replace `ModuleName` with an actual module name from `ListModules`.
 
 **Returns:** List of (command_name, description) tuples.
 
+#### List Parameterized Commands for a Module
+
+```bash
+gdbus call --session --dest org.gnome.Orca.Service \
+    --object-path /org/gnome/Orca/Service/ModuleName \
+    --method org.gnome.Orca.Module.ListParameterizedCommands
+```
+
+Replace `ModuleName` with an actual module name from `ListModules`.
+
+**Returns:** List of (command_name, description, parameters) tuples, where `parameters` is a
+list of (parameter_name, parameter_type) tuples.
+
+**Example output:**
+```
+([('GetVoicesForLanguage',
+   'Returns a list of available voices for the specified language.',
+   [('language', 'str'), ('variant', 'str'), ('notify_user', 'bool')])],)
+```
+
 #### List Runtime Getters for a Module
 
 ```bash

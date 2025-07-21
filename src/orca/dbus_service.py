@@ -24,6 +24,8 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-nested-blocks
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
@@ -34,6 +36,7 @@ __copyright__ = "Copyright (c) 2025 Valve Corporation."
 __license__   = "LGPL"
 
 import enum
+import inspect
 from typing import Callable
 
 from dasbus.connection import SessionMessageBus
@@ -115,6 +118,30 @@ def setter(func):
     func.dbus_setter_description = description
     return func
 
+
+def _extract_function_parameters(func: Callable) -> list[tuple[str, str]]:
+    """Extract parameter names and types from a function signature."""
+
+    sig = inspect.signature(func)
+    parameters = []
+
+    skip_params = {"self", "script", "event"}
+    for param_name, param in sig.parameters.items():
+        if param_name in skip_params:
+            continue
+
+        if param.annotation != inspect.Parameter.empty:
+            if hasattr(param.annotation, "__name__"):
+                type_str = param.annotation.__name__
+            else:
+                type_str = str(param.annotation).replace("typing.", "")
+        else:
+            type_str = "Any"
+        parameters.append((param_name, type_str))
+
+    return parameters
+
+
 class _HandlerInfo:
     """Stores processed information about a function exposed via D-Bus."""
 
@@ -123,12 +150,14 @@ class _HandlerInfo:
         python_function_name: str,
         description: str,
         action: Callable[..., bool],
-        handler_type: 'HandlerType' = HandlerType.COMMAND
+        handler_type: HandlerType = HandlerType.COMMAND,
+        parameters: list[tuple[str, str]] | None = None
     ):
         self.python_function_name: str = python_function_name
         self.description: str = description
         self.action: Callable[..., bool] = action
         self.handler_type: HandlerType = handler_type
+        self.parameters: list[tuple[str, str]] = parameters or []
 
 
 @dbus_interface("org.gnome.Orca.Module")
@@ -200,6 +229,16 @@ class OrcaModuleDBusInterface(Publishable):
         command_list = []
         for camel_case_name, info in self._commands.items():
             command_list.append((camel_case_name, info.description))
+        return command_list
+
+    def ListParameterizedCommands(  # pylint: disable=invalid-name
+        self,
+    ) -> list[tuple[str, str, list[tuple[str, str]]]]:
+        """Returns a list of (command_name, description, parameters) for this module."""
+
+        command_list = []
+        for camel_case_name, info in self._parameterized_commands.items():
+            command_list.append((camel_case_name, info.description, info.parameters))
         return command_list
 
     def ListRuntimeGetters(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
@@ -392,9 +431,9 @@ class OrcaDBusServiceInterface(Publishable):
 
         commands = []
         for attr_name in dir(self):
-            if not attr_name.startswith('_') and attr_name[0].isupper():
+            if not attr_name.startswith("_") and attr_name[0].isupper():
                 attr = getattr(self, attr_name)
-                if callable(attr) and hasattr(attr, '__doc__'):
+                if callable(attr) and hasattr(attr, "__doc__"):
                     description = (attr.__doc__.strip() if attr.__doc__
                                  else f"Service command: {attr_name}")
                     commands.append((attr_name, description))
@@ -611,7 +650,8 @@ class OrcaRemoteController:
                     python_function_name=attr_name,
                     description=description,
                     action=_create_parameterized_wrapper(),
-                    handler_type=HandlerType.PARAMETERIZED_COMMAND
+                    handler_type=HandlerType.PARAMETERIZED_COMMAND,
+                    parameters=_extract_function_parameters(attr)
                 )
                 handlers_info.append(handler_info)
                 commands_count += 1
@@ -732,9 +772,9 @@ class OrcaRemoteController:
 
         system_commands = 0
         for attr_name in dir(self._dbus_service_interface):
-            if not attr_name.startswith('_') and attr_name[0].isupper():
+            if not attr_name.startswith("_") and attr_name[0].isupper():
                 attr = getattr(self._dbus_service_interface, attr_name)
-                if callable(attr) and hasattr(attr, '__doc__'):
+                if callable(attr) and hasattr(attr, "__doc__"):
                     system_commands += 1
         return system_commands
 
