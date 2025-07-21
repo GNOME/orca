@@ -103,8 +103,8 @@ class Utilities(script_utilities.Utilities):
 
         return super()._isTopLevelObject(obj)
 
-    def columnConvert(self, column):
-        """Convert a spreadsheet column into its column label."""
+    def convert_column_to_string(self, column: int):
+        """Converts a column index to a string representation."""
 
         base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -221,7 +221,7 @@ class Utilities(script_utilities.Utilities):
         unselected_cols = sorted(set(self._calc_selected_columns).difference(cols))
 
         def convert_column(x):
-            return self.columnConvert(x+1)
+            return self.convert_column_to_string(x+1)
 
         def convert_row(x):
             return x + 1

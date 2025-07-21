@@ -236,7 +236,7 @@ class LabelInference:
         if self._cannot_label(obj):
             return None, []
 
-        contents = self._script.utilities.getObjectContentsAtOffset(obj, use_cache=False)
+        contents = self._script.utilities.get_object_contents_at_offset(obj, use_cache=False)
         objects = [content[0] for content in contents]
         if list(filter(self._is_widget, objects)):
             return None, []
@@ -260,7 +260,7 @@ class LabelInference:
             start = AXHypertext.get_link_start_offset(obj)
             obj = AXObject.get_parent(obj)
 
-        rv = self._script.utilities.getLineContentsAtOffset(obj, start, True, False)
+        rv = self._script.utilities.get_line_contents_at_offset(obj, start, True, False)
         if rv is None:
             rv = []
         self._line_cache[key] = rv
@@ -364,7 +364,7 @@ class LabelInference:
         if index > 0:
             return None, []
 
-        prev_obj, prev_offset = self._script.utilities.previousContext(
+        prev_obj, prev_offset = self._script.utilities.previous_context(
             this_line[0][0], this_line[0][1], True)
         prev_line = self._get_line_contents(prev_obj, prev_offset)
         if len(prev_line) != 1:
@@ -406,7 +406,7 @@ class LabelInference:
         if index > 0:
             return None, []
 
-        next_obj, next_offset = self._script.utilities.nextContext(
+        next_obj, next_offset = self._script.utilities.next_context(
             this_line[-1][0], this_line[-1][2] - 1, True)
         next_line = self._get_line_contents(next_obj, next_offset)
         if len(next_line) != 1:

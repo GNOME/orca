@@ -272,7 +272,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         contents = self._script.utilities.filterContentsForPresentation(contents, True)
 
         document = args.get("documentFrame")
-        obj, offset = self._script.utilities.getCaretContext(documentFrame=document)
+        obj, offset = self._script.utilities.get_caret_context(document=document)
         index = self._script.utilities.findObjectInContents(obj, offset, contents)
 
         last_region = None

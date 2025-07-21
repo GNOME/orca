@@ -2141,7 +2141,7 @@ class SpeechGenerator(generator.Generator):
                 return []
             if AXTable.is_layout_table(table):
                 return []
-            if not self._script.utilities.isGUICell(obj):
+            if not self._script.utilities.is_gui_cell(obj):
                 return []
         elif AXUtilities.is_layered_pane(parent):
             if obj in self._script.utilities.selectedChildren(parent):

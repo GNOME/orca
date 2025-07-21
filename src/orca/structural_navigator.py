@@ -1178,7 +1178,7 @@ class StructuralNavigator:
         current_path = AXObject.get_path(obj)
         for match in objects:
             path = AXObject.get_path(match)
-            comparison = script.utilities.pathComparison(path, current_path)
+            comparison = script.utilities.path_comparison(path, current_path)
             if (comparison > 0 and is_next) or (comparison < 0 and not is_next):
                 return match
 
@@ -1267,7 +1267,7 @@ class StructuralNavigator:
                 return self._get_item_string(script, parent)
             return AXUtilities.get_localized_role_name(obj)
 
-        if result := script.utilities.expandEOCs(obj):
+        if result := script.utilities.expand_eocs(obj):
             return result
 
         if AXUtilities.is_link(obj):
@@ -1296,7 +1296,7 @@ class StructuralNavigator:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             manager.set_locus_of_focus(None, obj, False)
             if AXObject.supports_text(obj):
-                script.utilities.setCaretPosition(obj, offset or 0)
+                script.utilities.set_caret_position(obj, offset or 0)
             return
 
         script.update_braille(obj)
@@ -1336,7 +1336,7 @@ class StructuralNavigator:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             manager.set_locus_of_focus(None, obj, False)
             if AXObject.supports_text(obj):
-                script.utilities.setCaretPosition(obj, offset)
+                script.utilities.set_caret_position(obj, offset)
 
             return
 
@@ -1357,7 +1357,7 @@ class StructuralNavigator:
                 script.present_message(dialog_title)
             return
 
-        current_object = script.utilities.getCaretContext()[0]
+        current_object = script.utilities.get_caret_context()[0]
         try:
             index = objects.index(current_object)
         except ValueError:
@@ -1372,7 +1372,7 @@ class StructuralNavigator:
         root = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_modal_dialog)
         if root is None:
             if mode == NavigationMode.DOCUMENT:
-                root = script.utilities.getTopLevelDocumentForObject(focus)
+                root = script.utilities.get_top_level_document_for_object(focus)
             elif mode == NavigationMode.GUI:
                 root = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_dialog_or_window)
                 if root is None:
@@ -3562,7 +3562,7 @@ class StructuralNavigator:
                 script.present_message(messages.CONTAINER_NOT_IN_A)
             return True
 
-        obj, offset = script.utilities.nextContext(container, -1)
+        obj, offset = script.utilities.next_context(container, -1)
         self._present_line(script, obj, offset, notify_user)
         return True
 
@@ -3588,8 +3588,8 @@ class StructuralNavigator:
 
         # Unlike going to the start of the container, when we move to the next edge
         # we pass beyond it on purpose. This makes us consistent with NVDA.
-        obj, offset = script.utilities.lastContext(container)
-        next_object, next_offset = script.utilities.nextContext(obj, offset)
+        obj, offset = script.utilities.last_context(container)
+        next_object, next_offset = script.utilities.next_context(obj, offset)
         if next_object is None:
             next_object, next_offset = obj, offset
 

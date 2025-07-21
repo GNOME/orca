@@ -247,7 +247,7 @@ class _ItemContext:
             string, start, end = AXText.get_line_at_point(self._obj, self._x, self._y)
 
         if string:
-            string = self._script.utilities.expandEOCs(self._obj, start, end)
+            string = self._script.utilities.expand_eocs(self._obj, start, end)
 
         return _StringContext(self._obj, self._script, string, start, end)
 

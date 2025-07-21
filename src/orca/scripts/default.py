@@ -880,7 +880,7 @@ class Script(script.Script):
 
         self.interrupt_presentation()
         AXText.clear_all_selected_text(obj)
-        self.utilities.setCaretOffset(obj, offset)
+        self.utilities.set_caret_offset(obj, offset)
         return True
 
     def process_braille_cut_line(self, event=None):
@@ -1873,7 +1873,7 @@ class Script(script.Script):
     def say_phrase(self, obj, start_offset, end_offset):
         """Speaks the text of an Accessible object between the start and end offsets."""
 
-        phrase = self.utilities.expandEOCs(obj, start_offset, end_offset)
+        phrase = self.utilities.expand_eocs(obj, start_offset, end_offset)
         if not phrase:
             return
 

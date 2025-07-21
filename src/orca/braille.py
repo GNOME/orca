@@ -700,7 +700,7 @@ class Text(Region):
             return
 
         script = script_manager.get_manager().get_active_script()
-        script.utilities.setCaretOffset(self.accessible, caretOffset)
+        script.utilities.set_caret_offset(self.accessible, caretOffset)
 
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -896,7 +896,7 @@ class ReviewText(Region):
 
         caretOffset = self.getCaretOffset(offset)
         script = script_manager.get_manager().get_active_script()
-        script.utilities.setCaretOffset(self.accessible, caretOffset)
+        script.utilities.set_caret_offset(self.accessible, caretOffset)
 
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential

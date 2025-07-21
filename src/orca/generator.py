@@ -864,7 +864,7 @@ class Generator:
             indicator = indicators[0]
 
         targets = AXUtilities.get_error_message(obj) or ""
-        error_message = "\n".join(map(self._script.utilities.expandEOCs, targets))
+        error_message = "\n".join(map(self._script.utilities.expand_eocs, targets))
         if error_message:
             result.append(f"{indicator}: {error_message}")
         else:
@@ -1084,7 +1084,7 @@ class Generator:
         if (hash(obj), start, end) in Generator.CACHED_TEXT_EXPANDING_EOCS:
             return Generator.CACHED_TEXT_EXPANDING_EOCS.get((hash(obj), start, end), [])
 
-        text = self._script.utilities.expandEOCs(
+        text = self._script.utilities.expand_eocs(
             obj, args.get("startOffset", 0), args.get("endOffset", -1))
         if text.strip() and "\ufffc" not in text \
            and not self._strings_are_redundant(AXObject.get_name(obj), text):

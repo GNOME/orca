@@ -162,7 +162,7 @@ class Utilities:
         Note that this is intended primarily for web content."""
 
         if not obj:
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
 
         document = AXObject.find_ancestor(obj, AXUtilities.is_document)
         if document:
@@ -208,7 +208,9 @@ class Utilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return results
 
-    def grabFocusWhenSettingCaret(self, obj):
+    def grab_focus_when_setting_caret(self, obj: Atspi.Accessible) -> bool:
+        """Returns true if we should grab focus when setting the caret."""
+
         return AXUtilities.is_focusable(obj)
 
     def grabFocusBeforeRouting(self, obj, offset):
@@ -307,19 +309,24 @@ class Utilities:
         return self.getDocumentForObject(obj) is not None
 
     def activeDocument(self, window=None):
-        return self.getTopLevelDocumentForObject(focus_manager.get_manager().get_locus_of_focus())
+        return self.get_top_level_document_for_object(
+            focus_manager.get_manager().get_locus_of_focus())
 
     def isTopLevelDocument(self, obj):
         return self.isDocument(obj) and not AXObject.find_ancestor(obj, self.isDocument)
 
-    def getTopLevelDocumentForObject(self, obj):
+    def get_top_level_document_for_object(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the top-level document containing obj."""
+
         return AXObject.find_ancestor_inclusive(obj, self.isTopLevelDocument)
 
     def getDocumentForObject(self, obj):
         return AXObject.find_ancestor_inclusive(obj, self.isDocument)
 
-    def columnConvert(self, column):
-        return column
+    def convert_column_to_string(self, column: int):
+        """Converts a column index to a string representation."""
+
+        return str(column)
 
     def isTextDocumentTable(self, obj):
         if not AXUtilities.is_table(obj):
@@ -328,7 +335,10 @@ class Utilities:
         doc = self.getDocumentForObject(obj)
         return doc is not None and not AXUtilities.is_document_spreadsheet(doc)
 
-    def isGUITable(self, obj):
+    def is_gui_table(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a GUI table."""
+
+        # TODO - JD: Move this into AXUtilities.
         return AXUtilities.is_table(obj) and self.getDocumentForObject(obj) is None
 
     def isSpreadSheetTable(self, obj):
@@ -348,10 +358,13 @@ class Utilities:
             return False
         return AXObject.find_ancestor(obj, self.isTextDocumentTable)
 
-    def isGUICell(self, obj):
+    def is_gui_cell(self, obj: Atspi.Accessible) -> bool:
+        """Returns true if obj is a cell in a GUI table."""
+
+        # TODO - JD: Move this into AXUtilities.
         if not AXUtilities.is_table_cell_or_header(obj):
             return False
-        return AXObject.find_ancestor(obj, self.isGUITable)
+        return AXObject.find_ancestor(obj, self.is_gui_table) is not None
 
     def isSpreadSheetCell(self, obj):
         if not AXUtilities.is_table_cell_or_header(obj):
@@ -411,7 +424,7 @@ class Utilities:
         name = AXObject.get_name(obj)
         if name:
             tokens.append(name)
-        text = self.expandEOCs(obj)
+        text = self.expand_eocs(obj)
         if text and text not in tokens:
             tokens.append(text)
         else:
@@ -540,9 +553,10 @@ class Utilities:
         return topLevel == focus_manager.get_manager().get_active_window()
 
     @staticmethod
-    def pathComparison(path1, path2):
-        """Compares the two paths and returns -1, 0, or 1 to indicate if path1
-        is before, the same, or after path2."""
+    def path_comparison(path1: list[int], path2: list[int]) -> int:
+        """Returns -1, 0, or 1 to indicate if path1 is before, the same, or after path2."""
+
+        # TODO - JD: Move into AXUtilities.
 
         if path1 == path2:
             return 0
@@ -652,7 +666,7 @@ class Utilities:
         """Finds the object before this one."""
 
         if restrict_to is None:
-            restrict_to = self.getTopLevelDocumentForObject(obj)
+            restrict_to = self.get_top_level_document_for_object(obj)
 
         result = AXUtilities.get_previous_object(obj)
         tokens = ["SCRIPT UTILITIES: Previous object for", obj, "is", result, "."]
@@ -668,7 +682,7 @@ class Utilities:
         """Finds the object after this one."""
 
         if restrict_to is None:
-            restrict_to = self.getTopLevelDocumentForObject(obj)
+            restrict_to = self.get_top_level_document_for_object(obj)
 
         result = AXUtilities.get_next_object(obj)
         tokens = ["SCRIPT UTILITIES: Next object for", obj, "is", result, "."]
@@ -679,33 +693,19 @@ class Utilities:
             return None
         return result
 
-    def expandEOCs(self, obj, startOffset=0, endOffset=-1):
-        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
-        with their text.
+    def expand_eocs(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1
+    ) -> str:
+        """Expands the current object replacing embedded object characters with their text."""
 
-        Arguments
-        - obj: the object whose text should be expanded
-        - startOffset: the offset of the first character to be included
-        - endOffset: the offset of the last character to be included
+        text = AXText.get_substring(obj, start_offset, end_offset)
+        if "\ufffc" not in text:
+            return text
 
-        Returns the fully expanded text for the object.
-        """
-
-        # TODO - JD: Audit all callers and eliminate these arguments having been set to None.
-        if startOffset is None:
-            tokens = ["SCRIPT UTILITIES: expandEOCs called with start offset of None on", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
-            startOffset = 0
-        if endOffset is None:
-            tokens = ["SCRIPT UTILITIES: expandEOCs called with end offset of None on", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
-            endOffset = -1
-
-        string = AXText.get_substring(obj, startOffset, endOffset)
-        if self.EMBEDDED_OBJECT_CHARACTER not in string:
-            return string
-
-        blockRoles = [Atspi.Role.HEADING,
+        block_roles = [Atspi.Role.HEADING,
                       Atspi.Role.LIST,
                       Atspi.Role.LIST_ITEM,
                       Atspi.Role.PARAGRAPH,
@@ -714,17 +714,17 @@ class Utilities:
                       Atspi.Role.TABLE_CELL,
                       Atspi.Role.TABLE_ROW]
 
-        toBuild = list(string)
-        for i, char in enumerate(toBuild):
+        to_build = list(text)
+        for i, char in enumerate(to_build):
             if char == self.EMBEDDED_OBJECT_CHARACTER:
-                child = AXHypertext.get_child_at_offset(obj, i + startOffset)
-                result = self.expandEOCs(child)
-                if child and AXObject.get_role(child) in blockRoles:
+                child = AXHypertext.get_child_at_offset(obj, i + start_offset)
+                result = self.expand_eocs(child)
+                if child and AXObject.get_role(child) in block_roles:
                     result += " "
-                toBuild[i] = result
+                to_build[i] = result
 
-        result = "".join(toBuild)
-        tokens = ["SCRIPT UTILITIES: Expanded EOCs for", obj, f"range: {startOffset}:{endOffset}:",
+        result = "".join(to_build)
+        tokens = ["SCRIPT UTILITIES: Expanded EOCs for", obj, f"range: {start_offset}:{end_offset}:",
                  f"'{result}'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -772,18 +772,34 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return ""
 
-    def getCaretContext(self):
+    def get_caret_context(
+        self,
+        document: Atspi.Accessible | None = None,  # pylint: disable=unused-argument
+        get_replicant: bool = False,  # pylint: disable=unused-argument
+        search_if_needed: bool = True  # pylint: disable=unused-argument
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns an (obj, offset) tuple representing the current location."""
+
         obj = focus_manager.get_manager().get_locus_of_focus()
         offset = AXText.get_caret_offset(obj)
         return obj, offset
 
-    def setCaretPosition(self, obj, offset, documentFrame=None):
-        focus_manager.get_manager().set_locus_of_focus(None, obj, False)
-        if self.grabFocusWhenSettingCaret(obj):
-            AXObject.grab_focus(obj)
-        self.setCaretOffset(obj, offset)
+    def set_caret_position(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        document: Atspi.Accessible | None = None  # pylint: disable=unused-argument
+    ) -> None:
+        """Sets the locus of focus to obj and sets the caret position to offset."""
 
-    def setCaretOffset(self, obj, offset):
+        focus_manager.get_manager().set_locus_of_focus(None, obj, False)
+        if self.grab_focus_when_setting_caret(obj):
+            AXObject.grab_focus(obj)
+        self.set_caret_offset(obj, offset)
+
+    def set_caret_offset(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Sets the caret offset via AtspiText."""
+
         # TODO - JD. Remove this function if the web override can be adjusted
         AXText.set_caret_offset(obj, offset)
 
@@ -836,25 +852,93 @@ class Utilities:
 
         return rv
 
-    def getLineContentsAtOffset(self, obj, offset, layoutMode=True, useCache=True):
+    def get_word_contents_at_offset(
+        self,
+        obj: Atspi.Accessible, # pylint: disable=unused-argument
+        offset: int = 0, # pylint: disable=unused-argument
+        use_cache: bool = True # pylint: disable=unused-argument
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the word at offset."""
+
         return []
 
-    def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
+    def get_previous_line_contents(
+        self,
+        obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
+        offset: int = -1, # pylint: disable=unused-argument
+        layout_mode: bool = True, # pylint: disable=unused-argument
+        use_cache: bool = True # pylint: disable=unused-argument
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the previous line."""
+
         return []
 
-    def previousContext(self, obj=None, offset=-1, skipSpace=False):
-        if not obj:
-            obj, offset = self.getCaretContext()
+    def get_line_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,  # pylint: disable=unused-argument
+        offset: int,  # pylint: disable=unused-argument
+        layout_mode: bool = True,  # pylint: disable=unused-argument
+        use_cache: bool = True  # pylint: disable=unused-argument
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the line at offset."""
+
+        return []
+
+    def get_next_line_contents(
+        self,
+        obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
+        offset: int = -1, # pylint: disable=unused-argument
+        layout_mode: bool = True, # pylint: disable=unused-argument
+        use_cache: bool = True # pylint: disable=unused-argument
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the next line."""
+
+        return []
+
+    def get_object_contents_at_offset(
+        self,
+        obj: Atspi.Accessible, # pylint: disable=unused-argument
+        offset: int = 0, # pylint: disable=unused-argument
+        use_cache: bool = True # pylint: disable=unused-argument
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the object at offset."""
+
+        return []
+
+    def previous_context(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        skip_space: bool = False # pylint: disable=unused-argument
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the previous viable/valid caret context given obj and offset."""
+
+        if obj is None:
+            obj, offset = self.get_caret_context()
 
         return obj, offset - 1
 
-    def nextContext(self, obj=None, offset=-1, skipSpace=False):
-        if not obj:
-            obj, offset = self.getCaretContext()
+    def next_context(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        skip_space: bool = False # pylint: disable=unused-argument
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the next viable/valid caret context given obj and offset."""
+
+        if obj is None:
+            obj, offset = self.get_caret_context()
 
         return obj, offset + 1
 
-    def lastContext(self, root):
+    def first_context(self, obj: Atspi.Accessible, offset: int) -> tuple[Atspi.Accessible, int]:
+        """Returns the first viable/valid caret context given obj and offset."""
+
+        return obj, offset
+
+    def last_context(self, root: Atspi.Accessible) -> tuple[Atspi.Accessible, int]:
+        """Returns the last viable/valid caret context in root."""
+
         offset = max(0, AXText.get_character_count(root) - 1)
         return root, offset
 

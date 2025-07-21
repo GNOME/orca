@@ -354,12 +354,12 @@ class CaretNavigation:
         if not event:
             return False
 
-        obj, offset = script.utilities.nextContext()
+        obj, offset = script.utilities.next_context()
         if not obj:
             return False
 
         self._last_input_event = event
-        script.utilities.setCaretPosition(obj, offset)
+        script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
         script.update_braille(obj)
         script.say_character(obj)
@@ -371,12 +371,12 @@ class CaretNavigation:
         if not event:
             return False
 
-        obj, offset = script.utilities.previousContext()
+        obj, offset = script.utilities.previous_context()
         if not obj:
             return False
 
         self._last_input_event = event
-        script.utilities.setCaretPosition(obj, offset)
+        script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
         script.update_braille(obj)
         script.say_character(obj)
@@ -388,8 +388,8 @@ class CaretNavigation:
         if not event:
             return False
 
-        obj, offset = script.utilities.nextContext(skipSpace=True)
-        contents = script.utilities.getWordContentsAtOffset(obj, offset)
+        obj, offset = script.utilities.next_context(skip_space=True)
+        contents = script.utilities.get_word_contents_at_offset(obj, offset)
         if not contents:
             return False
 
@@ -407,7 +407,7 @@ class CaretNavigation:
             end -= 1
 
         self._last_input_event = event
-        script.utilities.setCaretPosition(obj, end)
+        script.utilities.set_caret_position(obj, end)
         script.interrupt_presentation()
         script.update_braille(obj)
         script.say_word(obj)
@@ -419,14 +419,14 @@ class CaretNavigation:
         if not event:
             return False
 
-        obj, offset = script.utilities.previousContext(skipSpace=True)
-        contents = script.utilities.getWordContentsAtOffset(obj, offset)
+        obj, offset = script.utilities.previous_context(skip_space=True)
+        contents = script.utilities.get_word_contents_at_offset(obj, offset)
         if not contents:
             return False
 
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
-        script.utilities.setCaretPosition(obj, start)
+        script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.update_braille(obj)
         script.say_word(obj)
@@ -445,18 +445,18 @@ class CaretNavigation:
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
-        obj, offset = script.utilities.getCaretContext()
-        line = script.utilities.getLineContentsAtOffset(obj, offset)
+        obj, offset = script.utilities.get_caret_context()
+        line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
             return False
 
-        contents = script.utilities.getNextLineContents()
+        contents = script.utilities.get_next_line_contents()
         if not contents:
             return False
 
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
-        script.utilities.setCaretPosition(obj, start)
+        script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.speakContents(contents, priorObj=line[-1][0])
         script.displayContents(contents)
@@ -475,13 +475,13 @@ class CaretNavigation:
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
-        contents = script.utilities.getPreviousLineContents()
+        contents = script.utilities.get_previous_line_contents()
         if not contents:
             return False
 
         self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
-        script.utilities.setCaretPosition(obj, start)
+        script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.speakContents(contents)
         script.displayContents(contents)
@@ -493,14 +493,14 @@ class CaretNavigation:
         if not event:
             return False
 
-        obj, offset = script.utilities.getCaretContext()
-        line = script.utilities.getLineContentsAtOffset(obj, offset)
+        obj, offset = script.utilities.get_caret_context()
+        line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
             return False
 
         self._last_input_event = event
         obj, start = line[0][0], line[0][1]
-        script.utilities.setCaretPosition(obj, start)
+        script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.say_character(obj)
         script.displayContents(line)
@@ -512,8 +512,8 @@ class CaretNavigation:
         if not event:
             return False
 
-        obj, offset = script.utilities.getCaretContext()
-        line = script.utilities.getLineContentsAtOffset(obj, offset)
+        obj, offset = script.utilities.get_caret_context()
+        line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
             return False
 
@@ -522,7 +522,7 @@ class CaretNavigation:
             end -= 1
 
         self._last_input_event = event
-        script.utilities.setCaretPosition(obj, end)
+        script.utilities.set_caret_position(obj, end)
         script.interrupt_presentation()
         script.say_character(obj)
         script.displayContents(line)
@@ -535,14 +535,14 @@ class CaretNavigation:
             return False
 
         document = script.utilities.documentFrame()
-        obj, offset = script.utilities.findFirstCaretContext(document, 0)
-        contents = script.utilities.getLineContentsAtOffset(obj, offset)
+        obj, offset = script.utilities.first_context(document, 0)
+        contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
             return False
 
         self._last_input_event = event
         obj, offset = contents[0][0], contents[0][1]
-        script.utilities.setCaretPosition(obj, offset)
+        script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
         script.speakContents(contents)
         script.displayContents(contents)
@@ -564,18 +564,18 @@ class CaretNavigation:
 
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:
-            last_obj, last_offset = script.utilities.nextContext(obj, offset)
+            last_obj, last_offset = script.utilities.next_context(obj, offset)
             if not last_obj:
                 break
             obj, offset = last_obj, last_offset
 
-        contents = script.utilities.getLineContentsAtOffset(obj, offset)
+        contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
             return False
 
         self._last_input_event = event
         obj, offset = contents[-1][0], contents[-1][2]
-        script.utilities.setCaretPosition(obj, offset)
+        script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
         script.speakContents(contents)
         script.displayContents(contents)

@@ -37,7 +37,7 @@ class Bookmarks(bookmarks.Bookmarks):
         """Add an in-page accessible object bookmark for this key and URI."""
 
         index = (inputEvent.hw_code, self.getURIKey())
-        obj, characterOffset = self._script.utilities.getCaretContext()
+        obj, characterOffset = self._script.utilities.get_caret_context()
         path = self._objToPath()
         self._bookmarks[index] = path, characterOffset
         self._script.present_message(messages.BOOKMARK_ENTERED)
@@ -55,8 +55,8 @@ class Bookmarks(bookmarks.Bookmarks):
         if not obj:
             return
 
-        self._script.utilities.setCaretPosition(obj, offset)
-        contents = self._script.utilities.getObjectContentsAtOffset(obj, offset)
+        self._script.utilities.set_caret_position(obj, offset)
+        contents = self._script.utilities.get_object_contents_at_offset(obj, offset)
         self._script.speakContents(contents)
         self._script.displayContents(contents)
         self._currentbookmarkindex[index[1]] = index[0]

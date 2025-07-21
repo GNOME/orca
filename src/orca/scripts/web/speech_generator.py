@@ -271,7 +271,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(self.get_localized_role_name(o))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
-            string = self._script.utilities.expandEOCs(o)
+            string = self._script.utilities.expand_eocs(o)
             if not string.strip():
                 continue
 
@@ -309,7 +309,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result: list[Any] = []
         for o in objs:
-            string = self._script.utilities.expandEOCs(o) or AXObject.get_name(o) \
+            string = self._script.utilities.expand_eocs(o) or AXObject.get_name(o) \
                 or self.get_localized_role_name(o)
             words = string.split()
             if len(words) > 5:
@@ -628,7 +628,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             args["role"] = self._get_functional_role(obj, **args)
 
         if "priorObj" not in args:
-            document = self._script.utilities.getTopLevelDocumentForObject(obj)
+            document = self._script.utilities.get_top_level_document_for_object(obj)
             args["priorObj"] = self._script.utilities.getPriorContext(document)[0]
 
         start = args.get("startOffset", 0)

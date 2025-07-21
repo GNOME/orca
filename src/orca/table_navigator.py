@@ -894,7 +894,8 @@ class TableNavigator:
             AXTable.set_dynamic_row_headers_column(table, column)
             if notify_user:
                 script.present_message(
-                    messages.DYNAMIC_ROW_HEADER_SET % script.utilities.columnConvert(column + 1))
+                    messages.DYNAMIC_ROW_HEADER_SET % script.utilities.convert_column_to_string(
+                        column + 1))
 
         return True
 
@@ -946,13 +947,13 @@ class TableNavigator:
         self._previous_reported_row = row
         self._previous_reported_col = col
 
-        if script.utilities.grabFocusWhenSettingCaret(cell):
+        if script.utilities.grab_focus_when_setting_caret(cell):
             AXObject.grab_focus(cell)
 
         obj = AXObject.find_descendant(cell, AXObject.supports_text) or cell
         focus_manager.get_manager().set_locus_of_focus(None, obj, False)
-        if AXObject.supports_text(obj) and not script.utilities.isGUICell(cell):
-            script.utilities.setCaretPosition(obj, 0)
+        if AXObject.supports_text(obj) and not script.utilities.is_gui_cell(cell):
+            script.utilities.set_caret_position(obj, 0)
 
         if not notify_user:
             msg = "TABLE NAVIGATOR: _present_cell called with notify_user=False"

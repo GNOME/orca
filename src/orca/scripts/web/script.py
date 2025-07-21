@@ -464,7 +464,7 @@ class Script(default.Script):
         sayAllStyle = settings_manager.get_manager().get_setting('sayAllStyle')
         sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
         if offset is None:
-            obj, characterOffset = self.utilities.getCaretContext()
+            obj, characterOffset = self.utilities.get_caret_context()
         else:
             characterOffset = offset
         priorObj, priorOffset = self.utilities.getPriorContext()
@@ -491,7 +491,7 @@ class Script(default.Script):
             if sayAllBySentence:
                 contents = self.utilities.getSentenceContentsAtOffset(obj, characterOffset)
             else:
-                contents = self.utilities.getLineContentsAtOffset(obj, characterOffset)
+                contents = self.utilities.get_line_contents_at_offset(obj, characterOffset)
             self._sayAllContents = contents
             for i, content in enumerate(contents):
                 obj, startOffset, endOffset, text = content
@@ -555,7 +555,7 @@ class Script(default.Script):
             return
 
         offset = max(offset, start)
-        context = self.utilities.getCaretContext(documentFrame=document)
+        context = self.utilities.get_caret_context(document=document)
         self.utilities.setCaretContext(obj, offset, documentFrame=document)
 
         end = AXText.get_selection_end_offset(obj)
@@ -571,7 +571,7 @@ class Script(default.Script):
            and self.utilities.contextsAreOnSameLine(context, (obj, offset)):
             return
 
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
+        contents = self.utilities.get_line_contents_at_offset(obj, offset)
         self.speakContents(contents)
         self.update_braille(obj)
 
@@ -756,8 +756,8 @@ class Script(default.Script):
             super().say_character(obj)
             return
 
-        document = self.utilities.getTopLevelDocumentForObject(obj)
-        obj, offset = self.utilities.getCaretContext(documentFrame=document)
+        document = self.utilities.get_top_level_document_for_object(obj)
+        obj, offset = self.utilities.get_caret_context(document=document)
         tokens = ["WEB: Adjusted object and offset for say character to", obj, offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -801,20 +801,20 @@ class Script(default.Script):
             super().say_word(obj)
             return
 
-        document = self.utilities.getTopLevelDocumentForObject(obj)
-        obj, offset = self.utilities.getCaretContext(documentFrame=document)
+        document = self.utilities.get_top_level_document_for_object(obj)
+        obj, offset = self.utilities.get_caret_context(document=document)
         if input_event_manager.get_manager().last_event_was_right():
             offset -= 1
 
         tokens = ["WEB: Adjusted object and offset for say word to", obj, offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        wordContents = self.utilities.getWordContentsAtOffset(obj, offset, useCache=True)
-        textObj, startOffset, endOffset, word = wordContents[0]
-        self.speakMisspelledIndicator(textObj, startOffset)
+        wordContents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
+        text_obj, start_offset, _end_offset, _word_string = wordContents[0]
+        self.speakMisspelledIndicator(text_obj, start_offset)
         # TODO - JD: Clean up the focused + alreadyFocused mess which by side effect is causing
         # the content of some objects (e.g. table cells) to not be generated.
-        self.speakContents(wordContents, alreadyFocused=AXUtilities.is_text_input(textObj))
+        self.speakContents(wordContents, alreadyFocused=AXUtilities.is_text_input(text_obj))
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def say_line(self, obj, offset=None):
@@ -835,21 +835,21 @@ class Script(default.Script):
             msg = "WEB: Object is editable and line has no EOCs."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if not self._inFocusMode:
-                self.utilities.setCaretPosition(obj, 0)
+                self.utilities.set_caret_position(obj, 0)
             super().say_line(obj)
             return
 
-        document = self.utilities.getTopLevelDocumentForObject(obj)
+        document = self.utilities.get_top_level_document_for_object(obj)
         priorObj, _priorOffset = self.utilities.getPriorContext(documentFrame=document)
 
         if offset is None:
-            obj, offset = self.utilities.getCaretContext(documentFrame=document)
+            obj, offset = self.utilities.get_caret_context(document=document)
             tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        contents = self.utilities.getLineContentsAtOffset(obj, offset, useCache=True)
+        contents = self.utilities.get_line_contents_at_offset(obj, offset, use_cache=True)
         if contents and contents[0] and not self._inFocusMode:
-            self.utilities.setCaretPosition(contents[0][0], contents[0][1])
+            self.utilities.set_caret_position(contents[0][0], contents[0][1])
 
         self.speakContents(contents, priorObj=priorObj)
         self.point_of_reference["lastTextUnitSpoken"] = "line"
@@ -869,7 +869,7 @@ class Script(default.Script):
 
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
             if not self._inFocusMode:
-                self.utilities.setCaretPosition(obj, 0)
+                self.utilities.set_caret_position(obj, 0)
             super().present_object(obj, **args)
             return
 
@@ -905,7 +905,7 @@ class Script(default.Script):
         # 2. Giant nested lists.
         if AXUtilities.is_entry(obj) or AXUtilities.is_list_item(obj):
             if not self._inFocusMode:
-                self.utilities.setCaretPosition(obj, 0)
+                self.utilities.set_caret_position(obj, 0)
             super().present_object(obj, **args)
             return
 
@@ -916,11 +916,11 @@ class Script(default.Script):
         # We shouldn't use cache in this method, because if the last thing we presented
         # included this object and offset (e.g. a Say All or Mouse Review), we're in
         # danger of presented irrelevant context.
-        useCache = False
+        use_cache = False
         offset = args.get("offset", 0)
-        contents = self.utilities.getObjectContentsAtOffset(obj, offset, useCache)
+        contents = self.utilities.get_object_contents_at_offset(obj, offset, use_cache)
         if contents and contents[0] and not self._inFocusMode:
-            self.utilities.setCaretPosition(contents[0][0], contents[0][1])
+            self.utilities.set_caret_position(contents[0][0], contents[0][1])
         self.displayContents(contents)
         self.speakContents(contents, **args)
 
@@ -950,7 +950,7 @@ class Script(default.Script):
             super().update_braille(obj, **args)
             return
 
-        document = args.get("documentFrame", self.utilities.getTopLevelDocumentForObject(obj))
+        document = args.get("documentFrame", self.utilities.get_top_level_document_for_object(obj))
         if not document:
             tokens = ["WEB: updating braille for non-document object", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -976,11 +976,11 @@ class Script(default.Script):
         # such side effects from happening in the first place.
         offset = args.get("offset")
         if offset is None:
-            obj, offset = self.utilities.getCaretContext(documentFrame=document, getReplicant=True)
+            obj, offset = self.utilities.get_caret_context(document=document, get_replicant=True)
         if offset > 0 and isContentEditable and self.utilities.treatAsTextObject(obj):
             offset = min(offset, AXText.get_character_count(obj))
 
-        contents = self.utilities.getLineContentsAtOffset(obj, offset)
+        contents = self.utilities.get_line_contents_at_offset(obj, offset)
         self.displayContents(contents, documentFrame=document)
 
     def displayContents(self, contents, **args):
@@ -1028,12 +1028,12 @@ class Script(default.Script):
             super().pan_braille_left(inputEvent, pan_amount)
             return
 
-        contents = self.utilities.getPreviousLineContents()
+        contents = self.utilities.get_previous_line_contents()
         if not contents:
             return
 
         obj, start, end, string = contents[0]
-        self.utilities.setCaretPosition(obj, start)
+        self.utilities.set_caret_position(obj, start)
         self.update_braille(obj)
 
         # Hack: When panning to the left in a document, we want to start at
@@ -1054,12 +1054,12 @@ class Script(default.Script):
             super().pan_braille_right(inputEvent, pan_amount)
             return
 
-        contents = self.utilities.getNextLineContents()
+        contents = self.utilities.get_next_line_contents()
         if not contents:
             return
 
         obj, start, end, string = contents[0]
-        self.utilities.setCaretPosition(obj, start)
+        self.utilities.set_caret_position(obj, start)
         self.update_braille(obj)
 
         # Hack: When panning to the right in a document, we want to start at
@@ -1098,15 +1098,15 @@ class Script(default.Script):
         self.get_table_navigator().suspend_commands(self, self._inFocusMode, reason)
 
     def toggleLayoutMode(self, inputEvent):
-        layoutMode = not settings_manager.get_manager().get_setting('layoutMode')
-        if layoutMode:
+        layout_mode = not settings_manager.get_manager().get_setting("layoutMode")
+        if layout_mode:
             self.present_message(messages.MODE_LAYOUT)
         else:
             self.present_message(messages.MODE_OBJECT)
-        settings_manager.get_manager().set_setting('layoutMode', layoutMode)
+        settings_manager.get_manager().set_setting("layoutMode", layout_mode)
 
     def togglePresentationMode(self, inputEvent, documentFrame=None):
-        [obj, characterOffset] = self.utilities.getCaretContext(documentFrame)
+        [obj, characterOffset] = self.utilities.get_caret_context(documentFrame)
         if self._inFocusMode:
             parent = AXObject.get_parent(obj)
             if AXUtilities.is_list_box(parent):
@@ -1116,7 +1116,7 @@ class Script(default.Script):
             if not self._loadingDocumentContent:
                 self.present_message(messages.MODE_BROWSE)
         else:
-            if not self.utilities.grabFocusWhenSettingCaret(obj) \
+            if not self.utilities.grab_focus_when_setting_caret(obj) \
                and (self.caret_navigation.last_input_event_was_navigation_command() \
                     or self.get_structural_navigator().last_input_event_was_navigation_command() \
                     or self.get_table_navigator().last_input_event_was_navigation_command() \
@@ -1146,7 +1146,7 @@ class Script(default.Script):
         if new_focus and AXObject.is_dead(new_focus):
             return True
 
-        document = self.utilities.getTopLevelDocumentForObject(new_focus)
+        document = self.utilities.get_top_level_document_for_object(new_focus)
         if not document and self.utilities.isDocument(new_focus):
             document = new_focus
 
@@ -1159,7 +1159,7 @@ class Script(default.Script):
             self._madeFindAnnouncement = False
             self._inFocusMode = False
 
-            oldDocument = self.utilities.getTopLevelDocumentForObject(old_focus)
+            oldDocument = self.utilities.get_top_level_document_for_object(old_focus)
             if not document and self.utilities.isDocument(old_focus):
                 oldDocument = old_focus
 
@@ -1190,14 +1190,14 @@ class Script(default.Script):
         if self.utilities.inFindContainer(old_focus) \
            or (self.utilities.isDocument(new_focus) \
                and old_focus == focus_manager.get_manager().get_active_window()):
-            contextObj, contextOffset = self.utilities.getCaretContext(documentFrame=document)
+            contextObj, contextOffset = self.utilities.get_caret_context(document=document)
             if contextObj and AXObject.is_valid(contextObj):
                 new_focus, caretOffset = contextObj, contextOffset
 
         if AXUtilities.is_unknown_or_redundant(new_focus):
             msg = "WEB: Event source has bogus role. Likely browser bug."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            new_focus, offset = self.utilities.findFirstCaretContext(new_focus, 0)
+            new_focus, offset = self.utilities.first_context(new_focus, 0)
 
         if self.utilities.treatAsTextObject(new_focus):
             textOffset = AXText.get_caret_offset(new_focus)
@@ -1221,35 +1221,35 @@ class Script(default.Script):
              and event.type.startswith("object:text-caret-moved"):
             msg = "WEB: Last input event was mouse button. Generating line."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, caretOffset)
         elif self.utilities.isContentEditableWithEmbeddedObjects(new_focus) \
            and (lastCommandWasCaretNav or lastCommandWasStructNav or lastCommandWasLineNav) \
            and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus)):
             tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, caretOffset)
         elif self.utilities.isAnchor(new_focus):
             tokens = ["WEB: New focus", new_focus, "is anchor. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
         elif input_event_manager.get_manager().last_event_was_page_navigation() \
              and not AXTable.get_table(new_focus) \
              and not AXUtilities.is_feed_article(new_focus):
             tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, caretOffset)
         elif self.utilities.isFocusedWithMathChild(new_focus):
             tokens = ["WEB: New focus", new_focus, "has math child. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, caretOffset)
         elif AXUtilities.is_heading(new_focus):
             tokens = ["WEB: New focus", new_focus, "is heading. Generating object."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getObjectContentsAtOffset(new_focus, 0)
+            contents = self.utilities.get_object_contents_at_offset(new_focus, 0)
         elif self.utilities.caretMovedToSamePageFragment(event, old_focus):
             tokens = ["WEB: Source", event.source, "is same page fragment. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, 0)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
         elif event and event.type.startswith("object:children-changed:remove") \
              and self.utilities.isFocusModeWidget(new_focus):
             tokens = ["WEB: New focus", new_focus,
@@ -1258,11 +1258,11 @@ class Script(default.Script):
         elif lastCommandWasLineNav and not AXObject.is_valid(old_focus):
             msg = "WEB: Last input event was line nav; old_focus is invalid. Generating line."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, caretOffset)
         elif lastCommandWasLineNav and event and event.type.startswith("object:children-changed"):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            contents = self.utilities.getLineContentsAtOffset(new_focus, caretOffset)
+            contents = self.utilities.get_line_contents_at_offset(new_focus, caretOffset)
         else:
             tokens = ["WEB: New focus", new_focus, "is not a special case. Generating speech."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1370,7 +1370,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.getCaretContext()
+        obj, offset = self.utilities.get_caret_context()
         if not AXObject.is_valid(obj):
             self.utilities.clearCaretContext()
 
@@ -1431,7 +1431,7 @@ class Script(default.Script):
             if summary:
                 self.present_message(summary)
 
-        obj, offset = self.utilities.getCaretContext()
+        obj, offset = self.utilities.get_caret_context()
         if not AXUtilities.is_busy(event.source) \
            and self.utilities.isTopLevelWebApp(event.source):
             tokens = ["WEB: Setting locusOfFocus to", obj, "with sticky focus mode"]
@@ -1478,7 +1478,7 @@ class Script(default.Script):
         elif not settings_manager.get_manager().get_setting('sayAllOnLoad'):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.speakContents(self.utilities.getLineContentsAtOffset(obj, offset))
+            self.speakContents(self.utilities.get_line_contents_at_offset(obj, offset))
         elif settings_manager.get_manager().get_setting('enableSpeech'):
             msg = "WEB: Doing SayAll"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1493,7 +1493,7 @@ class Script(default.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
-        document = self.utilities.getTopLevelDocumentForObject(event.source)
+        document = self.utilities.get_top_level_document_for_object(event.source)
         if not document:
             if self.utilities.eventIsBrowserUINoise(event):
                 msg = "WEB: Ignoring event believed to be browser UI noise"
@@ -1509,7 +1509,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        obj, offset = self.utilities.getCaretContext(document, False, False)
+        obj, offset = self.utilities.get_caret_context(document, False, False)
         tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -1622,7 +1622,7 @@ class Script(default.Script):
         if self._inFocusMode:
             obj, offset = event.source, event.detail1
         else:
-            obj, offset = self.utilities.findFirstCaretContext(event.source, event.detail1)
+            obj, offset = self.utilities._first_context(event.source, event.detail1)
 
         if reason == TextEventReason.NAVIGATION_BY_PAGE:
             msg = "WEB: Caret moved due to scrolling."
@@ -1669,7 +1669,7 @@ class Script(default.Script):
             return True
 
         is_live_region = AXUtilities.is_live_region(event.source)
-        document = self.utilities.getTopLevelDocumentForObject(event.source)
+        document = self.utilities.get_top_level_document_for_object(event.source)
         if document and not is_live_region:
             focus = focus_manager.get_manager().get_locus_of_focus()
             if event.source == focus:
@@ -1757,7 +1757,7 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        document = self.utilities.getTopLevelDocumentForObject(event.source)
+        document = self.utilities.get_top_level_document_for_object(event.source)
         if document:
             focus = focus_manager.get_manager().get_locus_of_focus()
             if event.source == focus:
@@ -1871,7 +1871,7 @@ class Script(default.Script):
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        obj, offset = self.utilities.getCaretContext(searchIfNeeded=False)
+        obj, offset = self.utilities.get_caret_context(search_if_needed=False)
         tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not AXObject.is_valid(obj) and event.source == focus:
@@ -1939,7 +1939,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.getCaretContext()
+        obj, offset = self.utilities.get_caret_context()
         tokens = ["WEB: Caret context is", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -2142,7 +2142,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.getCaretContext()
+        obj, offset = self.utilities.get_caret_context()
         ancestor = AXObject.get_common_ancestor(obj, event.source)
         if ancestor and self.utilities.isTextBlockElement(ancestor):
             msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
@@ -2223,7 +2223,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, offset = self.utilities.getCaretContext(getReplicant=False)
+        obj, offset = self.utilities.get_caret_context(get_replicant=False)
         if obj and obj != event.source \
            and not AXObject.find_ancestor(obj, lambda x: x == event.source):
             tokens = ["WEB: Ignoring event because it isn't", obj, "or its ancestor"]
@@ -2236,7 +2236,7 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
-            obj, offset = self.utilities.getCaretContext(getReplicant=True)
+            obj, offset = self.utilities.get_caret_context(get_replicant=True)
             if obj:
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify_script=False)
 
@@ -2301,7 +2301,7 @@ class Script(default.Script):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.utilities.clearContentCache()
 
-        document = self.utilities.getTopLevelDocumentForObject(event.source)
+        document = self.utilities.get_top_level_document_for_object(event.source)
         if focus_manager.get_manager().focus_is_dead():
             msg = "WEB: Dumping cache: dead focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)

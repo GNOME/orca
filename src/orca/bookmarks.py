@@ -321,7 +321,7 @@ class Bookmarks:
         """Given an object, return it's path from the root accessible.  If obj
         is not provided, the current caret context is used. """
         if not start_obj:
-            [start_obj, characterOffset] = self._script.utilities.getCaretContext()
+            [start_obj, _characterOffset] = self._script.utilities.get_caret_context()
 
         if not start_obj:
             return []

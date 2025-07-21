@@ -180,7 +180,7 @@ class OrcaNavListGUI:
         obj, offset = self._get_selected_accessible_and_offset()
         self._gui.destroy()
         if self._script is not None:
-            self._script.utilities.setCaretPosition(obj, offset, self._document)
+            self._script.utilities.set_caret_position(obj, offset, self._document)
 
     def _on_activate_clicked(self, _widget: Gtk.Widget) -> None:
         """Handle activate button click."""
@@ -190,7 +190,7 @@ class OrcaNavListGUI:
             return
 
         if self._script is not None:
-            self._script.utilities.setCaretPosition(obj, offset)
+            self._script.utilities.set_caret_position(obj, offset)
         if not AXEventSynthesizer.try_all_clickable_actions(obj):
             tokens = ["INFO: Attempting a synthesized click on", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

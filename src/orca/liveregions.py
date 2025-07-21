@@ -411,8 +411,8 @@ class LiveRegionManager:
         """Move the caret to the last announced live region and speak the
         contents of that object"""
         if self.lastliveobj:
-            self._script.utilities.setCaretPosition(self.lastliveobj, 0)
-            self._script.speakContents(self._script.utilities.getObjectContentsAtOffset(
+            self._script.utilities.set_caret_position(self.lastliveobj, 0)
+            self._script.speakContents(self._script.utilities.get_object_contents_at_offset(
                                        self.lastliveobj, 0))
 
     def reviewLiveAnnouncement(self, script, inputEvent):
@@ -544,11 +544,11 @@ class LiveRegionManager:
                 if "\ufffc" not in event.any_data:
                     content = event.any_data
                 else:
-                    content = self._script.utilities.expandEOCs(
+                    content = self._script.utilities.expand_eocs(
                         event.source, event.detail1, event.detail1 + event.detail2)
             else:
                 container = self._findContainer(event.source)
-                content = self._script.utilities.expandEOCs(container)
+                content = self._script.utilities.expand_eocs(container)
 
         if not content:
             return None

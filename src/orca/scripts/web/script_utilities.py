@@ -18,6 +18,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-local-variables
+# pylint: disable=too-many-return-statements
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -202,7 +205,9 @@ class Utilities(script_utilities.Utilities):
 
         return self.getDocumentForObject(obj or focus_manager.get_manager().get_locus_of_focus())
 
-    def grabFocusWhenSettingCaret(self, obj):
+    def grab_focus_when_setting_caret(self, obj: Atspi.Accessible) -> bool:
+        """Returns true if we should grab focus when setting the caret."""
+
         # To avoid triggering popup lists.
         if AXUtilities.is_entry(obj):
             return False
@@ -215,20 +220,27 @@ class Utilities(script_utilities.Utilities):
 
         return AXUtilities.is_focusable(obj)
 
-    def setCaretPosition(self, obj, offset, documentFrame=None):
+    def set_caret_position(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        document: Atspi.Accessible | None = None
+    ) -> None:
+        """Sets the locus of focus to obj and sets the caret position to offset."""
+
         if self._script.get_flat_review_presenter().is_active():
             self._script.get_flat_review_presenter().quit()
-        grabFocus = self.grabFocusWhenSettingCaret(obj)
+        grab_focus = self.grab_focus_when_setting_caret(obj)
 
-        obj, offset = self.findFirstCaretContext(obj, offset)
-        self.setCaretContext(obj, offset, documentFrame)
+        obj, offset = self.first_context(obj, offset)
+        self.setCaretContext(obj, offset, document)
         if self._script.focusModeIsSticky():
             return
 
         old_focus = focus_manager.get_manager().get_locus_of_focus()
         AXText.clear_all_selected_text(old_focus)
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-        if grabFocus:
+        if grab_focus:
             AXObject.grab_focus(obj)
 
         AXText.set_caret_offset(obj, offset)
@@ -242,31 +254,6 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: This is private.
         self._script._save_focused_object_info(obj)
 
-    def getNextObjectInDocument(self, obj, documentFrame):
-        if not obj:
-            return None
-
-        targets = AXUtilities.get_flows_to(obj)
-        if targets:
-            return targets[0]
-
-        if obj == documentFrame:
-            obj, offset = self.getCaretContext(documentFrame)
-            for child in AXObject.iter_children(documentFrame):
-                if AXHypertext.get_character_offset_in_parent(child) > offset:
-                    return child
-
-        if AXObject.get_child_count(obj):
-            return AXObject.get_child(obj, 0)
-
-        while obj and obj != documentFrame:
-            nextObj = AXObject.get_next_sibling(obj)
-            if nextObj:
-                return nextObj
-            obj = AXObject.get_parent(obj)
-
-        return None
-
     def inFindContainer(self, obj=None):
         if not obj:
             obj = focus_manager.get_manager().get_locus_of_focus()
@@ -276,46 +263,66 @@ class Utilities(script_utilities.Utilities):
 
         return super().inFindContainer(obj)
 
-    def setCaretOffset(self, obj, characterOffset):
-        self.setCaretPosition(obj, characterOffset)
+    def set_caret_offset(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Sets the caret offset via AtspiText."""
+
+        # TODO - JD: Audit callers and see if this can be merged into the default logic.
+
+        self.set_caret_position(obj, offset)
         self._script.update_braille(obj)
 
-    def nextContext(self, obj=None, offset=-1, skipSpace=False):
-        if not obj:
-            obj, offset = self.getCaretContext()
+    def next_context(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        skip_space: bool = False # pylint: disable=unused-argument
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the next viable/valid caret context given obj and offset."""
 
-        nextobj, nextoffset = self.findNextCaretInOrder(obj, offset)
-        if skipSpace:
-            while AXText.get_character_at_offset(nextobj, nextoffset)[0].isspace():
-                nextobj, nextoffset = self.findNextCaretInOrder(nextobj, nextoffset)
+        if obj is None:
+            obj, offset = self.get_caret_context()
 
-        return nextobj, nextoffset
+        next_obj, next_offset = self.findNextCaretInOrder(obj, offset)
+        if skip_space:
+            while AXText.get_character_at_offset(next_obj, next_offset)[0].isspace():
+                next_obj, next_offset = self.findNextCaretInOrder(next_obj, next_offset)
 
-    def previousContext(self, obj=None, offset=-1, skipSpace=False):
-        if not obj:
-            obj, offset = self.getCaretContext()
+        return next_obj, next_offset
 
-        prevobj, prevoffset = self.findPreviousCaretInOrder(obj, offset)
-        if skipSpace:
-            while AXText.get_character_at_offset(prevobj, prevoffset)[0].isspace():
-                prevobj, prevoffset = self.findPreviousCaretInOrder(prevobj, prevoffset)
+    def previous_context(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        skip_space: bool = False
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the previous viable/valid caret context given obj and offset."""
 
-        return prevobj, prevoffset
+        if obj is None:
+            obj, offset = self.get_caret_context()
 
-    def lastContext(self, root):
+        prev_obj, prev_offset = self.findPreviousCaretInOrder(obj, offset)
+        if skip_space:
+            while AXText.get_character_at_offset(prev_obj, prev_offset)[0].isspace():
+                prev_obj, prev_offset = self.findPreviousCaretInOrder(prev_obj, prev_offset)
+
+        return prev_obj, prev_offset
+
+    def last_context(self, root: Atspi.Accessible) -> tuple[Atspi.Accessible, int]:
+        """Returns the last viable/valid caret context in root."""
+
         offset = 0
         if self.treatAsTextObject(root):
             offset = AXText.get_character_count(root) - 1
 
-        def _isInRoot(o):
+        def _is_in_root(o):
             return o == root or AXObject.find_ancestor(o, lambda x: x == root)
 
         obj = root
         while obj:
-            lastobj, lastoffset = self.nextContext(obj, offset)
-            if not (lastobj and _isInRoot(lastobj)):
+            last_obj, last_offset = self.next_context(obj, offset)
+            if not (last_obj and _is_in_root(last_obj)):
                 break
-            obj, offset = lastobj, lastoffset
+            obj, offset = last_obj, last_offset
 
         return obj, offset
 
@@ -379,9 +386,16 @@ class Utilities(script_utilities.Utilities):
 
         return [ext.x, ext.y, ext.width, ext.height]
 
-    def expandEOCs(self, obj, startOffset=0, endOffset=-1):
+    def expand_eocs(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1
+    ) -> str:
+        """Expands the current object replacing embedded object characters with their text."""
+
         if not self.inDocumentContent(obj):
-            return super().expandEOCs(obj, startOffset, endOffset)
+            return super().expand_eocs(obj, start_offset, end_offset)
 
         if self.hasGridDescendant(obj):
             tokens = ["WEB: not expanding EOCs:", obj, "has grid descendant"]
@@ -395,13 +409,13 @@ class Utilities(script_utilities.Utilities):
             utterances = self._script.speech_generator.generate_speech(obj)
             return self._script.speech_generator.utterances_to_string(utterances)
 
-        return super().expandEOCs(obj, startOffset, endOffset)
+        return super().expand_eocs(obj, start_offset, end_offset)
 
     def adjustContentsForLanguage(self, contents):
         rv = []
         for content in contents:
             split = self.splitSubstringByLanguage(*content[0:3])
-            for start, end, string, language, dialect in split:
+            for start, end, string, _language, _dialect in split:
                 rv.append([content[0], start, end, string])
 
         return rv
@@ -424,7 +438,7 @@ class Utilities(script_utilities.Utilities):
 
         return rv
 
-    def findObjectInContents(self, obj, offset, contents, usingCache=False):
+    def findObjectInContents(self, obj, offset, contents, use_cache=False):
         if not obj or not contents:
             return -1
 
@@ -433,7 +447,7 @@ class Utilities(script_utilities.Utilities):
         match = [x for x in matches if x[1] <= offset < x[2]]
         if match and match[0] and match[0] in contents:
             return contents.index(match[0])
-        if not usingCache:
+        if not use_cache:
             match = [x for x in matches if offset == x[2]]
             if match and match[0] and match[0] in contents:
                 return contents.index(match[0])
@@ -777,21 +791,21 @@ class Utilities(script_utilities.Utilities):
 
         return self.adjustContentsForLanguage([[obj, start, end, string]])
 
-    def getSentenceContentsAtOffset(self, obj, offset, useCache=True):
+    def getSentenceContentsAtOffset(self, obj, offset, use_cache=True):
         self._canHaveCaretContextDecision = {}
-        rv = self._getSentenceContentsAtOffset(obj, offset, useCache)
+        rv = self._getSentenceContentsAtOffset(obj, offset, use_cache)
         self._canHaveCaretContextDecision = {}
         return rv
 
-    def _getSentenceContentsAtOffset(self, obj, offset, useCache=True):
+    def _getSentenceContentsAtOffset(self, obj, offset, use_cache=True):
         if not obj:
             return []
 
         offset = max(0, offset)
 
-        if useCache:
+        if use_cache:
             if self.findObjectInContents(
-                    obj, offset, self._currentSentenceContents, usingCache=True) != -1:
+                    obj, offset, self._currentSentenceContents, use_cache=True) != -1:
                 return self._currentSentenceContents
 
         granularity = Atspi.TextGranularity.SENTENCE
@@ -851,50 +865,67 @@ class Utilities(script_utilities.Utilities):
 
             objects.extend(onRight)
 
-        if useCache:
+        if use_cache:
             self._currentSentenceContents = objects
 
         return objects
 
-    def getCharacterContentsAtOffset(self, obj, offset, useCache=True):
+    def getCharacterContentsAtOffset(self, obj, offset, use_cache=True):
         self._canHaveCaretContextDecision = {}
-        rv = self._getCharacterContentsAtOffset(obj, offset, useCache)
+        rv = self._getCharacterContentsAtOffset(obj, offset, use_cache)
         self._canHaveCaretContextDecision = {}
         return rv
 
-    def _getCharacterContentsAtOffset(self, obj, offset, useCache=True):
+    def _getCharacterContentsAtOffset(self, obj, offset, use_cache=True):
         if not obj:
             return []
 
         offset = max(0, offset)
 
-        if useCache:
+        if use_cache:
             if self.findObjectInContents(
-                    obj, offset, self._currentCharacterContents, usingCache=True) != -1:
+                    obj, offset, self._currentCharacterContents, use_cache=True) != -1:
                 return self._currentCharacterContents
 
         granularity = Atspi.TextGranularity.CHAR
         objects = self._getContentsForObj(obj, offset, granularity)
-        if useCache:
+        if use_cache:
             self._currentCharacterContents = objects
 
         return objects
 
-    def getWordContentsAtOffset(self, obj, offset, useCache=True):
+    def get_word_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int = 0,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the word at offset."""
+
         self._canHaveCaretContextDecision = {}
-        rv = self._getWordContentsAtOffset(obj, offset, useCache)
+        rv = self._get_word_contents_at_offset(obj, offset, use_cache)
         self._canHaveCaretContextDecision = {}
         return rv
 
-    def _getWordContentsAtOffset(self, obj, offset, useCache=True):
-        if not obj:
+    def _get_word_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int = 0,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        if obj is None:
+            return []
+
+        if AXObject.is_dead(obj):
+            msg = "ERROR: Cannot get word contents at offset for dead object."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         offset = max(0, offset)
 
-        if useCache:
+        if use_cache:
             if self.findObjectInContents(
-                    obj, offset, self._currentWordContents, usingCache=True) != -1:
+                    obj, offset, self._currentWordContents, use_cache=True) != -1:
                 self._debugContentsInfo(obj, offset, self._currentWordContents, "Word (cached)")
                 return self._currentWordContents
 
@@ -909,74 +940,87 @@ class Utilities(script_utilities.Utilities):
             if AXUtilities.is_text_input(obj):
                 return False
 
-            xObj, xStart, xEnd, xString = x
-            if xStart == xEnd or not xString:
+            x_obj, x_start, x_end, x_string = x
+            if x_start == x_end or not x_string:
                 return False
 
             if AXUtilities.is_table_cell_or_header(obj) \
-               and AXUtilities.is_table_cell_or_header(xObj) and obj != xObj:
+               and AXUtilities.is_table_cell_or_header(x_obj) and obj != x_obj:
                 return False
 
-            xExtents = self.getExtents(xObj, xStart, xStart + 1)
-            return self.extentsAreOnSameLine(extents, xExtents)
+            x_extents = self.getExtents(x_obj, x_start, x_start + 1)
+            return self.extentsAreOnSameLine(extents, x_extents)
 
         # Check for things in the same word to the left of this object.
-        firstObj, firstStart, firstEnd, firstString = objects[0]
-        prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
-        while prevObj and firstString and prevObj != firstObj:
-            char = AXText.get_character_at_offset(prevObj, pOffset)[0]
+        first_obj, first_start, first_end, first_string = objects[0]
+        prev_obj, p_offset = self.findPreviousCaretInOrder(first_obj, first_start)
+        while prev_obj and first_string and prev_obj != first_obj:
+            char = AXText.get_character_at_offset(prev_obj, p_offset)[0]
             if not char or char.isspace():
                 break
 
-            onLeft = self._getContentsForObj(prevObj, pOffset, granularity)
-            onLeft = list(filter(_include, onLeft))
-            if not onLeft:
+            on_left = self._getContentsForObj(prev_obj, p_offset, granularity)
+            on_left = list(filter(_include, on_left))
+            if not on_left:
                 break
 
-            if self._contentIsSubsetOf(objects[0], onLeft[-1]):
+            if self._contentIsSubsetOf(objects[0], on_left[-1]):
                 objects.pop(0)
 
-            objects[0:0] = onLeft
-            firstObj, firstStart, firstEnd, firstString = objects[0]
-            prevObj, pOffset = self.findPreviousCaretInOrder(firstObj, firstStart)
+            objects[0:0] = on_left
+            first_obj, first_start, first_end, first_string = objects[0]
+            prev_obj, p_offset = self.findPreviousCaretInOrder(first_obj, first_start)
 
         # Check for things in the same word to the right of this object.
-        lastObj, lastStart, lastEnd, lastString = objects[-1]
-        while lastObj and lastString and not lastString[-1].isspace():
-            nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
-            if nextObj == lastObj:
+        last_obj, last_start, last_end, last_string = objects[-1]
+        while last_obj and last_string and not last_string[-1].isspace():
+            next_obj, n_offset = self.findNextCaretInOrder(last_obj, last_end - 1)
+            if next_obj == last_obj:
                 break
 
-            onRight = self._getContentsForObj(nextObj, nOffset, granularity)
-            if onRight and self._contentIsSubsetOf(objects[0], onRight[-1]):
-                onRight = onRight[0:-1]
+            on_right = self._getContentsForObj(next_obj, n_offset, granularity)
+            if on_right and self._contentIsSubsetOf(objects[0], on_right[-1]):
+                on_right = on_right[0:-1]
 
-            onRight = list(filter(_include, onRight))
-            if not onRight:
+            on_right = list(filter(_include, on_right))
+            if not on_right:
                 break
 
-            objects.extend(onRight)
-            lastObj, lastStart, lastEnd, lastString = objects[-1]
+            objects.extend(on_right)
+            last_obj, last_start, last_end, last_string = objects[-1]
 
         # We want to treat the list item marker as its own word.
-        firstObj, firstStart, firstEnd, firstString = objects[0]
-        if firstStart == 0 and AXUtilities.is_list_item(firstObj):
+        first_obj, first_start, first_end, first_string = objects[0]
+        if first_start == 0 and AXUtilities.is_list_item(first_obj):
             objects = [objects[0]]
 
-        if useCache:
+        if use_cache:
             self._currentWordContents = objects
 
         self._debugContentsInfo(obj, offset, objects, "Word (not cached)")
         return objects
 
-    def getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
+    def get_object_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int = 0,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the object at offset."""
+
         self._canHaveCaretContextDecision = {}
-        rv = self._getObjectContentsAtOffset(obj, offset, useCache)
+        rv = self._get_object_contents_at_offset(obj, offset, use_cache)
         self._canHaveCaretContextDecision = {}
         return rv
 
-    def _getObjectContentsAtOffset(self, obj, offset=0, useCache=True):
-        if not obj:
+    def _get_object_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int = 0,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+
+        if obj is None:
             return []
 
         if AXObject.is_dead(obj):
@@ -986,9 +1030,9 @@ class Utilities(script_utilities.Utilities):
 
         offset = max(0, offset)
 
-        if useCache:
+        if use_cache:
             if self.findObjectInContents(
-                    obj, offset, self._currentObjectContents, usingCache=True) != -1:
+                    obj, offset, self._currentObjectContents, use_cache=True) != -1:
                 self._debugContentsInfo(
                     obj, offset, self._currentObjectContents, "Object (cached)")
                 return self._currentObjectContents
@@ -1033,7 +1077,7 @@ class Utilities(script_utilities.Utilities):
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
 
-        if useCache:
+        if use_cache:
             self._currentObjectContents = objects
 
         self._debugContentsInfo(obj, offset, objects, "Object (not cached)")
@@ -1098,13 +1142,27 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
+    def get_line_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        layout_mode: bool = True,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the line at offset."""
+
         self._canHaveCaretContextDecision = {}
-        rv = self._getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        rv = self._get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
         self._canHaveCaretContextDecision = {}
         return rv
 
-    def _getLineContentsAtOffset(self, obj, offset, layoutMode=None, useCache=True):
+    def _get_line_contents_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        layout_mode: bool = True,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         start_time = time.time()
         if not obj:
             return []
@@ -1122,15 +1180,15 @@ class Utilities(script_utilities.Utilities):
                 obj = child
                 offset = 0
 
-        if useCache:
+        if use_cache:
             if self.findObjectInContents(
-                    obj, offset, self._currentLineContents, usingCache=True) != -1:
+                    obj, offset, self._currentLineContents, use_cache=True) != -1:
                 self._debugContentsInfo(
                     obj, offset, self._currentLineContents, "Line (cached)")
                 return self._currentLineContents
 
-        if layoutMode is None:
-            layoutMode = settings_manager.get_manager().get_setting('layoutMode') \
+        if layout_mode is None:
+            layout_mode = settings_manager.get_manager().get_setting('layoutMode') \
                 or self._script.inFocusMode()
 
         objects = []
@@ -1144,7 +1202,7 @@ class Utilities(script_utilities.Utilities):
             if container:
                 extents = self.getExtents(container, 0, 1)
 
-        objBanner = AXObject.find_ancestor(obj, AXUtilities.is_landmark_banner)
+        obj_banner = AXObject.find_ancestor(obj, AXUtilities.is_landmark_banner)
 
         def _include(x):
             if x in objects:
@@ -1161,7 +1219,7 @@ class Utilities(script_utilities.Utilities):
                     return False
                 if self.isLink(obj) and self.isLink(xObj):
                     xObjBanner = AXObject.find_ancestor(xObj, AXUtilities.is_landmark_banner)
-                    if (objBanner or xObjBanner) and objBanner != xObjBanner:
+                    if (obj_banner or xObjBanner) and obj_banner != xObjBanner:
                         return False
                     if abs(extents[0] - xExtents[0]) <= 1 and abs(extents[1] - xExtents[1]) <= 1:
                         # This happens with dynamic skip links such as found on Wikipedia.
@@ -1185,8 +1243,8 @@ class Utilities(script_utilities.Utilities):
 
         granularity = Atspi.TextGranularity.LINE
         objects = self._getContentsForObj(obj, offset, granularity)
-        if not layoutMode:
-            if useCache:
+        if not layout_mode:
+            if use_cache:
                 self._currentLineContents = objects
 
             self._debugContentsInfo(obj, offset, objects, "Line (not layout mode)")
@@ -1203,7 +1261,7 @@ class Utilities(script_utilities.Utilities):
 
         lastObj, lastStart, lastEnd, lastString = objects[-1]
         if AXUtilities.is_math(lastObj):
-            lastObj, lastEnd = self.lastContext(lastObj)
+            lastObj, lastEnd = self.last_context(lastObj)
             lastEnd += 1
 
         document = self.getDocumentForObject(obj)
@@ -1259,7 +1317,7 @@ class Utilities(script_utilities.Utilities):
             objects.extend(onRight)
             lastObj, lastEnd = objects[-1][0], objects[-1][2]
             if AXUtilities.is_math(lastObj):
-                lastObj, lastEnd = self.lastContext(lastObj)
+                lastObj, lastEnd = self.last_context(lastObj)
                 lastEnd += 1
 
             nextObj, nOffset = self.findNextCaretInOrder(lastObj, lastEnd - 1)
@@ -1272,7 +1330,7 @@ class Utilities(script_utilities.Utilities):
         if firstString == "\n" and len(objects) > 1:
             objects.pop(0)
 
-        if useCache:
+        if use_cache:
             self._currentLineContents = objects
 
         msg = f"INFO: Time to get line contents: {time.time() - start_time:.4f}s"
@@ -1283,9 +1341,17 @@ class Utilities(script_utilities.Utilities):
         self._canHaveCaretContextDecision = {}
         return objects
 
-    def getPreviousLineContents(self, obj=None, offset=-1, layoutMode=None, useCache=True):
+    def get_previous_line_contents(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        layout_mode: bool = True,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the previous line."""
+
         if obj is None:
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
 
         tokens = ["WEB: Current context is: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1295,56 +1361,64 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.clearCachedObjects()
 
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
             tokens = ["WEB: Now Current context is: ", obj, ", ", offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        line = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
         if not (line and line[0]):
             return []
 
-        firstObj, firstOffset = line[0][0], line[0][1]
-        tokens = ["WEB: First context on line is: ", firstObj, ", ", firstOffset]
+        first_obj, first_offset = line[0][0], line[0][1]
+        tokens = ["WEB: First context on line is: ", first_obj, ", ", first_offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        skipSpace = not settings_manager.get_manager().get_setting("speakBlankLines")
-        obj, offset = self.previousContext(firstObj, firstOffset, skipSpace)
-        if not obj and firstObj:
+        skip_space = not settings_manager.get_manager().get_setting("speakBlankLines")
+        obj, offset = self.previous_context(first_obj, first_offset, skip_space)
+        if not obj and first_obj:
             tokens = ["WEB: Previous context is: ", obj, ", ", offset, ". Trying again."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.clearCachedObjects()
-            obj, offset = self.previousContext(firstObj, firstOffset, skipSpace)
+            obj, offset = self.previous_context(first_obj, first_offset, skip_space)
 
         tokens = ["WEB: Previous context is: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        contents = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
         if not contents:
             tokens = ["WEB: Could not get line contents for ", obj, ", ", offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         if line == contents:
-            obj, offset = self.previousContext(obj, offset, True)
+            obj, offset = self.previous_context(obj, offset, True)
             tokens = ["WEB: Got same line. Trying again with ", obj, ", ", offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+            contents = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
 
         if line == contents:
             start = AXHypertext.get_link_start_offset(obj)
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if start >= 0:
                 parent = AXObject.get_parent(obj)
-                obj, offset = self.previousContext(parent, start, True)
+                obj, offset = self.previous_context(parent, start, True)
                 tokens = ["WEB: Trying again with", obj, ", ", offset]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+                contents = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
 
         return contents
 
-    def getNextLineContents(self, obj=None, offset=-1, layoutMode=None, useCache=True):
+    def get_next_line_contents(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        layout_mode: bool = True,
+        use_cache: bool = True
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the next line."""
+
         if obj is None:
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
 
         tokens = ["WEB: Current context is: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1354,48 +1428,48 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.clearCachedObjects()
 
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
             tokens = ["WEB: Now Current context is: ", obj, ", ", offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        line = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        line = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
         if not (line and line[0]):
             return []
 
-        lastObj, lastOffset = line[-1][0], line[-1][2] - 1
-        math = AXObject.find_ancestor_inclusive(lastObj, AXUtilities.is_math)
+        last_obj, last_offset = line[-1][0], line[-1][2] - 1
+        math = AXObject.find_ancestor_inclusive(last_obj, AXUtilities.is_math)
         if math:
-            lastObj, lastOffset = self.lastContext(math)
+            last_obj, last_offset = self.last_context(math)
 
-        tokens = ["WEB: Last context on line is: ", lastObj, ", ", lastOffset]
+        tokens = ["WEB: Last context on line is: ", last_obj, ", ", last_offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        skipSpace = not settings_manager.get_manager().get_setting("speakBlankLines")
-        obj, offset = self.nextContext(lastObj, lastOffset, skipSpace)
-        if not obj and lastObj:
+        skip_space = not settings_manager.get_manager().get_setting("speakBlankLines")
+        obj, offset = self.next_context(last_obj, last_offset, skip_space)
+        if not obj and last_obj:
             tokens = ["WEB: Next context is: ", obj, ", ", offset, ". Trying again."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.clearCachedObjects()
-            obj, offset = self.nextContext(lastObj, lastOffset, skipSpace)
+            obj, offset = self.next_context(last_obj, last_offset, skip_space)
 
         tokens = ["WEB: Next context is: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+        contents = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
         if line == contents:
-            obj, offset = self.nextContext(obj, offset, True)
+            obj, offset = self.next_context(obj, offset, True)
             tokens = ["WEB: Got same line. Trying again with ", obj, ", ", offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+            contents = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
 
         if line == contents:
             end = AXHypertext.get_link_end_offset(obj)
             if end >= 0:
                 parent = AXObject.get_parent(obj)
-                obj, offset = self.nextContext(parent, end, True)
+                obj, offset = self.next_context(parent, end, True)
                 tokens = ["WEB: Trying again with", obj, ", ", offset]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                contents = self.getLineContentsAtOffset(obj, offset, layoutMode, useCache)
+                contents = self.get_line_contents_at_offset(obj, offset, layout_mode, use_cache)
 
         if not contents:
             tokens = ["WEB: Could not get line contents for ", obj, ", ", offset]
@@ -1490,7 +1564,7 @@ class Utilities(script_utilities.Utilities):
         self._script.point_of_reference['selectionAnchorAndFocus'] = (start, end)
 
         def _cmp(obj1, obj2):
-            return self.pathComparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
+            return self.path_comparison(AXObject.get_path(obj1), AXObject.get_path(obj2))
 
         oldSubtree = self._getSubtree(oldStart, oldEnd)
         if start == oldStart and end == oldEnd:
@@ -2457,7 +2531,7 @@ class Utilities(script_utilities.Utilities):
     def treatEventAsSpinnerValueChange(self, event):
         if event.type.startswith("object:text-caret-moved") and self.isSpinnerEntry(event.source):
             if input_event_manager.get_manager().last_event_was_up_or_down():
-                obj = self.getCaretContext()[0]
+                obj = self.get_caret_context()[0]
                 return event.source == obj
 
         return False
@@ -2490,7 +2564,7 @@ class Utilities(script_utilities.Utilities):
 
         if AXUtilities.is_editable(event.source) \
            and event.type.startswith("object:text-"):
-            obj, offset = self.getCaretContext(documentFrame)
+            obj, offset = self.get_caret_context(documentFrame)
             if isListBoxItem(obj) or isMenuItem(obj):
                 return True
 
@@ -2557,7 +2631,7 @@ class Utilities(script_utilities.Utilities):
     def eventIsFromLocusOfFocusDocument(self, event):
         if focus_manager.get_manager().focus_is_active_window():
             focus = self.activeDocument()
-            source = self.getTopLevelDocumentForObject(event.source)
+            source = self.get_top_level_document_for_object(event.source)
         else:
             focus = self.getDocumentForObject(focus_manager.get_manager().get_locus_of_focus())
             source = self.getDocumentForObject(event.source)
@@ -2817,17 +2891,24 @@ class Utilities(script_utilities.Utilities):
 
         return obj, AXText.get_caret_offset(obj)
 
-    def getCaretContext(self, documentFrame=None, getReplicant=False, searchIfNeeded=True):
-        tokens = ["WEB: Getting caret context for", documentFrame]
+    def get_caret_context(
+        self,
+        document: Atspi.Accessible | None = None,
+        get_replicant: bool = False,
+        search_if_needed: bool = True
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns an (obj, offset) tuple representing the current location."""
+
+        tokens = ["WEB: Getting caret context for", document]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not AXObject.is_valid(documentFrame):
-            documentFrame = self.documentFrame()
-            tokens = ["WEB: Now getting caret context for", documentFrame]
+        if not AXObject.is_valid(document):
+            document = self.documentFrame()
+            tokens = ["WEB: Now getting caret context for", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not documentFrame:
-            if not searchIfNeeded:
+        if not document:
+            if not search_if_needed:
                 msg = "WEB: Returning None, -1: No document and no search requested."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return None, -1
@@ -2837,23 +2918,23 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return obj, offset
 
-        context = self._caretContexts.get(hash(AXObject.get_parent(documentFrame)))
+        context = self._caretContexts.get(hash(AXObject.get_parent(document)))
         if context is not None:
-            tokens = ["WEB: Cached context of", documentFrame, "is", context[0], ", ", context[1]]
+            tokens = ["WEB: Cached context of", document, "is", context[0], ", ", context[1]]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
-            tokens = ["WEB: No cached context for", documentFrame, "."]
+            tokens = ["WEB: No cached context for", document, "."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             obj, offset = None, -1
 
-        if not context or not self.isTopLevelDocument(documentFrame):
-            if not searchIfNeeded:
+        if not context or not self.isTopLevelDocument(document):
+            if not search_if_needed:
                 msg = "WEB: Returning None, -1: No top-level document with context " \
                       "and no search requested."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return None, -1
-            obj, offset = self.searchForCaretContext(documentFrame)
-        elif not getReplicant:
+            obj, offset = self.searchForCaretContext(document)
+        elif not get_replicant:
             obj, offset = context
         elif not AXObject.is_valid(context[0]):
             msg = "WEB: Context is not valid. Searching for replicant."
@@ -2866,9 +2947,9 @@ class Utilities(script_utilities.Utilities):
         else:
             obj, offset = context
 
-        tokens = ["WEB: Result context of", documentFrame, "is", obj, ", ", offset, "."]
+        tokens = ["WEB: Result context of", document, "is", obj, ", ", offset, "."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self.setCaretContext(obj, offset, documentFrame)
+        self.setCaretContext(obj, offset, document)
         return obj, offset
 
     def getCaretContextPathRoleAndName(self, documentFrame=None):
@@ -2992,36 +3073,36 @@ class Utilities(script_utilities.Utilities):
             if event.detail1 >= childCount:
                 msg = "WEB: Last child removed. Getting new location from end of parent."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                obj, offset = self.previousContext(event.source, -1)
+                obj, offset = self.previous_context(event.source, -1)
             elif 0 <= event.detail1 - 1 < childCount:
                 child = AXObject.get_child(event.source, event.detail1 - 1)
                 tokens = ["WEB: Getting new location from end of previous child", child, "."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                obj, offset = self.previousContext(child, -1)
+                obj, offset = self.previous_context(child, -1)
             else:
                 prevObj = self.findPreviousObject(event.source)
                 tokens = ["WEB: Getting new location from end of source's previous object",
                           prevObj, "."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                obj, offset = self.previousContext(prevObj, -1)
+                obj, offset = self.previous_context(prevObj, -1)
 
         elif input_event_manager.get_manager().last_event_was_down():
             if event.detail1 == 0:
                 msg = "WEB: First child removed. Getting new location from start of parent."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                obj, offset = self.nextContext(event.source, -1)
+                obj, offset = self.next_context(event.source, -1)
             elif 0 < event.detail1 < childCount:
                 child = AXObject.get_child(event.source, event.detail1)
                 tokens = ["WEB: Getting new location from start of child", event.detail1,
                           child, "."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                obj, offset = self.nextContext(child, -1)
+                obj, offset = self.next_context(child, -1)
             else:
                 nextObj = self.findNextObject(event.source)
                 tokens = ["WEB: Getting new location from start of source's next object",
                           nextObj, "."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                obj, offset = self.nextContext(nextObj, -1)
+                obj, offset = self.next_context(nextObj, -1)
 
         else:
             notify = False
@@ -3062,7 +3143,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return None, -1
 
-        obj, offset = self.findFirstCaretContext(obj, 0)
+        obj, offset = self.first_context(obj, 0)
         tokens = ["WEB: Context replicant is", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return obj, offset
@@ -3102,51 +3183,53 @@ class Utilities(script_utilities.Utilities):
         name = AXObject.get_name(obj)
         self._contextPathsRolesAndNames[hash(parent)] = path, role, name
 
-    def findFirstCaretContext(self, obj, offset):
+    def first_context(self, obj: Atspi.Accessible, offset: int) -> tuple[Atspi.Accessible, int]:
+        """Returns the first viable/valid caret context given obj and offset."""
+
         self._canHaveCaretContextDecision = {}
-        rv = self._findFirstCaretContext(obj, offset)
+        rv = self._first_context(obj, offset)
         self._canHaveCaretContextDecision = {}
         return rv
 
-    def _findFirstCaretContext(self, obj, offset):
+    def _first_context(self, obj, offset):
         tokens = ["WEB: Looking for first caret context for", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         role = AXObject.get_role(obj)
-        lookInChild = [Atspi.Role.LIST,
+        look_in_child = [Atspi.Role.LIST,
                        Atspi.Role.INTERNAL_FRAME,
                        Atspi.Role.TABLE,
                        Atspi.Role.TABLE_ROW]
-        if role in lookInChild \
+        if role in look_in_child \
            and AXObject.get_child_count(obj) and not self.treatAsDiv(obj, offset):
             firstChild = AXObject.get_child(obj, 0)
             tokens = ["WEB: Will look in child", firstChild, "for first caret context"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return self._findFirstCaretContext(firstChild, 0)
+            return self._first_context(firstChild, 0)
 
-        treatAsText = self.treatAsTextObject(obj)
-        if not treatAsText and self._canHaveCaretContext(obj):
+        treat_as_text = self.treatAsTextObject(obj)
+        if not treat_as_text and self._canHaveCaretContext(obj):
             tokens = ["WEB: First caret context for non-text context is", obj, "0"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return obj, 0
 
         length = AXText.get_character_count(obj)
-        if treatAsText and offset >= length:
+        if treat_as_text and offset >= length:
             if self.isContentEditableWithEmbeddedObjects(obj) \
                and input_event_manager.get_manager().last_event_was_character_navigation():
-                nextObj, nextOffset = self.nextContext(obj, length)
-                if not nextObj:
+                next_obj, next_offset = self.next_context(obj, length)
+                if not next_obj:
                     tokens = ["WEB: No next object found at end of contenteditable", obj]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                elif not self.isContentEditableWithEmbeddedObjects(nextObj):
-                    tokens = ["WEB: Next object", nextObj,
+                elif not self.isContentEditableWithEmbeddedObjects(next_obj):
+                    tokens = ["WEB: Next object", next_obj,
                               "found at end of contenteditable", obj, "is not editable"]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 else:
                     tokens = ["WEB: First caret context at end of contenteditable", obj,
-                              "is next context", nextObj, ", ", nextOffset]
+                              "is next context", next_obj, ", ", next_offset]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    return nextObj, nextOffset
+                    return next_obj, next_offset
 
             tokens = ["WEB: First caret context at end of", obj, ", ", offset, "is",
                       obj, ", ", length]
@@ -3154,10 +3237,9 @@ class Utilities(script_utilities.Utilities):
             return obj, length
 
         offset = max(0, offset)
-        if treatAsText:
-            allText = AXText.get_all_text(obj)
-            if (allText and allText[offset] != self.EMBEDDED_OBJECT_CHARACTER) \
-               or role == Atspi.Role.ENTRY:
+        if treat_as_text:
+            all_text = AXText.get_all_text(obj)
+            if (all_text and all_text[offset] != "\ufffc") or role == Atspi.Role.ENTRY:
                 msg = "WEB: First caret context is unchanged"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return obj, offset
@@ -3182,12 +3264,12 @@ class Utilities(script_utilities.Utilities):
                 child = AXHypertext.get_child_at_offset(obj, offset)
 
         if self.isEmptyAnchor(child):
-            nextObj, nextOffset = self.nextContext(obj, offset)
-            if nextObj:
+            next_obj, next_offset = self.next_context(obj, offset)
+            if next_obj:
                 tokens = ["WEB: First caret context at end of empty anchor", obj,
-                          "is next context", nextObj, ", ", nextOffset]
+                          "is next context", next_obj, ", ", next_offset]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return nextObj, nextOffset
+                return next_obj, next_offset
 
         if not self._canHaveCaretContext(child):
             tokens = ["WEB: Child", child, "cannot be context. Returning", obj, ", ", offset]
@@ -3196,7 +3278,7 @@ class Utilities(script_utilities.Utilities):
 
         tokens = ["WEB: Looking in child", child, "for first caret context for", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return self._findFirstCaretContext(child, 0)
+        return self._first_context(child, 0)
 
     def findNextCaretInOrder(self, obj=None, offset=-1):
         start_time = time.time()
@@ -3208,7 +3290,7 @@ class Utilities(script_utilities.Utilities):
 
     def _findNextCaretInOrder(self, obj=None, offset=-1):
         if not obj:
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
 
         if not obj or not self.inDocumentContent(obj):
             return None, -1
@@ -3273,7 +3355,7 @@ class Utilities(script_utilities.Utilities):
 
     def _findPreviousCaretInOrder(self, obj=None, offset=-1):
         if not obj:
-            obj, offset = self.getCaretContext()
+            obj, offset = self.get_caret_context()
 
         if not obj or not self.inDocumentContent(obj):
             return None, -1
@@ -3339,7 +3421,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if not settings_manager.get_manager().get_setting('presentLiveRegionFromInactiveTab') \
-           and self.getTopLevelDocumentForObject(event.source) != self.activeDocument():
+           and self.get_top_level_document_for_object(event.source) != self.activeDocument():
             msg = "WEB: Live region source is not in active tab."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
