@@ -963,6 +963,9 @@ class AXText:
         if not AXObject.supports_text(obj):
             return Atspi.Rect()
 
+        if end <= 0:
+            end = AXText.get_character_count(obj)
+
         try:
             rect = Atspi.Text.get_range_extents(obj, start, end, Atspi.CoordType.WINDOW)
         except GLib.GError as error:
