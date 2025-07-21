@@ -222,6 +222,16 @@ class SpeechServer:
 
         return ()
 
+    def get_voice_families_for_language(
+        self,
+        language: str,
+        dialect: str,
+        maximum: int | None = None
+    ) -> list[tuple[str, str, str | None]]:
+        """Returns the families for language available in the current synthesizer."""
+
+        return []
+
     def should_change_voice_for_language(self, language: str, dialect: str = "") -> bool:
         """Returns True if we should change the voice for the specified language."""
 

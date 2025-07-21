@@ -20,6 +20,8 @@
 
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Configures speech and verbosity settings and adjusts strings accordingly."""
 
@@ -449,6 +451,35 @@ class SpeechAndVerbosityManager:
             if voice_name := voice.get(speechserver.VoiceFamily.NAME, ""):
                 result.append(voice_name)
         result = sorted(set(result))
+        return result
+
+    @dbus_service.parameterized_command
+    def get_voices_for_language(
+        self,
+        language: str,
+        variant: str = "",
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = False
+    ) -> list[tuple[str, str, str]]:
+        """Returns a list of available voices for the specified language."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: get_voices_for_language. Language:", language,
+                  "Variant:", variant, "Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        server = self._get_server()
+        if server is None:
+            return []
+
+        voices = server.get_voice_families_for_language(language, variant)
+        result = []
+        for name, lang, var in voices:
+            result.append((name, lang or "", var or ""))
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Found {len(result)} voice(s) for '{language}'."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     @dbus_service.getter

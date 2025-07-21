@@ -21,6 +21,9 @@
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-nested-blocks
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
@@ -49,6 +52,7 @@ class HandlerType(enum.Enum):
     """Enumeration of handler types for D-Bus methods."""
 
     COMMAND = enum.auto()
+    PARAMETERIZED_COMMAND = enum.auto()
     GETTER = enum.auto()
     SETTER = enum.auto()
 
@@ -63,6 +67,26 @@ def command(func):
     """
     description = func.__doc__ or f"D-Bus command: {func.__name__}"
     func.dbus_command_description = description
+    return func
+
+def parameterized_command(func):
+    """Decorator to mark a method as a D-Bus parameterized command using its docstring.
+
+    Usage:
+        @parameterized_command
+        def get_voices_for_language(
+            self,
+            language,
+            variant='',
+            script=None,
+            event=None,
+            notify_user=False
+        ):
+            '''Returns a list of available voices for the specified language.'''
+            # method implementation
+    """
+    description = func.__doc__ or f"D-Bus parameterized command: {func.__name__}"
+    func.dbus_parameterized_command_description = description
     return func
 
 def getter(func):
@@ -117,6 +141,7 @@ class OrcaModuleDBusInterface(Publishable):
         super().__init__()
         self._module_name = module_name
         self._commands: dict[str, _HandlerInfo] = {}
+        self._parameterized_commands: dict[str, _HandlerInfo] = {}
         self._getters: dict[str, _HandlerInfo] = {}
         self._setters: dict[str, _HandlerInfo] = {}
 
@@ -127,13 +152,16 @@ class OrcaModuleDBusInterface(Publishable):
                 self._getters[normalized_name] = info
             elif handler_type == HandlerType.SETTER:
                 self._setters[normalized_name] = info
+            elif handler_type == HandlerType.PARAMETERIZED_COMMAND:
+                self._parameterized_commands[normalized_name] = info
             else:
                 self._commands[normalized_name] = info
 
         msg = (
             f"DBUS SERVICE: OrcaModuleDBusInterface for {module_name} initialized "
-            f"with {len(self._commands)} command(s), {len(self._getters)} getter(s), "
-            f"{len(self._setters)} setter(s)."
+            f"with {len(self._commands)} command(s), "
+            f"{len(self._parameterized_commands)} parameterized command(s), "
+            f"{len(self._getters)} getter(s), {len(self._setters)} setter(s)."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -207,11 +235,34 @@ class OrcaModuleDBusInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
+    def ExecuteParameterizedCommand( # pylint: disable=invalid-name
+        self,
+        command_name: str,
+        parameters: dict[str, GLib.Variant],
+        notify_user: bool
+    ) -> GLib.Variant:
+        """Executes the named command with parameters and returns the result."""
+
+        handler_info = self._parameterized_commands.get(command_name)
+        if not handler_info:
+            msg = (
+                f"DBUS SERVICE: Unknown parameterized command '{command_name}' for "
+                f"'{self._module_name}'."
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return GLib.Variant("b", False)
+
+        kwargs = {name: variant.unpack() for name, variant in parameters.items()}
+        kwargs["notify_user"] = notify_user
+        result = handler_info.action(**kwargs)
+        msg = f"DBUS SERVICE: Parameterized '{command_name}' in '{self._module_name}' executed."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return self._to_variant(result)
+
     def for_publication(self):
         """Returns the D-Bus interface XML for publication."""
 
         return self.__dbus_xml__ # pylint: disable=no-member
-
 
     @staticmethod
     def _normalize_handler_name(
@@ -248,6 +299,13 @@ class OrcaModuleDBusInterface(Publishable):
                 return GLib.Variant("ax", list(result))
             if all(isinstance(x, bool) for x in result):
                 return GLib.Variant("ab", list(result))
+            if all(isinstance(x, (list, tuple)) for x in result):
+                if not result:
+                    return GLib.Variant("av", [])
+                first_len = len(result[0])
+                converted = [tuple(str(item or "") for item in x) for x in result]
+                signature = "(" + "s" * first_len + ")"
+                return GLib.Variant(f"a{signature}", converted)
             return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
         if result is None:
             return GLib.Variant("v", GLib.Variant("s", ""))
@@ -537,6 +595,23 @@ class OrcaRemoteController:
                     description=description,
                     action=_create_wrapper(),
                     handler_type=HandlerType.COMMAND
+                )
+                handlers_info.append(handler_info)
+                commands_count += 1
+            # Parameterized Command
+            elif callable(attr) and hasattr(attr, "dbus_parameterized_command_description"):
+                description = attr.dbus_parameterized_command_description
+                def _create_parameterized_wrapper(method=attr):
+                    def _wrapper(**kwargs):
+                        event = input_event.RemoteControllerEvent()
+                        script = script_manager.get_manager().get_active_script()
+                        return method(script=script, event=event, **kwargs)
+                    return _wrapper
+                handler_info = _HandlerInfo(
+                    python_function_name=attr_name,
+                    description=description,
+                    action=_create_parameterized_wrapper(),
+                    handler_type=HandlerType.PARAMETERIZED_COMMAND
                 )
                 handlers_info.append(handler_info)
                 commands_count += 1

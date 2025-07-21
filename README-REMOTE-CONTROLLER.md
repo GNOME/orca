@@ -194,6 +194,34 @@ gdbus call --session --dest org.gnome.Orca.Service \
 
 **Returns:** Boolean indicating success
 
+#### Execute a Parameterized Command
+
+```bash
+gdbus call --session --dest org.gnome.Orca.Service \
+    --object-path /org/gnome/Orca/Service/ModuleName \
+    --method org.gnome.Orca.Module.ExecuteParameterizedCommand 'CommandName' \
+    '{"param1": <"value1">, "param2": <"value2">}' false
+```
+
+**Parameters:**
+
+- `CommandName` (string): The name of the parameterized command to execute
+- `parameters` (dict): Dictionary of parameter names and values as GLib variants
+- `notify_user` (boolean): Whether to notify the user of the action
+
+**Returns:** The result returned by the command as a GLib variant (type depends on the command)
+
+##### Example: Get voices for a specific language
+
+```bash
+gdbus call --session --dest org.gnome.Orca.Service \
+    --object-path /org/gnome/Orca/Service/SpeechAndVerbosityManager \
+    --method org.gnome.Orca.Module.ExecuteParameterizedCommand 'GetVoicesForLanguage' \
+    '{"language": <"en-us">, "variant": <"">}' false
+```
+
+This will return a list of available voices for US English.
+
 ### Please Note
 
 **Setting `notify_user=true` is not a guarantee that feedback will be presented.** Some commands

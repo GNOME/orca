@@ -310,7 +310,8 @@ class SpeechServer(speechserver.SpeechServer):
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: "
-            f"{styles.get(settings_manager.get_manager().get_setting('verbalizePunctuationStyle'))}\n"
+            f"{styles.get(
+                settings_manager.get_manager().get_setting('verbalizePunctuationStyle'))}\n"
             f"SD rate {sd_rate}, pitch {sd_pitch}, volume {sd_volume}, language {sd_language}"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -626,9 +627,12 @@ class SpeechServer(speechserver.SpeechServer):
         result = []
         if self._client is None:
             return result
-        voices = self._client.list_synthesis_voices()
 
-        for voice in voices:
+        # Get all voices and filter manually
+        # TODO - JD: The speech-dispatcher API accepts language parameters for filtering,
+        # but this seems to fail for Voxin (returns all voices regardless of language).
+        all_voices = self._client.list_synthesis_voices()
+        for voice in all_voices:
             normalized_language, normalized_dialect = \
                 self._normalized_language_and_dialect(voice[1])
             if normalized_language != target_language:

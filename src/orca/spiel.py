@@ -730,6 +730,44 @@ class SpeechServer(speechserver.SpeechServer):
                 self._voices_id = None
         self._init()
 
+    def get_voice_families_for_language(
+        self,
+        language: str,
+        dialect: str,
+        maximum: int | None = None
+    ) -> list[tuple[str, str, str | None]]:
+        """Returns the families for language available in the current synthesizer."""
+
+        target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)
+
+        result: list[tuple[str, str, str | None]] = []
+        all_voices = self._current_voice_profiles
+        for voice in all_voices:
+            normalized_language, normalized_dialect = \
+                self._normalized_language_and_dialect(voice[1])
+            if normalized_language != target_language:
+                continue
+            if normalized_dialect == target_dialect:
+                result.append(voice)
+            elif not normalized_dialect and target_dialect == normalized_language:
+                result.append(voice)
+            if maximum is not None and len(result) >= maximum:
+                break
+
+        return result
+
+    def _normalized_language_and_dialect(self, language: str, dialect: str = "") -> tuple[str, str]:
+        """Attempts to ensure consistency across inconsistent formats."""
+
+        if "-" in language:
+            normalized_language = language.split("-", 1)[0].lower()
+            normalized_dialect = language.split("-", 1)[-1].lower()
+        else:
+            normalized_language = language.lower()
+            normalized_dialect = dialect.lower()
+
+        return normalized_language, normalized_dialect
+
     def get_output_module(self) -> str:
         """Returns the output module associated with this speech server."""
 
