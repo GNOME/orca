@@ -343,6 +343,22 @@ class OrcaDBusServiceInterface(Publishable):
 
         return sorted(commands)
 
+    def ShowPreferences(self) -> bool: # pylint: disable=invalid-name
+        """Shows Orca's preferences GUI."""
+
+        msg = "DBUS SERVICE: ShowPreferences called."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        manager = script_manager.get_manager()
+        script = manager.get_active_script() or manager.get_default_script()
+        if script is None:
+            msg = "DBUS SERVICE: No script available"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        script.show_preferences_gui()
+        return True
+
     def PresentMessage(self, message: str) -> bool: # pylint: disable=invalid-name
         """Presents message to the user."""
 
