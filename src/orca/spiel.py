@@ -39,11 +39,10 @@ __copyright__ = "Copyright © 2024 GNOME Foundation Inc. "
 __license__   = "LGPL"
 
 import locale
+import time
 from typing import TYPE_CHECKING, Any, Callable, Iterator
 
 import gi
-gi.require_version("GLib", "2.0")
-from gi.repository import GLib
 
 try:
     gi.require_version("Spiel", "1.0")
@@ -668,11 +667,18 @@ class SpeechServer(speechserver.SpeechServer):
     def _maybe_shutdown(self) -> bool:
         # We're the last speaker, wrap things up
         if len(SpeechServer._active_servers.values()) == 1:
-            while SpeechServer.DEFAULT_SPEAKER.props.speaking:
-                GLib.MainContext.default().iteration(False)
+            # Avoid GLib.MainContext.iteration() - causes deadlock with D-Bus calls.
+            timeout_count = 0
+            max_timeout = 100
 
-            # Ensure nothing squeaks through
-            SpeechServer.DEFAULT_SPEAKER.pause()
+            while SpeechServer.DEFAULT_SPEAKER.props.speaking and timeout_count < max_timeout:
+                time.sleep(0.01)
+                timeout_count += 1
+
+            # Only attempt to pause if speech finished normally (no timeout).
+            if timeout_count < max_timeout:
+                SpeechServer.DEFAULT_SPEAKER.pause()
+
             SpeechServer.DEFAULT_SPEAKER = None
             return True
 
