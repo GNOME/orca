@@ -665,24 +665,27 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _maybe_shutdown(self) -> bool:
-        # We're the last speaker, wrap things up
-        if len(SpeechServer._active_servers.values()) == 1:
-            # Avoid GLib.MainContext.iteration() - causes deadlock with D-Bus calls.
-            timeout_count = 0
-            max_timeout = 100
+        # If we're not the last speaker, don't shut down.
+        if len(SpeechServer._active_servers) > 1:
+            return False
 
-            while SpeechServer.DEFAULT_SPEAKER.props.speaking and timeout_count < max_timeout:
-                time.sleep(0.01)
-                timeout_count += 1
-
-            # Only attempt to pause if speech finished normally (no timeout).
-            if timeout_count < max_timeout:
-                SpeechServer.DEFAULT_SPEAKER.pause()
-
-            SpeechServer.DEFAULT_SPEAKER = None
+        # If there's not a default speaker, there's nothing we can do.
+        if SpeechServer.DEFAULT_SPEAKER is None:
             return True
 
-        return False
+        # Don't immediately cut off speech.
+        for _ in range(200):
+            try:
+                if not SpeechServer.DEFAULT_SPEAKER.props.speaking:
+                    SpeechServer.DEFAULT_SPEAKER.pause()
+                    break
+            except (AttributeError, TypeError):
+                break
+            time.sleep(0.01)
+
+        SpeechServer.DEFAULT_SPEAKER = None
+        return True
+
 
     def increase_speech_rate(self, step: int = 5) -> None:
         self._change_default_speech_rate(step)
