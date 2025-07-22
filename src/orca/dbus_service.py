@@ -627,6 +627,8 @@ class OrcaRemoteController:
                     def _wrapper(notify_user):
                         event = input_event.RemoteControllerEvent()
                         script = script_manager.get_manager().get_active_script()
+                        if script is None:
+                            script = script_manager.get_manager().get_default_script()
                         return method(script=script, event=event, notify_user=notify_user)
                     return _wrapper
                 handler_info = _HandlerInfo(
@@ -644,6 +646,8 @@ class OrcaRemoteController:
                     def _wrapper(**kwargs):
                         event = input_event.RemoteControllerEvent()
                         script = script_manager.get_manager().get_active_script()
+                        if script is None:
+                            script = script_manager.get_manager().get_default_script()
                         return method(script=script, event=event, **kwargs)
                     return _wrapper
                 handler_info = _HandlerInfo(
