@@ -1052,9 +1052,12 @@ class Context:
     def go_to_end_of(self, review_type: int = WINDOW) -> bool:
         """Returns True if moving to the end of the specified type succeeded."""
 
+        if not self._lines:
+            return False
+
         before = [self._line_index, self._zone_index, self._word_index, self._char_index]
         if review_type == Context.WINDOW:
-            self._line_index  = len(self._lines) - 1
+            self._line_index = len(self._lines) - 1
         elif review_type == Context.LINE:
             self._zone_index = len(self._lines[self._line_index].get_zones()) - 1
 
