@@ -866,7 +866,7 @@ class Utilities:
         self,
         obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
         offset: int = -1, # pylint: disable=unused-argument
-        layout_mode: bool = True, # pylint: disable=unused-argument
+        layout_mode: bool | None = None, # pylint: disable=unused-argument
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the previous line."""
@@ -877,7 +877,7 @@ class Utilities:
         self,
         obj: Atspi.Accessible,  # pylint: disable=unused-argument
         offset: int,  # pylint: disable=unused-argument
-        layout_mode: bool = True,  # pylint: disable=unused-argument
+        layout_mode: bool | None = None, # pylint: disable=unused-argument
         use_cache: bool = True  # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the line at offset."""
@@ -888,7 +888,7 @@ class Utilities:
         self,
         obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
         offset: int = -1, # pylint: disable=unused-argument
-        layout_mode: bool = True, # pylint: disable=unused-argument
+        layout_mode: bool | None = None, # pylint: disable=unused-argument
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the next line."""

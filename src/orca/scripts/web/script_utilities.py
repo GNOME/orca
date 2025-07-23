@@ -1146,7 +1146,7 @@ class Utilities(script_utilities.Utilities):
         self,
         obj: Atspi.Accessible,
         offset: int,
-        layout_mode: bool = True,
+        layout_mode: bool | None = None,
         use_cache: bool = True
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the line at offset."""
@@ -1160,7 +1160,7 @@ class Utilities(script_utilities.Utilities):
         self,
         obj: Atspi.Accessible,
         offset: int,
-        layout_mode: bool = True,
+        layout_mode: bool | None = None,
         use_cache: bool = True
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         start_time = time.time()
@@ -1345,7 +1345,7 @@ class Utilities(script_utilities.Utilities):
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
-        layout_mode: bool = True,
+        layout_mode: bool | None = None,
         use_cache: bool = True
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the previous line."""
@@ -1412,7 +1412,7 @@ class Utilities(script_utilities.Utilities):
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
-        layout_mode: bool = True,
+        layout_mode: bool | None = None,
         use_cache: bool = True
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the next line."""
