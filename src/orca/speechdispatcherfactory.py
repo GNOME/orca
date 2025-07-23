@@ -173,7 +173,13 @@ class SpeechServer(speechserver.SpeechServer):
             SpeechServer._active_servers[server_id] = self
 
     def _init(self) -> None:
-        self._client = client = speechd.SSIPClient("Orca", component=self._id)
+        try:
+            self._client = client = speechd.SSIPClient("Orca", component=self._id)
+        except (speechd.SSIPCommunicationError, speechd.SpawnError) as error:
+            msg = f"ERROR: Failed to connect to Speech Dispatcher: {error}"
+            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            self._client = None
+            return
         client.set_priority(speechd.Priority.MESSAGE)
 
         # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
@@ -230,6 +236,8 @@ class SpeechServer(speechserver.SpeechServer):
             msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.reset()
+            if self._client is None:
+                return None
             return command(*args, **kwargs)
         except Exception:
             return None

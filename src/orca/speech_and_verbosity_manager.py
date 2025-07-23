@@ -935,8 +935,11 @@ class SpeechAndVerbosityManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        index = available.index(current) + 1
-        if index == len(available):
+        try:
+            index = available.index(current) + 1
+            if index == len(available):
+                index = 0
+        except ValueError:
             index = 0
 
         server.set_output_module(available[index])
