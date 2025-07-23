@@ -142,7 +142,7 @@ class SpeechServer(speechserver.SpeechServer):
         return cls._active_servers.get(server_id)
 
     @staticmethod
-    def get_speech_server(info: list[str] | None) -> SpeechServer | None:
+    def get_speech_server(info: list[str] | None = None) -> SpeechServer | None:
         """Gets a given SpeechServer based upon the info."""
 
         this_id = info[1] if info is not None else SpeechServer.DEFAULT_SERVER_ID
@@ -158,6 +158,13 @@ class SpeechServer(speechserver.SpeechServer):
 
     def __init__(self, server_id: str) -> None:
         super().__init__()
+
+        # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
+        # the user's chosen server (synthesizer) might be from speech-dispatcher.
+        if server_id != SpeechServer.DEFAULT_SERVER_ID \
+           and server_id not in SpeechServer._active_providers:
+            server_id = SpeechServer.DEFAULT_SERVER_ID
+
         self._id = server_id
         self._speaker: Any = None
         self._current_voice_profiles = ()
@@ -779,6 +786,9 @@ class SpeechServer(speechserver.SpeechServer):
 
     def get_output_module(self) -> str:
         """Returns the output module associated with this speech server."""
+
+        if self._provider is not None:
+            return self._provider.props.name
 
         return self._id
 

@@ -109,6 +109,8 @@ class SpeechServer(speechserver.SpeechServer):
 
     @staticmethod
     def get_speech_server(info: list[str] | None = None) -> SpeechServer | None:
+        """Gets a given SpeechServer based upon the info."""
+
         this_id = info[1] if info is not None else SpeechServer.DEFAULT_SERVER_ID
         return SpeechServer._get_speech_server(this_id)
 
@@ -173,8 +175,18 @@ class SpeechServer(speechserver.SpeechServer):
     def _init(self) -> None:
         self._client = client = speechd.SSIPClient("Orca", component=self._id)
         client.set_priority(speechd.Priority.MESSAGE)
+
+        # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
+        # the user's chosen server (synthesizer) might be from spiel.
         if self._id and self._id != self.DEFAULT_SERVER_ID:
-            client.set_output_module(self._id)
+            try:
+                available_modules = client.list_output_modules()
+                if self._id not in available_modules:
+                    self._id = self.DEFAULT_SERVER_ID
+                else:
+                    client.set_output_module(self._id)
+            except (AttributeError, speechd.SSIPCommandError):
+                self._id = self.DEFAULT_SERVER_ID
         self._current_voice_properties = {}
         mode = self._punctuation_mode_map[settings.verbalizePunctuationStyle]
         client.set_punctuation(mode)
