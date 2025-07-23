@@ -190,7 +190,7 @@ class AXUtilitiesApplication:
         try:
             state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
             state = state.split()[1]
-        except GLib.GError as error:
+        except (GLib.GError, IndexError) as error:
             tokens = [f"AXUtilitiesApplication: Exception checking state of pid {pid}: {error}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
