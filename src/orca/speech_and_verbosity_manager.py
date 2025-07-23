@@ -36,8 +36,10 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import importlib
+import queue
 import re
 import string
+import threading
 from typing import TYPE_CHECKING
 
 from . import cmdnames
@@ -305,7 +307,30 @@ class SpeechAndVerbosityManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _get_server(self) -> SpeechServer | None:
+        """Returns the speech server if it is responsive.."""
+
         result = speech.get_speech_server()
+        if result is None:
+            msg = "SPEECH AND VERBOSITY MANAGER: Speech server is None."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+        result_queue: queue.Queue[bool] = queue.Queue()
+
+        def health_check_thread():
+            result.get_output_module()
+            result_queue.put(True)
+
+        thread = threading.Thread(target=health_check_thread, daemon=True)
+        thread.start()
+
+        try:
+            result_queue.get(timeout=2.0)
+        except queue.Empty:
+            msg = "SPEECH AND VERBOSITY MANAGER: Speech server health check timed out"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
         tokens = ["SPEECH AND VERBOSITY MANAGER: Speech server is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
