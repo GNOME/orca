@@ -334,10 +334,10 @@ class OrcaModuleDBusInterface(Publishable):
         if isinstance(result, (list, tuple)):
             if all(isinstance(x, str) for x in result):
                 return GLib.Variant("as", list(result))
-            if all(isinstance(x, int) for x in result):
-                return GLib.Variant("ax", list(result))
             if all(isinstance(x, bool) for x in result):
                 return GLib.Variant("ab", list(result))
+            if all(isinstance(x, int) for x in result):
+                return GLib.Variant("ax", list(result))
             if all(isinstance(x, (list, tuple)) for x in result):
                 if not result:
                     return GLib.Variant("av", [])
