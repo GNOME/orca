@@ -109,6 +109,13 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 def shutdown(script=None, _event=None, _signum=None):
     """Exits Orca. Returns True if shutdown ran to completion."""
 
+    if hasattr(shutdown, "in_progress"):
+        msg = "ORCA: Shutdown already in progress"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return False
+
+    shutdown.in_progress = True
+
     def _timeout(_signum=None, _frame=None):
         msg = "TIMEOUT: something has hung. Aborting."
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
@@ -122,10 +129,10 @@ def shutdown(script=None, _event=None, _signum=None):
     dbus_service.get_remote_controller().shutdown()
 
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
-    script = script_manager.get_manager().get_active_script()
-    if script is not None:
-        script.interrupt_presentation()
-        script.present_message(messages.STOP_ORCA, reset_styles=False)
+    if script := script_manager.get_manager().get_active_script():
+        if speech_and_verbosity_manager.get_manager().get_current_server():
+            script.interrupt_presentation()
+            script.present_message(messages.STOP_ORCA, reset_styles=False)
 
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
