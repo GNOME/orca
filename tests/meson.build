@@ -1,0 +1,62 @@
+python_module = import('python')
+python = python_module.find_installation('python3', required: false, modules: ['pytest'])
+
+if not python.found()
+  subdir_done()
+endif
+
+test_env = environment()
+test_env.prepend('PYTHONPATH', meson.project_source_root() / 'src')
+
+unit_tests = [
+  'unit_tests/test_ax_component.py',
+  'unit_tests/test_ax_hypertext.py',
+  'unit_tests/test_ax_object.py',
+  'unit_tests/test_ax_selection.py',
+  'unit_tests/test_ax_table.py',
+  'unit_tests/test_ax_text.py',
+  'unit_tests/test_ax_utilities.py',
+  'unit_tests/test_ax_utilities_application.py',
+  'unit_tests/test_ax_utilities_event.py',
+  'unit_tests/test_ax_utilities_relation.py',
+  'unit_tests/test_ax_utilities_role.py',
+  'unit_tests/test_ax_utilities_state.py',
+  'unit_tests/test_ax_value.py',
+  'unit_tests/test_dbus.py',
+]
+
+foreach test_file : unit_tests
+  test_name = test_file.split('/')[-1].split('.')[0]
+  test(
+    test_name,
+    python,
+    args: ['-m', 'pytest', files(test_file), '-v'],
+    env: test_env,
+    suite: 'unit',
+    timeout: 30,
+  )
+endforeach
+
+integration_tests = [
+  'integration_tests/test_dbus_with_orca.py',
+]
+
+integration_wrapper = configure_file(
+  input: 'integration_test_wrapper.py.in',
+  output: 'integration_test_wrapper.py',
+  configuration: {
+    'PYTHON': python.full_path(),
+  },
+)
+
+foreach test_file : integration_tests
+  test_name = test_file.split('/')[-1].split('.')[0]
+  test(
+    test_name,
+    integration_wrapper,
+    args: [files(test_file)],
+    env: test_env,
+    suite: 'integration',
+    timeout: 120,
+  )
+endforeach

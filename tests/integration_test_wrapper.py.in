@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Wrapper to check if Orca is running before running integration tests."""
+
+import subprocess
+import sys
+
+def is_orca_running():
+    """Check if Orca D-Bus service is available."""
+    try:
+        result = subprocess.run([
+            "python3", "-c",
+            "from dasbus.connection import SessionMessageBus; "
+            "bus = SessionMessageBus(); "
+            "proxy = bus.get_proxy('org.gnome.Orca.Service', '/org/gnome/Orca/Service'); "
+            "proxy.GetVersion()"
+        ], capture_output=True, timeout=5, check=False)
+        return result.returncode == 0
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return False
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: integration_test_wrapper.py <test_file>", file=sys.stderr)
+        sys.exit(1)
+
+    test_file = sys.argv[1]
+
+    # Check if Orca is running before attempting tests
+    if not is_orca_running():
+        sys.exit(77)  # Standard skip exit code
+
+    # Run pytest normally if Orca is available
+    pytest_result = subprocess.run([
+        "@PYTHON@", "-m", "pytest", test_file, "-v"
+    ], check=False)
+
+    sys.exit(pytest_result.returncode)

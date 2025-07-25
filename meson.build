@@ -105,6 +105,7 @@ subdir('help')
 subdir('icons')
 subdir('po')
 subdir('src')
+subdir('tests')
 
 summary(summary)
 
