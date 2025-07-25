@@ -56,14 +56,16 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": ["ShowActionsList"]
+        "ui_commands": ["ShowActionsList"],
+        "toggle_commands": []
     },
     "ClipboardPresenter": {
         "commands": ["PresentClipboardContents"],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": []
+        "ui_commands": [],
+        "toggle_commands": []
     },
     "FlatReviewPresenter": {
         "commands": [
@@ -83,7 +85,8 @@ MODULE_CONFIG = {
         "ui_commands": [
             "ShowContents", "LeftClickOnObject", "RightClickOnObject",
             "RoutePointerToObject"
-        ]
+        ],
+        "toggle_commands": ["ToggleFlatReviewMode", "ToggleRestrict"]
     },
     "ObjectNavigator": {
         "commands": [
@@ -93,7 +96,8 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": ["PerformAction"]
+        "ui_commands": ["PerformAction"],
+        "toggle_commands": ["ToggleSimplify"]
     },
     "NotificationPresenter": {
         "commands": [
@@ -103,14 +107,16 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": ["ShowNotificationList"]
+        "ui_commands": ["ShowNotificationList"],
+        "toggle_commands": []
     },
     "SleepModeManager": {
         "commands": ["ToggleSleepMode"],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": []
+        "ui_commands": [],
+        "toggle_commands": ["ToggleSleepMode"]
     },
     "SpeechAndVerbosityManager": {
         "commands": [
@@ -131,7 +137,11 @@ MODULE_CONFIG = {
             "CurrentServer", "CurrentSynthesizer", "CurrentVoice",
             "Pitch", "Rate", "Volume"
         ],
-        "ui_commands": []
+        "ui_commands": [],
+        "toggle_commands": [
+            "ToggleIndentationAndJustification", "ToggleSpeech",
+            "ToggleTableCellReadingMode", "ToggleVerbosity"
+        ]
     },
     "StructuralNavigator": {
         "commands": [
@@ -171,7 +181,8 @@ MODULE_CONFIG = {
             "ListIframes", "ListImages", "ListLandmarks", "ListLargeObjects",
             "ListLinks", "ListListItems", "ListLists", "ListParagraphs",
             "ListRadioButtons", "ListTables", "ListUnvisitedLinks", "ListVisitedLinks"
-        ]
+        ],
+        "toggle_commands": []
     },
     "SystemInformationPresenter": {
         "commands": [
@@ -181,7 +192,8 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": ["PresentBatteryStatus"]  # Can timeout on systems without battery
+        "ui_commands": ["PresentBatteryStatus"],  # Can timeout on systems without battery
+        "toggle_commands": []
     },
     "TableNavigator": {
         "commands": [
@@ -194,7 +206,8 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": []
+        "ui_commands": [],
+        "toggle_commands": ["ToggleEnabled"]
     },
     "WhereAmIPresenter": {
         "commands": [
@@ -205,7 +218,8 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": []
+        "ui_commands": [],
+        "toggle_commands": []
     }
 }
 
@@ -436,16 +450,25 @@ class TestOrcaDBusIntegration:
         """Test that module commands execute without errors."""
         commands = config["commands"]
         ui_commands = config.get("ui_commands", [])
+        toggle_commands = config.get("toggle_commands", [])
         print(f"\n  Testing {module_name} commands ({len(commands)} total):")
         for cmd in sorted(commands):
-            status = "(UI - skipped)" if cmd in ui_commands else ""
+            status_parts = []
+            if cmd in ui_commands:
+                status_parts.append("UI - skipped")
+            if cmd in toggle_commands:
+                status_parts.append("toggle - restore state")
+            status = f"({', '.join(status_parts)})" if status_parts else ""
             print(f"    • {cmd} {status}")
 
-        def test_single_command(proxy, cmd_name, ui_commands):
+        def test_single_command(proxy, cmd_name, ui_commands, toggle_commands):
             if cmd_name in ui_commands:
                 return {"success": True, "skipped": True}
             try:
                 proxy.ExecuteCommand(cmd_name, False)
+                if cmd_name in toggle_commands:
+                    print(f"      → Restoring {cmd_name} to original state")
+                    proxy.ExecuteCommand(cmd_name, False)
                 return {"success": True}
             except (DBusError, AttributeError, TypeError, ValueError) as error:
                 error_str = str(error)
@@ -459,7 +482,8 @@ class TestOrcaDBusIntegration:
         def test_commands():
             proxy = module_proxy_factory(module_name)
             ui_commands = config.get("ui_commands", [])
-            return {cmd: test_single_command(proxy, cmd, ui_commands)
+            toggle_commands = config.get("toggle_commands", [])
+            return {cmd: test_single_command(proxy, cmd, ui_commands, toggle_commands)
                     for cmd in config["commands"]}
 
         timeout = MODULE_TIMEOUTS.get(module_name)

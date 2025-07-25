@@ -32,7 +32,7 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache
+from conftest import clean_module_cache  # pylint: disable=import-error
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
