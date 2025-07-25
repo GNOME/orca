@@ -39,8 +39,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
-
-
 @pytest.mark.unit
 class TestAXComponent:
     """Test component-related methods."""
@@ -474,7 +472,7 @@ class TestAXComponent:
         from orca.ax_component import AXComponent
 
         # Always provide a mock for contains, regardless of conditions
-        def contains_func(obj, x, y, coord_type):  # pylint: disable=unused-argument
+        def contains_func(obj, x, y, coord_type):
             if supports_component and not is_bogus and contains_result is not None:
                 return contains_result
             return False
@@ -577,7 +575,7 @@ class TestAXComponent:
         is_menu,
         expected_result,
         mock_orca_dependencies
-    ):  # pylint: disable=too-many-arguments,too-many-positional-arguments
+    ):
         """Test AXComponent.object_is_off_screen."""
 
         # Configure mock classes BEFORE importing the module
@@ -591,7 +589,6 @@ class TestAXComponent:
 
         monkeypatch.setattr(mock_orca_dependencies["debug"], "print_tokens", Mock())
 
-        # pylint: disable=too-many-locals
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
         mock_rect = Atspi.Rect()
