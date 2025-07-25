@@ -24,6 +24,7 @@
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=unused-argument
 # pylint: disable=import-outside-toplevel
+# pylint: disable=too-many-locals
 
 """Unit tests for ax_component.py component-related methods."""
 

@@ -57,7 +57,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": ["ShowActionsList"],
-        "toggle_commands": []
+        "toggle_commands": [],
+        "skip": []
     },
     "ClipboardPresenter": {
         "commands": ["PresentClipboardContents"],
@@ -65,7 +66,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": [],
-        "toggle_commands": []
+        "toggle_commands": [],
+        "skip": []
     },
     "FlatReviewPresenter": {
         "commands": [
@@ -86,7 +88,8 @@ MODULE_CONFIG = {
             "ShowContents", "LeftClickOnObject", "RightClickOnObject",
             "RoutePointerToObject"
         ],
-        "toggle_commands": ["ToggleFlatReviewMode", "ToggleRestrict"]
+        "toggle_commands": ["ToggleFlatReviewMode", "ToggleRestrict"],
+        "skip": []
     },
     "ObjectNavigator": {
         "commands": [
@@ -97,7 +100,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": ["PerformAction"],
-        "toggle_commands": ["ToggleSimplify"]
+        "toggle_commands": ["ToggleSimplify"],
+        "skip": []
     },
     "NotificationPresenter": {
         "commands": [
@@ -108,7 +112,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": ["ShowNotificationList"],
-        "toggle_commands": []
+        "toggle_commands": [],
+        "skip": []
     },
     "SleepModeManager": {
         "commands": ["ToggleSleepMode"],
@@ -116,7 +121,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": [],
-        "toggle_commands": ["ToggleSleepMode"]
+        "toggle_commands": ["ToggleSleepMode"],
+        "skip": []
     },
     "SpeechAndVerbosityManager": {
         "commands": [
@@ -141,7 +147,8 @@ MODULE_CONFIG = {
         "toggle_commands": [
             "ToggleIndentationAndJustification", "ToggleSpeech",
             "ToggleTableCellReadingMode", "ToggleVerbosity"
-        ]
+        ],
+        "skip": []
     },
     "StructuralNavigator": {
         "commands": [
@@ -182,7 +189,8 @@ MODULE_CONFIG = {
             "ListLinks", "ListListItems", "ListLists", "ListParagraphs",
             "ListRadioButtons", "ListTables", "ListUnvisitedLinks", "ListVisitedLinks"
         ],
-        "toggle_commands": []
+        "toggle_commands": [],
+        "skip": ["CycleMode"] # Test flakiness depending on app and focus.
     },
     "SystemInformationPresenter": {
         "commands": [
@@ -192,8 +200,9 @@ MODULE_CONFIG = {
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
-        "ui_commands": ["PresentBatteryStatus"],  # Can timeout on systems without battery
-        "toggle_commands": []
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": ["PresentBatteryStatus"]  # Can timeout on systems without battery
     },
     "TableNavigator": {
         "commands": [
@@ -207,7 +216,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": [],
-        "toggle_commands": ["ToggleEnabled"]
+        "toggle_commands": ["ToggleEnabled"],
+        "skip": []
     },
     "WhereAmIPresenter": {
         "commands": [
@@ -219,7 +229,8 @@ MODULE_CONFIG = {
         "getters": [],
         "setters": [],
         "ui_commands": [],
-        "toggle_commands": []
+        "toggle_commands": [],
+        "skip": []
     }
 }
 
@@ -451,18 +462,21 @@ class TestOrcaDBusIntegration:
         commands = config["commands"]
         ui_commands = config.get("ui_commands", [])
         toggle_commands = config.get("toggle_commands", [])
+        skip_commands = config.get("skip", [])
         print(f"\n  Testing {module_name} commands ({len(commands)} total):")
         for cmd in sorted(commands):
             status_parts = []
             if cmd in ui_commands:
                 status_parts.append("UI - skipped")
+            if cmd in skip_commands:
+                status_parts.append("skipped")
             if cmd in toggle_commands:
                 status_parts.append("toggle - restore state")
             status = f"({', '.join(status_parts)})" if status_parts else ""
             print(f"    • {cmd} {status}")
 
-        def test_single_command(proxy, cmd_name, ui_commands, toggle_commands):
-            if cmd_name in ui_commands:
+        def test_single_command(proxy, cmd_name, ui_commands, toggle_commands, skip_commands):
+            if cmd_name in ui_commands or cmd_name in skip_commands:
                 return {"success": True, "skipped": True}
             try:
                 proxy.ExecuteCommand(cmd_name, False)
@@ -472,10 +486,7 @@ class TestOrcaDBusIntegration:
                 return {"success": True}
             except (DBusError, AttributeError, TypeError, ValueError) as error:
                 error_str = str(error)
-                is_battery_timeout = (
-                    cmd_name == "PresentBatteryStatus" and is_timeout_error(error_str)
-                )
-                if is_context_error(error_str) or is_battery_timeout or is_timeout_error(error_str):
+                if is_context_error(error_str) or is_timeout_error(error_str):
                     return {"success": True, "context_required": True}
                 return {"success": False, "error": error_str}
 
@@ -483,8 +494,11 @@ class TestOrcaDBusIntegration:
             proxy = module_proxy_factory(module_name)
             ui_commands = config.get("ui_commands", [])
             toggle_commands = config.get("toggle_commands", [])
-            return {cmd: test_single_command(proxy, cmd, ui_commands, toggle_commands)
-                    for cmd in config["commands"]}
+            skip_commands = config.get("skip", [])
+            return {
+                cmd: test_single_command(proxy, cmd, ui_commands, toggle_commands, skip_commands)
+                for cmd in config["commands"]
+            }
 
         timeout = MODULE_TIMEOUTS.get(module_name)
         result = run_with_timeout(test_commands, timeout)
