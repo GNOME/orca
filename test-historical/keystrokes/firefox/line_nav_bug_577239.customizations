@@ -1,3 +1,0 @@
-import orca.scripts.toolkits.Gecko.script_settings
-orca.scripts.toolkits.Gecko.script_settings.arrowToLineBeginning = False
-
