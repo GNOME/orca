@@ -30,6 +30,7 @@ from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock, patch
 
 import pytest
+from dasbus.error import DBusError
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -81,13 +82,17 @@ def _mock_dbus_service() -> Generator[ModuleType, None, None]:
     mock_gi = Mock()
     mock_gi.repository = mock_gi_repository
 
+    # Create mock dasbus.error module that provides real DBusError
+    mock_dasbus_error = Mock()
+    mock_dasbus_error.DBusError = DBusError
+
     with patch.dict(sys.modules, {
         "gi": mock_gi,
         "gi.repository": mock_gi_repository,
         "gi.repository.GLib": mock_glib,
         "dasbus": Mock(),
         "dasbus.connection": Mock(),
-        "dasbus.error": Mock(),
+        "dasbus.error": mock_dasbus_error,
         "dasbus.loop": Mock(),
         "dasbus.server": Mock(),
         "dasbus.server.interface": mock_dasbus_interface,

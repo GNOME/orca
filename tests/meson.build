@@ -22,7 +22,10 @@ unit_tests = [
   'unit_tests/test_ax_utilities_role.py',
   'unit_tests/test_ax_utilities_state.py',
   'unit_tests/test_ax_value.py',
-  'unit_tests/test_dbus.py',
+  'unit_tests/test_dbus_service.py',
+  'unit_tests/test_event_manager.py',
+  'unit_tests/test_focus_manager.py',
+  'unit_tests/test_script_manager.py',
 ]
 
 foreach test_file : unit_tests
