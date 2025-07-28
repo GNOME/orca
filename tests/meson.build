@@ -9,6 +9,7 @@ test_env = environment()
 test_env.prepend('PYTHONPATH', meson.project_source_root() / 'src')
 
 unit_tests = [
+  'unit_tests/test_ax_collection.py',
   'unit_tests/test_ax_component.py',
   'unit_tests/test_ax_hypertext.py',
   'unit_tests/test_ax_object.py',
@@ -17,15 +18,21 @@ unit_tests = [
   'unit_tests/test_ax_text.py',
   'unit_tests/test_ax_utilities.py',
   'unit_tests/test_ax_utilities_application.py',
+  'unit_tests/test_ax_utilities_debugging.py',
   'unit_tests/test_ax_utilities_event.py',
   'unit_tests/test_ax_utilities_relation.py',
   'unit_tests/test_ax_utilities_role.py',
   'unit_tests/test_ax_utilities_state.py',
   'unit_tests/test_ax_value.py',
+  'unit_tests/test_bypass_mode_manager.py',
   'unit_tests/test_dbus_service.py',
   'unit_tests/test_event_manager.py',
   'unit_tests/test_focus_manager.py',
+  'unit_tests/test_input_event_manager.py',
+  'unit_tests/test_orca_modifier_manager.py',
   'unit_tests/test_script_manager.py',
+  'unit_tests/test_sleep_mode_manager.py',
+  'unit_tests/test_speech_and_verbosity_manager.py',
 ]
 
 foreach test_file : unit_tests

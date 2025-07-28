@@ -520,17 +520,17 @@ class TestAXUtilitiesEvent:
 
         mock_input_manager = Mock()
         input_defaults = {
-            'last_event_was_delete': False,
-            'last_event_was_caret_selection': False,
-            'last_event_was_caret_navigation': False,
-            'last_event_was_select_all': False,
-            'last_event_was_primary_click_or_release': False,
-            'last_event_was_tab_navigation': False,
-            'last_event_was_command': False,
-            'last_event_was_printable_key': False
+            "last_event_was_delete": False,
+            "last_event_was_caret_selection": False,
+            "last_event_was_caret_navigation": False,
+            "last_event_was_select_all": False,
+            "last_event_was_primary_click_or_release": False,
+            "last_event_was_tab_navigation": False,
+            "last_event_was_command": False,
+            "last_event_was_printable_key": False
         }
         for attr, value in input_defaults.items():
-            setattr(getattr(mock_input_manager, attr), 'return_value', value)
+            setattr(getattr(mock_input_manager, attr), "return_value", value)
         mock_input_manager.last_event_was_backspace.return_value = last_event_was_backspace
         monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
 
@@ -686,20 +686,20 @@ class TestAXUtilitiesEvent:
 
         mock_input_manager = Mock()
         input_settings = {
-            'last_event_was_page_switch': False,
-            'last_event_was_delete': False,
-            'last_event_was_cut': False,
-            'last_event_was_paste': False,
-            'last_event_was_undo': False,
-            'last_event_was_redo': False,
-            'last_event_was_command': False,
-            'last_event_was_up_or_down': False,
-            'last_event_was_page_up_or_page_down': False,
-            'last_event_was_backspace': last_event_was_backspace,
-            'last_event_was_printable_key': not last_event_was_backspace
+            "last_event_was_page_switch": False,
+            "last_event_was_delete": False,
+            "last_event_was_cut": False,
+            "last_event_was_paste": False,
+            "last_event_was_undo": False,
+            "last_event_was_redo": False,
+            "last_event_was_command": False,
+            "last_event_was_up_or_down": False,
+            "last_event_was_page_up_or_page_down": False,
+            "last_event_was_backspace": last_event_was_backspace,
+            "last_event_was_printable_key": not last_event_was_backspace
         }
         for attr, value in input_settings.items():
-            setattr(getattr(mock_input_manager, attr), 'return_value', value)
+            setattr(getattr(mock_input_manager, attr), "return_value", value)
         monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
 
         if is_ui_role:
@@ -3003,3 +3003,1148 @@ class TestAXUtilitiesEvent:
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.MOUSE_MIDDLE_BUTTON
+
+    def test_clear_cache_now_with_reason(self, monkeypatch, mock_orca_dependencies):
+        """Test AXUtilitiesEvent.clear_cache_now with reason parameter."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        # Call clear_cache_now with a reason to test line 147
+        AXUtilitiesEvent.clear_cache_now("test reason")
+
+        # Verify that cache dictionaries are cleared
+        assert len(AXUtilitiesEvent.LAST_KNOWN_NAME) == 0
+        assert len(AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION) == 0
+        assert len(AXUtilitiesEvent.TEXT_EVENT_REASON) == 0
+
+    def test_get_caret_moved_event_reason_navigation_by_line(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_caret_moved_event_reason with line navigation scenario."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import input_event_manager, focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        mock_input_manager.last_event_was_line_navigation.return_value = True
+        mock_input_manager.last_event_was_word_navigation.return_value = False
+        mock_input_manager.last_event_was_character_navigation.return_value = False
+        mock_input_manager.last_event_was_page_navigation.return_value = False
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_select_all.return_value = False
+        mock_input_manager.last_event_was_primary_click_or_release.return_value = False
+        mock_input_manager.last_event_was_tab_navigation.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        mock_focus_manager = Mock()
+        mode_and_focus = ("normal", mock_obj)
+        mock_focus_manager.get_active_mode_and_object_of_interest.return_value = mode_and_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        # Test line 236: NAVIGATION_BY_LINE
+        result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_BY_LINE
+
+    def test_get_caret_moved_event_reason_unspecified_navigation(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_caret_moved_event_reason with unspecified navigation scenario."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import input_event_manager, focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        # All specific navigation types return False to trigger unspecified path
+        mock_input_manager.last_event_was_line_navigation.return_value = False
+        mock_input_manager.last_event_was_word_navigation.return_value = False
+        mock_input_manager.last_event_was_character_navigation.return_value = False
+        mock_input_manager.last_event_was_page_navigation.return_value = False
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_select_all.return_value = False
+        mock_input_manager.last_event_was_primary_click_or_release.return_value = False
+        mock_input_manager.last_event_was_tab_navigation.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        mock_focus_manager = Mock()
+        mode_and_focus = ("normal", mock_obj)
+        mock_focus_manager.get_active_mode_and_object_of_interest.return_value = mode_and_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        # Test line 248: UNSPECIFIED_NAVIGATION
+        result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
+        assert result == TextEventReason.UNSPECIFIED_NAVIGATION
+
+    def test_get_caret_moved_event_reason_editable_backspace(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_caret_moved_event_reason with editable object and backspace."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import input_event_manager, focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = False
+        mock_input_manager.last_event_was_select_all.return_value = False
+        mock_input_manager.last_event_was_primary_click_or_release.return_value = False
+        mock_input_manager.last_event_was_backspace.return_value = True
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = False
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = False
+        mock_input_manager.last_event_was_tab_navigation.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        mock_focus_manager = Mock()
+        mode_and_focus = ("normal", mock_obj)
+        mock_focus_manager.get_active_mode_and_object_of_interest.return_value = mode_and_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        # Test line 255: BACKSPACE in editable context
+        result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
+        assert result == TextEventReason.BACKSPACE
+
+    def test_get_text_deletion_event_reason_page_switch(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_deletion_event_reason with page switch scenario."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = True
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
+        monkeypatch.setattr(AXUtilitiesRole, "get_text_ui_roles", lambda: [Atspi.Role.LABEL])
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        # Test line 288: PAGE_SWITCH
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.PAGE_SWITCH
+
+    def test_get_text_deletion_event_reason_editable_scenarios(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_deletion_event_reason with various editable scenarios."""
+        # pylint: disable=too-many-statements
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
+        from orca import input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "deleted text"
+
+        # Test delete scenario (line 293)
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_backspace.return_value = False
+        mock_input_manager.last_event_was_delete.return_value = True
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = False
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = False
+        mock_input_manager.last_event_was_up_or_down.return_value = False
+        mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
+        monkeypatch.setattr(AXUtilitiesRole, "get_text_ui_roles", lambda: [Atspi.Role.LABEL])
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+        monkeypatch.setattr(AXText, "get_cached_selected_text", lambda obj: ("", 0, 0))
+
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.DELETE
+
+        # Test cut scenario (line 295)
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = True
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.CUT
+
+        # Test paste scenario (line 297)
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = True
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.PASTE
+
+        # Test undo scenario (line 299)
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = True
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.UNDO
+
+        # Test redo scenario (line 301)
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = True
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.REDO
+
+        # Test command scenario (line 303)
+        mock_input_manager.last_event_was_redo.return_value = False
+        mock_input_manager.last_event_was_command.return_value = True
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.UNSPECIFIED_COMMAND
+
+    def test_get_text_deletion_event_reason_command_non_editable(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_deletion_event_reason command scenario for non-editable."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "deleted text"
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_command.return_value = True
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
+        monkeypatch.setattr(AXUtilitiesRole, "get_text_ui_roles", lambda: [Atspi.Role.LABEL])
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        # Test line 317: UNSPECIFIED_COMMAND for non-editable
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == TextEventReason.UNSPECIFIED_COMMAND
+
+    def test_get_text_insertion_event_reason_editable_backspace(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_insertion_event_reason with editable backspace scenario."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
+        from orca import input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "inserted text"
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_backspace.return_value = True
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = False
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_space.return_value = False
+        mock_input_manager.last_event_was_tab.return_value = False
+        mock_input_manager.last_event_was_return.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = False
+        mock_input_manager.last_event_was_middle_click.return_value = False
+        mock_input_manager.last_event_was_middle_release.return_value = False
+        mock_input_manager.last_event_was_up_or_down.return_value = False
+        mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
+        monkeypatch.setattr(AXUtilitiesRole, "get_text_ui_roles", lambda: [Atspi.Role.LABEL])
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+        monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
+
+        # Test line 339: BACKSPACE in editable context
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        assert result == TextEventReason.BACKSPACE
+
+    def test_get_text_insertion_event_reason_redo_selected_text_restoration(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_insertion_event_reason with redo and selected text restoration."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
+        from orca import input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "selected text"
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_backspace.return_value = False
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = True
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_space.return_value = False
+        mock_input_manager.last_event_was_tab.return_value = False
+        mock_input_manager.last_event_was_return.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = False
+        mock_input_manager.last_event_was_middle_click.return_value = False
+        mock_input_manager.last_event_was_middle_release.return_value = False
+        mock_input_manager.last_event_was_up_or_down.return_value = False
+        mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
+        monkeypatch.setattr(AXUtilitiesRole, "get_text_ui_roles", lambda: [Atspi.Role.LABEL])
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+        # Return the same text as event.any_data to trigger SELECTED_TEXT_INSERTION
+        monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("selected text", 0, 13))
+
+        # Test line 353: SELECTED_TEXT_RESTORATION with redo
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        assert result == TextEventReason.SELECTED_TEXT_RESTORATION
+
+    def test_get_text_selection_changed_event_reason_comprehensive(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_selection_changed_event_reason with various scenarios."""
+        # pylint: disable=too-many-statements
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import input_event_manager, focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_obj
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        # Test search presentable scenario (line 416)
+        mock_search_obj = Mock(spec=Atspi.Accessible)
+        mock_focus_manager.get_locus_of_focus.return_value = mock_search_obj
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_backspace.return_value = False
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = False
+        mock_input_manager.last_event_was_select_all.return_value = False
+        mock_input_manager.last_event_was_primary_click_or_release.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXUtilitiesRole, "is_text_input_search", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SEARCH_PRESENTABLE
+
+        # Test search unpresentable scenario (line 414, branch where backspace is true)
+        mock_input_manager.last_event_was_backspace.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SEARCH_UNPRESENTABLE
+
+        # Test delete search unpresentable (line 413)
+        mock_input_manager.last_event_was_backspace.return_value = False
+        mock_input_manager.last_event_was_delete.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SEARCH_UNPRESENTABLE
+
+        # Test caret selection scenarios (lines 419, 422-431)
+        mock_focus_manager.get_locus_of_focus.return_value = mock_obj  # Reset to same object
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_caret_selection.return_value = True
+
+        # Line navigation selection (line 419)
+        mock_input_manager.last_event_was_line_navigation.return_value = True
+        mock_input_manager.last_event_was_word_navigation.return_value = False
+        mock_input_manager.last_event_was_character_navigation.return_value = False
+        mock_input_manager.last_event_was_page_navigation.return_value = False
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_BY_LINE
+
+        # Word navigation selection (line 422)
+        mock_input_manager.last_event_was_line_navigation.return_value = False
+        mock_input_manager.last_event_was_word_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_BY_WORD
+
+        # Character navigation selection (line 424)
+        mock_input_manager.last_event_was_word_navigation.return_value = False
+        mock_input_manager.last_event_was_character_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_BY_CHARACTER
+
+        # Page navigation selection (line 426)
+        mock_input_manager.last_event_was_character_navigation.return_value = False
+        mock_input_manager.last_event_was_page_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_BY_PAGE
+
+        # Line boundary selection (line 428)
+        mock_input_manager.last_event_was_page_navigation.return_value = False
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_TO_LINE_BOUNDARY
+
+        # File boundary selection (line 430)
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SELECTION_TO_FILE_BOUNDARY
+
+        # Unspecified selection (line 431)
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.UNSPECIFIED_SELECTION
+
+    def test_get_text_selection_changed_event_reason_caret_navigation(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_selection_changed_event_reason caret navigation scenarios."""
+        # pylint: disable=too-many-statements
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import input_event_manager, focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_obj
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        mock_input_manager.last_event_was_select_all.return_value = False
+        mock_input_manager.last_event_was_primary_click_or_release.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXUtilitiesRole, "is_text_input_search", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        # Test line navigation (line 434)
+        mock_input_manager.last_event_was_line_navigation.return_value = True
+        mock_input_manager.last_event_was_word_navigation.return_value = False
+        mock_input_manager.last_event_was_character_navigation.return_value = False
+        mock_input_manager.last_event_was_page_navigation.return_value = False
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_BY_LINE
+
+        # Test word navigation (line 437)
+        mock_input_manager.last_event_was_line_navigation.return_value = False
+        mock_input_manager.last_event_was_word_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_BY_WORD
+
+        # Test character navigation (line 439)
+        mock_input_manager.last_event_was_word_navigation.return_value = False
+        mock_input_manager.last_event_was_character_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_BY_CHARACTER
+
+        # Test page navigation (line 441)
+        mock_input_manager.last_event_was_character_navigation.return_value = False
+        mock_input_manager.last_event_was_page_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_BY_PAGE
+
+        # Test line boundary navigation (line 443)
+        mock_input_manager.last_event_was_page_navigation.return_value = False
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_TO_LINE_BOUNDARY
+
+        # Test file boundary navigation (line 445)
+        mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.NAVIGATION_TO_FILE_BOUNDARY
+
+        # Test unspecified navigation (line 446)
+        mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.UNSPECIFIED_NAVIGATION
+
+    def test_get_text_selection_changed_event_reason_editable_scenarios(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _get_text_selection_changed_event_reason with editable scenarios."""
+        # pylint: disable=too-many-statements
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import input_event_manager, focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_obj
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_caret_selection.return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = False
+        mock_input_manager.last_event_was_select_all.return_value = False
+        mock_input_manager.last_event_was_primary_click_or_release.return_value = False
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = False
+        mock_input_manager.last_event_was_up_or_down.return_value = False
+        mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXUtilitiesRole, "is_text_input_search", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_spin_button", lambda obj: False)
+        monkeypatch.setattr(AXObject, "find_ancestor", lambda obj, check_func: None)
+
+        # Test backspace (line 453)
+        mock_input_manager.last_event_was_backspace.return_value = True
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = False
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.BACKSPACE
+
+        # Test delete (line 455)
+        mock_input_manager.last_event_was_backspace.return_value = False
+        mock_input_manager.last_event_was_delete.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.DELETE
+
+        # Test cut (line 457)
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.CUT
+
+        # Test paste (line 459)
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.PASTE
+
+        # Test undo (line 461)
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.UNDO
+
+        # Test redo (line 463)
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.REDO
+
+        # Test page switch (line 465)
+        mock_input_manager.last_event_was_redo.return_value = False
+        mock_input_manager.last_event_was_page_switch.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.PAGE_SWITCH
+
+        # Test command (line 467)
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_command.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.UNSPECIFIED_COMMAND
+
+        # Test printable key (line 469)
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = True
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.TYPING
+
+        # Test spin button value change (line 473)
+        mock_input_manager.last_event_was_printable_key.return_value = False
+        mock_input_manager.last_event_was_up_or_down.return_value = True
+        monkeypatch.setattr(AXUtilitiesRole, "is_spin_button", lambda obj: True)
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.SPIN_BUTTON_VALUE_CHANGE
+
+    def test_is_presentable_active_descendant_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_active_descendant_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_child = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = mock_child
+
+        # Test neither source nor child have focused state (lines 487-489)
+        monkeypatch.setattr(AXUtilitiesState, "is_focused", lambda obj: False)
+        result = AXUtilitiesEvent.is_presentable_active_descendant_change(mock_event)
+        assert result is False
+
+        # Test tree table scenario with different tree (lines 494-497)
+        monkeypatch.setattr(AXUtilitiesState, "is_focused", lambda obj: obj == mock_child)
+
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_table = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        monkeypatch.setattr(AXUtilitiesRole, "is_table_cell", lambda obj: True)
+        monkeypatch.setattr(AXObject, "find_ancestor", lambda obj, check_func: mock_table)
+
+        result = AXUtilitiesEvent.is_presentable_active_descendant_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_checked_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_checked_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager, input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+
+        # Test descendant checking scenarios (lines 518-524)
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        monkeypatch.setattr(AXUtilitiesState, "is_checked", lambda obj: True)
+        # Clear any previous state to ensure state change is detected
+        AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
+
+        # Source is ancestor but focus is not list/tree item (lines 522-524)
+        monkeypatch.setattr(AXObject, "is_ancestor", lambda ancestor, descendant: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_tree_item", lambda obj: False)
+
+        result = AXUtilitiesEvent.is_presentable_checked_change(mock_event)
+        assert result is False
+
+        # Test radio button without space key (lines 530-532)
+        mock_focus_manager.get_locus_of_focus.return_value = mock_source  # Same as source
+        monkeypatch.setattr(AXUtilitiesRole, "is_radio_button", lambda obj: True)
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_space.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        result = AXUtilitiesEvent.is_presentable_checked_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_description_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_description_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = "new description"
+
+        # Clear any cached state
+        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.clear()
+
+        # Test with empty description (lines 556-558)
+        mock_event.any_data = ""
+        result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
+        assert result is False
+
+        # Reset with non-empty description
+        mock_event.any_data = "new description"
+
+        # Test source not showing (lines 561-563)
+        monkeypatch.setattr(AXUtilitiesState, "is_showing", lambda obj: False)
+        result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
+        assert result is False
+
+        # Reset showing state
+        monkeypatch.setattr(AXUtilitiesState, "is_showing", lambda obj: True)
+
+        # Test source not focus or ancestor (lines 567-569)
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        from orca.ax_object import AXObject
+        monkeypatch.setattr(AXObject, "is_ancestor", lambda focus, source: False)
+
+        result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_expanded_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_expanded_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.detail1 = 0
+
+        # Clear any cached state to ensure state change is detected
+        AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
+
+        monkeypatch.setattr(AXUtilitiesState, "is_expanded", lambda obj: True)
+
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        # Test not from focus and not ancestor (lines 594-596)
+        monkeypatch.setattr(AXObject, "is_ancestor", lambda focus, source: False)
+        result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
+        assert result is False
+
+        # Test with table row or list box roles (lines 599-601)
+        # Clear cached state again to ensure fresh state change detection
+        AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
+        monkeypatch.setattr(AXObject, "is_ancestor", lambda focus, source: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_table_row", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_list_box", lambda obj: False)
+        result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
+        assert result is True
+
+        # Test list box role (line 599, second condition)
+        # Clear cached state again to ensure fresh state change detection
+        AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
+        mock_event.detail1 = 1  # Reset detail1 to avoid early return
+        monkeypatch.setattr(AXUtilitiesRole, "is_table_row", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_list_box", lambda obj: True)
+        result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
+        assert result is True
+
+        # Test combo box without focus (lines 603-611)
+        monkeypatch.setattr(AXUtilitiesRole, "is_list_box", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_combo_box", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_button", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesState, "is_focused", lambda obj: False)
+        result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
+        assert result is False
+
+        # Test button without focus (lines 603-611)
+        monkeypatch.setattr(AXUtilitiesRole, "is_combo_box", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_button", lambda obj: True)
+        result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_indeterminate_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_indeterminate_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+
+        # Clear any cached state
+        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.clear()
+
+        # Test cleared state (lines 620-622, 628-631)
+        monkeypatch.setattr(AXUtilitiesState, "is_indeterminate", lambda obj: False)
+        result = AXUtilitiesEvent.is_presentable_indeterminate_change(mock_event)
+        assert result is False
+
+        # Test set state but not from focus (lines 634-636)
+        monkeypatch.setattr(AXUtilitiesState, "is_indeterminate", lambda obj: True)
+
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        result = AXUtilitiesEvent.is_presentable_indeterminate_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_invalid_entry_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_invalid_entry_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+
+        # Clear any cached state
+        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.clear()
+
+        monkeypatch.setattr(AXUtilitiesState, "is_invalid_entry", lambda obj: True)
+
+        # Test not from focus (lines 655-657)
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        result = AXUtilitiesEvent.is_presentable_invalid_entry_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_name_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_name_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_text import AXText
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = "new name"
+
+        # Clear any cached state
+        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
+
+        # Test with empty name (lines 681-683)
+        mock_event.any_data = ""
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is False
+
+        # Reset with non-empty name
+        mock_event.any_data = "new name"
+
+        # Test source not showing (lines 686-688)
+        monkeypatch.setattr(AXUtilitiesState, "is_showing", lambda obj: False)
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is False
+
+        # Reset showing state
+        monkeypatch.setattr(AXUtilitiesState, "is_showing", lambda obj: True)
+
+        # Test frame not active window (lines 692-694)
+        monkeypatch.setattr(AXUtilitiesRole, "is_frame", lambda obj: True)
+
+        mock_active_window = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_active_window.return_value = mock_active_window
+        mock_focus_manager.get_locus_of_focus.return_value = mock_source
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is False
+
+        # Test frame with redundant text (lines 704-715)
+        mock_focus_manager.get_active_window.return_value = mock_source  # Same as source
+
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXText, "get_character_count", lambda obj: 10)
+        monkeypatch.setattr(AXText, "get_all_text", lambda obj: "new")
+
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_pressed_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_pressed_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+
+        # Clear any cached state
+        AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
+
+        monkeypatch.setattr(AXUtilitiesState, "is_pressed", lambda obj: True)
+
+        # Test not from focus (lines 730-732)
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        result = AXUtilitiesEvent.is_presentable_pressed_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_selected_change_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test is_presentable_selected_change edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+
+        # Clear any cached state
+        AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
+
+        monkeypatch.setattr(AXUtilitiesState, "is_selected", lambda obj: True)
+
+        # Test not from focus (lines 751-753)
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        result = AXUtilitiesEvent.is_presentable_selected_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_text_event_edge_cases(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test _is_presentable_text_event edge cases."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_source = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+
+        # Test neither editable nor terminal (lines 765-767)
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+
+        result = AXUtilitiesEvent._is_presentable_text_event(mock_event)
+        assert result is False
+
+        # Test source ancestor of focus (lines 781-785)
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+
+        mock_focus = Mock(spec=Atspi.Accessible)
+        mock_focus_manager = Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_focus
+        monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
+
+        monkeypatch.setattr(AXUtilitiesState, "is_focused", lambda obj: False)
+        monkeypatch.setattr(AXObject, "is_ancestor", lambda source, focus: True)
+
+        result = AXUtilitiesEvent._is_presentable_text_event(mock_event)
+        assert result is True
+
+    def test_get_text_insertion_event_reason_additional_scenarios(
+        self, monkeypatch, mock_orca_dependencies
+    ):
+        """Test additional _get_text_insertion_event_reason scenarios for missing coverage."""
+
+        clean_module_cache("orca.ax_utilities_event")
+        _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
+        from orca import input_event_manager
+
+        mock_event = Mock(spec=Atspi.Event)
+        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "x"
+
+        mock_input_manager = Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_backspace.return_value = False
+        mock_input_manager.last_event_was_delete.return_value = False
+        mock_input_manager.last_event_was_cut.return_value = False
+        mock_input_manager.last_event_was_paste.return_value = False
+        mock_input_manager.last_event_was_undo.return_value = False
+        mock_input_manager.last_event_was_redo.return_value = False
+        mock_input_manager.last_event_was_command.return_value = False
+        mock_input_manager.last_event_was_space.return_value = False
+        mock_input_manager.last_event_was_tab.return_value = False
+        mock_input_manager.last_event_was_return.return_value = False
+        mock_input_manager.last_event_was_printable_key.return_value = True
+        mock_input_manager.last_event_was_middle_click.return_value = False
+        mock_input_manager.last_event_was_middle_release.return_value = False
+        mock_input_manager.last_event_was_up_or_down.return_value = False
+        mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
+        monkeypatch.setattr(input_event_manager, "get_manager", lambda: mock_input_manager)
+
+        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
+        monkeypatch.setattr(AXUtilitiesRole, "get_text_ui_roles", lambda: [Atspi.Role.LABEL])
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
+        monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
+        monkeypatch.setattr(AXUtilitiesRole, "is_password_text", lambda obj: True)
+        monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
+
+        # Mock settings manager for echo settings (line 373)
+        from orca import settings_manager
+        mock_settings_manager = Mock()
+        mock_settings_manager.get_setting.return_value = True
+        monkeypatch.setattr(settings_manager, "get_manager", lambda: mock_settings_manager)
+
+        # Test password text with echo enabled (line 373)
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        assert result == TextEventReason.TYPING_ECHOABLE
+
+        # Test text length check scenario (lines 387-388)
+        mock_event.any_data = "multi-char"
+        monkeypatch.setattr(AXUtilitiesRole, "is_password_text", lambda obj: False)
+        # Reset settings manager to return False for enableEchoByCharacter
+        mock_settings_manager.get_setting.return_value = False
+
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        # Should be TYPING now because echo is disabled
+        assert result == TextEventReason.TYPING
