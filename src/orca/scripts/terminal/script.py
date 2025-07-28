@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Script for terminal support."""
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -25,6 +27,7 @@ __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import debug
+from orca import focus_manager
 from orca.scripts import default
 from orca.ax_text import AXText
 
@@ -34,6 +37,7 @@ from .script_utilities import Utilities
 
 
 class Script(default.Script):
+    """Script for terminal support."""
 
     def __init__(self, app):
         super().__init__(app)
@@ -84,12 +88,12 @@ class Script(default.Script):
 
         self.update_braille(event.source)
 
-        newString = self.utilities.insertedText(event)
-        if len(newString) == 1:
-            self.speak_character(newString)
+        new_string = self.utilities.insertedText(event)
+        if len(new_string) == 1:
+            self.speak_character(new_string)
         else:
-            voice = self.speech_generator.voice(obj=event.source, string=newString)
-            self.speak_message(newString, voice=voice)
+            voice = self.speech_generator.voice(obj=event.source, string=new_string)
+            self.speak_message(new_string, voice=voice)
 
         if self.get_flat_review_presenter().is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"
@@ -97,7 +101,7 @@ class Script(default.Script):
             return
 
         offset = AXText.get_caret_offset(event.source)
-        self._saveLastCursorPosition(event.source, offset)
+        focus_manager.get_manager().set_last_cursor_position(event.source, offset)
         AXText.update_cached_selected_text(event.source)
 
     def present_keyboard_event(self, event):
@@ -114,9 +118,9 @@ class Script(default.Script):
         # We have no reliable way of knowing a password is being entered into
         # a terminal -- other than the fact that the text typed isn't there.
         char, start = AXText.get_character_at_offset(event.get_object())[0:2]
-        prevChar = AXText.get_character_at_offset(event.get_object(), start - 1)[0]
+        prev_char = AXText.get_character_at_offset(event.get_object(), start - 1)[0]
         string = event.get_key_name()
-        if string not in [prevChar, " ", char]:
+        if string not in [prev_char, " ", char]:
             return False
 
         tokens = ["TERMINAL: Presenting keyboard event", string]

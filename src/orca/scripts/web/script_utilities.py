@@ -251,9 +251,6 @@ class Utilities(script_utilities.Utilities):
         if obj:
             AXObject.clear_cache(obj, False, "Set caret in object.")
 
-        # TODO - JD: This is private.
-        self._script._save_focused_object_info(obj)
-
     def inFindContainer(self, obj=None):
         if not obj:
             obj = focus_manager.get_manager().get_locus_of_focus()

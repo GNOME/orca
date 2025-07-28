@@ -123,10 +123,19 @@ class TestFocusManager:
 
         AXObject.clear_cache = Mock()
         AXObject.is_dead = Mock(return_value=False)
-        AXObject.is_valid = Mock(return_value=True)
+        AXObject.is_valid = Mock(side_effect=lambda obj: obj is not None)
         AXObject.is_ancestor = Mock(return_value=False)
         AXObject.has_broken_ancestry = Mock(return_value=False)
         AXObject._get_toolkit_name = Mock(return_value="gtk")
+
+        # Mock functions that can't handle Mock objects being passed to GObject methods
+        from orca.ax_table import AXTable
+        from orca.ax_text import AXText
+
+        AXTable.get_cell_coordinates = Mock(return_value=(-1, -1))
+        AXText.get_caret_offset = Mock(return_value=-1)
+        AXText.update_cached_selected_text = Mock()
+        AXUtilities.save_object_info_for_events = Mock()
 
         return {
             "debug": debug_mock,
@@ -433,7 +442,7 @@ class TestFocusManager:
 
         AXObject.clear_cache = Mock()
         AXObject.is_dead = Mock(return_value=False)
-        AXObject.is_valid = Mock(return_value=True)
+        AXObject.is_valid = Mock(side_effect=lambda obj: obj is not None)
         AXUtilities.is_table_cell = Mock(return_value=False)
         AXUtilities.get_application = Mock(return_value=mock_app)
 
@@ -597,3 +606,66 @@ class TestFocusManager:
 
         assert manager1 is manager2
         assert isinstance(manager1, focus_manager.FocusManager)
+
+    def test_set_locus_of_focus_table_cell_coordinates(self, mock_focus_manager_deps):
+        """Test FocusManager.set_locus_of_focus saves table cell coordinates."""
+
+        from orca.focus_manager import FocusManager
+        from orca.ax_table import AXTable
+
+        manager = FocusManager()
+        mock_obj = Mock(spec=Atspi.Accessible)
+
+        # Mock table coordinates
+        AXTable.get_cell_coordinates = Mock(return_value=(5, 3))
+
+        manager.set_locus_of_focus(None, mock_obj)
+
+        # Verify cell coordinates were retrieved and saved
+        AXTable.get_cell_coordinates.assert_called_once_with(mock_obj, find_cell=True)
+        assert manager.get_last_cell_coordinates() == (5, 3)
+
+    def test_set_locus_of_focus_text_cursor_position(self, mock_focus_manager_deps):
+        """Test FocusManager.set_locus_of_focus saves text cursor position."""
+
+        from orca.focus_manager import FocusManager
+        from orca.ax_text import AXText
+
+        manager = FocusManager()
+        mock_obj = Mock(spec=Atspi.Accessible)
+
+        # Mock text cursor offset
+        AXText.get_caret_offset = Mock(return_value=42)
+
+        manager.set_locus_of_focus(None, mock_obj)
+
+        # Verify cursor position was retrieved and saved
+        AXText.get_caret_offset.assert_called_once_with(mock_obj)
+        AXText.update_cached_selected_text.assert_called_once_with(mock_obj)
+        obj, offset = manager.get_last_cursor_position()
+        assert obj == mock_obj
+        assert offset == 42
+
+    def test_set_locus_of_focus_none_object_coordinates(self, mock_focus_manager_deps):
+        """Test FocusManager.set_locus_of_focus handles None object coordinates properly."""
+
+        from orca.focus_manager import FocusManager
+        from orca.ax_table import AXTable
+        from orca.ax_text import AXText
+
+        manager = FocusManager()
+
+        # Mock functions should not be called for None object
+        AXTable.get_cell_coordinates = Mock()
+        AXText.get_caret_offset = Mock()
+        AXText.update_cached_selected_text = Mock()
+
+        manager.set_locus_of_focus(None, None)
+
+        # Verify functions were not called for None object
+        AXTable.get_cell_coordinates.assert_not_called()
+        AXText.get_caret_offset.assert_not_called()
+        AXText.update_cached_selected_text.assert_not_called()
+
+        # Verify default coordinates were set
+        assert manager.get_last_cell_coordinates() == (-1, -1)

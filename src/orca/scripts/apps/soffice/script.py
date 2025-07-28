@@ -312,7 +312,7 @@ class Script(default.Script):
                     self.speak_message(string, voice=voice)
                     self.update_braille(new_focus)
                     offset = AXText.get_caret_offset(new_focus)
-                    self._saveLastCursorPosition(new_focus,offset)
+                    focus_manager.get_manager().set_last_cursor_position(new_focus,offset)
                     return
 
         # Pass the event onto the parent class to be handled in the default way.
@@ -408,14 +408,14 @@ class Script(default.Script):
 
         AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
+        manager = focus_manager.get_manager()
         if AXTable.is_last_cell(event.any_data):
-            active_row = self.point_of_reference.get("lastRow", -1)
-            active_col = self.point_of_reference.get("lastColumn", -1)
+            active_row, active_col = manager.get_last_cell_coordinates()
             if active_row < 0 or active_col < 0:
                 return
 
-            if focus_manager.get_manager().focus_is_dead():
-                focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+            if manager.focus_is_dead():
+                manager.set_locus_of_focus(event, event.source, False)
 
             self.utilities.handleUndoTextEvent(event)
             row_count = AXTable.get_row_count(event.source)

@@ -377,11 +377,11 @@ class Utilities:
             return False
 
         if prevCell is None:
-            lastColumn = self._script.point_of_reference.get("lastColumn")
+            _last_row, last_column = focus_manager.get_manager().get_last_cell_coordinates()
         else:
-            lastColumn = AXTable.get_cell_coordinates(prevCell)[1]
+            last_column = AXTable.get_cell_coordinates(prevCell)[1]
 
-        return column != lastColumn
+        return column != last_column
 
     def cellRowChanged(self, cell, prevCell=None):
         row = AXTable.get_cell_coordinates(cell)[0]
@@ -389,10 +389,10 @@ class Utilities:
             return False
 
         if prevCell is None:
-            lastRow = self._script.point_of_reference.get("lastRow")
+            last_row, _last_column = focus_manager.get_manager().get_last_cell_coordinates()
         else:
-            lastRow = AXTable.get_cell_coordinates(prevCell)[0]
-        return row != lastRow
+            last_row = AXTable.get_cell_coordinates(prevCell)[0]
+        return row != last_row
 
     def shouldReadFullRow(self, obj, prevObj=None):
         if focus_manager.get_manager().in_say_all():
@@ -1032,38 +1032,37 @@ class Utilities:
 
     def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
         word, start, end = AXText.get_word_at_offset(obj, offset)
-        prevObj, prevOffset = self._script.point_of_reference.get(
-            "penultimateCursorPosition", (None, -1))
-        if prevObj != obj:
+        prev_obj, prev_offset = focus_manager.get_manager().get_penultimate_cursor_position()
+        if prev_obj != obj:
             return word, start, end
 
         manager = input_event_manager.get_manager()
-        wasPreviousWordNav = manager.last_event_was_previous_word_navigation()
-        wasNextWordNav = manager.last_event_was_next_word_navigation()
+        was_previous_word_nav = manager.last_event_was_previous_word_navigation()
+        was_next_word_nav = manager.last_event_was_next_word_navigation()
 
         # If we're in an ongoing series of native navigation-by-word commands, just present the
         # newly-traversed string.
-        prevWord, prevStart, prevEnd = AXText.get_word_at_offset(prevObj, prevOffset)
+        prev_word, prev_start, prev_end = AXText.get_word_at_offset(prev_obj, prev_offset)
         if self._script.point_of_reference.get("lastTextUnitSpoken") == "word":
-            if wasPreviousWordNav:
+            if was_previous_word_nav:
                 start = offset
-                end = prevOffset
-            elif wasNextWordNav:
-                start = prevOffset
+                end = prev_offset
+            elif was_next_word_nav:
+                start = prev_offset
                 end = offset
 
             word = AXText.get_substring(obj, start, end)
-            debugString = word.replace("\n", "\\n")
+            debug_string = word.replace("\n", "\\n")
             msg = (
                 f"SCRIPT UTILITIES: Adjusted word at offset {offset} for ongoing word nav is "
-                f"'{debugString}' ({start}-{end})"
+                f"'{debug_string}' ({start}-{end})"
             )
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return word, start, end
 
         # Otherwise, attempt some smarts so that the user winds up with the same presentation
         # they would get were this an ongoing series of native navigation-by-word commands.
-        if wasPreviousWordNav:
+        if was_previous_word_nav:
             # If we moved left via native nav, this should be the start of a native-navigation
             # word boundary, regardless of what ATK/AT-SPI2 tells us.
             start = offset
@@ -1074,37 +1073,37 @@ class Utilities:
             if not (word[-1].isspace() or word[-1].isalnum()):
                 end -= 1
 
-        elif wasNextWordNav:
+        elif was_next_word_nav:
             # If we moved right via native nav, this should be the end of a native-navigation
             # word boundary, regardless of what ATK/AT-SPI2 tells us.
             end = offset
 
             # This suggests we just moved to the end of the previous word.
-            if word != prevWord and prevStart < offset <= prevEnd:
-                start = prevStart
+            if word != prev_word and prev_start < offset <= prev_end:
+                start = prev_start
 
             # If the character to the left of our present position is neither a space, nor
             # an alphanumeric character, then suspect that character is a navigation boundary
             # where we would have landed before via the native next word command.
-            lastChar = AXText.get_substring(obj, offset - 1, offset)
-            if not (lastChar.isspace() or lastChar.isalnum()):
+            last_char = AXText.get_substring(obj, offset - 1, offset)
+            if not (last_char.isspace() or last_char.isalnum()):
                 start = offset - 1
 
         word = AXText.get_substring(obj, start, end)
 
         # We only want to present the newline character when we cross a boundary moving from one
         # word to another. If we're in the same word, strip it out.
-        if "\n" in word and word == prevWord:
+        if "\n" in word and word == prev_word:
             if word.startswith("\n"):
                 start += 1
             elif word.endswith("\n"):
                 end -= 1
 
         word = AXText.get_substring(obj, start, end)
-        debugString = word.replace("\n", "\\n")
+        debug_string = word.replace("\n", "\\n")
         msg = (
             f"SCRIPT UTILITIES: Adjusted word at offset {offset} for new word nav is "
-            f"'{debugString}' ({start}-{end})"
+            f"'{debug_string}' ({start}-{end})"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return word, start, end

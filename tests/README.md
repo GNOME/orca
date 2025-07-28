@@ -152,3 +152,38 @@ tested imports it.
 * **Testing a module that needs its dependencies mocked *before* it runs?** Use a fixture with
   `patch.dict(sys.modules, ...)` and remember to call `clean_module_cache()` in your test before
   importing the module you're testing.
+
+## Troubleshooting Mock-Related Test Failures
+
+When you've written correct code but tests fail due to mocking issues:
+
+### "Argument 0 does not allow None as a value" with Valid Code
+
+**Problem:** Your code properly checks for `None` but still crashes on GObject methods.
+**Root cause:** `AXObject.is_valid` is mocked to always return `True`, breaking null-checking.
+
+```python
+# Bad mock - breaks null checking
+AXObject.is_valid = Mock(return_value=True)  # Always True, even for None!
+
+# Good mock - preserves null checking
+AXObject.is_valid = Mock(side_effect=lambda obj: obj is not None)
+```
+
+### "expected GObject but got <Mock...>"
+
+**Problem:** Your code gets a Mock object where it expects a real GObject.
+**Solution:** Mock the functions that interact with GObjects, not the objects themselves:
+
+```python
+# Add these mocks to handle functions that can't work with Mock objects
+AXTable.get_cell_coordinates = Mock(return_value=(-1, -1))
+AXText.get_caret_offset = Mock(return_value=-1)
+AXText.update_cached_selected_text = Mock()
+```
+
+### Finding Mock Issues
+
+1. **Check fixture mocks:** Look in `conftest.py` for overly broad mocks (like `return_value=True`)
+2. **Test with real values:** Temporarily remove mocks to see if your code actually works
+3. **Mock smarter:** Use `side_effect` to preserve the original function's logic for edge cases

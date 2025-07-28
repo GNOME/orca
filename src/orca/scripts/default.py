@@ -599,26 +599,6 @@ class Script(script.Script):
 
         event_manager.get_manager().deregister_script_listeners(self)
 
-    def _save_focused_object_info(self, obj):
-        """Saves some basic information about obj. Note that this method is
-        intended to be called primarily (if not only) by locus_of_focus_changed()."""
-
-        # We want to save the offset for text objects because some apps and
-        # toolkits emit caret-moved events immediately after a text object
-        # gains focus, even though the caret has not actually moved.
-        caretOffset = AXText.get_caret_offset(obj)
-        self._saveLastCursorPosition(obj, max(0, caretOffset))
-        AXText.update_cached_selected_text(obj)
-
-        # We want to save the current row and column of a newly focused
-        # or selected table cell so that on subsequent cell focus/selection
-        # we only present the changed location.
-        row, column = AXTable.get_cell_coordinates(obj, find_cell=True)
-        self.point_of_reference['lastColumn'] = column
-        self.point_of_reference['lastRow'] = row
-
-        AXUtilities.save_object_info_for_events(obj)
-
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes.
 
@@ -668,7 +648,6 @@ class Script(script.Script):
            old_focus, new_focus, event):
             self.interrupt_presentation()
         speech.speak(utterances, interrupt=False)
-        self._save_focused_object_info(new_focus)
 
     def activate(self):
         """Called when this script is activated."""
@@ -1071,16 +1050,18 @@ class Script(script.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
-        focus = focus_manager.get_manager().get_locus_of_focus()
+
+        manager = focus_manager.get_manager()
+        focus = manager.get_locus_of_focus()
         if focus != event.source:
             if not AXUtilities.is_focused(event.source):
                 msg = "DEFAULT: Change is from unfocused source that is not the locus of focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return
             # TODO - JD: See if this can be removed. If it's still needed document why.
-            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+            manager.set_locus_of_focus(event, event.source, False)
 
-        obj, offset = self.point_of_reference.get("lastCursorPosition", (None, -1))
+        obj, offset = manager.get_last_cursor_position()
         if offset == event.detail1 and obj == event.source:
             msg = "DEFAULT: Event is for last saved cursor position"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1090,7 +1071,7 @@ class Script(script.Script):
             self.get_flat_review_presenter().quit()
 
         offset = AXText.get_caret_offset(event.source)
-        self._saveLastCursorPosition(event.source, offset)
+        manager.set_last_cursor_position(event.source, offset)
 
         ignore = [TextEventReason.CUT,
                   TextEventReason.PASTE,
@@ -1108,8 +1089,8 @@ class Script(script.Script):
             self.utilities.handleTextSelectionChange(event.source)
             return
 
-        string, _start, _end = AXText.get_cached_selected_text(obj)
-        if string and self.utilities.handleTextSelectionChange(obj):
+        text, _start, _end = AXText.get_cached_selected_text(obj)
+        if text and self.utilities.handleTextSelectionChange(obj):
             msg = "DEFAULT: Event handled as text selection change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -1310,7 +1291,6 @@ class Script(script.Script):
             if AXObject.find_ancestor(focus, lambda x: x == child):
                 tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                self._save_focused_object_info(focus)
                 return
 
             if child == mouseReviewItem:
@@ -1565,27 +1545,27 @@ class Script(script.Script):
         if not AXValue.did_value_change(event.source):
             return
 
-        isProgressBarUpdate, msg = self.utilities.isProgressBarUpdate(event.source)
-        tokens = ["DEFAULT: Is progress bar update:", isProgressBarUpdate, ",", msg]
+        is_progress_bar_update, msg = self.utilities.isProgressBarUpdate(event.source)
+        tokens = ["DEFAULT: Is progress bar update:", is_progress_bar_update, ",", msg]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not isProgressBarUpdate \
-           and event.source != focus_manager.get_manager().get_locus_of_focus():
+        manager = focus_manager.get_manager()
+        if not is_progress_bar_update and event.source != manager.get_locus_of_focus():
             msg = "DEFAULT: Source != locusOfFocus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         if AXUtilities.is_spin_button(event.source):
-            self._save_focused_object_info(event.source)
+            manager.set_last_cursor_position(event.source, AXText.get_caret_offset(event.source))
 
-        if not isProgressBarUpdate:
+        if not is_progress_bar_update:
             self.interrupt_presentation()
 
-        self.update_braille(event.source, isProgressBarUpdate=isProgressBarUpdate)
+        self.update_braille(event.source, isProgressBarUpdate=is_progress_bar_update)
         speech.speak(self.speech_generator.generate_speech(
-            event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
+            event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update))
         self.__play(self.sound_generator.generate_sound(
-            event.source, alreadyFocused=True, isProgressBarUpdate=isProgressBarUpdate))
+            event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update))
 
     def on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
@@ -2004,18 +1984,6 @@ class Script(script.Script):
             voice = self.speech_generator.voice(string=character)
             phoneticString = phonnames.get_phonetic_name(character.lower())
             self.speak_message(phoneticString, voice)
-
-    def _saveLastCursorPosition(self, obj, caretOffset):
-        """Save away the current text cursor position for next time.
-
-        Arguments:
-        - obj: the current accessible
-        - caretOffset: the cursor position within this object
-        """
-
-        prevObj, prevOffset = self.point_of_reference.get("lastCursorPosition", (None, -1))
-        self.point_of_reference["penultimateCursorPosition"] = prevObj, prevOffset
-        self.point_of_reference["lastCursorPosition"] = obj, caretOffset
 
     def speakMisspelledIndicator(self, obj, offset=None):
         # TODO - JD: Remove this and have callers use the speech-adjustment logic.

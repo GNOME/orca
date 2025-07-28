@@ -1284,8 +1284,6 @@ class Script(default.Script):
             utterances = self.speech_generator.generate_speech(new_focus, **args)
             speech.speak(utterances)
 
-        self._save_focused_object_info(new_focus)
-
         if self.utilities.inTopLevelWebApp(new_focus) and not self._browseModeIsSticky:
             announce = not self.utilities.inDocumentContent(old_focus)
             self.enableStickyFocusMode(None, announce)
@@ -1560,7 +1558,6 @@ class Script(default.Script):
             msg = "WEB: Event handled: Presenting find results"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.presentFindResults(event.source, event.detail1)
-            self._save_focused_object_info(focus_manager.get_manager().get_locus_of_focus())
             return True
 
         if not self.utilities.eventIsFromLocusOfFocusDocument(event):
@@ -1576,13 +1573,13 @@ class Script(default.Script):
         if reason in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             msg = "WEB: Event handled: Updating position due to insertion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._saveLastCursorPosition(event.source, event.detail1)
+            focus_manager.get_manager().set_last_cursor_position(event.source, event.detail1)
             return True
 
         if reason in (TextEventReason.DELETE, TextEventReason.BACKSPACE):
             msg = "WEB: Event handled: Updating position due to deletion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._saveLastCursorPosition(event.source, event.detail1)
+            focus_manager.get_manager().set_last_cursor_position(event.source, event.detail1)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
