@@ -34,13 +34,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
-
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXUtilitiesApplication:
@@ -94,9 +92,7 @@ class TestAXUtilitiesApplication:
     @pytest.mark.parametrize(
         "method_name, atspi_method, mock_method_name, success_return, error_return",
         [
-            pytest.param(
-                "get_desktop", Atspi, "get_desktop", "mock_desktop", None, id="desktop"
-            ),
+            pytest.param("get_desktop", Atspi, "get_desktop", "mock_desktop", None, id="desktop"),
             pytest.param(
                 "get_process_id", Atspi.Accessible, "get_process_id", 1234, -1, id="process_id"
             ),
@@ -110,7 +106,7 @@ class TestAXUtilitiesApplication:
         mock_method_name,
         success_return,
         error_return,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXUtilitiesApplication GLib error handling."""
 
@@ -128,6 +124,7 @@ class TestAXUtilitiesApplication:
             # Scenario: Desktop method raises GLib error
             def raise_glib_error(index):
                 raise GLib.GError("Test error")
+
             monkeypatch.setattr(atspi_method, mock_method_name, raise_glib_error)
             result = AXUtilitiesApplication.get_desktop()
             assert result is error_return
@@ -143,6 +140,7 @@ class TestAXUtilitiesApplication:
             # Scenario: Method call raises GLib error
             def raise_glib_error(self):
                 raise GLib.GError("Test error")
+
             monkeypatch.setattr(atspi_method, mock_method_name, raise_glib_error)
             result = method(mock_obj)
             assert result == error_return
@@ -159,11 +157,13 @@ class TestAXUtilitiesApplication:
         monkeypatch.setattr(AXUtilitiesApplication, "get_application", lambda obj: mock_app)
         monkeypatch.setattr(AXObject, "get_name", lambda obj: "Firefox")
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_application_toolkit_name",
+            AXUtilitiesApplication,
+            "get_application_toolkit_name",
             lambda obj: "Gtk",
         )
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_application_toolkit_version",
+            AXUtilitiesApplication,
+            "get_application_toolkit_version",
             lambda obj: "3.0",
         )
         result = AXUtilitiesApplication.application_as_string(mock_obj)
@@ -202,11 +202,13 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_desktop", lambda: mock_desktop)
         monkeypatch.setattr(
-            AXObject, "iter_children",
+            AXObject,
+            "iter_children",
             lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         monkeypatch.setattr(
-            AXObject, "get_name",
+            AXObject,
+            "get_name",
             lambda obj: "App1" if obj == mock_app1 else "App2",
         )
 
@@ -225,15 +227,18 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_desktop", lambda: mock_desktop)
         monkeypatch.setattr(
-            AXObject, "iter_children",
+            AXObject,
+            "iter_children",
             lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         monkeypatch.setattr(
-            AXObject, "get_name",
+            AXObject,
+            "get_name",
             lambda obj: "App1" if obj == mock_app1 else "App2",
         )
         monkeypatch.setattr(
-            AXUtilitiesApplication, "is_application_unresponsive",
+            AXUtilitiesApplication,
+            "is_application_unresponsive",
             lambda obj: obj == mock_app2,
         )
 
@@ -254,12 +259,12 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_desktop", lambda: mock_desktop)
         monkeypatch.setattr(
-            AXObject, "iter_children",
+            AXObject,
+            "iter_children",
             lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         monkeypatch.setattr(
-            AXObject, "get_name",
-            lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2"
+            AXObject, "get_name", lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2"
         )
 
         result = AXUtilitiesApplication.get_all_applications()
@@ -279,12 +284,12 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_desktop", lambda: mock_desktop)
         monkeypatch.setattr(
-            AXObject, "iter_children",
+            AXObject,
+            "iter_children",
             lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         monkeypatch.setattr(
-            AXObject, "get_name",
-            lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2"
+            AXObject, "get_name", lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2"
         )
 
         result = AXUtilitiesApplication.get_all_applications(is_debug=True)
@@ -302,11 +307,13 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_desktop", lambda: mock_desktop)
         monkeypatch.setattr(
-            AXObject, "iter_children",
+            AXObject,
+            "iter_children",
             lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         monkeypatch.setattr(
-            AXObject, "get_name",
+            AXObject,
+            "get_name",
             lambda obj: "App1" if obj == mock_app1 else "App2",
         )
         monkeypatch.setattr(AXObject, "get_child_count", lambda obj: 1 if obj == mock_app1 else 0)
@@ -359,11 +366,13 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
 
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_all_applications",
+            AXUtilitiesApplication,
+            "get_all_applications",
             lambda: [mock_app1, mock_app2],
         )
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_process_id",
+            AXUtilitiesApplication,
+            "get_process_id",
             lambda obj: 1234 if obj == mock_app1 else 5678,
         )
 
@@ -380,11 +389,13 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
 
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_all_applications",
+            AXUtilitiesApplication,
+            "get_all_applications",
             lambda: [mock_app1, mock_app2],
         )
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_process_id",
+            AXUtilitiesApplication,
+            "get_process_id",
             lambda obj: 1234 if obj == mock_app1 else 5678,
         )
 
@@ -401,7 +412,8 @@ class TestAXUtilitiesApplication:
         mock_app2 = Mock(spec=Atspi.Accessible)
 
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_all_applications",
+            AXUtilitiesApplication,
+            "get_all_applications",
             lambda: [mock_app1, mock_app2],
         )
 
@@ -419,7 +431,8 @@ class TestAXUtilitiesApplication:
         mock_app3 = Mock(spec=Atspi.Accessible)
 
         monkeypatch.setattr(
-            AXUtilitiesApplication, "get_all_applications",
+            AXUtilitiesApplication,
+            "get_all_applications",
             lambda: [mock_app1, mock_app2],
         )
 
@@ -436,7 +449,8 @@ class TestAXUtilitiesApplication:
 
         monkeypatch.setattr(AXUtilitiesApplication, "get_process_id", lambda obj: 1234)
         monkeypatch.setattr(
-            subprocess, "getoutput",
+            subprocess,
+            "getoutput",
             lambda cmd: "State: Z (zombie)",
         )
 
@@ -452,7 +466,8 @@ class TestAXUtilitiesApplication:
         mock_app = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_process_id", lambda obj: 1234)
         monkeypatch.setattr(
-            subprocess, "getoutput",
+            subprocess,
+            "getoutput",
             lambda cmd: "State: T (stopped)",
         )
 
@@ -468,7 +483,8 @@ class TestAXUtilitiesApplication:
         mock_app = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(AXUtilitiesApplication, "get_process_id", lambda obj: 1234)
         monkeypatch.setattr(
-            subprocess, "getoutput",
+            subprocess,
+            "getoutput",
             lambda cmd: "State: R (running)",
         )
 

@@ -33,12 +33,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
+from .conftest import clean_module_cache
 
 
 @pytest.mark.unit
@@ -132,9 +131,7 @@ class TestAXSelection:
         def mock_get_selected_child(obj, idx):
             return mock_children.get(idx)
 
-        monkeypatch.setattr(
-            AXSelection, "get_selected_child_count", lambda obj: selected_count
-        )
+        monkeypatch.setattr(AXSelection, "get_selected_child_count", lambda obj: selected_count)
         monkeypatch.setattr(Atspi.Selection, "get_selected_child", mock_get_selected_child)
 
         result = AXSelection.get_selected_child(mock_accessible, index)
@@ -153,9 +150,7 @@ class TestAXSelection:
         from orca import debug
 
         monkeypatch.setattr(AXSelection, "get_selected_child_count", lambda obj: 1)
-        monkeypatch.setattr(
-            Atspi.Selection, "get_selected_child", lambda obj, idx: mock_accessible
-        )
+        monkeypatch.setattr(Atspi.Selection, "get_selected_child", lambda obj, idx: mock_accessible)
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
 
         result = AXSelection.get_selected_child(mock_accessible, 0)

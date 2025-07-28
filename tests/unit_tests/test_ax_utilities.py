@@ -37,11 +37,10 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXUtilities:
@@ -990,9 +989,7 @@ class TestAXUtilities:
         sys.modules["orca.ax_utilities_role"].AXUtilitiesRole.is_dialog_or_alert = Mock(
             return_value=True
         )
-        sys.modules["orca.ax_object"].AXObject.get_child_count = Mock(
-            return_value=1
-        )
+        sys.modules["orca.ax_object"].AXObject.get_child_count = Mock(return_value=1)
         sys.modules["orca.ax_utilities_state"].AXUtilitiesState.is_showing = Mock(return_value=True)
 
         clean_module_cache("orca.ax_utilities")
@@ -1697,13 +1694,9 @@ class TestAXUtilities:
             return_value=[]
         )
 
-        sys.modules["orca.ax_object"].AXObject.get_index_in_parent = Mock(
-            return_value=0
-        )
+        sys.modules["orca.ax_object"].AXObject.get_index_in_parent = Mock(return_value=0)
         sys.modules["orca.ax_object"].AXObject.get_parent = Mock(return_value=mock_parent)
-        sys.modules["orca.ax_object"].AXObject.get_child_count = Mock(
-            return_value=3
-        )
+        sys.modules["orca.ax_object"].AXObject.get_child_count = Mock(return_value=3)
         sys.modules["orca.ax_object"].AXObject.get_child = Mock(return_value=mock_next)
 
         clean_module_cache("orca.ax_utilities")

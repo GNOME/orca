@@ -33,12 +33,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXValue:
@@ -67,13 +66,14 @@ class TestAXValue:
         current_value,
         last_known_value,
         expected_result,
-        setup_last_known
+        setup_last_known,
     ):
         """Test AXValue.did_value_change."""
 
         clean_module_cache("orca.ax_value")
         from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+
         monkeypatch.setattr(AXObject, "supports_value", lambda obj: supports_value)
 
         if current_value is not None:
@@ -102,7 +102,7 @@ class TestAXValue:
         supports_value,
         atspi_return_value,
         should_raise_error,
-        expected_result
+        expected_result,
     ):
         """Test AXValue._get_current_value."""
 
@@ -114,8 +114,10 @@ class TestAXValue:
         monkeypatch.setattr(AXObject, "supports_value", lambda obj: supports_value)
 
         if should_raise_error:
+
             def raise_glib_error(obj):
                 raise GLib.GError("Test error")
+
             monkeypatch.setattr(Atspi.Value, "get_current_value", raise_glib_error)
         elif atspi_return_value is not None:
             monkeypatch.setattr(Atspi.Value, "get_current_value", lambda obj: atspi_return_value)
@@ -250,7 +252,7 @@ class TestAXValue:
         is_indeterminate,
         min_val,
         max_val,
-        expected_result
+        expected_result,
     ):
         """Test AXValue.get_value_as_percent."""
 

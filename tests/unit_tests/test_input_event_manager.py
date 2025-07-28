@@ -41,6 +41,7 @@ from unittest.mock import Mock, call
 
 import pytest
 
+
 @pytest.mark.unit
 class TestInputEventManager:
     """Test InputEventManager class methods."""
@@ -224,6 +225,7 @@ class TestInputEventManager:
         monkeypatch.setattr("orca.input_event_manager.Gdk", mock_input_event_manager_deps["gdk"])
 
         from orca.input_event_manager import InputEventManager
+
         return InputEventManager()
 
     def test_init(self, input_event_manager):

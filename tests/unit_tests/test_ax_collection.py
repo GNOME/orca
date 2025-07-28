@@ -34,11 +34,11 @@ from unittest.mock import Mock, patch
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
+
+from .conftest import clean_module_cache
 
 
 @pytest.mark.unit
@@ -50,15 +50,15 @@ class TestAXCollection:
         """Create a mock Atspi.Accessible object."""
         return Mock(spec=Atspi.Accessible)
 
-
     def test_create_match_rule_with_default_parameters(self, mock_orca_dependencies):
         """Test create_match_rule with all default parameters."""
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -80,7 +80,7 @@ class TestAXCollection:
                 Atspi.CollectionMatchType.ANY,
                 [],
                 Atspi.CollectionMatchType.ALL,
-                False
+                False,
             )
 
             assert result == mock_rule
@@ -90,9 +90,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -113,9 +114,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -137,9 +139,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -162,9 +165,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -187,9 +191,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -202,8 +207,8 @@ class TestAXCollection:
             # Verify roles and interfaces are passed correctly
             mock_match_rule_new.assert_called_once()
             args = mock_match_rule_new.call_args[0]
-            assert args[4] == roles      # roles argument
-            assert args[6] == interfaces # interfaces argument
+            assert args[4] == roles  # roles argument
+            assert args[6] == interfaces  # interfaces argument
 
             assert result == mock_rule
 
@@ -212,9 +217,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_rule = Mock()
@@ -225,7 +231,7 @@ class TestAXCollection:
                 attribute_match_type=Atspi.CollectionMatchType.ALL,
                 role_match_type=Atspi.CollectionMatchType.ALL,
                 interface_match_type=Atspi.CollectionMatchType.ANY,
-                invert=True
+                invert=True,
             )
 
             # Verify match types and invert flag are passed correctly
@@ -244,9 +250,10 @@ class TestAXCollection:
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
 
-        with patch('gi.repository.Atspi.StateSet') as mock_state_set_class, \
-             patch('gi.repository.Atspi.MatchRule.new') as mock_match_rule_new:
-
+        with (
+            patch("gi.repository.Atspi.StateSet") as mock_state_set_class,
+            patch("gi.repository.Atspi.MatchRule.new") as mock_match_rule_new,
+        ):
             mock_state_set = Mock()
             mock_state_set_class.return_value = mock_state_set
             mock_match_rule_new.side_effect = GLib.GError("Test error")
@@ -260,9 +267,7 @@ class TestAXCollection:
 
             assert result is None
 
-    def test_get_all_matches_no_collection_support(
-        self, mock_orca_dependencies, mock_accessible
-    ):
+    def test_get_all_matches_no_collection_support(self, mock_orca_dependencies, mock_accessible):
         """Test get_all_matches when object does not support collection interface."""
         clean_module_cache("orca.ax_collection")
         from orca.ax_collection import AXCollection
@@ -300,9 +305,10 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches, \
-             patch('time.time') as mock_time:
-
+        with (
+            patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches,
+            patch("time.time") as mock_time,
+        ):
             # Mock time progression
             mock_time.side_effect = [1000.0, 1000.1234]  # 0.1234 second elapsed
 
@@ -320,8 +326,8 @@ class TestAXCollection:
                 mock_accessible,
                 mock_rule,
                 Atspi.CollectionSortOrder.CANONICAL,
-                0,    # no limit
-                True  # traverse
+                0,  # no limit
+                True,  # traverse
             )
 
             # Verify debug message with timing was printed
@@ -339,26 +345,21 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches, \
-             patch('time.time') as mock_time:
-
+        with (
+            patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches,
+            patch("time.time") as mock_time,
+        ):
             mock_time.side_effect = [1000.0, 1000.0]  # no time elapsed
             mock_get_matches.return_value = []
 
             mock_rule = Mock()
             result = AXCollection.get_all_matches(
-                mock_accessible,
-                mock_rule,
-                Atspi.CollectionSortOrder.REVERSE_CANONICAL
+                mock_accessible, mock_rule, Atspi.CollectionSortOrder.REVERSE_CANONICAL
             )
 
             # Verify custom sort order was used
             mock_get_matches.assert_called_once_with(
-                mock_accessible,
-                mock_rule,
-                Atspi.CollectionSortOrder.REVERSE_CANONICAL,
-                0,
-                True
+                mock_accessible, mock_rule, Atspi.CollectionSortOrder.REVERSE_CANONICAL, 0, True
             )
 
             assert result == []
@@ -371,7 +372,7 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches:
+        with patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches:
             mock_get_matches.side_effect = GLib.GError("Collection error")
 
             mock_rule = Mock()
@@ -424,9 +425,10 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches, \
-             patch('time.time') as mock_time:
-
+        with (
+            patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches,
+            patch("time.time") as mock_time,
+        ):
             # Mock time progression
             mock_time.side_effect = [2000.0, 2000.0567]  # 0.0567 second elapsed
 
@@ -443,8 +445,8 @@ class TestAXCollection:
                 mock_accessible,
                 mock_rule,
                 Atspi.CollectionSortOrder.CANONICAL,
-                1,    # limit to 1 result
-                True  # traverse
+                1,  # limit to 1 result
+                True,  # traverse
             )
 
             # Verify debug message with timing was printed
@@ -464,9 +466,10 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches, \
-             patch('time.time') as mock_time:
-
+        with (
+            patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches,
+            patch("time.time") as mock_time,
+        ):
             mock_time.side_effect = [3000.0, 3000.1]  # 0.1 second elapsed
             mock_get_matches.return_value = []  # no matches
 
@@ -490,26 +493,21 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches, \
-             patch('time.time') as mock_time:
-
+        with (
+            patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches,
+            patch("time.time") as mock_time,
+        ):
             mock_time.side_effect = [4000.0, 4000.0]  # no time elapsed
             mock_get_matches.return_value = []
 
             mock_rule = Mock()
             result = AXCollection.get_first_match(
-                mock_accessible,
-                mock_rule,
-                Atspi.CollectionSortOrder.REVERSE_CANONICAL
+                mock_accessible, mock_rule, Atspi.CollectionSortOrder.REVERSE_CANONICAL
             )
 
             # Verify custom sort order was used
             mock_get_matches.assert_called_once_with(
-                mock_accessible,
-                mock_rule,
-                Atspi.CollectionSortOrder.REVERSE_CANONICAL,
-                1,
-                True
+                mock_accessible, mock_rule, Atspi.CollectionSortOrder.REVERSE_CANONICAL, 1, True
             )
 
             assert result is None
@@ -522,7 +520,7 @@ class TestAXCollection:
         # Mock AXObject.supports_collection to return True
         mock_orca_dependencies.ax_object.AXObject.supports_collection.return_value = True
 
-        with patch('gi.repository.Atspi.Collection.get_matches') as mock_get_matches:
+        with patch("gi.repository.Atspi.Collection.get_matches") as mock_get_matches:
             mock_get_matches.side_effect = GLib.GError("First match error")
 
             mock_rule = Mock()

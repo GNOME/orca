@@ -34,12 +34,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXTextAttribute:
@@ -700,7 +699,6 @@ class TestAXText:
         result = AXText.get_word_at_offset(mock_accessible)
         assert result == ("", 0, 0)
 
-
     def test_get_all_text_successful(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_all_text."""
 
@@ -895,9 +893,7 @@ class TestAXText:
         result = list(AXText.iter_character(mock_accessible))
         assert not result
 
-    def test_iter_word_with_valid_text(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_iter_word_with_valid_text(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.iter_word with valid text."""
 
         clean_module_cache("orca.ax_text")
@@ -918,9 +914,7 @@ class TestAXText:
         result = list(AXText.iter_word(mock_accessible))
         assert result == [("hello", 0, 5), (" world", 5, 11)]
 
-    def test_iter_line_with_valid_text(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_iter_line_with_valid_text(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.iter_line with valid text."""
 
         clean_module_cache("orca.ax_text")
@@ -987,9 +981,7 @@ class TestAXText:
         result = list(AXText.iter_paragraph(mock_accessible))
         assert result == [("First paragraph.", 0, 15), ("Second paragraph.", 15, 30)]
 
-    def test_get_character_at_point(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_character_at_point(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_character_at_point."""
 
         clean_module_cache("orca.ax_text")
@@ -1016,9 +1008,7 @@ class TestAXText:
         result = AXText.get_character_at_point(mock_accessible, 100, 200)
         assert result == ("", 0, 0)
 
-    def test_get_word_at_point(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_word_at_point(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_word_at_point."""
 
         clean_module_cache("orca.ax_text")
@@ -1031,9 +1021,7 @@ class TestAXText:
         result = AXText.get_word_at_point(mock_accessible, 100, 200)
         assert result == ("hello", 3, 8)
 
-    def test_get_line_at_point(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_line_at_point(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_line_at_point."""
 
         clean_module_cache("orca.ax_text")
@@ -1048,9 +1036,7 @@ class TestAXText:
         result = AXText.get_line_at_point(mock_accessible, 100, 200)
         assert result == ("This is a line", 0, 14)
 
-    def test_get_sentence_at_point(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_sentence_at_point(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_sentence_at_point."""
 
         clean_module_cache("orca.ax_text")
@@ -1065,9 +1051,7 @@ class TestAXText:
         result = AXText.get_sentence_at_point(mock_accessible, 100, 200)
         assert result == ("This is a sentence.", 0, 19)
 
-    def test_get_paragraph_at_point(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_paragraph_at_point(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_paragraph_at_point."""
 
         clean_module_cache("orca.ax_text")
@@ -1295,15 +1279,14 @@ class TestAXText:
         result = AXText.is_all_text_selected(mock_accessible)
         assert result is False
 
-    def test_clear_all_selected_text(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_clear_all_selected_text(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.clear_all_selected_text."""
 
         clean_module_cache("orca.ax_text")
         from orca.ax_text import AXText
 
         removed_selections = []
+
         def mock_remove_selection(obj, selection_number):
             removed_selections.append(selection_number)
 
@@ -1313,9 +1296,7 @@ class TestAXText:
         AXText.clear_all_selected_text(mock_accessible)
         assert removed_selections == [0, 1, 2]
 
-    def test_remove_selection(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_remove_selection(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText._remove_selection."""
 
         clean_module_cache("orca.ax_text")
@@ -1360,10 +1341,7 @@ class TestAXText:
         monkeypatch.setattr(AXText, "_get_n_selections", lambda obj: 2)
 
         def mock_get_selection(obj, selection_num):
-            results = [
-                Mock(start_offset=5, end_offset=10),
-                Mock(start_offset=15, end_offset=20)
-            ]
+            results = [Mock(start_offset=5, end_offset=10), Mock(start_offset=15, end_offset=20)]
             return results[selection_num]
 
         monkeypatch.setattr("gi.repository.Atspi.Text.get_selection", mock_get_selection)
@@ -1524,7 +1502,7 @@ class TestAXText:
         mock_rect = Mock(x=10, y=20, width=5, height=12)
         monkeypatch.setattr(
             "gi.repository.Atspi.Text.get_character_extents",
-            lambda obj, offset, coord_type: mock_rect
+            lambda obj, offset, coord_type: mock_rect,
         )
 
         result = AXText.get_character_rect(mock_accessible, 5)
@@ -1552,9 +1530,7 @@ class TestAXText:
         result = AXText.get_character_rect(mock_accessible, 5)
         assert result.x == 0 and result.y == 0
 
-    def test_get_range_rect_successful(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_range_rect_successful(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_range_rect successful case."""
 
         clean_module_cache("orca.ax_text")
@@ -1565,7 +1541,7 @@ class TestAXText:
         mock_rect = Mock(x=10, y=20, width=50, height=12)
         monkeypatch.setattr(
             "gi.repository.Atspi.Text.get_range_extents",
-            lambda obj, start, end, coord_type: mock_rect
+            lambda obj, start, end, coord_type: mock_rect,
         )
 
         result = AXText.get_range_rect(mock_accessible, 5, 15)
@@ -1601,7 +1577,7 @@ class TestAXText:
         monkeypatch.setattr(AXText, "get_character_count", lambda obj: 20)
         monkeypatch.setattr(
             "gi.repository.Atspi.Text.scroll_substring_to_point",
-            lambda obj, start, end, coord_type, x, y: True
+            lambda obj, start, end, coord_type, x, y: True,
         )
 
         result = AXText.scroll_substring_to_point(mock_accessible, 100, 200, 5, 15)
@@ -1638,8 +1614,7 @@ class TestAXText:
         monkeypatch.setattr(AXText, "get_character_count", lambda obj: 20)
         mock_scroll_type = Mock()
         monkeypatch.setattr(
-            "gi.repository.Atspi.Text.scroll_substring_to",
-            lambda obj, start, end, location: True
+            "gi.repository.Atspi.Text.scroll_substring_to", lambda obj, start, end, location: True
         )
 
         result = AXText.scroll_substring_to_location(mock_accessible, mock_scroll_type, 5, 15)
@@ -1666,9 +1641,7 @@ class TestAXText:
         result = AXText.scroll_substring_to_location(mock_accessible, mock_scroll_type, 5, 15)
         assert result is False
 
-    def test_get_visible_lines(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_visible_lines(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXText.get_visible_lines."""
 
         clean_module_cache("orca.ax_text")
@@ -1705,9 +1678,7 @@ class TestAXText:
         clip_rect = Mock(x=0, y=0, width=100, height=50)
         monkeypatch.setattr(AXText, "get_character_count", lambda obj: 100)
 
-        monkeypatch.setattr(
-            AXText, "get_line_at_offset", lambda obj, offset: ("First line", 0, 10)
-        )
+        monkeypatch.setattr(AXText, "get_line_at_offset", lambda obj, offset: ("First line", 0, 10))
 
         result = AXText.find_first_visible_line(mock_accessible, clip_rect)
         assert result == ("First line", 0, 10)
@@ -1786,6 +1757,7 @@ class TestAXText:
         monkeypatch.setattr(AXText, "get_caret_offset", lambda obj: 20)
 
         call_count = 0
+
         def mock_get_string_at_offset(obj, offset, granularity):
             nonlocal call_count
             call_count += 1

@@ -798,7 +798,7 @@ class TestOrcaDBusServiceInterface:
 
         mock_bus = Mock()
         service = mock_dbus_service.OrcaDBusServiceInterface()
-        handlers = []
+        handlers: list[tuple[str, str]] = []
 
         mock_module_iface = Mock()
         monkeypatch.setattr(
@@ -820,7 +820,7 @@ class TestOrcaDBusServiceInterface:
         mock_bus = Mock()
         service = mock_dbus_service.OrcaDBusServiceInterface()
         service._registered_modules.add("TestModule")
-        handlers = []
+        handlers: list[tuple[str, str]] = []
 
         mock_module_iface = Mock()
         monkeypatch.setattr(
@@ -844,7 +844,7 @@ class TestOrcaDBusServiceInterface:
         mock_bus.unpublish_object.side_effect = DBusError("Unpublish failed")
         service = mock_dbus_service.OrcaDBusServiceInterface()
         service._registered_modules.add("TestModule")
-        handlers = []
+        handlers: list[tuple[str, str]] = []
 
         mock_module_iface = Mock()
         monkeypatch.setattr(
@@ -867,7 +867,7 @@ class TestOrcaDBusServiceInterface:
         mock_bus = Mock()
         mock_bus.publish_object.side_effect = DBusError("Publish failed")
         service = mock_dbus_service.OrcaDBusServiceInterface()
-        handlers = []
+        handlers: list[tuple[str, str]] = []
 
         mock_module_iface = Mock()
         monkeypatch.setattr(
@@ -1397,7 +1397,7 @@ class TestAdditionalCoverage:
     def test_to_variant_empty_list_tuples(self, mock_dbus_service: ModuleType) -> None:
         """Test OrcaModuleDBusInterface._to_variant empty list tuples."""
 
-        empty_tuples = []
+        empty_tuples: list[tuple[str, str]] = []
         variant = mock_dbus_service.OrcaModuleDBusInterface._to_variant(empty_tuples)
         assert variant.get_type_string() == "as"  # Empty list defaults to string array
         assert variant.unpack() == []
@@ -1457,12 +1457,14 @@ class TestAdditionalCoverage:
                 return "setter"
 
         # Add decorations to methods
-        MockModule.command_method.dbus_command_description = "Test command method."
-        MockModule.param_command_method.dbus_parameterized_command_description = (
-            "Test parameterized command."
+        setattr(MockModule.command_method, "dbus_command_description", "Test command method.")
+        setattr(
+            MockModule.param_command_method,
+            "dbus_parameterized_command_description",
+            "Test parameterized command.",
         )
-        MockModule.getter_method.dbus_getter_description = "Test getter method."
-        MockModule.setter_method.dbus_setter_description = "Test setter method."
+        setattr(MockModule.getter_method, "dbus_getter_description", "Test getter method.")
+        setattr(MockModule.setter_method, "dbus_setter_description", "Test setter method.")
 
         mock_module = MockModule()
         controller = mock_dbus_service.OrcaRemoteController()
@@ -1472,8 +1474,10 @@ class TestAdditionalCoverage:
 
         def mock_get_manager():
             return Mock()
+
         def mock_remote_controller_event():
             return Mock()
+
         monkeypatch.setattr(mock_dbus_service.script_manager, "get_manager", mock_get_manager)
         monkeypatch.setattr(
             mock_dbus_service.input_event, "RemoteControllerEvent", mock_remote_controller_event

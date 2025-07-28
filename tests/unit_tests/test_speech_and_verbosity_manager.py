@@ -39,7 +39,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
+from .conftest import clean_module_cache
 
 
 @pytest.mark.unit

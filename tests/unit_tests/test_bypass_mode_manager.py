@@ -37,7 +37,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
+from .conftest import clean_module_cache
 
 
 @pytest.fixture(name="mock_bypass_dependencies")
@@ -132,11 +132,12 @@ class TestBypassModeManager:
         mock_orca_dependencies.debug.print_message.assert_called_with(
             mock_orca_dependencies.debug.LEVEL_INFO,
             "BYPASS MODE MANAGER: Refreshing bindings. Is desktop: True",
-            True
+            True,
         )
 
     def test_get_bindings_refresh_desktop_false(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+        self, mock_bypass_dependencies, mock_orca_dependencies
+    ):
         """Test get_bindings with refresh=True and is_desktop=False."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -153,11 +154,10 @@ class TestBypassModeManager:
         mock_orca_dependencies.debug.print_message.assert_called_with(
             mock_orca_dependencies.debug.LEVEL_INFO,
             "BYPASS MODE MANAGER: Refreshing bindings. Is desktop: False",
-            True
+            True,
         )
 
-    def test_get_bindings_empty_bindings(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_get_bindings_empty_bindings(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test get_bindings when bindings are empty."""
 
         # Configure empty bindings
@@ -174,8 +174,7 @@ class TestBypassModeManager:
         assert bindings is not None
         key_bindings_instance.is_empty.assert_called()
 
-    def test_get_bindings_not_empty(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_get_bindings_not_empty(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test get_bindings when bindings are not empty."""
 
         # Configure non-empty bindings
@@ -192,8 +191,7 @@ class TestBypassModeManager:
         assert bindings == key_bindings_instance
         key_bindings_instance.is_empty.assert_called()
 
-    def test_get_handlers_refresh_true(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_get_handlers_refresh_true(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test get_handlers with refresh=True."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -210,11 +208,10 @@ class TestBypassModeManager:
         mock_orca_dependencies.debug.print_message.assert_called_with(
             mock_orca_dependencies.debug.LEVEL_INFO,
             "BYPASS MODE MANAGER: Refreshing handlers.",
-            True
+            True,
         )
 
-    def test_get_handlers_refresh_false(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_get_handlers_refresh_false(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test get_handlers with refresh=False."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -271,8 +268,7 @@ class TestBypassModeManager:
             manager._handlers, key_bindings_instance, False
         )
 
-    def test_is_active_initially_false(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_is_active_initially_false(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test is_active returns False initially."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -282,8 +278,7 @@ class TestBypassModeManager:
 
         assert manager.is_active() is False
 
-    def test_is_active_after_toggle(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_is_active_after_toggle(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test is_active returns True after setting active state."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -295,7 +290,8 @@ class TestBypassModeManager:
         assert manager.is_active() is True
 
     def test_toggle_enabled_activate_with_event(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+        self, mock_bypass_dependencies, mock_orca_dependencies
+    ):
         """Test toggle_enabled activating bypass mode with event."""
 
         # Configure bindings with some mock key bindings
@@ -328,7 +324,8 @@ class TestBypassModeManager:
         mock_script.key_bindings.add.assert_any_call(mock_binding2, include_grabs=True)
 
     def test_toggle_enabled_activate_without_event(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+        self, mock_bypass_dependencies, mock_orca_dependencies
+    ):
         """Test toggle_enabled activating bypass mode without event."""
 
         key_bindings_instance = mock_bypass_dependencies["key_bindings_instance"]
@@ -351,7 +348,8 @@ class TestBypassModeManager:
         modifier_manager.unset_orca_modifiers.assert_called_with("bypass mode enabled")
 
     def test_toggle_enabled_deactivate_with_event(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+        self, mock_bypass_dependencies, mock_orca_dependencies
+    ):
         """Test toggle_enabled deactivating bypass mode with event."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -373,7 +371,8 @@ class TestBypassModeManager:
         modifier_manager.refresh_orca_modifiers.assert_called_with("bypass mode disabled")
 
     def test_toggle_enabled_deactivate_without_event(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+        self, mock_bypass_dependencies, mock_orca_dependencies
+    ):
         """Test toggle_enabled deactivating bypass mode without event."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -393,8 +392,7 @@ class TestBypassModeManager:
         modifier_manager = mock_bypass_dependencies["modifier_manager_instance"]
         modifier_manager.refresh_orca_modifiers.assert_called_with("bypass mode disabled")
 
-    def test_get_manager_returns_singleton(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_get_manager_returns_singleton(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test get_manager returns the singleton instance."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -407,8 +405,7 @@ class TestBypassModeManager:
         assert hasattr(manager1, "toggle_enabled")
         assert hasattr(manager1, "is_active")
 
-    def test_toggle_enabled_multiple_times(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_toggle_enabled_multiple_times(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test toggle_enabled works correctly when called multiple times."""
 
         # Configure bindings with empty key bindings
@@ -440,8 +437,7 @@ class TestBypassModeManager:
         assert result3 is True
         assert manager.is_active() is True
 
-    def test_handlers_structure_and_content(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_handlers_structure_and_content(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test that handlers are properly structured and contain expected content."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -456,8 +452,7 @@ class TestBypassModeManager:
         expected_handler = mock_bypass_dependencies["input_event_handler"]
         assert handlers["bypass_mode_toggle"] == expected_handler
 
-    def test_bindings_with_key_override(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_bindings_with_key_override(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test that bindings are properly configured with key overrides."""
 
         # Configure override behavior
@@ -480,8 +475,7 @@ class TestBypassModeManager:
             manager._handlers, key_bindings_instance, False
         )
 
-    def test_setup_bindings_key_creation(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_setup_bindings_key_creation(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test that _setup_bindings creates correct key binding configuration."""
 
         # Set up specific modifier mask values
@@ -502,15 +496,14 @@ class TestBypassModeManager:
         # Verify KeyBinding was called with the updated mask values
         keybindings_mock.KeyBinding.assert_called_with(
             "BackSpace",
-            8,   # DEFAULT_MODIFIER_MASK
+            8,  # DEFAULT_MODIFIER_MASK
             16,  # ALT_MODIFIER_MASK
             manager._handlers["bypass_mode_toggle"],
             1,
             True,
         )
 
-    def test_handlers_refresh_behavior(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_handlers_refresh_behavior(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test that get_handlers properly refreshes handlers when requested."""
 
         clean_module_cache("orca.bypass_mode_manager")
@@ -531,8 +524,7 @@ class TestBypassModeManager:
         input_event_mock.InputEventHandler.assert_called()
         assert refreshed_handlers is not None
 
-    def test_toggle_state_persistence(
-            self, mock_bypass_dependencies, mock_orca_dependencies):
+    def test_toggle_state_persistence(self, mock_bypass_dependencies, mock_orca_dependencies):
         """Test that bypass mode state persists across multiple operations."""
 
         clean_module_cache("orca.bypass_mode_manager")

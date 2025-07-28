@@ -37,7 +37,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
+from .conftest import clean_module_cache
 
 
 @pytest.fixture(name="mock_sleep_dependencies")

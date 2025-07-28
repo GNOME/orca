@@ -53,7 +53,7 @@ class TestScriptManager:
     def mock_script_manager_deps(self, monkeypatch, mock_orca_dependencies):
         """Mock all dependencies needed for script_manager imports."""
 
-        from conftest import clean_module_cache  # pylint: disable=import-error
+        from .conftest import clean_module_cache
 
         modules_to_clean = [
             "orca.script_manager",
@@ -98,6 +98,7 @@ class TestScriptManager:
 
         class MockScript:
             """Mock script class for testing."""
+
             def __init__(self, app=None):
                 self.app = app
                 self.register_event_listeners = Mock()
@@ -380,7 +381,7 @@ class TestScriptManager:
         with patch("importlib.import_module") as mock_import:
             if has_module:
                 # Create module with specific attributes
-                mock_module = type('MockModule', (), {})()
+                mock_module = type("MockModule", (), {})()
                 if has_get_script:
                     mock_module.get_script = Mock(return_value=mock_script)
                 elif has_script_class:
@@ -423,7 +424,7 @@ class TestScriptManager:
 
         with patch("importlib.import_module") as mock_import:
             # Create module that only has Script (no get_script)
-            mock_module = type('MockModule', (), {})()
+            mock_module = type("MockModule", (), {})()
             mock_module.Script = Mock(side_effect=AttributeError("Script class not found"))
             mock_import.return_value = mock_module
 

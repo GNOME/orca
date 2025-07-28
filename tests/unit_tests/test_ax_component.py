@@ -25,6 +25,7 @@
 # pylint: disable=unused-argument
 # pylint: disable=import-outside-toplevel
 # pylint: disable=too-many-locals
+# pylint: disable=wrong-import-order
 
 """Unit tests for ax_component.py component-related methods."""
 
@@ -33,11 +34,12 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
+
+from .conftest import clean_module_cache
+
 
 @pytest.mark.unit
 class TestAXComponent:
@@ -73,14 +75,12 @@ class TestAXComponent:
         position_result,
         expected_x,
         expected_y,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.get_position."""
 
         monkeypatch.setattr(
-            mock_orca_dependencies.ax_object,
-            "supports_component",
-            lambda obj: supports_component
+            mock_orca_dependencies.ax_object, "supports_component", lambda obj: supports_component
         )
 
         clean_module_cache("orca.ax_component")
@@ -103,9 +103,7 @@ class TestAXComponent:
         """Test AXComponent.get_position handles GLib.GError exceptions."""
 
         monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"],
-            "supports_component",
-            lambda obj: True
+            mock_orca_dependencies["ax_object"], "supports_component", lambda obj: True
         )
 
         clean_module_cache("orca.ax_component")
@@ -133,23 +131,19 @@ class TestAXComponent:
         size_result,
         expected_width,
         expected_height,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.get_size."""
 
         monkeypatch.setattr(
-            mock_orca_dependencies.ax_object,
-            "supports_component",
-            lambda obj: supports_component
+            mock_orca_dependencies.ax_object, "supports_component", lambda obj: supports_component
         )
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
 
         if supports_component and size_result:
-            monkeypatch.setattr(
-                Atspi.Component, "get_size", lambda obj, coord_type: size_result
-            )
+            monkeypatch.setattr(Atspi.Component, "get_size", lambda obj, coord_type: size_result)
         else:
             # Mock the method to avoid TypeError when called with Mock object
             monkeypatch.setattr(
@@ -163,9 +157,7 @@ class TestAXComponent:
         """Test AXComponent.get_size handles GLib.GError exceptions."""
 
         monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"],
-            "supports_component",
-            lambda obj: True
+            mock_orca_dependencies["ax_object"], "supports_component", lambda obj: True
         )
 
         clean_module_cache("orca.ax_component")
@@ -199,14 +191,13 @@ class TestAXComponent:
         from orca.ax_component import AXComponent
 
         if supports_component:
-            monkeypatch.setattr(
-                Atspi.Component, "get_extents", lambda obj, coord_type: mock_rect
-            )
+            monkeypatch.setattr(Atspi.Component, "get_extents", lambda obj, coord_type: mock_rect)
         else:
             # Create a properly configured mock for the non-component case
             def mock_get_extents(obj, coord_type):
                 # This should not be called for unsupported components, but provide fallback
                 return None
+
             monkeypatch.setattr(Atspi.Component, "get_extents", mock_get_extents)
 
         result = AXComponent.get_rect(mock_accessible)
@@ -221,9 +212,7 @@ class TestAXComponent:
         """Test AXComponent.get_rect handles GLib.GError exceptions."""
 
         monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"],
-            "supports_component",
-            lambda obj: True
+            mock_orca_dependencies["ax_object"], "supports_component", lambda obj: True
         )
 
         clean_module_cache("orca.ax_component")
@@ -243,6 +232,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         mock_rect = Atspi.Rect()
         mock_rect.x = 10
         mock_rect.y = 20
@@ -270,6 +260,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         mock_rect = Atspi.Rect()
         mock_rect.width = width
         mock_rect.height = height
@@ -298,12 +289,13 @@ class TestAXComponent:
         width,
         height,
         expected_result,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.has_no_size_or_invalid_rect."""
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         mock_rect = Atspi.Rect()
         mock_rect.x = x
         mock_rect.y = y
@@ -332,6 +324,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         rect = Atspi.Rect()
         rect.x = x
         rect.y = y
@@ -346,6 +339,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         rect1 = Atspi.Rect()
         rect1.x = 10
         rect1.y = 20
@@ -374,6 +368,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         rect1 = Atspi.Rect()
         rect1.x = 10
         rect1.y = 20
@@ -398,6 +393,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         rect1 = Atspi.Rect()
         rect1.x = 10
         rect1.y = 20
@@ -456,7 +452,7 @@ class TestAXComponent:
         is_bogus,
         contains_result,
         expected_result,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.object_contains_point."""
 
@@ -476,6 +472,7 @@ class TestAXComponent:
             if supports_component and not is_bogus and contains_result is not None:
                 return contains_result
             return False
+
         monkeypatch.setattr(Atspi.Component, "contains", contains_func)
 
         result = AXComponent.object_contains_point(mock_accessible, 50, 75)
@@ -490,9 +487,7 @@ class TestAXComponent:
         from orca.ax_component import AXComponent
 
         monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"],
-            "supports_component",
-            lambda obj: True
+            mock_orca_dependencies["ax_object"], "supports_component", lambda obj: True
         )
         monkeypatch.setattr(mock_orca_dependencies["ax_object"], "is_bogus", lambda obj: False)
 
@@ -510,6 +505,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj_rect = Atspi.Rect()
         obj_rect.x = 10
         obj_rect.y = 20
@@ -534,6 +530,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj_rect = Atspi.Rect()
         obj_rect.x = 10
         obj_rect.y = 20
@@ -574,7 +571,7 @@ class TestAXComponent:
         child_count,
         is_menu,
         expected_result,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.object_is_off_screen."""
 
@@ -591,6 +588,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         mock_rect = Atspi.Rect()
         mock_rect.x = x
         mock_rect.y = y
@@ -607,6 +605,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj1 = Mock(spec=Atspi.Accessible)
         obj2 = Mock(spec=Atspi.Accessible)
 
@@ -641,6 +640,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj1 = Mock(spec=Atspi.Accessible)
         obj2 = Mock(spec=Atspi.Accessible)
 
@@ -669,6 +669,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj1 = Mock(spec=Atspi.Accessible)
         obj2 = Mock(spec=Atspi.Accessible)
 
@@ -703,6 +704,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj1 = Mock(spec=Atspi.Accessible)
         obj2 = Mock(spec=Atspi.Accessible)
 
@@ -746,7 +748,7 @@ class TestAXComponent:
         supports_component,
         scroll_result,
         expected_result,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.scroll_object_to_point."""
 
@@ -756,7 +758,7 @@ class TestAXComponent:
         monkeypatch.setattr(
             mock_orca_dependencies["ax_object"],
             "supports_component",
-            lambda obj: supports_component
+            lambda obj: supports_component,
         )
 
         if supports_component and scroll_result is not None:
@@ -780,9 +782,7 @@ class TestAXComponent:
         from orca.ax_component import AXComponent
 
         monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"],
-            "supports_component",
-            lambda obj: True
+            mock_orca_dependencies["ax_object"], "supports_component", lambda obj: True
         )
 
         def raise_glib_error(obj, coord_type, x, y):
@@ -807,7 +807,7 @@ class TestAXComponent:
         supports_component,
         scroll_result,
         expected_result,
-        mock_orca_dependencies
+        mock_orca_dependencies,
     ):
         """Test AXComponent.scroll_object_to_location."""
 
@@ -817,17 +817,13 @@ class TestAXComponent:
         monkeypatch.setattr(
             mock_orca_dependencies["ax_object"],
             "supports_component",
-            lambda obj: supports_component
+            lambda obj: supports_component,
         )
 
         if supports_component and scroll_result is not None:
-            monkeypatch.setattr(
-                Atspi.Component, "scroll_to", lambda obj, location: scroll_result
-            )
+            monkeypatch.setattr(Atspi.Component, "scroll_to", lambda obj, location: scroll_result)
         else:
-            monkeypatch.setattr(
-                Atspi.Component, "scroll_to", lambda obj, location: False
-            )
+            monkeypatch.setattr(Atspi.Component, "scroll_to", lambda obj, location: False)
 
         result = AXComponent.scroll_object_to_location(mock_accessible, Atspi.ScrollType.TOP_LEFT)
         assert result is expected_result
@@ -841,9 +837,7 @@ class TestAXComponent:
         from orca.ax_component import AXComponent
 
         monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"],
-            "supports_component",
-            lambda obj: True
+            mock_orca_dependencies["ax_object"], "supports_component", lambda obj: True
         )
 
         def raise_glib_error(obj, location):
@@ -858,6 +852,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj_small = Mock(spec=Atspi.Accessible)
         obj_medium = Mock(spec=Atspi.Accessible)
         obj_large = Mock(spec=Atspi.Accessible)
@@ -894,6 +889,7 @@ class TestAXComponent:
 
         clean_module_cache("orca.ax_component")
         from orca.ax_component import AXComponent
+
         obj_top_left = Mock(spec=Atspi.Accessible)
         obj_top_right = Mock(spec=Atspi.Accessible)
         obj_bottom_left = Mock(spec=Atspi.Accessible)
@@ -924,9 +920,7 @@ class TestAXComponent:
 
         assert result == [obj_top_left, obj_top_right, obj_bottom_left]
 
-    def test_sort_objects_by_position_same_coordinates(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_sort_objects_by_position_same_coordinates(self, monkeypatch, mock_orca_dependencies):
         """Test AXComponent.sort_objects_by_position when objects have same coordinates."""
 
         # Configure mock dependencies BEFORE importing the module

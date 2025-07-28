@@ -34,11 +34,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
+
+from .conftest import clean_module_cache
 
 
 @pytest.mark.unit
@@ -1541,7 +1541,6 @@ class TestAXTable:
         assert len(AXTable.COLUMN_HEADERS_FOR_CELL) == 0
         mock_orca_dependencies["debug"].print_message.assert_called()
 
-
     def test_get_cell_spans_from_table_with_negative_index(
         self, monkeypatch, mock_cell, mock_orca_dependencies
     ):
@@ -1609,9 +1608,7 @@ class TestAXTable:
         monkeypatch.setattr(AXTable, "get_table", lambda obj: mock_table)
         monkeypatch.setattr(AXObject, "supports_table", lambda obj: True)
         monkeypatch.setattr(AXUtilitiesRole, "is_tree", lambda obj: False)
-        monkeypatch.setattr(
-            Atspi.Table, "get_row_column_extents_at_index", raise_glib_error
-        )
+        monkeypatch.setattr(Atspi.Table, "get_row_column_extents_at_index", raise_glib_error)
         monkeypatch.setattr(debug, "print_message", mock_orca_dependencies["debug"].print_message)
 
         result = AXTable._get_cell_spans_from_table(mock_cell)
@@ -1819,9 +1816,7 @@ class TestAXTable:
         assert result == [mock_header]
         mock_orca_dependencies["debug"].print_tokens.assert_called()
 
-    def test_get_row_headers_from_table_without_support(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_row_headers_from_table_without_support(self, monkeypatch, mock_orca_dependencies):
         """Test AXTable._get_row_headers_from_table without table support."""
 
         clean_module_cache("orca.ax_table")
@@ -1835,9 +1830,7 @@ class TestAXTable:
         result = AXTable._get_row_headers_from_table(mock_table, 1)
         assert not result
 
-    def test_get_row_headers_from_table_negative_row(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_row_headers_from_table_negative_row(self, monkeypatch, mock_orca_dependencies):
         """Test AXTable._get_row_headers_from_table with negative row."""
 
         clean_module_cache("orca.ax_table")
@@ -1851,9 +1844,7 @@ class TestAXTable:
         result = AXTable._get_row_headers_from_table(mock_table, -1)
         assert not result
 
-    def test_get_row_headers_from_table_with_glib_error(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_row_headers_from_table_with_glib_error(self, monkeypatch, mock_orca_dependencies):
         """Test AXTable._get_row_headers_from_table handles GLib.GError."""
 
         clean_module_cache("orca.ax_table")
@@ -2082,7 +2073,6 @@ class TestAXTable:
         result = AXTable.get_row_headers(mock_cell)
         assert result == [mock_header]
 
-
     def test_get_row_headers_with_multiple_headers(
         self, monkeypatch, mock_cell, mock_orca_dependencies
     ):
@@ -2266,7 +2256,6 @@ class TestAXTable:
         result = AXTable.get_column_headers(mock_cell)
         assert result == [mock_header]
 
-
     def test_get_column_headers_with_multiple_headers(
         self, monkeypatch, mock_cell, mock_orca_dependencies
     ):
@@ -2438,9 +2427,7 @@ class TestAXTable:
         )
         monkeypatch.setattr(AXObject, "find_ancestor", lambda obj, func: mock_ancestor)
         monkeypatch.setattr(AXObject, "supports_table_cell", lambda obj: True)
-        monkeypatch.setattr(
-            AXTable, "_get_cell_coordinates_from_table_cell", lambda obj: (2, 3)
-        )
+        monkeypatch.setattr(AXTable, "_get_cell_coordinates_from_table_cell", lambda obj: (2, 3))
         monkeypatch.setattr(
             AXTable, "_get_cell_coordinates_from_attribute", lambda obj: (None, None)
         )
@@ -2461,7 +2448,6 @@ class TestAXTable:
 
         result = AXTable.get_cell_coordinates(mock_cell)
         assert result == (-1, -1)
-
 
     def test_get_cell_coordinates_from_table_with_negative_index(
         self, monkeypatch, mock_cell, mock_orca_dependencies
@@ -2513,7 +2499,6 @@ class TestAXTable:
         result = AXTable._get_cell_coordinates_from_table(mock_cell)
         assert result == (-1, -1)
         mock_orca_dependencies["debug"].print_message.assert_called()
-
 
     def test_get_cell_coordinates_from_table_cell_without_support(
         self, monkeypatch, mock_cell, mock_orca_dependencies
@@ -2575,7 +2560,6 @@ class TestAXTable:
 
         result = AXTable._get_cell_coordinates_from_attribute(None)
         assert result == (None, None)
-
 
     def test_get_cell_coordinates_from_attribute_from_row_ancestor(
         self, monkeypatch, mock_cell, mock_orca_dependencies

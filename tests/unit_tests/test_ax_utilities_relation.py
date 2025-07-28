@@ -24,6 +24,7 @@
 # pylint: disable=protected-access
 # pylint: disable=import-outside-toplevel
 # pylint: disable=unused-argument
+# pylint: disable=wrong-import-order
 
 """Unit tests for ax_utilities_relation.py relation-related methods."""
 
@@ -32,12 +33,10 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXUtilitiesRelation:
@@ -188,9 +187,7 @@ class TestAXUtilitiesRelation:
 
         mock_obj = Mock(spec=Atspi.Accessible)
         mock_targets = [Mock(spec=Atspi.Accessible)]
-        AXUtilitiesRelation.TARGETS[hash(mock_obj)] = {
-            Atspi.RelationType.LABELLED_BY: mock_targets
-        }
+        AXUtilitiesRelation.TARGETS[hash(mock_obj)] = {Atspi.RelationType.LABELLED_BY: mock_targets}
 
         result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
         assert result == mock_targets
@@ -220,7 +217,8 @@ class TestAXUtilitiesRelation:
         mock_relation.get_n_targets.return_value = 2
         mock_relation.get_target.side_effect = [mock_target1, mock_target2]
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation)
+            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation
+        )
         result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
         assert set(result) == {mock_target1, mock_target2}
 
@@ -236,7 +234,8 @@ class TestAXUtilitiesRelation:
         mock_relation.get_n_targets.return_value = 2
         mock_relation.get_target.side_effect = [mock_target, mock_obj]
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation)
+            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation
+        )
         result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
         assert result == [mock_target]
 
@@ -254,7 +253,8 @@ class TestAXUtilitiesRelation:
         mock_relation.get_n_targets.return_value = 2
         mock_relation.get_target.side_effect = [mock_target, mock_obj]
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation)
+            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation
+        )
         result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.MEMBER_OF)
         assert set(result) == {mock_target, mock_obj}
 
@@ -267,7 +267,8 @@ class TestAXUtilitiesRelation:
         mock_obj = Mock(spec=Atspi.Accessible)
         mock_targets = [Mock(spec=Atspi.Accessible)]
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets)
+            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets
+        )
         result = AXUtilitiesRelation.get_is_labelled_by(mock_obj, exclude_ancestors=False)
         assert result == mock_targets
 
@@ -283,10 +284,12 @@ class TestAXUtilitiesRelation:
         mock_non_ancestor = Mock(spec=Atspi.Accessible)
         mock_targets = [mock_ancestor, mock_non_ancestor]
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets)
+            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets
+        )
         # Mock is_ancestor directly on the imported module
-        monkeypatch.setattr(ax_utilities_relation.AXObject, "is_ancestor",
-                          lambda child, acc: acc == mock_ancestor)
+        monkeypatch.setattr(
+            ax_utilities_relation.AXObject, "is_ancestor", lambda child, acc: acc == mock_ancestor
+        )
         result = AXUtilitiesRelation.get_is_labelled_by(mock_obj, exclude_ancestors=True)
         assert result == [mock_non_ancestor]
 
@@ -299,7 +302,8 @@ class TestAXUtilitiesRelation:
         mock_obj1 = Mock(spec=Atspi.Accessible)
         mock_obj2 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: [mock_obj2])
+            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: [mock_obj2]
+        )
         result = AXUtilitiesRelation.object_is_controlled_by(mock_obj1, mock_obj2)
         assert result is True
 
@@ -313,7 +317,8 @@ class TestAXUtilitiesRelation:
         mock_obj2 = Mock(spec=Atspi.Accessible)
         mock_obj3 = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: [mock_obj3])
+            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: [mock_obj3]
+        )
         result = AXUtilitiesRelation.object_is_controlled_by(mock_obj1, mock_obj2)
         assert result is False
 
@@ -336,6 +341,7 @@ class TestAXUtilitiesRelation:
 
         mock_obj = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(
-            AXUtilitiesRelation, "get_relations", lambda obj: [Mock(spec=Atspi.Relation)])
+            AXUtilitiesRelation, "get_relations", lambda obj: [Mock(spec=Atspi.Relation)]
+        )
         result = AXUtilitiesRelation.object_is_unrelated(mock_obj)
         assert result is False

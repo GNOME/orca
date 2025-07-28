@@ -27,6 +27,7 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=unused-argument
 # pylint: disable=too-many-lines
+# pylint: disable=wrong-import-order
 
 """Unit tests for ax_object.py object-related methods."""
 
@@ -36,11 +37,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
+
+from .conftest import clean_module_cache
 
 
 @pytest.mark.unit

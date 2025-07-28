@@ -105,10 +105,10 @@ class TestOrcaModifierManager:
         input_event_manager_mock = mock_modifier_manager_deps["input_event_manager"]
         keybindings_mock = mock_modifier_manager_deps["keybindings"]
 
-        monkeypatch.setattr(orca_modifier_manager, 'debug', debug_mock)
-        monkeypatch.setattr(orca_modifier_manager, 'settings_manager', settings_manager_mock)
-        monkeypatch.setattr(orca_modifier_manager, 'input_event_manager', input_event_manager_mock)
-        monkeypatch.setattr(orca_modifier_manager, 'keybindings', keybindings_mock)
+        monkeypatch.setattr(orca_modifier_manager, "debug", debug_mock)
+        monkeypatch.setattr(orca_modifier_manager, "settings_manager", settings_manager_mock)
+        monkeypatch.setattr(orca_modifier_manager, "input_event_manager", input_event_manager_mock)
+        monkeypatch.setattr(orca_modifier_manager, "keybindings", keybindings_mock)
 
         # Create and return a fresh instance
         return orca_modifier_manager.OrcaModifierManager()
@@ -147,17 +147,17 @@ class TestOrcaModifierManager:
         debug_mock.reset_mock()
 
         # Patch the module's debug reference to use our mock
-        monkeypatch.setattr(orca_modifier_manager, 'debug', debug_mock)
+        monkeypatch.setattr(orca_modifier_manager, "debug", debug_mock)
 
         # Patch the Gdk.Display to return None and create a new instance
-        with patch.object(Gdk.Display, 'get_default', return_value=None):
+        with patch.object(Gdk.Display, "get_default", return_value=None):
             manager = orca_modifier_manager.OrcaModifierManager()
 
             # Should print debug message about inability to listen for device changes
             debug_mock.print_message.assert_called_with(
                 debug_mock.LEVEL_INFO,
                 "ORCA MODIFIER MANAGER: Cannot listen for input device changes.",
-                True
+                True,
             )
 
     @pytest.mark.parametrize(
@@ -168,19 +168,20 @@ class TestOrcaModifierManager:
             pytest.param(Gdk.InputSource.TOUCHSCREEN, False, id="touchscreen_device"),
         ],
     )
-    def test_on_device_changed(self, manager_instance, mock_modifier_manager_deps,
-                               device_source, should_refresh):
+    def test_on_device_changed(
+        self, manager_instance, mock_modifier_manager_deps, device_source, should_refresh
+    ):
         """Test OrcaModifierManager._on_device_changed."""
         mock_device = Mock(spec=Gdk.Device)
         mock_device.get_source.return_value = device_source
 
-        with patch.object(manager_instance, 'refresh_orca_modifiers') as mock_refresh:
+        with patch.object(manager_instance, "refresh_orca_modifiers") as mock_refresh:
             manager_instance._on_device_changed(None, mock_device)
 
             mock_modifier_manager_deps["debug"].print_tokens.assert_called_with(
                 mock_modifier_manager_deps["debug"].LEVEL_INFO,
                 ["ORCA MODIFIER MANAGER: Device changed", device_source],
-                True
+                True,
             )
 
             if should_refresh:
@@ -191,26 +192,31 @@ class TestOrcaModifierManager:
     @pytest.mark.parametrize(
         "modifier, orca_modifier_keys, is_grabbed, expected_result",
         [
-            pytest.param("Insert", ["Insert", "KP_Insert"], True, True,
-                         id="insert_grabbed"),
-            pytest.param("Insert", ["Insert", "KP_Insert"], False, False,
-                         id="insert_not_grabbed"),
-            pytest.param("KP_Insert", ["Insert", "KP_Insert"], True, True,
-                         id="kp_insert_grabbed"),
-            pytest.param("KP_Insert", ["Insert", "KP_Insert"], False, False,
-                         id="kp_insert_not_grabbed"),
+            pytest.param("Insert", ["Insert", "KP_Insert"], True, True, id="insert_grabbed"),
+            pytest.param("Insert", ["Insert", "KP_Insert"], False, False, id="insert_not_grabbed"),
+            pytest.param("KP_Insert", ["Insert", "KP_Insert"], True, True, id="kp_insert_grabbed"),
+            pytest.param(
+                "KP_Insert", ["Insert", "KP_Insert"], False, False, id="kp_insert_not_grabbed"
+            ),
             pytest.param("Caps_Lock", ["Caps_Lock"], False, True, id="caps_lock_always_true"),
             pytest.param("Shift_Lock", ["Shift_Lock"], False, True, id="shift_lock_always_true"),
             pytest.param("Control_L", ["Insert"], False, False, id="not_orca_modifier"),
         ],
     )
-    def test_is_orca_modifier(self, manager_instance, mock_modifier_manager_deps,
-                             modifier, orca_modifier_keys, is_grabbed, expected_result):
+    def test_is_orca_modifier(
+        self,
+        manager_instance,
+        mock_modifier_manager_deps,
+        modifier,
+        orca_modifier_keys,
+        is_grabbed,
+        expected_result,
+    ):
         """Test OrcaModifierManager.is_orca_modifier."""
-        mock_modifier_manager_deps["settings_manager_instance"].\
-            get_setting.return_value = orca_modifier_keys
-        manager_instance._grabbed_modifiers = (
-            {"Insert": 1, "KP_Insert": 2} if is_grabbed else {})
+        mock_modifier_manager_deps[
+            "settings_manager_instance"
+        ].get_setting.return_value = orca_modifier_keys
+        manager_instance._grabbed_modifiers = {"Insert": 1, "KP_Insert": 2} if is_grabbed else {}
 
         result = manager_instance.is_orca_modifier(modifier)
         assert result == expected_result
@@ -232,7 +238,7 @@ class TestOrcaModifierManager:
         mock_modifier_manager_deps["debug"].print_message.assert_called_with(
             mock_modifier_manager_deps["debug"].LEVEL_INFO,
             "ORCA MODIFIER MANAGER: Setting pressed state to True",
-            True
+            True,
         )
 
         manager_instance.set_pressed_state(False)
@@ -241,22 +247,23 @@ class TestOrcaModifierManager:
         mock_modifier_manager_deps["debug"].print_message.assert_called_with(
             mock_modifier_manager_deps["debug"].LEVEL_INFO,
             "ORCA MODIFIER MANAGER: Setting pressed state to False",
-            True
+            True,
         )
 
     @pytest.mark.parametrize(
         "grabbed_modifiers, modifier, expected_result",
         [
-            pytest.param({"Insert": 1, "KP_Insert": 2}, "Insert", True,
-                         id="modifier_grabbed"),
-            pytest.param({"Insert": 1, "KP_Insert": 2}, "KP_Insert", True,
-                         id="kp_modifier_grabbed"),
+            pytest.param({"Insert": 1, "KP_Insert": 2}, "Insert", True, id="modifier_grabbed"),
+            pytest.param(
+                {"Insert": 1, "KP_Insert": 2}, "KP_Insert", True, id="kp_modifier_grabbed"
+            ),
             pytest.param({"Insert": 1}, "KP_Insert", False, id="modifier_not_grabbed"),
             pytest.param({}, "Insert", False, id="no_grabs"),
         ],
     )
-    def test_is_modifier_grabbed(self, manager_instance, grabbed_modifiers,
-                                 modifier, expected_result):
+    def test_is_modifier_grabbed(
+        self, manager_instance, grabbed_modifiers, modifier, expected_result
+    ):
         """Test OrcaModifierManager.is_modifier_grabbed."""
         manager_instance._grabbed_modifiers = grabbed_modifiers
 
@@ -268,18 +275,21 @@ class TestOrcaModifierManager:
         [
             pytest.param(["Insert", "KP_Insert"], ["Insert", "KP_Insert"], id="insert_keys"),
             pytest.param(["Caps_Lock"], [], id="caps_lock_no_grab"),
-            pytest.param(["Insert", "Caps_Lock", "KP_Insert"], ["Insert", "KP_Insert"],
-                         id="mixed_keys"),
+            pytest.param(
+                ["Insert", "Caps_Lock", "KP_Insert"], ["Insert", "KP_Insert"], id="mixed_keys"
+            ),
             pytest.param([], [], id="no_keys"),
         ],
     )
-    def test_add_grabs_for_orca_modifiers(self, manager_instance, mock_modifier_manager_deps,
-                                        orca_modifier_keys, expected_calls):
+    def test_add_grabs_for_orca_modifiers(
+        self, manager_instance, mock_modifier_manager_deps, orca_modifier_keys, expected_calls
+    ):
         """Test OrcaModifierManager.add_grabs_for_orca_modifiers."""
-        mock_modifier_manager_deps["settings_manager_instance"].\
-            get_setting.return_value = orca_modifier_keys
+        mock_modifier_manager_deps[
+            "settings_manager_instance"
+        ].get_setting.return_value = orca_modifier_keys
 
-        with patch.object(manager_instance, 'add_modifier_grab') as mock_add_grab:
+        with patch.object(manager_instance, "add_modifier_grab") as mock_add_grab:
             manager_instance.add_grabs_for_orca_modifiers()
 
             calls = [call(modifier) for modifier in expected_calls]
@@ -291,18 +301,21 @@ class TestOrcaModifierManager:
         [
             pytest.param(["Insert", "KP_Insert"], ["Insert", "KP_Insert"], id="insert_keys"),
             pytest.param(["Caps_Lock"], [], id="caps_lock_no_ungrab"),
-            pytest.param(["Insert", "Caps_Lock", "KP_Insert"], ["Insert", "KP_Insert"],
-                         id="mixed_keys"),
+            pytest.param(
+                ["Insert", "Caps_Lock", "KP_Insert"], ["Insert", "KP_Insert"], id="mixed_keys"
+            ),
             pytest.param([], [], id="no_keys"),
         ],
     )
-    def test_remove_grabs_for_orca_modifiers(self, manager_instance, mock_modifier_manager_deps,
-                                           orca_modifier_keys, expected_calls):
+    def test_remove_grabs_for_orca_modifiers(
+        self, manager_instance, mock_modifier_manager_deps, orca_modifier_keys, expected_calls
+    ):
         """Test OrcaModifierManager.remove_grabs_for_orca_modifiers."""
-        mock_modifier_manager_deps["settings_manager_instance"].\
-            get_setting.return_value = orca_modifier_keys
+        mock_modifier_manager_deps[
+            "settings_manager_instance"
+        ].get_setting.return_value = orca_modifier_keys
 
-        with patch.object(manager_instance, 'remove_modifier_grab') as mock_remove_grab:
+        with patch.object(manager_instance, "remove_modifier_grab") as mock_remove_grab:
             manager_instance.remove_grabs_for_orca_modifiers()
 
             calls = [call(modifier) for modifier in expected_calls]
@@ -314,23 +327,22 @@ class TestOrcaModifierManager:
             mock_modifier_manager_deps["debug"].print_message.assert_called_with(
                 mock_modifier_manager_deps["debug"].LEVEL_INFO,
                 "ORCA MODIFIER MANAGER: Setting pressed state to False for grab removal",
-                True
+                True,
             )
 
     def test_add_modifier_grab_new(self, manager_instance, mock_modifier_manager_deps):
         """Test OrcaModifierManager.add_modifier_grab for new modifier."""
-        mock_modifier_manager_deps["keybindings"].get_keycodes.return_value = (
-            65379, 110)
-        mock_modifier_manager_deps["input_manager_instance"].\
-            add_grab_for_modifier.return_value = 123
+        mock_modifier_manager_deps["keybindings"].get_keycodes.return_value = (65379, 110)
+        mock_modifier_manager_deps[
+            "input_manager_instance"
+        ].add_grab_for_modifier.return_value = 123
 
         manager_instance.add_modifier_grab("Insert")
 
         mock_modifier_manager_deps["keybindings"].get_keycodes.assert_called_once_with("Insert")
-        mock_modifier_manager_deps["input_manager_instance"].\
-            add_grab_for_modifier.assert_called_once_with(
-            "Insert", 65379, 110
-        )
+        mock_modifier_manager_deps[
+            "input_manager_instance"
+        ].add_grab_for_modifier.assert_called_once_with("Insert", 65379, 110)
         assert manager_instance._grabbed_modifiers["Insert"] == 123
 
     def test_add_modifier_grab_existing(self, manager_instance, mock_modifier_manager_deps):
@@ -341,14 +353,14 @@ class TestOrcaModifierManager:
 
         # Should not call keybindings or input manager
         mock_modifier_manager_deps["keybindings"].get_keycodes.assert_not_called()
-        mock_modifier_manager_deps["input_manager_instance"].\
-            add_grab_for_modifier.assert_not_called()
+        mock_modifier_manager_deps[
+            "input_manager_instance"
+        ].add_grab_for_modifier.assert_not_called()
 
     def test_add_modifier_grab_failed(self, manager_instance, mock_modifier_manager_deps):
         """Test OrcaModifierManager.add_modifier_grab when grab fails."""
         mock_modifier_manager_deps["keybindings"].get_keycodes.return_value = (65379, 110)
-        mock_modifier_manager_deps["input_manager_instance"].\
-            add_grab_for_modifier.return_value = -1
+        mock_modifier_manager_deps["input_manager_instance"].add_grab_for_modifier.return_value = -1
 
         manager_instance.add_modifier_grab("Insert")
 
@@ -361,10 +373,9 @@ class TestOrcaModifierManager:
 
         manager_instance.remove_modifier_grab("Insert")
 
-        mock_modifier_manager_deps["input_manager_instance"].\
-            remove_grab_for_modifier.assert_called_once_with(
-            "Insert", 123
-        )
+        mock_modifier_manager_deps[
+            "input_manager_instance"
+        ].remove_grab_for_modifier.assert_called_once_with("Insert", 123)
         assert "Insert" not in manager_instance._grabbed_modifiers
 
     def test_remove_modifier_grab_not_grabbed(self, manager_instance, mock_modifier_manager_deps):
@@ -372,8 +383,9 @@ class TestOrcaModifierManager:
         manager_instance.remove_modifier_grab("Insert")
 
         # Should not call input manager
-        mock_modifier_manager_deps["input_manager_instance"].\
-            remove_grab_for_modifier.assert_not_called()
+        mock_modifier_manager_deps[
+            "input_manager_instance"
+        ].remove_grab_for_modifier.assert_not_called()
 
     @pytest.mark.parametrize(
         "keyval_name, expected_method",
@@ -384,8 +396,9 @@ class TestOrcaModifierManager:
             pytest.param("KP_Insert", "_toggle_modifier_grab", id="kp_insert"),
         ],
     )
-    def test_toggle_modifier(self, manager_instance, mock_keyboard_event,
-                              keyval_name, expected_method):
+    def test_toggle_modifier(
+        self, manager_instance, mock_keyboard_event, keyval_name, expected_method
+    ):
         """Test OrcaModifierManager.toggle_modifier."""
         mock_keyboard_event.keyval_name = keyval_name
 
@@ -393,29 +406,35 @@ class TestOrcaModifierManager:
             manager_instance.toggle_modifier(mock_keyboard_event)
             mock_method.assert_called_once_with(mock_keyboard_event)
 
-    def test_toggle_modifier_grab_pressed_key(self, manager_instance,
-                                               mock_keyboard_event,
-                                               mock_modifier_manager_deps):
+    def test_toggle_modifier_grab_pressed_key(
+        self, manager_instance, mock_keyboard_event, mock_modifier_manager_deps
+    ):
         """Test OrcaModifierManager._toggle_modifier_grab with pressed key."""
         mock_keyboard_event.is_pressed_key.return_value = True
 
-        with patch.object(manager_instance, 'remove_modifier_grab') as mock_remove:
+        with patch.object(manager_instance, "remove_modifier_grab") as mock_remove:
             manager_instance._toggle_modifier_grab(mock_keyboard_event)
             mock_remove.assert_not_called()
 
-    @patch('orca.orca_modifier_manager.GLib.timeout_add')
-    @patch('orca.orca_modifier_manager.Atspi.generate_keyboard_event')
-    def test_toggle_modifier_grab_release(self, mock_generate, mock_timeout,
-                                           manager_instance, mock_keyboard_event,
-                                           mock_modifier_manager_deps):
+    @patch("orca.orca_modifier_manager.GLib.timeout_add")
+    @patch("orca.orca_modifier_manager.Atspi.generate_keyboard_event")
+    def test_toggle_modifier_grab_release(
+        self,
+        mock_generate,
+        mock_timeout,
+        manager_instance,
+        mock_keyboard_event,
+        mock_modifier_manager_deps,
+    ):
         """Test OrcaModifierManager._toggle_modifier_grab with key release."""
         mock_keyboard_event.is_pressed_key.return_value = False
         mock_keyboard_event.keyval_name = "Insert"
         mock_keyboard_event.hw_code = 110
 
-        with patch.object(manager_instance, 'remove_modifier_grab') as mock_remove, \
-             patch.object(manager_instance, 'add_modifier_grab') as mock_add:
-
+        with (
+            patch.object(manager_instance, "remove_modifier_grab") as mock_remove,
+            patch.object(manager_instance, "add_modifier_grab") as mock_add,
+        ):
             manager_instance._toggle_modifier_grab(mock_keyboard_event)
 
             # Should remove grab before toggle
@@ -436,18 +455,27 @@ class TestOrcaModifierManager:
     @pytest.mark.parametrize(
         "keyval_name, is_pressed, expected_modifier",
         [
-            pytest.param("Caps_Lock", True, 1 << Atspi.ModifierType.SHIFTLOCK,
-                         id="caps_lock_pressed"),
-            pytest.param("Shift_Lock", True, 1 << Atspi.ModifierType.SHIFT,
-                         id="shift_lock_pressed"),
+            pytest.param(
+                "Caps_Lock", True, 1 << Atspi.ModifierType.SHIFTLOCK, id="caps_lock_pressed"
+            ),
+            pytest.param(
+                "Shift_Lock", True, 1 << Atspi.ModifierType.SHIFT, id="shift_lock_pressed"
+            ),
             pytest.param("Caps_Lock", False, None, id="caps_lock_released"),
             pytest.param("Other_Key", True, None, id="other_key"),
         ],
     )
-    @patch('orca.orca_modifier_manager.GLib.timeout_add')
-    def test_toggle_modifier_lock(self, mock_timeout, manager_instance,
-                                   mock_keyboard_event, mock_modifier_manager_deps,
-                                   keyval_name, is_pressed, expected_modifier):
+    @patch("orca.orca_modifier_manager.GLib.timeout_add")
+    def test_toggle_modifier_lock(
+        self,
+        mock_timeout,
+        manager_instance,
+        mock_keyboard_event,
+        mock_modifier_manager_deps,
+        keyval_name,
+        is_pressed,
+        expected_modifier,
+    ):
         """Test OrcaModifierManager._toggle_modifier_lock."""
         mock_keyboard_event.keyval_name = keyval_name
         mock_keyboard_event.is_pressed_key.return_value = is_pressed
@@ -464,9 +492,10 @@ class TestOrcaModifierManager:
         else:
             mock_timeout.assert_not_called()
 
-    @patch('orca.orca_modifier_manager.subprocess.Popen')
-    def test_refresh_orca_modifiers(self, mock_popen, manager_instance,
-                                     mock_modifier_manager_deps, monkeypatch):
+    @patch("orca.orca_modifier_manager.subprocess.Popen")
+    def test_refresh_orca_modifiers(
+        self, mock_popen, manager_instance, mock_modifier_manager_deps, monkeypatch
+    ):
         """Test OrcaModifierManager.refresh_orca_modifiers."""
 
         monkeypatch.setenv("DISPLAY", ":0")
@@ -474,16 +503,15 @@ class TestOrcaModifierManager:
         mock_process.communicate.return_value = (b"xmodmap_content", b"")
         mock_popen.return_value.__enter__.return_value = mock_process
 
-        with patch.object(manager_instance, 'unset_orca_modifiers') as mock_unset, \
-             patch.object(manager_instance, '_create_orca_xmodmap') as mock_create:
-
+        with (
+            patch.object(manager_instance, "unset_orca_modifiers") as mock_unset,
+            patch.object(manager_instance, "_create_orca_xmodmap") as mock_create,
+        ):
             manager_instance.refresh_orca_modifiers("test reason")
 
             mock_unset.assert_called_once_with("test reason")
             mock_popen.assert_called_once_with(
-                ["xkbcomp", ":0", "-"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.DEVNULL
+                ["xkbcomp", ":0", "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
             )
             assert manager_instance._original_xmodmap == b"xmodmap_content"
             mock_create.assert_called_once()
@@ -494,13 +522,21 @@ class TestOrcaModifierManager:
             pytest.param(True, False, False, [("set_caps", True)], id="caps_lock_enable"),
             pytest.param(False, True, False, [("set_caps", True)], id="shift_lock_enable"),
             pytest.param(True, True, False, [("set_caps", True)], id="both_enable"),
-            pytest.param(False, False, True, [("set_caps", False)],
-                         id="disable_previously_cleared"),
+            pytest.param(
+                False, False, True, [("set_caps", False)], id="disable_previously_cleared"
+            ),
             pytest.param(False, False, False, [], id="no_changes"),
         ],
     )
-    def test_create_orca_xmodmap(self, manager_instance, mock_modifier_manager_deps,
-                               caps_lock_orca, shift_lock_orca, caps_cleared, expected_calls):
+    def test_create_orca_xmodmap(
+        self,
+        manager_instance,
+        mock_modifier_manager_deps,
+        caps_lock_orca,
+        shift_lock_orca,
+        caps_cleared,
+        expected_calls,
+    ):
         """Test OrcaModifierManager._create_orca_xmodmap."""
         manager_instance._caps_lock_cleared = caps_cleared
 
@@ -511,11 +547,12 @@ class TestOrcaModifierManager:
                 return shift_lock_orca
             return False
 
-        with patch.object(manager_instance, 'is_orca_modifier',
-                          side_effect=is_orca_modifier_side_effect), \
-             patch.object(manager_instance, 'set_caps_lock_as_orca_modifier') \
-             as mock_set_caps:
-
+        with (
+            patch.object(
+                manager_instance, "is_orca_modifier", side_effect=is_orca_modifier_side_effect
+            ),
+            patch.object(manager_instance, "set_caps_lock_as_orca_modifier") as mock_set_caps,
+        ):
             manager_instance._create_orca_xmodmap()
 
             for call_type, enable in expected_calls:
@@ -528,9 +565,10 @@ class TestOrcaModifierManager:
             elif caps_cleared and not caps_lock_orca and not shift_lock_orca:
                 assert manager_instance._caps_lock_cleared is False
 
-    @patch('orca.orca_modifier_manager.subprocess.Popen')
-    def test_unset_orca_modifiers(self, mock_popen, manager_instance,
-                                   mock_modifier_manager_deps, monkeypatch):
+    @patch("orca.orca_modifier_manager.subprocess.Popen")
+    def test_unset_orca_modifiers(
+        self, mock_popen, manager_instance, mock_modifier_manager_deps, monkeypatch
+    ):
         """Test OrcaModifierManager.unset_orca_modifiers."""
 
         monkeypatch.setenv("DISPLAY", ":0")
@@ -541,35 +579,29 @@ class TestOrcaModifierManager:
         manager_instance.unset_orca_modifiers("test reason")
 
         mock_popen.assert_called_once_with(
-            ["xkbcomp", "-w0", "-", ":0"],
-            stdin=subprocess.PIPE,
-            stdout=None,
-            stderr=None
+            ["xkbcomp", "-w0", "-", ":0"], stdin=subprocess.PIPE, stdout=None, stderr=None
         )
-        mock_process.communicate.assert_called_once_with(
-            b"original_xmodmap_content")
+        mock_process.communicate.assert_called_once_with(b"original_xmodmap_content")
         assert manager_instance._caps_lock_cleared is False
 
-    def test_unset_orca_modifiers_no_xmodmap(self, manager_instance,
-                                              mock_modifier_manager_deps):
+    def test_unset_orca_modifiers_no_xmodmap(self, manager_instance, mock_modifier_manager_deps):
         """Test OrcaModifierManager.unset_orca_modifiers with no stored xmodmap."""
         manager_instance._original_xmodmap = b""
 
-        with patch('orca.orca_modifier_manager.subprocess.Popen') as mock_popen:
+        with patch("orca.orca_modifier_manager.subprocess.Popen") as mock_popen:
             manager_instance.unset_orca_modifiers()
 
             mock_popen.assert_not_called()
             mock_modifier_manager_deps["debug"].print_message.assert_called_with(
                 mock_modifier_manager_deps["debug"].LEVEL_INFO,
                 "ORCA MODIFIER MANAGER: No stored xmodmap found",
-                True
+                True,
             )
 
-    @patch('orca.orca_modifier_manager.subprocess.Popen')
-    def test_set_caps_lock_as_orca_modifier_enable(self, mock_popen,
-                                                    manager_instance,
-                                                    mock_modifier_manager_deps,
-                                                    monkeypatch):
+    @patch("orca.orca_modifier_manager.subprocess.Popen")
+    def test_set_caps_lock_as_orca_modifier_enable(
+        self, mock_popen, manager_instance, mock_modifier_manager_deps, monkeypatch
+    ):
         """Test OrcaModifierManager.set_caps_lock_as_orca_modifier enable."""
 
         monkeypatch.setenv("DISPLAY", ":0")
@@ -577,7 +609,7 @@ class TestOrcaModifierManager:
             interpret Caps_Lock+AnyOfOrNone(all) {
                 action= LockMods(modifiers=Lock);
             };
-        """.encode('UTF-8')
+        """.encode("UTF-8")
         manager_instance._original_xmodmap = original_xmodmap
         mock_process = Mock()
         mock_popen.return_value.__enter__.return_value = mock_process
@@ -585,21 +617,17 @@ class TestOrcaModifierManager:
         manager_instance.set_caps_lock_as_orca_modifier(True)
 
         mock_popen.assert_called_once_with(
-            ["xkbcomp", "-w0", "-", ":0"],
-            stdin=subprocess.PIPE,
-            stdout=None,
-            stderr=None
+            ["xkbcomp", "-w0", "-", ":0"], stdin=subprocess.PIPE, stdout=None, stderr=None
         )
 
         # Check that the communicated data contains NoAction
         called_data = mock_process.communicate.call_args[0][0]
         assert b"NoAction()" in called_data
 
-    @patch('orca.orca_modifier_manager.subprocess.Popen')
-    def test_set_caps_lock_as_orca_modifier_disable(self, mock_popen,
-                                                     manager_instance,
-                                                     mock_modifier_manager_deps,
-                                                     monkeypatch):
+    @patch("orca.orca_modifier_manager.subprocess.Popen")
+    def test_set_caps_lock_as_orca_modifier_disable(
+        self, mock_popen, manager_instance, mock_modifier_manager_deps, monkeypatch
+    ):
         """Test OrcaModifierManager.set_caps_lock_as_orca_modifier disable."""
 
         monkeypatch.setenv("DISPLAY", ":0")
@@ -607,7 +635,7 @@ class TestOrcaModifierManager:
             interpret Caps_Lock+AnyOfOrNone(all) {
                 action= NoAction();
             };
-        """.encode('UTF-8')
+        """.encode("UTF-8")
         manager_instance._original_xmodmap = original_xmodmap
         mock_process = Mock()
         mock_popen.return_value.__enter__.return_value = mock_process
@@ -621,14 +649,15 @@ class TestOrcaModifierManager:
         called_data = mock_process.communicate.call_args[0][0]
         assert b"LockMods(modifiers=Lock)" in called_data
 
-    def test_set_caps_lock_as_orca_modifier_no_changes(self, manager_instance,
-                                                        mock_modifier_manager_deps):
+    def test_set_caps_lock_as_orca_modifier_no_changes(
+        self, manager_instance, mock_modifier_manager_deps
+    ):
         """Test OrcaModifierManager.set_caps_lock_as_orca_modifier with no changes needed."""
 
         original_xmodmap = b"some other xmodmap content"
         manager_instance._original_xmodmap = original_xmodmap
 
-        with patch('orca.orca_modifier_manager.subprocess.Popen') as mock_popen:
+        with patch("orca.orca_modifier_manager.subprocess.Popen") as mock_popen:
             manager_instance.set_caps_lock_as_orca_modifier(True)
 
             # Should not call subprocess since no modifications were made
@@ -636,13 +665,12 @@ class TestOrcaModifierManager:
             mock_modifier_manager_deps["debug"].print_message.assert_called_with(
                 mock_modifier_manager_deps["debug"].LEVEL_INFO,
                 "ORCA MODIFIER MANAGER: Not updating xmodmap",
-                True
+                True,
             )
 
     def test_get_manager(self, mock_modifier_manager_deps):
         """Test orca_modifier_manager.get_manager."""
         from orca import orca_modifier_manager
-
 
         # First call should return instance
         manager1 = orca_modifier_manager.get_manager()

@@ -35,12 +35,10 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-
+from .conftest import clean_module_cache
 
 def _clear_ax_event_state():
     from orca.ax_utilities_event import AXUtilitiesEvent
@@ -91,7 +89,6 @@ def _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies):
 @pytest.mark.unit
 class TestAXUtilitiesEvent:
     """Test event-related methods."""
-
 
     @pytest.mark.parametrize(
         "initial_state, current_state, expected_result",
@@ -156,8 +153,11 @@ class TestAXUtilitiesEvent:
                 return False
             return True
 
-        monkeypatch.setattr(AXUtilitiesEvent, "is_presentable_description_change",
-                           mock_is_presentable_description_change)
+        monkeypatch.setattr(
+            AXUtilitiesEvent,
+            "is_presentable_description_change",
+            mock_is_presentable_description_change,
+        )
 
         result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
         assert result is expected_result
@@ -305,8 +305,9 @@ class TestAXUtilitiesEvent:
             AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(event.source)] = new_state
             return True
 
-        monkeypatch.setattr(AXUtilitiesEvent, "is_presentable_pressed_change",
-                           mock_is_presentable_pressed_change)
+        monkeypatch.setattr(
+            AXUtilitiesEvent, "is_presentable_pressed_change", mock_is_presentable_pressed_change
+        )
 
         result = AXUtilitiesEvent.is_presentable_pressed_change(mock_event)
         assert result is True
@@ -373,12 +374,14 @@ class TestAXUtilitiesEvent:
             AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(event.source)] = new_state
             return True
 
-        monkeypatch.setattr(AXUtilitiesEvent, "is_presentable_invalid_entry_change",
-                           mock_is_presentable_invalid_entry_change)
+        monkeypatch.setattr(
+            AXUtilitiesEvent,
+            "is_presentable_invalid_entry_change",
+            mock_is_presentable_invalid_entry_change,
+        )
 
         result = AXUtilitiesEvent.is_presentable_invalid_entry_change(mock_event)
         assert result is True
-
 
     def test_save_object_info_for_events_with_object(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent.save_object_info_for_events with valid object."""
@@ -398,12 +401,12 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
         monkeypatch.setattr(
-            AXObject, "get_name",
-            lambda obj: "test name" if obj == mock_obj else "window name"
+            AXObject, "get_name", lambda obj: "test name" if obj == mock_obj else "window name"
         )
         monkeypatch.setattr(
-            AXObject, "get_description",
-            lambda obj: "test desc" if obj == mock_obj else "window desc"
+            AXObject,
+            "get_description",
+            lambda obj: "test desc" if obj == mock_obj else "window desc",
         )
 
         monkeypatch.setattr(AXUtilitiesState, "is_checked", lambda obj: True)
@@ -421,13 +424,8 @@ class TestAXUtilitiesEvent:
         assert AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(mock_obj)] is True
         assert AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(mock_obj)] is False
         assert AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(mock_obj)] is True
-        assert (
-            AXUtilitiesEvent.LAST_KNOWN_NAME[hash(mock_window)] == "window name"
-        )
-        assert (
-            AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(mock_window)]
-            == "window desc"
-        )
+        assert AXUtilitiesEvent.LAST_KNOWN_NAME[hash(mock_window)] == "window name"
+        assert AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(mock_window)] == "window desc"
 
     @pytest.mark.parametrize(
         "event_type, expected_method",
@@ -435,22 +433,18 @@ class TestAXUtilitiesEvent:
             pytest.param(
                 "object:text-changed:insert",
                 "_get_text_insertion_event_reason",
-                id="text_insertion"
+                id="text_insertion",
             ),
             pytest.param(
-                "object:text-caret-moved",
-                "_get_caret_moved_event_reason",
-                id="caret_moved"
+                "object:text-caret-moved", "_get_caret_moved_event_reason", id="caret_moved"
             ),
             pytest.param(
-                "object:text-changed:delete",
-                "_get_text_deletion_event_reason",
-                id="text_deletion"
+                "object:text-changed:delete", "_get_text_deletion_event_reason", id="text_deletion"
             ),
             pytest.param(
                 "object:text-selection-changed",
                 "_get_text_selection_changed_event_reason",
-                id="text_selection"
+                id="text_selection",
             ),
         ],
     )
@@ -461,9 +455,7 @@ class TestAXUtilitiesEvent:
 
         clean_module_cache("orca.ax_utilities_event")
         _apply_common_ax_mocks(monkeypatch, mock_orca_dependencies)
-        from orca.ax_utilities_event import (
-            AXUtilitiesEvent, TextEventReason
-        )
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
 
         mock_event = Mock(spec=Atspi.Event)
         mock_event.type = event_type
@@ -483,18 +475,22 @@ class TestAXUtilitiesEvent:
         [
             pytest.param(True, True, False, False, "SAY_ALL", id="say_all_mode"),
             pytest.param(
-                False, False, True, True, "SEARCH_UNPRESENTABLE",
-                id="search_with_backspace"
+                False, False, True, True, "SEARCH_UNPRESENTABLE", id="search_with_backspace"
             ),
             pytest.param(
-                False, False, True, False, "SEARCH_PRESENTABLE",
-                id="search_without_backspace"
+                False, False, True, False, "SEARCH_PRESENTABLE", id="search_without_backspace"
             ),
         ],
     )
     def test_get_caret_moved_event_reason_scenarios(
-        self, monkeypatch, say_all_mode, focus_matches_source, is_search_input,
-        last_event_was_backspace, expected_reason, mock_orca_dependencies
+        self,
+        monkeypatch,
+        say_all_mode,
+        focus_matches_source,
+        is_search_input,
+        last_event_was_backspace,
+        expected_reason,
+        mock_orca_dependencies,
     ):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason."""
 
@@ -514,7 +510,8 @@ class TestAXUtilitiesEvent:
         focus_mode = focus_manager.SAY_ALL if say_all_mode else "normal"
         focus_object = mock_obj if focus_matches_source else mock_focus
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            focus_mode, focus_object
+            focus_mode,
+            focus_object,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -527,7 +524,7 @@ class TestAXUtilitiesEvent:
             "last_event_was_primary_click_or_release": False,
             "last_event_was_tab_navigation": False,
             "last_event_was_command": False,
-            "last_event_was_printable_key": False
+            "last_event_was_printable_key": False,
         }
         for attr, value in input_defaults.items():
             setattr(getattr(mock_input_manager, attr), "return_value", value)
@@ -556,7 +553,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -592,7 +590,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -631,7 +630,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -666,8 +666,13 @@ class TestAXUtilitiesEvent:
         ],
     )
     def test_get_text_deletion_event_reason_scenarios(
-        self, monkeypatch, is_ui_role, is_editable, last_event_was_backspace,
-        expected_reason, mock_orca_dependencies
+        self,
+        monkeypatch,
+        is_ui_role,
+        is_editable,
+        last_event_was_backspace,
+        expected_reason,
+        mock_orca_dependencies,
     ):
         """Test AXUtilitiesEvent._get_text_deletion_event_reason."""
 
@@ -696,7 +701,7 @@ class TestAXUtilitiesEvent:
             "last_event_was_up_or_down": False,
             "last_event_was_page_up_or_page_down": False,
             "last_event_was_backspace": last_event_was_backspace,
-            "last_event_was_printable_key": not last_event_was_backspace
+            "last_event_was_printable_key": not last_event_was_backspace,
         }
         for attr, value in input_settings.items():
             setattr(getattr(mock_input_manager, attr), "return_value", value)
@@ -715,9 +720,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
         assert result == getattr(TextEventReason, expected_reason)
 
-    def test_get_text_deletion_event_reason_spin_button(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_deletion_event_reason_spin_button(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_text_deletion_event_reason with spin button."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -796,8 +799,7 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         monkeypatch.setattr(
-            AXText, "get_cached_selected_text",
-            lambda obj: ("selected text", 0, 13)
+            AXText, "get_cached_selected_text", lambda obj: ("selected text", 0, 13)
         )
 
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
@@ -809,14 +811,19 @@ class TestAXUtilitiesEvent:
             pytest.param(True, False, False, False, "UI_UPDATE", id="ui_role"),
             pytest.param(False, True, True, False, "PASTE", id="editable_paste"),
             pytest.param(
-                False, True, False, True, "SELECTED_TEXT_INSERTION",
-                id="selected_text_insertion"
+                False, True, False, True, "SELECTED_TEXT_INSERTION", id="selected_text_insertion"
             ),
         ],
     )
     def test_get_text_insertion_event_reason_scenarios(
-        self, monkeypatch, is_ui_role, is_editable, last_event_was_paste,
-        selected_text_matches, expected_reason, mock_orca_dependencies
+        self,
+        monkeypatch,
+        is_ui_role,
+        is_editable,
+        last_event_was_paste,
+        selected_text_matches,
+        expected_reason,
+        mock_orca_dependencies,
     ):
         """Test AXUtilitiesEvent._get_text_insertion_event_reason."""
 
@@ -1103,13 +1110,15 @@ class TestAXUtilitiesEvent:
 
         monkeypatch.setattr(AXUtilitiesRole, "is_table_cell", lambda obj: obj == mock_focus)
         monkeypatch.setattr(
-            AXUtilitiesRole, "is_tree_or_tree_table",
-            lambda obj: obj in [mock_table, mock_different_table]
+            AXUtilitiesRole,
+            "is_tree_or_tree_table",
+            lambda obj: obj in [mock_table, mock_different_table],
         )
 
         monkeypatch.setattr(
-            AXObject, "find_ancestor",
-            lambda obj, predicate: mock_table if obj == mock_focus else None
+            AXObject,
+            "find_ancestor",
+            lambda obj, predicate: mock_table if obj == mock_focus else None,
         )
 
         result = AXUtilitiesEvent.is_presentable_active_descendant_change(mock_event)
@@ -1150,8 +1159,7 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj: True)
 
         monkeypatch.setattr(
-            AXObject, "is_ancestor",
-            lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus
+            AXObject, "is_ancestor", lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus
         )
 
         result = AXUtilitiesEvent.is_presentable_checked_change(mock_event)
@@ -1184,8 +1192,7 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesState, "is_showing", lambda obj: True)
 
         monkeypatch.setattr(
-            AXObject, "is_ancestor",
-            lambda obj1, obj2: obj1 == mock_focus and obj2 == mock_obj
+            AXObject, "is_ancestor", lambda obj1, obj2: obj1 == mock_focus and obj2 == mock_obj
         )
 
         result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
@@ -1251,9 +1258,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.is_presentable_indeterminate_change(mock_event)
         assert result is True
 
-    def test_is_presentable_name_change_with_frame(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_name_change_with_frame(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent.is_presentable_name_change with frame scenarios."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1316,8 +1321,7 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         monkeypatch.setattr(
-            AXObject, "is_ancestor",
-            lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus
+            AXObject, "is_ancestor", lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus
         )
 
         result = AXUtilitiesEvent._is_presentable_text_event(mock_event)
@@ -1331,9 +1335,7 @@ class TestAXUtilitiesEvent:
             pytest.param("is_presentable_text_insertion", id="text_insertion"),
         ],
     )
-    def test_text_event_methods_delegate(
-        self, monkeypatch, method_name, mock_orca_dependencies
-    ):
+    def test_text_event_methods_delegate(self, monkeypatch, method_name, mock_orca_dependencies):
         """Test AXUtilitiesEvent text event methods delegate to _is_presentable_text_event."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1365,7 +1367,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1384,9 +1387,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.SELECTION_BY_CHARACTER
 
-    def test_get_caret_moved_event_reason_page_selection(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_page_selection(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with page selection."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1401,7 +1402,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1437,7 +1439,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1473,7 +1476,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1509,7 +1513,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1545,7 +1550,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1565,9 +1571,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.NAVIGATION_BY_CHARACTER
 
-    def test_get_caret_moved_event_reason_select_all(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_select_all(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with select all."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1582,7 +1586,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1615,7 +1620,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1631,9 +1637,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.MOUSE_PRIMARY_BUTTON
 
-    def test_get_caret_moved_event_reason_delete(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_delete(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with delete key."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1650,7 +1654,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1693,7 +1698,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1727,7 +1733,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1762,7 +1769,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1797,7 +1805,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -1815,9 +1824,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.NAVIGATION_TO_FILE_BOUNDARY
 
-    def test_get_text_event_reason_ui_update(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_ui_update(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with UI update scenario."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1842,9 +1849,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UI_UPDATE
 
-    def test_get_text_event_reason_page_switch_scenario(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_page_switch_scenario(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with page switch scenario."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1869,9 +1874,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.PAGE_SWITCH
 
-    def test_get_text_event_reason_command_scenario(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_command_scenario(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with command scenario."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1901,9 +1904,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_COMMAND
 
-    def test_get_text_event_reason_delete_in_editable(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_delete_in_editable(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with delete in editable object."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1932,14 +1933,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         from orca.ax_text import AXText
+
         monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.DELETE
 
-    def test_get_text_event_reason_cut_in_editable(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_cut_in_editable(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with cut in editable object."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -1969,14 +1969,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         from orca.ax_text import AXText
+
         monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.CUT
 
-    def test_get_text_event_reason_paste_in_editable(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_paste_in_editable(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with paste in editable object."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2007,14 +2006,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         from orca.ax_text import AXText
+
         monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.PASTE
 
-    def test_get_text_event_reason_undo_in_editable(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_undo_in_editable(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with undo in editable object."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2046,14 +2044,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         from orca.ax_text import AXText
+
         monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UNDO
 
-    def test_get_text_event_reason_redo_in_editable(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_redo_in_editable(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with redo in editable object."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2086,14 +2083,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         from orca.ax_text import AXText
+
         monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.REDO
 
-    def test_get_text_event_reason_command_in_editable(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_event_reason_command_in_editable(self, monkeypatch, mock_orca_dependencies):
         """Test get_text_event_reason with command in editable object."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2127,14 +2123,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(AXUtilitiesRole, "is_terminal", lambda obj: False)
 
         from orca.ax_text import AXText
+
         monkeypatch.setattr(AXText, "get_selected_text", lambda obj: ("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_COMMAND
 
-    def test_clear_all_dictionaries_direct_call(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_clear_all_dictionaries_direct_call(self, monkeypatch, mock_orca_dependencies):
         """Test _clear_all_dictionaries method directly."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2371,21 +2366,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_COMMAND
 
-
-
-
-
-
-
-
-
-
-
-
-
-    def test_get_caret_moved_event_reason_cut(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_cut(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with cut operation."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2402,7 +2383,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2428,9 +2410,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.CUT
 
-    def test_get_caret_moved_event_reason_paste(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_paste(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with paste operation."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2447,7 +2427,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2473,9 +2454,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.PASTE
 
-    def test_get_caret_moved_event_reason_undo(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_undo(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with undo operation."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2492,7 +2471,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2518,9 +2498,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.UNDO
 
-    def test_get_caret_moved_event_reason_redo(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_redo(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with redo operation."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2537,7 +2515,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2563,9 +2542,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.REDO
 
-    def test_get_caret_moved_event_reason_page_switch(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_page_switch(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with page switch."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2582,7 +2559,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2608,9 +2586,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.PAGE_SWITCH
 
-    def test_get_caret_moved_event_reason_command(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_command(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with unspecified command."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2627,7 +2603,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2653,9 +2630,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_COMMAND
 
-    def test_get_caret_moved_event_reason_tab_navigation(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_tab_navigation(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with tab navigation focus change."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2673,7 +2648,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -2695,9 +2671,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.FOCUS_CHANGE
 
-    def test_get_caret_moved_event_reason_ui_update(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_caret_moved_event_reason_ui_update(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with UI update."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -2716,7 +2690,8 @@ class TestAXUtilitiesEvent:
 
         mock_focus_manager = Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
-            "normal", mock_obj
+            "normal",
+            mock_obj,
         )
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
@@ -3149,9 +3124,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == TextEventReason.BACKSPACE
 
-    def test_get_text_deletion_event_reason_page_switch(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_get_text_deletion_event_reason_page_switch(self, monkeypatch, mock_orca_dependencies):
         """Test _get_text_deletion_event_reason with page switch scenario."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -3705,9 +3678,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.is_presentable_active_descendant_change(mock_event)
         assert result is False
 
-    def test_is_presentable_checked_change_edge_cases(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_checked_change_edge_cases(self, monkeypatch, mock_orca_dependencies):
         """Test is_presentable_checked_change edge cases."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -3793,14 +3764,13 @@ class TestAXUtilitiesEvent:
         monkeypatch.setattr(focus_manager, "get_manager", lambda: mock_focus_manager)
 
         from orca.ax_object import AXObject
+
         monkeypatch.setattr(AXObject, "is_ancestor", lambda focus, source: False)
 
         result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
         assert result is False
 
-    def test_is_presentable_expanded_change_edge_cases(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_expanded_change_edge_cases(self, monkeypatch, mock_orca_dependencies):
         """Test is_presentable_expanded_change edge cases."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -3926,9 +3896,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.is_presentable_invalid_entry_change(mock_event)
         assert result is False
 
-    def test_is_presentable_name_change_edge_cases(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_name_change_edge_cases(self, monkeypatch, mock_orca_dependencies):
         """Test is_presentable_name_change edge cases."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -3988,9 +3956,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is False
 
-    def test_is_presentable_pressed_change_edge_cases(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_pressed_change_edge_cases(self, monkeypatch, mock_orca_dependencies):
         """Test is_presentable_pressed_change edge cases."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -4017,9 +3983,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.is_presentable_pressed_change(mock_event)
         assert result is False
 
-    def test_is_presentable_selected_change_edge_cases(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_selected_change_edge_cases(self, monkeypatch, mock_orca_dependencies):
         """Test is_presentable_selected_change edge cases."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -4046,9 +4010,7 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.is_presentable_selected_change(mock_event)
         assert result is False
 
-    def test_is_presentable_text_event_edge_cases(
-        self, monkeypatch, mock_orca_dependencies
-    ):
+    def test_is_presentable_text_event_edge_cases(self, monkeypatch, mock_orca_dependencies):
         """Test _is_presentable_text_event edge cases."""
 
         clean_module_cache("orca.ax_utilities_event")
@@ -4131,6 +4093,7 @@ class TestAXUtilitiesEvent:
 
         # Mock settings manager for echo settings (line 373)
         from orca import settings_manager
+
         mock_settings_manager = Mock()
         mock_settings_manager.get_setting.return_value = True
         monkeypatch.setattr(settings_manager, "get_manager", lambda: mock_settings_manager)

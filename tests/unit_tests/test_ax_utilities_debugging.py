@@ -30,11 +30,12 @@ import types
 from unittest.mock import Mock
 
 import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi, GLib
 import pytest
 
-from conftest import clean_module_cache # pylint: disable=import-error
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi, GLib
+
+from .conftest import clean_module_cache
 
 
 def load_debugging_module():
@@ -210,7 +211,7 @@ class TestAXUtilitiesDebuggingCore:
         for method_name, return_value in interface_support.items():
             monkeypatch.setattr(
                 f"orca.ax_utilities_debugging.AXObject.{method_name}",
-                lambda obj, rv=return_value: rv
+                lambda obj, rv=return_value: rv,
             )
 
         result = axutils_debug.interfaces_as_string(mock_obj)
@@ -362,21 +363,27 @@ class TestAXUtilitiesDebuggingExtended:
 
     def _create_function_object(self):
         """Create function object."""
+
         def test_function():
             pass
+
         test_function.__module__ = "test_module"
         test_function.__name__ = "test_function"
         return test_function
 
     def _create_method_object(self):
         """Create method object."""
+
         # Create a real method object
         class TestClass:
             """Test class for method creation."""
+
             def test_method(self):
                 """Test method for testing."""
+
             def another_method(self):
                 """Another method to satisfy pylint requirements."""
+
         return TestClass().test_method
 
     def _create_frame_object(self):
@@ -562,11 +569,11 @@ class TestAXUtilitiesDebuggingExtended:
         mock_target = Mock(spec=Atspi.Accessible)
         monkeypatch.setattr(
             "orca.ax_utilities_debugging.AXUtilitiesRelation.get_relations",
-            lambda obj: [mock_relation]
+            lambda obj: [mock_relation],
         )
         monkeypatch.setattr(
             "orca.ax_utilities_debugging.AXUtilitiesRelation.get_relation_targets_for_debugging",
-            lambda obj, rel_type: [mock_target]
+            lambda obj, rel_type: [mock_target],
         )
         monkeypatch.setattr(
             "orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "label"
@@ -615,7 +622,7 @@ class TestAXUtilitiesDebuggingExtended:
         # Mock all the AXObject methods used in object_details_as_string
         monkeypatch.setattr(
             "orca.ax_utilities_debugging.AXUtilitiesApplication.application_as_string",
-            lambda obj: "TestApp"
+            lambda obj: "TestApp",
         )
         monkeypatch.setattr(
             "orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "button name"
@@ -632,14 +639,10 @@ class TestAXUtilitiesDebuggingExtended:
         monkeypatch.setattr(
             "orca.ax_utilities_debugging.AXObject.get_accessible_id", lambda obj: "btn1"
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_path", lambda obj: [0, 1, 2]
-        )
+        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_path", lambda obj: [0, 1, 2])
 
         # Mock the debugging methods
-        monkeypatch.setattr(
-            axutils_debug, "state_set_as_string", lambda obj: "focused, visible"
-        )
+        monkeypatch.setattr(axutils_debug, "state_set_as_string", lambda obj: "focused, visible")
         monkeypatch.setattr(
             axutils_debug, "relations_as_string", lambda obj: "labelled-by: [label]"
         )

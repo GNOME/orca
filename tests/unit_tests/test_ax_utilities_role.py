@@ -25,6 +25,7 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-lines
+# pylint: disable=wrong-import-order
 
 """Unit tests for ax_utilities_role.py accessibility role utilities."""
 
@@ -33,11 +34,10 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXUtilitiesRole:
@@ -76,13 +76,9 @@ class TestAXUtilitiesRole:
             (
                 "is_document_presentation",
                 Atspi.Role.DOCUMENT_PRESENTATION,
-                Atspi.Role.DOCUMENT_TEXT
+                Atspi.Role.DOCUMENT_TEXT,
             ),
-            (
-                "is_document_spreadsheet",
-                Atspi.Role.DOCUMENT_SPREADSHEET,
-                Atspi.Role.DOCUMENT_TEXT
-            ),
+            ("is_document_spreadsheet", Atspi.Role.DOCUMENT_SPREADSHEET, Atspi.Role.DOCUMENT_TEXT),
             ("is_document_text", Atspi.Role.DOCUMENT_TEXT, Atspi.Role.TEXT),
             ("is_document_web", Atspi.Role.DOCUMENT_WEB, Atspi.Role.DOCUMENT_TEXT),
             ("is_drawing_area", Atspi.Role.DRAWING_AREA, Atspi.Role.CANVAS),
@@ -818,7 +814,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.COLOR_CHOOSER,
             Atspi.Role.DIALOG,
             Atspi.Role.FILE_CHOOSER,
-            Atspi.Role.ALERT
+            Atspi.Role.ALERT,
         ]
         assert roles == expected
 
@@ -840,7 +836,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.DOCUMENT_PRESENTATION,
             Atspi.Role.DOCUMENT_SPREADSHEET,
             Atspi.Role.DOCUMENT_TEXT,
-            Atspi.Role.DOCUMENT_WEB
+            Atspi.Role.DOCUMENT_WEB,
         ]
         assert roles == expected
 
@@ -862,7 +858,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.PASSWORD_TEXT,
             Atspi.Role.PUSH_BUTTON,
             Atspi.Role.SPIN_BUTTON,
-            Atspi.Role.TOGGLE_BUTTON
+            Atspi.Role.TOGGLE_BUTTON,
         ]
         assert roles == expected
 
@@ -877,7 +873,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.MENU_ITEM,
             Atspi.Role.CHECK_MENU_ITEM,
             Atspi.Role.RADIO_MENU_ITEM,
-            Atspi.Role.TEAROFF_MENU_ITEM
+            Atspi.Role.TEAROFF_MENU_ITEM,
         ]
         assert roles == expected
 
@@ -895,7 +891,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.MENU_ITEM,
             Atspi.Role.CHECK_MENU_ITEM,
             Atspi.Role.RADIO_MENU_ITEM,
-            Atspi.Role.TEAROFF_MENU_ITEM
+            Atspi.Role.TEAROFF_MENU_ITEM,
         ]
         assert roles == expected
 
@@ -908,8 +904,11 @@ class TestAXUtilitiesRole:
         # Scenario: Include headers (default)
         roles = AXUtilitiesRole.get_table_cell_roles()
         expected = [
-            Atspi.Role.TABLE_CELL, Atspi.Role.TABLE_COLUMN_HEADER,
-            Atspi.Role.TABLE_ROW_HEADER, Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER
+            Atspi.Role.TABLE_CELL,
+            Atspi.Role.TABLE_COLUMN_HEADER,
+            Atspi.Role.TABLE_ROW_HEADER,
+            Atspi.Role.COLUMN_HEADER,
+            Atspi.Role.ROW_HEADER,
         ]
         assert roles == expected
 
@@ -926,8 +925,10 @@ class TestAXUtilitiesRole:
 
         roles = AXUtilitiesRole.get_table_header_roles()
         expected = [
-            Atspi.Role.TABLE_COLUMN_HEADER, Atspi.Role.TABLE_ROW_HEADER,
-            Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER
+            Atspi.Role.TABLE_COLUMN_HEADER,
+            Atspi.Role.TABLE_ROW_HEADER,
+            Atspi.Role.COLUMN_HEADER,
+            Atspi.Role.ROW_HEADER,
         ]
         assert roles == expected
 
@@ -945,7 +946,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.TABLE_COLUMN_HEADER,
             Atspi.Role.TABLE_ROW_HEADER,
             Atspi.Role.COLUMN_HEADER,
-            Atspi.Role.ROW_HEADER
+            Atspi.Role.ROW_HEADER,
         ]
         assert roles == expected
 
@@ -958,7 +959,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.TABLE_ROW_HEADER,
             Atspi.Role.COLUMN_HEADER,
             Atspi.Role.ROW_HEADER,
-            Atspi.Role.CAPTION
+            Atspi.Role.CAPTION,
         ]
         assert roles == expected
 
@@ -1087,9 +1088,9 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole.is_single_line_autocomplete_entry."""
 
         mock_ax_utilities_state_class = Mock()
-        mock_orca_dependencies["ax_utilities_state"].AXUtilitiesState = (
-            mock_ax_utilities_state_class
-        )
+        mock_orca_dependencies[
+            "ax_utilities_state"
+        ].AXUtilitiesState = mock_ax_utilities_state_class
 
         clean_module_cache("orca.ax_utilities_role")
         from orca.ax_utilities_role import AXUtilitiesRole
@@ -1114,9 +1115,9 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole.is_single_line_entry."""
 
         mock_ax_utilities_state_class = Mock()
-        mock_orca_dependencies["ax_utilities_state"].AXUtilitiesState = (
-            mock_ax_utilities_state_class
-        )
+        mock_orca_dependencies[
+            "ax_utilities_state"
+        ].AXUtilitiesState = mock_ax_utilities_state_class
 
         clean_module_cache("orca.ax_utilities_role")
         from orca.ax_utilities_role import AXUtilitiesRole
@@ -1229,7 +1230,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.INFO_BAR,
             Atspi.Role.LABEL,
             Atspi.Role.PAGE_TAB,
-            Atspi.Role.STATUS_BAR
+            Atspi.Role.STATUS_BAR,
         ]
         assert roles == expected
 
@@ -1256,7 +1257,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.PAGE_TAB_LIST,
             Atspi.Role.TABLE,
             Atspi.Role.TREE,
-            Atspi.Role.TREE_TABLE
+            Atspi.Role.TREE_TABLE,
         ]
         assert roles == expected
 
@@ -1273,7 +1274,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.REDUNDANT_OBJECT,
             Atspi.Role.UNKNOWN,
             Atspi.Role.SCROLL_PANE,
-            Atspi.Role.TEAROFF_MENU_ITEM
+            Atspi.Role.TEAROFF_MENU_ITEM,
         ]
         assert roles == expected
 
@@ -1300,7 +1301,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.PANEL,
             Atspi.Role.TABLE,
             Atspi.Role.TREE,
-            Atspi.Role.TREE_TABLE
+            Atspi.Role.TREE_TABLE,
         ]
         assert roles == expected
 
@@ -1328,7 +1329,7 @@ class TestAXUtilitiesRole:
             Atspi.Role.TOOL_BAR,
             Atspi.Role.TREE_ITEM,
             Atspi.Role.TREE_TABLE,
-            Atspi.Role.TREE
+            Atspi.Role.TREE,
         ]
         assert roles == expected
 

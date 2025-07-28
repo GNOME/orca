@@ -25,6 +25,7 @@
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=import-outside-toplevel
 # pylint: disable=unused-argument
+# pylint: disable=wrong-import-order
 
 """Unit tests for ax_hypertext.py hypertext-related methods."""
 
@@ -33,12 +34,11 @@ from unittest.mock import Mock
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
+from .conftest import clean_module_cache
 
 
 @pytest.mark.unit
@@ -189,8 +189,10 @@ class TestAXHypertext:
             mock_links.append(mock_link)
 
         monkeypatch.setattr(AXHypertext, "_get_link_count", lambda obj: len(mock_links))
+
         def get_link_at_index(obj, index):
             return mock_links[index] if index < len(mock_links) else None
+
         monkeypatch.setattr(AXHypertext, "_get_link_at_index", get_link_at_index)
 
         def mock_get_start_offset(link):
@@ -211,9 +213,7 @@ class TestAXHypertext:
         result = AXHypertext.get_all_links_in_range(mock_accessible, start_offset, end_offset)
         assert len(result) == expected_count
 
-    def test_get_all_links_empty_object(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
+    def test_get_all_links_empty_object(self, monkeypatch, mock_accessible, mock_orca_dependencies):
         """Test AXHypertext.get_all_links with object containing no links."""
 
         clean_module_cache("orca.ax_hypertext")
@@ -343,19 +343,13 @@ class TestAXHypertext:
         from orca.ax_hypertext import AXHypertext
 
         if input_type == "accessible":
-            monkeypatch.setattr(
-                Atspi.Accessible, "get_hyperlink", lambda obj: mock_hyperlink
-            )
+            monkeypatch.setattr(Atspi.Accessible, "get_hyperlink", lambda obj: mock_hyperlink)
             input_obj = mock_accessible
         else:
-            monkeypatch.setattr(
-                Atspi.Hyperlink, "get_object", lambda link, index: mock_accessible
-            )
+            monkeypatch.setattr(Atspi.Hyperlink, "get_object", lambda link, index: mock_accessible)
             input_obj = mock_hyperlink
 
-        monkeypatch.setattr(
-            Atspi.Hyperlink, "get_start_index", lambda link: expected_offset
-        )
+        monkeypatch.setattr(Atspi.Hyperlink, "get_start_index", lambda link: expected_offset)
 
         result = AXHypertext.get_link_start_offset(input_obj)
         assert result == expected_offset
@@ -415,19 +409,13 @@ class TestAXHypertext:
         from orca.ax_hypertext import AXHypertext
 
         if input_type == "accessible":
-            monkeypatch.setattr(
-                Atspi.Accessible, "get_hyperlink", lambda obj: mock_hyperlink
-            )
+            monkeypatch.setattr(Atspi.Accessible, "get_hyperlink", lambda obj: mock_hyperlink)
             input_obj = mock_accessible
         else:
-            monkeypatch.setattr(
-                Atspi.Hyperlink, "get_object", lambda link, index: mock_accessible
-            )
+            monkeypatch.setattr(Atspi.Hyperlink, "get_object", lambda link, index: mock_accessible)
             input_obj = mock_hyperlink
 
-        monkeypatch.setattr(
-            Atspi.Hyperlink, "get_end_index", lambda link: expected_offset
-        )
+        monkeypatch.setattr(Atspi.Hyperlink, "get_end_index", lambda link: expected_offset)
 
         result = AXHypertext.get_link_end_offset(input_obj)
         assert result == expected_offset
@@ -480,9 +468,7 @@ class TestAXHypertext:
             pytest.param(
                 "https://example.com/simple", True, "simple", id="path_no_extension_capitalized"
             ),
-            pytest.param(
-                "file:///home/user/document.pdf", False, "document.pdf", id="file_uri"
-            ),
+            pytest.param("file:///home/user/document.pdf", False, "document.pdf", id="file_uri"),
             pytest.param(
                 "file:///home/user/document.pdf", True, "document", id="file_uri_extension_removed"
             ),
@@ -502,13 +488,9 @@ class TestAXHypertext:
         clean_module_cache("orca.ax_hypertext")
         from orca.ax_hypertext import AXHypertext
 
-        monkeypatch.setattr(
-            AXHypertext, "get_link_uri", lambda obj, index: uri
-        )
+        monkeypatch.setattr(AXHypertext, "get_link_uri", lambda obj, index: uri)
 
-        result = AXHypertext.get_link_basename(
-            mock_accessible, 0, remove_extension
-        )
+        result = AXHypertext.get_link_basename(mock_accessible, 0, remove_extension)
         assert result == expected_result
 
     def test_get_child_at_offset_with_valid_link(
@@ -524,12 +506,8 @@ class TestAXHypertext:
 
         monkeypatch.setattr(AXObject, "supports_hypertext", lambda obj: True)
         monkeypatch.setattr(Atspi.Hypertext, "get_link_index", lambda self, offset: 0)
-        monkeypatch.setattr(
-            AXHypertext, "_get_link_at_index", lambda obj, index: mock_hyperlink
-        )
-        monkeypatch.setattr(
-            Atspi.Hyperlink, "get_object", lambda link, index: mock_child
-        )
+        monkeypatch.setattr(AXHypertext, "_get_link_at_index", lambda obj, index: mock_hyperlink)
+        monkeypatch.setattr(Atspi.Hyperlink, "get_object", lambda link, index: mock_child)
 
         result = AXHypertext.get_child_at_offset(mock_accessible, 5)
         assert result == mock_child
@@ -558,9 +536,7 @@ class TestAXHypertext:
         from orca.ax_object import AXObject
 
         monkeypatch.setattr(AXObject, "supports_hypertext", lambda obj: True)
-        monkeypatch.setattr(
-            Atspi.Hypertext, "get_link_index", lambda self, offset: -1
-        )
+        monkeypatch.setattr(Atspi.Hypertext, "get_link_index", lambda self, offset: -1)
 
         result = AXHypertext.get_child_at_offset(mock_accessible, 5)
         assert result is None
@@ -601,9 +577,7 @@ class TestAXHypertext:
 
         monkeypatch.setattr(AXObject, "supports_hypertext", lambda obj: True)
         monkeypatch.setattr(Atspi.Hypertext, "get_link_index", lambda obj, offset: 0)
-        monkeypatch.setattr(
-            AXHypertext, "_get_link_at_index", lambda obj, index: mock_hyperlink
-        )
+        monkeypatch.setattr(AXHypertext, "_get_link_at_index", lambda obj, index: mock_hyperlink)
         monkeypatch.setattr(Atspi.Hyperlink, "get_object", raise_glib_error)
         monkeypatch.setattr(debug, "print_message", mock_orca_dependencies["debug"].print_message)
 

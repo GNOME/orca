@@ -50,7 +50,7 @@ class TestFocusManager:
     def mock_focus_manager_deps(self, monkeypatch):
         """Mock all dependencies needed for focus_manager imports."""
 
-        from conftest import clean_module_cache  # pylint: disable=import-error
+        from .conftest import clean_module_cache
 
         modules_to_clean = [
             "orca.focus_manager",

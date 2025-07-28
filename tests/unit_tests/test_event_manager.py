@@ -54,7 +54,7 @@ class TestEventManager:
     def mock_event_manager_deps(self, monkeypatch, mock_orca_dependencies):
         """Mock all dependencies needed for event_manager imports."""
 
-        from conftest import clean_module_cache   # pylint: disable=import-error
+        from .conftest import clean_module_cache
 
         modules_to_clean = [
             "orca.event_manager",
@@ -96,6 +96,7 @@ class TestEventManager:
 
         class MockMouseButtonEvent:
             """Mock MouseButtonEvent for testing."""
+
         input_event_mock.KeyboardEvent = MockKeyboardEvent
         input_event_mock.BrailleEvent = MockBrailleEvent
         input_event_mock.MouseButtonEvent = MockMouseButtonEvent
@@ -431,9 +432,6 @@ class TestEventManager:
 
         assert manager._ignore(mock_event) is True
 
-
-
-
     def test_queue_println(self, mock_event_manager_deps):
         """Test EventManager._queue_println."""
 
@@ -449,7 +447,6 @@ class TestEventManager:
         # Should not crash
         manager._queue_println(mock_event)
         manager._queue_println(mock_event, is_enqueue=False)
-
 
     def test_enqueue_object_event_ignored(self, mock_event_manager_deps):
         """Test EventManager._enqueue_object_event for ignored events."""
@@ -487,7 +484,6 @@ class TestEventManager:
         assert result is False
         script_mgr.set_active_script.assert_called_once()
         braille_mock.disableBraille.assert_called_once()
-
 
     def test_dequeue_object_event_empty_queue(self, mock_event_manager_deps):
         """Test EventManager._dequeue_object_event with empty queue."""
@@ -632,7 +628,6 @@ class TestEventManager:
 
         assert result == expected_script
 
-
     def test_get_script_for_event_defunct_app(self, mock_event_manager_deps):
         """Test EventManager._get_script_for_event with defunct application."""
 
@@ -732,10 +727,8 @@ class TestEventManager:
         assert result is True
         assert "insists" in reason
 
-
     @pytest.mark.parametrize(
-        "event_script_is_active, present_if_inactive, is_progress_bar, "
-        "verbosity_all, expected",
+        "event_script_is_active, present_if_inactive, is_progress_bar, verbosity_all, expected",
         [
             pytest.param(True, False, False, False, True, id="active_script"),
             pytest.param(False, True, False, False, True, id="inactive_but_presents"),
@@ -744,8 +737,13 @@ class TestEventManager:
         ],
     )
     def test_should_process_event(
-        self, mock_event_manager_deps, event_script_is_active, present_if_inactive,
-        is_progress_bar, verbosity_all, expected
+        self,
+        mock_event_manager_deps,
+        event_script_is_active,
+        present_if_inactive,
+        is_progress_bar,
+        verbosity_all,
+        expected,
     ):
         """Test EventManager._should_process_event."""
 
@@ -789,7 +787,6 @@ class TestEventManager:
         manager._process_object_event(mock_event)
         # Should return early without processing
 
-
     def test_process_object_event_dead_source(self, mock_event_manager_deps):
         """Test EventManager._process_object_event with dead event source."""
 
@@ -817,9 +814,6 @@ class TestEventManager:
         script_mgr.set_active_script.assert_called_once_with(
             None, "Active window is dead or defunct"
         )
-
-
-
 
     def test_process_object_event_no_listener(self, mock_event_manager_deps):
         """Test EventManager._process_object_event with no matching listener."""

@@ -28,23 +28,19 @@
 
 """Unit tests for ax_utilities_state.py accessibility state utilities."""
 
-
 from unittest.mock import Mock
 
 import gi
 import pytest
 
-from conftest import clean_module_cache  # pylint: disable=import-error
-
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-
+from .conftest import clean_module_cache
 
 @pytest.mark.unit
 class TestAXUtilitiesState:
     """Test state identification methods."""
-
 
     @pytest.mark.parametrize(
         "method_name, state_type",
@@ -94,7 +90,7 @@ class TestAXUtilitiesState:
             pytest.param(
                 "supports_autocompletion",
                 Atspi.StateType.SUPPORTS_AUTOCOMPLETION,
-                id="supports_autocompletion"
+                id="supports_autocompletion",
             ),
         ],
     )
@@ -110,14 +106,10 @@ class TestAXUtilitiesState:
         mock_obj = Mock(spec=Atspi.Accessible)
         method = getattr(AXUtilitiesState, method_name)
 
-        monkeypatch.setattr(
-            AXObject, "has_state", lambda obj, state: state == state_type
-        )
+        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: state == state_type)
         assert method(mock_obj)
 
-        monkeypatch.setattr(
-            AXObject, "has_state", lambda obj, state: state != state_type
-        )
+        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: state != state_type)
         assert not method(mock_obj)
 
     def test_get_current_item_status_string(self, monkeypatch, mock_orca_dependencies):
@@ -175,15 +167,11 @@ class TestAXUtilitiesState:
         mock_obj = Mock(spec=Atspi.Accessible)
 
         # Scenario: State set is empty
-        monkeypatch.setattr(
-            AXObject, "get_state_set", lambda obj: Mock(is_empty=lambda: True)
-        )
+        monkeypatch.setattr(AXObject, "get_state_set", lambda obj: Mock(is_empty=lambda: True))
         assert AXUtilitiesState.has_no_state(mock_obj)
 
         # Scenario: State set is not empty
-        monkeypatch.setattr(
-            AXObject, "get_state_set", lambda obj: Mock(is_empty=lambda: False)
-        )
+        monkeypatch.setattr(AXObject, "get_state_set", lambda obj: Mock(is_empty=lambda: False))
         assert not AXUtilitiesState.has_no_state(mock_obj)
 
     def test_is_checkable(self, monkeypatch, mock_orca_dependencies):
@@ -197,7 +185,8 @@ class TestAXUtilitiesState:
 
         # Scenario: Object has CHECKABLE state
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state == Atspi.StateType.CHECKABLE,
         )
         assert AXUtilitiesState.is_checkable(mock_obj)
@@ -207,6 +196,7 @@ class TestAXUtilitiesState:
             AXObject, "has_state", lambda obj, state: state == Atspi.StateType.CHECKED
         )
         from orca import debug
+
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
         assert AXUtilitiesState.is_checkable(mock_obj)
 
@@ -225,7 +215,8 @@ class TestAXUtilitiesState:
 
         # Scenario: Object has both CHECKED and CHECKABLE states
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state in (Atspi.StateType.CHECKED, Atspi.StateType.CHECKABLE),
         )
         assert AXUtilitiesState.is_checked(mock_obj)
@@ -235,13 +226,13 @@ class TestAXUtilitiesState:
             AXObject, "has_state", lambda obj, state: state == Atspi.StateType.CHECKED
         )
         from orca import debug
+
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
         assert AXUtilitiesState.is_checked(mock_obj)
 
         # Scenario: Object has no relevant states
         monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
         assert not AXUtilitiesState.is_checked(mock_obj)
-
 
     def test_is_expandable(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesState.is_expandable."""
@@ -254,17 +245,20 @@ class TestAXUtilitiesState:
 
         # Scenario: Object has EXPANDABLE state
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state == Atspi.StateType.EXPANDABLE,
         )
         assert AXUtilitiesState.is_expandable(mock_obj)
 
         # Scenario: Object has EXPANDED state but not EXPANDABLE
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state == Atspi.StateType.EXPANDED,
         )
         from orca import debug
+
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
         assert AXUtilitiesState.is_expandable(mock_obj)
 
@@ -283,17 +277,20 @@ class TestAXUtilitiesState:
 
         # Scenario: Object has both EXPANDED and EXPANDABLE states
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state in (Atspi.StateType.EXPANDED, Atspi.StateType.EXPANDABLE),
         )
         assert AXUtilitiesState.is_expanded(mock_obj)
 
         # Scenario: Object has only EXPANDED state
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state == Atspi.StateType.EXPANDED,
         )
         from orca import debug
+
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
         assert AXUtilitiesState.is_expanded(mock_obj)
 
@@ -312,7 +309,8 @@ class TestAXUtilitiesState:
 
         # Scenario: Object has FOCUSABLE state
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state == Atspi.StateType.FOCUSABLE,
         )
         assert AXUtilitiesState.is_focusable(mock_obj)
@@ -322,6 +320,7 @@ class TestAXUtilitiesState:
             AXObject, "has_state", lambda obj, state: state == Atspi.StateType.FOCUSED
         )
         from orca import debug
+
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
         assert AXUtilitiesState.is_focusable(mock_obj)
 
@@ -340,7 +339,8 @@ class TestAXUtilitiesState:
 
         # Scenario: Object has both FOCUSED and FOCUSABLE states
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state in (Atspi.StateType.FOCUSED, Atspi.StateType.FOCUSABLE),
         )
         assert AXUtilitiesState.is_focused(mock_obj)
@@ -350,6 +350,7 @@ class TestAXUtilitiesState:
             AXObject, "has_state", lambda obj, state: state == Atspi.StateType.FOCUSED
         )
         from orca import debug
+
         monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
         assert AXUtilitiesState.is_focused(mock_obj)
 
@@ -368,24 +369,23 @@ class TestAXUtilitiesState:
 
         # Scenario 1: Object has "hidden" attribute set to "true"
         monkeypatch.setattr(
-            AXObject, "get_attribute",
+            AXObject,
+            "get_attribute",
             lambda obj, attr, default: "true" if attr == "hidden" else default,
         )
         assert AXUtilitiesState.is_hidden(mock_obj)
 
         # Scenario 2: Object has "hidden" attribute set to "false"
         monkeypatch.setattr(
-            AXObject, "get_attribute",
+            AXObject,
+            "get_attribute",
             lambda obj, attr, default: "false" if attr == "hidden" else default,
         )
         assert not AXUtilitiesState.is_hidden(mock_obj)
 
         # Scenario 3: Object does not have "hidden" attribute
-        monkeypatch.setattr(
-            AXObject, "get_attribute", lambda obj, attr, default: default
-        )
+        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr, default: default)
         assert not AXUtilitiesState.is_hidden(mock_obj)
-
 
     def test_is_read_only(self, monkeypatch, mock_orca_dependencies):
         """Test AXUtilitiesState.is_read_only."""
@@ -398,30 +398,25 @@ class TestAXUtilitiesState:
 
         # Scenario 1: Object has READ_ONLY state
         monkeypatch.setattr(
-            AXObject, "has_state",
+            AXObject,
+            "has_state",
             lambda obj, state: state == Atspi.StateType.READ_ONLY,
         )
         assert AXUtilitiesState.is_read_only(mock_obj)
 
         # Scenario 2: Object does not have READ_ONLY state but is editable
         monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        monkeypatch.setattr(
-            AXUtilitiesState, "is_editable", lambda obj: True
-        )
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
         assert not AXUtilitiesState.is_read_only(mock_obj)
 
         # Scenario 3: Object does not have READ_ONLY state and is not editable, but is TEXT role
         monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        monkeypatch.setattr(
-            AXUtilitiesState, "is_editable", lambda obj: False
-        )
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
         monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
         assert AXUtilitiesState.is_read_only(mock_obj)
 
         # Scenario 4: Object does not have READ_ONLY state, is not editable, and is not TEXT role
         monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        monkeypatch.setattr(
-            AXUtilitiesState, "is_editable", lambda obj: False
-        )
+        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
         monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.LABEL)
         assert not AXUtilitiesState.is_read_only(mock_obj)

@@ -68,6 +68,7 @@ def _mock_dbus_service() -> Generator[ModuleType, None, None]:
     def dbus_interface_decorator(_interface_name):
         def decorator(cls):
             return cls
+
         return decorator
 
     mock_dasbus_interface = Mock()
@@ -86,23 +87,27 @@ def _mock_dbus_service() -> Generator[ModuleType, None, None]:
     mock_dasbus_error = Mock()
     mock_dasbus_error.DBusError = DBusError
 
-    with patch.dict(sys.modules, {
-        "gi": mock_gi,
-        "gi.repository": mock_gi_repository,
-        "gi.repository.GLib": mock_glib,
-        "dasbus": Mock(),
-        "dasbus.connection": Mock(),
-        "dasbus.error": mock_dasbus_error,
-        "dasbus.loop": Mock(),
-        "dasbus.server": Mock(),
-        "dasbus.server.interface": mock_dasbus_interface,
-        "dasbus.server.publishable": mock_dasbus_publishable,
-        "orca.debug": Mock(),
-        "orca.input_event": Mock(),
-        "orca.orca_platform": Mock(),
-        "orca.script_manager": Mock(),
-    }):
+    with patch.dict(
+        sys.modules,
+        {
+            "gi": mock_gi,
+            "gi.repository": mock_gi_repository,
+            "gi.repository.GLib": mock_glib,
+            "dasbus": Mock(),
+            "dasbus.connection": Mock(),
+            "dasbus.error": mock_dasbus_error,
+            "dasbus.loop": Mock(),
+            "dasbus.server": Mock(),
+            "dasbus.server.interface": mock_dasbus_interface,
+            "dasbus.server.publishable": mock_dasbus_publishable,
+            "orca.debug": Mock(),
+            "orca.input_event": Mock(),
+            "orca.orca_platform": Mock(),
+            "orca.script_manager": Mock(),
+        },
+    ):
         from orca import dbus_service  # pylint: disable=import-outside-toplevel
+
         yield dbus_service
 
 
@@ -146,11 +151,10 @@ def _mock_orca_dependencies_fixture(monkeypatch) -> OrcaMocks:
         "ax_utilities_relation": Mock(),
         "ax_utilities_event": Mock(),
         "keynames": Mock(),
-
         # Additional mocks for more complex test files
         "colornames": Mock(
             rgb_string_to_color_name=Mock(return_value="red"),
-            normalize_rgb_string=Mock(return_value="#ff0000")
+            normalize_rgb_string=Mock(return_value="#ff0000"),
         ),
         "messages": Mock(
             pixel_count=Mock(return_value="5 pixels"),
@@ -159,14 +163,13 @@ def _mock_orca_dependencies_fixture(monkeypatch) -> OrcaMocks:
             CURRENT_LOCATION="Current location",
             CURRENT_PAGE="Current page",
             CURRENT_STEP="Current step",
-            CURRENT_ITEM="Current item"
+            CURRENT_ITEM="Current item",
         ),
         "settings": Mock(useColorNames=True),
         "text_attribute_names": Mock(
             attribute_names={"bg-color": "Background Color"},
-            attribute_values={"bold": "Bold", "fill": "fill"}
+            attribute_values={"bold": "Bold", "fill": "fill"},
         ),
-
         # Advanced mocks for complex dependencies
         "orca_i18n": Mock(
             _=lambda x: x, C_=lambda c, x: x, ngettext=lambda s, p, n: s if n == 1 else p
@@ -183,11 +186,13 @@ def _mock_orca_dependencies_fixture(monkeypatch) -> OrcaMocks:
 
     return OrcaMocks(mocks)
 
+
 def clean_module_cache(module_name: str) -> None:
     """Clean a specific module from sys.modules cache."""
 
     if module_name in sys.modules:
         del sys.modules[module_name]
+
 
 def pytest_configure(config: Any) -> None:
     """Register custom markers."""
