@@ -43,7 +43,6 @@ from gi.repository import Atspi
 
 from . import debug
 from . import focus_manager
-from . import input_event_manager
 from . import settings_manager
 
 from .ax_object import AXObject
@@ -205,8 +204,10 @@ class AXUtilitiesEvent:
     def _get_caret_moved_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        reason = TextEventReason.UNKNOWN
+        from . import input_event_manager # pylint: disable=import-outside-toplevel
         mgr = input_event_manager.get_manager()
+
+        reason = TextEventReason.UNKNOWN
         obj = event.source
         mode, focus = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         if mode == focus_manager.SAY_ALL:
@@ -279,8 +280,10 @@ class AXUtilitiesEvent:
     def _get_text_deletion_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        reason = TextEventReason.UNKNOWN
+        from . import input_event_manager # pylint: disable=import-outside-toplevel
         mgr = input_event_manager.get_manager()
+
+        reason = TextEventReason.UNKNOWN
         obj = event.source
         if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
             reason = TextEventReason.UI_UPDATE
@@ -323,8 +326,10 @@ class AXUtilitiesEvent:
     def _get_text_insertion_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        reason = TextEventReason.UNKNOWN
+        from . import input_event_manager # pylint: disable=import-outside-toplevel
         mgr = input_event_manager.get_manager()
+
+        reason = TextEventReason.UNKNOWN
         obj = event.source
         if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
             reason = TextEventReason.UI_UPDATE
@@ -405,8 +410,10 @@ class AXUtilitiesEvent:
     def _get_text_selection_changed_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        reason = TextEventReason.UNKNOWN
+        from . import input_event_manager # pylint: disable=import-outside-toplevel
         mgr = input_event_manager.get_manager()
+
+        reason = TextEventReason.UNKNOWN
         obj = event.source
         focus = focus_manager.get_manager().get_locus_of_focus()
         if focus != obj and AXUtilitiesRole.is_text_input_search(focus):
@@ -523,10 +530,12 @@ class AXUtilitiesEvent:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
+        from . import input_event_manager # pylint: disable=import-outside-toplevel
+        mgr = input_event_manager.get_manager()
+
         # Radio buttons normally change their state when you arrow to them, so we handle the
         # announcement of their state changes in the focus handling code.
-        if AXUtilitiesRole.is_radio_button(event.source) \
-           and not input_event_manager.get_manager().last_event_was_space():
+        if AXUtilitiesRole.is_radio_button(event.source) and not mgr.last_event_was_space():
             msg = "AXUtilitiesEvent: Only presentable for this role if toggled by user."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
