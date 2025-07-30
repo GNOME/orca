@@ -506,16 +506,6 @@ class Script(default.Script):
                 self._skip_blank_cells_check_button.get_active()
         }
 
-    def interrupt_presentation(self, kill_flash=True):
-        """Convenience method to interrupt whatever is being presented at the moment."""
-
-        # TODO - JD: Combine this with the default method.
-
-        super().interrupt_presentation(kill_flash)
-        msg = "WEB: Flushing live region messages"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.live_region_manager.flushMessages()
-
     # TODO - JD: This needs to be moved out of the scripts.
     def _say_all_iter(
         self,

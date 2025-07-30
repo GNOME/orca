@@ -2131,6 +2131,8 @@ class Script(script.Script):
         speech_and_verbosity_manager.get_manager().interrupt_speech()
         if kill_flash:
             braille.killFlash()
+        if self.live_region_manager is not None:
+            self.live_region_manager.flushMessages()
 
     def present_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
