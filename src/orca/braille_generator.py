@@ -147,6 +147,17 @@ class BrailleGenerator(generator.Generator):
 
         return [result, focused_region]
 
+    def generate_contents(  # type: ignore[override]
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args
+    ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
+        """Generates braille for the specified contents."""
+
+        # That the first element in the tuple is a list of lists is due to the web script's
+        # implementation. That may or may not make sense here.
+        return [], None
+
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if settings_manager.get_manager().get_setting("brailleRolenameStyle") \
                 == settings.BRAILLE_ROLENAME_STYLE_SHORT:

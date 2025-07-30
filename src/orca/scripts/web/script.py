@@ -739,16 +739,6 @@ class Script(default.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def speak_contents(
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
-    ) -> None:
-        """Speaks the specified contents."""
-
-        utterances = self.speech_generator.generate_contents(contents, **args)
-        speech.speak(utterances)
-
     def say_character(self, obj: Atspi.Accessible) -> None:
         """Speaks the character at the current caret position."""
 
@@ -993,46 +983,6 @@ class Script(default.Script):
 
         contents = self.utilities.get_line_contents_at_offset(obj, offset)
         self.display_contents(contents, documentFrame=document)
-
-    def display_contents(
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
-    ) -> None:
-        """Displays contents in braille."""
-
-        tokens = ["WEB: Displaying", contents, args]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
-
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "WEB: Braille disabled", True)
-            return
-
-        braille.clear()
-        line = braille.Line()
-        braille.add_line(line)
-
-        document = args.get("documentFrame")
-        result = self.braille_generator.generate_contents(contents, documentFrame=document)
-        if not result:
-            msg = "WEB: Generating braille contents failed"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        regions, focused_region = result
-        tokens = ["WEB: Generated result", regions, "focused region", focused_region]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # Each "region" is a list.
-        for region in regions:
-            line.add_regions(region)
-
-        if line.regions:
-            line.regions[-1].string = line.regions[-1].string.rstrip(" ")
-
-        braille.setFocus(focused_region, indicate_links=False)
-        braille.refresh(panToCursor=True, indicate_links=False)
 
     def pan_braille_left(
         self,

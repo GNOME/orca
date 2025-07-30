@@ -264,7 +264,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
         **args
-    ) -> tuple[list[list[Any]], Any | None]:
+    ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         if not contents:
             return [], None
 

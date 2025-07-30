@@ -2057,6 +2057,49 @@ class Script(script.Script):
     ) -> None:
         """Speaks the specified contents."""
 
+        tokens = ["DEFAULT: Speaking", contents, args]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+        utterances = self.speech_generator.generate_contents(contents, **args)
+        speech.speak(utterances)
+
+    def display_contents(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args
+    ) -> None:
+        """Displays contents in braille."""
+
+        tokens = ["DEFAULT: Displaying", contents, args]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+
+        if not settings_manager.get_manager().get_setting("enableBraille") \
+           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
+            debug.print_message(debug.LEVEL_INFO, "DEFAULT: Braille disabled", True)
+            return
+
+        braille.clear()
+        line = braille.Line()
+        braille.add_line(line)
+
+        regions_list, focused_region = self.braille_generator.generate_contents(contents, **args)
+        if not regions_list:
+            msg = "DEFAULT: Generating braille contents failed"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        tokens = ["DEFAULT: Generated result", regions_list,
+                  "focused region", focused_region or "None"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        for regions in regions_list:
+            line.add_regions(regions)
+
+        if line.regions:
+            line.regions[-1].string = line.regions[-1].string.rstrip(" ")
+
+        braille.setFocus(focused_region, indicate_links=False)
+        braille.refresh(panToCursor=True, indicate_links=False)
+
     def _say_all_iter(
         self,
         obj: Atspi.Accessible,
