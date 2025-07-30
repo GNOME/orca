@@ -174,7 +174,7 @@ class SSML(dict[str, Any]):
                     msg = f"{i}th U+E000 does not have corresponding index"
                     debug.print_message(debug.LEVEL_WARNING, msg, True)
                 else:
-                    ssml += f"<mark name='{offsets[i][0]}:{offsets[i][1]}'/>"
+                    ssml += f'<mark name="{offsets[i][0]}:{offsets[i][1]}"/>'
                 i += 1
             # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
             #elif c == '"':
