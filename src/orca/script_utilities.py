@@ -831,6 +831,17 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return ""
 
+    def set_caret_context(
+        self,
+        obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
+        offset: int = -1, # pylint: disable=unused-argument
+        document: Atspi.Accessible | None = None # pylint: disable=unused-argument
+    ) -> None:
+        """Sets the caret context in document to (obj, offset)."""
+
+        # TODO - JD: This logic ultimately belongs in AX* utility or focus manager.
+        return
+
     def get_caret_context(
         self,
         document: Atspi.Accessible | None = None,  # pylint: disable=unused-argument

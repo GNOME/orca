@@ -100,9 +100,6 @@ class Script(default.Script):
         super().__init__(app)
 
         self._default_sn_mode = NavigationMode.DOCUMENT
-
-        self._say_all_contents: list[tuple[Atspi.Accessible, int, int, str]] = []
-        self._say_all_contexts: list = []
         self._loading_content = False
         self._made_find_announcement = False
         self._last_mouse_button_context = None, -1
@@ -154,7 +151,6 @@ class Script(default.Script):
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
 
-        self._say_all_contents = []
         self._loading_content = False
         self._made_find_announcement = False
         self._last_mouse_button_context = None, -1
@@ -704,38 +700,6 @@ class Script(default.Script):
         next_obj, next_offset = self.utilities.find_next_caret_in_order(obj, end)
         self.say_all(None, next_obj, next_offset)
         return True
-
-    def _say_all_progress_callback(
-        self,
-        context: speechserver.SayAllContext,
-        progress_type: int
-    ) -> None:
-        if not self.utilities.in_document_content():
-            super()._say_all_progress_callback(context, progress_type)
-            return
-
-        if progress_type == speechserver.SayAllContext.PROGRESS:
-            focus_manager.get_manager().emit_region_changed(
-                context.obj, context.current_offset, context.current_end_offset,
-                focus_manager.SAY_ALL)
-            return
-
-        if progress_type == speechserver.SayAllContext.INTERRUPTED:
-            manager = input_event_manager.get_manager()
-            if manager.last_event_was_keyboard():
-                if manager.last_event_was_down() and self._say_all_fast_forward(context):
-                    return
-                if manager.last_event_was_up() and self._say_all_rewind(context):
-                    return
-                if settings_manager.get_manager().get_setting("structNavInSayAll") \
-                   and self.get_structural_navigator().last_input_event_was_navigation_command():
-                    return
-
-        self._say_all_contents = []
-        self._say_all_contexts = []
-        focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-        focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
-        self.utilities.set_caret_context(context.obj, context.current_offset)
 
     def in_focus_mode(self) -> bool:
         """ Returns True if we're in focus mode."""

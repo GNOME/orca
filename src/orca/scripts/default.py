@@ -87,8 +87,9 @@ class Script(script.Script):
 
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
-        self._say_all_contexts: list = []
-        self.grab_ids: list = []
+        self._say_all_contents: list[tuple[Atspi.Accessible, int, int, str]] = []
+        self._say_all_contexts: list = [speechserver.SayAllContext]
+        self.grab_ids: list = [int]
 
     def setup_input_event_handlers(self) -> None:
         """Defines the input event handlers for this script."""
@@ -525,6 +526,8 @@ class Script(script.Script):
         """Called when this script is deactivated."""
 
         self.point_of_reference = {}
+        self._say_all_contents = []
+        self._say_all_contexts = []
 
         if self.get_bypass_mode_manager().is_active():
             self.get_bypass_mode_manager().toggle_enabled(self)
@@ -1818,11 +1821,15 @@ class Script(script.Script):
                     return
                 if manager.last_event_was_up() and self._say_all_rewind(context):
                     return
+                if settings_manager.get_manager().get_setting("structNavInSayAll") \
+                   and self.get_structural_navigator().last_input_event_was_navigation_command():
+                    return
 
+        self._say_all_contents = []
         self._say_all_contexts = []
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
         focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
-        AXText.set_caret_offset(context.obj, context.current_offset)
+        self.utilities.set_caret_context(context.obj, context.current_offset)
 
     def _echo_previous_sentence(self, obj: Atspi.Accessible) -> bool:
         """Speaks the sentence prior to the caret if at a sentence boundary."""
@@ -2073,6 +2080,7 @@ class Script(script.Script):
 
                 self._say_all_contexts.append(context)
                 self.get_event_synthesizer().scroll_into_view(obj, start, end)
+                AXText.set_caret_offset(obj, start)
                 yield [context, voice]
 
             prior_obj = obj
