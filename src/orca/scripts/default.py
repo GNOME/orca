@@ -1769,34 +1769,42 @@ class Script(script.Script):
     def _say_all_rewind(
         self,
         context: speechserver.SayAllContext,
-        min_char_count: int = 10
     ) -> bool:
         if not settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll"):
             return False
 
-        index = self._say_all_contexts.index(context)
-        self._say_all_contexts = self._say_all_contexts[0:index]
-        while self._say_all_contexts:
-            context = self._say_all_contexts.pop()
-            if context.end_offset - context.start_offset > min_char_count:
-                break
+        try:
+            obj, start, _end, _string = self._say_all_contents[0]
+        except IndexError:
+            obj, start = context.obj, context.start_offset
 
-        # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.start_offset):
-            focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
+        if obj is None:
+            return False
 
-        self.say_all(None, context.obj, context.start_offset)
+        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
+        self.utilities.set_caret_context(obj, start)
+
+        prev_obj, prev_offset = self.utilities.previous_context(obj, start)
+        self.say_all(None, prev_obj, prev_offset)
         return True
 
     def _say_all_fast_forward(self, context: speechserver.SayAllContext) -> bool:
         if not settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll"):
             return False
 
-        # TODO - JD: Why do we only update focus if text is supported?
-        if AXText.set_caret_offset(context.obj, context.end_offset):
-            focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
+        try:
+            obj, _start, end, _string = self._say_all_contents[-1]
+        except IndexError:
+            obj, end = context.obj, context.end_offset
 
-        self.say_all(None, context.obj, context.end_offset)
+        if obj is None:
+            return False
+
+        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
+        self.utilities.set_caret_context(obj, end)
+
+        next_obj, next_offset = self.utilities.next_context(obj, end)
+        self.say_all(None, next_obj, next_offset)
         return True
 
     def _say_all_progress_callback(
@@ -1824,6 +1832,8 @@ class Script(script.Script):
                 if settings_manager.get_manager().get_setting("structNavInSayAll") \
                    and self.get_structural_navigator().last_input_event_was_navigation_command():
                     return
+                self.interrupt_presentation()
+                AXText.set_caret_offset(context.obj, context.current_offset)
 
         self._say_all_contents = []
         self._say_all_contexts = []

@@ -653,54 +653,6 @@ class Script(default.Script):
 
         self._made_find_announcement = True
 
-    def _say_all_rewind(
-        self,
-        context: speechserver.SayAllContext,
-        min_char_count: int = 10
-    ) -> bool:
-        if not self.utilities.in_document_content():
-            return super()._say_all_rewind(context, min_char_count)
-
-        if not settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll"):
-            return False
-
-        try:
-            obj, start, _end, _string = self._say_all_contents[0]
-        except IndexError:
-            obj, start = context.obj, context.start_offset
-
-        if obj is None:
-            return False
-
-        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-        self.utilities.set_caret_context(obj, start)
-
-        prev_obj, prev_offset = self.utilities.find_previous_caret_in_order(obj, start)
-        self.say_all(None, prev_obj, prev_offset)
-        return True
-
-    def _say_all_fast_forward(self, context: speechserver.SayAllContext) -> bool:
-        if not self.utilities.in_document_content():
-            return super()._say_all_fast_forward(context)
-
-        if not settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll"):
-            return False
-
-        try:
-            obj, _start, end, _string = self._say_all_contents[-1]
-        except IndexError:
-            obj, end = context.obj, context.end_offset
-
-        if obj is None:
-            return False
-
-        focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-        self.utilities.set_caret_context(obj, end)
-
-        next_obj, next_offset = self.utilities.find_next_caret_in_order(obj, end)
-        self.say_all(None, next_obj, next_offset)
-        return True
-
     def in_focus_mode(self) -> bool:
         """ Returns True if we're in focus mode."""
 
