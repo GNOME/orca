@@ -19,15 +19,18 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
 
 """Custom script for SeaMonkey."""
+
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING
 
 from orca import cmdnames
 from orca import debug
@@ -36,71 +39,97 @@ from orca import input_event
 from orca.ax_table import AXTable
 from orca.scripts.toolkits import Gecko
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from orca.scripts.toolkits.Gecko.script_utilities import Utilities
+
 
 class Script(Gecko.Script):
     """Custom script for SeaMonkey."""
 
-    def setup_input_event_handlers(self):
+    # Type annotation to help with method resolution
+    utilities: "Utilities"
+
+    def setup_input_event_handlers(self) -> None:
         """Defines the input event handlers for this script."""
 
         super().setup_input_event_handlers()
 
         self.input_event_handlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
-                Script.togglePresentationMode,
+                Script.toggle_presentation_mode,
                 cmdnames.TOGGLE_PRESENTATION_MODE)
 
         self.input_event_handlers["enableStickyFocusModeHandler"] = \
             input_event.InputEventHandler(
-                Script.enableStickyFocusMode,
+                Script.enable_sticky_focus_mode,
                 cmdnames.SET_FOCUS_MODE_STICKY)
 
         self.input_event_handlers["enableStickyBrowseModeHandler"] = \
             input_event.InputEventHandler(
-                Script.enableStickyBrowseMode,
+                Script.enable_sticky_browse_mode,
                 cmdnames.SET_BROWSE_MODE_STICKY)
 
-    def on_busy_changed(self, event):
+    def on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
 
-        if self.utilities.isContentEditableWithEmbeddedObjects(event.source):
+        if self.utilities.is_content_editable_with_embedded_objects(event.source):
             msg = "SEAMONKEY: Ignoring, event source is content editable"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
-        if table and not self.utilities.isTextDocumentTable(table):
+        if table and not self.utilities.is_text_document_table(table):
             msg = "SEAMONKEY: Ignoring, table is not text-document table"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
+            return True
 
-        super().on_busy_changed(event)
+        return super().on_busy_changed(event)
 
-    def useFocusMode(self, obj, prevObj=None):
-        if self.utilities.isEditableMessage(obj):
+    def use_focus_mode(
+        self,
+        obj: Atspi.Accessible,
+        prev_obj: Atspi.Accessible | None = None
+    ) -> bool:
+        if self.utilities.is_editable_message(obj):
             tokens = ["SEAMONKEY: Using focus mode for editable message", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         tokens = ["SEAMONKEY:", obj, "is not an editable message."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return super().useFocusMode(obj, prevObj)
+        return super().use_focus_mode(obj, prev_obj)
 
-    def enableStickyBrowseMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(focus_manager.get_manager().get_locus_of_focus()):
-            return
+    def enable_sticky_browse_mode(
+        self,
+        inputEvent: input_event.InputEvent | None = None,
+        force_message: bool = False
+    ) -> bool:
+        if self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
+            return True
 
-        super().enableStickyBrowseMode(inputEvent, forceMessage)
+        return super().enable_sticky_browse_mode(inputEvent, force_message)
 
-    def enableStickyFocusMode(self, inputEvent, forceMessage=False):
-        if self.utilities.isEditableMessage(focus_manager.get_manager().get_locus_of_focus()):
-            return
+    def enable_sticky_focus_mode(
+        self,
+        inputEvent: input_event.InputEvent | None = None,
+        force_message: bool = False
+    ) -> bool:
+        if self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
+            return True
 
-        super().enableStickyFocusMode(inputEvent, forceMessage)
+        return super().enable_sticky_focus_mode(inputEvent, force_message)
 
-    def togglePresentationMode(self, inputEvent, documentFrame=None):
-        if self._inFocusMode \
-           and self.utilities.isEditableMessage(focus_manager.get_manager().get_locus_of_focus()):
-            return
+    def toggle_presentation_mode(
+        self,
+        event: input_event.InputEvent,
+        document: Atspi.Accessible | None = None
+    ) -> bool:
+        if self._in_focus_mode \
+           and self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
+            return True
 
-        super().togglePresentationMode(inputEvent, documentFrame)
+        return super().toggle_presentation_mode(event, document)

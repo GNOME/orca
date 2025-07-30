@@ -1586,10 +1586,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # currently used one.
             #
             tablesCombo = self.get_widget("contractionTableCombo")
-            tableDict = braille.listTables()
+            tableDict = braille.list_tables()
             selectedTableIter = None
-            selectedTable = prefs["brailleContractionTable"] or \
-                             braille.getDefaultTable()
+            selectedTable = prefs["brailleContractionTable"] or braille.get_default_table()
             if tableDict:
                 tablesModel = Gtk.ListStore(str, str)
                 names = sorted(tableDict.keys())
@@ -2134,7 +2133,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.kbindings = keybindings.KeyBindings()
             self.script.setup_input_event_handlers()
             allKeyBindings = self.script.get_key_bindings(False)
-            defKeyBindings = self.script.getDefaultKeyBindings()
+            defKeyBindings = self.script.get_default_keybindings_deprecated()
             npKeyBindings = self.script.get_notification_presenter().get_bindings(
                 is_desktop=isDesktop)
             cbKeyBindings = self.script.get_clipboard_presenter().get_bindings(

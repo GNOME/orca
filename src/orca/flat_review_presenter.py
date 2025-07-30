@@ -1323,8 +1323,8 @@ class FlatReviewPresenter:
             return
 
         line = braille.Line()
-        line.addRegions(regions)
-        braille.setLines([line])
+        line.add_regions(regions)
+        braille.set_lines([line])
         braille.setFocus(focused_region)
         braille.refresh(True)
 
@@ -1357,7 +1357,7 @@ class FlatReviewPresenter:
             self._update_braille(script)
             return True
 
-        if hasattr(braille_region, "zone"):
+        if braille_region and hasattr(braille_region, "zone"):
             self._context.set_current_zone(braille_region.zone, offset_in_zone)
             self._update_braille(script)
         return True
@@ -1389,7 +1389,7 @@ class FlatReviewPresenter:
             self._update_braille(script)
             return True
 
-        if hasattr(braille_region, "zone"):
+        if braille_region and hasattr(braille_region, "zone"):
             self._context.set_current_zone(braille_region.zone, offset_in_zone)
             self._update_braille(script)
         return True
@@ -1549,7 +1549,7 @@ class FlatReviewPresenter:
             elif speech_type == 2:
                 script.spell_item(line_string)
             elif speech_type == 3:
-                script.phoneticSpellCurrentItem(line_string)
+                script.spell_phonetically(line_string)
             else:
                 manager = speech_and_verbosity_manager.get_manager()
                 line_string = manager.adjust_for_presentation(
@@ -1587,7 +1587,7 @@ class FlatReviewPresenter:
                 elif speech_type == 2:
                     script.spell_item(word_string)
                 elif speech_type == 3:
-                    script.phoneticSpellCurrentItem(word_string)
+                    script.spell_phonetically(word_string)
                 elif speech_type == 1:
                     manager = speech_and_verbosity_manager.get_manager()
                     word_string = manager.adjust_for_presentation(
@@ -1623,7 +1623,7 @@ class FlatReviewPresenter:
                 elif speech_type == 3:
                     script.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
                 elif speech_type == 2:
-                    script.phoneticSpellCurrentItem(char_string)
+                    script.spell_phonetically(char_string)
                 else:
                     script.speak_character(char_string)
 

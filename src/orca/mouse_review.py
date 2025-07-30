@@ -456,7 +456,7 @@ class MouseReviewer:
         if obj:
             script = script_manager.get_manager().get_script(AXUtilities.get_application(obj), obj)
         if script:
-            frame = script.utilities.topLevelObject(obj)
+            frame = script.utilities.top_level_object(obj)
         self._current_mouse_over = _ItemContext(obj=obj, frame=frame, script=script)
 
         self._event_listener.register("mouse:abs")

@@ -218,7 +218,7 @@ class SpellCheck:
         braille.clear()
         msg = self.get_completion_message()
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.present_message(msg, voice=voice)
+        self._script.present_message(msg, voice=voice[0] if voice else None)
         return True
 
     def present_error_details(self, detailed: bool = False) -> bool:
@@ -302,7 +302,7 @@ class SpellCheck:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        items = self._script.utilities.selectedChildren(suggestions)
+        items = self._script.utilities.selected_children(suggestions)
         if not len(items) == 1:
             return False
 

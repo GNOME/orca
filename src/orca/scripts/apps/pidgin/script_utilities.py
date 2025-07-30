@@ -17,9 +17,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
 
 """Custom script utilities for pidgin."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
@@ -27,15 +29,22 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from orca import script_utilities
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
 class Utilities(script_utilities.Utilities):
     """Custom script utilities for pidgin."""
 
-    def get_expander_cell_for(self, obj):
+    def get_expander_cell_for(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the cell that is expandable in the row with obj."""
 
         if not self._script.chat.isInBuddyList(obj):
@@ -57,20 +66,11 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
-    def childNodes(self, obj):
-        """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
-        to this expanded table cell. Overridden here because the object
-        which contains the relation is in a hidden column and thus doesn't
-        have a column number.
-
-        Arguments:
-        -obj: the Accessible Object
-
-        Returns: a list of all the child nodes
-        """
+    def child_nodes(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
+        """Gets all of the objects that have RELATION_NODE_CHILD_OF pointing to this cell."""
 
         if not self._script.chat.isInBuddyList(obj):
-            return super().childNodes(obj)
+            return super().child_nodes(obj)
 
         if not AXUtilities.is_expanded(obj):
             return []
@@ -84,7 +84,7 @@ class Utilities(script_utilities.Utilities):
 
         # increment the column because the expander cell is hidden.
         col += 1
-        node_level = self.nodeLevel(obj)
+        node_level = self.node_level(obj)
 
         # Candidates will be in the rows beneath the current row.
         # Only check in the current column and stop checking as
@@ -101,13 +101,13 @@ class Utilities(script_utilities.Utilities):
             node_of = targets[0]
             if obj == node_of:
                 nodes.append(cell)
-            elif self.nodeLevel(node_of) <= node_level:
+            elif self.node_level(node_of) <= node_level:
                 break
 
         return nodes
 
-    def nodeLevel(self, obj):
+    def node_level(self, obj: Atspi.Accessible) -> int:
         if not self._script.chat.isInBuddyList(obj):
-            return super().nodeLevel(obj)
+            return super().node_level(obj)
 
-        return super().nodeLevel(AXObject.get_previous_sibling(obj))
+        return super().node_level(AXObject.get_previous_sibling(obj))

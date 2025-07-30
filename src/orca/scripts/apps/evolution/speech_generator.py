@@ -68,7 +68,7 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
             return []
 
         if self._script.utilities.is_message_list_toggle_cell(obj):
-            if self._script.utilities.cellRowChanged(obj) or not AXUtilities.is_focused(obj):
+            if self._script.utilities.cell_row_changed(obj) or not AXUtilities.is_focused(obj):
                 return []
 
         return super()._generate_state_checked_for_cell(obj, **args)
@@ -98,7 +98,7 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
            and not self._script.utilities.is_message_list_status_cell(obj):
             if not AXUtilities.is_checked(obj):
                 return []
-            if AXUtilities.is_focused(obj) and not self._script.utilities.cellRowChanged(obj):
+            if AXUtilities.is_focused(obj) and not self._script.utilities.cell_row_changed(obj):
                 return []
 
         return super()._generate_real_active_descendant_displayed_text(obj, **args)

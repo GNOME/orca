@@ -192,7 +192,7 @@ class LearnModePresenter:
         script.speak_key_event(event)
         if event.is_printable_key() and event.get_click_count() == 2 \
            and event.get_handler() is None:
-            script.phoneticSpellCurrentItem(event.get_key_name())
+            script.spell_phonetically(event.get_key_name())
 
         if event.keyval_name == "Escape":
             self.quit(script, event)
@@ -236,7 +236,7 @@ class LearnModePresenter:
         items = 0
         bindings = {}
         if event is None or event.keyval_name == "F2":
-            bound = script.getDefaultKeyBindings().get_bound_bindings()
+            bound = script.get_default_keybindings_deprecated().get_bound_bindings()
             bindings[guilabels.KB_GROUP_DEFAULT] = bound
             items += len(bound)
 

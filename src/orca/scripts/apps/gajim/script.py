@@ -17,9 +17,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
 
 """Custom script for Gajim."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -27,54 +29,67 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
-from orca import chat
-from orca.scripts import default
+from typing import TYPE_CHECKING
+
+from orca import keybindings
 from orca.ax_utilities import AXUtilities
+from orca.chat import Chat
+from orca.scripts import default
+
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    gi.require_version("Gtk", "3.0")
+    from gi.repository import Atspi
+    from gi.repository import Gtk
 
 class Script(default.Script):
     """Custom script for Gajim."""
 
-    def get_chat(self):
+    def get_chat(self) -> Chat:
         """Returns the 'chat' class for this script."""
 
-        return chat.Chat(self)
+        return Chat(self)
 
-    def setup_input_event_handlers(self):
+    def setup_input_event_handlers(self) -> None:
         """Defines the input event handlers for this script."""
 
         default.Script.setup_input_event_handlers(self)
+        assert self.chat is not None
         self.input_event_handlers.update(self.chat.input_event_handlers)
 
-    def get_app_key_bindings(self):
+    def get_app_key_bindings(self) -> keybindings.KeyBindings:
         """Returns the application-specific keybindings for this script."""
 
+        assert self.chat is not None
         return self.chat.key_bindings
 
-    def get_app_preferences_gui(self):
-        """Return a GtkGrid containing the application unique configuration
-        GUI items for the current application. The chat-related options get
-        created by the chat module."""
+    def get_app_preferences_gui(self) -> Gtk.Grid:
+        """Return a GtkGrid containing app-specific settings."""
 
+        assert self.chat is not None
         return self.chat.get_app_preferences_gui()
 
-    def get_preferences_from_gui(self):
+    def get_preferences_from_gui(self) -> dict:
         """Returns a dictionary with the app-specific preferences."""
 
+        assert self.chat is not None
         return self.chat.get_preferences_from_gui()
 
-    def on_text_inserted(self, event):
+    def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
+        assert self.chat is not None
         if self.chat.presentInsertedText(event):
-            return
+            return True
 
-        default.Script.on_text_inserted(self, event)
+        return default.Script.on_text_inserted(self, event)
 
-    def on_window_activated(self, event):
+    def on_window_activated(self, event: Atspi.Event) -> bool:
         """Callback for window:activate accessibility events."""
 
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
         AXUtilities.find_all_page_tabs(event.source)
-        default.Script.on_window_activated(self, event)
+        return default.Script.on_window_activated(self, event)

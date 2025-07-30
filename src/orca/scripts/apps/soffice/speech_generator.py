@@ -70,7 +70,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._script.utilities.isSpreadSheetCell(obj):
+        if self._script.utilities.is_spreadsheet_cell(obj):
             # Currently the coordinates of the cell are exposed as the name.
             return []
         return super()._generate_accessible_name(obj, **args)
@@ -161,7 +161,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = super()._generate_real_table_cell(obj, **args)
 
-        if not self._script.utilities.isSpreadSheetCell(obj):
+        if not self._script.utilities.is_spreadsheet_cell(obj):
             if self._script.get_table_navigator().last_input_event_was_navigation_command():
                 return result
 
@@ -175,8 +175,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 or self._script.utilities.spreadsheet_cell_name(obj)
             result.append(label)
 
-        if self._script.utilities.shouldReadFullRow(obj, args.get("priorObj")):
-            if self._script.utilities.cellRowChanged(obj):
+        if self._script.utilities.should_read_full_row(obj, args.get("priorObj")):
+            if self._script.utilities.cell_row_changed(obj):
                 return result
 
         too_long = self._generate_too_long(obj, **args)
@@ -197,15 +197,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._script.utilities.isSpreadSheetCell(obj) \
-           and self._script.utilities.isDocumentPanel(AXObject.get_parent(args.get("priorObj"))):
+        if self._script.utilities.is_spreadsheet_cell(obj) \
+           and self._script.utilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
             return []
 
         return super()._generate_new_ancestors(obj, **args)
 
     @log_generator_output
     def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._script.utilities.isSpreadSheetCell(args.get("priorObj")):
+        if self._script.utilities.is_spreadsheet_cell(args.get("priorObj")):
             return []
 
         return super()._generate_old_ancestors(obj, **args)

@@ -424,7 +424,7 @@ class WhereAmIPresenter:
 
         obj = focus_manager.get_manager().get_locus_of_focus()
         if dialog is None:
-            _frame, dialog = script.utilities.frameAndDialog(obj)
+            _frame, dialog = script.utilities.frame_and_dialog(obj)
         if dialog is None:
             if notify_user:
                 script.present_message(messages.DIALOG_NOT_IN_A)
@@ -458,7 +458,7 @@ class WhereAmIPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
-        frame, _dialog = script.utilities.frameAndDialog(obj)
+        frame, _dialog = script.utilities.frame_and_dialog(obj)
         if frame:
             statusbar = AXUtilities.get_status_bar(frame)
             if statusbar:
@@ -488,7 +488,7 @@ class WhereAmIPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         link = focus_manager.get_manager().get_locus_of_focus()
-        if not script.utilities.isLink(link):
+        if not script.utilities.is_link(link):
             if notify_user:
                 script.present_message(messages.NOT_ON_A_LINK)
             return True
@@ -499,24 +499,24 @@ class WhereAmIPresenter:
         """Returns the selected text of obj plus any adjacent text objects."""
 
         string = AXText.get_selected_text(obj)[0]
-        if script.utilities.isSpreadSheetCell(obj):
+        if script.utilities.is_spreadsheet_cell(obj):
             return string
 
-        prev_obj = script.utilities.findPreviousObject(obj)
+        prev_obj = script.utilities.find_previous_object(obj)
         while prev_obj:
             selection = AXText.get_selected_text(prev_obj)[0]
             if not selection:
                 break
             string = f"{selection} {string}"
-            prev_obj = script.utilities.findPreviousObject(prev_obj)
+            prev_obj = script.utilities.find_previous_object(prev_obj)
 
-        next_obj = script.utilities.findNextObject(obj)
+        next_obj = script.utilities.find_next_object(obj)
         while next_obj:
             selection = AXText.get_selected_text(next_obj)[0]
             if not selection:
                 break
             string = f"{string} {selection}"
-            next_obj = script.utilities.findNextObject(next_obj)
+            next_obj = script.utilities.find_next_object(next_obj)
 
         return string
 
@@ -565,30 +565,30 @@ class WhereAmIPresenter:
 
         obj = focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
-            if not script.utilities.isLink(obj):
+            if not script.utilities.is_link(obj):
                 script.speak_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         tokens = ["WHERE AM I PRESENTER: presenting selection for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        spreadsheet = AXObject.find_ancestor(obj, script.utilities.isSpreadSheetTable)
-        if spreadsheet is not None and script.utilities.speakSelectedCellRange(spreadsheet):
+        spreadsheet = AXObject.find_ancestor(obj, script.utilities.is_spreadsheet_table)
+        if spreadsheet is not None and script.utilities.speak_selected_cell_range(spreadsheet):
             return True
 
-        container = script.utilities.getSelectionContainer(obj)
+        container = script.utilities.get_selection_container(obj)
         if container is None:
             tokens = ["WHERE AM I PRESENTER: Selection container not found for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return self.present_selected_text(script, event, obj)
 
-        selected_count = script.utilities.selectedChildCount(container)
-        child_count = script.utilities.selectableChildCount(container)
+        selected_count = script.utilities.selected_child_count(container)
+        child_count = script.utilities.selectable_child_count(container)
         script.present_message(messages.selected_items_count(selected_count, child_count))
         if not selected_count:
             return True
 
-        selected_items = script.utilities.selectedChildren(container)
+        selected_items = script.utilities.selected_children(container)
         item_names = ",".join(map(AXObject.get_name, selected_items))
         script.speak_message(item_names)
         return True

@@ -163,7 +163,7 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings the represents details about the window title for obj."""
 
         result = []
-        frame, dialog = self._script.utilities.frameAndDialog(obj)
+        frame, dialog = self._script.utilities.frame_and_dialog(obj)
         if frame:
             frame_result = self._generate_accessible_label_and_name(frame)
             if not frame_result:
@@ -172,7 +172,8 @@ class SpeechGenerator(generator.Generator):
 
         if dialog:
             result.append(self._generate_accessible_label_and_name(dialog))
-        elif spreadsheet := AXObject.find_ancestor(obj, self._script.utilities.isSpreadSheetTable):
+        elif spreadsheet := AXObject.find_ancestor(
+                obj, self._script.utilities.is_spreadsheet_table):
             result.append(self._generate_accessible_label_and_name(spreadsheet))
 
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
@@ -430,7 +431,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_combo_box(AXObject.get_parent(obj)):
             return False
 
-        if self._script.utilities.isAnchor(obj):
+        if self._script.utilities.is_anchor(obj):
             return False
 
         if AXUtilities.is_desktop_frame(obj):
@@ -588,7 +589,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
-            child_nodes = self._script.utilities.childNodes(obj)
+            child_nodes = self._script.utilities.child_nodes(obj)
             if child_nodes:
                 result = [messages.item_count(len(child_nodes))]
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -634,7 +635,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         child_count = AXObject.get_child_count(container)
-        selected_count = len(self._script.utilities.selectedChildren(container))
+        selected_count = len(self._script.utilities.selected_children(container))
         result.append(messages.selected_items_count(selected_count, child_count))
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         result.append(object_properties.ICON_INDEX_SPEECH \
@@ -658,7 +659,7 @@ class SpeechGenerator(generator.Generator):
             if not AXObject.supports_selection(container):
                 return []
 
-        selected_items = self._script.utilities.selectedChildren(container)
+        selected_items = self._script.utilities.selected_children(container)
         return list(map(self._generate_accessible_label_and_name, selected_items))
 
     @log_generator_output
@@ -771,7 +772,7 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.leaving_n_blockquotes(count))
             else:
                 result.append(messages.LEAVING_BLOCKQUOTE)
-        elif self._script.utilities.isDocumentList(obj):
+        elif self._script.utilities.is_document_list(obj):
             if count > 1:
                 result.append(messages.leaving_n_lists(count))
             else:
@@ -781,13 +782,13 @@ class SpeechGenerator(generator.Generator):
         elif role == Atspi.Role.PANEL:
             if AXUtilities.is_figure(obj):
                 result.append(messages.LEAVING_FIGURE)
-            elif self._script.utilities.isDocumentPanel(obj):
+            elif self._script.utilities.is_document_panel(obj):
                 result.append(messages.LEAVING_PANEL)
             else:
                 result = [""]
         elif role == Atspi.Role.GROUPING:
             result.append(messages.LEAVING_GROUPING)
-        elif role == Atspi.Role.TABLE and self._script.utilities.isTextDocumentTable(obj):
+        elif role == Atspi.Role.TABLE and self._script.utilities.is_text_document_table(obj):
             result.append(messages.LEAVING_TABLE)
         elif role == "ROLE_DPUB_LANDMARK":
             if AXUtilities.is_dpub_acknowledgments(obj):
@@ -952,7 +953,8 @@ class SpeechGenerator(generator.Generator):
                 break
 
             # TODO - JD: Create an alternative role for this.
-            if parent_role in skip_roles and not self._script.utilities.isSpreadSheetTable(parent):
+            if parent_role in skip_roles \
+                    and not self._script.utilities.is_spreadsheet_table(parent):
                 pass
             elif include_only and parent_role not in include_only:
                 pass
@@ -1000,7 +1002,7 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        if self._script.utilities.inFindContainer():
+        if self._script.utilities.in_find_container():
             return []
 
         prior_obj = args.get("priorObj")
@@ -1014,7 +1016,7 @@ class SpeechGenerator(generator.Generator):
            or AXObject.find_ancestor(obj, lambda x: x == prior_obj):
             return []
 
-        _frame, dialog = self._script.utilities.frameAndDialog(obj)
+        _frame, dialog = self._script.utilities.frame_and_dialog(obj)
         if dialog:
             return []
 
@@ -1058,7 +1060,7 @@ class SpeechGenerator(generator.Generator):
         if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
             return []
 
-        if self._script.utilities.inFindContainer():
+        if self._script.utilities.in_find_container():
             return []
 
         prior_obj = args.get("priorObj")
@@ -1076,7 +1078,7 @@ class SpeechGenerator(generator.Generator):
         if prior_obj is not None:
             return self._generate_ancestors(obj, **args)
 
-        frame, dialog = self._script.utilities.frameAndDialog(obj)
+        frame, dialog = self._script.utilities.frame_and_dialog(obj)
         top_level = dialog or frame
         if AXUtilities.is_dialog_or_alert(top_level):
             return self._generate_ancestors(obj, **args)
@@ -1233,7 +1235,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         link_uri_info = urllib.parse.urlparse(link_uri)
-        doc_uri = AXDocument.get_uri(self._script.utilities.documentFrame())
+        doc_uri = AXDocument.get_uri(self._script.utilities.document_frame())
         if not doc_uri:
             return []
 
@@ -1668,7 +1670,7 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-            container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
+            container = AXObject.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
             if AXUtilities.is_suggestion(container):
                 result.extend(self._generate_pause(obj, **args))
                 result.extend(self._generate_has_details(container))
@@ -1724,7 +1726,7 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-            container = AXObject.find_ancestor(obj, self._script.utilities.hasDetails)
+            container = AXObject.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
             if AXUtilities.is_suggestion(container):
                 result.extend(self._generate_pause(obj, **args))
                 result.extend(self._generate_has_details(container))
@@ -2144,7 +2146,7 @@ class SpeechGenerator(generator.Generator):
             if not self._script.utilities.is_gui_cell(obj):
                 return []
         elif AXUtilities.is_layered_pane(parent):
-            if obj in self._script.utilities.selectedChildren(parent):
+            if obj in self._script.utilities.selected_children(parent):
                 return []
         else:
             return []
@@ -2266,7 +2268,7 @@ class SpeechGenerator(generator.Generator):
         if focus_manager.get_manager().in_say_all():
             return []
 
-        if not self._script.utilities.cellColumnChanged(obj, args.get("priorObj")) \
+        if not self._script.utilities.cell_column_changed(obj, args.get("priorObj")) \
            and not args.get("formatType", "").endswith("WhereAmI"):
             return []
 
@@ -2291,7 +2293,7 @@ class SpeechGenerator(generator.Generator):
         if focus_manager.get_manager().in_say_all():
             return []
 
-        if not self._script.utilities.cellRowChanged(obj, args.get("priorObj")) \
+        if not self._script.utilities.cell_row_changed(obj, args.get("priorObj")) \
            and not args.get("formatType", "").endswith("WhereAmI"):
             return []
 
@@ -2316,14 +2318,14 @@ class SpeechGenerator(generator.Generator):
         if AXTable.is_layout_table(obj):
             return []
 
-        if self._script.utilities.isSpreadSheetTable(obj):
+        if self._script.utilities.is_spreadsheet_table(obj):
             return []
 
         if settings_manager.get_manager().get_setting("speechVerbosityLevel") \
            == settings.VERBOSITY_LEVEL_BRIEF:
             return self._generate_accessible_role(obj, **args)
 
-        if self._script.utilities.isTextDocumentTable(obj):
+        if self._script.utilities.is_text_document_table(obj):
             role = args.get("role", AXObject.get_role(obj))
             _enabled, disabled = self._get_enabled_and_disabled_context_roles()
             if role in disabled:
@@ -2361,7 +2363,7 @@ class SpeechGenerator(generator.Generator):
         if not settings_manager.get_manager().get_setting("speakCellCoordinates"):
             return []
 
-        if not self._script.utilities.cellColumnChanged(obj):
+        if not self._script.utilities.cell_column_changed(obj):
             return []
 
         col = AXTable.get_cell_coordinates(obj, find_cell=True)[1]
@@ -2378,7 +2380,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if not self._script.utilities.cellRowChanged(obj):
+        if not self._script.utilities.cell_row_changed(obj):
             return []
 
         if args.get("readingRow"):
@@ -2471,7 +2473,7 @@ class SpeechGenerator(generator.Generator):
 
         end_offset = start_offset + len(text)
         for start, _end, string, language, dialect in \
-                self._script.utilities.splitSubstringByLanguage(obj, start_offset, end_offset):
+                self._script.utilities.split_substring_by_language(obj, start_offset, end_offset):
             string = string.replace("\ufffc", "")
             if not string:
                 continue
@@ -4148,7 +4150,7 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates speech for the notification role."""
 
-        # TODO - JD: Should this instead or also be using the logic in getNotificationContent?
+        # TODO - JD: Should this instead or also be using the logic in get_notification_content()?
         result = []
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)

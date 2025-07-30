@@ -19,10 +19,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# For the "AXUtilities has no ... member"
-# pylint: disable=E1101
+# pylint: disable=too-many-return-statements
 
 """Custom script utilities for Chromium"""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -31,6 +33,7 @@ __copyright__ = "Copyright (c) 2018-2019 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
+from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
@@ -38,39 +41,47 @@ from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 class Utilities(web.Utilities):
     """Custom script utilities for Chromium"""
 
-    def getFindResultsCount(self, root=None):
-        root = root or self._findContainer
+    def get_find_results_count(self, root: Atspi.Accessible | None = None) -> str:
+        """Returns a string description of the number of find-in-page results in root."""
+
+        root = root or self._find_container
         if not root:
             return ""
 
-        statusBars = AXUtilities.find_all_status_bars(root)
-        if len(statusBars) != 1:
+        status_bars = AXUtilities.find_all_status_bars(root)
+        if len(status_bars) != 1:
             return ""
 
-        bar = statusBars[0]
+        status_bar = status_bars[0]
         # TODO - JD: Is this still needed?
-        AXObject.clear_cache(bar, False, "Ensuring we have correct name for find results.")
-        if len(re.findall(r"\d+", AXObject.get_name(bar))) == 2:
-            return AXObject.get_name(bar)
+        AXObject.clear_cache(status_bar, False, "Ensuring we have correct name for find results.")
+        if len(re.findall(r"\d+", AXObject.get_name(status_bar))) == 2:
+            return AXObject.get_name(status_bar)
 
         return ""
 
-    def isFindContainer(self, obj):
-        if not obj or self.inDocumentContent(obj):
+    def _is_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
+        """Returns True if obj is a find-in-page container."""
+
+        if not obj or self.in_document_content(obj):
             return False
 
-        if obj == self._findContainer:
+        if obj == self._find_container:
             return True
 
-        result = self.getFindResultsCount(obj)
+        result = self.get_find_results_count(obj)
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (", result, ")"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._findContainer = obj
+            self._find_container = obj
             return True
 
         # When there are no results due to the absence of a search term, the status
@@ -97,19 +108,21 @@ class Utilities(web.Utilities):
 
         tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (accessibility tree)"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._findContainer = obj
+        self._find_container = obj
         return True
 
-    def inFindContainer(self, obj=None):
+    def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
+        """Returns True if obj is in a find-in-page container."""
+
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
-        if self.inDocumentContent(obj):
+        if self.in_document_content(obj):
             return False
 
-        result = AXObject.find_ancestor(obj, self.isFindContainer)
+        result = AXObject.find_ancestor(obj, self._is_find_container)
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page widget"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        return result
+        return bool(result)

@@ -18,25 +18,38 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+
+"""Custom script for basic switchers like Metacity."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2019 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from orca import script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 class Utilities(script_utilities.Utilities):
+    """Custom script for basic switchers like Metacity."""
 
-    def isSwitcherContainer(self, obj):
+    def is_switcher_container(self, obj: Atspi.Accessible | None = None) -> bool:
         """Returns True if obj is the switcher container."""
 
         return AXUtilities.is_status_bar(obj)
 
-    def isSwitcherSelectionChangeEventType(self, event):
+    def is_switcher_selection_change_event_type(self, event: Atspi.Event) -> bool:
         """Returns True if this event is the one we use to present changes."""
 
         if event.type.startswith("object:text-changed:insert"):
@@ -47,10 +60,10 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def getSelectionName(self, container):
+    def get_selection_name(self, container: Atspi.Accessible | None = None) -> str:
         """Returns the name of the currently-selected item."""
 
-        if self.isSwitcherContainer(container):
+        if self.is_switcher_container(container):
             return AXObject.get_name(container)
 
         return ""

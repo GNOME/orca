@@ -1228,9 +1228,9 @@ class SpeechAndVerbosityManager:
             script.present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        if not script.utilities.getDocumentForObject(table):
+        if not script.utilities.get_document_for_object(table):
             setting_name = "readFullRowInGUITable"
-        elif script.utilities.isSpreadSheetTable(table):
+        elif script.utilities.is_spreadsheet_table(table):
             setting_name = "readFullRowInSpreadSheet"
         else:
             setting_name = "readFullRowInDocumentTable"

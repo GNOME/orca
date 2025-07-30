@@ -628,7 +628,7 @@ class KeyboardEvent(InputEvent):
         if self._script.get_learn_mode_presenter().is_active():
             return
 
-        return self._script.present_keyboard_event(self)
+        self._script.present_keyboard_event(self)
 
     # pylint:disable=too-many-branches
     # pylint:disable=too-many-return-statements

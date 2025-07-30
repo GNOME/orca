@@ -170,7 +170,7 @@ class SoundGenerator(generator.Generator):
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        if not self._script.utilities.isClickableElement(obj):
+        if not self._script.utilities.is_clickable_element(obj):
             return []
 
         filename = object_properties.STATE_CLICKABLE_SOUND
@@ -214,7 +214,7 @@ class SoundGenerator(generator.Generator):
         if not settings_manager.get_manager().get_setting("playSoundForState"):
             return []
 
-        if not self._script.utilities.hasLongDesc(obj):
+        if not self._script.utilities.has_long_desc(obj):
             return []
 
         filename = object_properties.STATE_HAS_LONGDESC_SOUND

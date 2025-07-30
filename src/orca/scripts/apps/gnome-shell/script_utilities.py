@@ -21,24 +21,33 @@
 
 """Custom script utilities for gnome-shell."""
 
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2014 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from orca import debug
 from orca import script_utilities
 from orca.ax_text import AXText
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
 class Utilities(script_utilities.Utilities):
     """Custom script utilities for gnome-shell."""
 
-    def insertedText(self, event):
+    def inserted_text(self, event: Atspi.Event) -> str:
         if event.any_data:
             return event.any_data
 
-        # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/8092
+        # https://gitlab.gnome.org/GNOME/mutter/-/issues/3826
         if event.detail1 == -1:
             msg = "GNOME SHELL: Broken text insertion event"
             debug.print_message(debug.LEVEL_INFO, msg, True)

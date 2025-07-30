@@ -37,11 +37,16 @@ created in their own module.  The module defining the Script subclass
 is also required to have a 'get_script(app)' method that returns an
 instance of the Script subclass.  See default.py for an example."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING
 
 from . import ax_event_synthesizer
 from . import bypass_mode_manager
@@ -53,7 +58,6 @@ from . import debugging_tools_manager
 from . import flat_review_finder
 from . import flat_review_presenter
 from . import keybindings
-from . import label_inference
 from . import learn_mode_presenter
 from . import mouse_review
 from . import notification_presenter
@@ -70,18 +74,28 @@ from . import bookmarks
 from . import where_am_i_presenter
 from .ax_object import AXObject
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
+    from . import chat
+    from . import caret_navigation
+    from . import label_inference
+    from . import liveregions
+    from . import spellcheck
 
 class Script:
     """The base Script class."""
 
-    def __init__(self, app):
+    def __init__(self, app: Atspi.Accessible) -> None:
         self.app = app
         self.name = f"{AXObject.get_name(self.app) or 'default'} (module={self.__module__})"
-        self.present_if_inactive = True
-        self.run_find_command_on = None
-        self.input_event_handlers = {}
-        self.point_of_reference = {}
-        self.event_cache = {}
+        self.present_if_inactive: bool = True
+        self.run_find_command_on: Atspi.Accessible | None = None
+        self.input_event_handlers: dict = {}
+        self.point_of_reference: dict = {}
+        self.event_cache: dict = {}
         self.key_bindings = keybindings.KeyBindings()
 
         self.listeners = self.get_listeners()
@@ -90,15 +104,15 @@ class Script:
         self.braille_generator = self.get_braille_generator()
         self.sound_generator = self.get_sound_generator()
         self.speech_generator = self.get_speech_generator()
-
         self.bookmarks = self.get_bookmarks()
-        self.label_inference = self.get_label_inference()
 
         # pylint:disable=assignment-from-none
         self.caret_navigation = self.get_caret_navigation()
         self.live_region_manager = self.get_live_region_manager()
+        self.label_inference = self.get_label_inference()
         self.chat = self.get_chat()
         self.spellcheck = self.get_spellcheck()
+        # pylint:enable=assignment-from-none
 
         self.setup_input_event_handlers()
         self.braille_bindings = self.get_braille_bindings()
@@ -108,172 +122,183 @@ class Script:
         msg = f"SCRIPT: {self.name} initialized"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name}"
 
-    def get_listeners(self):
+    def get_listeners(self) -> dict:
         """Returns a dictionary of the event listeners for this script."""
 
         return {}
 
-    def setup_input_event_handlers(self):
+    def setup_input_event_handlers(self) -> None:
         """Defines the input event handlers for this script."""
 
-    def get_key_bindings(self, enabled_only=True):
+    def get_key_bindings(self, enabled_only: bool = True) -> keybindings.KeyBindings:
         """Returns the key bindings for this script."""
 
         return keybindings.KeyBindings()
 
-    def get_app_key_bindings(self):
+    def get_app_key_bindings(self) -> keybindings.KeyBindings:
         """Returns the application-specific keybindings for this script."""
 
         return keybindings.KeyBindings()
 
-    def get_braille_bindings(self):
+    def get_braille_bindings(self) -> dict:
         """Returns the braille bindings for this script."""
 
         return {}
 
-    def get_braille_generator(self):
+    def get_braille_generator(self) -> braille_generator.BrailleGenerator:
         """Returns the braille generator for this script."""
 
         return braille_generator.BrailleGenerator(self)
 
-    def get_sound_generator(self):
+    def get_sound_generator(self) -> sound_generator.SoundGenerator:
         """Returns the sound generator for this script."""
 
         return sound_generator.SoundGenerator(self)
 
-    def get_speech_generator(self):
+    def get_speech_generator(self) -> speech_generator.SpeechGenerator:
         """Returns the speech generator for this script."""
 
         return speech_generator.SpeechGenerator(self)
 
-    def get_chat(self):
+    def get_chat(self) -> chat.Chat | None:
         """Returns the 'chat' class for this script."""
 
         return None
 
-    def get_spellcheck(self):
+    def get_spellcheck(self) -> spellcheck.SpellCheck | None:
         """Returns the spellcheck support for this script."""
 
         return None
 
-    def get_caret_navigation(self):
+    def get_caret_navigation(self) -> caret_navigation.CaretNavigation | None:
         """Returns the caret navigation support for this script."""
 
         return None
 
-    def get_clipboard_presenter(self):
+    def get_clipboard_presenter(self) -> clipboard.ClipboardPresenter:
         """Returns the clipboard presenter for this script."""
 
         return clipboard.get_presenter()
 
-    def get_debugging_tools_manager(self):
+    def get_debugging_tools_manager(self) -> debugging_tools_manager.DebuggingToolsManager:
         """Returns the debugging tools manager for this script."""
 
         return debugging_tools_manager.get_manager()
 
-    def get_utilities(self):
+    def get_utilities(self) -> script_utilities.Utilities:
         """Returns the utilities for this script."""
 
         return script_utilities.Utilities(self)
 
-    def get_label_inference(self):
+    def get_label_inference(self) -> label_inference.LabelInference | None:
         """Returns the label inference functionality for this script."""
 
-        return label_inference.LabelInference(self)
+        return None
 
-    def get_structural_navigator(self):
+    def get_structural_navigator(self) -> structural_navigator.StructuralNavigator:
         """Returns the 'structural navigator' class for this script."""
 
         return structural_navigator.get_navigator()
 
-    def get_live_region_manager(self):
+    def get_live_region_manager(self) -> liveregions.LiveRegionManager | None:
         """Returns the live region manager for this script."""
 
         return None
 
-    def get_notification_presenter(self):
+    def get_notification_presenter(self) -> notification_presenter.NotificationPresenter:
         """Returns the notification presenter for this script."""
 
         return notification_presenter.get_presenter()
 
-    def get_flat_review_finder(self):
+    def get_flat_review_finder(self) -> flat_review_finder.FlatReviewFinder:
         """Returns the flat review finder for this script."""
 
         return flat_review_finder.get_finder()
 
-    def get_flat_review_presenter(self):
+    def get_flat_review_presenter(self) -> flat_review_presenter.FlatReviewPresenter:
         """Returns the flat review presenter for this script."""
 
         return flat_review_presenter.get_presenter()
 
-    def get_system_information_presenter(self):
+    def get_system_information_presenter(
+        self
+    ) -> system_information_presenter.SystemInformationPresenter:
         """Returns the system information presenter for this script."""
 
         return system_information_presenter.get_presenter()
 
-    def get_object_navigator(self):
+    def get_object_navigator(self) -> object_navigator.ObjectNavigator:
         """Returns the object navigator for this script."""
 
         return object_navigator.get_navigator()
 
-    def get_table_navigator(self):
+    def get_table_navigator(self) -> table_navigator.TableNavigator:
         """Returns the table navigator for this script."""
 
         return table_navigator.get_navigator()
 
-    def get_speech_and_verbosity_manager(self):
+    def get_speech_and_verbosity_manager(
+        self
+    ) -> speech_and_verbosity_manager.SpeechAndVerbosityManager:
         """Returns the speech and verbosity manager for this script."""
 
         return speech_and_verbosity_manager.get_manager()
 
-    def get_bypass_mode_manager(self):
+    def get_bypass_mode_manager(self) -> bypass_mode_manager.BypassModeManager:
         """Returns the bypass mode manager for this script."""
 
         return bypass_mode_manager.get_manager()
 
-    def get_where_am_i_presenter(self):
+    def get_where_am_i_presenter(self) -> where_am_i_presenter.WhereAmIPresenter:
         """Returns the where-am-I presenter for this script."""
 
         return where_am_i_presenter.get_presenter()
 
-    def get_learn_mode_presenter(self):
+    def get_learn_mode_presenter(self) -> learn_mode_presenter.LearnModePresenter:
         """Returns the learn-mode presenter for this script."""
 
         return learn_mode_presenter.get_presenter()
 
-    def get_action_presenter(self):
+    def get_action_presenter(self) -> action_presenter.ActionPresenter:
         """Returns the action presenter for this script."""
 
         return action_presenter.get_presenter()
 
-    def get_sleep_mode_manager(self):
+    def get_sleep_mode_manager(self) -> sleep_mode_manager.SleepModeManager:
         """Returns the sleep mode manager for this script."""
 
         return sleep_mode_manager.get_manager()
 
-    def get_mouse_reviewer(self):
+    def get_mouse_reviewer(self) -> mouse_review.MouseReviewer:
         """Returns the mouse reviewer for this script."""
 
         return mouse_review.get_reviewer()
 
-    def get_event_synthesizer(self):
+    def get_event_synthesizer(self) -> ax_event_synthesizer.AXEventSynthesizer:
         """Returns the event synthesizer for this script."""
 
         return ax_event_synthesizer.get_synthesizer()
 
-    def get_bookmarks(self):
+    def get_bookmarks(self) -> bookmarks.Bookmarks:
         """Returns the bookmarks support for this script."""
 
         try:
             return self.bookmarks
         except AttributeError:
-            self.bookmarks = bookmarks.Bookmarks(self)
+            # Base Script doesn't have all methods that Bookmarks expects from default.Script
+            self.bookmarks = bookmarks.Bookmarks(self)  # type: ignore[arg-type]
             return self.bookmarks
 
-    def _get_queued_event(self, event_type, detail1=None, detail2=None, any_data=None):
+    def _get_queued_event(
+        self,
+        event_type: str,
+        detail1: int | None = None,
+        detail2: int | None = None,
+        any_data=None
+    ) -> Atspi.Event | None:
         cached_event = self.event_cache.get(event_type, [None, 0])[0]
         if not cached_event:
             tokens = ["SCRIPT: No queued event of type", event_type]
@@ -281,14 +306,14 @@ class Script:
             return None
 
         if detail1 is not None and detail1 != cached_event.detail1:
-            tokens = ["SCRIPT: Queued event's detail1 (", cached_event.detail1,
-                      ") doesn't match", detail1]
+            tokens = ["SCRIPT: Queued event's detail1 (", str(cached_event.detail1),
+                      ") doesn't match", str(detail1)]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if detail2 is not None and detail2 != cached_event.detail2:
-            tokens = ["SCRIPT: Queued event's detail2 (", cached_event.detail2,
-                      ") doesn't match", detail2]
+            tokens = ["SCRIPT: Queued event's detail2 (", str(cached_event.detail2),
+                      ") doesn't match", str(detail2)]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
@@ -302,21 +327,28 @@ class Script:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return cached_event
 
-    def locus_of_focus_changed(self, event, old_focus, new_focus):
-        """Handles changes of focus of interest to the script."""
+    def locus_of_focus_changed(
+        self,
+        event: Atspi.Event | None,
+        old_focus: Atspi.Accessible | None,
+        new_focus: Atspi.Accessible | None
+    ) -> bool:
+        """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
-    def is_activatable_event(self, event):
+        return True
+
+    def is_activatable_event(self, event: Atspi.Event) -> bool:
         """Returns True if event should cause this script to become active."""
 
         return True
 
-    def force_script_activation(self, event):
+    def force_script_activation(self, event: Atspi.Event) -> bool:
         """Allows scripts to insist that they should become active."""
 
         return False
 
-    def activate(self):
+    def activate(self) -> None:
         """Called when this script is activated."""
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         """Called when this script is deactivated."""

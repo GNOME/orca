@@ -444,8 +444,9 @@ class Generator:
         name = self._generate_accessible_name(obj, **args)
         role = args.get("role", AXObject.get_role(obj))
         if not (label or name) and role == Atspi.Role.TABLE_CELL:
-            descendant = self._script.utilities.realActiveDescendant(obj)
-            name = self._generate_accessible_name(descendant)
+            descendant = self._script.utilities.active_descendant(obj)
+            if descendant is not None:
+                name = self._generate_accessible_name(descendant)
 
         # If we don't have a label, always use the name.
         if not label:
@@ -541,7 +542,7 @@ class Generator:
                 Generator.CACHED_STATIC_TEXT[hash(obj)] = result
                 return result
 
-        labels = self._script.utilities.unrelatedLabels(obj)
+        labels = self._script.utilities.unrelated_labels(obj)
         for label in labels:
             result.extend(self._generate_accessible_name(label, **args))
 
@@ -573,7 +574,7 @@ class Generator:
                 return "ROLE_DPUB_SECTION"
         if AXUtilities.is_switch(obj, role):
             return "ROLE_SWITCH"
-        if self._script.utilities.isAnchor(obj):
+        if self._script.utilities.is_anchor(obj):
             return Atspi.Role.STATIC
         if AXUtilities.is_block_quote(obj, role):
             return Atspi.Role.BLOCK_QUOTE
@@ -593,7 +594,7 @@ class Generator:
             if AXUtilities.is_landmark_region(obj):
                 return "ROLE_REGION"
             return Atspi.Role.LANDMARK
-        if self._script.utilities.isDocument(obj) and AXObject.supports_image(obj):
+        if self._script.utilities.is_document(obj) and AXObject.supports_image(obj):
             return Atspi.Role.IMAGE
 
         return role
@@ -655,7 +656,7 @@ class Generator:
             return []
 
         if AXObject.supports_selection(obj):
-            items = self._script.utilities.selectedChildren(obj)
+            items = self._script.utilities.selected_children(obj)
         else:
             items = [AXUtilities.get_focused_object(obj)]
         if not (items and items[0]):
@@ -761,7 +762,7 @@ class Generator:
         **args
     ) -> list[Any]:
         result = []
-        if self._script.utilities.hasMeaningfulToggleAction(obj):
+        if self._script.utilities.has_meaningful_toggle_action(obj):
             args["role"] = Atspi.Role.CHECK_BOX
             args["includeContext"] = False
             result.extend(self.generate(obj, **args))
@@ -864,7 +865,7 @@ class Generator:
             indicator = indicators[0]
 
         targets = AXUtilities.get_error_message(obj) or ""
-        error_message = "\n".join(map(self._script.utilities.expand_eocs, targets))
+        error_message = "\n".join(map(self._script.utilities.expand_eocs, targets or []))
         if error_message:
             result.append(f"{indicator}: {error_message}")
         else:
@@ -976,7 +977,7 @@ class Generator:
         if AXUtilities.is_sensitive(obj):
             return []
 
-        if self._script.utilities.isSpreadSheetCell(obj):
+        if self._script.utilities.is_spreadsheet_cell(obj):
             return []
 
         if self._mode == "braille":
@@ -1141,7 +1142,7 @@ class Generator:
     ) -> list[Any]:
         level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(obj))
         if level is None:
-            level = self._script.utilities.nodeLevel(obj)
+            level = self._script.utilities.node_level(obj)
             Generator.CACHED_TREE_ITEM_LEVEL[hash(obj)] = level
 
         if level < 0:
@@ -1151,7 +1152,7 @@ class Generator:
         if args.get("newOnly") and prior_object:
             old_level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(prior_object))
             if old_level is None:
-                old_level = self._script.utilities.nodeLevel(prior_object)
+                old_level = self._script.utilities.node_level(prior_object)
                 Generator.CACHED_TREE_ITEM_LEVEL[hash(prior_object)] = old_level
             if old_level == level:
                 return []
@@ -1248,11 +1249,11 @@ class Generator:
         if hash(obj) in Generator.CACHED_IS_NAMELESS_TOGGLE:
             return Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)]
 
-        if not self._script.utilities.hasMeaningfulToggleAction(obj):
+        if not self._script.utilities.has_meaningful_toggle_action(obj):
             Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = False
             return False
 
-        descendant = self._script.utilities.realActiveDescendant(obj)
+        descendant = self._script.utilities.active_descendant(obj)
         if AXObject.get_name(descendant) or AXText.get_all_text(descendant):
             Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = False
             return False
@@ -1269,7 +1270,7 @@ class Generator:
     ) -> list[Any]:
         present_all = args.get("readingRow") is True \
             or args.get("formatType") == "detailedWhereAmI" \
-            or self._script.utilities.shouldReadFullRow(obj, args.get("priorObj"))
+            or self._script.utilities.should_read_full_row(obj, args.get("priorObj"))
 
         if not present_all:
             return self._generate_real_table_cell(obj, **args)
@@ -1281,7 +1282,7 @@ class Generator:
         args["readingRow"] = True
         result: list[Any] = []
         cells = AXTable.get_showing_cells_in_same_row(
-            obj, clip_to_window=self._script.utilities.isSpreadSheetCell(obj))
+            obj, clip_to_window=self._script.utilities.is_spreadsheet_cell(obj))
 
         # Remove any pre-calculated values which only apply to obj and not row cells.
         do_not_include = ["startOffset", "endOffset", "string"]
@@ -1325,7 +1326,7 @@ class Generator:
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        rad = self._script.utilities.realActiveDescendant(obj)
+        rad = self._script.utilities.active_descendant(obj)
 
         if not (AXUtilities.is_table_cell(rad) and AXObject.get_child_count(rad)):
             return self._generate_text_content(rad, **args)
@@ -1443,8 +1444,8 @@ class Generator:
         if len(children) == 1:
             return AXText.get_all_text(children[0])
 
-        selected = self._script.utilities.selectedChildren(obj)
-        selected = selected or self._script.utilities.selectedChildren(AXObject.get_child(obj, 0))
+        selected = self._script.utilities.selected_children(obj)
+        selected = selected or self._script.utilities.selected_children(AXObject.get_child(obj, 0))
         if len(selected) == 1:
             return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
 

@@ -299,7 +299,7 @@ class Bookmarks:
     def getURIKey(self):
         """Returns the URI key for a given page as a URI stripped of
         parameters?query#fragment as seen in urlparse."""
-        uri = AXDocument.get_uri(self._script.utilities.documentFrame())
+        uri = AXDocument.get_uri(self._script.utilities.document_frame())
         if uri:
             parsed_uri = urllib.parse.urlparse(uri)
             return ''.join(parsed_uri[0:3])
@@ -309,7 +309,7 @@ class Bookmarks:
     def pathToObj(self, path):
         """Return the object with the given path (relative to the
         document frame). """
-        returnobj = self._script.utilities.documentFrame()
+        returnobj = self._script.utilities.document_frame()
         for childnumber in path:
             returnobj = AXObject.get_child(returnobj, childnumber)
             if not returnobj:
@@ -326,14 +326,14 @@ class Bookmarks:
         if not start_obj:
             return []
 
-        if self._script.utilities.isDocument(start_obj):
+        if self._script.utilities.is_document(start_obj):
             return []
 
         path = []
         path.append(AXObject.get_index_in_parent(start_obj))
         p = AXObject.get_parent(start_obj)
         while p:
-            if self._script.utilities.isDocument(p):
+            if self._script.utilities.is_document(p):
                 path.reverse()
                 return path
             path.append(AXObject.get_index_in_parent(p))

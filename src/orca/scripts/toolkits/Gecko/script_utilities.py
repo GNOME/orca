@@ -18,10 +18,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Commonly-required utility methods needed by -- and potentially
-   customized by -- application and toolkit scripts. They have
-   been pulled out from the scripts because certain scripts had
-   gotten way too large as a result of including these methods."""
+# pylint: disable=too-many-return-statements
+
+"""Custom script utilities for Gecko"""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
@@ -30,10 +32,8 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
                 "Copyright (c) 2014-2015 Igalia, S.L."
 __license__   = "LGPL"
 
-import gi
-gi.require_version("Atspi", "2.0")
-
 import re
+from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
@@ -41,16 +41,21 @@ from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 class Utilities(web.Utilities):
+    """Custom script utilities for Gecko"""
 
-    def isEditableMessage(self, obj):
+    def is_editable_message(self, obj: Atspi.Accessible) -> bool:
         """Returns True if this is an editable message."""
 
         if not AXUtilities.is_editable(obj):
             return False
 
-        document = self.getDocumentForObject(obj)
+        document = self.get_document_for_object(obj)
         if AXUtilities.is_editable(document):
             tokens = ["GECKO:", obj, "is in an editable document:", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -60,11 +65,11 @@ class Utilities(web.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def _isQuickFind(self, obj):
-        if not obj or self.inDocumentContent(obj):
+    def _is_quick_find(self, obj: Atspi.Accessible | None) -> bool:
+        if not obj or self.in_document_content(obj):
             return False
 
-        if obj == self._findContainer:
+        if obj == self._find_container:
             return True
 
         if not AXUtilities.is_tool_bar(obj):
@@ -84,24 +89,26 @@ class Utilities(web.Utilities):
 
         tokens = ["GECKO:", obj, "believed to be quick-find container (accessibility tree)"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._findContainer = obj
+        self._find_container = obj
         return True
 
-    def isFindContainer(self, obj):
-        if not obj or self.inDocumentContent(obj):
+    def _is_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
+        """Returns True if obj is a find-in-page container."""
+
+        if not obj or self.in_document_content(obj):
             return False
 
-        if obj == self._findContainer:
+        if obj == self._find_container:
             return True
 
         if not AXUtilities.is_tool_bar(obj):
             return False
 
-        result = self.getFindResultsCount(obj)
+        result = self.get_find_results_count(obj)
         if result:
             tokens = ["GECKO:", obj, "believed to be find-in-page container (", result, ")"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._findContainer = obj
+            self._find_container = obj
             return True
 
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
@@ -118,42 +125,46 @@ class Utilities(web.Utilities):
 
         tokens = ["GECKO:", obj, "believed to be find-in-page container (accessibility tree)"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._findContainer = obj
+        self._find_container = obj
         return True
 
-    def inFindContainer(self, obj=None):
+    def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
+        """Returns True if obj is in a find-in-page container."""
+
         if not obj:
             obj = focus_manager.get_manager().get_locus_of_focus()
 
-        if not obj or self.inDocumentContent(obj):
+        if not obj or self.in_document_content(obj):
             return False
 
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
 
         toolbar = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar)
-        result = self.isFindContainer(toolbar)
+        result = self._is_find_container(toolbar)
         if result:
             tokens = ["GECKO:", obj, "believed to be find-in-page widget (toolbar)"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if self._isQuickFind(toolbar):
+        if self._is_quick_find(toolbar):
             tokens = ["GECKO:", obj, "believed to be find-in-page widget (quick find)"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         return False
 
-    def getFindResultsCount(self, root=None):
-        root = root or self._findContainer
+    def get_find_results_count(self, root: Atspi.Accessible | None = None) -> str:
+        """Returns a string description of the number of find-in-page results in root."""
+
+        root = root or self._find_container
         if not root:
             return ""
 
-        def isMatch(x):
+        def is_match(x: Atspi.Accessible) -> bool:
             return len(re.findall(r"\d+", AXObject.get_name(x))) == 2
 
-        labels = AXUtilities.find_all_labels(root, isMatch)
+        labels = AXUtilities.find_all_labels(root, is_match)
         if len(labels) != 1:
             return ""
 
@@ -161,5 +172,12 @@ class Utilities(web.Utilities):
         AXObject.clear_cache(label, False, "Ensuring we have correct name for find results.")
         return AXObject.get_name(label)
 
-    def unrelatedLabels(self, root, onlyShowing=True, minimumWords=3):
-        return super().unrelatedLabels(root, onlyShowing, minimumWords=1)
+    def unrelated_labels(
+        self,
+        root: Atspi.Accessible | None = None,
+        only_showing: bool = True,
+        minimum_words: int = 3
+    ) -> list[Atspi.Accessible]:
+        """Returns a list of labels in root that lack a relationship."""
+
+        return super().unrelated_labels(root, only_showing, minimum_words=1)

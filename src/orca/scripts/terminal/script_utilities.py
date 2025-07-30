@@ -18,6 +18,13 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-return-statements
+
+"""Script utilities for terminal presentation."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -25,6 +32,7 @@ __copyright__ = "Copyright (c) 2016 Igalia, S.L."
 __license__   = "LGPL"
 
 import re
+from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
@@ -34,14 +42,16 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 class Utilities(script_utilities.Utilities):
+    """Script utilities for terminal presentation."""
 
-    def clearCache(self):
-        pass
-
-    def deletedText(self, event):
-        match = re.search("\n~", event.any_data)
+    def deleted_text(self, event: Atspi.Event) -> str:
+        match = re.search(r"\n~", event.any_data)
         if not match:
             return event.any_data
 
@@ -50,7 +60,7 @@ class Utilities(script_utilities.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return adjusted
 
-    def insertedText(self, event):
+    def inserted_text(self, event: Atspi.Event) -> str:
         if len(event.any_data) == 1:
             return event.any_data
 
@@ -61,32 +71,32 @@ class Utilities(script_utilities.Utilities):
             return event.any_data
 
         start, end = event.detail1, event.detail1 + len(event.any_data)
-        firstLine = AXText.get_line_at_offset(event.source, start)
-        tokens = ["TERMINAL: First line of insertion:", firstLine]
+        first_line = AXText.get_line_at_offset(event.source, start)
+        tokens = ["TERMINAL: First line of insertion:", first_line]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        lastLine = AXText.get_line_at_offset(event.source, end - 1)
-        tokens = ["TERMINAL: Last line of insertion:", lastLine]
+        last_line = AXText.get_line_at_offset(event.source, end - 1)
+        tokens = ["TERMINAL: Last line of insertion:", last_line]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if firstLine == lastLine:
+        if first_line == last_line:
             msg = "TERMINAL: Not adjusting single-line insertion."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return event.any_data
 
-        currentLine = AXText.get_line_at_offset(event.source, None)
-        tokens = ["TERMINAL: Current line:", currentLine]
+        current_line = AXText.get_line_at_offset(event.source, None)
+        tokens = ["TERMINAL: Current line:", current_line]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if firstLine != ("", 0, 0):
-            start = firstLine[1]
+        if first_line != ("", 0, 0):
+            start = first_line[1]
 
-        if currentLine not in (("", 0, 0), firstLine, lastLine):
-            lastLine = currentLine
+        if current_line not in (("", 0, 0), first_line, last_line):
+            last_line = current_line
 
-        if lastLine != ("", 0, 0):
-            end = lastLine[2]
-            if lastLine[0].endswith("\n"):
+        if last_line != ("", 0, 0):
+            end = last_line[2]
+            if last_line[0].endswith("\n"):
                 end -= 1
 
         adjusted = AXText.get_substring(event.source, start, end)
@@ -100,10 +110,9 @@ class Utilities(script_utilities.Utilities):
 
         return adjusted
 
-    def insertionEndsAtCaret(self, event):
-        return AXText.get_caret_offset(event.source) == event.detail1 + event.detail2
+    def treat_event_as_command(self, event: Atspi.Event) -> bool:
+        """Returns true if we should treat this event as resulting from a command."""
 
-    def treatEventAsCommand(self, event):
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             return False
 
@@ -117,7 +126,7 @@ class Utilities(script_utilities.Utilities):
 
             manager = input_event_manager.get_manager()
             if manager.last_event_was_return_tab_or_space():
-                return re.search(r"[^\d\s]", event.any_data)
+                return bool(re.search(r"[^\d\s]", event.any_data))
             # TODO - JD: What condition specifically is this here for?
             if manager.last_event_was_alt_modified():
                 return True
@@ -128,7 +137,9 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def treatEventAsNoise(self, event):
+    def treat_event_as_noise(self, event: Atspi.Event) -> bool:
+        """Returns true if we should treat this event as noise."""
+
         if input_event_manager.get_manager().last_event_was_command():
             return False
 

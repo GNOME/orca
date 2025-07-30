@@ -17,9 +17,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=duplicate-code
 
 """Custom script for The notification daemon."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -27,16 +29,23 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from orca import messages
 from orca.scripts import default
 from orca import settings
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
 class Script(default.Script):
     """Custom script for The notification daemon."""
 
-    def on_window_created(self, event):
+    def on_window_created(self, event: Atspi.Event) -> bool:
         """Callback for window:create accessibility events."""
 
         texts = [AXText.get_all_text(acc) for acc in AXUtilities.find_all_labels(event.source)]

@@ -21,11 +21,15 @@
 
 """Custom script utilities for Evolution."""
 
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2015 Igalia, S.L."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING
 
 from orca import input_event_manager
 from orca import focus_manager
@@ -34,11 +38,16 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
 
 class Utilities(WebKitGTK.Utilities):
     """Custom script utilities for Evolution."""
 
-    def is_message_list_status_cell(self, obj):
+    def is_message_list_status_cell(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a message list status cell."""
 
         if not self.is_message_list_toggle_cell(obj):
@@ -50,18 +59,18 @@ class Utilities(WebKitGTK.Utilities):
 
         return headers[0] and AXObject.get_name(headers[0]) != AXObject.get_name(obj)
 
-    def is_message_list_toggle_cell(self, obj):
+    def is_message_list_toggle_cell(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a message list toggle cell."""
 
-        if self.isWebKitGTK(obj):
+        if self.is_webkit_gtk(obj):
             return False
 
         if not AXObject.get_name(obj):
             return False
 
-        return self.hasMeaningfulToggleAction(obj)
+        return self.has_meaningful_toggle_action(obj)
 
-    def is_ignorable_event_from_document_preview(self, event):
+    def is_ignorable_event_from_document_preview(self, event: Atspi.Event) -> bool:
         """Returns True if event is from a document preview and can be ignored."""
 
         if not self.is_document_preview(event.source):
@@ -71,7 +80,7 @@ class Utilities(WebKitGTK.Utilities):
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.isWebKitGTK(focus):
+        if self.is_webkit_gtk(focus):
             return False
         if not AXUtilities.is_table_cell(focus):
             return False
@@ -80,10 +89,10 @@ class Utilities(WebKitGTK.Utilities):
 
         return True
 
-    def is_document_preview(self, obj):
+    def is_document_preview(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is or descends from the preview document."""
 
-        if not self.isWebKitGTK(obj):
+        if not self.is_webkit_gtk(obj):
             return False
 
         if AXUtilities.is_document(obj):
@@ -93,4 +102,4 @@ class Utilities(WebKitGTK.Utilities):
         if not document:
             return False
 
-        return AXObject.find_ancestor(document, AXUtilities.is_page_tab)
+        return bool(AXObject.find_ancestor(document, AXUtilities.is_page_tab))

@@ -458,8 +458,8 @@ class CaretNavigation:
         obj, start = contents[0][0], contents[0][1]
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
-        script.speakContents(contents, priorObj=line[-1][0])
-        script.displayContents(contents)
+        script.speak_contents(contents, priorObj=line[-1][0])
+        script.display_contents(contents)
         return True
 
     def _previous_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -483,8 +483,8 @@ class CaretNavigation:
         obj, start = contents[0][0], contents[0][1]
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
-        script.speakContents(contents)
-        script.displayContents(contents)
+        script.speak_contents(contents)
+        script.display_contents(contents)
         return True
 
     def _start_of_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -503,7 +503,7 @@ class CaretNavigation:
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.say_character(obj)
-        script.displayContents(line)
+        script.display_contents(line)
         return True
 
     def _end_of_line(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -525,7 +525,7 @@ class CaretNavigation:
         script.utilities.set_caret_position(obj, end)
         script.interrupt_presentation()
         script.say_character(obj)
-        script.displayContents(line)
+        script.display_contents(line)
         return True
 
     def _start_of_file(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -534,7 +534,7 @@ class CaretNavigation:
         if not event:
             return False
 
-        document = script.utilities.documentFrame()
+        document = script.utilities.document_frame()
         obj, offset = script.utilities.first_context(document, 0)
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
@@ -544,8 +544,8 @@ class CaretNavigation:
         obj, offset = contents[0][0], contents[0][1]
         script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
-        script.speakContents(contents)
-        script.displayContents(contents)
+        script.speak_contents(contents)
+        script.display_contents(contents)
         return True
 
     def _end_of_file(self, script: web.Script, event: InputEvent | None = None) -> bool:
@@ -554,7 +554,7 @@ class CaretNavigation:
         if not event:
             return False
 
-        document = script.utilities.documentFrame()
+        document = script.utilities.document_frame()
         tokens = ["CARET NAVIGATION: Go to end of", document]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -577,6 +577,6 @@ class CaretNavigation:
         obj, offset = contents[-1][0], contents[-1][2]
         script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
-        script.speakContents(contents)
-        script.displayContents(contents)
+        script.speak_contents(contents)
+        script.display_contents(contents)
         return True

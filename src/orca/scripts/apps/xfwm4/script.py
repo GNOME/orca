@@ -19,30 +19,42 @@
 
 """Custom script for xfwm4."""
 
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011 The Orca Team."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
 class Script(default.Script):
     """Custom script for xfwm4."""
 
-    def on_text_inserted(self, event):
+    def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         if not AXUtilities.is_label(event.source):
-            default.Script.on_text_inserted(self, event)
-            return
+            return default.Script.on_text_inserted(self, event)
 
         self.present_message(AXObject.get_name(event.source))
+        return True
 
-    def on_text_deleted(self, event):
+    def on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
         if not AXUtilities.is_label(event.source):
-            default.Script.on_text_deleted(self, event)
+            return default.Script.on_text_deleted(self, event)
+
+        self.present_message(AXObject.get_name(event.source))
+        return True

@@ -19,53 +19,74 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+"""Custom script utilities for Qt"""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 from orca import debug
 from orca import script_utilities
-
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-class Utilities(script_utilities.Utilities):
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
-    def _isTopLevelObject(self, obj):
+class Utilities(script_utilities.Utilities):
+    """Custom script utilities for Qt"""
+
+    def _is_top_level_object(self, obj: Atspi.Accessible) -> bool:
         # This is needed because Qt apps might insert some junk (e.g. a filler) in
         # between the window/frame/dialog and the application.
         return AXUtilities.is_application(AXObject.get_parent(obj))
 
-    def topLevelObject(self, obj, useFallbackSearch=False):
+    def top_level_object(
+        self,
+        obj: Atspi.Accessible,
+        use_fallback_search: bool = False
+    ) -> Atspi.Accessible | None:
+        """Returns the top level object for obj."""
+
         # The fallback search is needed because sometimes we can ascend the accessibility
         # tree all the way to the top; other times, we cannot get the parent, but can still
         # get the children. The fallback search handles the latter scenario.
-        result = super().topLevelObject(obj, useFallbackSearch=True)
-        if result is not None and AXObject.get_role(result) not in self._topLevelRoles():
+        result = super().top_level_object(obj, use_fallback_search=True)
+        if result is not None and AXObject.get_role(result) not in self._top_level_roles():
             tokens = ["QT: Top level object", result, "lacks expected role."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
 
-    def frameAndDialog(self, obj):
+    def frame_and_dialog(
+        self,
+        obj: Atspi.Accessible | None = None
+    ) -> list[Atspi.Accessible | None]:
         """Returns the frame and (possibly) the dialog containing obj."""
 
-        frame, dialog = super().frameAndDialog(obj)
+        frame, dialog = super().frame_and_dialog(obj)
         if frame or dialog:
-            return frame, dialog
+            return [frame, dialog]
 
         # https://bugreports.qt.io/browse/QTBUG-129656
         tokens = ["QT: Could not find frame or dialog for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        topLevel = self.topLevelObject(obj, True)
+        top_level = self.top_level_object(obj, True)
 
-        tokens = ["QT: Returning", topLevel, "as frame for", obj]
+        tokens = ["QT: Returning", top_level, "as frame for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return topLevel, None
+        return [top_level, None]
 
-    def hasMeaningfulToggleAction(self, obj):
+    def has_meaningful_toggle_action(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj has a meaningful toggle action."""
 
         # https://bugreports.qt.io/browse/QTBUG-116204
@@ -74,4 +95,4 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        return super().hasMeaningfulToggleAction(obj)
+        return super().has_meaningful_toggle_action(obj)

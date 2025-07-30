@@ -635,7 +635,7 @@ class Context:
         self._top_level: Atspi.Accessible | None = None
         self._rect: Atspi.Rect = Atspi.Rect()
 
-        frame, dialog = script.utilities.frameAndDialog(self._focus_obj)
+        frame, dialog = script.utilities.frame_and_dialog(self._focus_obj)
         if root is not None:
             self._top_level = root
             tokens = ["FLAT REVIEW: Restricting flat review to", root]
@@ -822,7 +822,8 @@ class Context:
 
         return None
 
-    def _get_showing_zones(self,
+    def _get_showing_zones(
+        self,
         root: Atspi.Accessible,
         boundingbox: Atspi.Rect | None = None
     ) -> list[Zone]:
@@ -843,7 +844,7 @@ class Context:
 
             zones = self._get_zones_from_object(o, boundingbox)
             if not zones:
-                descendant = self._script.utilities.realActiveDescendant(o)
+                descendant = self._script.utilities.active_descendant(o)
                 if descendant:
                     zones = self._get_zones_from_object(descendant, boundingbox)
             all_zones.extend(zones)
@@ -1025,14 +1026,14 @@ class Context:
         if focused_region is None:
             return regions, None
 
-        focused_region.cursorOffset = 0
+        focused_region.cursor_offset = 0
         if words := zone.get_words():
-            focused_region.cursorOffset += words[0].get_start_offset() - zone.get_start_offset()
+            focused_region.cursor_offset += words[0].get_start_offset() - zone.get_start_offset()
             for word_index in range(self._word_index):
-                focused_region.cursorOffset += len(words[word_index].get_string())
-        focused_region.cursorOffset += self._char_index
+                focused_region.cursor_offset += len(words[word_index].get_string())
+        focused_region.cursor_offset += self._char_index
         # This is related to contracted braille.
-        focused_region.repositionCursor()
+        focused_region.reposition_cursor()
         return regions, focused_region
 
     def go_to_start_of(self, review_type: int = WINDOW) -> bool:

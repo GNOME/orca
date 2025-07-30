@@ -21,11 +21,16 @@
 
 """Custom script utilities for LibreOffice"""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
+
+from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
@@ -38,16 +43,21 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
 class Utilities(script_utilities.Utilities):
     """Custom script utilities for LibreOffice"""
 
-    def __init__(self, script):
+    def __init__(self, script) -> None:
         super().__init__(script)
-        self._calc_selected_cells = []
-        self._calc_selected_rows = []
-        self._calc_selected_columns = []
+        self._calc_selected_cells: list[tuple[int, int]] = []
+        self._calc_selected_rows: list[int] = []
+        self._calc_selected_columns: list[int] = []
 
-    def is_cell_being_edited(self, obj):
+    def is_cell_being_edited(self, obj: Atspi.Accessible) -> str | bool:
         """Returns True if obj is a cell being edited."""
 
         parent = AXObject.get_parent(obj)
@@ -56,7 +66,7 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def spreadsheet_cell_name(self, cell):
+    def spreadsheet_cell_name(self, cell: Atspi.Accessible) -> str:
         """Returns the accessible name of the cell."""
 
         # TODO - JD: Is this still needed? See also _get_cell_name_for_coordinates.
@@ -68,7 +78,13 @@ class Utilities(script_utilities.Utilities):
 
         return ''
 
-    def _get_cell_name_for_coordinates(self, obj, row, col, include_contents=False):
+    def _get_cell_name_for_coordinates(
+        self,
+        obj: Atspi.Accessible,
+        row: int,
+        col: int,
+        include_contents: bool = False
+    ) -> str:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
         cell = AXTable.get_cell_at(obj, row, col)
         name = self.spreadsheet_cell_name(cell)
@@ -78,12 +94,20 @@ class Utilities(script_utilities.Utilities):
 
         return name.strip()
 
-    def getWordAtOffsetAdjustedForNavigation(self, obj, offset=None):
+    def get_word_at_offset_adjusted_for_navigation(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
         """Returns the word in obj at the specified or current offset."""
 
         return AXText.get_word_at_offset(obj, offset)
 
-    def shouldReadFullRow(self, obj, prevObj=None):
+    def should_read_full_row(
+        self,
+        obj: Atspi.Accessible,
+        previous_object: Atspi.Accessible | None = None
+    ) -> bool:
         """Returns True if the full row in obj should be read."""
 
         if self._script.get_table_navigator().last_input_event_was_navigation_command():
@@ -92,16 +116,16 @@ class Utilities(script_utilities.Utilities):
         if input_event_manager.get_manager().last_event_was_tab_navigation():
             return False
 
-        return super().shouldReadFullRow(obj, prevObj)
+        return super().should_read_full_row(obj, previous_object)
 
-    def _isTopLevelObject(self, obj):
+    def _is_top_level_object(self, obj: Atspi.Accessible) -> bool:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=160806
-        if AXObject.get_parent(obj) is None and AXObject.get_role(obj) in self._topLevelRoles():
+        if AXObject.get_parent(obj) is None and AXObject.get_role(obj) in self._top_level_roles():
             tokens = ["SOFFICE:", obj, "has no parent. Treating as top-level."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             return True
 
-        return super()._isTopLevelObject(obj)
+        return super()._is_top_level_object(obj)
 
     def convert_column_to_string(self, column: int):
         """Converts a column index to a string representation."""
@@ -119,7 +143,10 @@ class Utilities(script_utilities.Utilities):
 
         return res
 
-    def _get_coordinates_for_selected_range(self, obj):
+    def _get_coordinates_for_selected_range(
+        self,
+        obj: Atspi.Accessible
+    ) -> tuple[tuple[int, int], tuple[int, int]]:
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             tokens = ["SOFFICE:", obj, "does not implement both selection and table"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -129,17 +156,7 @@ class Utilities(script_utilities.Utilities):
         last = AXSelection.get_selected_child(obj, -1)
         return AXTable.get_cell_coordinates(first), AXTable.get_cell_coordinates(last)
 
-    def getSelectionContainer(self, obj):
-        """Returns the selection container of obj."""
-
-        # Writer implements the selection interface on the document and all its
-        # children. The former is interesting, but interferes with our presentation
-        # of selected text. The latter is just weird.
-        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_document_text):
-            return None
-        return super().getSelectionContainer(obj)
-
-    def speakSelectedCellRange(self, obj):
+    def speak_selected_cell_range(self, obj: Atspi.Accessible) -> bool:
         """Speaks the selected cell range."""
 
         first_coords, last_coords = self._get_coordinates_for_selected_range(obj)
@@ -158,18 +175,18 @@ class Utilities(script_utilities.Utilities):
         self._script.speak_message(messages.CELL_RANGE_SELECTED % (cell1, cell2))
         return True
 
-    def handle_cell_selection_change(self, obj):
+    def handle_cell_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Presents the selection change for obj."""
 
         first_coords, last_coords = self._get_coordinates_for_selected_range(obj)
         if first_coords == (-1, -1) or last_coords == (-1, -1):
             return True
 
-        current = []
+        current_list: list[tuple[int, int]] = []
         for r in range(first_coords[0], last_coords[0]+1):
-            current.extend((r, c) for c in range(first_coords[1], last_coords[1]+1))
+            current_list.extend((r, c) for c in range(first_coords[1], last_coords[1]+1))
 
-        current = set(current)
+        current = set(current_list)
         previous = set(self._calc_selected_cells)
         current.discard((-1, -1))
         previous.discard((-1, -1))
@@ -185,19 +202,19 @@ class Utilities(script_utilities.Utilities):
 
         msgs = []
         if len(unselected) == 1:
-            cell = self._get_cell_name_for_coordinates(obj, *unselected[0], True)
+            cell = self._get_cell_name_for_coordinates(obj, *unselected[0], include_contents=True)
             msgs.append(messages.CELL_UNSELECTED % cell)
         elif len(unselected) > 1:
-            cell1 = self._get_cell_name_for_coordinates(obj, *unselected[0], True)
-            cell2 = self._get_cell_name_for_coordinates(obj, *unselected[-1], True)
+            cell1 = self._get_cell_name_for_coordinates(obj, *unselected[0], include_contents=True)
+            cell2 = self._get_cell_name_for_coordinates(obj, *unselected[-1], include_contents=True)
             msgs.append(messages.CELL_RANGE_UNSELECTED % (cell1, cell2))
 
         if len(selected) == 1:
-            cell = self._get_cell_name_for_coordinates(obj, *selected[0], True)
+            cell = self._get_cell_name_for_coordinates(obj, *selected[0], include_contents=True)
             msgs.append(messages.CELL_SELECTED % cell)
         elif len(selected) > 1:
-            cell1 = self._get_cell_name_for_coordinates(obj, *selected[0], True)
-            cell2 = self._get_cell_name_for_coordinates(obj, *selected[-1], True)
+            cell1 = self._get_cell_name_for_coordinates(obj, *selected[0], include_contents=True)
+            cell2 = self._get_cell_name_for_coordinates(obj, *selected[-1], include_contents=True)
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
         if msgs:
@@ -208,7 +225,10 @@ class Utilities(script_utilities.Utilities):
 
         return bool(msgs)
 
-    def handle_row_and_column_selection_change(self, obj):
+    def handle_row_and_column_selection_change(
+        self,
+        obj: Atspi.Accessible
+    ) -> bool:
         """Presents the selection change for obj."""
 
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):

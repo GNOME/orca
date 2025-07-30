@@ -823,7 +823,7 @@ class Chat:
         """
 
         if AXUtilities.is_showing(obj):
-            active = self._script.utilities.topLevelObjectIsActiveAndCurrent(obj)
+            active = self._script.utilities.top_level_object_is_active_and_current(obj)
             tokens = ["INFO:", obj, "'s window is focused chat:", active]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return active

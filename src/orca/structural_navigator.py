@@ -2889,7 +2889,8 @@ class StructuralNavigator:
 
         self._last_input_event = event
         if settings_manager.get_manager().get_setting("inferLiveRegions"):
-            script.live_region_manager.goLastLiveRegion()
+            if script.live_region_manager is not None:
+                script.live_region_manager.goLastLiveRegion()
         elif notify_user:
             script.present_message(messages.LIVE_REGIONS_OFF)
         return True
