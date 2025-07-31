@@ -192,7 +192,7 @@ class AXText:
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> tuple[str, int, int]:
-        """Returns the character, start, and end for the current or specified offset."""
+        """Returns the (character, start, end) for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
         if not length:
@@ -221,13 +221,65 @@ class AXText:
 
     @staticmethod
     def get_character_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
-        """Returns the character, start, and end at the specified point."""
+        """Returns the (character, start, end) at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
         if not 0 <= offset < AXText.get_character_count(obj):
             return "", 0, 0
 
         return AXText.get_character_at_offset(obj, offset)
+
+    @staticmethod
+    def get_next_character(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the next (character, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_character, start, end = AXText.get_character_at_offset(obj, offset)
+        if not current_character:
+            return "", 0, 0
+
+        length = AXText.get_character_count(obj)
+        next_offset = max(end, offset + 1)
+
+        while next_offset < length:
+            next_character, next_start, next_end = AXText.get_character_at_offset(obj, next_offset)
+            if (next_character, next_start, next_end) != (current_character, start, end):
+                return next_character, next_start, next_end
+            next_offset += 1
+
+        return "", 0, 0
+
+    @staticmethod
+    def get_previous_character(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the previous (character, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_character, start, end = AXText.get_character_at_offset(obj, offset)
+        if not current_character:
+            return "", 0, 0
+
+        if start <= 0:
+            return "", 0, 0
+
+        prev_offset = start - 1
+
+        while prev_offset >= 0:
+            prev_character, prev_start, prev_end = AXText.get_character_at_offset(obj, prev_offset)
+            if (prev_character, prev_start, prev_end) != (current_character, start, end):
+                return prev_character, prev_start, prev_end
+            prev_offset -= 1
+
+        return "", 0, 0
 
     @staticmethod
     def iter_character(
@@ -255,7 +307,7 @@ class AXText:
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> tuple[str, int, int]:
-        """Returns the word, start, and end for the current or specified offset."""
+        """Returns the (word, start, end) for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
         if not length:
@@ -279,13 +331,65 @@ class AXText:
 
     @staticmethod
     def get_word_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
-        """Returns the word, start, and end at the specified point."""
+        """Returns the (word, start, end) at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
         if not 0 <= offset < AXText.get_character_count(obj):
             return "", 0, 0
 
         return AXText.get_word_at_offset(obj, offset)
+
+    @staticmethod
+    def get_next_word(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the next (word, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_word, start, end = AXText.get_word_at_offset(obj, offset)
+        if not current_word:
+            return "", 0, 0
+
+        length = AXText.get_character_count(obj)
+        next_offset = max(end, offset + 1)
+
+        while next_offset < length:
+            next_word, next_start, next_end = AXText.get_word_at_offset(obj, next_offset)
+            if (next_word, next_start, next_end) != (current_word, start, end):
+                return next_word, next_start, next_end
+            next_offset += 1
+
+        return "", 0, 0
+
+    @staticmethod
+    def get_previous_word(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the previous (word, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_word, start, end = AXText.get_word_at_offset(obj, offset)
+        if not current_word:
+            return "", 0, 0
+
+        if start <= 0:
+            return "", 0, 0
+
+        prev_offset = start - 1
+
+        while prev_offset >= 0:
+            prev_word, prev_start, prev_end = AXText.get_word_at_offset(obj, prev_offset)
+            if (prev_word, prev_start, prev_end) != (current_word, start, end):
+                return prev_word, prev_start, prev_end
+            prev_offset -= 1
+
+        return "", 0, 0
 
     @staticmethod
     def iter_word(
@@ -313,7 +417,7 @@ class AXText:
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> tuple[str, int, int]:
-        """Returns the line, start, and end for the current or specified offset."""
+        """Returns the (line, start, end) for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
         if not length:
@@ -351,7 +455,7 @@ class AXText:
 
     @staticmethod
     def get_line_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
-        """Returns the line, start, and end at the specified point."""
+        """Returns the (line, start, end) at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
         if not 0 <= offset < AXText.get_character_count(obj):
@@ -360,32 +464,83 @@ class AXText:
         return AXText.get_line_at_offset(obj, offset)
 
     @staticmethod
+    def get_next_line(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the next (line, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_line, start, end = AXText.get_line_at_offset(obj, offset)
+        if not current_line:
+            return "", 0, 0
+
+        length = AXText.get_character_count(obj)
+        next_offset = max(end, offset + 1)
+
+        while next_offset < length:
+            next_line, next_start, next_end = AXText.get_line_at_offset(obj, next_offset)
+            if (next_line, next_start, next_end) != (current_line, start, end):
+                return next_line, next_start, next_end
+            next_offset += 1
+
+        return "", 0, 0
+
+    @staticmethod
+    def get_previous_line(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the previous (line, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_line, start, end = AXText.get_line_at_offset(obj, offset)
+        if not current_line:
+            return "", 0, 0
+
+        if start <= 0:
+            return "", 0, 0
+
+        prev_offset = start - 1
+
+        while prev_offset >= 0:
+            prev_line, prev_start, prev_end = AXText.get_line_at_offset(obj, prev_offset)
+            if (prev_line, prev_start, prev_end) != (current_line, start, end):
+                return prev_line, prev_start, prev_end
+            prev_offset -= 1
+
+        return "", 0, 0
+
+    @staticmethod
     def iter_line(
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by line in obj starting with the line at offset."""
 
-        if offset is None:
-            offset = AXText.get_caret_offset(obj)
+        line, start, end = AXText.get_line_at_offset(obj, offset)
+        if not line:
+            return
 
-        last_result = None
-        length = AXText.get_character_count(obj)
-        while offset < length:
-            line, start, end = AXText.get_line_at_offset(obj, offset)
-            if last_result is None and not line:
-                return
-            if line and (line, start, end) != last_result:
-                yield line, start, end
-            offset = max(end, offset + 1)
-            last_result = line, start, end
+        yield line, start, end
+
+        while True:
+            next_line, next_start, next_end = AXText.get_next_line(obj, offset)
+            if not next_line:
+                break
+            yield next_line, next_start, next_end
+            offset = next_start
 
     @staticmethod
     def get_sentence_at_offset(
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> tuple[str, int, int]:
-        """Returns the sentence, start, and end for the current or specified offset."""
+        """Returns the (sentence, start, end) for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
         if not length:
@@ -409,7 +564,7 @@ class AXText:
 
     @staticmethod
     def get_sentence_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
-        """Returns the sentence, start, and end at the specified point."""
+        """Returns the (sentence, start, end) at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
         if not 0 <= offset < AXText.get_character_count(obj):
@@ -418,25 +573,76 @@ class AXText:
         return AXText.get_sentence_at_offset(obj, offset)
 
     @staticmethod
+    def get_next_sentence(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the next (sentence, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_sentence, start, end = AXText.get_sentence_at_offset(obj, offset)
+        if not current_sentence:
+            return "", 0, 0
+
+        length = AXText.get_character_count(obj)
+        next_offset = max(end, offset + 1)
+
+        while next_offset < length:
+            next_sentence, next_start, next_end = AXText.get_sentence_at_offset(obj, next_offset)
+            if (next_sentence, next_start, next_end) != (current_sentence, start, end):
+                return next_sentence, next_start, next_end
+            next_offset += 1
+
+        return "", 0, 0
+
+    @staticmethod
+    def get_previous_sentence(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the previous (sentence, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_sentence, start, end = AXText.get_sentence_at_offset(obj, offset)
+        if not current_sentence:
+            return "", 0, 0
+
+        if start <= 0:
+            return "", 0, 0
+
+        prev_offset = start - 1
+
+        while prev_offset >= 0:
+            prev_sentence, prev_start, prev_end = AXText.get_sentence_at_offset(obj, prev_offset)
+            if (prev_sentence, prev_start, prev_end) != (current_sentence, start, end):
+                return prev_sentence, prev_start, prev_end
+            prev_offset -= 1
+
+        return "", 0, 0
+
+    @staticmethod
     def iter_sentence(
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by sentence in obj starting with the sentence at offset."""
 
-        if offset is None:
-            offset = AXText.get_caret_offset(obj)
+        sentence, start, end = AXText.get_sentence_at_offset(obj, offset)
+        if not sentence:
+            return
 
-        last_result = None
-        length = AXText.get_character_count(obj)
-        while offset < length:
-            sentence, start, end = AXText.get_sentence_at_offset(obj, offset)
-            if last_result is None and not sentence:
-                return
-            if sentence and (sentence, start, end) != last_result:
-                yield sentence, start, end
-            offset = max(end, offset + 1)
-            last_result = sentence, start, end
+        yield sentence, start, end
+
+        while True:
+            next_sentence, next_start, next_end = AXText.get_next_sentence(obj, offset)
+            if not next_sentence:
+                break
+            yield next_sentence, next_start, next_end
+            offset = next_start
 
     @staticmethod
     def supports_sentence_iteration(obj: Atspi.Accessible) -> bool:
@@ -456,7 +662,7 @@ class AXText:
         obj: Atspi.Accessible,
         offset: int | None = None
     ) -> tuple[str, int, int]:
-        """Returns the paragraph, start, and end for the current or specified offset."""
+        """Returns the (paragraph, start, end) for the current or specified offset."""
 
         length = AXText.get_character_count(obj)
         if not length:
@@ -480,13 +686,65 @@ class AXText:
 
     @staticmethod
     def get_paragraph_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:
-        """Returns the paragraph, start, and end at the specified point."""
+        """Returns the (paragraph, start, end) at the specified point."""
 
         offset = AXText.get_offset_at_point(obj, x, y)
         if not 0 <= offset < AXText.get_character_count(obj):
             return "", 0, 0
 
         return AXText.get_paragraph_at_offset(obj, offset)
+
+    @staticmethod
+    def get_next_paragraph(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the next (paragraph, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_paragraph, start, end = AXText.get_paragraph_at_offset(obj, offset)
+        if not current_paragraph:
+            return "", 0, 0
+
+        length = AXText.get_character_count(obj)
+        next_offset = max(end, offset + 1)
+
+        while next_offset < length:
+            next_paragraph, next_start, next_end = AXText.get_paragraph_at_offset(obj, next_offset)
+            if (next_paragraph, next_start, next_end) != (current_paragraph, start, end):
+                return next_paragraph, next_start, next_end
+            next_offset += 1
+
+        return "", 0, 0
+
+    @staticmethod
+    def get_previous_paragraph(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Returns the previous (paragraph, start, end) for the current or specified offset."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        current_paragraph, start, end = AXText.get_paragraph_at_offset(obj, offset)
+        if not current_paragraph:
+            return "", 0, 0
+
+        if start <= 0:
+            return "", 0, 0
+
+        prev_offset = start - 1
+
+        while prev_offset >= 0:
+            prev_paragraph, prev_start, prev_end = AXText.get_paragraph_at_offset(obj, prev_offset)
+            if (prev_paragraph, prev_start, prev_end) != (current_paragraph, start, end):
+                return prev_paragraph, prev_start, prev_end
+            prev_offset -= 1
+
+        return "", 0, 0
 
     @staticmethod
     def iter_paragraph(

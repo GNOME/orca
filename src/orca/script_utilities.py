@@ -941,13 +941,14 @@ class Utilities:
 
     def get_word_contents_at_offset(
         self,
-        obj: Atspi.Accessible, # pylint: disable=unused-argument
-        offset: int = 0, # pylint: disable=unused-argument
+        obj: Atspi.Accessible,
+        offset: int = 0,
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the word at offset."""
 
-        return []
+        text, start, end = AXText.get_word_at_offset(obj, offset)
+        return [(obj, start, end, text)]
 
     def get_previous_line_contents(
         self,
@@ -958,49 +959,60 @@ class Utilities:
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the previous line."""
 
-        return []
+        if offset == -1:
+            offset = AXText.get_caret_offset(obj)
+
+        text, start, end = AXText.get_previous_line(obj, offset)
+        return [(obj, start, end, text)]
 
     def get_line_contents_at_offset(
         self,
-        obj: Atspi.Accessible,  # pylint: disable=unused-argument
-        offset: int,  # pylint: disable=unused-argument
+        obj: Atspi.Accessible,
+        offset: int,
         layout_mode: bool | None = None, # pylint: disable=unused-argument
         use_cache: bool = True  # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the line at offset."""
 
-        return []
+        text, start, end = AXText.get_line_at_offset(obj, offset)
+        return [(obj, start, end, text)]
 
     def get_next_line_contents(
         self,
-        obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
-        offset: int = -1, # pylint: disable=unused-argument
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
         layout_mode: bool | None = None, # pylint: disable=unused-argument
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the next line."""
 
-        return []
+        if offset == -1:
+            offset = AXText.get_caret_offset(obj)
+
+        text, start, end = AXText.get_next_line(obj, offset)
+        return [(obj, start, end, text)]
 
     def get_object_contents_at_offset(
         self,
-        obj: Atspi.Accessible, # pylint: disable=unused-argument
+        obj: Atspi.Accessible,
         offset: int = 0, # pylint: disable=unused-argument
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the object at offset."""
 
-        return []
+        text = AXText.get_all_text(obj)
+        return [(obj, 0, len(text), text)]
 
     def get_sentence_contents_at_offset(
         self,
-        obj: Atspi.Accessible, # pylint: disable=unused-argument
-        offset: int, # pylint: disable=unused-argument
+        obj: Atspi.Accessible,
+        offset: int,
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns the sentence contents for the specified offset."""
 
-        return []
+        text, start, end = AXText.get_sentence_at_offset(obj, offset)
+        return [(obj, start, end, text)]
 
     def find_first_caret_context(
         self,

@@ -506,13 +506,12 @@ class Script(default.Script):
                 self._skip_blank_cells_check_button.get_active()
         }
 
-    # TODO - JD: This needs to be moved out of the scripts.
     def _say_all_iter(
         self,
         obj: Atspi.Accessible,
         offset: int | None = None
-    ) -> Generator[list, None, None]:
-        """Creates a generator that can be used to iterate document content."""
+    ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
+        """A generator used by Say All."""
 
         if not self.utilities.in_document_content():
             super()._say_all_iter(obj, offset)

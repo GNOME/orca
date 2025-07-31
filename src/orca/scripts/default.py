@@ -2104,7 +2104,7 @@ class Script(script.Script):
         self,
         obj: Atspi.Accessible,
         offset: int | None = None
-    ) -> Generator[list[Any], None, None]:
+    ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
         """A generator used by Say All."""
 
         prior_obj = obj
@@ -2121,9 +2121,8 @@ class Script(script.Script):
                 iterator = AXText.iter_line
 
             for text, start, end in iterator(obj, offset):
-                voice: ACSS | list[ACSS] | None = self.speech_generator.voice(obj=obj, string=text)
-                if voice and isinstance(voice, list):
-                    voice = voice[0]
+                voice_list: ACSS | list[ACSS] = self.speech_generator.voice(obj=obj, string=text)
+                voice = voice_list[0]
 
                 manager = speech_and_verbosity_manager.get_manager()
                 text = manager.adjust_for_presentation(obj, text, start)
@@ -2141,6 +2140,7 @@ class Script(script.Script):
             obj = self.utilities.find_next_object(obj)
 
         self._say_all_contexts = []
+        self._say_all_contents = []
 
     def spell_phonetically(self, item_string: str) -> None:
         """Phonetically spell item_string."""
