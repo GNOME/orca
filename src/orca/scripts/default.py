@@ -2115,7 +2115,7 @@ class Script(script.Script):
             speech.speak(self.speech_generator.generate_context(obj, priorObj=prior_obj))
 
             style = settings_manager.get_manager().get_setting("sayAllStyle")
-            if style == settings.SAYALL_STYLE_SENTENCE and AXText.supports_sentence_iteration(obj):
+            if style == settings.SAYALL_STYLE_SENTENCE:
                 iterator = AXText.iter_sentence
             else:
                 iterator = AXText.iter_line

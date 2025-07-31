@@ -661,17 +661,6 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
-    def __find_sentence_hack(self, obj: Atspi.Accessible, offset: int) -> tuple[str, int, int]:
-        # TODO - JD: Move this sad hack to AXText.
-        text = AXText.get_all_text(obj)
-        spans = [m.span() for m in re.finditer(r"\S*[^\.\?\!]+((?<!\w)[\.\?\!]+(?!\w)|\S*)", text)]
-        range_start, range_end = 0, len(text)
-        for span in spans:
-            if span[0] <= offset <= span[1]:
-                range_start, range_end = span[0], span[1] + 1
-                break
-        return text[range_start:range_end], range_start, range_end
-
     def _get_text_at_offset(
         self,
         obj: Atspi.Accessible,
@@ -734,19 +723,6 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB:", granularity, f"at offset {offset} for", obj, ":",
                   f"'{s}', Start: {start}, End: {end}."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=1141181
-        need_sad_hack = granularity == Atspi.TextGranularity.SENTENCE and all_text \
-           and (string, start, end) == ("", 0, 0)
-
-        if need_sad_hack:
-            sad_string, sad_start, sad_end = self.__find_sentence_hack(obj, offset)
-            s = string_for_debug(sad_string)
-            tokens = ["HACK: Attempting to recover from above failure. Result:",
-                      f"'{s}', Start: {sad_start}, End: {sad_end}."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return sad_string, sad_start, sad_end
-
         return string, start, end
 
     def _get_contents_for_obj(
@@ -870,8 +846,7 @@ class Utilities(script_utilities.Utilities):
             if 0 <= x_start <= 5:
                 x_string = " ".join(x_string.split()[1:])
 
-            match = re.search(r"\S[\.\!\?]+(\s|\Z)", x_string)
-            return match is not None
+            return AXText.has_sentence_ending(x_string)
 
         # Check for things in the same sentence before this object.
         first_obj, first_start, _first_end, first_string = objects[0]

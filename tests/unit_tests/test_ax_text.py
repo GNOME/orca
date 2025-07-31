@@ -827,21 +827,6 @@ class TestAXText:
         assert result[0] == (0, 10, {"font-weight": "bold"})
         assert result[1] == (10, 20, {"font-style": "italic"})
 
-    def test_supports_sentence_iteration_true(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
-        """Test AXText.supports_sentence_iteration returns True."""
-
-        clean_module_cache("orca.ax_text")
-        from orca.ax_text import AXText
-
-        monkeypatch.setattr(
-            AXText, "get_sentence_at_offset", lambda obj, offset: ("This is a sentence.", 0, 19)
-        )
-
-        result = AXText.supports_sentence_iteration(mock_accessible)
-        assert result is True
-
     def test_supports_paragraph_iteration_true(
         self, monkeypatch, mock_accessible, mock_orca_dependencies
     ):
@@ -1896,20 +1881,6 @@ class TestAXText:
 
         result = AXText.get_substring(mock_accessible, 5, -1)
         assert result == "substring"
-
-    def test_supports_sentence_iteration_false(
-        self, monkeypatch, mock_accessible, mock_orca_dependencies
-    ):
-        """Test AXText.supports_sentence_iteration returns False."""
-
-        clean_module_cache("orca.ax_text")
-        from orca.ax_text import AXText
-        from orca.ax_object import AXObject
-
-        monkeypatch.setattr(AXObject, "supports_text", lambda obj: False)
-
-        result = AXText.supports_sentence_iteration(mock_accessible)
-        assert result is False
 
     def test_supports_paragraph_iteration_false(
         self, monkeypatch, mock_accessible, mock_orca_dependencies

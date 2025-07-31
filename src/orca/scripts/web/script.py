@@ -546,8 +546,7 @@ class Script(default.Script):
                     voices.append(u)
             return elements, voices
 
-        done = False
-        while not done:
+        while obj:
             if say_all_by_sentence:
                 contents = self.utilities.get_sentence_contents_at_offset(obj, character_offset)
             else:
@@ -555,8 +554,8 @@ class Script(default.Script):
             self._say_all_contents = contents
             for i, content in enumerate(contents):
                 obj, start_offset, end_offset, text = content
-                tokens = ["WEB SAY ALL CONTENT:",
-                          i, ". ", obj, "'", text, "' (", start_offset, "-", end_offset, ")"]
+                tokens = [f"WEB SAY ALL CONTENT: {i}.", obj,
+                          f"'{text}' ({start_offset}-{end_offset})"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
                 if self.utilities.is_inferred_label_for_contents(content, contents):
@@ -577,29 +576,32 @@ class Script(default.Script):
 
                 elements, voices = _parse_utterances(utterances)
                 if len(elements) != len(voices):
+                    tokens = ["WEB: Skipping content - elements/voices mismatch:", obj,
+                              f"'{text}', elements: {len(elements)}, voices: {len(voices)}"]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
                 for i, element in enumerate(elements):
+                    if not element or (isinstance(element, str) and not element.strip()):
+                        continue
+
                     context = speechserver.SayAllContext(obj, element, start_offset, end_offset)
-                    tokens = ["WEB", context]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     self._say_all_contexts.append(context)
                     self.get_event_synthesizer().scroll_into_view(obj, start_offset, end_offset)
                     yield [context, voices[i]]
 
             last_obj, last_offset = contents[-1][0], contents[-1][2]
-            obj, character_offset = self.utilities.find_next_caret_in_order(
-                last_obj, last_offset - 1)
+            obj, character_offset = self.utilities.next_context(
+                last_obj, last_offset - 1, skip_space=True)
             if obj == last_obj and character_offset <= last_offset:
-                obj, character_offset = self.utilities.find_next_caret_in_order(
-                    last_obj, last_offset)
+                obj, character_offset = self.utilities.next_context(
+                    last_obj, last_offset, skip_space=True)
+
             if obj == last_obj and character_offset <= last_offset:
                 tokens = ["WEB: Cycle within object detected in _say_all_iter. Last:",
-                          last_obj, ", ", last_offset, "Next:", obj, ", ", character_offset]
+                          last_obj, f", {last_offset}, Next:", obj, f", {character_offset}"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 break
-
-            done = obj is None
 
         self._say_all_contents = []
         self._say_all_contexts = []

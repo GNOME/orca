@@ -536,6 +536,62 @@ class AXText:
             offset = next_start
 
     @staticmethod
+    def _find_sentence_boundaries(text: str) -> list[int]:
+        """Returns the offsets in text that should be treated as sentence beginnings."""
+
+        if not text:
+            return []
+
+        boundaries = [0]
+        pattern = r"[.!?]+(?=\s|\ufffc|$)"
+        for match in re.finditer(pattern, text):
+            end_pos = match.end()
+            # Skip whitespace and embedded objects to find start of next sentence.
+            while end_pos < len(text) and (text[end_pos].isspace() or text[end_pos] == "\ufffc"):
+                end_pos += 1
+            # Only add boundary if we haven't reached the end and it's not a duplicate.
+            if end_pos < len(text) and end_pos not in boundaries:
+                boundaries.append(end_pos)
+
+        if boundaries[-1] != len(text):
+            boundaries.append(len(text))
+
+        return boundaries
+
+    @staticmethod
+    def has_sentence_ending(text: str) -> bool:
+        """Check if text contains a sentence ending."""
+
+        return bool(text and re.search(r"\S[.!?]+(\s|\ufffc|$)", text))
+
+    @staticmethod
+    def _get_sentence_at_offset_fallback(
+        obj: Atspi.Accessible,
+        offset: int | None = None
+    ) -> tuple[str, int, int]:
+        """Fallback sentence detection for broken implementations."""
+
+        if offset is None:
+            offset = AXText.get_caret_offset(obj)
+
+        text = AXText.get_all_text(obj)
+        if not text or offset < 0 or offset >= len(text):
+            return "", 0, 0
+
+        fallback_text, fallback_start, fallback_end = text, 0, len(text)
+        boundaries = AXText._find_sentence_boundaries(text)
+        for i in range(len(boundaries) - 1):
+            start, end = boundaries[i], boundaries[i + 1]
+            if start <= offset < end:
+                fallback_text, fallback_start, fallback_end = text[start:end], start, end
+                break
+
+        tokens = ["AXText: Fallback sentence in", obj,
+                  f" at offset {offset}: '{fallback_text}' ({fallback_start}-{fallback_end})"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return fallback_text, fallback_start, fallback_end
+
+    @staticmethod
     def get_sentence_at_offset(
         obj: Atspi.Accessible,
         offset: int | None = None
@@ -555,7 +611,14 @@ class AXText:
         except GLib.GError as error:
             msg = f"AXText: Exception in get_sentence_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return "", 0, 0
+            return AXText._get_sentence_at_offset_fallback(obj, offset)
+
+        if result.start_offset == result.end_offset == -1 or not result.content:
+            return AXText._get_sentence_at_offset_fallback(obj, offset)
+
+        if (result.start_offset == result.end_offset and
+            result.start_offset in [0, -1] and not result.content):
+            return AXText._get_sentence_at_offset_fallback(obj, offset)
 
         tokens = [f"AXText: Sentence at offset {offset} in", obj,
                   f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
@@ -643,19 +706,6 @@ class AXText:
                 break
             yield next_sentence, next_start, next_end
             offset = next_start
-
-    @staticmethod
-    def supports_sentence_iteration(obj: Atspi.Accessible) -> bool:
-        """Returns True if sentence iteration is supported on obj."""
-
-        if not AXObject.supports_text(obj):
-            return False
-
-        string, start, end = AXText.get_sentence_at_offset(obj, 0)
-        result = string and 0 <= start < end
-        tokens = ["AXText: Sentence iteration supported on", obj, f": {result}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return bool(result)
 
     @staticmethod
     def get_paragraph_at_offset(
