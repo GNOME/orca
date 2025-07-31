@@ -64,6 +64,7 @@ class InputEventManager:
         self._mapped_keycodes: list[int] = []
         self._mapped_keysyms: list[int] = []
         self._grabbed_bindings: dict[int, keybindings.KeyBinding] = {}
+        self._paused: bool = False
 
     def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
@@ -82,6 +83,13 @@ class InputEventManager:
         msg = "INPUT EVENT MANAGER: Stopping key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._device = None
+
+    def pause_key_watcher(self, pause: bool = True, reason: str = "") -> None:
+        """Pauses processing of keyboard input events."""
+
+        msg = f"INPUT EVENT MANAGER: Pause queueing: {pause}. {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._paused = pause
 
     def check_grabbed_bindings(self) -> None:
         """Checks the grabbed key bindings."""
@@ -252,6 +260,11 @@ class InputEventManager:
         text: str
     ) -> bool:
         """Processes this Atspi keyboard event."""
+
+        if self._paused:
+            msg = "INPUT EVENT MANAGER: Keyboard event processing is paused."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         event = input_event.KeyboardEvent(pressed, keycode, keysym, modifiers, text)
         if event in [self._last_input_event, self._last_non_modifier_key_event]:

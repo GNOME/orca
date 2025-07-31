@@ -122,6 +122,7 @@ class EventManager:
         self._paused = pause
         if clear_queue:
             self._event_queue = queue.PriorityQueue(0)
+        input_event_manager.get_manager().pause_key_watcher(pause, reason)
 
     def _get_priority(self, event: Atspi.Event) -> int:
         """Returns the priority associated with event."""
