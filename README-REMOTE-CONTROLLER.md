@@ -51,6 +51,26 @@ gdbus call --session --dest org.gnome.Orca.Service \
 
 **Returns:** Boolean indicating success
 
+### Show Orca's Preferences GUI
+
+```bash
+gdbus call --session --dest org.gnome.Orca.Service \
+    --object-path /org/gnome/Orca/Service \
+    --method org.gnome.Orca.Service.ShowPreferences
+```
+
+**Returns:** Boolean indicating success
+
+### Quit Orca
+
+```bash
+gdbus call --session --dest org.gnome.Orca.Service \
+    --object-path /org/gnome/Orca/Service \
+    --method org.gnome.Orca.Service.Quit
+```
+
+**Returns:** Boolean indicating if the quit request was accepted
+
 ### List Available Service Commands
 
 ```bash
@@ -113,6 +133,7 @@ Replace `ModuleName` with an actual module name from `ListModules`.
 list of (parameter_name, parameter_type) tuples.
 
 **Example output:**
+
 ```
 ([('GetVoicesForLanguage',
    'Returns a list of available voices for the specified language.',

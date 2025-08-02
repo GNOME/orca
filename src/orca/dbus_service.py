@@ -483,6 +483,23 @@ class OrcaDBusServiceInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
+    def Quit(self) -> bool: # pylint: disable=invalid-name
+        """Quits Orca. Returns True if the quit request was accepted."""
+
+        msg = "DBUS SERVICE: Quit called."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        from . import orca  # pylint: disable=import-outside-toplevel
+
+        # orca.shutdown() shuts down the dbus service, so send the response immediately and then
+        # do the actual shutdown after a brief delay.
+        def _delayed_shutdown():
+            orca.shutdown()
+            return False
+
+        GLib.timeout_add(100, _delayed_shutdown)
+        return True
+
     def shutdown_service(self, bus: SessionMessageBus, object_path_base: str) -> None:
         """Releases D-Bus resources held by this service and its modules."""
 
