@@ -57,8 +57,8 @@ class Bookmarks(bookmarks.Bookmarks):
 
         self._script.utilities.set_caret_position(obj, offset)
         contents = self._script.utilities.get_object_contents_at_offset(obj, offset)
-        self._script.speakContents(contents)
-        self._script.displayContents(contents)
+        self._script.speak_contents(contents)
+        self._script.display_contents(contents)
         self._currentbookmarkindex[index[1]] = index[0]
 
     def saveBookmarks(self, script, inputEvent):

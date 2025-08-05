@@ -412,7 +412,7 @@ class LiveRegionManager:
         contents of that object"""
         if self.lastliveobj:
             self._script.utilities.set_caret_position(self.lastliveobj, 0)
-            self._script.speakContents(self._script.utilities.get_object_contents_at_offset(
+            self._script.speak_contents(self._script.utilities.get_object_contents_at_offset(
                                        self.lastliveobj, 0))
 
     def reviewLiveAnnouncement(self, script, inputEvent):
