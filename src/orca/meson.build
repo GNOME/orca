@@ -130,6 +130,7 @@ lib_sources = [
   'spiel.py',
   'ssml.py',
   'structural_navigator.py',
+  'systemd.py',
   'system_information_presenter.py',
   'table_navigator.py',
   'text_attribute_names.py',

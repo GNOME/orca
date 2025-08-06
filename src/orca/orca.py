@@ -59,6 +59,7 @@ from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
 from . import sound
+from . import systemd
 from .ax_utilities import AXUtilities
 
 def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
@@ -112,6 +113,8 @@ def shutdown(script=None, _event=None, _signum=None):
         msg = "ORCA: Shutdown already in progress"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
+
+    systemd.get_manager().notify_stopping()
 
     shutdown.in_progress = True
 
@@ -168,7 +171,9 @@ def main():
         signal_string = f'({signal.strsignal(signum)})'
         tokens = [f"ORCA: Reloading due to signal={signum} {signal_string}", frame]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        systemd.get_manager().notify_reloading()
         load_user_settings()
+        systemd.get_manager().notify_ready()
 
     def _shutdown_on_signal(signum, frame):
         signal_string = f'({signal.strsignal(signum)})'
@@ -218,6 +223,7 @@ def main():
 
     clipboard.get_presenter().activate()
     Gdk.notify_startup_complete()
+    systemd.get_manager().notify_ready()
 
     try:
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)

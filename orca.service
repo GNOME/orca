@@ -11,7 +11,7 @@ After=graphical-session.target
 Wants=at-spi-dbus-bus.service
 
 [Service]
-Type=exec
+Type=notify-reload
 ExecStart=orca --replace
 Restart=always
 Slice=session.slice
