@@ -196,6 +196,8 @@ def main():
     signal.signal(signal.SIGQUIT, _shutdown_on_signal)
     signal.signal(signal.SIGUSR1, _show_preferences_on_signal)
 
+    systemd.get_manager().start_watchdog()
+
     debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not settings_manager.get_manager().is_accessibility_enabled():
         settings_manager.get_manager().set_accessibility(True)

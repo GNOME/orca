@@ -30,12 +30,14 @@ import errno
 import os
 import socket
 import time
+from gi.repository import GLib
 
 class Systemd:
     """Orca's integration with the systemd service manager"""
 
     def __init__(self) -> None:
         self._notify_socket: socket.socket | None = None
+        self._watchdog_interval: int | None = None
 
         socket_path = os.environ.get("NOTIFY_SOCKET")
         if socket_path:
@@ -49,6 +51,10 @@ class Systemd:
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM | socket.SOCK_CLOEXEC)
             sock.connect(socket_path)
             self._notify_socket = sock
+
+        watchdog_usec = os.environ.get("WATCHDOG_USEC")
+        if watchdog_usec:
+            self._watchdog_interval = int(watchdog_usec) // 1000 # µs -> ms
 
     def _notify(self, message: bytes) -> None:
         """Send systemd a raw sd_notify notification"""
@@ -70,6 +76,24 @@ class Systemd:
     def notify_stopping(self) -> None:
         """Tell systemd that Orca is shutting down"""
         self._notify(b"STOPPING=1")
+
+    def start_watchdog(self) -> None:
+        """Start regularly sending keepalive pings to the systemd watchdog"""
+        if not self._watchdog_interval:
+            return
+
+        def _on_watchdog_tick() -> bool:
+            """Send a keepalive ping to the watchdog"""
+            self._notify(b"WATCHDOG=1")
+            return GLib.SOURCE_CONTINUE
+
+        # The interval systemd reports to us is the deadline: if we miss it,
+        # systemd will restart Orca. So, we want to ping more quickly than
+        # requested, to avoid a situation where timer inaccuracies will
+        # cause us to miss the deadline. systemd's code for this pings
+        # anywhere from 133% - 200% faster than necessary. For us it's
+        # easier to just ping 2x as fast
+        GLib.timeout_add(self._watchdog_interval // 2, _on_watchdog_tick)
 
 _manager: Systemd = Systemd()
 

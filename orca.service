@@ -14,6 +14,7 @@ Wants=at-spi-dbus-bus.service
 Type=notify-reload
 ExecStart=orca --replace
 Restart=always
+WatchdogSec=3
 Slice=session.slice
 
 [Install]
