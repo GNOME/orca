@@ -1533,10 +1533,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if input_event_manager.get_manager().last_event_was_mouse_button():
-            msg = "WEB: Last input event was mouse button"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
+        if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
             if (event.source, event.detail1) == (obj, offset):
                 msg = "WEB: Event is for current caret context."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
