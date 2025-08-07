@@ -397,6 +397,9 @@ class InputEventManager:
     def last_event_equals_or_is_release_for_event(self, event):
         """Returns True if the last non-modifier event equals, or is the release for, event."""
 
+        if not self.last_event_was_keyboard():
+            return False
+
         if self._last_non_modifier_key_event is None:
             return False
 
