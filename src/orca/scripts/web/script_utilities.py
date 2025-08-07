@@ -776,7 +776,7 @@ class Utilities(script_utilities.Utilities):
         if not string:
             return [(obj, start, end, string)]
 
-        string_offset = offset - start
+        string_offset = max(0, offset - start)
         try:
             char = string[string_offset]
         except IndexError:
