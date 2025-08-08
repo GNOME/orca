@@ -41,7 +41,6 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import Gdk
-from gi.repository import Gio
 from gi.repository import GLib
 
 from . import braille
@@ -60,6 +59,7 @@ from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
 from . import sound
+from . import systemd
 from .ax_utilities import AXUtilities
 
 def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
@@ -114,6 +114,8 @@ def shutdown(script=None, _event=None, _signum=None):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
+    systemd.get_manager().notify_stopping()
+
     shutdown.in_progress = True
 
     def _timeout(_signum=None, _frame=None):
@@ -165,18 +167,13 @@ def shutdown(script=None, _event=None, _signum=None):
 def main():
     """The main entry point for Orca."""
 
-    def _on_enabled_changed(gsetting, key):
-        enabled = gsetting.get_boolean(key)
-        msg = f"ORCA: {key} changed to {enabled}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        if key == "screen-reader-enabled" and not enabled:
-            shutdown()
-
     def _reload_on_signal(signum, frame):
         signal_string = f'({signal.strsignal(signum)})'
         tokens = [f"ORCA: Reloading due to signal={signum} {signal_string}", frame]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        systemd.get_manager().notify_reloading()
         load_user_settings()
+        systemd.get_manager().notify_ready()
 
     def _shutdown_on_signal(signum, frame):
         signal_string = f'({signal.strsignal(signum)})'
@@ -199,23 +196,13 @@ def main():
     signal.signal(signal.SIGQUIT, _shutdown_on_signal)
     signal.signal(signal.SIGUSR1, _show_preferences_on_signal)
 
+    systemd.get_manager().start_watchdog()
+
     debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
     if not settings_manager.get_manager().is_accessibility_enabled():
         settings_manager.get_manager().set_accessibility(True)
 
     load_user_settings(is_reload=False)
-
-    try:
-        _a11y_applications_gsetting = Gio.Settings(schema_id="org.gnome.desktop.a11y.applications")
-        connection = _a11y_applications_gsetting.connect("changed", _on_enabled_changed)
-        msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-    except GLib.Error as error:
-        msg = f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
-    except (AttributeError, TypeError) as error:
-        msg = f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility): {error}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     dbus_service.get_remote_controller().start()
     script = script_manager.get_manager().get_default_script()
@@ -238,6 +225,7 @@ def main():
 
     clipboard.get_presenter().activate()
     Gdk.notify_startup_complete()
+    systemd.get_manager().notify_ready()
 
     try:
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)
