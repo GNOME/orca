@@ -295,8 +295,9 @@ class Utilities(script_utilities.Utilities):
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
-        skip_space: bool = False
-    ) -> tuple[Atspi.Accessible, int]:
+        skip_space: bool = False,
+        restrict_to: Atspi.Accessible | None = None # pylint: disable=unused-argument
+    ) -> tuple[Atspi.Accessible | None, int]:
         """Returns the next viable/valid caret context given obj and offset."""
 
         if obj is None:
@@ -313,8 +314,9 @@ class Utilities(script_utilities.Utilities):
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
-        skip_space: bool = False
-    ) -> tuple[Atspi.Accessible, int]:
+        skip_space: bool = False,
+        restrict_to: Atspi.Accessible | None = None # pylint: disable=unused-argument
+    ) -> tuple[Atspi.Accessible | None, int]:
         """Returns the previous viable/valid caret context given obj and offset."""
 
         if obj is None:

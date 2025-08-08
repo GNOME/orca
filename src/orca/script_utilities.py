@@ -1027,27 +1027,56 @@ class Utilities:
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
-        skip_space: bool = False # pylint: disable=unused-argument
-    ) -> tuple[Atspi.Accessible, int]:
+        skip_space: bool = False,
+        restrict_to: Atspi.Accessible | None = None
+    ) -> tuple[Atspi.Accessible | None, int]:
         """Returns the previous viable/valid caret context given obj and offset."""
 
         if obj is None:
             obj, offset = self.get_caret_context()
 
-        return obj, offset - 1
+        prev_offset = offset - 1
+        if skip_space:
+            char = AXText.get_character_at_offset(obj, prev_offset)[0]
+            while char and char.isspace():
+                prev_offset -= 1
+                char = AXText.get_character_at_offset(obj, prev_offset)[0]
+
+        if prev_offset >= 0:
+            return obj, prev_offset
+
+        if prev_obj := self.find_previous_object(obj, restrict_to):
+            length = AXText.get_character_count(prev_obj)
+            return prev_obj, max(0, length - 1)
+
+        return None, -1
 
     def next_context(
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
-        skip_space: bool = False # pylint: disable=unused-argument
-    ) -> tuple[Atspi.Accessible, int]:
+        skip_space: bool = False,
+        restrict_to: Atspi.Accessible | None = None
+    ) -> tuple[Atspi.Accessible | None, int]:
         """Returns the next viable/valid caret context given obj and offset."""
 
         if obj is None:
             obj, offset = self.get_caret_context()
 
-        return obj, offset + 1
+        next_offset = offset + 1
+        if skip_space:
+            char = AXText.get_character_at_offset(obj, next_offset)[0]
+            while char and char.isspace():
+                next_offset += 1
+                char = AXText.get_character_at_offset(obj, next_offset)[0]
+
+        if next_offset < AXText.get_character_count(obj):
+            return obj, next_offset
+
+        if next_obj := self.find_next_object(obj, restrict_to):
+            return next_obj, 0
+
+        return None, -1
 
     def first_context(self, obj: Atspi.Accessible, offset: int) -> tuple[Atspi.Accessible, int]:
         """Returns the first viable/valid caret context given obj and offset."""

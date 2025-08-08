@@ -5109,3 +5109,18 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the window role."""
 
         return self._generate_default_presentation(obj, **args)
+
+    def generate_contents(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args
+    ) -> list[Any]:
+        """Generates speech for a list of [obj, start, end, string] contents."""
+
+        result = []
+        for content in contents:
+            obj, _start, _end, text = content
+            voices = self.voice(obj=obj, string=text)
+            voice = voices[0] if voices and isinstance(voices, list) else voices
+            result.append([text, voice])
+        return result
