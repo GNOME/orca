@@ -88,7 +88,7 @@ class Script(script.Script):
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
         self._say_all_contents: list[tuple[Atspi.Accessible, int, int, str]] = []
-        self._say_all_contexts: list = [speechserver.SayAllContext]
+        self._say_all_contexts: list[speechserver.SayAllContext] = []
         self.grab_ids: list = [int]
 
     def setup_input_event_handlers(self) -> None:
