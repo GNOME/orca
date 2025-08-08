@@ -238,7 +238,12 @@ class SpeechServer(speechserver.SpeechServer):
             self.reset()
             if self._client is None:
                 return None
-            return command(*args, **kwargs)
+            try:
+                return command(*args, **kwargs)
+            except (AttributeError, speechd.SSIPCommandError) as error:
+                msg = f"SPEECH DISPATCHER: Failed to reconnect: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                return None
         except Exception:
             return None
 
@@ -708,7 +713,10 @@ class SpeechServer(speechserver.SpeechServer):
     def get_output_module(self) -> str:
         if self._client is None:
             return ""
-        return self._client.get_output_module()
+        result = self._send_command(self._client.get_output_module)
+        if result is not None:
+            return result
+        return ""
 
     def set_output_module(self, module_id: str) -> None:
         """Set the speech output module to the specified provider."""
@@ -717,7 +725,7 @@ class SpeechServer(speechserver.SpeechServer):
         # That might be desired (e.g. self._id impacts what is shown in Orca preferences),
         # but it can be confusing.
         if self._client is not None:
-            self._client.set_output_module(module_id)
+            self._send_command(self._client.set_output_module, module_id)
 
     def stop(self) -> None:
         self._cancel()
