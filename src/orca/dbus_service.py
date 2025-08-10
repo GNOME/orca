@@ -26,6 +26,7 @@
 # pylint: disable=too-many-nested-blocks
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-statements
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
@@ -48,6 +49,7 @@ from gi.repository import GLib
 
 from . import debug
 from . import input_event
+from . import input_event_manager
 from . import orca_platform # pylint: disable=no-name-in-module
 from . import script_manager
 
@@ -266,6 +268,8 @@ class OrcaModuleDBusInterface(Publishable):
             return False
 
         handler_info = self._commands[command_name]
+        msg = f"DBUS SERVICE: About to execute '{command_name}' in '{self._module_name}'."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         result = handler_info.action(notify_user)
         msg = (
             f"DBUS SERVICE: '{command_name}' in '{self._module_name}' executed. "
@@ -293,8 +297,10 @@ class OrcaModuleDBusInterface(Publishable):
 
         kwargs = {name: variant.unpack() for name, variant in parameters.items()}
         kwargs["notify_user"] = notify_user
+        msg = f"DBUS SERVICE: About to execute '{command_name}' in '{self._module_name}'."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         result = handler_info.action(**kwargs)
-        msg = f"DBUS SERVICE: Parameterized '{command_name}' in '{self._module_name}' executed."
+        msg = f"DBUS SERVICE: '{command_name}' in '{self._module_name}' executed."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return self._to_variant(result)
 
@@ -646,7 +652,11 @@ class OrcaRemoteController:
                         script = script_manager.get_manager().get_active_script()
                         if script is None:
                             script = script_manager.get_manager().get_default_script()
-                        return method(script=script, event=event, notify_user=notify_user)
+                        rv = method(script=script, event=event, notify_user=notify_user)
+                        # TODO - JD: It probably makes sense to fully process these input
+                        # events just like any others, rather than have the caller here.
+                        input_event_manager.get_manager().process_remote_controller_event(event)
+                        return rv
                     return _wrapper
                 handler_info = _HandlerInfo(
                     python_function_name=attr_name,
@@ -665,7 +675,11 @@ class OrcaRemoteController:
                         script = script_manager.get_manager().get_active_script()
                         if script is None:
                             script = script_manager.get_manager().get_default_script()
-                        return method(script=script, event=event, **kwargs)
+                        rv = method(script=script, event=event, **kwargs)
+                        # TODO - JD: It probably makes sense to fully process these input
+                        # events just like any others, rather than have the caller here.
+                        input_event_manager.get_manager().process_remote_controller_event(event)
+                        return rv
                     return _wrapper
                 handler_info = _HandlerInfo(
                     python_function_name=attr_name,

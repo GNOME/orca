@@ -991,6 +991,9 @@ class StructuralNavigator:
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
 
+        if self._last_input_event is None:
+            return False
+
         manager = input_event_manager.get_manager()
         result = manager.last_event_equals_or_is_release_for_event(self._last_input_event)
         if self._last_input_event is not None:
@@ -998,7 +1001,10 @@ class StructuralNavigator:
         else:
             string = "None"
 
-        msg = f"STRUCTURAL NAVIGATOR: Last navigation event ({string}) is last key event: {result}"
+        msg = (
+            f"STRUCTURAL NAVIGATOR: Last navigation event ({string}) "
+            f"is last input event: {result}"
+        )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 

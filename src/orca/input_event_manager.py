@@ -248,6 +248,14 @@ class InputEventManager:
         mouse_event.set_click_count(self._determine_mouse_event_click_count(mouse_event))
         self._last_input_event = mouse_event
 
+    def process_remote_controller_event(self, event: input_event.RemoteControllerEvent) -> None:
+        """Processes this RemoteController event."""
+
+        # TODO - JD: It probably makes sense to process remote controller events here rather
+        # than just updating state.
+        self._last_input_event = event
+        self._last_non_modifier_key_event = None
+
     # pylint: disable=too-many-arguments
     # pylint: disable=too-many-positional-arguments
     def process_keyboard_event(
@@ -395,7 +403,10 @@ class InputEventManager:
         return result
 
     def last_event_equals_or_is_release_for_event(self, event):
-        """Returns True if the last non-modifier event equals, or is the release for, event."""
+        """Returns True if the last event equals the provided event, or is the release for it."""
+
+        if self._last_input_event is event:
+            return True
 
         if not self.last_event_was_keyboard():
             return False
