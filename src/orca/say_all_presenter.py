@@ -39,6 +39,7 @@ __license__   = "LGPL"
 from typing import Generator, TYPE_CHECKING
 
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import input_event
@@ -72,6 +73,11 @@ class SayAllPresenter:
         self._script: default.Script | None = None
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
         self._contexts: list[speechserver.SayAllContext] = []
+
+        msg = "SayAllPresenter: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("SayAllPresenter", self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -154,16 +160,19 @@ class SayAllPresenter:
         msg = "SAY ALL PRESENTER: Laptop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    @dbus_service.command
     def say_all(
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
         obj: Atspi.Accessible | None = None,
         offset: int | None = None
     ) -> bool:
         """Speaks the entire document or text, starting from the current position."""
 
-        tokens = ["SAY ALL PRESENTER: say_all. Script:", script, "Event:", event]
+        tokens = ["SAY ALL PRESENTER: say_all. Script:", script, "Event:", event,
+                  "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._script = script
