@@ -1800,6 +1800,11 @@ class Script(default.Script):
             tokens = ["WEB: document changed from", prev_document, "to", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        if AXUtilities.is_link(event.source) and AXObject.is_ancestor(focus, event.source):
+            msg = "WEB: Ignoring focus change on link ancestor of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
             if self._browse_mode_is_sticky:
                 msg = "WEB: Embedded descendant claimed focus, but browse mode is sticky"
