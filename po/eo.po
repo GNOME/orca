@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnome-orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2023-09-15 13:44+0000\n"
-"PO-Revision-Date: 2025-08-10 01:58+0200\n"
+"PO-Revision-Date: 2025-08-10 18:54+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
 "Language-Team: Esperanto <gnome-eo-list@gnome.org>\n"
 "Language: eo\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 48.0\n"
 "X-Project-Style: gnome\n"
 
 #: orca-autostart.desktop.in:4
@@ -1724,16 +1724,14 @@ msgstr "subskribo egalas"
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #: src/orca/chnames.py:771
-#, fuzzy
 msgid "subscript left paren"
-msgstr "subskribo maldekstra gepatro"
+msgstr "subskribo maldekstra krampo"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: src/orca/chnames.py:775
-#, fuzzy
 msgid "subscript right paren"
-msgstr "subskribo dekstra gepatro"
+msgstr "subskribo dekstra krampo"
 
 #. Translators:  StarOffice/OOo includes private-use unicode character U+E00A
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
@@ -1770,10 +1768,9 @@ msgstr "objektan anstataŭan karakteron"
 #. Translators: this command will move the mouse pointer to the current item
 #. without clicking on it.
 #: src/orca/cmdnames.py:37
-#, fuzzy
 #| msgid "Routes the pointer to the current item."
 msgid "Route the pointer to the current item"
-msgstr "Krei novan eron en la nuna komponanto"
+msgstr "Direkti la montrilon al la nuna ero"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1841,44 +1838,39 @@ msgstr "Paroli la nunan elekton"
 #. Translators: This is the description of a dedicated command to speak details
 #. about a link, such as the uri and type of link.
 #: src/orca/cmdnames.py:90
-#, fuzzy
 #| msgid "Speaks entire document."
 msgid "Speak link details"
-msgstr "Detaloj"
+msgstr "Paroli lig-detalojn"
 
 #. Translators: This command will cause the dialog's default button name to be
 #. spoken and displayed in braille. The "default" button in a dialog box is the
 #. button that gets activated when Enter is pressed anywhere within that dialog
 #. box.
 #: src/orca/cmdnames.py:96
-#, fuzzy
 msgid "Present the default button"
-msgstr "Defaŭlta butono estas %s"
+msgstr "Prezenti la defaŭltan butonon"
 
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken and displayed in braille.
 #: src/orca/cmdnames.py:100
-#, fuzzy
 #| msgid "Speaks the status bar."
 msgid "Present the status bar"
-msgstr "Montri la statbreton"
+msgstr "Prezenti la statbreton"
 
 #. Translators: This command will cause the window's title to be spoken and
 #. displayed in braille.
 #: src/orca/cmdnames.py:104
-#, fuzzy
 #| msgid "Speaks the title bar."
 msgid "Present the title bar"
-msgstr "Sen titolo"
+msgstr "Prezenti la titolbreton"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text. For example, they may want to find
 #. the "OK" button.
 #: src/orca/cmdnames.py:109
-#, fuzzy
 #| msgid "Opens the Find dialog."
 msgid "Open the Find dialog"
-msgstr "Ekranlegila serĉdialogo"
+msgstr "Malfermi la serĉdialogon"
 
 #. Translators: Orca has a command which presents a menu with accessible actions
 #. that can be performed on the current object. This is the name of that command.
@@ -1891,7 +1883,6 @@ msgstr "Montri menuon de agoj"
 #. the "OK" button. This string is used for finding the next occurrence of a
 #. string.
 #: src/orca/cmdnames.py:119
-#, fuzzy
 #| msgid "Searches for the next instance of a string."
 msgid "Search for the next instance of a string"
 msgstr "Serĉi sekvan okazon de la nuna serĉĉeno"
@@ -1901,7 +1892,6 @@ msgstr "Serĉi sekvan okazon de la nuna serĉĉeno"
 #. the "OK" button. This string is used for finding the previous occurrence of a
 #. string.
 #: src/orca/cmdnames.py:125
-#, fuzzy
 #| msgid "Searches for the previous instance of a string."
 msgid "Search for the previous instance of a string"
 msgstr "Serĉi antaŭan okazon de la nuna serĉĉeno"
@@ -1912,7 +1902,6 @@ msgstr "Serĉi antaŭan okazon de la nuna serĉĉeno"
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:132
-#, fuzzy
 msgid "Enter and exit flat review mode"
 msgstr "Eniri kaj eliri platan revizian reĝimon"
 
@@ -2024,10 +2013,9 @@ msgstr "Paroli la nunan ebenan recenzon aŭ vorton"
 #. This particular command will cause Orca to spell the current word or item
 #. character by character.
 #: src/orca/cmdnames.py:223
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Spell the current flat review item or word"
-msgstr "Laŭtlegi la aktualan vicon."
+msgstr "Literumi la aktualan plat-revizian elementon aŭ vorton"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2038,10 +2026,9 @@ msgstr "Laŭtlegi la aktualan vicon."
 #. character by character phonetically, saying "Alpha" for "a", "Bravo" for "b"
 #. and so on.
 #: src/orca/cmdnames.py:234
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Phonetically spell the current flat review item or word"
-msgstr "Laŭtlegi la aktualan vicon."
+msgstr "Fonetike literumi la aktualan plat-revizian elementon aŭ vorton"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2074,10 +2061,9 @@ msgstr "Movi platan revizon al la vorto super la nuna vorto"
 #. like a pushbutton, a label, or some other GUI widget. The 'speaks' means it
 #. will speak the text associated with the object.
 #: src/orca/cmdnames.py:262
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Speak the current flat review object"
-msgstr "Laŭtlegi la aktualan vicon."
+msgstr "Paroli la aktualan plat-revizian objekton"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2108,10 +2094,9 @@ msgstr "Movi platan revizon al la antaŭa signo"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will speak the current character
 #: src/orca/cmdnames.py:288
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Speak the current flat review character"
-msgstr "Laŭtlegi la aktualan vicon."
+msgstr "Paroli la aktualan plat-revizian signon"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2121,10 +2106,9 @@ msgstr "Laŭtlegi la aktualan vicon."
 #. This particular command will cause Orca to present the character phonetically,
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:298
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Phonetically speak the current flat review character"
-msgstr "Laŭtlegi la aktualan vicon."
+msgstr "Fonetike paroli la aktualan plat-revizian signon"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2134,10 +2118,9 @@ msgstr "Laŭtlegi la aktualan vicon."
 #. This particular command will cause Orca to present the character's unicode
 #. value.
 #: src/orca/cmdnames.py:308
-#, fuzzy
 #| msgid "Speaks the current flat review line."
 msgid "Speak unicode value of the current flat review character"
-msgstr "Laŭtlegi la aktualan vicon."
+msgstr "Paroli unikod-valoron de la aktual plat-revizia signo"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2224,9 +2207,8 @@ msgstr "Legi la atributojn asociitajn kun la nuna tekstsigno"
 #. longer logical line and allow the user to press buttons on the braille display
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:381
-#, fuzzy
 msgid "Pan the braille display to the left"
-msgstr "Brajla (maldekstra mano, invertita dikfingro)"
+msgstr "Rulumi la brajlan ekranon maldekstren"
 
 #. Translators: a refreshable braille display is an external hardware device that
 #. presents braille characters to the user. There are a limited number of cells
@@ -2234,9 +2216,8 @@ msgstr "Brajla (maldekstra mano, invertita dikfingro)"
 #. longer logical line and allow the user to press buttons on the braille display
 #. so they can pan left and right over this line.
 #: src/orca/cmdnames.py:388
-#, fuzzy
 msgid "Pan the braille display to the right"
-msgstr "Brajla (dekstra mano, invertita dikfingro)"
+msgstr "Rulumi la brajlan ekranon dekstren"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -2287,53 +2268,46 @@ msgstr "Eniri lern-reĝimon. Premu eskap-klavon por eliri el lern-reĝimo"
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:426
-#, fuzzy
 #| msgid "Speaks the selected text."
 msgid "Decrease the speech rate"
-msgstr "_Rapido:"
+msgstr "Malpliigi la parolrapidon"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:430
-#, fuzzy
 #| msgid "Speaks the selected text."
 msgid "Increase the speech rate"
-msgstr "_Rapido:"
+msgstr "Pliigi la parolrapidon"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:434
-#, fuzzy
 msgid "Decrease the speech pitch"
-msgstr "Parolado"
+msgstr "Malpliigi la paroltonalton"
 
 #. Translators: the speech pitch is how high or low in pitch/frequency the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:438
-#, fuzzy
 msgid "Increase the speech pitch"
-msgstr "Parolado"
+msgstr "Pliigi la paroltonalton"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:442
-#, fuzzy
 msgid "Increase the speech volume"
-msgstr "Parolado"
+msgstr "Pliigi la parollaŭtecon"
 
 #. Translators: the speech volume is how high or low in gain/volume the
 #. speech synthesis engine will generate speech.
 #: src/orca/cmdnames.py:446
-#, fuzzy
 msgid "Decrease the speech volume"
-msgstr "Parolado"
+msgstr "Malpliigi la parollaŭtecon"
 
 #. Translators: Orca allows the user to turn speech synthesis on or off.
 #. We call it 'silencing'.
 #: src/orca/cmdnames.py:450
-#, fuzzy
 msgid "Toggle the silencing of speech"
-msgstr "baskuligi"
+msgstr "Ŝalti la silentigon de parolado"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -2346,10 +2320,9 @@ msgstr "Ŝalti parolrapidnivelon"
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
 #: src/orca/cmdnames.py:460
-#, fuzzy
 #| msgid "Quits the screen reader"
 msgid "Quit the screen reader"
-msgstr "Ekranlegilo enŝaltite."
+msgstr "Eliri la ekranlegilon"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
@@ -2452,10 +2425,9 @@ msgstr "Iri al antaŭa legosign-loko"
 #. Note that in this context, the "bookmark" is storing the location of an
 #. accessible object, typically on a web page.
 #: src/orca/cmdnames.py:541
-#, fuzzy
 #| msgid "Add bookmark."
 msgid "Go to bookmark"
-msgstr "eniris legosignon"
+msgstr "Iri al legosigno"
 
 #. Translators: this event handler cycles through the registered bookmarks and
 #. takes the user to the next bookmark location. Note that in this context, the
@@ -2474,33 +2446,29 @@ msgstr "Aldoni legosignon"
 #. Translators: this event handler saves all bookmarks for the current application
 #. to disk.
 #: src/orca/cmdnames.py:555
-#, fuzzy
 #| msgid "Save bookmarks."
 msgid "Save bookmarks"
-msgstr "konservis legosignon"
+msgstr "Konservi legosignojn"
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
 #: src/orca/cmdnames.py:559
-#, fuzzy
 msgid "Toggle mouse review mode"
-msgstr "_Mastrumu AI-moduson"
+msgstr "Ŝalti mus-revizian reĝimon"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
 #: src/orca/cmdnames.py:563
-#, fuzzy
 #| msgid "Present current date."
 msgid "Present current time"
-msgstr "tempo relativa je alia tempo"
+msgstr "Prezenti nunan tempon"
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
 #: src/orca/cmdnames.py:567
-#, fuzzy
 #| msgid "Present current date."
 msgid "Present current date"
-msgstr "Dato"
+msgstr "Prezenti nunan daton"
 
 #. Translators: Orca has a command to present the pixel size and location of
 #. the current object. This string is how this command is described in the list
@@ -2530,10 +2498,9 @@ msgstr "Paroli kaj brajli antaŭan babilejon-mesaĝon"
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is associated with the command to toggle typing status presentation on or off.
 #: src/orca/cmdnames.py:592
-#, fuzzy
 #| msgid "Do not announce when your buddies are typing."
 msgid "Toggle whether we announce when our buddies are typing"
-msgstr "Ne anonci kiam viaj amikoj skribas."
+msgstr "Ŝalti ĉu anonci kiam amikoj skribas"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. Some users prefer to have this message history combined
@@ -2627,9 +2594,8 @@ msgstr "6 punktoj"
 #. for a user to move the application's caret to the position indicated on the
 #. display.
 #: src/orca/cmdnames.py:666
-#, fuzzy
 msgid "Cursor Routing"
-msgstr "Montrilo"
+msgstr "Kursor-navigado"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -2637,9 +2603,8 @@ msgstr "Montrilo"
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:673
-#, fuzzy
 msgid "Cut Begin"
-msgstr "eltondi"
+msgstr "Komenci tondi"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -2647,91 +2612,77 @@ msgstr "eltondi"
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:680
-#, fuzzy
 msgid "Cut Line"
-msgstr "Linio"
+msgstr "Tondi linion"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
 #: src/orca/cmdnames.py:684
-#, fuzzy
 msgid "Present last notification message"
-msgstr "lasta mesaĝo estis ripetita por %d fojoj"
+msgstr "Prezenti lastan sciig-mesaĝon"
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
 #: src/orca/cmdnames.py:688
-#, fuzzy
 msgid "Present notification messages list"
-msgstr "_Listo pri la ĉeestantaj unuoj..."
+msgstr "Prezenti liston de sciig-mesaĝoj"
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
 #: src/orca/cmdnames.py:692
-#, fuzzy
 msgid "Present previous notification message"
-msgstr "Montri la antaŭan mesaĝon"
+msgstr "Prezenti antaŭan sciig-mesaĝon"
 
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
 #: src/orca/cmdnames.py:696
-#, fuzzy
 msgid "Present next notification message"
-msgstr "Montri la sekvan mesaĝon"
+msgstr "Prezenti sekvan sciig-mesaĝon"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:699
-#, fuzzy
 msgid "Go to next character"
-msgstr "Signara _kodoprezento"
+msgstr "Iri al sekva signo"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:702
-#, fuzzy
 msgid "Go to previous character"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa signo"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:705
-#, fuzzy
 msgid "Go to next word"
-msgstr "vorto"
+msgstr "Iri al sekva vorto"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:708
-#, fuzzy
 msgid "Go to previous word"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa vorto"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:711
-#, fuzzy
 msgid "Go to next line"
-msgstr "_Sekva"
+msgstr "Iri al sekva linio"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:714
-#, fuzzy
 msgid "Go to previous line"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa linio"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:717
-#, fuzzy
 msgid "Go to the top of the file"
-msgstr "Supre"
+msgstr "Iri al la supro de la dosiero"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:720
-#, fuzzy
 msgid "Go to the bottom of the file"
-msgstr "Malsupre"
+msgstr "Iri al la malsupro de la dosiero"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:723
-#, fuzzy
 msgid "Go to the beginning of the line"
-msgstr "Iri al la komenco de la mesaĝo"
+msgstr "Iri al la komenco de la linio"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:726
@@ -2861,78 +2812,67 @@ msgstr "Ŝalti struktura navigado-klavojn"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:823
-#, fuzzy
 msgid "Go to previous blockquote"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa blokcitaĵo"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:826
-#, fuzzy
 msgid "Go to next blockquote"
-msgstr "_Sekva"
+msgstr "Iri al sekva blokcitaĵo"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:829
-#, fuzzy
 msgid "Display a list of blockquotes"
-msgstr "_Ekrano"
+msgstr "Montri liston de blokcitaĵoj"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:832
-#, fuzzy
 msgid "Go to previous button"
-msgstr "Butono"
+msgstr "Iri al antaŭa butono"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:835
-#, fuzzy
 msgid "Go to next button"
-msgstr "_Iri al"
+msgstr "Iri al sekva butono"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:838
-#, fuzzy
 msgid "Display a list of buttons"
-msgstr "Montri fenestrajn butonojn nur per teksto"
+msgstr "Montri liston de butonoj"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:841
-#, fuzzy
 msgid "Go to previous check box"
-msgstr "Elektobutono"
+msgstr "Iri al antaŭa elektobutono"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:844
-#, fuzzy
 msgid "Go to next check box"
-msgstr "Elektobutono"
+msgstr "Iri al sekva elektobutono"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:847
 msgid "Display a list of check boxes"
-msgstr "Montri liston de mark-boksoj"
+msgstr "Montri liston de elektobutonoj"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:851
-#, fuzzy
 msgid "Go to previous clickable"
-msgstr "_Antaŭa"
+msgstr "Iri al antaŭa alklakebla"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:855
-#, fuzzy
 #| msgid "clickable"
 msgid "Go to next clickable"
-msgstr "_Iri al"
+msgstr "Iri al sekva alklakebla"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
 #: src/orca/cmdnames.py:859
-#, fuzzy
 msgid "Display a list of clickables"
-msgstr "_Ekrano"
+msgstr "Montri liston de alklakeblaj"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:862
@@ -2941,17 +2881,15 @@ msgstr "Iri al antaŭa kombin-ujo"
 
 #. Translators: this is for navigating among combo boxes in a document.
 #: src/orca/cmdnames.py:865
-#, fuzzy
 msgid "Go to next combo box"
-msgstr "Iri al la sekva kombokesto"
+msgstr "Iri al sekva kombin-ujo"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
 #: src/orca/cmdnames.py:870
-#, fuzzy
 msgid "Go to start of container"
-msgstr "Komenco"
+msgstr "Iri al komenco de ujo"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
@@ -2967,21 +2905,18 @@ msgstr "Montri liston de kombin-ujoj"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:881
-#, fuzzy
 msgid "Go to previous entry"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa kampo"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:884
-#, fuzzy
 msgid "Go to next entry"
-msgstr "_Iri al"
+msgstr "Iri al sekva kampo"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:887
-#, fuzzy
 msgid "Display a list of entries"
-msgstr "Montri"
+msgstr "Montri liston de kampoj"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:890
@@ -3000,22 +2935,19 @@ msgstr "Montri liston de formularkampoj"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:899
-#, fuzzy
 msgid "Go to previous heading"
-msgstr "_Antaŭa"
+msgstr "Iri al antaŭa titolo"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:902
-#, fuzzy
 msgid "Go to next heading"
-msgstr "_Iri al"
+msgstr "Iri al sekva titolo"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:905
-#, fuzzy
 #| msgid "Display Settings"
 msgid "Display a list of headings"
-msgstr "Titoloj"
+msgstr "Montri liston de titoloj"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
@@ -3055,46 +2987,40 @@ msgstr "Montri liston de enaj kadroj"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:929
-#, fuzzy
 msgid "Go to previous image"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa bildo"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:932
-#, fuzzy
 msgid "Go to next image"
-msgstr "_Sekva"
+msgstr "Iri al sekva bildo"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:935
-#, fuzzy
 #| msgid "Display Settings"
 msgid "Display a list of images"
-msgstr "Montri"
+msgstr "Montri liston de bildoj"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:940
-#, fuzzy
 msgid "Go to previous landmark"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa rubrik-punkto"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:945
-#, fuzzy
 msgid "Go to next landmark"
-msgstr "_Sekva"
+msgstr "Iri al sekva rubrik-punkto"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:950
-#, fuzzy
 msgid "Display a list of landmarks"
-msgstr "_Ekrano"
+msgstr "Montri liston de rubrik-punktoj"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
@@ -3114,64 +3040,54 @@ msgstr "Iri al sekva granda objekto"
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
 #: src/orca/cmdnames.py:965
-#, fuzzy
 msgid "Display a list of large objects"
-msgstr "Grandaj objektoj"
+msgstr "Montri liston de grandaj objektoj"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:968
-#, fuzzy
 msgid "Go to previous link"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa ligilo"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:971
-#, fuzzy
 msgid "Go to next link"
-msgstr "_Sekva"
+msgstr "Iri al sekva ligilo"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:974
-#, fuzzy
 #| msgid "Display Settings"
 msgid "Display a list of links"
-msgstr "Ligiloj"
+msgstr "Montri liston de ligiloj"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:977
-#, fuzzy
 msgid "Go to previous list"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa listo"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:980
-#, fuzzy
 msgid "Go to next list"
-msgstr "_Sekva"
+msgstr "Iri al sekva listo"
 
 #. Translators: this is for navigating among lists in a document.
 #: src/orca/cmdnames.py:983
-#, fuzzy
 msgid "Display a list of lists"
-msgstr "Listoj"
+msgstr "Montri liston de listoj"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:986
-#, fuzzy
 msgid "Go to previous list item"
-msgstr "Listero"
+msgstr "Iri al antaŭa listero"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:989
-#, fuzzy
 msgid "Go to next list item"
-msgstr "Listero"
+msgstr "Iri al sekva listero"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:992
-#, fuzzy
 msgid "Display a list of list items"
-msgstr "Listeroj"
+msgstr "Montri liston de listeroj"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
@@ -3233,89 +3149,75 @@ msgstr "Ŝalti simpligitan objektan navigadon."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1035
-#, fuzzy
 msgid "Go to previous paragraph"
-msgstr "_Antaŭa"
+msgstr "Iri al antaŭa paragrafo"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1038
-#, fuzzy
 msgid "Go to next paragraph"
-msgstr "_Iri al"
+msgstr "Iri al sekva paragrafo"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1041
-#, fuzzy
 msgid "Display a list of paragraphs"
-msgstr "Paragrafoj"
+msgstr "Montri liston de paragrafoj"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1044
-#, fuzzy
 msgid "Go to previous radio button"
-msgstr "Radiobutono"
+msgstr "Iri al antaŭa radiobutono"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1047
-#, fuzzy
 msgid "Go to next radio button"
-msgstr "Radiobutono"
+msgstr "Iri al sekva radiobutono"
 
 #. Translators: this is for navigating among radio buttons in a document.
 #: src/orca/cmdnames.py:1050
-#, fuzzy
 msgid "Display a list of radio buttons"
-msgstr "Radiobutonoj"
+msgstr "Montri liston de radiobutonoj"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:1054
-#, fuzzy
 msgid "Go to previous separator"
-msgstr "_Iri al"
+msgstr "Iri al antaŭa apartigilo"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
 #: src/orca/cmdnames.py:1058
-#, fuzzy
 msgid "Go to next separator"
-msgstr "_Sekva"
+msgstr "Iri al sekva apartigilo"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1061
-#, fuzzy
 msgid "Go to previous table"
-msgstr "_Antaŭa"
+msgstr "Iri al antaŭa tabelo"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1064
-#, fuzzy
 msgid "Go to next table"
-msgstr "_Iri al"
+msgstr "Iri al sekva tabelo"
 
 #. Translators: this is for navigating among tables in a document.
 #: src/orca/cmdnames.py:1067
-#, fuzzy
 msgid "Display a list of tables"
-msgstr "Tabeloj"
+msgstr "Montri liston de tabeloj"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1070
-#, fuzzy
 msgid "Go down one cell"
-msgstr "Movi la elektitajn kapojn sube per unu vico"
+msgstr "Iri unu ĉelon suben"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1073
-#, fuzzy
 msgid "Go to the first cell in a table"
-msgstr "Tabela ĉelo"
+msgstr "Iri al la unua ĉelo en tabelo"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1076
-#, fuzzy
 msgid "Go to the last cell in a table"
-msgstr "Tabela ĉelo"
+msgstr "Iri al la lasta ĉelo en tabelo"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1079
@@ -3329,9 +3231,8 @@ msgstr "Iri dekstren unu ĉelon"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1085
-#, fuzzy
 msgid "Go up one cell"
-msgstr "Movi la elektitajn kapojn supre per unu vico"
+msgstr "Iri unu ĉelon supren"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -3345,9 +3246,8 @@ msgstr "Movi la elektitajn kapojn supre per unu vico"
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1098
-#, fuzzy
 msgid "Toggle layout mode"
-msgstr "Angla (dividi/multobligi alternigas la aranĝon)"
+msgstr "Ŝalti aranĝ-reĝimon"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -3377,9 +3277,8 @@ msgstr "Ŝalti inter foliuma reĝimo kaj fokusa reĝimo"
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: src/orca/cmdnames.py:1125
-#, fuzzy
 msgid "Enable sticky focus mode"
-msgstr "Ŝalti/malŝalti tajpmontrilan navigadon"
+msgstr "Ebligi glueman fokus-reĝimon"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3391,9 +3290,8 @@ msgstr "Ŝalti/malŝalti tajpmontrilan navigadon"
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky browse mode.
 #: src/orca/cmdnames.py:1136
-#, fuzzy
 msgid "Enable sticky browse mode"
-msgstr "Ŝalti/malŝalti tajpmontrilan navigadon"
+msgstr "Ebligi glueman foliumadan reĝimon"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1139
@@ -3413,14 +3311,13 @@ msgstr "Montri liston de nevizititaj ligiloj"
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1148
 msgid "Go to previous visited link"
-msgstr "Iri al antaŭa nevizitita ligilo"
+msgstr "Iri al antaŭa vizitita ligilo"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1151
-#, fuzzy
 #| msgid "visited link"
 msgid "Go to next visited link"
-msgstr "_Vizitita ligilo:"
+msgstr "Iri al sekva vizitita ligilo"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1154
@@ -3431,10 +3328,9 @@ msgstr "Montri liston de vizititaj ligiloj"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:35
-#, fuzzy
 msgctxt "color name"
 msgid "alice blue"
-msgstr "_Bluo:"
+msgstr "alice blua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3560,10 +3456,9 @@ msgstr "korala"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:115
-#, fuzzy
 msgctxt "color name"
 msgid "cornflower blue"
-msgstr "blua"
+msgstr "cejanblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3609,10 +3504,9 @@ msgstr "malhela cejana"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:145
-#, fuzzy
 msgctxt "color name"
 msgid "dark goldenrod"
-msgstr "malhela oranĝkolora"
+msgstr "malhela orverga"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3666,10 +3560,9 @@ msgstr "malhela oranĝkolora"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:180
-#, fuzzy
 msgctxt "color name"
 msgid "dark orchid"
-msgstr "malhela oranĝkolora"
+msgstr "malhela orkidea"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3683,7 +3576,6 @@ msgstr "malhela ruĝa"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:190
-#, fuzzy
 msgctxt "color name"
 msgid "dark salmon"
 msgstr "malhela salmokolora"
@@ -3708,28 +3600,25 @@ msgstr "malhela ardezbluo"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:205
-#, fuzzy
 msgctxt "color name"
 msgid "dark slate gray"
-msgstr "malhelega griza"
+msgstr "malhela ardezgriza"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:210
-#, fuzzy
 msgctxt "color name"
 msgid "dark turquoise"
-msgstr "malhela oranĝkolora"
+msgstr "malhela turkisa"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:215
-#, fuzzy
 msgctxt "color name"
 msgid "dark violet"
-msgstr "blua violeta"
+msgstr "malhela violeta"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3743,10 +3632,9 @@ msgstr "profunde rozkolora"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:225
-#, fuzzy
 msgctxt "color name"
 msgid "deep sky blue"
-msgstr "ĉiela blua #2"
+msgstr "profunda ĉielblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3760,37 +3648,33 @@ msgstr "malklara griza"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:235
-#, fuzzy
 msgctxt "color name"
 msgid "dodger blue"
-msgstr "blua"
+msgstr "dodger blue"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:240
-#, fuzzy
 msgctxt "color name"
 msgid "fire brick"
-msgstr "Pafĉesigo"
+msgstr "brikruĝa"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:245
-#, fuzzy
 msgctxt "color name"
 msgid "floral white"
-msgstr "_Blanko"
+msgstr "flora blanka"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:250
-#, fuzzy
 msgctxt "color name"
 msgid "forest green"
-msgstr "Arbaro"
+msgstr "arbarverda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3812,10 +3696,9 @@ msgstr "gainsboro"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#HTML_color_names.
 #: src/orca/colornames.py:265
-#, fuzzy
 msgctxt "color name"
 msgid "ghost white"
-msgstr "_Blanko"
+msgstr "fantomblanka"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3869,10 +3752,9 @@ msgstr "mielmelono"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:300
-#, fuzzy
 msgctxt "color name"
 msgid "hot pink"
-msgstr "rozkolora"
+msgstr "helbrila rozkolora"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3894,10 +3776,9 @@ msgstr "indigo"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:315
-#, fuzzy
 msgctxt "color name"
 msgid "ivory"
-msgstr "Eburo"
+msgstr "ebura"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3927,10 +3808,9 @@ msgstr "lavenda ruĝeto"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:335
-#, fuzzy
 msgctxt "color name"
 msgid "lawn green"
-msgstr "_Verdo:"
+msgstr "herbverda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3952,11 +3832,9 @@ msgstr "helblua"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:350
-#, fuzzy
-#| msgid "right brace"
 msgctxt "color name"
 msgid "light coral"
-msgstr "bruneta"
+msgstr "hela korala"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3970,20 +3848,17 @@ msgstr "helcejana"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:360
-#, fuzzy
 msgctxt "color name"
 msgid "light goldenrod yellow"
-msgstr "helflava"
+msgstr "hela orvergo-flava"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:365
-#, fuzzy
-#| msgid "right brace"
 msgctxt "color name"
 msgid "light gray"
-msgstr "griza"
+msgstr "hela griza"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -3997,58 +3872,49 @@ msgstr "helverda"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:375
-#, fuzzy
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light pink"
-msgstr "rozkolora"
+msgstr "hela rozkolora"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:380
-#, fuzzy
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light salmon"
-msgstr "heloranĝa"
+msgstr "hela salmokolora"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:385
-#, fuzzy
-#| msgid "right paren"
 msgctxt "color name"
 msgid "light sea green"
-msgstr "helverda"
+msgstr "hela marverda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:390
-#, fuzzy
 msgctxt "color name"
 msgid "light sky blue"
-msgstr "helblua"
+msgstr "hela ĉielblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:395
-#, fuzzy
 msgctxt "color name"
 msgid "light slate gray"
-msgstr "griza"
+msgstr "hela ardezgriza"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:400
-#, fuzzy
 msgctxt "color name"
 msgid "light steel blue"
-msgstr "helblua"
+msgstr "hela ŝtalblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4070,7 +3936,6 @@ msgstr "limonverda"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:415
-#, fuzzy
 msgctxt "color name"
 msgid "lime green"
 msgstr "limonverda"
@@ -4079,11 +3944,9 @@ msgstr "limonverda"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:420
-#, fuzzy
-#| msgid "newline"
 msgctxt "color name"
 msgid "linen"
-msgstr "nova lineo"
+msgstr "linea"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4105,91 +3968,81 @@ msgstr "maronkolora"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:435
-#, fuzzy
 msgctxt "color name"
 msgid "medium aquamarine"
-msgstr "Meza"
+msgstr "meza akvamarina"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:440
-#, fuzzy
 msgctxt "color name"
 msgid "medium blue"
-msgstr "Meza"
+msgstr "meza blua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:445
-#, fuzzy
 msgctxt "color name"
 msgid "medium orchid"
-msgstr "Meza"
+msgstr "meza orkidea"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:450
-#, fuzzy
 msgctxt "color name"
 msgid "medium purple"
-msgstr "Meza"
+msgstr "meza purpura"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:455
-#, fuzzy
 msgctxt "color name"
 msgid "medium sea green"
-msgstr "verda"
+msgstr "meza marverda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:460
-#, fuzzy
 msgctxt "color name"
 msgid "medium slate blue"
-msgstr "blua"
+msgstr "meza ardezblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:465
-#, fuzzy
 msgctxt "color name"
 msgid "medium spring green"
-msgstr "verda"
+msgstr "meza printempe verda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:470
-#, fuzzy
 msgctxt "color name"
 msgid "medium turquoise"
-msgstr "Meza"
+msgstr "meza turkisa"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:475
-#, fuzzy
 msgctxt "color name"
 msgid "medium violet red"
-msgstr "ruĝa"
+msgstr "meza violruĝa"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:480
-#, fuzzy
 msgctxt "color name"
 msgid "midnight blue"
-msgstr "Meznokto"
+msgstr "meznokta blua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4219,10 +4072,9 @@ msgstr "mokaseno"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:500
-#, fuzzy
 msgctxt "color name"
 msgid "navajo white"
-msgstr "_Blanko"
+msgstr "navaha blanka"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4236,10 +4088,9 @@ msgstr "marblua"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:510
-#, fuzzy
 msgctxt "color name"
 msgid "old lace"
-msgstr "Malnova tjurka"
+msgstr "malnova punto"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4269,10 +4120,9 @@ msgstr "oranĝkolora"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:530
-#, fuzzy
 msgctxt "color name"
 msgid "orange red"
-msgstr "ruĝ-oranĝa"
+msgstr "oranĝruĝa"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4398,10 +4248,9 @@ msgstr "reĝa bluo"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:610
-#, fuzzy
 msgctxt "color name"
 msgid "saddle brown"
-msgstr "bruna"
+msgstr "sela bruna"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4415,7 +4264,6 @@ msgstr "salma"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:620
-#, fuzzy
 msgctxt "color name"
 msgid "sandy brown"
 msgstr "sabla bruna"
@@ -4424,11 +4272,9 @@ msgstr "sabla bruna"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:625
-#, fuzzy
-#| msgid "degrees"
 msgctxt "color name"
 msgid "sea green"
-msgstr "mara verda"
+msgstr "marverda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4458,28 +4304,25 @@ msgstr "arĝenta"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:645
-#, fuzzy
 msgctxt "color name"
 msgid "sky blue"
-msgstr "ĉiela blua #2"
+msgstr "ĉielblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:650
-#, fuzzy
 msgctxt "color name"
 msgid "slate blue"
-msgstr "_Bluo:"
+msgstr "ardezblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:655
-#, fuzzy
 msgctxt "color name"
 msgid "slate gray"
-msgstr "griza"
+msgstr "ardezgriza"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4493,29 +4336,25 @@ msgstr "negâ"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:665
-#, fuzzy
 msgctxt "color name"
 msgid "spring green"
-msgstr "_Verdo:"
+msgstr "printempe verda"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:670
-#, fuzzy
 msgctxt "color name"
 msgid "steel blue"
-msgstr "Ŝtalo"
+msgstr "ŝtalblua"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:675
-#, fuzzy
-#| msgid "btn"
 msgctxt "color name"
 msgid "tan"
-msgstr "btn"
+msgstr "bruniĝinta"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4553,19 +4392,17 @@ msgstr "turkisa"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:700
-#, fuzzy
 msgctxt "color name"
 msgid "violet"
-msgstr "blua violeta"
+msgstr "violeta"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:705
-#, fuzzy
 msgctxt "color name"
 msgid "wheat"
-msgstr "Tritiko"
+msgstr "tritika"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4579,10 +4416,9 @@ msgstr "blanka"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:715
-#, fuzzy
 msgctxt "color name"
 msgid "white smoke"
-msgstr "_Blanko"
+msgstr "blanka fumo"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
@@ -4596,10 +4432,9 @@ msgstr "flava"
 #. can be found at http://www.w3schools.com/cssref/css_colornames.asp and at
 #. http://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:725
-#, fuzzy
 msgctxt "color name"
 msgid "yellow green"
-msgstr "verda flava"
+msgstr "flavverda"
 
 #. Translators: This string appears on a button in a dialog. "Activating" the
 #. selected item will perform the action that one would expect to occur if the
@@ -4855,9 +4690,8 @@ msgstr "Aktuala ĉeno"
 #. would like the "Actual String" to be pronounced by the speech synthesizer.
 #. Example: "L O L" or "Laughing Out Loud" (for Actual String "LOL").
 #: src/orca/guilabels.py:222
-#, fuzzy
 msgid "Replacement String"
-msgstr "ĉeno ne trovita"
+msgstr "Anstataŭiga ĉeno"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. While Orca's "key echo" options present the actual keyboard keys
@@ -4939,10 +4773,9 @@ msgstr "Defaŭlte"
 #. are related to its "learn mode". Please use the same translation as done
 #. in cmdnames.py
 #: src/orca/guilabels.py:280
-#, fuzzy
 msgctxt "keybindings"
 msgid "Learn mode"
-msgstr "Reĝimo"
+msgstr "Lernreĝimo"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting and performing the accessible actions associated
@@ -4956,20 +4789,18 @@ msgstr "Agoj"
 #. are what determine the actions Orca will take when the user presses these
 #. buttons.
 #: src/orca/guilabels.py:291
-#, fuzzy
 msgid "Braille Bindings"
-msgstr "Klavkombinoj"
+msgstr "Brajlaj klavligoj"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to saving and jumping among objects via "bookmarks".
 #: src/orca/guilabels.py:295
 msgid "Bookmarks"
-msgstr "Preferaĵoj"
+msgstr "Legosignoj"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the date and time.
 #: src/orca/guilabels.py:299
-#, fuzzy
 msgid "Date and time"
 msgstr "Dato kaj horo"
 
@@ -4978,18 +4809,14 @@ msgstr "Dato kaj horo"
 #. and/or braille. The translation should be consistent with the string
 #. used in cmdnames.py.
 #: src/orca/guilabels.py:305
-#, fuzzy
 msgid "Mouse review"
-msgstr "Muso"
+msgstr "Musrecenzo"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
 #: src/orca/guilabels.py:309
-#, fuzzy
-#| msgctxt "role"
-#| msgid "navigation"
 msgid "Object navigation"
-msgstr "navigado"
+msgstr "Objekta navigado"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting information about the current location, such as
@@ -4997,9 +4824,8 @@ msgstr "navigado"
 #. name, role, and location of the currently-focused object; the selected
 #. text in the currently-focused object; etc.
 #: src/orca/guilabels.py:316
-#, fuzzy
 msgid "Object details"
-msgstr "Objektdetaloj"
+msgstr "Objektaj detaloj"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. do not currently have an associated key binding.
@@ -5015,9 +4841,8 @@ msgstr "Sendepende"
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:329
-#, fuzzy
 msgid "Flat review"
-msgstr "Recenzo"
+msgstr "Plata recenzo"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's speech and verbosity settings. This group of commands
@@ -5025,9 +4850,8 @@ msgstr "Recenzo"
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
 #: src/orca/guilabels.py:336
-#, fuzzy
 msgid "Speech and verbosity"
-msgstr "Parolado"
+msgstr "Parolo kaj vortemo"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -5039,9 +4863,8 @@ msgstr "Parolado"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:347
-#, fuzzy
 msgid "Flat review contents"
-msgstr "_Enhavoj"
+msgstr "Enhavo de plata recenzo"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -5082,10 +4905,9 @@ msgstr "Ricevita"
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
 #: src/orca/guilabels.py:376
-#, fuzzy
 #| msgid "Notification"
 msgid "Notification presenter"
-msgstr "Atentigo"
+msgstr "Prezentilo de sciigoj"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -5104,9 +4926,8 @@ msgstr "Ekranligilaj agordoj por %s"
 #. out the word; instead marking refers to adding some other indicator, e.g.
 #. "underlining" with braille dots 7-8 a word that is bold.
 #: src/orca/guilabels.py:391
-#, fuzzy
 msgid "Mark in braille"
-msgstr "Brajlo"
+msgstr "Marki en brajlo"
 
 #. Translators: "Present Unless" is a column header of the text attributes panel
 #. of the Orca preferences dialog. On this panel, the user can select a set of
@@ -5119,9 +4940,8 @@ msgstr "Brajlo"
 #. (single, double, low, etc.) except when the value of underline is none (i.e.
 #. when it's not underlined). "Present" here is being used as a verb.
 #: src/orca/guilabels.py:403
-#, fuzzy
 msgid "Present Unless"
-msgstr "Ĉeestantaj unuoj"
+msgstr "Prezenti krom se"
 
 #. Translators: This is a table column header. The "Speak" column consists of a
 #. single checkbox. If the checkbox is checked, Orca will speak the associated
@@ -5138,9 +4958,8 @@ msgstr "Diri"
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
 #: src/orca/guilabels.py:417
-#, fuzzy
 msgid "Save Profile As Conflict"
-msgstr "Konservi koloran _profilon"
+msgstr "Konflikto ĉe 'Konservi profilon kiel'"
 
 #. Translators: This is the label of a message dialog informing the user that
 #. he/she attempted to save a new user profile under a name which already exists.
@@ -5148,9 +4967,8 @@ msgstr "Konservi koloran _profilon"
 #. as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 #. braille and selected when reading Spanish content.
 #: src/orca/guilabels.py:424
-#, fuzzy
 msgid "User Profile Conflict!"
-msgstr "Uzanto:"
+msgstr "Konflikto de uzantprofilo!"
 
 #. Translators: This is the message in a dialog informing the user that he/she
 #. attempted to save a new user profile under a name which already exists.
@@ -5173,9 +4991,8 @@ msgstr ""
 #. which would use Spanish text-to-speech and Spanish braille and selected when
 #. reading Spanish content.
 #: src/orca/guilabels.py:441
-#, fuzzy
 msgid "Load user profile"
-msgstr "Ŝar_gi"
+msgstr "Ŝargi uzantprofilon"
 
 #. Translators: This text is displayed in a message dialog when a user indicates
 #. he/she wants to switch to a new user profile which will cause him/her to lose
@@ -5224,9 +5041,8 @@ msgstr "_Profilnomo:"
 #. The following is a label in a dialog informing the user that he/she
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:477
-#, fuzzy
 msgid "Remove user profile"
-msgstr "Fo_rigi"
+msgstr "Forigi uzantprofilon"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -5354,10 +5170,9 @@ msgstr "Alklakebla"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the selected item in a combo box.
 #: src/orca/guilabels.py:561
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Combo Box"
-msgstr "Elektobutono"
+msgstr "Kombokesto"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5382,10 +5197,9 @@ msgstr "Titolo"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the title associated with an iframe.
 #: src/orca/guilabels.py:579
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Internal Frame"
-msgstr "Interna eraro."
+msgstr "Interna kadro"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5412,11 +5226,9 @@ msgstr "Etikedo"
 #. tag attribute 'role' used to identify important part of webpage like banners,
 #. main context, search etc.
 #: src/orca/guilabels.py:599
-#, fuzzy
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmark"
-msgstr "Registrita marko"
+msgstr "Orientilo"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5558,7 +5370,6 @@ msgstr "Butonoj"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:695
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Elektobutonoj"
@@ -5568,12 +5379,9 @@ msgstr "Elektobutonoj"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. "Clickables" are web elements which have an "onClick" handler.
 #: src/orca/guilabels.py:701
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Tables"
 msgctxt "structural navigation"
 msgid "Clickables"
-msgstr "Alklakeblaj elementoj"
+msgstr "Klakeblaj elementoj"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5587,19 +5395,17 @@ msgstr "Kombiniloj"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:711
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Entries"
-msgstr "_Protokoleroj"
+msgstr "Enigoj"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:716
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Form Fields"
-msgstr "Montri kampojn"
+msgstr "Formularaj kampoj"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5613,10 +5419,9 @@ msgstr "Titoloj"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:726
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Internal Frames"
-msgstr "Interna eraro."
+msgstr "Internaj kadroj"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5631,10 +5436,10 @@ msgstr "Bildoj"
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #. Level will be a "1" for <h1>, a "2" for <h2>, and so on.
 #: src/orca/guilabels.py:737
-#, fuzzy, python-format
+#, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
-msgstr "NIVELO %d"
+msgstr "Titoloj je nivelo %d"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5642,11 +5447,9 @@ msgstr "NIVELO %d"
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #: src/orca/guilabels.py:744
-#, fuzzy
-#| msgid "trademark"
 msgctxt "structural navigation"
 msgid "Landmarks"
-msgstr "Registrita marko"
+msgstr "Orientiloj"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5710,19 +5513,17 @@ msgstr "Tabeloj"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:786
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Unvisited Links"
-msgstr "Ligiloj"
+msgstr "Nevizititaj ligiloj"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:791
-#, fuzzy
 msgctxt "structural navigation"
 msgid "Visited Links"
-msgstr "vizitite"
+msgstr "Vizititaj ligiloj"
 
 #. Translators: This is the title of a panel holding options for how to navigate
 #. HTML content (e.g., Orca caret navigation, positioning of caret, structural
@@ -5763,16 +5564,16 @@ msgstr "Dividi parolon en er_ojn inter paŭzoj"
 #. subsystem. Apart from this item, the list will contain the names of all
 #. available "real" voices provided by the speech engine.
 #: src/orca/guilabels.py:823
-#, fuzzy, python-format
+#, python-format
 msgid "%s default voice"
-msgstr "Implicita (%s)"
+msgstr "Defaŭlta voĉo de %s"
 
 #. Translators: This refers to the voice used by Orca when presenting the content
 #. of the screen and other messages.
 #: src/orca/guilabels.py:827
 msgctxt "VoiceType"
 msgid "Default"
-msgstr "Defaŭlte"
+msgstr "Defaŭlta"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is part of a hyperlink.
@@ -5802,26 +5603,23 @@ msgstr "Majuskle"
 #. Translators this label refers to the name of particular speech synthesis
 #. system. (http://devel.freebsoft.org/speechd)
 #: src/orca/guilabels.py:847
-#, fuzzy
 msgid "Speech Dispatcher"
-msgstr "Parolado"
+msgstr "Speech Dispatcher"
 
 #. Translators: This is a label for a group of options related to Orca's behavior
 #. when presenting an application's spell check dialog.
 #: src/orca/guilabels.py:851
-#, fuzzy
 msgctxt "OptionGroup"
 msgid "Spell Check"
-msgstr "Enteksta literumada kontrolo"
+msgstr "Literumkontrolo"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current error in addition
 #. to speaking it. For example, if the misspelled word is "foo," enabling this
 #. setting would cause Orca to speak "f o o" after speaking "foo".
 #: src/orca/guilabels.py:857
-#, fuzzy
 msgid "Spell _error"
-msgstr "literumado"
+msgstr "Literumi _eraron"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current suggestion in
@@ -5829,17 +5627,15 @@ msgstr "literumado"
 #. the first suggestion is "for" enabling this setting would cause Orca to speak
 #. "f o r" after speaking "for".
 #: src/orca/guilabels.py:864
-#, fuzzy
 msgid "Spell _suggestion"
-msgstr "literumado"
+msgstr "Literumi _sugeston"
 
 #. Translators: This is a label for a checkbox associated with an Orca setting.
 #. When this option is enabled, Orca will present the context (surrounding text,
 #. typically the sentence or line) in which the mistake occurred.
 #: src/orca/guilabels.py:869
-#, fuzzy
 msgid "Present _context of error"
-msgstr "Ĉeestantaj unuoj"
+msgstr "Prezenti _kuntekston de eraro"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the coordinates of the current spreadsheet cell. Coordinates are
@@ -5862,45 +5658,40 @@ msgstr "Ĉiam voĉlegi elektitan kalkultabelan gamon"
 #. Translators: This is a label for an option for whether or not to speak the
 #. header of a table cell in document content.
 #: src/orca/guilabels.py:887
-#, fuzzy
 msgid "Announce cell _header"
-msgstr "Kapo"
+msgstr "Anonci ĉel_kapon"
 
 #. Translators: This is the title of a panel containing options for specifying
 #. how to navigate tables in document content.
 #: src/orca/guilabels.py:891
-#, fuzzy
 msgid "Table Navigation"
-msgstr "_Tabelo…"
+msgstr "Tabel-navigado"
 
 #. Translators: This is a label for an option to tell Orca to skip over empty/
 #. blank cells when navigating tables in document content.
 #: src/orca/guilabels.py:895
-#, fuzzy
 msgid "Skip _blank cells"
-msgstr "malplene"
+msgstr "Preterlasi _malplenajn ĉelojn"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented to
 #. them. This label is associated with the default presentation to be used.
 #: src/orca/guilabels.py:900
-#, fuzzy
 msgid "Speak _cell"
-msgstr "Ĉ_elo…"
+msgstr "Voĉlegi _ĉelon"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
 #: src/orca/guilabels.py:904
-#, fuzzy
 msgid "Speak _cell coordinates"
-msgstr "Eraraj mapaj koordinatoj."
+msgstr "Voĉlegi _ĉelajn koordinatojn"
 
 #. Translators: This is a label for an option to tell Orca whether or not it
 #. should speak the span size of a table cell (e.g., how many rows and columns
 #. a particular table cell spans in a table).
 #: src/orca/guilabels.py:909
 msgid "Speak _multiple cell spans"
-msgstr "Esprimi _plurcelaj extensoj"
+msgstr "Voĉlegi _multoblajn ĉelajn etendojn"
 
 #. Translators: This is a table column header. "Attribute" here refers to text
 #. attributes such as bold, underline, family-name, etc.
@@ -5921,17 +5712,15 @@ msgstr "Kontroli kursoran navigadon"
 #. manner: go to previous/next header, list item, table, etc. This is the label
 #. of a checkbox in which users can indicate their default preference.
 #: src/orca/guilabels.py:925
-#, fuzzy
 msgid "Enable _structural navigation"
-msgstr "Strukturoj por kosmoŝipo"
+msgstr "Ebligi _struktur-navigadon"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
 #: src/orca/guilabels.py:929 src/orca/orca-setup.ui:1480
 #: src/orca/orca-setup.ui:2224
-#, fuzzy
 msgid "Brie_f"
-msgstr "_F#"
+msgstr "_Koncize"
 
 #. Translators: Orca has a feature to list all of the notification messages
 #. received, similar to the functionality gnome-shell provides when you press
@@ -5969,131 +5758,113 @@ msgstr "Stirklavo"
 #. Translators: this is how someone would speak the name of the left shift key
 #.
 #: src/orca/keynames.py:54
-#, fuzzy
 msgid "left shift"
-msgstr "Maldekstra Shift"
+msgstr "maldekstra Maj"
 
 #. Translators: this is how someone would speak the name of the left alt key
 #.
 #: src/orca/keynames.py:58
-#, fuzzy
 msgid "left alt"
-msgstr "Maldekstra Alt"
+msgstr "maldekstra Alt"
 
 #. Translators: this is how someone would speak the name of the left ctrl key
 #.
 #: src/orca/keynames.py:62
-#, fuzzy
 msgid "left control"
-msgstr "Stirklavo"
+msgstr "maldekstra Stirklavo"
 
 #. Translators: this is how someone would speak the name of the right shift key
 #.
 #: src/orca/keynames.py:66
-#, fuzzy
 msgid "right shift"
-msgstr "Dekstra Shift"
+msgstr "dekstra Maj"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
 #: src/orca/keynames.py:70
-#, fuzzy
 msgid "right alt"
-msgstr "Dekstra Alt"
+msgstr "dekstra Alt"
 
 #. Translators: this is how someone would speak the name of the right ctrl key
 #.
 #: src/orca/keynames.py:74
-#, fuzzy
 msgid "right control"
-msgstr "Stirklavo"
+msgstr "dekstra Stirklavo"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
 #: src/orca/keynames.py:78
-#, fuzzy
 msgid "left meta"
-msgstr "Maldekstra Ctrl kiel Meta"
+msgstr "maldekstra Meta"
 
 #. Translators: this is how someone would speak the name of the right meta key
 #.
 #: src/orca/keynames.py:82
-#, fuzzy
 msgid "right meta"
-msgstr "dekstre"
+msgstr "dekstra Meta"
 
 #. Translators: this is how someone would speak the name of the num lock key
 #.
 #: src/orca/keynames.py:86
-#, fuzzy
 msgid "num lock"
-msgstr "Num Lock"
+msgstr "nombra ŝlosilo"
 
 #. Translators: this is how someone would speak the name of the caps lock key
 #.
 #: src/orca/keynames.py:90
-#, fuzzy
 msgid "caps lock"
-msgstr "Caps Lock"
+msgstr "majuskliga ŝlosilo"
 
 #. Translators: this is how someone would speak the name of the shift lock key
 #. There is no reason to make it different from the translation for "caps lock"
 #.
 #: src/orca/keynames.py:95
-#, fuzzy
 msgid "shift lock"
-msgstr "Caps Lock alternigas Shift Lock (influante ĉiujn klavojn)"
+msgstr "majuskliga ŝlosilo"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
 #: src/orca/keynames.py:99
-#, fuzzy
 msgid "scroll lock"
-msgstr "Ruluma Baskulo"
+msgstr "ruluma ŝlosilo"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
 #: src/orca/keynames.py:103 src/orca/keynames.py:107 src/orca/keynames.py:111
 #: src/orca/keynames.py:115
-#, fuzzy
 msgid "page up"
-msgstr "Paĝa _agordo…"
+msgstr "paĝo supren"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
 #: src/orca/keynames.py:119 src/orca/keynames.py:123 src/orca/keynames.py:127
 #: src/orca/keynames.py:131
-#, fuzzy
 msgid "page down"
-msgstr "malsupre"
+msgstr "paĝo malsupren"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
 #: src/orca/keynames.py:139
-#, fuzzy
 msgid "left tab"
-msgstr "langeto"
+msgstr "maldekstra tabo"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
 #: src/orca/keynames.py:147
-#, fuzzy
 msgid "backspace"
-msgstr "Igi Caps Lock kroman Retroklavon"
+msgstr "retropaŝo"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
 #: src/orca/keynames.py:151
-#, fuzzy
 msgid "return"
-msgstr "Por enŝalti premu la enigklavon."
+msgstr "reveno"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
 #: src/orca/keynames.py:155
-#, fuzzy
 msgid "enter"
-msgstr "Enigu URLon ĉi tie"
+msgstr "enigklavo"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
@@ -6122,16 +5893,14 @@ msgstr "dekstre"
 #. Translators: this is how someone would speak the name of the left super key
 #.
 #: src/orca/keynames.py:191
-#, fuzzy
 msgid "left super"
-msgstr "Maldekstra superklavo"
+msgstr "maldekstra Super"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
 #: src/orca/keynames.py:195
-#, fuzzy
 msgid "right super"
-msgstr "Dekstra superklavo"
+msgstr "dekstra Super"
 
 #. Translators: this is how someone would speak the name of the menu key
 #.
@@ -6142,9 +5911,8 @@ msgstr "menuo"
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
 #: src/orca/keynames.py:203
-#, fuzzy
 msgid "Alt Gr"
-msgstr "gr"
+msgstr "Alt Gr"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
@@ -6239,9 +6007,8 @@ msgstr "Enmeti"
 #. "caps lock" modifier.
 #.
 #: src/orca/keybindings.py:148 src/orca/keybindings.py:153
-#, fuzzy
 msgid "Caps_Lock"
-msgstr "Caps Lock"
+msgstr "Majuskliga ŝlosilo"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
@@ -6322,10 +6089,10 @@ msgstr "kursive %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1150
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "bold italic %s"
-msgstr "kursive %s"
+msgstr "grasa kursiva %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6336,10 +6103,10 @@ msgstr "kursive %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1160
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "script %s"
-msgstr "Estas neeble legi la skripton '%s'."
+msgstr "skripta %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6350,10 +6117,10 @@ msgstr "Estas neeble legi la skripton '%s'."
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1170
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "bold script %s"
-msgstr "Estas neeble legi la skripton '%s'."
+msgstr "grasa skripta %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6364,10 +6131,10 @@ msgstr "Estas neeble legi la skripton '%s'."
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1180
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "fraktur %s"
-msgstr "%s — %s"
+msgstr "fraktura %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6378,10 +6145,10 @@ msgstr "%s — %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1190
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "double-struck %s"
-msgstr "duoble"
+msgstr "duobla konturo %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6392,10 +6159,10 @@ msgstr "duoble"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1200
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "bold fraktur %s"
-msgstr "dike %s"
+msgstr "grasa fraktura %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6406,10 +6173,10 @@ msgstr "dike %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1210
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif %s"
-msgstr "%s — %s"
+msgstr "sen-serifa %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6420,10 +6187,10 @@ msgstr "%s — %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1220
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif bold %s"
-msgstr "dike %s"
+msgstr "sen-serifa grasa %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6434,10 +6201,10 @@ msgstr "dike %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1230
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "sans-serif italic %s"
-msgstr "kursive %s"
+msgstr "sen-serifa kursiva %s"
 
 #. Translators: Unicode has a large set of characters consisting of a common
 #. alphanumeric symbol and a style. For instance, character 1D400 is a bold A,
@@ -6476,10 +6243,10 @@ msgstr "egallarĝa %s"
 #. being a single alphanumeric character. The full set of symbols can be found
 #. at http://www.unicode.org/charts/PDF/U1D400.pdf.
 #: src/orca/mathsymbols.py:1260
-#, fuzzy, python-format
+#, python-format
 msgctxt "math symbol"
 msgid "dotless %s"
-msgstr "%s — %s"
+msgstr "senpunkta %s"
 
 #. Translators: this is the spoken representation for the character '←' (U+2190)
 #: src/orca/mathsymbols.py:1263
@@ -6585,17 +6352,15 @@ msgstr "malsupren duobla sago"
 
 #. Translators: this is the spoken representation for the character '⇔' (U+21d4)
 #: src/orca/mathsymbols.py:1314
-#, fuzzy
 msgctxt "math symbol"
 msgid "left right double arrow"
-msgstr "Plenigi (maldekstre de dekstre)"
+msgstr "maldekstra-dekstra duobla sago"
 
 #. Translators: this is the spoken representation for the character '⇕' (U+21d5)
 #: src/orca/mathsymbols.py:1317
-#, fuzzy
 msgctxt "math symbol"
 msgid "up down double arrow"
-msgstr "Uzu supren kaj malsupren por elekti eron."
+msgstr "supren-malsupren duobla sago"
 
 #. Translators: this is the spoken representation for the character '⇖' (U+21d6)
 #: src/orca/mathsymbols.py:1320
@@ -6623,17 +6388,15 @@ msgstr "sudokcidenta duobla sago"
 
 #. Translators: this is the spoken representation for the character '➔' (U+2794)
 #: src/orca/mathsymbols.py:1332
-#, fuzzy
 msgctxt "math symbol"
 msgid "right-pointing arrow"
-msgstr "Sago"
+msgstr "dekstren montranta sago"
 
 #. Translators: this is the spoken representation for the character '➢' (U+27a2)
 #: src/orca/mathsymbols.py:1335
-#, fuzzy
 msgctxt "math symbol"
 msgid "right-pointing arrowhead"
-msgstr "Dekstra Ctrl+dekstra Shift"
+msgstr "dekstren montranta sagopinto"
 
 #. Translators: this is the spoken word for the character '-' (U+002d) when used
 #. as a MathML operator.
@@ -6646,17 +6409,13 @@ msgstr "minus"
 #. Translators: this is the spoken word for the character '<' (U+003c) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1343
-#, fuzzy
-#| msgid "less"
 msgctxt "math symbol"
 msgid "less than"
-msgstr "Malpli ol"
+msgstr "malpli ol"
 
 #. Translators: this is the spoken word for the character '>' (U+003e) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1347
-#, fuzzy
-#| msgid "greater"
 msgctxt "math symbol"
 msgid "greater than"
 msgstr "pli granda ol"
@@ -6692,18 +6451,15 @@ msgstr "punkto"
 #. Translators: this is the spoken word for the character '‖' (U+2016) when used
 #. as a MathML operator.
 #: src/orca/mathsymbols.py:1367
-#, fuzzy
 msgctxt "math symbol"
 msgid "double vertical line"
-msgstr "%s kun vertikala linio"
+msgstr "duobla vertikala linio"
 
 #. Translators: this is the spoken representation for the character '…' (U+2026)
 #: src/orca/mathsymbols.py:1370
-#, fuzzy
-#| msgid "horizontal"
 msgctxt "math symbol"
 msgid "horizontal ellipsis"
-msgstr "_Horizontale:"
+msgstr "horizontala tripunkto"
 
 #. Translators: this is the spoken representation for the character '∀' (U+2200)
 #: src/orca/mathsymbols.py:1373
@@ -6737,8 +6493,6 @@ msgstr "ne ekzistas"
 
 #. Translators: this is the spoken representation for the character '∅' (U+2205)
 #: src/orca/mathsymbols.py:1388
-#, fuzzy
-#| msgid "empty"
 msgctxt "math symbol"
 msgid "empty set"
 msgstr "malplena aro"
@@ -6769,38 +6523,33 @@ msgstr "ne elemento de"
 
 #. Translators: this is the spoken representation for the character '∊' (U+220a)
 #: src/orca/mathsymbols.py:1403
-#, fuzzy
 msgctxt "math symbol"
 msgid "small element of"
-msgstr "Eta mirindaĵo"
+msgstr "malgranda elemento de"
 
 #. Translators: this is the spoken representation for the character '∋' (U+220b)
 #: src/orca/mathsymbols.py:1406
-#, fuzzy
 msgctxt "math symbol"
 msgid "contains as a member"
-msgstr "Membro"
+msgstr "entenanta kiel membro"
 
 #. Translators: this is the spoken representation for the character '∌' (U+220c)
 #: src/orca/mathsymbols.py:1409
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not contain as a member"
-msgstr "ne entenas"
+msgstr "ne entenas kiel membron"
 
 #. Translators: this is the spoken representation for the character '∍' (U+220d)
 #: src/orca/mathsymbols.py:1412
-#, fuzzy
 msgctxt "math symbol"
 msgid "small contains as a member"
-msgstr "Membro"
+msgstr "malgranda entenas kiel membron"
 
 #. Translators: this is the spoken representation for the character '∎' (U+220e)
 #: src/orca/mathsymbols.py:1415
-#, fuzzy
 msgctxt "math symbol"
 msgid "end of proof"
-msgstr "fino"
+msgstr "fino de pruvo"
 
 #. Translators: this is the spoken representation for the character '∏' (U+220f)
 #: src/orca/mathsymbols.py:1418
@@ -6828,54 +6577,45 @@ msgstr "minus aŭ plus"
 
 #. Translators: this is the spoken representation for the character '∔' (U+2214)
 #: src/orca/mathsymbols.py:1433
-#, fuzzy
-#| msgid "plus"
 msgctxt "math symbol"
 msgid "dot plus"
-msgstr "punkto"
+msgstr "punkta plus"
 
 #. Translators: this is the spoken representation for the character '∕' (U+2215)
 #: src/orca/mathsymbols.py:1436
-#, fuzzy
 msgctxt "math symbol"
 msgid "division slash"
-msgstr "oblikvo"
+msgstr "divida oblikvo"
 
 #. Translators: this is the spoken representation for the character '∖' (U+2216)
 #: src/orca/mathsymbols.py:1439
-#, fuzzy
-#| msgid "plus or minus"
 msgctxt "math symbol"
 msgid "set minus"
-msgstr "minus"
+msgstr "aro-minus"
 
 #. Translators: this is the spoken representation for the character '∗' (U+2217)
 #: src/orca/mathsymbols.py:1442
-#, fuzzy
 msgctxt "math symbol"
 msgid "asterisk operator"
-msgstr "Servil-operatoro: %s"
+msgstr "operacio stelo"
 
 #. Translators: this is the spoken representation for the character '∘' (U+2218)
 #: src/orca/mathsymbols.py:1445
-#, fuzzy
 msgctxt "math symbol"
 msgid "ring operator"
-msgstr "ringo"
+msgstr "riga operacio"
 
 #. Translators: this is the spoken representation for the character '∙' (U+2219)
 #: src/orca/mathsymbols.py:1448
-#, fuzzy
 msgctxt "math symbol"
 msgid "bullet operator"
-msgstr "Mesaĝo el operatoro de la gastiga komputilo"
+msgstr "punkta operacio"
 
 #. Translators: this is the spoken representation for the character '√' (U+221a)
 #: src/orca/mathsymbols.py:1451
-#, fuzzy
 msgctxt "math symbol"
 msgid "square root"
-msgstr "kvadrata kuniĝo"
+msgstr "kvadrata radiko"
 
 #. Translators: this is the spoken representation for the character '∛' (U+221b)
 #: src/orca/mathsymbols.py:1454
@@ -6885,7 +6625,6 @@ msgstr "kuba radiko"
 
 #. Translators: this is the spoken representation for the character '∜' (U+221c)
 #: src/orca/mathsymbols.py:1457
-#, fuzzy
 msgctxt "math symbol"
 msgid "fourth root"
 msgstr "kvara radiko"
@@ -6904,33 +6643,27 @@ msgstr "senfineco"
 
 #. Translators: this is the spoken representation for the character '∟' (U+221f)
 #: src/orca/mathsymbols.py:1466
-#, fuzzy
-#| msgid "right paren"
 msgctxt "math symbol"
 msgid "right angle"
-msgstr "dekstra angula krampo"
+msgstr "rekta angulo"
 
 #. Translators: this is the spoken representation for the character '∠' (U+2220)
 #: src/orca/mathsymbols.py:1469
-#, fuzzy
-#| msgid "single"
 msgctxt "math symbol"
 msgid "angle"
-msgstr "Angulo:"
+msgstr "angulo"
 
 #. Translators: this is the spoken representation for the character '∡' (U+2221)
 #: src/orca/mathsymbols.py:1472
-#, fuzzy
 msgctxt "math symbol"
 msgid "measured angle"
-msgstr "mezurita per"
+msgstr "mezurita angulo"
 
 #. Translators: this is the spoken representation for the character '∢' (U+2222)
 #: src/orca/mathsymbols.py:1475
-#, fuzzy
 msgctxt "math symbol"
 msgid "spherical angle"
-msgstr "Angulo:"
+msgstr "sfera angulo"
 
 #. Translators: this is the spoken representation for the character '∣' (U+2223)
 #: src/orca/mathsymbols.py:1478
@@ -6940,7 +6673,6 @@ msgstr "dividas"
 
 #. Translators: this is the spoken representation for the character '∤' (U+2224)
 #: src/orca/mathsymbols.py:1481
-#, fuzzy
 msgctxt "math symbol"
 msgid "does not divide"
 msgstr "ne dividas"
@@ -6960,8 +6692,6 @@ msgstr "ne paralela al"
 #. Translators: this is the spoken representation for the character '∧' (U+2227)
 #. Translators: this is the spoken representation for the character '⋀' (U+22c0)
 #: src/orca/mathsymbols.py:1490 src/orca/mathsymbols.py:1949
-#, fuzzy
-#| msgid "logical not"
 msgctxt "math symbol"
 msgid "logical and"
 msgstr "logika kaj"
@@ -6969,8 +6699,6 @@ msgstr "logika kaj"
 #. Translators: this is the spoken representation for the character '∨' (U+2228)
 #. Translators: this is the spoken representation for the character '⋁' (U+22c1)
 #: src/orca/mathsymbols.py:1493 src/orca/mathsymbols.py:1952
-#, fuzzy
-#| msgid "logical not"
 msgctxt "math symbol"
 msgid "logical or"
 msgstr "logika aŭ"
@@ -7045,7 +6773,6 @@ msgstr "malhorloĝnadla kontura integralo"
 
 #. Translators: this is the spoken representation for the character '∴' (U+2234)
 #: src/orca/mathsymbols.py:1529
-#, fuzzy
 msgctxt "math symbol"
 msgid "therefore"
 msgstr "tial"
@@ -7070,8 +6797,6 @@ msgstr "proporcio"
 
 #. Translators: this is the spoken representation for the character '∸' (U+2238)
 #: src/orca/mathsymbols.py:1541
-#, fuzzy
-#| msgid "plus or minus"
 msgctxt "math symbol"
 msgid "dot minus"
 msgstr "punkta minus"
@@ -7102,10 +6827,9 @@ msgstr "tildo"
 
 #. Translators: this is the spoken representation for the character '∽' (U+223d)
 #: src/orca/mathsymbols.py:1556
-#, fuzzy
 msgctxt "math symbol"
 msgid "reversed tilde"
-msgstr "a tildo"
+msgstr "renversita tildo"
 
 #. Translators: this is the spoken representation for the character '∾' (U+223e)
 #: src/orca/mathsymbols.py:1559
@@ -7133,39 +6857,33 @@ msgstr "ne tildo"
 
 #. Translators: this is the spoken representation for the character '≂' (U+2242)
 #: src/orca/mathsymbols.py:1571
-#, fuzzy
-#| msgid "tilde"
 msgctxt "math symbol"
 msgid "minus tilde"
-msgstr "a tildo"
+msgstr "minus tildo"
 
 #. Translators: this is the spoken representation for the character '≃' (U+2243)
 #: src/orca/mathsymbols.py:1574
-#, fuzzy
 msgctxt "math symbol"
 msgid "asymptotically equal to"
-msgstr "ne egala al"
+msgstr "asimptote egala al"
 
 #. Translators: this is the spoken representation for the character '≄' (U+2244)
 #: src/orca/mathsymbols.py:1577
-#, fuzzy
 msgctxt "math symbol"
 msgid "not asymptotically equal to"
-msgstr "ne egala al"
+msgstr "ne asimptote egala al"
 
 #. Translators: this is the spoken representation for the character '≅' (U+2245)
 #: src/orca/mathsymbols.py:1580
-#, fuzzy
 msgctxt "math symbol"
 msgid "approximately equal to"
-msgstr "ne egala al"
+msgstr "proksimume egala al"
 
 #. Translators: this is the spoken representation for the character '≆' (U+2246)
 #: src/orca/mathsymbols.py:1583
-#, fuzzy
 msgctxt "math symbol"
 msgid "approximately but not actually equal to"
-msgstr "ne egala al"
+msgstr "proksimume sed ne efektive egala al"
 
 #. Translators: this is the spoken representation for the character '≇' (U+2247)
 #: src/orca/mathsymbols.py:1586
@@ -7229,54 +6947,45 @@ msgstr "alproksimiĝas al la limo"
 
 #. Translators: this is the spoken representation for the character '≑' (U+2251)
 #: src/orca/mathsymbols.py:1616
-#, fuzzy
 msgctxt "math symbol"
 msgid "geometrically equal to"
-msgstr "ne egala al"
+msgstr "geometrie egala al"
 
 #. Translators: this is the spoken representation for the character '≒' (U+2252)
 #: src/orca/mathsymbols.py:1619
-#, fuzzy
 msgctxt "math symbol"
 msgid "approximately equal to or the image of"
-msgstr "ne egala al"
+msgstr "proksimume egala al aŭ la bildo de"
 
 #. Translators: this is the spoken representation for the character '≓' (U+2253)
 #: src/orca/mathsymbols.py:1622
-#, fuzzy
 msgctxt "math symbol"
 msgid "image of or approximately equal to"
-msgstr "ne egala al"
+msgstr "bildo de aŭ proksimume egala al"
 
 #. Translators: this is the spoken representation for the character '≔' (U+2254)
 #: src/orca/mathsymbols.py:1625
-#, fuzzy
-#| msgid "equals"
 msgctxt "math symbol"
 msgid "colon equals"
-msgstr "egalsigno"
+msgstr "dupunkto egalo"
 
 #. Translators: this is the spoken representation for the character '≕' (U+2255)
 #: src/orca/mathsymbols.py:1628
-#, fuzzy
-#| msgid "equals"
 msgctxt "math symbol"
 msgid "equals colon"
-msgstr "egalsigno"
+msgstr "egalo dupunkto"
 
 #. Translators: this is the spoken representation for the character '≖' (U+2256)
 #: src/orca/mathsymbols.py:1631
-#, fuzzy
 msgctxt "math symbol"
 msgid "ring in equal to"
-msgstr "ne egala al"
+msgstr "ringo ene egala al"
 
 #. Translators: this is the spoken representation for the character '≗' (U+2257)
 #: src/orca/mathsymbols.py:1634
-#, fuzzy
 msgctxt "math symbol"
 msgid "ring equal to"
-msgstr "ne egala al"
+msgstr "ringo egala al"
 
 #. Translators: this is the spoken representation for the character '≘' (U+2258)
 #: src/orca/mathsymbols.py:1637
@@ -7292,19 +7001,15 @@ msgstr "taksoj"
 
 #. Translators: this is the spoken representation for the character '≚' (U+225a)
 #: src/orca/mathsymbols.py:1643
-#, fuzzy
-#| msgid "triangular bullet"
 msgctxt "math symbol"
 msgid "equiangular to"
-msgstr "triangula bulmarko"
+msgstr "egalangula al"
 
 #. Translators: this is the spoken representation for the character '≛' (U+225b)
 #: src/orca/mathsymbols.py:1646
-#, fuzzy
-#| msgid "equals"
 msgctxt "math symbol"
 msgid "star equals"
-msgstr "stelo"
+msgstr "stela egalo"
 
 #. Translators: this is the spoken representation for the character '≜' (U+225c)
 #: src/orca/mathsymbols.py:1649
@@ -7326,10 +7031,9 @@ msgstr "mezurita per"
 
 #. Translators: this is the spoken representation for the character '≟' (U+225f)
 #: src/orca/mathsymbols.py:1658
-#, fuzzy
 msgctxt "math symbol"
 msgid "questioned equal to"
-msgstr "ne egala al"
+msgstr "duba egalo"
 
 #. Translators: this is the spoken representation for the character '≠' (U+2260)
 #: src/orca/mathsymbols.py:1661
@@ -7375,38 +7079,33 @@ msgstr "malpli ol super egala al"
 
 #. Translators: this is the spoken representation for the character '≧' (U+2267)
 #: src/orca/mathsymbols.py:1682
-#, fuzzy
 msgctxt "math symbol"
 msgid "greater than over equal to"
-msgstr "estas pli granda ol aŭ egale al"
+msgstr "pli granda ol super egala al"
 
 #. Translators: this is the spoken representation for the character '≨' (U+2268)
 #: src/orca/mathsymbols.py:1685
-#, fuzzy
 msgctxt "math symbol"
 msgid "less than but not equal to"
-msgstr "estas malpli granda ol aŭ egale al"
+msgstr "malpli ol sed ne egala al"
 
 #. Translators: this is the spoken representation for the character '≩' (U+2269)
 #: src/orca/mathsymbols.py:1688
-#, fuzzy
 msgctxt "math symbol"
 msgid "greater than but not equal to"
-msgstr "estas pli granda ol aŭ egale al"
+msgstr "pli granda ol sed ne egala al"
 
 #. Translators: this is the spoken representation for the character '≪' (U+226a)
 #: src/orca/mathsymbols.py:1691
-#, fuzzy
 msgctxt "math symbol"
 msgid "much less than"
-msgstr "pli malgranda ol"
+msgstr "multe malpli ol"
 
 #. Translators: this is the spoken representation for the character '≫' (U+226b)
 #: src/orca/mathsymbols.py:1694
-#, fuzzy
 msgctxt "math symbol"
 msgid "much greater than"
-msgstr "pli granda ol"
+msgstr "multe pli granda ol"
 
 #. Translators: this is the spoken representation for the character '≬' (U+226c)
 #: src/orca/mathsymbols.py:1697
@@ -7428,39 +7127,33 @@ msgstr "ne malpli ol"
 
 #. Translators: this is the spoken representation for the character '≯' (U+226f)
 #: src/orca/mathsymbols.py:1706
-#, fuzzy
-#| msgid "greater"
 msgctxt "math symbol"
 msgid "not greater than"
-msgstr "pli granda ol"
+msgstr "ne pli granda ol"
 
 #. Translators: this is the spoken representation for the character '≰' (U+2270)
 #: src/orca/mathsymbols.py:1709
-#, fuzzy
 msgctxt "math symbol"
 msgid "neither less than nor equal to"
-msgstr "estas malpli granda ol aŭ egale al"
+msgstr "nek malpli ol nek egala al"
 
 #. Translators: this is the spoken representation for the character '≱' (U+2271)
 #: src/orca/mathsymbols.py:1712
-#, fuzzy
 msgctxt "math symbol"
 msgid "neither greater than nor equal to"
-msgstr "estas pli granda ol aŭ egale al"
+msgstr "nek pli granda ol nek egala al"
 
 #. Translators: this is the spoken representation for the character '≲' (U+2272)
 #: src/orca/mathsymbols.py:1715
-#, fuzzy
 msgctxt "math symbol"
 msgid "less than or equivalent to"
-msgstr "estas malpli granda ol aŭ egale al"
+msgstr "malpli ol aŭ ekvivalenta al"
 
 #. Translators: this is the spoken representation for the character '≳' (U+2273)
 #: src/orca/mathsymbols.py:1718
-#, fuzzy
 msgctxt "math symbol"
 msgid "greater than or equivalent to"
-msgstr "estas pli granda ol aŭ egale al"
+msgstr "pli granda ol aŭ ekvivalenta al"
 
 #. Translators: this is the spoken representation for the character '≴' (U+2274)
 #: src/orca/mathsymbols.py:1721
@@ -7638,75 +7331,65 @@ msgstr "kvadrata originalo de"
 
 #. Translators: this is the spoken representation for the character '⊑' (U+2291)
 #: src/orca/mathsymbols.py:1808
-#, fuzzy
 msgctxt "math symbol"
 msgid "square image of or equal to"
-msgstr "ne egala al"
+msgstr "kvadrata bildo de aŭ egala al"
 
 #. Translators: this is the spoken representation for the character '⊒' (U+2292)
 #: src/orca/mathsymbols.py:1811
-#, fuzzy
 msgctxt "math symbol"
 msgid "square original of or equal to"
-msgstr "ne egala al"
+msgstr "kvadrata originalo de aŭ egala al"
 
 #. Translators: this is the spoken representation for the character '⊓' (U+2293)
 #: src/orca/mathsymbols.py:1814
-#, fuzzy
 msgctxt "math symbol"
 msgid "square cap"
-msgstr "kvadrata kuniĝo"
+msgstr "kvadrata kapo"
 
 #. Translators: this is the spoken representation for the character '⊔' (U+2294)
 #: src/orca/mathsymbols.py:1817
-#, fuzzy
 msgctxt "math symbol"
 msgid "square cup"
-msgstr "kvadrata kuniĝo"
+msgstr "kvadrata taso"
 
 #. Translators: this is the spoken representation for the character '⊕' (U+2295)
 #. Translators: this is the spoken representation for the character '⨁' (U+2a01)
 #: src/orca/mathsymbols.py:1820 src/orca/mathsymbols.py:2171
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled plus"
-msgstr "rondigita punkto"
+msgstr "en cirklo plus"
 
 #. Translators: this is the spoken representation for the character '⊖' (U+2296)
 #: src/orca/mathsymbols.py:1823
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled minus"
-msgstr "rondigita punkto"
+msgstr "en cirklo minus"
 
 #. Translators: this is the spoken representation for the character '⊗' (U+2297)
 #. Translators: this is the spoken representation for the character '⨂' (U+2a02)
 #: src/orca/mathsymbols.py:1826 src/orca/mathsymbols.py:2174
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled times"
-msgstr "rondigita punkto"
+msgstr "en cirklo multipliko"
 
 #. Translators: this is the spoken representation for the character '⊘' (U+2298)
 #: src/orca/mathsymbols.py:1829
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled division slash"
-msgstr "rondigita punkto"
+msgstr "en cirklo divid-signo"
 
 #. Translators: this is the spoken representation for the character '⊙' (U+2299)
 #: src/orca/mathsymbols.py:1832
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled dot operator"
-msgstr "rondigita punkto"
+msgstr "en cirklo punkto"
 
 #. Translators: this is the spoken representation for the character '⊚' (U+229a)
 #: src/orca/mathsymbols.py:1835
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled ring operator"
-msgstr "rondigita punkto"
+msgstr "en cirklo ringo"
 
 #. Translators: this is the spoken representation for the character '⊛' (U+229b)
 #: src/orca/mathsymbols.py:1838
@@ -7716,40 +7399,33 @@ msgstr "cirkulita asterisko operatoro"
 
 #. Translators: this is the spoken representation for the character '⊜' (U+229c)
 #: src/orca/mathsymbols.py:1841
-#, fuzzy
-#| msgid "equals"
 msgctxt "math symbol"
 msgid "circled equals"
-msgstr "egalsigno"
+msgstr "en cirklo egalo"
 
 #. Translators: this is the spoken representation for the character '⊝' (U+229d)
 #: src/orca/mathsymbols.py:1844
-#, fuzzy
 msgctxt "math symbol"
 msgid "circled dash"
-msgstr "haltostreko"
+msgstr "en cirklo streko"
 
 #. Translators: this is the spoken representation for the character '⊞' (U+229e)
 #: src/orca/mathsymbols.py:1847
-#, fuzzy
 msgctxt "math symbol"
 msgid "squared plus"
-msgstr "plus"
+msgstr "en kvadrato plus"
 
 #. Translators: this is the spoken representation for the character '⊟' (U+229f)
 #: src/orca/mathsymbols.py:1850
-#, fuzzy
-#| msgid "plus or minus"
 msgctxt "math symbol"
 msgid "squared minus"
-msgstr "minus"
+msgstr "en kvadrato minus"
 
 #. Translators: this is the spoken representation for the character '⊠' (U+22a0)
 #: src/orca/mathsymbols.py:1853
-#, fuzzy
 msgctxt "math symbol"
 msgid "squared times"
-msgstr "aldona tempo ĉiuj"
+msgstr "en kvadrato multipliko"
 
 #. Translators: this is the spoken representation for the character '⊡' (U+22a1)
 #: src/orca/mathsymbols.py:1856
@@ -7771,18 +7447,15 @@ msgstr "maldekstra krampo"
 
 #. Translators: this is the spoken representation for the character '⊤' (U+22a4)
 #: src/orca/mathsymbols.py:1865
-#, fuzzy
-#| msgid "down"
 msgctxt "math symbol"
 msgid "down tack"
-msgstr "_Malsupre"
+msgstr "malsuprena krampo"
 
 #. Translators: this is the spoken representation for the character '⊥' (U+22a5)
 #: src/orca/mathsymbols.py:1868
-#, fuzzy
 msgctxt "math symbol"
 msgid "up tack"
-msgstr "_Supre"
+msgstr "suprena krampo"
 
 #. Translators: this is the spoken representation for the character '⊦' (U+22a6)
 #: src/orca/mathsymbols.py:1871
@@ -7828,11 +7501,9 @@ msgstr "ne pruvas"
 
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
 #: src/orca/mathsymbols.py:1892
-#, fuzzy
-#| msgid "true"
 msgctxt "math symbol"
 msgid "not true"
-msgstr "vere"
+msgstr "malvera"
 
 #. Translators: this is the spoken representation for the character '⊮' (U+22ae)
 #: src/orca/mathsymbols.py:1895
@@ -7890,10 +7561,9 @@ msgstr "originalo de"
 
 #. Translators: this is the spoken representation for the character '⊷' (U+22b7)
 #: src/orca/mathsymbols.py:1922
-#, fuzzy
 msgctxt "math symbol"
 msgid "image of"
-msgstr "_Neniu bildo"
+msgstr "bildo de"
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
 #: src/orca/mathsymbols.py:1925
@@ -7957,17 +7627,15 @@ msgstr "punkta operatoro"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
 #: src/orca/mathsymbols.py:1967
-#, fuzzy
 msgctxt "math symbol"
 msgid "star operator"
-msgstr "stelo"
+msgstr "operacio stelo"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
 #: src/orca/mathsymbols.py:1970
-#, fuzzy
 msgctxt "math symbol"
 msgid "division times"
-msgstr "aldona tempo ĉiuj"
+msgstr "divido signmultoblo"
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
 #: src/orca/mathsymbols.py:1973
@@ -8187,10 +7855,9 @@ msgstr "ne enhavas kiel normalan subgrupon"
 
 #. Translators: this is the spoken representation for the character '⋬' (U+22ec)
 #: src/orca/mathsymbols.py:2081
-#, fuzzy
 msgctxt "math symbol"
 msgid "not normal subgroup of or equal to"
-msgstr "ne egala al"
+msgstr "ne normala subgrupo de aŭ egala al"
 
 #. Translators: this is the spoken representation for the character '⋭' (U+22ed)
 #: src/orca/mathsymbols.py:2084
@@ -8287,10 +7954,9 @@ msgstr "malgrande enhavas kun vertikala strio fine de horizonta streko"
 
 #. Translators: this is the spoken representation for the character '⋽' (U+22fd)
 #: src/orca/mathsymbols.py:2135
-#, fuzzy
 msgctxt "math symbol"
 msgid "contains with overbar"
-msgstr "entenas"
+msgstr "enhavas kun superstrio"
 
 #. Translators: this is the spoken representation for the character '⋾' (U+22fe)
 #: src/orca/mathsymbols.py:2138
@@ -8561,9 +8227,8 @@ msgstr "piktogramo"
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: src/orca/messages.py:112
-#, fuzzy
 msgid "Capitalization style set to icon."
-msgstr "BONE. Normala stilo estas ebligita."
+msgstr "Majuskliga stilo agordita al piktogramo."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -8587,9 +8252,8 @@ msgstr "neniu"
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: src/orca/messages.py:132
-#, fuzzy
 msgid "Capitalization style set to none."
-msgstr "BONE. Normala stilo estas ebligita."
+msgstr "Majuskliga stilo agordita al neniu."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -8613,9 +8277,8 @@ msgstr "literumado"
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
 #: src/orca/messages.py:152
-#, fuzzy
 msgid "Capitalization style set to spell."
-msgstr "BONE. Normala stilo estas ebligita."
+msgstr "Majuskliga stilo agordita al literumado."
 
 #. Translators: Native application caret navigation does not always work as the
 #. Orca user wants. As such, Orca offers the user the ability to toggle between
@@ -8989,57 +8652,49 @@ msgstr "Provizi babilejan specifan mesaĝan historion."
 #. be said is content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:437
-#, fuzzy
 msgctxt "content"
 msgid "deletion start"
-msgstr "Komenco"
+msgstr "forigada komenco"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:442
-#, fuzzy
-#| msgid "delete"
 msgctxt "content"
 msgid "deletion end"
-msgstr "Marki la elektitajn mesaĝojn por forigado"
+msgstr "forigada fino"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for insertion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:447
-#, fuzzy
 msgctxt "content"
 msgid "insertion start"
-msgstr "je la komenco"
+msgstr "enmeta komenco"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:452
-#, fuzzy
 msgctxt "content"
 msgid "insertion end"
-msgstr "fino"
+msgstr "enmeta fino"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element.
 #: src/orca/messages.py:457
-#, fuzzy
 msgctxt "content"
 msgid "highlight start"
-msgstr "Komenco"
+msgstr "emfaza komenco"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked/highlighted in a document, such as content which
 #. is inside an HTML 'mark' element.
 #: src/orca/messages.py:462
-#, fuzzy
-#| msgid "right paren"
 msgctxt "content"
 msgid "highlight end"
-msgstr "Emfazi _citojn kun"
+msgstr "emfaza fino"
 
 #. Translators: This phrase is spoken to inform the user that the content being
 #. presented is the end of an inline suggestion a document. A "suggestion" is a
@@ -9047,11 +8702,9 @@ msgstr "Emfazi _citojn kun"
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:469
-#, fuzzy
-#| msgid "question"
 msgctxt "content"
 msgid "suggestion end"
-msgstr "fino"
+msgstr "sugesta fino"
 
 #. Translators: This is for navigating document content by moving to the start
 #. or end of a container. Examples of containers include tables, lists, and
@@ -9093,20 +8746,17 @@ msgstr "Defaŭlta butono estas %s"
 #. the button (e.g. "OK" or "Close"). When translating "Grayed," please use
 #. the same word used for the string in object_properties.py.
 #: src/orca/messages.py:501
-#, fuzzy, python-format
-#| msgid "Default button is %s"
+#, python-format
 msgid "Default button is %s. Grayed"
-msgstr "Defaŭlta butono estas %s"
+msgstr "Defaŭlta butono estas %s. Grizigita"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
 #. a command to present the default button. This is the message Orca will
 #. present if it could not find the default button.
 #: src/orca/messages.py:507
-#, fuzzy
-#| msgid "Default button is %s"
 msgid "Default button not found"
-msgstr "Defaŭlta butono estas %s"
+msgstr "Defaŭlta butono ne trovita"
 
 #. Translators: This string is part of the presentation of an item that includes
 #. one or several consecutive subscripted characters. For example, 'X' followed
@@ -9115,7 +8765,7 @@ msgstr "Defaŭlta butono estas %s"
 #: src/orca/messages.py:513
 #, python-format
 msgid " subscript %s"
-msgstr "subskribo %s"
+msgstr " subskribo %s"
 
 #. Translators: This string is part of the presentation of an item that includes
 #. one or several consecutive superscripted characters. For example, 'X' followed
@@ -9124,15 +8774,14 @@ msgstr "subskribo %s"
 #: src/orca/messages.py:519
 #, python-format
 msgid " superscript %s"
-msgstr "superskribo %s"
+msgstr " superskribo %s"
 
 #. Translators: this message is presented when the user tries to perform a command
 #. specific to dialog boxes, such as presenting the default button, but is not in
 #. a dialog.
 #: src/orca/messages.py:524
-#, fuzzy
 msgid "Not in a dialog"
-msgstr "Fermu fenestron"
+msgstr "Ne en dialogo"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9148,10 +8797,8 @@ msgstr "tuta dokumento elektita"
 #. selected but the user presses a key (e.g. an arrow key) causing the
 #. selection to be completely removed.
 #: src/orca/messages.py:537
-#, fuzzy
-#| msgid "entire document selected"
 msgid "entire document unselected"
-msgstr "tuta dokumento elektita"
+msgstr "tuta dokumento malelektita"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -9182,9 +8829,8 @@ msgstr "dokumento elektita al la pozicio de la kursoro"
 #. unselected. This message is presented when the user unselects previously
 #. selected text by pressing Ctrl+Shift+Home.
 #: src/orca/messages.py:561
-#, fuzzy
 msgid "document unselected to cursor position"
-msgstr "Kursoropozicio"
+msgstr "dokumento malelektita ĝis la pozicio de la kursoro"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
@@ -9250,9 +8896,8 @@ msgstr "Neniu dosiero trovita."
 #. let the user know that he/she successfully appended the contents under
 #. flat review onto the existing contents of the clipboard.
 #: src/orca/messages.py:606
-#, fuzzy
 msgid "Appended contents to clipboard."
-msgstr "_Enhavoj"
+msgstr "Aldonis enhavon al tondujo."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9261,9 +8906,8 @@ msgstr "_Enhavoj"
 #. let the user know that he/she successfully copied the contents under flat
 #. review to the clipboard.
 #: src/orca/messages.py:614
-#, fuzzy
 msgid "Copied contents to clipboard."
-msgstr "_Enhavoj"
+msgstr "Kopiis enhavon al tondujo."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9272,9 +8916,8 @@ msgstr "_Enhavoj"
 #. let the user know that he/she attempted to use a flat review command when
 #. not using flat review.
 #: src/orca/messages.py:622
-#, fuzzy
 msgid "Not using flat review."
-msgstr "Recenzo"
+msgstr "Ne uzas platan revizion."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9282,9 +8925,8 @@ msgstr "Recenzo"
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
 #: src/orca/messages.py:629
-#, fuzzy
 msgid "Entering flat review."
-msgstr "Recenzo"
+msgstr "Eniras platan revizion."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9292,9 +8934,8 @@ msgstr "Recenzo"
 #. sequence of words in a sequence of lines.  This message is presented to
 #. let the user know he/she just entered flat review.
 #: src/orca/messages.py:636
-#, fuzzy
 msgid "Leaving flat review."
-msgstr "Recenzo"
+msgstr "Eliras el plata revizio."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -9319,24 +8960,20 @@ msgstr "Plata revizio nelimigita"
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
 #: src/orca/messages.py:656
-#, fuzzy
 msgid "has formula"
-msgstr "Havas ambasadon"
+msgstr "havas formulon"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a dialog to appear if activated.
 #: src/orca/messages.py:660
-#, fuzzy
-#| msgid "Opens the Find dialog."
 msgid "opens dialog"
-msgstr "Malfermas dialogon por elekti la dosierujon al kiu vi volas iri"
+msgstr "malfermas dialogon"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a grid to appear if activated. A grid is an interactive table.
 #: src/orca/messages.py:664
-#, fuzzy
 msgid "opens grid"
-msgstr "_Krado"
+msgstr "malfermas kradon"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a listbox to appear if activated.
@@ -9364,9 +9001,8 @@ msgstr "malfermas arbon"
 #. link. Please see http://en.wikipedia.org/wiki/Imagemap for more information
 #. and examples.
 #: src/orca/messages.py:685
-#, fuzzy
 msgid "image map link"
-msgstr "_Neniu bildo"
+msgstr "bildmapa ligilo"
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. that the key combination (e.g., Ctrl+Alt+f) they just entered has already been
@@ -9404,9 +9040,8 @@ msgstr "Klavkombino forigita. Premu enigan klavon por konfirmi."
 #. Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
 #. their input.
 #: src/orca/messages.py:711
-#, fuzzy
 msgid "The keybinding has been removed."
-msgstr "Dosiero “%s” estas forigita."
+msgstr "La klavkombino estas forigita."
 
 #. Translators: This is a spoken and/or brailled message asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
@@ -9474,9 +9109,8 @@ msgstr "Neniu"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:768
-#, fuzzy
 msgid "Echo set to None."
-msgstr "Neniu"
+msgstr "Eĥo agordita al nenio."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9506,11 +9140,8 @@ msgstr "klavo kaj vorto"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:794
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "key and word"
 msgid "Echo set to key and word."
-msgstr "klavo kaj vorto"
+msgstr "Eĥo agordita al klavo kaj vorto."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9540,9 +9171,8 @@ msgstr "frazo"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:820
-#, fuzzy
 msgid "Echo set to sentence."
-msgstr "Frazo"
+msgstr "Eĥo agordita al frazo."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9572,9 +9202,8 @@ msgstr "vorto"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:846
-#, fuzzy
 msgid "Echo set to word."
-msgstr "vorto"
+msgstr "Eĥo agordita al vorto."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9604,11 +9233,8 @@ msgstr "vorto kaj frazo"
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:872
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "word and sentence"
 msgid "Echo set to word and sentence."
-msgstr "vorto kaj frazo"
+msgstr "Eĥo agordita al vorto kaj frazo."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -9621,10 +9247,10 @@ msgstr "vorto kaj frazo"
 #. about the MathML 'menclose' element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:884
-#, fuzzy, python-format
+#, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
-msgstr "['attachment','attaching','attached','enclosed','aldonaĵo','aldonis','aldonas','aldonos','aldoni','aldonus']"
+msgstr "Enfermita per: %s"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9633,10 +9259,9 @@ msgstr "['attachment','attaching','attached','enclosed','aldonaĵo','aldonis','a
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:892
-#, fuzzy
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
-msgstr "Simbolo"
+msgstr "aktuara simbolo"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9645,10 +9270,9 @@ msgstr "Simbolo"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:900
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a box"
-msgstr "_Poŝtujo:"
+msgstr "skatolo"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9657,11 +9281,9 @@ msgstr "_Poŝtujo:"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:908
-#, fuzzy
-#| msgid "a circumflex"
 msgctxt "math enclosure"
 msgid "a circle"
-msgstr "Cirklo"
+msgstr "cirklo"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9670,10 +9292,9 @@ msgstr "Cirklo"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:916
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a long division sign"
-msgstr "tro longa"
+msgstr "signo de longa dividado"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9693,10 +9314,9 @@ msgstr "radikalo"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:932
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a rounded box"
-msgstr "Grupigi laŭ _ujo"
+msgstr "rondigita skatolo"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9705,11 +9325,9 @@ msgstr "Grupigi laŭ _ujo"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:940
-#, fuzzy
-#| msgid "horizontal"
 msgctxt "math enclosure"
 msgid "a horizontal strike"
-msgstr "_Horizontale:"
+msgstr "horizontala trastreko"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9718,11 +9336,9 @@ msgstr "_Horizontale:"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:948
-#, fuzzy
-#| msgid "vertical bar"
 msgctxt "math enclosure"
 msgid "a vertical strike"
-msgstr "_Vertikale:"
+msgstr "vertikala trastreko"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9731,10 +9347,9 @@ msgstr "_Vertikale:"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:956
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a down diagonal strike"
-msgstr "Lineo malsupre"
+msgstr "malsuprena diagonala trastreko"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9743,10 +9358,9 @@ msgstr "Lineo malsupre"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:964
-#, fuzzy
 msgctxt "math enclosure"
 msgid "an up diagonal strike"
-msgstr "Lineo supre"
+msgstr "suprena diagonala trastreko"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9755,10 +9369,9 @@ msgstr "Lineo supre"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:972
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a northeast arrow"
-msgstr "Sago"
+msgstr "nordorienta sago"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -9767,10 +9380,9 @@ msgstr "Sago"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:980
-#, fuzzy
 msgctxt "math enclosure"
 msgid "a line at the bottom"
-msgstr "Linio"
+msgstr "linio malsupre"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -10913,51 +10525,44 @@ msgstr "Neniuj idoj."
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no next sibling.
 #: src/orca/messages.py:1817
-#, fuzzy
 msgid "No next."
-msgstr "_Sekva"
+msgstr "Neniu sekva."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no parent.
 #: src/orca/messages.py:1822
-#, fuzzy
-#| msgid "%d percent."
-#| msgid_plural "%d percent."
 msgid "No parent."
-msgstr "Neniu respondo aŭ gepatro"
+msgstr "Neniu gepatra elemento."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
 #: src/orca/messages.py:1827
-#, fuzzy
 msgid "No previous."
-msgstr "_Antaŭa"
+msgstr "Neniu antaŭa."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is enabled.
 #: src/orca/messages.py:1832
-#, fuzzy
 msgid "Simplified navigation enabled."
-msgstr "Simpligite"
+msgstr "Simpligita navigado ebligita."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
 #: src/orca/messages.py:1837
-#, fuzzy
 msgid "Simplified navigation disabled."
-msgstr "Simpligite"
+msgstr "Simpligita navigado malebligita."
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
 #. list that's inside another list).
 #: src/orca/messages.py:1842 src/orca/object_properties.py:60
-#, fuzzy, python-format
+#, python-format
 msgid "Nesting level %d"
-msgstr "NIVELO %d"
+msgstr "Nestnivelo %d"
 
 #. Translators: Orca has a command that moves the mouse pointer to the current
 #. location on a web page. If moving the mouse pointer caused an item to appear
@@ -10972,10 +10577,9 @@ msgstr "Nova elemento estis aldonita"
 #. name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
 #. localized rolename if it does not.
 #: src/orca/messages.py:1854
-#, fuzzy, python-format
-#| msgid "No application has focus."
+#, python-format
 msgid "No actions found on: %s"
-msgstr "Trovis rendevuon en la kalendaro “%s”"
+msgstr "Neniuj agoj trovitaj por: %s"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
@@ -10993,132 +10597,117 @@ msgstr "Neniu aplikaĵo havas fokuson."
 #. to blockquote. This is a detailed message which will be presented to the user
 #. if no more blockquotes can be found.
 #: src/orca/messages.py:1867
-#, fuzzy
 msgid "No more blockquotes."
-msgstr "Pli…"
+msgstr "Ne plu estas blokcitaĵoj."
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
 #. if no more buttons can be found.
 #: src/orca/messages.py:1872
-#, fuzzy
 msgid "No more buttons."
-msgstr "Pli…"
+msgstr "Ne plu estas butonoj."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
 #. user if no more check boxes can be found.
 #: src/orca/messages.py:1877
-#, fuzzy
 msgid "No more check boxes."
-msgstr "Elektobutono"
+msgstr "Ne plu estas elektobutonoj."
 
 #. Translators: This is for navigating document content by moving from 'large
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
 #. such as a paragraph, a list, a table, etc. This is a detailed message which
 #. will be presented to the user if no more check boxes can be found.
 #: src/orca/messages.py:1883
-#, fuzzy
 msgid "No more large objects."
-msgstr "Grandaj objektoj"
+msgstr "Ne plu estas grandaj objektoj."
 
 #. Translators: This is for navigating document content by moving amongst web
 #. elements which have an "onClick" action. This is a detailed message which
 #. will be presented to the user if no more clickable elements can be found.
 #: src/orca/messages.py:1888
-#, fuzzy
 msgid "No more clickables."
-msgstr "Pli…"
+msgstr "Ne plu estas klakeblaj elementoj."
 
 #. Translators: This is for navigating document content by moving from combo
 #. box to combo box. This is a detailed message which will be presented to the
 #. user if no more combo boxes can be found.
 #: src/orca/messages.py:1893
-#, fuzzy
 msgid "No more combo boxes."
-msgstr "Pli…"
+msgstr "Ne plu estas kombokestoj."
 
 #. Translators: This is for navigating document content by moving from entry
 #. to entry. This is a detailed message which will be presented to the user
 #. if no more entries can be found.
 #: src/orca/messages.py:1898
-#, fuzzy
 msgid "No more entries."
-msgstr "_Protokoleroj"
+msgstr "Ne plu estas enigoj."
 
 #. Translators: This is for navigating document content by moving from form
 #. field to form field. This is a detailed message which will be presented to
 #. the user if no more form fields can be found.
 #: src/orca/messages.py:1903
-#, fuzzy
 msgid "No more form fields."
-msgstr "Montri kampojn"
+msgstr "Ne plu estas formularaj kampoj."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading. This is a detailed message which will be presented to the user
 #. if no more headings can be found.
 #: src/orca/messages.py:1908
-#, fuzzy
 msgid "No more headings."
-msgstr "Titoloj"
+msgstr "Ne plu estas titoloj."
 
 #. Translators: This is for navigating document content by moving from heading
 #. to heading at a particular level (i.e. only <h1> or only <h2>, etc.). This
 #. is a detailed message which will be presented to the user if no more headings
 #. at the desired level can be found.
 #: src/orca/messages.py:1914
-#, fuzzy, python-format
+#, python-format
 msgid "No more headings at level %d."
-msgstr "NIVELO %d"
+msgstr "Ne plu estas titoloj je nivelo %d."
 
 #. Translators: This is for navigating document content by moving from iframe
 #. to iframe. This is a detailed message which will be presented to the user
 #. if no more iframes can be found.
 #: src/orca/messages.py:1919
-#, fuzzy
 msgid "No more internal frames."
-msgstr "Pli…"
+msgstr "Ne plu estas internaj kadroj."
 
 #. Translators: This is for navigating document content by moving from image
 #. to image. This is a detailed message which will be presented to the user
 #. if no more images can be found.
 #: src/orca/messages.py:1924
-#, fuzzy
 msgid "No more images."
-msgstr "Pli…"
+msgstr "Ne plu estas bildoj."
 
 #. Translators: this is for navigating to the previous ARIA role landmark.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
 #. This is an indication that one was not found.
 #: src/orca/messages.py:1930
-#, fuzzy
 msgid "No landmark found."
-msgstr "Ne trovite"
+msgstr "Neniu orientilo trovita."
 
 #. Translators: This is for navigating document content by moving from link to
 #. link (regardless of visited state). This is a detailed message which will be
 #. presented to the user if no more links can be found.
 #: src/orca/messages.py:1935
-#, fuzzy
 msgid "No more links."
-msgstr "Ligiloj"
+msgstr "Ne plu estas ligiloj."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list to bulleted/numbered list. This is a detailed message which will
 #. be presented to the user if no more lists can be found.
 #: src/orca/messages.py:1940
-#, fuzzy
 msgid "No more lists."
-msgstr "Pli…"
+msgstr "Ne plu estas listoj."
 
 #. Translators: This is for navigating document content by moving from bulleted/
 #. numbered list item to bulleted/numbered list item. This is a detailed message
 #. which will be presented to the user if no more list items can be found.
 #: src/orca/messages.py:1945
-#, fuzzy
 msgid "No more list items."
-msgstr "Listeroj"
+msgstr "Ne plu estas listeroj."
 
 #. Translators: This is for navigating document content by moving from live
 #. region to live region. A live region is an area of a web page that is
@@ -11126,57 +10715,50 @@ msgstr "Listeroj"
 #. will be presented to the user if no more live regions can be found. For
 #. more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/messages.py:1952
-#, fuzzy
 msgid "No more live regions."
-msgstr "Pli…"
+msgstr "Ne plu estas vivaj regionoj."
 
 #. Translators: This is for navigating document content by moving from paragraph
 #. to paragraph. This is a detailed message which will be presented to the user
 #. if no more paragraphs can be found.
 #: src/orca/messages.py:1957
-#, fuzzy
 msgid "No more paragraphs."
-msgstr "Paragrafoj"
+msgstr "Ne plu estas alineoj."
 
 #. Translators: This is for navigating document content by moving from radio
 #. button to radio button. This is a detailed message which will be presented to
 #. the user if no more radio buttons can be found.
 #: src/orca/messages.py:1962
-#, fuzzy
 msgid "No more radio buttons."
-msgstr "Radiobutonoj"
+msgstr "Ne plu estas radiobutonoj."
 
 #. Translators: This is for navigating document content by moving from separator
 #. to separator (e.g. <hr> tags). This is a detailed message which will be
 #. presented to the user if no more separators can be found.
 #: src/orca/messages.py:1967
-#, fuzzy
 msgid "No more separators."
-msgstr "Pli…"
+msgstr "Ne plu estas apartigiloj."
 
 #. Translators: This is for navigating document content by moving from table to
 #. to table. This is a detailed message which will be presented to the user if
 #. no more tables can be found.
 #: src/orca/messages.py:1972
-#, fuzzy
 msgid "No more tables."
-msgstr "Tabeloj"
+msgstr "Ne plu estas tabeloj."
 
 #. Translators: This is for navigating document content by moving from unvisited
 #. link to unvisited link. This is a detailed message which will be presented to
 #. the user if no more unvisited links can be found.
 #: src/orca/messages.py:1977
-#, fuzzy
 msgid "No more unvisited links."
-msgstr "Ligiloj"
+msgstr "Ne plu estas nevizititaj ligiloj."
 
 #. Translators: This is for navigating document content by moving from visited
 #. link to visited link. This is a detailed message which will be presented to
 #. the user if no more visited links can be found.
 #: src/orca/messages.py:1982
-#, fuzzy
 msgid "No more visited links."
-msgstr "vizitite"
+msgstr "Ne plu estas vizititaj ligiloj."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is what Orca will present if the user performs this
@@ -11189,9 +10771,8 @@ msgstr "Neniu teksto estas elektita."
 #. about the currently-focused link. This message is what Orca will present
 #. if the user performs this command when not on a link.
 #: src/orca/messages.py:1992
-#, fuzzy
 msgid "Not on a link."
-msgstr "_Ligilo…"
+msgstr "Ne sur ligilo."
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
@@ -11216,9 +10797,8 @@ msgstr "Supre"
 #. Translators: This message is presented to the user when the notifications list
 #. is empty.
 #: src/orca/messages.py:2008
-#, fuzzy
 msgid "No notification messages"
-msgstr "Atentigo"
+msgstr "Neniuj atentigoj"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -11226,10 +10806,9 @@ msgstr "Atentigo"
 #. two options. This string to be translated is the brief message spoken when the
 #. user has enabled speaking numbers as digits.
 #: src/orca/messages.py:2015
-#, fuzzy
 msgctxt "number style"
 msgid "digits"
-msgstr "Ciferklavaro ĉiam enigas ciferojn (kiel en macOS)"
+msgstr "ciferoj"
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -11237,9 +10816,8 @@ msgstr "Ciferklavaro ĉiam enigas ciferojn (kiel en macOS)"
 #. two options. This string to be translated is the verbose message spoken when
 #. the user has enabled speaking numbers as digits.
 #: src/orca/messages.py:2022
-#, fuzzy
 msgid "Speak numbers as digits."
-msgstr "Voĉlegi _numerojn kiel ciferoj"
+msgstr "Voĉlegi numerojn kiel ciferojn."
 
 #. Translators: Orca has a setting through which users can control how a number is
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -11300,9 +10878,9 @@ msgstr "Ŝarĝado de %s finis."
 #. presentation of the summary. The string substitution is a list of items, such
 #. as "10 headings, 1 form, 52 links".
 #: src/orca/messages.py:2066
-#, fuzzy, python-format
+#, python-format
 msgid "Page has %s."
-msgstr "“%s” havas nevalidan strukturon"
+msgstr "Paĝo enhavas %s."
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -11429,9 +11007,8 @@ msgstr "Ĉiuj"
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2158
-#, fuzzy
 msgid "Punctuation level set to all."
-msgstr "La apriora nivelo de lerteco por IA estas agordita je '%s'."
+msgstr "Interpunkcia nivelo agordita al ĉiuj."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -11447,9 +11024,8 @@ msgstr "Plej multe"
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2170
-#, fuzzy
 msgid "Punctuation level set to most."
-msgstr "La apriora nivelo de lerteco por IA estas agordita je '%s'."
+msgstr "Interpunkcia nivelo agordita al maksimuma."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -11465,9 +11041,8 @@ msgstr "Neniu"
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2182
-#, fuzzy
 msgid "Punctuation level set to none."
-msgstr "La apriora nivelo de lerteco por IA estas agordita je '%s'."
+msgstr "Interpunkcia nivelo agordita al nenio."
 
 #. Translators: This brief message will be presented as the user cycles
 #. through the different levels of spoken punctuation. The options are:
@@ -11483,9 +11058,8 @@ msgstr "Iom"
 #. All punctuation marks will be spoken, None will be spoken, Most will be
 #. spoken, or Some will be spoken.
 #: src/orca/messages.py:2194
-#, fuzzy
 msgid "Punctuation level set to some."
-msgstr "La apriora nivelo de lerteco por IA estas agordita je '%s'."
+msgstr "Interpunkcia nivelo agordita al iom."
 
 #. Translators: This message is presented to indicate that a search has begun
 #. or is still taking place.
@@ -11502,9 +11076,8 @@ msgstr "Serĉado finis."
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
 #: src/orca/messages.py:2206
-#, fuzzy
 msgid "Screen reader settings reloaded."
-msgstr "Ekranlegilo Orko"
+msgstr "Agordoj de ekranlegilo reŝargitaj."
 
 #. Translators: Orca has a dedicated command to speak the currently-selected
 #. text. This message is spoken by Orca before speaking the text which is
@@ -11520,9 +11093,8 @@ msgstr "Elektita teksto estas: %s"
 #. document matches the previously-selected contents, Orca will indicate that
 #. fact instead of presenting the full string which was just deleted.
 #: src/orca/messages.py:2218
-#, fuzzy
 msgid "Selection deleted."
-msgstr "Forigita"
+msgstr "Elekto forigita."
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -11533,28 +11105,24 @@ msgstr "Forigita"
 #. will indicate the restoration rather than presenting the full string
 #. which was just inserted.
 #: src/orca/messages.py:2228
-#, fuzzy
 msgid "Selection restored."
-msgstr "_Elekto"
+msgstr "Elekto restaŭrita."
 
 #. Translators: This message is presented to the user when text had been
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2233
-#, fuzzy
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Text unselected."
-msgstr "neelektite"
+msgstr "Teksto malelektita."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
 #. presented in response to the command. The string substitutions are all for
 #. quantities (in pixels).
 #: src/orca/messages.py:2239
-#, fuzzy, python-format
+#, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr "Lokiĝo: (%d, %d) [%d]"
+msgstr "Grando: %d, %d. Loko: %d, %d."
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -11604,10 +11172,8 @@ msgstr "pli laŭte."
 
 #. Translators: This string announces speech volume change.
 #: src/orca/messages.py:2271
-#, fuzzy
-#| msgid "faster."
 msgid "softer."
-msgstr "pli rapide."
+msgstr "pli mallaŭte."
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -11615,10 +11181,9 @@ msgstr "pli rapide."
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
 #: src/orca/messages.py:2278
-#, fuzzy
 msgctxt "Speech"
 msgid "Verbosity level: brief"
-msgstr "_Nivelo:"
+msgstr "Nivelo de detaleco: konciza"
 
 #. Translators: Orca's verbosity levels control how much (or how little)
 #. Orca will speak when presenting objects as the user navigates within
@@ -11626,10 +11191,9 @@ msgstr "_Nivelo:"
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
 #: src/orca/messages.py:2285
-#, fuzzy
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
-msgstr "_Nivelo:"
+msgstr "Nivelo de detaleco: detala"
 
 #. Translators: We replace the ellipses (both manual and UTF-8) with a spoken
 #. string. The extra space you see at the beginning is because we need the
@@ -11651,9 +11215,8 @@ msgstr "Ekranlegilo elŝaltite."
 
 #. Translators: This message means speech synthesis is not installed or working.
 #: src/orca/messages.py:2300
-#, fuzzy
 msgid "Speech is unavailable."
-msgstr "Parolado"
+msgstr "Parolado ne havebla."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
@@ -11667,10 +11230,8 @@ msgstr "Ne trovite"
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2310
-#, fuzzy
-#| msgid "string not found"
 msgid "Status bar not found"
-msgstr "Montri la statbreton"
+msgstr "Statbreto ne trovita"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -11727,87 +11288,77 @@ msgstr "Fino de tabelo"
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2352
-#, fuzzy
 msgid "Speak cell"
-msgstr "Ĉ_elo…"
+msgstr "Voĉlegi ĉelon"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
 #: src/orca/messages.py:2357
-#, fuzzy
 msgid "Speak row"
-msgstr "_Vico"
+msgstr "Voĉlegi vicon"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
 #: src/orca/messages.py:2362
-#, fuzzy
 msgid "Non-uniform"
-msgstr "neniu kongruo"
+msgstr "Neuniforma"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
 #: src/orca/messages.py:2367
-#, fuzzy
 msgid "Not in a table."
-msgstr "_Tabelo…"
+msgstr "Ne en tabelo."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
 #: src/orca/messages.py:2371
-#, fuzzy
 msgid "Columns reordered"
-msgstr "Kolumnoj sur ĉiu vico"
+msgstr "Kolumnoj reordigitaj"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
 #: src/orca/messages.py:2375
-#, fuzzy
 msgid "Rows reordered"
-msgstr " Vicoj "
+msgstr "Vicoj reordigitaj"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
 #: src/orca/messages.py:2379
-#, fuzzy, python-format
+#, python-format
 msgid "column %d"
-msgstr "Kolumno"
+msgstr "kolumno %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
 #: src/orca/messages.py:2383
-#, fuzzy, python-format
+#, python-format
 msgid "column %(index)d of %(total)d"
-msgstr "Enspezo: %d    Elspezo: %d"
+msgstr "kolumno %(index)d el %(total)d"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
 #: src/orca/messages.py:2388
-#, fuzzy
 msgid "Bottom of column."
-msgstr "Kolumno"
+msgstr "Malsupro de kolumno."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
 #: src/orca/messages.py:2393
-#, fuzzy
 msgid "Top of column."
-msgstr "Kolumno"
+msgstr "Supro de kolumno."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: src/orca/messages.py:2398
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Column %s selected"
-msgstr "Aranĝi kolumno_jn…"
+msgstr "Kolumno %s elektita"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11815,9 +11366,9 @@ msgstr "Aranĝi kolumno_jn…"
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
 #: src/orca/messages.py:2405
-#, fuzzy, python-format
+#, python-format
 msgid "Columns %s through %s selected"
-msgstr "%s tra %s asignis taskon al vi:"
+msgstr "Kolumnoj %s ĝis %s elektitaj"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -11825,70 +11376,63 @@ msgstr "%s tra %s asignis taskon al vi:"
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
 #: src/orca/messages.py:2412
-#, fuzzy, python-format
+#, python-format
 msgid "Columns %s through %s unselected"
-msgstr "%s tra %s asignis taskon al vi:"
+msgstr "Kolumnoj %s ĝis %s malelektitaj"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: src/orca/messages.py:2417
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Column %s unselected"
-msgstr "Aranĝi kolumno_jn…"
+msgstr "Kolumno %s malelektita"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
 #: src/orca/messages.py:2421
-#, fuzzy, python-format
+#, python-format
 msgid "row %d"
-msgstr "_Vico"
+msgstr "vico %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
 #: src/orca/messages.py:2425
-#, fuzzy, python-format
+#, python-format
 msgid "row %(index)d of %(total)d"
-msgstr "Enspezo: %d    Elspezo: %d"
+msgstr "vico %(index)d el %(total)d"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
 #: src/orca/messages.py:2430
-#, fuzzy
 msgid "Beginning of row."
-msgstr "Iri al la komenco de la mesaĝo"
+msgstr "Komenco de vico."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
 #: src/orca/messages.py:2435
-#, fuzzy
 msgid "End of row."
-msgstr "fino"
+msgstr "Fino de vico."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
 #: src/orca/messages.py:2439
-#, fuzzy
 msgid "Row deleted."
-msgstr "Forigita"
+msgstr "Vico forigita."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
 #: src/orca/messages.py:2443
-#, fuzzy
 msgid "Last row deleted."
-msgstr "_Lasta:"
+msgstr "Lasta vico forigita."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
 #: src/orca/messages.py:2447
-#, fuzzy
 msgid "Row inserted."
-msgstr "_Vico"
+msgstr "Vico enmetita."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
@@ -11929,11 +11473,9 @@ msgstr "Vicoj %s tra %s malektitaj"
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
 #: src/orca/messages.py:2476
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Row %s unselected"
-msgstr "Vica am_plekso:"
+msgstr "Vico %s malelektita"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
@@ -11993,35 +11535,31 @@ msgstr "Ekranlegila versio %s."
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
 #: src/orca/messages.py:2519
-#, fuzzy
 msgid "white space"
-msgstr "spaco"
+msgstr "blankspaco"
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
 #: src/orca/messages.py:2525
-#, fuzzy
 msgid "Wrapping to bottom."
-msgstr "Malsupre"
+msgstr "Salti al malsupro."
 
 #. Translators: when the user is attempting to locate a particular object and the
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
 #: src/orca/messages.py:2531
-#, fuzzy
 msgid "Wrapping to top."
-msgstr "Supre"
+msgstr "Salti al supro."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
 #: src/orca/messages.py:2536
-#, fuzzy
 msgid "0 items"
-msgstr "{0}"
+msgstr "0 eroj"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -12035,11 +11573,11 @@ msgstr[1] "Ĉelo ampleksas %d vicojn"
 
 #. Translators: this represents the number of columns in a table.
 #: src/orca/messages.py:2549
-#, fuzzy, python-format
+#, python-format
 msgid " %d column"
 msgid_plural " %d columns"
-msgstr[0] "Kolumno"
-msgstr[1] "Kolumnoj sur ĉiu vico"
+msgstr[0] " %d kolumno"
+msgstr[1] " %d kolumnoj"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
@@ -12055,11 +11593,11 @@ msgstr[1] "Ĉelo etendas tra %d kolumnoj"
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
 #: src/orca/messages.py:2573
-#, fuzzy, python-format
+#, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
-msgstr[0] "tro longa"
-msgstr[1] "tro longa"
+msgstr[0] "%d signo tro longa"
+msgstr[1] "%d signoj tro longaj"
 
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
@@ -12075,11 +11613,11 @@ msgstr[1] "(%d dialogoj)"
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
 #: src/orca/messages.py:2587
-#, fuzzy, python-format
+#, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
-msgstr[0] "(%d dialogo)"
-msgstr[1] "(%d dialogoj)"
+msgstr[0] "%d nefokusa dialogo"
+msgstr[1] "%d nefokusaj dialogoj"
 
 #. Translators: This is the size of a file in bytes
 #: src/orca/messages.py:2591
@@ -12092,27 +11630,27 @@ msgstr[1] "%d bajtoj"
 #. Translators: This message informs the user who many files were found as
 #. a result of a search.
 #: src/orca/messages.py:2596
-#, fuzzy, python-format
+#, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "trovis %d elementon"
-msgstr[1] "Neniu dosiero trovita."
+msgstr[0] "Trovis %d dosieron"
+msgstr[1] "Trovis %d dosierojn"
 
 #. Translators: This message presents the number of forms in a document.
 #: src/orca/messages.py:2603
-#, fuzzy, python-format
+#, python-format
 msgid "%d form"
 msgid_plural "%d forms"
-msgstr[0] "formularo"
-msgstr[1] "%d × %d"
+msgstr[0] "%d formularo"
+msgstr[1] "%d formularoj"
 
 #. Translators: This message presents the number of headings in a document.
 #: src/orca/messages.py:2610
-#, fuzzy, python-format
+#, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
-msgstr[0] "Titolo"
-msgstr[1] "Titoloj"
+msgstr[0] "%d titolo"
+msgstr[1] "%d titoloj"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
@@ -12126,12 +11664,11 @@ msgstr[1] "%d elementoj"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2624
-#, fuzzy, python-format
+#: src/orca/messages.py:2624, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
-msgstr[0] "%d × %d"
-msgstr[1] "%d × %d"
+msgstr[0] "%d orientilo"
+msgstr[1] "%d orientiloj"
 
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
@@ -12147,20 +11684,20 @@ msgstr[1] "trovis %d elementojn"
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
 #: src/orca/messages.py:2636
-#, fuzzy, python-format
+#, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
-msgstr[0] "Forlaso de loka ludo estas la fino de la ludo mem!"
-msgstr[1] "Forlaso de loka ludo estas la fino de la ludo mem!"
+msgstr[0] "Eliras el %d blokcitaĵo."
+msgstr[1] "Eliras el %d blokcitaĵoj."
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
 #: src/orca/messages.py:2641
-#, fuzzy, python-format
+#, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
-msgstr[0] "_Forigi la notoliston"
-msgstr[1] "Forlaso de loka ludo estas la fino de la ludo mem!"
+msgstr[0] "Eliras el %d listo."
+msgstr[1] "Eliras el %d listoj."
 
 #. Translators: This message describes a list in web content for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -12169,17 +11706,16 @@ msgstr[1] "Forlaso de loka ludo estas la fino de la ludo mem!"
 #. number. Normally Orca announces "list with n items" when the count is
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2651
-#, fuzzy
 msgid "List of unknown size"
-msgstr "_Grando:"
+msgstr "Listo de nekonata grandeco"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2654
-#, fuzzy, python-format
+#, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
-msgstr[0] "%d elemento"
-msgstr[1] "%d elementoj"
+msgstr[0] "Listo kun %d ero"
+msgstr[1] "Listo kun %d eroj"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -12187,41 +11723,38 @@ msgstr[1] "%d elementoj"
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2663
-#, fuzzy
 msgid "Feed of unknown size"
-msgstr "_Grando:"
+msgstr "Fluo de nekonata grandeco"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
 #: src/orca/messages.py:2667
-#, fuzzy, python-format
+#, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
-msgstr[0] "%d × %d"
-msgstr[1] "%d × %d"
+msgstr[0] "Fluo kun %d artikolo"
+msgstr[1] "Fluo kun %d artikoloj"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
 #: src/orca/messages.py:2673
-#, fuzzy, python-format
+#, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
-msgstr[0] "Priskribolisto"
-msgstr[1] "Priskribolisto"
+msgstr[0] "Priskribolisto kun %d termino"
+msgstr[1] "Priskribolisto kun %d termoj"
 
 #. Translators: This message describes a description list.
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #: src/orca/messages.py:2681
-#, fuzzy, python-format
-#| msgctxt "structural navigation"
-#| msgid "Value"
+#, python-format
 msgid "%d value"
 msgid_plural "%d values"
-msgstr[0] "_Valoro:"
-msgstr[1] "Valoroj"
+msgstr[0] "%d valoro"
+msgstr[1] "%d valoroj"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -12240,11 +11773,11 @@ msgstr[1] "matematika tabelo kun %d vicoj"
 #. Translators: this represents the number of columns in a table.
 #: src/orca/messages.py:2691 src/orca/messages.py:2707
 #: src/orca/messages.py:2815
-#, fuzzy, python-format
+#, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] "Kolumno"
-msgstr[1] "Kolumnoj sur ĉiu vico"
+msgstr[0] "%d kolumno"
+msgstr[1] "%d kolumnoj"
 
 #. Translators: this represents the number of rows in a mathematical table
 #. which is nested inside another mathematical table.
@@ -12277,12 +11810,11 @@ msgstr[1] "%d elcentoj."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2727
-#, fuzzy, python-format
+#, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
-msgstr[0] "%d elcento."
-msgstr[1] "%d elcento."
+msgstr[0] "%d elcento de la dokumento legita"
+msgstr[1] "%d elcentoj de la dokumento legita"
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
@@ -12336,39 +11868,36 @@ msgstr[1] "%(count)d klavkombinoj de ekranlegilo por %(application)s trovitaj."
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
 #: src/orca/messages.py:2771
-#, fuzzy, python-format
+#, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
-msgstr[0] "spaco"
-msgstr[1] "%d × %d"
+msgstr[0] "%d spaco"
+msgstr[1] "%d spacoj"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
 #: src/orca/messages.py:2776
-#, fuzzy, python-format
+#, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] "langeto"
-msgstr[1] "Ebligu la langetojn de la raportoj pri la stato"
+msgstr[0] "%d tab-signo"
+msgstr[1] "%d tab-signoj"
 
 #. Translators: This message presents the number of tables in a document.
 #: src/orca/messages.py:2783
-#, fuzzy, python-format
+#, python-format
 msgid "%d table"
 msgid_plural "%d tables"
-msgstr[0] "_Tabelo…"
-msgstr[1] "Tabeloj"
+msgstr[0] "%d tabelo"
+msgstr[1] "%d tabeloj"
 
 #. Translators: This message describes a table for which both the
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
 #: src/orca/messages.py:2792
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Enabled"
 msgid "table of unknown size"
-msgstr "Nekonato"
+msgstr "tabelo de nekonata grandeco"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
@@ -12437,20 +11966,20 @@ msgstr[1] "antaŭ %d tagoj"
 #. Translators: This message presents the number of unvisited links in a
 #. document.
 #: src/orca/messages.py:2847
-#, fuzzy, python-format
+#, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
-msgstr[0] "nevizitite"
-msgstr[1] "Ligiloj"
+msgstr[0] "%d nevizitita ligilo"
+msgstr[1] "%d nevizititaj ligiloj"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
 #: src/orca/messages.py:2855
-#, fuzzy, python-format
+#, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
-msgstr[0] "_Vizitita ligilo:"
-msgstr[1] "vizitite"
+msgstr[0] "%d vizitita ligilo"
+msgstr[1] "%d vizititaj ligiloj"
 
 #. Translators: this is the action name for the 'toggle' action. It must be the
 #. same string used in the *.po file for gail.
@@ -12462,17 +11991,17 @@ msgstr "baskuligi"
 #. total number of icons within an icon panel. An example of an icon panel is
 #. the Nautilus folder view.
 #: src/orca/object_properties.py:41
-#, fuzzy, python-format
+#, python-format
 msgid "on %(index)d of %(total)d"
-msgstr "Enspezo: %d    Elspezo: %d"
+msgstr "%(index)d el %(total)d"
 
 #. Translators: this refers to the position of an item in a list or group of
 #. objects, such as menu items in a menu, radio buttons in a radio button group,
 #. combobox item in a combobox, etc.
 #: src/orca/object_properties.py:46
-#, fuzzy, python-format
+#, python-format
 msgid "%(index)d of %(total)d"
-msgstr "Enspezo: %d    Elspezo: %d"
+msgstr "%(index)d el %(total)d"
 
 #. Translators: this refers to the position of an item in a list for which the
 #. size is unknown. Examples include unlimited scrolling news/article feeds
@@ -12482,9 +12011,9 @@ msgstr "Enspezo: %d    Elspezo: %d"
 #. total number (e.g. "3 of 5"). This is the corresponding message for the
 #. unknown-count scenario.
 #: src/orca/object_properties.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "item %(index)d"
-msgstr "indekso"
+msgstr "ero %(index)d"
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -12499,16 +12028,16 @@ msgstr "NIVELO %d"
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the spoken version.
 #: src/orca/object_properties.py:71
-#, fuzzy, python-format
+#, python-format
 msgid "tree level %d"
-msgstr "NIVELO %d"
+msgstr "arba nivelo %d"
 
 #. Translators: This represents the depth of a node in a TreeView (i.e. how many
 #. ancestors the node has). This is the braille version.
 #: src/orca/object_properties.py:75
-#, fuzzy, python-format
+#, python-format
 msgid "TREE LEVEL %d"
-msgstr "NIVELO %d"
+msgstr "ARBA NIVELO %d"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -12523,9 +12052,9 @@ msgstr "NIVELO %d"
 #. "details for Pythagorean Theorem image".
 #. See https://w3c.github.io/aria/#aria-details
 #: src/orca/object_properties.py:89
-#, fuzzy, python-format
+#, python-format
 msgid "details for %s"
-msgstr "Detaloj"
+msgstr "detaloj por %s"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -12541,9 +12070,9 @@ msgstr "Detaloj"
 #. present: "has details in Requirements list".
 #. See https://w3c.github.io/aria/#aria-details
 #: src/orca/object_properties.py:104
-#, fuzzy, python-format
+#, python-format
 msgid "has details in %s"
-msgstr "Detaloj"
+msgstr "havas detalojn en %s"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12551,11 +12080,9 @@ msgstr "Detaloj"
 #. include the insertion and/or deletion of content, and would typically be seen
 #. in a collaborative editor, such as in Google Docs.
 #: src/orca/object_properties.py:111
-#, fuzzy
-#| msgid "question"
 msgctxt "role"
 msgid "suggestion"
-msgstr "demando"
+msgstr "sugesto"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12563,21 +12090,16 @@ msgstr "demando"
 #. possible for users to quickly identify combo boxes in which a value can be
 #. typed or arrowed to.
 #: src/orca/object_properties.py:118
-#, fuzzy
-#| msgid "editable"
 msgid "editable combo box"
-msgstr "redakteble"
+msgstr "redaktebla kombokesto"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role is to describe elements in web content which have the contenteditable
 #. attribute set to true, indicating that the element can be edited by the user.
 #: src/orca/object_properties.py:124
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Enabled"
 msgid "editable content"
-msgstr "redakteble"
+msgstr "redaktebla enhavo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12622,12 +12144,9 @@ msgstr "agnoskoj"
 #. This role refers to the afterword in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-afterword
 #: src/orca/object_properties.py:156
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
-msgstr "vorto"
+msgstr "postparolo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12643,10 +12162,9 @@ msgstr "apendico"
 #. This role refers to a bibliography entry in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-biblioentry
 #: src/orca/object_properties.py:168
-#, fuzzy
 msgctxt "role"
 msgid "bibliography entry"
-msgstr "Tekstenigo por enigi daton"
+msgstr "bibliografia ero"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12770,22 +12288,18 @@ msgstr "errata"
 #. This role refers to an example in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-example
 #: src/orca/object_properties.py:252
-#, fuzzy
 msgctxt "role"
 msgid "example"
-msgstr " Ekzemplo pri interbatalo 1"
+msgstr "ekzemplo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the foreword in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-foreword
 #: src/orca/object_properties.py:258
-#, fuzzy
-#| msgctxt "key echo"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
-msgstr "vorto"
+msgstr "antaŭparolo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12819,30 +12333,27 @@ msgstr "enkonduko"
 #. This role refers to a pagebreak in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pagebreak
 #: src/orca/object_properties.py:282
-#, fuzzy
 msgctxt "role"
 msgid "page break"
-msgstr "nerompebla spaceto"
+msgstr "paĝrompo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a page list in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pagelist
 #: src/orca/object_properties.py:288
-#, fuzzy
 msgctxt "role"
 msgid "page list"
-msgstr "Paĝo…"
+msgstr "paĝolisto"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a named part in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-part
 #: src/orca/object_properties.py:294
-#, fuzzy
 msgctxt "role"
 msgid "part"
-msgstr "Aranĝi parton kiel HTML"
+msgstr "parto"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12867,11 +12378,9 @@ msgstr "prologo"
 #. This role refers to a pullquote in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pullquote
 #: src/orca/object_properties.py:312
-#, fuzzy
-#| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
-msgstr "citilo"
+msgstr "eltiraĵo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12899,12 +12408,9 @@ msgstr "subtitolo"
 #. This role refers to the table of contents in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-toc
 #: src/orca/object_properties.py:333
-#, fuzzy
-#| msgctxt "indentation and justification"
-#| msgid "Enabled"
 msgctxt "role"
 msgid "table of contents"
-msgstr "_Tabelo…"
+msgstr "enhavtabelo"
 
 #. Translators: The 'h' in this string represents a heading level attribute for
 #. content that you might find in something such as HTML content (e.g., <h1>).
@@ -12919,20 +12425,19 @@ msgstr "h%d"
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
 #. translated rolename for the heading.
 #: src/orca/object_properties.py:344
-#, fuzzy, python-format
+#, python-format
 msgid "%(role)s level %(level)d"
-msgstr "Nivelo: %s.<br>"
+msgstr "%(role)s nivelo %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
-#. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
+#. Examples of rules include "checkbox", "radio button", "paragraph", and "link."
 #. The reason we include the orientation as part of the role is because in some
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:351
-#, fuzzy
 #| msgid "horizontal"
 msgid "horizontal scroll bar"
-msgstr "_Horizontale:"
+msgstr "horizontala rulumilo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12940,10 +12445,9 @@ msgstr "_Horizontale:"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:358
-#, fuzzy
 #| msgid "vertical bar"
 msgid "vertical scroll bar"
-msgstr "vertikala streko"
+msgstr "vertikala rulumilo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12953,10 +12457,9 @@ msgstr "vertikala streko"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:367
-#, fuzzy
 #| msgid "horizontal"
 msgid "horizontal slider"
-msgstr "_Horizontale:"
+msgstr "horizontala ŝovilo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12966,10 +12469,9 @@ msgstr "_Horizontale:"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:376
-#, fuzzy
 #| msgid "vertical bar"
 msgid "vertical slider"
-msgstr "_Vertikale:"
+msgstr "vertikala ŝovilo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12982,10 +12484,9 @@ msgstr "_Vertikale:"
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: src/orca/object_properties.py:388
-#, fuzzy
 #| msgid "horizontal"
 msgid "horizontal splitter"
-msgstr "_Horizontale:"
+msgstr "horizontala dividilo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -12998,10 +12499,9 @@ msgstr "_Horizontale:"
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: src/orca/object_properties.py:400
-#, fuzzy
 #| msgid "vertical bar"
 msgid "vertical splitter"
-msgstr "_Vertikale:"
+msgstr "vertikala dividilo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13035,10 +12535,9 @@ msgstr "standardo"
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
 #: src/orca/object_properties.py:425
-#, fuzzy
 msgctxt "role"
 msgid "complementary content"
-msgstr "Laboristoj: Kontentaj"
+msgstr "komplementa enhavo"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13078,10 +12577,9 @@ msgstr "navigado"
 #. navigate to the section easily and to have it listed in a summary of the page."
 #. See https://www.w3.org/TR/wai-aria-1.1/#region
 #: src/orca/object_properties.py:455
-#, fuzzy
 msgctxt "role"
 msgid "region"
-msgstr "Monda regiono"
+msgstr "regiono"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -13113,24 +12611,21 @@ msgstr "menubutono"
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to ascending.
 #: src/orca/object_properties.py:479
-#, fuzzy
 msgid "sorted ascending"
-msgstr "(Kreskanta)"
+msgstr "ordigita kreskante"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to descending.
 #: src/orca/object_properties.py:483
-#, fuzzy
 msgid "sorted descending"
-msgstr "(Malkreskanta)"
+msgstr "ordigita malkreskante"
 
 #. Translators: This string refers to a row or column whose sort-order has been set,
 #. but the nature of the sort order is unknown or something other than ascending or
 #. descending.
 #: src/orca/object_properties.py:488
-#, fuzzy
 msgid "sorted"
-msgstr "Ne ordigita"
+msgstr "ordigita"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
@@ -13149,9 +12644,8 @@ msgstr "faldita"
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
 #. means the item's children are not showing; expanded means they are.
 #: src/orca/object_properties.py:502
-#, fuzzy
 msgid "expanded"
-msgstr "ege vastigita"
+msgstr "malfaldita"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
@@ -13281,25 +12775,22 @@ msgstr "nurlega"
 #. Translators: Certain objects (such as form controls on web pages) can have
 #. STATE_REQUIRED set to inform the user that this field must be filled out.
 #: src/orca/object_properties.py:582 src/orca/object_properties.py:586
-#, fuzzy
 msgid "required"
-msgstr "Necesas almenaŭ unu alestanto."
+msgstr "deviga"
 
 #. Translators: "multi-select" refers to a web form list in which more than
 #. one item can be selected at a time.
 #: src/orca/object_properties.py:590
-#, fuzzy
 msgid "multi-select"
-msgstr "_Elekti..."
+msgstr "plur-elekto"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
 #: src/orca/object_properties.py:595
-#, fuzzy
 msgctxt "error"
 msgid "invalid entry"
-msgstr "nevalide"
+msgstr "nevalida enigo"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -13332,10 +12823,9 @@ msgstr "literumado"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
 #: src/orca/object_properties.py:618
-#, fuzzy
 msgctxt "error"
 msgid "invalid grammar"
-msgstr "nevalide"
+msgstr "nevalida gramatiko"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -13373,19 +12863,16 @@ msgid "Search for:"
 msgstr "Serĉi por:"
 
 #: src/orca/orca-find.ui:166
-#, fuzzy
 msgid "_Top of window"
-msgstr "Supre"
+msgstr "_Supro de fenestro"
 
 #: src/orca/orca-find.ui:175
-#, fuzzy
 msgid "Top of window"
-msgstr "Supre"
+msgstr "Supro de fenestro"
 
 #: src/orca/orca-find.ui:193 src/orca/orca-find.ui:196
-#, fuzzy
 msgid "Start from:"
-msgstr "Eble ni ne povas startigi ĝin de ĉi tie."
+msgstr "Komenci de:"
 
 #: src/orca/orca-find.ui:226
 msgid "_Wrap around"
@@ -13450,9 +12937,8 @@ msgid "_Apply"
 msgstr "_Apliki"
 
 #: src/orca/orca-setup.ui:258
-#, fuzzy
 msgid "_Laptop"
-msgstr "Tekokomputilo Acer"
+msgstr "_Tekokomputilo"
 
 #: src/orca/orca-setup.ui:280
 msgid "Keyboard Layout"
@@ -13463,9 +12949,8 @@ msgid "Active _Profile:"
 msgstr "Aktiva _profilo:"
 
 #: src/orca/orca-setup.ui:331
-#, fuzzy
 msgid "Start-up Profile:"
-msgstr "Startigo"
+msgstr "Start-profilo:"
 
 #. This button will load the selected settings profile in the application.
 #: src/orca/orca-setup.ui:379
@@ -13487,9 +12972,8 @@ msgid "Profiles"
 msgstr "Profiloj"
 
 #: src/orca/orca-setup.ui:465
-#, fuzzy
 msgid "_Present tooltips"
-msgstr "Ĉeestantaj unuoj"
+msgstr "_Prezenti helpetojn"
 
 #: src/orca/orca-setup.ui:481
 msgid "Speak object under mo_use"
@@ -13500,25 +12984,21 @@ msgid "Mouse"
 msgstr "Muso"
 
 #: src/orca/orca-setup.ui:538
-#, fuzzy
 msgid "_Time format:"
-msgstr "Tempoaranĝo:"
+msgstr "_Temp-formato:"
 
 #: src/orca/orca-setup.ui:555
-#, fuzzy
 msgid "Dat_e format:"
-msgstr "_Aranĝi kiel…"
+msgstr "Dat_o-formato:"
 
 #: src/orca/orca-setup.ui:611
-#, fuzzy
 msgid "Time and Date"
-msgstr "Dato kaj horo"
+msgstr "Tempo kaj dato"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically speak the current percentage.
 #: src/orca/orca-setup.ui:640
-#, fuzzy
 msgid "_Speak updates"
-msgstr "_Brajlo-ĝisdatigoj"
+msgstr "_Paroli ĝisdatigojn"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically display the current percentage in braille.
 #: src/orca/orca-setup.ui:659
@@ -13531,17 +13011,15 @@ msgstr "10"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
 #: src/orca/orca-setup.ui:700
-#, fuzzy
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
-msgstr "?mins/secs:%02dm %02ds"
+msgstr "Ofteco (sekundoj):"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
 #: src/orca/orca-setup.ui:714
-#, fuzzy
 #| msgid "Application"
 msgid "Applies to:"
-msgstr "Aplikaĵo"
+msgstr "Aplikebla al:"
 
 #. Translators: This is an option in the Preferences dialog box related to the presentation of progress bar updates. If this checkbox is checked, Orca will periodically emit beeps which increase in pitch as the value of the progress bar increases.
 #: src/orca/orca-setup.ui:750
@@ -13565,9 +13043,8 @@ msgstr "Ebligi _strukturan navigacion en Diri Ĉion"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and say all by line.  If Orca were speaking a work of fiction, it would probably be best to do say all by sentence so it sounds more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: src/orca/orca-setup.ui:847
-#, fuzzy
 msgid "Say All B_y:"
-msgstr "%B %Y"
+msgstr "Diri Ĉion La_ŭ:"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a blockquote has been entered before speaking the text. At the end of the text, Orca will announce that the blockquote is being exited.
 #: src/orca/orca-setup.ui:886
@@ -13581,21 +13058,18 @@ msgstr "Anonci li_stojn en Diri Ĉion"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a table with x rows and y columns has been entered before speaking the content of that table. At the end of the table content, Orca will announce that the table is being exited.
 #: src/orca/orca-setup.ui:920
-#, fuzzy
 msgid "Announce _tables in Say All"
-msgstr "Diri ĉion"
+msgstr "Anonci _tabelojn en Diri Ĉion"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a panel has been entered before speaking the new location. At the end of the panel contents, Orca will announce that the panel is being exited. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:937
-#, fuzzy
 msgid "Announce _panels in Say All"
-msgstr "Diri ĉion"
+msgstr "Anonci _panelojn en Diri Ĉion"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: src/orca/orca-setup.ui:954
-#, fuzzy
 msgid "Announce _forms in Say All"
-msgstr "Diri ĉion"
+msgstr "Anonci _formularojn en Diri Ĉion"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
@@ -13631,32 +13105,27 @@ msgid "_Language:"
 msgstr "_Lingvo:"
 
 #: src/orca/orca-setup.ui:1204
-#, fuzzy
 msgid "Speech synthesi_zer:"
-msgstr "Parolado"
+msgstr "Parol-sintezi_ilo:"
 
 #: src/orca/orca-setup.ui:1230
-#, fuzzy
 msgid "Speech _system:"
-msgstr "Parolado"
+msgstr "Parol-_sistemo:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: src/orca/orca-setup.ui:1263
-#, fuzzy
 msgid "_Voice type:"
-msgstr "Voĉo"
+msgstr "_Voĉtipo:"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via text-to-speech. Speech Dispatcher has a feature to control how capital letters are presented: Do nothing at all; say the word 'capital' prior to presenting a capital letter (which Speech Dispatcher refers to as 'spell'), or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca refers to these things as 'capitalization style'. This string is the text of the label through which users can choose which of style they would prefer.
 #: src/orca/orca-setup.ui:1277
-#, fuzzy
 msgid "_Capitalization style:"
-msgstr "Kapitaligo"
+msgstr "_Kapitaliga stilo:"
 
 #. Translators: Having multiple voice types in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available voice types in Orca include: default, uppercase, hyperlink, and system -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
 #: src/orca/orca-setup.ui:1313
-#, fuzzy
 msgid "Voice Type Settings"
-msgstr "Ĝeneralaj voĉ-agordoj"
+msgstr "Agordoj de voĉtipoj"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: src/orca/orca-setup.ui:1358
@@ -13677,14 +13146,12 @@ msgid "Voice"
 msgstr "Voĉo"
 
 #: src/orca/orca-setup.ui:1436
-#, fuzzy
 msgid "_Enable speech"
-msgstr "Parolado"
+msgstr "_Enŝalti paroladon"
 
 #: src/orca/orca-setup.ui:1496 src/orca/orca-setup.ui:2240
-#, fuzzy
 msgid "Ver_bose"
-msgstr "Ver_tikala bazo:"
+msgstr "Ver_boza"
 
 #: src/orca/orca-setup.ui:1518 src/orca/orca-setup.ui:2262
 msgid "Verbosity"
@@ -13695,24 +13162,21 @@ msgid "_All"
 msgstr "Ĉi_o"
 
 #: src/orca/orca-setup.ui:1617
-#, fuzzy
 msgid "Punctuation Level"
-msgstr "Nivelo"
+msgstr "Interpunkcia nivelo"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. checkbox) or its state (e.g. not checked) or say misspelled to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: src/orca/orca-setup.ui:1658
-#, fuzzy
 msgid "Only speak displayed text"
-msgstr "Nur _teksto"
+msgstr "Voĉlegi nur videblan tekston"
 
 #: src/orca/orca-setup.ui:1678
 msgid "Speak blank lines"
 msgstr "Voĉlegi vakajn liniojn"
 
 #: src/orca/orca-setup.ui:1694
-#, fuzzy
 msgid "Speak _indentation and justification"
-msgstr "Voĉlegi _priskribon"
+msgstr "Voĉlegi _krommarĝenon kaj ĝustigon"
 
 #: src/orca/orca-setup.ui:1709
 msgid "Spea_k object mnemonics"
@@ -13724,15 +13188,13 @@ msgid "Speak child p_osition"
 msgstr "Voĉlegi idon p_ozicion"
 
 #: src/orca/orca-setup.ui:1741
-#, fuzzy
 msgid "Speak tutorial messages"
-msgstr "Voĉlegi mesaĝojn de"
+msgstr "Voĉlegi instrumesaĝojn"
 
 #. Translators: Orca has system messages which are similar in nature to notifications or announcements. They are most commonly used for Orca to communicate Orca-specific information to the user via speech, such as confirming the toggling of an Orca setting via command.  In instances where the message to be displayed is long/detailed, Orca provides a brief alternative. Users who prefer that brief alternative can uncheck this checkbox.
 #: src/orca/orca-setup.ui:1757
-#, fuzzy
 msgid "_System messages are detailed"
-msgstr "Detala erar-mesaĝo:"
+msgstr "_Sistemaj mesaĝoj estas detalaj"
 
 #. Translators: Orca has a command to present font and formatting information, including foreground and background color. The setting associated with this checkbox determines how Orca will speak colors: As rgb values or as names (e.g. light blue).
 #: src/orca/orca-setup.ui:1774
@@ -13756,9 +13218,8 @@ msgstr "Anonci _tabelojn dum navigacio"
 
 #. Translators: The misspelled-word indicator is the red squiggly line that appears underneath misspelled words in editable text fields. If this setting is enabled, when a user first moves into a word with this indicator, or types a misspelled word causing this indicator to appear, Orca will announce that the word is misspelled.
 #: src/orca/orca-setup.ui:1842
-#, fuzzy
 msgid "Speak _misspelled-word indicator"
-msgstr "Malatenti misliterumitan vorton"
+msgstr "Paroli _misliteruman indikilion"
 
 #. Translators: Orca can optionally speak additional details as the user navigates (e.g. via the arrow keys) within document content.  If this checkbox is checked, Orca will announce that a panel has been entered as the user arrows into it and before speaking the new location. Upon navigating out of the panel, Orca will announce that the panel has been exited prior to speaking the new location. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:1859
@@ -13796,9 +13257,8 @@ msgid "Speak full row in _GUI tables"
 msgstr "Voĉlegi plenan vicon en _GUI tabeloj"
 
 #: src/orca/orca-setup.ui:1990
-#, fuzzy
 msgid "Spoken Context"
-msgstr "Kunteksto estas %s"
+msgstr "Parolata kunteksto"
 
 #: src/orca/orca-setup.ui:2026
 msgid "Speech"
@@ -13938,9 +13398,8 @@ msgid "Key Bindings"
 msgstr "Klavkombinoj"
 
 #: src/orca/orca-setup.ui:3002
-#, fuzzy
 msgid "Pronunciation Dictionary"
-msgstr "Prononco"
+msgstr "Prononca vortaro"
 
 #: src/orca/orca-setup.ui:3020
 msgid "_New entry"
@@ -14054,7 +13513,6 @@ msgstr "fonkoloro"
 #. http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #.
 #: src/orca/text_attribute_names.py:70
-#, fuzzy
 msgctxt "textattr"
 msgid "background full height"
 msgstr "fono plena alteco"
@@ -14065,10 +13523,9 @@ msgstr "fono plena alteco"
 #. http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #.
 #: src/orca/text_attribute_names.py:77
-#, fuzzy
 msgctxt "textattr"
 msgid "background stipple"
-msgstr "fona punkto"
+msgstr "fona punktado"
 
 #. Translators: this attribute specifies the direction of the text.
 #. Values are "none", "ltr" or "rtl".
@@ -14115,10 +13572,9 @@ msgstr "malfona koloro"
 #. http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #.
 #: src/orca/text_attribute_names.py:111
-#, fuzzy
 msgctxt "textattr"
 msgid "foreground stipple"
-msgstr "malfono"
+msgstr "malfona punktado"
 
 #. Translators: this attribute specifies the effect applied to the font
 #. used by the text.
@@ -14222,7 +13678,6 @@ msgstr "alinea stilo"
 #. http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #.
 #: src/orca/text_attribute_names.py:187
-#, fuzzy
 msgctxt "textattr"
 msgid "pixels above lines"
 msgstr "pikseloj super linioj"
