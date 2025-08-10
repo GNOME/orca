@@ -57,6 +57,7 @@ from . import keybindings
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
+from . import say_all_presenter
 from . import script_manager
 from . import settings_manager
 from .ax_hypertext import AXHypertext
@@ -1288,7 +1289,7 @@ class StructuralNavigator:
 
         manager = focus_manager.get_manager()
         if manager.in_say_all() and settings_manager.get_manager().get_setting("structNavInSayAll"):
-            script.say_all(None, obj, offset)
+            say_all_presenter.get_presenter().say_all(script, event=None, obj=obj, offset=offset)
             return
 
         if not notify_user:
@@ -1328,7 +1329,7 @@ class StructuralNavigator:
 
         manager = focus_manager.get_manager()
         if manager.in_say_all() and settings_manager.get_manager().get_setting("structNavInSayAll"):
-            script.say_all(None, obj, offset)
+            say_all_presenter.get_presenter().say_all(script, event=None, obj=obj, offset=offset)
             return
 
         if not notify_user:

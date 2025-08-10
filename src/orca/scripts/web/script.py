@@ -1385,7 +1385,7 @@ class Script(default.Script):
         elif settings_manager.get_manager().get_setting("enableSpeech"):
             msg = "WEB: Doing SayAll"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.say_all(None)
+            self.get_say_all_presenter().say_all(self, None)
         else:
             msg = "WEB: Not doing SayAll due to enableSpeech being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)

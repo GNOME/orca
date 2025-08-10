@@ -62,6 +62,7 @@ from . import learn_mode_presenter
 from . import mouse_review
 from . import notification_presenter
 from . import object_navigator
+from . import say_all_presenter
 from . import script_utilities
 from . import sleep_mode_manager
 from . import sound_generator
@@ -197,6 +198,11 @@ class Script:
         """Returns the label inference functionality for this script."""
 
         return None
+
+    def get_say_all_presenter(self) -> say_all_presenter.SayAllPresenter:
+        """Returns the 'say all' presenter for this script."""
+
+        return say_all_presenter.get_presenter()
 
     def get_structural_navigator(self) -> structural_navigator.StructuralNavigator:
         """Returns the 'structural navigator' class for this script."""
