@@ -1823,6 +1823,8 @@ class Script(script.Script):
             return
 
         if progress_type == speechserver.SayAllContext.INTERRUPTED:
+            tokens = ["SAY ALL PROGRESS CALLBACK: Interrupted", context]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             manager = input_event_manager.get_manager()
             if manager.last_event_was_keyboard():
                 if manager.last_event_was_down() and self._say_all_fast_forward(context):
@@ -1834,6 +1836,9 @@ class Script(script.Script):
                     return
                 self.interrupt_presentation()
                 AXText.set_caret_offset(context.obj, context.current_offset)
+        else:
+            tokens = ["SAY ALL PROGRESS CALLBACK: Completed", context]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._say_all_contents = []
         self._say_all_contexts = []
@@ -2100,6 +2105,40 @@ class Script(script.Script):
         braille.setFocus(focused_region, indicate_links=False)
         braille.refresh(panToCursor=True, indicate_links=False)
 
+    def _say_all_should_skip_content(
+        self,
+        content: tuple[Atspi.Accessible, int, int, str],
+        contents: list[tuple[Atspi.Accessible, int, int, str]] # pylint: disable=unused-argument
+    ) -> bool:
+        """Returns True if content should be skipped during say-all iteration."""
+
+        obj, start_offset, end_offset, _text = content
+        if start_offset == end_offset:
+            return True
+        if AXUtilities.get_is_label_for(obj):
+            return True
+        return False
+
+    def _parse_utterances(
+        self,
+        utterances: list[str | ACSS | list]
+    ) -> tuple[list[str], list[ACSS]]:
+        """Parse utterances into elements and voices lists."""
+
+        # TODO - JD: This is a workaround from the web script. Ideally, the speech servers' say-all
+        # would be able to handle more complex utterances.
+        elements, voices = [], []
+        for u in utterances:
+            if isinstance(u, list):
+                e, v = self._parse_utterances(u)
+                elements.extend(e)
+                voices.extend(v)
+            elif isinstance(u, str):
+                elements.append(u)
+            elif isinstance(u, ACSS):
+                voices.append(u)
+        return elements, voices
+
     def _say_all_iter(
         self,
         obj: Atspi.Accessible,
@@ -2108,36 +2147,68 @@ class Script(script.Script):
         """A generator used by Say All."""
 
         prior_obj = obj
+        style = settings_manager.get_manager().get_setting("sayAllStyle")
+        say_all_by_sentence = style == settings.SAYALL_STYLE_SENTENCE
+
         if offset is None:
-            offset = AXText.get_caret_offset(obj)
+            offset = self.utilities.get_caret_context()[-1] or 0
+
+        restrict_to = None
+        if AXUtilities.is_text(obj) or AXUtilities.is_terminal(obj):
+            restrict_to = obj
 
         while obj:
-            speech.speak(self.speech_generator.generate_context(obj, priorObj=prior_obj))
-
-            style = settings_manager.get_manager().get_setting("sayAllStyle")
-            if style == settings.SAYALL_STYLE_SENTENCE:
-                iterator = AXText.iter_sentence
+            if say_all_by_sentence:
+                contents = self.utilities.get_sentence_contents_at_offset(obj, offset)
             else:
-                iterator = AXText.iter_line
+                contents = self.utilities.get_line_contents_at_offset(obj, offset)
 
-            for text, start, end in iterator(obj, offset):
-                voice_list: ACSS | list[ACSS] = self.speech_generator.voice(obj=obj, string=text)
-                voice = voice_list[0]
-
-                manager = speech_and_verbosity_manager.get_manager()
-                text = manager.adjust_for_presentation(obj, text, start)
-                context = speechserver.SayAllContext(obj, text, start, end)
-                tokens = ["DEFAULT:", context]
+            contents = self.utilities.filter_contents_for_presentation(contents)
+            self._say_all_contents = contents
+            for i, content in enumerate(contents):
+                content_obj, start, end, text = content
+                tokens = [f"SAY ALL CONTENT: {i}.", content_obj, f"'{text}' ({start}-{end})"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-                self._say_all_contexts.append(context)
-                self.get_event_synthesizer().scroll_into_view(obj, start, end)
-                AXText.set_caret_offset(obj, start)
-                yield [context, voice]
+                if self._say_all_should_skip_content(content, contents):
+                    msg = "SAY ALL: Skipping content - script directive."
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    continue
 
-            prior_obj = obj
-            offset = 0
-            obj = self.utilities.find_next_object(obj)
+                utterances = self.speech_generator.generate_contents(
+                    [content], eliminatePauses=True, priorObj=prior_obj)
+                prior_obj = content_obj
+                elements, voices = self._parse_utterances(utterances)
+                if len(elements) != len(voices):
+                    tokens = ["SAY ALL: Skipping content - elements/voices mismatch:", content_obj,
+                              f"'{text}', elements: {len(elements)}, voices: {len(voices)}"]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    continue
+
+                for element, voice in zip(elements, voices):
+                    if not element or (isinstance(element, str) and not element.strip()):
+                        continue
+
+                    context = speechserver.SayAllContext(content_obj, element, start, end)
+                    self._say_all_contexts.append(context)
+                    tokens = [context]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    self.utilities.set_caret_offset(content_obj, start)
+                    self.get_event_synthesizer().scroll_into_view(
+                        context.obj, context.start_offset, context.end_offset)
+                    yield [context, voice]
+
+            if contents:
+                last_obj, last_offset = contents[-1][0], contents[-1][2]
+                obj, offset = self.utilities.next_context(
+                    last_obj, last_offset, restrict_to=restrict_to)
+            else:
+                obj = self.utilities.find_next_object(obj, restrict_to)
+                offset = 0
+
+            if obj is not None:
+                tokens = ["SAY ALL: Updating focus to", obj]
+                focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
 
         self._say_all_contexts = []
         self._say_all_contents = []

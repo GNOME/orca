@@ -42,7 +42,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2014-2025 Igalia, S.L."
 __license__   = "LGPL"
 
-from typing import Generator, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -63,8 +63,6 @@ from orca import messages
 from orca import settings
 from orca import settings_manager
 from orca import speech
-from orca import speechserver
-from orca.acss import ACSS
 from orca.scripts import default
 from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
@@ -505,106 +503,6 @@ class Script(default.Script):
             "skipBlankCells":
                 self._skip_blank_cells_check_button.get_active()
         }
-
-    def _say_all_iter(
-        self,
-        obj: Atspi.Accessible,
-        offset: int | None = None
-    ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
-        """A generator used by Say All."""
-
-        if not self.utilities.in_document_content():
-            super()._say_all_iter(obj, offset)
-            return
-
-        say_all_style = settings_manager.get_manager().get_setting("sayAllStyle")
-        say_all_by_sentence = say_all_style == settings.SAYALL_STYLE_SENTENCE
-        if offset is None:
-            obj, character_offset = self.utilities.get_caret_context()
-        else:
-            character_offset = offset
-        prior_context = self.utilities.get_prior_context()
-        if prior_context is not None:
-            prior_obj, _prior_offset = prior_context
-        else:
-            prior_obj = None
-
-        # TODO - JD: This is sad, but it's better than the old, broken
-        # clumpUtterances(). We really need to fix the speechservers'
-        # SayAll support. In the meantime, the generators should be
-        # providing one ACSS per string.
-        def _parse_utterances(utterances):
-            elements, voices = [], []
-            for u in utterances:
-                if isinstance(u, list):
-                    e, v = _parse_utterances(u)
-                    elements.extend(e)
-                    voices.extend(v)
-                elif isinstance(u, str):
-                    elements.append(u)
-                elif isinstance(u, ACSS):
-                    voices.append(u)
-            return elements, voices
-
-        while obj:
-            if say_all_by_sentence:
-                contents = self.utilities.get_sentence_contents_at_offset(obj, character_offset)
-            else:
-                contents = self.utilities.get_line_contents_at_offset(obj, character_offset)
-            self._say_all_contents = contents
-            for i, content in enumerate(contents):
-                obj, start_offset, end_offset, text = content
-                tokens = [f"WEB SAY ALL CONTENT: {i}.", obj,
-                          f"'{text}' ({start_offset}-{end_offset})"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-                if self.utilities.is_inferred_label_for_contents(content, contents):
-                    continue
-
-                if start_offset == end_offset:
-                    continue
-
-                if self.utilities.is_labelling_interactive_element(obj):
-                    continue
-
-                if self.utilities.is_link_ancestor_of_image_in_contents(obj, contents):
-                    continue
-
-                utterances = self.speech_generator.generate_contents(
-                    [content], eliminatePauses=True, priorObj=prior_obj)
-                prior_obj = obj
-
-                elements, voices = _parse_utterances(utterances)
-                if len(elements) != len(voices):
-                    tokens = ["WEB: Skipping content - elements/voices mismatch:", obj,
-                              f"'{text}', elements: {len(elements)}, voices: {len(voices)}"]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    continue
-
-                for i, element in enumerate(elements):
-                    if not element or (isinstance(element, str) and not element.strip()):
-                        continue
-
-                    context = speechserver.SayAllContext(obj, element, start_offset, end_offset)
-                    self._say_all_contexts.append(context)
-                    self.get_event_synthesizer().scroll_into_view(obj, start_offset, end_offset)
-                    yield [context, voices[i]]
-
-            last_obj, last_offset = contents[-1][0], contents[-1][2]
-            obj, character_offset = self.utilities.next_context(
-                last_obj, last_offset - 1, skip_space=True)
-            if obj == last_obj and character_offset <= last_offset:
-                obj, character_offset = self.utilities.next_context(
-                    last_obj, last_offset, skip_space=True)
-
-            if obj == last_obj and character_offset <= last_offset:
-                tokens = ["WEB: Cycle within object detected in _say_all_iter. Last:",
-                          last_obj, f", {last_offset}, Next:", obj, f", {character_offset}"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                break
-
-        self._say_all_contents = []
-        self._say_all_contexts = []
 
     def _present_find_results(self, obj: Atspi.Accessible, offset: int) -> None:
         """Updates the context and presents the find results if appropriate."""

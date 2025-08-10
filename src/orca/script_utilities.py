@@ -1083,6 +1083,15 @@ class Utilities:
 
         return obj, offset
 
+    def filter_contents_for_presentation(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        infer_labels: bool = False  # pylint: disable=unused-argument
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Filters contents for presentation, removing objects that should not be included."""
+
+        return contents
+
     def last_context(self, root: Atspi.Accessible) -> tuple[Atspi.Accessible, int]:
         """Returns the last viable/valid caret context in root."""
 

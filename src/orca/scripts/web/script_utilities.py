@@ -1938,6 +1938,7 @@ class Utilities(script_utilities.Utilities):
                or AXUtilities.is_hidden(obj) \
                or self._is_off_screen_label(obj) \
                or self._is_useless_image(obj) \
+               or self.is_link_ancestor_of_image_in_contents(obj, contents) \
                or self.is_error_for_contents(obj, contents) \
                or self._is_labelling_contents(obj, contents):
                 rv = False
@@ -2204,16 +2205,6 @@ class Utilities(script_utilities.Utilities):
         for o in objs:
             label, sources = self.infer_label_for(o)
             if obj in sources and label and label.strip() == string.strip():
-                return True
-
-        return False
-
-    def is_labelling_interactive_element(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is labelling an interactive element."""
-
-        # TODO - JD: Move into AXUtilities.
-        for target in AXUtilities.get_is_label_for(obj):
-            if AXUtilities.is_focusable(target):
                 return True
 
         return False
