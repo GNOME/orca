@@ -510,7 +510,7 @@ class Utilities(script_utilities.Utilities):
         if not self.is_text_block_element(obj):
             return -1
 
-        child = AXHypertext.get_child_at_offset(obj, offset)
+        child = AXHypertext.find_child_at_offset(obj, offset)
         if child and not self.is_text_block_element(child):
             matches = [x for x in contents if x[0] == child]
             if len(matches) == 1:
@@ -776,7 +776,7 @@ class Utilities(script_utilities.Utilities):
         if not string:
             return [(obj, start, end, string)]
 
-        string_offset = offset - start
+        string_offset = max(0, offset - start)
         try:
             char = string[string_offset]
         except IndexError:
@@ -784,7 +784,7 @@ class Utilities(script_utilities.Utilities):
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             if char == "\ufffc":
-                if child := AXHypertext.get_child_at_offset(obj, offset):
+                if child := AXHypertext.find_child_at_offset(obj, offset):
                     return self._get_contents_for_obj(child, 0, granularity)
 
         ranges = [m.span() for m in re.finditer("[^\ufffc]+", string)]
@@ -1210,7 +1210,7 @@ class Utilities(script_utilities.Utilities):
         offset = max(0, offset)
         if (AXUtilities.is_tool_bar(obj) or AXUtilities.is_menu_bar(obj)) \
                 and not self._treat_object_as_whole(obj):
-            child = AXHypertext.get_child_at_offset(obj, offset)
+            child = AXHypertext.find_child_at_offset(obj, offset)
             if child:
                 obj = child
                 offset = 0
@@ -2977,7 +2977,7 @@ class Utilities(script_utilities.Utilities):
                 obj = None
             else:
                 context_obj, context_offset = obj, offset
-                child = AXHypertext.get_child_at_offset(obj, offset)
+                child = AXHypertext.find_child_at_offset(obj, offset)
                 if child:
                     obj = child
                 else:
@@ -3381,7 +3381,7 @@ class Utilities(script_utilities.Utilities):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return obj, offset
 
-        child = AXHypertext.get_child_at_offset(obj, offset)
+        child = AXHypertext.find_child_at_offset(obj, offset)
         if not child:
             msg = "WEB: Child at offset is null. Returning context unchanged."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3392,7 +3392,7 @@ class Utilities(script_utilities.Utilities):
                 tokens = ["WEB: Child", child, "of", obj, "at offset", offset, "cannot be context."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 offset += 1
-                child = AXHypertext.get_child_at_offset(obj, offset)
+                child = AXHypertext.find_child_at_offset(obj, offset)
 
         if self._is_empty_anchor(child):
             next_obj, next_offset = self.next_context(obj, offset)
@@ -3440,11 +3440,15 @@ class Utilities(script_utilities.Utilities):
             if self.treat_as_text_object(obj) and AXText.get_character_count(obj):
                 all_text = AXText.get_all_text(obj)
                 for i in range(offset + 1, len(all_text)):
-                    child = AXHypertext.get_child_at_offset(obj, i)
+                    child = AXHypertext.find_child_at_offset(obj, i)
                     if child and all_text[i] != "\ufffc":
                         tokens = ["ERROR: Child", child, "found at offset with char '",
                                   all_text[i].replace("\n", "\\n"), "'"]
                         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                        if offset == AXHypertext.get_character_offset_in_parent(child):
+                            tokens = ["WEB: Handling error by returning", obj, i]
+                            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                            return obj, i
                     if self._can_have_caret_context(child):
                         if self._treat_object_as_whole(child, -1):
                             return child, 0
@@ -3517,7 +3521,7 @@ class Utilities(script_utilities.Utilities):
                 if offset == -1 or offset > len(all_text):
                     offset = len(all_text)
                 for i in range(offset - 1, -1, -1):
-                    child = AXHypertext.get_child_at_offset(obj, i)
+                    child = AXHypertext.find_child_at_offset(obj, i)
                     if child and all_text[i] != "\ufffc":
                         tokens = ["ERROR: Child", child, "found at offset with char '",
                                   all_text[i].replace("\n", "\\n"), "'"]

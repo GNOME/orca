@@ -451,6 +451,18 @@ class AXText:
         tokens = [f"AXText: Line at offset {offset} in", obj,
                   f"'{debug_string}' ({result.start_offset}-{result.end_offset})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if 0 <= offset < result.start_offset:
+            offset -= 1
+            msg = f"ERROR: Start offset is greater than offset. Trying with offset {offset}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
+
+            debug_string = result.content.replace("\n", "\\n")
+            tokens = [f"AXText: Line at offset {offset} in", obj,
+                    f"'{debug_string}' ({result.start_offset}-{result.end_offset})"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         return result.content, result.start_offset, result.end_offset
 
     @staticmethod

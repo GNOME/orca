@@ -768,7 +768,7 @@ class Utilities:
         to_build = list(text)
         for i, char in enumerate(to_build):
             if char == "\ufffc":
-                child = AXHypertext.get_child_at_offset(obj, i + start_offset)
+                child = AXHypertext.find_child_at_offset(obj, i + start_offset)
                 result = self.expand_eocs(child)
                 if child and AXObject.get_role(child) in block_roles:
                     result += " "
@@ -1470,14 +1470,14 @@ class Utilities:
                 if old_string.endswith("\ufffc") and old_end == change_start:
                     # There's a possibility that we have a link spanning multiple lines. If so,
                     # we want to present the continuation that just became selected.
-                    child = AXHypertext.get_child_at_offset(obj, old_end - 1)
+                    child = AXHypertext.find_child_at_offset(obj, old_end - 1)
                     self.handle_text_selection_change(child, False)
             else:
                 changes.append([change_start, change_end, messages.TEXT_UNSELECTED])
                 if new_string.endswith("\ufffc"):
                     # There's a possibility that we have a link spanning multiple lines. If so,
                     # we want to present the continuation that just became unselected.
-                    child = AXHypertext.get_child_at_offset(obj, new_end - 1)
+                    child = AXHypertext.find_child_at_offset(obj, new_end - 1)
                     self.handle_text_selection_change(child, False)
 
         speak_message = speak_message \
@@ -1499,7 +1499,7 @@ class Utilities:
                     self._script.speak_message(message, interrupt=False)
 
             if ends_with_child:
-                child = AXHypertext.get_child_at_offset(obj, end)
+                child = AXHypertext.find_child_at_offset(obj, end)
                 self.handle_text_selection_change(child, speak_message)
 
         return True
