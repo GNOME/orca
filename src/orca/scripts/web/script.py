@@ -1431,6 +1431,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if reason == TextEventReason.SAY_ALL:
+            msg = "WEB: Event handled: SayAll triggered"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
             if (event.source, event.detail1) == (obj, offset):
                 msg = "WEB: Event is for current caret context."
