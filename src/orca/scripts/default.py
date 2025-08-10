@@ -1784,7 +1784,7 @@ class Script(script.Script):
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         self.utilities.set_caret_context(obj, start)
 
-        prev_obj, prev_offset = self.utilities.previous_context(obj, start)
+        prev_obj, prev_offset = self.utilities.previous_context(obj, start, True)
         self.say_all(None, prev_obj, prev_offset)
         return True
 
@@ -1803,7 +1803,7 @@ class Script(script.Script):
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         self.utilities.set_caret_context(obj, end)
 
-        next_obj, next_offset = self.utilities.next_context(obj, end)
+        next_obj, next_offset = self.utilities.next_context(obj, end, True)
         self.say_all(None, next_obj, next_offset)
         return True
 

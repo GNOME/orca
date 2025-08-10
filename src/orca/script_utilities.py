@@ -1047,7 +1047,7 @@ class Utilities:
 
         if prev_obj := self.find_previous_object(obj, restrict_to):
             length = AXText.get_character_count(prev_obj)
-            return prev_obj, max(0, length - 1)
+            return self.previous_context(prev_obj, length, skip_space, restrict_to)
 
         return None, -1
 
@@ -1074,7 +1074,7 @@ class Utilities:
             return obj, next_offset
 
         if next_obj := self.find_next_object(obj, restrict_to):
-            return next_obj, 0
+            return self.next_context(next_obj, -1, skip_space, restrict_to)
 
         return None, -1
 
