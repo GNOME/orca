@@ -259,7 +259,7 @@ class SayAllPresenter:
                     continue
 
                 utterances = self._script.speech_generator.generate_contents(
-                    [content], eliminatePauses=True, priorObj=prior_obj)
+                    [content], eliminatePauses=True, priorObj=prior_obj, total=len(contents))
                 prior_obj = content_obj
                 elements, voices = self._parse_utterances(utterances)
                 if len(elements) != len(voices):

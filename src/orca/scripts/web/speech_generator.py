@@ -660,9 +660,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             obj, start, end, string = content
             tokens = [f"ITEM {i}: ", obj, f"start: {start}, end: {end} '{string}'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            index = args.pop("index", i)
+            total = args.pop("total", len(contents))
             utterance = self.generate_speech(
                 obj, startOffset=start, endOffset=end, string=string,
-                index=i, total=len(contents), **args)
+                index=index, total=total, **args)
             if isinstance(utterance, list):
                 def is_not_empty_list(x):
                     return not (isinstance(x, list) and not x)
