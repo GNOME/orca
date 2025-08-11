@@ -1250,7 +1250,8 @@ class Utilities(script_utilities.Utilities):
 
             if AXUtilities.is_math(x_obj) or AXUtilities.is_math_related(obj):
                 on_same_line = self._extents_are_on_same_line(extents, x_extents, extents[3])
-            elif AXUtilities.is_subscript_or_superscript_text(x_obj):
+            elif AXObject.find_ancestor_inclusive(
+                    x_obj, AXUtilities.is_subscript_or_superscript_text):
                 on_same_line = self._extents_are_on_same_line(extents, x_extents, x_extents[3])
             else:
                 on_same_line = self._extents_are_on_same_line(extents, x_extents)
