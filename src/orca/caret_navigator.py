@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2013-2015 Igalia, S.L.
+# Copyright 2013-2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@ from __future__ import annotations
 __id__ = "$Id$"
 __version__ = "$Revision$"
 __date__ = "$Date$"
-__copyright__ = "Copyright (c) 2013-2015 Igalia, S.L."
+__copyright__ = "Copyright (c) 2013-2025 Igalia, S.L."
 __license__ = "LGPL"
 
 from typing import TYPE_CHECKING
@@ -46,7 +46,7 @@ if TYPE_CHECKING:
     from .input_event import InputEvent
     from .scripts import default
 
-class CaretNavigation:
+class CaretNavigator:
     """Implements the caret navigation support available to scripts."""
 
     def __init__(self) -> None:
@@ -74,9 +74,9 @@ class CaretNavigation:
         """Returns the caret-navigation keybindings."""
 
         if refresh:
-            msg = f"CARET NAVIGATION: Refreshing bindings. Is desktop: {is_desktop}"
+            msg = f"CARET NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("CARET NAVIGATION: Refreshing bindings.")
+            self._bindings.remove_key_grabs("CARET NAVIGATOR: Refreshing bindings.")
             self._setup_bindings()
         elif self._bindings.is_empty():
             self._setup_bindings()
@@ -87,7 +87,7 @@ class CaretNavigation:
         """Returns the caret-navigation handlers."""
 
         if refresh:
-            msg = "CARET NAVIGATION: Refreshing handlers."
+            msg = "CARET NAVIGATOR: Refreshing handlers."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._setup_handlers()
 
@@ -104,7 +104,7 @@ class CaretNavigation:
                 cmdnames.CARET_NAVIGATION_TOGGLE,
                 enabled = not self._suspended)
 
-        enabled = settings_manager.get_manager().get_setting('caretNavigationEnabled') \
+        enabled = settings_manager.get_manager().get_setting("caretNavigationEnabled") \
             and not self._suspended
 
         self._handlers["next_character"] = \
@@ -167,7 +167,7 @@ class CaretNavigation:
                 cmdnames.CARET_NAVIGATION_LINE_END,
                 enabled = enabled)
 
-        msg = f"CARET NAVIGATION: Handlers set up. Suspended: {self._suspended}"
+        msg = f"CARET NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _setup_bindings(self) -> None:
@@ -184,7 +184,7 @@ class CaretNavigation:
                 1,
                 not self._suspended))
 
-        enabled = settings_manager.get_manager().get_setting('caretNavigationEnabled') \
+        enabled = settings_manager.get_manager().get_setting("caretNavigationEnabled") \
             and not self._suspended
 
         self._bindings.add(
@@ -281,7 +281,7 @@ class CaretNavigation:
         self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
 
-        msg = f"CARET NAVIGATION: Bindings set up. Suspended: {self._suspended}"
+        msg = f"CARET NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def last_input_event_was_navigation_command(self) -> bool:
@@ -297,14 +297,14 @@ class CaretNavigation:
         else:
             string = "None"
 
-        msg = f"CARET NAVIGATION: Last navigation event ({string}) is last input event: {result}"
+        msg = f"CARET NAVIGATOR: Last navigation event ({string}) is last input event: {result}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
     def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
         """Refreshes caret navigation bindings and grabs for script."""
 
-        msg = "CARET NAVIGATION: Refreshing bindings and grabs"
+        msg = "CARET NAVIGATOR: Refreshing bindings and grabs"
         if reason:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -325,14 +325,14 @@ class CaretNavigation:
             return False
 
         _settings_manager = settings_manager.get_manager()
-        enabled = not _settings_manager.get_setting('caretNavigationEnabled')
+        enabled = not _settings_manager.get_setting("caretNavigationEnabled")
         if enabled:
             string = messages.CARET_CONTROL_ORCA
         else:
             string = messages.CARET_CONTROL_APP
 
         script.present_message(string)
-        _settings_manager.set_setting('caretNavigationEnabled', enabled)
+        _settings_manager.set_setting("caretNavigationEnabled", enabled)
         self._last_input_event = None
         self.refresh_bindings_and_grabs(script, "toggling caret navigation")
         return True
@@ -343,7 +343,7 @@ class CaretNavigation:
         if suspended == self._suspended:
             return
 
-        msg = f"CARET NAVIGATION: Commands suspended: {suspended}"
+        msg = f"CARET NAVIGATOR: Commands suspended: {suspended}"
         if reason:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -356,6 +356,9 @@ class CaretNavigation:
 
         if not event:
             return False
+
+        msg = "CARET NAVIGATOR: _next_character."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         obj, offset = script.utilities.next_context()
         if not obj:
@@ -374,6 +377,9 @@ class CaretNavigation:
         if not event:
             return False
 
+        msg = "CARET NAVIGATOR: _previous_character."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         obj, offset = script.utilities.previous_context()
         if not obj:
             return False
@@ -391,6 +397,9 @@ class CaretNavigation:
         if not event:
             return False
 
+        msg = "CARET NAVIGATOR: _next_word."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         obj, offset = script.utilities.next_context(skip_space=True)
         contents = script.utilities.get_word_contents_at_offset(obj, offset)
         if not contents:
@@ -401,7 +410,7 @@ class CaretNavigation:
         # do will cause us to set the caret to the offset with the embedded child and then
         # present the first word in that child.
         if len(contents) > 1 and contents[-1][3].isspace():
-            msg = "CARET NAVIGATION: Adjusting next word contents to eliminate trailing space."
+            msg = "CARET NAVIGATOR: Adjusting next word contents to eliminate trailing space."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = contents[:-1]
 
@@ -422,6 +431,9 @@ class CaretNavigation:
         if not event:
             return False
 
+        msg = "CARET NAVIGATOR: _previous_word."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         obj, offset = script.utilities.previous_context(skip_space=True)
         contents = script.utilities.get_word_contents_at_offset(obj, offset)
         if not contents:
@@ -441,10 +453,13 @@ class CaretNavigation:
         if not event:
             return False
 
+        msg = "CARET NAVIGATOR: _next_line."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         if focus_manager.get_manager().in_say_all():
             _settings_manager = settings_manager.get_manager()
             if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
-                msg = "CARET NAVIGATION: In say all and rewind/fast-forward is enabled"
+                msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
@@ -471,10 +486,13 @@ class CaretNavigation:
         if not event:
             return False
 
+        msg = "CARET NAVIGATOR: _previous_line."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         if focus_manager.get_manager().in_say_all():
             _settings_manager = settings_manager.get_manager()
             if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
-                msg = "CARET NAVIGATION: In say all and rewind/fast-forward is enabled"
+                msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
@@ -496,6 +514,9 @@ class CaretNavigation:
         if not event:
             return False
 
+        msg = "CARET NAVIGATOR: _start_of_line."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         obj, offset = script.utilities.get_caret_context()
         line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
@@ -514,6 +535,9 @@ class CaretNavigation:
 
         if not event:
             return False
+
+        msg = "CARET NAVIGATOR: _end_of_line."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         obj, offset = script.utilities.get_caret_context()
         line = script.utilities.get_line_contents_at_offset(obj, offset)
@@ -538,6 +562,9 @@ class CaretNavigation:
             return False
 
         document = script.utilities.active_document()
+        tokens = ["CARET NAVIGATOR: _start_of_file", document]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         obj, offset = script.utilities.first_context(document, 0)
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
@@ -558,11 +585,11 @@ class CaretNavigation:
             return False
 
         document = script.utilities.active_document()
-        tokens = ["CARET NAVIGATION: Go to end of", document]
+        tokens = ["CARET NAVIGATOR: _end_of_file", document]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = AXObject.find_deepest_descendant(document)
-        tokens = ["CARET NAVIGATION: Last object in", document, "is", obj]
+        tokens = ["CARET NAVIGATOR: Last object in", document, "is", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         offset = max(0, AXText.get_character_count(obj) - 1)
@@ -583,3 +610,9 @@ class CaretNavigation:
         script.speak_contents(contents)
         script.display_contents(contents)
         return True
+
+_navigator = CaretNavigator()
+def get_navigator() -> CaretNavigator:
+    """Returns the Caret Navigator."""
+
+    return _navigator

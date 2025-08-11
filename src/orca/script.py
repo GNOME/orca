@@ -81,7 +81,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from . import chat
-    from . import caret_navigation
+    from . import caret_navigator
     from . import label_inference
     from . import liveregions
     from . import spellcheck
@@ -108,7 +108,6 @@ class Script:
         self.bookmarks = self.get_bookmarks()
 
         # pylint:disable=assignment-from-none
-        self.caret_navigation = self.get_caret_navigation()
         self.live_region_manager = self.get_live_region_manager()
         self.label_inference = self.get_label_inference()
         self.chat = self.get_chat()
@@ -174,8 +173,8 @@ class Script:
 
         return None
 
-    def get_caret_navigation(self) -> caret_navigation.CaretNavigation | None:
-        """Returns the caret navigation support for this script."""
+    def get_caret_navigator(self) -> caret_navigator.CaretNavigator | None:
+        """Returns the caret navigator for this script."""
 
         return None
 

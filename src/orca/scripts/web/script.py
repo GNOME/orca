@@ -49,7 +49,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from orca import braille
-from orca import caret_navigation
+from orca import caret_navigator
 from orca import cmdnames
 from orca import keybindings
 from orca import debug
@@ -82,7 +82,7 @@ from .script_utilities import Utilities
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
-    from orca.caret_navigation import CaretNavigation
+    from orca.caret_navigator import CaretNavigator
 
 
 class Script(default.Script):
@@ -90,7 +90,7 @@ class Script(default.Script):
 
     # Type annotations to override the base class types
     utilities: Utilities
-    caret_navigation: caret_navigation.CaretNavigation
+    caret_navigator: caret_navigator.CaretNavigator
     live_region_manager: liveregions.LiveRegionManager
     bookmarks: Bookmarks
 
@@ -140,7 +140,7 @@ class Script(default.Script):
         in_doc = self.utilities.in_document_content(focus)
         suspend = not (in_doc and in_app)
         reason = f"script activation, not in document content in this app: {suspend}"
-        self.caret_navigation.suspend_commands(self, suspend, reason)
+        self.get_caret_navigator().suspend_commands(self, suspend, reason)
         self.get_structural_navigator().suspend_commands(self, suspend, reason)
         self.live_region_manager.suspend_commands(self, suspend, reason)
         self.get_table_navigator().suspend_commands(self, suspend, reason)
@@ -154,7 +154,7 @@ class Script(default.Script):
         self._last_mouse_button_context = None, -1
         self.utilities.clear_cached_objects()
         reason = "script deactivation"
-        self.caret_navigation.suspend_commands(self, False, reason)
+        self.get_caret_navigator().suspend_commands(self, False, reason)
         self.get_structural_navigator().suspend_commands(self, False, reason)
         self.live_region_manager.suspend_commands(self, False, reason)
         self.get_table_navigator().suspend_commands(self, False, reason)
@@ -168,7 +168,7 @@ class Script(default.Script):
         layout = settings_manager.get_manager().get_setting("keyboardLayout")
         is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        caret_nav_bindings = self.caret_navigation.get_bindings(
+        caret_nav_bindings = self.get_caret_navigator().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for key_binding in caret_nav_bindings.key_bindings:
             key_bindings.add(key_binding)
@@ -214,7 +214,7 @@ class Script(default.Script):
         """Defines the input event handlers for this script."""
 
         super().setup_input_event_handlers()
-        self.input_event_handlers.update(self.caret_navigation.get_handlers(True))
+        self.input_event_handlers.update(self.get_caret_navigator().get_handlers(True))
         self.input_event_handlers.update(self.live_region_manager.get_handlers(True))
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
@@ -263,10 +263,10 @@ class Script(default.Script):
 
         return BrailleGenerator(self)
 
-    def get_caret_navigation(self) -> CaretNavigation:
-        """Returns the caret navigation support for this script."""
+    def get_caret_navigator(self) -> CaretNavigator:
+        """Returns the caret navigator for this script."""
 
-        return caret_navigation.CaretNavigation()
+        return caret_navigator.get_navigator()
 
     def get_label_inference(self) -> label_inference.LabelInference | None:
         """Returns the label inference functionality for this script."""
@@ -591,7 +591,8 @@ class Script(default.Script):
         if prev_obj and AXObject.is_dead(prev_obj):
             prev_obj = None
 
-        last_command_was_caret_nav = self.caret_navigation.last_input_event_was_navigation_command()
+        last_command_was_caret_nav = \
+            self.get_caret_navigator().last_input_event_was_navigation_command()
         if not settings_manager.get_manager().get_setting("caretNavTriggersFocusMode") \
            and last_command_was_caret_nav \
            and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None:
@@ -771,7 +772,7 @@ class Script(default.Script):
             return
 
         prior_obj = args.get("priorObj")
-        if self.caret_navigation.last_input_event_was_navigation_command() \
+        if self.get_caret_navigator().last_input_event_was_navigation_command() \
            or self.get_structural_navigator().last_input_event_was_navigation_command() \
            or self.get_table_navigator().last_input_event_was_navigation_command() \
            or args.get("includeContext") or AXTable.get_table(obj):
@@ -857,7 +858,7 @@ class Script(default.Script):
 
         is_content_editable = self.utilities.is_content_editable_with_embedded_objects(obj)
 
-        if not self.caret_navigation.last_input_event_was_navigation_command() \
+        if not self.get_caret_navigator().last_input_event_was_navigation_command() \
            and not self.get_structural_navigator().last_input_event_was_navigation_command() \
            and not self.get_table_navigator().last_input_event_was_navigation_command() \
            and not is_content_editable \
@@ -953,7 +954,7 @@ class Script(default.Script):
         self._focus_mode_is_sticky = False
         self._browse_mode_is_sticky = True
         reason = "enable sticky browse mode"
-        self.caret_navigation.suspend_commands(self, self._in_focus_mode, reason)
+        self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.get_structural_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
@@ -973,7 +974,7 @@ class Script(default.Script):
         self._focus_mode_is_sticky = True
         self._browse_mode_is_sticky = False
         reason = "enable sticky focus mode"
-        self.caret_navigation.suspend_commands(self, self._in_focus_mode, reason)
+        self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.get_structural_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
@@ -1008,7 +1009,7 @@ class Script(default.Script):
                 self.present_message(messages.MODE_BROWSE)
         else:
             if not self.utilities.grab_focus_when_setting_caret(obj) \
-               and (self.caret_navigation.last_input_event_was_navigation_command() \
+               and (self.get_caret_navigator().last_input_event_was_navigation_command() \
                     or self.get_structural_navigator().last_input_event_was_navigation_command() \
                     or self.get_table_navigator().last_input_event_was_navigation_command() \
                     or event):
@@ -1020,7 +1021,7 @@ class Script(default.Script):
         self._browse_mode_is_sticky = False
 
         reason = "toggling focus/browse mode"
-        self.caret_navigation.suspend_commands(self, self._in_focus_mode, reason)
+        self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.get_structural_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
@@ -1074,8 +1075,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             reason = "locus of focus no longer in document"
-            assert self.caret_navigation is not None
-            self.caret_navigation.suspend_commands(self, True, reason)
+            self.get_caret_navigator().suspend_commands(self, True, reason)
             assert self.live_region_manager is not None
             self.live_region_manager.suspend_commands(self, True, reason)
             self.get_structural_navigator().suspend_commands(self, True, reason)
@@ -1108,7 +1108,8 @@ class Script(default.Script):
 
         contents = None
         args = {}
-        last_command_was_caret_nav = self.caret_navigation.last_input_event_was_navigation_command()
+        last_command_was_caret_nav = \
+            self.get_caret_navigator().last_input_event_was_navigation_command()
         last_command_was_struct_nav = last_command_was_struct_nav \
             or self.get_table_navigator().last_input_event_was_navigation_command()
         manager = input_event_manager.get_manager()
@@ -1200,7 +1201,7 @@ class Script(default.Script):
         if not self.utilities.in_document_content(old_focus):
             sn_navigator.set_mode(self, NavigationMode.DOCUMENT)
             reason = "locus of focus now in document"
-            self.caret_navigation.suspend_commands(self, self._in_focus_mode, reason)
+            self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
             sn_navigator.suspend_commands(self, self._in_focus_mode, reason)
             self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
             self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
@@ -1416,7 +1417,7 @@ class Script(default.Script):
         tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if self.caret_navigation.last_input_event_was_navigation_command():
+        if self.get_caret_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1866,7 +1867,7 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
                 if not notify and prev_document is None:
                     reason = "updating locus of focus without notification"
-                    self.caret_navigation.suspend_commands(self, self._in_focus_mode, reason)
+                    self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
                     self.get_structural_navigator().suspend_commands(
                         self, self._in_focus_mode, reason)
                     self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
@@ -1876,7 +1877,7 @@ class Script(default.Script):
                 msg = "WEB: Search for caret context failed"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self.caret_navigation.last_input_event_was_navigation_command():
+        if self.get_caret_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

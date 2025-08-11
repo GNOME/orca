@@ -209,7 +209,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if AXUtilities.is_link(obj, args.get("role")) \
-           and self._script.caret_navigation.last_input_event_was_navigation_command():
+           and self._script.get_caret_navigator().last_input_event_was_navigation_command():
             return []
 
         return super()._generate_accessible_description(obj, **args)
