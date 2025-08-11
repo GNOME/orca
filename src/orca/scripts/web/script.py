@@ -1800,6 +1800,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if focus_manager.get_manager().in_say_all():
+            msg = "WEB: Ignoring focus change during say all"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         focus = focus_manager.get_manager().get_locus_of_focus()
         prev_document = self.utilities.get_document_for_object(focus)
         if prev_document != document:
