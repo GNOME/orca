@@ -953,6 +953,9 @@ class Utilities:
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the previous line."""
 
+        if obj is None:
+            obj, offset = self.get_caret_context()
+
         if offset == -1:
             offset = AXText.get_caret_offset(obj)
 
@@ -979,6 +982,9 @@ class Utilities:
         use_cache: bool = True # pylint: disable=unused-argument
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Returns a list of (obj, start, end, string) tuples for the next line."""
+
+        if obj is None:
+            obj, offset = self.get_caret_context()
 
         if offset == -1:
             offset = AXText.get_caret_offset(obj)
