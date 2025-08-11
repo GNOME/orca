@@ -243,7 +243,8 @@ class SayAllPresenter:
             if say_all_by_sentence:
                 contents = self._script.utilities.get_sentence_contents_at_offset(obj, offset)
             else:
-                contents = self._script.utilities.get_line_contents_at_offset(obj, offset)
+                contents = self._script.utilities.get_line_contents_at_offset(
+                    obj, offset, layout_mode=True, use_cache=False)
 
             contents = self._script.utilities.filter_contents_for_presentation(contents)
             self._contents = contents
