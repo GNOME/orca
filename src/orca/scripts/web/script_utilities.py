@@ -124,7 +124,7 @@ class Utilities(script_utilities.Utilities):
         """Dumps all cached information about objects, and by default the caret context."""
 
         if not AXObject.is_valid(document):
-            document = self.document_frame()
+            document = self.active_document()
 
         document_parent = AXObject.get_parent(document)
         context = self._cached_caret_contexts.get(hash(document_parent))
@@ -209,26 +209,6 @@ class Utilities(script_utilities.Utilities):
         rv = document is not None
         self._cached_in_document_content[hash(obj)] = rv
         return rv
-
-    def active_document(self) -> Atspi.Accessible | None:
-        """Returns the active document."""
-
-        window = focus_manager.get_manager().get_active_window()
-        documents = list(filter(self.is_document, AXUtilities.get_embeds(window)))
-        documents = list(filter(AXUtilities.is_showing, documents))
-        if len(documents) == 1:
-            return documents[0]
-        return None
-
-    def document_frame(self, obj: Atspi.Accessible | None = None) -> Atspi.Accessible | None:
-        """Returns the document frame which is displaying the content."""
-
-        if not obj:
-            document = self.active_document()
-            if document:
-                return document
-
-        return self.get_document_for_object(obj or focus_manager.get_manager().get_locus_of_focus())
 
     def grab_focus_when_setting_caret(self, obj: Atspi.Accessible) -> bool:
         """Returns true if we should grab focus when setting the caret."""
@@ -1743,7 +1723,7 @@ class Utilities(script_utilities.Utilities):
         if role in focus_mode_roles \
            and not self.is_text_block_element(obj) \
            and not self._has_name_and_action_and_no_useful_children(obj) \
-           and not AXDocument.is_pdf(self.document_frame()):
+           and not AXDocument.is_pdf(self.get_document_for_object(obj)):
             tokens = ["WEB:", obj, "is focus mode widget based on presumed functionality"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -1971,7 +1951,7 @@ class Utilities(script_utilities.Utilities):
         if not AXObject.get_child_count(obj):
             rv = False
         else:
-            document = self.document_frame(obj)
+            document = self.active_document()
             if obj != document:
                 document_has_grids = self._has_grid_descendant(document)
                 if not document_has_grids:
@@ -2163,7 +2143,7 @@ class Utilities(script_utilities.Utilities):
         obj: Atspi.Accessible,
         root: Atspi.Accessible | None = None
     ) -> Atspi.Accessible | None:
-        root = root or self.document_frame()
+        root = root or self.active_document()
         for iframe in AXUtilities.find_all_internal_frames(root):
             if AXObject.get_parent(obj) == iframe:
                 tokens = ["WEB: Returning", iframe, "as iframe parent of detached", obj]
@@ -2807,7 +2787,8 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_editable(event.source):
             return False
 
-        fragment = AXDocument.get_document_uri_fragment(self.document_frame())
+        document = self.active_document()
+        fragment = AXDocument.get_document_uri_fragment(document)
         if not fragment:
             return False
 
@@ -2821,12 +2802,12 @@ class Utilities(script_utilities.Utilities):
         else:
             link = AXObject.find_ancestor(old_focus, self.is_link)
 
-        return link and AXHypertext.get_link_uri(link) == AXDocument.get_uri(self.document_frame())
+        return link and AXHypertext.get_link_uri(link) == AXDocument.get_uri(document)
 
     def is_child_of_current_fragment(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is a child of the current document fragment."""
 
-        fragment = AXDocument.get_document_uri_fragment(self.document_frame(obj))
+        fragment = AXDocument.get_document_uri_fragment(self.active_document())
         if not fragment:
             return False
 
@@ -3003,7 +2984,7 @@ class Utilities(script_utilities.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not AXObject.is_valid(document):
-            document = self.document_frame()
+            document = self.active_document()
             tokens = ["WEB: Now getting caret context for", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -3059,7 +3040,7 @@ class Utilities(script_utilities.Utilities):
         self,
         document: Atspi.Accessible | None = None
     ) -> tuple[list[int], Atspi.Role | None, str | None]:
-        document = document or self.document_frame()
+        document = document or self.active_document()
         if not document:
             return [-1], None, None
 
@@ -3075,7 +3056,7 @@ class Utilities(script_utilities.Utilities):
 
         # TODO - JD: All the clearing stuff should be unified.
         self.clear_content_cache()
-        document = document or self.document_frame()
+        document = document or self.active_document()
         if not document:
             return
 
@@ -3112,7 +3093,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         notify = AXObject.get_name(replicant) != name
-        document = self.document_frame()
+        document = self.active_document()
         _obj, offset = self._cached_caret_contexts.get(hash(AXObject.get_parent(document)))
 
         tokens = ["WEB: Is event from context replicant. Notify:", notify]
@@ -3274,7 +3255,7 @@ class Utilities(script_utilities.Utilities):
         """Returns the previously-stored caret context for the given document."""
 
         if not AXObject.is_valid(document):
-            document = self.document_frame()
+            document = self.active_document()
 
         if document:
             context = self._cached_prior_contexts.get(hash(AXObject.get_parent(document)))
@@ -3300,7 +3281,7 @@ class Utilities(script_utilities.Utilities):
     ) -> None:
         """Sets the caret context in document to (obj, offset)."""
 
-        document = document or self.document_frame()
+        document = document or self.active_document()
         if not document:
             return
 

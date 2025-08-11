@@ -437,7 +437,7 @@ class LiveRegionManager:
             return
 
         # start at the document frame
-        docframe = self._script.utilities.document_frame()
+        docframe = self._script.utilities.active_document()
         # get the URI of the page.  It is used as a partial key.
         uri = self._script.bookmarks.getURIKey()
 
@@ -650,7 +650,7 @@ class LiveRegionManager:
     def _getPath(self, obj):
         """ Returns, as a tuple of integers, the path from the given object
         to the document frame."""
-        docframe = self._script.utilities.document_frame()
+        docframe = self._script.utilities.active_document()
         path = []
         while True:
             if obj == docframe or AXObject.get_parent(obj) is None:

@@ -1235,7 +1235,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         link_uri_info = urllib.parse.urlparse(link_uri)
-        doc_uri = AXDocument.get_uri(self._script.utilities.document_frame())
+        doc_uri = AXDocument.get_uri(self._script.utilities.active_document())
         if not doc_uri:
             return []
 

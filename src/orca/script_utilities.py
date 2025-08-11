@@ -140,22 +140,6 @@ class Utilities:
 
         return text_objects
 
-    def document_frame(self, obj: Atspi.Accessible | None = None) -> Atspi.Accessible | None:
-        """Returns the document frame which is displaying the content."""
-
-        if obj is None:
-            obj, _offset = self.get_caret_context()
-
-        document = AXObject.find_ancestor(obj, AXUtilities.is_document)
-        if document:
-            return document
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_document(focus):
-            return focus
-
-        return None
-
     def frame_and_dialog(
         self,
         obj: Atspi.Accessible | None = None
@@ -310,8 +294,18 @@ class Utilities:
     def active_document(self) -> Atspi.Accessible | None:
         """Returns the active document."""
 
-        return self.get_top_level_document_for_object(
+        window = focus_manager.get_manager().get_active_window()
+        documents = list(filter(self.is_document, AXUtilities.get_embeds(window)))
+        documents = list(filter(AXUtilities.is_showing, documents))
+        if len(documents) == 1:
+            tokens = ["SCRIPT UTILITIES: Active document (via embeds):", documents[0]]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return documents[0]
+
+        document = self.get_top_level_document_for_object(
             focus_manager.get_manager().get_locus_of_focus())
+        tokens = ["SCRIPT UTILITIES: Active document (via locus of focus):", document]
+        return document
 
     def is_top_level_document(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is a top-level document."""

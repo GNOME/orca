@@ -537,7 +537,7 @@ class CaretNavigation:
         if not event:
             return False
 
-        document = script.utilities.document_frame()
+        document = script.utilities.active_document()
         obj, offset = script.utilities.first_context(document, 0)
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
@@ -557,7 +557,7 @@ class CaretNavigation:
         if not event:
             return False
 
-        document = script.utilities.document_frame()
+        document = script.utilities.active_document()
         tokens = ["CARET NAVIGATION: Go to end of", document]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
