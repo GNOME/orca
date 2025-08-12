@@ -896,8 +896,10 @@ class TestInputEventManager:
     ):
         """Test InputEventManager.last_event_equals_or_is_release_for_event with equal events."""
 
-        mock_event = Mock()
+        keyboard_event_class = mock_input_event_manager_deps["input_event"].KeyboardEvent
+        mock_event = keyboard_event_class()
         input_event_manager._last_non_modifier_key_event = mock_event
+        input_event_manager._last_input_event = mock_event
 
         result = input_event_manager.last_event_equals_or_is_release_for_event(mock_event)
         assert result is True
@@ -907,11 +909,12 @@ class TestInputEventManager:
     ):
         """Test InputEventManager.last_event_equals_or_is_release_for_event with release event."""
 
-        mock_event = Mock()
-        mock_last_event = Mock()
+        keyboard_event_class = mock_input_event_manager_deps["input_event"].KeyboardEvent
+        mock_event = keyboard_event_class(pressed=False)
+        mock_last_event = keyboard_event_class(pressed=True)
         input_event_manager._last_non_modifier_key_event = mock_last_event
+        input_event_manager._last_input_event = mock_last_event
 
-        # Mock is_release_for to return True
         input_event_manager.is_release_for = Mock(return_value=True)
 
         result = input_event_manager.last_event_equals_or_is_release_for_event(mock_event)

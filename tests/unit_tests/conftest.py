@@ -104,6 +104,17 @@ def _mock_dbus_service() -> Generator[ModuleType, None, None]:
             "orca.input_event": Mock(),
             "orca.orca_platform": Mock(),
             "orca.script_manager": Mock(),
+            "orca.orca_i18n": Mock(),
+            "orca.messages": Mock(),
+            "orca.settings": Mock(),
+            "orca.braille": Mock(),
+            "orca.ax_object": Mock(),
+            "orca.ax_utilities": Mock(),
+            "orca.ax_utilities_role": Mock(),
+            "orca.ax_component": Mock(),
+            "orca.ax_table": Mock(),
+            "orca.focus_manager": Mock(),
+            "orca.input_event_manager": Mock(),
         },
     ):
         from orca import dbus_service  # pylint: disable=import-outside-toplevel

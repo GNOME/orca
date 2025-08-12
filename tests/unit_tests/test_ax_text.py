@@ -909,6 +909,8 @@ class TestAXText:
         monkeypatch.setattr(AXText, "get_character_count", lambda obj: 20)
 
         def mock_get_line_at_offset(obj, offset):
+            if offset is None:
+                offset = 0
             if 0 <= offset < 10:
                 return ("First line", 0, 10)
             if 10 <= offset < 20:
@@ -932,6 +934,8 @@ class TestAXText:
         monkeypatch.setattr(AXText, "get_character_count", lambda obj: 25)
 
         def mock_get_sentence_at_offset(obj, offset):
+            if offset is None:
+                offset = 0
             if 0 <= offset < 12:
                 return ("First sentence.", 0, 12)
             if 12 <= offset < 25:
@@ -1797,6 +1801,7 @@ class TestAXText:
 
         monkeypatch.setattr(AXText, "get_character_count", lambda obj: 25)
         monkeypatch.setattr(AXText, "get_caret_offset", lambda obj: 7)
+        monkeypatch.setattr(AXText, "get_all_text", lambda obj: "")
 
         def mock_get_string_at_offset(obj, offset, granularity):
             raise GLib.GError("Test error")
