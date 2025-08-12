@@ -95,6 +95,10 @@ class Systemd:
         # easier to just ping 2x as fast
         GLib.timeout_add(self._watchdog_interval // 2, _on_watchdog_tick)
 
+    def is_systemd_managed(self) -> bool:
+        """Returns whether or not Orca is being managed by systemd"""
+        return self._notify_socket is not None
+
 _manager: Systemd = Systemd()
 
 def get_manager() -> Systemd:
