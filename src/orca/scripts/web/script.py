@@ -1491,9 +1491,10 @@ class Script(default.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        i_e_manager = input_event_manager.get_manager()
         if self.utilities.is_item_for_editable_combo_box(focus, event.source) \
-           and not input_event_manager.get_manager().last_event_was_character_navigation() \
-           and not input_event_manager.get_manager().last_event_was_line_boundary_navigation():
+           and not i_e_manager.last_event_was_character_navigation() \
+           and not i_e_manager.last_event_was_line_boundary_navigation():
             msg = "WEB: Event ignored: Editable combobox noise"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1544,9 +1545,10 @@ class Script(default.Script):
             msg = "WEB: Editable object is not (yet) the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = \
-                input_event_manager.get_manager().last_event_was_line_navigation()
+                i_e_manager.last_event_was_line_navigation() or \
+                i_e_manager.last_event_was_return()
 
-        elif input_event_manager.get_manager().last_event_was_caret_navigation():
+        elif i_e_manager.last_event_was_caret_navigation():
             msg = "WEB: Caret moved due to native caret navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
