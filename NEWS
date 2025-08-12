@@ -1,3 +1,49 @@
+49.beta - 12 August 2025
+
+New Features:
+
+* Orca now has a systemd user service. (Thanks Adrian Vovk!)
+
+* Structural Navigation is now available in all apps; not just web
+  content. To toggle it, try Orca + Z. Note that there are still many
+  improvements to be made and some bugs to be fixed.
+
+* Many commands are now available via the still-work-in-progress D-Bus
+  "Remote Controller." Documentation: README-REMOTE-CONTROLLER.md.
+
+Other Changes:
+
+* Support "politeness" level in the accessible "announcement" event.
+
+* Improve performance of finding "clickables" in web content.
+
+* Improve line identification of web content with sub/superscripts.
+
+* Use SIGUSR1 to show the preferences dialog for the running Orca.
+  Also provide a D-Bus command to accomplish the same thing.
+
+* Fix several issues related to shutting down Orca when a speech
+  server was unresponsive.
+
+* Work around some hypertext/hyperlink implementation brokenness that
+  was causing Orca to get stuck in certain Chromium content.
+
+* Fix several bugs in Say All's rewind/fast-forward support.
+
+* General code clean up, fixes for tracebacks, etc.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  eo              Esperanto                 Kristjan SCHMIDT
+  gl              Galician                  Fran Diéguez
+  hu              Hungarian                 Attila Hammer
+  ro              Romanian                  Antonio Marin
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Martin
+  tr              Turkish                   Emin Tufan Çetin
+
+=========
+
 49.alpha - 1 July 2025
 
 Updated Dependencies:
