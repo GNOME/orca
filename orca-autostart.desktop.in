@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
 Name=Orca Screen Reader
-Exec=orca
+Exec=orca --replace
 NoDisplay=true
 AutostartCondition=GSettings org.gnome.desktop.a11y.applications screen-reader-enabled
 X-GNOME-AutoRestart=true
 #X-GNOME-Autostart-Phase=Initialization
-OnlyShowIn=MATE;Unity;Cinnamon;
+OnlyShowIn=GNOME;MATE;Unity;Cinnamon;
 X-systemd-skip=true
