@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-08-02 15:37+0000\n"
-"PO-Revision-Date: 2025-08-03 00:32+0200\n"
+"POT-Creation-Date: 2025-08-12 15:02+0000\n"
+"PO-Revision-Date: 2025-08-17 16:42+0200\n"
 "Last-Translator: Fran Dieguez <fran.dieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -5871,7 +5871,6 @@ msgstr "tilde invertida"
 
 #. Translators: this is the spoken representation for the character '∾' (U+223e)
 #: src/orca/mathsymbols.py:1565
-#, fuzzy
 msgctxt "math symbol"
 msgid "inverted lazy S"
 msgstr "S vaga invertida"
@@ -13159,7 +13158,6 @@ msgstr "carácter de palabra"
 #. http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #.
 #: src/orca/text_attribute_names.py:431
-#, fuzzy
 msgctxt "textattr"
 msgid "ltr"
 msgstr "E a D"
@@ -13170,7 +13168,6 @@ msgstr "E a D"
 #. http://developer.gnome.org/atk/stable/AtkText.html#AtkTextAttribute
 #.
 #: src/orca/text_attribute_names.py:438
-#, fuzzy
 msgctxt "textattr"
 msgid "rtl"
 msgstr "D a E"
