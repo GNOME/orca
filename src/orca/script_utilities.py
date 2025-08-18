@@ -63,6 +63,11 @@ class Utilities:
     def __init__(self, script):
         self._script = script
 
+        # TODO - JD: We actually need to keep track of a root object and its descendant
+        # caret context, just like we do in the web script. And it all should move into
+        # the focus manager. In the meantime, just get things working for the active app.
+        self._caret_context = (None, -1)
+
     def node_level(self, obj: Atspi.Accessible) -> int:
         """Returns the node level of the specified tree item."""
 
@@ -825,6 +830,15 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return ""
 
+    def clear_caret_context(
+        self,
+        document: Atspi.Accessible | None = None # pylint: disable=unused-argument
+    ) -> None:
+        """Clears the caret context."""
+
+        # TODO - JD: This logic ultimately belongs in the focus manager.
+        self._caret_context = (None, -1)
+
     def set_caret_context(
         self,
         obj: Atspi.Accessible | None = None, # pylint: disable=unused-argument
@@ -833,8 +847,8 @@ class Utilities:
     ) -> None:
         """Sets the caret context in document to (obj, offset)."""
 
-        # TODO - JD: This logic ultimately belongs in AX* utility or focus manager.
-        return
+        # TODO - JD: This logic ultimately belongs in the focus manager.
+        self._caret_context = (obj, offset)
 
     def get_caret_context(
         self,
@@ -844,8 +858,16 @@ class Utilities:
     ) -> tuple[Atspi.Accessible, int]:
         """Returns an (obj, offset) tuple representing the current location."""
 
+        obj, offset = self._caret_context
+        if obj is not None:
+            tokens = ["SCRIPT UTILITIES: Returning cached caret context", obj, offset]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return obj, offset
+
         obj = focus_manager.get_manager().get_locus_of_focus()
         offset = AXText.get_caret_offset(obj)
+        tokens = ["SCRIPT UTILITIES: Returning focus + caret offset", obj, offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return obj, offset
 
     def set_caret_position(
@@ -856,10 +878,27 @@ class Utilities:
     ) -> None:
         """Sets the locus of focus to obj and sets the caret position to offset."""
 
-        focus_manager.get_manager().set_locus_of_focus(None, obj, False)
+        manager = focus_manager.get_manager()
+        manager.set_locus_of_focus(None, obj, False)
         if self.grab_focus_when_setting_caret(obj):
             AXObject.grab_focus(obj)
+
+        # We cannot count on implementations clearing the selection for us when we set the caret
+        # offset. Also, we should clear the selected text first.
+        # https://bugs.documentfoundation.org/show_bug.cgi?id=167930
+        AXText.clear_all_selected_text(obj)
         self.set_caret_offset(obj, offset)
+
+        # TODO - JD: The web script's set_caret_position() also sets the caret context.
+        # Ensuring global structural navigation, caret navigation, browse mode, etc.
+        # work means we should do the same here. Ultimately, however, we need to clearly
+        # define and unite the whole offset + position + context + locus of focus +
+        # last cursor position.
+        manager.set_last_cursor_position(obj, offset)
+        self.set_caret_context(obj, offset)
+
+        scroll_to = max(0, min(offset, AXText.get_character_count(obj) - 1))
+        self._script.get_event_synthesizer().scroll_into_view(obj, scroll_to)
 
     def set_caret_offset(
         self,
@@ -960,7 +999,14 @@ class Utilities:
             offset = AXText.get_caret_offset(obj)
 
         text, start, end = AXText.get_previous_line(obj, offset)
-        return [(obj, start, end, text)]
+        if text:
+            return [(obj, start, end, text)]
+
+        if not AXText.get_character_count(obj):
+            prev_obj, prev_offset = self.previous_context(obj, 0)
+            return self.get_line_contents_at_offset(prev_obj, prev_offset)
+
+        return [(obj, 0, 0, "")]
 
     def get_line_contents_at_offset(
         self,
@@ -990,7 +1036,15 @@ class Utilities:
             offset = AXText.get_caret_offset(obj)
 
         text, start, end = AXText.get_next_line(obj, offset)
-        return [(obj, start, end, text)]
+        if text:
+            return [(obj, start, end, text)]
+
+        _this_line, _this_start, this_end = AXText.get_line_at_offset(obj, offset)
+        if this_end == AXText.get_character_count(obj):
+            next_obj, next_offset = self.next_context(obj, this_end)
+            return self.get_line_contents_at_offset(next_obj, next_offset)
+
+        return [(obj, 0, 0, "")]
 
     def get_object_contents_at_offset(
         self,
@@ -1046,6 +1100,8 @@ class Utilities:
             return obj, prev_offset
 
         if prev_obj := self.find_previous_object(obj, restrict_to):
+            if prev_obj != obj and not AXText.get_character_count(prev_obj) and not skip_space:
+                return prev_obj, 0
             length = AXText.get_character_count(prev_obj)
             return self.previous_context(prev_obj, length, skip_space, restrict_to)
 
@@ -1074,12 +1130,21 @@ class Utilities:
             return obj, next_offset
 
         if next_obj := self.find_next_object(obj, restrict_to):
+            if next_obj != obj and not AXText.get_character_count(next_obj) and not skip_space:
+                return next_obj, 0
             return self.next_context(next_obj, -1, skip_space, restrict_to)
 
         return None, -1
 
     def first_context(self, obj: Atspi.Accessible, offset: int) -> tuple[Atspi.Accessible, int]:
         """Returns the first viable/valid caret context given obj and offset."""
+
+        if AXObject.supports_text(obj):
+            return obj, offset
+
+        descendant = AXObject.find_descendant(obj, AXObject.supports_text)
+        if descendant is not None:
+            return descendant, 0
 
         return obj, offset
 

@@ -5120,7 +5120,19 @@ class SpeechGenerator(generator.Generator):
         result = []
         for content in contents:
             obj, _start, _end, text = content
+            if not text:
+                continue
             voices = self.voice(obj=obj, string=text)
             voice = voices[0] if voices and isinstance(voices, list) else voices
             result.append([text, voice])
+
+        if not result or (len(result) == 1 and result[0][0] == "\n"):
+            if focus_manager.get_manager().in_say_all() \
+               or not settings_manager.get_manager().get_setting("speakBlankLines") \
+               or args.get("formatType") == "ancestor":
+                string = ""
+            else:
+                string = messages.BLANK
+            result = [[string, self.voice(DEFAULT, **args)]]
+
         return result
