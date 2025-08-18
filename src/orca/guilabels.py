@@ -358,6 +358,12 @@ KB_GROUP_BRAILLE = _("Braille Bindings")
 KB_GROUP_BOOKMARKS = _("Bookmarks")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to caret navigation, such as moving by character, word, and line.
+# These commands are enabled by default for web content and can be optionally
+# toggled on in other applications.
+KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to the clipboard.
 KB_GROUP_CLIPBOARD = _("Clipboard")
 
