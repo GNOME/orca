@@ -1002,7 +1002,8 @@ class Utilities:
         if text:
             return [(obj, start, end, text)]
 
-        if not AXText.get_character_count(obj):
+        _this_line, this_start, _this_end = AXText.get_line_at_offset(obj, offset)
+        if not this_start:
             prev_obj, prev_offset = self.previous_context(obj, 0)
             return self.get_line_contents_at_offset(prev_obj, prev_offset)
 
