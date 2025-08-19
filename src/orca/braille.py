@@ -571,7 +571,7 @@ class Text(Region):
         cursor_offset += len(self._label)
 
         if self.contracted:
-            self.string, self.inPos, self.outPos, cursor_offset = \
+            self.string, self.in_position, self.out_position, cursor_offset = \
                        self._contract_line(self._raw_line, cursor_offset, True)
 
         self.cursor_offset = cursor_offset
@@ -663,7 +663,7 @@ class Text(Region):
 
         if self.contracted:
             contracted_mask = [0] * len(self._raw_line)
-            out_position = self.outPos[len(self._label):]
+            out_position = self.out_position[len(self._label):]
             if self._label:
                 out_position = [offset - len(self._label) - 1 for offset in out_position]
             for i, m in enumerate(region_mask):
