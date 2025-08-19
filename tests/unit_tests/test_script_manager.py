@@ -1,4 +1,4 @@
-# Unit tests for script_manager.py ScriptManager class methods.
+# Unit tests for script_manager.py methods.
 #
 # Copyright 2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -18,82 +18,124 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-public-methods
 # pylint: disable=wrong-import-position
+# pylint: disable=import-outside-toplevel
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-statements
+# pylint: disable=too-few-public-methods
+# pylint: disable=protected-access
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
-# pylint: disable=unused-argument
-# pylint: disable=protected-access
-# pylint: disable=import-outside-toplevel
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
-# pylint: disable=unused-variable
-# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-lines
 
-"""Unit tests for script_manager.py ScriptManager class methods."""
+"""Unit tests for script_manager.py methods."""
 
 from __future__ import annotations
 
 import sys
-from unittest.mock import Mock, patch, call
+from typing import TYPE_CHECKING
+from unittest.mock import call, Mock
 
-import gi
 import pytest
 
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
+if TYPE_CHECKING:
+    from .orca_test_context import OrcaTestContext
+    from unittest.mock import MagicMock
 
 @pytest.mark.unit
 class TestScriptManager:
     """Test ScriptManager class methods."""
 
-    @pytest.fixture
-    def mock_script_manager_deps(self, monkeypatch, mock_orca_dependencies):
-        """Mock all dependencies needed for script_manager imports."""
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Returns dependencies for script_manager module testing."""
 
-        from .conftest import clean_module_cache
+        modules_to_clean = ["orca.script_manager"]
+        for module_name in modules_to_clean:
+            if module_name in sys.modules:
+                del sys.modules[module_name]
 
-        modules_to_clean = [
-            "orca.script_manager",
-            "orca.braille",
-            "orca.settings_manager",
-            "orca.speech_and_verbosity_manager",
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "orca.ax_utilities",
             "orca.scripts",
-            "orca.scripts.default",
             "orca.scripts.apps",
+            "orca.scripts.default",
             "orca.scripts.sleepmode",
             "orca.scripts.toolkits",
+            "orca.speech_and_verbosity_manager",
         ]
-        for module in modules_to_clean:
-            clean_module_cache(module)
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        braille_mock = Mock()
-        braille_mock.checkBrailleSetting = Mock()
-        braille_mock.setupKeyRanges = Mock()
+        if "orca.script_manager" in essential_modules:
+            del essential_modules["orca.script_manager"]
+        if "orca.script_manager" in sys.modules:
+            del sys.modules["orca.script_manager"]
 
-        settings_manager_mock = Mock()
-        manager_instance = Mock()
-        manager_instance.get_runtime_settings = Mock(return_value={})
-        manager_instance.set_setting = Mock()
-        settings_manager_mock.get_manager = Mock(return_value=manager_instance)
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
 
-        speech_and_verbosity_manager_mock = Mock()
-        speech_manager_instance = Mock()
-        speech_manager_instance.check_speech_setting = Mock()
-        speech_and_verbosity_manager_mock.get_manager = Mock(return_value=speech_manager_instance)
+        class UnionSupportingMock(Mock):
+            """Mock that supports union operations for Atspi.Accessible."""
 
-        monkeypatch.setitem(sys.modules, "orca.braille", braille_mock)
-        monkeypatch.setitem(sys.modules, "orca.settings_manager", settings_manager_mock)
-        monkeypatch.setitem(
-            sys.modules, "orca.speech_and_verbosity_manager", speech_and_verbosity_manager_mock
+            def __or__(self, other):
+                return UnionSupportingMock()
+
+        atspi_mock.Accessible = UnionSupportingMock()
+        gi_repository_mock.Atspi = atspi_mock
+
+        ax_object_mock = essential_modules["orca.ax_object"]
+        ax_object_class_mock = test_context.Mock()
+        ax_object_class_mock.get_name = test_context.Mock(return_value="test-app")
+        ax_object_class_mock.get_attribute = test_context.Mock(return_value="GTK")
+        ax_object_mock.AXObject = ax_object_class_mock
+
+        ax_utilities_mock = essential_modules["orca.ax_utilities"]
+        ax_utilities_class_mock = test_context.Mock()
+        ax_utilities_class_mock.is_terminal = test_context.Mock(return_value=False)
+        ax_utilities_class_mock.get_application_toolkit_name = test_context.Mock(
+            return_value="gtk"
+        )
+        ax_utilities_class_mock.is_application_in_desktop = test_context.Mock(
+            return_value=True
+        )
+        ax_utilities_class_mock.is_frame = test_context.Mock(return_value=False)
+        ax_utilities_class_mock.is_status_bar = test_context.Mock(return_value=False)
+        ax_utilities_mock.AXUtilities = ax_utilities_class_mock
+
+        braille_mock = essential_modules["orca.braille"]
+        braille_mock.checkBrailleSetting = test_context.Mock()
+        braille_mock.setupKeyRanges = test_context.Mock()
+
+        debug_mock = essential_modules["orca.debug"]
+        debug_mock.print_message = test_context.Mock()
+        debug_mock.LEVEL_INFO = 800
+
+        settings_manager_mock = essential_modules["orca.settings_manager"]
+        settings_manager_instance = test_context.Mock()
+        settings_manager_instance.get_runtime_settings = test_context.Mock(return_value={})
+        settings_manager_instance.set_setting = test_context.Mock()
+        settings_manager_mock.get_manager = test_context.Mock(
+            return_value=settings_manager_instance
         )
 
-        scripts_mock = Mock()
-        apps_mock = Mock()
+        speech_verbosity_mock = essential_modules["orca.speech_and_verbosity_manager"]
+        speech_manager_instance = test_context.Mock()
+        speech_manager_instance.check_speech_setting = test_context.Mock()
+        speech_verbosity_mock.get_manager = test_context.Mock(
+            return_value=speech_manager_instance
+        )
+
+        scripts_mock = essential_modules["orca.scripts"]
+        apps_mock = essential_modules["orca.scripts.apps"]
+        toolkits_mock = essential_modules["orca.scripts.toolkits"]
+        default_mock = essential_modules["orca.scripts.default"]
+        sleepmode_mock = essential_modules["orca.scripts.sleepmode"]
+
         apps_mock.__all__ = ["evolution", "gedit", "gnome-shell"]
-        toolkits_mock = Mock()
         toolkits_mock.__all__ = ["gtk", "Gecko", "Qt"]
 
         class MockScript:
@@ -101,29 +143,28 @@ class TestScriptManager:
 
             def __init__(self, app=None):
                 self.app = app
-                self.register_event_listeners = Mock()
-                self.deregister_event_listeners = Mock()
-                self.activate = Mock()
-                self.deactivate = Mock()
+                self.register_event_listeners = test_context.Mock()
+                self.deregister_event_listeners = test_context.Mock()
+                self.activate = test_context.Mock()
+                self.deactivate = test_context.Mock()
                 self.braille_bindings = {}
-                self._sleep_mode_manager = Mock()
-                self._sleep_mode_manager.is_active_for_app = Mock(return_value=False)
-                self.get_sleep_mode_manager = Mock(return_value=self._sleep_mode_manager)
+                self._sleep_mode_manager = test_context.Mock()
+                self._sleep_mode_manager.is_active_for_app = test_context.Mock(
+                    return_value=False
+                )
+                self.get_sleep_mode_manager = test_context.Mock(
+                    return_value=self._sleep_mode_manager
+                )
 
             def __or__(self, other):
-                # Support for type annotation union operator
                 return MockScript
 
-        default_script_constructor = Mock(side_effect=MockScript)
-        default_script_constructor.__or__ = lambda self, other: MockScript
+        default_script_constructor = test_context.Mock(return_value=MockScript())
+        default_script_constructor.__or__ = lambda self, other: MockScript()
+        sleepmode_script_constructor = test_context.Mock(return_value=MockScript())
+        sleepmode_script_constructor.__or__ = lambda self, other: MockScript()
 
-        sleepmode_script_constructor = Mock(side_effect=MockScript)
-        sleepmode_script_constructor.__or__ = lambda self, other: MockScript
-
-        default_mock = Mock()
         default_mock.Script = default_script_constructor
-
-        sleepmode_mock = Mock()
         sleepmode_mock.Script = sleepmode_script_constructor
 
         scripts_mock.apps = apps_mock
@@ -131,53 +172,69 @@ class TestScriptManager:
         scripts_mock.sleepmode = sleepmode_mock
         scripts_mock.toolkits = toolkits_mock
 
-        monkeypatch.setitem(sys.modules, "orca.scripts", scripts_mock)
-        monkeypatch.setitem(sys.modules, "orca.scripts.apps", apps_mock)
-        monkeypatch.setitem(sys.modules, "orca.scripts.default", default_mock)
-        monkeypatch.setitem(sys.modules, "orca.scripts.sleepmode", sleepmode_mock)
-        monkeypatch.setitem(sys.modules, "orca.scripts.toolkits", toolkits_mock)
+        essential_modules["settings_manager_instance"] = settings_manager_instance
+        essential_modules["speech_manager_instance"] = speech_manager_instance
 
-        from orca.ax_utilities import AXUtilities
-        from orca.ax_object import AXObject
+        default_script = test_context.Mock()
+        default_script.app = test_context.Mock()
+        default_script.register_event_listeners = test_context.Mock()
+        default_script.deregister_event_listeners = test_context.Mock()
+        default_script.activate = test_context.Mock()
+        default_script.deactivate = test_context.Mock()
+        default_script.braille_bindings = {}
 
-        AXUtilities.is_terminal = Mock(return_value=False)
-        AXUtilities.get_application_toolkit_name = Mock(return_value="gtk")
-        AXUtilities.is_application_in_desktop = Mock(return_value=True)
-        AXUtilities.is_frame = Mock(return_value=False)
-        AXUtilities.is_status_bar = Mock(return_value=False)
+        sleepmode_script = test_context.Mock()
+        sleepmode_script.app = test_context.Mock()
+        sleepmode_script.register_event_listeners = test_context.Mock()
+        sleepmode_script.deregister_event_listeners = test_context.Mock()
+        sleepmode_script.activate = test_context.Mock()
+        sleepmode_script.deactivate = test_context.Mock()
 
-        AXObject.get_name = Mock(return_value="test-app")
-        AXObject.get_attribute = Mock(return_value="GTK")
+        sleep_mode_manager = test_context.Mock()
+        sleep_mode_manager.is_active_for_app = test_context.Mock(return_value=False)
 
-        return {
-            "debug": mock_orca_dependencies.debug,
-            "braille": braille_mock,
-            "settings_manager": settings_manager_mock,
-            "speech_and_verbosity_manager": speech_and_verbosity_manager_mock,
-            "scripts": scripts_mock,
-            "apps": apps_mock,
-            "toolkits": toolkits_mock,
-            "default": default_mock,
-            "sleepmode": sleepmode_mock,
-        }
+        essential_modules["default_script"] = default_script
+        essential_modules["sleepmode_script"] = sleepmode_script
+        essential_modules["sleep_mode_manager"] = sleep_mode_manager
 
-    @pytest.fixture
-    def mock_script_classes(self, mock_script_manager_deps):
-        """Create mock script classes for testing."""
+        default_module = test_context.Mock()
+        default_module.Script = test_context.Mock(return_value=test_context.Mock())
 
-        mock_script_constructor = mock_script_manager_deps["default"].Script
-        default_script_mock = mock_script_constructor()
-        sleepmode_script_mock = mock_script_constructor()
+        sleepmode_module = test_context.Mock()
+        sleepmode_module.Script = test_context.Mock(return_value=test_context.Mock())
 
-        return {
-            "default_script": default_script_mock,
-            "sleepmode_script": sleepmode_script_mock,
-            "sleep_mode_manager": default_script_mock._sleep_mode_manager,
-        }
+        deps_settings_manager = test_context.Mock()
+        deps_settings_manager_instance = test_context.Mock()
+        deps_settings_manager_instance.get_runtime_settings = test_context.Mock(return_value={})
+        deps_settings_manager_instance.set_setting = test_context.Mock()
+        deps_settings_manager.get_manager = test_context.Mock(
+            return_value=deps_settings_manager_instance
+        )
 
-    def test_init(self, mock_script_manager_deps):
+        deps_speech_manager = test_context.Mock()
+        deps_speech_manager_instance = test_context.Mock()
+        deps_speech_manager_instance.check_speech_setting = test_context.Mock()
+        deps_speech_manager.get_manager = test_context.Mock(
+            return_value=deps_speech_manager_instance
+        )
+
+        braille_module = test_context.Mock()
+        braille_module.checkBrailleSetting = test_context.Mock()
+        braille_module.setupKeyRanges = test_context.Mock()
+
+        essential_modules["default_module"] = default_module
+        essential_modules["sleepmode_module"] = sleepmode_module
+        essential_modules["deps_settings_manager"] = deps_settings_manager
+        essential_modules["deps_speech_manager"] = deps_speech_manager
+        essential_modules["braille_module"] = braille_module
+
+        return essential_modules
+
+
+    def test_init(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.__init__."""
 
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
@@ -189,356 +246,504 @@ class TestScriptManager:
         assert manager._active_script is None
         assert manager._active is False
 
-    def test_activate(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager.activate."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "inactive_to_active",
+                "initially_active": False,
+                "expects_script_creation": True,
+            },
+            {"id": "already_active", "initially_active": True, "expects_script_creation": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_activate(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test ScriptManager.activate with different initial states."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
+
+        if case["expects_script_creation"]:
+            mock_default_script = test_context.Mock()
+            test_context.patch(
+                "orca.script_manager.default.Script", new=mock_default_script
+            )
+            mock_default_script.return_value = default_script
 
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        manager._active = False
-
+        manager._active = case["initially_active"]
         manager.activate()
 
         assert manager._active is True
-        assert manager._default_script is not None
-        assert manager._active_script is not None
-        # The default script instance will have register_event_listeners called
-        manager._default_script.register_event_listeners.assert_called_once()
 
-    def test_activate_already_active(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager.activate when already active."""
+        if case["expects_script_creation"]:
+            assert manager._default_script is not None
+            assert manager._active_script is not None
+            default_script.register_event_listeners.assert_called_once()
 
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "active_to_inactive", "initially_active": True, "expects_cleanup": True},
+            {"id": "already_inactive", "initially_active": False, "expects_cleanup": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_deactivate(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test ScriptManager.deactivate with different initial states."""
+
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        manager._active = True
+        manager._active = case["initially_active"]
 
-        manager.activate()
-
-        # Should not change state or call register_event_listeners
-        mock_script_classes["default_script"].register_event_listeners.assert_not_called()
-
-    def test_deactivate(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager.deactivate."""
-
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-        manager._active = True
-        manager._default_script = mock_script_classes["default_script"]
-        manager.app_scripts = {"test": "script"}
-        manager.toolkit_scripts = {"test": "script"}
-        manager.custom_scripts = {"test": "script"}
-
-        manager.deactivate()
-
-        assert manager._active is False
-        assert manager._default_script is None
-        assert manager._active_script is None
-        assert not manager.app_scripts
-        assert not manager.toolkit_scripts
-        assert not manager.custom_scripts
-        mock_script_classes["default_script"].deregister_event_listeners.assert_called_once()
-
-    def test_deactivate_already_inactive(self, mock_script_manager_deps):
-        """Test ScriptManager.deactivate when already inactive."""
-
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-        manager._active = False
+        if case["expects_cleanup"]:
+            mock_script = test_context.Mock()
+            mock_script.deregister_event_listeners = test_context.Mock()
+            manager._default_script = mock_script
+            manager.app_scripts = {"test": "script"}
+            manager.toolkit_scripts = {"test": "script"}
+            manager.custom_scripts = {"test": "script"}
 
         manager.deactivate()
         assert manager._active is False
 
-    @pytest.mark.parametrize(
-        "app_name, expected_result",
-        [
-            pytest.param("evolution", "evolution", id="app_in_apps_list"),
-            pytest.param("gtk", "gtk", id="toolkit_in_toolkits_list"),
-            pytest.param("mate-notification-daemon", "notification-daemon", id="mapped_app_name"),
-            pytest.param("pluma", "gedit", id="alias_app_name"),
-            pytest.param("test-app.py", "test-app", id="python_extension"),
-            pytest.param("test-app.bin", "test-app", id="bin_extension"),
-            pytest.param("org.gnome.TestApp", "TestApp", id="reverse_domain"),
-            pytest.param("com.example.TestApp", "TestApp", id="reverse_domain_com"),
-            pytest.param("unknown-app", "unknown-app", id="unknown_app"),
-        ],
-    )
-    def test_get_module_name(self, mock_script_manager_deps, app_name, expected_result):
-        """Test ScriptManager.get_module_name."""
-
-        from orca.script_manager import ScriptManager
-        from orca.ax_object import AXObject
-
-        manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
-
-        AXObject.get_name = Mock(return_value=app_name)
-
-        result = manager.get_module_name(mock_app)
-        assert result == expected_result
-
-    def test_get_module_name_null_app(self, mock_script_manager_deps):
-        """Test ScriptManager.get_module_name with null app."""
-
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-        result = manager.get_module_name(None)
-        assert result is None
-
-    def test_get_module_name_nameless_app(self, mock_script_manager_deps):
-        """Test ScriptManager.get_module_name with nameless app."""
-
-        from orca.script_manager import ScriptManager
-        from orca.ax_object import AXObject
-
-        manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
-
-        AXObject.get_name = Mock(return_value="")
-
-        result = manager.get_module_name(mock_app)
-        assert result is None
+        if case["expects_cleanup"]:
+            assert manager._default_script is None
+            assert manager._active_script is None
+            assert not manager.app_scripts
+            assert not manager.toolkit_scripts
+            assert not manager.custom_scripts
+            mock_script.deregister_event_listeners.assert_called_once()
 
     @pytest.mark.parametrize(
-        "toolkit_attribute, expected_result",
+        "case",
         [
-            pytest.param("GTK", "gtk", id="gtk_toolkit"),
-            pytest.param("GAIL", "gtk", id="gail_mapped_to_gtk"),
-            pytest.param("Qt", "Qt", id="qt_toolkit"),
-            pytest.param("", "", id="empty_toolkit"),
-            pytest.param(None, None, id="none_toolkit"),
+            {
+                "id": "app_in_apps_list",
+                "app_name": "evolution",
+                "expected_result": "evolution",
+                "use_null_app": False,
+            },
+            {
+                "id": "toolkit_in_toolkits_list",
+                "app_name": "gtk",
+                "expected_result": "gtk",
+                "use_null_app": False,
+            },
+            {
+                "id": "mapped_app_name",
+                "app_name": "mate-notification-daemon",
+                "expected_result": "notification-daemon",
+                "use_null_app": False,
+            },
+            {
+                "id": "alias_app_name",
+                "app_name": "pluma",
+                "expected_result": "gedit",
+                "use_null_app": False,
+            },
+            {
+                "id": "python_extension",
+                "app_name": "test-app.py",
+                "expected_result": "test-app",
+                "use_null_app": False,
+            },
+            {
+                "id": "bin_extension",
+                "app_name": "test-app.bin",
+                "expected_result": "test-app",
+                "use_null_app": False,
+            },
+            {
+                "id": "reverse_domain",
+                "app_name": "org.gnome.TestApp",
+                "expected_result": "TestApp",
+                "use_null_app": False,
+            },
+            {
+                "id": "reverse_domain_com",
+                "app_name": "com.example.TestApp",
+                "expected_result": "TestApp",
+                "use_null_app": False,
+            },
+            {
+                "id": "unknown_app",
+                "app_name": "unknown-app",
+                "expected_result": "unknown-app",
+                "use_null_app": False,
+            },
+            {"id": "null_app", "app_name": None, "expected_result": None, "use_null_app": True},
+            {"id": "nameless_app", "app_name": "", "expected_result": None, "use_null_app": False},
         ],
+        ids=lambda case: case["id"],
     )
-    def test_toolkit_for_object(self, mock_script_manager_deps, toolkit_attribute, expected_result):
+    def test_get_module_name_scenarios(self, test_context, case: dict) -> None:
+        """Test ScriptManager.get_module_name with various scenarios."""
+        self._setup_dependencies(test_context)
+        from orca.script_manager import ScriptManager
+
+        manager = ScriptManager()
+
+        if case["use_null_app"]:
+            result = manager.get_module_name(None)
+        else:
+            mock_app = test_context.Mock()
+            mock_ax_object = test_context.Mock()
+            test_context.patch("orca.script_manager.AXObject", new=mock_ax_object)
+            mock_ax_object.get_name.return_value = case["app_name"]
+            result = manager.get_module_name(mock_app)
+
+        assert result == case["expected_result"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "gtk_toolkit", "toolkit_attribute": "GTK", "expected_result": "gtk"},
+            {"id": "gail_mapped_to_gtk", "toolkit_attribute": "GAIL", "expected_result": "gtk"},
+            {"id": "qt_toolkit", "toolkit_attribute": "Qt", "expected_result": "Qt"},
+            {"id": "empty_toolkit", "toolkit_attribute": "", "expected_result": ""},
+            {"id": "none_toolkit", "toolkit_attribute": None, "expected_result": None},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_toolkit_for_object(self, test_context, case: dict) -> None:
         """Test ScriptManager._toolkit_for_object."""
 
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
-        from orca.ax_object import AXObject
 
         manager = ScriptManager()
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock()
 
-        AXObject.get_attribute = Mock(return_value=toolkit_attribute)
-
+        mock_ax_object = test_context.Mock()
+        test_context.patch("orca.script_manager.AXObject", new=mock_ax_object)
+        mock_ax_object.get_attribute.return_value = case["toolkit_attribute"]
         result = manager._toolkit_for_object(mock_obj)
-        assert result == expected_result
-        AXObject.get_attribute.assert_called_once_with(mock_obj, "toolkit")
+        assert result == case["expected_result"]
+        mock_ax_object.get_attribute.assert_called_once_with(mock_obj, "toolkit")
 
     @pytest.mark.parametrize(
-        "is_terminal, expected_result",
+        "case",
         [
-            pytest.param(True, "terminal", id="terminal_role"),
-            pytest.param(False, "", id="non_terminal_role"),
+            {"id": "terminal_role", "is_terminal": True, "expected_result": "terminal"},
+            {"id": "non_terminal_role", "is_terminal": False, "expected_result": ""},
         ],
+        ids=lambda case: case["id"],
     )
-    def test_script_for_role(self, mock_script_manager_deps, is_terminal, expected_result):
+    def test_script_for_role(self, test_context, case: dict) -> None:
         """Test ScriptManager._script_for_role."""
 
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
-        from orca.ax_utilities import AXUtilities
 
         manager = ScriptManager()
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock()
 
-        AXUtilities.is_terminal = Mock(return_value=is_terminal)
-
+        mock_ax_utilities = test_context.Mock()
+        test_context.patch("orca.script_manager.AXUtilities", new=mock_ax_utilities)
+        mock_ax_utilities.is_terminal.return_value = case["is_terminal"]
         result = manager._script_for_role(mock_obj)
-        assert result == expected_result
-        AXUtilities.is_terminal.assert_called_once_with(mock_obj)
+        assert result == case["expected_result"]
+        mock_ax_utilities.is_terminal.assert_called_once_with(mock_obj)
 
     @pytest.mark.parametrize(
-        "app, name, has_module, has_get_script, has_script_class, should_succeed",
+        "case",
         [
-            pytest.param(None, "", False, False, False, False, id="null_app_empty_name"),
-            pytest.param("app", "", False, False, False, False, id="empty_name"),
-            pytest.param("app", "test", False, False, False, False, id="no_module"),
-            pytest.param("app", "test", True, True, False, True, id="has_get_script"),
-            pytest.param("app", "test", True, False, True, True, id="has_script_class"),
-            pytest.param("app", "test", True, False, False, False, id="no_script_creation"),
+            {
+                "id": "null_app_empty_name",
+                "app": None,
+                "name": "",
+                "has_module": False,
+                "has_get_script": False,
+                "has_script_class": False,
+                "should_succeed": False,
+            },
+            {
+                "id": "empty_name",
+                "app": "app",
+                "name": "",
+                "has_module": False,
+                "has_get_script": False,
+                "has_script_class": False,
+                "should_succeed": False,
+            },
+            {
+                "id": "no_module",
+                "app": "app",
+                "name": "test",
+                "has_module": False,
+                "has_get_script": False,
+                "has_script_class": False,
+                "should_succeed": False,
+            },
+            {
+                "id": "has_get_script",
+                "app": "app",
+                "name": "test",
+                "has_module": True,
+                "has_get_script": True,
+                "has_script_class": False,
+                "should_succeed": True,
+            },
+            {
+                "id": "has_script_class",
+                "app": "app",
+                "name": "test",
+                "has_module": True,
+                "has_get_script": False,
+                "has_script_class": True,
+                "should_succeed": True,
+            },
+            {
+                "id": "no_script_creation",
+                "app": "app",
+                "name": "test",
+                "has_module": True,
+                "has_get_script": False,
+                "has_script_class": False,
+                "should_succeed": False,
+            },
         ],
+        ids=lambda case: case["id"],
     )
-    def test_new_named_script(
-        self,
-        mock_script_manager_deps,
-        app,
-        name,
-        has_module,
-        has_get_script,
-        has_script_class,
-        should_succeed,
-    ):
+    def test_new_named_script(self, test_context, case: dict) -> None:
         """Test ScriptManager._new_named_script."""
 
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible) if app else None
-        mock_script = Mock()
+        mock_app = test_context.Mock() if case["app"] else None
+        mock_script = test_context.Mock()
+        mock_import = test_context.Mock()
+        test_context.patch("importlib.import_module", side_effect=mock_import)
+        if case["has_module"]:
+            mock_module = type("MockModule", (), {})()
+            if case["has_get_script"]:
+                mock_module.get_script = test_context.Mock(return_value=mock_script)
+            elif case["has_script_class"]:
+                mock_module.Script = test_context.Mock(return_value=mock_script)
+            mock_import.return_value = mock_module
+        else:
+            mock_import.side_effect = ImportError("Module not found")
+        result = manager._new_named_script(mock_app, case["name"])
+        if case["should_succeed"]:
+            assert result == mock_script
+        else:
+            assert result is None
 
-        with patch("importlib.import_module") as mock_import:
-            if has_module:
-                # Create module with specific attributes
-                mock_module = type("MockModule", (), {})()
-                if has_get_script:
-                    mock_module.get_script = Mock(return_value=mock_script)
-                elif has_script_class:
-                    mock_module.Script = Mock(return_value=mock_script)
-                # For no_script_creation case, module exists but has neither attribute
-                mock_import.return_value = mock_module
-            else:
-                mock_import.side_effect = ImportError("Module not found")
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "os_error_causes_unboundlocal",
+                "exception_type": "OSError",
+            },
+            {
+                "id": "script_creation_error",
+                "exception_type": "AttributeError",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_new_named_script_error_handling(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test ScriptManager._new_named_script handles various errors."""
 
-            result = manager._new_named_script(mock_app, name)
-
-            if should_succeed:
-                assert result == mock_script
-            else:
-                assert result is None
-
-    def test_new_named_script_os_error(self, mock_script_manager_deps):
-        """Test ScriptManager._new_named_script handles OSError."""
-
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
+        mock_app = test_context.Mock()
+        mock_import = test_context.Mock()
+        test_context.patch("importlib.import_module", side_effect=mock_import)
 
-        with patch("importlib.import_module") as mock_import:
+        if case["exception_type"] == "OSError":
             mock_import.side_effect = OSError("Permission denied")
-
-            # Due to a bug in the original code, OSError causes UnboundLocalError
-            # The test should expect this behavior in the current implementation
             with pytest.raises(UnboundLocalError):
                 manager._new_named_script(mock_app, "test")
-
-    def test_new_named_script_creation_error(self, mock_script_manager_deps):
-        """Test ScriptManager._new_named_script handles script creation errors."""
-
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
-
-        with patch("importlib.import_module") as mock_import:
-            # Create module that only has Script (no get_script)
+        else:
             mock_module = type("MockModule", (), {})()
-            mock_module.Script = Mock(side_effect=AttributeError("Script class not found"))
+            mock_module.Script = test_context.Mock(
+                side_effect=AttributeError("Script class not found")
+            )
             mock_import.return_value = mock_module
-
             result = manager._new_named_script(mock_app, "test")
             assert result is None
 
-    def test_create_script(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager._create_script."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "no_module_name", "module_name": None, "expected_result_type": "default_script"},
+            {
+                "id": "with_module_name",
+                "module_name": "test_script",
+                "expected_result_type": "named_script",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_create_script(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test ScriptManager._create_script with different module name scenarios."""
 
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_app = test_context.Mock()
+        mock_obj = test_context.Mock()
+        mock_script = test_context.Mock()
 
-        manager.get_module_name = Mock(return_value=None)
-        manager._toolkit_for_object = Mock(return_value=None)
-        manager.get_default_script = Mock(return_value=mock_script_classes["default_script"])
+        test_context.patch_object(
+            manager, "get_module_name", return_value=case["module_name"]
+        )
+        test_context.patch_object(
+            manager, "_toolkit_for_object", return_value=None
+        )
+        test_context.patch_object(
+            manager, "get_default_script", return_value=default_script
+        )
+
+        test_context.patch(
+            "orca.script_manager.AXUtilities.get_application_toolkit_name",
+            return_value=None,
+        )
+
+        if case["expected_result_type"] == "default_script":
+            mock_new_named_script = test_context.Mock(return_value=None)
+        else:
+            mock_new_named_script = test_context.Mock(return_value=mock_script)
+        test_context.patch_object(manager, "_new_named_script", side_effect=mock_new_named_script)
 
         result = manager._create_script(mock_app, mock_obj)
-        assert result == mock_script_classes["default_script"]
 
-    def test_create_script_with_module_name(self, mock_script_manager_deps):
-        """Test ScriptManager._create_script with valid module name."""
+        if case["expected_result_type"] == "default_script":
+            assert result == default_script
+        else:
+            assert result == mock_script
+            mock_new_named_script.assert_called_once_with(mock_app, case["module_name"])
 
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_script = Mock()
-
-        manager.get_module_name = Mock(return_value="test_script")
-        manager._new_named_script = Mock(return_value=mock_script)
-
-        result = manager._create_script(mock_app, mock_obj)
-        assert result == mock_script
-        manager._new_named_script.assert_called_once_with(mock_app, "test_script")
-
-    def test_get_default_script(self, mock_script_manager_deps, mock_script_classes):
+    def test_get_default_script(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.get_default_script."""
 
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
         from orca.script_manager import ScriptManager
 
+        mock_default_script = test_context.Mock()
+        test_context.patch("orca.script_manager.default.Script", new=mock_default_script)
+        mock_default_script.return_value = default_script
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
+        mock_app = test_context.Mock()
 
-        # Scenario: Get default script with app
         result = manager.get_default_script(mock_app)
         assert result is not None
-        mock_script_manager_deps["default"].Script.assert_called_with(mock_app)
+        mock_default_script.assert_called_with(mock_app)
 
-        # Scenario: Get default script without app (should use cached)
-        manager._default_script = mock_script_classes["default_script"]
+        manager._default_script = default_script
         result = manager.get_default_script(None)
-        assert result == mock_script_classes["default_script"]
+        assert result == default_script
 
-        # Scenario: Get default script without app and no cached script
         manager._default_script = None
         result = manager.get_default_script(None)
         assert result is not None
         assert manager._default_script is not None
 
-    def test_get_or_create_sleep_mode_script(self, mock_script_manager_deps, mock_script_classes):
+    def test_get_or_create_sleep_mode_script(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.get_or_create_sleep_mode_script."""
 
+        essential_modules = self._setup_dependencies(test_context)
+        sleepmode_script = essential_modules["sleepmode_script"]
         from orca.script_manager import ScriptManager
 
+        mock_sleepmode_script = test_context.Mock()
+        test_context.patch(
+            "orca.script_manager.sleepmode.Script", new=mock_sleepmode_script
+        )
+        mock_sleepmode_script.return_value = sleepmode_script
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
+        mock_app = test_context.Mock()
 
-        # Scenario: Create new sleep mode script
         result = manager.get_or_create_sleep_mode_script(mock_app)
         assert result is not None
-        assert isinstance(result, type(mock_script_classes["sleepmode_script"]))
+        assert result == sleepmode_script
         assert manager._sleep_mode_scripts[mock_app] == result
 
-        # Scenario: Get existing sleep mode script
         result2 = manager.get_or_create_sleep_mode_script(mock_app)
         assert result2 == result
         assert len(manager._sleep_mode_scripts) == 1
 
     @pytest.mark.parametrize(
-        "app, obj, sleep_mode_active, has_custom_script, has_toolkit_script, expected_script_type",
+        "case",
         [
-            pytest.param(None, None, False, False, False, "default", id="null_app_and_obj"),
-            pytest.param("app", "obj", True, False, False, "sleep", id="sleep_mode_active"),
-            pytest.param("app", "obj", False, True, False, "custom", id="custom_script"),
-            pytest.param("app", "obj", False, False, True, "toolkit", id="toolkit_script"),
-            pytest.param("app", "obj", False, False, False, "app", id="app_script"),
+            {
+                "id": "null_app_and_obj",
+                "app": None,
+                "obj": None,
+                "sleep_mode_active": False,
+                "has_custom_script": False,
+                "has_toolkit_script": False,
+                "expected_script_type": "default",
+            },
+            {
+                "id": "sleep_mode_active",
+                "app": "app",
+                "obj": "obj",
+                "sleep_mode_active": True,
+                "has_custom_script": False,
+                "has_toolkit_script": False,
+                "expected_script_type": "sleep",
+            },
+            {
+                "id": "custom_script",
+                "app": "app",
+                "obj": "obj",
+                "sleep_mode_active": False,
+                "has_custom_script": True,
+                "has_toolkit_script": False,
+                "expected_script_type": "custom",
+            },
+            {
+                "id": "toolkit_script",
+                "app": "app",
+                "obj": "obj",
+                "sleep_mode_active": False,
+                "has_custom_script": False,
+                "has_toolkit_script": True,
+                "expected_script_type": "toolkit",
+            },
+            {
+                "id": "app_script",
+                "app": "app",
+                "obj": "obj",
+                "sleep_mode_active": False,
+                "has_custom_script": False,
+                "has_toolkit_script": False,
+                "expected_script_type": "app",
+            },
         ],
+        ids=lambda case: case["id"],
     )
-    def test_get_script(
-        self,
-        mock_script_manager_deps,
-        mock_script_classes,
-        app,
-        obj,
-        sleep_mode_active,
-        has_custom_script,
-        has_toolkit_script,
-        expected_script_type,
-    ):
+    def test_get_script(self, test_context, case: dict) -> None:
         """Test ScriptManager.get_script."""
 
+        essential_modules = self._setup_dependencies(test_context)
+        sleepmode_script = essential_modules["sleepmode_script"]
+        sleep_mode_manager = essential_modules["sleep_mode_manager"]
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible) if app else None
-        mock_obj = Mock(spec=Atspi.Accessible) if obj else None
-
-        mock_default_script = mock_script_classes["default_script"]
-        mock_sleep_script = mock_script_classes["sleepmode_script"]
-        mock_custom_script = Mock()
+        mock_app = test_context.Mock() if case["app"] else None
+        mock_obj = test_context.Mock() if case["obj"] else None
+        mock_sleep_script = sleepmode_script
+        mock_custom_script = test_context.Mock()
 
         class ToolkitScript:
             """Mock toolkit script class."""
@@ -546,259 +751,315 @@ class TestScriptManager:
         class AppScript:
             """Mock app script class."""
 
-        mock_toolkit_script = Mock(spec=ToolkitScript)
-        mock_toolkit_script.__class__ = ToolkitScript
-        mock_app_script = Mock(spec=AppScript)
-        mock_app_script.__class__ = AppScript
+        mock_toolkit_script = test_context.Mock(spec=ToolkitScript)
+        mock_app_script = test_context.Mock(spec=AppScript)
+        sleep_mode_manager.is_active_for_app = test_context.Mock(
+            return_value=case["sleep_mode_active"]
+        )
+        mock_app_script.get_sleep_mode_manager = test_context.Mock(return_value=sleep_mode_manager)
+        test_context.patch_object(
+            manager,
+            "get_or_create_sleep_mode_script",
+            return_value=mock_sleep_script,
+        )
+        test_context.patch_object(
+            manager,
+            "_script_for_role",
+            return_value="terminal" if case["has_custom_script"] else "",
+        )
+        test_context.patch_object(
+            manager,
+            "_toolkit_for_object",
+            return_value="gtk" if case["has_toolkit_script"] else None,
+        )
 
-        sleep_mode_manager = mock_script_classes["sleep_mode_manager"]
-        sleep_mode_manager.is_active_for_app = Mock(return_value=sleep_mode_active)
-        mock_app_script.get_sleep_mode_manager = Mock(return_value=sleep_mode_manager)
-
-        manager.get_default_script = Mock(return_value=mock_default_script)
-        manager.get_or_create_sleep_mode_script = Mock(return_value=mock_sleep_script)
-        manager._script_for_role = Mock(return_value="terminal" if has_custom_script else "")
-        manager._toolkit_for_object = Mock(return_value="gtk" if has_toolkit_script else None)
-
-        def create_script_side_effect(app, obj):
-            if obj and has_toolkit_script:
+        def create_script_side_effect(_app, obj):
+            if obj and case["has_toolkit_script"]:
                 return mock_toolkit_script
             return mock_app_script
 
-        manager._create_script = Mock(side_effect=create_script_side_effect)
-
-        if has_custom_script:
-            manager._new_named_script = Mock(return_value=mock_custom_script)
-
+        test_context.patch_object(
+            manager, "_create_script", side_effect=create_script_side_effect
+        )
+        if case["has_custom_script"]:
+            test_context.patch_object(
+                manager, "_new_named_script", return_value=mock_custom_script
+            )
         result = manager.get_script(mock_app, mock_obj)
-
-        if expected_script_type == "default":
-            assert result == mock_default_script
-        elif expected_script_type == "sleep":
+        if case["expected_script_type"] == "default":
+            assert result is not None
+            assert hasattr(result, "register_event_listeners")
+        elif case["expected_script_type"] == "sleep":
             assert result == mock_sleep_script
-        elif expected_script_type == "custom":
+        elif case["expected_script_type"] == "custom":
             assert result == mock_custom_script
-        elif expected_script_type == "toolkit":
+        elif case["expected_script_type"] == "toolkit":
             assert result == mock_toolkit_script
-        elif expected_script_type == "app":
+        elif case["expected_script_type"] == "app":
             assert result == mock_app_script
 
-    def test_get_script_exception_handling(self, mock_script_manager_deps, mock_script_classes):
+    def test_get_script_exception_handling(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.get_script handles exceptions."""
 
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        mock_app = Mock(spec=Atspi.Accessible)
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        manager._script_for_role = Mock(return_value="")
-        manager._toolkit_for_object = Mock(return_value=None)
+        mock_app = test_context.Mock()
+        mock_obj = test_context.Mock()
+        test_context.patch_object(
+            manager, "_script_for_role", return_value=""
+        )
+        test_context.patch_object(
+            manager, "_toolkit_for_object", return_value=None
+        )
 
         def create_script_side_effect(app, obj):
-            if obj is None:
-                raise KeyError("Script creation failed")
-            return Mock()  # Toolkit script creation (shouldn't be called)
+            raise KeyError("Script creation failed")
 
-        manager._create_script = Mock(side_effect=create_script_side_effect)
-        manager.get_default_script = Mock(return_value=mock_script_classes["default_script"])
-
+        test_context.patch_object(
+            manager, "_create_script", side_effect=create_script_side_effect
+        )
         result = manager.get_script(mock_app, mock_obj)
-        assert result == mock_script_classes["default_script"]
+        assert result is not None
+        assert hasattr(result, "register_event_listeners")
 
-    def test_get_active_script(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager.get_active_script."""
-
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "no_active_script", "has_active_script": False, "test_type": "script"},
+            {"id": "has_active_script", "has_active_script": True, "test_type": "script"},
+            {"id": "no_active_script_app", "has_active_script": False, "test_type": "app"},
+            {"id": "has_active_script_app", "has_active_script": True, "test_type": "app"},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_active_script_and_app(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test ScriptManager.get_active_script and get_active_script_app."""
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
+        mock_app = test_context.Mock()
 
-        # Scenario: No active script
-        result = manager.get_active_script()
-        assert result is None
+        if case["has_active_script"]:
+            default_script.app = mock_app
+            manager._active_script = default_script
 
-        # Scenario: With active script
-        manager._active_script = mock_script_classes["default_script"]
-        result = manager.get_active_script()
-        assert result == mock_script_classes["default_script"]
+        if case["test_type"] == "script":
+            result = manager.get_active_script()
+            expected = default_script if case["has_active_script"] else None
+        else:
+            result = manager.get_active_script_app()
+            expected = mock_app if case["has_active_script"] else None
 
-    def test_get_active_script_app(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager.get_active_script_app."""
+        assert result == expected
 
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-
-        # Scenario: No active script
-        result = manager.get_active_script_app()
-        assert result is None
-
-        # Scenario: With active script
-        mock_app = Mock(spec=Atspi.Accessible)
-        mock_script_classes["default_script"].app = mock_app
-        manager._active_script = mock_script_classes["default_script"]
-        result = manager.get_active_script_app()
-        assert result == mock_app
-
-    def test_set_active_script(self, mock_script_manager_deps, mock_script_classes):
+    def test_set_active_script(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.set_active_script."""
 
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
+        settings_manager = essential_modules["deps_settings_manager"]
         from orca.script_manager import ScriptManager
 
+        mock_check_braille = test_context.Mock()
+        test_context.patch(
+            "orca.script_manager.braille.checkBrailleSetting", new=mock_check_braille
+        )
+        mock_setup_ranges = test_context.Mock()
+        test_context.patch(
+            "orca.script_manager.braille.setupKeyRanges", new=mock_setup_ranges
+        )
+        mock_get_speech_manager = test_context.Mock()
+        test_context.patch(
+            "orca.script_manager.speech_and_verbosity_manager.get_manager",
+            new=mock_get_speech_manager,
+        )
+        mock_speech_manager_instance = test_context.Mock()
+        mock_get_speech_manager.return_value = mock_speech_manager_instance
         manager = ScriptManager()
-        old_script = Mock()
-        old_script.app = Mock()
-        old_script.deactivate = Mock()
-        new_script = mock_script_classes["default_script"]
-        new_script.app = Mock()
-        new_script.activate = Mock()
+        old_script = test_context.Mock()
+        old_script.app = test_context.Mock()
+        old_script.deactivate = test_context.Mock()
+        new_script = default_script
+        new_script.app = test_context.Mock()
+        new_script.activate = test_context.Mock()
         new_script.braille_bindings = {"key": "binding"}
+        manager_instance = test_context.Mock()
+        manager_instance.get_runtime_settings = test_context.Mock(return_value={"setting": "value"})
+        manager_instance.set_setting = test_context.Mock()
+        settings_manager.get_manager = test_context.Mock(return_value=manager_instance)
 
-        settings_manager = mock_script_manager_deps["settings_manager"]
-        manager_instance = Mock()
-        manager_instance.get_runtime_settings = Mock(return_value={"setting": "value"})
-        manager_instance.set_setting = Mock()
-        settings_manager.get_manager = Mock(return_value=manager_instance)
-
-        # Scenario: Set new script when old script exists
         manager._active_script = old_script
         manager.set_active_script(new_script, "test reason")
-
         old_script.deactivate.assert_called_once()
         new_script.activate.assert_called_once()
         assert manager._active_script == new_script
 
-        # Verify braille and speech settings are updated
-        braille_mock = mock_script_manager_deps["braille"]
-        braille_mock.checkBrailleSetting.assert_called_once()
-        braille_mock.setupKeyRanges.assert_called_once_with(new_script.braille_bindings.keys())
+        mock_check_braille.assert_called_once()
+        mock_setup_ranges.assert_called_once_with(new_script.braille_bindings.keys())
+        mock_speech_manager_instance.check_speech_setting.assert_called_once()
 
-        speech_manager = mock_script_manager_deps["speech_and_verbosity_manager"]
-        speech_manager.get_manager().check_speech_setting.assert_called_once()
-
-    def test_set_active_script_same_script(self, mock_script_manager_deps, mock_script_classes):
-        """Test ScriptManager.set_active_script with same script."""
-
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "same_script_no_change",
+                "new_script_type": "same",
+                "expects_deactivate": False,
+                "expects_activate": False,
+            },
+            {
+                "id": "set_to_none",
+                "new_script_type": "none",
+                "expects_deactivate": True,
+                "expects_activate": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_active_script_special_cases(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test ScriptManager.set_active_script special cases."""
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
         from orca.script_manager import ScriptManager
 
         manager = ScriptManager()
-        script = mock_script_classes["default_script"]
-        manager._active_script = script
-
-        manager.set_active_script(script, "same script")
-        script.deactivate.assert_not_called()
-        script.activate.assert_not_called()
-
-    def test_set_active_script_none(self, mock_script_manager_deps):
-        """Test ScriptManager.set_active_script with None."""
-
-        from orca.script_manager import ScriptManager
-
-        manager = ScriptManager()
-        old_script = Mock()
-        old_script.deactivate = Mock()
+        old_script = test_context.Mock()
+        old_script.deactivate = test_context.Mock()
         manager._active_script = old_script
 
-        manager.set_active_script(None)
+        if case["new_script_type"] == "same":
+            manager._active_script = default_script
+            manager.set_active_script(default_script, "same script")
+            if case["expects_deactivate"]:
+                default_script.deactivate.assert_called_once()
+            else:
+                default_script.deactivate.assert_not_called()
+                default_script.activate.assert_not_called()
+        else:
+            manager.set_active_script(None)
+            if case["expects_deactivate"]:
+                old_script.deactivate.assert_called_once()
+            assert manager._active_script is None
 
-        old_script.deactivate.assert_called_once()
-        assert manager._active_script is None
-
-    def test_set_active_script_runtime_settings(
-        self, mock_script_manager_deps, mock_script_classes
-    ):
+    def test_set_active_script_runtime_settings(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.set_active_script preserves runtime settings for same app."""
 
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
         from orca.script_manager import ScriptManager
 
-        manager = ScriptManager()
-        same_app = Mock(spec=Atspi.Accessible)
-        old_script = Mock()
-        old_script.app = same_app
-        old_script.deactivate = Mock()
-        new_script = mock_script_classes["default_script"]
-        new_script.app = same_app
-        new_script.activate = Mock()
-        new_script.braille_bindings = {}
-
-        settings_manager = mock_script_manager_deps["settings_manager"]
-        manager_instance = Mock()
+        settings_patch = "orca.script_manager.settings_manager.get_manager"
+        mock_get_settings_manager = test_context.Mock()
+        test_context.patch(settings_patch, new=mock_get_settings_manager)
+        test_context.patch(
+            "orca.script_manager.braille.checkBrailleSetting", return_value=None
+        )
+        test_context.patch(
+            "orca.script_manager.braille.setupKeyRanges", return_value=None
+        )
+        speech_patch = "orca.script_manager.speech_and_verbosity_manager.get_manager"
+        mock_get_speech_manager = test_context.Mock()
+        test_context.patch(speech_patch, new=mock_get_speech_manager)
+        manager_instance = test_context.Mock()
         runtime_settings = {"key1": "value1", "key2": "value2"}
-        manager_instance.get_runtime_settings = Mock(return_value=runtime_settings)
-        manager_instance.set_setting = Mock()
-        settings_manager.get_manager = Mock(return_value=manager_instance)
+        manager_instance.get_runtime_settings = test_context.Mock(return_value=runtime_settings)
+        manager_instance.set_setting = test_context.Mock()
+        mock_get_settings_manager.return_value = manager_instance
 
+        speech_manager_instance = test_context.Mock()
+        mock_get_speech_manager.return_value = speech_manager_instance
+        manager = ScriptManager()
+        same_app = test_context.Mock()
+        old_script = test_context.Mock()
+        old_script.app = same_app
+        old_script.deactivate = test_context.Mock()
+        new_script = default_script
+        new_script.app = same_app
+        new_script.activate = test_context.Mock()
+        new_script.braille_bindings = {}
         manager._active_script = old_script
         manager.set_active_script(new_script)
-
-        expected_calls = [call("key1", "value1"), call("key2", "value2")]
+        expected_calls = [
+            call("key1", "value1"),
+            call("key2", "value2"),
+        ]
         manager_instance.set_setting.assert_has_calls(expected_calls, any_order=True)
 
-    def test_reclaim_scripts(self, mock_script_manager_deps):
-        """Test ScriptManager.reclaim_scripts."""
-
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "mixed_apps_normal", "has_app_in_desktop": True, "has_key_error": False},
+            {
+                "id": "no_desktop_apps_with_key_error",
+                "has_app_in_desktop": False,
+                "has_key_error": True,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_reclaim_scripts(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test ScriptManager.reclaim_scripts with various scenarios."""
+        self._setup_dependencies(test_context)
         from orca.script_manager import ScriptManager
-        from orca.ax_utilities import AXUtilities
 
+        desktop_patch = "orca.script_manager.AXUtilities.is_application_in_desktop"
+        mock_is_in_desktop = test_context.Mock()
+        test_context.patch(desktop_patch, new=mock_is_in_desktop)
         manager = ScriptManager()
+        app_not_in_desktop = test_context.Mock()
 
-        app_in_desktop = Mock(spec=Atspi.Accessible)
-        app_not_in_desktop = Mock(spec=Atspi.Accessible)
+        if case["has_app_in_desktop"]:
+            app_in_desktop = test_context.Mock()
+            manager.app_scripts = {
+                app_in_desktop: test_context.Mock(),
+                app_not_in_desktop: test_context.Mock(),
+            }
+            manager.toolkit_scripts = {app_not_in_desktop: test_context.Mock()}
+            manager.custom_scripts = {app_not_in_desktop: test_context.Mock()}
+            manager._sleep_mode_scripts = {app_not_in_desktop: test_context.Mock()}
 
-        manager.app_scripts = {
-            app_in_desktop: Mock(),
-            app_not_in_desktop: Mock(),
-        }
-        manager.toolkit_scripts = {app_not_in_desktop: Mock()}
-        manager.custom_scripts = {app_not_in_desktop: Mock()}
-        manager._sleep_mode_scripts = {app_not_in_desktop: Mock()}
+            def mock_is_in_desktop_func(app):
+                return app == app_in_desktop
 
-        def mock_is_in_desktop(app):
-            return app == app_in_desktop
+            mock_is_in_desktop.side_effect = mock_is_in_desktop_func
+            manager.reclaim_scripts()
+            assert app_in_desktop in manager.app_scripts
+            assert app_not_in_desktop not in manager.app_scripts
+            assert app_not_in_desktop not in manager.toolkit_scripts
+            assert app_not_in_desktop not in manager.custom_scripts
+            assert app_not_in_desktop not in manager._sleep_mode_scripts
+        else:
+            manager.app_scripts = {app_not_in_desktop: test_context.Mock()}
+            if case["has_key_error"]:
+                manager.toolkit_scripts = {}
+                manager.custom_scripts = {}
+                manager._sleep_mode_scripts = {}
+            else:
+                manager.toolkit_scripts = {app_not_in_desktop: test_context.Mock()}
+                manager.custom_scripts = {app_not_in_desktop: test_context.Mock()}
+                manager._sleep_mode_scripts = {app_not_in_desktop: test_context.Mock()}
 
-        AXUtilities.is_application_in_desktop = Mock(side_effect=mock_is_in_desktop)
+            mock_is_in_desktop.return_value = False
+            manager.reclaim_scripts()
+            assert app_not_in_desktop not in manager.app_scripts
+            if not case["has_key_error"]:
+                assert app_not_in_desktop not in manager.toolkit_scripts
+                assert app_not_in_desktop not in manager.custom_scripts
+                assert app_not_in_desktop not in manager._sleep_mode_scripts
 
-        manager.reclaim_scripts()
-
-        # Verify only the app not in desktop is removed
-        assert app_in_desktop in manager.app_scripts
-        assert app_not_in_desktop not in manager.app_scripts
-        assert app_not_in_desktop not in manager.toolkit_scripts
-        assert app_not_in_desktop not in manager.custom_scripts
-        assert app_not_in_desktop not in manager._sleep_mode_scripts
-
-    def test_reclaim_scripts_key_error(self, mock_script_manager_deps):
-        """Test ScriptManager.reclaim_scripts handles KeyError."""
-
-        from orca.script_manager import ScriptManager
-        from orca.ax_utilities import AXUtilities
-
-        manager = ScriptManager()
-
-        app_not_in_desktop = Mock(spec=Atspi.Accessible)
-
-        # Setup scripts - app_scripts has the app but toolkit_scripts is missing it
-        # This will cause a KeyError when trying to pop from toolkit_scripts
-        manager.app_scripts = {app_not_in_desktop: Mock()}
-        manager.toolkit_scripts = {}  # Empty - will cause KeyError
-        manager.custom_scripts = {}
-        manager._sleep_mode_scripts = {}
-
-        AXUtilities.is_application_in_desktop = Mock(return_value=False)
-
-        # Should not raise exception even with KeyError
-        manager.reclaim_scripts()
-
-        # Verify app script was removed despite KeyError on other collections
-        assert app_not_in_desktop not in manager.app_scripts
-
-    def test_get_manager(self, mock_script_manager_deps):
+    def test_get_manager(self, test_context: OrcaTestContext) -> None:
         """Test script_manager.get_manager."""
 
+        self._setup_dependencies(test_context)
         from orca import script_manager
 
         manager1 = script_manager.get_manager()
         manager2 = script_manager.get_manager()
-
         assert manager1 is manager2
         assert isinstance(manager1, script_manager.ScriptManager)

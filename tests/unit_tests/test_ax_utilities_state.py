@@ -18,17 +18,15 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-public-methods
 # pylint: disable=wrong-import-position
-# pylint: disable=too-many-lines
 # pylint: disable=import-outside-toplevel
-# pylint: disable=unused-argument
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-branches
 
 """Unit tests for ax_utilities_state.py accessibility state utilities."""
 
-from unittest.mock import Mock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import gi
 import pytest
@@ -36,387 +34,477 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from .conftest import clean_module_cache
+if TYPE_CHECKING:
+    from .orca_test_context import OrcaTestContext
+    from unittest.mock import MagicMock
 
 @pytest.mark.unit
 class TestAXUtilitiesState:
-    """Test state identification methods."""
+    """Test AXUtilitiesState class methods."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for ax_utilities_state dependencies."""
+
+        essential_modules = test_context.setup_shared_dependencies([])
+
+        debug_mock = essential_modules["orca.debug"]
+        debug_mock.print_tokens = test_context.Mock()
+        debug_mock.LEVEL_INFO = 800
+
+        messages_mock = essential_modules["orca.messages"]
+        messages_mock.CURRENT_DATE = "current date"
+        messages_mock.CURRENT_TIME = "current time"
+        messages_mock.CURRENT_LOCATION = "current location"
+        messages_mock.CURRENT_PAGE = "current page"
+        messages_mock.CURRENT_STEP = "current step"
+        messages_mock.CURRENT_ITEM = "current item"
+
+        ax_object_class_mock = test_context.Mock()
+        ax_object_class_mock.has_state = test_context.Mock(return_value=False)
+        ax_object_class_mock.get_state_set = test_context.Mock()
+
+        def mock_get_attribute(obj, attr, default=None):  # pylint: disable=unused-argument
+            return default
+
+        ax_object_class_mock.get_attribute = test_context.Mock(side_effect=mock_get_attribute)
+        ax_object_class_mock.get_role = test_context.Mock(return_value=Atspi.Role.UNKNOWN)
+        essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
+
+        return essential_modules
 
     @pytest.mark.parametrize(
-        "method_name, state_type",
+        "case",
         [
-            pytest.param("has_popup", Atspi.StateType.HAS_POPUP, id="popup"),
-            pytest.param("has_tooltip", Atspi.StateType.HAS_TOOLTIP, id="tooltip"),
-            pytest.param("is_active", Atspi.StateType.ACTIVE, id="active"),
-            pytest.param("is_animated", Atspi.StateType.ANIMATED, id="animated"),
-            pytest.param("is_armed", Atspi.StateType.ARMED, id="armed"),
-            pytest.param("is_busy", Atspi.StateType.BUSY, id="busy"),
-            pytest.param("is_collapsed", Atspi.StateType.COLLAPSED, id="collapsed"),
-            pytest.param("is_default", Atspi.StateType.IS_DEFAULT, id="default"),
-            pytest.param("is_defunct", Atspi.StateType.DEFUNCT, id="defunct"),
-            pytest.param("is_editable", Atspi.StateType.EDITABLE, id="editable"),
-            pytest.param("is_enabled", Atspi.StateType.ENABLED, id="enabled"),
-            pytest.param("is_horizontal", Atspi.StateType.HORIZONTAL, id="horizontal"),
-            pytest.param("is_iconified", Atspi.StateType.ICONIFIED, id="iconified"),
-            pytest.param("is_indeterminate", Atspi.StateType.INDETERMINATE, id="indeterminate"),
-            pytest.param("is_invalid_state", Atspi.StateType.INVALID, id="invalid_state"),
-            pytest.param("is_invalid_entry", Atspi.StateType.INVALID_ENTRY, id="invalid_entry"),
-            pytest.param("is_modal", Atspi.StateType.MODAL, id="modal"),
-            pytest.param("is_multi_line", Atspi.StateType.MULTI_LINE, id="multi_line"),
-            pytest.param(
-                "is_multiselectable", Atspi.StateType.MULTISELECTABLE, id="multiselectable"
-            ),
-            pytest.param("is_opaque", Atspi.StateType.OPAQUE, id="opaque"),
-            pytest.param("is_pressed", Atspi.StateType.PRESSED, id="pressed"),
-            pytest.param("is_required", Atspi.StateType.REQUIRED, id="required"),
-            pytest.param("is_resizable", Atspi.StateType.RESIZABLE, id="resizable"),
-            pytest.param("is_selectable", Atspi.StateType.SELECTABLE, id="selectable"),
-            pytest.param(
-                "is_selectable_text", Atspi.StateType.SELECTABLE_TEXT, id="selectable_text"
-            ),
-            pytest.param("is_selected", Atspi.StateType.SELECTED, id="selected"),
-            pytest.param("is_sensitive", Atspi.StateType.SENSITIVE, id="sensitive"),
-            pytest.param("is_showing", Atspi.StateType.SHOWING, id="showing"),
-            pytest.param("is_single_line", Atspi.StateType.SINGLE_LINE, id="single_line"),
-            pytest.param("is_stale", Atspi.StateType.STALE, id="stale"),
-            pytest.param("is_transient", Atspi.StateType.TRANSIENT, id="transient"),
-            pytest.param("is_truncated", Atspi.StateType.TRUNCATED, id="truncated"),
-            pytest.param("is_vertical", Atspi.StateType.VERTICAL, id="vertical"),
-            pytest.param("is_visible", Atspi.StateType.VISIBLE, id="visible"),
-            pytest.param("is_visited", Atspi.StateType.VISITED, id="visited"),
-            pytest.param(
-                "manages_descendants", Atspi.StateType.MANAGES_DESCENDANTS, id="manages_descendants"
-            ),
-            pytest.param(
-                "supports_autocompletion",
-                Atspi.StateType.SUPPORTS_AUTOCOMPLETION,
-                id="supports_autocompletion",
-            ),
+            {"id": "enabled", "method_name": "is_enabled", "state_type": Atspi.StateType.ENABLED},
+            {
+                "id": "editable",
+                "method_name": "is_editable",
+                "state_type": Atspi.StateType.EDITABLE,
+            },
+            {
+                "id": "selected",
+                "method_name": "is_selected",
+                "state_type": Atspi.StateType.SELECTED,
+            },
+            {"id": "visible", "method_name": "is_visible", "state_type": Atspi.StateType.VISIBLE},
+            {"id": "pressed", "method_name": "is_pressed", "state_type": Atspi.StateType.PRESSED},
         ],
+        ids=lambda case: case["id"],
     )
-    def test_simple_state_methods(
-        self, monkeypatch, method_name, state_type, mock_orca_dependencies
-    ):
-        """Test AXUtilitiesState simple state methods."""
+    def test_common_state_methods(self, test_context, case: dict) -> None:
+        """Test AXUtilitiesState common state methods."""
 
-        clean_module_cache("orca.ax_utilities_state")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        method = getattr(AXUtilitiesState, method_name)
-
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: state == state_type)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        method = getattr(AXUtilitiesState, case["method_name"])
+        mock_ax_object_class.has_state = test_context.Mock(
+            side_effect=lambda obj, state: state == case["state_type"]
+        )
         assert method(mock_obj)
-
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: state != state_type)
+        mock_ax_object_class.has_state = test_context.Mock(
+            side_effect=lambda obj, state: state != case["state_type"]
+        )
         assert not method(mock_obj)
 
-    def test_get_current_item_status_string(self, monkeypatch, mock_orca_dependencies):
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "not_active",
+                "is_active": False,
+                "attribute_value": None,
+                "expected_result": "",
+            },
+            {
+                "id": "active_no_attribute",
+                "is_active": True,
+                "attribute_value": None,
+                "expected_result": "",
+            },
+            {
+                "id": "date_attribute",
+                "is_active": True,
+                "attribute_value": "date",
+                "expected_result": "current date",
+            },
+            {
+                "id": "time_attribute",
+                "is_active": True,
+                "attribute_value": "time",
+                "expected_result": "current time",
+            },
+            {
+                "id": "location_attribute",
+                "is_active": True,
+                "attribute_value": "location",
+                "expected_result": "current location",
+            },
+            {
+                "id": "page_attribute",
+                "is_active": True,
+                "attribute_value": "page",
+                "expected_result": "current page",
+            },
+            {
+                "id": "step_attribute",
+                "is_active": True,
+                "attribute_value": "step",
+                "expected_result": "current step",
+            },
+            {
+                "id": "unknown_attribute",
+                "is_active": True,
+                "attribute_value": "unknown",
+                "expected_result": "current item",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_current_item_status_string(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
         """Test AXUtilitiesState.get_current_item_status_string."""
 
-        clean_module_cache("orca.ax_utilities_state")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import messages
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object is not active
-        monkeypatch.setattr(AXUtilitiesState, "is_active", lambda obj: False)
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == ""
-
-        # Scenario: Object is active but has no attribute
-        monkeypatch.setattr(AXUtilitiesState, "is_active", lambda obj: True)
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: None)
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == ""
-
-        # Scenario: Object has "date" attribute
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: "date")
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == messages.CURRENT_DATE
-
-        # Scenario: Object has "time" attribute
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: "time")
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == messages.CURRENT_TIME
-
-        # Scenario: Object has "location" attribute
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: "location")
-        assert (
-            AXUtilitiesState.get_current_item_status_string(mock_obj) == messages.CURRENT_LOCATION
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesState, "is_active", return_value=case["is_active"]
         )
+        mock_ax_object_class.get_attribute = test_context.Mock(return_value=case["attribute_value"])
+        result = AXUtilitiesState.get_current_item_status_string(mock_obj)
+        assert result == case["expected_result"]
 
-        # Scenario: Object has "page" attribute
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: "page")
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == messages.CURRENT_PAGE
-
-        # Scenario: Object has "step" attribute
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: "step")
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == messages.CURRENT_STEP
-
-        # Scenario: Object has unknown attribute type
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr: "unknown")
-        assert AXUtilitiesState.get_current_item_status_string(mock_obj) == messages.CURRENT_ITEM
-
-    def test_has_no_state(self, monkeypatch, mock_orca_dependencies):
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "empty_state_set", "is_empty": True, "expected_result": True},
+            {"id": "non_empty_state_set", "is_empty": False, "expected_result": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_has_no_state(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test AXUtilitiesState.has_no_state."""
 
-        clean_module_cache("orca.ax_utilities_state")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_state_set = test_context.Mock(
+            return_value=test_context.Mock(
+                is_empty=test_context.Mock(return_value=case["is_empty"])
+            )
+        )
+        assert AXUtilitiesState.has_no_state(mock_obj) == case["expected_result"]
 
-        # Scenario: State set is empty
-        monkeypatch.setattr(AXObject, "get_state_set", lambda obj: Mock(is_empty=lambda: True))
-        assert AXUtilitiesState.has_no_state(mock_obj)
-
-        # Scenario: State set is not empty
-        monkeypatch.setattr(AXObject, "get_state_set", lambda obj: Mock(is_empty=lambda: False))
-        assert not AXUtilitiesState.has_no_state(mock_obj)
-
-    def test_is_checkable(self, monkeypatch, mock_orca_dependencies):
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "has_checkable_state", "state_scenario": "checkable", "expected_result": True},
+            {"id": "has_checked_state", "state_scenario": "checked", "expected_result": True},
+            {"id": "no_relevant_state", "state_scenario": "none", "expected_result": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_checkable(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test AXUtilitiesState.is_checkable."""
 
-        clean_module_cache("orca.ax_utilities_state")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        from orca.ax_utilities_state import AXUtilitiesState
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        if case["state_scenario"] == "checkable":
+            mock_ax_object_class.has_state = test_context.Mock(
+                side_effect=lambda obj, state: state == Atspi.StateType.CHECKABLE
+            )
+        elif case["state_scenario"] == "checked":
+            mock_ax_object_class.has_state = test_context.Mock(
+                side_effect=lambda obj, state: state == Atspi.StateType.CHECKED
+            )
+        else:
+            mock_ax_object_class.has_state = test_context.Mock(return_value=False)
+
+        assert AXUtilitiesState.is_checkable(mock_obj) == case["expected_result"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "checked_both_states",
+                "method_name": "is_checked",
+                "state_scenario": "both_states",
+                "expected_result": True,
+                "expects_debug": False,
+            },
+            {
+                "id": "checked_checked_only",
+                "method_name": "is_checked",
+                "state_scenario": "checked_only",
+                "expected_result": True,
+                "expects_debug": True,
+            },
+            {
+                "id": "checked_none",
+                "method_name": "is_checked",
+                "state_scenario": "none",
+                "expected_result": False,
+                "expects_debug": False,
+            },
+            {
+                "id": "expandable_expandable",
+                "method_name": "is_expandable",
+                "state_scenario": "expandable",
+                "expected_result": True,
+                "expects_debug": False,
+            },
+            {
+                "id": "expandable_expanded",
+                "method_name": "is_expandable",
+                "state_scenario": "expanded",
+                "expected_result": True,
+                "expects_debug": True,
+            },
+            {
+                "id": "expandable_none",
+                "method_name": "is_expandable",
+                "state_scenario": "none",
+                "expected_result": False,
+                "expects_debug": False,
+            },
+            {
+                "id": "expanded_both_states",
+                "method_name": "is_expanded",
+                "state_scenario": "both_states",
+                "expected_result": True,
+                "expects_debug": False,
+            },
+            {
+                "id": "expanded_expanded_only",
+                "method_name": "is_expanded",
+                "state_scenario": "expanded_only",
+                "expected_result": True,
+                "expects_debug": True,
+            },
+            {
+                "id": "expanded_none",
+                "method_name": "is_expanded",
+                "state_scenario": "none",
+                "expected_result": False,
+                "expects_debug": False,
+            },
+            {
+                "id": "focusable_focusable",
+                "method_name": "is_focusable",
+                "state_scenario": "focusable",
+                "expected_result": True,
+                "expects_debug": False,
+            },
+            {
+                "id": "focusable_focused",
+                "method_name": "is_focusable",
+                "state_scenario": "focused",
+                "expected_result": True,
+                "expects_debug": True,
+            },
+            {
+                "id": "focusable_none",
+                "method_name": "is_focusable",
+                "state_scenario": "none",
+                "expected_result": False,
+                "expects_debug": False,
+            },
+            {
+                "id": "focused_both_states",
+                "method_name": "is_focused",
+                "state_scenario": "both_states",
+                "expected_result": True,
+                "expects_debug": False,
+            },
+            {
+                "id": "focused_focused_only",
+                "method_name": "is_focused",
+                "state_scenario": "focused_only",
+                "expected_result": True,
+                "expects_debug": True,
+            },
+            {
+                "id": "focused_none",
+                "method_name": "is_focused",
+                "state_scenario": "none",
+                "expected_result": False,
+                "expects_debug": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_state_methods_with_debug(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesState methods that can trigger debug output."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object has CHECKABLE state
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state == Atspi.StateType.CHECKABLE,
-        )
-        assert AXUtilitiesState.is_checkable(mock_obj)
-
-        # Scenario: Object has CHECKED state but not CHECKABLE
-        monkeypatch.setattr(
-            AXObject, "has_state", lambda obj, state: state == Atspi.StateType.CHECKED
-        )
         from orca import debug
 
-        monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
-        assert AXUtilitiesState.is_checkable(mock_obj)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        # Scenario: Object has no relevant states
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        assert not AXUtilitiesState.is_checkable(mock_obj)
+        if case["method_name"] == "is_checked":
+            if case["state_scenario"] == "both_states":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state
+                    in (Atspi.StateType.CHECKED, Atspi.StateType.CHECKABLE),
+                )
+            elif case["state_scenario"] == "checked_only":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.CHECKED,
+                )
+        elif case["method_name"] == "is_expandable":
+            if case["state_scenario"] == "expandable":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.EXPANDABLE,
+                )
+            elif case["state_scenario"] == "expanded":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.EXPANDED,
+                )
+        elif case["method_name"] == "is_expanded":
+            if case["state_scenario"] == "both_states":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state
+                    in (Atspi.StateType.EXPANDED, Atspi.StateType.EXPANDABLE),
+                )
+            elif case["state_scenario"] == "expanded_only":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.EXPANDED,
+                )
+        elif case["method_name"] == "is_focusable":
+            if case["state_scenario"] == "focusable":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.FOCUSABLE,
+                )
+            elif case["state_scenario"] == "focused":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.FOCUSED,
+                )
+        elif case["method_name"] == "is_focused":
+            if case["state_scenario"] == "both_states":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state
+                    in (Atspi.StateType.FOCUSED, Atspi.StateType.FOCUSABLE),
+                )
+            elif case["state_scenario"] == "focused_only":
+                test_context.patch_object(
+                    AXObject,
+                    "has_state",
+                    side_effect=lambda obj, state: state == Atspi.StateType.FOCUSED,
+                )
 
-    def test_is_checked(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesState.is_checked."""
+        if case["state_scenario"] == "none":
+            test_context.patch_object(AXObject, "has_state", return_value=False)
 
-        clean_module_cache("orca.ax_utilities_state")
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
+        if case["expects_debug"]:
+            test_context.patch_object(
+                debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
+            )
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        method = getattr(AXUtilitiesState, case["method_name"])
+        assert method(mock_obj) == case["expected_result"]
 
-        # Scenario: Object has both CHECKED and CHECKABLE states
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state in (Atspi.StateType.CHECKED, Atspi.StateType.CHECKABLE),
-        )
-        assert AXUtilitiesState.is_checked(mock_obj)
-
-        # Scenario: Object has only CHECKED state
-        monkeypatch.setattr(
-            AXObject, "has_state", lambda obj, state: state == Atspi.StateType.CHECKED
-        )
-        from orca import debug
-
-        monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
-        assert AXUtilitiesState.is_checked(mock_obj)
-
-        # Scenario: Object has no relevant states
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        assert not AXUtilitiesState.is_checked(mock_obj)
-
-    def test_is_expandable(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesState.is_expandable."""
-
-        clean_module_cache("orca.ax_utilities_state")
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object has EXPANDABLE state
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state == Atspi.StateType.EXPANDABLE,
-        )
-        assert AXUtilitiesState.is_expandable(mock_obj)
-
-        # Scenario: Object has EXPANDED state but not EXPANDABLE
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state == Atspi.StateType.EXPANDED,
-        )
-        from orca import debug
-
-        monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
-        assert AXUtilitiesState.is_expandable(mock_obj)
-
-        # Scenario: Object has no relevant states
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        assert not AXUtilitiesState.is_expandable(mock_obj)
-
-    def test_is_expanded(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesState.is_expanded."""
-
-        clean_module_cache("orca.ax_utilities_state")
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object has both EXPANDED and EXPANDABLE states
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state in (Atspi.StateType.EXPANDED, Atspi.StateType.EXPANDABLE),
-        )
-        assert AXUtilitiesState.is_expanded(mock_obj)
-
-        # Scenario: Object has only EXPANDED state
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state == Atspi.StateType.EXPANDED,
-        )
-        from orca import debug
-
-        monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
-        assert AXUtilitiesState.is_expanded(mock_obj)
-
-        # Scenario: Object has no relevant states
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        assert not AXUtilitiesState.is_expanded(mock_obj)
-
-    def test_is_focusable(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesState.is_focusable."""
-
-        clean_module_cache("orca.ax_utilities_state")
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object has FOCUSABLE state
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state == Atspi.StateType.FOCUSABLE,
-        )
-        assert AXUtilitiesState.is_focusable(mock_obj)
-
-        # Scenario: Object has FOCUSED state but not FOCUSABLE
-        monkeypatch.setattr(
-            AXObject, "has_state", lambda obj, state: state == Atspi.StateType.FOCUSED
-        )
-        from orca import debug
-
-        monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
-        assert AXUtilitiesState.is_focusable(mock_obj)
-
-        # Scenario: Object has no relevant states
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        assert not AXUtilitiesState.is_focusable(mock_obj)
-
-    def test_is_focused(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesState.is_focused."""
-
-        clean_module_cache("orca.ax_utilities_state")
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object has both FOCUSED and FOCUSABLE states
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state in (Atspi.StateType.FOCUSED, Atspi.StateType.FOCUSABLE),
-        )
-        assert AXUtilitiesState.is_focused(mock_obj)
-
-        # Scenario: Object has only FOCUSED state
-        monkeypatch.setattr(
-            AXObject, "has_state", lambda obj, state: state == Atspi.StateType.FOCUSED
-        )
-        from orca import debug
-
-        monkeypatch.setattr(debug, "print_tokens", mock_orca_dependencies["debug"].print_tokens)
-        assert AXUtilitiesState.is_focused(mock_obj)
-
-        # Scenario: Object has no relevant states
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        assert not AXUtilitiesState.is_focused(mock_obj)
-
-    def test_is_hidden(self, monkeypatch, mock_orca_dependencies):
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "hidden_true", "hidden_value": "true", "expected_result": True},
+            {"id": "hidden_false", "hidden_value": "false", "expected_result": False},
+            {"id": "hidden_none", "hidden_value": None, "expected_result": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_hidden(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test AXUtilitiesState.is_hidden."""
 
-        clean_module_cache("orca.ax_utilities_state")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario 1: Object has "hidden" attribute set to "true"
-        monkeypatch.setattr(
-            AXObject,
-            "get_attribute",
-            lambda obj, attr, default: "true" if attr == "hidden" else default,
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_attribute = test_context.Mock(
+            side_effect=lambda obj, attr, default=None: case["hidden_value"]
+            if attr == "hidden"
+            else default
         )
-        assert AXUtilitiesState.is_hidden(mock_obj)
+        assert AXUtilitiesState.is_hidden(mock_obj) == case["expected_result"]
 
-        # Scenario 2: Object has "hidden" attribute set to "false"
-        monkeypatch.setattr(
-            AXObject,
-            "get_attribute",
-            lambda obj, attr, default: "false" if attr == "hidden" else default,
-        )
-        assert not AXUtilitiesState.is_hidden(mock_obj)
-
-        # Scenario 3: Object does not have "hidden" attribute
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, attr, default: default)
-        assert not AXUtilitiesState.is_hidden(mock_obj)
-
-    def test_is_read_only(self, monkeypatch, mock_orca_dependencies):
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "has_read_only_state",
+                "read_only_scenario": "has_read_only_state",
+                "expected_result": True,
+            },
+            {"id": "is_editable", "read_only_scenario": "editable", "expected_result": False},
+            {
+                "id": "text_role_not_editable",
+                "read_only_scenario": "text_role_not_editable",
+                "expected_result": True,
+            },
+            {
+                "id": "label_role_not_editable",
+                "read_only_scenario": "label_role_not_editable",
+                "expected_result": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_read_only(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test AXUtilitiesState.is_read_only."""
 
-        clean_module_cache("orca.ax_utilities_state")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_object import AXObject
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        # Scenario 1: Object has READ_ONLY state
-        monkeypatch.setattr(
-            AXObject,
-            "has_state",
-            lambda obj, state: state == Atspi.StateType.READ_ONLY,
-        )
-        assert AXUtilitiesState.is_read_only(mock_obj)
+        if case["read_only_scenario"] == "has_read_only_state":
+            test_context.patch_object(
+                AXObject,
+                "has_state",
+                side_effect=lambda obj, state: state == Atspi.StateType.READ_ONLY,
+            )
+        elif case["read_only_scenario"] == "editable":
+            test_context.patch_object(AXObject, "has_state", return_value=False)
+            test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
+        elif case["read_only_scenario"] == "text_role_not_editable":
+            test_context.patch_object(AXObject, "has_state", return_value=False)
+            test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
+            test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
+        elif case["read_only_scenario"] == "label_role_not_editable":
+            test_context.patch_object(AXObject, "has_state", return_value=False)
+            test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
+            test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.LABEL)
 
-        # Scenario 2: Object does not have READ_ONLY state but is editable
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: True)
-        assert not AXUtilitiesState.is_read_only(mock_obj)
-
-        # Scenario 3: Object does not have READ_ONLY state and is not editable, but is TEXT role
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
-        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.TEXT)
-        assert AXUtilitiesState.is_read_only(mock_obj)
-
-        # Scenario 4: Object does not have READ_ONLY state, is not editable, and is not TEXT role
-        monkeypatch.setattr(AXObject, "has_state", lambda obj, state: False)
-        monkeypatch.setattr(AXUtilitiesState, "is_editable", lambda obj: False)
-        monkeypatch.setattr(AXObject, "get_role", lambda obj: Atspi.Role.LABEL)
-        assert not AXUtilitiesState.is_read_only(mock_obj)
+        assert AXUtilitiesState.is_read_only(mock_obj) == case["expected_result"]

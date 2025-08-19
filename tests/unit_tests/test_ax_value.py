@@ -1,4 +1,4 @@
-# Unit tests for ax_value.py value-related methods.
+# Unit tests for ax_value.py methods.
 #
 # Copyright 2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -24,11 +24,12 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=import-outside-toplevel
-# pylint: disable=unused-argument
 
-"""Unit tests for ax_value.py value-related methods."""
+"""Unit tests for ax_value.py methods."""
 
-from unittest.mock import Mock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import gi
 import pytest
@@ -37,250 +38,613 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
-from .conftest import clean_module_cache
+if TYPE_CHECKING:
+    from .orca_test_context import OrcaTestContext
+    from unittest.mock import MagicMock
 
 @pytest.mark.unit
 class TestAXValue:
-    """Test value-related methods."""
+    """Test AXValue class methods."""
 
-    @pytest.fixture
-    def mock_accessible(self):
-        """Create a mock Atspi.Accessible object."""
-        return Mock(spec=Atspi.Accessible)
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Returns dependencies for ax_value module testing."""
+
+        additional_modules = ["orca.ax_utilities", "orca.ax_utilities_state"]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        debug_mock = essential_modules["orca.debug"]
+        debug_mock.print_tokens = test_context.Mock()
+        debug_mock.LEVEL_INFO = 800
+
+        ax_object_class_mock = test_context.Mock()
+        ax_object_class_mock.supports_value = test_context.Mock(return_value=True)
+        ax_object_class_mock.get_attribute = test_context.Mock(return_value="")
+        essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
+
+        ax_utilities_class_mock = test_context.Mock()
+        ax_utilities_class_mock.is_indeterminate = test_context.Mock(return_value=False)
+        essential_modules["orca.ax_utilities"].AXUtilities = ax_utilities_class_mock
+
+        ax_utilities_state_class_mock = test_context.Mock()
+        ax_utilities_state_class_mock.is_indeterminate = test_context.Mock(
+            return_value=False
+        )
+        essential_modules[
+            "orca.ax_utilities_state"
+        ].AXUtilitiesState = ax_utilities_state_class_mock
+
+        return essential_modules
 
     @pytest.mark.parametrize(
-        "supports_value, current_value, last_known_value, expected_result, setup_last_known",
+        "case",
         [
-            pytest.param(False, None, None, False, False, id="no_value_support"),
-            pytest.param(True, 50.0, None, True, False, id="first_time_value"),
-            pytest.param(True, 50.0, 50.0, False, True, id="same_value"),
-            pytest.param(True, 75.0, 50.0, True, True, id="value_changed"),
+            {
+                "id": "no_value_support",
+                "supports_value": False,
+                "current_value": None,
+                "last_known_value": None,
+                "expected_result": False,
+                "setup_last_known": False,
+            },
+            {
+                "id": "first_time_value",
+                "supports_value": True,
+                "current_value": 50.0,
+                "last_known_value": None,
+                "expected_result": True,
+                "setup_last_known": False,
+            },
+            {
+                "id": "same_value",
+                "supports_value": True,
+                "current_value": 50.0,
+                "last_known_value": 50.0,
+                "expected_result": False,
+                "setup_last_known": True,
+            },
+            {
+                "id": "value_changed",
+                "supports_value": True,
+                "current_value": 75.0,
+                "last_known_value": 50.0,
+                "expected_result": True,
+                "setup_last_known": True,
+            },
         ],
+        ids=lambda case: case["id"],
     )
     def test_did_value_change(
         self,
-        mock_accessible,
-        monkeypatch,
-        mock_orca_dependencies,
-        supports_value,
-        current_value,
-        last_known_value,
-        expected_result,
-        setup_last_known,
-    ):
+        test_context,
+        case: dict,
+    ) -> None:
         """Test AXValue.did_value_change."""
 
-        clean_module_cache("orca.ax_value")
+        self._setup_dependencies(test_context)
         from orca.ax_value import AXValue
         from orca.ax_object import AXObject
 
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: supports_value)
+        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
 
-        if current_value is not None:
-            monkeypatch.setattr(AXValue, "_get_current_value", lambda obj: current_value)
+        if case["current_value"] is not None:
+            test_context.patch_object(
+                AXValue, "_get_current_value", side_effect=lambda obj: case["current_value"]
+            )
 
-        if setup_last_known:
-            AXValue.LAST_KNOWN_VALUE[hash(mock_accessible)] = last_known_value
+        if case["setup_last_known"]:
+            AXValue.LAST_KNOWN_VALUE[hash(mock_accessible)] = case["last_known_value"]
         else:
             AXValue.LAST_KNOWN_VALUE.clear()
 
         result = AXValue.did_value_change(mock_accessible)
-        assert result is expected_result
+        assert result is case["expected_result"]
 
     @pytest.mark.parametrize(
-        "supports_value, atspi_return_value, should_raise_error, expected_result",
+        "case",
         [
-            pytest.param(False, None, False, 0.0, id="no_value_support"),
-            pytest.param(True, 42.5, False, 42.5, id="success_case"),
-            pytest.param(True, None, True, 0.0, id="glib_error"),
+            {
+                "id": "no_value_support",
+                "supports_value": False,
+                "atspi_return_value": None,
+                "should_raise_error": False,
+                "expected_result": 0.0,
+            },
+            {
+                "id": "success_case",
+                "supports_value": True,
+                "atspi_return_value": 42.5,
+                "should_raise_error": False,
+                "expected_result": 42.5,
+            },
+            {
+                "id": "glib_error",
+                "supports_value": True,
+                "atspi_return_value": None,
+                "should_raise_error": True,
+                "expected_result": 0.0,
+            },
         ],
+        ids=lambda case: case["id"],
     )
     def test_get_current_value_private(
         self,
-        monkeypatch,
-        mock_orca_dependencies,
-        supports_value,
-        atspi_return_value,
-        should_raise_error,
-        expected_result,
+        test_context,
+        case: dict,
     ):
         """Test AXValue._get_current_value."""
 
-        clean_module_cache("orca.ax_value")
+        self._setup_dependencies(test_context)
         from orca.ax_value import AXValue
         from orca.ax_object import AXObject
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: supports_value)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
 
-        if should_raise_error:
+        if case["should_raise_error"]:
 
             def raise_glib_error(obj):
                 raise GLib.GError("Test error")
 
-            monkeypatch.setattr(Atspi.Value, "get_current_value", raise_glib_error)
-        elif atspi_return_value is not None:
-            monkeypatch.setattr(Atspi.Value, "get_current_value", lambda obj: atspi_return_value)
+            test_context.patch_object(
+                Atspi.Value, "get_current_value", side_effect=raise_glib_error
+            )
+        elif case["atspi_return_value"] is not None:
+            test_context.patch_object(
+                Atspi.Value, "get_current_value", side_effect=lambda obj: case["atspi_return_value"]
+            )
         else:
-            # For the no_value_support case, we shouldn't reach this call
-            monkeypatch.setattr(Atspi.Value, "get_current_value", lambda obj: 0.0)
+            test_context.patch_object(Atspi.Value, "get_current_value", return_value=0.0)
 
         result = AXValue._get_current_value(mock_obj)
-        assert result == expected_result
-
-    def test_get_current_value_with_no_value_support(self, monkeypatch, mock_orca_dependencies):
-        """Test AXValue.get_current_value when object doesn't support value."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: False)
-        result = AXValue.get_current_value(mock_obj)
-        assert result == 0.0
-
-    def test_get_current_value_stores_value(self, monkeypatch, mock_orca_dependencies):
-        """Test AXValue.get_current_value stores the value in LAST_KNOWN_VALUE."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: True)
-        monkeypatch.setattr(AXValue, "_get_current_value", lambda obj: 75.0)
-        AXValue.LAST_KNOWN_VALUE.clear()
-        result = AXValue.get_current_value(mock_obj)
-        assert result == 75.0
-        assert AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] == 75.0
-
-    def test_get_current_value_text_with_valuetext_attribute(
-        self, monkeypatch, mock_orca_dependencies
-    ):
-        """Test AXValue.get_current_value_text with valuetext attribute."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, name, check_computed: "75%")
-        result = AXValue.get_current_value_text(mock_obj)
-        assert result == "75%"
-
-    def test_get_current_value_text_no_value_support_no_attribute(
-        self, monkeypatch, mock_orca_dependencies
-    ):
-        """Test AXValue.get_current_value_text when no value support."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, name, check_computed: "")
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: False)
-        result = AXValue.get_current_value_text(mock_obj)
-        assert result == ""
-
-    def test_get_current_value_text_from_atspi(self, monkeypatch, mock_orca_dependencies):
-        """Test AXValue.get_current_value_text from Atspi.Value.get_text."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, name, check_computed: "")
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: True)
-        monkeypatch.setattr(Atspi.Value, "get_text", lambda self: "50 percent")
-        result = AXValue.get_current_value_text(mock_obj)
-        assert result == "50 percent"
-
-    def test_get_current_value_text_with_glib_error(self, monkeypatch, mock_orca_dependencies):
-        """Test AXValue.get_current_value_text handles GLib.GError."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        def raise_glib_error(self):
-            raise GLib.GError("Test error")
-
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, name, check_computed: "")
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: True)
-        monkeypatch.setattr(Atspi.Value, "get_text", raise_glib_error)
-        monkeypatch.setattr(AXValue, "get_current_value", lambda obj: 42.0)
-        result = AXValue.get_current_value_text(mock_obj)
-        assert result == "42"
-
-    def test_get_current_value_text_formats_decimal_places(
-        self, monkeypatch, mock_orca_dependencies
-    ):
-        """Test AXValue.get_current_value_text preserves decimal places."""
-
-        clean_module_cache("orca.ax_value")
-        from orca.ax_value import AXValue
-        from orca.ax_object import AXObject
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "get_attribute", lambda obj, name, check_computed: "")
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: True)
-        monkeypatch.setattr(Atspi.Value, "get_text", lambda self: "")
-        monkeypatch.setattr(AXValue, "get_current_value", lambda obj: 0.125)
-        result = AXValue.get_current_value_text(mock_obj)
-        assert result == "0.125"
+        assert result == case["expected_result"]
 
     @pytest.mark.parametrize(
-        "supports_value, current_value, is_indeterminate, min_val, max_val, expected_result",
+        "case",
         [
-            pytest.param(False, None, False, None, None, None, id="no_value_support"),
-            pytest.param(True, 0.0, True, None, None, None, id="indeterminate_state"),
-            pytest.param(True, 50.0, False, 100.0, 100.0, None, id="min_equals_max"),
-            pytest.param(True, 75.0, False, 0.0, 100.0, 75, id="normal_calculation"),
+            {
+                "id": "no_value_support",
+                "supports_value": False,
+                "get_current_return": 0.0,
+                "expected_result": 0.0,
+                "stores_value": False,
+            },
+            {
+                "id": "stores_value",
+                "supports_value": True,
+                "get_current_return": 75.0,
+                "expected_result": 75.0,
+                "stores_value": True,
+            },
         ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_current_value(
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
+    ) -> None:
+        """Test AXValue.get_current_value with various scenarios."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_value import AXValue
+        from orca.ax_object import AXObject
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
+        if case["supports_value"]:
+            test_context.patch_object(
+                AXValue, "_get_current_value", side_effect=lambda obj: case["get_current_return"]
+            )
+        else:
+            test_context.patch_object(
+                Atspi.Value, "get_current_value", side_effect=lambda obj: case["get_current_return"]
+            )
+
+        AXValue.LAST_KNOWN_VALUE.clear()
+        result = AXValue.get_current_value(mock_obj)
+        assert result == case["expected_result"]
+
+        if case["stores_value"]:
+            assert AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] == case["expected_result"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "valuetext_attribute",
+                "supports_value": True,
+                "valuetext_attr": "75%",
+                "atspi_text": "",
+                "should_raise_error": False,
+                "current_value": 0.0,
+                "expected_result": "75%",
+            },
+            {
+                "id": "no_value_support",
+                "supports_value": False,
+                "valuetext_attr": "",
+                "atspi_text": "",
+                "should_raise_error": False,
+                "current_value": 0.0,
+                "expected_result": "",
+            },
+            {
+                "id": "from_atspi",
+                "supports_value": True,
+                "valuetext_attr": "",
+                "atspi_text": "50 percent",
+                "should_raise_error": False,
+                "current_value": 0.0,
+                "expected_result": "50 percent",
+            },
+            {
+                "id": "glib_error",
+                "supports_value": True,
+                "valuetext_attr": "",
+                "atspi_text": "",
+                "should_raise_error": True,
+                "current_value": 42.0,
+                "expected_result": "42",
+            },
+            {
+                "id": "decimal_places",
+                "supports_value": True,
+                "valuetext_attr": "",
+                "atspi_text": "",
+                "should_raise_error": False,
+                "current_value": 0.125,
+                "expected_result": "0.125",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_current_value_text(  # pylint: disable=too-many-locals
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
+    ) -> None:
+        """Test AXValue.get_current_value_text with various scenarios."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+
+        def mock_get_attribute(obj, name, check_computed=True):  # pylint: disable=unused-argument
+            if name == "valuetext":
+                return case["valuetext_attr"]
+            return ""
+
+        essential_modules["orca.ax_object"].AXObject.get_attribute = mock_get_attribute
+        essential_modules["orca.ax_object"].AXObject.supports_value = test_context.Mock(
+            return_value=case["supports_value"]
+        )
+
+        from orca.ax_value import AXValue
+        from orca.ax_object import AXObject
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        AXValue.LAST_KNOWN_VALUE.clear()
+
+        test_context.patch_object(AXObject, "get_attribute", side_effect=mock_get_attribute)
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
+
+        if case["should_raise_error"]:
+
+            def raise_glib_error(self):
+                raise GLib.GError("Test error")
+
+            test_context.patch_object(Atspi.Value, "get_text", side_effect=raise_glib_error)
+            test_context.patch_object(
+                AXValue, "get_current_value", side_effect=lambda obj: case["current_value"]
+            )
+        else:
+            test_context.patch_object(
+                Atspi.Value, "get_text", side_effect=lambda self: case["atspi_text"]
+            )
+            if case["current_value"] != 0.0:
+                test_context.patch_object(
+                    AXValue, "get_current_value", side_effect=lambda obj: case["current_value"]
+                )
+
+        test_context.patch_object(Atspi.Value, "get_current_value", return_value=0.0)
+
+        result = AXValue.get_current_value_text(mock_obj)
+        assert result == case["expected_result"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "no_value_support",
+                "supports_value": False,
+                "current_value": None,
+                "is_indeterminate": False,
+                "min_val": None,
+                "max_val": None,
+                "expected_result": None,
+            },
+            {
+                "id": "indeterminate_state",
+                "supports_value": True,
+                "current_value": 0.0,
+                "is_indeterminate": True,
+                "min_val": None,
+                "max_val": None,
+                "expected_result": None,
+            },
+            {
+                "id": "min_equals_max",
+                "supports_value": True,
+                "current_value": 50.0,
+                "is_indeterminate": False,
+                "min_val": 100.0,
+                "max_val": 100.0,
+                "expected_result": None,
+            },
+            {
+                "id": "normal_calculation",
+                "supports_value": True,
+                "current_value": 75.0,
+                "is_indeterminate": False,
+                "min_val": 0.0,
+                "max_val": 100.0,
+                "expected_result": 75,
+            },
+        ],
+        ids=lambda case: case["id"],
     )
     def test_get_value_as_percent(
         self,
-        monkeypatch,
-        mock_orca_dependencies,
-        supports_value,
-        current_value,
-        is_indeterminate,
-        min_val,
-        max_val,
-        expected_result,
-    ):
+        test_context,
+        case: dict,
+    ) -> None:
         """Test AXValue.get_value_as_percent."""
 
-        clean_module_cache("orca.ax_value")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+
+        supports_value_mock = test_context.Mock(return_value=case["supports_value"])
+        is_indeterminate_mock = test_context.Mock(return_value=case["is_indeterminate"])
+        essential_modules["orca.ax_object"].AXObject.supports_value = supports_value_mock
+        essential_modules["orca.ax_utilities"].AXUtilities.is_indeterminate = is_indeterminate_mock
+
         from orca.ax_value import AXValue
         from orca.ax_object import AXObject
-        from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_utilities import AXUtilities
 
-        # Add missing method to AXUtilities for cross-contamination prevention
-        if not hasattr(AXUtilities, "is_indeterminate"):
-            setattr(
-                AXUtilities, "is_indeterminate", staticmethod(AXUtilitiesState.is_indeterminate)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        AXValue.LAST_KNOWN_VALUE.clear()
+
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
+
+        current_val = case["current_value"] if case["current_value"] is not None else 0.0
+        min_val_default = case["min_val"] if case["min_val"] is not None else 0.0
+        max_val_default = case["max_val"] if case["max_val"] is not None else 100.0
+
+        test_context.patch_object(
+            Atspi.Value, "get_current_value", side_effect=lambda obj: current_val
+        )
+        test_context.patch_object(
+            Atspi.Value, "get_minimum_value", side_effect=lambda obj: min_val_default
+        )
+        test_context.patch_object(
+            Atspi.Value, "get_maximum_value", side_effect=lambda obj: max_val_default
+        )
+
+        test_context.patch_object(
+            AXUtilities, "is_indeterminate", side_effect=lambda obj: case["is_indeterminate"]
+        )
+
+        if case["current_value"] is not None:
+            test_context.patch_object(
+                AXValue, "get_current_value", side_effect=lambda obj: case["current_value"]
+            )
+        if case["min_val"] is not None:
+            test_context.patch_object(
+                AXValue, "get_minimum_value", side_effect=lambda obj: case["min_val"]
+            )
+        if case["max_val"] is not None:
+            test_context.patch_object(
+                AXValue, "get_maximum_value", side_effect=lambda obj: case["max_val"]
             )
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXObject, "supports_value", lambda obj: supports_value)
-
-        if current_value is not None:
-            monkeypatch.setattr(AXValue, "get_current_value", lambda obj: current_value)
-
-        if supports_value:
-            monkeypatch.setattr(AXUtilities, "is_indeterminate", lambda obj: is_indeterminate)
-
-            if min_val is not None:
-                monkeypatch.setattr(AXValue, "get_minimum_value", lambda obj: min_val)
-            if max_val is not None:
-                monkeypatch.setattr(AXValue, "get_maximum_value", lambda obj: max_val)
-
         result = AXValue.get_value_as_percent(mock_obj)
-        assert result == expected_result
+        assert result == case["expected_result"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "no_value_support",
+                "supports_value": False,
+                "current_value": None,
+                "cached_value": None,
+                "expected_result": False,
+                "expects_debug_call": False,
+                "cache_should_exist": False,
+            },
+            {
+                "id": "cached_value_changed",
+                "supports_value": True,
+                "current_value": 75.0,
+                "cached_value": 50.0,
+                "expected_result": True,
+                "expects_debug_call": True,
+                "cache_should_exist": True,
+            },
+            {
+                "id": "cached_value_unchanged",
+                "supports_value": True,
+                "current_value": 50.0,
+                "cached_value": 50.0,
+                "expected_result": False,
+                "expects_debug_call": False,
+                "cache_should_exist": True,
+            },
+            {
+                "id": "no_cached_value",
+                "supports_value": True,
+                "current_value": 25.0,
+                "cached_value": None,
+                "expected_result": True,
+                "expects_debug_call": True,
+                "cache_should_exist": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_did_value_change_scenarios(
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
+    ) -> None:
+        """Test AXValue.did_value_change with various scenarios."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.ax_value import AXValue
+        from orca.ax_object import AXObject
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
+
+        if case["current_value"] is not None:
+            test_context.patch_object(
+                AXValue, "_get_current_value", side_effect=lambda obj: case["current_value"]
+            )
+
+        AXValue.LAST_KNOWN_VALUE.clear()
+        if case["cached_value"] is not None:
+            AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] = case["cached_value"]
+
+        result = AXValue.did_value_change(mock_obj)
+        assert result is case["expected_result"]
+
+        if case["expects_debug_call"]:
+            essential_modules["orca.debug"].print_tokens.assert_called()
+
+        if case["cache_should_exist"] and case["cached_value"] is not None:
+            assert AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] == case["cached_value"]
+        elif not case["cache_should_exist"]:
+            assert hash(mock_obj) not in AXValue.LAST_KNOWN_VALUE
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "min_no_value_support",
+                "method_name": "get_minimum_value",
+                "supports_value": False,
+                "atspi_return_value": None,
+                "should_raise_error": False,
+                "expected_result": 0.0,
+            },
+            {
+                "id": "min_success_case",
+                "method_name": "get_minimum_value",
+                "supports_value": True,
+                "atspi_return_value": 10.0,
+                "should_raise_error": False,
+                "expected_result": 10.0,
+            },
+            {
+                "id": "min_glib_error",
+                "method_name": "get_minimum_value",
+                "supports_value": True,
+                "atspi_return_value": None,
+                "should_raise_error": True,
+                "expected_result": 0.0,
+            },
+            {
+                "id": "min_negative_values",
+                "method_name": "get_minimum_value",
+                "supports_value": True,
+                "atspi_return_value": -50.5,
+                "should_raise_error": False,
+                "expected_result": -50.5,
+            },
+            {
+                "id": "max_no_value_support",
+                "method_name": "get_maximum_value",
+                "supports_value": False,
+                "atspi_return_value": None,
+                "should_raise_error": False,
+                "expected_result": 0.0,
+            },
+            {
+                "id": "max_success_case",
+                "method_name": "get_maximum_value",
+                "supports_value": True,
+                "atspi_return_value": 100.0,
+                "should_raise_error": False,
+                "expected_result": 100.0,
+            },
+            {
+                "id": "max_glib_error",
+                "method_name": "get_maximum_value",
+                "supports_value": True,
+                "atspi_return_value": None,
+                "should_raise_error": True,
+                "expected_result": 0.0,
+            },
+            {
+                "id": "max_large_values",
+                "method_name": "get_maximum_value",
+                "supports_value": True,
+                "atspi_return_value": 99999.99,
+                "should_raise_error": False,
+                "expected_result": 99999.99,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_minimum_maximum_value(
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
+    ) -> None:
+        """Test AXValue.get_minimum_value and get_maximum_value with various scenarios."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.ax_value import AXValue
+        from orca.ax_object import AXObject
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+        )
+
+        if case["should_raise_error"]:
+
+            def raise_glib_error(obj):  # pylint: disable=unused-argument
+                error_type = "minimum" if "minimum" in case["method_name"] else "maximum"
+                raise GLib.GError(f"Test {error_type} value error")
+
+            test_context.patch_object(
+                Atspi.Value, case["method_name"], side_effect=raise_glib_error
+            )
+        elif case["atspi_return_value"] is not None:
+            test_context.patch_object(
+                Atspi.Value, case["method_name"], side_effect=lambda obj: case["atspi_return_value"]
+            )
+        else:
+            test_context.patch_object(Atspi.Value, case["method_name"], return_value=0.0)
+
+        result = getattr(AXValue, case["method_name"])(mock_obj)
+        assert result == case["expected_result"]
+
+        if case["supports_value"]:
+            if case["should_raise_error"]:
+                essential_modules["orca.debug"].print_message.assert_called()
+            else:
+                essential_modules["orca.debug"].print_tokens.assert_called()

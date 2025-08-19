@@ -66,7 +66,8 @@ class AXUtilities:
     @staticmethod
     def get_all_widgets(
         obj: Atspi.Accessible,
-        must_be_showing_and_visible: bool = True
+        must_be_showing_and_visible: bool = True,
+        exclude_push_button: bool = False
     ) -> list[Atspi.Accessible]: ...
 
     @staticmethod

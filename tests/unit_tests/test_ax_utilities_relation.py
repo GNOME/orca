@@ -1,4 +1,4 @@
-# Unit tests for ax_utilities_relation.py relation-related methods.
+# Unit tests for ax_utilities_relation.py methods.
 #
 # Copyright 2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -23,12 +23,12 @@
 # pylint: disable=too-many-lines
 # pylint: disable=protected-access
 # pylint: disable=import-outside-toplevel
-# pylint: disable=unused-argument
-# pylint: disable=wrong-import-order
 
-"""Unit tests for ax_utilities_relation.py relation-related methods."""
+"""Unit tests for ax_utilities_relation.py methods."""
 
-from unittest.mock import Mock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import gi
 import pytest
@@ -36,312 +36,449 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from .conftest import clean_module_cache
+if TYPE_CHECKING:
+    from .orca_test_context import OrcaTestContext
+    from unittest.mock import MagicMock
 
 @pytest.mark.unit
 class TestAXUtilitiesRelation:
-    """Test relation-related methods."""
+    """Test AXUtilitiesRelation class methods."""
 
-    def setup_method(self):
-        """Clear cached data before each test."""
-        clean_module_cache("orca.ax_utilities_relation")
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for ax_utilities_relation dependencies."""
+
+        essential_modules = test_context.setup_shared_dependencies([])
+
+        ax_object_mock = essential_modules["orca.ax_object"]
+        ax_object_mock.is_valid = test_context.Mock(return_value=True)
+        ax_object_mock.is_ancestor = test_context.Mock(return_value=False)
+
+        return essential_modules
 
     @pytest.mark.parametrize(
-        "method_name, relation_type",
+        "case",
         [
-            ("get_is_controlled_by", Atspi.RelationType.CONTROLLED_BY),
-            ("get_is_controller_for", Atspi.RelationType.CONTROLLER_FOR),
-            ("get_is_described_by", Atspi.RelationType.DESCRIBED_BY),
-            ("get_is_description_for", Atspi.RelationType.DESCRIPTION_FOR),
-            ("get_details", Atspi.RelationType.DETAILS),
-            ("get_is_details_for", Atspi.RelationType.DETAILS_FOR),
-            ("get_is_embedded_by", Atspi.RelationType.EMBEDDED_BY),
-            ("get_embeds", Atspi.RelationType.EMBEDS),
-            ("get_is_error_for", Atspi.RelationType.ERROR_FOR),
-            ("get_error_message", Atspi.RelationType.ERROR_MESSAGE),
-            ("get_flows_from", Atspi.RelationType.FLOWS_FROM),
-            ("get_flows_to", Atspi.RelationType.FLOWS_TO),
-            ("get_is_label_for", Atspi.RelationType.LABEL_FOR),
-            ("get_is_member_of", Atspi.RelationType.MEMBER_OF),
-            ("get_is_node_child_of", Atspi.RelationType.NODE_CHILD_OF),
-            ("get_is_node_parent_of", Atspi.RelationType.NODE_PARENT_OF),
-            ("get_is_parent_window_of", Atspi.RelationType.PARENT_WINDOW_OF),
-            ("get_is_popup_for", Atspi.RelationType.POPUP_FOR),
-            ("get_is_subwindow_of", Atspi.RelationType.SUBWINDOW_OF),
-            ("get_is_tooltip_for", Atspi.RelationType.TOOLTIP_FOR),
-            ("get_relation_targets_for_debugging", Atspi.RelationType.LABELLED_BY),
+            {
+                "id": "controlled_by",
+                "method_name": "get_is_controlled_by",
+                "relation_type": Atspi.RelationType.CONTROLLED_BY,
+            },
+            {
+                "id": "controller_for",
+                "method_name": "get_is_controller_for",
+                "relation_type": Atspi.RelationType.CONTROLLER_FOR,
+            },
+            {
+                "id": "described_by",
+                "method_name": "get_is_described_by",
+                "relation_type": Atspi.RelationType.DESCRIBED_BY,
+            },
+            {
+                "id": "description_for",
+                "method_name": "get_is_description_for",
+                "relation_type": Atspi.RelationType.DESCRIPTION_FOR,
+            },
+            {
+                "id": "details",
+                "method_name": "get_details",
+                "relation_type": Atspi.RelationType.DETAILS,
+            },
+            {
+                "id": "details_for",
+                "method_name": "get_is_details_for",
+                "relation_type": Atspi.RelationType.DETAILS_FOR,
+            },
+            {
+                "id": "embedded_by",
+                "method_name": "get_is_embedded_by",
+                "relation_type": Atspi.RelationType.EMBEDDED_BY,
+            },
+            {
+                "id": "embeds",
+                "method_name": "get_embeds",
+                "relation_type": Atspi.RelationType.EMBEDS,
+            },
+            {
+                "id": "error_for",
+                "method_name": "get_is_error_for",
+                "relation_type": Atspi.RelationType.ERROR_FOR,
+            },
+            {
+                "id": "error_message",
+                "method_name": "get_error_message",
+                "relation_type": Atspi.RelationType.ERROR_MESSAGE,
+            },
+            {
+                "id": "flows_from",
+                "method_name": "get_flows_from",
+                "relation_type": Atspi.RelationType.FLOWS_FROM,
+            },
+            {
+                "id": "flows_to",
+                "method_name": "get_flows_to",
+                "relation_type": Atspi.RelationType.FLOWS_TO,
+            },
+            {
+                "id": "label_for",
+                "method_name": "get_is_label_for",
+                "relation_type": Atspi.RelationType.LABEL_FOR,
+            },
+            {
+                "id": "member_of",
+                "method_name": "get_is_member_of",
+                "relation_type": Atspi.RelationType.MEMBER_OF,
+            },
+            {
+                "id": "node_child_of",
+                "method_name": "get_is_node_child_of",
+                "relation_type": Atspi.RelationType.NODE_CHILD_OF,
+            },
+            {
+                "id": "node_parent_of",
+                "method_name": "get_is_node_parent_of",
+                "relation_type": Atspi.RelationType.NODE_PARENT_OF,
+            },
+            {
+                "id": "parent_window_of",
+                "method_name": "get_is_parent_window_of",
+                "relation_type": Atspi.RelationType.PARENT_WINDOW_OF,
+            },
+            {
+                "id": "popup_for",
+                "method_name": "get_is_popup_for",
+                "relation_type": Atspi.RelationType.POPUP_FOR,
+            },
+            {
+                "id": "subwindow_of",
+                "method_name": "get_is_subwindow_of",
+                "relation_type": Atspi.RelationType.SUBWINDOW_OF,
+            },
+            {
+                "id": "tooltip_for",
+                "method_name": "get_is_tooltip_for",
+                "relation_type": Atspi.RelationType.TOOLTIP_FOR,
+            },
+            {
+                "id": "debugging_labelled_by",
+                "method_name": "get_relation_targets_for_debugging",
+                "relation_type": Atspi.RelationType.LABELLED_BY,
+            },
         ],
+        ids=lambda case: case["id"],
     )
-    def test_get_relation_targets_wrappers(
-        self, monkeypatch, method_name, relation_type, mock_orca_dependencies
-    ):
+    def test_get_relation_targets_wrappers(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test that various get_*_relation_targets methods call _get_relation_targets."""
 
-        clean_module_cache("orca.ax_utilities_relation")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_targets = [Mock(spec=Atspi.Accessible)]
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_targets = [test_context.Mock(spec=Atspi.Accessible)]
+        test_context.patch_object(
+            AXUtilitiesRelation, "_get_relation_targets", return_value=mock_targets
         )
-
-        method = getattr(AXUtilitiesRelation, method_name)
-        if method_name == "get_relation_targets_for_debugging":
-            result = method(mock_obj, relation_type)
+        method = getattr(AXUtilitiesRelation, case["method_name"])
+        if case["method_name"] == "get_relation_targets_for_debugging":
+            result = method(mock_obj, case["relation_type"])
         else:
             result = method(mock_obj)
-
         assert result == mock_targets
 
-    def test_get_relations_with_invalid_object(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.get_relations for invalid object."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "invalid_object",
+                "is_valid": False,
+                "has_cache": False,
+                "should_raise_error": False,
+                "expected_result": [],
+                "should_cache": False,
+            },
+            {
+                "id": "from_cache",
+                "is_valid": True,
+                "has_cache": True,
+                "should_raise_error": False,
+                "expected_result": "cached_relations",
+                "should_cache": False,
+            },
+            {
+                "id": "from_atspi",
+                "is_valid": True,
+                "has_cache": False,
+                "should_raise_error": False,
+                "expected_result": "atspi_relations",
+                "should_cache": True,
+            },
+            {
+                "id": "glib_error",
+                "is_valid": True,
+                "has_cache": False,
+                "should_raise_error": True,
+                "expected_result": [],
+                "should_cache": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_relations(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRelation.get_relations with various scenarios."""
 
-        clean_module_cache("orca.ax_utilities_relation")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
-        from orca import ax_utilities_relation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(ax_utilities_relation.AXObject, "is_valid", lambda obj: False)
-        result = AXUtilitiesRelation.get_relations(mock_obj)
-        assert result == []
-
-    def test_get_relations_from_cache(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.get_relations with cached relations."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-        from orca import ax_utilities_relation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_relations = [Mock(spec=Atspi.Relation)]
-        monkeypatch.setattr(ax_utilities_relation.AXObject, "is_valid", lambda obj: True)
-        AXUtilitiesRelation.RELATIONS[hash(mock_obj)] = mock_relations
-        result = AXUtilitiesRelation.get_relations(mock_obj)
-        assert result == mock_relations
-
-    def test_get_relations_from_atspi(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.get_relations fetches from AT-SPI."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-        from orca import ax_utilities_relation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_relations = [Mock(spec=Atspi.Relation)]
-        monkeypatch.setattr(ax_utilities_relation.AXObject, "is_valid", lambda obj: True)
-        monkeypatch.setattr(Atspi.Accessible, "get_relation_set", lambda self: mock_relations)
-        result = AXUtilitiesRelation.get_relations(mock_obj)
-        assert result == mock_relations
-        assert AXUtilitiesRelation.RELATIONS[hash(mock_obj)] == mock_relations
-
-    def test_get_relations_with_glib_error(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.get_relations when GLib.GError occurs."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-        from orca import ax_utilities_relation
         from gi.repository import GLib
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_relations = [test_context.Mock(spec=Atspi.Relation)]
 
-        def raise_glib_error(self):
-            raise GLib.GError("Test error")
+        test_context.patch(
+            "orca.ax_utilities_relation.AXObject.is_valid", return_value=case["is_valid"]
+        )
 
-        monkeypatch.setattr(ax_utilities_relation.AXObject, "is_valid", lambda obj: True)
-        monkeypatch.setattr(Atspi.Accessible, "get_relation_set", raise_glib_error)
+        AXUtilitiesRelation.RELATIONS.clear()
+        if case["has_cache"]:
+            AXUtilitiesRelation.RELATIONS[hash(mock_obj)] = mock_relations
+
+        if case["should_raise_error"]:
+
+            def raise_glib_error(self):
+                raise GLib.GError("Test error")
+
+            test_context.patch_object(
+                Atspi.Accessible, "get_relation_set", side_effect=raise_glib_error
+            )
+        else:
+            test_context.patch_object(
+                Atspi.Accessible, "get_relation_set", return_value=mock_relations
+            )
+
         result = AXUtilitiesRelation.get_relations(mock_obj)
-        assert result == []
 
-    def test_get_relation_with_matching_type(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation._get_relation with matching type."""
+        if case["expected_result"] in ("cached_relations", "atspi_relations"):
+            assert result == mock_relations
+        else:
+            assert result == case["expected_result"]
 
-        clean_module_cache("orca.ax_utilities_relation")
+        if case["should_cache"]:
+            assert AXUtilitiesRelation.RELATIONS[hash(mock_obj)] == mock_relations
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "matching_type",
+                "relation_type_to_find": Atspi.RelationType.LABELLED_BY,
+                "relation_type_available": Atspi.RelationType.LABELLED_BY,
+                "expected_result": "found_relation",
+            },
+            {
+                "id": "no_matching_type",
+                "relation_type_to_find": Atspi.RelationType.LABEL_FOR,
+                "relation_type_available": Atspi.RelationType.LABELLED_BY,
+                "expected_result": None,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_relation(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRelation._get_relation with various scenarios."""
+
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_relation = Mock(spec=Atspi.Relation)
-        mock_relation.get_relation_type.return_value = Atspi.RelationType.LABELLED_BY
-        monkeypatch.setattr(AXUtilitiesRelation, "get_relations", lambda obj: [mock_relation])
-        result = AXUtilitiesRelation._get_relation(mock_obj, Atspi.RelationType.LABELLED_BY)
-        assert result == mock_relation
-
-    def test_get_relation_with_no_matching_type(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation._get_relation when no matching type found."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_relation = Mock(spec=Atspi.Relation)
-        mock_relation.get_relation_type.return_value = Atspi.RelationType.LABELLED_BY
-        monkeypatch.setattr(AXUtilitiesRelation, "get_relations", lambda obj: [mock_relation])
-        result = AXUtilitiesRelation._get_relation(mock_obj, Atspi.RelationType.LABEL_FOR)
-        assert result is None
-
-    def test_get_relation_targets_from_cache(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation._get_relation_targets with cached targets."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_targets = [Mock(spec=Atspi.Accessible)]
-        AXUtilitiesRelation.TARGETS[hash(mock_obj)] = {Atspi.RelationType.LABELLED_BY: mock_targets}
-
-        result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
-        assert result == mock_targets
-
-    def test_get_relation_targets_with_no_relation(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation._get_relation_targets when no relation exists."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: None)
-        result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
-        assert result == []
-        assert AXUtilitiesRelation.TARGETS[hash(mock_obj)][Atspi.RelationType.LABELLED_BY] == []
-
-    def test_get_relation_targets_with_valid_targets(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation._get_relation_targets from relation."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_target1 = Mock(spec=Atspi.Accessible)
-        mock_target2 = Mock(spec=Atspi.Accessible)
-        mock_relation = Mock(spec=Atspi.Relation)
-        mock_relation.get_n_targets.return_value = 2
-        mock_relation.get_target.side_effect = [mock_target1, mock_target2]
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_relation = test_context.Mock(spec=Atspi.Relation)
+        mock_relation.get_relation_type.return_value = case["relation_type_available"]
+        test_context.patch_object(
+            AXUtilitiesRelation, "get_relations", return_value=[mock_relation]
         )
-        result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
-        assert set(result) == {mock_target1, mock_target2}
 
-    def test_get_relation_targets_removes_self_reference(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation._get_relation_targets removes self-references."""
+        result = AXUtilitiesRelation._get_relation(mock_obj, case["relation_type_to_find"])
 
-        clean_module_cache("orca.ax_utilities_relation")
+        if case["expected_result"] == "found_relation":
+            assert result == mock_relation
+        else:
+            assert result is case["expected_result"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "from_cache",
+                "scenario": "cached",
+                "relation_type": Atspi.RelationType.LABELLED_BY,
+                "expected_result": "cached_targets",
+                "has_self_target": False,
+            },
+            {
+                "id": "no_relation",
+                "scenario": "no_relation",
+                "relation_type": Atspi.RelationType.LABELLED_BY,
+                "expected_result": [],
+                "has_self_target": False,
+            },
+            {
+                "id": "valid_targets",
+                "scenario": "valid_targets",
+                "relation_type": Atspi.RelationType.LABELLED_BY,
+                "expected_result": "all_targets",
+                "has_self_target": False,
+            },
+            {
+                "id": "removes_self",
+                "scenario": "with_self",
+                "relation_type": Atspi.RelationType.LABELLED_BY,
+                "expected_result": "exclude_self",
+                "has_self_target": True,
+            },
+            {
+                "id": "keeps_member_of_self",
+                "scenario": "member_of_self",
+                "relation_type": Atspi.RelationType.MEMBER_OF,
+                "expected_result": "include_self",
+                "has_self_target": True,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_relation_targets(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRelation._get_relation_targets with various scenarios."""
+
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_target = Mock(spec=Atspi.Accessible)
-        mock_relation = Mock(spec=Atspi.Relation)
-        mock_relation.get_n_targets.return_value = 2
-        mock_relation.get_target.side_effect = [mock_target, mock_obj]
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation
-        )
-        result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.LABELLED_BY)
-        assert result == [mock_target]
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_target1 = test_context.Mock(spec=Atspi.Accessible)
+        mock_target2 = test_context.Mock(spec=Atspi.Accessible)
 
-    def test_get_relation_targets_keeps_self_for_member_of(
-        self, monkeypatch, mock_orca_dependencies
-    ):
-        """Test AXUtilitiesRelation._get_relation_targets keeps MEMBER_OF self-references."""
+        AXUtilitiesRelation.TARGETS.clear()
 
-        clean_module_cache("orca.ax_utilities_relation")
+        if case["scenario"] == "cached":
+            mock_targets = [mock_target1]
+            AXUtilitiesRelation.TARGETS[hash(mock_obj)] = {case["relation_type"]: mock_targets}
+            result = AXUtilitiesRelation._get_relation_targets(mock_obj, case["relation_type"])
+            assert result == mock_targets
+            return
+
+        if case["scenario"] == "no_relation":
+            test_context.patch_object(
+                AXUtilitiesRelation, "_get_relation", return_value=None
+            )
+        else:
+            mock_relation = test_context.Mock(spec=Atspi.Relation)
+            if case["has_self_target"]:
+                mock_relation.get_n_targets.return_value = 2
+                mock_relation.get_target.side_effect = [mock_target1, mock_obj]
+            else:
+                mock_relation.get_n_targets.return_value = 2
+                mock_relation.get_target.side_effect = [mock_target1, mock_target2]
+            test_context.patch_object(
+                AXUtilitiesRelation, "_get_relation", return_value=mock_relation
+            )
+
+        result = AXUtilitiesRelation._get_relation_targets(mock_obj, case["relation_type"])
+
+        if case["expected_result"] == "all_targets":
+            assert set(result) == {mock_target1, mock_target2}
+        elif case["expected_result"] == "exclude_self":
+            assert result == [mock_target1]
+        elif case["expected_result"] == "include_self":
+            assert set(result) == {mock_target1, mock_obj}
+        else:
+            assert result == case["expected_result"]
+
+        if case["scenario"] == "no_relation":
+            assert AXUtilitiesRelation.TARGETS[hash(mock_obj)][case["relation_type"]] == []
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "without_filtering",
+                "exclude_ancestors": False,
+                "expected_result": "all_targets",
+            },
+            {
+                "id": "with_filtering",
+                "exclude_ancestors": True,
+                "expected_result": "non_ancestors_only",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_is_labelled_by(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRelation.get_is_labelled_by with and without ancestor filtering."""
+
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_target = Mock(spec=Atspi.Accessible)
-        mock_relation = Mock(spec=Atspi.Relation)
-        mock_relation.get_n_targets.return_value = 2
-        mock_relation.get_target.side_effect = [mock_target, mock_obj]
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation", lambda obj, rel_type: mock_relation
-        )
-        result = AXUtilitiesRelation._get_relation_targets(mock_obj, Atspi.RelationType.MEMBER_OF)
-        assert set(result) == {mock_target, mock_obj}
-
-    def test_get_is_labelled_by_without_filtering(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.get_is_labelled_by with exclude_ancestors=False."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_targets = [Mock(spec=Atspi.Accessible)]
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets
-        )
-        result = AXUtilitiesRelation.get_is_labelled_by(mock_obj, exclude_ancestors=False)
-        assert result == mock_targets
-
-    def test_get_is_labelled_by_with_filtering(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.get_is_labelled_by with exclude_ancestors=True."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-        from orca import ax_utilities_relation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        mock_ancestor = Mock(spec=Atspi.Accessible)
-        mock_non_ancestor = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
+        mock_non_ancestor = test_context.Mock(spec=Atspi.Accessible)
         mock_targets = [mock_ancestor, mock_non_ancestor]
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: mock_targets
-        )
-        # Mock is_ancestor directly on the imported module
-        monkeypatch.setattr(
-            ax_utilities_relation.AXObject, "is_ancestor", lambda child, acc: acc == mock_ancestor
-        )
-        result = AXUtilitiesRelation.get_is_labelled_by(mock_obj, exclude_ancestors=True)
-        assert result == [mock_non_ancestor]
 
-    def test_object_is_controlled_by_true(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.object_is_controlled_by when obj2 controls obj1."""
+        test_context.patch_object(
+            AXUtilitiesRelation, "_get_relation_targets", return_value=mock_targets
+        )
 
-        clean_module_cache("orca.ax_utilities_relation")
+        if case["exclude_ancestors"]:
+            test_context.patch(
+                "orca.ax_utilities_relation.AXObject.is_ancestor",
+                side_effect=lambda child, acc: acc == mock_ancestor,
+            )
+
+        result = AXUtilitiesRelation.get_is_labelled_by(
+            mock_obj, exclude_ancestors=case["exclude_ancestors"]
+        )
+
+        if case["expected_result"] == "all_targets":
+            assert result == mock_targets
+        else:
+            assert result == [mock_non_ancestor]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "controlled", "is_controlled": True, "expected": True},
+            {"id": "not_controlled", "is_controlled": False, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_object_is_controlled_by(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRelation.object_is_controlled_by with controlled/uncontrolled objects."""
+
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
 
-        mock_obj1 = Mock(spec=Atspi.Accessible)
-        mock_obj2 = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: [mock_obj2]
+        mock_obj1 = test_context.Mock(spec=Atspi.Accessible)
+        mock_obj2 = test_context.Mock(spec=Atspi.Accessible)
+        mock_obj3 = test_context.Mock(spec=Atspi.Accessible)
+        targets = [mock_obj2] if case["is_controlled"] else [mock_obj3]
+        test_context.patch_object(
+            AXUtilitiesRelation, "_get_relation_targets", return_value=targets
         )
         result = AXUtilitiesRelation.object_is_controlled_by(mock_obj1, mock_obj2)
-        assert result is True
+        assert result is case["expected"]
 
-    def test_object_is_controlled_by_false(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.object_is_controlled_by when obj2 doesn't control obj1."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "no_relations", "has_relations": False, "expected": True},
+            {"id": "has_relations", "has_relations": True, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_object_is_unrelated(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRelation.object_is_unrelated with objects with and without relations."""
 
-        clean_module_cache("orca.ax_utilities_relation")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_relation import AXUtilitiesRelation
 
-        mock_obj1 = Mock(spec=Atspi.Accessible)
-        mock_obj2 = Mock(spec=Atspi.Accessible)
-        mock_obj3 = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "_get_relation_targets", lambda obj, rel_type: [mock_obj3]
-        )
-        result = AXUtilitiesRelation.object_is_controlled_by(mock_obj1, mock_obj2)
-        assert result is False
-
-    def test_object_is_unrelated_true(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.object_is_unrelated when object has no relations."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRelation, "get_relations", lambda obj: [])
-        result = AXUtilitiesRelation.object_is_unrelated(mock_obj)
-        assert result is True
-
-    def test_object_is_unrelated_false(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRelation.object_is_unrelated when object has relations."""
-
-        clean_module_cache("orca.ax_utilities_relation")
-        from orca.ax_utilities_relation import AXUtilitiesRelation
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(
-            AXUtilitiesRelation, "get_relations", lambda obj: [Mock(spec=Atspi.Relation)]
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        relations = [test_context.Mock(spec=Atspi.Relation)] if case["has_relations"] else []
+        test_context.patch_object(
+            AXUtilitiesRelation, "get_relations", return_value=relations
         )
         result = AXUtilitiesRelation.object_is_unrelated(mock_obj)
-        assert result is False
+        assert result is case["expected"]

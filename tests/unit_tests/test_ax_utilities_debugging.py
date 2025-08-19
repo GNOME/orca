@@ -1,4 +1,4 @@
-# Unit tests for ax_utilities_debugging.py debugging utility methods.
+# Unit tests for ax_utilities_debugging.py methods.
 #
 # Copyright 2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -19,15 +19,14 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
+# pylint: disable=import-outside-toplevel
 
-"""Unit tests for ax_utilities_debugging.py debugging utility methods."""
+"""Unit tests for ax_utilities_debugging.py methods."""
 
 from __future__ import annotations
 
-import importlib
-import inspect
-import types
-from unittest.mock import Mock
+from typing import TYPE_CHECKING
 
 import gi
 import pytest
@@ -35,21 +34,50 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from .conftest import clean_module_cache
-
-
-def load_debugging_module():
-    """Load the debugging module."""
-
-    clean_module_cache("orca.ax_utilities_debugging")
-    # Dynamic import to avoid circular dependencies and allow module cache cleanup
-    module = importlib.import_module("orca.ax_utilities_debugging")
-    return module.AXUtilitiesDebugging
-
+if TYPE_CHECKING:
+    from .orca_test_context import OrcaTestContext
 
 @pytest.mark.unit
-class TestAXUtilitiesDebuggingCore:
-    """Test core debugging utility methods."""
+class TestAXUtilitiesDebugging:
+    """Test debugging utility methods."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext):
+        """Returns dependencies for ax_utilities_debugging module testing."""
+
+        additional_modules = ["orca.ax_utilities_application", "orca.ax_utilities_relation"]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        ax_object_class_mock = test_context.Mock()
+        ax_object_class_mock.is_valid = test_context.Mock(return_value=True)
+        ax_object_class_mock.is_dead = test_context.Mock(return_value=False)
+        ax_object_class_mock.get_name = test_context.Mock(return_value="test-object")
+        ax_object_class_mock.get_role_name = test_context.Mock(return_value="unknown")
+        ax_object_class_mock.get_description = test_context.Mock(return_value="")
+        ax_object_class_mock.get_help_text = test_context.Mock(return_value="")
+        ax_object_class_mock.get_accessible_id = test_context.Mock(return_value="")
+        ax_object_class_mock.get_path = test_context.Mock(return_value=[])
+        ax_object_class_mock.get_n_actions = test_context.Mock(return_value=0)
+        ax_object_class_mock.get_action_name = test_context.Mock(return_value="")
+        ax_object_class_mock.get_action_key_binding = test_context.Mock(return_value="")
+        ax_object_class_mock.get_attributes_dict = test_context.Mock(return_value={})
+        ax_object_class_mock.get_state_set = test_context.Mock(
+            return_value=test_context.Mock()
+        )
+        ax_object_class_mock.supports_text = test_context.Mock(return_value=False)
+        essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
+
+        app_class_mock = test_context.Mock()
+        app_class_mock.application_as_string = test_context.Mock(return_value="TestApp")
+        essential_modules["orca.ax_utilities_application"].AXUtilitiesApplication = app_class_mock
+
+        relation_class_mock = test_context.Mock()
+        relation_class_mock.get_relations = test_context.Mock(return_value=[])
+        relation_class_mock.get_relation_targets_for_debugging = test_context.Mock(
+            return_value=[]
+        )
+        essential_modules["orca.ax_utilities_relation"].AXUtilitiesRelation = relation_class_mock
+
+        return essential_modules
 
     @pytest.mark.parametrize(
         "input_string, expected_result",
@@ -71,77 +99,85 @@ class TestAXUtilitiesDebuggingCore:
             ),
         ],
     )
-    def test_format_string(self, input_string, expected_result, mock_orca_dependencies):
+    def test_format_string(  # pylint: disable=too-many-arguments,too-many-positional-arguments
+        self, input_string, expected_result, test_context
+    ) -> None:
         """Test AXUtilitiesDebugging._format_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        result = axutils_debug._format_string(input_string)  # pylint: disable=protected-access
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        result = AXUtilitiesDebugging._format_string(input_string)  # pylint: disable=protected-access
         assert result == expected_result
 
-    def test_as_string_accessible_object(self, monkeypatch, mock_orca_dependencies):
+    def test_as_string_accessible_object(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.as_string with Atspi.Accessible objects."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Mock AXObject methods by patching the imported module
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "button"
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
         )
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "OK")
-
-        result = axutils_debug.as_string(mock_obj)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_name", return_value="OK"
+        )
+        result = AXUtilitiesDebugging.as_string(mock_obj)
         assert "button: 'OK'" in result
         assert hex(id(mock_obj)) in result
 
-    def test_as_string_accessible_dead_object(self, monkeypatch, mock_orca_dependencies):
+    def test_as_string_accessible_dead_object(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.as_string handles dead accessible objects."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Mock AXObject methods to return empty values (dead object behavior)
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "")
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "")
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        result = axutils_debug.as_string(mock_obj)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value=""
+        )
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_name", return_value=""
+        )
+        result = AXUtilitiesDebugging.as_string(mock_obj)
         assert "[DEAD" in result
 
-    def test_as_string_event_object(self, monkeypatch, mock_orca_dependencies):
+    def test_as_string_event_object(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.as_string with Atspi.Event objects."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_event = Mock(spec=Atspi.Event)
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.type = "focus:in"
-        mock_event.source = Mock(spec=Atspi.Accessible)
+        mock_event.source = test_context.Mock(spec=Atspi.Accessible)
         mock_event.detail1 = 0
         mock_event.detail2 = 0
         mock_event.any_data = None
 
-        # Mock AXObject methods for the source
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "button"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
         )
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "OK")
-
-        # Mock application string formatting
-        monkeypatch.setattr(
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_name", return_value="OK"
+        )
+        test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesApplication.application_as_string",
-            lambda obj: "TestApp",
+            return_value="TestApp"
         )
-
-        result = axutils_debug.as_string(mock_event)
+        result = AXUtilitiesDebugging.as_string(mock_event)
         assert "focus:in for" in result
         assert "TestApp" in result
 
-    def test_actions_as_string(self, monkeypatch, mock_orca_dependencies):
+    def test_actions_as_string(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.actions_as_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Scenario: Object with actions
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_n_actions", lambda obj: 2)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_n_actions", return_value=2
+        )
 
         def mock_get_action_name(unused_obj, index):
             return ["click", "focus"][index]
@@ -149,48 +185,46 @@ class TestAXUtilitiesDebuggingCore:
         def mock_get_action_key_binding(unused_obj, index):
             return ["Return", ""][index]
 
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_action_name", mock_get_action_name
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_action_name", new=mock_get_action_name
         )
-        monkeypatch.setattr(
+        test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_action_key_binding",
-            mock_get_action_key_binding,
+            new=mock_get_action_key_binding
         )
-
-        result = axutils_debug.actions_as_string(mock_obj)
+        result = AXUtilitiesDebugging.actions_as_string(mock_obj)
         assert "click (Return)" in result
         assert "focus" in result
         assert ";" in result
 
-    def test_attributes_as_string(self, monkeypatch, mock_orca_dependencies):
+    def test_attributes_as_string(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.attributes_as_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Scenario: Object with attributes
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
         attributes_dict = {"level": "2", "placeholder-text": "Enter name"}
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_attributes_dict", lambda obj: attributes_dict
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_attributes_dict", return_value=attributes_dict
         )
-
-        result = axutils_debug.attributes_as_string(mock_obj)
+        result = AXUtilitiesDebugging.attributes_as_string(mock_obj)
         assert "level:2" in result
         assert "placeholder-text:Enter name" in result
         assert ", " in result
 
-    def test_interfaces_as_string(self, monkeypatch, mock_orca_dependencies):
+    def test_interfaces_as_string(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.interfaces_as_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Scenario: Invalid object
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_valid", lambda obj: False)
-        result = axutils_debug.interfaces_as_string(mock_obj)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=False
+        )
+        result = AXUtilitiesDebugging.interfaces_as_string(mock_obj)
         assert result == ""
 
-        # Scenario: Valid object with multiple interfaces
         interface_support = {
             "is_valid": True,
             "supports_action": True,
@@ -207,236 +241,161 @@ class TestAXUtilitiesDebuggingCore:
             "supports_table_cell": False,
             "supports_value": False,
         }
-
         for method_name, return_value in interface_support.items():
-            monkeypatch.setattr(
-                f"orca.ax_utilities_debugging.AXObject.{method_name}",
-                lambda obj, rv=return_value: rv,
+            test_context.patch(
+                f"orca.ax_utilities_debugging.AXObject.{method_name}", return_value=return_value
             )
-
-        result = axutils_debug.interfaces_as_string(mock_obj)
+        result = AXUtilitiesDebugging.interfaces_as_string(mock_obj)
         assert "Action" in result
         assert "Component" in result
         assert "Text" in result
         assert ", " in result
 
-    def test_state_set_as_string(self, monkeypatch, mock_orca_dependencies):
+    def test_state_set_as_string(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.state_set_as_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Scenario: Invalid object
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_valid", lambda obj: False)
-        result = axutils_debug.state_set_as_string(mock_obj)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=False
+        )
+        result = AXUtilitiesDebugging.state_set_as_string(mock_obj)
         assert result == ""
 
-        # Scenario: Valid object with states
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_valid", lambda obj: True)
-
-        # Mock state set
-        mock_state_set = Mock()
-        mock_state1 = Mock()
-        mock_state1.value_name = "ATSPI_STATE_FOCUSED"
-        mock_state2 = Mock()
-        mock_state2.value_name = "ATSPI_STATE_VISIBLE"
-        mock_state_set.get_states.return_value = [mock_state1, mock_state2]
-
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_state_set", lambda obj: mock_state_set
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=True
         )
 
-        result = axutils_debug.state_set_as_string(mock_obj)
+        mock_state_set = test_context.Mock()
+        mock_state1 = test_context.Mock()
+        mock_state1.value_name = "ATSPI_STATE_FOCUSED"
+        mock_state2 = test_context.Mock()
+        mock_state2.value_name = "ATSPI_STATE_VISIBLE"
+        mock_state_set.get_states.return_value = [mock_state1, mock_state2]
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_state_set", return_value=mock_state_set
+        )
+        result = AXUtilitiesDebugging.state_set_as_string(mock_obj)
         assert "focused" in result
         assert "visible" in result
         assert ", " in result
 
-    def test_text_for_debugging(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.text_for_debugging."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object does not support text
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.supports_text", lambda obj: False)
-        result = axutils_debug.text_for_debugging(mock_obj)
-        assert result == ""
-
-        # Scenario: Object supports text and returns content
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.supports_text", lambda obj: True)
-
-        def mock_get_text(unused_obj, unused_start, unused_end):
-            return "Sample text content"
-
-        def mock_get_character_count(unused_obj):
-            return 20
-
-        monkeypatch.setattr(Atspi.Text, "get_text", mock_get_text)
-        monkeypatch.setattr(Atspi.Text, "get_character_count", mock_get_character_count)
-
-        result = axutils_debug.text_for_debugging(mock_obj)
-        assert result == "Sample text content"
-
-
-@pytest.mark.unit
-class TestAXUtilitiesDebuggingExtended:
-    """Test extended debugging utility methods."""
-
     @pytest.mark.parametrize(
-        "obj_type, expected_pattern",
+        "supports_text, should_raise_error, expected_result",
         [
-            pytest.param("role", "role-nick", id="role_enum"),
-            pytest.param("state", "state-nick", id="state_enum"),
-            pytest.param("rect", "(x:10, y:20, width:100, height:200)", id="rect_object"),
-            pytest.param("list", "[item1, item2]", id="list_object"),
-            pytest.param("set", "item1", id="set_object"),
-            pytest.param("dict", "{'key1': 'value1'", id="dict_object"),
-            pytest.param("function", "test_module.test_function", id="function_object"),
-            pytest.param("method", "TestClass.test_method", id="method_object"),
-            pytest.param("frame", "test_module.test_function", id="frame_object"),
-            pytest.param("frameinfo", "test_module.test_function:42", id="frameinfo_object"),
-            pytest.param("string", "test string", id="string_object"),
+            pytest.param(False, False, "", id="no_text_support"),
+            pytest.param(True, False, "Sample text content", id="success_case"),
+            pytest.param(True, True, "", id="glib_error"),
         ],
     )
-    def test_as_string_various_objects(self, obj_type, expected_pattern, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with various object types."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
+    def test_text_for_debugging(
+        self,
+        test_context: OrcaTestContext,
+        supports_text: bool,
+        should_raise_error: bool,
+        expected_result: str,
+    ) -> None:
+        """Test AXUtilitiesDebugging.text_for_debugging with various scenarios."""
 
-        # Create test objects based on type
-        test_obj = self._create_test_object(obj_type)
-        result = axutils_debug.as_string(test_obj)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        # Verify the result contains expected patterns
-        assert expected_pattern in result
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.supports_text", return_value=supports_text
+        )
 
-    def _create_test_object(self, obj_type):
-        """Create test objects for various types."""
-        creators = {
-            "role": self._create_role_object,
-            "state": self._create_state_object,
-            "rect": self._create_rect_object,
-            "list": self._create_list_object,
-            "set": self._create_set_object,
-            "dict": self._create_dict_object,
-            "function": self._create_function_object,
-            "method": self._create_method_object,
-            "frame": self._create_frame_object,
-            "frameinfo": self._create_frameinfo_object,
-            "string": self._create_string_object,
-        }
-        creator = creators.get(obj_type)
-        return creator() if creator else None
+        if supports_text:
+            if should_raise_error:
 
-    def _create_role_object(self):
-        """Create mock role object."""
-        mock_role = Mock(spec=Atspi.Role)
-        mock_role.value_nick = "role-nick"
-        return mock_role
+                def mock_get_text_with_error(unused_obj, unused_start, unused_end):
+                    raise GLib.GError("Access error")
 
-    def _create_state_object(self):
-        """Create mock state object."""
-        mock_state = Mock(spec=Atspi.StateType)
-        mock_state.value_nick = "state-nick"
-        return mock_state
+                test_context.patch_object(Atspi.Text, "get_text", new=mock_get_text_with_error)
+            else:
 
-    def _create_rect_object(self):
-        """Create mock rect object."""
-        mock_rect = Mock(spec=Atspi.Rect)
+                def mock_get_text(unused_obj, unused_start, unused_end):
+                    return "Sample text content"
+
+                test_context.patch_object(Atspi.Text, "get_text", new=mock_get_text)
+
+            character_count = 10 if should_raise_error else 20
+            test_context.patch_object(
+                Atspi.Text, "get_character_count", return_value=character_count
+            )
+
+        result = AXUtilitiesDebugging.text_for_debugging(mock_obj)
+        assert result == expected_result
+
+    def test_as_string_role_object(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesDebugging.as_string with role object."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_role = test_context.Mock(spec=Atspi.Role)
+        mock_role.value_nick = "button"
+        result = AXUtilitiesDebugging.as_string(mock_role)
+        assert "button" in result
+
+    def test_as_string_rect_object(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesDebugging.as_string with rect object."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_rect = test_context.Mock(spec=Atspi.Rect)
         mock_rect.x = 10
         mock_rect.y = 20
         mock_rect.width = 100
         mock_rect.height = 200
-        return mock_rect
+        result = AXUtilitiesDebugging.as_string(mock_rect)
+        assert "(x:10, y:20, width:100, height:200)" in result
 
-    def _create_list_object(self):
-        """Create list object."""
-        return ["item1", "item2"]
+    def test_as_string_collection_objects(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesDebugging.as_string with collection objects."""
 
-    def _create_set_object(self):
-        """Create set object."""
-        return {"item1", "item2"}
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
 
-    def _create_dict_object(self):
-        """Create dict object."""
-        return {"key1": "value1", "key2": "value2"}
+        test_list = ["item1", "item2"]
+        result = AXUtilitiesDebugging.as_string(test_list)
+        assert "[item1, item2]" in result
 
-    def _create_function_object(self):
-        """Create function object."""
+        test_dict = {"key1": "value1", "key2": "value2"}
+        result = AXUtilitiesDebugging.as_string(test_dict)
+        assert "{'key1': 'value1'" in result
 
-        def test_function():
-            pass
-
-        test_function.__module__ = "test_module"
-        test_function.__name__ = "test_function"
-        return test_function
-
-    def _create_method_object(self):
-        """Create method object."""
-
-        # Create a real method object
-        class TestClass:
-            """Test class for method creation."""
-
-            def test_method(self):
-                """Test method for testing."""
-
-            def another_method(self):
-                """Another method to satisfy pylint requirements."""
-
-        return TestClass().test_method
-
-    def _create_frame_object(self):
-        """Create frame object."""
-        mock_frame = Mock(spec=types.FrameType)
-        mock_frame.f_code.co_filename = "/path/to/test_module.py"
-        mock_frame.f_code.co_name = "test_function"
-        return mock_frame
-
-    def _create_frameinfo_object(self):
-        """Create frameinfo object."""
-        mock_frameinfo = Mock(spec=inspect.FrameInfo)
-        mock_frameinfo.filename = "/path/to/test_module.py"
-        mock_frameinfo.function = "test_function"
-        mock_frameinfo.lineno = 42
-        return mock_frameinfo
-
-    def _create_string_object(self):
-        """Create string object."""
-        return "test string"
-
-    def test_object_details_as_string_basic(self, monkeypatch, mock_orca_dependencies):
+    def test_object_details_as_string_basic(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.object_details_as_string basic functionality."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
 
-        # Scenario: Non-Atspi.Accessible object
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         non_accessible = "not an accessible"
-        result = axutils_debug.object_details_as_string(non_accessible)
+        result = AXUtilitiesDebugging.object_details_as_string(non_accessible)
         assert result == ""
 
-        # Scenario: Dead object
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_dead", lambda obj: True)
-        result = axutils_debug.object_details_as_string(mock_obj)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_dead", return_value=True
+        )
+        result = AXUtilitiesDebugging.object_details_as_string(mock_obj)
         assert result == "(exception fetching data)"
 
-    def test_object_event_details_as_string(self, monkeypatch, mock_orca_dependencies):
+    def test_object_event_details_as_string(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.object_event_details_as_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
 
-        # Scenario: Mouse event (should return empty string)
-        mock_event = Mock(spec=Atspi.Event)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.type = "mouse:button"
-
-        result = axutils_debug.object_event_details_as_string(mock_event)
+        result = AXUtilitiesDebugging.object_event_details_as_string(mock_event)
         assert result == ""
 
-        # Scenario: Non-mouse event with source and any_data
-        mock_event.type = "focus:in"
-        mock_event.source = Mock(spec=Atspi.Accessible)
-        mock_event.any_data = Mock(spec=Atspi.Accessible)
+        mock_event.type = "object:state-changed:focused"
+        mock_event.source = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.any_data = test_context.Mock(spec=Atspi.Accessible)
 
         def mock_object_details(obj, indent="", unused_include_app=True):
             if obj == mock_event.source:
@@ -445,15 +404,15 @@ class TestAXUtilitiesDebuggingExtended:
                 return f"{indent}ANY_DATA DETAILS"
             return ""
 
-        monkeypatch.setattr(axutils_debug, "object_details_as_string", mock_object_details)
-
-        result = axutils_debug.object_event_details_as_string(mock_event)
+        test_context.patch_object(
+            AXUtilitiesDebugging, "object_details_as_string", new=mock_object_details
+        )
+        result = AXUtilitiesDebugging.object_event_details_as_string(mock_event)
         assert "EVENT SOURCE:" in result
         assert "SOURCE DETAILS" in result
         assert "EVENT ANY DATA:" in result
         assert "ANY_DATA DETAILS" in result
 
-        # Scenario: Non-mouse event with source but no any_data
         mock_event.any_data = None
 
         def mock_object_details_no_any_data(obj, indent="", unused_include_app=True):
@@ -461,198 +420,119 @@ class TestAXUtilitiesDebuggingExtended:
                 return f"{indent}SOURCE DETAILS"
             return ""
 
-        monkeypatch.setattr(
-            axutils_debug, "object_details_as_string", mock_object_details_no_any_data
+        test_context.patch_object(
+            AXUtilitiesDebugging, "object_details_as_string", new=mock_object_details_no_any_data
         )
-
-        result = axutils_debug.object_event_details_as_string(mock_event)
+        result = AXUtilitiesDebugging.object_event_details_as_string(mock_event)
         assert "EVENT SOURCE:" in result
         assert "SOURCE DETAILS" in result
         assert "EVENT ANY DATA:" not in result
 
-    def test_as_string_collection_match_type(self, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with CollectionMatchType."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_match_type = Mock(spec=Atspi.CollectionMatchType)
-        mock_match_type.value_nick = "all"
-
-        result = axutils_debug.as_string(mock_match_type)
-        assert result == "all"
-
-    def test_as_string_text_granularity(self, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with TextGranularity."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_granularity = Mock(spec=Atspi.TextGranularity)
-        mock_granularity.value_nick = "char"
-
-        result = axutils_debug.as_string(mock_granularity)
-        assert result == "char"
-
-    def test_as_string_scroll_type(self, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with ScrollType."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_scroll_type = Mock(spec=Atspi.ScrollType)
-        mock_scroll_type.value_nick = "top-left"
-
-        result = axutils_debug.as_string(mock_scroll_type)
-        assert result == "top-left"
-
-    def test_as_string_function_with_self(self, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with function that has __self__."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-
-        def test_function():
-            pass
-
-        # Mock function with __self__ attribute
-        test_function.__module__ = "test_module"
-        test_function.__name__ = "test_function"
-        test_function.__self__ = Mock()
-        test_function.__self__.__class__.__name__ = "TestClass"
-
-        result = axutils_debug.as_string(test_function)
-        assert "test_module.TestClass.test_function" in result
-
-    def test_as_string_method_without_self(self, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with method without __self__."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-
-        # Create a method mock without __self__
-        mock_method = Mock(spec=types.MethodType)
-        mock_method.__name__ = "test_method"
-
-        # Remove __self__ attribute
-        if hasattr(mock_method, "__self__"):
-            delattr(mock_method, "__self__")
-
-        result = axutils_debug.as_string(mock_method)
-        assert result == "test_method"
-
-    def test_as_string_frameinfo_unknown_module(self, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.as_string with FrameInfo unknown module."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_frameinfo = Mock(spec=inspect.FrameInfo)
-        mock_frameinfo.filename = "/unknown/path/file.py"
-        mock_frameinfo.function = "test_function"
-        mock_frameinfo.lineno = 42
-
-        result = axutils_debug.as_string(mock_frameinfo)
-        assert "file.test_function:42" in result
-
-    def test_relations_as_string(self, monkeypatch, mock_orca_dependencies):
+    def test_relations_as_string(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.relations_as_string."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Scenario: Invalid object
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_valid", lambda obj: False)
-        result = axutils_debug.relations_as_string(mock_obj)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=False
+        )
+        result = AXUtilitiesDebugging.relations_as_string(mock_obj)
         assert result == ""
 
-        # Scenario: Valid object with relations
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_valid", lambda obj: True)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=True
+        )
 
-        # Mock relation
-        mock_relation = Mock()
-        mock_relation_type = Mock()
+        mock_relation = test_context.Mock()
+        mock_relation_type = test_context.Mock()
         mock_relation_type.value_name = "ATSPI_RELATION_LABELLED_BY"
         mock_relation.get_relation_type.return_value = mock_relation_type
 
-        # Mock relation targets
-        mock_target = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(
+        mock_target = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesRelation.get_relations",
-            lambda obj: [mock_relation],
+            return_value=[mock_relation]
         )
-        monkeypatch.setattr(
+        test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesRelation.get_relation_targets_for_debugging",
-            lambda obj, rel_type: [mock_target],
+            side_effect=lambda obj, rel_type: [mock_target]
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "label"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="label"
         )
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "Username")
-
-        result = axutils_debug.relations_as_string(mock_obj)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_name", return_value="Username"
+        )
+        result = AXUtilitiesDebugging.relations_as_string(mock_obj)
         assert "labelled-by" in result
         assert "label: 'Username'" in result
 
-        # Scenario: Dead target object
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "")
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "")
-
-        result = axutils_debug.relations_as_string(mock_obj)
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value=""
+        )
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_name", return_value=""
+        )
+        result = AXUtilitiesDebugging.relations_as_string(mock_obj)
         assert "labelled-by" in result
         assert "DEAD" in result
 
-    def test_text_for_debugging_glib_error(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesDebugging.text_for_debugging with GLib.GError."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object supports text but raises GLib.GError
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.supports_text", lambda obj: True)
-
-        def mock_get_text_with_error(unused_obj, unused_start, unused_end):
-            raise GLib.GError("Access error")
-
-        monkeypatch.setattr(Atspi.Text, "get_text", mock_get_text_with_error)
-        monkeypatch.setattr(Atspi.Text, "get_character_count", lambda obj: 10)
-
-        result = axutils_debug.text_for_debugging(mock_obj)
-        assert result == ""
-
-    def test_object_details_as_string_complete(self, monkeypatch, mock_orca_dependencies):
+    def test_object_details_as_string_complete(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesDebugging.object_details_as_string complete functionality."""
-        _ = mock_orca_dependencies  # unused but required
-        axutils_debug = load_debugging_module()
-        mock_obj = Mock(spec=Atspi.Accessible)
 
-        # Scenario: Valid object with all details
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.is_dead", lambda obj: False)
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_debugging import AXUtilitiesDebugging
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        # Mock all the AXObject methods used in object_details_as_string
-        monkeypatch.setattr(
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.is_dead", return_value=False
+        )
+
+        test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesApplication.application_as_string",
-            lambda obj: "TestApp",
+            return_value="TestApp"
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_name", lambda obj: "button name"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_name", return_value="button name"
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", lambda obj: "button"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_description", lambda obj: "button desc"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_description", return_value="button desc"
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_help_text", lambda obj: "button help"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_help_text", return_value="button help"
         )
-        monkeypatch.setattr(
-            "orca.ax_utilities_debugging.AXObject.get_accessible_id", lambda obj: "btn1"
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_accessible_id", return_value="btn1"
         )
-        monkeypatch.setattr("orca.ax_utilities_debugging.AXObject.get_path", lambda obj: [0, 1, 2])
+        test_context.patch(
+            "orca.ax_utilities_debugging.AXObject.get_path", return_value=[0, 1, 2]
+        )
 
-        # Mock the debugging methods
-        monkeypatch.setattr(axutils_debug, "state_set_as_string", lambda obj: "focused, visible")
-        monkeypatch.setattr(
-            axutils_debug, "relations_as_string", lambda obj: "labelled-by: [label]"
+        test_context.patch_object(
+            AXUtilitiesDebugging, "state_set_as_string", return_value="focused, visible"
         )
-        monkeypatch.setattr(axutils_debug, "actions_as_string", lambda obj: "click, focus")
-        monkeypatch.setattr(axutils_debug, "interfaces_as_string", lambda obj: "Action, Component")
-        monkeypatch.setattr(axutils_debug, "attributes_as_string", lambda obj: "level:1")
-        monkeypatch.setattr(axutils_debug, "text_for_debugging", lambda obj: "button text")
+        test_context.patch_object(
+            AXUtilitiesDebugging, "relations_as_string", return_value="labelled-by: [label]"
+        )
+        test_context.patch_object(
+            AXUtilitiesDebugging, "actions_as_string", return_value="click, focus"
+        )
+        test_context.patch_object(
+            AXUtilitiesDebugging, "interfaces_as_string", return_value="Action, Component"
+        )
+        test_context.patch_object(
+            AXUtilitiesDebugging, "attributes_as_string", return_value="level:1"
+        )
+        test_context.patch_object(
+            AXUtilitiesDebugging, "text_for_debugging", return_value="button text"
+        )
 
-        # Test with include_app=True (default)
-        result = axutils_debug.object_details_as_string(mock_obj)
+        result = AXUtilitiesDebugging.object_details_as_string(mock_obj)
         assert "app='TestApp'" in result
         assert "name='button name'" in result
         assert "role='button'" in result
@@ -667,12 +547,12 @@ class TestAXUtilitiesDebuggingExtended:
         assert "text='button text'" in result
         assert "path=[0, 1, 2]" in result
 
-        # Test with include_app=False
-        result = axutils_debug.object_details_as_string(mock_obj, include_app=False)
+        result = AXUtilitiesDebugging.object_details_as_string(mock_obj, include_app=False)
         assert "app='TestApp'" not in result
         assert "name='button name'" in result
         assert "role='button'" in result
 
-        # Test with custom indent
-        result = axutils_debug.object_details_as_string(mock_obj, indent="  ")
+        result = AXUtilitiesDebugging.object_details_as_string(mock_obj, indent="  ")
         assert "  app='TestApp' name='button name'" in result
+
+

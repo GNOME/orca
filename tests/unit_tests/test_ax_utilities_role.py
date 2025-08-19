@@ -1,4 +1,4 @@
-# Unit tests for ax_utilities_role.py accessibility role utilities.
+# Unit tests for ax_utilities_role.py methods.
 #
 # Copyright 2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -18,18 +18,18 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
 # pylint: disable=wrong-import-position
 # pylint: disable=import-outside-toplevel
-# pylint: disable=unused-argument
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
-# pylint: disable=too-many-lines
-# pylint: disable=wrong-import-order
 
-"""Unit tests for ax_utilities_role.py accessibility role utilities."""
+"""Unit tests for ax_utilities_role.py methods."""
 
-from unittest.mock import Mock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import gi
 import pytest
@@ -37,835 +37,2153 @@ import pytest
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from .conftest import clean_module_cache
+if TYPE_CHECKING:
+    from .orca_test_context import OrcaTestContext
+    from unittest.mock import MagicMock
 
 @pytest.mark.unit
 class TestAXUtilitiesRole:
-    """Test role identification methods."""
+    """Test AXUtilitiesRole class methods."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for ax_utilities_role dependencies."""
+
+        additional_modules = ["orca.object_properties", "orca.ax_utilities_state"]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        debug_mock = essential_modules["orca.debug"]
+        debug_mock.print_tokens = test_context.Mock()
+        debug_mock.LEVEL_INFO = 800
+
+        object_props_mock = essential_modules["orca.object_properties"]
+        object_props_mock.ROLE_SLIDER_HORIZONTAL = "slider horizontal"
+        object_props_mock.ROLE_SLIDER_VERTICAL = "slider vertical"
+        object_props_mock.ROLE_SCROLL_BAR_HORIZONTAL = "scroll bar horizontal"
+        object_props_mock.ROLE_SCROLL_BAR_VERTICAL = "scroll bar vertical"
+        object_props_mock.ROLE_SPLITTER_HORIZONTAL = "splitter horizontal"
+        object_props_mock.ROLE_SPLITTER_VERTICAL = "splitter vertical"
+        object_props_mock.ROLE_CONTENT_SUGGESTION = "content suggestion"
+        object_props_mock.ROLE_FEED = "feed"
+        object_props_mock.ROLE_FIGURE = "figure"
+        object_props_mock.ROLE_SWITCH = "switch"
+        object_props_mock.ROLE_ACKNOWLEDGMENTS = "acknowledgments"
+        object_props_mock.ROLE_ABSTRACT = "abstract"
+        object_props_mock.ROLE_BIBLIOENTRY = "biblioentry"
+        object_props_mock.ROLE_LANDMARK_BANNER = "banner"
+        object_props_mock.ROLE_LANDMARK_COMPLEMENTARY = "complementary"
+        object_props_mock.ROLE_LANDMARK_CONTENTINFO = "contentinfo"
+        object_props_mock.ROLE_LANDMARK_MAIN = "main"
+        object_props_mock.ROLE_LANDMARK_NAVIGATION = "navigation"
+        object_props_mock.ROLE_LANDMARK_REGION = "region"
+        object_props_mock.ROLE_LANDMARK_SEARCH = "search"
+
+        ax_object_class_mock = test_context.Mock()
+        ax_object_class_mock.get_role = test_context.Mock(return_value=Atspi.Role.UNKNOWN)
+        ax_object_class_mock.get_role_name = test_context.Mock(return_value="unknown")
+        ax_object_class_mock.get_attributes_dict = test_context.Mock(return_value={})
+        ax_object_class_mock.has_state = test_context.Mock(return_value=False)
+        ax_object_class_mock.find_ancestor = test_context.Mock(return_value=None)
+        ax_object_class_mock.find_descendant = test_context.Mock(return_value=None)
+        ax_object_class_mock.supports_value = test_context.Mock(return_value=False)
+        ax_object_class_mock.get_attribute = test_context.Mock(return_value=None)
+        essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
+
+        state_class_mock = test_context.Mock()
+        state_class_mock.has_popup = test_context.Mock(return_value=False)
+        state_class_mock.is_editable = test_context.Mock(return_value=False)
+        state_class_mock.is_single_line = test_context.Mock(return_value=False)
+        state_class_mock.supports_autocompletion = test_context.Mock(return_value=False)
+        essential_modules["orca.ax_utilities_state"].AXUtilitiesState = state_class_mock
+
+        return essential_modules
 
     @pytest.mark.parametrize(
-        "method_name, matching_role, non_matching_role",
+        "case",
         [
-            ("is_color_chooser", Atspi.Role.COLOR_CHOOSER, Atspi.Role.PUSH_BUTTON),
-            ("is_column_header", Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER),
-            ("is_alert", Atspi.Role.ALERT, Atspi.Role.DIALOG),
-            ("is_animation", Atspi.Role.ANIMATION, Atspi.Role.IMAGE),
-            ("is_application", Atspi.Role.APPLICATION, Atspi.Role.FRAME),
-            ("is_arrow", Atspi.Role.ARROW, Atspi.Role.PUSH_BUTTON),
-            ("is_article", Atspi.Role.ARTICLE, Atspi.Role.SECTION),
-            ("is_audio", Atspi.Role.AUDIO, Atspi.Role.VIDEO),
-            ("is_block_quote", Atspi.Role.BLOCK_QUOTE, Atspi.Role.PARAGRAPH),
-            ("is_calendar", Atspi.Role.CALENDAR, Atspi.Role.DATE_EDITOR),
-            ("is_canvas", Atspi.Role.CANVAS, Atspi.Role.IMAGE),
-            ("is_caption", Atspi.Role.CAPTION, Atspi.Role.LABEL),
-            ("is_chart", Atspi.Role.CHART, Atspi.Role.IMAGE),
-            ("is_check_box", Atspi.Role.CHECK_BOX, Atspi.Role.RADIO_BUTTON),
-            ("is_check_menu_item", Atspi.Role.CHECK_MENU_ITEM, Atspi.Role.MENU_ITEM),
-            ("is_combo_box", Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX),
-            ("is_date_editor", Atspi.Role.DATE_EDITOR, Atspi.Role.SPIN_BUTTON),
-            ("is_definition", Atspi.Role.DEFINITION, Atspi.Role.DESCRIPTION_VALUE),
-            ("is_description_list", Atspi.Role.DESCRIPTION_LIST, Atspi.Role.LIST),
-            ("is_description_term", Atspi.Role.DESCRIPTION_TERM, Atspi.Role.DESCRIPTION_VALUE),
-            ("is_description_value", Atspi.Role.DESCRIPTION_VALUE, Atspi.Role.DESCRIPTION_TERM),
-            ("is_desktop_icon", Atspi.Role.DESKTOP_ICON, Atspi.Role.ICON),
-            ("is_dial", Atspi.Role.DIAL, Atspi.Role.SLIDER),
-            ("is_dialog", Atspi.Role.DIALOG, Atspi.Role.FRAME),
-            ("is_directory_pane", Atspi.Role.DIRECTORY_PANE, Atspi.Role.TREE),
-            ("is_document_email", Atspi.Role.DOCUMENT_EMAIL, Atspi.Role.DOCUMENT_TEXT),
-            ("is_document_frame", Atspi.Role.DOCUMENT_FRAME, Atspi.Role.FRAME),
-            (
-                "is_document_presentation",
-                Atspi.Role.DOCUMENT_PRESENTATION,
-                Atspi.Role.DOCUMENT_TEXT,
-            ),
-            ("is_document_spreadsheet", Atspi.Role.DOCUMENT_SPREADSHEET, Atspi.Role.DOCUMENT_TEXT),
-            ("is_document_text", Atspi.Role.DOCUMENT_TEXT, Atspi.Role.TEXT),
-            ("is_document_web", Atspi.Role.DOCUMENT_WEB, Atspi.Role.DOCUMENT_TEXT),
-            ("is_drawing_area", Atspi.Role.DRAWING_AREA, Atspi.Role.CANVAS),
-            ("is_editbar", Atspi.Role.EDITBAR, Atspi.Role.TOOL_BAR),
-            ("is_embedded", Atspi.Role.EMBEDDED, Atspi.Role.PANEL),
-            ("is_entry", Atspi.Role.ENTRY, Atspi.Role.TEXT),
-            ("is_extended", Atspi.Role.EXTENDED, Atspi.Role.UNKNOWN),
-            ("is_file_chooser", Atspi.Role.FILE_CHOOSER, Atspi.Role.DIALOG),
-            ("is_filler", Atspi.Role.FILLER, Atspi.Role.PANEL),
-            ("is_focus_traversable", Atspi.Role.FOCUS_TRAVERSABLE, Atspi.Role.PANEL),
-            ("is_font_chooser", Atspi.Role.FONT_CHOOSER, Atspi.Role.COLOR_CHOOSER),
-            ("is_footer", Atspi.Role.FOOTER, Atspi.Role.HEADER),
-            ("is_footnote", Atspi.Role.FOOTNOTE, Atspi.Role.STATIC),
-            ("is_form", Atspi.Role.FORM, Atspi.Role.PANEL),
-            ("is_frame", Atspi.Role.FRAME, Atspi.Role.WINDOW),
-            ("is_glass_pane", Atspi.Role.GLASS_PANE, Atspi.Role.PANEL),
-            ("is_header", Atspi.Role.HEADER, Atspi.Role.FOOTER),
-            ("is_heading", Atspi.Role.HEADING, Atspi.Role.LABEL),
-            ("is_html_container", Atspi.Role.HTML_CONTAINER, Atspi.Role.SECTION),
-            ("is_icon", Atspi.Role.ICON, Atspi.Role.IMAGE),
-            ("is_image", Atspi.Role.IMAGE, Atspi.Role.ICON),
-            ("is_image_map", Atspi.Role.IMAGE_MAP, Atspi.Role.IMAGE),
-            ("is_info_bar", Atspi.Role.INFO_BAR, Atspi.Role.TOOL_BAR),
-            ("is_input_method_window", Atspi.Role.INPUT_METHOD_WINDOW, Atspi.Role.WINDOW),
-            ("is_internal_frame", Atspi.Role.INTERNAL_FRAME, Atspi.Role.FRAME),
-            ("is_invalid_role", Atspi.Role.INVALID, Atspi.Role.UNKNOWN),
-            ("is_label", Atspi.Role.LABEL, Atspi.Role.STATIC),
-            ("is_landmark", Atspi.Role.LANDMARK, Atspi.Role.SECTION),
-            ("is_layered_pane", Atspi.Role.LAYERED_PANE, Atspi.Role.PANEL),
-            ("is_level_bar", Atspi.Role.LEVEL_BAR, Atspi.Role.PROGRESS_BAR),
-            ("is_link", Atspi.Role.LINK, Atspi.Role.TEXT),
-            ("is_list", Atspi.Role.LIST, Atspi.Role.LIST_BOX),
-            ("is_list_box", Atspi.Role.LIST_BOX, Atspi.Role.LIST),
-            ("is_list_item", Atspi.Role.LIST_ITEM, Atspi.Role.LIST),
-            ("is_log", Atspi.Role.LOG, Atspi.Role.TEXT),
-            ("is_marquee", Atspi.Role.MARQUEE, Atspi.Role.ANIMATION),
-            ("is_math", Atspi.Role.MATH, Atspi.Role.STATIC),
-            ("is_math_fraction", Atspi.Role.MATH_FRACTION, Atspi.Role.MATH),
-            ("is_math_root", Atspi.Role.MATH_ROOT, Atspi.Role.MATH),
-            ("is_menu", Atspi.Role.MENU, Atspi.Role.MENU_BAR),
-            ("is_menu_bar", Atspi.Role.MENU_BAR, Atspi.Role.MENU),
-            ("is_menu_item", Atspi.Role.MENU_ITEM, Atspi.Role.CHECK_MENU_ITEM),
-            ("is_notification", Atspi.Role.NOTIFICATION, Atspi.Role.ALERT),
-            ("is_option_pane", Atspi.Role.OPTION_PANE, Atspi.Role.PANEL),
-            ("is_page", Atspi.Role.PAGE, Atspi.Role.SECTION),
-            ("is_page_tab", Atspi.Role.PAGE_TAB, Atspi.Role.PAGE_TAB_LIST),
-            ("is_page_tab_list", Atspi.Role.PAGE_TAB_LIST, Atspi.Role.PAGE_TAB),
-            ("is_panel", Atspi.Role.PANEL, Atspi.Role.FILLER),
-            ("is_paragraph", Atspi.Role.PARAGRAPH, Atspi.Role.TEXT),
-            ("is_password_text", Atspi.Role.PASSWORD_TEXT, Atspi.Role.TEXT),
-            ("is_popup_menu", Atspi.Role.POPUP_MENU, Atspi.Role.MENU),
-            ("is_progress_bar", Atspi.Role.PROGRESS_BAR, Atspi.Role.LEVEL_BAR),
-            ("is_push_button", Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON),
-            ("is_push_button_menu", Atspi.Role.PUSH_BUTTON_MENU, Atspi.Role.PUSH_BUTTON),
-            ("is_radio_button", Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX),
-            ("is_radio_menu_item", Atspi.Role.RADIO_MENU_ITEM, Atspi.Role.CHECK_MENU_ITEM),
-            ("is_rating", Atspi.Role.RATING, Atspi.Role.SLIDER),
-            ("is_redundant_object_role", Atspi.Role.REDUNDANT_OBJECT, Atspi.Role.UNKNOWN),
-            ("is_root_pane", Atspi.Role.ROOT_PANE, Atspi.Role.PANEL),
-            ("is_row_header", Atspi.Role.ROW_HEADER, Atspi.Role.COLUMN_HEADER),
-            ("is_ruler", Atspi.Role.RULER, Atspi.Role.SEPARATOR),
-            ("is_scroll_bar", Atspi.Role.SCROLL_BAR, Atspi.Role.SLIDER),
-            ("is_scroll_pane", Atspi.Role.SCROLL_PANE, Atspi.Role.PANEL),
-            ("is_section", Atspi.Role.SECTION, Atspi.Role.ARTICLE),
-            ("is_separator", Atspi.Role.SEPARATOR, Atspi.Role.RULER),
-            ("is_slider", Atspi.Role.SLIDER, Atspi.Role.SCROLL_BAR),
-            ("is_spin_button", Atspi.Role.SPIN_BUTTON, Atspi.Role.ENTRY),
-            ("is_split_pane", Atspi.Role.SPLIT_PANE, Atspi.Role.PANEL),
-            ("is_static", Atspi.Role.STATIC, Atspi.Role.LABEL),
-            ("is_status_bar", Atspi.Role.STATUS_BAR, Atspi.Role.TOOL_BAR),
-            ("is_subscript", Atspi.Role.SUBSCRIPT, Atspi.Role.SUPERSCRIPT),
-            ("is_superscript", Atspi.Role.SUPERSCRIPT, Atspi.Role.SUBSCRIPT),
-            ("is_table", Atspi.Role.TABLE, Atspi.Role.TREE_TABLE),
-            ("is_table_cell", Atspi.Role.TABLE_CELL, Atspi.Role.COLUMN_HEADER),
-            ("is_terminal", Atspi.Role.TERMINAL, Atspi.Role.TEXT),
-            ("is_text", Atspi.Role.TEXT, Atspi.Role.LABEL),
-            ("is_timer", Atspi.Role.TIMER, Atspi.Role.STATIC),
-            ("is_title_bar", Atspi.Role.TITLE_BAR, Atspi.Role.TOOL_BAR),
-            ("is_toggle_button", Atspi.Role.TOGGLE_BUTTON, Atspi.Role.PUSH_BUTTON),
-            ("is_tool_bar", Atspi.Role.TOOL_BAR, Atspi.Role.PANEL),
-            ("is_tool_tip", Atspi.Role.TOOL_TIP, Atspi.Role.LABEL),
-            ("is_tree", Atspi.Role.TREE, Atspi.Role.TREE_TABLE),
-            ("is_tree_item", Atspi.Role.TREE_ITEM, Atspi.Role.LIST_ITEM),
-            ("is_tree_table", Atspi.Role.TREE_TABLE, Atspi.Role.TABLE),
-            ("is_unknown", Atspi.Role.UNKNOWN, Atspi.Role.INVALID),
-            ("is_video", Atspi.Role.VIDEO, Atspi.Role.AUDIO),
-            ("is_viewport", Atspi.Role.VIEWPORT, Atspi.Role.PANEL),
-            ("is_window", Atspi.Role.WINDOW, Atspi.Role.FRAME),
+            {
+                "id": "color_chooser_role",
+                "method_name": "is_color_chooser",
+                "matching_role": Atspi.Role.COLOR_CHOOSER,
+                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+            },
+            {
+                "id": "column_header_role",
+                "method_name": "is_column_header",
+                "matching_role": Atspi.Role.COLUMN_HEADER,
+                "non_matching_role": Atspi.Role.ROW_HEADER,
+            },
+            {
+                "id": "alert_role",
+                "method_name": "is_alert",
+                "matching_role": Atspi.Role.ALERT,
+                "non_matching_role": Atspi.Role.DIALOG,
+            },
+            {
+                "id": "animation_role",
+                "method_name": "is_animation",
+                "matching_role": Atspi.Role.ANIMATION,
+                "non_matching_role": Atspi.Role.IMAGE,
+            },
+            {
+                "id": "application_role",
+                "method_name": "is_application",
+                "matching_role": Atspi.Role.APPLICATION,
+                "non_matching_role": Atspi.Role.FRAME,
+            },
+            {
+                "id": "arrow_role",
+                "method_name": "is_arrow",
+                "matching_role": Atspi.Role.ARROW,
+                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+            },
+            {
+                "id": "article_role",
+                "method_name": "is_article",
+                "matching_role": Atspi.Role.ARTICLE,
+                "non_matching_role": Atspi.Role.SECTION,
+            },
+            {
+                "id": "audio_role",
+                "method_name": "is_audio",
+                "matching_role": Atspi.Role.AUDIO,
+                "non_matching_role": Atspi.Role.VIDEO,
+            },
+            {
+                "id": "block_quote_role",
+                "method_name": "is_block_quote",
+                "matching_role": Atspi.Role.BLOCK_QUOTE,
+                "non_matching_role": Atspi.Role.PARAGRAPH,
+            },
+            {
+                "id": "calendar_role",
+                "method_name": "is_calendar",
+                "matching_role": Atspi.Role.CALENDAR,
+                "non_matching_role": Atspi.Role.DATE_EDITOR,
+            },
+            {
+                "id": "canvas_role",
+                "method_name": "is_canvas",
+                "matching_role": Atspi.Role.CANVAS,
+                "non_matching_role": Atspi.Role.IMAGE,
+            },
+            {
+                "id": "caption_role",
+                "method_name": "is_caption",
+                "matching_role": Atspi.Role.CAPTION,
+                "non_matching_role": Atspi.Role.LABEL,
+            },
+            {
+                "id": "chart_role",
+                "method_name": "is_chart",
+                "matching_role": Atspi.Role.CHART,
+                "non_matching_role": Atspi.Role.IMAGE,
+            },
+            {
+                "id": "check_box_role",
+                "method_name": "is_check_box",
+                "matching_role": Atspi.Role.CHECK_BOX,
+                "non_matching_role": Atspi.Role.RADIO_BUTTON,
+            },
+            {
+                "id": "check_menu_item_role",
+                "method_name": "is_check_menu_item",
+                "matching_role": Atspi.Role.CHECK_MENU_ITEM,
+                "non_matching_role": Atspi.Role.MENU_ITEM,
+            },
+            {
+                "id": "combo_box_role",
+                "method_name": "is_combo_box",
+                "matching_role": Atspi.Role.COMBO_BOX,
+                "non_matching_role": Atspi.Role.LIST_BOX,
+            },
+            {
+                "id": "date_editor_role",
+                "method_name": "is_date_editor",
+                "matching_role": Atspi.Role.DATE_EDITOR,
+                "non_matching_role": Atspi.Role.SPIN_BUTTON,
+            },
+            {
+                "id": "definition_role",
+                "method_name": "is_definition",
+                "matching_role": Atspi.Role.DEFINITION,
+                "non_matching_role": Atspi.Role.DESCRIPTION_VALUE,
+            },
+            {
+                "id": "description_list_role",
+                "method_name": "is_description_list",
+                "matching_role": Atspi.Role.DESCRIPTION_LIST,
+                "non_matching_role": Atspi.Role.LIST,
+            },
+            {
+                "id": "description_term_role",
+                "method_name": "is_description_term",
+                "matching_role": Atspi.Role.DESCRIPTION_TERM,
+                "non_matching_role": Atspi.Role.DESCRIPTION_VALUE,
+            },
+            {
+                "id": "description_value_role",
+                "method_name": "is_description_value",
+                "matching_role": Atspi.Role.DESCRIPTION_VALUE,
+                "non_matching_role": Atspi.Role.DESCRIPTION_TERM,
+            },
+            {
+                "id": "desktop_icon_role",
+                "method_name": "is_desktop_icon",
+                "matching_role": Atspi.Role.DESKTOP_ICON,
+                "non_matching_role": Atspi.Role.ICON,
+            },
+            {
+                "id": "dial_role",
+                "method_name": "is_dial",
+                "matching_role": Atspi.Role.DIAL,
+                "non_matching_role": Atspi.Role.SLIDER,
+            },
+            {
+                "id": "dialog_role",
+                "method_name": "is_dialog",
+                "matching_role": Atspi.Role.DIALOG,
+                "non_matching_role": Atspi.Role.FRAME,
+            },
+            {
+                "id": "directory_pane_role",
+                "method_name": "is_directory_pane",
+                "matching_role": Atspi.Role.DIRECTORY_PANE,
+                "non_matching_role": Atspi.Role.TREE,
+            },
+            {
+                "id": "document_email_role",
+                "method_name": "is_document_email",
+                "matching_role": Atspi.Role.DOCUMENT_EMAIL,
+                "non_matching_role": Atspi.Role.DOCUMENT_TEXT,
+            },
+            {
+                "id": "document_frame_role",
+                "method_name": "is_document_frame",
+                "matching_role": Atspi.Role.DOCUMENT_FRAME,
+                "non_matching_role": Atspi.Role.FRAME,
+            },
+            {
+                "id": "document_presentation_role",
+                "method_name": "is_document_presentation",
+                "matching_role": Atspi.Role.DOCUMENT_PRESENTATION,
+                "non_matching_role": Atspi.Role.DOCUMENT_TEXT,
+            },
+            {
+                "id": "document_spreadsheet_role",
+                "method_name": "is_document_spreadsheet",
+                "matching_role": Atspi.Role.DOCUMENT_SPREADSHEET,
+                "non_matching_role": Atspi.Role.DOCUMENT_TEXT,
+            },
+            {
+                "id": "document_text_role",
+                "method_name": "is_document_text",
+                "matching_role": Atspi.Role.DOCUMENT_TEXT,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "document_web_role",
+                "method_name": "is_document_web",
+                "matching_role": Atspi.Role.DOCUMENT_WEB,
+                "non_matching_role": Atspi.Role.DOCUMENT_TEXT,
+            },
+            {
+                "id": "drawing_area_role",
+                "method_name": "is_drawing_area",
+                "matching_role": Atspi.Role.DRAWING_AREA,
+                "non_matching_role": Atspi.Role.CANVAS,
+            },
+            {
+                "id": "editbar_role",
+                "method_name": "is_editbar",
+                "matching_role": Atspi.Role.EDITBAR,
+                "non_matching_role": Atspi.Role.TOOL_BAR,
+            },
+            {
+                "id": "embedded_role",
+                "method_name": "is_embedded",
+                "matching_role": Atspi.Role.EMBEDDED,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "entry_role",
+                "method_name": "is_entry",
+                "matching_role": Atspi.Role.ENTRY,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "extended_role",
+                "method_name": "is_extended",
+                "matching_role": Atspi.Role.EXTENDED,
+                "non_matching_role": Atspi.Role.UNKNOWN,
+            },
+            {
+                "id": "file_chooser_role",
+                "method_name": "is_file_chooser",
+                "matching_role": Atspi.Role.FILE_CHOOSER,
+                "non_matching_role": Atspi.Role.DIALOG,
+            },
+            {
+                "id": "filler_role",
+                "method_name": "is_filler",
+                "matching_role": Atspi.Role.FILLER,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "focus_traversable_role",
+                "method_name": "is_focus_traversable",
+                "matching_role": Atspi.Role.FOCUS_TRAVERSABLE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "font_chooser_role",
+                "method_name": "is_font_chooser",
+                "matching_role": Atspi.Role.FONT_CHOOSER,
+                "non_matching_role": Atspi.Role.COLOR_CHOOSER,
+            },
+            {
+                "id": "footer_role",
+                "method_name": "is_footer",
+                "matching_role": Atspi.Role.FOOTER,
+                "non_matching_role": Atspi.Role.HEADER,
+            },
+            {
+                "id": "footnote_role",
+                "method_name": "is_footnote",
+                "matching_role": Atspi.Role.FOOTNOTE,
+                "non_matching_role": Atspi.Role.STATIC,
+            },
+            {
+                "id": "form_role",
+                "method_name": "is_form",
+                "matching_role": Atspi.Role.FORM,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "frame_role",
+                "method_name": "is_frame",
+                "matching_role": Atspi.Role.FRAME,
+                "non_matching_role": Atspi.Role.WINDOW,
+            },
+            {
+                "id": "glass_pane_role",
+                "method_name": "is_glass_pane",
+                "matching_role": Atspi.Role.GLASS_PANE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "header_role",
+                "method_name": "is_header",
+                "matching_role": Atspi.Role.HEADER,
+                "non_matching_role": Atspi.Role.FOOTER,
+            },
+            {
+                "id": "heading_role",
+                "method_name": "is_heading",
+                "matching_role": Atspi.Role.HEADING,
+                "non_matching_role": Atspi.Role.LABEL,
+            },
+            {
+                "id": "html_container_role",
+                "method_name": "is_html_container",
+                "matching_role": Atspi.Role.HTML_CONTAINER,
+                "non_matching_role": Atspi.Role.SECTION,
+            },
+            {
+                "id": "icon_role",
+                "method_name": "is_icon",
+                "matching_role": Atspi.Role.ICON,
+                "non_matching_role": Atspi.Role.IMAGE,
+            },
+            {
+                "id": "image_role",
+                "method_name": "is_image",
+                "matching_role": Atspi.Role.IMAGE,
+                "non_matching_role": Atspi.Role.ICON,
+            },
+            {
+                "id": "image_map_role",
+                "method_name": "is_image_map",
+                "matching_role": Atspi.Role.IMAGE_MAP,
+                "non_matching_role": Atspi.Role.IMAGE,
+            },
+            {
+                "id": "info_bar_role",
+                "method_name": "is_info_bar",
+                "matching_role": Atspi.Role.INFO_BAR,
+                "non_matching_role": Atspi.Role.TOOL_BAR,
+            },
+            {
+                "id": "input_method_window_role",
+                "method_name": "is_input_method_window",
+                "matching_role": Atspi.Role.INPUT_METHOD_WINDOW,
+                "non_matching_role": Atspi.Role.WINDOW,
+            },
+            {
+                "id": "internal_frame_role",
+                "method_name": "is_internal_frame",
+                "matching_role": Atspi.Role.INTERNAL_FRAME,
+                "non_matching_role": Atspi.Role.FRAME,
+            },
+            {
+                "id": "invalid_role",
+                "method_name": "is_invalid_role",
+                "matching_role": Atspi.Role.INVALID,
+                "non_matching_role": Atspi.Role.UNKNOWN,
+            },
+            {
+                "id": "label_role",
+                "method_name": "is_label",
+                "matching_role": Atspi.Role.LABEL,
+                "non_matching_role": Atspi.Role.STATIC,
+            },
+            {
+                "id": "landmark_role",
+                "method_name": "is_landmark",
+                "matching_role": Atspi.Role.LANDMARK,
+                "non_matching_role": Atspi.Role.SECTION,
+            },
+            {
+                "id": "layered_pane_role",
+                "method_name": "is_layered_pane",
+                "matching_role": Atspi.Role.LAYERED_PANE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "level_bar_role",
+                "method_name": "is_level_bar",
+                "matching_role": Atspi.Role.LEVEL_BAR,
+                "non_matching_role": Atspi.Role.PROGRESS_BAR,
+            },
+            {
+                "id": "link_role",
+                "method_name": "is_link",
+                "matching_role": Atspi.Role.LINK,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "list_role",
+                "method_name": "is_list",
+                "matching_role": Atspi.Role.LIST,
+                "non_matching_role": Atspi.Role.LIST_BOX,
+            },
+            {
+                "id": "list_box_role",
+                "method_name": "is_list_box",
+                "matching_role": Atspi.Role.LIST_BOX,
+                "non_matching_role": Atspi.Role.LIST,
+            },
+            {
+                "id": "list_item_role",
+                "method_name": "is_list_item",
+                "matching_role": Atspi.Role.LIST_ITEM,
+                "non_matching_role": Atspi.Role.LIST,
+            },
+            {
+                "id": "log_role",
+                "method_name": "is_log",
+                "matching_role": Atspi.Role.LOG,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "marquee_role",
+                "method_name": "is_marquee",
+                "matching_role": Atspi.Role.MARQUEE,
+                "non_matching_role": Atspi.Role.ANIMATION,
+            },
+            {
+                "id": "math_role",
+                "method_name": "is_math",
+                "matching_role": Atspi.Role.MATH,
+                "non_matching_role": Atspi.Role.STATIC,
+            },
+            {
+                "id": "math_fraction_role",
+                "method_name": "is_math_fraction",
+                "matching_role": Atspi.Role.MATH_FRACTION,
+                "non_matching_role": Atspi.Role.MATH,
+            },
+            {
+                "id": "math_root_role",
+                "method_name": "is_math_root",
+                "matching_role": Atspi.Role.MATH_ROOT,
+                "non_matching_role": Atspi.Role.MATH,
+            },
+            {
+                "id": "menu_role",
+                "method_name": "is_menu",
+                "matching_role": Atspi.Role.MENU,
+                "non_matching_role": Atspi.Role.MENU_BAR,
+            },
+            {
+                "id": "menu_bar_role",
+                "method_name": "is_menu_bar",
+                "matching_role": Atspi.Role.MENU_BAR,
+                "non_matching_role": Atspi.Role.MENU,
+            },
+            {
+                "id": "menu_item_role",
+                "method_name": "is_menu_item",
+                "matching_role": Atspi.Role.MENU_ITEM,
+                "non_matching_role": Atspi.Role.CHECK_MENU_ITEM,
+            },
+            {
+                "id": "notification_role",
+                "method_name": "is_notification",
+                "matching_role": Atspi.Role.NOTIFICATION,
+                "non_matching_role": Atspi.Role.ALERT,
+            },
+            {
+                "id": "option_pane_role",
+                "method_name": "is_option_pane",
+                "matching_role": Atspi.Role.OPTION_PANE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "page_role",
+                "method_name": "is_page",
+                "matching_role": Atspi.Role.PAGE,
+                "non_matching_role": Atspi.Role.SECTION,
+            },
+            {
+                "id": "page_tab_role",
+                "method_name": "is_page_tab",
+                "matching_role": Atspi.Role.PAGE_TAB,
+                "non_matching_role": Atspi.Role.PAGE_TAB_LIST,
+            },
+            {
+                "id": "page_tab_list_role",
+                "method_name": "is_page_tab_list",
+                "matching_role": Atspi.Role.PAGE_TAB_LIST,
+                "non_matching_role": Atspi.Role.PAGE_TAB,
+            },
+            {
+                "id": "panel_role",
+                "method_name": "is_panel",
+                "matching_role": Atspi.Role.PANEL,
+                "non_matching_role": Atspi.Role.FILLER,
+            },
+            {
+                "id": "paragraph_role",
+                "method_name": "is_paragraph",
+                "matching_role": Atspi.Role.PARAGRAPH,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "password_text_role",
+                "method_name": "is_password_text",
+                "matching_role": Atspi.Role.PASSWORD_TEXT,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "popup_menu_role",
+                "method_name": "is_popup_menu",
+                "matching_role": Atspi.Role.POPUP_MENU,
+                "non_matching_role": Atspi.Role.MENU,
+            },
+            {
+                "id": "progress_bar_role",
+                "method_name": "is_progress_bar",
+                "matching_role": Atspi.Role.PROGRESS_BAR,
+                "non_matching_role": Atspi.Role.LEVEL_BAR,
+            },
+            {
+                "id": "push_button_role",
+                "method_name": "is_push_button",
+                "matching_role": Atspi.Role.PUSH_BUTTON,
+                "non_matching_role": Atspi.Role.TOGGLE_BUTTON,
+            },
+            {
+                "id": "push_button_menu_role",
+                "method_name": "is_push_button_menu",
+                "matching_role": Atspi.Role.PUSH_BUTTON_MENU,
+                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+            },
+            {
+                "id": "radio_button_role",
+                "method_name": "is_radio_button",
+                "matching_role": Atspi.Role.RADIO_BUTTON,
+                "non_matching_role": Atspi.Role.CHECK_BOX,
+            },
+            {
+                "id": "radio_menu_item_role",
+                "method_name": "is_radio_menu_item",
+                "matching_role": Atspi.Role.RADIO_MENU_ITEM,
+                "non_matching_role": Atspi.Role.CHECK_MENU_ITEM,
+            },
+            {
+                "id": "rating_role",
+                "method_name": "is_rating",
+                "matching_role": Atspi.Role.RATING,
+                "non_matching_role": Atspi.Role.SLIDER,
+            },
+            {
+                "id": "redundant_object_role",
+                "method_name": "is_redundant_object_role",
+                "matching_role": Atspi.Role.REDUNDANT_OBJECT,
+                "non_matching_role": Atspi.Role.UNKNOWN,
+            },
+            {
+                "id": "root_pane_role",
+                "method_name": "is_root_pane",
+                "matching_role": Atspi.Role.ROOT_PANE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "row_header_role",
+                "method_name": "is_row_header",
+                "matching_role": Atspi.Role.ROW_HEADER,
+                "non_matching_role": Atspi.Role.COLUMN_HEADER,
+            },
+            {
+                "id": "ruler_role",
+                "method_name": "is_ruler",
+                "matching_role": Atspi.Role.RULER,
+                "non_matching_role": Atspi.Role.SEPARATOR,
+            },
+            {
+                "id": "scroll_bar_role",
+                "method_name": "is_scroll_bar",
+                "matching_role": Atspi.Role.SCROLL_BAR,
+                "non_matching_role": Atspi.Role.SLIDER,
+            },
+            {
+                "id": "scroll_pane_role",
+                "method_name": "is_scroll_pane",
+                "matching_role": Atspi.Role.SCROLL_PANE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "section_role",
+                "method_name": "is_section",
+                "matching_role": Atspi.Role.SECTION,
+                "non_matching_role": Atspi.Role.ARTICLE,
+            },
+            {
+                "id": "separator_role",
+                "method_name": "is_separator",
+                "matching_role": Atspi.Role.SEPARATOR,
+                "non_matching_role": Atspi.Role.RULER,
+            },
+            {
+                "id": "slider_role",
+                "method_name": "is_slider",
+                "matching_role": Atspi.Role.SLIDER,
+                "non_matching_role": Atspi.Role.SCROLL_BAR,
+            },
+            {
+                "id": "spin_button_role",
+                "method_name": "is_spin_button",
+                "matching_role": Atspi.Role.SPIN_BUTTON,
+                "non_matching_role": Atspi.Role.ENTRY,
+            },
+            {
+                "id": "split_pane_role",
+                "method_name": "is_split_pane",
+                "matching_role": Atspi.Role.SPLIT_PANE,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "static_role",
+                "method_name": "is_static",
+                "matching_role": Atspi.Role.STATIC,
+                "non_matching_role": Atspi.Role.LABEL,
+            },
+            {
+                "id": "status_bar_role",
+                "method_name": "is_status_bar",
+                "matching_role": Atspi.Role.STATUS_BAR,
+                "non_matching_role": Atspi.Role.TOOL_BAR,
+            },
+            {
+                "id": "subscript_role",
+                "method_name": "is_subscript",
+                "matching_role": Atspi.Role.SUBSCRIPT,
+                "non_matching_role": Atspi.Role.SUPERSCRIPT,
+            },
+            {
+                "id": "superscript_role",
+                "method_name": "is_superscript",
+                "matching_role": Atspi.Role.SUPERSCRIPT,
+                "non_matching_role": Atspi.Role.SUBSCRIPT,
+            },
+            {
+                "id": "table_role",
+                "method_name": "is_table",
+                "matching_role": Atspi.Role.TABLE,
+                "non_matching_role": Atspi.Role.TREE_TABLE,
+            },
+            {
+                "id": "table_cell_role",
+                "method_name": "is_table_cell",
+                "matching_role": Atspi.Role.TABLE_CELL,
+                "non_matching_role": Atspi.Role.COLUMN_HEADER,
+            },
+            {
+                "id": "terminal_role",
+                "method_name": "is_terminal",
+                "matching_role": Atspi.Role.TERMINAL,
+                "non_matching_role": Atspi.Role.TEXT,
+            },
+            {
+                "id": "text_role",
+                "method_name": "is_text",
+                "matching_role": Atspi.Role.TEXT,
+                "non_matching_role": Atspi.Role.LABEL,
+            },
+            {
+                "id": "timer_role",
+                "method_name": "is_timer",
+                "matching_role": Atspi.Role.TIMER,
+                "non_matching_role": Atspi.Role.STATIC,
+            },
+            {
+                "id": "title_bar_role",
+                "method_name": "is_title_bar",
+                "matching_role": Atspi.Role.TITLE_BAR,
+                "non_matching_role": Atspi.Role.TOOL_BAR,
+            },
+            {
+                "id": "toggle_button_role",
+                "method_name": "is_toggle_button",
+                "matching_role": Atspi.Role.TOGGLE_BUTTON,
+                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+            },
+            {
+                "id": "tool_bar_role",
+                "method_name": "is_tool_bar",
+                "matching_role": Atspi.Role.TOOL_BAR,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "tool_tip_role",
+                "method_name": "is_tool_tip",
+                "matching_role": Atspi.Role.TOOL_TIP,
+                "non_matching_role": Atspi.Role.LABEL,
+            },
+            {
+                "id": "tree_role",
+                "method_name": "is_tree",
+                "matching_role": Atspi.Role.TREE,
+                "non_matching_role": Atspi.Role.TREE_TABLE,
+            },
+            {
+                "id": "tree_item_role",
+                "method_name": "is_tree_item",
+                "matching_role": Atspi.Role.TREE_ITEM,
+                "non_matching_role": Atspi.Role.LIST_ITEM,
+            },
+            {
+                "id": "tree_table_role",
+                "method_name": "is_tree_table",
+                "matching_role": Atspi.Role.TREE_TABLE,
+                "non_matching_role": Atspi.Role.TABLE,
+            },
+            {
+                "id": "unknown_role",
+                "method_name": "is_unknown",
+                "matching_role": Atspi.Role.UNKNOWN,
+                "non_matching_role": Atspi.Role.INVALID,
+            },
+            {
+                "id": "video_role",
+                "method_name": "is_video",
+                "matching_role": Atspi.Role.VIDEO,
+                "non_matching_role": Atspi.Role.AUDIO,
+            },
+            {
+                "id": "viewport_role",
+                "method_name": "is_viewport",
+                "matching_role": Atspi.Role.VIEWPORT,
+                "non_matching_role": Atspi.Role.PANEL,
+            },
+            {
+                "id": "window_role",
+                "method_name": "is_window",
+                "matching_role": Atspi.Role.WINDOW,
+                "non_matching_role": Atspi.Role.FRAME,
+            },
         ],
+        ids=lambda case: case["id"],
     )
-    def test_simple_role_methods(
-        self, monkeypatch, method_name, matching_role, non_matching_role, mock_orca_dependencies
-    ):
+    def test_simple_role_methods(self, test_context, case: dict) -> None:
         """Test AXUtilitiesRole simple role methods."""
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=matching_role)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_role = test_context.Mock(return_value=case["matching_role"])
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        method = getattr(AXUtilitiesRole, method_name)
+        method = getattr(AXUtilitiesRole, case["method_name"])
         assert method(mock_obj)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=case["non_matching_role"])
 
-        mock_ax_object_class.get_role = Mock(return_value=non_matching_role)
-
-        # No need to re-import, just use the existing AXUtilitiesRole class
-        method = getattr(AXUtilitiesRole, method_name)
+        method = getattr(AXUtilitiesRole, case["method_name"])
         assert not method(mock_obj)
 
-    def test_is_button_with_push_button_role(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_button with push button role."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "push_button_true", "role": Atspi.Role.PUSH_BUTTON, "expected": True},
+            {"id": "toggle_button_true", "role": Atspi.Role.TOGGLE_BUTTON, "expected": True},
+            {"id": "label_false", "role": Atspi.Role.LABEL, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_button(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRole.is_button with various roles."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.PUSH_BUTTON)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_role = test_context.Mock(return_value=case["role"])
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        assert AXUtilitiesRole.is_button(mock_obj)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        result = AXUtilitiesRole.is_button(mock_obj)
+        assert result is case["expected"]
 
-    def test_is_button_with_toggle_button_role(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_button with toggle button role."""
-
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.TOGGLE_BUTTON)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        assert AXUtilitiesRole.is_button(mock_obj)
-
-    def test_is_button_with_non_button_role(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_button with non-button roles."""
-
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        assert not AXUtilitiesRole.is_button(mock_obj)
-
-    def test_children_are_presentational(self, monkeypatch, mock_orca_dependencies):
+    def test_children_are_presentational(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.children_are_presentational."""
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        # Scenario: Role is inherently presentational
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.PUSH_BUTTON)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.PUSH_BUTTON)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        monkeypatch.setattr(AXUtilitiesRole, "is_switch", lambda obj, role=None: False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         assert AXUtilitiesRole.children_are_presentational(mock_obj)
 
-        # Scenario: Role is not presentational
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
-        monkeypatch.setattr(AXUtilitiesRole, "is_switch", lambda obj, role=None: False)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         assert not AXUtilitiesRole.children_are_presentational(mock_obj)
 
-        # Scenario: Role becomes presentational via is_switch
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
-        monkeypatch.setattr(AXUtilitiesRole, "is_switch", lambda obj, role=None: True)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=True)
         assert AXUtilitiesRole.children_are_presentational(mock_obj)
 
-    def test_get_localized_role_name_with_atspi_role(self, monkeypatch, mock_orca_dependencies):
+    def test_get_localized_role_name_with_atspi_role(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_localized_role_name with standard Atspi.Role."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
-        mock_ax_object_class.supports_value = Mock(return_value=False)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRole, "is_dpub", lambda obj: False)
-        monkeypatch.setattr(AXUtilitiesRole, "is_landmark", lambda obj, role=None: False)
-        monkeypatch.setattr(AXUtilitiesRole, "is_comment", lambda obj, role=None: False)
-
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
         if hasattr(Atspi, "role_get_localized_name"):
-            monkeypatch.setattr(Atspi, "role_get_localized_name", lambda role: "LocalizedRole")
+            test_context.patch_object(
+                Atspi, "role_get_localized_name", return_value="LocalizedRole"
+            )
         else:
-            monkeypatch.setattr(Atspi, "role_get_name", lambda role: "LocalizedRole")
-
+            test_context.patch_object(Atspi, "role_get_name", return_value="LocalizedRole")
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.PUSH_BUTTON)
             == "LocalizedRole"
         )
 
-    def test_get_localized_role_name_with_non_atspi_role(self, monkeypatch, mock_orca_dependencies):
+    def test_get_localized_role_name_with_non_atspi_role(
+        self, test_context: OrcaTestContext
+    ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name with non-Atspi.Role value."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
-        mock_ax_object_class.get_role_name = Mock(return_value="role_name")
-        mock_ax_object_class.supports_value = Mock(return_value=False)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.get_role_name = test_context.Mock(return_value="role_name")
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
         assert AXUtilitiesRole.get_localized_role_name(mock_obj, "not_a_role") == "role_name"
 
-    def test_get_localized_role_name_with_dpub_roles(self, monkeypatch, mock_orca_dependencies):
+    def test_get_localized_role_name_with_dpub_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_localized_role_name for DPUB roles."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
-        mock_ax_object_class.supports_value = Mock(return_value=False)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRole, "is_dpub", lambda obj: True)
-
-        # Scenario: DPUB landmark role (acknowledgments)
-        monkeypatch.setattr(AXUtilitiesRole, "is_landmark", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "is_dpub_acknowledgments", lambda obj, role=None: True)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=True)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_dpub_acknowledgments", return_value=True
+        )
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LANDMARK)
             == object_properties.ROLE_ACKNOWLEDGMENTS
         )
-
-        # Scenario: DPUB section role (abstract)
-        monkeypatch.setattr(AXUtilitiesRole, "is_landmark", lambda obj, role=None: False)
-        monkeypatch.setattr(AXUtilitiesRole, "is_dpub_abstract", lambda obj, role=None: True)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_dpub_abstract", return_value=True
+        )
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, "ROLE_DPUB_SECTION")
             == object_properties.ROLE_ABSTRACT
         )
-
-        # Scenario: DPUB list item role (biblioref)
-        monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "is_dpub_biblioref", lambda obj, role=None: True)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_list_item", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_dpub_biblioref", return_value=True
+        )
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LIST_ITEM)
             == object_properties.ROLE_BIBLIOENTRY
         )
 
-    def test_is_grid(self, monkeypatch, mock_orca_dependencies):
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "horizontal_slider",
+                "supports_value": True,
+                "role_check_method": "is_horizontal_slider",
+                "role": Atspi.Role.SLIDER,
+                "expected_result": "object_properties.ROLE_SLIDER_HORIZONTAL",
+            },
+            {
+                "id": "vertical_slider",
+                "supports_value": True,
+                "role_check_method": "is_vertical_slider",
+                "role": Atspi.Role.SLIDER,
+                "expected_result": "object_properties.ROLE_SLIDER_VERTICAL",
+            },
+            {
+                "id": "horizontal_scrollbar",
+                "supports_value": True,
+                "role_check_method": "is_horizontal_scrollbar",
+                "role": Atspi.Role.SCROLL_BAR,
+                "expected_result": "object_properties.ROLE_SCROLL_BAR_HORIZONTAL",
+            },
+            {
+                "id": "vertical_scrollbar",
+                "supports_value": True,
+                "role_check_method": "is_vertical_scrollbar",
+                "role": Atspi.Role.SCROLL_BAR,
+                "expected_result": "object_properties.ROLE_SCROLL_BAR_VERTICAL",
+            },
+            {
+                "id": "horizontal_separator",
+                "supports_value": True,
+                "role_check_method": "is_horizontal_separator",
+                "role": Atspi.Role.SEPARATOR,
+                "expected_result": "object_properties.ROLE_SPLITTER_HORIZONTAL",
+            },
+            {
+                "id": "vertical_separator",
+                "supports_value": True,
+                "role_check_method": "is_vertical_separator",
+                "role": Atspi.Role.SEPARATOR,
+                "expected_result": "object_properties.ROLE_SPLITTER_VERTICAL",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_localized_role_name_value_based_roles(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name for value-based roles."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=case["supports_value"])
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import object_properties
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        role_methods = [
+            "is_horizontal_slider",
+            "is_vertical_slider",
+            "is_horizontal_scrollbar",
+            "is_vertical_scrollbar",
+            "is_horizontal_separator",
+            "is_vertical_separator",
+            "is_split_pane",
+        ]
+        for method in role_methods:
+            test_context.patch_object(
+                AXUtilitiesRole,
+                method,
+                side_effect=lambda obj, role=None, m=method: m == case["role_check_method"],
+            )
+
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, case["role"])
+        expected = getattr(object_properties, case["expected_result"].split(".")[1])
+        assert result == expected
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "horizontal_state",
+                "has_horizontal_state": True,
+                "has_vertical_state": False,
+                "expected_result": "object_properties.ROLE_SPLITTER_VERTICAL",
+            },
+            {
+                "id": "vertical_state",
+                "has_horizontal_state": False,
+                "has_vertical_state": True,
+                "expected_result": "object_properties.ROLE_SPLITTER_HORIZONTAL",
+            },
+            {
+                "id": "no_orientation",
+                "has_horizontal_state": False,
+                "has_vertical_state": False,
+                "expected_result": None,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_localized_role_name_split_pane_orientation(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name for split pane orientation."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=True)
+        mock_ax_object_class.has_state = test_context.Mock(
+            side_effect=lambda obj, state: (
+                state == Atspi.StateType.HORIZONTAL
+                and case["has_horizontal_state"]
+                or state == Atspi.StateType.VERTICAL
+                and case["has_vertical_state"]
+            )
+        )
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import object_properties
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_split_pane", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_horizontal_slider", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_vertical_slider", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_horizontal_scrollbar", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_vertical_scrollbar", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_horizontal_separator", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_vertical_separator", return_value=False
+        )
+
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+        test_context.patch_object(
+            Atspi, "role_get_localized_name", return_value="fallback_role"
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.SPLIT_PANE)
+        if case["expected_result"]:
+            expected = getattr(object_properties, case["expected_result"].split(".")[1])
+            assert result == expected
+        else:
+            assert result == "fallback_role"
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "suggestion",
+                "role_check_method": "is_suggestion",
+                "expected_result": "object_properties.ROLE_CONTENT_SUGGESTION",
+            },
+            {
+                "id": "feed",
+                "role_check_method": "is_feed",
+                "expected_result": "object_properties.ROLE_FEED",
+            },
+            {
+                "id": "figure",
+                "role_check_method": "is_figure",
+                "expected_result": "object_properties.ROLE_FIGURE",
+            },
+            {
+                "id": "switch",
+                "role_check_method": "is_switch",
+                "expected_result": "object_properties.ROLE_SWITCH",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_localized_role_name_simple_roles(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name for simple role mappings."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import object_properties
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        simple_methods = ["is_suggestion", "is_feed", "is_figure", "is_switch"]
+        for method in simple_methods:
+            test_context.patch_object(
+                AXUtilitiesRole,
+                method,
+                side_effect=lambda obj, role=None, m=method: m == case["role_check_method"],
+            )
+
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.UNKNOWN)
+        expected = getattr(object_properties, case["expected_result"].split(".")[1])
+        assert result == expected
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "landmark_banner",
+                "role_check_method": "is_landmark_banner",
+                "expected_result": "object_properties.ROLE_LANDMARK_BANNER",
+            },
+            {
+                "id": "landmark_complementary",
+                "role_check_method": "is_landmark_complementary",
+                "expected_result": "object_properties.ROLE_LANDMARK_COMPLEMENTARY",
+            },
+            {
+                "id": "landmark_contentinfo",
+                "role_check_method": "is_landmark_contentinfo",
+                "expected_result": "object_properties.ROLE_LANDMARK_CONTENTINFO",
+            },
+            {
+                "id": "landmark_main",
+                "role_check_method": "is_landmark_main",
+                "expected_result": "object_properties.ROLE_LANDMARK_MAIN",
+            },
+            {
+                "id": "landmark_navigation",
+                "role_check_method": "is_landmark_navigation",
+                "expected_result": "object_properties.ROLE_LANDMARK_NAVIGATION",
+            },
+            {
+                "id": "landmark_region",
+                "role_check_method": "is_landmark_region",
+                "expected_result": "object_properties.ROLE_LANDMARK_REGION",
+            },
+            {
+                "id": "landmark_search",
+                "role_check_method": "is_landmark_search",
+                "expected_result": "object_properties.ROLE_LANDMARK_SEARCH",
+            },
+            {
+                "id": "landmark_without_type",
+                "role_check_method": "is_landmark_without_type",
+                "expected_result": "",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_localized_role_name_landmark_roles(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name for landmark roles."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import object_properties
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=True
+        )
+
+        landmark_methods = [
+            "is_landmark_without_type",
+            "is_landmark_banner",
+            "is_landmark_complementary",
+            "is_landmark_contentinfo",
+            "is_landmark_main",
+            "is_landmark_navigation",
+            "is_landmark_region",
+            "is_landmark_search",
+            "is_landmark_form",
+        ]
+        for method in landmark_methods:
+            test_context.patch_object(
+                AXUtilitiesRole,
+                method,
+                side_effect=lambda obj, role=None, m=method: m == case["role_check_method"],
+            )
+
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LANDMARK)
+        if case["expected_result"]:
+            if case["expected_result"] == "":
+                assert result == ""
+            else:
+                expected = getattr(object_properties, case["expected_result"].split(".")[1])
+                assert result == expected
+
+    def test_get_localized_role_name_landmark_form_fallback(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name landmark form fallback to FORM role."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
+        from orca.ax_utilities_role import AXUtilitiesRole
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_form", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_without_type", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_banner", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_complementary", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_contentinfo", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_main", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_navigation", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_region", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark_search", return_value=False
+        )
+
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+        test_context.patch_object(
+            Atspi, "role_get_localized_name", return_value="form_localized"
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LANDMARK)
+        assert result == "form_localized"
+
+    def test_get_localized_role_name_comment_fallback(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name comment fallback to COMMENT role."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
+        from orca.ax_utilities_role import AXUtilitiesRole
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=True)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            Atspi, "role_get_localized_name", return_value="comment_localized"
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.SECTION)
+        assert result == "comment_localized"
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "dpub_acknowledgments",
+                "dpub_method": "is_dpub_acknowledgments",
+                "expected_result": "object_properties.ROLE_ACKNOWLEDGMENTS",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_afterword",
+                "dpub_method": "is_dpub_afterword",
+                "expected_result": "object_properties.ROLE_AFTERWORD",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_appendix",
+                "dpub_method": "is_dpub_appendix",
+                "expected_result": "object_properties.ROLE_APPENDIX",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_bibliography",
+                "dpub_method": "is_dpub_bibliography",
+                "expected_result": "object_properties.ROLE_BIBLIOGRAPHY",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_chapter",
+                "dpub_method": "is_dpub_chapter",
+                "expected_result": "object_properties.ROLE_CHAPTER",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_conclusion",
+                "dpub_method": "is_dpub_conclusion",
+                "expected_result": "object_properties.ROLE_CONCLUSION",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_credits",
+                "dpub_method": "is_dpub_credits",
+                "expected_result": "object_properties.ROLE_CREDITS",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_endnotes",
+                "dpub_method": "is_dpub_endnotes",
+                "expected_result": "object_properties.ROLE_ENDNOTES",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_epilogue",
+                "dpub_method": "is_dpub_epilogue",
+                "expected_result": "object_properties.ROLE_EPILOGUE",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_errata",
+                "dpub_method": "is_dpub_errata",
+                "expected_result": "object_properties.ROLE_ERRATA",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_foreword",
+                "dpub_method": "is_dpub_foreword",
+                "expected_result": "object_properties.ROLE_FOREWORD",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_glossary",
+                "dpub_method": "is_dpub_glossary",
+                "expected_result": "object_properties.ROLE_GLOSSARY",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_index",
+                "dpub_method": "is_dpub_index",
+                "expected_result": "object_properties.ROLE_INDEX",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_introduction",
+                "dpub_method": "is_dpub_introduction",
+                "expected_result": "object_properties.ROLE_INTRODUCTION",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_pagelist",
+                "dpub_method": "is_dpub_pagelist",
+                "expected_result": "object_properties.ROLE_PAGELIST",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_part",
+                "dpub_method": "is_dpub_part",
+                "expected_result": "object_properties.ROLE_PART",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_preface",
+                "dpub_method": "is_dpub_preface",
+                "expected_result": "object_properties.ROLE_PREFACE",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_prologue",
+                "dpub_method": "is_dpub_prologue",
+                "expected_result": "object_properties.ROLE_PROLOGUE",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_toc",
+                "dpub_method": "is_dpub_toc",
+                "expected_result": "object_properties.ROLE_TOC",
+                "role_context": "landmark",
+            },
+            {
+                "id": "dpub_abstract",
+                "dpub_method": "is_dpub_abstract",
+                "expected_result": "object_properties.ROLE_ABSTRACT",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_colophon",
+                "dpub_method": "is_dpub_colophon",
+                "expected_result": "object_properties.ROLE_COLOPHON",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_credit",
+                "dpub_method": "is_dpub_credit",
+                "expected_result": "object_properties.ROLE_CREDIT",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_dedication",
+                "dpub_method": "is_dpub_dedication",
+                "expected_result": "object_properties.ROLE_DEDICATION",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_epigraph",
+                "dpub_method": "is_dpub_epigraph",
+                "expected_result": "object_properties.ROLE_EPIGRAPH",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_example",
+                "dpub_method": "is_dpub_example",
+                "expected_result": "object_properties.ROLE_EXAMPLE",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_pullquote",
+                "dpub_method": "is_dpub_pullquote",
+                "expected_result": "object_properties.ROLE_PULLQUOTE",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_qna",
+                "dpub_method": "is_dpub_qna",
+                "expected_result": "object_properties.ROLE_QNA",
+                "role_context": "section",
+            },
+            {
+                "id": "dpub_biblioref",
+                "dpub_method": "is_dpub_biblioref",
+                "expected_result": "object_properties.ROLE_BIBLIOENTRY",
+                "role_context": "list_item",
+            },
+            {
+                "id": "dpub_endnote",
+                "dpub_method": "is_dpub_endnote",
+                "expected_result": "object_properties.ROLE_ENDNOTE",
+                "role_context": "list_item",
+            },
+            {
+                "id": "dpub_cover",
+                "dpub_method": "is_dpub_cover",
+                "expected_result": "object_properties.ROLE_COVER",
+                "role_context": "other",
+            },
+            {
+                "id": "dpub_pagebreak",
+                "dpub_method": "is_dpub_pagebreak",
+                "expected_result": "object_properties.ROLE_PAGEBREAK",
+                "role_context": "other",
+            },
+            {
+                "id": "dpub_subtitle",
+                "dpub_method": "is_dpub_subtitle",
+                "expected_result": "object_properties.ROLE_SUBTITLE",
+                "role_context": "other",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_localized_role_name_dpub_roles_comprehensive(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name for all DPUB role types."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import object_properties
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=True)
+        if case["role_context"] == "landmark":
+            test_context.patch_object(
+                AXUtilitiesRole, "is_landmark", return_value=True
+            )
+            test_context.patch_object(
+                AXUtilitiesRole, "is_list_item", return_value=False
+            )
+            role_param = Atspi.Role.LANDMARK
+        elif case["role_context"] == "section":
+            test_context.patch_object(
+                AXUtilitiesRole, "is_landmark", return_value=False
+            )
+            test_context.patch_object(
+                AXUtilitiesRole, "is_list_item", return_value=False
+            )
+            role_param = "ROLE_DPUB_SECTION"
+        elif case["role_context"] == "list_item":
+            test_context.patch_object(
+                AXUtilitiesRole, "is_landmark", return_value=False
+            )
+            test_context.patch_object(
+                AXUtilitiesRole, "is_list_item", return_value=True
+            )
+            role_param = Atspi.Role.LIST_ITEM
+        else:
+            test_context.patch_object(
+                AXUtilitiesRole, "is_landmark", return_value=False
+            )
+            test_context.patch_object(
+                AXUtilitiesRole, "is_list_item", return_value=False
+            )
+            role_param = Atspi.Role.UNKNOWN
+
+        dpub_methods = [
+            "is_dpub_acknowledgments",
+            "is_dpub_afterword",
+            "is_dpub_appendix",
+            "is_dpub_bibliography",
+            "is_dpub_chapter",
+            "is_dpub_conclusion",
+            "is_dpub_credits",
+            "is_dpub_endnotes",
+            "is_dpub_epilogue",
+            "is_dpub_errata",
+            "is_dpub_foreword",
+            "is_dpub_glossary",
+            "is_dpub_index",
+            "is_dpub_introduction",
+            "is_dpub_pagelist",
+            "is_dpub_part",
+            "is_dpub_preface",
+            "is_dpub_prologue",
+            "is_dpub_toc",
+            "is_dpub_abstract",
+            "is_dpub_colophon",
+            "is_dpub_credit",
+            "is_dpub_dedication",
+            "is_dpub_epigraph",
+            "is_dpub_example",
+            "is_dpub_pullquote",
+            "is_dpub_qna",
+            "is_dpub_biblioref",
+            "is_dpub_endnote",
+            "is_dpub_cover",
+            "is_dpub_pagebreak",
+            "is_dpub_subtitle",
+        ]
+        for method in dpub_methods:
+            test_context.patch_object(
+                AXUtilitiesRole,
+                method,
+                side_effect=lambda obj, role=None, m=method: m == case["dpub_method"],
+            )
+
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj, role_param)
+        expected = getattr(object_properties, case["expected_result"].split(".")[1])
+        assert result == expected
+
+    def test_get_localized_role_name_no_role_provided_uses_ax_object_get_role(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXUtilitiesRole.get_localized_role_name without role parameter."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
+        mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.PUSH_BUTTON)
+        from orca.ax_utilities_role import AXUtilitiesRole
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_suggestion", return_value=False
+        )
+        test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "is_comment", return_value=False
+        )
+        test_context.patch_object(
+            Atspi, "role_get_localized_name", return_value="button_localized"
+        )
+
+        result = AXUtilitiesRole.get_localized_role_name(mock_obj)
+        assert result == "button_localized"
+        mock_ax_object_class.get_role.assert_called_once_with(mock_obj)
+
+    def test_is_grid(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_grid."""
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        self._setup_dependencies(test_context)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        # Scenario: Object is not a table
-        clean_module_cache("orca.ax_utilities_role")
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        monkeypatch.setattr(AXUtilitiesRole, "is_table", lambda obj, role=None: False)
+        test_context.patch_object(AXUtilitiesRole, "is_table", return_value=False)
         assert not AXUtilitiesRole.is_grid(mock_obj)
 
-        # Scenario: Object is a table but has no grid xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "is_table", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [])
+        test_context.patch_object(AXUtilitiesRole, "is_table", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=[])
         assert not AXUtilitiesRole.is_grid(mock_obj)
 
-        # Scenario: Object is a table with grid xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["grid"])
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["grid"])
         assert AXUtilitiesRole.is_grid(mock_obj)
 
-    def test_is_grid_cell(self, monkeypatch, mock_orca_dependencies):
+    def test_is_grid_cell(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_grid_cell."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.find_ancestor = Mock(return_value=None)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Object is not a table cell
-        monkeypatch.setattr(AXUtilitiesRole, "is_table_cell", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_table_cell", return_value=False
+        )
         assert not AXUtilitiesRole.is_grid_cell(mock_obj)
 
-        # Scenario: Table cell with gridcell xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "is_table_cell", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["gridcell"])
+        test_context.patch_object(
+            AXUtilitiesRole, "is_table_cell", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_xml_roles", return_value=["gridcell"]
+        )
         assert AXUtilitiesRole.is_grid_cell(mock_obj)
 
-        # Scenario: Table cell with cell xml-role and grid ancestor
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["cell"])
-        mock_ax_object_class.find_ancestor = Mock(return_value=Mock())
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["cell"])
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=test_context.Mock())
         assert AXUtilitiesRole.is_grid_cell(mock_obj)
 
-        # Scenario: Table cell with cell xml-role but no grid ancestor
-        mock_ax_object_class.find_ancestor = Mock(return_value=None)  # No ancestor found
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_grid_cell(mock_obj)
 
-    def test_is_editable_combo_box(self, monkeypatch, mock_orca_dependencies):
+    def test_is_editable_combo_box(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_editable_combo_box."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
-        mock_ax_object_class.find_descendant = Mock(return_value=None)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        mock_utilities_state_class = Mock()
-        mock_utilities_state_class.is_editable = Mock(return_value=False)
-        mock_orca_dependencies["ax_utilities_state"].AXUtilitiesState = mock_utilities_state_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
+        mock_ax_object_class.find_descendant = test_context.Mock(return_value=None)
+        mock_utilities_state_class = essential_modules["orca.ax_utilities_state"].AXUtilitiesState
+        mock_utilities_state_class.is_editable = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not a combo box
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
         assert not AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
-        # Scenario: Combo box, editable
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.COMBO_BOX)
-        mock_utilities_state_class.is_editable = Mock(return_value=True)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.COMBO_BOX)
+        mock_utilities_state_class.is_editable = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
-        # Scenario: Combo box, not editable, has text input descendant
-        mock_utilities_state_class.is_editable = Mock(return_value=False)
-        mock_ax_object_class.find_descendant = Mock(return_value=Mock())
+        mock_utilities_state_class.is_editable = test_context.Mock(return_value=False)
+        mock_ax_object_class.find_descendant = test_context.Mock(return_value=test_context.Mock())
         assert AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
-        # Scenario: Combo box, not editable, no text input descendant
-        mock_ax_object_class.find_descendant = Mock(return_value=None)  # No descendant found
+        mock_ax_object_class.find_descendant = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
-    def test_is_feed_article(self, monkeypatch, mock_orca_dependencies):
+    def test_is_feed_article(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_feed_article."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.find_ancestor = Mock(return_value=None)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not an article
-        monkeypatch.setattr(AXUtilitiesRole, "is_article", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_article", return_value=False
+        )
         assert not AXUtilitiesRole.is_feed_article(mock_obj)
 
-        # Scenario: Article, no feed ancestor
-        monkeypatch.setattr(AXUtilitiesRole, "is_article", lambda obj, role=None: True)
-        mock_ax_object_class.find_ancestor = Mock(return_value=None)
+        test_context.patch_object(AXUtilitiesRole, "is_article", return_value=True)
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_feed_article(mock_obj)
 
-        # Scenario: Article, has feed ancestor
-        mock_ax_object_class.find_ancestor = Mock(return_value=Mock())
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=test_context.Mock())
         assert AXUtilitiesRole.is_feed_article(mock_obj)
 
-    def test_is_inline_internal_frame(self, monkeypatch, mock_orca_dependencies):
-        """Test is_inline_internal_frame for internal frame and display style."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "internal_frame",
+                "method_name": "is_inline_internal_frame",
+                "base_method_name": "is_internal_frame",
+            },
+            {
+                "id": "list_item",
+                "method_name": "is_inline_list_item",
+                "base_method_name": "is_list_item",
+            },
+            {
+                "id": "suggestion",
+                "method_name": "is_inline_suggestion",
+                "base_method_name": "is_suggestion",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_inline_methods(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test is_inline_* methods for base role check and display style."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        method_to_test = getattr(AXUtilitiesRole, case["method_name"])
+        test_context.patch_object(
+            AXUtilitiesRole, case["base_method_name"], return_value=False
+        )
+        assert not method_to_test(mock_obj)
 
-        # Scenario: Not internal frame
-        monkeypatch.setattr(AXUtilitiesRole, "is_internal_frame", lambda obj, role=None: False)
-        assert not AXUtilitiesRole.is_inline_internal_frame(mock_obj)
+        test_context.patch_object(
+            AXUtilitiesRole, case["base_method_name"], return_value=True
+        )
+        test_context.patch_object(AXUtilitiesRole, "_get_display_style", return_value="block")
+        assert not method_to_test(mock_obj)
 
-        # Scenario: Internal frame, not inline
-        monkeypatch.setattr(AXUtilitiesRole, "is_internal_frame", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_display_style", lambda obj: "block")
-        assert not AXUtilitiesRole.is_inline_internal_frame(mock_obj)
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_display_style", return_value="inline"
+        )
+        assert method_to_test(mock_obj)
 
-        # Scenario: Internal frame, inline
-        monkeypatch.setattr(AXUtilitiesRole, "_get_display_style", lambda obj: "inline")
-        assert AXUtilitiesRole.is_inline_internal_frame(mock_obj)
-
-    def test_is_inline_list_item(self, monkeypatch, mock_orca_dependencies):
-        """Test is_inline_list_item for list item and display style."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not list item
-        monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj, role=None: False)
-        assert not AXUtilitiesRole.is_inline_list_item(mock_obj)
-
-        # Scenario: List item, not inline
-        monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_display_style", lambda obj: "block")
-        assert not AXUtilitiesRole.is_inline_list_item(mock_obj)
-
-        # Scenario: List item, inline
-        monkeypatch.setattr(AXUtilitiesRole, "_get_display_style", lambda obj: "inline")
-        assert AXUtilitiesRole.is_inline_list_item(mock_obj)
-
-    def test_is_inline_suggestion(self, monkeypatch, mock_orca_dependencies):
-        """Test is_inline_suggestion for suggestion and display style."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not suggestion
-        monkeypatch.setattr(AXUtilitiesRole, "is_suggestion", lambda obj, role=None: False)
-        assert not AXUtilitiesRole.is_inline_suggestion(mock_obj)
-
-        # Scenario: Suggestion, not inline
-        monkeypatch.setattr(AXUtilitiesRole, "is_suggestion", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_display_style", lambda obj: "block")
-        assert not AXUtilitiesRole.is_inline_suggestion(mock_obj)
-
-        # Scenario: Suggestion, inline
-        monkeypatch.setattr(AXUtilitiesRole, "_get_display_style", lambda obj: "inline")
-        assert AXUtilitiesRole.is_inline_suggestion(mock_obj)
-
-    def test_is_list_box_item(self, monkeypatch, mock_orca_dependencies):
+    def test_is_list_box_item(self, test_context: OrcaTestContext) -> None:
         """Test is_list_box_item for list item and list box ancestor."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.find_ancestor = Mock(return_value=None)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not list item
-        monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_list_item", return_value=False
+        )
         assert not AXUtilitiesRole.is_list_box_item(mock_obj)
 
-        # Scenario: List item, no list box ancestor
-        monkeypatch.setattr(AXUtilitiesRole, "is_list_item", lambda obj, role=None: True)
-        mock_ax_object_class.find_ancestor = Mock(return_value=None)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_list_item", return_value=True
+        )
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_list_box_item(mock_obj)
 
-        # Scenario: List item, has list box ancestor
-        mock_ax_object_class.find_ancestor = Mock(return_value=Mock())
+        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=test_context.Mock())
         assert AXUtilitiesRole.is_list_box_item(mock_obj)
 
-    def test_is_math_fraction_without_bar(self, monkeypatch, mock_orca_dependencies):
+    def test_is_math_fraction_without_bar(self, test_context: OrcaTestContext) -> None:
         """Test is_math_fraction_without_bar for math fraction and linethickness."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_attribute = Mock(return_value=None)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attribute = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not math fraction
-        monkeypatch.setattr(AXUtilitiesRole, "is_math_fraction", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_math_fraction", return_value=False
+        )
         assert not AXUtilitiesRole.is_math_fraction_without_bar(mock_obj)
 
-        # Scenario: Math fraction, no linethickness
-        monkeypatch.setattr(AXUtilitiesRole, "is_math_fraction", lambda obj, role=None: True)
-        mock_ax_object_class.get_attribute = Mock(return_value=None)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_math_fraction", return_value=True
+        )
+        mock_ax_object_class.get_attribute = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_math_fraction_without_bar(mock_obj)
 
-        # Scenario: Math fraction, linethickness with nonzero
-        mock_ax_object_class.get_attribute = Mock(return_value="2")
+        mock_ax_object_class.get_attribute = test_context.Mock(return_value="2")
         assert not AXUtilitiesRole.is_math_fraction_without_bar(mock_obj)
 
-        # Scenario: Math fraction, linethickness all zero
-        mock_ax_object_class.get_attribute = Mock(return_value="00")
+        mock_ax_object_class.get_attribute = test_context.Mock(return_value="00")
         assert AXUtilitiesRole.is_math_fraction_without_bar(mock_obj)
 
-    def test_is_modal_dialog(self, monkeypatch, mock_orca_dependencies):
+    def test_is_modal_dialog(self, test_context: OrcaTestContext) -> None:
         """Test is_modal_dialog for dialog/alert roles and modal state."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.has_state = Mock(return_value=False)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not dialog or alert
-        monkeypatch.setattr(AXUtilitiesRole, "is_dialog_or_alert", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_dialog_or_alert", return_value=False
+        )
         assert not AXUtilitiesRole.is_modal_dialog(mock_obj)
 
-        # Scenario: Dialog or alert, not modal
-        monkeypatch.setattr(AXUtilitiesRole, "is_dialog_or_alert", lambda obj, role=None: True)
-        mock_ax_object_class.has_state = Mock(return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_dialog_or_alert", return_value=True
+        )
+        mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_modal_dialog(mock_obj)
 
-        # Scenario: Dialog or alert, modal
-        mock_ax_object_class.has_state = Mock(return_value=True)
+        mock_ax_object_class.has_state = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_modal_dialog(mock_obj)
 
-    def test_is_multi_line_entry(self, monkeypatch, mock_orca_dependencies):
+    def test_is_multi_line_entry(self, test_context: OrcaTestContext) -> None:
         """Test is_multi_line_entry for entry role and multiline state."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.has_state = Mock(return_value=False)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not entry
-        monkeypatch.setattr(AXUtilitiesRole, "is_entry", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesRole, "is_entry", return_value=False)
         assert not AXUtilitiesRole.is_multi_line_entry(mock_obj)
 
-        # Scenario: Entry, not multiline
-        monkeypatch.setattr(AXUtilitiesRole, "is_entry", lambda obj, role=None: True)
-        mock_ax_object_class.has_state = Mock(return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_entry", return_value=True)
+        mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_multi_line_entry(mock_obj)
 
-        # Scenario: Entry, multiline
-        mock_ax_object_class.has_state = Mock(return_value=True)
+        mock_ax_object_class.has_state = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_multi_line_entry(mock_obj)
 
-    def test_is_docked_frame(self, monkeypatch, mock_orca_dependencies):
+    def test_is_docked_frame(self, test_context: OrcaTestContext) -> None:
         """Test is_docked_frame for frame role and docked attribute."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not frame
-        monkeypatch.setattr(AXUtilitiesRole, "is_frame", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         assert not AXUtilitiesRole.is_docked_frame(mock_obj)
 
-        # Scenario: Frame, not docked
-        monkeypatch.setattr(AXUtilitiesRole, "is_frame", lambda obj, role=None: True)
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"window-type": "normal"})
+        test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=True)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"window-type": "normal"}
+        )
         assert not AXUtilitiesRole.is_docked_frame(mock_obj)
 
-        # Scenario: Frame, docked
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"window-type": "dock"})
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"window-type": "dock"}
+        )
         assert AXUtilitiesRole.is_docked_frame(mock_obj)
 
-    def test_is_desktop_frame(self, monkeypatch, mock_orca_dependencies):
+    def test_is_desktop_frame(self, test_context: OrcaTestContext) -> None:
         """Test is_desktop_frame for desktop frame and is-desktop attribute."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Role is DESKTOP_FRAME
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.DESKTOP_FRAME)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.DESKTOP_FRAME)
         assert AXUtilitiesRole.is_desktop_frame(mock_obj)
 
-        # Scenario: Role is FRAME, is-desktop true
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.FRAME)
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"is-desktop": "true"})
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.FRAME)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"is-desktop": "true"}
+        )
         assert AXUtilitiesRole.is_desktop_frame(mock_obj)
 
-        # Scenario: Role is FRAME, is-desktop false
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"is-desktop": "false"})
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"is-desktop": "false"}
+        )
         assert not AXUtilitiesRole.is_desktop_frame(mock_obj)
 
-        # Scenario: Role is not DESKTOP_FRAME or FRAME
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.LABEL)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
         assert not AXUtilitiesRole.is_desktop_frame(mock_obj)
 
-    def test_is_live_region(self, monkeypatch, mock_orca_dependencies):
+    def test_is_live_region(self, test_context: OrcaTestContext) -> None:
         """Test is_live_region for container-live attribute."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: No container-live
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"foo": "bar"})
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={"foo": "bar"})
         assert not AXUtilitiesRole.is_live_region(mock_obj)
 
-        # Scenario: Has container-live
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"container-live": "polite"})
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"container-live": "polite"}
+        )
         assert AXUtilitiesRole.is_live_region(mock_obj)
 
-    def test_is_code_with_code_xml_role(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_code with code xml-role."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "with_code_xml_role",
+                "xml_roles": ["code"],
+                "tag": None,
+                "expected_result": True,
+            },
+            {"id": "with_code_tag", "xml_roles": [], "tag": "code", "expected_result": True},
+            {"id": "with_pre_tag", "xml_roles": [], "tag": "pre", "expected_result": True},
+            {
+                "id": "with_no_code_indicators",
+                "xml_roles": ["text"],
+                "tag": "p",
+                "expected_result": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_code(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRole.is_code in various scenarios."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["code"])
-        assert AXUtilitiesRole.is_code(mock_obj)
-
-    def test_is_code_with_code_tag(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_code with code HTML tag."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [])
-        monkeypatch.setattr(AXUtilitiesRole, "_get_tag", lambda obj: "code")
-        assert AXUtilitiesRole.is_code(mock_obj)
-
-    def test_is_code_with_pre_tag(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_code with pre HTML tag."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [])
-        monkeypatch.setattr(AXUtilitiesRole, "_get_tag", lambda obj: "pre")
-        assert AXUtilitiesRole.is_code(mock_obj)
-
-    def test_is_code_with_no_code_indicators(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_code with no code indicators."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["text"])
-        monkeypatch.setattr(AXUtilitiesRole, "_get_tag", lambda obj: "p")
-        assert not AXUtilitiesRole.is_code(mock_obj)
-
-    def test_is_button_with_popup_true(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_button_with_popup for button with popup."""
-
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.PUSH_BUTTON)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        mock_utilities_state_class = Mock()
-        mock_utilities_state_class.has_popup = Mock(return_value=True)
-        mock_orca_dependencies["ax_utilities_state"].AXUtilitiesState = mock_utilities_state_class
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        assert AXUtilitiesRole.is_button_with_popup(mock_obj)
-
-    def test_is_button_with_popup_false_no_popup(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_button_with_popup for button without popup."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"], "get_role", lambda obj: Atspi.Role.PUSH_BUTTON
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_xml_roles", side_effect=lambda obj: case["xml_roles"]
         )
-        monkeypatch.setattr(
-            mock_orca_dependencies["ax_utilities_state"], "has_popup", lambda obj: False
-        )
-        assert not AXUtilitiesRole.is_button_with_popup(mock_obj)
+        if case["tag"] is not None:
+            test_context.patch_object(
+                AXUtilitiesRole, "_get_tag", side_effect=lambda obj: case["tag"]
+            )
 
-    def test_is_button_with_popup_false_not_button(self, monkeypatch, mock_orca_dependencies):
-        """Test AXUtilitiesRole.is_button_with_popup for non-button with popup."""
+        result = AXUtilitiesRole.is_code(mock_obj)
+        assert result == case["expected_result"]
 
-        clean_module_cache("orca.ax_utilities_role")
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "push_button_with_popup",
+                "role": Atspi.Role.PUSH_BUTTON,
+                "has_popup": True,
+                "expected": True,
+            },
+            {
+                "id": "push_button_without_popup",
+                "role": Atspi.Role.PUSH_BUTTON,
+                "has_popup": False,
+                "expected": False,
+            },
+            {
+                "id": "label_with_popup",
+                "role": Atspi.Role.LABEL,
+                "has_popup": True,
+                "expected": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_is_button_with_popup(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRole.is_button_with_popup with various combinations."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        ax_object_mock = essential_modules["orca.ax_object"].AXObject
+        ax_utilities_state_mock = essential_modules["orca.ax_utilities_state"].AXUtilitiesState
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        monkeypatch.setattr(
-            mock_orca_dependencies["ax_object"], "get_role", lambda obj: Atspi.Role.LABEL
-        )
-        monkeypatch.setattr(
-            mock_orca_dependencies["ax_utilities_state"], "has_popup", lambda obj: True
-        )
-        assert not AXUtilitiesRole.is_button_with_popup(mock_obj)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        ax_object_mock.get_role.return_value = case["role"]
+        ax_utilities_state_mock.has_popup.return_value = case["has_popup"]
 
-    def test_is_landmark_without_type(self, monkeypatch, mock_orca_dependencies):
+        result = AXUtilitiesRole.is_button_with_popup(mock_obj)
+        assert result is case["expected"]
+
+    def test_is_landmark_without_type(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_landmark_without_type."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario 1: Role is not a landmark
-        monkeypatch.setattr(AXUtilitiesRole, "is_landmark", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=False
+        )
         assert not AXUtilitiesRole.is_landmark_without_type(mock_obj)
 
-        # Scenario 2: Role is a landmark and there are no xml-roles
-        monkeypatch.setattr(AXUtilitiesRole, "is_landmark", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [])
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=True
+        )
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=[])
         assert AXUtilitiesRole.is_landmark_without_type(mock_obj)
 
-        # Scenario 3: Role is a landmark and there are xml-roles
-        monkeypatch.setattr(AXUtilitiesRole, "is_landmark", lambda obj, role=None: True)
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["navigation"])
+        test_context.patch_object(
+            AXUtilitiesRole, "is_landmark", return_value=True
+        )
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_xml_roles", return_value=["navigation"]
+        )
         assert not AXUtilitiesRole.is_landmark_without_type(mock_obj)
 
-    def test_get_dialog_roles(self, mock_orca_dependencies):
-        """Test AXUtilitiesRole.get_dialog_roles."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "dialog_roles",
+                "method_name": "get_dialog_roles",
+                "expected_roles": [
+                    Atspi.Role.COLOR_CHOOSER,
+                    Atspi.Role.DIALOG,
+                    Atspi.Role.FILE_CHOOSER,
+                    Atspi.Role.ALERT,
+                ],
+                "test_params": [{}, {"include_alert_as_dialog": False}],
+            },
+            {
+                "id": "document_roles",
+                "method_name": "get_document_roles",
+                "expected_roles": [
+                    Atspi.Role.DOCUMENT_EMAIL,
+                    Atspi.Role.DOCUMENT_FRAME,
+                    Atspi.Role.DOCUMENT_PRESENTATION,
+                    Atspi.Role.DOCUMENT_SPREADSHEET,
+                    Atspi.Role.DOCUMENT_TEXT,
+                    Atspi.Role.DOCUMENT_WEB,
+                ],
+                "test_params": [{}],
+            },
+            {
+                "id": "form_field_roles",
+                "method_name": "get_form_field_roles",
+                "expected_roles": [
+                    Atspi.Role.CHECK_BOX,
+                    Atspi.Role.RADIO_BUTTON,
+                    Atspi.Role.COMBO_BOX,
+                    Atspi.Role.DOCUMENT_FRAME,
+                    Atspi.Role.TEXT,
+                    Atspi.Role.LIST_BOX,
+                    Atspi.Role.ENTRY,
+                    Atspi.Role.PASSWORD_TEXT,
+                    Atspi.Role.PUSH_BUTTON,
+                    Atspi.Role.SPIN_BUTTON,
+                    Atspi.Role.TOGGLE_BUTTON,
+                ],
+                "test_params": [{}],
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_role_collections(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRole get_*_roles methods."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        # Scenario: Include alert as dialog (default)
-        roles = AXUtilitiesRole.get_dialog_roles()
-        expected = [
-            Atspi.Role.COLOR_CHOOSER,
-            Atspi.Role.DIALOG,
-            Atspi.Role.FILE_CHOOSER,
-            Atspi.Role.ALERT,
-        ]
-        assert roles == expected
+        method_to_test = getattr(AXUtilitiesRole, case["method_name"])
 
-        # Scenario: Exclude alert as dialog
-        roles = AXUtilitiesRole.get_dialog_roles(include_alert_as_dialog=False)
-        expected = [Atspi.Role.COLOR_CHOOSER, Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
-        assert roles == expected
+        for params in case["test_params"]:
+            roles = method_to_test(**params)
+            if case["method_name"] == "get_dialog_roles" and "include_alert_as_dialog" in params:
+                expected = [r for r in case["expected_roles"] if r != Atspi.Role.ALERT]
+                assert roles == expected
+            else:
+                assert roles == case["expected_roles"]
 
-    def test_get_document_roles(self, mock_orca_dependencies):
-        """Test AXUtilitiesRole.get_document_roles."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        roles = AXUtilitiesRole.get_document_roles()
-        expected = [
-            Atspi.Role.DOCUMENT_EMAIL,
-            Atspi.Role.DOCUMENT_FRAME,
-            Atspi.Role.DOCUMENT_PRESENTATION,
-            Atspi.Role.DOCUMENT_SPREADSHEET,
-            Atspi.Role.DOCUMENT_TEXT,
-            Atspi.Role.DOCUMENT_WEB,
-        ]
-        assert roles == expected
-
-    def test_get_form_field_roles(self, mock_orca_dependencies):
-        """Test AXUtilitiesRole.get_form_field_roles."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        roles = AXUtilitiesRole.get_form_field_roles()
-        expected = [
-            Atspi.Role.CHECK_BOX,
-            Atspi.Role.RADIO_BUTTON,
-            Atspi.Role.COMBO_BOX,
-            Atspi.Role.DOCUMENT_FRAME,
-            Atspi.Role.TEXT,
-            Atspi.Role.LIST_BOX,
-            Atspi.Role.ENTRY,
-            Atspi.Role.PASSWORD_TEXT,
-            Atspi.Role.PUSH_BUTTON,
-            Atspi.Role.SPIN_BUTTON,
-            Atspi.Role.TOGGLE_BUTTON,
-        ]
-        assert roles == expected
-
-    def test_get_menu_item_roles(self, mock_orca_dependencies):
+    def test_get_menu_item_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_menu_item_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_menu_item_roles()
@@ -877,10 +2195,10 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_get_menu_related_roles(self, mock_orca_dependencies):
+    def test_get_menu_related_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_menu_related_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_menu_related_roles()
@@ -895,50 +2213,57 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_get_table_cell_roles(self, mock_orca_dependencies):
-        """Test AXUtilitiesRole.get_table_cell_roles."""
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "table_cell_roles",
+                "method_name": "get_table_cell_roles",
+                "expected_roles": [
+                    Atspi.Role.TABLE_CELL,
+                    Atspi.Role.TABLE_COLUMN_HEADER,
+                    Atspi.Role.TABLE_ROW_HEADER,
+                    Atspi.Role.COLUMN_HEADER,
+                    Atspi.Role.ROW_HEADER,
+                ],
+                "test_params": [{}, {"include_headers": False}],
+            },
+            {
+                "id": "table_header_roles",
+                "method_name": "get_table_header_roles",
+                "expected_roles": [
+                    Atspi.Role.TABLE_COLUMN_HEADER,
+                    Atspi.Role.TABLE_ROW_HEADER,
+                    Atspi.Role.COLUMN_HEADER,
+                    Atspi.Role.ROW_HEADER,
+                ],
+                "test_params": [{}],
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_table_role_collections(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test AXUtilitiesRole get_table_*_roles methods."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        # Scenario: Include headers (default)
-        roles = AXUtilitiesRole.get_table_cell_roles()
-        expected = [
-            Atspi.Role.TABLE_CELL,
-            Atspi.Role.TABLE_COLUMN_HEADER,
-            Atspi.Role.TABLE_ROW_HEADER,
-            Atspi.Role.COLUMN_HEADER,
-            Atspi.Role.ROW_HEADER,
-        ]
-        assert roles == expected
+        method_to_test = getattr(AXUtilitiesRole, case["method_name"])
 
-        # Scenario: Exclude headers
-        roles = AXUtilitiesRole.get_table_cell_roles(include_headers=False)
-        expected = [Atspi.Role.TABLE_CELL]
-        assert roles == expected
+        for params in case["test_params"]:
+            roles = method_to_test(**params)
+            if case["method_name"] == "get_table_cell_roles" and "include_headers" in params:
+                expected = [Atspi.Role.TABLE_CELL]
+                assert roles == expected
+            else:
+                assert roles == case["expected_roles"]
 
-    def test_get_table_header_roles(self, mock_orca_dependencies):
-        """Test AXUtilitiesRole.get_table_header_roles."""
-
-        clean_module_cache("orca.ax_utilities_role")
-        from orca.ax_utilities_role import AXUtilitiesRole
-
-        roles = AXUtilitiesRole.get_table_header_roles()
-        expected = [
-            Atspi.Role.TABLE_COLUMN_HEADER,
-            Atspi.Role.TABLE_ROW_HEADER,
-            Atspi.Role.COLUMN_HEADER,
-            Atspi.Role.ROW_HEADER,
-        ]
-        assert roles == expected
-
-    def test_get_table_related_roles(self, mock_orca_dependencies):
+    def test_get_table_related_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_table_related_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        # Scenario: Exclude caption (default)
         roles = AXUtilitiesRole.get_table_related_roles()
         expected = [
             Atspi.Role.TABLE,
@@ -950,7 +2275,6 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-        # Scenario: Include caption
         roles = AXUtilitiesRole.get_table_related_roles(include_caption=True)
         expected = [
             Atspi.Role.TABLE,
@@ -963,23 +2287,18 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_have_same_role(self, monkeypatch, mock_orca_dependencies):
+    def test_have_same_role(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.have_same_role."""
 
-        mock_ax_object_class = Mock()
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj1 = Mock(spec=Atspi.Accessible)
-        mock_obj2 = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Same roles
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.PUSH_BUTTON)
+        mock_obj1 = test_context.Mock(spec=Atspi.Accessible)
+        mock_obj2 = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.PUSH_BUTTON)
         assert AXUtilitiesRole.have_same_role(mock_obj1, mock_obj2)
 
-        # Scenario: Different roles
         def mock_get_role(obj):
             if obj == mock_obj1:
                 return Atspi.Role.PUSH_BUTTON
@@ -988,228 +2307,194 @@ class TestAXUtilitiesRole:
         mock_ax_object_class.get_role = mock_get_role
         assert not AXUtilitiesRole.have_same_role(mock_obj1, mock_obj2)
 
-    def test_has_role_from_aria(self, monkeypatch, mock_orca_dependencies):
+    def test_has_role_from_aria(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.has_role_from_aria."""
 
-        mock_ax_object_class = Mock()
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Has xml-roles attribute
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"xml-roles": "button"})
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"xml-roles": "button"}
+        )
         assert AXUtilitiesRole.has_role_from_aria(mock_obj)
 
-        # Scenario: No xml-roles attribute
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={})
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         assert not AXUtilitiesRole.has_role_from_aria(mock_obj)
 
-        # Scenario: Empty xml-roles attribute
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"xml-roles": ""})
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={"xml-roles": ""})
         assert not AXUtilitiesRole.has_role_from_aria(mock_obj)
 
-    def test_is_aria_alert(self, monkeypatch, mock_orca_dependencies):
+    def test_is_aria_alert(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_aria_alert."""
 
-        mock_ax_object_class = Mock()
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not an ARIA alert (no xml-roles with "alert")
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"xml-roles": "button"})
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"xml-roles": "button"}
+        )
         assert not AXUtilitiesRole.is_aria_alert(mock_obj)
 
-        # Scenario: ARIA alert with notification role
-        mock_ax_object_class.get_attributes_dict = Mock(return_value={"xml-roles": "alert"})
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.NOTIFICATION)
+        mock_ax_object_class.get_attributes_dict = test_context.Mock(
+            return_value={"xml-roles": "alert"}
+        )
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.NOTIFICATION)
         assert AXUtilitiesRole.is_aria_alert(mock_obj)
 
-        # Scenario: ARIA alert with wrong role (still returns True but logs debug message)
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.ALERT)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.ALERT)
         assert AXUtilitiesRole.is_aria_alert(mock_obj)
 
-    def test_is_autocomplete(self, monkeypatch, mock_orca_dependencies):
+    def test_is_autocomplete(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_autocomplete."""
 
-        mock_ax_object_class = Mock()
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Has autocomplete role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.AUTOCOMPLETE)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.AUTOCOMPLETE)
         assert AXUtilitiesRole.is_autocomplete(mock_obj)
 
-        # Scenario: Different role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.BUTTON)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.BUTTON)
         assert not AXUtilitiesRole.is_autocomplete(mock_obj)
-
-        # Scenario: With explicit role parameter
         assert AXUtilitiesRole.is_autocomplete(mock_obj, Atspi.Role.AUTOCOMPLETE)
         assert not AXUtilitiesRole.is_autocomplete(mock_obj, Atspi.Role.BUTTON)
 
-    def test_is_default_button(self, monkeypatch, mock_orca_dependencies):
+    def test_is_default_button(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_default_button."""
 
-        mock_ax_object_class = Mock()
-        mock_ax_object_class.has_state = Mock(return_value=False)
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
+        mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not a push button
-        monkeypatch.setattr(AXUtilitiesRole, "is_push_button", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_push_button", return_value=False
+        )
         assert not AXUtilitiesRole.is_default_button(mock_obj)
 
-        # Scenario: Push button, not default
-        monkeypatch.setattr(AXUtilitiesRole, "is_push_button", lambda obj, role=None: True)
-        mock_ax_object_class.has_state = Mock(return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_push_button", return_value=True
+        )
+        mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_default_button(mock_obj)
 
-        # Scenario: Push button, is default
-        monkeypatch.setattr(AXUtilitiesRole, "is_push_button", lambda obj, role=None: True)
-        mock_ax_object_class.has_state = Mock(return_value=True)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_push_button", return_value=True
+        )
+        mock_ax_object_class.has_state = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_default_button(mock_obj)
 
-    def test_is_single_line_autocomplete_entry(self, monkeypatch, mock_orca_dependencies):
+    def test_is_single_line_autocomplete_entry(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_single_line_autocomplete_entry."""
 
-        mock_ax_utilities_state_class = Mock()
-        mock_orca_dependencies[
-            "ax_utilities_state"
-        ].AXUtilitiesState = mock_ax_utilities_state_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_utilities_state_class = essential_modules[
+            "orca.ax_utilities_state"
+        ].AXUtilitiesState
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not single line entry
-        monkeypatch.setattr(AXUtilitiesRole, "is_single_line_entry", lambda obj, role=None: False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_single_line_entry", return_value=False
+        )
         assert not AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
-        # Scenario: Single line entry, not autocomplete
-        monkeypatch.setattr(AXUtilitiesRole, "is_single_line_entry", lambda obj, role=None: True)
-        mock_ax_utilities_state_class.supports_autocompletion = Mock(return_value=False)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_single_line_entry", return_value=True
+        )
+        mock_ax_utilities_state_class.supports_autocompletion = test_context.Mock(
+            return_value=False
+        )
         assert not AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
-        # Scenario: Single line entry, autocomplete
-        monkeypatch.setattr(AXUtilitiesRole, "is_single_line_entry", lambda obj, role=None: True)
-        mock_ax_utilities_state_class.supports_autocompletion = Mock(return_value=True)
+        test_context.patch_object(
+            AXUtilitiesRole, "is_single_line_entry", return_value=True
+        )
+        mock_ax_utilities_state_class.supports_autocompletion = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
-    def test_is_single_line_entry(self, monkeypatch, mock_orca_dependencies):
+    def test_is_single_line_entry(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_single_line_entry."""
 
-        mock_ax_utilities_state_class = Mock()
-        mock_orca_dependencies[
-            "ax_utilities_state"
-        ].AXUtilitiesState = mock_ax_utilities_state_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_utilities_state_class = essential_modules[
+            "orca.ax_utilities_state"
+        ].AXUtilitiesState
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Not single line
-        mock_ax_utilities_state_class.is_single_line = Mock(return_value=False)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_utilities_state_class.is_single_line = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_single_line_entry(mock_obj)
 
-        # Scenario: Single line entry
-        mock_ax_utilities_state_class.is_single_line = Mock(return_value=True)
-        monkeypatch.setattr(AXUtilitiesRole, "is_entry", lambda obj, role=None: True)
+        mock_ax_utilities_state_class.is_single_line = test_context.Mock(return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_entry", return_value=True)
         assert AXUtilitiesRole.is_single_line_entry(mock_obj)
 
-        # Scenario: Single line text, editable
-        mock_ax_utilities_state_class.is_single_line = Mock(return_value=True)
-        monkeypatch.setattr(AXUtilitiesRole, "is_entry", lambda obj, role=None: False)
-        monkeypatch.setattr(AXUtilitiesRole, "is_text", lambda obj, role=None: True)
-        mock_ax_utilities_state_class.is_editable = Mock(return_value=True)
+        mock_ax_utilities_state_class.is_single_line = test_context.Mock(return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_entry", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_text", return_value=True)
+        mock_ax_utilities_state_class.is_editable = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_single_line_entry(mock_obj)
 
-        # Scenario: Single line text, not editable
-        mock_ax_utilities_state_class.is_editable = Mock(return_value=False)
+        mock_ax_utilities_state_class.is_editable = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_single_line_entry(mock_obj)
 
-    def test_is_dialog_or_alert(self, monkeypatch, mock_orca_dependencies):
+    def test_is_dialog_or_alert(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_dialog_or_alert."""
 
-        mock_ax_object_class = Mock()
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Is dialog role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.DIALOG)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.DIALOG)
         assert AXUtilitiesRole.is_dialog_or_alert(mock_obj)
 
-        # Scenario: Is alert role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.ALERT)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.ALERT)
         assert AXUtilitiesRole.is_dialog_or_alert(mock_obj)
 
-        # Scenario: Is color chooser role (in dialog roles)
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.COLOR_CHOOSER)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.COLOR_CHOOSER)
         assert AXUtilitiesRole.is_dialog_or_alert(mock_obj)
 
-        # Scenario: Is file chooser role (in dialog roles)
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.FILE_CHOOSER)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.FILE_CHOOSER)
         assert AXUtilitiesRole.is_dialog_or_alert(mock_obj)
 
-        # Scenario: Neither dialog nor alert
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.BUTTON)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.BUTTON)
         assert not AXUtilitiesRole.is_dialog_or_alert(mock_obj)
 
-    def test_is_dialog_or_window(self, monkeypatch, mock_orca_dependencies):
+    def test_is_dialog_or_window(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_dialog_or_window."""
 
-        mock_ax_object_class = Mock()
-        mock_orca_dependencies["ax_object"].AXObject = mock_ax_object_class
-
-        clean_module_cache("orca.ax_utilities_role")
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Is dialog role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.DIALOG)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.DIALOG)
         assert AXUtilitiesRole.is_dialog_or_window(mock_obj)
 
-        # Scenario: Is frame role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.FRAME)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.FRAME)
         assert AXUtilitiesRole.is_dialog_or_window(mock_obj)
 
-        # Scenario: Is window role
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.WINDOW)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.WINDOW)
         assert AXUtilitiesRole.is_dialog_or_window(mock_obj)
 
-        # Scenario: Is color chooser role (in dialog roles, exclude_alert=False)
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.COLOR_CHOOSER)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.COLOR_CHOOSER)
         assert AXUtilitiesRole.is_dialog_or_window(mock_obj)
 
-        # Scenario: Neither dialog nor window
-        mock_ax_object_class.get_role = Mock(return_value=Atspi.Role.BUTTON)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.BUTTON)
         assert not AXUtilitiesRole.is_dialog_or_window(mock_obj)
 
-    def test_get_widget_roles(self, mock_orca_dependencies):
+    def test_get_widget_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_widget_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_widget_roles()
@@ -1219,10 +2504,10 @@ class TestAXUtilitiesRole:
         assert Atspi.Role.ENTRY in roles
         assert Atspi.Role.COMBO_BOX in roles
 
-    def test_get_text_ui_roles(self, mock_orca_dependencies):
+    def test_get_text_ui_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_text_ui_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_text_ui_roles()
@@ -1234,20 +2519,20 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_get_tree_related_roles(self, mock_orca_dependencies):
+    def test_get_tree_related_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_tree_related_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_tree_related_roles()
         expected = [Atspi.Role.TREE, Atspi.Role.TREE_ITEM, Atspi.Role.TREE_TABLE]
         assert roles == expected
 
-    def test_get_set_container_roles(self, mock_orca_dependencies):
+    def test_get_set_container_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_set_container_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_set_container_roles()
@@ -1261,10 +2546,10 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_get_layout_only_roles(self, mock_orca_dependencies):
+    def test_get_layout_only_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_layout_only_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_layout_only_roles()
@@ -1278,10 +2563,10 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_get_large_container_roles(self, mock_orca_dependencies):
+    def test_get_large_container_roles(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_large_container_roles."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_large_container_roles()
@@ -1305,10 +2590,10 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_get_roles_to_exclude_from_clickables_list(self, mock_orca_dependencies):
+    def test_get_roles_to_exclude_from_clickables_list(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_roles_to_exclude_from_clickables_list."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         roles = AXUtilitiesRole.get_roles_to_exclude_from_clickables_list()
@@ -1333,86 +2618,293 @@ class TestAXUtilitiesRole:
         ]
         assert roles == expected
 
-    def test_is_dpub(self, monkeypatch, mock_orca_dependencies):
+    def test_is_dpub(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_dpub."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-
-        # Scenario: Has DPUB xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["doc-abstract"])
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_xml_roles", return_value=["doc-abstract"]
+        )
         assert AXUtilitiesRole.is_dpub(mock_obj)
 
-        # Scenario: No DPUB xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["button"])
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["button"])
         assert not AXUtilitiesRole.is_dpub(mock_obj)
 
-        # Scenario: No xml-roles
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [])
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=[])
         assert not AXUtilitiesRole.is_dpub(mock_obj)
 
     @pytest.mark.parametrize(
-        "method_name, expected_xml_role",
+        "case",
         [
-            ("is_dpub_abstract", "doc-abstract"),
-            ("is_dpub_acknowledgments", "doc-acknowledgments"),
-            ("is_dpub_afterword", "doc-afterword"),
-            ("is_dpub_appendix", "doc-appendix"),
-            ("is_dpub_backlink", "doc-backlink"),
-            ("is_dpub_biblioref", "doc-biblioref"),
-            ("is_dpub_bibliography", "doc-bibliography"),
-            ("is_dpub_chapter", "doc-chapter"),
-            ("is_dpub_colophon", "doc-colophon"),
-            ("is_dpub_conclusion", "doc-conclusion"),
-            ("is_dpub_cover", "doc-cover"),
-            ("is_dpub_credit", "doc-credit"),
-            ("is_dpub_credits", "doc-credits"),
-            ("is_dpub_dedication", "doc-dedication"),
-            ("is_dpub_endnote", "doc-endnote"),
-            ("is_dpub_endnotes", "doc-endnotes"),
-            ("is_dpub_epigraph", "doc-epigraph"),
-            ("is_dpub_epilogue", "doc-epilogue"),
-            ("is_dpub_errata", "doc-errata"),
-            ("is_dpub_example", "doc-example"),
-            ("is_dpub_footnote", "doc-footnote"),
-            ("is_dpub_foreword", "doc-foreword"),
-            ("is_dpub_glossary", "doc-glossary"),
-            ("is_dpub_glossref", "doc-glossref"),
-            ("is_dpub_index", "doc-index"),
-            ("is_dpub_introduction", "doc-introduction"),
-            ("is_dpub_noteref", "doc-noteref"),
-            ("is_dpub_pagelist", "doc-pagelist"),
-            ("is_dpub_pagebreak", "doc-pagebreak"),
-            ("is_dpub_part", "doc-part"),
-            ("is_dpub_preface", "doc-preface"),
-            ("is_dpub_prologue", "doc-prologue"),
-            ("is_dpub_pullquote", "doc-pullquote"),
-            ("is_dpub_qna", "doc-qna"),
-            ("is_dpub_subtitle", "doc-subtitle"),
-            ("is_dpub_toc", "doc-toc"),
+            {
+                "id": "dpub_abstract",
+                "method_name": "is_dpub_abstract",
+                "expected_xml_role": "doc-abstract",
+            },
+            {
+                "id": "dpub_acknowledgments",
+                "method_name": "is_dpub_acknowledgments",
+                "expected_xml_role": "doc-acknowledgments",
+            },
+            {
+                "id": "dpub_afterword",
+                "method_name": "is_dpub_afterword",
+                "expected_xml_role": "doc-afterword",
+            },
+            {
+                "id": "dpub_appendix",
+                "method_name": "is_dpub_appendix",
+                "expected_xml_role": "doc-appendix",
+            },
+            {
+                "id": "dpub_backlink",
+                "method_name": "is_dpub_backlink",
+                "expected_xml_role": "doc-backlink",
+            },
+            {
+                "id": "dpub_biblioref",
+                "method_name": "is_dpub_biblioref",
+                "expected_xml_role": "doc-biblioref",
+            },
+            {
+                "id": "dpub_bibliography",
+                "method_name": "is_dpub_bibliography",
+                "expected_xml_role": "doc-bibliography",
+            },
+            {
+                "id": "dpub_chapter",
+                "method_name": "is_dpub_chapter",
+                "expected_xml_role": "doc-chapter",
+            },
+            {
+                "id": "dpub_colophon",
+                "method_name": "is_dpub_colophon",
+                "expected_xml_role": "doc-colophon",
+            },
+            {
+                "id": "dpub_conclusion",
+                "method_name": "is_dpub_conclusion",
+                "expected_xml_role": "doc-conclusion",
+            },
+            {"id": "dpub_cover", "method_name": "is_dpub_cover", "expected_xml_role": "doc-cover"},
+            {
+                "id": "dpub_credit",
+                "method_name": "is_dpub_credit",
+                "expected_xml_role": "doc-credit",
+            },
+            {
+                "id": "dpub_credits",
+                "method_name": "is_dpub_credits",
+                "expected_xml_role": "doc-credits",
+            },
+            {
+                "id": "dpub_dedication",
+                "method_name": "is_dpub_dedication",
+                "expected_xml_role": "doc-dedication",
+            },
+            {
+                "id": "dpub_endnote",
+                "method_name": "is_dpub_endnote",
+                "expected_xml_role": "doc-endnote",
+            },
+            {
+                "id": "dpub_endnotes",
+                "method_name": "is_dpub_endnotes",
+                "expected_xml_role": "doc-endnotes",
+            },
+            {
+                "id": "dpub_epigraph",
+                "method_name": "is_dpub_epigraph",
+                "expected_xml_role": "doc-epigraph",
+            },
+            {
+                "id": "dpub_epilogue",
+                "method_name": "is_dpub_epilogue",
+                "expected_xml_role": "doc-epilogue",
+            },
+            {
+                "id": "dpub_errata",
+                "method_name": "is_dpub_errata",
+                "expected_xml_role": "doc-errata",
+            },
+            {
+                "id": "dpub_example",
+                "method_name": "is_dpub_example",
+                "expected_xml_role": "doc-example",
+            },
+            {
+                "id": "dpub_footnote",
+                "method_name": "is_dpub_footnote",
+                "expected_xml_role": "doc-footnote",
+            },
+            {
+                "id": "dpub_foreword",
+                "method_name": "is_dpub_foreword",
+                "expected_xml_role": "doc-foreword",
+            },
+            {
+                "id": "dpub_glossary",
+                "method_name": "is_dpub_glossary",
+                "expected_xml_role": "doc-glossary",
+            },
+            {
+                "id": "dpub_glossref",
+                "method_name": "is_dpub_glossref",
+                "expected_xml_role": "doc-glossref",
+            },
+            {"id": "dpub_index", "method_name": "is_dpub_index", "expected_xml_role": "doc-index"},
+            {
+                "id": "dpub_introduction",
+                "method_name": "is_dpub_introduction",
+                "expected_xml_role": "doc-introduction",
+            },
+            {
+                "id": "dpub_noteref",
+                "method_name": "is_dpub_noteref",
+                "expected_xml_role": "doc-noteref",
+            },
+            {
+                "id": "dpub_pagelist",
+                "method_name": "is_dpub_pagelist",
+                "expected_xml_role": "doc-pagelist",
+            },
+            {
+                "id": "dpub_pagebreak",
+                "method_name": "is_dpub_pagebreak",
+                "expected_xml_role": "doc-pagebreak",
+            },
+            {"id": "dpub_part", "method_name": "is_dpub_part", "expected_xml_role": "doc-part"},
+            {
+                "id": "dpub_preface",
+                "method_name": "is_dpub_preface",
+                "expected_xml_role": "doc-preface",
+            },
+            {
+                "id": "dpub_prologue",
+                "method_name": "is_dpub_prologue",
+                "expected_xml_role": "doc-prologue",
+            },
+            {
+                "id": "dpub_pullquote",
+                "method_name": "is_dpub_pullquote",
+                "expected_xml_role": "doc-pullquote",
+            },
+            {"id": "dpub_qna", "method_name": "is_dpub_qna", "expected_xml_role": "doc-qna"},
+            {
+                "id": "dpub_subtitle",
+                "method_name": "is_dpub_subtitle",
+                "expected_xml_role": "doc-subtitle",
+            },
+            {"id": "dpub_toc", "method_name": "is_dpub_toc", "expected_xml_role": "doc-toc"},
         ],
+        ids=lambda case: case["id"],
     )
-    def test_dpub_methods(
-        self, monkeypatch, mock_orca_dependencies, method_name, expected_xml_role
-    ):
+    def test_dpub_methods(self, test_context, case: dict) -> None:
         """Test AXUtilitiesRole DPUB methods."""
 
-        clean_module_cache("orca.ax_utilities_role")
+        self._setup_dependencies(test_context)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        mock_obj = Mock(spec=Atspi.Accessible)
-        method = getattr(AXUtilitiesRole, method_name)
-
-        # Scenario: Has expected DPUB xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [expected_xml_role])
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        method = getattr(AXUtilitiesRole, case["method_name"])
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_xml_roles", side_effect=lambda obj: [case["expected_xml_role"]]
+        )
         assert method(mock_obj)
 
-        # Scenario: Different DPUB xml-role
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: ["doc-other"])
+        test_context.patch_object(
+            AXUtilitiesRole, "_get_xml_roles", return_value=["doc-other"]
+        )
         assert not method(mock_obj)
 
-        # Scenario: No xml-roles
-        monkeypatch.setattr(AXUtilitiesRole, "_get_xml_roles", lambda obj: [])
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=[])
         assert not method(mock_obj)
+
+    def test_get_display_style(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole._get_display_style method."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import ax_utilities_role
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_utilities_role.AXObject, "get_attributes_dict", return_value={"display": "inline"}
+        )
+        result = AXUtilitiesRole._get_display_style(mock_obj)  # pylint: disable=protected-access
+        assert result == "inline"
+
+    def test_get_display_style_missing(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole._get_display_style when display attribute is missing."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import ax_utilities_role
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_utilities_role.AXObject, "get_attributes_dict", return_value={}
+        )
+        result = AXUtilitiesRole._get_display_style(mock_obj)  # pylint: disable=protected-access
+        assert result == ""
+
+    def test_get_tag(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole._get_tag method."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import ax_utilities_role
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_utilities_role.AXObject, "get_attributes_dict", return_value={"tag": "button"}
+        )
+        result = AXUtilitiesRole._get_tag(mock_obj)  # pylint: disable=protected-access
+        assert result == "button"
+
+    def test_get_tag_missing(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole._get_tag when tag attribute is missing."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import ax_utilities_role
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_utilities_role.AXObject, "get_attributes_dict", return_value={}
+        )
+        result = AXUtilitiesRole._get_tag(mock_obj)  # pylint: disable=protected-access
+        assert result is None
+
+    def test_get_xml_roles(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole._get_xml_roles method."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import ax_utilities_role
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_utilities_role.AXObject,
+            "get_attributes_dict",
+            return_value={"xml-roles": "doc-part doc-chapter"},
+        )
+        result = AXUtilitiesRole._get_xml_roles(mock_obj)  # pylint: disable=protected-access
+        assert result == ["doc-part", "doc-chapter"]
+
+    def test_get_xml_roles_empty(self, test_context: OrcaTestContext) -> None:
+        """Test AXUtilitiesRole._get_xml_roles when xml-roles is empty."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import ax_utilities_role
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(
+            ax_utilities_role.AXObject, "get_attributes_dict", return_value={"xml-roles": ""}
+        )
+        result = AXUtilitiesRole._get_xml_roles(mock_obj)  # pylint: disable=protected-access
+        assert result == []
