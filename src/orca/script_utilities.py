@@ -1068,15 +1068,6 @@ class Utilities:
         text, start, end = AXText.get_sentence_at_offset(obj, offset)
         return [(obj, start, end, text)]
 
-    def find_first_caret_context(
-        self,
-        obj: Atspi.Accessible,
-        offset: int
-    ) -> tuple[Atspi.Accessible, int]:
-        """Returns the first viable/valid caret context given obj and offset."""
-
-        return obj, offset
-
     def previous_context(
         self,
         obj: Atspi.Accessible | None = None,

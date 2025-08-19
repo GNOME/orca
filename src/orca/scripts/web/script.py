@@ -1096,7 +1096,7 @@ class Script(default.Script):
         if AXUtilities.is_unknown_or_redundant(new_focus):
             msg = "WEB: Event source has bogus role. Likely browser bug."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            new_focus, _offset = self.utilities.find_first_caret_context(new_focus, 0)
+            new_focus, _offset = self.utilities.first_context(new_focus, 0)
 
         if self.utilities.treat_as_text_object(new_focus):
             text_offset = AXText.get_caret_offset(new_focus)
