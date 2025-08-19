@@ -57,17 +57,6 @@ class CaretNavigator:
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_input_event: input_event.InputEvent | None = None
 
-    def handles_navigation(self, handler: input_event.InputEventHandler) -> bool:
-        """Returns True if handler is a navigation command."""
-
-        if handler not in self._handlers.values():
-            return False
-
-        if handler.function is self.toggle_enabled:
-            return False
-
-        return True
-
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
     ) -> keybindings.KeyBindings:

@@ -175,8 +175,6 @@ class TestCaretNavigator:
     @pytest.mark.parametrize(
         "test_method,scenario,expected_result",
         [
-            pytest.param("handles_navigation", "external_handler", False, id="external_handler"),
-            pytest.param("handles_navigation", "nav_handler", True, id="nav_handler"),
             pytest.param("suspend_commands", "suspend_true", True, id="suspend_commands"),
             pytest.param("toggle_enabled", "toggle_test", True, id="toggle_enabled"),
         ],
@@ -196,19 +194,7 @@ class TestCaretNavigator:
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
 
-        if test_method == "handles_navigation":
-            if scenario == "external_handler":
-                external_handler = test_context.Mock()
-                external_handler.function = test_context.Mock()
-                result = navigator.handles_navigation(external_handler)
-                assert result == expected_result
-            elif scenario == "nav_handler":
-                nav_handler = navigator._handlers.get("next_character")
-                if nav_handler:
-                    result = navigator.handles_navigation(nav_handler)
-                    assert result == expected_result
-
-        elif test_method == "suspend_commands":
+        if test_method == "suspend_commands":
             mock_script.key_bindings = test_context.Mock()
             mock_script.key_bindings.remove = test_context.Mock()
             mock_script.key_bindings.add = test_context.Mock()
