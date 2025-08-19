@@ -38,6 +38,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import script_manager
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -273,6 +274,15 @@ class CaretNavigator:
         msg = f"CARET NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def _is_active_script(self, script):
+        active_script = script_manager.get_manager().get_active_script()
+        if active_script == script:
+            return True
+
+        tokens = ["CARET NAVIGATOR:", script, "is not the active script", active_script]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return False
+
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
 
@@ -298,14 +308,65 @@ class CaretNavigator:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, include_grabs=True)
+        self.remove_bindings(script, reason)
+        self.add_bindings(script, reason)
+
+    def add_bindings(self, script: default.Script, reason: str = "") -> None:
+        """Adds caret navigation bindings for script."""
+
+        tokens = ["CARET NAVIGATOR: Adding bindings for", script]
+        if reason:
+            tokens.append(f": {reason}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if not (script and self._is_active_script(script)):
+            tokens = ["CARET NAVIGATOR: Not adding bindings for non-active script", script]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["CARET NAVIGATOR:", script,
+                      f"had {len(has_grabs)} key grabs prior to adding bindings."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._handlers = self.get_handlers(True)
         self._bindings = self.get_bindings(True)
 
         for binding in self._bindings.key_bindings:
             script.key_bindings.add(binding, include_grabs=not self._suspended)
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["CARET NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+    def remove_bindings(self, script: default.Script, reason: str = "") -> None:
+        """Removes caret navigation bindings for script."""
+
+        tokens = ["CARET NAVIGATOR: Removing bindings for", script]
+        if reason:
+            tokens.append(f": {reason}")
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if not (script and self._is_active_script(script)):
+            tokens = ["CARET NAVIGATOR: Not removing bindings for non-active script", script]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["CARET NAVIGATOR:", script,
+                      f"had {len(has_grabs)} key grabs prior to removing bindings."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        for binding in self._bindings.key_bindings:
+            script.key_bindings.remove(binding, include_grabs=True)
+
+        if debug.LEVEL_INFO >= debug.debugLevel:
+            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
+            tokens = ["CARET NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def toggle_enabled(self, script: default.Script, event: InputEvent | None = None) -> bool:
         """Toggles caret navigation."""
