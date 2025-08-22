@@ -1064,7 +1064,10 @@ class Script(script.Script):
             self.get_flat_review_presenter().quit()
 
         offset = AXText.get_caret_offset(event.source)
+
+        # TODO - JD: These need to be harmonized / unified / simplified.
         manager.set_last_cursor_position(event.source, offset)
+        self.utilities.set_caret_context(event.source, offset)
 
         ignore = [TextEventReason.CUT,
                   TextEventReason.PASTE,
