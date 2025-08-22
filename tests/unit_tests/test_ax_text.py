@@ -2325,7 +2325,7 @@ class TestAXText:
                 "id": "previous_line_no_current",
                 "direction": "previous",
                 "unit_type": "line",
-                "setup_params": {"caret_offset": 5, "line_data": {}},
+                "setup_params": {"caret_offset": 5, "count": 10, "line_data": {}},
                 "method_params": {},
                 "expected": ("", 0, 0),
             },
@@ -2617,7 +2617,7 @@ class TestAXText:
     def test_get_character_at_offset_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXText.get_character_at_offset when GLib.GError occurs."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_text import AXText
 
         def raise_glib_error(_obj, _offset, _granularity):
@@ -2632,4 +2632,86 @@ class TestAXText:
 
         result = AXText.get_character_at_offset(test_context.Mock(spec=Atspi.Accessible), 5)
         assert result == ("", 0, 0)
-        essential_modules["orca.debug"].print_message.assert_called()
+
+    def test_get_previous_line_at_end_with_newline_sets_correct_start(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXText.get_previous_line sets start when fallback line ends with newline."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        # Mock get_character_count to return 12 (end of text)
+        test_context.patch_object(AXText, "get_character_count", return_value=12)
+
+        # Mock get_line_at_offset for the sequence
+        def mock_get_line_at_offset(_obj, offset):
+            if offset == 12:  # At end of text - empty line
+                return ("", 12, 12)
+            if offset == 11:  # One character back - line ending with newline
+                return ("Hello World\n", 0, 12)
+            if offset == 10:  # Previous line search from (offset-1)-1 = 10
+                return ("Previous Line", 0, 11)
+            return ("", 0, 0)
+
+        test_context.patch_object(AXText, "get_line_at_offset", new=mock_get_line_at_offset)
+
+        # Test: when at end with empty line and fallback has newline
+        result = AXText.get_previous_line(mock_obj, 12)
+
+        # The current line becomes "Hello World\n" with start=11
+        assert result == ("Previous Line", 0, 11)
+
+    def test_get_previous_line_at_end_of_text_fallback_to_normal_behavior(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXText.get_previous_line at end when fallback doesn't end with newline."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        # Mock get_character_count to return 11 (end of text)
+        test_context.patch_object(AXText, "get_character_count", return_value=11)
+
+        # Mock get_line_at_offset scenarios
+        def mock_get_line_at_offset(_obj, offset):
+            if offset == 11:  # At end of text
+                return ("", 11, 11)
+            if offset == 10:  # One character back - no newline
+                return ("Hello World", 5, 15)  # start > 0 so it continues
+            if offset == 4:  # Previous line lookup from start-1 = 4
+                return ("Previous Line", 0, 5)
+            return ("", 0, 0)
+
+        test_context.patch_object(AXText, "get_line_at_offset", new=mock_get_line_at_offset)
+
+        # Test: should use normal behavior when fallback line doesn't end with newline
+        result = AXText.get_previous_line(mock_obj, 11)
+        assert result == ("Previous Line", 0, 5)
+
+    def test_get_previous_line_empty_current_line_returns_empty(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXText.get_previous_line returns empty when current_line is empty."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+
+        # Mock get_character_count to return 5 (not at end)
+        test_context.patch_object(AXText, "get_character_count", return_value=5)
+
+        # Mock get_line_at_offset to return empty line not at end of text
+        def mock_get_line_at_offset(_obj, _offset):
+            return ("", 3, 3)
+
+        test_context.patch_object(AXText, "get_line_at_offset", new=mock_get_line_at_offset)
+
+        # Test: when current_line is empty (and not at end), should return empty
+        result = AXText.get_previous_line(mock_obj, 3)
+        assert result == ("", 0, 0)

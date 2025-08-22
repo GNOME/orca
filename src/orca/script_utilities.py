@@ -1118,7 +1118,7 @@ class Utilities:
                 next_offset += 1
                 char = AXText.get_character_at_offset(obj, next_offset)[0]
 
-        if next_offset < AXText.get_character_count(obj):
+        if next_offset <= AXText.get_character_count(obj):
             return obj, next_offset
 
         if next_obj := self.find_next_object(obj, restrict_to):

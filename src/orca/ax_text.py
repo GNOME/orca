@@ -511,10 +511,12 @@ class AXText:
             offset = AXText.get_caret_offset(obj)
 
         current_line, start, end = AXText.get_line_at_offset(obj, offset)
-        if not current_line:
-            return "", 0, 0
+        if not current_line and offset == AXText.get_character_count(obj):
+            current_line, start, end = AXText.get_line_at_offset(obj, offset - 1)
+            if current_line.endswith("\n"):
+                start = offset - 1
 
-        if start <= 0:
+        if not current_line or start <= 0:
             return "", 0, 0
 
         prev_offset = start - 1
