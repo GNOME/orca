@@ -84,10 +84,18 @@ class TestCaretNavigator:
     ) -> None:
         """Test character navigation (next/previous) with various conditions."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
+        ax_object_mock = essential_modules["orca.ax_object"]
+        ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None
+        ax_object_mock.AXObject.is_valid.side_effect = lambda obj: obj is not None
+        ax_object_mock.AXObject.is_ancestor.side_effect = (
+            lambda obj, root, same: obj is not None and root is not None
+        )
+
         navigator = CaretNavigator()
+        test_context.patch_object(navigator, "_get_root_object", return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock() if event_provided else None
 
@@ -200,6 +208,7 @@ class TestCaretNavigator:
             mock_script.key_bindings.remove = test_context.Mock()
             mock_script.key_bindings.add = test_context.Mock()
             test_context.patch_object(navigator, "refresh_bindings_and_grabs")
+            test_context.patch_object(navigator, "_is_active_script", return_value=True)
             navigator._suspended = False
             navigator.suspend_commands(mock_script, True, "test reason")
             assert navigator._suspended == expected_result
@@ -363,6 +372,7 @@ class TestCaretNavigator:
             mock_script.utilities.get_line_contents_at_offset.return_value = current_line
             mock_script.utilities.get_next_line_contents.return_value = next_prev_contents
         elif navigation_type == "previous_line" and not in_say_all:
+            mock_script.utilities.get_caret_context.return_value = ("obj", 5)
             mock_script.utilities.get_previous_line_contents.return_value = next_prev_contents
 
         mock_script.utilities.set_caret_position = test_context.Mock()

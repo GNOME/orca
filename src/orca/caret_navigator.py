@@ -44,6 +44,10 @@ from .ax_object import AXObject
 from .ax_text import AXText
 
 if TYPE_CHECKING:
+    import gi
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
     from .input_event import InputEvent
     from .scripts import default
 
@@ -57,6 +61,7 @@ class CaretNavigator:
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_input_event: input_event.InputEvent | None = None
+        self._enabled_for_script: dict[default.Script, bool] = {}
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -283,6 +288,27 @@ class CaretNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
+    def get_enabled(self, script: default.Script) -> bool:
+        """Returns the current caret-navigator enabled state associated with script."""
+
+        enabled = self._enabled_for_script.get(script, False)
+        tokens = ["CARET NAVIGATOR: Enabled state for", script, f"is {enabled}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return enabled
+
+    def set_enabled(self, script: default.Script, enabled: bool) -> None:
+        """Sets the caret-navigator enabled state."""
+
+        tokens = ["CARET NAVIGATOR: Setting enabled state for", script, f"to {enabled}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        self._enabled_for_script[script] = enabled
+
+        if not (script and self._is_active_script(script)):
+            return
+
+        settings_manager.get_manager().set_setting("caretNavigationEnabled", enabled)
+        self.refresh_bindings_and_grabs(script, "Setting caret navigation mode")
+
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
 
@@ -380,6 +406,7 @@ class CaretNavigator:
             string = messages.CARET_CONTROL_ORCA
         else:
             string = messages.CARET_CONTROL_APP
+            script.utilities.clear_caret_context()
 
         script.present_message(string)
         _settings_manager.set_setting("caretNavigationEnabled", enabled)
@@ -390,7 +417,7 @@ class CaretNavigator:
     def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
         """Suspends caret navigation independent of the enabled setting."""
 
-        if suspended == self._suspended:
+        if not (script and self._is_active_script(script)):
             return
 
         msg = f"CARET NAVIGATOR: Commands suspended: {suspended}"
@@ -400,6 +427,45 @@ class CaretNavigator:
 
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
+
+    def _get_root_object(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible | None = None
+        ) -> Atspi.Accessible | None:
+        """Returns the object which should be treated as the root/container for navigation."""
+
+        root = script.utilities.active_document()
+        if root is None:
+            if obj is None:
+                obj, _offset = script.utilities.get_caret_context()
+            if AXObject.supports_text(obj):
+                root = obj
+
+        tokens = ["CARET NAVIGATOR: Root is", root]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return root
+
+    def _is_navigable_object(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        root: Atspi.Accessible | None = None
+    ) -> bool:
+        """Returns True if obj is a valid location for navigation."""
+
+        # There's a small, theoretical possibility that we can creep out of the logical container,
+        # but until that happens, this check is the most performant.
+        if AXObject.supports_text(obj):
+            return True
+
+        if root is None:
+            root = self._get_root_object(script)
+
+        if root is None:
+            return False
+
+        return AXObject.is_ancestor(obj, root, True)
 
     def _next_character(self, script: default.Script, event: InputEvent | None = None) -> bool:
         """Moves to the next character."""
@@ -411,7 +477,7 @@ class CaretNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         obj, offset = script.utilities.next_context()
-        if not obj:
+        if not self._is_navigable_object(script, obj):
             return False
 
         self._last_input_event = event
@@ -431,7 +497,7 @@ class CaretNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         obj, offset = script.utilities.previous_context()
-        if not obj:
+        if not self._is_navigable_object(script, obj):
             return False
 
         self._last_input_event = event
@@ -451,6 +517,9 @@ class CaretNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         obj, offset = script.utilities.next_context(skip_space=True)
+        if obj is None:
+            return False
+
         contents = script.utilities.get_word_contents_at_offset(obj, offset)
         if not contents:
             return False
@@ -465,6 +534,9 @@ class CaretNavigator:
             contents = contents[:-1]
 
         obj, end, string = contents[-1][0], contents[-1][2], contents[-1][3]
+        if not self._is_navigable_object(script, obj):
+            return False
+
         if string and string[-1].isspace():
             end -= 1
 
@@ -485,12 +557,18 @@ class CaretNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         obj, offset = script.utilities.previous_context(skip_space=True)
+        if obj is None:
+            return False
+
         contents = script.utilities.get_word_contents_at_offset(obj, offset)
         if not contents:
             return False
 
-        self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
+        if not self._is_navigable_object(script, obj):
+            return False
+
+        self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.update_braille(obj)
@@ -514,6 +592,11 @@ class CaretNavigator:
                 return True
 
         obj, offset = script.utilities.get_caret_context()
+        if obj is None:
+            return False
+
+        # We get the current line in order to set the last object on the line as the prior object,
+        # so that we don't re-announce context.
         line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
             return False
@@ -522,8 +605,11 @@ class CaretNavigator:
         if not contents:
             return False
 
-        self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
+        if not self._is_navigable_object(script, obj):
+            return False
+
+        self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.speak_contents(contents, priorObj=line[-1][0])
@@ -546,12 +632,19 @@ class CaretNavigator:
                 debug.print_message(debug.LEVEL_INFO, msg)
                 return True
 
-        contents = script.utilities.get_previous_line_contents()
+        obj, offset = script.utilities.get_caret_context()
+        if obj is None:
+            return False
+
+        contents = script.utilities.get_previous_line_contents(obj, offset)
         if not contents:
             return False
 
-        self._last_input_event = event
         obj, start = contents[0][0], contents[0][1]
+        if not self._is_navigable_object(script, obj):
+            return False
+
+        self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
         script.speak_contents(contents)
@@ -611,11 +704,20 @@ class CaretNavigator:
         if not event:
             return False
 
-        document = script.utilities.active_document()
-        tokens = ["CARET NAVIGATOR: _start_of_file", document]
+        root = self._get_root_object(script)
+        tokens = ["CARET NAVIGATOR: _start_of_file", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        obj, offset = script.utilities.first_context(document, 0)
+        obj, offset = script.utilities.first_context(root, 0)
+        if obj is None:
+            return False
+
+        while obj:
+            prev_obj, prev_offset = script.utilities.previous_context(obj, offset, restrict_to=root)
+            if prev_obj is None or (prev_obj, prev_offset) == (obj, offset):
+                break
+            obj, offset = prev_obj, prev_offset
+
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
             return False
@@ -634,18 +736,21 @@ class CaretNavigator:
         if not event:
             return False
 
-        document = script.utilities.active_document()
-        tokens = ["CARET NAVIGATOR: _end_of_file", document]
+        root = self._get_root_object(script)
+        tokens = ["CARET NAVIGATOR: _end_of_file", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        obj = AXObject.find_deepest_descendant(document)
-        tokens = ["CARET NAVIGATOR: Last object in", document, "is", obj]
+        obj = AXObject.find_deepest_descendant(root)
+        if obj is None:
+            return False
+
+        tokens = ["CARET NAVIGATOR: Last object in", root, "is", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:
-            last_obj, last_offset = script.utilities.next_context(obj, offset)
-            if not last_obj:
+            last_obj, last_offset = script.utilities.next_context(obj, offset, restrict_to=root)
+            if last_obj is None or (last_obj, last_offset) == (obj, offset):
                 break
             obj, offset = last_obj, last_offset
 
