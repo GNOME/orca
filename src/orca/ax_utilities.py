@@ -737,8 +737,9 @@ class AXUtilities:
             return None
 
         targets = AXUtilitiesRelation.get_flows_to(obj)
-        if targets:
-            return targets[0]
+        for target in targets:
+            if not AXObject.is_dead(target):
+                return target
 
         index = AXObject.get_index_in_parent(obj) + 1
         parent = AXObject.get_parent(obj)
@@ -766,8 +767,9 @@ class AXUtilities:
             return None
 
         targets = AXUtilitiesRelation.get_flows_from(obj)
-        if targets:
-            return targets[0]
+        for target in targets:
+            if not AXObject.is_dead(target):
+                return target
 
         index = AXObject.get_index_in_parent(obj) - 1
         parent = AXObject.get_parent(obj)

@@ -1581,6 +1581,7 @@ class TestAXUtilities:
         mock_target = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(return_value=False)
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_to = test_context.Mock(return_value=[mock_target])
@@ -1588,6 +1589,70 @@ class TestAXUtilities:
 
         result = AXUtilities.get_next_object(mock_obj)
         assert result == mock_target
+
+    def test_get_next_object_with_dead_flows_to_targets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXUtilities.get_next_object filters out dead objects from flows-to targets."""
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_dead_target = test_context.Mock(spec=Atspi.Accessible)
+        mock_live_target = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
+            return_value=True
+        )
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
+            side_effect=lambda obj: obj == mock_dead_target
+        )
+        essential_modules[
+            "orca.ax_utilities_relation"
+        ].AXUtilitiesRelation.get_flows_to = test_context.Mock(
+            return_value=[mock_dead_target, mock_live_target]
+        )
+        from orca.ax_utilities import AXUtilities
+
+        result = AXUtilities.get_next_object(mock_obj)
+        assert result == mock_live_target
+
+    def test_get_next_object_with_all_dead_flows_to_targets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXUtilities.get_next_object falls back to traversal when all flows-to are dead."""
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_dead_target1 = test_context.Mock(spec=Atspi.Accessible)
+        mock_dead_target2 = test_context.Mock(spec=Atspi.Accessible)
+        mock_parent = test_context.Mock(spec=Atspi.Accessible)
+        mock_next = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
+            return_value=True
+        )
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
+            return_value=True
+        )
+        essential_modules["orca.ax_object"].AXObject.get_index_in_parent = (
+            test_context.Mock(return_value=0)
+        )
+        essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
+            return_value=mock_parent
+        )
+        essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
+            return_value=2
+        )
+        essential_modules["orca.ax_object"].AXObject.get_child = test_context.Mock(
+            return_value=mock_next
+        )
+        essential_modules[
+            "orca.ax_utilities_relation"
+        ].AXUtilitiesRelation.get_flows_to = test_context.Mock(
+            return_value=[mock_dead_target1, mock_dead_target2]
+        )
+        from orca.ax_utilities import AXUtilities
+
+        result = AXUtilities.get_next_object(mock_obj)
+        assert result == mock_next
 
     def test_get_next_object_normal_traversal(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.get_next_object with normal parent-child traversal."""
@@ -1626,6 +1691,7 @@ class TestAXUtilities:
         mock_source = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(return_value=False)
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_from = test_context.Mock(return_value=[mock_source])
@@ -1633,6 +1699,70 @@ class TestAXUtilities:
 
         result = AXUtilities.get_previous_object(mock_obj)
         assert result == mock_source
+
+    def test_get_previous_object_with_dead_flows_from_targets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXUtilities.get_previous_object filters out dead objects from flows-from targets."""
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_dead_source = test_context.Mock(spec=Atspi.Accessible)
+        mock_live_source = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
+            return_value=True
+        )
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
+            side_effect=lambda obj: obj == mock_dead_source
+        )
+        essential_modules[
+            "orca.ax_utilities_relation"
+        ].AXUtilitiesRelation.get_flows_from = test_context.Mock(
+            return_value=[mock_dead_source, mock_live_source]
+        )
+        from orca.ax_utilities import AXUtilities
+
+        result = AXUtilities.get_previous_object(mock_obj)
+        assert result == mock_live_source
+
+    def test_get_previous_object_with_all_dead_flows_from_targets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXUtilities.get_previous_object falls back when all flows-from are dead."""
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_dead_source1 = test_context.Mock(spec=Atspi.Accessible)
+        mock_dead_source2 = test_context.Mock(spec=Atspi.Accessible)
+        mock_parent = test_context.Mock(spec=Atspi.Accessible)
+        mock_previous = test_context.Mock(spec=Atspi.Accessible)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
+            return_value=True
+        )
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
+            return_value=True
+        )
+        essential_modules["orca.ax_object"].AXObject.get_index_in_parent = (
+            test_context.Mock(return_value=1)
+        )
+        essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
+            return_value=mock_parent
+        )
+        essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
+            return_value=2
+        )
+        essential_modules["orca.ax_object"].AXObject.get_child = test_context.Mock(
+            return_value=mock_previous
+        )
+        essential_modules[
+            "orca.ax_utilities_relation"
+        ].AXUtilitiesRelation.get_flows_from = test_context.Mock(
+            return_value=[mock_dead_source1, mock_dead_source2]
+        )
+        from orca.ax_utilities import AXUtilities
+
+        result = AXUtilities.get_previous_object(mock_obj)
+        assert result == mock_previous
 
     @pytest.mark.parametrize(
         "case",
