@@ -691,6 +691,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 continue
 
             name = family[speechserver.VoiceFamily.NAME]
+            variant = family[speechserver.VoiceFamily.VARIANT]
+            if variant and variant not in ("none", "None"):
+                name = variant
+
             self.speechFamiliesChoices.append(family)
             self.speechFamiliesModel.append((i, name))
             i += 1
