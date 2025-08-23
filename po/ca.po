@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-02-28 16:15+0000\n"
-"PO-Revision-Date: 2025-03-10 14:45+0100\n"
+"PO-Revision-Date: 2025-08-23 14:45+0100\n"
 "Last-Translator: Bàrbara Vidal <barbara@barbara.cat>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -1942,12 +1942,12 @@ msgstr "Mostra una llista d'objectes grans"
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:1010
 msgid "Go to previous link"
-msgstr "Va a l'enllaç anterior"
+msgstr "Ves a l'enllaç anterior"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:1013
 msgid "Go to next link"
-msgstr "Va a l'enllaç següent"
+msgstr "Ves a l'enllaç següent"
 
 #. Translators: this is for navigating among links in a document.
 #: src/orca/cmdnames.py:1016
