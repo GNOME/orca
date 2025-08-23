@@ -134,7 +134,7 @@ list of (parameter_name, parameter_type) tuples.
 
 **Example output:**
 
-```
+```bash
 ([('GetVoicesForLanguage',
    'Returns a list of available voices for the specified language.',
    [('language', 'str'), ('variant', 'str'), ('notify_user', 'bool')])],)
@@ -263,10 +263,11 @@ gdbus call --session --dest org.gnome.Orca.Service \
 
 This will return a list of available voices for US English.
 
-### Please Note
+### User Notification Applicability
 
-**Setting `notify_user=true` is not a guarantee that feedback will be presented.** Some commands
-inherently don't make sense to announce. For example:
+**Setting `notify_user=true` is not a guarantee that feedback will be presented.**
+
+Some commands inherently don't make sense to announce. For example:
 
 ```bash
 # This command should simply stop speech, not announce that it is stopping speech.
@@ -289,7 +290,50 @@ most part Orca will try to respect this value. The exceptions are:
    checks and early returns to handle this possibility does not seem worth doing. If you
    don't want Orca to present the time, don't ask Orca to present the time. 😃
 
-## TODO
+### Navigator Module "Enabled" State Applicability
 
-- Add support for more commands, getters, and setters.
-- Fix bugs, of which there are undoubtedly many.
+**In the Remote Controller, Navigator commands are expected to work even when not "enabled."**
+
+Some of Orca's Navigator modules, namely Table Navigator, Caret Navigator, and Structural Navigator,
+have an "enabled" state. The reason for this is very much tied to the keyboard-centric nature of
+Orca's commands. For instance, if Orca always grabbed "H" (for heading navigation) and the arrow
+keys (for caret navigation), normal interaction with applications would be completely broken. For
+this reason, Navigator modules whose commands will prevent normal, native interaction with
+applications are typically not enabled by default and can be easily disabled.
+
+In contrast, performing Navigator commands via D-Bus does not prevent native interaction with
+applications. For instance, one could use the Remote Controller to move to the next heading without
+causing H to stop functioning in editable fields. For this reason, and to avoid a performance hit,
+the decision was made to not check if (keyboard-centric) navigation commands were enabled. As a
+result, it should be possible to use Remote Controller navigation even in "focus mode" or other
+cases where Orca is not controlling the caret. This is by design.
+
+Given the keyboard-centric nature of Orca's commands, there may be instances in which one uses the
+Remote Controller for navigation and Orca fails to correctly update its location in response. If
+Orca correctly updates its location when the same navigation command is executed via keyboard,
+please report the Remote Controller failure as a new bug in Orca's gitlab.
+
+### The "Stickiness" (or Lack Thereof) of On-The-Fly Settings Changes
+
+Orca has a number of keyboard commands to temporarily change settings such as speech rate, pitch,
+volume; capitalization style; punctuation level; etc., etc. The question is: how long should
+on-the-fly modifications to settings persist?
+
+Early on in Orca's development, the conclusion was that on-the-fly settings changes should be
+seen as quite temporary, presumed to be used to address a specific one-time need. For instance,
+if reading some difficult-to-understand text, one might want to reduce the speed just for that text.
+If one were doing a final proofread of some content, one might want to briefly set the punctuation
+level to all. If one needs slow speed and/or verbose punctuation all the time, those should be set
+in Orca's Preferences dialogs -- either globally or on a per-app basis. Orca also has a profile
+feature through which the user can save settings and quickly load/unload them by switching profiles*.
+
+Whether or not that historical decision was the right decision goes beyond the scope of the
+Remote Controller. The primary purpose of the Remote Controller is to provide D-Bus access to
+commands and runtime settings as if they were performed by the user via keyboard command. Thus if
+a setting changed via Remote Controller persists (or fails to persist) in the same way as when
+changed via keyboard command, it is not a Remote Controller bug. (It may be a general Orca
+bug or feature request, and you are encouraged to file it as such.) On the other hand, if the
+behavior of the Remote Controller differs from that of the corresponding or related keyboard
+command, please report that Remote Controller failure as a new bug in Orca's gitlab.
+
+\* *Note: Remote Controller support for profile management is still pending.*
