@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-return-statements
+
 """Provides an Orca-controlled caret for text content."""
 
 # This has to be the first non-docstring line in the module to make linters happy.
@@ -483,7 +485,7 @@ class CaretNavigator:
         self._last_input_event = event
         script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
-        script.update_braille(obj)
+        script.update_braille(obj, offset=offset)
         script.say_character(obj)
         return True
 
@@ -503,7 +505,7 @@ class CaretNavigator:
         self._last_input_event = event
         script.utilities.set_caret_position(obj, offset)
         script.interrupt_presentation()
-        script.update_braille(obj)
+        script.update_braille(obj, offset=offset)
         script.say_character(obj)
         return True
 
@@ -543,7 +545,7 @@ class CaretNavigator:
         self._last_input_event = event
         script.utilities.set_caret_position(obj, end)
         script.interrupt_presentation()
-        script.update_braille(obj)
+        script.update_braille(obj, offset=end)
         script.say_word(obj)
         return True
 
@@ -571,7 +573,7 @@ class CaretNavigator:
         self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
         script.interrupt_presentation()
-        script.update_braille(obj)
+        script.update_braille(obj, offset=start)
         script.say_word(obj)
         return True
 
