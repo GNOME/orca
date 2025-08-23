@@ -767,7 +767,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             name = family.get(speechserver.VoiceFamily.NAME, "")
             if "default" in name.lower():
                 return (0, "")
-            if variant is not None and variant != "none" and variant != "None":
+            if variant not in (None, "none", "None"):
                 return (1, variant.lower())
             return (1, name.lower())
 
