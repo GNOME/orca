@@ -66,10 +66,10 @@ class TestCaretNavigator:
     @pytest.mark.parametrize(
         "direction,event_provided,context_available,expected_result",
         [
-            pytest.param("next", False, True, False, id="next_char_no_event_returns_false"),
+            pytest.param("next", False, True, True, id="next_char_no_event_returns_true"),
             pytest.param("next", True, False, False, id="next_char_no_context_returns_false"),
             pytest.param("next", True, True, True, id="next_char_valid_navigation_succeeds"),
-            pytest.param("previous", False, True, False, id="prev_char_no_event_returns_false"),
+            pytest.param("previous", False, True, True, id="prev_char_no_event_returns_true"),
             pytest.param("previous", True, False, False, id="prev_char_no_context_returns_false"),
             pytest.param("previous", True, True, True, id="prev_char_valid_navigation_succeeds"),
         ],
@@ -111,7 +111,7 @@ class TestCaretNavigator:
             else:
                 mock_script.utilities.previous_context.return_value = (None, 0)
 
-        navigation_method = getattr(navigator, f"_{direction}_character")
+        navigation_method = getattr(navigator, f"{direction}_character")
         result = navigation_method(mock_script, mock_event)
         assert result == expected_result
 
@@ -166,7 +166,7 @@ class TestCaretNavigator:
         mock_script.update_braille = test_context.Mock()
         mock_script.say_word = test_context.Mock()
 
-        navigation_method = getattr(navigator, f"_{direction}_word")
+        navigation_method = getattr(navigator, f"{direction}_word")
         result = navigation_method(mock_script, mock_event)
 
         assert result == expected_result
@@ -380,7 +380,7 @@ class TestCaretNavigator:
         mock_script.speak_contents = test_context.Mock()
         mock_script.display_contents = test_context.Mock()
 
-        navigation_method = getattr(navigator, f"_{navigation_type}")
+        navigation_method = getattr(navigator, f"{navigation_type}")
         result = navigation_method(mock_script, mock_event)
 
         assert result == expected_result
@@ -432,7 +432,7 @@ class TestCaretNavigator:
         mock_script.say_character = test_context.Mock()
         mock_script.display_contents = test_context.Mock()
 
-        navigation_method = getattr(navigator, f"_{navigation_type}")
+        navigation_method = getattr(navigator, f"{navigation_type}")
         result = navigation_method(mock_script, mock_event)
 
         assert result == expected_result

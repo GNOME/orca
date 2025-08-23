@@ -34,6 +34,7 @@ __license__ = "LGPL"
 from typing import TYPE_CHECKING
 
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import input_event
@@ -50,7 +51,6 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from .input_event import InputEvent
     from .scripts import default
 
 class CaretNavigator:
@@ -64,6 +64,11 @@ class CaretNavigator:
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_input_event: input_event.InputEvent | None = None
         self._enabled_for_script: dict[default.Script, bool] = {}
+
+        msg = "CARET NAVIGATOR: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("CaretNavigator", self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -106,61 +111,61 @@ class CaretNavigator:
 
         self._handlers["next_character"] = \
             input_event.InputEventHandler(
-                self._next_character,
+                self.next_character,
                 cmdnames.CARET_NAVIGATION_NEXT_CHAR,
                 enabled = enabled)
 
         self._handlers["previous_character"] = \
             input_event.InputEventHandler(
-                self._previous_character,
+                self.previous_character,
                 cmdnames.CARET_NAVIGATION_PREV_CHAR,
                 enabled = enabled)
 
         self._handlers["next_word"] = \
             input_event.InputEventHandler(
-                self._next_word,
+                self.next_word,
                 cmdnames.CARET_NAVIGATION_NEXT_WORD,
                 enabled = enabled)
 
         self._handlers["previous_word"] = \
             input_event.InputEventHandler(
-                self._previous_word,
+                self.previous_word,
                 cmdnames.CARET_NAVIGATION_PREV_WORD,
                 enabled = enabled)
 
         self._handlers["next_line"] = \
             input_event.InputEventHandler(
-                self._next_line,
+                self.next_line,
                 cmdnames.CARET_NAVIGATION_NEXT_LINE,
                 enabled = enabled)
 
         self._handlers["previous_line"] = \
             input_event.InputEventHandler(
-                self._previous_line,
+                self.previous_line,
                 cmdnames.CARET_NAVIGATION_PREV_LINE,
                 enabled = enabled)
 
         self._handlers["start_of_file"] = \
             input_event.InputEventHandler(
-                self._start_of_file,
+                self.start_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_START,
                 enabled = enabled)
 
         self._handlers["end_of_file"] = \
             input_event.InputEventHandler(
-                self._end_of_file,
+                self.end_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_END,
                 enabled = enabled)
 
         self._handlers["start_of_line"] = \
             input_event.InputEventHandler(
-                self._start_of_line,
+                self.start_of_line,
                 cmdnames.CARET_NAVIGATION_LINE_START,
                 enabled = enabled)
 
         self._handlers["end_of_line"] = \
             input_event.InputEventHandler(
-                self._end_of_line,
+                self.end_of_line,
                 cmdnames.CARET_NAVIGATION_LINE_END,
                 enabled = enabled)
 
@@ -396,11 +401,18 @@ class CaretNavigator:
             tokens = ["CARET NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def toggle_enabled(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def toggle_enabled(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Toggles caret navigation."""
 
-        if not event:
-            return False
+        tokens = ["CARET NAVIGATOR: toggle_enabled. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         _settings_manager = settings_manager.get_manager()
         enabled = not _settings_manager.get_setting("caretNavigationEnabled")
@@ -410,7 +422,9 @@ class CaretNavigator:
             string = messages.CARET_CONTROL_APP
             script.utilities.clear_caret_context()
 
-        script.present_message(string)
+        if notify_user:
+            script.present_message(string)
+
         _settings_manager.set_setting("caretNavigationEnabled", enabled)
         self._last_input_event = None
         self.refresh_bindings_and_grabs(script, "toggling caret navigation")
@@ -469,14 +483,18 @@ class CaretNavigator:
 
         return AXObject.is_ancestor(obj, root, True)
 
-    def _next_character(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def next_character(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the next character."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _next_character."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: next_character. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.next_context()
         if not self._is_navigable_object(script, obj):
@@ -484,19 +502,26 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, offset)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.update_braille(obj, offset=offset)
         script.say_character(obj)
         return True
 
-    def _previous_character(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def previous_character(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the previous character."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _previous_character."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: previous_character. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.previous_context()
         if not self._is_navigable_object(script, obj):
@@ -504,19 +529,26 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, offset)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.update_braille(obj, offset=offset)
         script.say_character(obj)
         return True
 
-    def _next_word(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def next_word(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the next word."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _next_word."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: next_word. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.next_context(skip_space=True)
         if obj is None:
@@ -544,19 +576,26 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, end)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.update_braille(obj, offset=end)
         script.say_word(obj)
         return True
 
-    def _previous_word(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def previous_word(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the previous word."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _previous_word."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: previous_word. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.previous_context(skip_space=True)
         if obj is None:
@@ -572,19 +611,26 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.update_braille(obj, offset=start)
         script.say_word(obj)
         return True
 
-    def _next_line(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def next_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the next line."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _next_line."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: next_line. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if focus_manager.get_manager().in_say_all():
             _settings_manager = settings_manager.get_manager()
@@ -613,19 +659,26 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.speak_contents(contents, priorObj=line[-1][0])
         script.display_contents(contents)
         return True
 
-    def _previous_line(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def previous_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the previous line."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _previous_line."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: previous_line. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if focus_manager.get_manager().in_say_all():
             _settings_manager = settings_manager.get_manager()
@@ -648,19 +701,27 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, start)
+
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.speak_contents(contents)
         script.display_contents(contents)
         return True
 
-    def _start_of_line(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def start_of_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the start of the line."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _start_of_line."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: start_of_line. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.get_caret_context()
         line = script.utilities.get_line_contents_at_offset(obj, offset)
@@ -670,19 +731,26 @@ class CaretNavigator:
         self._last_input_event = event
         obj, start = line[0][0], line[0][1]
         script.utilities.set_caret_position(obj, start)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.say_character(obj)
         script.display_contents(line)
         return True
 
-    def _end_of_line(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def end_of_line(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the end of the line."""
 
-        if not event:
-            return False
-
-        msg = "CARET NAVIGATOR: _end_of_line."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = ["CARET NAVIGATOR: end_of_line. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.get_caret_context()
         line = script.utilities.get_line_contents_at_offset(obj, offset)
@@ -695,21 +763,28 @@ class CaretNavigator:
 
         self._last_input_event = event
         script.utilities.set_caret_position(obj, end)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.say_character(obj)
         script.display_contents(line)
         return True
 
-    def _start_of_file(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def start_of_file(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the start of the file."""
 
-        if not event:
-            return False
-
-        root = self._get_root_object(script)
-        tokens = ["CARET NAVIGATOR: _start_of_file", root]
+        tokens = ["CARET NAVIGATOR: start_of_file. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        root = self._get_root_object(script)
         obj, offset = script.utilities.first_context(root, 0)
         if obj is None:
             return False
@@ -727,21 +802,28 @@ class CaretNavigator:
         self._last_input_event = event
         obj, offset = contents[0][0], contents[0][1]
         script.utilities.set_caret_position(obj, offset)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.speak_contents(contents)
         script.display_contents(contents)
         return True
 
-    def _end_of_file(self, script: default.Script, event: InputEvent | None = None) -> bool:
+    @dbus_service.command
+    def end_of_file(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Moves to the end of the file."""
 
-        if not event:
-            return False
-
-        root = self._get_root_object(script)
-        tokens = ["CARET NAVIGATOR: _end_of_file", root]
+        tokens = ["CARET NAVIGATOR: end_of_file. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        root = self._get_root_object(script)
         obj = AXObject.find_deepest_descendant(root)
         if obj is None:
             return False
@@ -763,6 +845,9 @@ class CaretNavigator:
         self._last_input_event = event
         obj, offset = contents[-1][0], contents[-1][2]
         script.utilities.set_caret_position(obj, offset)
+        if not notify_user:
+            return True
+
         script.interrupt_presentation()
         script.speak_contents(contents)
         script.display_contents(contents)
