@@ -73,6 +73,7 @@ class SayAllPresenter:
         self._script: default.Script | None = None
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
         self._contexts: list[speechserver.SayAllContext] = []
+        self._current_context: speechserver.SayAllContext | None = None
 
         msg = "SayAllPresenter: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -171,6 +172,10 @@ class SayAllPresenter:
     ) -> bool:
         """Speaks the entire document or text, starting from the current position."""
 
+        self._contexts = []
+        self._contents = []
+        self._current_context = None
+
         tokens = ["SAY ALL PRESENTER: say_all. Script:", script, "Event:", event,
                   "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -184,6 +189,34 @@ class SayAllPresenter:
 
         speech.say_all(self._say_all_iter(obj, offset), self._progress_callback)
         return True
+
+    @dbus_service.command
+    def rewind(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Jumps back in the current Say All."""
+
+        tokens = ["SAY ALL PRESENTER: rewind. Script:", script, "Event:", event,
+                  "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return self._rewind(None, True)
+
+    @dbus_service.command
+    def fast_forward(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Jumps forward in the current Say All."""
+
+        tokens = ["SAY ALL PRESENTER: fast_forward. Script:", script, "Event:", event,
+                  "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return self._fast_forward(None, True)
 
     def _parse_utterances(
         self,
@@ -247,7 +280,7 @@ class SayAllPresenter:
                     obj, offset, layout_mode=True, use_cache=False)
 
             contents = self._script.utilities.filter_contents_for_presentation(contents)
-            self._contents = contents
+            self._contents.extend(contents)
             for i, content in enumerate(contents):
                 content_obj, start, end, text = content
                 tokens = [f"SAY ALL PRESENTER: CONTENT: {i}.", content_obj,
@@ -298,15 +331,26 @@ class SayAllPresenter:
 
         self._contexts = []
         self._contents = []
+        self._current_context = None
 
-    def _rewind(self, context: speechserver.SayAllContext) -> bool:
-        if not settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll"):
+    def _rewind(
+        self,
+        context: speechserver.SayAllContext | None,
+        override_setting: bool = False
+    ) -> bool:
+        if not (override_setting
+                or settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll")):
             return False
 
+        if context is None:
+            context = self._current_context
+
+        obj = None
         try:
             obj, start, _end, _string = self._contents[0]
         except IndexError:
-            obj, start = context.obj, context.start_offset
+            if context is not None:
+                obj, start = context.obj, context.start_offset
 
         if obj is None:
             return False
@@ -319,14 +363,24 @@ class SayAllPresenter:
         self.say_all(self._script, obj=prev_obj, offset=prev_offset)
         return True
 
-    def _fast_forward(self, context: speechserver.SayAllContext) -> bool:
-        if not settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll"):
+    def _fast_forward(
+        self,
+        context: speechserver.SayAllContext | None,
+        override_setting: bool = False
+    ) -> bool:
+        if not (override_setting
+                or settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll")):
             return False
 
+        if context is None:
+            context = self._current_context
+
+        obj = None
         try:
             obj, _start, end, _string = self._contents[-1]
         except IndexError:
-            obj, end = context.obj, context.end_offset
+            if context is not None:
+                obj, end = context.obj, context.end_offset
 
         if obj is None:
             return False
@@ -340,6 +394,8 @@ class SayAllPresenter:
         return True
 
     def _progress_callback(self, context: speechserver.SayAllContext, progress_type: int) -> None:
+        self._current_context = context
+
         if AXText.character_at_offset_is_eoc(context.obj, context.current_offset):
             return
 
@@ -370,8 +426,6 @@ class SayAllPresenter:
             tokens = ["SAY ALL PROGRESS CALLBACK: Completed", context]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self._contents = []
-        self._contexts = []
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
         focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
