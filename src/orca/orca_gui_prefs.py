@@ -761,6 +761,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         combobox.set_model(None)
         self.speechLanguagesModel.clear()
         self.speechFamilies = self.speechServersChoice.get_voice_families()
+
+        def _get_sort_key(family):
+            variant = family.get(speechserver.VoiceFamily.VARIANT)
+            name = family.get(speechserver.VoiceFamily.NAME, "")
+            if "default" in name.lower():
+                return (0, "")
+            if variant is not None and variant != "none" and variant != "None":
+                return (1, variant.lower())
+            return (1, name.lower())
+
+        self.speechFamilies.sort(key=_get_sort_key)
         self.speechLanguagesChoices = []
 
         if len(self.speechFamilies) == 0:
