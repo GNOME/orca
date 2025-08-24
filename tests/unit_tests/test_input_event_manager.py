@@ -187,25 +187,12 @@ class TestInputEventManager:
         atspi_mock.ModifierType.ALT = 3
         gi_repo_mock.Atspi = atspi_mock
 
-        gdk_mock = test_context.Mock()
-        gdk_mock.Keymap = test_context.Mock()
-        gdk_mock.Keymap.get_default = test_context.Mock()
-        keymap_instance = test_context.Mock()
-        gdk_mock.Keymap.get_default.return_value = keymap_instance
-        keymap_instance.get_entries_for_keycode = test_context.Mock(
-            return_value=(None, None, [120, 121])
-        )
-        gdk_mock.keyval_name = test_context.Mock(side_effect=lambda x: f"key_{x}")
-        gi_repo_mock.Gdk = gdk_mock
-
         essential_modules["focus_manager_instance"] = focus_mgr_instance
         essential_modules["script_manager_instance"] = script_mgr_instance
         essential_modules["script_instance"] = script_instance
         essential_modules["ax_object_class"] = ax_object_class
         essential_modules["ax_utilities_class"] = ax_utilities_class
         essential_modules["atspi"] = atspi_mock
-        essential_modules["gdk"] = gdk_mock
-
         return essential_modules
 
     def _setup_input_event_manager(self, test_context) -> tuple:
@@ -237,7 +224,6 @@ class TestInputEventManager:
         test_context.patch(
             "orca.input_event_manager.Atspi", new=essential_modules["atspi"]
         )
-        test_context.patch("orca.input_event_manager.Gdk", new=essential_modules["gdk"])
 
         from orca.input_event_manager import InputEventManager
 
@@ -1132,70 +1118,6 @@ class TestInputEventManager:
         result = input_event_manager._last_key_and_modifiers()
         assert result == (case["expected_key"], case["expected_modifiers"])
 
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "no_last_non_modifier",
-                "has_last_non_modifier": False,
-                "last_event_keyboard": True,
-                "expected_keycode": 0,
-                "expected_modifiers": 0,
-            },
-            {
-                "id": "last_not_keyboard",
-                "has_last_non_modifier": True,
-                "last_event_keyboard": False,
-                "expected_keycode": 0,
-                "expected_modifiers": 0,
-            },
-            {
-                "id": "has_both",
-                "has_last_non_modifier": True,
-                "last_event_keyboard": True,
-                "expected_keycode": 42,
-                "expected_modifiers": 4,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_last_keycode_and_modifiers(
-        self,
-        test_context,
-        case: dict,
-    ) -> None:
-        """Test InputEventManager._last_keycode_and_modifiers."""
-
-        input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-        if case["has_last_non_modifier"]:
-            mock_last_non_modifier = test_context.Mock()
-            mock_last_non_modifier.hw_code = 42
-            input_event_manager._last_non_modifier_key_event = mock_last_non_modifier
-        else:
-            input_event_manager._last_non_modifier_key_event = None
-        if case["last_event_keyboard"]:
-            keyboard_event_class = essential_modules["orca.input_event"].KeyboardEvent
-            mock_last_event = test_context.Mock(spec=keyboard_event_class())
-            mock_last_event.__class__ = keyboard_event_class
-            mock_last_event.modifiers = 4
-            input_event_manager._last_input_event = mock_last_event
-            result = input_event_manager._last_keycode_and_modifiers()
-            assert result == (case["expected_keycode"], case["expected_modifiers"])
-        else:
-            result = input_event_manager._last_keycode_and_modifiers()
-            assert result == (case["expected_keycode"], case["expected_modifiers"])
-
-    def test_all_names_for_key_code(self, test_context: OrcaTestContext) -> None:
-        """Test InputEventManager._all_names_for_key_code."""
-
-        input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-        keycode = 42
-        mock_keymap = essential_modules["gdk"].Keymap.get_default.return_value
-        mock_keymap.get_entries_for_keycode.return_value = (None, None, [120, 121])
-        essential_modules["gdk"].keyval_name.side_effect = lambda x: f"key_{x}"
-        result = input_event_manager._all_names_for_key_code(keycode)
-        assert result == ["key_120", "key_121"]
-        mock_keymap.get_entries_for_keycode.assert_called_once_with(keycode)
 
     @pytest.mark.parametrize(
         "case",
@@ -2634,6 +2556,13 @@ class TestInputEventManager:
                 "expected_result": False,
             },
             {
+                "id": "delete_unknown_key",
+                "method_name": "last_event_was_delete",
+                "keynames": ["x"],
+                "modifiers": 0,
+                "expected_result": False,
+            },
+            {
                 "id": "cut_ctrl_x",
                 "method_name": "last_event_was_cut",
                 "keynames": ["x"],
@@ -2672,11 +2601,8 @@ class TestInputEventManager:
         """Test InputEventManager simple editing action methods."""
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-        input_event_manager._last_keycode_and_modifiers = test_context.Mock(
-            return_value=(42, case["modifiers"])
-        )
-        input_event_manager._all_names_for_key_code = test_context.Mock(
-            return_value=case["keynames"]
+        input_event_manager._last_key_and_modifiers = test_context.Mock(
+            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"])
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -2782,11 +2708,8 @@ class TestInputEventManager:
         mock_last_event = test_context.Mock()
         mock_last_event.get_object.return_value = mock_object
         input_event_manager._last_input_event = mock_last_event
-        input_event_manager._last_keycode_and_modifiers = test_context.Mock(
-            return_value=(42, case["modifiers"])
-        )
-        input_event_manager._all_names_for_key_code = test_context.Mock(
-            return_value=case["keynames"]
+        input_event_manager._last_key_and_modifiers = test_context.Mock(
+            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"])
         )
         essential_modules["ax_utilities_class"].is_terminal.return_value = case["is_terminal"]
         method = getattr(input_event_manager, case["method_name"])
@@ -2862,6 +2785,13 @@ class TestInputEventManager:
                 "expected_result": False,
             },
             {
+                "id": "redo_unknown_key",
+                "method_name": "last_event_was_redo",
+                "keynames": ["x"],
+                "modifiers": 1 << 2,
+                "expected_result": False,
+            },
+            {
                 "id": "select_all_ctrl_a",
                 "method_name": "last_event_was_select_all",
                 "keynames": ["a"],
@@ -2882,6 +2812,13 @@ class TestInputEventManager:
                 "modifiers": 0,
                 "expected_result": False,
             },
+            {
+                "id": "select_all_unknown_key",
+                "method_name": "last_event_was_select_all",
+                "keynames": ["x"],
+                "modifiers": 1 << 2,
+                "expected_result": False,
+            },
         ],
         ids=lambda case: case["id"],
     )
@@ -2893,11 +2830,8 @@ class TestInputEventManager:
         """Test InputEventManager undo/redo/select editing action methods."""
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-        input_event_manager._last_keycode_and_modifiers = test_context.Mock(
-            return_value=(42, case["modifiers"])
-        )
-        input_event_manager._all_names_for_key_code = test_context.Mock(
-            return_value=case["keynames"]
+        input_event_manager._last_key_and_modifiers = test_context.Mock(
+            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"])
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()

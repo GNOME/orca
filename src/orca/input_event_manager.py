@@ -39,9 +39,7 @@ from typing import TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
-gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gdk
 
 from . import debug
 from . import focus_manager
@@ -429,25 +427,6 @@ class InputEventManager:
             return "", 0
 
         return self._last_non_modifier_key_event.keyval_name, self._last_input_event.modifiers
-
-    def _last_keycode_and_modifiers(self):
-        """Returns the last keycode and modifiers"""
-
-        if self._last_non_modifier_key_event is None:
-            return 0, 0
-
-        if not isinstance(self._last_input_event, input_event.KeyboardEvent):
-            return 0, 0
-
-        return self._last_non_modifier_key_event.hw_code, self._last_input_event.modifiers
-
-    @staticmethod
-    def _all_names_for_key_code(keycode):
-        """Returns all the possible names associated with keycode."""
-
-        keymap = Gdk.Keymap.get_default()
-        entries = keymap.get_entries_for_keycode(keycode)[-1]
-        return list(map(Gdk.keyval_name, set(entries)))
 
     def last_event_was_command(self):
         """Returns True if the last event is believed to be a command."""
@@ -845,11 +824,10 @@ class InputEventManager:
     def last_event_was_delete(self):
         """Returns True if the last event is believed to be delete."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "Delete" in keynames or "KP_Delete" in keynames:
+        string, mods = self._last_key_and_modifiers()
+        if string in ["Delete", "KP_Delete"]:
             rv = True
-        elif "d" in keynames:
+        elif string == "d":
             rv = bool(mods & 1 << Atspi.ModifierType.CONTROL)
         else:
             rv = False
@@ -862,9 +840,8 @@ class InputEventManager:
     def last_event_was_cut(self):
         """Returns True if the last event is believed to be the cut command."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "x" not in keynames:
+        string, mods = self._last_key_and_modifiers()
+        if string != "x":
             return False
 
         if mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT:
@@ -876,9 +853,8 @@ class InputEventManager:
     def last_event_was_copy(self):
         """Returns True if the last event is believed to be the copy command."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "c" not in keynames or not mods & 1 << Atspi.ModifierType.CONTROL:
+        string, mods = self._last_key_and_modifiers()
+        if string != "c" or not mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         elif AXUtilities.is_terminal(self._last_input_event.get_object()):
             rv = mods & 1 << Atspi.ModifierType.SHIFT
@@ -893,9 +869,8 @@ class InputEventManager:
     def last_event_was_paste(self):
         """Returns True if the last event is believed to be the paste command."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "v" not in keynames or not mods & 1 << Atspi.ModifierType.CONTROL:
+        string, mods = self._last_key_and_modifiers()
+        if string != "v" or not mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         elif AXUtilities.is_terminal(self._last_input_event.get_object()):
             rv = mods & 1 << Atspi.ModifierType.SHIFT
@@ -910,9 +885,8 @@ class InputEventManager:
     def last_event_was_undo(self):
         """Returns True if the last event is believed to be the undo command."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "z" not in keynames:
+        string, mods = self._last_key_and_modifiers()
+        if string != "z":
             return False
         if mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT:
             msg = "INPUT EVENT MANAGER: Last event was undo"
@@ -923,11 +897,10 @@ class InputEventManager:
     def last_event_was_redo(self):
         """Returns True if the last event is believed to be the redo command."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "z" in keynames:
+        string, mods = self._last_key_and_modifiers()
+        if string == "z":
             rv = mods & 1 << Atspi.ModifierType.CONTROL and mods & 1 << Atspi.ModifierType.SHIFT
-        elif "y" in keynames:
+        elif string == "y":
             # LibreOffice
             rv = mods & 1 << Atspi.ModifierType.CONTROL \
                 and not mods & 1 << Atspi.ModifierType.SHIFT
@@ -942,9 +915,8 @@ class InputEventManager:
     def last_event_was_select_all(self):
         """Returns True if the last event is believed to be the select all command."""
 
-        keycode, mods = self._last_keycode_and_modifiers()
-        keynames = self._all_names_for_key_code(keycode)
-        if "a" not in keynames:
+        string, mods = self._last_key_and_modifiers()
+        if string != "a":
             return False
 
         if (mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT):
