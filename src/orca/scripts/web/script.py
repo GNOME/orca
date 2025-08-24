@@ -82,8 +82,6 @@ from .script_utilities import Utilities
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
-    from orca.caret_navigator import CaretNavigator
-
 
 class Script(default.Script):
     """Provides support for accessing user-agent-agnostic web-content."""
@@ -98,6 +96,8 @@ class Script(default.Script):
         super().__init__(app)
 
         self._default_sn_mode = NavigationMode.DOCUMENT
+        self._default_caret_navigation_enabled: bool = True
+
         self._loading_content = False
         self._made_find_announcement = False
         self._last_mouse_button_context = None, -1
@@ -168,11 +168,6 @@ class Script(default.Script):
         layout = settings_manager.get_manager().get_setting("keyboardLayout")
         is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        caret_nav_bindings = self.get_caret_navigator().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for key_binding in caret_nav_bindings.key_bindings:
-            key_bindings.add(key_binding)
-
         live_region_bindings = self.live_region_manager.get_bindings(
             refresh=True, is_desktop=is_desktop)
         for key_binding in live_region_bindings.key_bindings:
@@ -214,7 +209,6 @@ class Script(default.Script):
         """Defines the input event handlers for this script."""
 
         super().setup_input_event_handlers()
-        self.input_event_handlers.update(self.get_caret_navigator().get_handlers(True))
         self.input_event_handlers.update(self.live_region_manager.get_handlers(True))
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
@@ -262,11 +256,6 @@ class Script(default.Script):
         """Returns the braille generator for this script."""
 
         return BrailleGenerator(self)
-
-    def get_caret_navigator(self) -> CaretNavigator:
-        """Returns the caret navigator for this script."""
-
-        return caret_navigator.get_navigator()
 
     def get_label_inference(self) -> label_inference.LabelInference | None:
         """Returns the label inference functionality for this script."""
@@ -1417,16 +1406,19 @@ class Script(default.Script):
         tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        # TODO - JD: Make this a TextEventReason.
         if self.get_caret_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was caret nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        # TODO - JD: Make this a TextEventReason.
         if self.get_structural_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was struct nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        # TODO - JD: Make this a TextEventReason.
         if self.get_table_navigator().last_input_event_was_navigation_command():
             msg = "WEB: Event ignored: Last command was table nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)

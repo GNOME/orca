@@ -247,19 +247,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         del args["includeContext"]
         return result
 
-    def _needs_separator(self, last_char: str, next_char: str) -> bool:
-        if last_char.isspace() or next_char.isspace():
-            return False
-
-        opening_punctuation = ["(", "[", "{", "<"]
-        closing_punctuation = [".", "?", "!", ":", ",", ";", ")", "]", "}", ">"]
-        if last_char in closing_punctuation or next_char in opening_punctuation:
-            return True
-        if last_char in opening_punctuation or next_char in closing_punctuation:
-            return False
-
-        return last_char.isalnum()
-
     def generate_contents(  # type: ignore[override]
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],

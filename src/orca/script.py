@@ -52,6 +52,7 @@ from . import ax_event_synthesizer
 from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
+from . import caret_navigator
 from . import clipboard
 from . import debug
 from . import debugging_tools_manager
@@ -81,7 +82,6 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from . import chat
-    from . import caret_navigator
     from . import label_inference
     from . import liveregions
     from . import spellcheck
@@ -117,7 +117,9 @@ class Script:
         self.setup_input_event_handlers()
         self.braille_bindings = self.get_braille_bindings()
 
-        self._default_sn_mode = structural_navigator.NavigationMode.OFF
+        self._default_sn_mode: structural_navigator.NavigationMode = \
+            structural_navigator.NavigationMode.OFF
+        self._default_caret_navigation_enabled: bool = False
 
         msg = f"SCRIPT: {self.name} initialized"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -173,10 +175,10 @@ class Script:
 
         return None
 
-    def get_caret_navigator(self) -> caret_navigator.CaretNavigator | None:
+    def get_caret_navigator(self) -> caret_navigator.CaretNavigator:
         """Returns the caret navigator for this script."""
 
-        return None
+        return caret_navigator.get_navigator()
 
     def get_clipboard_presenter(self) -> clipboard.ClipboardPresenter:
         """Returns the clipboard presenter for this script."""

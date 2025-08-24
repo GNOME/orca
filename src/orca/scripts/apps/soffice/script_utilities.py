@@ -101,6 +101,9 @@ class Utilities(script_utilities.Utilities):
     ) -> tuple[str, int, int]:
         """Returns the word in obj at the specified or current offset."""
 
+        if self._script.get_caret_navigator().last_input_event_was_navigation_command():
+            return super().get_word_at_offset_adjusted_for_navigation(obj, offset)
+
         return AXText.get_word_at_offset(obj, offset)
 
     def should_read_full_row(

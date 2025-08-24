@@ -275,6 +275,11 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound
             items += len(bound)
 
+            bound = script.get_caret_navigator().get_bindings(
+                is_desktop=is_desktop).get_bound_bindings()
+            bindings[guilabels.KB_GROUP_CARET_NAVIGATION] = bound
+            items += len(bound)
+
             bound = script.get_structural_navigator().get_bindings(
                 is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_STRUCTURAL_NAVIGATION] = bound

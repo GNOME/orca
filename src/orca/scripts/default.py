@@ -172,6 +172,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.bookmarks.get_handlers())
         self.input_event_handlers.update(self.get_object_navigator().get_handlers())
         self.input_event_handlers.update(self.get_say_all_presenter().get_handlers())
+        self.input_event_handlers.update(self.get_caret_navigator().get_handlers())
         self.input_event_handlers.update(self.get_structural_navigator().get_handlers())
         self.input_event_handlers.update(self.get_table_navigator().get_handlers())
         self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
@@ -281,6 +282,11 @@ class Script(script.Script):
             key_bindings.add(binding)
 
         bindings = self.get_object_navigator().get_bindings(
+            refresh=True, is_desktop=is_desktop)
+        for binding in bindings.key_bindings:
+            key_bindings.add(binding)
+
+        bindings = self.get_caret_navigator().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
@@ -638,6 +644,7 @@ class Script(script.Script):
         self.get_speech_and_verbosity_manager().update_synthesizer()
 
         self.get_structural_navigator().set_mode(self, self._default_sn_mode)
+        self.get_caret_navigator().set_enabled(self, self._default_caret_navigation_enabled)
 
         self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]
@@ -1702,6 +1709,16 @@ class Script(script.Script):
 
         obj = obj or event.source
         self._update_braille_caret_position(obj)
+
+        # TODO - JD: Make this a TextEventReason. Also handle structural navigation
+        # and table navigation here. Technically that's not been necessary because
+        # it won't match anything below. But it would be cleaner to cover each cause
+        # explicitly.
+        if self.get_caret_navigator().last_input_event_was_navigation_command():
+            msg = "DEFAULT: Event ignored: Last command was caret nav"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if reason == TextEventReason.SAY_ALL:
             msg = "DEFAULT: Not presenting text because SayAll is active"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1781,7 +1798,11 @@ class Script(script.Script):
     def say_character(self, obj: Atspi.Accessible) -> None:
         """Speak the character at the caret."""
 
-        offset = AXText.get_caret_offset(obj)
+        context_obj, context_offset = self.utilities.get_caret_context(obj)
+        if context_obj == obj:
+            offset = context_offset
+        else:
+            offset = AXText.get_caret_offset(obj)
 
         # If we have selected text and the last event was a move to the
         # right, then speak the character to the left of where the text
@@ -1891,7 +1912,12 @@ class Script(script.Script):
     def say_word(self, obj: Atspi.Accessible) -> None:
         """Speaks the word at the caret, taking into account the previous caret position."""
 
-        offset = AXText.get_caret_offset(obj)
+        context_obj, context_offset = self.utilities.get_caret_context(obj)
+        if context_obj == obj:
+            offset = context_offset
+        else:
+            offset = AXText.get_caret_offset(obj)
+
         word, start_offset, end_offset = \
             self.utilities.get_word_at_offset_adjusted_for_navigation(obj, offset)
 

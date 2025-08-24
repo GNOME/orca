@@ -101,6 +101,7 @@ userCustomizableSettings: list[str] = [
     "largeObjectTextLength",
     "structuralNavigationEnabled",
     "wrappedStructuralNavigation",
+    "caretNavigationEnabled",
     "chatMessageVerbosity",
     "chatSpeakRoomName",
     "chatAnnounceBuddyTyping",
@@ -318,6 +319,9 @@ skipBlankCells: bool = False
 largeObjectTextLength: int = 75
 wrappedStructuralNavigation: bool = True
 inferLiveRegions: bool = True
+
+# Caret navigation
+caretNavigationEnabled: bool = True
 
 # Chat
 chatMessageVerbosity: int = CHAT_SPEAK_ALL

@@ -18,6 +18,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-locals
 # pylint: disable=wrong-import-position
 # pylint: disable=too-few-public-methods
 # pylint: disable=unused-argument
@@ -147,6 +148,19 @@ class BrailleGenerator(generator.Generator):
 
         return [result, focused_region]
 
+    def _needs_separator(self, last_char: str, next_char: str) -> bool:
+        if last_char.isspace() or next_char.isspace():
+            return False
+
+        opening_punctuation = ["(", "[", "{", "<"]
+        closing_punctuation = [".", "?", "!", ":", ",", ";", ")", "]", "}", ">"]
+        if last_char in closing_punctuation or next_char in opening_punctuation:
+            return True
+        if last_char in opening_punctuation or next_char in closing_punctuation:
+            return False
+
+        return last_char.isalnum()
+
     def generate_contents(  # type: ignore[override]
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
@@ -154,9 +168,34 @@ class BrailleGenerator(generator.Generator):
     ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         """Generates braille for the specified contents."""
 
-        # That the first element in the tuple is a list of lists is due to the web script's
-        # implementation. That may or may not make sense here.
-        return [], None
+        result = []
+        last_region = None
+        focused_region = None
+        obj, offset = self._script.utilities.get_caret_context()
+        for i, content in enumerate(contents):
+            acc, start, end, string = content
+            regions, f_region = self.generate_braille(
+                acc, startOffset=start, endOffset=end, caretOffset=offset, string=string,
+                index=i, total=len(contents))
+            if not regions:
+                continue
+
+            if acc == obj and start <= offset < end:
+                focused_region = f_region
+
+            if last_region and regions:
+                last_char = next_char = ""
+                if last_region.string:
+                    last_char = last_region.string[-1]
+                if regions[0].string:
+                    next_char = regions[0].string[0]
+                if self._needs_separator(last_char, next_char):
+                    regions.insert(0, braille.Region(" "))
+
+            last_region = regions[-1]
+            result.append(regions)
+
+        return result, focused_region
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if settings_manager.get_manager().get_setting("brailleRolenameStyle") \
@@ -1414,7 +1453,12 @@ class BrailleGenerator(generator.Generator):
     def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the terminal role."""
 
-        return [braille.Text(obj)]
+        result = [braille.Text(
+            obj,
+            start_offset=args.get("startOffset"),
+            end_offset=args.get("endOffset"),
+            caret_offset=args.get("caretOffset", args.get("offset")))]
+        return result
 
     def _generate_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the text role."""
