@@ -827,7 +827,7 @@ class InputEventManager:
         string, mods = self._last_key_and_modifiers()
         if string in ["Delete", "KP_Delete"]:
             rv = True
-        elif string == "d":
+        elif string.lower() == "d":
             rv = bool(mods & 1 << Atspi.ModifierType.CONTROL)
         else:
             rv = False
@@ -841,7 +841,7 @@ class InputEventManager:
         """Returns True if the last event is believed to be the cut command."""
 
         string, mods = self._last_key_and_modifiers()
-        if string != "x":
+        if string.lower() != "x":
             return False
 
         if mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT:
@@ -854,7 +854,7 @@ class InputEventManager:
         """Returns True if the last event is believed to be the copy command."""
 
         string, mods = self._last_key_and_modifiers()
-        if string != "c" or not mods & 1 << Atspi.ModifierType.CONTROL:
+        if string.lower() != "c" or not mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         elif AXUtilities.is_terminal(self._last_input_event.get_object()):
             rv = mods & 1 << Atspi.ModifierType.SHIFT
@@ -870,7 +870,7 @@ class InputEventManager:
         """Returns True if the last event is believed to be the paste command."""
 
         string, mods = self._last_key_and_modifiers()
-        if string != "v" or not mods & 1 << Atspi.ModifierType.CONTROL:
+        if string.lower() != "v" or not mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         elif AXUtilities.is_terminal(self._last_input_event.get_object()):
             rv = mods & 1 << Atspi.ModifierType.SHIFT
@@ -886,7 +886,7 @@ class InputEventManager:
         """Returns True if the last event is believed to be the undo command."""
 
         string, mods = self._last_key_and_modifiers()
-        if string != "z":
+        if string.lower() != "z":
             return False
         if mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT:
             msg = "INPUT EVENT MANAGER: Last event was undo"
@@ -898,9 +898,9 @@ class InputEventManager:
         """Returns True if the last event is believed to be the redo command."""
 
         string, mods = self._last_key_and_modifiers()
-        if string == "z":
+        if string.lower() == "z":
             rv = mods & 1 << Atspi.ModifierType.CONTROL and mods & 1 << Atspi.ModifierType.SHIFT
-        elif string == "y":
+        elif string.lower() == "y":
             # LibreOffice
             rv = mods & 1 << Atspi.ModifierType.CONTROL \
                 and not mods & 1 << Atspi.ModifierType.SHIFT
@@ -916,7 +916,7 @@ class InputEventManager:
         """Returns True if the last event is believed to be the select all command."""
 
         string, mods = self._last_key_and_modifiers()
-        if string != "a":
+        if string.lower() != "a":
             return False
 
         if (mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT):
