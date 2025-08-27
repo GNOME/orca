@@ -714,10 +714,11 @@ class AXText:
             return
 
         yield sentence, start, end
+        offset = start
 
         while True:
             next_sentence, next_start, next_end = AXText.get_next_sentence(obj, offset)
-            if not next_sentence:
+            if not next_sentence or next_start <= offset:
                 break
             yield next_sentence, next_start, next_end
             offset = next_start
