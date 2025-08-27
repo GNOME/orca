@@ -950,6 +950,30 @@ class TestAXText:
         result = list(AXText.iter_line(test_context.Mock(spec=Atspi.Accessible)))
         assert result == [("First line", 0, 10), ("Second line", 10, 20)]
 
+    def test_iter_line_prevents_infinite_loop_when_get_next_line_returns_same_position(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that iter_line prevents infinite loops when get_next_line doesn't advance."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        test_context.patch_object(AXText, "get_caret_offset", return_value=0)
+
+        def mock_get_line_at_offset(_obj, offset) -> tuple[str, int, int]:
+            if offset is None:
+                offset = 0
+            return ("Test line", 0, 10)
+
+        def mock_get_next_line(_obj, _offset) -> tuple[str, int, int]:
+            return ("Next line", 0, 10)
+
+        test_context.patch_object(AXText, "get_line_at_offset", new=mock_get_line_at_offset)
+        test_context.patch_object(AXText, "get_next_line", new=mock_get_next_line)
+
+        result = list(AXText.iter_line(test_context.Mock(spec=Atspi.Accessible)))
+        assert result == [("Test line", 0, 10)]
+
     def test_iter_sentence_with_valid_text(self, test_context: OrcaTestContext) -> None:
         """Test AXText.iter_sentence with valid text."""
 

@@ -541,10 +541,11 @@ class AXText:
             return
 
         yield line, start, end
+        offset = start
 
         while True:
             next_line, next_start, next_end = AXText.get_next_line(obj, offset)
-            if not next_line:
+            if not next_line or next_start <= offset:
                 break
             yield next_line, next_start, next_end
             offset = next_start
