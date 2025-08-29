@@ -479,6 +479,7 @@ class LabelInference:
                 if label:
                     return label.strip(), sources
 
+        label_above: str | None = None
         sources_above: list[Atspi.Accessible] = []
         if cell_above:
             label_above, sources_above = self._create_label_from_contents(cell_above)
