@@ -486,7 +486,12 @@ class MouseReviewer:
     def deactivate(self) -> None:
         """Deactivates mouse review."""
 
-        self._event_listener.deregister("mouse:abs")
+        try:
+            self._event_listener.deregister("mouse:abs")
+        except GLib.GError as error:
+            msg = f"MOUSE REVIEW: Exception deregistering 'mouse:abs' listener: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
         for key, value in self._handler_ids.items():
             value.disconnect(key)
         self._handler_ids = {}
