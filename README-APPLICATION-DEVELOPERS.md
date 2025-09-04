@@ -507,86 +507,19 @@ window.show()
 app.exec()
 ```
 
-## Stand-Alone Tools For Debugging
+## Tools For Debugging
 
-### Dump The Focused Object And Its Ancestors
+We recommend using [Accerciser](https://gitlab.gnome.org/GNOME/accerciser) for examining the
+information and events exposed by applications to assistive technologies.
 
-This tool listens for `object:state-changed:focused` events. When an object emits this event,
-the tool will print the event along with the accessibility tree from the application down to
-the object which just claimed focus. Note that the information dumped is limited to the basics:
-role, name/label, description, and help text.
+For instances in which a plain-text dump would be preferable, Orca's `tools/` directory contains
+some simple command-line utilities:
 
-```python
-#!/usr/bin/python
+* **[dump-tree.py](tools/dump-tree.py)** - Dumps the full accessibility tree for the specified
+  application.
 
-import gi
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
+* **[dump-focused-object.py](tools/dump-focused-object.py)** - Dumps basic information about the
+  newly-focused object and its ancestors each time focus changes.
 
-def as_string(obj):
-    try:
-        help_text = Atspi.Accessible.get_help_text(obj)
-    except Exception as error:
-        help_text = f"({error})"
-    return (f"{Atspi.Accessible.get_role(obj).value_name} "
-            f"name:'{get_name(obj)}' "
-            f"description:'{get_description(obj)}' "
-            f"help text: '{help_text}'")
-
-def get_name(obj):
-    name = Atspi.Accessible.get_name(obj)
-    if name:
-        return name
-
-    relations = Atspi.Accessible.get_relation_set(obj)
-    for relation in relations:
-        if relation.get_relation_type() != Atspi.RelationType.LABELLED_BY:
-            continue
-        targets = [relation.get_target(i) for i in range(relation.get_n_targets())]
-        return " ".join([target.name for target in targets])
-
-    return ""
-
-def get_description(obj):
-    description = Atspi.Accessible.get_description(obj)
-    if description:
-        return description
-
-    relations = Atspi.Accessible.get_relation_set(obj)
-    for relation in relations:
-        if relation.get_relation_type() != Atspi.RelationType.DESCRIBED_BY:
-            continue
-        targets = [relation.get_target(i) for i in range(relation.get_n_targets())]
-        return " ".join([target.name for target in targets])
-
-    return ""
-
-def on_event(e):
-    if not e.detail1:
-        return
-
-    print(f"\n{as_string(e.source)} is now focused")
-    ancestors = []
-    parent = e.source
-    while parent:
-      grandparent = Atspi.Accessible.get_parent(parent)
-      ancestors.append(as_string(parent))
-      if Atspi.Accessible.get_role(parent) == Atspi.Role.APPLICATION:
-        break
-      parent = grandparent
-
-    ancestors.reverse()
-    indent = 0
-    for ancestor in ancestors:
-        print(f"{' ' * indent}--> {ancestor}")
-        indent += 2
-
-    if Atspi.Accessible.get_role(e.source) == Atspi.Role.TERMINAL:
-      print("Exiting.")
-      Atspi.event_quit()
-
-listener = Atspi.EventListener.new(on_event)
-listener.register("object:state-changed:focused")
-print("Return focus to your terminal to exit")
-Atspi.event_main()
-```
+* **[dump-window-events.py](tools/dump-window-events.py)** - Dumps basic info in response to
+  `window:activate` and `window:deactivate` events, which all accessible apps should be firing.
