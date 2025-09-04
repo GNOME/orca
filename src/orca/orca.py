@@ -217,15 +217,21 @@ def main():
                 shutdown()
 
         try:
-            _a11y_applications_gsetting = Gio.Settings(schema_id="org.gnome.desktop.a11y.applications")
+            _a11y_applications_gsetting = Gio.Settings(
+                schema_id="org.gnome.desktop.a11y.applications")
             connection = _a11y_applications_gsetting.connect("changed", _on_enabled_changed)
             msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         except GLib.Error as error:
-            msg = f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
+            msg = (
+                f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
+            )
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
         except (AttributeError, TypeError) as error:
-            msg = f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility): {error}"
+            msg = (
+                "ORCA: EXCEPTION connecting to a11y applications (version incompatibility):"
+                f"{error}"
+            )
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     dbus_service.get_remote_controller().start()
