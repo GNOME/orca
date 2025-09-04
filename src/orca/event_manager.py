@@ -612,7 +612,11 @@ class EventManager:
 
         self._script_listener_counts[event_type] -= 1
         if self._script_listener_counts[event_type] == 0:
-            self._listener.deregister(event_type)
+            try:
+                self._listener.deregister(event_type)
+            except GLib.GError as error:
+                msg = f"EVENT MANAGER: Exception deregistering listener for {event_type}: {error}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             del self._script_listener_counts[event_type]
 
     def register_script_listeners(self, script: default.Script) -> None:
