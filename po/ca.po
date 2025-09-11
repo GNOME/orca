@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-09-04 19:08+0000\n"
-"PO-Revision-Date: 2025-09-04 23:52+0200\n"
+"PO-Revision-Date: 2025-09-11 14:45+0100\n"
 "Last-Translator: Bàrbara Vidal <barbara@barbara.cat>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -9728,7 +9728,7 @@ msgstr "No hi ha cap cita en bloc."
 #. if no more buttons can be found.
 #: src/orca/messages.py:1924
 msgid "No more buttons."
-msgstr "No hi ha cap més botons."
+msgstr "No hi ha més botons."
 
 #. Translators: This is for navigating document content by moving from check
 #. box to check box. This is a detailed message which will be presented to the
@@ -11723,7 +11723,7 @@ msgstr "commutador"
 #. of icons.
 #: src/orca/object_properties.py:410
 msgid "Icon panel"
-msgstr "Icona del quadre"
+msgstr "Quadre d'icones"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
