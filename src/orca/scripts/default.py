@@ -40,7 +40,6 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import re
-import string
 from typing import Any, Callable, TYPE_CHECKING
 
 from orca import braille
@@ -175,6 +174,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_caret_navigator().get_handlers())
         self.input_event_handlers.update(self.get_structural_navigator().get_handlers())
         self.input_event_handlers.update(self.get_table_navigator().get_handlers())
+        self.input_event_handlers.update(self.get_typing_echo_presenter().get_handlers())
         self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
         self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
         self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
@@ -267,11 +267,6 @@ class Script(script.Script):
             key_bindings.add(binding)
 
         bindings = self.get_speech_and_verbosity_manager().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_say_all_presenter().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
@@ -454,6 +449,11 @@ class Script(script.Script):
         say_all_bindings = self.get_say_all_presenter().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in say_all_bindings.key_bindings:
+            bindings.add(binding)
+
+        typing_echo_bindings = self.get_typing_echo_presenter().get_bindings(
+            refresh=True, is_desktop=is_desktop)
+        for binding in typing_echo_bindings.key_bindings:
             bindings.add(binding)
 
         return bindings
@@ -1513,13 +1513,11 @@ class Script(script.Script):
            or reason not in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             return True
 
-        if settings_manager.get_manager().get_setting("enableEchoBySentence") \
-           and self._echo_previous_sentence(event.source):
+        presenter = self.get_typing_echo_presenter()
+        if presenter.echo_previous_sentence(self, event.source):
             return True
 
-        if settings_manager.get_manager().get_setting("enableEchoByWord"):
-            self._echo_previous_word(event.source)
-
+        presenter.echo_previous_word(self, event.source)
         return True
 
     def on_text_selection_changed(self, event: Atspi.Event) -> bool:
@@ -1747,53 +1745,6 @@ class Script(script.Script):
                 self.say_line(obj)
                 return True
         return False
-
-    def _echo_previous_sentence(self, obj: Atspi.Accessible) -> bool:
-        """Speaks the sentence prior to the caret if at a sentence boundary."""
-
-        offset = AXText.get_caret_offset(obj)
-        char, start = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
-        previous_char, previous_start = AXText.get_character_at_offset(obj, start - 1)[0:-1]
-        if not (char in string.whitespace + "\u00a0" and previous_char in "!.?:;"):
-            return False
-
-        sentence = AXText.get_sentence_at_offset(obj, previous_start)[0]
-        if not sentence:
-            msg = "DEFAULT: At a sentence boundary, but no sentence found. Missing implementation?"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        voice = self.speech_generator.voice(obj=obj, string=sentence)
-        self.speak_message(sentence, voice, obj=obj)
-        return True
-
-    def _echo_previous_word(self, obj: Atspi.Accessible) -> bool:
-        """Speaks the word prior to the caret if at a word boundary."""
-
-        offset = AXText.get_caret_offset(obj)
-        if offset == -1:
-            offset = AXText.get_character_count(obj)
-
-        if offset <= 0:
-            return False
-
-        # If the previous character is not a word delimiter, there's nothing to echo.
-        prev_char, prev_start = AXText.get_character_at_offset(obj, offset - 1)[0:-1]
-        if prev_char not in string.punctuation + string.whitespace + "\u00a0":
-            return False
-
-        # Two back-to-back delimiters should not result in a re-echo.
-        prev_char, prev_start = AXText.get_character_at_offset(obj, prev_start - 1)[0:-1]
-        if prev_char in string.punctuation + string.whitespace + "\u00a0":
-            return False
-
-        word = AXText.get_word_at_offset(obj, prev_start)[0]
-        if not word:
-            return False
-
-        voice = self.speech_generator.voice(obj=obj, string=word)
-        self.speak_message(word, voice, obj=obj)
-        return True
 
     def say_character(self, obj: Atspi.Accessible) -> None:
         """Speak the character at the caret."""
@@ -2054,31 +2005,7 @@ class Script(script.Script):
     def present_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
 
-        if not event.is_pressed_key():
-            self.utilities.clear_cached_command_state_deprecated()
-
-        if not event.should_echo() or event.is_orca_modified():
-            return
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_dialog_or_window(focus):
-            if focused_object := focus_manager.get_manager().find_focused_object():
-                focus_manager.get_manager().set_locus_of_focus(None, focused_object, False)
-
-        if AXUtilities.is_password_text(focus) and not event.is_locking_key():
-            return
-
-        if not event.is_pressed_key():
-            return
-
-        braille.displayKeyEvent(event)
-        orca_modifier_pressed = event.is_orca_modifier() and event.is_pressed_key()
-        if event.is_character_echoable() and not orca_modifier_pressed:
-            return
-
-        msg = "DEFAULT: Presenting keyboard event"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self.speak_key_event(event)
+        self.get_typing_echo_presenter().echo_keyboard_event(self, event)
 
     def present_message(
         self,

@@ -52,7 +52,6 @@ if TYPE_CHECKING:
     import gi
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
-    from orca import input_event
 
 class Script(default.Script):
     """The sleep-mode script."""
@@ -116,12 +115,6 @@ class Script(default.Script):
 
         msg = "SLEEP MODE: Not updating braille."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def present_keyboard_event(self, event: input_event.InputEvent) -> None:
-        """Presents the keyboard event to the user."""
-
-        msg = "SLEEP MODE: Not presenting keyboard event."
-        debug.print_message(debug.LEVEL_INFO, msg, True, True)
 
     def locus_of_focus_changed(
         self,

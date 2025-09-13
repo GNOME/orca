@@ -327,9 +327,8 @@ class Script(default.Script):
         # fixes the broken echo previous word on Return.
         if new_focus != old_focus \
              and AXUtilities.is_paragraph(new_focus) and AXUtilities.is_paragraph(old_focus):
-            if input_event_manager.get_manager().last_event_was_return() \
-               and settings_manager.get_manager().get_setting("enableEchoByWord"):
-                self._echo_previous_word(old_focus)
+            if input_event_manager.get_manager().last_event_was_return():
+                self.get_typing_echo_presenter().echo_previous_word(self, old_focus)
                 return True
 
             # TODO - JD: And this hack is another one that needs to be done better.

@@ -72,6 +72,7 @@ from . import speech_generator
 from . import structural_navigator
 from . import system_information_presenter
 from . import table_navigator
+from . import typing_echo_presenter
 from . import bookmarks
 from . import where_am_i_presenter
 from .ax_object import AXObject
@@ -209,6 +210,11 @@ class Script:
         """Returns the 'structural navigator' class for this script."""
 
         return structural_navigator.get_navigator()
+
+    def get_typing_echo_presenter(self) -> typing_echo_presenter.TypingEchoPresenter:
+        """Returns the 'typing echo' presenter for this script."""
+
+        return typing_echo_presenter.get_presenter()
 
     def get_live_region_manager(self) -> liveregions.LiveRegionManager | None:
         """Returns the live region manager for this script."""

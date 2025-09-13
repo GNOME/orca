@@ -484,39 +484,6 @@ class KeyboardEvent(InputEvent):
 
         return self.id == Gdk.KEY_space
 
-    def is_character_echoable(self) -> bool:
-        """Returns True if the script will echo this event as part of character echo."""
-
-        if not settings.enableEchoByCharacter:
-            msg = "KEYBOARD EVENT: Not character echoable, setting disabled."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not self.is_printable_key():
-            msg = "KEYBOARD EVENT: Not character echoable, is not printable key."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        # TODO - JD: What is this check handling specifically?
-        if self.modifiers & keybindings.ORCA_CTRL_MODIFIER_MASK:
-            msg = "KEYBOARD EVENT: Not character echoable due to modifier mask."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if AXUtilities.is_password_text(self._obj):
-            msg = "KEYBOARD EVENT: Not character echoable, is password text."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj):
-            msg = "KEYBOARD EVENT: Character echoable, is editable or terminal."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        msg = "KEYBOARD EVENT: Not character echoable, no reason to echo."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return False
-
     def get_locking_state(self) -> bool | None:
         """Returns True if the event locked a locking key, False if the event unlocked it, and None
         if not a locking key."""
@@ -645,47 +612,6 @@ class KeyboardEvent(InputEvent):
             return
 
         self._script.present_keyboard_event(self)
-
-    # pylint:disable=too-many-branches
-    # pylint:disable=too-many-return-statements
-    def should_echo(self) -> bool:
-        """Returns True if this input event should be echoed."""
-
-        if not (self.is_pressed_key() or AXUtilities.is_terminal(self._obj)):
-            return False
-
-        if self.is_locking_key():
-            if settings.presentLockingKeys is None:
-                return not settings.onlySpeakDisplayedText
-            return settings.presentLockingKeys
-
-        if not settings.enableKeyEcho:
-            return False
-
-        if self.is_navigation_key():
-            return settings.enableNavigationKeys
-        if self.is_action_key():
-            return settings.enableActionKeys
-        if self.is_modifier_key():
-            return settings.enableModifierKeys
-        if self.is_function_key():
-            return settings.enableFunctionKeys
-        if self.is_diacritical_key():
-            if settings.enableDiacriticalKeys is None:
-                return not settings.onlySpeakDisplayedText
-            return settings.enableDiacriticalKeys
-        if self.is_alphabetic_key():
-            return settings.enableAlphabeticKeys or settings.enableEchoByCharacter
-        if self.is_numeric_key():
-            return settings.enableNumericKeys or settings.enableEchoByCharacter
-        if self.is_punctuation_key():
-            return settings.enablePunctuationKeys or settings.enableEchoByCharacter
-        if self.is_space():
-            return settings.enableSpace or settings.enableEchoByCharacter
-
-        return False
-    # pylint:enable=too-many-branches
-    # pylint:enable=too-many-return-statements
 
     def process(self) -> None:
         """Processes this input event."""

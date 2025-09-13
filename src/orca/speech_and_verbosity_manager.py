@@ -130,11 +130,6 @@ class SpeechAndVerbosityManager:
                 self.cycle_synthesizer,
                 cmdnames.CYCLE_SYNTHESIZER)
 
-        self._handlers["cycleKeyEchoHandler"] = \
-            input_event.InputEventHandler(
-                self.cycle_key_echo,
-                cmdnames.CYCLE_KEY_ECHO)
-
         self._handlers["changeNumberStyleHandler"] = \
             input_event.InputEventHandler(
                 self.change_number_style,
@@ -218,13 +213,6 @@ class SpeechAndVerbosityManager:
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["cycleSynthesizerHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.DEFAULT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleKeyEchoHandler"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
@@ -1042,57 +1030,6 @@ class SpeechAndVerbosityManager:
         if script is not None and notify_user:
             script.present_message(full, brief)
         self.update_punctuation_level()
-        return True
-
-    @dbus_service.command
-    def cycle_key_echo(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        """Cycle through the key echo levels."""
-
-        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_key_echo. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        manager = settings_manager.get_manager()
-        (new_key, new_word, new_sentence) = (False, False, False)
-        key = manager.get_setting("enableKeyEcho")
-        word = manager.get_setting("enableEchoByWord")
-        sentence = manager.get_setting("enableEchoBySentence")
-
-        if (key, word, sentence) == (False, False, False):
-            (new_key, new_word, new_sentence) = (True, False, False)
-            full = messages.KEY_ECHO_KEY_FULL
-            brief = messages.KEY_ECHO_KEY_BRIEF
-        elif (key, word, sentence) == (True, False, False):
-            (new_key, new_word, new_sentence) = (False, True, False)
-            full = messages.KEY_ECHO_WORD_FULL
-            brief = messages.KEY_ECHO_WORD_BRIEF
-        elif (key, word, sentence) == (False, True, False):
-            (new_key, new_word, new_sentence) = (False, False, True)
-            full = messages.KEY_ECHO_SENTENCE_FULL
-            brief = messages.KEY_ECHO_SENTENCE_BRIEF
-        elif (key, word, sentence) == (False, False, True):
-            (new_key, new_word, new_sentence) = (True, True, False)
-            full = messages.KEY_ECHO_KEY_AND_WORD_FULL
-            brief = messages.KEY_ECHO_KEY_AND_WORD_BRIEF
-        elif (key, word, sentence) == (True, True, False):
-            (new_key, new_word, new_sentence) = (False, True, True)
-            full = messages.KEY_ECHO_WORD_AND_SENTENCE_FULL
-            brief = messages.KEY_ECHO_WORD_AND_SENTENCE_BRIEF
-        else:
-            (new_key, new_word, new_sentence) = (False, False, False)
-            full = messages.KEY_ECHO_NONE_FULL
-            brief = messages.KEY_ECHO_NONE_BRIEF
-
-        manager.set_setting("enableKeyEcho", new_key)
-        manager.set_setting("enableEchoByWord", new_word)
-        manager.set_setting("enableEchoBySentence", new_sentence)
-        if script is not None and notify_user:
-            script.present_message(full, brief)
         return True
 
     @dbus_service.command
