@@ -3811,7 +3811,10 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_label_and_name(obj, **args)
         result += (self._generate_number_of_children(obj, **args) \
             or self._generate_accessible_role(obj, **args))
-        result += self._generate_nesting_level(obj, **args)
+        if AXUtilities.is_gui_list(obj):
+            result += self._generate_accessible_static_text(obj, **args)
+        else:
+            result += self._generate_nesting_level(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 

@@ -1229,6 +1229,15 @@ class AXUtilitiesRole:
         return role == Atspi.Role.GLASS_PANE
 
     @staticmethod
+    def is_gui_list(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
+        """Returns True if obj has the list role but contains UI rather than static text."""
+
+        if not AXUtilitiesRole.is_list(obj, role):
+            return False
+
+        return AXObject.get_toolkit_name(obj) == "gtk"
+
+    @staticmethod
     def is_grid(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the grid role."""
 

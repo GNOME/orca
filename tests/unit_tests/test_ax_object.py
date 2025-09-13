@@ -180,7 +180,7 @@ class TestAXObject:
         mock_get_toolkit = test_context.Mock(return_value=case["toolkit"])
         test_context.patch_object(AXObject, "get_role", new=mock_get_role)
         test_context.patch_object(AXObject, "get_parent", new=mock_get_parent)
-        test_context.patch_object(AXObject, "_get_toolkit_name", new=mock_get_toolkit)
+        test_context.patch_object(AXObject, "get_toolkit_name", new=mock_get_toolkit)
 
         result = AXObject.is_bogus(mock_accessible)
         assert result is case["expected_result"]
@@ -244,7 +244,7 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "_get_toolkit_name", side_effect=lambda obj: case["toolkit"]
+            AXObject, "get_toolkit_name", side_effect=lambda obj: case["toolkit"]
         )
 
         if case["toolkit"] == "qt":
@@ -306,7 +306,7 @@ class TestAXObject:
         test_context: OrcaTestContext,
         case: dict,
     ) -> None:
-        """Test AXObject._get_toolkit_name with various scenarios."""
+        """Test AXObject.get_toolkit_name with various scenarios."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
@@ -333,7 +333,7 @@ class TestAXObject:
                 Atspi.Accessible, "get_toolkit_name", side_effect=lambda app: case["toolkit_result"]
             )
 
-        result = AXObject._get_toolkit_name(mock_accessible)
+        result = AXObject.get_toolkit_name(mock_accessible)
         assert result == case["expected_result"]
 
         if case["expects_debug"]:

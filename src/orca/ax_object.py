@@ -89,7 +89,7 @@ class AXObject:
         thread.start()
 
     @staticmethod
-    def _get_toolkit_name(obj: Atspi.Accessible) -> str:
+    def get_toolkit_name(obj: Atspi.Accessible) -> str:
         """Returns the toolkit name of obj as a lowercase string"""
 
         try:
@@ -112,7 +112,7 @@ class AXObject:
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1879750
         if AXObject.get_role(obj) == Atspi.Role.SECTION \
            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME \
-           and AXObject._get_toolkit_name(obj) == "gecko":
+           and AXObject.get_toolkit_name(obj) == "gecko":
             tokens = ["AXObject:", obj, "is bogus. See mozilla bug 1879750."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             return True
@@ -127,7 +127,7 @@ class AXObject:
             return False
 
         # https://bugreports.qt.io/browse/QTBUG-130116
-        toolkit_name = AXObject._get_toolkit_name(obj)
+        toolkit_name = AXObject.get_toolkit_name(obj)
         if not toolkit_name.startswith("qt"):
             return False
 

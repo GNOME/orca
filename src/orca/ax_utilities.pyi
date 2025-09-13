@@ -591,6 +591,9 @@ class AXUtilities:
     def is_glass_pane(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool: ...
 
     @staticmethod
+    def is_gui_list(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool: ...
+
+    @staticmethod
     def is_grid(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool: ...
 
     @staticmethod
