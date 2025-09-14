@@ -50,7 +50,15 @@ class TestLearnModePresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns all dependencies needed for LearnModePresenter testing."""
 
-        additional_modules = ["gi.repository", "orca.input_event_manager", "time"]
+        additional_modules = [
+            "gi.repository",
+            "orca.input_event_manager",
+            "time",
+            "orca.speech",
+            "orca.speech_generator",
+            "orca.generator",
+            "orca.ax_hypertext"
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_repository_mock = essential_modules["gi.repository"]
@@ -78,9 +86,20 @@ class TestLearnModePresenter:
         gobject_mock = test_context.Mock()
         gobject_mock.TYPE_STRING = str
 
+        atspi_mock = test_context.Mock()
+        atspi_hyperlink_mock = test_context.Mock()
+        atspi_hyperlink_mock.__or__ = test_context.Mock(return_value=type("UnionType", (), {}))
+        atspi_mock.Hyperlink = atspi_hyperlink_mock
+        atspi_mock.Accessible = test_context.Mock()
+        atspi_mock.Hypertext = test_context.Mock()
+        glib_mock = test_context.Mock()
+        glib_mock.GError = Exception
+
         gi_repository_mock.Gdk = gdk_mock
         gi_repository_mock.Gtk = gtk_mock
         gi_repository_mock.GObject = gobject_mock
+        gi_repository_mock.Atspi = atspi_mock
+        gi_repository_mock.GLib = glib_mock
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
         cmdnames_mock.ENTER_LEARN_MODE = "enterLearnMode"
@@ -175,10 +194,14 @@ class TestLearnModePresenter:
         script_instance.display_message = test_context.Mock()
         script_instance.speak_key_event = test_context.Mock()
         script_instance.phoneticSpellCurrentItem = test_context.Mock()
+        script_instance.spell_phonetically = test_context.Mock()
         script_instance.app = test_context.Mock()
         script_instance.getDefaultKeyBindings = test_context.Mock(
             return_value=key_bindings_instance
         )
+        script_instance.speech_generator = test_context.Mock()
+        script_instance.speech_generator.voice = test_context.Mock(
+            return_value=[test_context.Mock()])
 
         for method_name in [
             "get_learn_mode_presenter",
@@ -234,6 +257,9 @@ class TestLearnModePresenter:
 
         time_mock = essential_modules["time"]
         time_mock.time = test_context.Mock(return_value=1234567890.0)
+
+        speech_mock = essential_modules["orca.speech"]
+        speech_mock.speak_key_event = test_context.Mock()
 
         return essential_modules
 
@@ -463,9 +489,8 @@ class TestLearnModePresenter:
         event.modifiers = 0
         result = presenter.handle_event(event)
         assert result is True
-        script_manager = essential_modules["orca.script_manager"]
-        script = script_manager.get_manager.return_value.get_active_script.return_value
-        script.speak_key_event.assert_called_with(event)
+        speech_mock = essential_modules["orca.speech"]
+        speech_mock.speak_key_event.assert_called()
 
     def test_handle_event_printable_double_click(self, test_context: OrcaTestContext) -> None:
         """Test LearnModePresenter.handle_event with printable key double-click."""
