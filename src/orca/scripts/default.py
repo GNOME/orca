@@ -2120,25 +2120,22 @@ class Script(script.Script):
             debug.print_exception(debug.LEVEL_WARNING)
             return
 
-        manager = settings_manager.get_manager()
-        if not manager.get_setting("enableSpeech") \
-           or (manager.get_setting("onlySpeakDisplayedText") and not force):
+        speech_manager = speech_and_verbosity_manager.get_manager()
+        if speech_manager.get_speech_is_muted() \
+           or (speech_manager.get_only_speak_displayed_text() and not force):
             return
 
         voices = settings_manager.get_manager().get_setting("voices")
         system_voice = voices.get(settings.SYSTEM_VOICE)
-
         voice = voice or system_voice
         if voice == system_voice and reset_styles:
-            cap_style = settings_manager.get_manager().get_setting("capitalizationStyle")
-            manager.set_setting("capitalizationStyle", settings.CAPITALIZATION_STYLE_NONE)
-            self.get_speech_and_verbosity_manager().update_capitalization_style()
+            cap_style = speech_manager.get_capitalization_style()
+            speech_manager.set_capitalization_style("none")
 
-            punct_style = manager.get_setting("verbalizePunctuationStyle")
-            manager.set_setting("verbalizePunctuationStyle", settings.PUNCTUATION_STYLE_NONE)
-            self.get_speech_and_verbosity_manager().update_punctuation_level()
+            punct_style = speech_manager.get_punctuation_level()
+            speech_manager.set_punctuation_level("none")
 
-        text = speech_and_verbosity_manager.get_manager().adjust_for_presentation(obj, text)
+        text = speech_manager.adjust_for_presentation(obj, text)
         voice_to_use: ACSS | dict[str, Any] | None = None
         if isinstance(voice, list) and voice:
             voice_to_use = voice[0]
@@ -2147,8 +2144,5 @@ class Script(script.Script):
         speech.speak(text, voice_to_use, interrupt)
 
         if voice == system_voice and reset_styles:
-            manager.set_setting("capitalizationStyle", cap_style)
-            self.get_speech_and_verbosity_manager().update_capitalization_style()
-
-            manager.set_setting("verbalizePunctuationStyle", punct_style)
-            self.get_speech_and_verbosity_manager().update_punctuation_level()
+            speech_manager.set_capitalization_style(cap_style)
+            speech_manager.set_punctuation_level(punct_style)

@@ -40,6 +40,7 @@ import queue
 import re
 import string
 import threading
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from . import cmdnames
@@ -70,6 +71,39 @@ if TYPE_CHECKING:
 
     from .scripts import default
     from .speechserver import SpeechServer
+
+class CapitalizationStyle(Enum):
+    """Capitalization style enumeration with string values from settings."""
+
+    NONE = settings.CAPITALIZATION_STYLE_NONE
+    SPELL = settings.CAPITALIZATION_STYLE_SPELL
+    ICON = settings.CAPITALIZATION_STYLE_ICON
+
+class PunctuationStyle(Enum):
+    """Punctuation style enumeration with int values from settings."""
+
+    NONE = settings.PUNCTUATION_STYLE_NONE
+    SOME = settings.PUNCTUATION_STYLE_SOME
+    MOST = settings.PUNCTUATION_STYLE_MOST
+    ALL = settings.PUNCTUATION_STYLE_ALL
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
+class VerbosityLevel(Enum):
+    """Verbosity level enumeration with int values from settings."""
+
+    BRIEF = settings.VERBOSITY_LEVEL_BRIEF
+    VERBOSE = settings.VERBOSITY_LEVEL_VERBOSE
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
 
 class SpeechAndVerbosityManager:
     """Configures speech and verbosity settings and adjusts strings accordingly."""
@@ -871,6 +905,63 @@ class SpeechAndVerbosityManager:
 
         return True
 
+    @dbus_service.getter
+    def get_capitalization_style(self) -> str:
+        """Returns the current capitalization style."""
+
+        return settings_manager.get_manager().get_setting("capitalizationStyle")
+
+    @dbus_service.setter
+    def set_capitalization_style(self, value: str) -> bool:
+        """Sets the capitalization style."""
+
+        try:
+            style = CapitalizationStyle[value.upper()]
+        except KeyError:
+            msg = f"SPEECH AND VERBOSITY MANAGER: Invalid capitalization style: {value}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting capitalization style to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("capitalizationStyle", style.value)
+        self.update_capitalization_style()
+        return True
+
+    @dbus_service.command
+    def cycle_capitalization_style(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Cycle through the speech-dispatcher capitalization styles."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_capitalization_style. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        manager = settings_manager.get_manager()
+        current_style = manager.get_setting("capitalizationStyle")
+        if current_style == settings.CAPITALIZATION_STYLE_NONE:
+            new_style = settings.CAPITALIZATION_STYLE_SPELL
+            full = messages.CAPITALIZATION_SPELL_FULL
+            brief = messages.CAPITALIZATION_SPELL_BRIEF
+        elif current_style == settings.CAPITALIZATION_STYLE_SPELL:
+            new_style = settings.CAPITALIZATION_STYLE_ICON
+            full = messages.CAPITALIZATION_ICON_FULL
+            brief = messages.CAPITALIZATION_ICON_BRIEF
+        else:
+            new_style = settings.CAPITALIZATION_STYLE_NONE
+            full = messages.CAPITALIZATION_NONE_FULL
+            brief = messages.CAPITALIZATION_NONE_BRIEF
+
+        manager.set_setting("capitalizationStyle", new_style)
+        if script is not None and notify_user:
+            script.present_message(full, brief)
+        self.update_capitalization_style()
+        return True
+
     def update_capitalization_style(self) -> bool:
         """Updates the capitalization style based on the value in settings."""
 
@@ -881,6 +972,68 @@ class SpeechAndVerbosityManager:
             return True
 
         server.update_capitalization_style()
+        return True
+
+    @dbus_service.getter
+    def get_punctuation_level(self) -> str:
+        """Returns the current punctuation level."""
+
+        int_value = settings_manager.get_manager().get_setting("verbalizePunctuationStyle")
+        return PunctuationStyle(int_value).string_name
+
+    @dbus_service.setter
+    def set_punctuation_level(self, value: str) -> bool:
+        """Sets the punctuation level."""
+
+        try:
+            style = PunctuationStyle[value.upper()]
+        except KeyError:
+            msg = f"SPEECH AND VERBOSITY MANAGER: Invalid punctuation level: {value}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting punctuation level to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("verbalizePunctuationStyle", style.value)
+        self.update_punctuation_level()
+        return True
+
+    @dbus_service.command
+    def cycle_punctuation_level(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Cycles through punctuation levels for speech."""
+
+        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_punctuation_level. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        manager = settings_manager.get_manager()
+        current_level = manager.get_setting("verbalizePunctuationStyle")
+        if current_level == settings.PUNCTUATION_STYLE_NONE:
+            new_level = settings.PUNCTUATION_STYLE_SOME
+            full = messages.PUNCTUATION_SOME_FULL
+            brief = messages.PUNCTUATION_SOME_BRIEF
+        elif current_level == settings.PUNCTUATION_STYLE_SOME:
+            new_level = settings.PUNCTUATION_STYLE_MOST
+            full = messages.PUNCTUATION_MOST_FULL
+            brief = messages.PUNCTUATION_MOST_BRIEF
+        elif current_level == settings.PUNCTUATION_STYLE_MOST:
+            new_level = settings.PUNCTUATION_STYLE_ALL
+            full = messages.PUNCTUATION_ALL_FULL
+            brief = messages.PUNCTUATION_ALL_BRIEF
+        else:
+            new_level = settings.PUNCTUATION_STYLE_NONE
+            full = messages.PUNCTUATION_NONE_FULL
+            brief = messages.PUNCTUATION_NONE_BRIEF
+
+        manager.set_setting("verbalizePunctuationStyle", new_level)
+        if script is not None and notify_user:
+            script.present_message(full, brief)
+        self.update_punctuation_level()
         return True
 
     def update_punctuation_level(self) -> bool:
@@ -960,76 +1113,19 @@ class SpeechAndVerbosityManager:
             script.present_message(available[index])
         return True
 
-    @dbus_service.command
-    def cycle_capitalization_style(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        """Cycle through the speech-dispatcher capitalization styles."""
+    @dbus_service.getter
+    def get_speak_numbers_as_digits(self) -> bool:
+        """Returns whether numbers are spoken as digits."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_capitalization_style. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return settings_manager.get_manager().get_setting("speakNumbersAsDigits")
 
-        manager = settings_manager.get_manager()
-        current_style = manager.get_setting("capitalizationStyle")
-        if current_style == settings.CAPITALIZATION_STYLE_NONE:
-            new_style = settings.CAPITALIZATION_STYLE_SPELL
-            full = messages.CAPITALIZATION_SPELL_FULL
-            brief = messages.CAPITALIZATION_SPELL_BRIEF
-        elif current_style == settings.CAPITALIZATION_STYLE_SPELL:
-            new_style = settings.CAPITALIZATION_STYLE_ICON
-            full = messages.CAPITALIZATION_ICON_FULL
-            brief = messages.CAPITALIZATION_ICON_BRIEF
-        else:
-            new_style = settings.CAPITALIZATION_STYLE_NONE
-            full = messages.CAPITALIZATION_NONE_FULL
-            brief = messages.CAPITALIZATION_NONE_BRIEF
+    @dbus_service.setter
+    def set_speak_numbers_as_digits(self, value: bool) -> bool:
+        """Sets whether numbers are spoken as digits."""
 
-        manager.set_setting("capitalizationStyle", new_style)
-        if script is not None and notify_user:
-            script.present_message(full, brief)
-        self.update_capitalization_style()
-        return True
-
-    @dbus_service.command
-    def cycle_punctuation_level(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        """Cycles through punctuation levels for speech."""
-
-        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_punctuation_level. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        manager = settings_manager.get_manager()
-        current_level = manager.get_setting("verbalizePunctuationStyle")
-        if current_level == settings.PUNCTUATION_STYLE_NONE:
-            new_level = settings.PUNCTUATION_STYLE_SOME
-            full = messages.PUNCTUATION_SOME_FULL
-            brief = messages.PUNCTUATION_SOME_BRIEF
-        elif current_level == settings.PUNCTUATION_STYLE_SOME:
-            new_level = settings.PUNCTUATION_STYLE_MOST
-            full = messages.PUNCTUATION_MOST_FULL
-            brief = messages.PUNCTUATION_MOST_BRIEF
-        elif current_level == settings.PUNCTUATION_STYLE_MOST:
-            new_level = settings.PUNCTUATION_STYLE_ALL
-            full = messages.PUNCTUATION_ALL_FULL
-            brief = messages.PUNCTUATION_ALL_BRIEF
-        else:
-            new_level = settings.PUNCTUATION_STYLE_NONE
-            full = messages.PUNCTUATION_NONE_FULL
-            brief = messages.PUNCTUATION_NONE_BRIEF
-
-        manager.set_setting("verbalizePunctuationStyle", new_level)
-        if script is not None and notify_user:
-            script.present_message(full, brief)
-        self.update_punctuation_level()
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak numbers as digits to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakNumbersAsDigits", value)
         return True
 
     @dbus_service.command
@@ -1045,8 +1141,7 @@ class SpeechAndVerbosityManager:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        manager = settings_manager.get_manager()
-        speak_digits = manager.get_setting("speakNumbersAsDigits")
+        speak_digits = self.get_speak_numbers_as_digits()
         if speak_digits:
             brief = messages.NUMBER_STYLE_WORDS_BRIEF
             full = messages.NUMBER_STYLE_WORDS_FULL
@@ -1054,9 +1149,39 @@ class SpeechAndVerbosityManager:
             brief = messages.NUMBER_STYLE_DIGITS_BRIEF
             full = messages.NUMBER_STYLE_DIGITS_FULL
 
-        manager.set_setting("speakNumbersAsDigits", not speak_digits)
+        self.set_speak_numbers_as_digits(not speak_digits)
         if script is not None and notify_user:
             script.present_message(full, brief)
+        return True
+
+    @dbus_service.getter
+    def get_speech_is_muted(self) -> bool:
+        """Returns whether speech output is temporarily muted."""
+
+        return settings_manager.get_manager().get_setting("silenceSpeech")
+
+    @dbus_service.setter
+    def set_speech_is_muted(self, value: bool) -> bool:
+        """Sets whether speech output is temporarily muted."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech muted to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("silenceSpeech", value)
+        return True
+
+    @dbus_service.getter
+    def get_only_speak_displayed_text(self) -> bool:
+        """Returns whether only displayed text should be spoken."""
+
+        return settings_manager.get_manager().get_setting("onlySpeakDisplayedText")
+
+    @dbus_service.setter
+    def set_only_speak_displayed_text(self, value: bool) -> bool:
+        """Sets whether only displayed text should be spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting only speak displayed text to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("onlySpeakDisplayedText", value)
         return True
 
     @dbus_service.command
@@ -1072,22 +1197,44 @@ class SpeechAndVerbosityManager:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        manager = settings_manager.get_manager()
         if script is not None:
             script.interrupt_presentation()
-        if manager.get_setting("silenceSpeech"):
-            manager.set_setting("silenceSpeech", False)
+        if self.get_speech_is_muted():
+            self.set_speech_is_muted(False)
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_ENABLED)
-        elif not manager.get_setting("enableSpeech"):
-            manager.set_setting("enableSpeech", True)
+        elif not settings_manager.get_manager().get_setting("enableSpeech"):
+            settings_manager.get_manager().set_setting("enableSpeech", True)
             speech.init()
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_ENABLED)
         else:
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_DISABLED)
-            manager.set_setting("silenceSpeech", True)
+            self.set_speech_is_muted(True)
+        return True
+
+    @dbus_service.getter
+    def get_verbosity_level(self) -> str:
+        """Returns the current speech verbosity level."""
+
+        int_value = settings_manager.get_manager().get_setting("speechVerbosityLevel")
+        return VerbosityLevel(int_value).string_name
+
+    @dbus_service.setter
+    def set_verbosity_level(self, value: str) -> bool:
+        """Sets the speech verbosity level."""
+
+        try:
+            level = VerbosityLevel[value.upper()]
+        except KeyError:
+            msg = f"SPEECH AND VERBOSITY MANAGER: Invalid verbosity level: {value}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting verbosity level to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speechVerbosityLevel", level.value)
         return True
 
     @dbus_service.command
@@ -1115,6 +1262,23 @@ class SpeechAndVerbosityManager:
             manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_BRIEF)
         return True
 
+    @dbus_service.getter
+    def get_speak_indentation_and_justification(self) -> bool:
+        """Returns whether speaking of indentation and justification is enabled."""
+
+        return settings_manager.get_manager().get_setting("enableSpeechIndentation")
+
+    @dbus_service.setter
+    def set_speak_indentation_and_justification(self, value: bool) -> bool:
+        """Sets whether speaking of indentation and justification is enabled."""
+
+        msg = (
+            f"SPEECH AND VERBOSITY MANAGER: Setting speak indentation and justification to {value}."
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("enableSpeechIndentation", value)
+        return True
+
     @dbus_service.command
     def toggle_indentation_and_justification(
         self,
@@ -1128,10 +1292,9 @@ class SpeechAndVerbosityManager:
                   "Script:", script, "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        manager = settings_manager.get_manager()
-        value = manager.get_setting("enableSpeechIndentation")
-        manager.set_setting("enableSpeechIndentation", not value)
-        if manager.get_setting("enableSpeechIndentation"):
+        value = self.get_speak_indentation_and_justification()
+        self.set_speak_indentation_and_justification(not value)
+        if self.get_speak_indentation_and_justification():
             full = messages.INDENTATION_JUSTIFICATION_ON_FULL
             brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
         else:
@@ -1286,8 +1449,8 @@ class SpeechAndVerbosityManager:
     ) -> str:
         """Returns a description of the indentation in the given line."""
 
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
-           or not settings_manager.get_manager().get_setting("enableSpeechIndentation"):
+        if self.get_only_speak_displayed_text() \
+           or not self.get_speak_indentation_and_justification():
             return ""
 
         line = line.replace("\u00a0", " ")

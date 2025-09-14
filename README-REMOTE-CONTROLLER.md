@@ -1,9 +1,10 @@
 # Orca Remote Controller (D-Bus Interface)
 
-> **⚠️⚠️ WORK IN PROGRESS**: This D-Bus interface is in its very early stages, and under active
-development. It should be considered **highly unstable**. The API may change significantly
-before the final release. **Do not rely on this interface for production applications until
-Orca v49.0 is released.**
+> **⚠️⚠️ WORK IN PROGRESS**: This D-Bus interface is brand new and not yet feature complete.
+Low-risk feature additions will continue to be made in version 49 point releases. More involved
+features will be added only in version 50 and later. The API present in version 49.0 may be
+modified beyond bug fixes in version 50 or later based on feedback from consumers of this support.
+Such changes will be documented here.
 
 [TOC]
 

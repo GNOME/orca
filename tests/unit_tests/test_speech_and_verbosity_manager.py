@@ -41,6 +41,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestSpeechAndVerbosityManager:
     """Test SpeechAndVerbosityManager class methods."""
@@ -70,6 +71,17 @@ class TestSpeechAndVerbosityManager:
         settings_mock.speechServerInfo = None
         settings_mock.voices = {}
         settings_mock.DEFAULT_VOICE = "default"
+
+        # Set up constants for enum testing
+        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
+        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
+        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
+        settings_mock.PUNCTUATION_STYLE_NONE = 3
+        settings_mock.PUNCTUATION_STYLE_SOME = 2
+        settings_mock.PUNCTUATION_STYLE_MOST = 1
+        settings_mock.PUNCTUATION_STYLE_ALL = 0
+        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
+        settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
@@ -129,15 +141,9 @@ class TestSpeechAndVerbosityManager:
         self, test_context, manager, return_text="Hello world"
     ):
         """Set up common mocks for presentation adjustment testing."""
-        test_context.patch_object(
-            manager, "_adjust_for_links", return_value=return_text
-        )
-        test_context.patch_object(
-            manager, "adjust_for_digits", return_value=return_text
-        )
-        test_context.patch_object(
-            manager, "_adjust_for_repeats", return_value=return_text
-        )
+        test_context.patch_object(manager, "_adjust_for_links", return_value=return_text)
+        test_context.patch_object(manager, "adjust_for_digits", return_value=return_text)
+        test_context.patch_object(manager, "_adjust_for_repeats", return_value=return_text)
         test_context.patch_object(
             manager,
             "_adjust_for_verbalized_punctuation",
@@ -214,9 +220,7 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server_module_map", return_value={}
-        )
+        test_context.patch_object(manager, "_get_server_module_map", return_value={})
         result = manager._switch_server("Invalid Server")
         assert result is False
 
@@ -238,13 +242,9 @@ class TestSpeechAndVerbosityManager:
         if case["server_return"] == "mock_server":
             mock_server = test_context.Mock()
             mock_server.get_factory_name.return_value = "Test Server"
-            test_context.patch_object(
-                manager, "_get_server", return_value=mock_server
-            )
+            test_context.patch_object(manager, "_get_server", return_value=mock_server)
         else:
-            test_context.patch_object(
-                manager, "_get_server", return_value=case["server_return"]
-            )
+            test_context.patch_object(manager, "_get_server", return_value=case["server_return"])
 
         result = manager.get_current_server()
         assert result == case["expected_result"]
@@ -256,9 +256,7 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=None
-        )
+        test_context.patch_object(manager, "_get_server", return_value=None)
         result = manager.get_current_synthesizer()
         assert result == ""
 
@@ -382,9 +380,7 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=None
-        )
+        test_context.patch_object(manager, "_get_server", return_value=None)
 
         method = getattr(manager, case["method_name"])
         result = method(*case["method_args"])
@@ -445,9 +441,7 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "update_capitalization_style", new=test_context.Mock()
-        )
+        test_context.patch_object(manager, "update_capitalization_style", new=test_context.Mock())
         result = manager.cycle_capitalization_style()
         assert result is True
 
@@ -471,9 +465,7 @@ class TestSpeechAndVerbosityManager:
         result = manager.toggle_indentation_and_justification()
         assert result is True
 
-    def test_toggle_table_cell_reading_mode_no_script(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_toggle_table_cell_reading_mode_no_script(self, test_context: OrcaTestContext) -> None:
         """Test _adjust_for_links static method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -515,9 +507,7 @@ class TestSpeechAndVerbosityManager:
         result = manager.get_indentation_description(line)
         assert result == ""
 
-    def test_get_error_description_disabled(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_error_description_disabled(self, test_context: OrcaTestContext) -> None:
         """Test get_manager function."""
 
         (self._setup_dependencies(test_context))
@@ -541,7 +531,7 @@ class TestSpeechAndVerbosityManager:
         mock_server.is_alive.return_value = True
         test_context.patch(
             "orca.speech_and_verbosity_manager.speech.get_speech_server",
-            side_effect=lambda: mock_server
+            side_effect=lambda: mock_server,
         )
         result = manager._get_server()
         assert result is mock_server
@@ -555,15 +545,11 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         result = manager.get_current_synthesizer()
         assert result == "espeak-ng"
 
-    def test_set_current_synthesizer_with_server(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_set_current_synthesizer_with_server(self, test_context: OrcaTestContext) -> None:
         """Test get_available_voices method with valid server."""
 
         mock_voice1 = {"name": "Voice 1"}
@@ -576,15 +562,11 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         result = manager.get_available_voices()
         assert result == ["Voice 1", "Voice 2"]
 
-    def test_get_voices_for_language_with_server(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_voices_for_language_with_server(self, test_context: OrcaTestContext) -> None:
         """Test set_current_voice method with valid server."""
 
         mock_voice = {"name": "Test Voice"}
@@ -597,12 +579,8 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
-        test_context.patch_object(
-            manager, "get_available_voices", return_value=["Test Voice"]
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
+        test_context.patch_object(manager, "get_available_voices", return_value=["Test Voice"])
         result = manager.set_current_voice("Test Voice")
         assert result is True
         mock_server.set_voice_family.assert_called_once_with(mock_voice)
@@ -683,9 +661,7 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
@@ -715,9 +691,7 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
@@ -747,16 +721,12 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
 
-    def test_update_capitalization_style_with_server(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_update_capitalization_style_with_server(self, test_context: OrcaTestContext) -> None:
         """Test update_synthesizer method with server and different synthesizer ID."""
 
         mock_server = test_context.Mock()
@@ -767,12 +737,10 @@ class TestSpeechAndVerbosityManager:
 
         manager = SpeechAndVerbosityManager()
 
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         test_context.patch(
             "orca.speech_and_verbosity_manager.settings.speechServerInfo",
-            new=["Test Server", "espeak-ng"]
+            new=["Test Server", "espeak-ng"],
         )
         manager.update_synthesizer()
         mock_server.set_output_module.assert_called_once_with("espeak-ng")
@@ -788,16 +756,12 @@ class TestSpeechAndVerbosityManager:
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
 
         manager = SpeechAndVerbosityManager()
-        test_context.patch_object(
-            manager, "_get_server", return_value=mock_server
-        )
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
         result = manager.cycle_synthesizer()
         assert result is True
         mock_server.set_output_module.assert_called_once_with("espeak")
 
-    def test_apply_pronunciation_dictionary(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_apply_pronunciation_dictionary(self, test_context: OrcaTestContext) -> None:
         """Test _adjust_for_verbalized_punctuation static method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -827,3 +791,428 @@ class TestSpeechAndVerbosityManager:
         mock_obj = test_context.Mock()
         result = SpeechAndVerbosityManager._should_verbalize_punctuation(mock_obj)
         assert result is True
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "get_capitalization_style", "setting_value": "spell", "expected": "spell"},
+            {"id": "get_capitalization_style_none", "setting_value": "none", "expected": "none"},
+            {"id": "get_capitalization_style_icon", "setting_value": "icon", "expected": "icon"},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_capitalization_style(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test get_capitalization_style method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_capitalization_style()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("capitalizationStyle")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "set_capitalization_style_valid", "input_value": "spell", "expected": True},
+            {"id": "set_capitalization_style_none", "input_value": "none", "expected": True},
+            {"id": "set_capitalization_style_icon", "input_value": "icon", "expected": True},
+            {"id": "set_capitalization_style_invalid", "input_value": "invalid", "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_capitalization_style(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test set_capitalization_style method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+        mock_update = test_context.Mock()
+        test_context.patch_object(manager, "update_capitalization_style", new=mock_update)
+
+        result = manager.set_capitalization_style(case["input_value"])
+        assert result == case["expected"]
+
+        if case["expected"]:
+            settings_manager_instance.set_setting.assert_called_with(
+                "capitalizationStyle", case["input_value"]
+            )
+            mock_update.assert_called_once()
+        else:
+            settings_manager_instance.set_setting.assert_not_called()
+            mock_update.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "punctuation_none", "setting_value": 3, "expected": "none"},
+            {"id": "punctuation_some", "setting_value": 2, "expected": "some"},
+            {"id": "punctuation_most", "setting_value": 1, "expected": "most"},
+            {"id": "punctuation_all", "setting_value": 0, "expected": "all"},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_punctuation_level(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test get_punctuation_level method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_punctuation_level()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("verbalizePunctuationStyle")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "set_punctuation_none",
+                "input_value": "none",
+                "expected": True,
+                "setting_int": 3,
+            },
+            {
+                "id": "set_punctuation_some",
+                "input_value": "some",
+                "expected": True,
+                "setting_int": 2,
+            },
+            {
+                "id": "set_punctuation_most",
+                "input_value": "most",
+                "expected": True,
+                "setting_int": 1,
+            },
+            {"id": "set_punctuation_all", "input_value": "all", "expected": True, "setting_int": 0},
+            {
+                "id": "set_punctuation_invalid",
+                "input_value": "invalid",
+                "expected": False,
+                "setting_int": None,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_punctuation_level(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test set_punctuation_level method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+        mock_update = test_context.Mock()
+        test_context.patch_object(manager, "update_punctuation_level", new=mock_update)
+
+        result = manager.set_punctuation_level(case["input_value"])
+        assert result == case["expected"]
+
+        if case["expected"]:
+            settings_manager_instance.set_setting.assert_called_with(
+                "verbalizePunctuationStyle", case["setting_int"]
+            )
+            mock_update.assert_called_once()
+        else:
+            settings_manager_instance.set_setting.assert_not_called()
+            mock_update.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "verbosity_brief", "setting_value": 0, "expected": "brief"},
+            {"id": "verbosity_verbose", "setting_value": 1, "expected": "verbose"},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_verbosity_level(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test get_verbosity_level method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_verbosity_level()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("speechVerbosityLevel")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "set_verbosity_brief",
+                "input_value": "brief",
+                "expected": True,
+                "setting_int": 0,
+            },
+            {
+                "id": "set_verbosity_verbose",
+                "input_value": "verbose",
+                "expected": True,
+                "setting_int": 1,
+            },
+            {
+                "id": "set_verbosity_invalid",
+                "input_value": "invalid",
+                "expected": False,
+                "setting_int": None,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_verbosity_level(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test set_verbosity_level method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.set_verbosity_level(case["input_value"])
+        assert result == case["expected"]
+
+        if case["expected"]:
+            settings_manager_instance.set_setting.assert_called_with(
+                "speechVerbosityLevel", case["setting_int"]
+            )
+        else:
+            settings_manager_instance.set_setting.assert_not_called()
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "speak_numbers_true", "setting_value": True, "expected": True},
+            {"id": "speak_numbers_false", "setting_value": False, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_speak_numbers_as_digits(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test get_speak_numbers_as_digits method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_speak_numbers_as_digits()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("speakNumbersAsDigits")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "set_speak_numbers_true", "input_value": True, "expected": True},
+            {"id": "set_speak_numbers_false", "input_value": False, "expected": True},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_speak_numbers_as_digits(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test set_speak_numbers_as_digits method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.set_speak_numbers_as_digits(case["input_value"])
+        assert result == case["expected"]
+        settings_manager_instance.set_setting.assert_called_with(
+            "speakNumbersAsDigits", case["input_value"]
+        )
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "speech_muted_true", "setting_value": True, "expected": True},
+            {"id": "speech_muted_false", "setting_value": False, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_speech_is_muted(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test get_speech_is_muted method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_speech_is_muted()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("silenceSpeech")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "set_speech_muted_true", "input_value": True, "expected": True},
+            {"id": "set_speech_muted_false", "input_value": False, "expected": True},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_speech_is_muted(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test set_speech_is_muted method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.set_speech_is_muted(case["input_value"])
+        assert result == case["expected"]
+        settings_manager_instance.set_setting.assert_called_with(
+            "silenceSpeech", case["input_value"]
+        )
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "only_speak_displayed_true", "setting_value": True, "expected": True},
+            {"id": "only_speak_displayed_false", "setting_value": False, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_only_speak_displayed_text(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test get_only_speak_displayed_text method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_only_speak_displayed_text()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("onlySpeakDisplayedText")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "set_only_speak_displayed_true", "input_value": True, "expected": True},
+            {"id": "set_only_speak_displayed_false", "input_value": False, "expected": True},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_only_speak_displayed_text(self, test_context: OrcaTestContext, case: dict) -> None:
+        """Test set_only_speak_displayed_text method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.set_only_speak_displayed_text(case["input_value"])
+        assert result == case["expected"]
+        settings_manager_instance.set_setting.assert_called_with(
+            "onlySpeakDisplayedText", case["input_value"]
+        )
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "speak_indentation_true", "setting_value": True, "expected": True},
+            {"id": "speak_indentation_false", "setting_value": False, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_speak_indentation_and_justification(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test get_speak_indentation_and_justification method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+        settings_manager_instance.get_setting.return_value = case["setting_value"]
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.get_speak_indentation_and_justification()
+        assert result == case["expected"]
+        settings_manager_instance.get_setting.assert_called_with("enableSpeechIndentation")
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "set_speak_indentation_true", "input_value": True, "expected": True},
+            {"id": "set_speak_indentation_false", "input_value": False, "expected": True},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_speak_indentation_and_justification(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test set_speak_indentation_and_justification method."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_manager_instance = essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value
+
+        from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+
+        manager = SpeechAndVerbosityManager()
+
+        result = manager.set_speak_indentation_and_justification(case["input_value"])
+        assert result == case["expected"]
+        settings_manager_instance.set_setting.assert_called_with(
+            "enableSpeechIndentation", case["input_value"]
+        )
