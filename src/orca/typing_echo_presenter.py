@@ -44,7 +44,9 @@ from . import debug
 from . import input_event
 from . import keybindings
 from . import messages
+from . import settings
 from . import settings_manager
+from . import speech
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -531,15 +533,24 @@ class TypingEchoPresenter:
         if not self.should_echo_keyboard_event(event):
             return
 
-        braille.displayKeyEvent(event)
+        if locking_state_string := event.get_locking_state_string():
+            keyname = event.get_key_name()
+            msg = f"{keyname} {locking_state_string}"
+            braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+
         orca_modifier_pressed = event.is_orca_modifier() and event.is_pressed_key()
         if self.is_character_echoable(event) and not orca_modifier_pressed:
             return
 
         msg = "TYPING ECHO PRESENTER: Presenting keyboard event"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        script.speak_key_event(event)
 
+        key_name = None
+        if event.is_printable_key():
+            key_name = event.get_key_name()
+
+        voice = script.speech_generator.voice(string=key_name)
+        speech.speak_key_event(event, voice[0] if voice else None)
 
 _presenter: TypingEchoPresenter = TypingEchoPresenter()
 

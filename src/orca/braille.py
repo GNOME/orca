@@ -1444,16 +1444,6 @@ def displayMessage(message, cursor=-1, flashTime=0):
     setFocus(region)
     refresh(True, stopFlash=False)
 
-def displayKeyEvent(event):
-    """Displays a KeyboardEvent. Typically reserved for locking keys like
-    Caps Lock and Num Lock."""
-
-    locking_state_string = event.get_locking_state_string()
-    if locking_state_string:
-        keyname = event.get_key_name()
-        msg = f"{keyname} {locking_state_string}"
-        displayMessage(msg, flashTime=settings.brailleFlashTime)
-
 def _adjustForWordWrap(targetCursorCell):
     start_position = viewport[0]
     end_position = start_position + _displaySize[0]

@@ -2089,16 +2089,6 @@ class Script(script.Script):
 
         braille.displayMessage(message, cursor, flash_time)
 
-    def speak_key_event(self, event: input_event.KeyboardEvent) -> None:
-        """Speaks the KeyboardEvent event."""
-
-        key_name = None
-        if event.is_printable_key():
-            key_name = event.get_key_name()
-
-        voice = self.speech_generator.voice(string=key_name)
-        speech.speak_key_event(event, voice[0] if voice else None)
-
     def spell_item(self, text: str) -> None:
         """Speak the characters in the string one by one."""
 
