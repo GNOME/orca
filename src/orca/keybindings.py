@@ -606,7 +606,12 @@ class KeyBindings:
         if event.is_keypad_key_with_numlock_on():
             return None
 
-        tokens = [f"KEYBINDINGS: {event.as_single_line_string()} fallback candidates", candidates]
+        tokens = [f"KEYBINDINGS: {event.as_single_line_string()} {len(candidates)}",
+                  "fallback candidate(s):"]
+        if not event.should_obscure():
+            tokens.append(candidates)
+        else:
+            tokens.append("(obscured)")
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # If we're still here, we don't have an exact match. Prefer the one whose click count is

@@ -159,7 +159,7 @@ class KeyboardEvent(InputEvent):
         return False
 
     def __str__(self) -> str:
-        if self._should_obscure():
+        if self.should_obscure():
             keyid = hw_code = modifiers = text = keyval_name = "*"
         else:
             keyid = str(self.id)
@@ -180,7 +180,7 @@ class KeyboardEvent(InputEvent):
     def as_single_line_string(self) -> str:
         """Returns a single-line string representation of this event."""
 
-        if self._should_obscure():
+        if self.should_obscure():
             return "(obscured)"
 
         return (
@@ -188,7 +188,7 @@ class KeyboardEvent(InputEvent):
             f"{self.type.value_nick}"
         )
 
-    def _should_obscure(self) -> bool:
+    def should_obscure(self) -> bool:
         """Returns True if we should obscure the details of this event."""
 
         if not AXUtilities.is_password_text(self._obj):
@@ -629,7 +629,8 @@ class KeyboardEvent(InputEvent):
         """Processes this input event."""
 
         start_time = time.time()
-        if not self._should_obscure():
+        should_obscure = self.should_obscure()
+        if not should_obscure:
             data = f"'{self.keyval_name}' ({self.hw_code})"
         else:
             data = "(obscured)"
@@ -651,8 +652,9 @@ class KeyboardEvent(InputEvent):
         if self._script:
             self._handler = self._get_user_handler() \
                 or self._script.key_bindings.get_input_handler(self)
-            tokens = ["HANDLER:", str(self._handler)]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            if not should_obscure:
+                tokens = ["HANDLER:", str(self._handler)]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if self._script.get_learn_mode_presenter().is_active():
                 self._consumer = self._script.get_learn_mode_presenter().handle_event

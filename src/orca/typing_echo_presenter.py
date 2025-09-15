@@ -449,7 +449,8 @@ class TypingEchoPresenter:
     def should_echo_keyboard_event(self, event: input_event.KeyboardEvent) -> bool:
         """Returns whether the given keyboard event should be echoed."""
 
-        name = event.get_key_name()
+        should_obscure = event.should_obscure()
+        name = event.get_key_name() if not should_obscure else "(obscured)"
         msg = f"TYPING ECHO PRESENTER: should_echo_keyboard_event: '{name}'?"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -498,7 +499,7 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return result
 
-        if AXUtilities.is_password_text(event.get_object()):
+        if AXUtilities.is_password_text(event.get_object()) and event.should_obscure():
             msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: is password text."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
