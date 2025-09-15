@@ -2133,7 +2133,7 @@ class Script(script.Script):
             speech_manager.set_capitalization_style("none")
 
             punct_style = speech_manager.get_punctuation_level()
-            speech_manager.set_punctuation_level("none")
+            speech_manager.set_punctuation_level("some")
 
         text = speech_manager.adjust_for_presentation(obj, text)
         voice_to_use: ACSS | dict[str, Any] | None = None
