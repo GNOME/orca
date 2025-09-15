@@ -46,6 +46,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import Gdk
 from gi.repository import GLib
+import unicodedata
 
 from . import debug
 from . import focus_manager
@@ -297,7 +298,18 @@ class KeyboardEvent(InputEvent):
             Gdk.KEY_dead_u,
             Gdk.KEY_dead_voiced_sound,
         ]
-        return self.id in keys
+
+        if self.id in keys:
+            return True
+
+        name = self.get_key_name()
+        if len(name) == 1:
+            category = unicodedata.category(name)
+            # Mn = Mark, nonspacing; Mc = Mark, spacing combining; Me = Mark, enclosing
+            if category in ("Mn", "Mc", "Me"):
+                return True
+
+        return False
 
     def is_function_key(self) -> bool:
         """Return True if this is a function key."""

@@ -445,40 +445,91 @@ class TypingEchoPresenter:
         script.speak_message(word, voice, obj=obj)
         return True
 
+    # pylint: disable-next=too-many-statements
     def should_echo_keyboard_event(self, event: input_event.KeyboardEvent) -> bool:
         """Returns whether the given keyboard event should be echoed."""
 
+        name = event.get_key_name()
+        msg = f"TYPING ECHO PRESENTER: should_echo_keyboard_event: '{name}'?"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         if not event.is_pressed_key():
+            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key is not pressed."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if self.is_character_echoable(event):
+            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: is character echoable."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if event.is_locking_key():
-            return self.get_locking_keys_presented()
+            result = self.get_locking_keys_presented()
+            msg = f"TYPING ECHO PRESENTER: Echoing locking keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
 
         if not self.get_key_echo_enabled():
+            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key echo is not enabled."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         if event.is_navigation_key():
-            return self.get_navigation_keys_enabled()
-        if event.is_action_key():
-            return self.get_action_keys_enabled()
-        if event.is_modifier_key():
-            return self.get_modifier_keys_enabled()
-        if event.is_function_key():
-            return self.get_function_keys_enabled()
-        if event.is_diacritical_key():
-            return self.get_diacritical_keys_enabled()
-        if event.is_alphabetic_key():
-            return self.get_alphabetic_keys_enabled() or self.get_character_echo_enabled()
-        if event.is_numeric_key():
-            return self.get_numeric_keys_enabled() or self.get_character_echo_enabled()
-        if event.is_punctuation_key():
-            return self.get_punctuation_keys_enabled() or self.get_character_echo_enabled()
-        if event.is_space():
-            return self.get_space_enabled() or self.get_character_echo_enabled()
+            result = self.get_navigation_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing navigation keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
 
+        if event.is_action_key():
+            result = self.get_action_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing action keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_modifier_key():
+            result = self.get_modifier_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing modifier keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_function_key():
+            result = self.get_function_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing function keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_diacritical_key():
+            result = self.get_diacritical_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing diacritical keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_alphabetic_key():
+            result = self.get_alphabetic_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing alphabetic keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_numeric_key():
+            result = self.get_numeric_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing numeric keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_punctuation_key():
+            result = self.get_punctuation_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing punctuation keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        if event.is_space():
+            result = self.get_space_enabled() or self.get_character_echo_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing space keyboard event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
+        msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key type unknown."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
     def is_character_echoable(self, event: input_event.KeyboardEvent) -> bool:
