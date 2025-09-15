@@ -498,6 +498,11 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return result
 
+        if AXUtilities.is_password_text(event.get_object()):
+            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: is password text."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         if event.is_diacritical_key():
             result = self.get_diacritical_keys_enabled()
             msg = f"TYPING ECHO PRESENTER: Echoing diacritical keyboard event: {result}."
