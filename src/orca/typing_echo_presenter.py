@@ -544,6 +544,11 @@ class TypingEchoPresenter:
         if not self.get_character_echo_enabled():
             return False
 
+        if event.is_alt_control_or_orca_modified():
+            msg = "TYPING ECHO PRESENTER: Not character echoable due to modifier."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         if not event.is_printable_key():
             msg = "TYPING ECHO PRESENTER: Not character echoable, is not printable key."
             debug.print_message(debug.LEVEL_INFO, msg, True)

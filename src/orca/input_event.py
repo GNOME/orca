@@ -38,6 +38,7 @@ __license__   = "LGPL"
 import inspect
 import math
 import time
+import unicodedata
 from typing import Callable, TYPE_CHECKING
 
 import gi
@@ -46,7 +47,6 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import Gdk
 from gi.repository import GLib
-import unicodedata
 
 from . import debug
 from . import focus_manager
@@ -188,6 +188,16 @@ class KeyboardEvent(InputEvent):
             f"{self.type.value_nick}"
         )
 
+    def is_alt_control_or_orca_modified(self) -> bool:
+        """Return True if this key is Alt, Control, or Orca modified."""
+
+        if self.modifiers & keybindings.CTRL_MODIFIER_MASK \
+           or self.modifiers & keybindings.ALT_MODIFIER_MASK \
+           or self.modifiers & keybindings.ORCA_MODIFIER_MASK:
+            return True
+
+        return False
+
     def should_obscure(self) -> bool:
         """Returns True if we should obscure the details of this event."""
 
@@ -197,9 +207,7 @@ class KeyboardEvent(InputEvent):
         if not self.is_printable_key():
             return False
 
-        if self.modifiers & keybindings.CTRL_MODIFIER_MASK \
-           or self.modifiers & keybindings.ALT_MODIFIER_MASK \
-           or self.modifiers & keybindings.ORCA_MODIFIER_MASK:
+        if self.is_alt_control_or_orca_modified():
             return False
 
         return True
