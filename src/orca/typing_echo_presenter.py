@@ -459,6 +459,18 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        # Historically we had only filtered out Orca-modified events. But it seems strange to
+        # treat the Orca modifier as special. A change to make Orca-modified events echoed in
+        # the same fashion as other modified events received some negative feedback, specifically
+        # in relation to flat review commands in laptop layout. Feedback regarding whether any
+        # command-like modifier should result in no echo has thus far ranged from yes to
+        # it's "not disturbing" to hear echo with other modifiers. Given the lack of demand
+        # for echo with modifiers, treat all command modifiers the same and suppress echo.
+        if event.is_alt_control_or_orca_modified():
+            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event due to modifier."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         if self.is_character_echoable(event):
             msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: is character echoable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -591,6 +603,7 @@ class TypingEchoPresenter:
 
         if not event.is_pressed_key():
             script.utilities.clear_cached_command_state_deprecated()
+            return
 
         if not self.should_echo_keyboard_event(event):
             return
@@ -599,10 +612,6 @@ class TypingEchoPresenter:
             keyname = event.get_key_name()
             msg = f"{keyname} {locking_state_string}"
             braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
-
-        orca_modifier_pressed = event.is_orca_modifier() and event.is_pressed_key()
-        if self.is_character_echoable(event) and not orca_modifier_pressed:
-            return
 
         msg = "TYPING ECHO PRESENTER: Presenting keyboard event"
         debug.print_message(debug.LEVEL_INFO, msg, True)
