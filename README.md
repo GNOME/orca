@@ -1,4 +1,4 @@
-# Orca v49.1
+# Orca v50.alpha
 
 [TOC]
 
@@ -27,7 +27,7 @@ community, and where to log bugs and feature requests.
 
 ## Dependencies
 
-Orca v49.x is supported on GNOME 49.x only.  We highly suggest you
+Orca v50.x is supported on GNOME 50.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -48,7 +48,7 @@ Orca also has the following dependencies:
 * libwnck3         - Used for mouse review (optional)
 
 You are strongly encouraged to also have the latest stable versions
-of AT-SPI2 and ATK for the GNOME 49.x release.
+of AT-SPI2 and ATK for the GNOME 50.x release.
 
 ## Note for Braille Users
 

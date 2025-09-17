@@ -1,5 +1,5 @@
 ## Orca Version
-*Note that versions prior to version 47.x are unsupported for non-critical issues. If you are
+*Note that versions prior to version 48.x are unsupported for non-critical issues. If you are
 reporting a non-critical issue for an unsupported version, your bug report may be closed for
 that reason.*
 
