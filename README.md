@@ -1,4 +1,4 @@
-# Orca v49.rc
+# Orca v49.0
 
 [TOC]
 
@@ -133,15 +133,7 @@ outside of `default.py`.
 
 **New in Orca v49.0:** Orca now provides a D-Bus interface that allows external applications
 to remotely control Orca's functionality and present messages to users. This feature is
-currently experimental and should be considered highly unstable until the final v49.0 release.
-
-The D-Bus interface includes:
-
-* **PresentMessage**: Send messages directly to Orca for speech/braille presentation
-* **Module Commands**: Execute Orca commands remotely (speech controls, etc.)
-* **Command Discovery**: List available commands and modules programmatically
-
-For detailed usage instructions, examples, and API documentation, see
+currently experimental. For detailed usage instructions, examples, and API documentation, see
 [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md).
 
 ### Spiel Text-to-Speech Support

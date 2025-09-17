@@ -1,3 +1,69 @@
+49.0 - 17 September 2025
+
+New Features:
+
+* Orca-controlled caret navigation is now available in all text objects;
+  not just web content. To toggle it, try Orca + F12. Note that there
+  are still improvements to be made and bugs to be fixed.
+
+* Support for more commands and settings have been added to the D-Bus
+ "Remote Controller".
+
+Other Changes:
+
+* Restore OnlyShowIn=GNOME to the orca-autostart.desktop file so that Orca
+  v49 and later can be autostarted in earlier versions of GNOME. Execute
+  Orca with `--replace` so that when autostart is used, any previously-
+  running versions of Orca are terminated first.
+
+* Present static text descriptions associated with GtkList ancestors.
+
+* Speak system messages with "some" punctuation rather than "no"
+  punctuation to ensure symbols like percentage are spoken.
+
+* Treat unicode mark characters as diacritics for the purpose of key
+  echo so that combining characters are spoken.
+
+* Fix echoing of keypad keys when NumLock is on.
+
+* Fix incorrect identification of keys by always using keysyms rather
+  than keycodes.
+
+* Improve the presentation of voice names in Preferences by using the
+  variant name when one is provided and sorting the list that populates
+  the combo box.
+
+* Fix several flat review bugs.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Jordi Mas
+  ca              Catalan                   Jordi Mas i Hernandez
+  cs              Czech                     Daniel Rusek
+  da              Danish                    Alan Mortensen
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Saratsua Garmendia
+  fa              Persian                   Danial Behzadi
+  gl              Galician                  Francisco Diéguez Souto
+  gl              Galician                  Fran Diéguez
+  hu              Hungarian                 Attila Hammer
+  ka              Georgian                  Ekaterine Papava
+  lt              Lithuanian                Aurimas Aurimas Černius
+  nl              Dutch                     Nathan Follens
+  pl              Polish                    Piotr Drąg
+  pt_BR           Brazilian Portuguese      Juliano de Souza Camargo
+  pt              Portuguese                Hugo Carvalho
+  ro              Romanian                  Antonio Marin
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Martin
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Emin Tufan Çetin
+  tr              Turkish                   Sabri Ünal
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           Luming Zh
+
+=========
+
 49.beta - 12 August 2025
 
 New Features:
