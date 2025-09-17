@@ -95,7 +95,7 @@ class AXComponent:
         dest_x2 = min(rect1.x + rect1.width, rect2.x + rect2.width)
         dest_y2 = min(rect1.y + rect1.height, rect2.y + rect2.height)
 
-        if dest_x2 > dest_x and dest_y2 > dest_y:
+        if dest_x2 >= dest_x and dest_y2 >= dest_y:
             result.x = dest_x
             result.y = dest_y
             result.width = dest_x2 - dest_x
