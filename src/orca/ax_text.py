@@ -1504,7 +1504,14 @@ class AXText:
     def has_presentable_text(obj: Atspi.Accessible) -> bool:
         """Returns True if obj has presentable text."""
 
-        return bool(re.search(r"\w+", AXText.get_all_text(obj)))
+        if not AXObject.supports_text(obj):
+            return False
+
+        text = AXText.get_all_text(obj).strip()
+        if not text:
+            return AXUtilitiesRole.is_paragraph(obj)
+
+        return bool(re.search(r"\w+", text))
 
     @staticmethod
     def scroll_substring_to_point(

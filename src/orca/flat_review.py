@@ -45,6 +45,7 @@ from . import braille
 from . import debug
 from . import focus_manager
 from . import script_manager
+from . import settings_manager
 from . import settings
 from .ax_component import AXComponent
 from .ax_object import AXObject
@@ -728,6 +729,9 @@ class Context:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         lines = AXText.get_visible_lines(obj, cliprect)
+        # Optionally skip whitespace-only lines based on user preference.
+        if not settings_manager.get_manager().get_setting("speakBlankLines"):
+            lines = [t for t in lines if t[0] and t[0].strip()]
         tokens = ["FLAT REVIEW:", len(lines), "lines found for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
