@@ -974,6 +974,32 @@ class TestAXText:
         result = list(AXText.iter_line(test_context.Mock(spec=Atspi.Accessible)))
         assert result == [("Test line", 0, 10)]
 
+    def test_iter_line_skips_duplicate_when_offset_at_end(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Ensure iter_line doesn't yield the same line when starting at its end offset."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        # get_line_at_offset returns the same first line even when called at end
+        test_context.patch_object(
+            AXText,
+            "get_line_at_offset",
+            new=lambda _obj, _offset: ("First line", 0, 10),
+        )
+
+        # get_next_line advances to a distinct second line only once
+        def mock_get_next_line(_obj, offset) -> tuple[str, int, int]:
+            if offset == 0:
+                return ("Second line", 10, 20)
+            return ("", 0, 0)
+
+        test_context.patch_object(AXText, "get_next_line", new=mock_get_next_line)
+
+        result = list(AXText.iter_line(test_context.Mock(spec=Atspi.Accessible), 10))
+        assert result == [("Second line", 10, 20)]
+
     def test_iter_sentence_prevents_infinite_loop_when_get_next_sentence_returns_same_position(
         self, test_context: OrcaTestContext
     ) -> None:
@@ -997,6 +1023,32 @@ class TestAXText:
 
         result = list(AXText.iter_sentence(test_context.Mock(spec=Atspi.Accessible)))
         assert result == [("Test sentence", 0, 15)]
+
+    def test_iter_sentence_skips_duplicate_when_offset_at_end(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Ensure iter_sentence doesn't yield the same sentence when starting at its end."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        # get_sentence_at_offset returns the same first sentence even at its end
+        test_context.patch_object(
+            AXText,
+            "get_sentence_at_offset",
+            new=lambda _obj, _offset: ("First sentence.", 0, 12),
+        )
+
+        # get_next_sentence advances to a distinct second sentence only once
+        def mock_get_next_sentence(_obj, offset) -> tuple[str, int, int]:
+            if offset == 0:
+                return ("Second sentence.", 12, 25)
+            return ("", 0, 0)
+
+        test_context.patch_object(AXText, "get_next_sentence", new=mock_get_next_sentence)
+
+        result = list(AXText.iter_sentence(test_context.Mock(spec=Atspi.Accessible), 12))
+        assert result == [("Second sentence.", 12, 25)]
 
     def test_iter_sentence_with_valid_text(self, test_context: OrcaTestContext) -> None:
         """Test AXText.iter_sentence with valid text."""
