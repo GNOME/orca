@@ -459,6 +459,18 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if event.is_orca_modifier():
+            click_count = event.get_click_count()
+            if click_count == 2:
+                msg = "TYPING ECHO PRESENTER: Echoing Orca modifier double-click."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
+            result = click_count == 1 and self.get_modifier_keys_enabled()
+            msg = f"TYPING ECHO PRESENTER: Echoing modifier Orca modifier event: {result}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return result
+
         # Historically we had only filtered out Orca-modified events. But it seems strange to
         # treat the Orca modifier as special. A change to make Orca-modified events echoed in
         # the same fashion as other modified events received some negative feedback, specifically
