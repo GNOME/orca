@@ -459,6 +459,8 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        key_echo_enabled = self.get_key_echo_enabled()
+
         if event.is_orca_modifier():
             click_count = event.get_click_count()
             if click_count == 2:
@@ -466,7 +468,7 @@ class TypingEchoPresenter:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
-            result = click_count == 1 and self.get_modifier_keys_enabled()
+            result = click_count == 1 and key_echo_enabled and self.get_modifier_keys_enabled()
             msg = f"TYPING ECHO PRESENTER: Echoing modifier Orca modifier event: {result}."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return result
@@ -494,7 +496,7 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return result
 
-        if not self.get_key_echo_enabled():
+        if not key_echo_enabled:
             msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key echo is not enabled."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
