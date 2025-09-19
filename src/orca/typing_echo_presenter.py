@@ -625,8 +625,7 @@ class TypingEchoPresenter:
             msg = "TYPING ECHO PRESENTER: Echoing delayed terminal press."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._speak_key_event(script, self._delayed_terminal_press)
-
-        self._delayed_terminal_press = None
+            self._delayed_terminal_press = None
 
     def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
