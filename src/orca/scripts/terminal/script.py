@@ -33,6 +33,7 @@ from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
+from orca import typing_echo_presenter
 from orca.scripts import default
 from orca.ax_text import AXText
 
@@ -81,6 +82,8 @@ class Script(default.Script):
 
     def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
+
+        typing_echo_presenter.get_presenter().echo_delayed_terminal_press(self, event)
 
         if not self.utilities.treat_event_as_command(event):
             msg = "TERMINAL: Passing along event to default script."
