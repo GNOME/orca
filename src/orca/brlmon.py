@@ -32,7 +32,11 @@ __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2011 The Orca Team."
 __license__   = "LGPL"
 
-import brlapi
+try:
+    from brlapi import KEY_CMD_ROUTE
+except ImportError:
+    KEY_CMD_ROUTE = None
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -117,12 +121,15 @@ class BrlCell(Gtk.Button):
     def _on_cell_clicked(self, _widget: Gtk.Button) -> None:
         """Callback for the 'clicked' signal on the push button."""
 
+        if KEY_CMD_ROUTE is None:
+            return
+
         script = script_manager.get_manager().get_active_script()
         if script is None:
             return
 
         fake_key_press = {}
-        fake_key_press["command"] = brlapi.KEY_CMD_ROUTE # pylint: disable=c-extension-no-member
+        fake_key_press["command"] = KEY_CMD_ROUTE
         fake_key_press["argument"] = self._position
         event = BrailleEvent(fake_key_press)
         script.process_routing_key(event)
