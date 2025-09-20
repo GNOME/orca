@@ -1,3 +1,15 @@
+49.1 - 20 September 2025
+
+Fixes for Regressions:
+
+* Orca would not launch in environments which lack BrlAPI.
+
+* Toggling CapsLock via double-click was not being spoken.
+
+* KeyEcho in terminals was failing in some environments.
+
+=========
+
 49.0 - 17 September 2025
 
 New Features:
