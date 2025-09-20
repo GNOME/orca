@@ -63,8 +63,7 @@ class TypingEchoPresenter:
     def __init__(self) -> None:
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._last_indentation_description: str = ""
-        self._last_error_description: str = ""
+        self._delayed_terminal_press: input_event.KeyboardEvent | None = None
 
         msg = "TYPING ECHO PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -595,37 +594,8 @@ class TypingEchoPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
-        """Presents the KeyboardEvent event."""
-
-        if script.get_sleep_mode_manager().is_active_for_app(script.app):
-            msg = "TYPING ECHO PRESENTER: Ignoring keyboard event, sleep mode active."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        obj = event.get_object()
-        if AXUtilities.is_terminal(obj) and event.is_printable_key() and event.is_pressed_key():
-            # We have no reliable way of knowing a password is being entered into
-            # a terminal -- other than the fact that the text typed isn't there.
-            char, start = AXText.get_character_at_offset(obj)[0:2]
-            prev_char = AXText.get_character_at_offset(obj, start - 1)[0]
-            name = event.get_key_name()
-            if name not in [prev_char, " ", char]:
-                msg = "TYPING ECHO PRESENTER: Possible password entry in terminal."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return
-
-        if not event.is_pressed_key():
-            script.utilities.clear_cached_command_state_deprecated()
-            return
-
-        if not self.should_echo_keyboard_event(event):
-            return
-
-        if locking_state_string := event.get_locking_state_string():
-            keyname = event.get_key_name()
-            msg = f"{keyname} {locking_state_string}"
-            braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+    def _speak_key_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
+        """Speaks the given keyboard event."""
 
         msg = "TYPING ECHO PRESENTER: Presenting keyboard event"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -636,6 +606,60 @@ class TypingEchoPresenter:
 
         voice = script.speech_generator.voice(string=key_name)
         speech.speak_key_event(event, voice[0] if voice else None)
+
+    def echo_delayed_terminal_press(self, script: default.Script, event: Atspi.Event) -> None:
+        """Echoes a previously delayed terminal key press if it matches the inserted text."""
+
+        if self._delayed_terminal_press is None:
+            msg = "TYPING ECHO PRESENTER: No rejected terminal press to echo."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if self._delayed_terminal_press.get_object() != event.source:
+            msg = "TYPING ECHO PRESENTER: Delayed terminal press does not match event source."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        character = self._delayed_terminal_press.get_key_name().lower()
+        if event.any_data.lower() == character:
+            msg = "TYPING ECHO PRESENTER: Echoing delayed terminal press."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._speak_key_event(script, self._delayed_terminal_press)
+            self._delayed_terminal_press = None
+
+    def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
+        """Presents the KeyboardEvent event."""
+
+        if script.get_sleep_mode_manager().is_active_for_app(script.app):
+            msg = "TYPING ECHO PRESENTER: Ignoring keyboard event, sleep mode active."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if not event.is_pressed_key():
+            script.utilities.clear_cached_command_state_deprecated()
+            return
+
+        self._delayed_terminal_press = None
+        if not self.should_echo_keyboard_event(event):
+            return
+
+        obj = event.get_object()
+        if AXUtilities.is_terminal(obj) and event.is_printable_key():
+            # We have no reliable way of knowing a password is being entered into a terminal --
+            # other than the fact that the text typed isn't there. Before we waited for the
+            # release event and echoed that. But that is laggy. So delay presentation until we
+            # see the text appear. If it doesn't appear, we never echo it.
+            msg = "TYPING ECHO PRESENTER: Delaying terminal key press echo."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._delayed_terminal_press = event
+            return
+
+        if locking_state_string := event.get_locking_state_string():
+            keyname = event.get_key_name()
+            msg = f"{keyname} {locking_state_string}"
+            braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+
+        self._speak_key_event(script, event)
 
 _presenter: TypingEchoPresenter = TypingEchoPresenter()
 
