@@ -23,6 +23,7 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-statements
+# pylint: disable=too-many-public-methods
 
 """Module for commands related to the current accessible object."""
 
@@ -36,6 +37,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2011-2025 Igalia, S.L."
 __license__   = "LGPL"
 
+from enum import Enum
 from typing import Generator, TYPE_CHECKING
 
 from . import cmdnames
@@ -62,6 +64,17 @@ if TYPE_CHECKING:
 
     from .scripts import default
 
+class SayAllStyle(Enum):
+    """Style enumeration with int values from settings."""
+
+    SENTENCE = settings.SAYALL_STYLE_SENTENCE
+    LINE = settings.SAYALL_STYLE_LINE
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
 class SayAllPresenter:
     """Module for commands related to the current accessible object."""
 
@@ -429,6 +442,149 @@ class SayAllPresenter:
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
         focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
+
+    @dbus_service.getter
+    def get_announce_blockquote(self) -> bool:
+        """Returns whether blockquotes are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("sayAllContextBlockquote")
+
+    @dbus_service.setter
+    def set_announce_blockquote(self, value: bool) -> bool:
+        """Sets whether blockquotes are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce blockquotes to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllContextBlockquote", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_form(self) -> bool:
+        """Returns whether non-landmark forms are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("sayAllContextNonLandmarkForm")
+
+    @dbus_service.setter
+    def set_announce_form(self, value: bool) -> bool:
+        """Sets whether non-landmark forms are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce forms to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllContextNonLandmarkForm", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_grouping(self) -> bool:
+        """Returns whether groupings are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("sayAllContextPanel")
+
+    @dbus_service.setter
+    def set_announce_grouping(self, value: bool) -> bool:
+        """Sets whether groupings are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce groupings to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllContextPanel", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_landmark(self) -> bool:
+        """Returns whether landmarks are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("sayAllContextLandmark")
+
+    @dbus_service.setter
+    def set_announce_landmark(self, value: bool) -> bool:
+        """Sets whether landmarks are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce landmarks to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllContextLandmark", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_list(self) -> bool:
+        """Returns whether lists are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("sayAllContextList")
+
+    @dbus_service.setter
+    def set_announce_list(self, value: bool) -> bool:
+        """Sets whether lists are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce lists to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllContextList", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_table(self) -> bool:
+        """Returns whether tables are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("sayAllContextTable")
+
+    @dbus_service.setter
+    def set_announce_table(self, value: bool) -> bool:
+        """Sets whether tables are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce tables to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllContextTable", value)
+        return True
+
+    @dbus_service.getter
+    def get_style(self) -> str:
+        """Returns the current Say All style."""
+
+        int_value = settings_manager.get_manager().get_setting("sayAllStyle")
+        return SayAllStyle(int_value).string_name
+
+    @dbus_service.setter
+    def set_style(self, value: str) -> bool:
+        """Sets the current Say All style."""
+
+        try:
+            style = SayAllStyle[value.upper()]
+        except KeyError:
+            msg = f"SAY ALL PRESENTER: Invalid style: {value}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        msg = f"SAY ALL PRESENTER: Setting style to {value} ({style.value})."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("sayAllStyle", style.value)
+        return True
+
+    @dbus_service.getter
+    def get_structural_navigation_enabled(self) -> bool:
+        """Returns whether structural navigation keys can be used in Say All."""
+
+        return settings_manager.get_manager().get_setting("structNavInSayAll")
+
+    @dbus_service.setter
+    def set_structural_navigation_enabled(self, value: bool) -> bool:
+        """Sets whether structural navigation keys can be used in Say All."""
+
+        msg = f"SAY ALL PRESENTER: Setting enable structural navigation to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("structNavInSayAll", value)
+        return True
+
+    @dbus_service.getter
+    def get_rewind_and_fast_forward_enabled(self) -> bool:
+        """Returns whether Up and Down can be used in Say All."""
+
+        return settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll")
+
+    @dbus_service.setter
+    def set_rewind_and_fast_forward_enabled(self, value: bool) -> bool:
+        """Returns whether Up and Down can be used in Say All."""
+
+        msg = f"SAY ALL PRESENTER: Setting enable rewind and fast forward to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("rewindAndFastForwardInSayAll", value)
+        return True
 
 
 _presenter = SayAllPresenter()
