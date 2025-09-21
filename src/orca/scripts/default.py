@@ -1227,7 +1227,7 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_selected_change(event):
             return True
 
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text():
             return True
 
         announce_state = False
@@ -1768,7 +1768,7 @@ class Script(script.Script):
         if not character or character == "\r":
             character = "\n"
 
-        speak_blank_lines = settings_manager.get_manager().get_setting("speakBlankLines")
+        speak_blank_lines = speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
         if character == "\n":
             line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
             if not line_string or line_string == "\n":
@@ -1829,7 +1829,7 @@ class Script(script.Script):
                 result.extend(voice)
                 utterance.append(result)
             speech.speak(utterance)
-        elif settings_manager.get_manager().get_setting("speakBlankLines"):
+        elif speech_and_verbosity_manager.get_manager().get_speak_blank_lines():
             self.speak_message(messages.BLANK, interrupt=False)
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
@@ -1872,9 +1872,13 @@ class Script(script.Script):
         word, start_offset, end_offset = \
             self.utilities.get_word_at_offset_adjusted_for_navigation(obj, offset)
 
-        # Announce when we cross a hard line boundary.
         if "\n" in word:
-            if settings_manager.get_manager().get_setting("enableSpeechIndentation"):
+            # Announce when we cross a hard line boundary, based on whether or not indentation and
+            # justification should be spoken. This was done to avoid yet another setting in
+            # response to some users saying this announcement was too chatty. The idea of using
+            # this setting for the decision is that if the user wants indentation and justification
+            # announced, they are interested in explicit whitespace information.
+            if speech_and_verbosity_manager.get_manager().get_speak_indentation_and_justification():
                 self.speak_character("\n")
             if word.startswith("\n"):
                 start_offset += 1
@@ -2023,8 +2027,9 @@ class Script(script.Script):
         if brief is None:
             brief = full
 
-        if settings_manager.get_manager().get_setting("enableSpeech"):
-            if not settings_manager.get_manager().get_setting("messagesAreDetailed"):
+        speech_manager = speech_and_verbosity_manager.get_manager()
+        if speech_manager.get_speech_is_enabled_and_not_muted():
+            if not speech_manager.get_messages_are_detailed():
                 message = brief
             else:
                 message = full

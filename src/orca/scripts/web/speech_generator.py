@@ -50,8 +50,7 @@ from orca import focus_manager
 from orca import input_event_manager
 from orca import messages
 from orca import object_properties
-from orca import settings
-from orca import settings_manager
+from orca import speech_and_verbosity_manager
 from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -142,7 +141,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_state_has_popup(self, obj: Atspi.Accessible, **args) -> list[Any]:
         # TODO - JD: Can this be merged into the default's
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result: list[Any] = []
@@ -167,7 +166,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_has_click_action(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not self._script.utilities.in_document_content(obj):
@@ -185,7 +184,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not self._script.utilities.in_document_content(obj):
@@ -216,7 +215,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_has_long_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not self._script.utilities.in_document_content(obj):
@@ -231,7 +230,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_has_details(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not self._script.utilities.in_document_content(obj):
@@ -251,7 +250,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_all_details(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         objs: list[Atspi.Accessible] = []
@@ -283,7 +282,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_details_for(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not self._script.utilities.in_document_content(obj):
@@ -397,7 +396,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_leaving(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not args.get("leaving"):
@@ -423,9 +422,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
-           or settings_manager.get_manager().get_setting("speechVerbosityLevel") \
-               == settings.VERBOSITY_LEVEL_BRIEF:
+        if self._only_speak_displayed_text() \
+           or not speech_and_verbosity_manager.get_manager().use_verbose_speech():
             return []
 
         # We handle things even for non-document content due to issues in
@@ -591,7 +589,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.in_focus_mode():
             return result
 
-        if settings_manager.get_manager().get_setting("speakCellCoordinates"):
+        if speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():
             label = AXTable.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
@@ -675,7 +673,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not result:
             if focus_manager.get_manager().in_say_all() \
-               or not settings_manager.get_manager().get_setting("speakBlankLines") \
+               or not speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
                or args.get("formatType") == "ancestor":
                 string = ""
             else:

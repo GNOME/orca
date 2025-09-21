@@ -43,7 +43,6 @@ from gi.repository import Atspi
 
 from . import debug
 from . import focus_manager
-from . import settings_manager
 
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -374,10 +373,12 @@ class AXUtilitiesEvent:
                     reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
                 else:
                     reason = TextEventReason.TYPING
+                    from . import typing_echo_presenter # pylint: disable=import-outside-toplevel
+                    presenter = typing_echo_presenter.get_presenter()
                     if AXUtilitiesRole.is_password_text(obj):
-                        echo = settings_manager.get_manager().get_setting("enableKeyEcho")
+                        echo = presenter.get_key_echo_enabled()
                     else:
-                        echo = settings_manager.get_manager().get_setting("enableEchoByCharacter")
+                        echo = presenter.get_character_echo_enabled()
                     if echo:
                         reason = TextEventReason.TYPING_ECHOABLE
             elif mgr.last_event_was_middle_click() or mgr.last_event_was_middle_release():

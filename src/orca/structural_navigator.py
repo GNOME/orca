@@ -1294,8 +1294,9 @@ class StructuralNavigator:
             return
 
         manager = focus_manager.get_manager()
-        if manager.in_say_all() and settings_manager.get_manager().get_setting("structNavInSayAll"):
-            say_all_presenter.get_presenter().say_all(script, event=None, obj=obj, offset=offset)
+        presenter = say_all_presenter.get_presenter()
+        if manager.in_say_all() and presenter.get_structural_navigation_enabled():
+            presenter.say_all(script, event=None, obj=obj, offset=offset)
             return
 
         if not notify_user:
@@ -1334,8 +1335,9 @@ class StructuralNavigator:
             return
 
         manager = focus_manager.get_manager()
-        if manager.in_say_all() and settings_manager.get_manager().get_setting("structNavInSayAll"):
-            say_all_presenter.get_presenter().say_all(script, event=None, obj=obj, offset=offset)
+        presenter = say_all_presenter.get_presenter()
+        if manager.in_say_all() and presenter.get_structural_navigation_enabled():
+            presenter.say_all(script, event=None, obj=obj, offset=offset)
             return
 
         if not notify_user:

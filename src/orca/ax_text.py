@@ -50,7 +50,6 @@ from gi.repository import GLib
 from . import colornames
 from . import debug
 from . import messages
-from . import settings
 from . import text_attribute_names
 from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
@@ -143,9 +142,7 @@ class AXTextAttribute(enum.Enum):
             return messages.pixel_count(int(value))
 
         if self in [AXTextAttribute.BG_COLOR, AXTextAttribute.FG_COLOR]:
-            if settings.useColorNames:
-                return colornames.rgb_string_to_color_name(value)
-            return colornames.normalize_rgb_string(value)
+            return colornames.get_presentable_color_name(value)
 
         # TODO - JD: Is this still needed?
         value = value.replace("-moz", "")

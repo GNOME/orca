@@ -46,6 +46,7 @@ from . import object_properties
 from . import script_manager
 from . import settings
 from . import settings_manager
+from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -449,13 +450,12 @@ class Utilities:
         if table is None:
             return False
 
+        manager = speech_and_verbosity_manager.get_manager()
         if not self.get_document_for_object(table):
-            return settings_manager.get_manager().get_setting("readFullRowInGUITable")
-
+            return manager.get_speak_row_in_gui_table()
         if self.is_spreadsheet_table(table):
-            return settings_manager.get_manager().get_setting("readFullRowInSpreadSheet")
-
-        return settings_manager.get_manager().get_setting("readFullRowInDocumentTable")
+            return manager.get_speak_row_in_spreadsheet()
+        return manager.get_speak_row_in_document_table()
 
     def get_notification_content(self, obj: Atspi.Accessible) -> str:
         """Returns a string containing the content of the notification obj."""
@@ -1538,7 +1538,7 @@ class Utilities:
                     self.handle_text_selection_change(child, False)
 
         speak_message = speak_message \
-            and not settings_manager.get_manager().get_setting('onlySpeakDisplayedText')
+            and not speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text()
         for start, end, message in changes:
             string = AXText.get_substring(obj, start, end)
             ends_with_child = string.endswith("\ufffc")

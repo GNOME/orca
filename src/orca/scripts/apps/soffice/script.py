@@ -50,6 +50,7 @@ from orca import keybindings
 from orca import input_event
 from orca import messages
 from orca import settings_manager
+from orca import speech_and_verbosity_manager
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
@@ -142,18 +143,21 @@ class Script(default.Script):
         """Return a GtkGrid containing the application unique configuration
         GUI items for the current application."""
 
+        # TODO - JD: All table settings belong in a non-app dialog page.
+
+        speech_manager = speech_and_verbosity_manager.get_manager()
         grid = Gtk.Grid()
         grid.set_border_width(12)
 
         label = guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES
-        value = settings_manager.get_manager().get_setting("speakSpreadsheetCoordinates")
+        value = speech_manager.get_announce_spreadsheet_cell_coordinates()
         self.speak_spreadsheet_coordinates_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speak_spreadsheet_coordinates_check_button.set_active(value)
         grid.attach(self.speak_spreadsheet_coordinates_check_button, 0, 0, 1, 1)
 
         label = guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE
-        value = settings_manager.get_manager().get_setting("alwaysSpeakSelectedSpreadsheetRange")
+        value = speech_manager.get_always_announce_selected_range_in_spreadsheet()
         self.always_speak_selected_spreadsheet_range_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.always_speak_selected_spreadsheet_range_check_button.set_active(value)
@@ -173,21 +177,21 @@ class Script(default.Script):
         table_alignment.add(table_grid)
 
         label = guilabels.TABLE_SPEAK_CELL_COORDINATES
-        value = settings_manager.get_manager().get_setting("speakCellCoordinates")
+        value = speech_manager.get_announce_cell_coordinates()
         self.speak_cell_coordinates_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speak_cell_coordinates_check_button.set_active(value)
         table_grid.attach(self.speak_cell_coordinates_check_button, 0, 0, 1, 1)
 
         label = guilabels.TABLE_SPEAK_CELL_SPANS
-        value = settings_manager.get_manager().get_setting("speakCellSpan")
+        value = speech_manager.get_announce_cell_span()
         self.speak_cell_span_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speak_cell_span_check_button.set_active(value)
         table_grid.attach(self.speak_cell_span_check_button, 0, 1, 1, 1)
 
         label = guilabels.TABLE_ANNOUNCE_CELL_HEADER
-        value = settings_manager.get_manager().get_setting("speakCellHeaders")
+        value = speech_manager.get_announce_cell_headers()
         self.speak_cell_headers_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.speak_cell_headers_check_button.set_active(value)
@@ -538,9 +542,10 @@ class Script(default.Script):
             return True
 
         if self.utilities.is_spreadsheet_table(event.source):
-            if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+            manager = speech_and_verbosity_manager.get_manager()
+            if manager.get_only_speak_displayed_text():
                 return True
-            if settings_manager.get_manager().get_setting("alwaysSpeakSelectedSpreadsheetRange"):
+            if manager.get_always_announce_selected_range_in_spreadsheet():
                 self.utilities.speak_selected_cell_range(event.source)
                 return True
             if self.utilities.handle_row_and_column_selection_change(event.source):

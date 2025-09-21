@@ -51,8 +51,8 @@ from . import debug
 from . import focus_manager
 from . import messages
 from . import object_properties
-from . import settings
 from . import settings_manager
+from . import speech_and_verbosity_manager
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -1369,8 +1369,8 @@ class Generator:
         if not self._get_is_nameless_toggle(obj):
             role_string = self.get_localized_role_name(obj, role=Atspi.Role.COLUMN_HEADER)
             if self._mode == "speech":
-                if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
-                and args.get("formatType") not in ["basicWhereAmI", "detailedWhereAmI"]:
+                if speech_and_verbosity_manager.get_manager().use_verbose_speech() \
+                   and args.get("formatType") not in ["basicWhereAmI", "detailedWhereAmI"]:
                     text = f"{text} {role_string}"
             elif self._mode == "braille":
                 text = f"{text} {role_string}"
@@ -1409,7 +1409,7 @@ class Generator:
         text = ". ".join(tokens)
         role_string =  self.get_localized_role_name(obj, role=Atspi.Role.ROW_HEADER)
         if self._mode == "speech":
-            if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+            if speech_and_verbosity_manager.get_manager().use_verbose_speech() \
                and args.get("formatType") not in ["basicWhereAmI", "detailedWhereAmI"]:
                 text = f"{text} {role_string}"
         elif self._mode == "braille":

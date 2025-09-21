@@ -47,6 +47,7 @@ from . import messages
 from . import settings
 from . import settings_manager
 from . import speech
+from . import speech_and_verbosity_manager
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -380,7 +381,7 @@ class TypingEchoPresenter:
         if result is not None:
             return result
 
-        return not manager.get_setting("onlySpeakDisplayedText")
+        return not speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text()
 
     @dbus_service.setter
     def set_locking_keys_presented(self, value: bool | None) -> bool:

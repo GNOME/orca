@@ -178,6 +178,7 @@ class Utilities(script_utilities.Utilities):
         self._script.speak_message(messages.CELL_RANGE_SELECTED % (cell1, cell2))
         return True
 
+    # pylint: disable-next=too-many-locals
     def handle_cell_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Presents the selection change for obj."""
 

@@ -48,6 +48,7 @@ from orca import guilabels
 from orca import messages
 from orca import object_properties
 from orca import settings_manager
+from orca import speech_and_verbosity_manager
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -318,7 +319,7 @@ class SpellCheck:
         if detailed or settings_manager.get_manager().get_setting("spellcheckSpellSuggestion"):
             self._script.spell_item(string)
 
-        if settings_manager.get_manager().get_setting("enablePositionSpeaking") \
+        if speech_and_verbosity_manager.get_manager().get_speak_position_in_set() \
            and items[0] == focus_manager.get_manager().get_locus_of_focus():
             index, total = self._get_suggestion_index_and_position(items[0])
             msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}

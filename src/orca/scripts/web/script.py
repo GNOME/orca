@@ -63,6 +63,7 @@ from orca import messages
 from orca import settings
 from orca import settings_manager
 from orca import speech
+from orca import speech_and_verbosity_manager
 from orca.scripts import default
 from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
@@ -349,6 +350,9 @@ class Script(default.Script):
         table_frame = Gtk.Frame()
         grid.attach(table_frame, 0, 1, 1, 1)
 
+        # TODO - JD: All table settings belong in a non-app dialog page.
+        speech_manager = speech_and_verbosity_manager.get_manager()
+
         label = Gtk.Label(label=f"<b>{guilabels.TABLE_NAVIGATION}</b>")
         label.set_use_markup(True)
         table_frame.set_label_widget(label)
@@ -360,21 +364,21 @@ class Script(default.Script):
         table_alignment.add(table_grid)
 
         label = guilabels.TABLE_SPEAK_CELL_COORDINATES
-        value = settings_manager.get_manager().get_setting("speakCellCoordinates")
+        value = speech_manager.get_announce_cell_coordinates()
         self._speak_cell_coordinates_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speak_cell_coordinates_check_button.set_active(value)
         table_grid.attach(self._speak_cell_coordinates_check_button, 0, 0, 1, 1)
 
         label = guilabels.TABLE_SPEAK_CELL_SPANS
-        value = settings_manager.get_manager().get_setting("speakCellSpan")
+        value = speech_manager.get_announce_cell_span()
         self._speak_cell_span_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speak_cell_span_check_button.set_active(value)
         table_grid.attach(self._speak_cell_span_check_button, 0, 1, 1, 1)
 
         label = guilabels.TABLE_ANNOUNCE_CELL_HEADER
-        value = settings_manager.get_manager().get_setting("speakCellHeaders")
+        value = speech_manager.get_announce_cell_headers()
         self._speak_cell_headers_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speak_cell_headers_check_button.set_active(value)
@@ -661,7 +665,7 @@ class Script(default.Script):
 
         obj, start, _end, string = contents[0]
         if start > 0 and string == "\n":
-            if settings_manager.get_manager().get_setting("speakBlankLines"):
+            if speech_and_verbosity_manager.get_manager().get_speak_blank_lines():
                 self.speak_message(messages.BLANK, interrupt=False)
                 return
 
@@ -1266,8 +1270,8 @@ class Script(default.Script):
             self.utilities.clear_caret_context()
 
         should_present = True
-        mgr = settings_manager.get_manager()
-        if mgr.get_setting("onlySpeakDisplayedText"):
+        mgr = speech_and_verbosity_manager.get_manager()
+        if mgr.get_only_speak_displayed_text():
             should_present = False
             msg = "WEB: Not presenting due to settings"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1283,7 +1287,7 @@ class Script(default.Script):
             should_present = False
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        elif mgr.get_setting("speechVerbosityLevel") != settings.VERBOSITY_LEVEL_VERBOSE:
+        elif not mgr.use_verbose_speech():
             should_present = not event.detail1
             tokens = ["WEB: Brief verbosity set. Should present", obj, f": {should_present}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1292,7 +1296,7 @@ class Script(default.Script):
             if event.detail1:
                 self.present_message(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
-                if mgr.get_setting("speechVerbosityLevel") != settings.VERBOSITY_LEVEL_VERBOSE:
+                if not mgr.use_verbose_speech():
                     msg = AXObject.get_name(event.source)
                 else:
                     msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
@@ -1372,12 +1376,12 @@ class Script(default.Script):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak_contents(self.utilities.get_line_contents_at_offset(obj, offset))
-        elif settings_manager.get_manager().get_setting("enableSpeech"):
+        elif speech_and_verbosity_manager.get_manager().get_speech_is_enabled_and_not_muted():
             msg = "WEB: Doing SayAll"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.get_say_all_presenter().say_all(self, None)
         else:
-            msg = "WEB: Not doing SayAll due to enableSpeech being False"
+            msg = "WEB: Not doing SayAll due to speech being disabled or muted"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         return True

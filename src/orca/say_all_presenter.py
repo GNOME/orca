@@ -587,7 +587,8 @@ class SayAllPresenter:
         return True
 
 
-_presenter = SayAllPresenter()
+_presenter : SayAllPresenter = SayAllPresenter()
+
 def get_presenter() -> SayAllPresenter:
     """Returns the Say All Presenter"""
 

@@ -83,8 +83,9 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         script = script_manager.get_manager().get_default_script()
 
     settings_manager.get_manager().load_app_settings(script)
-    if settings_manager.get_manager().get_setting('enableSpeech'):
-        speech_and_verbosity_manager.get_manager().start_speech()
+    speech_manager = speech_and_verbosity_manager.get_manager()
+    if speech_manager.get_speech_is_enabled():
+        speech_manager.start_speech()
         if is_reload and not skip_reload_message:
             script.speak_message(messages.SETTINGS_RELOADED)
 
@@ -150,9 +151,9 @@ def shutdown(script=None, _event=None, _signum=None):
     mouse_review.get_reviewer().deactivate()
 
     # Shutdown all the other support.
-    #
-    if settings.enableSpeech:
-        speech_and_verbosity_manager.get_manager().shutdown_speech()
+    speech_manager = speech_and_verbosity_manager.get_manager()
+    if speech_manager.get_speech_is_enabled():
+        speech_manager.shutdown_speech()
     if settings.enableBraille:
         braille.shutdown()
     if settings.enableSound:

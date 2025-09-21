@@ -55,6 +55,7 @@ from . import input_event_manager
 from . import mathsymbols
 from . import messages
 from . import object_properties
+from . import say_all_presenter
 from . import settings
 from . import settings_manager
 from . import speech
@@ -183,6 +184,9 @@ class SpeechGenerator(generator.Generator):
             result.append(dialogs)
         return result
 
+    def _only_speak_displayed_text(self) -> bool:
+        return speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text()
+
     def _generate_result_separator(
         self,
         obj: Atspi.Accessible,
@@ -190,13 +194,9 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         return PAUSE
 
-    def _generate_pause(
-        self,
-        obj: Atspi.Accessible,
-        **args
-    ) -> list[Any]:
-        if not settings_manager.get_manager().get_setting("enablePauseBreaks") \
-           or args.get("eliminatePauses", False):
+    def _generate_pause(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        manager = speech_and_verbosity_manager.get_manager()
+        if not manager.get_insert_pauses_between_utterances() or args.get("eliminatePauses", False):
             return []
 
         if settings_manager.get_manager().get_setting("verbalizePunctuationStyle") == \
@@ -263,10 +263,11 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        mgr = settings_manager.get_manager()
-        if not mgr.get_setting("speakDescription") or mgr.get_setting("onlySpeakDisplayedText"):
+        if not speech_and_verbosity_manager.get_manager().get_speak_description() \
+           or self._only_speak_displayed_text():
             return []
 
+        mgr = settings_manager.get_manager()
         if args.get("inMouseReview") and not mgr.get_setting("presentToolTips"):
             return []
 
@@ -290,7 +291,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_accessible_image_description(obj, **args)
@@ -316,7 +317,7 @@ class SpeechGenerator(generator.Generator):
         **args
     ) -> list[Any]:
         is_layered_pane = AXUtilities.is_layered_pane(obj, args.get("role"))
-        if is_layered_pane and settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if is_layered_pane and self._only_speak_displayed_text():
             return []
 
         result = super()._generate_accessible_name(obj, **args)
@@ -370,8 +371,7 @@ class SpeechGenerator(generator.Generator):
         return AXObject.find_ancestor(obj, use_ancestor_role)
 
     def _should_speak_role(self, obj, **args):
-        settings_mgr = settings_manager.get_manager()
-        if settings_mgr.get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return False
 
         mode, _acc = focus_manager.get_manager().get_active_mode_and_object_of_interest()
@@ -396,7 +396,7 @@ class SpeechGenerator(generator.Generator):
                         Atspi.Role.STATIC,
                         Atspi.Role.TABLE_CELL,
                         Atspi.Role.UNKNOWN]
-        if settings_mgr.get_setting("speechVerbosityLevel") == settings.VERBOSITY_LEVEL_BRIEF:
+        if not speech_and_verbosity_manager.get_manager().use_verbose_speech():
             do_not_speak.extend([
                 Atspi.Role.CANVAS,
                 Atspi.Role.ICON,
@@ -490,7 +490,7 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Provides the tutorial message for obj."""
 
-        if not settings_manager.get_manager().get_setting("enableTutorialMessages") \
+        if not speech_and_verbosity_manager.get_manager().get_speak_tutorial_messages() \
            and not args.get("formatType", "").endswith("WhereAmI"):
             return []
 
@@ -583,9 +583,8 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
-           or settings_manager.get_manager().get_setting("speechVerbosityLevel") \
-               == settings.VERBOSITY_LEVEL_BRIEF:
+        if self._only_speak_displayed_text() \
+           or not speech_and_verbosity_manager.get_manager().use_verbose_speech():
             return []
 
         if AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
@@ -624,7 +623,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         container = obj
@@ -650,7 +649,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         container = obj
@@ -668,7 +667,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = []
@@ -699,50 +698,33 @@ class SpeechGenerator(generator.Generator):
                     Atspi.Role.TOOL_TIP]
 
         enabled, disabled = [], []
+
         if focus_manager.get_manager().in_say_all():
-            if settings_manager.get_manager().get_setting("sayAllContextBlockquote"):
-                enabled.append(Atspi.Role.BLOCK_QUOTE)
-            if settings_manager.get_manager().get_setting("sayAllContextLandmark"):
-                enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK"])
-            if settings_manager.get_manager().get_setting("sayAllContextList"):
-                enabled.append(Atspi.Role.LIST)
-                enabled.append(Atspi.Role.DESCRIPTION_LIST)
-                enabled.append("ROLE_FEED")
-            if settings_manager.get_manager().get_setting("sayAllContextPanel"):
-                enabled.extend([Atspi.Role.PANEL,
-                                Atspi.Role.TOOL_TIP,
-                                Atspi.Role.CONTENT_DELETION,
-                                Atspi.Role.CONTENT_INSERTION,
-                                Atspi.Role.GROUPING,
-                                Atspi.Role.MARK,
-                                Atspi.Role.SUGGESTION,
-                                "ROLE_DPUB_SECTION"])
-            if settings_manager.get_manager().get_setting("sayAllContextNonLandmarkForm"):
-                enabled.append(Atspi.Role.FORM)
-            if settings_manager.get_manager().get_setting("sayAllContextTable"):
-                enabled.append(Atspi.Role.TABLE)
+            provider = say_all_presenter.get_presenter()
         else:
-            if settings_manager.get_manager().get_setting("speakContextBlockquote"):
-                enabled.append(Atspi.Role.BLOCK_QUOTE)
-            if settings_manager.get_manager().get_setting("speakContextLandmark"):
-                enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK", "ROLE_REGION"])
-            if settings_manager.get_manager().get_setting("speakContextList"):
-                enabled.append(Atspi.Role.LIST)
-                enabled.append(Atspi.Role.DESCRIPTION_LIST)
-                enabled.append("ROLE_FEED")
-            if settings_manager.get_manager().get_setting("speakContextPanel"):
-                enabled.extend([Atspi.Role.PANEL,
-                                Atspi.Role.TOOL_TIP,
-                                Atspi.Role.CONTENT_DELETION,
-                                Atspi.Role.CONTENT_INSERTION,
-                                Atspi.Role.GROUPING,
-                                Atspi.Role.MARK,
-                                Atspi.Role.SUGGESTION,
-                                "ROLE_DPUB_SECTION"])
-            if settings_manager.get_manager().get_setting("speakContextNonLandmarkForm"):
-                enabled.append(Atspi.Role.FORM)
-            if settings_manager.get_manager().get_setting("speakContextTable"):
-                enabled.append(Atspi.Role.TABLE)
+            provider = speech_and_verbosity_manager.get_manager()
+
+        if provider.get_announce_blockquote():
+            enabled.append(Atspi.Role.BLOCK_QUOTE)
+        if provider.get_announce_landmark():
+            enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK"])
+        if provider.get_announce_list():
+            enabled.append(Atspi.Role.LIST)
+            enabled.append(Atspi.Role.DESCRIPTION_LIST)
+            enabled.append("ROLE_FEED")
+        if provider.get_announce_grouping():
+            enabled.extend([Atspi.Role.PANEL,
+                            Atspi.Role.TOOL_TIP,
+                            Atspi.Role.CONTENT_DELETION,
+                            Atspi.Role.CONTENT_INSERTION,
+                            Atspi.Role.GROUPING,
+                            Atspi.Role.MARK,
+                            Atspi.Role.SUGGESTION,
+                            "ROLE_DPUB_SECTION"])
+        if provider.get_announce_form():
+            enabled.append(Atspi.Role.FORM)
+        if provider.get_announce_table():
+            enabled.append(Atspi.Role.TABLE)
 
         disabled = list(set(all_roles).symmetric_difference(enabled))
         return enabled, disabled
@@ -999,7 +981,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if self._script.utilities.in_find_container():
@@ -1057,7 +1039,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if self._script.utilities.in_find_container():
@@ -1114,8 +1096,8 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
-           or not (settings_manager.get_manager().get_setting("enablePositionSpeaking") \
+        if self._only_speak_displayed_text() \
+           or not (speech_and_verbosity_manager.get_manager().get_speak_position_in_set() \
                    or args.get("forceList", False)) \
            or args.get("formatType") == "ancestor":
             return []
@@ -1151,7 +1133,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result: list[Any] = []
@@ -1168,11 +1150,11 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result: list[Any] = []
-        if settings_manager.get_manager().get_setting("enableMnemonicSpeaking") \
+        if speech_and_verbosity_manager.get_manager().get_speak_widget_mnemonic() \
            or args.get("forceMnemonic", False):
             mnemonic = AXObject.get_mnemonic(obj)
             if mnemonic:
@@ -1627,7 +1609,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         start_offset = args.get("startOffset", 0)
@@ -1651,7 +1633,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         end_offset = args.get("endOffset")
@@ -1683,7 +1665,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         start_offset = args.get("startOffset", 0)
@@ -1707,7 +1689,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         end_offset = args.get("endOffset")
@@ -1739,7 +1721,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         start_offset = args.get("startOffset", 0)
@@ -1763,7 +1745,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         end_offset = args.get("endOffset")
@@ -1782,7 +1764,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         attrs = AXObject.get_attributes_dict(obj)
@@ -1797,7 +1779,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         attrs = AXObject.get_attributes_dict(obj)
@@ -1812,7 +1794,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if AXUtilities.is_math_fraction_without_bar(obj):
@@ -1828,7 +1810,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = [messages.MATH_FRACTION_END]
@@ -1841,7 +1823,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = []
@@ -1875,7 +1857,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = [messages.MATH_ROOT_END]
@@ -1888,7 +1870,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not AXObject.supports_table(obj):
@@ -1910,7 +1892,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         nesting_level = self._get_nesting_level(obj)
@@ -1929,7 +1911,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_current(obj, **args)
@@ -1943,7 +1925,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_checked(obj, **args)
@@ -1957,7 +1939,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_checked_for_switch(obj, **args)
@@ -1971,7 +1953,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_checked_if_checkable(obj, **args)
@@ -1985,7 +1967,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_expanded(obj, **args)
@@ -1999,9 +1981,8 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText") \
-           or settings_manager.get_manager().get_setting("speechVerbosityLevel") \
-               == settings.VERBOSITY_LEVEL_BRIEF:
+        if self._only_speak_displayed_text() \
+           or not speech_and_verbosity_manager.get_manager().use_verbose_speech():
             return []
 
         if AXUtilities.is_menu(obj) or not AXUtilities.has_popup(obj):
@@ -2015,7 +1996,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_invalid(obj, **args)
@@ -2029,7 +2010,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_multiselectable(obj, **args)
@@ -2043,7 +2024,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_pressed(obj, **args)
@@ -2068,7 +2049,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if args.get("alreadyFocused"):
@@ -2085,7 +2066,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_selected_for_radio_button(obj, **args)
@@ -2099,7 +2080,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         result = super()._generate_state_sensitive(obj, **args)
@@ -2113,7 +2094,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if args.get("inMouseReview"):
@@ -2175,7 +2156,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         args["newOnly"] = True
@@ -2247,7 +2228,7 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         result = super()._generate_real_table_cell(obj, **args)
         if not (result and result[0]) \
-           and settings_manager.get_manager().get_setting("speakBlankLines") \
+           and speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
            and not args.get("readingRow", False) \
            and args.get("formatType") != "ancestor":
             result.append(messages.BLANK)
@@ -2262,7 +2243,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if not settings_manager.get_manager().get_setting("speakCellHeaders"):
+        if not speech_and_verbosity_manager.get_manager().get_announce_cell_headers():
             return []
 
         if focus_manager.get_manager().in_say_all():
@@ -2287,7 +2268,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not settings_manager.get_manager().get_setting("speakCellHeaders"):
+        if not speech_and_verbosity_manager.get_manager().get_announce_cell_headers():
             return []
 
         if focus_manager.get_manager().in_say_all():
@@ -2309,7 +2290,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if args.get("leaving"):
@@ -2321,8 +2302,7 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.is_spreadsheet_table(obj):
             return []
 
-        if settings_manager.get_manager().get_setting("speechVerbosityLevel") \
-           == settings.VERBOSITY_LEVEL_BRIEF:
+        if not speech_and_verbosity_manager.get_manager().use_verbose_speech():
             return self._generate_accessible_role(obj, **args)
 
         if self._script.utilities.is_text_document_table(obj):
@@ -2360,7 +2340,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not settings_manager.get_manager().get_setting("speakCellCoordinates"):
+        if not speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():
             return []
 
         if not self._script.utilities.cell_column_changed(obj):
@@ -2386,7 +2366,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not settings_manager.get_manager().get_setting("speakCellCoordinates"):
+        if not speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():
             return []
 
         row = AXTable.get_cell_coordinates(obj, find_cell=True)[0]
@@ -2403,7 +2383,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         row, col = AXTable.get_cell_coordinates(obj, find_cell=True)
@@ -2437,7 +2417,7 @@ class SpeechGenerator(generator.Generator):
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         if result[0] in ["\n", ""] \
-           and settings_manager.get_manager().get_setting("speakBlankLines") \
+           and speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
            and not focus_manager.get_manager().in_say_all() \
            and args.get("total", 1) == 1 \
            and not AXUtilities.is_table_cell_or_header(obj) \
@@ -2462,7 +2442,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]
-        if text == "\n" and settings_manager.get_manager().get_setting("speakBlankLines") \
+        if text == "\n" and speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
            and not focus_manager.get_manager().in_say_all() \
            and args.get("total", 1) == 1 \
            and not AXUtilities.is_table_cell_or_header(obj) \
@@ -2527,7 +2507,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         if not AXText.is_all_text_selected(obj):
@@ -2543,7 +2523,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if not settings_manager.get_manager().get_setting("enableSpeechIndentation"):
+        if not speech_and_verbosity_manager.get_manager().get_speak_indentation_and_justification():
             return []
 
         format_type = args.get("formatType", "unfocused")
@@ -2581,7 +2561,7 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         **args
     ) -> list[Any]:
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         percent_value = AXValue.get_value_as_percent(obj)
@@ -3113,7 +3093,7 @@ class SpeechGenerator(generator.Generator):
             result += (self._generate_accessible_label_and_name(obj, **args) or \
                 self._generate_text_line(obj, **args))
 
-        if settings_manager.get_manager().get_setting("speakContextList"):
+        if speech_and_verbosity_manager.get_manager().get_announce_list():
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return result
 
@@ -3141,7 +3121,7 @@ class SpeechGenerator(generator.Generator):
         result += (self._generate_accessible_label_and_name(obj, **args) or \
             self._generate_text_line(obj, **args))
 
-        if settings_manager.get_manager().get_setting("speakContextList"):
+        if speech_and_verbosity_manager.get_manager().get_announce_list():
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return result
 
@@ -5131,7 +5111,7 @@ class SpeechGenerator(generator.Generator):
 
         if not result or (len(result) == 1 and result[0][0] == "\n"):
             if focus_manager.get_manager().in_say_all() \
-               or not settings_manager.get_manager().get_setting("speakBlankLines") \
+               or not speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
                or args.get("formatType") == "ancestor":
                 string = ""
             else:

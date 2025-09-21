@@ -48,6 +48,7 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import settings_manager
+from . import speech_and_verbosity_manager
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
@@ -965,18 +966,20 @@ class TableNavigator:
 
         script.present_object(cell, offset=0, priorObj=previous_cell, interrupt=True)
 
+        manager = speech_and_verbosity_manager.get_manager()
         # TODO - JD: This should be part of the normal table cell presentation.
-        if settings_manager.get_manager().get_setting("speakCellCoordinates"):
+        if manager.get_announce_cell_coordinates():
             script.present_message(
                 messages.TABLE_CELL_COORDINATES % {"row" : row + 1, "column" : col + 1})
 
         # TODO - JD: Ditto.
-        if settings_manager.get_manager().get_setting("speakCellSpan"):
+        if manager.get_announce_cell_span():
             rowspan, colspan = AXTable.get_cell_spans(cell)
             if rowspan > 1 or colspan > 1:
                 script.present_message(messages.cell_span(rowspan, colspan))
 
-_navigator = TableNavigator()
+_navigator : TableNavigator = TableNavigator()
+
 def get_navigator() -> TableNavigator:
     """Returns the Table Navigator"""
 

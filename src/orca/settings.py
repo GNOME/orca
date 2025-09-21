@@ -200,6 +200,72 @@ voices: dict[str, ACSS] = {
     SYSTEM_VOICE: ACSS({}),
 }
 
+# Managed by typing_echo_presenter.py
+enableKeyEcho: bool = True
+enableAlphabeticKeys: bool = True
+enableNumericKeys: bool = True
+enablePunctuationKeys: bool = True
+enableSpace: bool = True
+enableModifierKeys: bool = True
+enableFunctionKeys: bool = True
+enableActionKeys: bool = True
+enableNavigationKeys: bool = False
+enableDiacriticalKeys: bool = False
+enableEchoByCharacter: bool = False
+enableEchoByWord: bool = False
+enableEchoBySentence: bool = False
+presentLockingKeys: bool | None = None
+
+# Managed by speech_and_verbosity_manager.py
+silenceSpeech: bool = False
+enableSpeech: bool = True
+enablePauseBreaks: bool = True
+speakNumbersAsDigits: bool = False
+speakMisspelledIndicator: bool = True
+enableSpeechIndentation: bool = False
+speakIndentationOnlyIfChanged: bool = False
+speakBlankLines: bool = True
+onlySpeakDisplayedText: bool = False
+enableTutorialMessages: bool = True
+speakDescription: bool = True
+enablePositionSpeaking: bool = False
+enableMnemonicSpeaking: bool = False
+speakContextNonLandmarkForm: bool = True
+speakContextBlockquote: bool = True
+speakContextPanel: bool = True
+speakContextLandmark: bool = True
+speakContextList: bool = True
+speakContextTable: bool = True
+useColorNames: bool = True
+readFullRowInGUITable: bool = True
+readFullRowInDocumentTable: bool = True
+readFullRowInSpreadSheet: bool = False
+speakCellSpan: bool = True
+speakCellCoordinates: bool = True
+speakCellHeaders: bool = True
+speakSpreadsheetCoordinates: bool = True
+alwaysSpeakSelectedSpreadsheetRange: bool = False
+messagesAreDetailed: bool = True
+usePronunciationDictionary: bool = True
+repeatCharacterLimit: int = 4
+speechVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
+verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
+capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
+
+# Managed by say_all_presenter.py
+sayAllContextBlockquote: bool = True
+sayAllContextPanel: bool = True
+sayAllContextNonLandmarkForm: bool = True
+sayAllContextLandmark: bool = True
+sayAllContextList: bool = True
+sayAllContextTable: bool = True
+sayAllStyle: int = SAYALL_STYLE_SENTENCE
+structNavInSayAll: bool = False
+rewindAndFastForwardInSayAll: bool = False
+
+# Managed by flat_review_presenter.py
+flatReviewIsRestricted: bool = False
+
 # Profiles
 startingProfile: list[str] = ['Default', 'default']
 activeProfile: list[str] = ['Default', 'default']
@@ -210,47 +276,6 @@ speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
 speechServerFactory: str = "speechdispatcherfactory"
 speechServerInfo: list[str] | None = None # None means let the factory decide.
 speechSystemOverride: str | None = None
-enableSpeech: bool = True
-silenceSpeech: bool = False
-enableTutorialMessages: bool = True
-enableMnemonicSpeaking: bool = False
-enablePositionSpeaking: bool = False
-enableSpeechIndentation: bool = False
-onlySpeakDisplayedText: bool = False
-presentToolTips: bool = False
-speakBlankLines: bool = True
-repeatCharacterLimit: int = 4
-readFullRowInGUITable: bool = True
-readFullRowInDocumentTable: bool = True
-readFullRowInSpreadSheet: bool = False
-speakCellCoordinates: bool = True
-speakCellSpan: bool = True
-speakCellHeaders: bool = True
-speakSpreadsheetCoordinates: bool = True
-alwaysSpeakSelectedSpreadsheetRange: bool = False
-speakNumbersAsDigits: bool = False
-speakMisspelledIndicator: bool = True
-useColorNames: bool = True
-usePronunciationDictionary: bool = True
-sayAllStyle: int = SAYALL_STYLE_SENTENCE
-capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
-verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
-speechVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
-messagesAreDetailed: bool = True
-enablePauseBreaks: bool = True
-speakDescription: bool = True
-speakContextBlockquote: bool = True
-speakContextPanel: bool = True
-speakContextNonLandmarkForm: bool = True
-speakContextLandmark: bool = True
-speakContextList: bool = True
-speakContextTable: bool = True
-sayAllContextBlockquote: bool = True
-sayAllContextPanel: bool = True
-sayAllContextNonLandmarkForm: bool = True
-sayAllContextLandmark: bool = True
-sayAllContextList: bool = True
-sayAllContextTable: bool = True
 
 # Braille
 enableBraille: bool = True
@@ -281,26 +306,10 @@ playSoundForValue: bool = False
 keyboardLayout: int = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout: float = 0.5
-enableKeyEcho: bool = True
-enableAlphabeticKeys: bool = True
-enableNumericKeys: bool = True
-enablePunctuationKeys: bool = True
-enableSpace: bool = True
-enableModifierKeys: bool = True
-enableFunctionKeys: bool = True
-enableActionKeys: bool = True
-enableNavigationKeys: bool = False
-enableDiacriticalKeys: bool = False
-enableEchoByCharacter: bool = False
-enableEchoByWord: bool = False
-enableEchoBySentence: bool = False
-presentLockingKeys: bool | None = None
 
-# Mouse review
+# Mouse
 enableMouseReview: bool = False
-
-# Flat review
-flatReviewIsRestricted: bool = False
+presentToolTips: bool = False
 
 # Progressbars
 speakProgressBarUpdates: bool = True
@@ -315,13 +324,21 @@ ignoreStatusBarProgressBars: bool = True
 
 # Structural navigation
 structuralNavigationEnabled: bool = True
-skipBlankCells: bool = False
 largeObjectTextLength: int = 75
 wrappedStructuralNavigation: bool = True
 inferLiveRegions: bool = True
 
+# table navigation
+skipBlankCells: bool = False
+
 # Caret navigation
 caretNavigationEnabled: bool = True
+
+# Document navigation
+caretNavTriggersFocusMode: bool = False
+structNavTriggersFocusMode: bool = False
+nativeNavTriggersFocusMode: bool = True
+layoutMode: bool = True
 
 # Chat
 chatMessageVerbosity: int = CHAT_SPEAK_ALL
@@ -355,17 +372,7 @@ textAttributesToBraille: list[str] = []
 keyBindingsMap: dict[str, Any] = {}
 brailleBindingsMap: dict[str, Any] = {}
 
-structNavTriggersFocusMode: bool = False
-caretNavTriggersFocusMode: bool = False
-nativeNavTriggersFocusMode: bool = True
-
-layoutMode: bool = True
-
-rewindAndFastForwardInSayAll: bool = False
-structNavInSayAll: bool = False
-
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 presentChatRoomLast: bool = False
 presentLiveRegionFromInactiveTab: bool = False
-speakIndentationOnlyIfChanged: bool = False

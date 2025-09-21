@@ -41,6 +41,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import say_all_presenter
 from . import script_manager
 from . import settings_manager
 from .ax_object import AXObject
@@ -632,12 +633,11 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if focus_manager.get_manager().in_say_all():
-            _settings_manager = settings_manager.get_manager()
-            if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
-                msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
-                debug.print_message(debug.LEVEL_INFO, msg)
-                return True
+        if focus_manager.get_manager().in_say_all() and \
+           say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled():
+            msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
+            debug.print_message(debug.LEVEL_INFO, msg)
+            return True
 
         obj, offset = script.utilities.get_caret_context()
         if obj is None:
@@ -680,12 +680,11 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if focus_manager.get_manager().in_say_all():
-            _settings_manager = settings_manager.get_manager()
-            if _settings_manager.get_setting("rewindAndFastForwardInSayAll"):
-                msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
-                debug.print_message(debug.LEVEL_INFO, msg)
-                return True
+        if focus_manager.get_manager().in_say_all() and \
+           say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled():
+            msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
+            debug.print_message(debug.LEVEL_INFO, msg)
+            return True
 
         obj, offset = script.utilities.get_caret_context()
         if obj is None:

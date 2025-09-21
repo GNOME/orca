@@ -1750,6 +1750,7 @@ class SpeechAndVerbosityManager:
             script.present_message(messages.TABLE_NOT_IN_A)
             return True
 
+        # TODO - JD: Use the new getters and setters for this.
         if not script.utilities.get_document_for_object(table):
             setting_name = "readFullRowInGUITable"
         elif script.utilities.is_spreadsheet_table(table):
@@ -1807,8 +1808,7 @@ class SpeechAndVerbosityManager:
                 tokens[o:o] = text
         return "".join(tokens)
 
-    @staticmethod
-    def _adjust_for_repeats(text: str) -> str:
+    def _adjust_for_repeats(self, text: str) -> str:
         """Adjust line to include a description of repeated symbols."""
 
         def replacement(match):
@@ -1818,10 +1818,11 @@ class SpeechAndVerbosityManager:
                 return f" {messages.repeated_char_count(char, count)}"
             return messages.repeated_char_count(char, count)
 
-        if len(text) < 4 or settings.repeatCharacterLimit < 4:
+        limit = self.get_repeated_character_limit()
+        if len(text) < 4 or limit < 4:
             return text
 
-        pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(settings.repeatCharacterLimit - 1) + ",}")
+        pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(limit - 1) + ",}")
         return re.sub(pattern, replacement, text)
 
     @staticmethod
@@ -1854,11 +1855,10 @@ class SpeechAndVerbosityManager:
 
         return result
 
-    @staticmethod
-    def _apply_pronunciation_dictionary(text: str) -> str:
+    def _apply_pronunciation_dictionary(self, text: str) -> str:
         """Applies the pronunciation dictionary to the text."""
 
-        if not settings_manager.get_manager().get_setting("usePronunciationDictionary"):
+        if not self.get_use_pronunciation_dictionary():
             return text
 
         words = re.split(r"(\W+)", text)
@@ -1891,8 +1891,7 @@ class SpeechAndVerbosityManager:
                 result += f"{messages.tabs_count(span[1] - span[0])} "
 
         if only_if_changed is None:
-            only_if_changed = settings_manager.get_manager().get_setting(
-                "speakIndentationOnlyIfChanged")
+            only_if_changed = self.get_speak_indentation_only_if_changed()
 
         if only_if_changed:
             if self._last_indentation_description == result:
@@ -1913,7 +1912,7 @@ class SpeechAndVerbosityManager:
     ) -> str:
         """Returns a description of the error at the current offset."""
 
-        if not settings_manager.get_manager().get_setting("speakMisspelledIndicator"):
+        if not self.get_speak_misspelled_indicator():
             return ""
 
         # If we're on whitespace or punctuation, we cannot be on an error.

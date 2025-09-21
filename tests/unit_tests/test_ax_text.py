@@ -77,6 +77,9 @@ class TestAXTextAttribute:
             side_effect=lambda color: colornames_mock.COLOR_NAMES.get(color, color)
         )
         colornames_mock.normalize_rgb_string = test_context.Mock(side_effect=lambda color: color)
+        colornames_mock.get_presentable_color_name = test_context.Mock(
+            side_effect=lambda color: colornames_mock.COLOR_NAMES.get(color, color)
+        )
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.LEVEL_INFO = 800
@@ -365,6 +368,9 @@ class TestAXText:
             side_effect=lambda color: colornames_mock.COLOR_NAMES.get(color, color)
         )
         colornames_mock.normalize_rgb_string = test_context.Mock(side_effect=lambda color: color)
+        colornames_mock.get_presentable_color_name = test_context.Mock(
+            side_effect=lambda color: colornames_mock.COLOR_NAMES.get(color, color)
+        )
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.LEVEL_INFO = 800

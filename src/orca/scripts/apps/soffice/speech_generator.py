@@ -39,7 +39,7 @@ from gi.repository import Atspi
 from orca import debug
 from orca import focus_manager
 from orca import messages
-from orca import settings_manager
+from orca import speech_and_verbosity_manager
 from orca import speech_generator
 from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
@@ -120,7 +120,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns an indication of how many characters are greater than the size
         of the spread sheet cell, or None if the message fits.
         """
-        if settings_manager.get_manager().get_setting("onlySpeakDisplayedText"):
+        if self._only_speak_displayed_text():
             return []
 
         # TODO - JD: Can this be moved to AXText?
@@ -161,15 +161,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = super()._generate_real_table_cell(obj, **args)
 
+        speech_manager = speech_and_verbosity_manager.get_manager()
         if not self._script.utilities.is_spreadsheet_cell(obj):
             if self._script.get_table_navigator().last_input_event_was_navigation_command():
                 return result
 
-            if settings_manager.get_manager().get_setting("speakCellCoordinates"):
+            if speech_manager.get_announce_cell_coordinates():
                 result.append(AXObject.get_name(obj))
             return result
 
-        if settings_manager.get_manager().get_setting("speakSpreadsheetCoordinates") \
+        if speech_manager.get_announce_spreadsheet_cell_coordinates() \
            or args.get("formatType") == "basicWhereAmI":
             label = AXTable.get_label_for_cell_coordinates(obj) \
                 or self._script.utilities.spreadsheet_cell_name(obj)

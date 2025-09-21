@@ -54,7 +54,6 @@ from . import keybindings
 from . import messages
 from . import script_manager
 from . import settings_manager
-from . import settings
 from . import speech_and_verbosity_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
@@ -73,8 +72,7 @@ class FlatReviewPresenter:
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
-        self._restrict: bool = \
-            settings_manager.get_manager().get_setting("flatReviewIsRestricted") or False
+        self._restrict: bool = self.get_is_restricted()
         self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
         self._desktop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._laptop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
@@ -781,8 +779,7 @@ class FlatReviewPresenter:
         if event is None:
             return
 
-        if settings_manager.get_manager().get_setting('speechVerbosityLevel') \
-           != settings.VERBOSITY_LEVEL_BRIEF:
+        if speech_and_verbosity_manager.get_manager().use_verbose_speech():
             script.present_message(messages.FLAT_REVIEW_START)
         self._item_presentation(script, event)
 
@@ -807,8 +804,7 @@ class FlatReviewPresenter:
         if event is None or script is None:
             return
 
-        if settings_manager.get_manager().get_setting('speechVerbosityLevel') \
-           != settings.VERBOSITY_LEVEL_BRIEF:
+        if speech_and_verbosity_manager.get_manager().use_verbose_speech():
             script.present_message(messages.FLAT_REVIEW_STOP)
         script.update_braille(focus)
 
