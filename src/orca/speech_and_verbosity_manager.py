@@ -1114,6 +1114,372 @@ class SpeechAndVerbosityManager:
         return True
 
     @dbus_service.getter
+    def get_speak_misspelled_indicator(self) -> bool:
+        """Returns whether the misspelled indicator is spoken."""
+
+        return settings_manager.get_manager().get_setting("speakMisspelledIndicator")
+
+    @dbus_service.setter
+    def set_speak_misspelled_indicator(self, value: bool) -> bool:
+        """Sets whether the misspelled indicator is spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak misspelled indicator to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakMisspelledIndicator", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_description(self) -> bool:
+        """Returns whether object descriptions are spoken."""
+
+        return settings_manager.get_manager().get_setting("speakDescription")
+
+    @dbus_service.setter
+    def set_speak_description(self, value: bool) -> bool:
+        """Sets whether object descriptions are spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak description to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakDescription", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_position_in_set(self) -> bool:
+        """Returns whether the position and set size of objects are spoken."""
+
+        return settings_manager.get_manager().get_setting("enablePositionSpeaking")
+
+    @dbus_service.setter
+    def set_speak_position_in_set(self, value: bool) -> bool:
+        """Sets whether the position and set size of objects are spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak position in set to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("enablePositionSpeaking", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_widget_mnemonic(self) -> bool:
+        """Returns whether widget mnemonics are spoken."""
+
+        return settings_manager.get_manager().get_setting("enableMnemonicSpeaking")
+
+    @dbus_service.setter
+    def set_speak_widget_mnemonic(self, value: bool) -> bool:
+        """Sets whether widget mnemonics are spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak widget mnemonics to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("enableMnemonicSpeaking", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_tutorial_messages(self) -> bool:
+        """Returns whether tutorial messages are spoken."""
+
+        return settings_manager.get_manager().get_setting("enableTutorialMessages")
+
+    @dbus_service.setter
+    def set_speak_tutorial_messages(self, value: bool) -> bool:
+        """Sets whether tutorial messages are spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak tutorial messages to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("enableTutorialMessages", value)
+        return True
+
+    @dbus_service.getter
+    def get_insert_pauses_between_utterances(self) -> bool:
+        """Returns whether pauses are inserted between utterances, e.g. between name and role."""
+
+        return settings_manager.get_manager().get_setting("enablePauseBreaks")
+
+    @dbus_service.setter
+    def set_insert_pauses_between_utterances(self, value: bool) -> bool:
+        """Sets whether pauses are inserted between utterances, e.g. between name and role."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting insert pauses to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("enablePauseBreaks", value)
+        return True
+
+    @dbus_service.getter
+    def get_repeated_character_limit(self) -> int:
+        """Returns the count at which repeated, non-alphanumeric symbols will be described."""
+
+        return settings_manager.get_manager().get_setting("repeatCharacterLimit")
+
+    @dbus_service.setter
+    def set_repeated_character_limit(self, value: int) -> bool:
+        """Sets the count at which repeated, non-alphanumeric symbols will be described."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting repeated character limit to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("repeatCharacterLimit", value)
+        return True
+
+    @dbus_service.getter
+    def get_use_pronunciation_dictionary(self) -> bool:
+        """Returns whether the user's pronunciation dictionary should be applied."""
+
+        return settings_manager.get_manager().get_setting("usePronunciationDictionary")
+
+    @dbus_service.setter
+    def set_use_pronunciation_dictionary(self, value: bool) -> bool:
+        """Sets whether the user's pronunciation dictionary should be applied."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting use pronunciation dictionary to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("usePronunciationDictionary", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_blank_lines(self) -> bool:
+        """Returns whether blank lines will be spoken."""
+
+        return settings_manager.get_manager().get_setting("speakBlankLines")
+
+    @dbus_service.setter
+    def set_speak_blank_lines(self, value: bool) -> bool:
+        """Sets whether blank lines will be spoken."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak blank lines to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakBlankLines", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_row_in_gui_table(self) -> bool:
+        """Returns whether Up/Down in GUI tables speaks the row or just the cell."""
+
+        return settings_manager.get_manager().get_setting("readFullRowInGUITable")
+
+    @dbus_service.setter
+    def set_speak_row_in_gui_table(self, value: bool) -> bool:
+        """Sets whether Up/Down in GUI tables speaks the row or just the cell."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in GUI table to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("readFullRowInGUITable", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_row_in_document_table(self) -> bool:
+        """Returns whether Up/Down in text-document tables speaks the row or just the cell."""
+
+        return settings_manager.get_manager().get_setting("readFullRowInDocumentTable")
+
+    @dbus_service.setter
+    def set_speak_row_in_document_table(self, value: bool) -> bool:
+        """Sets whether Up/Down in text-document tables speaks the row or just the cell."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in document table to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("readFullRowInDocumentTable", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_row_in_spreadsheet(self) -> bool:
+        """Returns whether Up/Down in spreadsheets speaks the row or just the cell."""
+
+        return settings_manager.get_manager().get_setting("readFullRowInSpreadSheet")
+
+    @dbus_service.setter
+    def set_speak_row_in_spreadsheet(self, value: bool) -> bool:
+        """Sets whether Up/Down in spreadsheets speaks the row or just the cell."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in spreadsheet to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("readFullRowInSpreadSheet", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_cell_span(self) -> bool:
+        """Returns whether cell spans are announced when greater than 1."""
+
+        return settings_manager.get_manager().get_setting("speakCellSpan")
+
+    @dbus_service.setter
+    def set_announce_cell_span(self, value: bool) -> bool:
+        """Sets whether cell spans are announced when greater than 1."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell spans to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakCellSpan", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_cell_coordinates(self) -> bool:
+        """Returns whether (non-spreadsheet) cell coordinates are announced."""
+
+        return settings_manager.get_manager().get_setting("speakCellCoordinates")
+
+    @dbus_service.setter
+    def set_announce_cell_coordinates(self, value: bool) -> bool:
+        """Sets whether (non-spreadsheet) cell coordinates are announced."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell coordinates to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakCellCoordinates", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_spreadsheet_cell_coordinates(self) -> bool:
+        """Returns whether spreadsheet cell coordinates are announced."""
+
+        return settings_manager.get_manager().get_setting("speakSpreadsheetCoordinates")
+
+    @dbus_service.setter
+    def set_announce_spreadsheet_cell_coordinates(self, value: bool) -> bool:
+        """Sets whether spreadsheet cell coordinates are announced."""
+
+        msg = (
+            f"SPEECH AND VERBOSITY MANAGER: Setting announce spreadsheet cell coordinates to "
+            f"{value}."
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakSpreadsheetCoordinates", value)
+        return True
+
+    @dbus_service.getter
+    def get_always_announce_selected_range_in_spreadsheet(self) -> bool:
+        """Returns whether the selected range in spreadsheets is always announced."""
+
+        return settings_manager.get_manager().get_setting("alwaysSpeakSelectedSpreadsheetRange")
+
+    @dbus_service.setter
+    def set_always_announce_selected_range_in_spreadsheet(self, value: bool) -> bool:
+        """Sets whether the selected range in spreadsheets is always announced."""
+
+        msg = (
+            f"SPEECH AND VERBOSITY MANAGER: Setting always announce selected spreadsheet range to "
+            f"{value}."
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("alwaysSpeakSelectedSpreadsheetRange", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_cell_headers(self) -> bool:
+        """Returns whether cell headers are announced."""
+
+        return settings_manager.get_manager().get_setting("speakCellHeaders")
+
+    @dbus_service.setter
+    def set_announce_cell_headers(self, value: bool) -> bool:
+        """Sets whether cell headers are announced."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell headers to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakCellHeaders", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_blockquote(self) -> bool:
+        """Returns whether blockquotes are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("speakContextBlockquote")
+
+    @dbus_service.setter
+    def set_announce_blockquote(self, value: bool) -> bool:
+        """Sets whether blockquotes are announced when entered."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce blockquotes to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakContextBlockquote", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_form(self) -> bool:
+        """Returns whether non-landmark forms are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("speakContextNonLandmarkForm")
+
+    @dbus_service.setter
+    def set_announce_form(self, value: bool) -> bool:
+        """Sets whether non-landmark forms are announced when entered."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce forms to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakContextNonLandmarkForm", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_grouping(self) -> bool:
+        """Returns whether groupings are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("speakContextPanel")
+
+    @dbus_service.setter
+    def set_announce_grouping(self, value: bool) -> bool:
+        """Sets whether groupings are announced when entered."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce groupings to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakContextPanel", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_landmark(self) -> bool:
+        """Returns whether landmarks are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("speakContextLandmark")
+
+    @dbus_service.setter
+    def set_announce_landmark(self, value: bool) -> bool:
+        """Sets whether landmarks are announced when entered."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce landmarks to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakContextLandmark", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_list(self) -> bool:
+        """Returns whether lists are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("speakContextList")
+
+    @dbus_service.setter
+    def set_announce_list(self, value: bool) -> bool:
+        """Sets whether lists are announced when entered."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce lists to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakContextList", value)
+        return True
+
+    @dbus_service.getter
+    def get_announce_table(self) -> bool:
+        """Returns whether tables are announced when entered."""
+
+        return settings_manager.get_manager().get_setting("speakContextTable")
+
+    @dbus_service.setter
+    def set_announce_table(self, value: bool) -> bool:
+        """Sets whether tables are announced when entered."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce tables to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakContextTable", value)
+        return True
+
+    @dbus_service.getter
+    def get_use_color_names(self) -> bool:
+        """Returns whether colors are announced by name or as RGB values."""
+
+        return settings_manager.get_manager().get_setting("useColorNames")
+
+    @dbus_service.setter
+    def set_use_color_names(self, value: bool) -> bool:
+        """Sets whether colors are announced by name or as RGB values."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting use color names to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("useColorNames", value)
+        return True
+
+    @dbus_service.getter
     def get_speak_numbers_as_digits(self) -> bool:
         """Returns whether numbers are spoken as digits."""
 
@@ -1154,6 +1520,11 @@ class SpeechAndVerbosityManager:
             script.present_message(full, brief)
         return True
 
+    def get_speech_is_enabled_and_not_muted(self) -> bool:
+        """Returns whether speech is enabled and not muted."""
+
+        return self.get_speech_is_enabled() and not self.get_speech_is_muted()
+
     @dbus_service.getter
     def get_speech_is_muted(self) -> bool:
         """Returns whether speech output is temporarily muted."""
@@ -1167,6 +1538,21 @@ class SpeechAndVerbosityManager:
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech muted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings_manager.get_manager().set_setting("silenceSpeech", value)
+        return True
+
+    @dbus_service.getter
+    def get_speech_is_enabled(self) -> bool:
+        """Returns whether the speech server is enabled. See also the is-muted getter."""
+
+        return settings_manager.get_manager().get_setting("enableSpeech")
+
+    @dbus_service.setter
+    def set_speech_is_enabled(self, value: bool) -> bool:
+        """Sets whether the speech server is enabled. See also the is-muted setter."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech enabled to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("enableSpeech", value)
         return True
 
     @dbus_service.getter
@@ -1215,15 +1601,36 @@ class SpeechAndVerbosityManager:
         return True
 
     @dbus_service.getter
+    def get_messages_are_detailed(self) -> bool:
+        """Returns whether informative messages will be detailed or brief."""
+
+        return settings_manager.get_manager().get_setting("messagesAreDetailed")
+
+    @dbus_service.setter
+    def set_messages_are_detailed(self, value: bool) -> bool:
+        """Sets whether informative messages will be detailed or brief."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting messages are detailed to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("messagesAreDetailed", value)
+        return True
+
+    def use_verbose_speech(self) -> bool:
+        """Returns whether the speech verbosity level is set to verbose."""
+
+        level = settings_manager.get_manager().get_setting("speechVerbosityLevel")
+        return level == settings.VERBOSITY_LEVEL_VERBOSE
+
+    @dbus_service.getter
     def get_verbosity_level(self) -> str:
-        """Returns the current speech verbosity level."""
+        """Returns the current speech verbosity level for object presentation."""
 
         int_value = settings_manager.get_manager().get_setting("speechVerbosityLevel")
         return VerbosityLevel(int_value).string_name
 
     @dbus_service.setter
     def set_verbosity_level(self, value: str) -> bool:
-        """Sets the speech verbosity level."""
+        """Sets the speech verbosity level for object presentation."""
 
         try:
             level = VerbosityLevel[value.upper()]
@@ -1277,6 +1684,21 @@ class SpeechAndVerbosityManager:
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings_manager.get_manager().set_setting("enableSpeechIndentation", value)
+        return True
+
+    @dbus_service.getter
+    def get_speak_indentation_only_if_changed(self) -> bool:
+        """Returns whether indentation will be announced only if it has changed."""
+
+        return settings_manager.get_manager().get_setting("speakIndentationOnlyIfChanged")
+
+    @dbus_service.setter
+    def set_speak_indentation_only_if_changed(self, value: bool) -> bool:
+        """Sets whether indentation will be announced only if it has changed."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak indentation only if changed to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("speakIndentationOnlyIfChanged", value)
         return True
 
     @dbus_service.command

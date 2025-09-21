@@ -1498,6 +1498,21 @@ class FlatReviewPresenter:
             script.present_message(messages.FLAT_REVIEW_APPENDED)
         return True
 
+    @dbus_service.getter
+    def get_is_restricted(self) -> bool:
+        """Returns whether flat review is restricted to the current object."""
+
+        return settings_manager.get_manager().get_setting("flatReviewIsRestricted")
+
+    @dbus_service.setter
+    def set_is_restricted(self, value: bool) -> bool:
+        """Sets whether flat review is restricted to the current object."""
+
+        msg = f"FLAT REVIEW PRESENTER: Setting is-restricted to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("flatReviewIsRestricted", value)
+        return True
+
     @dbus_service.command
     def toggle_restrict(
         self,

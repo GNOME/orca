@@ -21,6 +21,7 @@
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-return-statements
+# pylint: disable=too-many-lines
 
 """Integration tests for Orca's D-Bus service."""
 
@@ -44,10 +45,12 @@ FLAT_REVIEW_TIMEOUT = int(os.environ.get("ORCA_FLAT_REVIEW_TIMEOUT", DEFAULT_MOD
 STRUCTURAL_NAVIGATOR_TIMEOUT = int(
     os.environ.get("ORCA_STRUCTURAL_NAVIGATOR_TIMEOUT", DEFAULT_MODULE_TIMEOUT)
 )
+SPEECH_AND_VERBOSITY_TIMEOUT = int(os.environ.get("ORCA_SPEECH_AND_VERBOSITY_TIMEOUT", 30))
 
 MODULE_TIMEOUTS = {
     "FlatReviewPresenter": FLAT_REVIEW_TIMEOUT,
     "StructuralNavigator": STRUCTURAL_NAVIGATOR_TIMEOUT,
+    "SpeechAndVerbosityManager": SPEECH_AND_VERBOSITY_TIMEOUT,
 }
 
 MODULE_CONFIG = {
@@ -58,7 +61,7 @@ MODULE_CONFIG = {
         "setters": [],
         "ui_commands": ["ShowActionsList"],
         "toggle_commands": [],
-        "skip": []
+        "skip": [],
     },
     "ClipboardPresenter": {
         "commands": ["PresentClipboardContents"],
@@ -67,53 +70,85 @@ MODULE_CONFIG = {
         "setters": [],
         "ui_commands": [],
         "toggle_commands": [],
-        "skip": []
+        "skip": [],
     },
     "FlatReviewPresenter": {
         "commands": [
-            "AppendToClipboard", "CopyToClipboard", "GetCurrentObject", "GoAbove",
-            "GoBelow", "GoBottomLeft", "GoEnd", "GoEndOfLine", "GoHome",
-            "GoNextCharacter", "GoNextItem", "GoNextLine", "GoPreviousCharacter",
-            "GoPreviousItem", "GoPreviousLine", "GoStartOfLine", "LeftClickOnObject",
-            "PhoneticItem", "PhoneticLine", "PresentCharacter", "PresentItem",
-            "PresentLine", "PresentObject", "RightClickOnObject",
-            "RoutePointerToObject", "SayAll", "ShowContents", "SpellCharacter",
-            "SpellItem", "SpellLine", "ToggleFlatReviewMode", "ToggleRestrict",
-            "UnicodeCurrentCharacter"
+            "AppendToClipboard",
+            "CopyToClipboard",
+            "GetCurrentObject",
+            "GoAbove",
+            "GoBelow",
+            "GoBottomLeft",
+            "GoEnd",
+            "GoEndOfLine",
+            "GoHome",
+            "GoNextCharacter",
+            "GoNextItem",
+            "GoNextLine",
+            "GoPreviousCharacter",
+            "GoPreviousItem",
+            "GoPreviousLine",
+            "GoStartOfLine",
+            "LeftClickOnObject",
+            "PhoneticItem",
+            "PhoneticLine",
+            "PresentCharacter",
+            "PresentItem",
+            "PresentLine",
+            "PresentObject",
+            "RightClickOnObject",
+            "RoutePointerToObject",
+            "SayAll",
+            "ShowContents",
+            "SpellCharacter",
+            "SpellItem",
+            "SpellLine",
+            "ToggleFlatReviewMode",
+            "ToggleRestrict",
+            "UnicodeCurrentCharacter",
         ],
         "parameterized_commands": [],
-        "getters": [],
-        "setters": [],
+        "getters": ["IsRestricted"],
+        "setters": ["IsRestricted"],
         "ui_commands": [
-            "ShowContents", "LeftClickOnObject", "RightClickOnObject",
-            "RoutePointerToObject"
+            "ShowContents",
+            "LeftClickOnObject",
+            "RightClickOnObject",
+            "RoutePointerToObject",
         ],
         "toggle_commands": ["ToggleFlatReviewMode", "ToggleRestrict"],
-        "skip": []
+        "skip": [],
     },
     "ObjectNavigator": {
         "commands": [
-            "MoveToFirstChild", "MoveToNextSibling", "MoveToParent",
-            "MoveToPreviousSibling", "PerformAction", "ToggleSimplify"
+            "MoveToFirstChild",
+            "MoveToNextSibling",
+            "MoveToParent",
+            "MoveToPreviousSibling",
+            "PerformAction",
+            "ToggleSimplify",
         ],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
         "ui_commands": ["PerformAction"],
         "toggle_commands": ["ToggleSimplify"],
-        "skip": []
+        "skip": [],
     },
     "NotificationPresenter": {
         "commands": [
-            "PresentLastNotification", "PresentNextNotification",
-            "PresentPreviousNotification", "ShowNotificationList"
+            "PresentLastNotification",
+            "PresentNextNotification",
+            "PresentPreviousNotification",
+            "ShowNotificationList",
         ],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
         "ui_commands": ["ShowNotificationList"],
         "toggle_commands": [],
-        "skip": []
+        "skip": [],
     },
     "SleepModeManager": {
         "commands": ["ToggleSleepMode"],
@@ -122,125 +157,402 @@ MODULE_CONFIG = {
         "setters": [],
         "ui_commands": [],
         "toggle_commands": ["ToggleSleepMode"],
-        "skip": []
+        "skip": [],
     },
     "SpeechAndVerbosityManager": {
         "commands": [
-            "ChangeNumberStyle", "CycleCapitalizationStyle", "CycleKeyEcho",
-            "CyclePunctuationLevel", "CycleSynthesizer", "DecreasePitch",
-            "DecreaseRate", "DecreaseVolume", "IncreasePitch", "IncreaseRate",
-            "IncreaseVolume", "InterruptSpeech", "RefreshSpeech", "ShutdownSpeech",
-            "StartSpeech", "ToggleIndentationAndJustification", "ToggleSpeech",
-            "ToggleTableCellReadingMode", "ToggleVerbosity"
+            "ChangeNumberStyle",
+            "CycleCapitalizationStyle",
+            "CyclePunctuationLevel",
+            "CycleSynthesizer",
+            "DecreasePitch",
+            "DecreaseRate",
+            "DecreaseVolume",
+            "IncreasePitch",
+            "IncreaseRate",
+            "IncreaseVolume",
+            "InterruptSpeech",
+            "RefreshSpeech",
+            "ShutdownSpeech",
+            "StartSpeech",
+            "ToggleIndentationAndJustification",
+            "ToggleSpeech",
+            "ToggleTableCellReadingMode",
+            "ToggleVerbosity",
         ],
         "parameterized_commands": ["GetVoicesForLanguage"],
         "getters": [
-            "AvailableServers", "AvailableSynthesizers", "AvailableVoices",
-            "CurrentServer", "CurrentSynthesizer", "CurrentVoice",
-            "Pitch", "Rate", "Volume"
+            "AlwaysAnnounceSelectedRangeInSpreadsheet",
+            "AnnounceBlockquote",
+            "AnnounceCellCoordinates",
+            "AnnounceCellHeaders",
+            "AnnounceCellSpan",
+            "AnnounceForm",
+            "AnnounceGrouping",
+            "AnnounceLandmark",
+            "AnnounceList",
+            "AnnounceSpreadsheetCellCoordinates",
+            "AnnounceTable",
+            "AvailableServers",
+            "AvailableSynthesizers",
+            "AvailableVoices",
+            "CapitalizationStyle",
+            "CurrentServer",
+            "CurrentSynthesizer",
+            "CurrentVoice",
+            "InsertPausesBetweenUtterances",
+            "MessagesAreDetailed",
+            "OnlySpeakDisplayedText",
+            "Pitch",
+            "PunctuationLevel",
+            "Rate",
+            "RepeatedCharacterLimit",
+            "SpeakBlankLines",
+            "SpeakDescription",
+            "SpeakIndentationAndJustification",
+            "SpeakIndentationOnlyIfChanged",
+            "SpeakMisspelledIndicator",
+            "SpeakNumbersAsDigits",
+            "SpeakPositionInSet",
+            "SpeakRowInDocumentTable",
+            "SpeakRowInGuiTable",
+            "SpeakRowInSpreadsheet",
+            "SpeakTutorialMessages",
+            "SpeakWidgetMnemonic",
+            "SpeechIsEnabled",
+            "SpeechIsMuted",
+            "UseColorNames",
+            "UsePronunciationDictionary",
+            "VerbosityLevel",
+            "Volume",
         ],
         "setters": [
-            "CurrentServer", "CurrentSynthesizer", "CurrentVoice",
-            "Pitch", "Rate", "Volume"
+            "AlwaysAnnounceSelectedRangeInSpreadsheet",
+            "AnnounceBlockquote",
+            "AnnounceCellCoordinates",
+            "AnnounceCellHeaders",
+            "AnnounceCellSpan",
+            "AnnounceForm",
+            "AnnounceGrouping",
+            "AnnounceLandmark",
+            "AnnounceList",
+            "AnnounceSpreadsheetCellCoordinates",
+            "AnnounceTable",
+            "CapitalizationStyle",
+            "CurrentServer",
+            "CurrentSynthesizer",
+            "CurrentVoice",
+            "InsertPausesBetweenUtterances",
+            "MessagesAreDetailed",
+            "OnlySpeakDisplayedText",
+            "Pitch",
+            "PunctuationLevel",
+            "Rate",
+            "RepeatedCharacterLimit",
+            "SpeakBlankLines",
+            "SpeakDescription",
+            "SpeakIndentationAndJustification",
+            "SpeakIndentationOnlyIfChanged",
+            "SpeakMisspelledIndicator",
+            "SpeakNumbersAsDigits",
+            "SpeakPositionInSet",
+            "SpeakRowInDocumentTable",
+            "SpeakRowInGuiTable",
+            "SpeakRowInSpreadsheet",
+            "SpeakTutorialMessages",
+            "SpeakWidgetMnemonic",
+            "SpeechIsEnabled",
+            "SpeechIsMuted",
+            "UseColorNames",
+            "UsePronunciationDictionary",
+            "VerbosityLevel",
+            "Volume",
         ],
         "ui_commands": [],
         "toggle_commands": [
-            "ToggleIndentationAndJustification", "ToggleSpeech",
-            "ToggleTableCellReadingMode", "ToggleVerbosity"
+            "ToggleIndentationAndJustification",
+            "ToggleSpeech",
+            "ToggleTableCellReadingMode",
+            "ToggleVerbosity",
         ],
-        "skip": []
+        "skip": [],
     },
     "StructuralNavigator": {
         "commands": [
-            "ContainerEnd", "ContainerStart", "CycleMode", "ListBlockquotes",
-            "ListButtons", "ListCheckboxes", "ListClickables", "ListComboboxes",
-            "ListEntries", "ListFormFields", "ListHeadings", "ListHeadingsLevel1",
-            "ListHeadingsLevel2", "ListHeadingsLevel3", "ListHeadingsLevel4",
-            "ListHeadingsLevel5", "ListHeadingsLevel6", "ListIframes", "ListImages",
-            "ListLandmarks", "ListLargeObjects", "ListLinks", "ListListItems",
-            "ListLists", "ListParagraphs", "ListRadioButtons", "ListTables",
-            "ListUnvisitedLinks", "ListVisitedLinks", "NextBlockquote", "NextButton",
-            "NextCheckbox", "NextClickable", "NextCombobox", "NextEntry",
-            "NextFormField", "NextHeading", "NextHeadingLevel1", "NextHeadingLevel2",
-            "NextHeadingLevel3", "NextHeadingLevel4", "NextHeadingLevel5",
-            "NextHeadingLevel6", "NextIframe", "NextImage", "NextLandmark",
-            "NextLargeObject", "NextLink", "NextList", "NextListItem",
-            "NextLiveRegion", "NextParagraph", "NextRadioButton", "NextSeparator",
-            "NextTable", "NextUnvisitedLink", "NextVisitedLink", "PreviousBlockquote",
-            "PreviousButton", "PreviousCheckbox", "PreviousClickable",
-            "PreviousCombobox", "PreviousEntry", "PreviousFormField",
-            "PreviousHeading", "PreviousHeadingLevel1", "PreviousHeadingLevel2",
-            "PreviousHeadingLevel3", "PreviousHeadingLevel4", "PreviousHeadingLevel5",
-            "PreviousHeadingLevel6", "PreviousIframe", "PreviousImage",
-            "PreviousLandmark", "PreviousLargeObject", "PreviousLink",
-            "PreviousList", "PreviousListItem", "PreviousLiveRegion",
-            "PreviousParagraph", "PreviousRadioButton", "PreviousSeparator",
-            "PreviousTable", "PreviousUnvisitedLink", "PreviousVisitedLink"
+            "ContainerEnd",
+            "ContainerStart",
+            "CycleMode",
+            "ListBlockquotes",
+            "ListButtons",
+            "ListCheckboxes",
+            "ListClickables",
+            "ListComboboxes",
+            "ListEntries",
+            "ListFormFields",
+            "ListHeadings",
+            "ListHeadingsLevel1",
+            "ListHeadingsLevel2",
+            "ListHeadingsLevel3",
+            "ListHeadingsLevel4",
+            "ListHeadingsLevel5",
+            "ListHeadingsLevel6",
+            "ListIframes",
+            "ListImages",
+            "ListLandmarks",
+            "ListLargeObjects",
+            "ListLinks",
+            "ListListItems",
+            "ListLists",
+            "ListParagraphs",
+            "ListRadioButtons",
+            "ListTables",
+            "ListUnvisitedLinks",
+            "ListVisitedLinks",
+            "NextBlockquote",
+            "NextButton",
+            "NextCheckbox",
+            "NextClickable",
+            "NextCombobox",
+            "NextEntry",
+            "NextFormField",
+            "NextHeading",
+            "NextHeadingLevel1",
+            "NextHeadingLevel2",
+            "NextHeadingLevel3",
+            "NextHeadingLevel4",
+            "NextHeadingLevel5",
+            "NextHeadingLevel6",
+            "NextIframe",
+            "NextImage",
+            "NextLandmark",
+            "NextLargeObject",
+            "NextLink",
+            "NextList",
+            "NextListItem",
+            "NextLiveRegion",
+            "NextParagraph",
+            "NextRadioButton",
+            "NextSeparator",
+            "NextTable",
+            "NextUnvisitedLink",
+            "NextVisitedLink",
+            "PreviousBlockquote",
+            "PreviousButton",
+            "PreviousCheckbox",
+            "PreviousClickable",
+            "PreviousCombobox",
+            "PreviousEntry",
+            "PreviousFormField",
+            "PreviousHeading",
+            "PreviousHeadingLevel1",
+            "PreviousHeadingLevel2",
+            "PreviousHeadingLevel3",
+            "PreviousHeadingLevel4",
+            "PreviousHeadingLevel5",
+            "PreviousHeadingLevel6",
+            "PreviousIframe",
+            "PreviousImage",
+            "PreviousLandmark",
+            "PreviousLargeObject",
+            "PreviousLink",
+            "PreviousList",
+            "PreviousListItem",
+            "PreviousLiveRegion",
+            "PreviousParagraph",
+            "PreviousRadioButton",
+            "PreviousSeparator",
+            "PreviousTable",
+            "PreviousUnvisitedLink",
+            "PreviousVisitedLink",
         ],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
         "ui_commands": [
-            "ListBlockquotes", "ListButtons", "ListCheckboxes", "ListClickables",
-            "ListComboboxes", "ListEntries", "ListFormFields", "ListHeadings",
-            "ListHeadingsLevel1", "ListHeadingsLevel2", "ListHeadingsLevel3",
-            "ListHeadingsLevel4", "ListHeadingsLevel5", "ListHeadingsLevel6",
-            "ListIframes", "ListImages", "ListLandmarks", "ListLargeObjects",
-            "ListLinks", "ListListItems", "ListLists", "ListParagraphs",
-            "ListRadioButtons", "ListTables", "ListUnvisitedLinks", "ListVisitedLinks"
+            "ListBlockquotes",
+            "ListButtons",
+            "ListCheckboxes",
+            "ListClickables",
+            "ListComboboxes",
+            "ListEntries",
+            "ListFormFields",
+            "ListHeadings",
+            "ListHeadingsLevel1",
+            "ListHeadingsLevel2",
+            "ListHeadingsLevel3",
+            "ListHeadingsLevel4",
+            "ListHeadingsLevel5",
+            "ListHeadingsLevel6",
+            "ListIframes",
+            "ListImages",
+            "ListLandmarks",
+            "ListLargeObjects",
+            "ListLinks",
+            "ListListItems",
+            "ListLists",
+            "ListParagraphs",
+            "ListRadioButtons",
+            "ListTables",
+            "ListUnvisitedLinks",
+            "ListVisitedLinks",
         ],
         "toggle_commands": [],
-        "skip": ["CycleMode"] # Test flakiness depending on app and focus.
+        "skip": ["CycleMode"],  # Test flakiness depending on app and focus.
     },
     "SystemInformationPresenter": {
         "commands": [
-            "PresentBatteryStatus", "PresentCpuAndMemoryUsage",
-            "PresentDate", "PresentTime"
+            "PresentBatteryStatus",
+            "PresentCpuAndMemoryUsage",
+            "PresentDate",
+            "PresentTime",
         ],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
         "ui_commands": [],
         "toggle_commands": [],
-        "skip": ["PresentBatteryStatus"]  # Can timeout on systems without battery
+        "skip": ["PresentBatteryStatus"],  # Can timeout on systems without battery
     },
     "TableNavigator": {
         "commands": [
-            "ClearDynamicColumnHeadersRow", "ClearDynamicRowHeadersColumn",
-            "MoveDown", "MoveLeft", "MoveRight", "MoveToBeginningOfRow",
-            "MoveToBottomOfColumn", "MoveToEndOfRow", "MoveToFirstCell",
-            "MoveToLastCell", "MoveToTopOfColumn", "MoveUp",
-            "SetDynamicColumnHeadersRow", "SetDynamicRowHeadersColumn", "ToggleEnabled"
+            "ClearDynamicColumnHeadersRow",
+            "ClearDynamicRowHeadersColumn",
+            "MoveDown",
+            "MoveLeft",
+            "MoveRight",
+            "MoveToBeginningOfRow",
+            "MoveToBottomOfColumn",
+            "MoveToEndOfRow",
+            "MoveToFirstCell",
+            "MoveToLastCell",
+            "MoveToTopOfColumn",
+            "MoveUp",
+            "SetDynamicColumnHeadersRow",
+            "SetDynamicRowHeadersColumn",
+            "ToggleEnabled",
         ],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
         "ui_commands": [],
         "toggle_commands": ["ToggleEnabled"],
-        "skip": []
+        "skip": [],
+    },
+    "TypingEchoPresenter": {
+        "commands": ["CycleKeyEcho"],
+        "parameterized_commands": [],
+        "getters": [
+            "KeyEchoEnabled",
+            "CharacterEchoEnabled",
+            "WordEchoEnabled",
+            "SentenceEchoEnabled",
+            "AlphabeticKeysEnabled",
+            "NumericKeysEnabled",
+            "PunctuationKeysEnabled",
+            "SpaceEnabled",
+            "ModifierKeysEnabled",
+            "FunctionKeysEnabled",
+            "ActionKeysEnabled",
+            "NavigationKeysEnabled",
+            "DiacriticalKeysEnabled",
+            "LockingKeysPresented",
+        ],
+        "setters": [
+            "KeyEchoEnabled",
+            "CharacterEchoEnabled",
+            "WordEchoEnabled",
+            "SentenceEchoEnabled",
+            "AlphabeticKeysEnabled",
+            "NumericKeysEnabled",
+            "PunctuationKeysEnabled",
+            "SpaceEnabled",
+            "ModifierKeysEnabled",
+            "FunctionKeysEnabled",
+            "ActionKeysEnabled",
+            "NavigationKeysEnabled",
+            "DiacriticalKeysEnabled",
+            "LockingKeysPresented",
+        ],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
+    "CaretNavigator": {
+        "commands": [
+            "ToggleEnabled",
+            "NextCharacter",
+            "PreviousCharacter",
+            "NextWord",
+            "PreviousWord",
+            "NextLine",
+            "PreviousLine",
+            "StartOfLine",
+            "EndOfLine",
+            "StartOfFile",
+            "EndOfFile",
+        ],
+        "parameterized_commands": [],
+        "getters": [],
+        "setters": [],
+        "ui_commands": [],
+        "toggle_commands": ["ToggleEnabled"],
+        "skip": [],
+    },
+    "SayAllPresenter": {
+        "commands": ["SayAll", "Rewind", "FastForward"],
+        "parameterized_commands": [],
+        "getters": [
+            "AnnounceBlockquote",
+            "AnnounceForm",
+            "AnnounceGrouping",
+            "AnnounceLandmark",
+            "AnnounceList",
+            "AnnounceTable",
+            "Style",
+            "StructuralNavigationEnabled",
+            "RewindAndFastForwardEnabled",
+        ],
+        "setters": [
+            "AnnounceBlockquote",
+            "AnnounceForm",
+            "AnnounceGrouping",
+            "AnnounceLandmark",
+            "AnnounceList",
+            "AnnounceTable",
+            "Style",
+            "StructuralNavigationEnabled",
+            "RewindAndFastForwardEnabled",
+        ],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
     },
     "WhereAmIPresenter": {
         "commands": [
-            "PresentCharacterAttributes", "PresentDefaultButton", "PresentLink",
-            "PresentSelectedText", "PresentSelection", "PresentSizeAndPosition",
-            "PresentStatusBar", "PresentTitle", "WhereAmIBasic", "WhereAmIDetailed"
+            "PresentCharacterAttributes",
+            "PresentDefaultButton",
+            "PresentLink",
+            "PresentSelectedText",
+            "PresentSelection",
+            "PresentSizeAndPosition",
+            "PresentStatusBar",
+            "PresentTitle",
+            "WhereAmIBasic",
+            "WhereAmIDetailed",
         ],
         "parameterized_commands": [],
         "getters": [],
         "setters": [],
         "ui_commands": [],
         "toggle_commands": [],
-        "skip": []
-    }
+        "skip": [],
+    },
 }
 
 PARAMETERIZED_TEST_PARAMS = {
-    "GetVoicesForLanguage": {
-        "language": "en",
-        "variant": "",
-        "notify_user": False
-    }
+    "GetVoicesForLanguage": {"language": "en", "variant": "", "notify_user": False}
 }
+
 
 def safe_call(func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any | None:
     """Safely call a function, returning result or None on error."""
@@ -295,12 +607,11 @@ def is_timeout_error(error_str: str) -> bool:
 def unpack_variant(value: Any) -> Any:
     """Unpack a GLib.Variant if needed."""
 
-    return value.unpack() if hasattr(value, 'unpack') else value
+    return value.unpack() if hasattr(value, "unpack") else value
+
 
 def get_alternative_value(
-    proxy: DBusProxy,
-    prop_name: str,
-    current_value: str | int | float | bool
+    proxy: DBusProxy, prop_name: str, current_value: str | int | float | bool
 ) -> str | int | float | bool:
     """Get an alternative value for testing setters, avoiding defaults when possible."""
 
@@ -327,23 +638,22 @@ def get_alternative_value(
             if voices and len(voices) > 1:
                 assert isinstance(current_value, str)
                 current_voice_name = current_value.split()[0] if current_value else ""
-                non_default = [v[0] for v in voices
-                              if v[0] != current_voice_name and "default" not in v[0].lower()]
+                non_default = [
+                    v[0]
+                    for v in voices
+                    if v[0] != current_voice_name and "default" not in v[0].lower()
+                ]
                 if non_default:
                     return non_default[0]
-                return next(
-                    (v[0] for v in voices if v[0] != current_voice_name),
-                    current_value
-                )
+                return next((v[0] for v in voices if v[0] != current_voice_name), current_value)
             return current_value
         return current_value
     except (DBusError, AttributeError, TypeError, ValueError):
         return current_value
 
+
 def get_test_value(
-    proxy: DBusProxy,
-    prop_name: str,
-    current_value: str | int | float | bool
+    proxy: DBusProxy, prop_name: str, current_value: str | int | float | bool
 ) -> str | int | float | bool:
     """Generate an appropriate test value for a property."""
 
@@ -354,6 +664,7 @@ def get_test_value(
     if isinstance(current_value, bool):
         return not current_value
     return current_value
+
 
 def to_variant(value: str | bool | int | float) -> Any:
     """Convert a Python value to GLib.Variant."""
@@ -367,6 +678,7 @@ def to_variant(value: str | bool | int | float) -> Any:
     if isinstance(value, float):
         return GLib.Variant("d", value)
     return GLib.Variant("s", str(value))
+
 
 @pytest.mark.dbus
 class TestOrcaDBusIntegration:
@@ -416,8 +728,7 @@ class TestOrcaDBusIntegration:
         "module_name,config", MODULE_CONFIG.items(), ids=list(MODULE_CONFIG.keys())
     )
     @pytest.mark.dbus
-    def test_module_capabilities(self, module_proxy_factory, run_with_timeout,
-                                 module_name, config):
+    def test_module_capabilities(self, module_proxy_factory, run_with_timeout, module_name, config):
         """Test that each module reports correct capabilities."""
         print(f"\n  Testing {module_name} capabilities:")
         for cap_type in ["commands", "parameterized_commands", "getters", "setters"]:
@@ -435,7 +746,7 @@ class TestOrcaDBusIntegration:
                 "commands": extract_names(safe_call(proxy.ListCommands)),
                 "parameterized_commands": extract_names(safe_call(proxy.ListParameterizedCommands)),
                 "getters": extract_names(safe_call(proxy.ListRuntimeGetters)),
-                "setters": extract_names(safe_call(proxy.ListRuntimeSetters))
+                "setters": extract_names(safe_call(proxy.ListRuntimeSetters)),
             }
 
         timeout = MODULE_TIMEOUTS.get(module_name)
@@ -451,13 +762,13 @@ class TestOrcaDBusIntegration:
             assert not missing, f"{module_name} missing {cap_type}: {sorted(missing)}"
             assert not unexpected, f"{module_name} unexpected {cap_type}: {sorted(unexpected)}"
 
-    @pytest.mark.parametrize("module_name,config", [
-        (name, config) for name, config in MODULE_CONFIG.items()
-        if config.get("commands")
-    ], ids=[name for name, config in MODULE_CONFIG.items() if config.get("commands")])
+    @pytest.mark.parametrize(
+        "module_name,config",
+        [(name, config) for name, config in MODULE_CONFIG.items() if config.get("commands")],
+        ids=[name for name, config in MODULE_CONFIG.items() if config.get("commands")],
+    )
     @pytest.mark.dbus
-    def test_module_commands(self, module_proxy_factory, run_with_timeout,
-                             module_name, config):
+    def test_module_commands(self, module_proxy_factory, run_with_timeout, module_name, config):
         """Test that module commands execute without errors."""
         commands = config["commands"]
         ui_commands = config.get("ui_commands", [])
@@ -504,17 +815,28 @@ class TestOrcaDBusIntegration:
         result = run_with_timeout(test_commands, timeout)
         assert result["success"], f"Failed to test {module_name} commands: {result['error']}"
 
-        failed = [f"{cmd}: {res['error']}" for cmd, res in result["result"].items()
-                  if not res["success"] and not res.get("skipped")]
+        failed = [
+            f"{cmd}: {res['error']}"
+            for cmd, res in result["result"].items()
+            if not res["success"] and not res.get("skipped")
+        ]
         assert not failed, f"{module_name} command failures: {failed}"
 
-    @pytest.mark.parametrize("module_name,config", [
-        (name, config) for name, config in MODULE_CONFIG.items()
-        if config.get("parameterized_commands")
-    ], ids=[name for name, config in MODULE_CONFIG.items() if config.get("parameterized_commands")])
+    @pytest.mark.parametrize(
+        "module_name,config",
+        [
+            (name, config)
+            for name, config in MODULE_CONFIG.items()
+            if config.get("parameterized_commands")
+        ],
+        ids=[
+            name for name, config in MODULE_CONFIG.items() if config.get("parameterized_commands")
+        ],
+    )
     @pytest.mark.dbus
-    def test_module_parameterized_commands(self, module_proxy_factory, run_with_timeout,
-                                           module_name, config):
+    def test_module_parameterized_commands(
+        self, module_proxy_factory, run_with_timeout, module_name, config
+    ):
         """Test that module parameterized commands execute with proper parameters."""
         param_commands = config["parameterized_commands"]
         print(f"\n  Testing {module_name} parameterized commands ({len(param_commands)} total):")
@@ -523,15 +845,13 @@ class TestOrcaDBusIntegration:
             param_str = ", ".join(f"{k}={v}" for k, v in params.items())
             print(f"    • {cmd}({param_str})")
 
-
         def test_single_param_command(proxy, cmd_name):
             params = PARAMETERIZED_TEST_PARAMS.get(cmd_name, {})
             if not params:
                 return {"success": False, "error": "No test parameters"}
 
             try:
-                variant_params = {k: to_variant(v) for k, v in params.items()
-                                  if k != "notify_user"}
+                variant_params = {k: to_variant(v) for k, v in params.items() if k != "notify_user"}
                 notify_user = params.get("notify_user", False)
                 result = proxy.ExecuteParameterizedCommand(cmd_name, variant_params, notify_user)
                 return {"success": True, "result": result}
@@ -544,28 +864,40 @@ class TestOrcaDBusIntegration:
             if GLib is None:
                 pytest.skip("GLib not available")
             proxy = module_proxy_factory(module_name)
-            return {cmd: test_single_param_command(proxy, cmd)
-                    for cmd in config["parameterized_commands"]}
+            return {
+                cmd: test_single_param_command(proxy, cmd)
+                for cmd in config["parameterized_commands"]
+            }
 
         timeout = MODULE_TIMEOUTS.get(module_name)
         result = run_with_timeout(test_parameterized_commands, timeout)
         error_msg = f"Failed to test {module_name} parameterized commands: {result['error']}"
         assert result["success"], error_msg
 
-        failed = [f"{cmd}: {res['error']}" for cmd, res in result["result"].items()
-                  if not res["success"] and not res.get("context_required")]
+        failed = [
+            f"{cmd}: {res['error']}"
+            for cmd, res in result["result"].items()
+            if not res["success"] and not res.get("context_required")
+        ]
         assert not failed, f"{module_name} parameterized command failures: {failed}"
 
-    @pytest.mark.parametrize("module_name,config", [
-        (name, config) for name, config in MODULE_CONFIG.items()
-        if config.get("getters") or config.get("setters")
-    ], ids=[
-        name for name, config in MODULE_CONFIG.items()
-        if config.get("getters") or config.get("setters")
-    ])
+    @pytest.mark.parametrize(
+        "module_name,config",
+        [
+            (name, config)
+            for name, config in MODULE_CONFIG.items()
+            if config.get("getters") or config.get("setters")
+        ],
+        ids=[
+            name
+            for name, config in MODULE_CONFIG.items()
+            if config.get("getters") or config.get("setters")
+        ],
+    )
     @pytest.mark.dbus
-    def test_module_getters_setters(self, module_proxy_factory, run_with_timeout,
-                                    module_name, config):
+    def test_module_getters_setters(
+        self, module_proxy_factory, run_with_timeout, module_name, config
+    ):
         """Test that module getter/setter pairs work correctly."""
         all_props = sorted(set(config.get("getters", []) + config.get("setters", [])))
         print(f"\n  Testing {module_name} properties ({len(all_props)} total):")
@@ -592,7 +924,7 @@ class TestOrcaDBusIntegration:
                         "success": True,
                         "original_value": current_value,
                         "test_value": test_value,
-                        "actual_new_value": new_value
+                        "actual_new_value": new_value,
                     }
                 return {"success": True, "value": current_value}
             except (DBusError, AttributeError, TypeError, ValueError) as error:
@@ -639,8 +971,11 @@ class TestOrcaDBusIntegration:
                     else:
                         print(f"      - {prop}: ERROR - {res['error']}")
 
-        failed = [f"{prop}: {res['error']}" for prop, res in result["result"].items()
-                  if not res["success"]]
+        failed = [
+            f"{prop}: {res['error']}"
+            for prop, res in result["result"].items()
+            if not res["success"]
+        ]
         assert not failed, f"{module_name} getter/setter failures: {failed}"
 
     @pytest.mark.dbus
@@ -660,6 +995,24 @@ class TestOrcaDBusIntegration:
         if "GetVoicesForLanguage" in signatures:
             expected = [["language", "str"], ["variant", "str"], ["notify_user", "bool"]]
             actual = signatures["GetVoicesForLanguage"]
-            error_msg = (f"GetVoicesForLanguage signature mismatch: "
-                         f"expected {expected}, got {actual}")
+            error_msg = (
+                f"GetVoicesForLanguage signature mismatch: expected {expected}, got {actual}"
+            )
             assert actual == expected, error_msg
+
+    @pytest.mark.dbus
+    def test_no_unexpected_modules(self, dbus_service_proxy):
+        """Test that no unexpected modules exist - ensures test coverage for all modules."""
+
+        actual_modules = set(dbus_service_proxy.ListModules())
+        expected_modules = set(MODULE_CONFIG.keys())
+        unexpected_modules = actual_modules - expected_modules
+
+        if unexpected_modules:
+            module_list = sorted(unexpected_modules)
+            error_msg = (
+                f"Found {len(unexpected_modules)} unexpected modules that lack test coverage: "
+                f"{module_list}\n"
+                f"Please add configuration for these modules to MODULE_CONFIG in the test file."
+            )
+            assert False, error_msg
