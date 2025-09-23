@@ -72,6 +72,7 @@ lib_sources = [
   'bookmarks.py',
   'braille.py',
   'braille_generator.py',
+  'braille_presenter.py',
   'braille_rolenames.py',
   'brlmon.py',
   'brltablenames.py',

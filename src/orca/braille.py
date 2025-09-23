@@ -203,18 +203,22 @@ TABLE_NAMES = {"Cz-Cz-g1": brltablenames.CZ_CZ_G1,
                "it-it-g1": brltablenames.IT_IT_G1,
                "nl-be-g1": brltablenames.NL_BE_G1}
 
+def get_table_files():
+    """Returns a list of braille table filenames in the tables directory."""
+
+    try:
+        return [fname for fname in os.listdir(tablesdir) if fname[-4:] in (".utb", ".ctb")]
+    except OSError:
+        return []
+
 def list_tables():
     """Returns a list of available braille translation tables."""
 
     tables = {}
-    try:
-        for fname in os.listdir(tablesdir):
-            if fname[-4:] in (".utb", ".ctb"):
-                alias = fname[:-4]
-                tables[TABLE_NAMES.get(alias, alias)] = \
-                    os.path.join(tablesdir, fname)
-    except OSError:
-        pass
+    for fname in get_table_files():
+        alias = fname[:-4]
+        tables[TABLE_NAMES.get(alias, alias)] = \
+            os.path.join(tablesdir, fname)
 
     return tables
 

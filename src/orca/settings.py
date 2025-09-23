@@ -60,6 +60,7 @@ userCustomizableSettings: list[str] = [
     "enableMnemonicSpeaking",
     "enablePositionSpeaking",
     "enableBraille",
+    "enableBrailleContext",
     "disableBrailleEOL",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
@@ -280,6 +281,7 @@ speechSystemOverride: str | None = None
 # Braille
 enableBraille: bool = True
 enableBrailleMonitor: bool = False
+enableBrailleContext: bool = True
 enableFlashMessages: bool = True
 brailleFlashTime: int = 5000
 flashIsPersistent: bool = False
