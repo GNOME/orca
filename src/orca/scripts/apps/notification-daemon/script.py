@@ -33,7 +33,6 @@ from typing import TYPE_CHECKING
 
 from orca import messages
 from orca.scripts import default
-from orca import settings
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
@@ -52,6 +51,5 @@ class Script(default.Script):
         text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
         voice = self.speech_generator.voice(obj=event.source, string=text)
-        self.speak_message(text, voice=voice)
-        self.display_message(text, flash_time=settings.brailleFlashTime)
+        self.present_message(text, voice=voice)
         self.get_notification_presenter().save_notification(text)

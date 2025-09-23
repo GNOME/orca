@@ -41,12 +41,12 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import braille
+from . import braille_presenter
 from . import debug
 from . import focus_manager
 from . import generator
 from . import messages
 from . import object_properties
-from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -92,9 +92,7 @@ class BrailleGenerator(generator.Generator):
     def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns a [result, focused_region] list for presenting obj."""
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return [[], None]
 
         if obj == focus_manager.get_manager().get_locus_of_focus() \
@@ -198,8 +196,7 @@ class BrailleGenerator(generator.Generator):
         return result, focused_region
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
-        if settings_manager.get_manager().get_setting("brailleRolenameStyle") \
-                == settings.BRAILLE_ROLENAME_STYLE_SHORT:
+        if not braille_presenter.get_presenter().use_full_rolenames():
             rv = shortRoleNames.get(args.get("role", AXObject.get_role(obj)))
             if rv:
                 return rv
@@ -244,8 +241,6 @@ class BrailleGenerator(generator.Generator):
 
         result = []
         role = args.get('role', AXObject.get_role(obj))
-        verbosity_level = settings_manager.get_manager().get_setting('brailleVerbosityLevel')
-
         do_not_present = [Atspi.Role.UNKNOWN,
                         Atspi.Role.REDUNDANT_OBJECT,
                         Atspi.Role.FILLER,
@@ -256,14 +251,14 @@ class BrailleGenerator(generator.Generator):
         if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             do_not_present.append(AXObject.get_role(obj))
 
-        if verbosity_level == settings.VERBOSITY_LEVEL_BRIEF:
+        is_verbose = braille_presenter.get_presenter().use_verbose_braille()
+        if not is_verbose:
             do_not_present.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
         level = AXUtilities.get_heading_level(obj)
         if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
-        elif verbosity_level == settings.VERBOSITY_LEVEL_VERBOSE \
-           and not args.get('readingRow', False) and role not in do_not_present:
+        elif is_verbose and not args.get('readingRow', False) and role not in do_not_present:
             result.append(self.get_localized_role_name(obj, **args))
         return result
 
@@ -278,7 +273,7 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not settings_manager.get_manager().get_setting('enableBrailleContext'):
+        if not braille_presenter.get_presenter().get_display_ancestors():
             return []
         if self._script.get_table_navigator().last_input_event_was_navigation_command():
             return []
@@ -302,8 +297,7 @@ class BrailleGenerator(generator.Generator):
     ################################### KEYBOARD ###################################
 
     def _generate_keyboard_accelerator(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        verbosity_level = settings_manager.get_manager().get_setting('brailleVerbosityLevel')
-        if verbosity_level == settings.VERBOSITY_LEVEL_BRIEF:
+        if not braille_presenter.get_presenter().use_verbose_braille():
             return []
 
         result = []
@@ -348,7 +342,7 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_eol(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if settings_manager.get_manager().get_setting("disableBrailleEOL"):
+        if not braille_presenter.get_presenter().get_end_of_line_indicator_is_enabled():
             return []
 
         if not (AXUtilities.is_editable(obj) or AXUtilities.is_code(obj)):

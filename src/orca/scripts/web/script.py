@@ -49,6 +49,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from orca import braille
+from orca import braille_presenter
 from orca import caret_navigator
 from orca import cmdnames
 from orca import keybindings
@@ -831,9 +832,7 @@ class Script(default.Script):
         tokens = ["WEB: updating braille for", obj, args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE: disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return
 
         if self._in_focus_mode and "\ufffc" not in AXText.get_all_text(obj):

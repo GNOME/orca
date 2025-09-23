@@ -42,10 +42,10 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import braille
+from . import braille_presenter
 from . import debug
 from . import focus_manager
 from . import script_manager
-from . import settings
 from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
@@ -602,7 +602,7 @@ class Line:
                     regions.append(braille.Region(" "))
                 regions.append(region)
 
-        if not settings.disableBrailleEOL:
+        if braille_presenter.get_presenter().get_end_of_line_indicator_is_enabled():
             if regions:
                 regions.append(braille.Region(" "))
             regions.append(braille.Region("$l"))

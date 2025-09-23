@@ -55,6 +55,8 @@ class TestFlatReviewPresenter:
             "orca.speech_and_verbosity_manager",
             "orca.ax_event_synthesizer",
             "orca.ax_text",
+            "orca.braille_presenter",
+            "orca.orca_platform",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -91,6 +93,9 @@ class TestFlatReviewPresenter:
         flat_review_context_mock.get_current_character = test_context.Mock(return_value="t")
         flat_review_context_mock.get_current_item = test_context.Mock(return_value="test item")
         flat_review_context_mock.get_contents = test_context.Mock(return_value="test content")
+        flat_review_context_mock.get_current_braille_regions = test_context.Mock(
+            return_value=([], None)
+        )
 
         flat_review_context_mock.go_next_line = test_context.Mock(return_value=True)
         flat_review_context_mock.go_previous_line = test_context.Mock(return_value=True)
@@ -216,6 +221,16 @@ class TestFlatReviewPresenter:
         speech_verbosity_mock.get_manager = test_context.Mock(
             return_value=speech_verbosity_instance
         )
+
+        braille_presenter_mock = essential_modules["orca.braille_presenter"]
+        braille_presenter_instance = test_context.Mock()
+        braille_presenter_instance.use_braille = test_context.Mock(return_value=True)
+        braille_presenter_mock.get_presenter = test_context.Mock(
+            return_value=braille_presenter_instance
+        )
+
+        platform_mock = essential_modules["orca.orca_platform"]
+        platform_mock.tablesdir = "/usr/share/liblouis/tables"
 
         essential_modules["flat_review_context"] = flat_review_context_mock
         essential_modules["focus_manager_instance"] = focus_manager_instance

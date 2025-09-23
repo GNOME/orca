@@ -267,20 +267,8 @@ rewindAndFastForwardInSayAll: bool = False
 # Managed by flat_review_presenter.py
 flatReviewIsRestricted: bool = False
 
-# Profiles
-startingProfile: list[str] = ['Default', 'default']
-activeProfile: list[str] = ['Default', 'default']
-profile: list[str] = ['Default', 'default']
-
-# Speech
-speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
-speechServerFactory: str = "speechdispatcherfactory"
-speechServerInfo: list[str] | None = None # None means let the factory decide.
-speechSystemOverride: str | None = None
-
-# Braille
+# Managed by braille_presenter.py
 enableBraille: bool = True
-enableBrailleMonitor: bool = False
 enableBrailleContext: bool = True
 enableFlashMessages: bool = True
 brailleFlashTime: int = 5000
@@ -295,6 +283,20 @@ brailleSelectorIndicator: int = BRAILLE_UNDERLINE_BOTH
 brailleLinkIndicator: int = BRAILLE_UNDERLINE_BOTH
 textAttributesBrailleIndicator: int = BRAILLE_UNDERLINE_NONE
 brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
+
+# Profiles
+startingProfile: list[str] = ['Default', 'default']
+activeProfile: list[str] = ['Default', 'default']
+profile: list[str] = ['Default', 'default']
+
+# Speech
+speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
+speechServerFactory: str = "speechdispatcherfactory"
+speechServerInfo: list[str] | None = None # None means let the factory decide.
+speechSystemOverride: str | None = None
+
+# Braille Monitor
+enableBrailleMonitor: bool = False
 
 # Sound
 enableSound: bool = True

@@ -43,6 +43,7 @@ import re
 from typing import Any, Callable, TYPE_CHECKING
 
 from orca import braille
+from orca import braille_presenter
 from orca import cmdnames
 from orca import debug
 from orca import event_manager
@@ -653,9 +654,7 @@ class Script(script.Script):
     def update_braille(self, obj: Atspi.Accessible, **args) -> None:
         """Updates the braille display to show obj."""
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE: update disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return
 
         if not obj:
@@ -727,8 +726,7 @@ class Script(script.Script):
         associated with cell 0."""
 
         if isinstance(event, input_event.KeyboardEvent) \
-           and not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
+           and not braille_presenter.get_presenter().use_braille():
             msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -782,8 +780,7 @@ class Script(script.Script):
         associated with cell 0."""
 
         if isinstance(event, input_event.KeyboardEvent) \
-           and not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
+           and not braille_presenter.get_presenter().use_braille():
             msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1680,9 +1677,7 @@ class Script(script.Script):
     def _update_braille_caret_position(self, obj: Atspi.Accessible) -> None:
         """Try to reposition the cursor without having to do a full update."""
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE: update caret disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return
 
         needs_repainting = True
@@ -1943,9 +1938,7 @@ class Script(script.Script):
         tokens = ["DEFAULT: Displaying", contents, args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "DEFAULT: Braille disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return
 
         braille.clear()
@@ -2036,28 +2029,22 @@ class Script(script.Script):
             if message:
                 self.speak_message(message, voice=voice, reset_styles=reset_styles, force=force)
 
-        if (settings_manager.get_manager().get_setting("enableBraille") \
-             or settings_manager.get_manager().get_setting("enableBrailleMonitor")) \
-           and settings_manager.get_manager().get_setting("enableFlashMessages"):
-            if not settings_manager.get_manager().get_setting("flashIsDetailed"):
-                message = brief
-            else:
-                message = full
-            if not message:
-                return
+        presenter = braille_presenter.get_presenter()
+        if not (presenter.use_braille() and presenter.get_flash_messages_are_enabled()):
+            return
 
-            if isinstance(message[0], list):
-                message = message[0]
-            if isinstance(message, list):
-                message = [i for i in message if isinstance(i, str)]
-                message = " ".join(message)
+        message = full if presenter.get_flash_messages_are_detailed() else brief
+        if not message:
+            return
 
-            if settings_manager.get_manager().get_setting("flashIsPersistent"):
-                duration = -1
-            else:
-                duration = settings_manager.get_manager().get_setting("brailleFlashTime")
+        if isinstance(message[0], list):
+            message = message[0]
+        if isinstance(message, list):
+            message = [i for i in message if isinstance(i, str)]
+            message = " ".join(message)
 
-            braille.displayMessage(message, flashTime=duration)
+        duration = presenter.get_flashtime_from_settings()
+        braille.displayMessage(message, flashTime=duration)
 
     @staticmethod
     def __play(sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
@@ -2087,9 +2074,7 @@ class Script(script.Script):
           a cursor routing key.
         """
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE: display message disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return
 
         braille.displayMessage(message, cursor, flash_time)

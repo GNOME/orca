@@ -43,6 +43,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import braille
+from . import braille_presenter
 from . import cmdnames
 from . import dbus_service
 from . import debug
@@ -1307,9 +1308,7 @@ class FlatReviewPresenter:
     def _update_braille(self, script: default.Script) -> None:
         """Obtains the braille regions for the current flat review line and displays them."""
 
-        if not settings_manager.get_manager().get_setting("enableBraille") \
-           and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
-            debug.print_message(debug.LEVEL_INFO, "BRAILLE: update review disabled", True)
+        if not braille_presenter.get_presenter().use_braille():
             return
 
         self._context = self.get_or_create_context(script)
