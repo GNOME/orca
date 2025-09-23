@@ -554,5 +554,3 @@ class TestAXUtilitiesDebugging:
 
         result = AXUtilitiesDebugging.object_details_as_string(mock_obj, indent="  ")
         assert "  app='TestApp' name='button name'" in result
-
-

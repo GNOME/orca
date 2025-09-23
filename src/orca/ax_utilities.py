@@ -26,6 +26,8 @@
 
 """Utilities for performing tasks related to accessibility inspection."""
 
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"

@@ -147,6 +147,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.savedGain = None
         self.savedPitch = None
         self.savedRate = None
+        self.typing_echo_grid = None
         self._isInitialSetup = False
         self.selectedFamilyChoices = {}
         self.selectedLanguageChoices = {}
@@ -343,7 +344,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.window = self.get_widget("orcaSetupWindow")
 
-        self._setKeyEchoItems()
+        presenter = self.script.get_typing_echo_presenter()
+        self.typing_echo_grid = presenter.create_preferences_grid()
+        notebook = self.get_widget("notebook")
+        echo_label = Gtk.Label(label=guilabels.TABS_ECHO)
+        echo_label.show()
+        notebook.insert_page(self.typing_echo_grid, echo_label, 4)
 
         self.speechSystemsModel  = \
                         self._initComboBox(self.get_widget("speechSystems"))
@@ -1388,6 +1394,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         prefs = self.prefsDict
 
+        self.typing_echo_grid.reload()
+
         # Speech pane.
         #
         enable = prefs.get("enableSpeech", settings.enableSpeech)
@@ -1664,35 +1672,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         duration = prefs["brailleFlashTime"]
         self.get_widget("brailleFlashTimeSpinButton").set_value(duration / 1000)
 
-        # Key Echo pane.
-        #
-        self.get_widget("keyEchoCheckButton").set_active( \
-                        prefs["enableKeyEcho"])
-        self.get_widget("enableAlphabeticKeysCheckButton").set_active(
-                        prefs.get("enableAlphabeticKeys", settings.enableAlphabeticKeys))
-        self.get_widget("enableNumericKeysCheckButton").set_active(
-                        prefs.get("enableNumericKeys", settings.enableNumericKeys))
-        self.get_widget("enablePunctuationKeysCheckButton").set_active(
-                        prefs.get("enablePunctuationKeys", settings.enablePunctuationKeys))
-        self.get_widget("enableSpaceCheckButton").set_active(
-                        prefs.get("enableSpace", settings.enableSpace))
-        self.get_widget("enableModifierKeysCheckButton").set_active( \
-                        prefs["enableModifierKeys"])
-        self.get_widget("enableFunctionKeysCheckButton").set_active( \
-                        prefs["enableFunctionKeys"])
-        self.get_widget("enableActionKeysCheckButton").set_active( \
-                        prefs["enableActionKeys"])
-        self.get_widget("enableNavigationKeysCheckButton").set_active( \
-                        prefs["enableNavigationKeys"])
-        self.get_widget("enableDiacriticalKeysCheckButton").set_active( \
-                        prefs["enableDiacriticalKeys"])
-        self.get_widget("enableEchoByCharacterCheckButton").set_active( \
-                        prefs["enableEchoByCharacter"])
-        self.get_widget("enableEchoByWordCheckButton").set_active( \
-                        prefs["enableEchoByWord"])
-        self.get_widget("enableEchoBySentenceCheckButton").set_active( \
-                        prefs["enableEchoBySentence"])
-
         # Text attributes pane.
         #
         self._createTextAttributesTreeView()
@@ -1913,23 +1892,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             cell.set_fixed_size(size[0] - 29, -1)
 
         return model
-
-    def _setKeyEchoItems(self):
-        """[In]sensitize the checkboxes for the various types of key echo,
-        depending upon whether the value of the key echo check button is set.
-        """
-
-        enable = self.get_widget("keyEchoCheckButton").get_active()
-        self.get_widget("enableAlphabeticKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enableNumericKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enablePunctuationKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enableSpaceCheckButton").set_sensitive(enable)
-        self.get_widget("enableModifierKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enableFunctionKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enableActionKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enableNavigationKeysCheckButton").set_sensitive(enable)
-        self.get_widget("enableDiacriticalKeysCheckButton").set_sensitive( \
-          enable)
 
     def _presentMessage(self, text, interrupt=False):
         """If the text field is not None, presents the given text, optionally
@@ -2491,21 +2453,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # strip "CheckButton" from the end.
         settingName = settingName[:-11]
         self.prefsDict[settingName] = widget.get_active()
-
-    def keyEchoChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           keyEchoCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Key Echo' checkbox. Set the
-           'enableKeyEcho' preference to the new value. [In]sensitize
-           the checkboxes for the various types of key echo, depending
-           upon whether this value is checked or unchecked.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableKeyEcho"] = widget.get_active()
-        self._setKeyEchoItems()
 
     def brailleSelectionChanged(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -3205,6 +3152,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         self.saveBasicSettings()
+        updated_values = self.typing_echo_grid.save_settings()
+        self.prefsDict.update(updated_values)
         activeProfile = self.getComboBoxList(self.profilesCombo)
         startingProfile = self.getComboBoxList(self.startingProfileCombo)
 
@@ -3215,6 +3164,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.writeUserPreferences()
         orca.load_user_settings(self.script)
+        self.typing_echo_grid.reload()
         braille.checkBrailleSetting()
         self._initSpeechState()
         self._populateKeyBindings()
@@ -3467,6 +3417,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.prefsDict = settings_manager.get_manager().get_general_settings(profile[1])
 
         orca.load_user_settings(skip_reload_message=True)
+        self.typing_echo_grid.reload()
 
         self._initGUIState()
 
@@ -3477,4 +3428,3 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._populateKeyBindings()
 
         self.__initProfileCombo()
-
