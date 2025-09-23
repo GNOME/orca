@@ -45,6 +45,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 
 from . import braille
+from . import braille_presenter
 from . import clipboard
 from . import dbus_service
 from . import debug
@@ -88,7 +89,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         if is_reload and not skip_reload_message:
             script.speak_message(messages.SETTINGS_RELOADED)
 
-    if settings_manager.get_manager().get_setting('enableBraille'):
+    if braille_presenter.get_presenter().get_braille_is_enabled():
         braille.init(input_event_manager.get_manager().process_braille_event)
 
     # TODO - JD: This ultimately belongs in an extension manager.
@@ -153,7 +154,7 @@ def shutdown(script=None, _event=None, _signum=None):
     #
     if settings.enableSpeech:
         speech_and_verbosity_manager.get_manager().shutdown_speech()
-    if settings.enableBraille:
+    if braille_presenter.get_presenter().get_braille_is_enabled():
         braille.shutdown()
     if settings.enableSound:
         player = sound.get_player()
