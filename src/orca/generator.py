@@ -608,9 +608,12 @@ class Generator:
         obj_name = AXObject.get_name(obj) or AXUtilities.get_displayed_label(obj)
         obj_desc = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
         descendants = AXUtilities.get_on_screen_objects(obj)
+        labelled_by = AXUtilities.get_is_labelled_by(obj)
         used_description_as_static_text = False
         for child in descendants:
             if child == obj:
+                continue
+            if child in labelled_by:
                 continue
             if AXUtilities.is_section(child):
                 continue
