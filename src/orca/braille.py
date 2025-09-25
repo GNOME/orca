@@ -881,7 +881,7 @@ def getRegionAtCell(cell):
     return [None, -1]
 
 def getCaretContext(event):
-    """Gets the accesible and caret offset associated with the given
+    """Gets the accessible and caret offset associated with the given
     event.  The event should have a BrlAPI event that contains an
     argument value that corresponds to a cell on the display.
 
@@ -930,7 +930,7 @@ def getShowingLine():
         return Line()
 
 def setFocus(region, panToFocus=True, indicate_links=True):
-    """Specififes the region with focus.  This region will be positioned
+    """Specifies the region with focus.  This region will be positioned
     at the home position if panToFocus is True.
 
     Arguments:
@@ -993,7 +993,7 @@ def _idleBraille():
             _brlAPI.setParameter(brlapi.PARAM_CLIENT_PRIORITY, 0, False, BRLAPI_PRIORITY_IDLE)
             idle = True
         except Exception:
-            msg = "BRAILLE: Idling braille failled. This requires BrlAPI >= 0.8."
+            msg = "BRAILLE: Idling braille failed. This requires BrlAPI >= 0.8."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             msg = "BRAILLE: Idling braille succeeded."
