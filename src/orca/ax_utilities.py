@@ -583,6 +583,8 @@ class AXUtilities:
 
         if AXUtilitiesRole.is_combo_box(obj):
             selected_children = AXSelection.get_selected_children(obj)
+            if not selected_children:
+                return -1
             if len(selected_children) == 1:
                 obj = selected_children[0]
 
@@ -641,6 +643,8 @@ class AXUtilities:
 
         if AXUtilitiesRole.is_combo_box(obj):
             selected_children = AXSelection.get_selected_children(obj)
+            if not selected_children:
+                return -1
             if len(selected_children) == 1:
                 obj = selected_children[0]
 
