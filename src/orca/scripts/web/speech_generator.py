@@ -624,8 +624,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             args["role"] = Atspi.Role.IMAGE
         elif self._script.utilities.treat_as_div(obj, offset=args.get("startOffset")):
             args["role"] = Atspi.Role.SECTION
-        else:
-            args["role"] = self._get_functional_role(obj, **args)
 
         if "priorObj" not in args:
             document = self._script.utilities.get_top_level_document_for_object(obj)

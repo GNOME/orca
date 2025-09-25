@@ -117,6 +117,9 @@ class SpeechGenerator(generator.Generator):
     def generate_speech(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech presentation for obj."""
 
+        if not args.get("role"):
+            args["role"] = self._get_functional_role(obj)
+
         rv = self.generate(obj, **args)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
             tokens = ["SPEECH GENERATOR: Results for", obj, "are pauses only"]
