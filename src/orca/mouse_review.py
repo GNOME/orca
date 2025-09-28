@@ -59,6 +59,7 @@ except Exception:
     pass
 
 from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import keybindings
@@ -366,7 +367,7 @@ class MouseReviewer:
     """Main class for the mouse-review feature."""
 
     def __init__(self) -> None:
-        self._active: bool = settings_manager.get_manager().get_setting("enableMouseReview")
+        self._active: bool = self.get_is_enabled()
         self._current_mouse_over: _ItemContext = _ItemContext()
         self._workspace = None
         self._windows: list[Wnck.Window] = []
@@ -382,7 +383,12 @@ class MouseReviewer:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._active = False
+            return
 
+        msg = "MOUSE REVIEW: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("MouseReviewer", self)
         if not self._active:
             return
 
@@ -519,24 +525,56 @@ class MouseReviewer:
 
         return obj
 
-    def toggle(self, script=None, _event=None) -> bool:
-        """Toggle mouse reviewing on or off."""
+    @dbus_service.getter
+    def get_is_enabled(self) -> bool:
+        """Returns whether mouse review is enabled (requires Wnck)."""
+
+        return settings_manager.get_manager().get_setting("enableMouseReview")
+
+    @dbus_service.setter
+    def set_is_enabled(self, value: bool) -> bool:
+        """Sets whether mouse review is enabled (requires Wnck)."""
 
         if not _MOUSE_REVIEW_CAPABLE:
+            msg = "MOUSE REVIEW ERROR: Wnck is not available"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = f"MOUSE REVIEW: Setting enable mouse review to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if value == self._active:
             return True
 
-        self._active = not self._active
-        settings_manager.get_manager().set_setting("enableMouseReview", self._active)
-
-        if not self._active:
-            self.deactivate()
-            msg = messages.MOUSE_REVIEW_DISABLED
-        else:
+        settings_manager.get_manager().set_setting("enableMouseReview", value)
+        if value:
             self.activate()
-            msg = messages.MOUSE_REVIEW_ENABLED
+        else:
+            self.deactivate()
 
-        script = script_manager.get_manager().get_active_script()
-        if script is not None:
+        return True
+
+    @dbus_service.command
+    def toggle(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Toggle mouse reviewing on or off (requires Wnck)."""
+
+        tokens = ["MOUSE REVIEW: Toggle. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        new_state = not self._active
+        if not self.set_is_enabled(new_state):
+            return False
+
+        if notify_user:
+            if new_state:
+                msg = messages.MOUSE_REVIEW_ENABLED
+            else:
+                msg = messages.MOUSE_REVIEW_DISABLED
             script.present_message(msg)
 
         return True
