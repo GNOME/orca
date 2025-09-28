@@ -62,6 +62,7 @@ class TestSpeechAndVerbosityManager:
             "orca.ax_utilities",
             "orca.colornames",
             "orca.ax_utilities_text",
+            "orca.ax_document",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -771,6 +772,7 @@ class TestSpeechAndVerbosityManager:
         (
             essential_modules["orca.ax_object"].AXObject.find_ancestor_inclusive.return_value
         ) = mock_code_obj
+        essential_modules["orca.ax_document"].AXDocument.is_plain_text.return_value = False
         mock_obj = test_context.Mock()
         text = "Hello, world! How are you?"
         result = SpeechAndVerbosityManager._adjust_for_verbalized_punctuation(mock_obj, text)
@@ -788,6 +790,7 @@ class TestSpeechAndVerbosityManager:
         (
             essential_modules["orca.ax_object"].AXObject.find_ancestor_inclusive.return_value
         ) = mock_code_obj
+        essential_modules["orca.ax_document"].AXDocument.is_plain_text.return_value = False
         mock_obj = test_context.Mock()
         result = SpeechAndVerbosityManager._should_verbalize_punctuation(mock_obj)
         assert result is True
