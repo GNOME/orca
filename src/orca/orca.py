@@ -94,8 +94,9 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         braille.init(input_event_manager.get_manager().process_braille_event)
 
     # TODO - JD: This ultimately belongs in an extension manager.
-    if settings_manager.get_manager().get_setting('enableMouseReview'):
-        mouse_review.get_reviewer().activate()
+    mouse_reviewer = mouse_review.get_reviewer()
+    if mouse_reviewer.get_is_enabled():
+        mouse_reviewer.activate()
 
     if settings_manager.get_manager().get_setting('enableSound'):
         sound.get_player().init()

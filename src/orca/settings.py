@@ -284,6 +284,9 @@ brailleLinkIndicator: int = BRAILLE_UNDERLINE_BOTH
 textAttributesBrailleIndicator: int = BRAILLE_UNDERLINE_NONE
 brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
 
+# Managed by mouse_review.py
+enableMouseReview: bool = False
+
 # Profiles
 startingProfile: list[str] = ['Default', 'default']
 activeProfile: list[str] = ['Default', 'default']
@@ -312,7 +315,6 @@ orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout: float = 0.5
 
 # Mouse
-enableMouseReview: bool = False
 presentToolTips: bool = False
 
 # Progressbars
