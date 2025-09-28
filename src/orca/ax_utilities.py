@@ -327,7 +327,7 @@ class AXUtilities:
             return result, reason
 
         if AXUtilitiesRole.is_menu(obj, role) or AXUtilitiesRole.is_list(obj, role):
-            result = AXUtilitiesRole.is_combo_box(AXObject.get_parent(obj))
+            result = AXObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box) is not None
             if result:
                 reason = "is inside combo box"
             return result, reason
