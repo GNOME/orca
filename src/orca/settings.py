@@ -287,6 +287,10 @@ brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
 # Managed by mouse_review.py
 enableMouseReview: bool = False
 
+# Managed by structural_navigator.py
+largeObjectTextLength: int = 75
+wrappedStructuralNavigation: bool = True
+
 # Profiles
 startingProfile: list[str] = ['Default', 'default']
 activeProfile: list[str] = ['Default', 'default']
@@ -330,8 +334,6 @@ ignoreStatusBarProgressBars: bool = True
 
 # Structural navigation
 structuralNavigationEnabled: bool = True
-largeObjectTextLength: int = 75
-wrappedStructuralNavigation: bool = True
 inferLiveRegions: bool = True
 
 # table navigation
