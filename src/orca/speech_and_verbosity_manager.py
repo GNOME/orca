@@ -58,6 +58,7 @@ from . import settings_manager
 from . import speech
 from . import speechserver
 from .acss import ACSS
+from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -1828,7 +1829,12 @@ class SpeechAndVerbosityManager:
     def _should_verbalize_punctuation(obj: Atspi.Accessible) -> bool:
         """Returns True if punctuation should be verbalized."""
 
-        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_code) is None:
+        ancestor = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_code)
+        if ancestor is None:
+            return False
+
+        document = AXObject.find_ancestor_inclusive(ancestor, AXUtilities.is_document)
+        if AXDocument.is_plain_text(document):
             return False
 
         # If the user has set their punctuation level to All, then the synthesizer will
