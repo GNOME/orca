@@ -95,9 +95,6 @@ class BrailleGenerator(generator.Generator):
         if not braille_presenter.get_presenter().use_braille():
             return [[], None]
 
-        if not args.get("role"):
-            args["role"] = self._get_functional_role(obj)
-
         if obj == focus_manager.get_manager().get_locus_of_focus() \
            and not args.get("formatType", None):
             args["formatType"] = "focused"
