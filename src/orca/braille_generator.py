@@ -292,7 +292,8 @@ class BrailleGenerator(generator.Generator):
         while parent:
             parent_result = []
             if not AXUtilities.is_layout_only(parent):
-                parent_result = self.generate(parent, **args)
+                parent_args = {k: v for k, v in args.items() if k != "role"}
+                parent_result = self.generate(parent, **parent_args)
             if result and parent_result:
                 result.append(braille.Region(" "))
             result.extend(parent_result)
