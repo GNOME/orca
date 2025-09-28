@@ -97,9 +97,6 @@ class BrailleGenerator(generator.Generator):
             debug.print_message(debug.LEVEL_INFO, "BRAILLE GENERATOR: generation disabled", True)
             return [[], None]
 
-        if not args.get("role"):
-            args["role"] = self._get_functional_role(obj)
-
         if obj == focus_manager.get_manager().get_locus_of_focus() \
            and not args.get("formatType", None):
             args["formatType"] = "focused"

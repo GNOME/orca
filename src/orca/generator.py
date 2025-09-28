@@ -272,6 +272,9 @@ class Generator:
     def generate(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns the presentation of the object."""
 
+        if not args.get("role"):
+            args["role"] = self._get_functional_role(obj)
+
         _generator = self._generators.get(  # type: ignore
             args.get("role") or AXObject.get_role(obj)
         )
