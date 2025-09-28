@@ -1071,6 +1071,36 @@ class StructuralNavigator:
         self.remove_bindings(script, reason)
         self.add_bindings(script, reason)
 
+    @dbus_service.getter
+    def get_navigation_wraps(self) -> bool:
+        """Returns whether navigation wraps when reaching the top/bottom of the document."""
+
+        return settings_manager.get_manager().get_setting("wrappedStructuralNavigation")
+
+    @dbus_service.setter
+    def set_navigation_wraps(self, value: bool) -> bool:
+        """Sets whether navigation wraps when reaching the top/bottom of the document."""
+
+        msg = f"STRUCTURAL NAVIGATOR: Setting navigation wraps to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("wrappedStructuralNavigation", value)
+        return True
+
+    @dbus_service.getter
+    def get_large_object_text_length(self) -> int:
+        """Returns the minimum number of characters to be considered a 'large object'."""
+
+        return settings_manager.get_manager().get_setting("largeObjectTextLength")
+
+    @dbus_service.setter
+    def set_large_object_text_length(self, value: int) -> bool:
+        """Sets the minimum number of characters to be considered a 'large object'."""
+
+        msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("largeObjectTextLength", value)
+        return True
+
     @dbus_service.command
     def cycle_mode(
         self,
@@ -1139,7 +1169,7 @@ class StructuralNavigator:
             return None
 
         if should_wrap is None:
-            should_wrap = settings_manager.get_manager().get_setting("wrappedStructuralNavigation")
+            should_wrap = self.get_navigation_wraps()
 
         # If we're in a matching object, return the next/previous one in the list.
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -1631,7 +1661,7 @@ class StructuralNavigator:
     ########################
 
     def _get_all_large_objects(self, script: default.Script) -> list[Atspi.Accessible]:
-        minimum_length = settings_manager.get_manager().get_setting("largeObjectTextLength")
+        minimum_length = self.get_large_object_text_length()
 
         def _is_large(obj):
             if AXUtilities.is_heading(obj):
