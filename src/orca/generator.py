@@ -76,6 +76,7 @@ class Generator:
     CACHED_TEXT: dict = {}
     CACHED_TEXT_EXPANDING_EOCS: dict = {}
     CACHED_TREE_ITEM_LEVEL: dict = {}
+    CACHED_DESCENDANTS: dict = {}
     USED_DESCRIPTION_FOR_NAME: dict = {}
     USED_DESCRIPTION_FOR_STATIC_TEXT: dict = {}
 
@@ -223,6 +224,7 @@ class Generator:
                 Generator.CACHED_TEXT = {}
                 Generator.CACHED_TEXT_EXPANDING_EOCS = {}
                 Generator.CACHED_TREE_ITEM_LEVEL = {}
+                Generator.CACHED_DESCENDANTS = {}
                 Generator.USED_DESCRIPTION_FOR_NAME = {}
                 Generator.USED_DESCRIPTION_FOR_STATIC_TEXT = {}
 
@@ -603,13 +605,21 @@ class Generator:
         return role
 
     @log_generator_output
-    def _generate_descendants(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = []
-        obj_name = AXObject.get_name(obj) or AXUtilities.get_displayed_label(obj)
-        obj_desc = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
+    def _get_presentable_descendants(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
+        """Returns a list of presentable descendants of obj."""
+
+        if hash(obj) in Generator.CACHED_DESCENDANTS:
+            return Generator.CACHED_DESCENDANTS.get(hash(obj), [])
+
         descendants = AXUtilities.get_on_screen_objects(obj)
+        if not descendants:
+            Generator.CACHED_DESCENDANTS[hash(obj)] = []
+            return []
+
         labelled_by = AXUtilities.get_is_labelled_by(obj)
-        used_description_as_static_text = False
+        obj_name = AXObject.get_name(obj) or AXUtilities.get_displayed_label(obj)
+
+        presentable_descendants = []
         for child in descendants:
             if child == obj:
                 continue
@@ -631,20 +641,33 @@ class Generator:
                 continue
 
             child_name = AXObject.get_name(child)
-            if AXUtilities.is_button(child):
-                if child_name in obj_name:
-                    continue
-                if AXUtilities.has_popup(child):
-                    continue
+            if self._strings_are_redundant(obj_name, child_name):
+                continue
 
             if AXUtilities.is_label(child):
                 if not AXText.has_presentable_text(child):
                     continue
                 if AXUtilities.get_is_label_for(child):
                     continue
-                if self._strings_are_redundant(obj_name, child_name):
-                    continue
-                if self._strings_are_redundant(obj_desc, child_name):
+
+            presentable_descendants.append(child)
+
+        Generator.CACHED_DESCENDANTS[hash(obj)] = presentable_descendants
+        return presentable_descendants
+
+    @log_generator_output
+    def _generate_descendants(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        descendants = self._get_presentable_descendants(obj)
+        if not descendants:
+            return []
+
+        result = []
+        used_description_as_static_text = False
+        obj_desc = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
+
+        for child in descendants:
+            if AXUtilities.is_label(child):
+                if self._strings_are_redundant(obj_desc, AXObject.get_name(child)):
                     used_description_as_static_text = True
 
             child_result = self.generate(child, includeContext=False, omitDescription=True)
