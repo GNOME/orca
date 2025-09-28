@@ -637,7 +637,7 @@ class Generator:
             if AXUtilities.is_label(child):
                 if not AXText.has_presentable_text(child):
                     continue
-                if AXUtilities.get_is_label_for(obj):
+                if AXUtilities.get_is_label_for(child):
                     continue
                 if self._strings_are_redundant(obj_name, child_name):
                     continue
