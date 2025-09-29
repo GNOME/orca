@@ -1,3 +1,23 @@
+48.7 - 29 September 2025
+
+General:
+
+* Fix bug in which caching labelled-by/described-by text resulted
+  in presenting stale information.
+
+* Improve performance when determining on-screen objects based on
+  bounding-box intersections.
+
+* Ignore collapsed events from objects we're not on/in.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  eo              Esperanto                 Kristjan SCHMIDT
+  es              Spanish                   Daniel Mustieles
+  ro              Romanian                  Antonio Marin
+
+=========
+
 48.6 - 25 June 2025
 
 Web:
