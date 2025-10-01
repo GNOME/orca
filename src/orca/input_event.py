@@ -700,7 +700,11 @@ class KeyboardEvent(InputEvent):
         elif self._handler and self._handler.function is not None and self._handler.is_enabled():
             msg = f"KEYBOARD EVENT: Handler is {self._handler}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._handler.function(self._script, self)
+            try:
+                self._handler.function(self._script, self)
+            except GLib.GError as error:
+                msg = f"KEYBOARD EVENT: Exception calling handler function: {error}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
         else:
             msg = "KEYBOARD EVENT: No enabled handler or consumer"
             debug.print_message(debug.LEVEL_INFO, msg, True)
