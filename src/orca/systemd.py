@@ -32,6 +32,8 @@ import socket
 import time
 from gi.repository import GLib
 
+from . import debug
+
 class Systemd:
     """Orca's integration with the systemd service manager"""
 
@@ -61,6 +63,8 @@ class Systemd:
         # Reference:
         # https://freedesktop.org/software/systemd/man/sd_notify.html#Standalone%20Implementations
         if self._notify_socket:
+            debug.print_message(
+                debug.LEVEL_INFO, f"SYSTEMD: Sending: {message.decode('utf-8')}", True)
             self._notify_socket.sendall(message)
 
     def notify_ready(self) -> None:
@@ -92,8 +96,11 @@ class Systemd:
         # requested, to avoid a situation where timer inaccuracies will
         # cause us to miss the deadline. systemd's code for this pings
         # anywhere from 133% - 200% faster than necessary. For us it's
-        # easier to just ping 2x as fast
-        GLib.timeout_add(self._watchdog_interval // 2, _on_watchdog_tick)
+        # easier to just ping 2x as fast. Use a high priority so that it is
+        # scheduled ahead of other work done on the main loop (e.g. event
+        # processing during a flood).
+        GLib.timeout_add(self._watchdog_interval // 2, _on_watchdog_tick,
+                         priority=GLib.PRIORITY_HIGH)
 
     def is_systemd_managed(self) -> bool:
         """Returns whether or not Orca is being managed by systemd"""
