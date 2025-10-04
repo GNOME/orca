@@ -1461,6 +1461,8 @@ class AXText:
         attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
         if attributes.get("invalid") == "spelling":
             return True
+        if attributes.get("invalid") == "grammar":
+            return False
         if attributes.get("text-spelling") == "misspelled":
             return True
         if attributes.get("underline") in ["error", "spelling"]:
@@ -1474,7 +1476,7 @@ class AXText:
         attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
         if attributes.get("invalid") == "grammar":
             return True
-        if attributes.get("underline") in ["error", "grammar"]:
+        if attributes.get("underline") == "grammar":
             return True
         return False
 
