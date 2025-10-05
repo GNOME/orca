@@ -454,7 +454,7 @@ class Component(Region):
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         script = script_manager.get_manager().get_active_script()
-        if script and script.utilities.grab_focus_before_routing(self.accessible, offset):
+        if script and script.utilities.grab_focus_before_routing(self.accessible):
             AXObject.grab_focus(self.accessible)
 
         if AXObject.do_action(self.accessible, 0):
