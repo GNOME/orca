@@ -1188,6 +1188,10 @@ class Script(default.Script):
             self.toggle_presentation_mode(dummy_event, document)
 
         if not self.utilities.in_document_content(old_focus):
+            if self._focus_mode_is_sticky:
+                self.present_message(messages.MODE_FOCUS_IS_STICKY)
+                return True
+
             sn_navigator.set_mode(self, NavigationMode.DOCUMENT)
             reason = "locus of focus now in document"
             self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
