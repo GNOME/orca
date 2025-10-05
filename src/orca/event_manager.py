@@ -246,7 +246,7 @@ class EventManager:
 
         return None
 
-    def _ignore(self, event: Atspi.Event) -> bool:
+    def _ignore(self, event: Atspi.Event, focus: Atspi.Accessible) -> bool:
         """Returns True if this event should be ignored."""
 
         tokens = ["EVENT MANAGER:", event]
@@ -303,7 +303,6 @@ class EventManager:
 
         # Keep these checks early in the process so we can assume them throughout
         # the rest of our checks.
-        focus = focus_manager.get_manager().get_locus_of_focus()
         if focus == event.source:
             msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -522,6 +521,8 @@ class EventManager:
         msg = f"EVENT MANAGER: Filtering events (raw queue size: {self._raw_event_queue.qsize()})"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
+
         batch_size = 10
         processed = 0
         while processed < batch_size:
@@ -533,7 +534,7 @@ class EventManager:
                 break
 
             processed += 1
-            if self._ignore(e):
+            if self._ignore(e, focus):
                 continue
 
             self._queue_println(e)
@@ -572,7 +573,7 @@ class EventManager:
             return
 
         queue_size = self._raw_event_queue.qsize()
-        if queue_size > 150:
+        if queue_size > 75:
             droppable = (
                 "object:children-changed",
                 "object:state-changed:sensitive",
