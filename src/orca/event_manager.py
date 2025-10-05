@@ -77,11 +77,9 @@ class EventManager:
         self._active: bool = False
         self._paused: bool = False
         self._counter = itertools.count()
-        self._raw_event_queue: queue.Queue[Atspi.Event] = queue.Queue(0)
         self._event_queue: queue.PriorityQueue[
             tuple[int, int, Atspi.Event]
         ] = queue.PriorityQueue(0)
-        self._filter_gidle_id: int = 0
         self._gidle_id: int = 0
         self._gidle_lock = threading.Lock()
         self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
@@ -110,7 +108,6 @@ class EventManager:
 
         input_event_manager.get_manager().stop_key_watcher()
         self._active = False
-        self._raw_event_queue = queue.Queue(0)
         self._event_queue = queue.PriorityQueue(0)
         self._script_listener_counts = {}
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Deactivated', True)
@@ -124,7 +121,6 @@ class EventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._paused = pause
         if clear_queue:
-            self._raw_event_queue = queue.Queue(0)
             self._event_queue = queue.PriorityQueue(0)
         input_event_manager.get_manager().pause_key_watcher(pause, reason)
 
@@ -249,16 +245,17 @@ class EventManager:
     def _ignore(self, event: Atspi.Event) -> bool:
         """Returns True if this event should be ignored."""
 
+        debug.print_message(debug.LEVEL_INFO, '')
         tokens = ["EVENT MANAGER:", event]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._active or self._paused:
-            msg = "EVENT MANAGER: Ignoring because manager is not active or queueing is paused."
+            msg = 'EVENT MANAGER: Ignoring because manager is not active or queueing is paused'
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         event_type = event.type
-        if event_type.startswith(("window", "mouse:button")):
+        if event_type.startswith(('window', 'mouse:button')):
             return False
 
         # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher
@@ -516,85 +513,28 @@ class EventManager:
             tokens[0:0] = ["EVENT MANAGER: Dequeueing"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def _filter_events(self) -> bool:
-        """Filters events from raw queue and adds to priority queue."""
-
-        msg = f"EVENT MANAGER: Filtering events (raw queue size: {self._raw_event_queue.qsize()})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        batch_size = 10
-        processed = 0
-        while processed < batch_size:
-            try:
-                e = self._raw_event_queue.get_nowait()
-            except queue.Empty:
-                msg = "EVENT MANAGER: Raw event queue is empty."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                break
-
-            processed += 1
-            if self._ignore(e):
-                continue
-
-            self._queue_println(e)
-            app = AXUtilities.get_application(e.source)
-            script = script_manager.get_manager().get_script(app, e.source)
-            script.event_cache[e.type] = (e, time.time())
-
-            with self._gidle_lock:
-                priority = self._get_priority(e)
-                counter = next(self._counter)
-                self._event_queue.put((priority, counter, e))
-                tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority}, counter: {counter}"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                if not self._gidle_id:
-                    self._gidle_id = GLib.idle_add(self._dequeue_object_event)
-
-        if not self._raw_event_queue.empty():
-            msg = f"EVENT MANAGER: Remaining events to filter: {self._raw_event_queue.qsize()})"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return GLib.SOURCE_CONTINUE
-
-        msg = "EVENT MANAGER: Filtering complete, removing filter idle."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        with self._gidle_lock:
-            self._filter_gidle_id = 0
-        return GLib.SOURCE_REMOVE
-
     def _enqueue_object_event(self, e: Atspi.Event) -> None:
         """Callback for Atspi object events."""
 
-        # Keep this method super lightweight.
-
-        if not self._active or self._paused:
-            msg = "EVENT MANAGER: Ignoring because manager is not active or queueing is paused."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._ignore(e):
             return
 
-        queue_size = self._raw_event_queue.qsize()
-        if queue_size > 150:
-            droppable = (
-                "object:children-changed",
-                "object:state-changed:sensitive",
-                "object:state-changed:showing"
-            )
-
-            if e.type.startswith(droppable):
-                tokens = ["EVENT MANAGER: Dropping", e, f"due to queue size ({queue_size})"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return
-
-        self._raw_event_queue.put(e)
-        tokens = ["EVENT MANAGER: Enqueueing to raw queue:", e,
-                  f"(size: {self._raw_event_queue.qsize()})"]
+        self._queue_println(e)
+        app = AXUtilities.get_application(e.source)
+        tokens = ["EVENT MANAGER: App for event source is", app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        script = script_manager.get_manager().get_script(app, e.source)
+        script.event_cache[e.type] = (e, time.time())
+
         with self._gidle_lock:
-            if not self._filter_gidle_id:
-                msg = "EVENT MANAGER: Scheduling filter idle callback"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                self._filter_gidle_id = GLib.idle_add(
-                    self._filter_events, priority=GLib.PRIORITY_HIGH_IDLE
-                )
+            priority = self._get_priority(e)
+            counter = next(self._counter)
+            self._event_queue.put((priority, counter, e))
+            tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority}, counter: {counter}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            if not self._gidle_id:
+                self._gidle_id = GLib.idle_add(self._dequeue_object_event)
 
     def _on_no_focus(self) -> bool:
         if focus_manager.get_manager().focus_and_window_are_unknown():
