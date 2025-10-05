@@ -489,7 +489,7 @@ class TestEventManager:
 
         manager._active = case["active"]
         manager._paused = case["paused"]
-        assert manager._ignore(mock_event, None) is case["expected"]
+        assert manager._ignore(mock_event) is case["expected"]
 
     @pytest.mark.parametrize(
         "case",
@@ -535,7 +535,7 @@ class TestEventManager:
             ax_utilities = essential_modules["orca.ax_utilities"]
             ax_utilities.is_window.return_value = case["event_config"]["is_window"]
 
-        assert manager._ignore(mock_event, None) is case["expected_result"]
+        assert manager._ignore(mock_event) is case["expected_result"]
 
     def test_ignore_frame_events(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore for frame events."""
@@ -573,7 +573,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.AXObject.get_name", return_value="mutter-x11-frames"
         )
-        assert manager._ignore(mock_event, None) is True
+        assert manager._ignore(mock_event) is True
 
         regular_app = test_context.Mock()
         test_context.patch(
@@ -588,7 +588,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.AXObject.get_name", return_value="regular-app"
         )
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
     def test_ignore_text_events(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore for text-related events."""
@@ -620,14 +620,14 @@ class TestEventManager:
         manager._event_history = {}
 
         mock_event.type = "object:text-changed:insert"
-        result = manager._ignore(mock_event, None)
+        result = manager._ignore(mock_event)
         assert result is True, f"Expected True but got {result}"
 
         mock_event.detail2 = 100
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
         mock_event.type = "object:text-changed:delete"
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
     @pytest.mark.parametrize(
         "case",
@@ -668,7 +668,7 @@ class TestEventManager:
         ax_utilities.is_alert.return_value = False
         getattr(ax_utilities, case["utility_method"]).return_value = case["utility_value"]
 
-        assert manager._ignore(mock_event, None) is case["expected_result"]
+        assert manager._ignore(mock_event) is case["expected_result"]
 
     def test_ignore_focus_and_selection_events(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore for focus and selection events."""
@@ -687,14 +687,14 @@ class TestEventManager:
         focus_mgr = essential_modules["focus_manager_instance"]
 
         focus_mgr.get_locus_of_focus.return_value = mock_event.source
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
         focus_mgr.get_locus_of_focus.return_value = mock_event.any_data
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
         focus_mgr.get_locus_of_focus.return_value = test_context.Mock()
         ax_utilities.is_selected.return_value = True
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
     def test_ignore_focused_source_events(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore for events from focused sources."""
@@ -741,7 +741,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.AXUtilities.manages_descendants", return_value=False
         )
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
         # - should not be ignored
         mock_event.type = "object:state-changed:focused"
@@ -770,7 +770,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.AXUtilities.manages_descendants", return_value=True
         )
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
     def test_ignore_live_region_events(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore for live region events."""
@@ -795,13 +795,13 @@ class TestEventManager:
         ax_utilities.is_section.return_value = True
 
         ax_object.get_attribute.return_value = "polite"
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
         ax_object.get_attribute.return_value = "off"
         mock_app = test_context.Mock()
         ax_utilities.get_application.return_value = mock_app
         manager._event_history = {}
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
     def test_ignore_spam_filtering(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore spam filtering mechanism."""
@@ -871,7 +871,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.focus_manager.get_manager", return_value=focus_mgr
         )
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
         test_context.patch("time.time", return_value=100.05)
         test_context.patch(
@@ -913,7 +913,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.focus_manager.get_manager", return_value=focus_mgr
         )
-        assert manager._ignore(mock_event, None) is True
+        assert manager._ignore(mock_event) is True
 
         test_context.patch("time.time", return_value=100.2)
         test_context.patch(
@@ -955,7 +955,7 @@ class TestEventManager:
         test_context.patch(
             "orca.event_manager.focus_manager.get_manager", return_value=focus_mgr
         )
-        assert manager._ignore(mock_event, None) is False
+        assert manager._ignore(mock_event) is False
 
     def test_ignore_mutter_events(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._ignore for mutter-x11-frames events."""
@@ -1025,7 +1025,7 @@ class TestEventManager:
             "orca.event_manager.focus_manager.get_manager", return_value=focus_mgr
         )
         manager._event_history = {}
-        assert manager._ignore(mock_event, None) is True
+        assert manager._ignore(mock_event) is True
 
     @pytest.mark.parametrize(
         "case",
@@ -1299,7 +1299,7 @@ class TestEventManager:
             "orca.event_manager.AXObject.get_name", return_value="regular-app"
         )
 
-        result = manager._ignore(mock_event, None)
+        result = manager._ignore(mock_event)
         assert result is case["expected_ignore"]
 
     def test_ignore_live_region_text_insertion(self, test_context: OrcaTestContext) -> None:
@@ -1363,7 +1363,7 @@ class TestEventManager:
             side_effect=lambda obj, attr: "polite" if attr == "live" else None,
         )
 
-        result = manager._ignore(mock_event, None)
+        result = manager._ignore(mock_event)
         assert result is False
 
     def test_ignore_event_history_filtering(self, test_context: OrcaTestContext) -> None:
@@ -1435,13 +1435,13 @@ class TestEventManager:
         )
 
         # First call should not be ignored
-        result1 = manager._ignore(mock_event, None)
+        result1 = manager._ignore(mock_event)
         assert result1 is False
         assert manager._event_history["object:test-event"] == (12345, 100.0)
 
         # Second call within 0.1s should be ignored
         test_context.patch("time.time", return_value=100.05)
-        result2 = manager._ignore(mock_event, None)
+        result2 = manager._ignore(mock_event)
         assert result2 is True
 
     def test_is_obsoleted_by_identical_events(self, test_context: OrcaTestContext) -> None:
@@ -1648,11 +1648,11 @@ class TestEventManager:
             "orca.event_manager.AXUtilities.is_frame", return_value=False
         )
 
-        result = manager._ignore(mock_event, None)
+        result = manager._ignore(mock_event)
         assert result is False
 
         focus_mgr.get_locus_of_focus.return_value = mock_event.any_data
-        result = manager._ignore(mock_event, None)
+        result = manager._ignore(mock_event)
         assert result is False
 
     def test_ignore_selected_source_not_ignored(self, test_context: OrcaTestContext) -> None:
@@ -1716,7 +1716,7 @@ class TestEventManager:
             "orca.event_manager.AXObject.get_attribute", return_value=None
         )
 
-        result = manager._ignore(mock_event, None)
+        result = manager._ignore(mock_event)
         assert result is False
 
     def test_queue_println(self, test_context: OrcaTestContext) -> None:
