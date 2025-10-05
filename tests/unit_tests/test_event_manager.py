@@ -2221,31 +2221,40 @@ class TestEventManager:
         manager = EventManager()
         manager._active = True
         manager._paused = False
-        manager._filter_gidle_id = 0  # No existing filter idle handler
+        manager._gidle_id = 0  # No existing idle handler
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.type = "object:text-changed:insert"
         mock_event.source = test_context.Mock()
+        mock_app = test_context.Mock()
+        mock_script = test_context.Mock()
+        mock_script.event_cache = {}
 
+        mock_ignore = test_context.Mock(return_value=False)
+        test_context.patch_object(manager, "_ignore", new=mock_ignore)
+        test_context.patch(
+            "orca.event_manager.AXUtilities.get_application", return_value=mock_app
+        )
+        mock_get_script_mgr = test_context.Mock()
+        test_context.patch(
+            "orca.event_manager.script_manager.get_manager", new=mock_get_script_mgr
+        )
         mock_idle_add = test_context.Mock(return_value=456)
         test_context.patch("orca.event_manager.GLib.idle_add", new=mock_idle_add)
-
-        # First enqueue should add event to raw queue and schedule filter
+        test_context.patch("time.time", return_value=200.0)
+        mock_script_mgr = test_context.Mock()
+        mock_get_script_mgr.return_value = mock_script_mgr
+        mock_script_mgr.get_script.return_value = mock_script
         manager._enqueue_object_event(mock_event)
 
-        assert not manager._raw_event_queue.empty()
-        mock_idle_add.assert_called_once()
-        # Verify that the filter callback was scheduled with high priority
-        call_args = mock_idle_add.call_args
-        assert call_args[0][0] == manager._filter_events
-        assert call_args[1]['priority'] == test_context.patch(
-            "orca.event_manager.GLib.PRIORITY_HIGH_IDLE"
-        ).return_value or True
-        assert manager._filter_gidle_id == 456
+        assert not manager._event_queue.empty()
+        assert mock_event.type in mock_script.event_cache
+        mock_idle_add.assert_called_once_with(manager._dequeue_object_event)
+        assert manager._gidle_id == 456
 
-        # Second enqueue with existing filter idle should not reschedule
         mock_idle_add.reset_mock()
-        manager._filter_gidle_id = 456
+        manager._gidle_id = 456
+        test_context.patch("time.time", return_value=200.1)
         manager._enqueue_object_event(mock_event)
 
         mock_idle_add.assert_not_called()
-        assert manager._filter_gidle_id == 456
+        assert manager._gidle_id == 456
