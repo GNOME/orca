@@ -522,7 +522,7 @@ class Utilities(script_utilities.Utilities):
             rv = False
 
         elif rv and not AXUtilities.is_live_region(obj):
-            not_text_roles = [Atspi.Role.LIST_BOX]
+            not_text_roles = [Atspi.Role.LIST_BOX, Atspi.Role.TABLE, Atspi.Role.TABLE_ROW]
             role = AXObject.get_role(obj)
             if rv and role in not_text_roles:
                 tokens = ["WEB: Treating", obj, "as non-text due to role."]
@@ -1218,6 +1218,7 @@ class Utilities(script_utilities.Utilities):
                 extents = self._get_extents(container, 0, 1)
 
         obj_banner = AXObject.find_ancestor(obj, AXUtilities.is_landmark_banner)
+        obj_row = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_table_row)
 
         def _include(x):
             if x in objects:
@@ -1295,6 +1296,9 @@ class Utilities(script_utilities.Utilities):
             if char == "\n" and first_obj == prev_obj:
                 break
 
+            if obj_row != AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_table_row):
+                break
+
             on_left = self._get_contents_for_obj(prev_obj, prev_offset, granularity)
             on_left = list(filter(_include, on_left))
             if not on_left:
@@ -1320,6 +1324,9 @@ class Utilities(script_utilities.Utilities):
 
             char = AXText.get_character_at_offset(next_obj, next_offset)[0]
             if char == "\n" and last_obj == next_obj:
+                break
+
+            if obj_row != AXObject.find_ancestor_inclusive(next_obj, AXUtilities.is_table_row):
                 break
 
             on_right = self._get_contents_for_obj(next_obj, next_offset, granularity)
@@ -2890,6 +2897,10 @@ class Utilities(script_utilities.Utilities):
             rv = True
         elif AXUtilities.is_landmark(obj):
             tokens = ["WEB: Landmark can have caret context", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            rv = True
+        elif AXUtilities.is_table_related(obj, True):
+            tokens = ["WEB: Table-related object can have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = True
         elif AXUtilities.is_tool_tip(obj):
