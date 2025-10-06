@@ -35,6 +35,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import time
+from enum import Enum
 from typing import TYPE_CHECKING
 
 _PSUTIL_AVAILABLE = False
@@ -51,6 +52,49 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import settings_manager
+
+class DateFormat(Enum):
+    """Date format enumeration with string values from messages."""
+
+    LOCALE = messages.DATE_FORMAT_LOCALE
+    NUMBERS_DM = messages.DATE_FORMAT_NUMBERS_DM
+    NUMBERS_MD = messages.DATE_FORMAT_NUMBERS_MD
+    NUMBERS_DMY = messages.DATE_FORMAT_NUMBERS_DMY
+    NUMBERS_MDY = messages.DATE_FORMAT_NUMBERS_MDY
+    NUMBERS_YMD = messages.DATE_FORMAT_NUMBERS_YMD
+    FULL_DM = messages.DATE_FORMAT_FULL_DM
+    FULL_MD = messages.DATE_FORMAT_FULL_MD
+    FULL_DMY = messages.DATE_FORMAT_FULL_DMY
+    FULL_MDY = messages.DATE_FORMAT_FULL_MDY
+    FULL_YMD = messages.DATE_FORMAT_FULL_YMD
+    ABBREVIATED_DM = messages.DATE_FORMAT_ABBREVIATED_DM
+    ABBREVIATED_MD = messages.DATE_FORMAT_ABBREVIATED_MD
+    ABBREVIATED_DMY = messages.DATE_FORMAT_ABBREVIATED_DMY
+    ABBREVIATED_MDY = messages.DATE_FORMAT_ABBREVIATED_MDY
+    ABBREVIATED_YMD = messages.DATE_FORMAT_ABBREVIATED_YMD
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
+class TimeFormat(Enum):
+    """Time format enumeration with string values from messages."""
+
+    LOCALE = messages.TIME_FORMAT_LOCALE
+    TWELVE_HM = messages.TIME_FORMAT_12_HM
+    TWELVE_HMS = messages.TIME_FORMAT_12_HMS
+    TWENTYFOUR_HM = messages.TIME_FORMAT_24_HM
+    TWENTYFOUR_HMS = messages.TIME_FORMAT_24_HMS
+    TWENTYFOUR_HM_WITH_WORDS = messages.TIME_FORMAT_24_HM_WITH_WORDS
+    TWENTYFOUR_HMS_WITH_WORDS = messages.TIME_FORMAT_24_HMS_WITH_WORDS
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -160,6 +204,80 @@ class SystemInformationPresenter:
         msg = "SYSTEM INFORMATION PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def _get_date_format_string(self) -> str:
+        """Returns the current date format string for internal use."""
+
+        return settings_manager.get_manager().get_setting("presentDateFormat")
+
+    def _get_time_format_string(self) -> str:
+        """Returns the current time format string for internal use."""
+
+        return settings_manager.get_manager().get_setting("presentTimeFormat")
+
+    @dbus_service.getter
+    def get_date_format(self) -> str:
+        """Returns the current date format name."""
+
+        string_value = settings_manager.get_manager().get_setting("presentDateFormat")
+        for fmt in DateFormat:
+            if fmt.value == string_value:
+                return fmt.string_name
+        return string_value
+
+    @dbus_service.setter
+    def set_date_format(self, value: str) -> bool:
+        """Sets the date format."""
+
+        try:
+            fmt = DateFormat[value.upper()]
+        except KeyError:
+            msg = f"SYSTEM INFORMATION PRESENTER: Invalid date format: {value}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        msg = f"SYSTEM INFORMATION PRESENTER: Setting date format to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("presentDateFormat", fmt.value)
+        return True
+
+    @dbus_service.getter
+    def get_available_date_formats(self) -> list[str]:
+        """Returns a list of available date format names."""
+
+        return [fmt.string_name for fmt in DateFormat]
+
+    @dbus_service.getter
+    def get_time_format(self) -> str:
+        """Returns the current time format name."""
+
+        string_value = settings_manager.get_manager().get_setting("presentTimeFormat")
+        for fmt in TimeFormat:
+            if fmt.value == string_value:
+                return fmt.string_name
+        return string_value
+
+    @dbus_service.setter
+    def set_time_format(self, value: str) -> bool:
+        """Sets the time format."""
+
+        try:
+            fmt = TimeFormat[value.upper()]
+        except KeyError:
+            msg = f"SYSTEM INFORMATION PRESENTER: Invalid time format: {value}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        msg = f"SYSTEM INFORMATION PRESENTER: Setting time format to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("presentTimeFormat", fmt.value)
+        return True
+
+    @dbus_service.getter
+    def get_available_time_formats(self) -> list[str]:
+        """Returns a list of available time format names."""
+
+        return [fmt.string_name for fmt in TimeFormat]
+
     @dbus_service.command
     def present_time(
         self,
@@ -173,7 +291,7 @@ class SystemInformationPresenter:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        time_format = settings_manager.get_manager().get_setting('presentTimeFormat')
+        time_format = self._get_time_format_string()
         script.present_message(time.strftime(time_format, time.localtime()))
         return True
 
@@ -190,8 +308,8 @@ class SystemInformationPresenter:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        data_format = settings_manager.get_manager().get_setting('presentDateFormat')
-        script.present_message(time.strftime(data_format, time.localtime()))
+        date_format = self._get_date_format_string()
+        script.present_message(time.strftime(date_format, time.localtime()))
         return True
 
     @dbus_service.command

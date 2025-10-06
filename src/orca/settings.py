@@ -291,6 +291,10 @@ enableMouseReview: bool = False
 largeObjectTextLength: int = 75
 wrappedStructuralNavigation: bool = True
 
+# Managed by system_information_presenter.py
+presentDateFormat: str = messages.DATE_FORMAT_LOCALE
+presentTimeFormat: str = messages.TIME_FORMAT_LOCALE
+
 # Profiles
 startingProfile: list[str] = ['Default', 'default']
 activeProfile: list[str] = ['Default', 'default']
@@ -358,10 +362,6 @@ chatRoomHistories: bool = False
 spellcheckSpellError: bool = True
 spellcheckSpellSuggestion: bool = True
 spellcheckPresentContext: bool = True
-
-# Day and time
-presentDateFormat: str = messages.DATE_FORMAT_LOCALE
-presentTimeFormat: str = messages.TIME_FORMAT_LOCALE
 
 # App search support
 FIND_SPEAK_NONE: int = 0
