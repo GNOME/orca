@@ -117,6 +117,12 @@ class InputEventManager:
         grab_ids = []
         for kd in binding.key_definitions():
             grab_id = self._device.add_key_grab(kd, None)
+            # When we have double/triple-click bindings, the single-click binding will be
+            # registered first, and subsequent attempts to register what is externally the
+            # same grab will fail. If we only have a double/triple-click, it succeeds.
+            # A grab id of 0 indicates failure.
+            if grab_id == 0:
+                continue
             grab_ids.append(grab_id)
             self._grabbed_bindings[grab_id] = binding
 
