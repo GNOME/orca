@@ -366,8 +366,14 @@ MODULE_CONFIG = {
             "PreviousVisitedLink",
         ],
         "parameterized_commands": [],
-        "getters": [],
-        "setters": [],
+        "getters": [
+            "LargeObjectTextLength",
+            "NavigationWraps",
+        ],
+        "setters": [
+            "LargeObjectTextLength",
+            "NavigationWraps",
+        ],
         "ui_commands": [
             "ListBlockquotes",
             "ListButtons",
@@ -407,8 +413,16 @@ MODULE_CONFIG = {
             "PresentTime",
         ],
         "parameterized_commands": [],
-        "getters": [],
-        "setters": [],
+        "getters": [
+            "DateFormat",
+            "TimeFormat",
+            "AvailableDateFormats",
+            "AvailableTimeFormats",
+        ],
+        "setters": [
+            "DateFormat",
+            "TimeFormat",
+        ],
         "ui_commands": [],
         "toggle_commands": [],
         "skip": ["PresentBatteryStatus"],  # Can timeout on systems without battery

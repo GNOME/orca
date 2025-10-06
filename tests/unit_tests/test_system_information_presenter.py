@@ -95,6 +95,31 @@ class TestSystemInformationPresenter:
         messages_mock.memory_usage_gb = test_context.Mock(return_value="5.2GB / 16GB")
         messages_mock.memory_usage_mb = test_context.Mock(return_value="512MB / 1024MB")
 
+        messages_mock.DATE_FORMAT_LOCALE = "%x"
+        messages_mock.DATE_FORMAT_NUMBERS_DM = "%d/%m"
+        messages_mock.DATE_FORMAT_NUMBERS_MD = "%m/%d"
+        messages_mock.DATE_FORMAT_NUMBERS_DMY = "%d/%m/%Y"
+        messages_mock.DATE_FORMAT_NUMBERS_MDY = "%m/%d/%Y"
+        messages_mock.DATE_FORMAT_NUMBERS_YMD = "%Y/%m/%d"
+        messages_mock.DATE_FORMAT_FULL_DM = "%A, %-d %B"
+        messages_mock.DATE_FORMAT_FULL_MD = "%A, %B %-d"
+        messages_mock.DATE_FORMAT_FULL_DMY = "%A, %-d %B, %Y"
+        messages_mock.DATE_FORMAT_FULL_MDY = "%A, %B %-d, %Y"
+        messages_mock.DATE_FORMAT_FULL_YMD = "%Y. %B %-d, %A"
+        messages_mock.DATE_FORMAT_ABBREVIATED_DM = "%a, %-d %b"
+        messages_mock.DATE_FORMAT_ABBREVIATED_MD = "%a, %b %-d"
+        messages_mock.DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
+        messages_mock.DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
+        messages_mock.DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a"
+
+        messages_mock.TIME_FORMAT_LOCALE = "%X"
+        messages_mock.TIME_FORMAT_24_HMS = "%H:%M:%S"
+        messages_mock.TIME_FORMAT_24_HM = "%H:%M"
+        messages_mock.TIME_FORMAT_12_HM = "%I:%M %p"
+        messages_mock.TIME_FORMAT_12_HMS = "%I:%M:%S %p"
+        messages_mock.TIME_FORMAT_24_HMS_WITH_WORDS = "%H hours, %M minutes and %S seconds"
+        messages_mock.TIME_FORMAT_24_HM_WITH_WORDS = "%H hours and %M minutes"
+
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_instance = test_context.Mock()
         settings_instance.get_setting = test_context.Mock(
@@ -501,3 +526,248 @@ class TestSystemInformationPresenter:
         import orca.system_information_presenter as presenter_module
 
         assert presenter_module._PSUTIL_AVAILABLE is False
+
+    @pytest.mark.parametrize(
+        "format_value,expected_name",
+        [
+            ("%x", "locale"),
+            ("%d/%m/%Y", "numbers_dmy"),
+            ("%m/%d/%Y", "numbers_mdy"),
+            ("%A, %-d %B", "full_dm"),
+            ("%A, %B %-d", "full_md"),
+            ("%a, %-d %b, %Y", "abbreviated_dmy"),
+        ],
+    )
+    def test_get_date_format(
+        self, test_context: OrcaTestContext, format_value: str, expected_name: str
+    ) -> None:
+        """Test SystemInformationPresenter.get_date_format returns correct enum name."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["settings_instance"].get_setting = test_context.Mock(
+            return_value=format_value
+        )
+
+        test_context.patch(
+            "orca.system_information_presenter.dbus_service.getter",
+            new=lambda func: func
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter.get_date_format()
+
+        assert result == expected_name
+        essential_modules["settings_instance"].get_setting.assert_called_with("presentDateFormat")
+
+    @pytest.mark.parametrize(
+        "format_name,expected_success,expected_value",
+        [
+            ("locale", True, "%x"),
+            ("LOCALE", True, "%x"),
+            ("numbers_dmy", True, "%d/%m/%Y"),
+            ("full_md", True, "%A, %B %-d"),
+            ("abbreviated_ymd", True, "%Y. %b %-d, %a"),
+            ("invalid_format", False, None),
+        ],
+    )
+    def test_set_date_format(
+        self,
+        test_context: OrcaTestContext,
+        format_name: str,
+        expected_success: bool,
+        expected_value: str | None,
+    ) -> None:
+        """Test SystemInformationPresenter.set_date_format validates and sets format."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["settings_instance"].set_setting = test_context.Mock()
+
+        test_context.patch(
+            "orca.system_information_presenter.dbus_service.setter",
+            new=lambda func: func
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter.set_date_format(format_name)
+
+        assert result == expected_success
+
+        if expected_success:
+            essential_modules["settings_instance"].set_setting.assert_called_once_with(
+                "presentDateFormat", expected_value
+            )
+            essential_modules["orca.debug"].print_message.assert_any_call(
+                800, f"SYSTEM INFORMATION PRESENTER: Setting date format to {format_name}.", True
+            )
+        else:
+            essential_modules["settings_instance"].set_setting.assert_not_called()
+            debug_mock = essential_modules["orca.debug"].print_message
+            assert any(
+                call[0][1] == f"SYSTEM INFORMATION PRESENTER: Invalid date format: {format_name}"
+                for call in debug_mock.call_args_list
+            )
+
+    @pytest.mark.parametrize(
+        "format_value,expected_name",
+        [
+            ("%X", "locale"),
+            ("%I:%M %p", "twelve_hm"),
+            ("%I:%M:%S %p", "twelve_hms"),
+            ("%H:%M", "twentyfour_hm"),
+            ("%H:%M:%S", "twentyfour_hms"),
+        ],
+    )
+    def test_get_time_format(
+        self, test_context: OrcaTestContext, format_value: str, expected_name: str
+    ) -> None:
+        """Test SystemInformationPresenter.get_time_format returns correct enum name."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["settings_instance"].get_setting = test_context.Mock(
+            return_value=format_value
+        )
+
+        test_context.patch(
+            "orca.system_information_presenter.dbus_service.getter",
+            new=lambda func: func
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter.get_time_format()
+
+        assert result == expected_name
+        essential_modules["settings_instance"].get_setting.assert_called_with("presentTimeFormat")
+
+    @pytest.mark.parametrize(
+        "format_name,expected_success,expected_value",
+        [
+            ("locale", True, "%X"),
+            ("LOCALE", True, "%X"),
+            ("twelve_hm", True, "%I:%M %p"),
+            ("twentyfour_hms", True, "%H:%M:%S"),
+            ("twentyfour_hm_with_words", True, "%H hours and %M minutes"),
+            ("invalid_format", False, None),
+        ],
+    )
+    def test_set_time_format(
+        self,
+        test_context: OrcaTestContext,
+        format_name: str,
+        expected_success: bool,
+        expected_value: str | None,
+    ) -> None:
+        """Test SystemInformationPresenter.set_time_format validates and sets format."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["settings_instance"].set_setting = test_context.Mock()
+
+        test_context.patch(
+            "orca.system_information_presenter.dbus_service.setter",
+            new=lambda func: func
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter.set_time_format(format_name)
+
+        assert result == expected_success
+
+        if expected_success:
+            essential_modules["settings_instance"].set_setting.assert_called_once_with(
+                "presentTimeFormat", expected_value
+            )
+            essential_modules["orca.debug"].print_message.assert_any_call(
+                800, f"SYSTEM INFORMATION PRESENTER: Setting time format to {format_name}.", True
+            )
+        else:
+            essential_modules["settings_instance"].set_setting.assert_not_called()
+            debug_mock = essential_modules["orca.debug"].print_message
+            assert any(
+                call[0][1] == f"SYSTEM INFORMATION PRESENTER: Invalid time format: {format_name}"
+                for call in debug_mock.call_args_list
+            )
+
+    def test_get_available_date_formats(self, test_context: OrcaTestContext) -> None:
+        """Test SystemInformationPresenter.get_available_date_formats returns all format names."""
+
+        self._setup_dependencies(test_context)
+
+        test_context.patch(
+            "orca.system_information_presenter.dbus_service.getter",
+            new=lambda func: func
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter.get_available_date_formats()
+
+        assert isinstance(result, list)
+        assert len(result) == 16
+        assert "locale" in result
+        assert "numbers_dmy" in result
+        assert "full_md" in result
+        assert "abbreviated_ymd" in result
+
+    def test_get_available_time_formats(self, test_context: OrcaTestContext) -> None:
+        """Test SystemInformationPresenter.get_available_time_formats returns all format names."""
+
+        self._setup_dependencies(test_context)
+
+        test_context.patch(
+            "orca.system_information_presenter.dbus_service.getter",
+            new=lambda func: func
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter.get_available_time_formats()
+
+        assert isinstance(result, list)
+        assert len(result) == 7
+        assert "locale" in result
+        assert "twelve_hm" in result
+        assert "twentyfour_hms" in result
+        assert "twentyfour_hm_with_words" in result
+
+    def test_internal_get_date_format_string(self, test_context: OrcaTestContext) -> None:
+        """Test SystemInformationPresenter._get_date_format_string returns raw format."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        expected_format = "%A, %B %-d"
+        essential_modules["settings_instance"].get_setting = test_context.Mock(
+            return_value=expected_format
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter._get_date_format_string()
+
+        assert result == expected_format
+        essential_modules["settings_instance"].get_setting.assert_called_with("presentDateFormat")
+
+    def test_internal_get_time_format_string(self, test_context: OrcaTestContext) -> None:
+        """Test SystemInformationPresenter._get_time_format_string returns raw format."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        expected_format = "%I:%M %p"
+        essential_modules["settings_instance"].get_setting = test_context.Mock(
+            return_value=expected_format
+        )
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        result = presenter._get_time_format_string()
+
+        assert result == expected_format
+        essential_modules["settings_instance"].get_setting.assert_called_with("presentTimeFormat")
