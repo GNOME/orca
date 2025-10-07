@@ -89,6 +89,7 @@ class StructuralNavigator:
         self._handlers: dict = self.get_handlers(True)
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._mode_for_script: dict[default.Script, NavigationMode] = {}
+        self._previous_mode_for_script: dict[default.Script, NavigationMode] = {}
 
         msg = "STRUCTURAL NAVIGATOR: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -116,8 +117,7 @@ class StructuralNavigator:
                 cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE,
                 enabled = not self._suspended)
 
-        enabled = settings_manager.get_manager().get_setting("structuralNavigationEnabled") \
-            and not self._suspended
+        enabled = self.get_is_enabled() and not self._suspended
 
         self._handlers["previous_blockquote"] = InputEventHandler(
             self.previous_blockquote, cmdnames.BLOCKQUOTE_PREV, enabled=enabled)
@@ -316,8 +316,7 @@ class StructuralNavigator:
                 1,
                 not self._suspended))
 
-        enabled = settings_manager.get_manager().get_setting("structuralNavigationEnabled") \
-            and not self._suspended
+        enabled = self.get_is_enabled() and not self._suspended
 
         self._bindings.add(
             keybindings.KeyBinding(
@@ -1008,6 +1007,14 @@ class StructuralNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
+    def last_command_prevents_focus_mode(self) -> bool:
+        """Returns True if the last command was navigation but the setting disallows focus mode."""
+
+        if not self.last_input_event_was_navigation_command():
+            return False
+
+        return not self.get_triggers_focus_mode()
+
     def add_bindings(self, script: default.Script, reason: str = "") -> None:
         """Adds structural navigation bindings for script."""
 
@@ -1099,6 +1106,64 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings_manager.get_manager().set_setting("largeObjectTextLength", value)
+        return True
+
+    @dbus_service.getter
+    def get_is_enabled(self) -> bool:
+        """Returns whether structural navigation is enabled."""
+
+        return settings_manager.get_manager().get_setting("structuralNavigationEnabled")
+
+    @dbus_service.setter
+    def set_is_enabled(self, value: bool) -> bool:
+        """Sets whether structural navigation is enabled."""
+
+        if self.get_is_enabled() == value:
+            return True
+
+        msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("structuralNavigationEnabled", value)
+
+        script = script_manager.get_manager().get_active_script()
+        if not script:
+            return True
+
+        current_mode = self.get_mode(script)
+        if not value and current_mode == NavigationMode.OFF:
+            return True
+
+        self._last_input_event = None
+        if value:
+            if previous_mode := self._previous_mode_for_script.get(script):
+                tokens = ["STRUCTURAL NAVIGATOR: Restoring mode for", script, "to", previous_mode]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                self._mode_for_script[script] = previous_mode
+        else:
+            self._previous_mode_for_script[script] = current_mode
+            tokens = ["STRUCTURAL NAVIGATOR: Saving", current_mode, "as previous mode for", script]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            self._mode_for_script[script] = NavigationMode.OFF
+
+        self.refresh_bindings_and_grabs(script, "D-Bus setter changed enabled state")
+        return True
+
+    @dbus_service.getter
+    def get_triggers_focus_mode(self) -> bool:
+        """Returns whether structural navigation triggers focus mode."""
+
+        return settings_manager.get_manager().get_setting("structNavTriggersFocusMode")
+
+    @dbus_service.setter
+    def set_triggers_focus_mode(self, value: bool) -> bool:
+        """Sets whether structural navigation triggers focus mode."""
+
+        if self.get_triggers_focus_mode() == value:
+            return True
+
+        msg = f"STRUCTURAL NAVIGATOR: Setting triggers focus mode to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("structNavTriggersFocusMode", value)
         return True
 
     @dbus_service.command

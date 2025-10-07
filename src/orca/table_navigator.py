@@ -22,7 +22,8 @@
 
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
-# pylint:disable=too-many-public-methods
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
 
 """Provides Orca-controlled navigation for tabular content."""
 
@@ -526,7 +527,7 @@ class TableNavigator:
         row, col = self._get_cell_coordinates(current)
         cell = AXTable.get_cell_on_left(current)
 
-        if settings_manager.get_manager().get_setting("skipBlankCells"):
+        if self.get_skip_blank_cells():
             while cell and self._is_blank(cell) and not AXTable.is_start_of_row(cell):
                 cell = AXTable.get_cell_on_left(cell)
 
@@ -561,7 +562,7 @@ class TableNavigator:
         row, col = self._get_cell_coordinates(current)
         cell = AXTable.get_cell_on_right(current)
 
-        if settings_manager.get_manager().get_setting("skipBlankCells"):
+        if self.get_skip_blank_cells():
             while cell and self._is_blank(cell) and not AXTable.is_end_of_row(cell):
                 cell = AXTable.get_cell_on_right(cell)
 
@@ -596,7 +597,7 @@ class TableNavigator:
         row, col = self._get_cell_coordinates(current)
         cell = AXTable.get_cell_above(current)
 
-        if settings_manager.get_manager().get_setting("skipBlankCells"):
+        if self.get_skip_blank_cells():
             while cell and self._is_blank(cell) and not AXTable.is_top_of_column(cell):
                 cell = AXTable.get_cell_above(cell)
 
@@ -631,7 +632,7 @@ class TableNavigator:
         row, col = self._get_cell_coordinates(current)
         cell = AXTable.get_cell_below(current)
 
-        if settings_manager.get_manager().get_setting("skipBlankCells"):
+        if self.get_skip_blank_cells():
             while cell and self._is_blank(cell) and not AXTable.is_bottom_of_column(cell):
                 cell = AXTable.get_cell_below(cell)
 
@@ -976,7 +977,26 @@ class TableNavigator:
             if rowspan > 1 or colspan > 1:
                 script.present_message(messages.cell_span(rowspan, colspan))
 
-_navigator = TableNavigator()
+    @dbus_service.getter
+    def get_skip_blank_cells(self) -> bool:
+        """Returns whether blank cells should be skipped during navigation."""
+
+        return settings_manager.get_manager().get_setting("skipBlankCells")
+
+    @dbus_service.setter
+    def set_skip_blank_cells(self, value: bool) -> bool:
+        """Sets whether blank cells should be skipped during navigation."""
+
+        if self.get_skip_blank_cells() == value:
+            return True
+
+        msg = f"TABLE NAVIGATOR: Setting skip blank cells to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("skipBlankCells", value)
+        return True
+
+_navigator : TableNavigator = TableNavigator()
+
 def get_navigator() -> TableNavigator:
     """Returns the Table Navigator"""
 

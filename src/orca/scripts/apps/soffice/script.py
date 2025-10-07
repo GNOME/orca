@@ -194,7 +194,7 @@ class Script(default.Script):
         table_grid.attach(self.speak_cell_headers_check_button, 0, 2, 1, 1)
 
         label = guilabels.TABLE_SKIP_BLANK_CELLS
-        value = settings_manager.get_manager().get_setting("skipBlankCells")
+        value = self.get_table_navigator().get_skip_blank_cells()
         self.skip_blank_cells_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.skip_blank_cells_check_button.set_active(value)
