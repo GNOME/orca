@@ -47,7 +47,15 @@ class Utilities(script_utilities.Utilities):
     def is_switcher_container(self, obj: Atspi.Accessible | None = None) -> bool:
         """Returns True if obj is the switcher container."""
 
-        return AXUtilities.is_status_bar(obj)
+        # Mate
+        if AXUtilities.is_status_bar(obj):
+            return True
+
+        # Budgie
+        if AXUtilities.is_table(obj) and AXObject.supports_selection(obj):
+            return True
+
+        return False
 
     def is_switcher_selection_change_event_type(self, event: Atspi.Event) -> bool:
         """Returns True if this event is the one we use to present changes."""
@@ -58,12 +66,23 @@ class Utilities(script_utilities.Utilities):
         if event.type.startswith("object:state-changed:showing"):
             return event.detail1
 
+        if event.type.startswith("object:selection-changed"):
+            return True
+
         return False
 
     def get_selection_name(self, container: Atspi.Accessible | None = None) -> str:
         """Returns the name of the currently-selected item."""
 
-        if self.is_switcher_container(container):
-            return AXObject.get_name(container)
+        if not self.is_switcher_container(container):
+            return ""
+
+        if name := AXObject.get_name(container):
+            return name
+
+        # Budgie's container doesn't actually hold the label.
+        if AXUtilities.is_table(container):
+            if label := AXObject.find_descendant(self._script.app, AXUtilities.is_label):
+                return AXObject.get_name(label)
 
         return ""
