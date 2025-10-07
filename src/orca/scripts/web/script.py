@@ -107,8 +107,6 @@ class Script(default.Script):
         self._focus_mode_is_sticky = False
         self._browse_mode_is_sticky = False
 
-        if settings_manager.get_manager().get_setting("caretNavigationEnabled") is None:
-            settings_manager.get_manager().set_setting("caretNavigationEnabled", True)
         if settings_manager.get_manager().get_setting("sayAllOnLoad") is None:
             settings_manager.get_manager().set_setting("sayAllOnLoad", True)
         if settings_manager.get_manager().get_setting("pageSummaryOnLoad") is None:
@@ -299,27 +297,27 @@ class Script(default.Script):
         general_alignment.add(general_grid)
 
         label = guilabels.USE_CARET_NAVIGATION
-        value = settings_manager.get_manager().get_setting("caretNavigationEnabled")
+        value = self.get_caret_navigator().get_is_enabled()
         self._control_caret_navigation_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._control_caret_navigation_check_button.set_active(value)
         general_grid.attach(self._control_caret_navigation_check_button, 0, 0, 1, 1)
 
         label = guilabels.AUTO_FOCUS_MODE_CARET_NAV
-        value = settings_manager.get_manager().get_setting("caretNavTriggersFocusMode")
+        value = self.get_caret_navigator().get_triggers_focus_mode()
         self._auto_focus_mode_caret_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._auto_focus_mode_caret_nav_check_button.set_active(value)
         general_grid.attach(self._auto_focus_mode_caret_nav_check_button, 0, 1, 1, 1)
 
         label = guilabels.USE_STRUCTURAL_NAVIGATION
-        value = settings_manager.get_manager().get_setting("structuralNavigationEnabled")
+        value = self.get_structural_navigator().get_is_enabled()
         self._structural_navigation_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._structural_navigation_check_button.set_active(value)
         general_grid.attach(self._structural_navigation_check_button, 0, 2, 1, 1)
 
         label = guilabels.AUTO_FOCUS_MODE_STRUCT_NAV
-        value = settings_manager.get_manager().get_setting("structNavTriggersFocusMode")
+        value = self.get_structural_navigator().get_triggers_focus_mode()
         self._auto_focus_mode_struct_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._auto_focus_mode_struct_nav_check_button.set_active(value)
         general_grid.attach(self._auto_focus_mode_struct_nav_check_button, 0, 3, 1, 1)
@@ -386,7 +384,7 @@ class Script(default.Script):
         table_grid.attach(self._speak_cell_headers_check_button, 0, 2, 1, 1)
 
         label = guilabels.TABLE_SKIP_BLANK_CELLS
-        value = settings_manager.get_manager().get_setting("skipBlankCells")
+        value = self.get_table_navigator().get_skip_blank_cells()
         self._skip_blank_cells_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._skip_blank_cells_check_button.set_active(value)
@@ -573,11 +571,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        last_command_was_struct_nav = \
-            self.get_structural_navigator().last_input_event_was_navigation_command() \
-            or self.get_table_navigator().last_input_event_was_navigation_command()
-        if not settings_manager.get_manager().get_setting("structNavTriggersFocusMode") \
-           and last_command_was_struct_nav:
+        if self.get_structural_navigator().last_command_prevents_focus_mode():
             msg = "WEB: Not using focus mode due to struct nav settings"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -585,20 +579,19 @@ class Script(default.Script):
         if prev_obj and AXObject.is_dead(prev_obj):
             prev_obj = None
 
-        last_command_was_caret_nav = \
-            self.get_caret_navigator().last_input_event_was_navigation_command()
-        if not settings_manager.get_manager().get_setting("caretNavTriggersFocusMode") \
-           and last_command_was_caret_nav \
+        if self.get_caret_navigator().last_command_prevents_focus_mode() \
            and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None:
             msg = "WEB: Not using focus mode due to caret nav settings"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not settings_manager.get_manager().get_setting("nativeNavTriggersFocusMode") \
-           and not (last_command_was_struct_nav or last_command_was_caret_nav):
-            msg = "WEB: Not changing focus/browse mode due to native nav settings"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return self._in_focus_mode
+        if not settings_manager.get_manager().get_setting("nativeNavTriggersFocusMode"):
+            struct_nav = self.get_structural_navigator().last_input_event_was_navigation_command()
+            caret_nav = self.get_caret_navigator().last_input_event_was_navigation_command()
+            if not (struct_nav or caret_nav):
+                msg = "WEB: Not changing focus/browse mode due to native nav settings"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return self._in_focus_mode
 
         if self.utilities.is_focus_mode_widget(obj):
             tokens = ["WEB: Using focus mode because", obj, "is a focus mode widget"]

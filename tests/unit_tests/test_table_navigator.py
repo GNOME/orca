@@ -2112,3 +2112,45 @@ class TestTableNavigator:
         mock_focus_manager.set_locus_of_focus.assert_called_with(None, mock_text_obj, False)
         assert navigator._previous_reported_row == 1
         assert navigator._previous_reported_col == 2
+
+    def test_get_skip_blank_cells(self, test_context: OrcaTestContext) -> None:
+        """Test TableNavigator.get_skip_blank_cells returns setting value."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_settings_manager = test_context.Mock()
+        essential_modules["orca.settings_manager"].get_manager.return_value = mock_settings_manager
+        mock_settings_manager.get_setting.return_value = True
+        from orca.table_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.get_skip_blank_cells()
+        assert result is True
+        mock_settings_manager.get_setting.assert_called_with("skipBlankCells")
+
+    def test_set_skip_blank_cells(self, test_context: OrcaTestContext) -> None:
+        """Test TableNavigator.set_skip_blank_cells updates setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_settings_manager = test_context.Mock()
+        essential_modules["orca.settings_manager"].get_manager.return_value = mock_settings_manager
+        mock_settings_manager.get_setting.return_value = False
+        from orca.table_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.set_skip_blank_cells(True)
+        assert result is True
+        mock_settings_manager.set_setting.assert_called_with("skipBlankCells", True)
+
+    def test_set_skip_blank_cells_no_change(self, test_context: OrcaTestContext) -> None:
+        """Test TableNavigator.set_skip_blank_cells returns early if value unchanged."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_settings_manager = test_context.Mock()
+        essential_modules["orca.settings_manager"].get_manager.return_value = mock_settings_manager
+        mock_settings_manager.get_setting.return_value = True
+        from orca.table_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.set_skip_blank_cells(True)
+        assert result is True
+        mock_settings_manager.set_setting.assert_not_called()

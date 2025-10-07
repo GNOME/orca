@@ -645,7 +645,8 @@ class Script(script.Script):
         self.get_speech_and_verbosity_manager().update_synthesizer()
 
         self.get_structural_navigator().set_mode(self, self._default_sn_mode)
-        self.get_caret_navigator().set_enabled(self, self._default_caret_navigation_enabled)
+        self.get_caret_navigator().set_enabled_for_script(
+            self, self._default_caret_navigation_enabled)
 
         self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]

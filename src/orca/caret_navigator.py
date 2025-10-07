@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-return-statements
+# pylint: disable=too-many-public-methods
 
 """Provides an Orca-controlled caret for text content."""
 
@@ -107,8 +108,7 @@ class CaretNavigator:
                 cmdnames.CARET_NAVIGATION_TOGGLE,
                 enabled = not self._suspended)
 
-        enabled = settings_manager.get_manager().get_setting("caretNavigationEnabled") \
-            and not self._suspended
+        enabled = self.get_is_enabled() and not self._suspended
 
         self._handlers["next_character"] = \
             input_event.InputEventHandler(
@@ -187,8 +187,7 @@ class CaretNavigator:
                 1,
                 not self._suspended))
 
-        enabled = settings_manager.get_manager().get_setting("caretNavigationEnabled") \
-            and not self._suspended
+        enabled = self.get_is_enabled() and not self._suspended
 
         self._bindings.add(
             keybindings.KeyBinding(
@@ -296,7 +295,48 @@ class CaretNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def get_enabled(self, script: default.Script) -> bool:
+    @dbus_service.getter
+    def get_is_enabled(self) -> bool:
+        """Returns whether caret navigation is enabled."""
+
+        return settings_manager.get_manager().get_setting("caretNavigationEnabled")
+
+    @dbus_service.setter
+    def set_is_enabled(self, value: bool) -> bool:
+        """Sets whether caret navigation is enabled."""
+
+        if self.get_is_enabled() == value:
+            return True
+
+        msg = f"CARET NAVIGATOR: Setting enabled to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("caretNavigationEnabled", value)
+
+        self._last_input_event = None
+        if script := script_manager.get_manager().get_active_script():
+            self.refresh_bindings_and_grabs(script, msg)
+
+        return True
+
+    @dbus_service.getter
+    def get_triggers_focus_mode(self) -> bool:
+        """Returns whether caret navigation triggers focus mode."""
+
+        return settings_manager.get_manager().get_setting("caretNavTriggersFocusMode")
+
+    @dbus_service.setter
+    def set_triggers_focus_mode(self, value: bool) -> bool:
+        """Sets whether caret navigation triggers focus mode."""
+
+        if self.get_triggers_focus_mode() == value:
+            return True
+
+        msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings_manager.get_manager().set_setting("caretNavTriggersFocusMode", value)
+        return True
+
+    def get_enabled_for_script(self, script: default.Script) -> bool:
         """Returns the current caret-navigator enabled state associated with script."""
 
         enabled = self._enabled_for_script.get(script, False)
@@ -304,8 +344,8 @@ class CaretNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return enabled
 
-    def set_enabled(self, script: default.Script, enabled: bool) -> None:
-        """Sets the caret-navigator enabled state."""
+    def set_enabled_for_script(self, script: default.Script, enabled: bool) -> None:
+        """Sets the current caret-navigator enabled state associated with script."""
 
         tokens = ["CARET NAVIGATOR: Setting enabled state for", script, f"to {enabled}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -314,8 +354,7 @@ class CaretNavigator:
         if not (script and self._is_active_script(script)):
             return
 
-        settings_manager.get_manager().set_setting("caretNavigationEnabled", enabled)
-        self.refresh_bindings_and_grabs(script, "Setting caret navigation mode")
+        self.set_is_enabled(enabled)
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
@@ -333,6 +372,14 @@ class CaretNavigator:
         msg = f"CARET NAVIGATOR: Last navigation event ({string}) is last input event: {result}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
+
+    def last_command_prevents_focus_mode(self) -> bool:
+        """Returns True if the last command was navigation but the setting disallows focus mode."""
+
+        if not self.last_input_event_was_navigation_command():
+            return False
+
+        return not self.get_triggers_focus_mode()
 
     def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
         """Refreshes caret navigation bindings and grabs for script."""
@@ -415,8 +462,7 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        _settings_manager = settings_manager.get_manager()
-        enabled = not _settings_manager.get_setting("caretNavigationEnabled")
+        enabled = not self.get_is_enabled()
         if enabled:
             string = messages.CARET_CONTROL_ORCA
         else:
@@ -426,9 +472,7 @@ class CaretNavigator:
         if notify_user:
             script.present_message(string)
 
-        _settings_manager.set_setting("caretNavigationEnabled", enabled)
-        self._last_input_event = None
-        self.refresh_bindings_and_grabs(script, "toggling caret navigation")
+        self.set_is_enabled(enabled)
         return True
 
     def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
@@ -502,11 +546,11 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.update_braille(obj, offset=offset)
         script.say_character(obj)
         return True
@@ -529,11 +573,11 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.update_braille(obj, offset=offset)
         script.say_character(obj)
         return True
@@ -576,11 +620,11 @@ class CaretNavigator:
             end -= 1
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.update_braille(obj, offset=end)
         script.say_word(obj)
         return True
@@ -611,11 +655,11 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.update_braille(obj, offset=start)
         script.say_word(obj)
         return True
@@ -658,11 +702,11 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.speak_contents(contents, priorObj=line[-1][0])
         script.display_contents(contents)
         return True
@@ -699,12 +743,11 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
-
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.speak_contents(contents)
         script.display_contents(contents)
         return True
@@ -729,11 +772,11 @@ class CaretNavigator:
 
         self._last_input_event = event
         obj, start = line[0][0], line[0][1]
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.say_character(obj)
         script.display_contents(line)
         return True
@@ -761,11 +804,11 @@ class CaretNavigator:
             end -= 1
 
         self._last_input_event = event
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.say_character(obj)
         script.display_contents(line)
         return True
@@ -800,11 +843,11 @@ class CaretNavigator:
 
         self._last_input_event = event
         obj, offset = contents[0][0], contents[0][1]
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.speak_contents(contents)
         script.display_contents(contents)
         return True
@@ -843,11 +886,11 @@ class CaretNavigator:
 
         self._last_input_event = event
         obj, offset = contents[-1][0], contents[-1][2]
+        script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         if not notify_user:
             return True
 
-        script.interrupt_presentation()
         script.speak_contents(contents)
         script.display_contents(contents)
         return True

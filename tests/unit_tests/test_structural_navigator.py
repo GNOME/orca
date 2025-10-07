@@ -43,6 +43,7 @@ from gi.repository import Atspi
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
+
 @pytest.mark.unit
 class TestStructuralNavigator:
     """Test StructuralNavigator class methods."""
@@ -86,9 +87,7 @@ class TestStructuralNavigator:
         mock_set_mode = test_context.Mock()
         test_context.patch_object(nav, "set_mode", new=mock_set_mode)
 
-        test_context.patch_object(
-            nav, "_is_active_script", return_value=True
-        )
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
 
         mock_determine_root = None
         if supports_collection:
@@ -460,9 +459,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         nav._suspended = initial_suspended
-        test_context.patch_object(
-            nav, "_is_active_script", return_value=is_active
-        )
+        test_context.patch_object(nav, "_is_active_script", return_value=is_active)
         mock_refresh = test_context.Mock()
         test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
 
@@ -596,9 +593,7 @@ class TestStructuralNavigator:
         mock_result = test_context.Mock()
         mock_script = test_context.Mock()
 
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=mock_result
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=mock_result)
 
         result = nav._get_object_in_direction(mock_script, [], True, True)
         assert result == mock_result
@@ -616,9 +611,7 @@ class TestStructuralNavigator:
         mock_result = test_context.Mock()
         mock_script = test_context.Mock()
 
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=mock_result
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=mock_result)
 
         result = nav._get_object_in_direction(mock_script, [], False, True)
         assert result == mock_result
@@ -632,9 +625,7 @@ class TestStructuralNavigator:
         nav = get_navigator()
         mock_script = test_context.Mock()
 
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
 
         result = nav._get_object_in_direction(mock_script, [], True, False)
         assert result is None
@@ -726,9 +717,7 @@ class TestStructuralNavigator:
         nav = get_navigator()
         mock_bindings = test_context.Mock()
         mock_bindings.key_bindings = []
-        test_context.patch_object(
-            nav, "get_bindings", return_value=mock_bindings
-        )
+        test_context.patch_object(nav, "get_bindings", return_value=mock_bindings)
 
         bindings = nav.get_bindings(refresh=False)
         assert bindings.key_bindings is not None
@@ -827,9 +816,7 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_determine_root_container", return_value=mock_document
-        )
+        test_context.patch_object(nav, "_determine_root_container", return_value=mock_document)
 
         result = nav._determine_root_container(mock_script)
         assert result == mock_document
@@ -846,9 +833,7 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_determine_root_container", return_value=mock_app
-        )
+        test_context.patch_object(nav, "_determine_root_container", return_value=mock_app)
         result = nav._determine_root_container(mock_script)
         assert result == mock_app
 
@@ -955,9 +940,7 @@ class TestStructuralNavigator:
         essential_modules["orca.AXUtilities"].is_expanded.return_value = False
         essential_modules["orca.AXUtilities"].is_pressed.return_value = False
         essential_modules["orca.AXUtilities"].is_selected.return_value = False
-        test_context.patch_object(
-            nav, "_get_state_string", return_value="test state"
-        )
+        test_context.patch_object(nav, "_get_state_string", return_value="test state")
         result = nav._get_state_string(mock_obj)
         assert isinstance(result, str)
         assert result == "test state"
@@ -1009,12 +992,8 @@ class TestStructuralNavigator:
         mock_bindings = test_context.Mock()
         mock_bindings.key_bindings = []
         nav._bindings = mock_bindings
-        test_context.patch_object(
-            nav, "_is_active_script", return_value=True
-        )
-        test_context.patch_object(
-            nav, "get_bindings", return_value=mock_bindings
-        )
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
+        test_context.patch_object(nav, "get_bindings", return_value=mock_bindings)
         nav.add_bindings(mock_script, "test")
         essential_modules["orca.debug"].print_tokens.assert_called()
 
@@ -1034,9 +1013,7 @@ class TestStructuralNavigator:
         mock_bindings = test_context.Mock()
         mock_bindings.key_bindings = []
         nav._bindings = mock_bindings
-        test_context.patch_object(
-            nav, "_is_active_script", return_value=True
-        )
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
         nav.remove_bindings(mock_script, "test")
         essential_modules["orca.debug"].print_tokens.assert_called()
 
@@ -1048,9 +1025,7 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_is_active_script", return_value=True
-        )
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
         test_context.patch_object(nav, "remove_bindings", new=test_context.Mock())
         test_context.patch_object(nav, "add_bindings", new=test_context.Mock())
         nav.refresh_bindings_and_grabs(mock_script, "test")
@@ -1063,12 +1038,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_headings", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_headings", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_heading(mock_script, mock_event, True)
         assert result is True
@@ -1082,12 +1053,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_headings", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_headings", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_heading(mock_script, mock_event, True)
         assert result is True
@@ -1101,9 +1068,7 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_headings", return_value=[]
-        )
+        test_context.patch_object(nav, "_get_all_headings", return_value=[])
         test_context.patch_object(nav, "_present_object_list", new=test_context.Mock())
         result = nav.list_headings(mock_script, mock_event)
         assert result is True
@@ -1118,9 +1083,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_links", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_link(mock_script, mock_event, True)
         assert result is True
@@ -1135,9 +1098,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_links", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_link(mock_script, mock_event, True)
         assert result is True
@@ -1166,9 +1127,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_tables", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_table(mock_script, mock_event, True)
         assert result is True
@@ -1183,9 +1142,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_tables", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_table(mock_script, mock_event, True)
         assert result is True
@@ -1214,9 +1171,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_lists", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_list(mock_script, mock_event, True)
         assert result is True
@@ -1231,9 +1186,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_lists", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_list(mock_script, mock_event, True)
         assert result is True
@@ -1261,12 +1214,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_blockquotes", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_blockquotes", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_blockquote(mock_script, mock_event, True)
         assert result is True
@@ -1280,12 +1229,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_blockquotes", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_blockquotes", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_blockquote(mock_script, mock_event, True)
         assert result is True
@@ -1299,12 +1244,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_checkboxes", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_checkboxes", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_checkbox(mock_script, mock_event, True)
         assert result is True
@@ -1318,12 +1259,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_checkboxes", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_checkboxes", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_checkbox(mock_script, mock_event, True)
         assert result is True
@@ -1337,12 +1274,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_entries", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_entries", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_entry(mock_script, mock_event, True)
         assert result is True
@@ -1356,12 +1289,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_entries", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_entries", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_entry(mock_script, mock_event, True)
         assert result is True
@@ -1375,12 +1304,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_form_fields", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_form_fields", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_form_field(mock_script, mock_event, True)
         assert result is True
@@ -1394,12 +1319,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_form_fields", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_form_fields", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_form_field(mock_script, mock_event, True)
         assert result is True
@@ -1414,9 +1335,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_images", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_image(mock_script, mock_event, True)
         assert result is True
@@ -1431,9 +1350,7 @@ class TestStructuralNavigator:
 
         nav = get_navigator()
         test_context.patch_object(nav, "_get_all_images", return_value=[])
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_image(mock_script, mock_event, True)
         assert result is True
@@ -1447,12 +1364,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_landmarks", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_landmarks", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_landmark(mock_script, mock_event, True)
         assert result is True
@@ -1466,12 +1379,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_landmarks", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_landmarks", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_landmark(mock_script, mock_event, True)
         assert result is True
@@ -1485,12 +1394,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_paragraphs", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_paragraphs", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.previous_paragraph(mock_script, mock_event, True)
         assert result is True
@@ -1504,12 +1409,8 @@ class TestStructuralNavigator:
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(
-            nav, "_get_all_paragraphs", return_value=[]
-        )
-        test_context.patch_object(
-            nav, "_get_object_in_direction", return_value=None
-        )
+        test_context.patch_object(nav, "_get_all_paragraphs", return_value=[])
+        test_context.patch_object(nav, "_get_object_in_direction", return_value=None)
         test_context.patch_object(nav, "_present_object", new=test_context.Mock())
         result = nav.next_paragraph(mock_script, mock_event, True)
         assert result is True
@@ -1613,3 +1514,226 @@ class TestStructuralNavigator:
         assert navigator._last_input_event is None
         assert navigator._suspended is False
         assert isinstance(navigator._mode_for_script, dict)
+
+    def test_get_is_enabled(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.get_is_enabled returns setting value."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.get_is_enabled()
+        assert result is True
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.assert_called_with("structuralNavigationEnabled")
+
+    def test_set_is_enabled_no_change(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_is_enabled returns early if value unchanged."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.set_is_enabled(True)
+        assert result is True
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_setting.assert_not_called()
+
+    def test_set_is_enabled_true_with_previous_mode(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_is_enabled restores previous mode when enabling."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_script = test_context.Mock()
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules[
+            "orca.script_manager"
+        ].get_manager.return_value.get_active_script.return_value = mock_script
+        from orca.structural_navigator import get_navigator, NavigationMode
+
+        nav = get_navigator()
+        nav._previous_mode_for_script[mock_script] = NavigationMode.DOCUMENT
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
+        mock_refresh = test_context.Mock()
+        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
+
+        result = nav.set_is_enabled(True)
+        assert result is True
+        assert nav._mode_for_script[mock_script] == NavigationMode.DOCUMENT
+        mock_refresh.assert_called_once()
+
+    def test_set_is_enabled_true_without_previous_mode(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_is_enabled without previous mode when enabling."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_script = test_context.Mock()
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules[
+            "orca.script_manager"
+        ].get_manager.return_value.get_active_script.return_value = mock_script
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
+        mock_refresh = test_context.Mock()
+        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
+
+        result = nav.set_is_enabled(True)
+        assert result is True
+        mock_refresh.assert_called_once()
+
+    def test_set_is_enabled_false_saves_mode(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_is_enabled saves current mode when disabling."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_script = test_context.Mock()
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules[
+            "orca.script_manager"
+        ].get_manager.return_value.get_active_script.return_value = mock_script
+        from orca.structural_navigator import get_navigator, NavigationMode
+
+        nav = get_navigator()
+        nav._mode_for_script[mock_script] = NavigationMode.DOCUMENT
+        test_context.patch_object(nav, "_is_active_script", return_value=True)
+        mock_refresh = test_context.Mock()
+        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
+
+        result = nav.set_is_enabled(False)
+        assert result is True
+        assert nav._previous_mode_for_script[mock_script] == NavigationMode.DOCUMENT
+        assert nav._mode_for_script[mock_script] == NavigationMode.OFF
+        mock_refresh.assert_called_once()
+
+    def test_set_is_enabled_false_already_off(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_is_enabled returns early if already OFF."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_script = test_context.Mock()
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules[
+            "orca.script_manager"
+        ].get_manager.return_value.get_active_script.return_value = mock_script
+        from orca.structural_navigator import get_navigator, NavigationMode
+
+        nav = get_navigator()
+        nav._mode_for_script[mock_script] = NavigationMode.OFF
+        mock_refresh = test_context.Mock()
+        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
+
+        result = nav.set_is_enabled(False)
+        assert result is True
+        mock_refresh.assert_not_called()
+
+    def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.get_triggers_focus_mode returns setting value."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = False
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.get_triggers_focus_mode()
+        assert result is False
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.assert_called_with("structNavTriggersFocusMode")
+
+    def test_set_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_triggers_focus_mode updates setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.set_triggers_focus_mode(False)
+        assert result is True
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_setting.assert_called_with(
+            "structNavTriggersFocusMode", False
+        )
+
+    def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.set_triggers_focus_mode returns early if unchanged."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        result = nav.set_triggers_focus_mode(True)
+        assert result is True
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_setting.assert_not_called()
+
+    def test_last_command_prevents_focus_mode_true(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.last_command_prevents_focus_mode returns True."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules[
+            "orca.input_event_manager"
+        ].get_manager.return_value.last_event_equals_or_is_release_for_event.return_value = True
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        mock_event = test_context.Mock()
+        nav._last_input_event = mock_event
+        result = nav.last_command_prevents_focus_mode()
+        assert result is True
+
+    def test_last_command_prevents_focus_mode_false_no_event(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test StructuralNavigator.last_command_prevents_focus_mode returns False if no event."""
+
+        self._setup_dependencies(test_context)
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        nav._last_input_event = None
+        result = nav.last_command_prevents_focus_mode()
+        assert result is False
+
+    def test_last_command_prevents_focus_mode_false_setting_true(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test StructuralNavigator.last_command_prevents_focus_mode returns False if setting True."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_setting.return_value = True
+        from orca.structural_navigator import get_navigator
+
+        nav = get_navigator()
+        mock_event = test_context.Mock()
+        nav._last_input_event = mock_event
+        result = nav.last_command_prevents_focus_mode()
+        assert result is False

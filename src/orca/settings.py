@@ -290,6 +290,15 @@ enableMouseReview: bool = False
 # Managed by structural_navigator.py
 largeObjectTextLength: int = 75
 wrappedStructuralNavigation: bool = True
+structNavTriggersFocusMode: bool = False
+structuralNavigationEnabled: bool = True
+
+# Managed by caret_navigator.py
+caretNavTriggersFocusMode: bool = False
+caretNavigationEnabled: bool = True
+
+# Managed by table_navigator.py
+skipBlankCells: bool = False
 
 # Managed by system_information_presenter.py
 presentDateFormat: str = messages.DATE_FORMAT_LOCALE
@@ -317,7 +326,7 @@ playSoundForState: bool = False
 playSoundForPositionInSet: bool = False
 playSoundForValue: bool = False
 
-# Keyboard and Echo
+# Keyboard
 keyboardLayout: int = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout: float = 0.5
@@ -336,21 +345,10 @@ progressBarBeepInterval: int = 0
 progressBarVerbosity: int = PROGRESS_BAR_APPLICATION
 ignoreStatusBarProgressBars: bool = True
 
-# Structural navigation
-structuralNavigationEnabled: bool = True
-inferLiveRegions: bool = True
-
-# table navigation
-skipBlankCells: bool = False
-
-# Caret navigation
-caretNavigationEnabled: bool = True
-
-# Document navigation
-caretNavTriggersFocusMode: bool = False
-structNavTriggersFocusMode: bool = False
+# Document navigation and content
 nativeNavTriggersFocusMode: bool = True
 layoutMode: bool = True
+inferLiveRegions: bool = True
 
 # Chat
 chatMessageVerbosity: int = CHAT_SPEAK_ALL
