@@ -241,8 +241,8 @@ class AXUtilities:
         """Returns all the descendants of obj with a widget role"""
 
         roles = AXUtilitiesRole.get_widget_roles()
-        if exclude_push_button and Atspi.Role.PUSH_BUTTON in roles:
-            roles.remove(Atspi.Role.PUSH_BUTTON)
+        if exclude_push_button and Atspi.Role.BUTTON in roles:
+            roles.remove(Atspi.Role.BUTTON)
 
         result = None
         if AXObject.supports_collection(obj):

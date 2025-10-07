@@ -441,7 +441,7 @@ class EventManager:
                     return True
                 return False
             if "selected" in event_type:
-                if not event.detail1 and role in [Atspi.Role.PUSH_BUTTON]:
+                if not event.detail1 and role in [Atspi.Role.BUTTON]:
                     msg = f"EVENT MANAGER: Ignoring {event_type} due to role of source and detail1"
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     return True

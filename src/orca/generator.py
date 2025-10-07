@@ -92,6 +92,7 @@ class Generator:
             Atspi.Role.ARTICLE: self._generate_article,
             "ROLE_ARTICLE_IN_FEED": self._generate_article_in_feed,
             Atspi.Role.BLOCK_QUOTE: self._generate_block_quote,
+            Atspi.Role.BUTTON: self._generate_push_button,
             Atspi.Role.CANVAS: self._generate_canvas,
             Atspi.Role.CAPTION: self._generate_caption,
             Atspi.Role.CHECK_BOX: self._generate_check_box,
@@ -159,7 +160,6 @@ class Generator:
             Atspi.Role.PARAGRAPH: self._generate_paragraph,
             Atspi.Role.PASSWORD_TEXT: self._generate_password_text,
             Atspi.Role.PROGRESS_BAR: self._generate_progress_bar,
-            Atspi.Role.PUSH_BUTTON: self._generate_push_button,
             Atspi.Role.RADIO_BUTTON: self._generate_radio_button,
             Atspi.Role.RADIO_MENU_ITEM: self._generate_radio_menu_item,
             "ROLE_REGION": self._generate_region,
@@ -177,8 +177,7 @@ class Generator:
             Atspi.Role.SUBSCRIPT: self._generate_subscript,
             Atspi.Role.SUGGESTION: self._generate_suggestion,
             Atspi.Role.SUPERSCRIPT: self._generate_superscript,
-            # TODO - JD: Replace this with the real role once dependencies are bumped to v2.56.
-            "ROLE_SWITCH": self._generate_switch,
+            Atspi.Role.SWITCH: self._generate_switch,
             Atspi.Role.TABLE: self._generate_table,
             Atspi.Role.TABLE_CELL: self._generate_table_cell_in_row,
             "REAL_ROLE_TABLE_CELL": self._generate_table_cell,
@@ -577,8 +576,6 @@ class Generator:
                 return "ROLE_DPUB_LANDMARK"
             if AXUtilities.is_section(obj, role):
                 return "ROLE_DPUB_SECTION"
-        if AXUtilities.is_switch(obj, role):
-            return "ROLE_SWITCH"
         if self._script.utilities.is_anchor(obj):
             return Atspi.Role.STATIC
         if AXUtilities.is_block_quote(obj, role):

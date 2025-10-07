@@ -14,8 +14,8 @@ if not python3.language_version().version_compare(f'>= @python_minimum_version@'
 endif
 
 # Hard dependencies (checked via pkg-config)
-dependency('atspi-2', version: '>= 2.52.0')
-dependency('atk-bridge-2.0', version: '>= 2.50.0')
+dependency('atspi-2', version: '>= 2.56.0')
+dependency('atk-bridge-2.0', version: '>= 2.56.0')
 dependency('pygobject-3.0', version: '>= 3.18')
 
 # Hard Python module dependencies

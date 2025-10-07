@@ -71,32 +71,26 @@ class AXUtilitiesRole:
         # both in ARIA and in GTK.
 
         roles = [
+            Atspi.Role.BUTTON,
             Atspi.Role.CHECK_BOX,
             Atspi.Role.CHECK_MENU_ITEM,
             Atspi.Role.IMAGE,
             Atspi.Role.LEVEL_BAR,
             Atspi.Role.PAGE_TAB,
             Atspi.Role.PROGRESS_BAR,
-            Atspi.Role.PUSH_BUTTON,
             Atspi.Role.RADIO_BUTTON,
             Atspi.Role.RADIO_MENU_ITEM,
             Atspi.Role.SCROLL_BAR,
             Atspi.Role.SEPARATOR,
             Atspi.Role.SLIDER,
+            Atspi.Role.SWITCH,
             Atspi.Role.TOGGLE_BUTTON,
         ]
-
-        # TODO - JD: Remove this check when dependencies are bumped to v2.56.
-        try:
-            roles.append(Atspi.Role.SWITCH)
-        except AttributeError:
-            pass
 
         if role is None:
             role = AXObject.get_role(obj)
 
-        # TODO - JD: The is_switch() call be be removed as part of the removal above.
-        if role in roles or AXUtilitiesRole.is_switch(obj, role):
+        if role in roles:
             tokens = ["AXUtilitiesRole:", obj, "has presentational children."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -130,7 +124,8 @@ class AXUtilitiesRole:
     def get_form_field_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider form fields"""
 
-        roles = [Atspi.Role.CHECK_BOX,
+        roles = [Atspi.Role.BUTTON,
+                 Atspi.Role.CHECK_BOX,
                  Atspi.Role.RADIO_BUTTON,
                  Atspi.Role.COMBO_BOX,
                  Atspi.Role.DOCUMENT_FRAME, # rich text editing pred recommended
@@ -138,7 +133,6 @@ class AXUtilitiesRole:
                  Atspi.Role.LIST_BOX,
                  Atspi.Role.ENTRY,
                  Atspi.Role.PASSWORD_TEXT,
-                 Atspi.Role.PUSH_BUTTON,
                  Atspi.Role.SPIN_BUTTON,
                  Atspi.Role.TOGGLE_BUTTON]
         return roles
@@ -298,24 +292,18 @@ class AXUtilitiesRole:
     def get_widget_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider widgets"""
 
-        roles = [Atspi.Role.CHECK_BOX,
+        roles = [Atspi.Role.BUTTON,
+                 Atspi.Role.CHECK_BOX,
                  Atspi.Role.COMBO_BOX,
                  Atspi.Role.ENTRY,
                  Atspi.Role.LIST_BOX,
                  Atspi.Role.PASSWORD_TEXT,
-                 Atspi.Role.PUSH_BUTTON,
                  Atspi.Role.RADIO_BUTTON,
                  Atspi.Role.SLIDER,
                  Atspi.Role.SPIN_BUTTON,
+                 Atspi.Role.SWITCH,
                  Atspi.Role.TEXT, # predicate recommended to check it is editable
                  Atspi.Role.TOGGLE_BUTTON]
-
-        # TODO - JD: Remove this check when dependencies are bumped to v2.56.
-        try:
-            roles.append(Atspi.Role.SWITCH)
-        except AttributeError:
-            pass
-
         return roles
 
     @staticmethod
@@ -560,7 +548,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role in [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]
+        return role in [Atspi.Role.BUTTON, Atspi.Role.TOGGLE_BUTTON]
 
     @staticmethod
     def is_button_with_popup(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1904,7 +1892,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.PUSH_BUTTON
+        return role == Atspi.Role.BUTTON
 
     @staticmethod
     def is_push_button_menu(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2123,12 +2111,8 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
 
-        # TODO - JD: Remove this check when dependencies are bumped to v2.56.
-        try:
-            if role == Atspi.Role.SWITCH:
-                return True
-        except AttributeError:
-            pass
+        if role == Atspi.Role.SWITCH:
+            return True
 
         return "switch" in AXUtilitiesRole._get_xml_roles(obj)
 

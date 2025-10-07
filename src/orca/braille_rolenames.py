@@ -185,7 +185,7 @@ shortRoleNames = {
     Atspi.Role.PROGRESS_BAR: _("pgbar"),
 
     # Translators: short braille for the rolename of a push button.
-    Atspi.Role.PUSH_BUTTON: _("btn"),
+    Atspi.Role.BUTTON: _("btn"),
 
     # Translators: short braille for the rolename of a radio button.
     Atspi.Role.RADIO_BUTTON: _("radio"),

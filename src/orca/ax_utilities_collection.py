@@ -354,7 +354,7 @@ class AXUtilitiesCollection:
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the push- or toggle-button role"""
 
-        roles = [Atspi.Role.PUSH_BUTTON, Atspi.Role.TOGGLE_BUTTON]
+        roles = [Atspi.Role.BUTTON, Atspi.Role.TOGGLE_BUTTON]
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -1558,7 +1558,7 @@ class AXUtilitiesCollection:
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the push button role"""
 
-        roles = [Atspi.Role.PUSH_BUTTON]
+        roles = [Atspi.Role.BUTTON]
         return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
 
     @staticmethod
@@ -2291,7 +2291,7 @@ class AXUtilitiesCollection:
     def find_default_button(root: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the default button inside root"""
 
-        roles = [Atspi.Role.PUSH_BUTTON]
+        roles = [Atspi.Role.BUTTON]
         states = [Atspi.StateType.IS_DEFAULT]
         rule = AXCollection.create_match_rule(roles=roles, states=states)
         return AXCollection.get_first_match(root, rule)

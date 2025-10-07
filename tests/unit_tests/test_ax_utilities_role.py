@@ -104,7 +104,7 @@ class TestAXUtilitiesRole:
                 "id": "color_chooser_role",
                 "method_name": "is_color_chooser",
                 "matching_role": Atspi.Role.COLOR_CHOOSER,
-                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+                "non_matching_role": Atspi.Role.BUTTON,
             },
             {
                 "id": "column_header_role",
@@ -134,7 +134,7 @@ class TestAXUtilitiesRole:
                 "id": "arrow_role",
                 "method_name": "is_arrow",
                 "matching_role": Atspi.Role.ARROW,
-                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+                "non_matching_role": Atspi.Role.BUTTON,
             },
             {
                 "id": "article_role",
@@ -589,14 +589,14 @@ class TestAXUtilitiesRole:
             {
                 "id": "push_button_role",
                 "method_name": "is_push_button",
-                "matching_role": Atspi.Role.PUSH_BUTTON,
+                "matching_role": Atspi.Role.BUTTON,
                 "non_matching_role": Atspi.Role.TOGGLE_BUTTON,
             },
             {
                 "id": "push_button_menu_role",
                 "method_name": "is_push_button_menu",
                 "matching_role": Atspi.Role.PUSH_BUTTON_MENU,
-                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+                "non_matching_role": Atspi.Role.BUTTON,
             },
             {
                 "id": "radio_button_role",
@@ -746,7 +746,7 @@ class TestAXUtilitiesRole:
                 "id": "toggle_button_role",
                 "method_name": "is_toggle_button",
                 "matching_role": Atspi.Role.TOGGLE_BUTTON,
-                "non_matching_role": Atspi.Role.PUSH_BUTTON,
+                "non_matching_role": Atspi.Role.BUTTON,
             },
             {
                 "id": "tool_bar_role",
@@ -824,7 +824,7 @@ class TestAXUtilitiesRole:
     @pytest.mark.parametrize(
         "case",
         [
-            {"id": "push_button_true", "role": Atspi.Role.PUSH_BUTTON, "expected": True},
+            {"id": "push_button_true", "role": Atspi.Role.BUTTON, "expected": True},
             {"id": "toggle_button_true", "role": Atspi.Role.TOGGLE_BUTTON, "expected": True},
             {"id": "label_false", "role": Atspi.Role.LABEL, "expected": False},
         ],
@@ -849,19 +849,16 @@ class TestAXUtilitiesRole:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
-        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.PUSH_BUTTON)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.BUTTON)
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
+        assert AXUtilitiesRole.children_are_presentational(mock_obj)
+
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.SWITCH)
         assert AXUtilitiesRole.children_are_presentational(mock_obj)
 
         mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
-        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         assert not AXUtilitiesRole.children_are_presentational(mock_obj)
-
-        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
-        test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=True)
-        assert AXUtilitiesRole.children_are_presentational(mock_obj)
 
     def test_get_localized_role_name_with_atspi_role(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.get_localized_role_name with standard Atspi.Role."""
@@ -887,7 +884,7 @@ class TestAXUtilitiesRole:
         else:
             test_context.patch_object(Atspi, "role_get_name", return_value="LocalizedRole")
         assert (
-            AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.PUSH_BUTTON)
+            AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.BUTTON)
             == "LocalizedRole"
         )
 
@@ -1691,7 +1688,7 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
-        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.PUSH_BUTTON)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.BUTTON)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2056,13 +2053,13 @@ class TestAXUtilitiesRole:
         [
             {
                 "id": "push_button_with_popup",
-                "role": Atspi.Role.PUSH_BUTTON,
+                "role": Atspi.Role.BUTTON,
                 "has_popup": True,
                 "expected": True,
             },
             {
                 "id": "push_button_without_popup",
-                "role": Atspi.Role.PUSH_BUTTON,
+                "role": Atspi.Role.BUTTON,
                 "has_popup": False,
                 "expected": False,
             },
@@ -2147,6 +2144,7 @@ class TestAXUtilitiesRole:
                 "id": "form_field_roles",
                 "method_name": "get_form_field_roles",
                 "expected_roles": [
+                    Atspi.Role.BUTTON,
                     Atspi.Role.CHECK_BOX,
                     Atspi.Role.RADIO_BUTTON,
                     Atspi.Role.COMBO_BOX,
@@ -2155,7 +2153,6 @@ class TestAXUtilitiesRole:
                     Atspi.Role.LIST_BOX,
                     Atspi.Role.ENTRY,
                     Atspi.Role.PASSWORD_TEXT,
-                    Atspi.Role.PUSH_BUTTON,
                     Atspi.Role.SPIN_BUTTON,
                     Atspi.Role.TOGGLE_BUTTON,
                 ],
@@ -2296,12 +2293,12 @@ class TestAXUtilitiesRole:
 
         mock_obj1 = test_context.Mock(spec=Atspi.Accessible)
         mock_obj2 = test_context.Mock(spec=Atspi.Accessible)
-        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.PUSH_BUTTON)
+        mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.BUTTON)
         assert AXUtilitiesRole.have_same_role(mock_obj1, mock_obj2)
 
         def mock_get_role(obj):
             if obj == mock_obj1:
-                return Atspi.Role.PUSH_BUTTON
+                return Atspi.Role.BUTTON
             return Atspi.Role.LABEL
 
         mock_ax_object_class.get_role = mock_get_role
@@ -2499,7 +2496,7 @@ class TestAXUtilitiesRole:
 
         roles = AXUtilitiesRole.get_widget_roles()
         assert len(roles) > 10
-        assert Atspi.Role.PUSH_BUTTON in roles
+        assert Atspi.Role.BUTTON in roles
         assert Atspi.Role.CHECK_BOX in roles
         assert Atspi.Role.ENTRY in roles
         assert Atspi.Role.COMBO_BOX in roles

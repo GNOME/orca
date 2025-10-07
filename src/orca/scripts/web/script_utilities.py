@@ -569,14 +569,14 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _treat_object_as_whole(self, obj: Atspi.Accessible, offset: int | None = None) -> bool:
-        always = [Atspi.Role.CHECK_BOX,
+        always = [Atspi.Role.BUTTON,
+                  Atspi.Role.CHECK_BOX,
                   Atspi.Role.CHECK_MENU_ITEM,
                   Atspi.Role.LIST_BOX,
                   Atspi.Role.MENU_ITEM,
                   Atspi.Role.PAGE_TAB,
                   Atspi.Role.RADIO_MENU_ITEM,
                   Atspi.Role.RADIO_BUTTON,
-                  Atspi.Role.PUSH_BUTTON,
                   Atspi.Role.TOGGLE_BUTTON]
 
         descendable = [Atspi.Role.MENU,

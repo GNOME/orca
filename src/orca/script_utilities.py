@@ -645,7 +645,8 @@ class Utilities:
             return []
 
         label_roles = [Atspi.Role.LABEL, Atspi.Role.STATIC]
-        skip_roles = [Atspi.Role.COMBO_BOX,
+        skip_roles = [Atspi.Role.BUTTON,
+                      Atspi.Role.COMBO_BOX,
                       Atspi.Role.DOCUMENT_EMAIL,
                       Atspi.Role.DOCUMENT_FRAME,
                       Atspi.Role.DOCUMENT_PRESENTATION,
@@ -658,7 +659,6 @@ class Utilities:
                       Atspi.Role.LIST_ITEM,
                       Atspi.Role.MENU,
                       Atspi.Role.MENU_BAR,
-                      Atspi.Role.PUSH_BUTTON,
                       Atspi.Role.SCROLL_PANE,
                       Atspi.Role.SPLIT_PANE,
                       Atspi.Role.TABLE,
