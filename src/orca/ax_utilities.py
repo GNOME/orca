@@ -477,7 +477,7 @@ class AXUtilities:
         """Returns the list of objects sorted according to child index."""
 
         def cmp(x, y):
-            return AXObject.get_index_in_parent(y) - AXObject.get_index_in_parent(x)
+            return AXObject.get_index_in_parent(x) - AXObject.get_index_in_parent(y)
 
         result = sorted(object_list, key=functools.cmp_to_key(cmp))
         if object_list != result:
