@@ -2147,3 +2147,43 @@ class Script(script.Script):
         if voice == system_voice and reset_styles:
             speech_manager.set_capitalization_style(cap_style)
             speech_manager.set_punctuation_level(punct_style)
+
+    # TODO - JD: This is temporary and in place just so that we could include D-Bus support
+    # for the web script's commands prior to having global browse mode.
+    # pylint: disable=unused-argument
+    def toggle_presentation_mode(
+        self,
+        event: input_event.InputEvent,
+        document: Atspi.Accessible | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Switches between browse mode and focus mode."""
+
+        return False
+
+    def toggle_layout_mode(
+        self,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Switches between object mode and layout mode for line presentation."""
+
+        return False
+
+    def enable_sticky_browse_mode(
+        self,
+        event: input_event.InputEvent | None = None,
+        force_message: bool = False
+    ) -> bool:
+        """Enables sticky browse mode."""
+
+        return False
+
+    def enable_sticky_focus_mode(
+        self,
+        event: input_event.InputEvent | None = None,
+        force_message: bool = False
+    ) -> bool:
+        """Enables sticky focus mode."""
+
+        return False

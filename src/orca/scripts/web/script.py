@@ -962,21 +962,27 @@ class Script(default.Script):
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
         return True
 
-    def toggle_layout_mode(self, _event: input_event.InputEvent) -> bool:
+    def toggle_layout_mode(
+        self,
+        _event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
         """Switches between object mode and layout mode for line presentation."""
 
         layout_mode = not settings_manager.get_manager().get_setting("layoutMode")
-        if layout_mode:
-            self.present_message(messages.MODE_LAYOUT)
-        else:
-            self.present_message(messages.MODE_OBJECT)
+        if notify_user:
+            if layout_mode:
+                self.present_message(messages.MODE_LAYOUT)
+            else:
+                self.present_message(messages.MODE_OBJECT)
         settings_manager.get_manager().set_setting("layoutMode", layout_mode)
         return True
 
     def toggle_presentation_mode(
         self,
         event: input_event.InputEvent,
-        document: Atspi.Accessible | None = None
+        document: Atspi.Accessible | None = None,
+        notify_user: bool = True
     ) -> bool:
         """Switches between browse mode and focus mode."""
 
@@ -987,7 +993,7 @@ class Script(default.Script):
                 self.utilities.set_caret_context(parent, -1)
             elif AXUtilities.is_menu(parent):
                 self.utilities.set_caret_context(AXObject.get_parent(parent), -1)
-            if not self._loading_content:
+            if notify_user and not self._loading_content:
                 self.present_message(messages.MODE_BROWSE)
         else:
             if not self.utilities.grab_focus_when_setting_caret(obj) \
@@ -997,7 +1003,8 @@ class Script(default.Script):
                     or event):
                 AXObject.grab_focus(obj)
 
-            self.present_message(messages.MODE_FOCUS)
+            if notify_user:
+                self.present_message(messages.MODE_FOCUS)
         self._in_focus_mode = not self._in_focus_mode
         self._focus_mode_is_sticky = False
         self._browse_mode_is_sticky = False

@@ -72,6 +72,20 @@ MODULE_CONFIG = {
         "toggle_commands": [],
         "skip": [],
     },
+    "FocusManager": {
+        "commands": [
+            "EnableStickyBrowseMode",
+            "EnableStickyFocusMode",
+            "ToggleLayoutMode",
+            "TogglePresentationMode",
+        ],
+        "parameterized_commands": [],
+        "getters": [],
+        "setters": [],
+        "ui_commands": [],
+        "toggle_commands": ["ToggleLayoutMode", "TogglePresentationMode"],
+        "skip": [],
+    },
     "FlatReviewPresenter": {
         "commands": [
             "AppendToClipboard",
