@@ -25,6 +25,9 @@
 
 """Module to manage the focused object, window, etc."""
 
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
+
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
@@ -32,17 +35,24 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2016-2023 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import TYPE_CHECKING
+
 import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import braille
+from . import dbus_service
 from . import debug
 from . import script_manager
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+
+if TYPE_CHECKING:
+    from .input_event import InputEvent
+    from .scripts import default
 
 CARET_TRACKING = "caret-tracking"
 FOCUS_TRACKING = "focus-tracking"
@@ -63,6 +73,11 @@ class FocusManager:
         self._last_cell_coordinates: tuple[int, int] = (-1, -1)
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
+
+        msg = "FOCUS MANAGER: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("FocusManager", self)
 
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
@@ -351,6 +366,50 @@ class FocusManager:
         app = AXUtilities.get_application(self._focus)
         script = script_manager.get_manager().get_script(app, self._focus)
         script_manager.get_manager().set_active_script(script, "Setting active window")
+
+    @dbus_service.command
+    def toggle_presentation_mode(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Switches between browse mode and focus mode (web content only)."""
+
+        return script.toggle_presentation_mode(event, document=None, notify_user=notify_user)
+
+    @dbus_service.command
+    def toggle_layout_mode(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Switches between object mode and layout mode for line presentation (web content only)."""
+
+        return script.toggle_layout_mode(event, notify_user=notify_user)
+
+    @dbus_service.command
+    def enable_sticky_browse_mode(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Enables sticky browse mode (web content only)."""
+
+        return script.enable_sticky_browse_mode(event, force_message=notify_user)
+
+    @dbus_service.command
+    def enable_sticky_focus_mode(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Enables sticky focus mode (web content only)."""
+
+        return script.enable_sticky_focus_mode(event, force_message=notify_user)
 
 
 _manager: FocusManager = FocusManager()
