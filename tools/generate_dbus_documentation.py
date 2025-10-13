@@ -392,13 +392,20 @@ def generate_documentation():
     for module_name in modules:
         module_infos[module_name] = get_module_info(bus, module_name)
 
+    total_commands = len(system_commands)
+    total_commands += sum(len(info["commands"]) for info in module_infos.values())
+    total_commands += sum(len(info["parameterized_commands"]) for info in module_infos.values())
+    total_getters = sum(len(info["getters"]) for info in module_infos.values())
+    total_setters = sum(len(info["setters"]) for info in module_infos.values())
+
     lines = []
     lines.append("# Orca D-Bus Service Commands Reference")
     lines.append("")
     lines.append(
-        "This document lists all commands, getters, and setters available via "
-        "Orca's D-Bus Remote Controller interface."
+        f"This document lists all commands ({total_commands}), "
+        f"runtime getters ({total_getters}), and runtime setters ({total_setters}) available"
     )
+    lines.append("via Orca's D-Bus Remote Controller interface.")
     lines.append("")
     lines.append("The service can be accessed at:")
     lines.append("")

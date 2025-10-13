@@ -1,6 +1,7 @@
 # Orca D-Bus Service Commands Reference
 
-This document lists all commands, getters, and setters available via Orca's D-Bus Remote Controller interface.
+This document lists all commands (205), runtime getters (95), and runtime setters (89) available
+via Orca's D-Bus Remote Controller interface.
 
 The service can be accessed at:
 
