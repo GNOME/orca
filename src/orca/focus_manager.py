@@ -22,6 +22,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-public-methods
 
 """Module to manage the focused object, window, etc."""
 
@@ -411,6 +412,37 @@ class FocusManager:
 
         return script.enable_sticky_focus_mode(event, force_message=notify_user)
 
+    @dbus_service.getter
+    def get_in_layout_mode(self) -> bool:
+        """Returns True if layout mode (as opposed to object mode) is active (web content only)."""
+
+        if script := script_manager.get_manager().get_active_script():
+            return script.in_layout_mode()
+        return False
+
+    @dbus_service.getter
+    def get_in_focus_mode(self) -> bool:
+        """Returns True if focus mode is active (web content only)."""
+
+        if script := script_manager.get_manager().get_active_script():
+            return script.in_focus_mode()
+        return False
+
+    @dbus_service.getter
+    def get_focus_mode_is_sticky(self) -> bool:
+        """Returns True if focus mode is active and 'sticky' (web content only)."""
+
+        if script := script_manager.get_manager().get_active_script():
+            return script.focus_mode_is_sticky()
+        return False
+
+    @dbus_service.getter
+    def get_browse_mode_is_sticky(self) -> bool:
+        """Returns True if browse mode is active and 'sticky' (web content only)."""
+
+        if script := script_manager.get_manager().get_active_script():
+            return script.browse_mode_is_sticky()
+        return False
 
 _manager: FocusManager = FocusManager()
 

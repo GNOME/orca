@@ -2153,7 +2153,7 @@ class Script(script.Script):
     # pylint: disable=unused-argument
     def toggle_presentation_mode(
         self,
-        event: input_event.InputEvent,
+        event: input_event.InputEvent | None = None,
         document: Atspi.Accessible | None = None,
         notify_user: bool = True
     ) -> bool:
@@ -2185,5 +2185,25 @@ class Script(script.Script):
         force_message: bool = False
     ) -> bool:
         """Enables sticky focus mode."""
+
+        return False
+
+    def in_focus_mode(self) -> bool:
+        """ Returns True if we're in focus mode."""
+
+        return False
+
+    def focus_mode_is_sticky(self) -> bool:
+        """Returns True if we're in 'sticky' focus mode."""
+
+        return False
+
+    def browse_mode_is_sticky(self) -> bool:
+        """Returns True if we're in 'sticky' browse mode."""
+
+        return False
+
+    def in_layout_mode(self) -> bool:
+        """ Returns True if we're in layout mode."""
 
         return False
