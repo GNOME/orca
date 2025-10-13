@@ -83,7 +83,12 @@ MODULE_CONFIG = {
             "TogglePresentationMode",
         ],
         "parameterized_commands": [],
-        "getters": [],
+        "getters": [
+            "BrowseModeIsSticky",
+            "FocusModeIsSticky",
+            "InFocusMode",
+            "InLayoutMode",
+        ],
         "setters": [],
         "ui_commands": [],
         "toggle_commands": ["ToggleLayoutMode", "TogglePresentationMode"],

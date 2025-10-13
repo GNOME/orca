@@ -1,6 +1,6 @@
 # Orca D-Bus Service Commands Reference
 
-This document lists all commands (205), runtime getters (95), and runtime setters (89) available
+This document lists all commands (205), runtime getters (99), and runtime setters (89) available
 via Orca's D-Bus Remote Controller interface.
 
 The service can be accessed at:
@@ -188,6 +188,17 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`EnableStickyFocusMode`**: Enables sticky focus mode (web content only).
 - **`ToggleLayoutMode`**: Switches between object mode and layout mode for line presentation (web content only).
 - **`TogglePresentationMode`**: Switches between browse mode and focus mode (web content only).
+
+#### Settings
+
+**Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
+**Parameters**: `PropertyName` (string), `Value` (variant, setter only)
+
+- **`BrowseModeIsSticky`**: Returns True if we are in 'sticky' browse mode (web content only). (getter only)
+- **`FocusModeIsSticky`**: Returns True if we are in 'sticky' focus mode (web content only). (getter only)
+- **`InFocusMode`**: Returns True if we are in focus mode (web content only). (getter only)
+- **`InLayoutMode`**: Returns True if we are in layout mode instead of object mode (web content only). (getter only)
 
 ---
 

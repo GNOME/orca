@@ -687,7 +687,7 @@ class SpeechAndVerbosityManager:
 
     @dbus_service.setter
     def set_rate(self, value: int) -> bool:
-        """Sets the current speech rate."""
+        """Sets the current speech rate (0-100, default: 50)."""
 
         if not isinstance(value, (int, float)):
             return False
@@ -765,7 +765,7 @@ class SpeechAndVerbosityManager:
 
     @dbus_service.setter
     def set_pitch(self, value: float) -> bool:
-        """Sets the current speech pitch."""
+        """Sets the current speech pitch (0.0-10.0, default: 5.0)."""
 
         if not isinstance(value, (int, float)):
             return False
@@ -843,7 +843,7 @@ class SpeechAndVerbosityManager:
 
     @dbus_service.setter
     def set_volume(self, value: float) -> bool:
-        """Sets the current speech volume."""
+        """Sets the current speech volume (0.0-10.0, default: 10.0)."""
 
         if not isinstance(value, (int, float)):
             return False

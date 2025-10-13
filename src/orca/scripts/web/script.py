@@ -534,6 +534,11 @@ class Script(default.Script):
 
         self._made_find_announcement = True
 
+    def in_layout_mode(self) -> bool:
+        """ Returns True if we're in layout mode."""
+
+        return settings_manager.get_manager().get_setting("layoutMode")
+
     def in_focus_mode(self) -> bool:
         """ Returns True if we're in focus mode."""
 
@@ -983,7 +988,7 @@ class Script(default.Script):
 
     def toggle_presentation_mode(
         self,
-        event: input_event.InputEvent,
+        event: input_event.InputEvent | None = None,
         document: Atspi.Accessible | None = None,
         notify_user: bool = True
     ) -> bool:
