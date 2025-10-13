@@ -170,7 +170,7 @@ class ActionPresenter:
         event: input_event.InputEvent | None = None,
         notify_user: bool = True
     ) -> bool:
-        """Shows a list with all the available accessible actions."""
+        """Shows a list of all the accessible actions exposed by the focused object."""
 
         tokens = ["ACTION PRESENTER: show_actions_list. Script:", script,
                   "Event:", event, "notify_user:", notify_user]

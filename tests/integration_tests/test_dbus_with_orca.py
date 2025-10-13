@@ -53,6 +53,9 @@ MODULE_TIMEOUTS = {
     "SpeechAndVerbosityManager": SPEECH_AND_VERBOSITY_TIMEOUT,
 }
 
+# Modules that may not be present in all environments (e.g., X11 vs Wayland)
+OPTIONAL_MODULES = {"MouseReviewer"}
+
 MODULE_CONFIG = {
     "ActionPresenter": {
         "commands": ["ShowActionsList"],
@@ -84,6 +87,15 @@ MODULE_CONFIG = {
         "setters": [],
         "ui_commands": [],
         "toggle_commands": ["ToggleLayoutMode", "TogglePresentationMode"],
+        "skip": [],
+    },
+    "MouseReviewer": {
+        "commands": ["Toggle"],
+        "parameterized_commands": [],
+        "getters": ["IsEnabled"],
+        "setters": ["IsEnabled"],
+        "ui_commands": [],
+        "toggle_commands": ["Toggle"],
         "skip": [],
     },
     "FlatReviewPresenter": {
@@ -1080,7 +1092,7 @@ class TestOrcaDBusIntegration:
 
         actual_modules = set(dbus_service_proxy.ListModules())
         expected_modules = set(MODULE_CONFIG.keys())
-        unexpected_modules = actual_modules - expected_modules
+        unexpected_modules = actual_modules - expected_modules - OPTIONAL_MODULES
 
         if unexpected_modules:
             module_list = sorted(unexpected_modules)
