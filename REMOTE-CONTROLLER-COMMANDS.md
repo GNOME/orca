@@ -195,10 +195,10 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
-- **`BrowseModeIsSticky`**: Returns True if we are in 'sticky' browse mode (web content only). (getter only)
-- **`FocusModeIsSticky`**: Returns True if we are in 'sticky' focus mode (web content only). (getter only)
-- **`InFocusMode`**: Returns True if we are in focus mode (web content only). (getter only)
-- **`InLayoutMode`**: Returns True if we are in layout mode instead of object mode (web content only). (getter only)
+- **`BrowseModeIsSticky`**: Returns True if browse mode is active and 'sticky' (web content only). (getter only)
+- **`FocusModeIsSticky`**: Returns True if focus mode is active and 'sticky' (web content only). (getter only)
+- **`InFocusMode`**: Returns True if focus mode is active (web content only). (getter only)
+- **`InLayoutMode`**: Returns True if layout mode (as opposed to object mode) is active (web content only). (getter only)
 
 ---
 
