@@ -173,6 +173,7 @@ def format_module_commands(module_name, info):
         lines.append("#### Commands")
         lines.append("")
         lines.append("**Method**: `org.gnome.Orca.Module.ExecuteCommand`")
+        lines.append("")
         lines.append(
             "**Parameters**: `CommandName` (string), "
             "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
@@ -319,11 +320,6 @@ def format_module_commands(module_name, info):
         lines.append("#### Parameterized Commands")
         lines.append("")
         lines.append("**Method**: `org.gnome.Orca.Module.ExecuteParameterizedCommand`")
-        lines.append(
-            "**Parameters**: `CommandName` (string), "
-            "`Parameters` (dict of variants), "
-            "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
-        )
         lines.append("")
         for name, description, parameters in info["parameterized_commands"]:
             param_list = ", ".join([f"`{pname}` ({ptype})" for pname, ptype in parameters])
@@ -338,6 +334,7 @@ def format_module_commands(module_name, info):
         lines.append("#### Settings")
         lines.append("")
         lines.append("**Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`")
+        lines.append("")
         lines.append(
             "**Parameters**: `PropertyName` (string), "
             "`Value` (variant, setter only)"

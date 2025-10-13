@@ -37,6 +37,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`ShowActionsList`**: Shows a list of all the accessible actions exposed by the focused object.
@@ -50,6 +51,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`AvailableContractionTables`**: Returns a list of available contraction table names. (getter only)
@@ -78,6 +80,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`NextCharacter`**: Moves to the next character.
@@ -95,6 +98,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`IsEnabled`**: Gets/Sets whether caret navigation is enabled.
@@ -109,6 +113,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`PresentClipboardContents`**: Presents the clipboard contents.
@@ -122,6 +127,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`GoAbove`**: Moves to the character above.
@@ -161,6 +167,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`IsRestricted`**: Gets/Sets whether flat review is restricted to the current object.
@@ -174,6 +181,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`EnableStickyBrowseMode`**: Enables sticky browse mode (web content only).
@@ -190,6 +198,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`Toggle`**: Toggle mouse reviewing on or off (requires Wnck).
@@ -197,6 +206,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`IsEnabled`**: Gets/Sets whether mouse review is enabled (requires Wnck).
@@ -210,6 +220,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`PresentLastNotification`**: Presents the last notification.
@@ -226,6 +237,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`MoveToFirstChild`**: Moves the navigator focus to the first child of the current focus.
@@ -244,6 +256,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`FastForward`**: Jumps forward in the current Say All.
@@ -253,6 +266,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`AnnounceBlockquote`**: Gets/Sets whether blockquotes are announced when entered.
@@ -274,6 +288,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`ToggleSleepMode`**: Toggles sleep mode for the active application.
@@ -287,6 +302,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`IncreaseRate`**: Increases the speech rate.
@@ -311,13 +327,13 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Parameterized Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteParameterizedCommand`
-**Parameters**: `CommandName` (string), `Parameters` (dict of variants), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`GetVoicesForLanguage`**: Returns a list of available voices for the specified language. Parameters: `language` (str), `variant` (str), `notify_user` (bool)
 
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`AlwaysAnnounceSelectedRangeInSpreadsheet`**: Gets/Sets whether the selected range in spreadsheets is always announced.
@@ -373,6 +389,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 ##### Blockquotes
@@ -526,6 +543,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`IsEnabled`**: Gets/Sets whether structural navigation is enabled.
@@ -542,6 +560,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`PresentBatteryStatus`**: Presents the battery status.
@@ -552,6 +571,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`AvailableDateFormats`**: Returns a list of available date format names. (getter only)
@@ -568,6 +588,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`ClearDynamicColumnHeadersRow`**: Clears the row for the dynamic column headers.
@@ -589,6 +610,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`SkipBlankCells`**: Gets/Sets whether blank cells should be skipped during navigation.
@@ -602,6 +624,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`CycleKeyEcho`**: Cycle through the key echo levels.
@@ -609,6 +632,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Settings
 
 **Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
 **Parameters**: `PropertyName` (string), `Value` (variant, setter only)
 
 - **`ActionKeysEnabled`**: Gets/Sets whether action keys will be echoed when key echo is enabled.
@@ -635,6 +659,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 #### Commands
 
 **Method**: `org.gnome.Orca.Module.ExecuteCommand`
+
 **Parameters**: `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`PresentCharacterAttributes`**: Presents the font and formatting details for the current character.
