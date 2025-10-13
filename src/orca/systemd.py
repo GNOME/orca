@@ -40,6 +40,7 @@ class Systemd:
     def __init__(self) -> None:
         self._notify_socket: socket.socket | None = None
         self._watchdog_interval: int | None = None
+        self._last_ping: float = 0.0
 
         socket_path = os.environ.get("NOTIFY_SOCKET")
         if socket_path:
@@ -81,6 +82,23 @@ class Systemd:
         """Tell systemd that Orca is shutting down"""
         self._notify(b"STOPPING=1")
 
+    def _ping_watchdog(self) -> None:
+        """Send a watchdog ping and update last-ping timestamp"""
+        self._notify(b"WATCHDOG=1")
+        self._last_ping = time.time()
+
+    def notify_alive(self, reason: str = "") -> None:
+        """Tell systemd that Orca is still alive"""
+
+        if not self._watchdog_interval:
+            return
+
+        msg = f"SYSTEMD: notify_alive called. {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        elapsed_ms = (time.time() - self._last_ping) * 1000
+        if elapsed_ms >= self._watchdog_interval // 2:
+            self._ping_watchdog()
+
     def start_watchdog(self) -> None:
         """Start regularly sending keepalive pings to the systemd watchdog"""
         if not self._watchdog_interval:
@@ -88,7 +106,7 @@ class Systemd:
 
         def _on_watchdog_tick() -> bool:
             """Send a keepalive ping to the watchdog"""
-            self._notify(b"WATCHDOG=1")
+            self._ping_watchdog()
             return GLib.SOURCE_CONTINUE
 
         # The interval systemd reports to us is the deadline: if we miss it,

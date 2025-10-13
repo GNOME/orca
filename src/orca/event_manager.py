@@ -54,6 +54,7 @@ from . import input_event
 from . import input_event_manager
 from . import script_manager
 from . import settings
+from . import systemd
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_utilities_debugging import AXUtilitiesDebugging
@@ -515,6 +516,11 @@ class EventManager:
 
     def _enqueue_object_event(self, e: Atspi.Event) -> None:
         """Callback for Atspi object events."""
+
+        # If we are enqueuing events, we're not dead and should not be killed
+        # and restarted by systemd.
+        if self._event_queue.qsize() > 75 and systemd.get_manager().is_systemd_managed():
+            systemd.get_manager().notify_alive("Event queue size > 75")
 
         if self._ignore(e):
             return
