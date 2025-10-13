@@ -168,25 +168,15 @@ def format_module_commands(module_name, info):
     lines.append(f"**Object Path**: `/org/gnome/Orca/Service/{module_name}`")
     lines.append("")
 
-    # Count unique properties (getters and setters combined)
-    property_names = set()
-    for name, _ in info["getters"]:
-        property_names.add(name)
-    for name, _ in info["setters"]:
-        property_names.add(name)
-
-    # Add module details (only if count > 0)
-    if len(info["commands"]) > 0:
-        lines.append(f"- **Commands**: {len(info['commands'])}")
-    if len(info["parameterized_commands"]) > 0:
-        lines.append(f"- **Parameterized Commands**: {len(info['parameterized_commands'])}")
-    if len(property_names) > 0:
-        lines.append(f"- **Settings**: {len(property_names)}")
-    lines.append("")
-
     # Commands - special handling for certain modules
     if info["commands"]:
-        lines.append("#### Commands (use with `ExecuteCommand`)")
+        lines.append("#### Commands")
+        lines.append("")
+        lines.append("**Method**: `org.gnome.Orca.Module.ExecuteCommand`")
+        lines.append(
+            "**Parameters**: `CommandName` (string), "
+            "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
+        )
         lines.append("")
 
         if module_name == "SpeechAndVerbosityManager":
@@ -326,7 +316,14 @@ def format_module_commands(module_name, info):
 
     # Parameterized Commands
     if info["parameterized_commands"]:
-        lines.append("#### Parameterized Commands (use with `ExecuteParameterizedCommand`)")
+        lines.append("#### Parameterized Commands")
+        lines.append("")
+        lines.append("**Method**: `org.gnome.Orca.Module.ExecuteParameterizedCommand`")
+        lines.append(
+            "**Parameters**: `CommandName` (string), "
+            "`Parameters` (dict of variants), "
+            "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
+        )
         lines.append("")
         for name, description, parameters in info["parameterized_commands"]:
             param_list = ", ".join([f"`{pname}` ({ptype})" for pname, ptype in parameters])
@@ -338,7 +335,13 @@ def format_module_commands(module_name, info):
 
     # Runtime Settings (combine getters and setters)
     if info["getters"] or info["setters"]:
-        lines.append("#### Settings (use with `ExecuteRuntimeGetter` / `ExecuteRuntimeSetter`)")
+        lines.append("#### Settings")
+        lines.append("")
+        lines.append("**Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`")
+        lines.append(
+            "**Parameters**: `PropertyName` (string), "
+            "`Value` (variant, setter only)"
+        )
         lines.append("")
 
         # Build a merged dictionary of properties
@@ -414,8 +417,8 @@ def generate_documentation():
     lines.append("- **Module Object Paths**: `/org/gnome/Orca/Service/ModuleName`")
     lines.append("")
     lines.append(
-        "For information on how to execute these commands, "
-        "see [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md)."
+        "Additional information about using the remote controller can be found in "
+        "[README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md)."
     )
     lines.append("")
     lines.append("---")
