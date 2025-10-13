@@ -1,3 +1,14 @@
+49.3 - 13 October 2025
+
+Remote Controller:
+
+* Add additional getters for browse/focus modes.
+
+* Fix integration test failure resulting from differences in Wayland
+  versus X11 with respect to MouseReview.
+
+=========
+
 49.2 - 13 October 2025
 
 Web:
