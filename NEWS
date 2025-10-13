@@ -1,3 +1,41 @@
+49.2 - 13 October 2025
+
+Web:
+
+* Ensure sticky focus mode sticks when returning to document content.
+
+* Try to make deeply nested layout tables less time-consuming.
+
+* Fix false positive identifying grammar errors as spelling.
+
+* Fix punctuation presention of plain text documents viewed in Firefox.
+
+General:
+
+* Decrease likelihood that systemd will kill Orca during event floods.
+
+* Add Remote Controller support for more settings and commands.
+
+* Improve presentation (to the extent possible) of Budgie switcher
+  and panel.
+
+* Fix regressions in braille generation and cursor routing.
+
+* Fix presentation of GTK4 switches.
+
+* Fix chattiness in GTK4 combo boxes.
+
+* Improve performance when generating descendants, and ignore anything
+  with the labelled-by relation.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 twlvnn kraftwerk
+  eu              Basque                    Asier Saratsua Garmendia
+  sl              Slovenian                 Martin
+
+=========
+
 49.1 - 20 September 2025
 
 Fixes for Regressions:
