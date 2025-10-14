@@ -94,7 +94,7 @@ def format_system_commands(commands):
     lines.append("")
 
     for name, description in commands:
-        lines.append(f"- **`{name}`**: {description}")
+        lines.append(f"- **`{name}`:** {description}")
 
     lines.append("")
     return "\n".join(lines)
@@ -165,17 +165,17 @@ def format_module_commands(module_name, info):
     lines = []
     lines.append(f"### {module_name}")
     lines.append("")
-    lines.append(f"**Object Path**: `/org/gnome/Orca/Service/{module_name}`")
+    lines.append(f"**Object Path:** `/org/gnome/Orca/Service/{module_name}`")
     lines.append("")
 
     # Commands - special handling for certain modules
     if info["commands"]:
         lines.append("#### Commands")
         lines.append("")
-        lines.append("**Method**: `org.gnome.Orca.Module.ExecuteCommand`")
+        lines.append("**Method:** `org.gnome.Orca.Module.ExecuteCommand`")
         lines.append("")
         lines.append(
-            "**Parameters**: `CommandName` (string), "
+            "**Parameters:** `CommandName` (string), "
             "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
         )
         lines.append("")
@@ -200,7 +200,7 @@ def format_module_commands(module_name, info):
 
             sorted_commands = sorted(info["commands"], key=sort_speech_commands)
             for name, description in sorted_commands:
-                lines.append(f"- **`{name}`**: {description}")
+                lines.append(f"- **`{name}`:** {description}")
             lines.append("")
 
         elif module_name == "FlatReviewPresenter":
@@ -213,7 +213,7 @@ def format_module_commands(module_name, info):
 
             sorted_commands = sorted(info["commands"], key=sort_flat_review_commands)
             for name, description in sorted_commands:
-                lines.append(f"- **`{name}`**: {description}")
+                lines.append(f"- **`{name}`:** {description}")
             lines.append("")
 
         elif module_name == "CaretNavigator":
@@ -250,7 +250,7 @@ def format_module_commands(module_name, info):
 
             sorted_commands = sorted(info["commands"], key=sort_caret_commands)
             for name, description in sorted_commands:
-                lines.append(f"- **`{name}`**: {description}")
+                lines.append(f"- **`{name}`:** {description}")
             lines.append("")
 
         elif module_name == "StructuralNavigator":
@@ -300,7 +300,7 @@ def format_module_commands(module_name, info):
 
                 sorted_commands = sorted(cmds["commands"], key=sort_key)
                 for name, desc in sorted_commands:
-                    lines.append(f"- **`{name}`**: {desc}")
+                    lines.append(f"- **`{name}`:** {desc}")
                 lines.append("")
 
             # Show uncategorized commands at the end
@@ -308,46 +308,48 @@ def format_module_commands(module_name, info):
                 lines.append("##### Other")
                 lines.append("")
                 for name, description in other:
-                    lines.append(f"- **`{name}`**: {description}")
+                    lines.append(f"- **`{name}`:** {description}")
                 lines.append("")
         else:
             for name, description in info["commands"]:
-                lines.append(f"- **`{name}`**: {description}")
+                lines.append(f"- **`{name}`:** {description}")
             lines.append("")
 
     # Parameterized Commands
     if info["parameterized_commands"]:
         lines.append("#### Parameterized Commands")
         lines.append("")
-        lines.append("**Method**: `org.gnome.Orca.Module.ExecuteParameterizedCommand`")
+        lines.append("**Method:** `org.gnome.Orca.Module.ExecuteParameterizedCommand`")
         lines.append("")
         for name, description, parameters in info["parameterized_commands"]:
             param_list = ", ".join([f"`{pname}` ({ptype})" for pname, ptype in parameters])
             if param_list:
-                lines.append(f"- **`{name}`**: {description} Parameters: {param_list}")
+                lines.append(f"- **`{name}`:** {description} Parameters: {param_list}")
             else:
-                lines.append(f"- **`{name}`**: {description}")
+                lines.append(f"- **`{name}`:** {description}")
         lines.append("")
 
     # Runtime Settings (combine getters and setters)
     if info["getters"] or info["setters"]:
         lines.append("#### Settings")
         lines.append("")
-        lines.append("**Methods**: `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`")
+        lines.append("**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`")
         lines.append("")
         lines.append(
-            "**Parameters**: `PropertyName` (string), "
+            "**Parameters:** `PropertyName` (string), "
             "`Value` (variant, setter only)"
         )
         lines.append("")
 
         # Build a merged dictionary of properties
+        # Prefer setter descriptions as they may contain range/default info
         properties = {}
         for name, description in info["getters"]:
             properties[name] = {"description": description, "getter": True, "setter": False}
         for name, description in info["setters"]:
             if name in properties:
                 properties[name]["setter"] = True
+                properties[name]["description"] = description
             else:
                 properties[name] = {"description": description, "getter": False, "setter": True}
 
@@ -362,10 +364,13 @@ def format_module_commands(module_name, info):
             elif prop["setter"] and not prop["getter"]:
                 annotation = " (setter only)"
             else:
-                # Both getter and setter - change "Returns" to "Gets/Sets"
-                description = description.replace("Returns ", "Gets/Sets ")
+                # Both getter and setter - change "Returns" or "Sets" to "Gets/Sets"
+                if description.startswith("Returns "):
+                    description = description.replace("Returns ", "Gets/Sets ", 1)
+                elif description.startswith("Sets "):
+                    description = description.replace("Sets ", "Gets/Sets ", 1)
 
-            lines.append(f"- **`{name}`**: {description}{annotation}")
+            lines.append(f"- **`{name}`:** {description}{annotation}")
         lines.append("")
 
     return "\n".join(lines)
@@ -409,9 +414,9 @@ def generate_documentation():
     lines.append("")
     lines.append("The service can be accessed at:")
     lines.append("")
-    lines.append("- **Service Name**: `org.gnome.Orca.Service`")
-    lines.append("- **Main Object Path**: `/org/gnome/Orca/Service`")
-    lines.append("- **Module Object Paths**: `/org/gnome/Orca/Service/ModuleName`")
+    lines.append("- **Service Name:** `org.gnome.Orca.Service`")
+    lines.append("- **Main Object Path:** `/org/gnome/Orca/Service`")
+    lines.append("- **Module Object Paths:** `/org/gnome/Orca/Service/ModuleName`")
     lines.append("")
     lines.append(
         "Additional information about using the remote controller can be found in "

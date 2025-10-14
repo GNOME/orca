@@ -1543,13 +1543,13 @@ class SpeechAndVerbosityManager:
 
     @dbus_service.getter
     def get_speech_is_enabled(self) -> bool:
-        """Returns whether the speech server is enabled. See also the is-muted getter."""
+        """Returns whether the speech server is enabled. See also is-muted."""
 
         return settings_manager.get_manager().get_setting("enableSpeech")
 
     @dbus_service.setter
     def set_speech_is_enabled(self, value: bool) -> bool:
-        """Sets whether the speech server is enabled. See also the is-muted setter."""
+        """Sets whether the speech server is enabled. See also is-muted."""
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
