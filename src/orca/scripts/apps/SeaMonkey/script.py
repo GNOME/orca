@@ -125,8 +125,9 @@ class Script(Gecko.Script):
 
     def toggle_presentation_mode(
         self,
-        event: input_event.InputEvent,
-        document: Atspi.Accessible | None = None
+        event: input_event.InputEvent | None = None,
+        document: Atspi.Accessible | None = None,
+        notify_user: bool = True
     ) -> bool:
         if self._in_focus_mode \
            and self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
