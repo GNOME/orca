@@ -581,6 +581,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self.get_table_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Not using focus mode because last command was table navigation"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         if prev_obj and AXObject.is_dead(prev_obj):
             prev_obj = None
 
