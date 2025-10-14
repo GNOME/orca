@@ -16,16 +16,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-10-13 09:38+0000\n"
-"PO-Revision-Date: 2020-08-08 18:56+0300\n"
-"Last-Translator: Giannis Antypas <gianni.antypas@gmail.com>\n"
+"POT-Creation-Date: 2025-10-14 20:27+0000\n"
+"PO-Revision-Date: 2025-10-14 23:47+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek, Modern (1453-) <team@gnome.gr>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.7\n"
 "X-Project-Style: gnome\n"
 
 #: orca-autostart.desktop.in:3
@@ -605,8 +605,6 @@ msgstr "Ουγγρικός βαθμός 1"
 #. Translators: This is the name of a braille translation table. To learn more
 #. about braille translation tables, see http://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:152
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian Grade 2"
 msgstr "Ουγγρικός βαθμός 2"
 
@@ -626,8 +624,6 @@ msgstr "Ολλανδικός βαθμός 1 Βελγίου"
 #. Translators: this command will move the mouse pointer to the current item,
 #. typically a widget, without clicking on it.
 #: src/orca/cmdnames.py:39
-#, fuzzy
-#| msgid "Routes the pointer to the current item."
 msgid "Route the pointer to the current item"
 msgstr "Δρομολόγηση του δείκτη στο τρέχον αντικείμενο"
 
@@ -635,8 +631,6 @@ msgstr "Δρομολόγηση του δείκτη στο τρέχον αντι�
 #. describes the Orca command to generate a left mouse button click on the
 #. current item, typically a widget.
 #: src/orca/cmdnames.py:44
-#, fuzzy
-#| msgid "Performs left click on current flat review item."
 msgid "Perform left click on current item"
 msgstr "Πραγματοποίηση αριστερού κλικ στο τρέχον αντικείμενο"
 
@@ -644,8 +638,6 @@ msgstr "Πραγματοποίηση αριστερού κλικ στο τρέχ
 #. describes the Orca command to generate a right mouse button click on the
 #. current item, typically a widget.
 #: src/orca/cmdnames.py:49
-#, fuzzy
-#| msgid "Performs right click on current flat review item."
 msgid "Perform right click on current item"
 msgstr "Πραγματοποίηση δεξιού κλικ στο τρέχον αντικείμενο"
 
@@ -664,8 +656,6 @@ msgstr "Εκφώνηση ολόκληρου εγγράφου"
 #. by the {previous,next} {line,word,character}. This string is the name of a command
 #. which causes Orca to speak the entire contents of the window using flat review.
 #: src/orca/cmdnames.py:63
-#, fuzzy
-#| msgid "Speaks entire window using flat review."
 msgid "Speak entire window using flat review"
 msgstr "Εκφώνηση ολόκληρου παραθύρου με επίπεδη προεπισκόπηση"
 
@@ -674,8 +664,6 @@ msgstr "Εκφώνηση ολόκληρου παραθύρου με επίπεδ
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:69
-#, fuzzy
-#| msgid "Performs the basic where am I operation."
 msgid "Perform the basic Where Am I operation"
 msgstr "Εκτέλεση βασικής λειτουργίας 'Πού Βρίσκομαι'"
 
@@ -684,8 +672,6 @@ msgstr "Εκτέλεση βασικής λειτουργίας 'Πού Βρίσ�
 #. For example, the information may include the name of the current pushbutton
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:75
-#, fuzzy
-#| msgid "Performs the detailed where am I operation."
 msgid "Perform the detailed Where Am I operation"
 msgstr "Εκτέλεση λεπτομερούς λειτουργίας 'Πού Βρίσκομαι'"
 
@@ -715,16 +701,12 @@ msgstr "Παρουσίαση προεπιλεγμένου κουμπιού"
 #. Translators: This command will cause the window's status bar contents to be
 #. spoken and displayed in braille.
 #: src/orca/cmdnames.py:96
-#, fuzzy
-#| msgid "Speaks the status bar."
 msgid "Present the status bar"
 msgstr "Παρουσίαση γραμμής κατάστασης"
 
 #. Translators: This command will cause the window's title to be spoken and
 #. displayed in braille.
 #: src/orca/cmdnames.py:100
-#, fuzzy
-#| msgid "Speaks the title bar."
 msgid "Present the title bar"
 msgstr "Παρουσίαση γραμμής τίτλου"
 
@@ -738,8 +720,6 @@ msgstr "Άνοιγμα διαλόγου εύρεσης"
 #. Translators: Orca has a command which presents a list with accessible actions
 #. that can be performed on the current object. This is the name of that command.
 #: src/orca/cmdnames.py:109
-#, fuzzy
-#| msgid "fraction end"
 msgid "Show actions list"
 msgstr "Εμφάνιση λίστας ενεργειών"
 
@@ -748,8 +728,6 @@ msgstr "Εμφάνιση λίστας ενεργειών"
 #. the "OK" button. This string is used for finding the next occurrence of a
 #. string.
 #: src/orca/cmdnames.py:115
-#, fuzzy
-#| msgid "Searches for the next instance of a string."
 msgid "Search for the next instance of a string"
 msgstr "Αναζήτηση επόμενης εμφάνισης συμβολοσειράς"
 
@@ -758,8 +736,6 @@ msgstr "Αναζήτηση επόμενης εμφάνισης συμβολοσ�
 #. the "OK" button. This string is used for finding the previous occurrence of a
 #. string.
 #: src/orca/cmdnames.py:121
-#, fuzzy
-#| msgid "Searches for the previous instance of a string."
 msgid "Search for the previous instance of a string"
 msgstr "Αναζήτηση προηγούμενης εμφάνισης συμβολοσειράς"
 
@@ -769,8 +745,6 @@ msgstr "Αναζήτηση προηγούμενης εμφάνισης συμβ�
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:128
-#, fuzzy
-#| msgid "Enters and exits flat review mode."
 msgid "Enter and exit flat review mode"
 msgstr "Είσοδος και έξοδος από λειτουργία επίπεδης προεπισκόπησης"
 
@@ -781,8 +755,6 @@ msgstr "Είσοδος και έξοδος από λειτουργία επίπ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This switch allows the user to restrict the flat review function to a specific object.
 #: src/orca/cmdnames.py:136
-#, fuzzy
-#| msgid "Moves flat review to the end position."
 msgid "Toggle restricting flat review to the current object"
 msgstr "Εναλλαγή περιορισμού επίπεδης προεπισκόπησης στο τρέχον αντικείμενο"
 
@@ -793,8 +765,6 @@ msgstr "Εναλλαγή περιορισμού επίπεδης προεπισ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. The home position is the beginning of the content in the window.
 #: src/orca/cmdnames.py:144
-#, fuzzy
-#| msgid "Moves flat review to the home position."
 msgid "Move flat review to the home position"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στην αρχική θέση"
 
@@ -805,8 +775,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. The home position is the last bit of information in the window.
 #: src/orca/cmdnames.py:152
-#, fuzzy
-#| msgid "Moves flat review to the end position."
 msgid "Move flat review to the end position"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στην τελική θέση"
 
@@ -816,8 +784,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:160
-#, fuzzy
-#| msgid "Moves flat review to the beginning of the previous line."
 msgid "Move flat review to the beginning of the previous line"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στην αρχή προηγούμενης γραμμής"
 
@@ -827,8 +793,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:167
-#, fuzzy
-#| msgid "Speaks the current flat review line."
 msgid "Speak the current flat review line"
 msgstr "Εκφώνηση τρέχουσας γραμμής επίπεδης προεπισκόπησης"
 
@@ -840,8 +804,6 @@ msgstr "Εκφώνηση τρέχουσας γραμμής επίπεδης πρ
 #. This particular command will cause Orca to spell the current line character
 #. by character.
 #: src/orca/cmdnames.py:176
-#, fuzzy
-#| msgid "Spells the current flat review line."
 msgid "Spell the current flat review line"
 msgstr "Ορθογραφική ανάγνωση τρέχουσας γραμμής επίπεδης προεπισκόπησης"
 
@@ -853,8 +815,6 @@ msgstr "Ορθογραφική ανάγνωση τρέχουσας γραμμή�
 #. This particular command will cause Orca to spell the current line character
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:186
-#, fuzzy
-#| msgid "Phonetically spells the current flat review line."
 msgid "Phonetically spell the current flat review line"
 msgstr "Φωνητική ανάγνωση τρέχουσας γραμμής επίπεδης προεπισκόπησης"
 
@@ -864,8 +824,6 @@ msgstr "Φωνητική ανάγνωση τρέχουσας γραμμής επ
 #. sequence of words in a sequence of lines.  The flat review feature allows
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #: src/orca/cmdnames.py:193
-#, fuzzy
-#| msgid "Moves flat review to the beginning of the next line."
 msgid "Move flat review to the beginning of the next line"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στην αρχή επόμενης γραμμής"
 
@@ -877,8 +835,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. Previous will go backwards in the window until you reach the top (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:202
-#, fuzzy
-#| msgid "Moves flat review to the previous item or word."
 msgid "Move flat review to the previous item or word"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στο προηγούμενο αντικείμενο ή λέξη"
 
@@ -889,8 +845,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will speak the current word or item.
 #: src/orca/cmdnames.py:210
-#, fuzzy
-#| msgid "Speaks the current flat review item or word."
 msgid "Speak the current flat review item or word"
 msgstr "Εκφώνηση τρέχοντος αντικειμένου ή λέξης επίπεδης προεπισκόπησης"
 
@@ -902,10 +856,9 @@ msgstr "Εκφώνηση τρέχοντος αντικειμένου ή λέξη
 #. This particular command will cause Orca to spell the current word or item
 #. character by character.
 #: src/orca/cmdnames.py:219
-#, fuzzy
-#| msgid "Spells the current flat review item or word."
 msgid "Spell the current flat review item or word"
-msgstr "Ορθογραφική ανάγνωση τρέχοντος αντικειμένου ή λέξης επίπεδης προεπισκόπησης"
+msgstr ""
+"Ορθογραφική ανάγνωση τρέχοντος αντικειμένου ή λέξης επίπεδης προεπισκόπησης"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -916,10 +869,9 @@ msgstr "Ορθογραφική ανάγνωση τρέχοντος αντικε�
 #. character by character phonetically, saying "Alpha" for "a", "Bravo" for "b"
 #. and so on.
 #: src/orca/cmdnames.py:230
-#, fuzzy
-#| msgid "Phonetically spells the current flat review item or word."
 msgid "Phonetically spell the current flat review item or word"
-msgstr "Φωνητική ανάγνωση τρέχοντος αντικειμένου ή λέξης επίπεδης προεπισκόπησης"
+msgstr ""
+"Φωνητική ανάγνωση τρέχοντος αντικειμένου ή λέξης επίπεδης προεπισκόπησης"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -929,8 +881,6 @@ msgstr "Φωνητική ανάγνωση τρέχοντος αντικειμέ�
 #. Next will go forwards in the window until you reach the end (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:239
-#, fuzzy
-#| msgid "Moves flat review to the next item or word."
 msgid "Move flat review to the next item or word"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στο επόμενο αντικείμενο ή λέξη"
 
@@ -942,8 +892,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. Above in this case means geographically above, as if you drew a vertical
 #. line upward on the screen.
 #: src/orca/cmdnames.py:248
-#, fuzzy
-#| msgid "Moves flat review to the word above the current word."
 msgid "Move flat review to the word above the current word"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στη λέξη πάνω από την τρέχουσα λέξη"
 
@@ -956,8 +904,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. like a pushbutton, a label, or some other GUI widget. The 'speaks' means it
 #. will speak the text associated with the object.
 #: src/orca/cmdnames.py:258
-#, fuzzy
-#| msgid "Speaks the current flat review object."
 msgid "Speak the current flat review object"
 msgstr "Εκφώνηση τρέχοντος αντικειμένου επίπεδης προεπισκόπησης"
 
@@ -969,8 +915,6 @@ msgstr "Εκφώνηση τρέχοντος αντικειμένου επίπε�
 #. Below in this case means geographically below, as if you drew a vertical
 #. line downward on the screen.
 #: src/orca/cmdnames.py:267
-#, fuzzy
-#| msgid "Moves flat review to the word below the current word."
 msgid "Move flat review to the word below the current word"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στη λέξη κάτω από την τρέχουσα λέξη"
 
@@ -982,8 +926,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. Previous will go backwards in the window until you reach the top (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:276
-#, fuzzy
-#| msgid "Moves flat review to the previous character."
 msgid "Move flat review to the previous character"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στον προηγούμενο χαρακτήρα"
 
@@ -994,8 +936,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will speak the current character
 #: src/orca/cmdnames.py:284
-#, fuzzy
-#| msgid "Speaks the current flat review character."
 msgid "Speak the current flat review character"
 msgstr "Εκφώνηση τρέχοντος χαρακτήρα επίπεδης προεπισκόπησης"
 
@@ -1007,8 +947,6 @@ msgstr "Εκφώνηση τρέχοντος χαρακτήρα επίπεδης 
 #. This particular command will cause Orca to present the character phonetically,
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:294
-#, fuzzy
-#| msgid "Phonetically speaks the current flat review character."
 msgid "Phonetically speak the current flat review character"
 msgstr "Φωνητική ανάγνωση τρέχοντος χαρακτήρα επίπεδης προεπισκόπησης"
 
@@ -1020,8 +958,6 @@ msgstr "Φωνητική ανάγνωση τρέχοντος χαρακτήρα 
 #. This particular command will cause Orca to present the character's unicode
 #. value.
 #: src/orca/cmdnames.py:304
-#, fuzzy
-#| msgid "Speaks unicode value of the current flat review character."
 msgid "Speak unicode value of the current flat review character"
 msgstr "Εκφώνηση τιμής unicode τρέχοντος χαρακτήρα επίπεδης προεπισκόπησης"
 
@@ -1033,8 +969,6 @@ msgstr "Εκφώνηση τιμής unicode τρέχοντος χαρακτήρ�
 #. Previous will go forwards in the window until you reach the end (i.e., it
 #. will wrap across lines if necessary).
 #: src/orca/cmdnames.py:313
-#, fuzzy
-#| msgid "Moves flat review to the next character."
 msgid "Move flat review to the next character"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στον επόμενο χαρακτήρα"
 
@@ -1045,8 +979,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. This command will move to and present the end of the line.
 #: src/orca/cmdnames.py:321
-#, fuzzy
-#| msgid "Moves flat review to the end of the line."
 msgid "Move flat review to the end of the line"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στο τέλος γραμμής"
 
@@ -1057,8 +989,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. The bottom left is the bottom left of the window currently being reviewed.
 #: src/orca/cmdnames.py:329
-#, fuzzy
-#| msgid "Moves flat review to the bottom left."
 msgid "Move flat review to the bottom left"
 msgstr "Μετακίνηση επίπεδης προεπισκόπησης στο κάτω αριστερό"
 
@@ -1070,8 +1000,6 @@ msgstr "Μετακίνηση επίπεδης προεπισκόπησης στ�
 #. This command lets the user copy the contents currently being reviewed to the
 #. clipboard.
 #: src/orca/cmdnames.py:338
-#, fuzzy
-#| msgid "Copies the contents under flat review to the clipboard."
 msgid "Copy the contents under flat review to the clipboard"
 msgstr "Αντιγραφή περιεχομένων επίπεδης προεπισκόπησης στο πρόχειρο"
 
@@ -1083,8 +1011,6 @@ msgstr "Αντιγραφή περιεχομένων επίπεδης προεπ�
 #. This command lets the user append the contents currently being reviewed to
 #. the existing contents of the clipboard.
 #: src/orca/cmdnames.py:348
-#, fuzzy
-#| msgid "Appends the contents under flat review to the clipboard."
 msgid "Append the contents under flat review to the clipboard"
 msgstr "Προσάρτηση περιεχομένων επίπεδης προεπισκόπησης στο πρόχειρο"
 
@@ -1098,8 +1024,6 @@ msgstr "Προσάρτηση περιεχομένων επίπεδης προε�
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string describes that command.
 #: src/orca/cmdnames.py:359
-#, fuzzy
-#| msgid "Moves flat review to the end position."
 msgid "Show flat review contents"
 msgstr "Εμφάνιση περιεχομένων επίπεδης προεπισκόπησης"
 
@@ -1107,9 +1031,6 @@ msgstr "Εμφάνιση περιεχομένων επίπεδης προεπι�
 #. entire row of a table read; other times they just want the current cell
 #. to be presented to them.
 #: src/orca/cmdnames.py:365
-#, fuzzy
-#| msgid ""
-#| "Toggles whether to read just the current table cell or the whole row."
 msgid "Toggle whether to read just the current table cell or the whole row"
 msgstr "Εναλλαγή ανάγνωσης τρέχοντος κελιού πίνακα ή ολόκληρης γραμμής"
 
@@ -1152,8 +1073,6 @@ msgstr "Πανάρισμα οθόνης braille προς τα δεξιά"
 #. changing which object in the window which has focus. The feature used here
 #. will return the flat review to the object with focus.
 #: src/orca/cmdnames.py:394
-#, fuzzy
-#| msgid "Returns to object with keyboard focus."
 msgid "Return to object with keyboard focus"
 msgstr "Επιστροφή σε αντικείμενο με εστίαση πληκτρολογίου"
 
@@ -1204,16 +1123,12 @@ msgstr "Είσοδος σε λειτουργία μάθησης. Πατήστε 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:422
-#, fuzzy
-#| msgid "Decreases the speech rate."
 msgid "Decrease the speech rate"
 msgstr "Μείωση ρυθμού ομιλίας"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
 #: src/orca/cmdnames.py:426
-#, fuzzy
-#| msgid "Increases the speech rate."
 msgid "Increase the speech rate"
 msgstr "Αύξηση ρυθμού ομιλίας"
 
@@ -1276,8 +1191,6 @@ msgstr "Εναλλαγή λειτουργίας ύπνου για τρέχουσ
 #. applications and reads content. The levels can be toggled via command.
 #. This string describes that command.
 #: src/orca/cmdnames.py:466
-#, fuzzy
-#| msgid "Toggles speech verbosity level."
 msgid "Toggle speech verbosity level"
 msgstr "Εναλλαγή επιπέδου λεπτομέρειας ομιλίας"
 
@@ -1290,24 +1203,18 @@ msgstr "Έξοδος από τον αναγνώστη οθόνης"
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
 #: src/orca/cmdnames.py:474
-#, fuzzy
-#| msgid "Displays the preferences configuration dialog."
 msgid "Display the preferences configuration dialog"
 msgstr "Εμφάνιση διαλόγου ρύθμισης προτιμήσεων"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:479
-#, fuzzy
-#| msgid "Displays the application preferences configuration dialog."
 msgid "Display the application preferences configuration dialog"
 msgstr "Εμφάνιση διαλόγου ρύθμισης προτιμήσεων εφαρμογής"
 
 #. Translators: Orca allows the user to enable/disable speaking of indentation
 #. and justification.
 #: src/orca/cmdnames.py:484
-#, fuzzy
-#| msgid "Toggles the speaking of indentation and justification."
 msgid "Toggle the speaking of indentation and justification"
 msgstr "Εναλλαγή εκφώνησης εσοχών και στοίχισης"
 
@@ -1316,8 +1223,6 @@ msgstr "Εναλλαγή εκφώνησης εσοχών και στοίχιση
 #. three"). This string to be translated refers to an Orca command for quickly
 #. toggling between the two options.
 #: src/orca/cmdnames.py:490
-#, fuzzy
-#| msgid "Changes spoken number style."
 msgid "Change spoken number style"
 msgstr "Αλλαγή στυλ προφοράς αριθμών"
 
@@ -1325,8 +1230,6 @@ msgstr "Αλλαγή στυλ προφοράς αριθμών"
 #. the user without them having to switch to a clipboard manager application. This
 #. string is the description of that command.
 #: src/orca/cmdnames.py:495
-#, fuzzy
-#| msgid "Present Unless"
 msgid "Present clipboard contents"
 msgstr "Παρουσίαση περιεχομένων προχείρου"
 
@@ -1788,7 +1691,8 @@ msgstr "Προχώρηση ρύθμισης ευγένειας ζωντανής 
 #, fuzzy
 #| msgid "Set default live region politeness level to off."
 msgid "Set default live region politeness level to off"
-msgstr "Ρύθμιση προεπιλεγμένου επιπέδου ευγένειας ζωντανής περιοχής σε απενεργό"
+msgstr ""
+"Ρύθμιση προεπιλεγμένου επιπέδου ευγένειας ζωντανής περιοχής σε απενεργό"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -1885,63 +1789,46 @@ msgstr "Εναλλαγή πλήκτρων πλοήγησης πίνακα"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:862
-#, fuzzy
 msgid "Go to previous blockquote"
 msgstr "Μετάβαση στην προηγούμενη παράθεση"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:865
-#, fuzzy
-#| msgid "Goes to next blockquote."
 msgid "Go to next blockquote"
 msgstr "Μετάβαση στην επόμενη παράθεση"
 
 #. Translators: this is for navigating among blockquotes in a document.
 #: src/orca/cmdnames.py:868
-#, fuzzy
-#| msgid "Displays a list of blockquotes."
 msgid "Display a list of blockquotes"
 msgstr "Εμφάνιση λίστας παραθέσεων"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:871
-#, fuzzy
-#| msgid "Goes to previous button."
 msgid "Go to previous button"
 msgstr "Μετάβαση στο προηγούμενο κουμπί"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:874
-#, fuzzy
-#| msgid "Goes to next button."
 msgid "Go to next button"
 msgstr "Μετάβαση στο επόμενο κουμπί"
 
 #. Translators: this is for navigating among buttons in a document.
 #: src/orca/cmdnames.py:877
-#, fuzzy
-#| msgid "Displays a list of buttons."
 msgid "Display a list of buttons"
 msgstr "Εμφάνιση λίστας κουμπιών"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:880
-#, fuzzy
-#| msgid "Goes to previous check box."
 msgid "Go to previous check box"
 msgstr "Μετάβαση στο προηγούμενο πλαίσιο επιλογής"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:883
-#, fuzzy
-#| msgid "Goes to next check box."
 msgid "Go to next check box"
 msgstr "Μετάβαση στο επόμενο πλαίσιο επιλογής"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:886
-#, fuzzy
-#| msgid "Displays a list of check boxes."
 msgid "Display a list of check boxes"
 msgstr "Εμφάνιση λίστας πλαισίων επιλογής"
 
@@ -2010,64 +1897,46 @@ msgstr "Εμφάνιση λίστας πλαισίων επιλογών"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:920
-#, fuzzy
-#| msgid "Goes to previous entry."
 msgid "Go to previous entry"
 msgstr "Μετάβαση στην προηγούμενη καταχώρηση"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:923
-#, fuzzy
-#| msgid "Goes to next entry."
 msgid "Go to next entry"
 msgstr "Μετάβαση στην επόμενη καταχώρηση"
 
 #. Translators: this is for navigating among entries in a document.
 #: src/orca/cmdnames.py:926
-#, fuzzy
-#| msgid "Displays a list of entries."
 msgid "Display a list of entries"
 msgstr "Εμφάνιση λίστας καταχωρήσεων"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:929
-#, fuzzy
-#| msgid "Goes to previous form field."
 msgid "Go to previous form field"
 msgstr "Μετάβαση στο προηγούμενο πεδίο φόρμας"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:932
-#, fuzzy
-#| msgid "Goes to next form field."
 msgid "Go to next form field"
 msgstr "Μετάβαση στο επόμενο πεδίο φόρμας"
 
 #. Translators: this is for navigating among form fields in a document.
 #: src/orca/cmdnames.py:935
-#, fuzzy
-#| msgid "Displays a list of form fields."
 msgid "Display a list of form fields"
 msgstr "Εμφάνιση λίστας πεδίων φόρμας"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:938
-#, fuzzy
-#| msgid "Goes to previous heading."
 msgid "Go to previous heading"
 msgstr "Μετάβαση στην προηγούμενη επικεφαλίδα"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:941
-#, fuzzy
-#| msgid "Goes to next heading."
 msgid "Go to next heading"
 msgstr "Μετάβαση στην επόμενη επικεφαλίδα"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #: src/orca/cmdnames.py:944
-#, fuzzy
-#| msgid "Displays a list of headings."
 msgid "Display a list of headings"
 msgstr "Εμφάνιση λίστας επικεφαλίδων"
 
@@ -2097,22 +1966,16 @@ msgstr "Εμφάνιση λίστας επικεφαλίδων επιπέδου 
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:959
-#, fuzzy
-#| msgid "Go to previous table"
 msgid "Go to previous internal frame"
 msgstr "Μετάβαση στο προηγούμενο εσωτερικό πλαίσιο"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:962
-#, fuzzy
-#| msgid "Go to next table"
 msgid "Go to next internal frame"
 msgstr "Μετάβαση στο επόμενο εσωτερικό πλαίσιο"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:965
-#, fuzzy
-#| msgid "Display a list of tables"
 msgid "Display a list of internal frames"
 msgstr "Εμφάνιση λίστας εσωτερικών πλαισίων"
 
@@ -2146,7 +2009,7 @@ msgid "Go to next landmark"
 msgstr "Μετάβαση στο επόμενο ορόσημο"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
-#. role landmarks are the W3C defined HTML tag attribute 'role> used to identify
+#. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
 #: src/orca/cmdnames.py:989
 msgid "Display a list of landmarks"
@@ -2215,8 +2078,6 @@ msgstr "Μετάβαση στο επόμενο στοιχείο λίστας"
 
 #. Translators: this is for navigating among list items in a document.
 #: src/orca/cmdnames.py:1031
-#, fuzzy
-#| msgid "Displays a list of list items."
 msgid "Display a list of list items"
 msgstr "Εμφάνιση λίστας στοιχείων λίστας"
 
@@ -2238,54 +2099,45 @@ msgstr "Μετάβαση στην επόμενη ζωντανή περιοχή"
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 #: src/orca/cmdnames.py:1046
-#, fuzzy
-#| msgid "Goes to the last live region which made an announcement."
 msgid "Go to the last live region which made an announcement"
 msgstr "Μετάβαση στην τελευταία ζωντανή περιοχή που έκανε ανακοίνωση"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1050
-#, fuzzy
-#| msgid ""
-#| "Prints debug information about the ancestry of the object with focus."
 msgid "Go to the parent of the object with navigator focus."
-msgstr "Μετάβαση στον γονέα του αντικειμένου με εστίαση πλοηγού"
+msgstr "Μετάβαση στον γονέα του αντικειμένου με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1054
 msgid "Go to the first child of the object with navigator focus."
-msgstr "Μετάβαση στο πρώτο παιδί του αντικειμένου με εστίαση πλοηγού"
+msgstr "Μετάβαση στο πρώτο παιδί του αντικειμένου με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1058
 msgid "Go to the next sibling of the object with navigator focus."
-msgstr "Μετάβαση στο επόμενο αδερφό του αντικειμένου με εστίαση πλοηγού"
+msgstr "Μετάβαση στο επόμενο αδερφό του αντικειμένου με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1062
 msgid "Go to the previous sibling of the object with navigator focus."
-msgstr "Μετάβαση στο προηγούμενο αδερφό του αντικειμένου με εστίαση πλοηγού"
+msgstr "Μετάβαση στο προηγούμενο αδερφό του αντικειμένου με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
 #: src/orca/cmdnames.py:1066
-#, fuzzy
-#| msgid "Returns to object with keyboard focus."
 msgid "Click on the object with navigator focus."
-msgstr "Κλικ στο αντικείμενο με εστίαση πλοηγού"
+msgstr "Κλικ στο αντικείμενο με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
 #. toggled on and off.
 #: src/orca/cmdnames.py:1071
-#, fuzzy
-#| msgid "Toggles structural navigation keys."
 msgid "Toggle simplified object navigation."
-msgstr "Εναλλαγή απλοποιημένης πλοήγησης αντικειμένων"
+msgstr "Εναλλαγή απλοποιημένης πλοήγησης αντικειμένων."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #: src/orca/cmdnames.py:1074
@@ -2376,29 +2228,21 @@ msgstr "Μετάβαση προς τα πάνω κατά ένα κελί"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1127
-#, fuzzy
-#| msgid "Go to the beginning of the line"
 msgid "Go to the beginning of the row"
 msgstr "Μετάβαση στην αρχή της γραμμής"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1130
-#, fuzzy
-#| msgid "Go to the end of the line"
 msgid "Go to the end of the row"
 msgstr "Μετάβαση στο τέλος της γραμμής"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1133
-#, fuzzy
-#| msgid "Go to the top of the file"
 msgid "Go to the top of the column"
 msgstr "Μετάβαση στην κορυφή της στήλης"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1136
-#, fuzzy
-#| msgid "Go to the bottom of the file"
 msgid "Go to the bottom of the column"
 msgstr "Μετάβαση στο κάτω μέρος της στήλης"
 
@@ -2414,8 +2258,6 @@ msgstr "Μετάβαση στο κάτω μέρος της στήλης"
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
 #: src/orca/cmdnames.py:1149
-#, fuzzy
-#| msgid "Toggles layout mode."
 msgid "Toggle layout mode"
 msgstr "Εναλλαγή λειτουργίας διάταξης"
 
@@ -2434,8 +2276,6 @@ msgstr "Εναλλαγή λειτουργίας διάταξης"
 #. This string is associated with the Orca command to manually switch
 #. between these two modes.
 #: src/orca/cmdnames.py:1165
-#, fuzzy
-#| msgid "Switches between browse mode and focus mode."
 msgid "Switch between browse mode and focus mode"
 msgstr "Εναλλαγή μεταξύ λειτουργίας περιήγησης και λειτουργίας εστίασης"
 
@@ -4005,7 +3845,6 @@ msgstr "Εκφώνηση αποτελεσμάτων κατά τη διάρκει
 msgid "Command"
 msgstr "Εντολή"
 
-
 #. Translators: Key Binding is a table column header where the cells in the
 #. column represent keyboard combinations the user can press to invoke Orca
 #. commands.
@@ -4027,17 +3866,15 @@ msgstr "Προεπιλογή"
 #: src/orca/guilabels.py:337
 msgctxt "keybindings"
 msgid "Debugging Tools"
-msgstr ""
+msgstr "Εργαλεία αποσφαλμάτωσης"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to its "learn mode". Please use the same translation as done
 #. in cmdnames.py
 #: src/orca/guilabels.py:342
-#, fuzzy
-#| msgid "Layout mode."
 msgctxt "keybindings"
 msgid "Learn mode"
-msgstr "Λειτουργίας διάταξης."
+msgstr "Λειτουργίας εκμάθησης"
 
 # #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
@@ -4066,10 +3903,8 @@ msgstr "Συνδυασμοί μπράιγ"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to saving and jumping among objects via "bookmarks".
 #: src/orca/guilabels.py:358
-#, fuzzy
-#| msgid "Save bookmarks"
 msgid "Bookmarks"
-msgstr "Αποθήκευση σελιδοδεικτών"
+msgstr "Σελιδοδείκτες"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to caret navigation, such as moving by character, word, and line.
@@ -4085,15 +3920,13 @@ msgstr "Πλοήγηση πίνακα"
 #. are related to the clipboard.
 #: src/orca/guilabels.py:368
 msgid "Clipboard"
-msgstr ""
+msgstr "Πρόχειρο"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the date and time.
 #: src/orca/guilabels.py:372
-#, fuzzy
-#| msgid "Time and Date"
 msgid "Date and time"
-msgstr "Ώρα και ημερομηνία"
+msgstr "Ημερομηνία και Ώρα"
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -4119,10 +3952,8 @@ msgstr "αναδίπλωση"
 #. and/or braille. The translation should be consistent with the string
 #. used in cmdnames.py.
 #: src/orca/guilabels.py:392
-#, fuzzy
-#| msgid "Mouse review enabled."
 msgid "Mouse review"
-msgstr "Απενεργοποιήθηκε η προεπισκόπηση ποντικιού."
+msgstr "Προεπισκόπηση ποντικιού"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
@@ -4137,11 +3968,8 @@ msgstr "πλοήγηση"
 #. related to presenting information about the system, such as date, time,
 #. battery status, CPU status, etc.
 #: src/orca/guilabels.py:401
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgid "System information"
-msgstr "πληροφορίες"
+msgstr "Πληροφορίες συστήματος"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to structural navigation, such as moving to the next heading,
@@ -4233,11 +4061,9 @@ msgstr "_Επιφάνεια εργασίας"
 #. column for the time of the notification. This string is a column header
 #. for the text of the notifications.
 #: src/orca/guilabels.py:462
-#, fuzzy
-#| msgid "Notification"
 msgctxt "notification presenter"
 msgid "Notifications"
-msgstr "Ειδοποίηση"
+msgstr "Ειδοποιήσεις"
 
 #. Translators: Orca has a feature to list all of the notification messages
 #. received, similar to the functionality gnome-shell provides when you press
@@ -4546,12 +4372,9 @@ msgstr "Kεφαλίδα"
 #. could with native keyboard navigation. This is the title for a column which
 #. contains the title associated with an iframe.
 #: src/orca/guilabels.py:677
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "intercalate"
 msgctxt "structural navigation"
 msgid "Internal Frame"
-msgstr "παρεμβάλλω"
+msgstr "Εσωτερικό πλαίσιο"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4785,12 +4608,9 @@ msgstr "Kεφαλίδες"
 #. objects in a dialog box so that users can navigate more quickly than they
 #. could with native keyboard navigation. This is the title of such a dialog box.
 #: src/orca/guilabels.py:824
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "intercalate"
 msgctxt "structural navigation"
 msgid "Internal Frames"
-msgstr "παρεμβάλλω"
+msgstr "Εσωτερικά πλαίσια"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -5104,12 +4924,11 @@ msgstr "_Σύντομη περιγραφή"
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
 #: src/orca/guilabels.py:1041
-#, fuzzy, python-format
-#| msgid "Notification"
+#, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
-msgstr[0] "Ειδοποίηση"
-msgstr[1] "Ειδοποίηση"
+msgstr[0] "%d ειδοποίηση"
+msgstr[1] "%d ειδοποιήσεις"
 
 #. Translators: this is how someone would speak the name of the shift key
 #: src/orca/keynames.py:34
@@ -5415,9 +5234,6 @@ msgstr "Meta2"
 #. "alt" modifier.
 #.
 #: src/orca/keybindings.py:194
-#, fuzzy
-#| msgctxt "keyboard"
-#| msgid "Alt"
 msgid "Alt"
 msgstr "Alt"
 
@@ -7612,8 +7428,6 @@ msgstr "δεν ήταν δυνατόν να αποθηκευτούν οι σελ
 #. presented to the user when they try to go to a bookmark, but don't have
 #. any bookmarks.
 #: src/orca/messages.py:93
-#, fuzzy
-#| msgid "No landmark found."
 msgid "No bookmarks found."
 msgstr "Δεν βρέθηκαν σελιδοδείκτες."
 
@@ -7624,8 +7438,6 @@ msgstr "Δεν βρέθηκαν σελιδοδείκτες."
 #. index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
 #. that index.
 #: src/orca/messages.py:101
-#, fuzzy
-#| msgid "No landmark found."
 msgid "Bookmark not found."
 msgstr "Δεν βρέθηκε σελιδοδείκτης."
 
@@ -7877,7 +7689,7 @@ msgstr "Αδύνατη η ενεργοποίηση του διαχειριστή
 #: src/orca/messages.py:283
 msgid ""
 "Another screen reader process is already running for this session.\n"
-"Run \"orca --replace\" to replace that process with a new one."
+"Run “orca --replace” to replace that process with a new one."
 msgstr ""
 "Μια άλλη διεργασία αναγνώστη οθόνης εκτελείται ήδη σε αυτήν τη συνεδρία.\n"
 "Εκτελέστε \"orca --replace\" για να αντικαταστήσετε αυτήν τη διεργασία με "
@@ -7919,8 +7731,8 @@ msgstr "Σύστημα ομιλίας"
 #. list of avaialable speech systems.
 #: src/orca/messages.py:311
 #, python-format
-msgid "Speech system \"%s\" is unavailable (available: %s)"
-msgstr "Το σύστημα ομιλίας \"%s\" είναι μη διαθέσιμο (διαθέσιμο: %s)"
+msgid "Speech system “%s” is unavailable (available: %s)"
+msgstr "Το σύστημα ομιλίας \"%s\" δεν είναι διαθέσιμο (διαθέσιμο: %s)"
 
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
@@ -8218,24 +8030,18 @@ msgstr "όλα τα αντικείμενα επιλεγμένα"
 #. Translators: This message is presented when the user is in a date picker and
 #. navigates to the item which reflects the current date.
 #: src/orca/messages.py:544
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current date"
 msgstr "Τρέχουσα ημερομηνία"
 
 #. Translators: This message is presented wwhen the user is in a time picker/schedule
 #. and navigates to the item which reflects the current time.
 #: src/orca/messages.py:548
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current time"
 msgstr "Τρέχουσα ώρα"
 
 #. Translators: This message is presented when the user is in a map or flow chart and
 #. navigates to the item which reflects the current location.
 #: src/orca/messages.py:552
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current location"
 msgstr "Τρέχουσα τοποθεσία"
 
@@ -8243,10 +8049,8 @@ msgstr "Τρέχουσα τοποθεσία"
 #. other set of pagination links and navigates to the item which reflects the current
 #. page.
 #: src/orca/messages.py:557
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current page"
-msgstr "Τρέχουσα σεελίδα"
+msgstr "Τρέχουσα σελίδα"
 
 #. Translators: This message is presented when the user is in a wizard or other
 #. step-based interface and navigates to the item which reflects the current step.
@@ -11451,7 +11255,8 @@ msgstr[1] "Βρέθηκαν %d προεπιλεγμένες συντομεύσε
 msgid "%(count)d Screen reader shortcut for %(application)s found."
 msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
 msgstr[0] "Βρέθηκε %(count)d συντόμευση αναγνώστη οθόνης για %(application)s."
-msgstr[1] "Βρέθηκαν %(count)d συντομεύσεις αναγνώστη οθόνης για %(application)s."
+msgstr[1] ""
+"Βρέθηκαν %(count)d συντομεύσεις αναγνώστη οθόνης για %(application)s."
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
@@ -12590,7 +12395,8 @@ msgstr "Ανακοίνωση _φορμών στη λειτουργία Ανάγ�
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce when an ARIA landmark has been entered or exited. ARIA landmarks are the W3C defined HTML tag attribute 'role' used to identify important part of webpage like banners, main context, search, etc.
 #: src/orca/orca-setup.ui:971
 msgid "Announce land_marks in Say All"
-msgstr "Ανακοίνωση σημαντικών _αντικειμένων σελίδας στη λειτουργία Ανάγνωση Όλων"
+msgstr ""
+"Ανακοίνωση σημαντικών _αντικειμένων σελίδας στη λειτουργία Ανάγνωση Όλων"
 
 #: src/orca/orca-setup.ui:994
 msgid "Say All"
@@ -13103,6 +12909,10 @@ msgctxt "textattr"
 msgid "mistake"
 msgstr "λάθος"
 
+#. Translators: this attribute specifies there is something "wrong" with
+#. the text, such as it being a misspelled word. See:
+#. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#.
 #. Translators: this attribute specifies whether the text is invisible.
 #. It will be a "true" or "false" value.
 #. See
