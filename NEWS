@@ -1,3 +1,16 @@
+49.4 - 16 October 2025
+
+Web:
+
+* Fix regression in which table navigation in a grid switches to focus
+  mode.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  el              Greek                     Efstathios Iosifidis
+
+=========
+
 49.3 - 13 October 2025
 
 Remote Controller:
