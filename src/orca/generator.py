@@ -1003,7 +1003,7 @@ class Generator:
         if AXUtilities.is_sensitive(obj):
             return []
 
-        if self._script.utilities.is_spreadsheet_cell(obj):
+        if AXUtilities.is_editable(obj):
             return []
 
         if self._mode == "braille":
