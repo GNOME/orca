@@ -1091,6 +1091,10 @@ class Generator:
             return result
 
         text = AXText.get_all_text(obj)
+        if not text and AXUtilities.is_table_cell_or_header(obj) \
+           and AXUtilities.is_editable(obj):
+            text = " ".join(AXText.get_all_text(child) for child in AXObject.iter_children(obj))
+
         if text and "\ufffc" not in text:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT[hash(obj)] = [text]
