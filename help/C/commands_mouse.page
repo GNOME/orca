@@ -1,6 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_mouse">
   <info>
-    <link type="next" xref="commands_bookmarks" />
+    <link type="next" xref="commands_live_regions" />
     <link type="guide" xref="commands#reviewing_screen_contents" />
     <title type="sort">3. Mouse/Pointer-Related</title>
     <title type="link">Mouse/Pointer-Related</title>

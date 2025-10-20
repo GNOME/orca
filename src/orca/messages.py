@@ -64,42 +64,6 @@ BLANK = _("blank")
 # Translators: This refers to font weight.
 BOLD = _("bold")
 
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is
-# presented to the user when a new bookmark has been entered into the list
-# of bookmarks.
-BOOKMARK_ENTERED = _("bookmark entered")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is
-# presented to the user when the active list of bookmarks have been saved to
-# disk.
-BOOKMARKS_SAVED = _("bookmarks saved")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is
-# presented to the user when an error was encountered, preventing the active
-# list of bookmarks being saved to disk.
-BOOKMARKS_SAVED_FAILURE = _("bookmarks could not be saved")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is
-# presented to the user when they try to go to a bookmark, but don't have
-# any bookmarks.
-BOOKMARKS_NOT_FOUND = _("No bookmarks found.")
-
-# Translators: Orca has a feature in which users can store/save a particular
-# location in an application window and return to it later by pressing a
-# keystroke. These stored/saved locations are "bookmarks". This string is
-# presented to the user when they try to go to a bookmark at a particular
-# index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
-# that index.
-BOOKMARK_NOT_FOUND = _("Bookmark not found.")
-
 # Translators: Orca has a command which toggles all (other) Orca commands so that
 # the associated keystroke can by consumed by the native application. For example,
 # if there were an Orca command bound to Alt+Down, normally pressing Alt+Down
@@ -1669,37 +1633,41 @@ LIVE_REGIONS_LEVEL_POLITE = _("setting live region to polite")
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 # Orca has several features to facilitate accessing live regions. This message
 # is presented in response to a command that toggles whether or not Orca pays
-# attention to changes in live regions. Note that turning off monitoring of live
-# events is NOT the same as turning the politeness level to "off". The user can
-# opt to have no notifications presented (politeness level of "off") and still
-# manually review recent updates to live regions via Orca commands for doing so
-# -- as long as the monitoring of live regions is enabled.
-LIVE_REGIONS_MONITORING_OFF = _("Live regions monitoring off")
+# attention to changes in live regions.
+LIVE_REGIONS_DISABLED = _("Live regions disabled")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 # Orca has several features to facilitate accessing live regions. This message
 # is presented in response to a command that toggles whether or not Orca pays
-# attention to changes in live regions. Note that turning off monitoring of live
-# events is NOT the same as turning the politeness level to "off". The user can
-# opt to have no notifications presented (politeness level of "off") and still
-# manually review recent updates to live regions via Orca commands for doing so
-# -- as long as the monitoring of live regions is enabled.
-LIVE_REGIONS_MONITORING_ON = _("Live regions monitoring on")
+# attention to changes in live regions.
+LIVE_REGIONS_ENABLED = _("Live regions enabled")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 # Orca has several features to facilitate accessing live regions. This message
-# is presented to inform the user that a cached message is not available for the
-# the current live region.
-LIVE_REGIONS_NO_MESSAGE = _("no live message saved")
+# is presented when the user attempts to perform a live region command, but
+# live region support is disabled.
+LIVE_REGIONS_SUPPORT_DISABLED = _("Live region support is disabled")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
 # Orca has several features to facilitate accessing live regions. This message
-# is presented to inform the user that Orca's live region features have been
-# turned off.
-LIVE_REGIONS_OFF = _("Live region support is off")
+# is presented when the user is at the beginning of the list of stored messages.
+LIVE_REGIONS_LIST_TOP = C_("live region", "Top")
+
+# Translators: A live region is an area of a web page that is periodically
+# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# Orca has several features to facilitate accessing live regions. This message
+# is presented when the user is at the end of the list of stored messages.
+LIVE_REGIONS_LIST_BOTTOM = C_("live region", "Bottom")
+
+# Translators: A live region is an area of a web page that is periodically
+# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# Orca has several features to facilitate accessing live regions. This message
+# is presented when the user tries to navigate through live region messages,
+# but there are no messages to navigate.
+LIVE_REGIONS_NO_MESSAGES = _("No live region messages")
 
 # Translators: Orca has a command that allows the user to move the mouse pointer
 # to the current object. This is a brief message which will be presented if for

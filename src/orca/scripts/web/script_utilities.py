@@ -3560,26 +3560,3 @@ class Utilities(script_utilities.Utilities):
             obj = parent
 
         return None, -1
-
-    def handle_as_live_region(self, event: Atspi.Event) -> bool:
-        """Returns true if event should be handled as a live region."""
-
-        if not settings_manager.get_manager().get_setting("inferLiveRegions"):
-            return False
-
-        if not AXUtilities.is_live_region(event.source):
-            return False
-
-        if not settings_manager.get_manager().get_setting("presentLiveRegionFromInactiveTab") \
-           and self.get_top_level_document_for_object(event.source) != self.active_document():
-            msg = "WEB: Live region source is not in active tab."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        alert = AXObject.find_ancestor(event.source, AXUtilities.is_aria_alert)
-        if alert and AXUtilities.get_focused_object(alert) == event.source:
-            msg = "WEB: Focused source will be presented as part of alert"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return True

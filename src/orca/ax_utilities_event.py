@@ -61,6 +61,7 @@ class TextEventReason(enum.Enum):
     CUT = enum.auto()
     DELETE = enum.auto()
     FOCUS_CHANGE = enum.auto()
+    LIVE_REGION_UPDATE = enum.auto()
     MOUSE_MIDDLE_BUTTON = enum.auto()
     MOUSE_PRIMARY_BUTTON = enum.auto()
     NAVIGATION_BY_CHARACTER = enum.auto()
@@ -286,6 +287,8 @@ class AXUtilitiesEvent:
         obj = event.source
         if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
             reason = TextEventReason.UI_UPDATE
+        elif AXUtilitiesRole.is_live_region(obj):
+            reason = TextEventReason.LIVE_REGION_UPDATE
         elif mgr.last_event_was_page_switch():
             reason = TextEventReason.PAGE_SWITCH
         elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
@@ -332,6 +335,8 @@ class AXUtilitiesEvent:
         obj = event.source
         if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
             reason = TextEventReason.UI_UPDATE
+        elif AXUtilitiesRole.is_live_region(obj):
+            reason = TextEventReason.LIVE_REGION_UPDATE
         elif mgr.last_event_was_page_switch():
             reason = TextEventReason.PAGE_SWITCH
         elif AXUtilitiesState.is_editable(obj) \

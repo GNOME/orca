@@ -1220,6 +1220,30 @@ class StructuralNavigator:
         self._suspended = suspended
         self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
 
+    def _get_container_for_nested_item(self, obj: Atspi.Accessible) -> Atspi.Accessible:
+        # If an author put an ARIA heading inside a native heading (or vice versa), obj
+        # could be the inner heading. If we treat the outer heading as as the previous heading
+        # and then set the caret context to the first position inside the outer heading, i.e.
+        # the inner heading, we'll get stuck. Thanks authors.
+        if AXUtilities.is_heading(obj):
+            if ancestor := AXObject.find_ancestor(obj, AXUtilities.is_heading):
+                tokens = ["STRUCTURAL NAVIGATOR: Current heading", obj, "is inside another heading",
+                          ancestor, "Treating the outer heading as current."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return ancestor
+            return obj
+
+        candidate = obj
+        if AXUtilities.is_live_region(obj):
+            while ancestor := AXObject.find_ancestor(candidate, AXUtilities.is_live_region):
+                candidate = ancestor
+            if candidate != obj:
+                tokens = ["STRUCTURAL NAVIGATOR: Current live region", obj, "is inside another ",
+                          "live region", candidate, "Treating the outer region as current."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return candidate
+
     def _get_object_in_direction(
         self,
         script: default.Script,
@@ -1244,17 +1268,8 @@ class StructuralNavigator:
                 candidate = AXObject.get_parent(candidate)
                 continue
 
-            # If an author put an ARIA heading inside a native heading (or vice versa), candidate
-            # could be the inner heading. If we treat the outer heading as as the previous heading
-            # and then set the caret context to the first position inside the outer heading, i.e.
-            # the inner heading, we'll get stuck. Thanks authors.
-            if AXUtilities.is_heading(candidate) and not is_next:
-                if ancestor := AXObject.find_ancestor(candidate, AXUtilities.is_heading):
-                    tokens = ["STRUCTURAL NAVIGATOR: Current heading", candidate,
-                              "is inside another heading", ancestor,
-                              "Treating the ancestor is the current heading."]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    candidate = ancestor
+            if not is_next:
+                candidate = self._get_container_for_nested_item(candidate)
 
             index = objects.index(candidate)
             if is_next:
@@ -2992,11 +3007,7 @@ class StructuralNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
-        if settings_manager.get_manager().get_setting("inferLiveRegions"):
-            if script.live_region_manager is not None:
-                script.live_region_manager.goLastLiveRegion()
-        elif notify_user:
-            script.present_message(messages.LIVE_REGIONS_OFF)
+        script.get_live_region_presenter().go_last_live_region(script, event)
         return True
 
     ########################
@@ -3408,7 +3419,6 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_visited_links(root, pred=pred)
 
@@ -3486,7 +3496,6 @@ class StructuralNavigator:
         pred = None
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
-
 
         root = self._determine_root_container(script)
         return AXUtilities.find_all_links(root, pred=pred)

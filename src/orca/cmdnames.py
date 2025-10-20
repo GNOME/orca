@@ -551,38 +551,6 @@ DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION = \
 # applications, etc.
 DEBUG_CAPTURE_SNAPSHOT = _("Capture snapshot for debugging")
 
-# Translators: this command announces information regarding the relationship of
-# the given bookmark to the current position. Note that in this context, the
-# "bookmark" is storing the location of an accessible object, typically on a web
-# page.
-BOOKMARK_CURRENT_WHERE_AM_I = \
-    _("Bookmark where am I with respect to current position")
-
-# Translators: this event handler cycles through the registered bookmarks and
-# takes the user to the previous bookmark location. Note that in this context,
-# the "bookmark" is storing the location of an accessible object, typically on
-# a web page.
-BOOKMARK_GO_TO_PREVIOUS = _("Go to previous bookmark location")
-
-# Translators: this command moves the user to the location stored at the bookmark.
-# Note that in this context, the "bookmark" is storing the location of an
-# accessible object, typically on a web page.
-BOOKMARK_GO_TO = _("Go to bookmark")
-
-# Translators: this event handler cycles through the registered bookmarks and
-# takes the user to the next bookmark location. Note that in this context, the
-# "bookmark" is storing the location of an accessible object, typically on a web
-# page.
-BOOKMARK_GO_TO_NEXT = _("Go to next bookmark location")
-
-# Translators: this event handler binds an in-page accessible object location to
-# the given input key command.
-BOOKMARK_ADD = _("Add bookmark")
-
-# Translators: this event handler saves all bookmarks for the current application
-# to disk.
-BOOKMARK_SAVE = _("Save bookmarks")
-
 # Translators: Orca allows the item under the pointer to be spoken. This toggles
 # the feature without the need to get into a GUI.
 MOUSE_REVIEW_TOGGLE = _("Toggle mouse review mode")
@@ -798,14 +766,18 @@ LIVE_REGIONS_ADVANCE_POLITENESS = _("Advance live region politeness setting")
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
 # features to facilitate accessing live regions. This string refers to a command
 # to turn off live regions by default.
-LIVE_REGIONS_SET_POLITENESS_OFF = \
+LIVE_REGIONS_ARE_ANNOUNCED = \
     _("Set default live region politeness level to off")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
-# This string refers to a command for reviewing up to nine stored previous live
-# messages.
-LIVE_REGIONS_REVIEW = _("Review live region announcement")
+# This string refers to a command for presenting the previous live region message.
+LIVE_REGIONS_PREVIOUS = _("Present previous live region message")
+
+# Translators: A live region is an area of a web page that is periodically
+# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# This string refers to a command for presenting the next live region message.
+LIVE_REGIONS_NEXT = _("Present next live region message")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion

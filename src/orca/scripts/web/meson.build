@@ -1,6 +1,5 @@
 lib_sources = [
   '__init__.py',
-  'bookmarks.py',
   'braille_generator.py',
   'script.py',
   'script_utilities.py',

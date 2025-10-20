@@ -26,36 +26,28 @@
     <item>
       <p>
         Monitor live regions:
-        <keyseq><key>Orca Modifier</key><key>Shift</key><key>Backslash</key></keyseq>
+        <keyseq><key>Orca Modifier</key><key>Backslash</key></keyseq>
       </p>
     </item>
     <item>
-      <p>
-        Advance live region politeness setting: <key>Backslash</key>
-      </p>
+      <p>Advance live region politeness setting: (Unbound)</p>
+    </item>
+    <item>
+      <p>Set default politeness level to off: (Unbound)</p>
     </item>
     <item>
       <p>
-        Set default politeness level to off:
-        <keyseq><key>Shift</key><key>Backslash</key></keyseq>
-      </p>
-    </item>
-    <item>
-      <p>
-        Go to next/previous live region:
+        Go to next/previous live region in the document's reading order:
         <keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>
       </p>
+    </item>
+    <item>
+      <p>Review the next/previous saved live region message: (Unbound)</p>
     </item>
     <item>
       <p>
         Go to last live region which made an announcement:
         <keyseq><key>Y</key></keyseq>
-      </p>
-    </item>
-    <item>
-      <p>
-        Review live region announcements:
-        <keyseq><key>Orca Modifier</key><key>F1</key></keyseq> through <key>F9</key>
       </p>
     </item>
 </list>

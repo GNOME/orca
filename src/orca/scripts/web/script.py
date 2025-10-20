@@ -59,7 +59,6 @@ from orca import guilabels
 from orca import input_event
 from orca import input_event_manager
 from orca import label_inference
-from orca import liveregions
 from orca import messages
 from orca import settings
 from orca import settings_manager
@@ -76,7 +75,6 @@ from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
 from orca.structural_navigator import NavigationMode
 
-from .bookmarks import Bookmarks
 from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
@@ -91,8 +89,6 @@ class Script(default.Script):
     # Type annotations to override the base class types
     utilities: Utilities
     caret_navigator: caret_navigator.CaretNavigator
-    live_region_manager: liveregions.LiveRegionManager
-    bookmarks: Bookmarks
 
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
@@ -142,7 +138,7 @@ class Script(default.Script):
         reason = f"script activation, not in document content in this app: {suspend}"
         self.get_caret_navigator().suspend_commands(self, suspend, reason)
         self.get_structural_navigator().suspend_commands(self, suspend, reason)
-        self.live_region_manager.suspend_commands(self, suspend, reason)
+        self.get_live_region_presenter().suspend_commands(self, suspend, reason)
         self.get_table_navigator().suspend_commands(self, suspend, reason)
         super().activate()
 
@@ -156,7 +152,7 @@ class Script(default.Script):
         reason = "script deactivation"
         self.get_caret_navigator().suspend_commands(self, False, reason)
         self.get_structural_navigator().suspend_commands(self, False, reason)
-        self.live_region_manager.suspend_commands(self, False, reason)
+        self.get_live_region_presenter().suspend_commands(self, False, reason)
         self.get_table_navigator().suspend_commands(self, False, reason)
         super().deactivate()
 
@@ -164,15 +160,6 @@ class Script(default.Script):
         """Returns the application-specific keybindings for this script."""
 
         key_bindings = keybindings.KeyBindings()
-
-        layout = settings_manager.get_manager().get_setting("keyboardLayout")
-        is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-
-        live_region_bindings = self.live_region_manager.get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for key_binding in live_region_bindings.key_bindings:
-            key_bindings.add(key_binding)
-
         key_bindings.add(
             keybindings.KeyBinding(
                 "a",
@@ -209,7 +196,6 @@ class Script(default.Script):
         """Defines the input event handlers for this script."""
 
         super().setup_input_event_handlers()
-        self.input_event_handlers.update(self.live_region_manager.get_handlers(True))
 
         self.input_event_handlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
@@ -243,15 +229,6 @@ class Script(default.Script):
                 Script.toggle_layout_mode,
                 cmdnames.TOGGLE_LAYOUT_MODE)
 
-    def get_bookmarks(self) -> Bookmarks:
-        """Returns the "bookmarks" class for this script."""
-
-        try:
-            return self.bookmarks
-        except AttributeError:
-            self.bookmarks = Bookmarks(self)
-            return self.bookmarks
-
     def get_braille_generator(self) -> BrailleGenerator:
         """Returns the braille generator for this script."""
 
@@ -261,11 +238,6 @@ class Script(default.Script):
         """Returns the label inference functionality for this script."""
 
         return label_inference.LabelInference(self)
-
-    def get_live_region_manager(self) -> liveregions.LiveRegionManager:
-        """Returns the live region support for this script."""
-
-        return liveregions.LiveRegionManager(self)
 
     def get_speech_generator(self) -> SpeechGenerator:
         """Returns the speech generator for this script."""
@@ -951,7 +923,7 @@ class Script(default.Script):
         reason = "enable sticky browse mode"
         self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.get_structural_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
+        self.get_live_region_presenter().suspend_commands(self, self._in_focus_mode, reason)
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
         return True
 
@@ -971,7 +943,7 @@ class Script(default.Script):
         reason = "enable sticky focus mode"
         self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.get_structural_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
+        self.get_live_region_presenter().suspend_commands(self, self._in_focus_mode, reason)
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
         return True
 
@@ -1025,7 +997,7 @@ class Script(default.Script):
         reason = "toggling focus/browse mode"
         self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
         self.get_structural_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
+        self.get_live_region_presenter().suspend_commands(self, self._in_focus_mode, reason)
         self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
         return True
 
@@ -1078,8 +1050,7 @@ class Script(default.Script):
 
             reason = "locus of focus no longer in document"
             self.get_caret_navigator().suspend_commands(self, True, reason)
-            assert self.live_region_manager is not None
-            self.live_region_manager.suspend_commands(self, True, reason)
+            self.get_live_region_presenter().suspend_commands(self, True, reason)
             self.get_structural_navigator().suspend_commands(self, True, reason)
             self.get_table_navigator().suspend_commands(self, True, reason)
             return False
@@ -1209,7 +1180,7 @@ class Script(default.Script):
             reason = "locus of focus now in document"
             self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
             sn_navigator.suspend_commands(self, self._in_focus_mode, reason)
-            self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
+            self.get_live_region_presenter().suspend_commands(self, self._in_focus_mode, reason)
             self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
 
         return True
@@ -1749,7 +1720,7 @@ class Script(default.Script):
         msg = "WEB: Updating loading state and resetting live regions"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._loading_content = False
-        self.live_region_manager.reset()
+        self.get_live_region_presenter().reset()
         return True
 
     def on_document_load_stopped(self, event: Atspi.Event) -> bool:
@@ -1886,7 +1857,8 @@ class Script(default.Script):
                     self.get_caret_navigator().suspend_commands(self, self._in_focus_mode, reason)
                     self.get_structural_navigator().suspend_commands(
                         self, self._in_focus_mode, reason)
-                    self.live_region_manager.suspend_commands(self, self._in_focus_mode, reason)
+                    self.get_live_region_presenter().suspend_commands(
+                        self, self._in_focus_mode, reason)
                     self.get_table_navigator().suspend_commands(self, self._in_focus_mode, reason)
                 self.utilities.set_caret_context(obj, offset)
             else:
@@ -2111,7 +2083,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_live_region(event.source):
+        if reason == TextEventReason.LIVE_REGION_UPDATE:
             msg = "WEB: Ignoring deletion from live region"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -2189,14 +2161,10 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_live_region(event.source):
-            if self.utilities.handle_as_live_region(event):
-                msg = "WEB: Event to be handled as live region"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                self.live_region_manager.handleEvent(event)
-                return True
-            msg = "WEB: Ignoring because live region event not to be handled."
+        if reason == TextEventReason.LIVE_REGION_UPDATE:
+            msg = "WEB: Event is from live region"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.get_live_region_presenter().handle_event(self, event)
             return True
 
         if reason == TextEventReason.CHILDREN_CHANGE:

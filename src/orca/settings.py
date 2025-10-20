@@ -300,6 +300,10 @@ caretNavigationEnabled: bool = True
 # Managed by table_navigator.py
 skipBlankCells: bool = False
 
+# Managed by live_region_presenter.py
+enableLiveRegions: bool = True
+presentLiveRegionFromInactiveTab: bool = False
+
 # Managed by system_information_presenter.py
 presentDateFormat: str = messages.DATE_FORMAT_LOCALE
 presentTimeFormat: str = messages.TIME_FORMAT_LOCALE
@@ -348,7 +352,6 @@ ignoreStatusBarProgressBars: bool = True
 # Document navigation and content
 nativeNavTriggersFocusMode: bool = True
 layoutMode: bool = True
-inferLiveRegions: bool = True
 
 # Chat
 chatMessageVerbosity: int = CHAT_SPEAK_ALL
@@ -381,4 +384,3 @@ brailleBindingsMap: dict[str, Any] = {}
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 presentChatRoomLast: bool = False
-presentLiveRegionFromInactiveTab: bool = False

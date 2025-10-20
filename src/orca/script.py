@@ -60,6 +60,7 @@ from . import flat_review_finder
 from . import flat_review_presenter
 from . import keybindings
 from . import learn_mode_presenter
+from . import live_region_presenter
 from . import mouse_review
 from . import notification_presenter
 from . import object_navigator
@@ -73,7 +74,6 @@ from . import structural_navigator
 from . import system_information_presenter
 from . import table_navigator
 from . import typing_echo_presenter
-from . import bookmarks
 from . import where_am_i_presenter
 from .ax_object import AXObject
 
@@ -84,7 +84,6 @@ if TYPE_CHECKING:
 
     from . import chat
     from . import label_inference
-    from . import liveregions
     from . import spellcheck
 
 class Script:
@@ -106,10 +105,8 @@ class Script:
         self.braille_generator = self.get_braille_generator()
         self.sound_generator = self.get_sound_generator()
         self.speech_generator = self.get_speech_generator()
-        self.bookmarks = self.get_bookmarks()
 
         # pylint:disable=assignment-from-none
-        self.live_region_manager = self.get_live_region_manager()
         self.label_inference = self.get_label_inference()
         self.chat = self.get_chat()
         self.spellcheck = self.get_spellcheck()
@@ -216,10 +213,10 @@ class Script:
 
         return typing_echo_presenter.get_presenter()
 
-    def get_live_region_manager(self) -> liveregions.LiveRegionManager | None:
-        """Returns the live region manager for this script."""
+    def get_live_region_presenter(self) -> live_region_presenter.LiveRegionPresenter:
+        """Returns the live region presenter for this script."""
 
-        return None
+        return live_region_presenter.get_presenter()
 
     def get_notification_presenter(self) -> notification_presenter.NotificationPresenter:
         """Returns the notification presenter for this script."""
@@ -294,16 +291,6 @@ class Script:
         """Returns the event synthesizer for this script."""
 
         return ax_event_synthesizer.get_synthesizer()
-
-    def get_bookmarks(self) -> bookmarks.Bookmarks:
-        """Returns the bookmarks support for this script."""
-
-        try:
-            return self.bookmarks
-        except AttributeError:
-            # Base Script doesn't have all methods that Bookmarks expects from default.Script
-            self.bookmarks = bookmarks.Bookmarks(self)  # type: ignore[arg-type]
-            return self.bookmarks
 
     def _get_queued_event(
         self,

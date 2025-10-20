@@ -124,8 +124,10 @@ class TestStructuralNavigator:
         essential_modules["orca.AXObject"].get_parent.return_value = None
         essential_modules["orca.AXObject"].supports_collection.return_value = True
         essential_modules["orca.AXObject"].find_ancestor.return_value = None
+        essential_modules["orca.AXObject"].get_attributes_dict.return_value = {}
         essential_modules["orca.AXUtilities"].is_web_application.return_value = False
         essential_modules["orca.AXUtilities"].is_heading.return_value = False
+        essential_modules["orca.AXUtilities"].is_live_region.return_value = False
         essential_modules["orca.AXUtilities"].find_descendant.return_value = None
         script_manager_instance = test_context.Mock()
         script_manager_instance.get_active_script.return_value = None
@@ -541,8 +543,10 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
+        from orca import ax_utilities
 
         nav = get_navigator()
+        test_context.patch_object(ax_utilities.AXUtilities, "is_live_region", return_value=False)
         mock_obj1 = test_context.Mock()
         mock_obj2 = test_context.Mock()
         mock_obj3 = test_context.Mock()

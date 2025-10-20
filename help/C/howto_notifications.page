@@ -1,7 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_notifications">
   <info>
     <link type="guide" xref="index#reviewing"/>
-    <link type="next" xref="howto_bookmarks" />
     <title type="sort">5. Notifications</title>
     <desc>Reading previously-received messages</desc>
     <credit type="author">

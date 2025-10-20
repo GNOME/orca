@@ -211,12 +211,13 @@ class TestLearnModePresenter:
             "get_flat_review_presenter",
             "get_flat_review_finder",
             "get_object_navigator",
+            "get_caret_navigator",
             "get_structural_navigator",
             "get_table_navigator",
+            "get_live_region_presenter",
             "get_system_information_presenter",
             "get_notification_presenter",
             "get_clipboard_presenter",
-            "get_bookmarks",
             "get_mouse_reviewer",
             "get_action_presenter",
             "get_debugging_tools_manager",
@@ -664,11 +665,6 @@ class TestLearnModePresenter:
             object_navigator_kb.get_bound_bindings.return_value = []
             object_navigator.get_bindings.return_value = object_navigator_kb
             script.get_object_navigator.return_value = object_navigator
-            caret_navigator = test_context.Mock()
-            caret_navigator_kb = test_context.Mock()
-            caret_navigator_kb.get_bound_bindings.return_value = []
-            caret_navigator.get_bindings.return_value = caret_navigator_kb
-            script.get_caret_navigator.return_value = caret_navigator
         else:
             key_binding_mock = test_context.Mock()
             key_binding_mock.handler = test_context.Mock()

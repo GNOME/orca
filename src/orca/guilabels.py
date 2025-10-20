@@ -369,10 +369,6 @@ ACTIONS_LIST = KB_GROUP_ACTIONS
 KB_GROUP_BRAILLE = _("Braille Bindings")
 
 # Translators: This string is a label for the group of Orca commands which
-# are related to saving and jumping among objects via "bookmarks".
-KB_GROUP_BOOKMARKS = _("Bookmarks")
-
-# Translators: This string is a label for the group of Orca commands which
 # are related to caret navigation, such as moving by character, word, and line.
 # These commands are enabled by default for web content and can be optionally
 # toggled on in other applications.
@@ -385,6 +381,10 @@ KB_GROUP_CLIPBOARD = _("Clipboard")
 # Translators: This string is a label for the group of Orca commands which
 # are related to presenting the date and time.
 KB_GROUP_DATE_AND_TIME = _("Date and time")
+
+# Translators: A live region is an area of a web page that is periodically
+# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+KB_GROUP_LIVE_REGIONS = _("Live regions")
 
 # Translators: Orca has a sleep mode which causes Orca to essentially behave as
 # if it were not running for a given application. Some use cases include self-

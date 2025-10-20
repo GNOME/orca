@@ -297,6 +297,11 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_TABLE_NAVIGATION] = bound
             items += len(bound)
 
+            bound = script.get_live_region_presenter().get_bindings(
+                is_desktop=is_desktop).get_bound_bindings()
+            bindings[guilabels.KB_GROUP_LIVE_REGIONS] = bound
+            items += len(bound)
+
             bound = script.get_system_information_presenter().get_bindings(
                 is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_SYSTEM_INFORMATION] = bound
@@ -310,11 +315,6 @@ class LearnModePresenter:
             bound = script.get_clipboard_presenter().get_bindings(
                 is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_CLIPBOARD] = bound
-            items += len(bound)
-
-            bound = script.get_bookmarks().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_BOOKMARKS] = bound
             items += len(bound)
 
             bound = script.get_mouse_reviewer().get_bindings(

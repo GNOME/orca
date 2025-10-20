@@ -169,12 +169,12 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_speech_and_verbosity_manager().get_handlers())
         self.input_event_handlers.update(self.get_bypass_mode_manager().get_handlers())
         self.input_event_handlers.update(self.get_system_information_presenter().get_handlers())
-        self.input_event_handlers.update(self.bookmarks.get_handlers())
         self.input_event_handlers.update(self.get_object_navigator().get_handlers())
         self.input_event_handlers.update(self.get_say_all_presenter().get_handlers())
         self.input_event_handlers.update(self.get_caret_navigator().get_handlers())
         self.input_event_handlers.update(self.get_structural_navigator().get_handlers())
         self.input_event_handlers.update(self.get_table_navigator().get_handlers())
+        self.input_event_handlers.update(self.get_live_region_presenter().get_handlers())
         self.input_event_handlers.update(self.get_typing_echo_presenter().get_handlers())
         self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
         self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
@@ -297,11 +297,6 @@ class Script(script.Script):
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
 
-        bindings = self.bookmarks.get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
         bindings = self.get_mouse_reviewer().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in bindings.key_bindings:
@@ -313,6 +308,11 @@ class Script(script.Script):
             key_bindings.add(binding)
 
         bindings = self.get_debugging_tools_manager().get_bindings(
+            refresh=True, is_desktop=is_desktop)
+        for binding in bindings.key_bindings:
+            key_bindings.add(binding)
+
+        bindings = self.get_live_region_presenter().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
@@ -1467,6 +1467,12 @@ class Script(script.Script):
             AXText.update_cached_selected_text(event.source)
             return True
 
+        if reason == TextEventReason.LIVE_REGION_UPDATE:
+            msg = "DEFAULT: Event is from live region"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.get_live_region_presenter().handle_event(self, event)
+            return True
+
         speak_string = True
         if reason == TextEventReason.PAGE_SWITCH:
             msg = "DEFAULT: Insertion is believed to be due to page switch"
@@ -1989,7 +1995,7 @@ class Script(script.Script):
     #                                                                          #
     ############################################################################
 
-    def interrupt_presentation(self, kill_flash=True):
+    def interrupt_presentation(self, kill_flash: bool = True) -> None:
         """Convenience method to interrupt whatever is being presented at the moment."""
 
         msg = "DEFAULT: Interrupting presentation"
@@ -1997,8 +2003,7 @@ class Script(script.Script):
         speech_and_verbosity_manager.get_manager().interrupt_speech()
         if kill_flash:
             braille.killFlash()
-        if self.live_region_manager is not None:
-            self.live_region_manager.flushMessages()
+        self.get_live_region_presenter().flush_messages()
 
     def present_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
