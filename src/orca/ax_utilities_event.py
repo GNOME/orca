@@ -364,7 +364,7 @@ class AXUtilitiesEvent:
                     reason = TextEventReason.REDO
             elif mgr.last_event_was_command():
                 reason = TextEventReason.UNSPECIFIED_COMMAND
-            elif mgr.last_event_was_space():
+            elif mgr.last_event_was_space() and not AXUtilitiesRole.is_password_text(obj):
                 # Gecko inserts a newline at the offset past the space in contenteditables.
                 if event.any_data == "\n":
                     reason = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
@@ -373,7 +373,7 @@ class AXUtilitiesEvent:
             elif mgr.last_event_was_tab() or mgr.last_event_was_return():
                 if not event.any_data.strip():
                     reason = TextEventReason.TYPING
-            elif mgr.last_event_was_printable_key():
+            elif mgr.last_event_was_printable_key() or mgr.last_event_was_space():
                 if reason == TextEventReason.SELECTED_TEXT_INSERTION:
                     reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
                 else:

@@ -204,7 +204,7 @@ class KeyboardEvent(InputEvent):
         if not AXUtilities.is_password_text(self._obj):
             return False
 
-        if not self.is_printable_key():
+        if not self.is_printable_key() and not self.is_space():
             return False
 
         if self.is_alt_control_or_orca_modified():
