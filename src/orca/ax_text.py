@@ -76,6 +76,7 @@ class AXTextAttribute(enum.Enum):
     LANGUAGE = ("language", False)
     LEFT_MARGIN = ("left-margin", False)
     LINE_HEIGHT = ("line-height", False)
+    MARK = ("mark", True)
     PARAGRAPH_STYLE = ("paragraph-style", True)
     PIXELS_ABOVE_LINES = ("pixels-above-lines", False)
     PIXELS_BELOW_LINES = ("pixels-below-lines", False)

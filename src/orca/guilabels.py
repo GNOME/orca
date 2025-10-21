@@ -383,7 +383,7 @@ KB_GROUP_CLIPBOARD = _("Clipboard")
 KB_GROUP_DATE_AND_TIME = _("Date and time")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 KB_GROUP_LIVE_REGIONS = _("Live regions")
 
 # Translators: Orca has a sleep mode which causes Orca to essentially behave as

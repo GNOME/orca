@@ -477,6 +477,11 @@ CONTENT_MARK_START = C_("content", "highlight start")
 # is inside an HTML 'mark' element.
 CONTENT_MARK_END = C_("content", "highlight end")
 
+# Translators: This phrase is spoken to inform the user that what is about to
+# be said is content marked/highlighted in a document, such as content which
+# is inside an HTML 'mark' element or which has the CSS custom highlight applied.
+CONTENT_MARKED = C_("content", "highlighted")
+
 # Translators: This phrase is spoken to inform the user that the content being
 # presented is the end of an inline suggestion a document. A "suggestion" is a
 # proposed change. This change can include the insertion and/or deletion
@@ -1571,7 +1576,7 @@ LIST_NAVIGATION = \
     _("Use Up and Down Arrow to navigate the list. Press Escape to exit.")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -1581,7 +1586,7 @@ LIST_NAVIGATION = \
 LIVE_REGIONS_ALL_OFF = _("All live regions set to off")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -1591,7 +1596,7 @@ LIVE_REGIONS_ALL_OFF = _("All live regions set to off")
 LIVE_REGIONS_ALL_RESTORED = _("live regions politeness levels restored")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -1600,7 +1605,7 @@ LIVE_REGIONS_ALL_RESTORED = _("live regions politeness levels restored")
 LIVE_REGIONS_LEVEL = _("politeness level %s")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -1610,7 +1615,7 @@ LIVE_REGIONS_LEVEL = _("politeness level %s")
 LIVE_REGIONS_LEVEL_ASSERTIVE = _("setting live region to assertive")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -1620,7 +1625,7 @@ LIVE_REGIONS_LEVEL_ASSERTIVE = _("setting live region to assertive")
 LIVE_REGIONS_LEVEL_OFF = _("setting live region to off")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -1630,40 +1635,40 @@ LIVE_REGIONS_LEVEL_OFF = _("setting live region to off")
 LIVE_REGIONS_LEVEL_POLITE = _("setting live region to polite")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # Orca has several features to facilitate accessing live regions. This message
 # is presented in response to a command that toggles whether or not Orca pays
 # attention to changes in live regions.
 LIVE_REGIONS_DISABLED = _("Live regions disabled")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # Orca has several features to facilitate accessing live regions. This message
 # is presented in response to a command that toggles whether or not Orca pays
 # attention to changes in live regions.
 LIVE_REGIONS_ENABLED = _("Live regions enabled")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # Orca has several features to facilitate accessing live regions. This message
 # is presented when the user attempts to perform a live region command, but
 # live region support is disabled.
 LIVE_REGIONS_SUPPORT_DISABLED = _("Live region support is disabled")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # Orca has several features to facilitate accessing live regions. This message
 # is presented when the user is at the beginning of the list of stored messages.
 LIVE_REGIONS_LIST_TOP = C_("live region", "Top")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # Orca has several features to facilitate accessing live regions. This message
 # is presented when the user is at the end of the list of stored messages.
 LIVE_REGIONS_LIST_BOTTOM = C_("live region", "Bottom")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # Orca has several features to facilitate accessing live regions. This message
 # is presented when the user tries to navigate through live region messages,
 # but there are no messages to navigate.
@@ -1968,7 +1973,7 @@ NO_MORE_LIST_ITEMS = _("No more list items.")
 # region to live region. A live region is an area of a web page that is
 # periodically updated, e.g. stock ticker. This is a detailed message which
 # will be presented to the user if no more live regions can be found. For
-# more info, see http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# more info, see https://w3c.github.io/aria/#dfn-live-region
 NO_MORE_LIVE_REGIONS = _("No more live regions.")
 
 # Translators: This is for navigating document content by moving from paragraph

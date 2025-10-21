@@ -402,7 +402,7 @@ ROLE_SPLITTER_VERTICAL = _("vertical splitter")
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 # The "switch" role is a "light switch" style toggle, such as can be seen in
-# https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+# https://docs.gtk.org/gtk4/class.Switch.html
 ROLE_SWITCH = C_("role", "switch")
 
 # Translators: This is an alternative name for the parent object of a series
@@ -518,11 +518,11 @@ STATE_CHECKED = C_("checkbox", "checked")
 STATE_NOT_CHECKED = C_("checkbox", "not checked")
 
 # Translators: This is a state which applies to a switch. For an example of
-# a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+# a switch, see https://docs.gtk.org/gtk4/class.Switch.html
 STATE_ON_SWITCH = C_("switch", "on")
 
 # Translators: This is a state which applies to a switch. For an example of
-# a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
+# a switch, see https://docs.gtk.org/gtk4/class.Switch.html
 STATE_OFF_SWITCH = C_("switch", "off")
 
 # Translators: This is a state which applies to a check box.

@@ -751,7 +751,7 @@ CARET_NAVIGATION_TOGGLE = \
     _("Switch between native and screen-reader caret navigation")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -760,7 +760,7 @@ CARET_NAVIGATION_TOGGLE = \
 LIVE_REGIONS_ADVANCE_POLITENESS = _("Advance live region politeness setting")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
 # about a change to live region content. Examples include: never ("off"), when
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
@@ -770,17 +770,17 @@ LIVE_REGIONS_ARE_ANNOUNCED = \
     _("Set default live region politeness level to off")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # This string refers to a command for presenting the previous live region message.
 LIVE_REGIONS_PREVIOUS = _("Present previous live region message")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # This string refers to a command for presenting the next live region message.
 LIVE_REGIONS_NEXT = _("Present next live region message")
 
 # Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # This string refers to an Orca command which allows the user to toggle whether
 # or not Orca pays attention to changes in live regions. Note that turning off
 # monitoring of live events is NOT the same as turning the politeness level
@@ -1004,17 +1004,17 @@ LIST_ITEM_LIST = _("Display a list of list items")
 
 # Translators: this is for navigating among live regions in a document. A live
 # region is an area of a web page that is periodically updated, e.g. a stock
-# ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# ticker. https://w3c.github.io/aria/#dfn-live-region
 LIVE_REGION_PREV = _("Go to previous live region")
 
 # Translators: this is for navigating among live regions in a document. A live
 # region is an area of a web page that is periodically updated, e.g. a stock
-# ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# ticker. https://w3c.github.io/aria/#dfn-live-region
 LIVE_REGION_NEXT = _("Go to next live region")
 
 # Translators: this is for navigating among live regions in a document. A live
 # region is an area of a web page that is periodically updated, e.g. a stock
-# ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
+# ticker. https://w3c.github.io/aria/#dfn-live-region
 LIVE_REGION_LAST = _("Go to the last live region which made an announcement")
 
 # Translators: the object navigator allows users to explore UI objects presented
