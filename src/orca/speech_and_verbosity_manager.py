@@ -1924,6 +1924,7 @@ class SpeechAndVerbosityManager:
         # If we're on whitespace or punctuation, we cannot be on an error.
         char = AXText.get_character_at_offset(obj, offset)[0]
         if char in string.punctuation + string.whitespace + "\u00a0":
+            self._last_error_description = ""
             return ""
 
         msg = ""

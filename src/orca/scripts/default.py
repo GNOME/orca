@@ -1406,7 +1406,14 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_text_attributes_change(event):
             return True
 
-        self.speak_misspelled_indicator(event.source)
+        word, start, _end = AXText.get_word_at_offset(event.source)
+        if not word.strip():
+            word, start, _end = AXText.get_word_at_offset(event.source, start - 1)
+
+        manager = speech_and_verbosity_manager.get_manager()
+        if error := manager.get_error_description(event.source, start, False):
+            self.speak_message(error)
+
         return True
 
     def on_text_deleted(self, event: Atspi.Event) -> bool:
@@ -1770,7 +1777,8 @@ class Script(script.Script):
         if not character or character == "\r":
             character = "\n"
 
-        speak_blank_lines = speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+        speech_manager = speech_and_verbosity_manager.get_manager()
+        speak_blank_lines = speech_manager.get_speak_blank_lines()
         if character == "\n":
             line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
             if not line_string or line_string == "\n":
@@ -1787,7 +1795,9 @@ class Script(script.Script):
                 self.speak_message(messages.BLANK, interrupt=False)
             return
 
-        self.speak_misspelled_indicator(obj, offset)
+        if error := speech_manager.get_error_description(obj, offset):
+            self.speak_message(error)
+
         self.speak_character(character)
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
@@ -1874,13 +1884,14 @@ class Script(script.Script):
         word, start_offset, end_offset = \
             self.utilities.get_word_at_offset_adjusted_for_navigation(obj, offset)
 
+        speech_manager = speech_and_verbosity_manager.get_manager()
         if "\n" in word:
             # Announce when we cross a hard line boundary, based on whether or not indentation and
             # justification should be spoken. This was done to avoid yet another setting in
             # response to some users saying this announcement was too chatty. The idea of using
             # this setting for the decision is that if the user wants indentation and justification
             # announced, they are interested in explicit whitespace information.
-            if speech_and_verbosity_manager.get_manager().get_speak_indentation_and_justification():
+            if speech_manager.get_speak_indentation_and_justification():
                 self.speak_character("\n")
             if word.startswith("\n"):
                 start_offset += 1
@@ -1903,7 +1914,9 @@ class Script(script.Script):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self.speak_misspelled_indicator(obj, start_offset)
+        if error := speech_manager.get_error_description(obj, start_offset):
+            self.speak_message(error)
+
         self.say_phrase(obj, start_offset, end_offset)
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
@@ -1978,15 +1991,6 @@ class Script(script.Script):
             voice = self.speech_generator.voice(string=character)
             phonetic_string = phonnames.get_phonetic_name(character.lower())
             self.speak_message(phonetic_string, voice)
-
-    def speak_misspelled_indicator(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
-        """Speaks the misspelled-word indicator."""
-
-        # TODO - JD: Remove this and have callers use the speech-adjustment logic.
-        manager = speech_and_verbosity_manager.get_manager()
-        error = manager.get_error_description(obj, offset)
-        if error:
-            self.speak_message(error)
 
     ############################################################################
     #                                                                          #

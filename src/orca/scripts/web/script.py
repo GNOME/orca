@@ -639,14 +639,16 @@ class Script(default.Script):
         if not contents:
             return
 
+        speech_manager = speech_and_verbosity_manager.get_manager()
         obj, start, _end, string = contents[0]
         if start > 0 and string == "\n":
-            if speech_and_verbosity_manager.get_manager().get_speak_blank_lines():
+            if speech_manager.get_speak_blank_lines():
                 self.speak_message(messages.BLANK, interrupt=False)
                 return
 
         if string:
-            self.speak_misspelled_indicator(obj, start)
+            if error := speech_manager.get_error_description(obj, start):
+                self.speak_message(error)
             self.speak_character(string)
         else:
             self.speak_contents(contents)
@@ -674,7 +676,11 @@ class Script(default.Script):
 
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
         text_obj, start_offset, _end_offset, _word = word_contents[0]
-        self.speak_misspelled_indicator(text_obj, start_offset)
+
+        speech_manager = speech_and_verbosity_manager.get_manager()
+        if error := speech_manager.get_error_description(text_obj, start_offset):
+            self.speak_message(error)
+
         # TODO - JD: Clean up the focused + alreadyFocused mess which by side effect is causing
         # the content of some objects (e.g. table cells) to not be generated.
         self.speak_contents(word_contents, alreadyFocused=AXUtilities.is_text_input(text_obj))
