@@ -51,9 +51,9 @@ class AXCollection:
         states: list[str] | None = None,
         state_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
         attributes: list[str] | None = None,
-        attribute_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ANY,
+        attribute_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
         roles: list[str] | None = None,
-        role_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ANY,
+        role_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
         interfaces: list[str] | None = None,
         interface_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
         invert: bool = False) -> Atspi.MatchRule | None:

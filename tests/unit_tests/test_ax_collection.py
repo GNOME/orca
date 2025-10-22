@@ -89,7 +89,8 @@ class TestAXCollection:
         )
 
         attributes = ["class:button", "class:primary"]
-        result = AXCollection.create_match_rule(attributes=attributes)
+        result = AXCollection.create_match_rule(attributes=attributes,
+                                                attribute_match_type=Atspi.CollectionMatchType.ANY)
 
         expected_attrs = {"class": "button:primary"}
         mock_match_rule_new.assert_called_once()

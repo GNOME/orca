@@ -175,7 +175,8 @@ class AXUtilitiesCollection:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(
-            roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.ALL)
+            roles=role_list, role_match_type=Atspi.CollectionMatchType.ANY,
+            states=state_list, state_match_type=Atspi.CollectionMatchType.ALL)
         matches = AXCollection.get_all_matches(root, rule)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
@@ -201,7 +202,8 @@ class AXUtilitiesCollection:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(
-            roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.ANY)
+            roles=role_list, role_match_type=Atspi.CollectionMatchType.ANY,
+            states=state_list, state_match_type=Atspi.CollectionMatchType.ANY)
         matches = AXCollection.get_all_matches(root, rule)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
@@ -227,7 +229,8 @@ class AXUtilitiesCollection:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         rule = AXCollection.create_match_rule(
-            roles=role_list, states=state_list, state_match_type=Atspi.CollectionMatchType.NONE)
+            roles=role_list, role_match_type=Atspi.CollectionMatchType.ANY,
+            states=state_list, state_match_type=Atspi.CollectionMatchType.NONE)
         matches = AXCollection.get_all_matches(root, rule)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
@@ -1257,7 +1260,8 @@ class AXUtilitiesCollection:
         for level in levels:
             attributes.append('container-live:' + level)
 
-        rule = AXCollection.create_match_rule(attributes=attributes)
+        rule = AXCollection.create_match_rule(attributes=attributes,
+                                              attribute_match_type=Atspi.CollectionMatchType.ANY)
         matches = AXCollection.get_all_matches(root, rule)
         if pred is not None:
             matches = AXUtilitiesCollection._apply_predicate(matches, pred)
@@ -2328,7 +2332,9 @@ class AXUtilitiesCollection:
 
         roles = [Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX]
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
-        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        rule = AXCollection.create_match_rule(roles=roles,
+                                              role_match_type=Atspi.CollectionMatchType.ANY,
+                                              states=states)
         return bool(AXCollection.get_first_match(root, rule))
 
     @staticmethod
@@ -2345,7 +2351,9 @@ class AXUtilitiesCollection:
 
         roles = [Atspi.Role.SCROLL_PANE]
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
-        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        rule = AXCollection.create_match_rule(roles=roles,
+                                              role_match_type=Atspi.CollectionMatchType.ANY,
+                                              states=states)
         return bool(AXCollection.get_first_match(root, rule))
 
     @staticmethod
@@ -2363,5 +2371,7 @@ class AXUtilitiesCollection:
 
         roles = [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
-        rule = AXCollection.create_match_rule(roles=roles, states=states)
+        rule = AXCollection.create_match_rule(roles=roles,
+                                              role_match_type=Atspi.CollectionMatchType.ANY,
+                                              states=states)
         return bool(AXCollection.get_first_match(root, rule))

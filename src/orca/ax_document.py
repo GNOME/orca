@@ -230,7 +230,7 @@ class AXDocument:
                  Atspi.Role.FORM,
                  Atspi.Role.LANDMARK]
 
-        rule = AXCollection.create_match_rule(roles=roles)
+        rule = AXCollection.create_match_rule(roles=roles, role_match_type=Atspi.CollectionMatchType.ANY)
         matches = AXCollection.get_all_matches(document, rule)
 
         for obj in matches:
