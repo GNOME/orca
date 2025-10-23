@@ -479,7 +479,19 @@ class AXUtilities:
         def cmp(x, y):
             return AXObject.get_index_in_parent(x) - AXObject.get_index_in_parent(y)
 
+        if not object_list or len(object_list) == 1:
+            return object_list
+
         result = sorted(object_list, key=functools.cmp_to_key(cmp))
+
+        first, second = result[0:2]
+        if AXUtilitiesRole.is_radio_button(first) and AXObject.get_toolkit_name(first) == "gtk":
+            # Gtk radio buttons are often in reverse order, except for when they're not.
+            # See https://gitlab.gnome.org/GNOME/gtk/-/issues/7839.
+            sorted_first, _sorted_second = AXComponent.sort_objects_by_position([first, second])
+            if sorted_first != first:
+                result.reverse()
+
         if object_list != result:
             tokens = ["AXUtilities: Original list", object_list]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
