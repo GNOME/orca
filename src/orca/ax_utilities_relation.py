@@ -102,6 +102,11 @@ class AXUtilitiesRelation:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
+        if relations is None:
+            tokens = ["AXUtilitiesRelation: get_relation_set failed for", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
         AXUtilitiesRelation.RELATIONS[hash(obj)] = relations
         return relations
 

@@ -547,6 +547,11 @@ class AXTable:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
+        if headers is None:
+            tokens = ["AXTable: get_column_header_cells failed for", cell]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return []
+
         tokens = ["AXTable: TableCell iface column headers for cell are:", headers]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return headers
@@ -587,6 +592,11 @@ class AXTable:
         except GLib.GError as error:
             msg = f"AXTable: Exception in _get_row_headers_from_table_cell: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return []
+
+        if headers is None:
+            tokens = ["AXTable: get_row_header_cells failed for", cell]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
         tokens = ["AXTable: TableCell iface row headers for cell are:", headers]

@@ -1058,6 +1058,11 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return Atspi.StateSet()
 
+        if state_set is None:
+            tokens = ["AXObject: get_state_set failed for", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return Atspi.StateSet()
+
         AXObject._set_known_dead_status(obj, False)
         return state_set
 
