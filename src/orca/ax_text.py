@@ -211,6 +211,11 @@ class AXText:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return "", 0, 0
 
+        if result is None:
+            tokens = ["AXText: get_string_at_offset (char) failed for", obj, f"at {offset}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return "", 0, 0
+
         debug_string = result.content.replace("\n", "\\n")
         tokens = [f"AXText: Character at offset {offset} in", obj,
                   f"'{debug_string}' ({result.start_offset}-{result.end_offset})"]
@@ -320,6 +325,11 @@ class AXText:
         except GLib.GError as error:
             msg = f"AXText: Exception in get_word_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
+
+        if result is None:
+            tokens = ["AXText: get_string_at_offset (word) failed for", obj, f"at {offset}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
         tokens = [f"AXText: Word at offset {offset} in", obj,
@@ -438,6 +448,11 @@ class AXText:
         except GLib.GError as error:
             msg = f"AXText: Exception in get_line_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
+
+        if result is None:
+            tokens = ["AXText: get_string_at_offset (line) failed for", obj, f"at {offset}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
         # Try again, e.g. Chromium returns "", -1, -1.
@@ -633,6 +648,11 @@ class AXText:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return AXText._get_sentence_at_offset_fallback(obj, offset)
 
+        if result is None:
+            tokens = ["AXText: get_string_at_offset (sentence) failed for", obj, f"at {offset}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return "", 0, 0
+
         if result.start_offset == result.end_offset == -1 or not result.content:
             return AXText._get_sentence_at_offset_fallback(obj, offset)
 
@@ -752,6 +772,11 @@ class AXText:
         except GLib.GError as error:
             msg = f"AXText: Exception in get_paragraph_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return "", 0, 0
+
+        if result is None:
+            tokens = ["AXText: get_string_at_offset (paragraph) failed for", obj, f"at {offset}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
         tokens = [f"AXText: Paragraph at offset {offset} in", obj,
@@ -1192,6 +1217,11 @@ class AXText:
         except GLib.GError as error:
             msg = f"AXText: Exception in get_text_attributes_at_offset: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return {}, 0, AXText.get_character_count(obj)
+
+        if result is None:
+            tokens = ["AXText: get_attribute_run failed for", obj, f"at offset {offset}."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return {}, 0, AXText.get_character_count(obj)
 
         tokens = ["AXText: Attributes for", obj, f"at offset {offset} : {result}"]

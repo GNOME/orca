@@ -66,6 +66,11 @@ class AXComponent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
+        if point is None:
+            tokens = ["AXComponent: get_position failed for", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return -1, -1
+
         return point.x, point.y
 
     @staticmethod
@@ -117,6 +122,11 @@ class AXComponent:
         except GLib.GError as error:
             msg = f"AXComponent: Exception in get_position: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return -1, -1
+
+        if point is None:
+            tokens = ["AXComponent: get_size failed for", obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
         # An Atspi.Point object stores width in x and height in y.
