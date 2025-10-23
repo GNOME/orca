@@ -450,6 +450,12 @@ class AXTable:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
+        if result is None:
+            tokens = ["AXTable: get_row_column_extents_at_index failed for", cell,
+                      f"at index {index} in", table]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return -1, -1
+
         if not result[0]:
             return -1, -1
 

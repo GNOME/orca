@@ -147,6 +147,11 @@ class AXDocument:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
+        if result is None:
+            tokens = ["AXDocument: get_locale failed for", document]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return ""
+
         tokens = ["AXDocument: Locale of", document, f"is '{result}'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
