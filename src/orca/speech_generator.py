@@ -450,7 +450,7 @@ class SpeechGenerator(generator.Generator):
             if not (child and AXUtilities.is_widget(child)):
                 return False
 
-        if AXUtilities.is_editable(obj) and obj == args.get("priorObj"):
+        if obj == args.get("priorObj"):
             return False
 
         return True
