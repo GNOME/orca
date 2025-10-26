@@ -238,8 +238,6 @@ class Utilities(script_utilities.Utilities):
 
         obj, offset = self.first_context(obj, offset)
         self.set_caret_context(obj, offset, document)
-        if self._script.focus_mode_is_sticky():
-            return
 
         old_focus = focus_manager.get_manager().get_locus_of_focus()
         AXText.clear_all_selected_text(old_focus)
@@ -248,6 +246,11 @@ class Utilities(script_utilities.Utilities):
             AXObject.grab_focus(obj)
 
         AXText.set_caret_offset(obj, offset)
+
+        # If we return earlier than here, braille cursor routing fails in sticky focus mode.
+        if self._script.focus_mode_is_sticky():
+            return
+
         if self._script.use_focus_mode(obj, old_focus) != self._script.in_focus_mode():
             self._script.toggle_presentation_mode(None)
 
