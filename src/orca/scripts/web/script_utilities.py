@@ -1403,8 +1403,6 @@ class Utilities(script_utilities.Utilities):
         skip_space = not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
         obj, offset = self.previous_context(first_obj, first_offset, skip_space)
         if not obj and first_obj:
-            tokens = ["WEB: Previous context is: ", obj, ", ", offset, ". Trying again."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.clear_cached_objects()
             obj, offset = self.previous_context(first_obj, first_offset, skip_space)
 
@@ -1474,8 +1472,6 @@ class Utilities(script_utilities.Utilities):
         skip_space = not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
         obj, offset = self.next_context(last_obj, last_offset, skip_space)
         if not obj and last_obj:
-            tokens = ["WEB: Next context is: ", obj, ", ", offset, ". Trying again."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.clear_cached_objects()
             obj, offset = self.next_context(last_obj, last_offset, skip_space)
 

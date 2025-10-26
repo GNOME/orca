@@ -327,12 +327,19 @@ class TestCaretNavigator:
                 True,
                 id="next_line_success",
             ),
-            pytest.param("previous_line", True, None, [], True, id="previous_line_in_say_all"),
-            pytest.param("previous_line", False, None, [], False, id="previous_line_no_contents"),
+            pytest.param(
+                "previous_line",
+                True,
+                [("obj", 0, 10, "text")],
+                [],
+                True,
+                id="previous_line_in_say_all",
+            ),
+            pytest.param("previous_line", False, [], [], False, id="previous_line_no_contents"),
             pytest.param(
                 "previous_line",
                 False,
-                None,
+                [("obj", 0, 10, "text")],
                 [("obj", 0, 10, "prev")],
                 True,
                 id="previous_line_success",
@@ -372,9 +379,16 @@ class TestCaretNavigator:
             mock_script.utilities.get_caret_context.return_value = ("obj", 5)
             mock_script.utilities.get_line_contents_at_offset.return_value = current_line
             mock_script.utilities.get_next_line_contents.return_value = next_prev_contents
+            test_context.patch_object(navigator, "_get_end_of_file", return_value=(None, -1))
+            test_context.patch_object(navigator, "_line_contains_context", return_value=False)
+            test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
         elif navigation_type == "previous_line" and not in_say_all:
             mock_script.utilities.get_caret_context.return_value = ("obj", 5)
+            mock_script.utilities.get_line_contents_at_offset.return_value = current_line
             mock_script.utilities.get_previous_line_contents.return_value = next_prev_contents
+            test_context.patch_object(navigator, "_get_start_of_file", return_value=(None, -1))
+            test_context.patch_object(navigator, "_line_contains_context", return_value=False)
+            test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
 
         mock_script.utilities.set_caret_position = test_context.Mock()
         mock_script.interrupt_presentation = test_context.Mock()

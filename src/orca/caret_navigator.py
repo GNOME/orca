@@ -20,6 +20,7 @@
 
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-locals
 
 """Provides an Orca-controlled caret for text content."""
 
@@ -528,6 +529,53 @@ class CaretNavigator:
 
         return AXObject.is_ancestor(obj, root, True)
 
+    def _line_contains_context(
+        self,
+        line: list[tuple[Atspi.Accessible, int, int, str]],
+        context: tuple[Atspi.Accessible, int]
+    ) -> bool:
+        """Returns True if line contains the (obj, offset) context."""
+
+        for entry in line:
+            line_obj, start, end = entry[0], entry[1], entry[2]
+            if line_obj == context[0] and start <= context[1] <= end:
+                return True
+
+        return False
+
+    def _get_start_of_file(self, script: default.Script) -> tuple[Atspi.Accessible | None, int]:
+        """Returns the start of the file as (obj, offset)."""
+
+        root = self._get_root_object(script)
+        obj, offset = script.utilities.first_context(root, 0)
+        if obj is None:
+            return None, -1
+
+        while obj:
+            prev_obj, prev_offset = script.utilities.previous_context(obj, offset, restrict_to=root)
+            if prev_obj is None or (prev_obj, prev_offset) == (obj, offset):
+                break
+            obj, offset = prev_obj, prev_offset
+
+        return obj, offset
+
+    def _get_end_of_file(self, script: default.Script) -> tuple[Atspi.Accessible | None, int]:
+        """Returns the end of the file as (obj, offset)."""
+
+        root = self._get_root_object(script)
+        obj = AXObject.find_deepest_descendant(root)
+        if obj is None:
+            return None, -1
+
+        offset = max(0, AXText.get_character_count(obj) - 1)
+        while obj:
+            next_obj, next_offset = script.utilities.next_context(obj, offset, restrict_to=root)
+            if next_obj is None or (next_obj, next_offset) == (obj, offset):
+                break
+            obj, offset = next_obj, next_offset
+
+        return obj, offset
+
     @dbus_service.command
     def next_character(
         self,
@@ -687,26 +735,36 @@ class CaretNavigator:
         if obj is None:
             return False
 
-        # We get the current line in order to set the last object on the line as the prior object,
-        # so that we don't re-announce context.
         line = script.utilities.get_line_contents_at_offset(obj, offset)
         if not (line and line[0]):
             return False
 
         contents = script.utilities.get_next_line_contents()
         if not contents:
+            last_obj, last_offset = self._get_end_of_file(script)
+            if self._line_contains_context(line, (last_obj, last_offset)):
+                msg = "CARET NAVIGATOR: At end of document; cannot move to next line."
+                debug.print_message(debug.LEVEL_INFO, msg)
+                contents = line
+
+        if not contents:
             return False
 
-        obj, start = contents[0][0], contents[0][1]
         if not self._is_navigable_object(script, obj):
             return False
 
         self._last_input_event = event
         script.interrupt_presentation()
-        script.utilities.set_caret_position(obj, start)
+
+        if line != contents:
+            obj, offset = contents[0][0], contents[0][1]
+        else:
+            obj, offset = contents[-1][0], contents[-1][2]
+        script.utilities.set_caret_position(obj, offset)
         if not notify_user:
             return True
 
+        # Setting the last object on the current line as priorObj prevents re-announcing context.
         script.speak_contents(contents, priorObj=line[-1][0])
         script.display_contents(contents)
         return True
@@ -734,7 +792,18 @@ class CaretNavigator:
         if obj is None:
             return False
 
+        line = script.utilities.get_line_contents_at_offset(obj, offset)
+        if not (line and line[0]):
+            return False
+
         contents = script.utilities.get_previous_line_contents(obj, offset)
+        if not contents:
+            first_obj, first_offset = self._get_start_of_file(script)
+            if self._line_contains_context(line, (first_obj, first_offset)):
+                msg = "CARET NAVIGATOR: At start of document; cannot move to previous line."
+                debug.print_message(debug.LEVEL_INFO, msg)
+                contents = line
+
         if not contents:
             return False
 
@@ -748,7 +817,8 @@ class CaretNavigator:
         if not notify_user:
             return True
 
-        script.speak_contents(contents)
+        # Setting the first object on the current line as priorObj prevents re-announcing context.
+        script.speak_contents(contents, priorObj=line[0][0])
         script.display_contents(contents)
         return True
 
@@ -826,16 +896,9 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        root = self._get_root_object(script)
-        obj, offset = script.utilities.first_context(root, 0)
+        obj, offset = self._get_start_of_file(script)
         if obj is None:
             return False
-
-        while obj:
-            prev_obj, prev_offset = script.utilities.previous_context(obj, offset, restrict_to=root)
-            if prev_obj is None or (prev_obj, prev_offset) == (obj, offset):
-                break
-            obj, offset = prev_obj, prev_offset
 
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
@@ -865,20 +928,9 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        root = self._get_root_object(script)
-        obj = AXObject.find_deepest_descendant(root)
+        obj, offset = self._get_end_of_file(script)
         if obj is None:
             return False
-
-        tokens = ["CARET NAVIGATOR: Last object in", root, "is", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        offset = max(0, AXText.get_character_count(obj) - 1)
-        while obj:
-            last_obj, last_offset = script.utilities.next_context(obj, offset, restrict_to=root)
-            if last_obj is None or (last_obj, last_offset) == (obj, offset):
-                break
-            obj, offset = last_obj, last_offset
 
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
         if not contents:
