@@ -2419,13 +2419,14 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result.extend(self.voice(DEFAULT, obj=obj, **args))
-        if result[0] in ["\n", ""] \
-           and speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
-           and not focus_manager.get_manager().in_say_all() \
-           and args.get("total", 1) == 1 \
-           and not AXUtilities.is_table_cell_or_header(obj) \
-           and args.get("formatType") != "ancestor":
-            result[0] = messages.BLANK
+        if result[0] in ["\n", ""]:
+            if args.get("total", 1) > 1:
+                return [""]
+            if speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
+                and not focus_manager.get_manager().in_say_all() \
+                and not AXUtilities.is_table_cell_or_header(obj) \
+                and args.get("formatType") != "ancestor":
+                result[0] = messages.BLANK
 
         manager = speech_and_verbosity_manager.get_manager()
         result[0] = manager.adjust_for_presentation(obj, result[0])
@@ -2445,14 +2446,17 @@ class SpeechGenerator(generator.Generator):
             return result
 
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]
-        if text == "\n" and speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
-           and not focus_manager.get_manager().in_say_all() \
-           and args.get("total", 1) == 1 \
-           and not AXUtilities.is_table_cell_or_header(obj) \
-           and args.get("formatType") != "ancestor":
-            result = [messages.BLANK]
-            result.extend(self.voice(string=text, obj=obj, **args))
-            return result
+        if text == "\n":
+            if args.get("total", 1) > 1:
+                return [""]
+
+            if speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
+                and not focus_manager.get_manager().in_say_all() \
+                and not AXUtilities.is_table_cell_or_header(obj) \
+                and args.get("formatType") != "ancestor":
+                result = [messages.BLANK]
+                result.extend(self.voice(string=text, obj=obj, **args))
+                return result
 
         end_offset = start_offset + len(text)
         for start, _end, string, language, dialect in \

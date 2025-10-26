@@ -1292,14 +1292,6 @@ class Utilities(script_utilities.Utilities):
         # Check for things on the same line to the left of this object.
         prev_start_time = time.time()
         while prev_obj and self.get_document_for_object(prev_obj) == document:
-            char = AXText.get_character_at_offset(prev_obj, prev_offset)[0]
-            if char.isspace():
-                prev_obj, prev_offset = self.find_previous_caret_in_order(prev_obj, prev_offset)
-
-            char = AXText.get_character_at_offset(prev_obj, prev_offset)[0]
-            if char == "\n" and first_obj == prev_obj:
-                break
-
             if obj_row != AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_table_row):
                 break
 
@@ -1322,14 +1314,6 @@ class Utilities(script_utilities.Utilities):
         # Check for things on the same line to the right of this object.
         next_start_time = time.time()
         while next_obj and self.get_document_for_object(next_obj) == document:
-            char = AXText.get_character_at_offset(next_obj, next_offset)[0]
-            if char.isspace():
-                next_obj, next_offset = self.find_next_caret_in_order(next_obj, next_offset)
-
-            char = AXText.get_character_at_offset(next_obj, next_offset)[0]
-            if char == "\n" and last_obj == next_obj:
-                break
-
             if obj_row != AXObject.find_ancestor_inclusive(next_obj, AXUtilities.is_table_row):
                 break
 
