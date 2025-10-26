@@ -1798,6 +1798,10 @@ class Script(default.Script):
         if prev_document != document:
             tokens = ["WEB: document changed from", prev_document, "to", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        elif document == event.source:
+            msg = "WEB: Ignoring focus change to document ancestor of focus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         if AXUtilities.is_link(event.source) and AXObject.is_ancestor(focus, event.source):
             msg = "WEB: Ignoring focus change on link ancestor of focus"
