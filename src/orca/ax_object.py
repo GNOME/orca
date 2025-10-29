@@ -1256,6 +1256,22 @@ class AXObject:
         return description
 
     @staticmethod
+    def get_action_localized_name(obj: Atspi.Accessible, i: int) -> str:
+        """Returns the localized name of obj's action at index i."""
+
+        if not 0 <= i < AXObject.get_n_actions(obj):
+            return ""
+
+        try:
+            name = Atspi.Action.get_localized_name(obj, i)
+        except GLib.GError as error:
+            msg = f"AXObject: Exception in get_action_localized_name: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return ""
+
+        return name
+
+    @staticmethod
     def get_action_key_binding(obj: Atspi.Accessible, i: int) -> str:
         """Returns the key binding string of obj's action at index i."""
 

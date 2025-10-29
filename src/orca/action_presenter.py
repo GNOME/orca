@@ -187,11 +187,13 @@ class ActionPresenter:
         actions = {}
         for i in range(AXObject.get_n_actions(obj)):
             name = AXObject.get_action_name(obj, i)
+            localized_name = AXObject.get_action_localized_name(obj, i)
             description = AXObject.get_action_description(obj, i)
             tokens = [f"ACTION PRESENTER: Action {i} on", obj,
-                      f": '{name}' localized description: '{description}'"]
+                      f": '{name}' localized name: '{localized_name}' ",
+                      f"localized description: '{description}'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            actions[name] = description or name
+            actions[name] = localized_name or description or name
 
         if not actions.items():
             name = AXObject.get_name(obj) or script.speech_generator.get_localized_role_name(obj)

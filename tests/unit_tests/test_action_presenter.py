@@ -155,6 +155,11 @@ class TestActionPresenter:
                 if i < len(["click", "activate"])
                 else f"action{i}"
             )
+            ax_object_mock.get_action_localized_name = test_context.Mock(
+                side_effect=lambda obj, i: ["click", "activate"][i]
+                if i < len(["click", "activate"])
+                else f"action{i}"
+            )
             ax_object_mock.get_action_description = test_context.Mock(
                 side_effect=lambda obj, i: action_descriptions[i]
                 if i < len(action_descriptions)
