@@ -2631,6 +2631,9 @@ class SpeechGenerator(generator.Generator):
         if args.get("includeContext") is False:
             return []
 
+        if obj == args.get("priorObj"):
+            return []
+
         # Do not call _generate_accessible_static_text here for ancestors.
         # The roles of objects which typically have static text we want to
         # present (panels, groupings, dialogs) already generate it. If we
@@ -4506,7 +4509,7 @@ class SpeechGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         result = self._generate_default_prefix(obj, **args)
-        if AXUtilities.is_focusable(obj) or AXUtilities.has_explicit_name(obj):
+        if AXUtilities.is_focusable(obj) and AXUtilities.has_explicit_name(obj):
             result += self._generate_accessible_label_and_name(obj, **args)
             result += self._generate_pause(obj, **args)
         if format_type == "ancestor":
