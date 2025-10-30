@@ -3219,12 +3219,21 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates speech for document-related roles."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
+        result = []
+        prior_doc = None
+        if prior_obj := args.get("priorObj"):
+            prior_doc = AXObject.find_ancestor_inclusive(prior_obj, AXUtilities.is_document)
+
+        if prior_doc != obj:
+            result += self._generate_default_prefix(obj, **args)
+            result += self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_state_read_only(obj, **args)
+            result += self._generate_accessible_role(obj, **args)
+
         result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+
+        if prior_doc != obj:
+            result += self._generate_default_suffix(obj, **args)
         return result
 
     def _generate_document_email(
