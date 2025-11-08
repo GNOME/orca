@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-10-26 16:19+0000\n"
-"PO-Revision-Date: 2025-10-27 10:11+0100\n"
+"POT-Creation-Date: 2025-10-30 23:10+0000\n"
+"PO-Revision-Date: 2025-11-08 23:15+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -10205,9 +10205,8 @@ msgstr "Posodobljeni predeli / Predeli v živo so omogočeni"
 #. live region support is disabled.
 #: src/orca/messages.py:1656
 #, fuzzy
-#| msgid "Live region support is off"
 msgid "Live region support is disabled"
-msgstr "Podpora samodejno posodobljenim predelom"
+msgstr "Podpora samodejno posodobljenim predelom je onemogočena"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
