@@ -218,8 +218,8 @@ def get_click_count_string(count: int) -> str:
     return ""
 
 
-def create_key_definitions(keycode: int, keyval: int, modifiers: int) -> list[Atspi.KeyDefinition]:
-    """Returns a list of Atspi key definitions for the given keycode, keyval, and modifiers."""
+def create_key_definitions(keyval: int, modifiers: int) -> list[Atspi.KeyDefinition]:
+    """Returns a list of Atspi key definitions for the given keyval and modifiers."""
 
     ret = []
     if modifiers & ORCA_MODIFIER_MASK:
@@ -346,12 +346,12 @@ class KeyBinding:
         ret = []
         if not self.keycode:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
-        ret.extend(create_key_definitions(self.keycode, self.keyval, self.modifiers))
+        ret.extend(create_key_definitions(self.keyval, self.modifiers))
         # We need to bind the uppercase keysyms if requested, as well as the lowercase
         # ones, because keysyms represent characters, not key locations.
         if self.modifiers & SHIFT_MODIFIER_MASK:
             if (upper_keyval := Gdk.keyval_to_upper(self.keyval)) != self.keyval:
-                ret.extend(create_key_definitions(self.keycode, upper_keyval, self.modifiers))
+                ret.extend(create_key_definitions(upper_keyval, self.modifiers))
         return ret
 
     def get_grab_ids(self) -> list[int]:
