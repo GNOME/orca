@@ -146,17 +146,6 @@ class InputEventManager:
                 msg = f"INPUT EVENT MANAGER: No key binding for grab id {grab_id}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def map_keycode_to_modifier(self, keycode: int) -> int:
-        """Maps keycode as a modifier, returns the newly-mapped modifier."""
-
-        if self._device is None:
-            msg = f"INPUT EVENT MANAGER: No device to map keycode {keycode} to modifier"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return 0
-
-        self._mapped_keycodes.append(keycode)
-        return self._device.map_modifier(keycode)
-
     def map_keysym_to_modifier(self, keysym: int) -> int:
         """Maps keysym as a modifier, returns the newly-mapped modifier."""
 

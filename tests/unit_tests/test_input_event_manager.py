@@ -42,6 +42,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestInputEventManager:
     """Test InputEventManager class methods."""
@@ -62,9 +63,7 @@ class TestInputEventManager:
         focus_mgr_instance = test_context.Mock()
         focus_mgr_instance.get_locus_of_focus = test_context.Mock()
         focus_mgr_instance.get_active_window = test_context.Mock()
-        focus_mgr_instance.focus_and_window_are_unknown = test_context.Mock(
-            return_value=False
-        )
+        focus_mgr_instance.focus_and_window_are_unknown = test_context.Mock(return_value=False)
         focus_mgr_instance.clear_state = test_context.Mock()
         focus_manager_mock.get_manager = test_context.Mock(return_value=focus_mgr_instance)
 
@@ -77,14 +76,10 @@ class TestInputEventManager:
         script_instance.is_activatable_event = test_context.Mock(return_value=True)
         script_instance.force_script_activation = test_context.Mock(return_value=False)
         script_instance.present_if_inactive = False
-        script_mgr_instance.get_active_script = test_context.Mock(
-            return_value=script_instance
-        )
+        script_mgr_instance.get_active_script = test_context.Mock(return_value=script_instance)
         script_mgr_instance.get_script = test_context.Mock(return_value=script_instance)
         script_mgr_instance.set_active_script = test_context.Mock()
-        script_mgr_instance.get_default_script = test_context.Mock(
-            return_value=script_instance
-        )
+        script_mgr_instance.get_default_script = test_context.Mock(return_value=script_instance)
         script_mgr_instance.reclaim_scripts = test_context.Mock()
         script_manager_mock.get_manager = test_context.Mock(return_value=script_mgr_instance)
 
@@ -200,9 +195,7 @@ class TestInputEventManager:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
 
-        test_context.patch(
-            "orca.input_event_manager.debug", new=essential_modules["orca.debug"]
-        )
+        test_context.patch("orca.input_event_manager.debug", new=essential_modules["orca.debug"])
         test_context.patch(
             "orca.input_event_manager.focus_manager", new=essential_modules["orca.focus_manager"]
         )
@@ -221,9 +214,7 @@ class TestInputEventManager:
         test_context.patch(
             "orca.input_event_manager.AXUtilities", new=essential_modules["ax_utilities_class"]
         )
-        test_context.patch(
-            "orca.input_event_manager.Atspi", new=essential_modules["atspi"]
-        )
+        test_context.patch("orca.input_event_manager.Atspi", new=essential_modules["atspi"])
 
         from orca.input_event_manager import InputEventManager
 
@@ -474,28 +465,7 @@ class TestInputEventManager:
         "case",
         [
             {
-                "id": "keycode_no_device",
-                "method_type": "keycode",
-                "has_device": False,
-                "input_value": 42,
-                "expected_result": 0,
-                "device_method": None,
-                "device_return_value": None,
-                "mapped_collection": None,
-            },
-            {
-                "id": "keycode_success",
-                "method_type": "keycode",
-                "has_device": True,
-                "input_value": 42,
-                "expected_result": 8,
-                "device_method": "map_modifier",
-                "device_return_value": 8,
-                "mapped_collection": "_mapped_keycodes",
-            },
-            {
                 "id": "keysym_no_device",
-                "method_type": "keysym",
                 "has_device": False,
                 "input_value": 0x61,
                 "expected_result": 0,
@@ -505,7 +475,6 @@ class TestInputEventManager:
             },
             {
                 "id": "keysym_success",
-                "method_type": "keysym",
                 "has_device": True,
                 "input_value": 0x61,
                 "expected_result": 16,
@@ -516,8 +485,10 @@ class TestInputEventManager:
         ],
         ids=lambda case: case["id"],
     )
-    def test_map_modifier_scenarios(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test InputEventManager modifier mapping methods with various scenarios."""
+    def test_map_keysym_to_modifier_scenarios(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test InputEventManager.map_keysym_to_modifier with various scenarios."""
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         if case["has_device"]:
@@ -528,10 +499,7 @@ class TestInputEventManager:
                 ]
             input_event_manager._device = mock_device
 
-        if case["method_type"] == "keycode":
-            result = input_event_manager.map_keycode_to_modifier(case["input_value"])
-        else:
-            result = input_event_manager.map_keysym_to_modifier(case["input_value"])
+        result = input_event_manager.map_keysym_to_modifier(case["input_value"])
 
         assert result == case["expected_result"]
 
@@ -1095,7 +1063,6 @@ class TestInputEventManager:
         )
         result = input_event_manager._last_key_and_modifiers()
         assert result == (case["expected_key"], case["expected_modifiers"])
-
 
     @pytest.mark.parametrize(
         "case",
