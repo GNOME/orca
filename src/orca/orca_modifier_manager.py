@@ -229,8 +229,14 @@ class OrcaModifierManager:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        display = os.environ.get("DISPLAY")
+        if not display:
+            msg = "ORCA MODIFIER MANAGER: DISPLAY not set, skipping xkbcomp operations"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         self.unset_orca_modifiers(reason)
-        with subprocess.Popen(["xkbcomp", os.environ["DISPLAY"], "-"],
+        with subprocess.Popen(["xkbcomp", display, "-"],
                               stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as p:
             self._original_xmodmap, _ = p.communicate()
         self._create_orca_xmodmap()
@@ -261,19 +267,37 @@ class OrcaModifierManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
+        display = os.environ.get("DISPLAY")
+        if not display:
+            msg = "ORCA MODIFIER MANAGER: DISPLAY not set, skipping xmodmap restoration"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         self._caps_lock_cleared = False
-        with subprocess.Popen(["xkbcomp", "-w0", "-", os.environ["DISPLAY"]],
+        with subprocess.Popen(["xkbcomp", "-w0", "-", display],
                               stdin=subprocess.PIPE, stdout=None, stderr=None) as p:
             p.communicate(self._original_xmodmap)
 
         msg = "ORCA MODIFIER MANAGER: Original xmodmap restored"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    # pylint: disable-next=too-many-statements
     def set_caps_lock_as_orca_modifier(self, enable: bool) -> None:
         """Enable or disable use of the caps lock key as an Orca modifier key."""
 
         msg = "ORCA MODIFIER MANAGER: Setting caps lock as the Orca modifier"
         debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        display = os.environ.get("DISPLAY")
+        if not display:
+            msg = "ORCA MODIFIER MANAGER: DISPLAY not set, cannot modify caps lock"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        if not self._original_xmodmap:
+            msg = "ORCA MODIFIER MANAGER: No xmodmap available, cannot modify caps lock"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         interpret_caps_line_prog = re.compile(
             r'^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$', re.I)
@@ -325,7 +349,7 @@ class OrcaModifierManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
 
-            with subprocess.Popen(["xkbcomp", "-w0", "-", os.environ["DISPLAY"]],
+            with subprocess.Popen(["xkbcomp", "-w0", "-", display],
                               stdin=subprocess.PIPE, stdout=None, stderr=None) as p:
                 p.communicate(bytes('\n'.join(lines), 'UTF-8'))
         else:
