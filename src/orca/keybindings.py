@@ -87,8 +87,6 @@ NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
                                  1 << MODIFIER_ORCA)
 DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
 
-CAN_USE_KEYSYMS = Atspi.get_version() >= (2, 55, 0)
-
 def get_keycodes(keysym: str) -> tuple[int, int]:
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
     should match the event.hw_code for key events and to the corresponding
@@ -232,20 +230,14 @@ def create_key_definitions(keycode: int, keyval: int, modifiers: int) -> list[At
             mod_keyval, mod_keycode = get_keycodes(key)
             if mod_keycode == 0 and key == "Shift_Lock":
                 mod_keyval, mod_keycode = get_keycodes("Caps_Lock")
-            if CAN_USE_KEYSYMS:
-                mod = manager.map_keysym_to_modifier(mod_keyval)
-            else:
-                mod = manager.map_keycode_to_modifier(mod_keycode)
+            mod = manager.map_keysym_to_modifier(mod_keyval)
             if mod:
                 modifier_list.append(mod | other_modifiers)
     else:
         modifier_list = [modifiers]
     for mod in modifier_list:
         kd = Atspi.KeyDefinition()
-        if CAN_USE_KEYSYMS:
-            kd.keysym = keyval
-        else:
-            kd.keycode = keycode
+        kd.keysym = keyval
         kd.modifiers = mod
         ret.append(kd)
     return ret
@@ -355,9 +347,9 @@ class KeyBinding:
         if not self.keycode:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
         ret.extend(create_key_definitions(self.keycode, self.keyval, self.modifiers))
-        # If we are using keysyms, we need to bind the uppercase keysyms if requested,
-        # as well as the lowercase ones, because keysyms represent characters, not key locations.
-        if CAN_USE_KEYSYMS and self.modifiers & SHIFT_MODIFIER_MASK:
+        # We need to bind the uppercase keysyms if requested, as well as the lowercase
+        # ones, because keysyms represent characters, not key locations.
+        if self.modifiers & SHIFT_MODIFIER_MASK:
             if (upper_keyval := Gdk.keyval_to_upper(self.keyval)) != self.keyval:
                 ret.extend(create_key_definitions(self.keycode, upper_keyval, self.modifiers))
         return ret

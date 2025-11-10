@@ -240,38 +240,16 @@ class TestInputEventManager:
         assert not input_event_manager._mapped_keysyms
         assert not input_event_manager._grabbed_bindings
 
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "new_atspi",
-                "atspi_version": (2, 56, 0),
-                "device_factory_method": "new_full",
-            },
-            {
-                "id": "old_atspi",
-                "atspi_version": (2, 54, 0),
-                "device_factory_method": "new",
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_start_key_watcher_scenarios(self, test_context, case: dict) -> None:
-        """Test InputEventManager.start_key_watcher with different Atspi versions."""
+    def test_start_key_watcher(self, test_context) -> None:
+        """Test InputEventManager.start_key_watcher."""
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         mock_device = test_context.Mock()
-        device_factory = getattr(essential_modules["atspi"].Device, case["device_factory_method"])
-        device_factory.return_value = mock_device
-        essential_modules["atspi"].get_version.return_value = case["atspi_version"]
+        essential_modules["atspi"].Device.new_full.return_value = mock_device
 
         input_event_manager.start_key_watcher()
 
-        if case["device_factory_method"] == "new_full":
-            device_factory.assert_called_once_with("org.gnome.Orca")
-        else:
-            device_factory.assert_called_once()
-
+        essential_modules["atspi"].Device.new_full.assert_called_once_with("org.gnome.Orca")
         mock_device.add_key_watcher.assert_called_once_with(
             input_event_manager.process_keyboard_event
         )
