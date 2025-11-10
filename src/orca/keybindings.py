@@ -287,30 +287,19 @@ class KeyBinding:
             f"grab ids={self._grab_ids}"
         )
 
-    def matches(self, event: KeyboardEvent) -> bool:
-        """Returns true if this key binding matches the given keyboard event."""
+    def matches(self, keyval: int, keycode: int, modifiers: int) -> bool:
+        """Returns true if this key binding matches the given keycode and modifier state."""
 
-        # self.keyval gets set in key_definitions() when a grab is added. If there's not a
-        # keyval, this command is either unbound or not enabled which means it is not a
-        # match for event.
-        if not self.keyval:
-            return False
+        # We lazily bind the keycode.  The primary reason for doing this
+        # is so that atspi does not have to be initialized before setting
+        # keybindings in the user's preferences file.
+        #
+        if not self.keycode:
+            self.keyval, self.keycode = get_keycodes(self.keysymstring)
 
-        # Prefer keyval matching (works for QWERTY, Dvorak, etc.)
-        if self.keyval == event.id:
-            result = event.modifiers & self.modifier_mask
-            rv = result == self.modifiers
-            tokens = ["KEYBINDING: Matching by keyval:", self, event, "result:", rv]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return rv
-
-        # Fall back to keycode for non-Latin layouts.
-        if event.id > 0xFF and self.keycode == event.hw_code:
-            result = event.modifiers & self.modifier_mask
-            rv = result == self.modifiers
-            tokens = ["KEYBINDING: Matching by keycode:", self, event, "result:", rv]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return rv
+        if self.keycode == keycode or self.keyval == keyval:
+            result = modifiers & self.modifier_mask
+            return result == self.modifiers
 
         return False
 
@@ -590,7 +579,7 @@ class KeyBindings:
         candidates: list[KeyBinding] = []
         click_count = event.get_click_count()
         for binding in self.key_bindings:
-            if binding.matches(event):
+            if binding.matches(event.id, event.hw_code, event.modifiers):
                 # Checking the modifier mask ensures we don't consume flat review commands
                 # when NumLock is on.
                 if binding.modifier_mask == event.modifiers and binding.click_count == click_count:
