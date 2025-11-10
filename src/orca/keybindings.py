@@ -290,12 +290,10 @@ class KeyBinding:
     def matches(self, keyval: int, keycode: int, modifiers: int) -> bool:
         """Returns true if this key binding matches the given keycode and modifier state."""
 
-        # We lazily bind the keycode.  The primary reason for doing this
-        # is so that atspi does not have to be initialized before setting
-        # keybindings in the user's preferences file.
-        #
-        if not self.keycode:
-            self.keyval, self.keycode = get_keycodes(self.keysymstring)
+        # self.keyval gets set in key_definitions() when a grab is added. If there's not a
+        # keyval, this command is either unbound or not enabled which means it is not a match.
+        if not self.keyval:
+            return False
 
         if self.keycode == keycode or self.keyval == keyval:
             result = modifiers & self.modifier_mask
