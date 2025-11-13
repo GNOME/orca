@@ -1269,7 +1269,9 @@ class StructuralNavigator:
                 continue
 
             if not is_next:
-                candidate = self._get_container_for_nested_item(candidate)
+                alternative = self._get_container_for_nested_item(candidate)
+                if alternative in objects:
+                    candidate = alternative
 
             index = objects.index(candidate)
             if is_next:
