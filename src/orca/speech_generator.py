@@ -226,6 +226,14 @@ class SpeechGenerator(generator.Generator):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        # Special-case non-language "languages" and "dialects".
+        not_a_language = ["x"]
+        if language in not_a_language:
+            language = ""
+        not_a_dialect = ["unicode"]
+        if dialect in not_a_dialect:
+            dialect = ""
+
         server = speech.get_speech_server()
         assert server, "No speech server available"
         if not language:
