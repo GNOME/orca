@@ -255,7 +255,7 @@ class SpeechGenerator(generator.Generator):
                 if families := server.get_voice_families_for_language(
                    language, dialect, family.get(VoiceFamily.VARIANT)):
                     family[VoiceFamily.NAME] = families[0][0]
-                elif not family.get(VoiceFamily.VARIANT):
+                else:
                     # On occasions (e.g. SD + espeak + 'zh'), we might not get any matching family.
                     # When that occurs, setting/updating the language but leaving the original name
                     # can cause the voice to not be updated, whereas clearing the name seems to be
