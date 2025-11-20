@@ -521,7 +521,7 @@ class SpeechAndVerbosityManager:
         if server is None:
             return []
 
-        voices = server.get_voice_families_for_language(language, variant)
+        voices = server.get_voice_families_for_language(language=language, variant=variant)
         result = []
         for name, lang, var in voices:
             result.append((name, lang or "", var or ""))

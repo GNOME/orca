@@ -67,6 +67,7 @@ from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
+from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
     from . import script
@@ -215,22 +216,22 @@ class SpeechGenerator(generator.Generator):
         voices = settings_manager.get_manager().get_setting("voices")
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT), acss.ACSS()))
 
-        language = args.get("language")
+        language = args.get("language", "")
         dialect = args.get("dialect", "")
+        family = voice.get(acss.ACSS.FAMILY, {})
         msg = (
             f"SPEECH GENERATOR: {key} voice requested with "
-            f"language='{language}', dialect='{dialect}'"
+            f"language='{language}', dialect='{dialect}' "
+            f"family from settings='{family}'"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        # This is purely for debugging. The code needed to actually switch voices
-        # does not yet exist due to some problems which need to be debugged and
-        # fixed.
-        check_voices_for_language = False
-        if language and check_voices_for_language:
-            server = speech.get_speech_server()
-            assert server, "No speech server available"
-            server.should_change_voice_for_language(language, dialect)
+        server = speech.get_speech_server()
+        assert server, "No speech server available"
+        if not language:
+            language, dialect = server.get_language_and_dialect(family)
+            msg = f"SPEECH GENERATOR: Updated to: '{language}', '{dialect}'"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if key in [None, DEFAULT]:
             string = args.get("string", "")
@@ -239,11 +240,25 @@ class SpeechGenerator(generator.Generator):
                 voice.update(voices.get(voiceType.get(HYPERLINK), acss.ACSS()))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType.get(UPPERCASE), acss.ACSS()))
+            family[VoiceFamily.LANG] = language
+            family[VoiceFamily.DIALECT] = dialect
+
+            if families := server.get_voice_families_for_language(
+               language, dialect, family.get(VoiceFamily.VARIANT)):
+                family[VoiceFamily.NAME] = families[0][0]
+            else:
+                # On occasions (e.g. SD + espeak + 'zh'), we might not get any matching family.
+                # When that occurs, setting/updating the language but leaving the original name
+                # can cause the voice to not be updated, whereas clearing the name seems to be
+                # enough to trigger the correct language to be used.
+                family[VoiceFamily.NAME] = ""
+
         else:
             override = voices.get(voicename)
             if override and override.get("established", True):
                 voice.update(override)
 
+        voice[acss.ACSS.FAMILY] = family
         return [voice]
 
     def utterances_to_string(self, utterances: list[Any]) -> str:

@@ -225,14 +225,20 @@ class SpeechServer:
     def get_voice_families_for_language(
         self,
         language: str,
-        dialect: str,
+        dialect: str = "",
+        variant: str | None = None,
         maximum: int | None = None
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
 
         return []
 
-    def should_change_voice_for_language(self, language: str, dialect: str = "") -> bool:
-        """Returns True if we should change the voice for the specified language."""
+    def _get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
+        """Returns the language and dialect from the ACSS family dictionary."""
 
-        return False
+        return "", ""
+
+    def get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
+        """Returns the language and dialect from the ACSS family dictionary."""
+
+        return self._get_language_and_dialect(acss_family)

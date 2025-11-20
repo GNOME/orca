@@ -287,6 +287,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _set_family(self, acss_family: dict[str, Any] | None) -> None:
         if self._client is None:
             return
+
         lang, dialect = self._get_language_and_dialect(acss_family)
         if lang:
             self._send_command(self._client.set_language, lang)
@@ -294,17 +295,10 @@ class SpeechServer(speechserver.SpeechServer):
                 # Try to set precise dialect
                 self._send_command(self._client.set_language, lang + "-" + dialect)
 
-        try:
-            # This command is not available with older SD versions.
-            set_synthesis_voice = self._client.set_synthesis_voice
-        except AttributeError:
-            pass
-        else:
-            if acss_family is not None:
-                name = acss_family.get(speechserver.VoiceFamily.NAME)
-                if name is not None and name != self._default_voice_name:
-                    self._send_command(set_synthesis_voice, name)
-                    self._current_synthesis_voice = name
+        if acss_family is not None:
+            if name := acss_family.get(speechserver.VoiceFamily.NAME):
+                self._send_command(self._client.set_synthesis_voice, name)
+                self._current_synthesis_voice = name
 
     def _debug_sd_values(self, prefix: str = "") -> None:
         if debug.debugLevel > debug.LEVEL_INFO:
@@ -610,23 +604,6 @@ class SpeechServer(speechserver.SpeechServer):
     def decrease_speech_volume(self, step: float = 0.5) -> None:
         self._change_default_speech_volume(step, decrease=True)
 
-    def get_language(self) -> str:
-        """Returns the current language."""
-
-        if self._client is None:
-            return ""
-        return self._client.get_language()
-
-    def set_language(self, language: str, dialect: str) -> None:
-        """Sets the current language"""
-
-        if not language or self._client is None:
-            return
-
-        self._client.set_language(language)
-        if dialect:
-            self._client.set_language(language + "-" + dialect)
-
     def _normalized_language_and_dialect(self, language: str, dialect: str = "") -> tuple[str, str]:
         """Attempts to ensure consistency across inconsistent formats."""
 
@@ -639,13 +616,18 @@ class SpeechServer(speechserver.SpeechServer):
 
         return normalized_language, normalized_dialect
 
+    # pylint: disable-next=too-many-locals
     def get_voice_families_for_language(
         self,
         language: str,
-        dialect: str,
+        dialect: str = "",
+        variant: str | None = None,
         maximum: int | None = None
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
+
+        if not language:
+            language, dialect = self._get_language_and_dialect(None)
 
         start = time.time()
         target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)
@@ -654,11 +636,36 @@ class SpeechServer(speechserver.SpeechServer):
         if self._client is None:
             return result
 
-        # Get all voices and filter manually
-        # TODO - JD: The speech-dispatcher API accepts language parameters for filtering,
-        # but this seems to fail for Voxin (returns all voices regardless of language).
-        all_voices = self._client.list_synthesis_voices()
-        for voice in all_voices:
+        msg = (
+            f"SPEECH DISPATCHER: Searching for language='{language}' "
+            f"dialect='{dialect}' variant='{variant}'."
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        language_with_dialect = f"{language}-{dialect}" if dialect else language
+        try:
+            voices = self._client.list_synthesis_voices(language_with_dialect, variant)
+            msg = f"SPEECH DISPATCHER: Unfiltered voice list has {len(voices)} entries."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        except (AttributeError, ValueError) as error:
+            msg = f"SPEECH DISPATCHER: specifying language and variant failed: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            try:
+                voices = self._client.list_synthesis_voices()
+            except (AttributeError, ValueError, speechd.SSIPCommandError) as error2:
+                msg = f"SPEECH DISPATCHER: Error listing synthesis voices: {error2}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                return []
+        except speechd.SSIPCommandError as error:
+            msg = f"SPEECH DISPATCHER: Error listing synthesis voices: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return []
+
+        # While the speech-dispatcher API used above lets us specify language and variant, it works
+        # in some cases (e.g. espeak variants), but fails in others (e.g. Voxin). So we need to do
+        # a second pass. In addition, the language and dialect formats are not consistent across
+        # synthesizers.
+        for voice in voices:
             normalized_language, normalized_dialect = \
                 self._normalized_language_and_dialect(voice[1])
             if normalized_language != target_language:
@@ -667,48 +674,17 @@ class SpeechServer(speechserver.SpeechServer):
                 result.append(voice)
             elif not normalized_dialect and target_dialect == normalized_language:
                 result.append(voice)
+            elif not target_dialect and normalized_dialect == target_language:
+                result.append(voice)
             if maximum is not None and len(result) >= maximum:
                 break
 
         msg = (
             f"SPEECH DISPATCHER: Found {len(result)} match(es) for language='{language}' "
-            f"dialect='{dialect}' in {time.time() - start:.4f}s."
+            f"dialect='{dialect}' variant='{variant}' in {time.time() - start:.4f}s."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
-
-    def should_change_voice_for_language(
-        self,
-        language: str,
-        dialect: str = ""
-    ) -> bool:
-        """Returns True if we should change the voice for the specified language."""
-
-        current_language, current_dialect = \
-            self._normalized_language_and_dialect(self.get_language())
-        other_language, other_dialect = self._normalized_language_and_dialect(language, dialect)
-
-        msg = (
-            f"SPEECH DISPATCHER: Should change voice for language? "
-            f"Current: '{current_language}' '{current_dialect}' "
-            f"New: '{other_language}' '{other_dialect}'"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if current_language == other_language and current_dialect == other_dialect:
-            msg ="SPEECH DISPATCHER: No. Language and dialect are the same."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        families = self.get_voice_families_for_language(other_language, other_dialect, maximum=1)
-        if families:
-            tokens = ["SPEECH DISPATCHER: Yes. Found matching family", families[0], "."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        tokens = ["SPEECH DISPATCHER: No. No matching family in", self.get_output_module(), "."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return True
 
     def get_output_module(self) -> str:
         if self._client is None:

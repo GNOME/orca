@@ -754,6 +754,9 @@ class SpeechServer(speechserver.SpeechServer):
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
 
+        if not language:
+            language, dialect = self._get_language_and_dialect(None)
+
         target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)
 
         result: list[tuple[str, str, str | None]] = []
