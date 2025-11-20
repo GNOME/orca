@@ -240,18 +240,19 @@ class SpeechGenerator(generator.Generator):
                 voice.update(voices.get(voiceType.get(HYPERLINK), acss.ACSS()))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType.get(UPPERCASE), acss.ACSS()))
-            family[VoiceFamily.LANG] = language
-            family[VoiceFamily.DIALECT] = dialect
 
-            if families := server.get_voice_families_for_language(
-               language, dialect, family.get(VoiceFamily.VARIANT)):
-                family[VoiceFamily.NAME] = families[0][0]
-            else:
-                # On occasions (e.g. SD + espeak + 'zh'), we might not get any matching family.
-                # When that occurs, setting/updating the language but leaving the original name
-                # can cause the voice to not be updated, whereas clearing the name seems to be
-                # enough to trigger the correct language to be used.
-                family[VoiceFamily.NAME] = ""
+            if settings_manager.get_manager().get_setting("enableAutoLanguageSwitching"):
+                family[VoiceFamily.LANG] = language
+                family[VoiceFamily.DIALECT] = dialect
+                if families := server.get_voice_families_for_language(
+                   language, dialect, family.get(VoiceFamily.VARIANT)):
+                    family[VoiceFamily.NAME] = families[0][0]
+                else:
+                    # On occasions (e.g. SD + espeak + 'zh'), we might not get any matching family.
+                    # When that occurs, setting/updating the language but leaving the original name
+                    # can cause the voice to not be updated, whereas clearing the name seems to be
+                    # enough to trigger the correct language to be used.
+                    family[VoiceFamily.NAME] = ""
 
         else:
             override = voices.get(voicename)

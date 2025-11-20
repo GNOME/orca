@@ -141,7 +141,8 @@ userCustomizableSettings: list[str] = [
     "sayAllContextLandmark",
     "sayAllContextNonLandmarkForm",
     "sayAllContextList",
-    "sayAllContextTable"
+    "sayAllContextTable",
+    "enableAutoLanguageSwitching"
 ]
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP: int = 1
@@ -384,3 +385,4 @@ brailleBindingsMap: dict[str, Any] = {}
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 presentChatRoomLast: bool = False
+enableAutoLanguageSwitching: bool = True
