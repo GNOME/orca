@@ -212,7 +212,7 @@ class SpeechServer(speechserver.SpeechServer):
         volume = acss_volume / 10.0
         return max(0.0, min(volume, 2.0))
 
-    def _get_language_and_dialect(self, acss_family: VoiceFamily | None) -> tuple[str, str]:
+    def _get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
         # Duplicate of what's in speechdispatcherfactory.py
         if acss_family is None:
             acss_family = VoiceFamily(None)
@@ -749,7 +749,8 @@ class SpeechServer(speechserver.SpeechServer):
     def get_voice_families_for_language(
         self,
         language: str,
-        dialect: str,
+        dialect: str = "",
+        variant: str | None = None,
         maximum: int | None = None
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
@@ -765,6 +766,8 @@ class SpeechServer(speechserver.SpeechServer):
             normalized_language, normalized_dialect = \
                 self._normalized_language_and_dialect(voice[1])
             if normalized_language != target_language:
+                continue
+            if variant is not None and voice[2] != variant:
                 continue
             if normalized_dialect == target_dialect:
                 result.append(voice)
