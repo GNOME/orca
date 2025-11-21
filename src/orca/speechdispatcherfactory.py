@@ -627,7 +627,7 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._voice_families_cache.clear()
 
-    # pylint: disable-next=too-many-locals
+    # pylint: disable-next=too-many-locals, too-many-statements
     def get_voice_families_for_language(
         self,
         language: str,
@@ -670,6 +670,10 @@ class SpeechServer(speechserver.SpeechServer):
             voices = self._client.list_synthesis_voices(language_with_dialect, variant)
             msg = f"SPEECH DISPATCHER: Unfiltered voice list has {len(voices)} entries."
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            if not voices:
+                voices = self._client.list_synthesis_voices(language, variant)
+                msg = f"SPEECH DISPATCHER: Unfiltered voice list (try 2) has {len(voices)} entries."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
         except (AttributeError, ValueError) as error:
             msg = f"SPEECH DISPATCHER: specifying language and variant failed: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
