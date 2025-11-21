@@ -235,12 +235,10 @@ class SpeechGenerator(generator.Generator):
             tokens = ["SPEECH GENERATOR: Reported locale of", obj, "is", obj_locale]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        # Special-case non-language "languages" and "dialects".
-        not_a_language = ["x"]
-        if language in not_a_language or not language.isalpha():
+        if len(language) <= 1 or not language.isalpha():
             language = ""
-        not_a_dialect = ["unicode"]
-        if dialect in not_a_dialect or not dialect.isalpha():
+            dialect = ""
+        elif len(dialect) <= 1 or not dialect.isalpha():
             dialect = ""
 
         server = speech.get_speech_server()
