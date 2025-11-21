@@ -216,30 +216,31 @@ class SpeechGenerator(generator.Generator):
         voices = settings_manager.get_manager().get_setting("voices")
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT), acss.ACSS()))
 
+        obj = args.get("obj")
         language = args.get("language", "")
         dialect = args.get("dialect", "")
         family = voice.get(acss.ACSS.FAMILY, {})
-        msg = (
-            f"SPEECH GENERATOR: {key} voice requested with "
-            f"language='{language}', dialect='{dialect}' "
-            f"family from settings='{family}'"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        tokens = [f"SPEECH GENERATOR: {key} voice requested for", obj,
+                  f"language='{language}', dialect='{dialect}'",
+                  f"Unmodified voice={voice}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (language and dialect):
-            obj_locale = AXObject.get_locale(args.get("obj")).split(".")[0]
+            obj_locale = AXObject.get_locale(obj).split(".")[0]
             if parts := obj_locale.split("_"):
                 if not language:
                     language = parts[0]
                 if language == parts[0] and not dialect and len(parts) > 1:
                     dialect = parts[1]
+            tokens = ["SPEECH GENERATOR: Reported locale of", obj, "is", obj_locale]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # Special-case non-language "languages" and "dialects".
         not_a_language = ["x"]
-        if language in not_a_language:
+        if language in not_a_language or not language.isalpha():
             language = ""
         not_a_dialect = ["unicode"]
-        if dialect in not_a_dialect:
+        if dialect in not_a_dialect or not dialect.isalpha():
             dialect = ""
 
         server = speech.get_speech_server()
@@ -255,7 +256,6 @@ class SpeechGenerator(generator.Generator):
 
         if key in [None, DEFAULT]:
             string = args.get("string", "")
-            obj = args.get("obj")
             if AXUtilities.is_link(obj):
                 voice.update(voices.get(voiceType.get(HYPERLINK), acss.ACSS()))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
@@ -273,13 +273,16 @@ class SpeechGenerator(generator.Generator):
                     # can cause the voice to not be updated, whereas clearing the name seems to be
                     # enough to trigger the correct language to be used.
                     family[VoiceFamily.NAME] = ""
-
+                tokens = ["SPEECH GENERATOR: Family updated to", family]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
             override = voices.get(voicename)
             if override and override.get("established", True):
                 voice.update(override)
 
         voice[acss.ACSS.FAMILY] = family
+        tokens = ["SPEECH GENERATOR: Final voice is", voice]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return [voice]
 
     def utterances_to_string(self, utterances: list[Any]) -> str:
