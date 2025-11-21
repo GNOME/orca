@@ -1045,6 +1045,22 @@ class AXObject:
         return sibling
 
     @staticmethod
+    def get_locale(obj: Atspi.Accessible) -> str:
+        """Returns the locale of obj"""
+
+        if not AXObject.is_valid(obj):
+            return ""
+
+        try:
+            locale = Atspi.Accessible.get_object_locale(obj)
+        except GLib.GError as error:
+            msg = f"AXObject: Exception in get_locale: {error}"
+            AXObject.handle_error(obj, error, msg)
+            return ""
+
+        return locale
+
+    @staticmethod
     def get_state_set(obj: Atspi.Accessible) -> Atspi.StateSet:
         """Returns the state set associated with obj"""
 

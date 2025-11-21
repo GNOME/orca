@@ -43,6 +43,7 @@ def as_string(obj: Atspi.Accessible, prefix: str) -> str:
             f"{get_role_as_string(obj)} ({hex(id(obj))}) "
             f"NAME: '{get_name(obj)}' "
             f"DESCRIPTION: '{get_description(obj)}'"
+            f"\n{indent}LOCALE: '{get_locale(obj)}'"
             f"\n{indent}PARENT: {get_parent_as_string(obj)} "
             f"INDEX IN PARENT: {get_index_in_parent(obj)}"
             f"\n{indent}ATTRIBUTES: {get_attributes_as_string(obj)}"
@@ -191,6 +192,17 @@ def get_role_as_string(obj: Atspi.Accessible) -> str:
     except GLib.GError as error:
         print(f"Exception in get_role: {error}")
         return "(unknown role)"
+
+def get_locale(obj: Atspi.Accessible) -> str:
+    """Returns the locale of obj"""
+
+    try:
+        locale = Atspi.Accessible.get_object_locale(obj)
+    except GLib.GError as error:
+        print(f"Exception in get_object_locale: {error}")
+        return ""
+
+    return locale
 
 def get_text(obj: Atspi.Accessible) -> str:
     "Get the text of an accessible object."
