@@ -128,6 +128,10 @@ class SpeechServer(speechserver.SpeechServer):
         self._client: Any = None
         self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
+        self._voice_families_cache: dict[
+            tuple[str, str, str | None, int | None],
+            list[tuple[str, str, str | None]]
+        ] = {}
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
@@ -616,6 +620,13 @@ class SpeechServer(speechserver.SpeechServer):
 
         return normalized_language, normalized_dialect
 
+    def clear_voice_families_cache(self) -> None:
+        """Clear the cache for voice family lookups."""
+
+        msg = "SPEECH DISPATCHER: Clearing voice families cache"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._voice_families_cache.clear()
+
     # pylint: disable-next=too-many-locals
     def get_voice_families_for_language(
         self,
@@ -633,6 +644,14 @@ class SpeechServer(speechserver.SpeechServer):
             if language == locale_language:
                 dialect = locale_dialect
 
+        cache_key = (language, dialect, variant, maximum)
+        if cache_key in self._voice_families_cache:
+            msg = (
+                f"SPEECH DISPATCHER: Returning cached result for language='{language}' "
+                f"dialect='{dialect}' variant='{variant}'"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return self._voice_families_cache[cache_key]
         start = time.time()
         target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)
 
@@ -684,10 +703,12 @@ class SpeechServer(speechserver.SpeechServer):
                 break
 
         msg = (
-            f"SPEECH DISPATCHER: Found {len(result)} match(es) for language='{language}' "
-            f"dialect='{dialect}' variant='{variant}' in {time.time() - start:.4f}s."
+            f"SPEECH DISPATCHER: Found {len(result)} match(es) for "
+            f"language='{language}' dialect='{dialect}' variant='{variant}' "
+            f"in {time.time() - start:.4f}s."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._voice_families_cache[cache_key] = result
         return result
 
     def get_output_module(self) -> str:
@@ -706,6 +727,7 @@ class SpeechServer(speechserver.SpeechServer):
         # but it can be confusing.
         if self._client is not None:
             self._send_command(self._client.set_output_module, module_id)
+            self.clear_voice_families_cache()
 
     def stop(self) -> None:
         self._cancel()
@@ -738,6 +760,7 @@ class SpeechServer(speechserver.SpeechServer):
             msg = f"SPEECH DISPATCHER: Error during reset of server {self._id}: {error}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
         finally:
+            self.clear_voice_families_cache()
             self._init()
 
     def list_output_modules(self) -> tuple[str, ...]:
