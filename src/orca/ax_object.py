@@ -1058,7 +1058,7 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return ""
 
-        return locale
+        return locale or ""
 
     @staticmethod
     def get_state_set(obj: Atspi.Accessible) -> Atspi.StateSet:

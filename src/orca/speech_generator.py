@@ -234,6 +234,14 @@ class SpeechGenerator(generator.Generator):
         if dialect in not_a_dialect:
             dialect = ""
 
+        if not (language and dialect):
+            obj_locale = AXObject.get_locale(args.get("obj")).split(".")[0]
+            if parts := obj_locale.split("_"):
+                if not language:
+                    language = parts[0]
+                if language == parts[0] and not dialect and len(parts) > 1:
+                    dialect = parts[1]
+
         server = speech.get_speech_server()
         assert server, "No speech server available"
         if not (language and dialect):
