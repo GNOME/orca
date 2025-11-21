@@ -628,6 +628,10 @@ class SpeechServer(speechserver.SpeechServer):
 
         if not language:
             language, dialect = self._get_language_and_dialect(None)
+        elif not dialect:
+            locale_language, locale_dialect = self._get_language_and_dialect(None)
+            if language == locale_language:
+                dialect = locale_dialect
 
         start = time.time()
         target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)

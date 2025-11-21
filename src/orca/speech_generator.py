@@ -236,8 +236,12 @@ class SpeechGenerator(generator.Generator):
 
         server = speech.get_speech_server()
         assert server, "No speech server available"
-        if not language:
-            language, dialect = server.get_language_and_dialect(family)
+        if not (language and dialect):
+            alt_language, alt_dialect = server.get_language_and_dialect(family)
+            if not language:
+                language = alt_language
+            if language == alt_language and not dialect:
+                dialect = alt_dialect
             msg = f"SPEECH GENERATOR: Updated to: '{language}', '{dialect}'"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
