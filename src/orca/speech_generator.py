@@ -225,12 +225,11 @@ class SpeechGenerator(generator.Generator):
                   f"Unmodified voice={voice}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not (language and dialect):
+        if not language:
             obj_locale = AXObject.get_locale(obj).split(".")[0]
             if parts := obj_locale.split("_"):
-                if not language:
-                    language = parts[0]
-                if language == parts[0] and not dialect and len(parts) > 1:
+                language = parts[0]
+                if len(parts) > 1:
                     dialect = parts[1]
             tokens = ["SPEECH GENERATOR: Reported locale of", obj, "is", obj_locale]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -243,12 +242,10 @@ class SpeechGenerator(generator.Generator):
 
         server = speech.get_speech_server()
         assert server, "No speech server available"
-        if not (language and dialect):
+        if not language:
             alt_language, alt_dialect = server.get_language_and_dialect(family)
-            if not language:
-                language = alt_language
-            if language == alt_language and not dialect:
-                dialect = alt_dialect
+            language = alt_language
+            dialect = alt_dialect
             msg = f"SPEECH GENERATOR: Updated to: '{language}', '{dialect}'"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -260,19 +257,28 @@ class SpeechGenerator(generator.Generator):
                 voice.update(voices.get(voiceType.get(UPPERCASE), acss.ACSS()))
 
             if settings_manager.get_manager().get_setting("enableAutoLanguageSwitching"):
-                family[VoiceFamily.LANG] = language
-                family[VoiceFamily.DIALECT] = dialect
-                if families := server.get_voice_families_for_language(
-                   language, dialect, family.get(VoiceFamily.VARIANT)):
-                    family[VoiceFamily.NAME] = families[0][0]
-                else:
-                    # On occasions (e.g. SD + espeak + 'zh'), we might not get any matching family.
-                    # When that occurs, setting/updating the language but leaving the original name
-                    # can cause the voice to not be updated, whereas clearing the name seems to be
-                    # enough to trigger the correct language to be used.
-                    family[VoiceFamily.NAME] = ""
-                tokens = ["SPEECH GENERATOR: Family updated to", family]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                # Only update the language if it has changed from the user's preferred voice.
+                # If that occurred, changing the dialect should not be problematic/bothersome.
+                # For now, ignore dialect changes for the same language to avoid two potential
+                # problems: 1) Unexpected voice changes when we have both a user-specified and
+                # object-specified dialect (e.g. American English versus British English). In
+                # the future, we can make this change opt-in. 2) Unexpected voice changes and/or
+                # pauses when either the user or the object lacks a dialect because the families
+                # won't match.
+                if language and language != family.get(VoiceFamily.LANG):
+                    family[VoiceFamily.LANG] = language
+                    family[VoiceFamily.DIALECT] = dialect
+                    if families := server.get_voice_families_for_language(
+                       language, dialect, family.get(VoiceFamily.VARIANT)):
+                        family[VoiceFamily.NAME] = families[0][0]
+                    else:
+                        # On occasions (e.g. SD + espeak + "zh"), we might not get any matching
+                        # family. When that occurs, setting/updating the language but leaving the
+                        # original name can cause the voice to not be updated, whereas clearing the
+                        # name seems to be enough to trigger the correct language to be used.
+                        family[VoiceFamily.NAME] = ""
+                    tokens = ["SPEECH GENERATOR: Family updated to", family]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
             override = voices.get(voicename)
             if override and override.get("established", True):
