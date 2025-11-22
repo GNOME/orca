@@ -37,6 +37,7 @@ from . import script_manager
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 #############################################################################
@@ -828,6 +829,14 @@ class Chat:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return active
 
+        # TODO - JD: This was in the smuxi-frontend-gnome Chat class. Who knows if it's
+        # still relevant?
+        if page_tab := AXObject.find_ancestor(obj, AXUtilities.is_page_tab):
+            result = AXUtilities.is_showing(page_tab)
+            tokens = ["INFO:", obj, "is in focused tab:", result]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return result
+
         tokens = ["INFO:", obj, "is not focused chat (not showing)"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
@@ -873,15 +882,15 @@ class Chat:
         return False
 
     def isTypingStatusChangedEvent(self, event):
-        """Returns True if event is associated with a change in typing status.
+        """Returns True if event is associated with a change in typing status."""
 
-        Arguments:
-        - event: the accessible event being examined
-        """
+        if not event.type.startswith("object:text-changed:insert"):
+            return False
 
-        # TODO - JD: I still need to figure this one out. Pidgin seems to
-        # no longer be presenting this change in the conversation history
-        # as it was doing before. And I'm not yet sure what other apps do.
-        # In the meantime, scripts can override this.
-        #
-        return False
+        # TODO - JD: This is from 15 years ago. Who knows if it still works?
+        # Bit of a hack. Pidgin inserts text into the chat history when the
+        # user is typing. We seem able to (more or less) reliably distinguish
+        # this text via its attributes because these attributes are absent
+        # from user inserted text -- no matter how that text is formatted.
+        attr = AXText.get_text_attributes_at_offset(event.source, event.detail1)[0]
+        return float(attr.get("scale", "1")) < 1 or int(attr.get("weight", "400")) < 400

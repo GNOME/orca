@@ -36,9 +36,9 @@ from orca import messages
 from orca import settings
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+from orca.chat import Chat
 from orca.scripts.toolkits import gtk
 
-from .chat import Chat
 from .script_utilities import Utilities
 from .speech_generator import SpeechGenerator
 
@@ -78,7 +78,7 @@ class Script(gtk.Script):
         super().setup_input_event_handlers()
         self.input_event_handlers.update(self.chat.input_event_handlers)
 
-    def get_app_key_bindings(self) -> "keybindings.KeyBindings":
+    def get_app_key_bindings(self) -> keybindings.KeyBindings:
         """Returns the application-specific keybindings for this script."""
 
         return self.chat.key_bindings

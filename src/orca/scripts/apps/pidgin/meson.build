@@ -1,6 +1,5 @@
 lib_sources = [
   '__init__.py',
-  'chat.py',
   'script.py',
   'script_utilities.py',
   'speech_generator.py',
