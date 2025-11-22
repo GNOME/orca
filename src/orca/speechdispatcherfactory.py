@@ -692,28 +692,41 @@ class SpeechServer(speechserver.SpeechServer):
         # in some cases (e.g. espeak variants), but fails in others (e.g. Voxin). So we need to do
         # a second pass. In addition, the language and dialect formats are not consistent across
         # synthesizers.
+        candidates = []
+        fallbacks = []
         for voice in voices:
             normalized_language, normalized_dialect = \
                 self._normalized_language_and_dialect(voice[1])
             if normalized_language != target_language:
                 continue
             if normalized_dialect == target_dialect:
-                result.append(voice)
+                candidates.append(voice)
             elif not normalized_dialect and target_dialect == normalized_language:
-                result.append(voice)
-            elif not target_dialect and normalized_dialect == target_language:
-                result.append(voice)
-            if maximum is not None and len(result) >= maximum:
+                candidates.append(voice)
+            elif not target_dialect:
+                if normalized_dialect == target_language:
+                    candidates.append(voice)
+                if len(normalized_dialect) == 2:
+                    fallbacks.append(voice)
+            if maximum is not None and len(candidates) >= maximum:
                 break
 
         msg = (
-            f"SPEECH DISPATCHER: Found {len(result)} match(es) for "
+            f"SPEECH DISPATCHER: Found {len(candidates)} match(es) for "
             f"language='{language}' dialect='{dialect}' variant='{variant}' "
             f"in {time.time() - start:.4f}s."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._voice_families_cache[cache_key] = result
-        return result
+        if not candidates and fallbacks:
+            msg = (
+                f"SPEECH DISPATCHER: No direct matches found, "
+                f"using {len(fallbacks)} fallback(s)."
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            candidates = fallbacks
+
+        self._voice_families_cache[cache_key] = candidates
+        return candidates
 
     def get_output_module(self) -> str:
         if self._client is None:
