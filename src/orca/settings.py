@@ -187,14 +187,6 @@ UPPERCASE_VOICE: str = "uppercase"
 HYPERLINK_VOICE: str = "hyperlink"
 SYSTEM_VOICE: str = "system"
 
-voicesKeys: dict[str, str] = {
-"DEFAULT_VOICE"     : "default",
-"UPPERCASE_VOICE"   : "uppercase",
-"HYPERLINK_VOICE"   : "hyperlink",
-"SYSTEM_VOICE"      : "system"
-}
-
-
 voices: dict[str, ACSS] = {
     DEFAULT_VOICE: ACSS({}),
     UPPERCASE_VOICE: ACSS({ACSS.AVERAGE_PITCH : 7.0}),
