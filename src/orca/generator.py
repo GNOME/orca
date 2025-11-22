@@ -1488,8 +1488,9 @@ class Generator:
         **args
     ) -> list[Any]:
         if AXUtilities.is_combo_box(obj, args.get("role")):
-            value = self._get_combo_box_value(obj)
-            return [value]
+            if value := self._get_combo_box_value(obj):
+                return [value]
+            return []
 
         if AXUtilities.is_separator(obj, args.get("role")) and not AXUtilities.is_focused(obj):
             return []
