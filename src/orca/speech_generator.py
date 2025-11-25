@@ -241,7 +241,14 @@ class SpeechGenerator(generator.Generator):
             dialect = ""
 
         server = speech.get_speech_server()
-        assert server, "No speech server available"
+        # TODO - JD: We probably never should have gotten to this point if there is no speech
+        # server. Thus we should probably return early in generate_speech() instead. For now,
+        # this check is in place of an assertion that was being reached on a user's system.
+        if server is None:
+            msg = "SPEECH GENERATOR: No speech server available"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return [voice]
+
         if not language:
             alt_language, alt_dialect = server.get_language_and_dialect(family)
             language = alt_language
