@@ -1,3 +1,29 @@
+49.5 - 25 November 2025
+
+Web:
+
+* Fix double prsentation of lines with new line characters.
+
+* Fix several chattiness issues.
+
+General:
+
+* Treat space as a printable character during password input.
+
+* Don't say "grayed" in editable table cells regardless of state.
+
+* Fall back on descendants when presenting editable table cell content.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  id              Indonesian                Andika Triwidada
+  nb              Norwegian Bokmål          Kjartan Maraas
+  sr@latin        Serbian (Latin)           Милош Поповић
+  sr              Serbian                   Милош Поповић
+  ug              Uighur                    Abduqadir Abliz
+
+=========
+
 49.4 - 16 October 2025
 
 Web:
