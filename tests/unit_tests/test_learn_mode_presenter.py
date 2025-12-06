@@ -665,6 +665,11 @@ class TestLearnModePresenter:
             object_navigator_kb.get_bound_bindings.return_value = []
             object_navigator.get_bindings.return_value = object_navigator_kb
             script.get_object_navigator.return_value = object_navigator
+            chat = test_context.Mock()
+            chat_kb = test_context.Mock()
+            chat_kb.get_bound_bindings.return_value = []
+            chat.get_bindings.return_value = chat_kb
+            script.chat = chat
         else:
             key_binding_mock = test_context.Mock()
             key_binding_mock.handler = test_context.Mock()

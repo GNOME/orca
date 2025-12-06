@@ -47,7 +47,7 @@ class Utilities(script_utilities.Utilities):
     def get_expander_cell_for(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the cell that is expandable in the row with obj."""
 
-        if not self._script.chat.isInBuddyList(obj):
+        if not self._script.chat.is_in_buddy_list(obj):
             return None
 
         if AXUtilities.is_expandable(obj):
@@ -69,7 +69,7 @@ class Utilities(script_utilities.Utilities):
     def child_nodes(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Gets all of the objects that have RELATION_NODE_CHILD_OF pointing to this cell."""
 
-        if not self._script.chat.isInBuddyList(obj):
+        if not self._script.chat.is_in_buddy_list(obj):
             return super().child_nodes(obj)
 
         if not AXUtilities.is_expanded(obj):
@@ -107,7 +107,7 @@ class Utilities(script_utilities.Utilities):
         return nodes
 
     def node_level(self, obj: Atspi.Accessible) -> int:
-        if not self._script.chat.isInBuddyList(obj):
+        if not self._script.chat.is_in_buddy_list(obj):
             return super().node_level(obj)
 
         return super().node_level(AXObject.get_previous_sibling(obj))

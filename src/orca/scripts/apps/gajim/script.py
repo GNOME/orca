@@ -31,9 +31,7 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
-from orca import keybindings
 from orca.ax_utilities import AXUtilities
-from orca.chat import Chat
 from orca.scripts import default
 
 if TYPE_CHECKING:
@@ -46,41 +44,20 @@ if TYPE_CHECKING:
 class Script(default.Script):
     """Custom script for Gajim."""
 
-    def get_chat(self) -> Chat:
-        """Returns the 'chat' class for this script."""
-
-        return Chat(self)
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        default.Script.setup_input_event_handlers(self)
-        assert self.chat is not None
-        self.input_event_handlers.update(self.chat.input_event_handlers)
-
-    def get_app_key_bindings(self) -> keybindings.KeyBindings:
-        """Returns the application-specific keybindings for this script."""
-
-        assert self.chat is not None
-        return self.chat.key_bindings
-
     def get_app_preferences_gui(self) -> Gtk.Grid:
         """Return a GtkGrid containing app-specific settings."""
 
-        assert self.chat is not None
         return self.chat.get_app_preferences_gui()
 
     def get_preferences_from_gui(self) -> dict:
         """Returns a dictionary with the app-specific preferences."""
 
-        assert self.chat is not None
         return self.chat.get_preferences_from_gui()
 
     def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
-        assert self.chat is not None
-        if self.chat.presentInsertedText(event):
+        if self.chat.present_inserted_text(event):
             return True
 
         return default.Script.on_text_inserted(self, event)

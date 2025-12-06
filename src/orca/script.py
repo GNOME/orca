@@ -53,6 +53,7 @@ from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
 from . import caret_navigator
+from . import chat
 from . import clipboard
 from . import debug
 from . import debugging_tools_manager
@@ -163,10 +164,10 @@ class Script:
 
         return speech_generator.SpeechGenerator(self)
 
-    def get_chat(self) -> chat.Chat | None:
+    def get_chat(self) -> chat.Chat:
         """Returns the 'chat' class for this script."""
 
-        return None
+        return chat.Chat(self)
 
     def get_spellcheck(self) -> spellcheck.SpellCheck | None:
         """Returns the spellcheck support for this script."""

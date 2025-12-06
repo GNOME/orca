@@ -32,7 +32,6 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
-from orca.chat import Chat
 from orca.scripts.toolkits import gtk
 
 
@@ -42,29 +41,8 @@ if TYPE_CHECKING:
     gi.require_version("Gtk", "3.0")
     from gi.repository import Atspi, Gtk
 
-    from orca import keybindings
-
 class Script(gtk.Script):
     """Custom script for Smuxi."""
-
-    # Override the base class type annotation since this script always has chat
-    chat: Chat
-
-    def get_chat(self) -> Chat:
-        """Returns the 'chat' class for this script."""
-
-        return Chat(self)
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        super().setup_input_event_handlers()
-        self.input_event_handlers.update(self.chat.input_event_handlers)
-
-    def get_app_key_bindings(self) -> keybindings.KeyBindings:
-        """Returns the application-specific keybindings for this script."""
-
-        return self.chat.key_bindings
 
     def get_app_preferences_gui(self) -> Gtk.Grid:
         """Return a GtkGrid containing the application unique configuration."""
@@ -79,7 +57,7 @@ class Script(gtk.Script):
     def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
-        if self.chat.presentInsertedText(event):
+        if self.chat.present_inserted_text(event):
             return True
 
         return super().on_text_inserted(event)

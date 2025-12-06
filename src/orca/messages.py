@@ -430,6 +430,18 @@ CHAT_SEPARATE_HISTORIES_OFF = \
 # translated is presented when the value of the setting is toggled.
 CHAT_SEPARATE_HISTORIES_ON = _("Provide chat room specific message histories.")
 
+# Translators: This is presented when the user has navigated to the top of the
+# chat message history.
+CHAT_LIST_TOP = C_("chat", "Top")
+
+# Translators: This is presented when the user has navigated to the bottom of the
+# chat message history.
+CHAT_LIST_BOTTOM = C_("chat", "Bottom")
+
+# Translators: This is presented when the user tries to navigate the chat message
+# history but there are no messages.
+CHAT_NO_MESSAGES = _("No chat messages")
+
 DATE_FORMAT_LOCALE = "%x"
 DATE_FORMAT_NUMBERS_DM = "%d/%m"
 DATE_FORMAT_NUMBERS_MD = "%m/%d"

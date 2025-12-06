@@ -17,13 +17,26 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Implements generic chat support."""
+
+# This has to be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
+
+from collections import deque
+from dataclasses import dataclass
+from typing import Any, Iterator, TYPE_CHECKING
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 from . import cmdnames
 from . import debug
@@ -40,627 +53,506 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
-#############################################################################
-#                                                                           #
-# Ring List. A fixed size circular list by Flavio Catalani                  #
-# http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902            #
-#                                                                           #
-# Included here to keep track of conversation histories.                    #
-#                                                                           #
-#############################################################################
+if TYPE_CHECKING:
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
-class RingList:
-    def __init__(self, length):
-        self.__data__ = []
-        self.__full__ = 0
-        self.__max__ = length
-        self.__cur__ = 0
-
-    def append(self, x):
-        if self.__full__ == 1:
-            for i in range (0, self.__cur__ - 1):
-                self.__data__[i] = self.__data__[i + 1]
-            self.__data__[self.__cur__ - 1] = x
-        else:
-            self.__data__.append(x)
-            self.__cur__ += 1
-            if self.__cur__ == self.__max__:
-                self.__full__ = 1
-
-    def get(self):
-        return self.__data__
-
-    def remove(self):
-        if (self.__cur__ > 0):
-            del self.__data__[self.__cur__ - 1]
-            self.__cur__ -= 1
-
-    def size(self):
-        return self.__cur__
-
-    def maxsize(self):
-        return self.__max__
-
-    def __str__(self):
-        return ''.join(self.__data__)
-
-#############################################################################
-#                                                                           #
-# Conversation                                                              #
-#                                                                           #
-#############################################################################
+    from .scripts import default
 
 class Conversation:
+    """Represents a conversation or chat room."""
 
-    # The number of messages to keep in the history
-    #
-    MESSAGE_LIST_LENGTH = 9
+    HISTORY_SIZE = 9
 
-    def __init__(self, name, accHistory, inputArea=None):
+    def __init__(self, name: str, log: Atspi.Accessible) -> None:
+        self._name = name
+        self._log = log
+        self._messages: deque[str] = deque(maxlen=Conversation.HISTORY_SIZE)
+        self._typing_status = ""
 
-        """Creates a new instance of the Conversation class.
+    def get_name(self) -> str:
+        """Returns the conversation name."""
 
-        Arguments:
-        - name: the chatroom/conversation name
-        - accHistory: the accessible which holds the conversation history
-        - inputArea: the editable text object for this conversation.
-        """
+        return self._name
 
-        self.name = name
-        self.accHistory = accHistory
-        self.inputArea = inputArea
+    def is_log(self, obj: Atspi.Accessible) -> bool:
+        """Returns true if obj is the conversation log."""
 
-        # A cyclic list to hold the chat room history for this conversation
-        #
-        self._messageHistory = RingList(Conversation.MESSAGE_LIST_LENGTH)
+        return self._log == obj
 
-        # Initially populate the cyclic lists with empty strings.
-        #
-        i = 0
-        while i < self._messageHistory.maxsize():
-            self.addMessage("")
-            i += 1
+    def add_message(self, message: str) -> None:
+        """Adds the current message to the message history."""
 
-        # Keep track of the last typing status because some platforms (e.g.
-        # MSN) seem to issue the status constantly and even though it has
-        # not changed.
-        #
-        self._typingStatus = ""
+        self._messages.append(message)
 
-    def addMessage(self, message):
-        """Adds the current message to the message history.
+    def get_message(self, index: int) -> str:
+        """Returns the indexed message from the message history."""
 
-        Arguments:
-        - message: A string containing the message to add
-        """
+        return self._messages[index]
 
-        self._messageHistory.append(message)
+    def has_messages(self) -> bool:
+        """Returns True if there are any messages in the history."""
 
-    def getNthMessage(self, messageNumber):
-        """Returns the specified message from the message history.
+        return len(self._messages) > 0
 
-        Arguments:
-        - messageNumber: the index of the message to get.
-        """
+    def get_message_count(self) -> int:
+        """Returns the number of messages in the history."""
 
-        messages = self._messageHistory.get()
+        return len(self._messages)
 
-        return messages[messageNumber]
-
-    def getTypingStatus(self):
+    def get_typing_status(self) -> str:
         """Returns the typing status of the buddy in this conversation."""
 
-        return self._typingStatus
+        return self._typing_status
 
-    def setTypingStatus(self, status):
-        """Sets the typing status of the buddy in this conversation.
+    def set_typing_status(self, status: str) -> None:
+        """Sets the typing status of the buddy in this conversation."""
 
-        Arguments:
-        - status: a string describing the current status.
-        """
+        self._typing_status = status
 
-        self._typingStatus = status
 
-#############################################################################
-#                                                                           #
-# ConversationList                                                          #
-#                                                                           #
-#############################################################################
+@dataclass
+class Message:
+    """Represents a chat message with its associated conversation."""
+
+    text: str
+    conversation: Conversation | None
+
 
 class ConversationList:
+    """Represents a list of Conversations."""
 
-    def __init__(self, messageListLength):
+    def __init__(self) -> None:
+        self._conversations: list[Conversation] = []
+        self._messages: deque[Message] = deque(maxlen=Conversation.HISTORY_SIZE)
 
-        """Creates a new instance of the ConversationList class.
+    def __iter__(self) -> Iterator[Conversation]:
+        """Allows iteration over conversations."""
 
-        Arguments:
-        - messageListLength: the size of the message history to keep.
-        """
+        return iter(self._conversations)
 
-        self.conversations = []
+    def add_message(self, message: str, conversation: Conversation | None) -> None:
+        """Adds the current message to the message history."""
 
-        # A cyclic list to hold the most recent (messageListLength) previous
-        # messages for all conversations in the ConversationList.
-        #
-        self._messageHistory = RingList(messageListLength)
+        if conversation and conversation not in self._conversations:
+            self._conversations.append(conversation)
 
-        # A corresponding cyclic list to hold the name of the conversation
-        # associated with each message in the messageHistory.
-        #
-        self._roomHistory = RingList(messageListLength)
+        msg = Message(text=message, conversation=conversation)
+        self._messages.append(msg)
 
-        # Initially populate the cyclic lists with empty strings.
-        #
-        i = 0
-        while i < self._messageHistory.maxsize():
-            self.addMessage("", None)
-            i += 1
+    def get_message_and_name(self, index: int) -> tuple[str, str]:
+        """Returns the indexed message, room-name tuple from the message history."""
 
-    def addMessage(self, message, conversation):
-        """Adds the current message to the message history.
+        msg = self._messages[index]
+        name = msg.conversation.get_name() if msg.conversation else ""
+        return msg.text, name
 
-        Arguments:
-        - message: A string containing the message to add
-        - conversation: The instance of the Conversation class with which
-          the message is associated
-        """
+    def has_messages(self) -> bool:
+        """Returns True if there are any messages in the history."""
 
-        if not conversation:
-            name = ""
-        else:
-            if not self.hasConversation(conversation):
-                self.addConversation(conversation)
-            name = conversation.name
+        return len(self._messages) > 0
 
-        self._messageHistory.append(message)
-        self._roomHistory.append(name)
+    def get_message_count(self) -> int:
+        """Returns the number of messages in the history."""
 
-    def getNthMessageAndName(self, messageNumber):
-        """Returns a list containing the specified message from the message
-        history and the name of the chatroom/conversation associated with
-        that message.
+        return len(self._messages)
 
-        Arguments:
-        - messageNumber: the index of the message to get.
-        """
 
-        messages = self._messageHistory.get()
-        rooms = self._roomHistory.get()
-
-        return messages[messageNumber], rooms[messageNumber]
-
-    def hasConversation(self, conversation):
-        """Returns True if we know about this conversation.
-
-        Arguments:
-        - conversation: the conversation of interest
-        """
-
-        return conversation in self.conversations
-
-    def getNConversations(self):
-        """Returns the number of conversations we currently know about."""
-
-        return len(self.conversations)
-
-    def addConversation(self, conversation):
-        """Adds conversation to the list of conversations.
-
-        Arguments:
-        - conversation: the conversation to add
-        """
-
-        self.conversations.append(conversation)
-
-    def removeConversation(self, conversation):
-        """Removes conversation from the list of conversations.
-
-        Arguments:
-        - conversation: the conversation to remove
-
-        Returns True if conversation was successfully removed.
-        """
-
-        # TODO - JD: In the Pidgin script, I do not believe we handle the
-        # case where a conversation window is closed. I *think* it remains
-        # in the overall chat history. What do we want to do in that case?
-        # I would assume that we'd want to remove it.... So here's a method
-        # to do so. Nothing in the Chat class uses it yet.
-        #
-        try:
-            self.conversations.remove(conversation)
-        except Exception:
-            return False
-        else:
-            return True
-
-#############################################################################
-#                                                                           #
-# Chat                                                                      #
-#                                                                           #
-#############################################################################
-
+# pylint: disable-next=too-many-instance-attributes
 class Chat:
     """Provides chat functionality available to scripts for chat apps."""
 
-    def __init__(self, script):
+    def __init__(self, script: default.Script) -> None:
         self._script = script
+        self._conversation_list = ConversationList()
+        self._current_index = Conversation.HISTORY_SIZE  # Sentinel for "not navigating"
 
-        # Keybindings to provide conversation message history. The message
-        # review order will be based on the index within the list. Thus F1
-        # is associated with the most recent message, F2 the message before
-        # that, and so on. A script could override this. Setting messageKeys
-        # to ["a", "b", "c" ... ] will cause "a" to be associated with the
-        # most recent message, "b" to be associated with the message before
-        # that, etc. Scripts can also override the messageKeyModifier.
-        #
-        self.messageKeys = \
-            ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
-        self.messageKeyModifier = keybindings.ORCA_MODIFIER_MASK
-        self.input_event_handlers = {}
-        self.setup_input_event_handlers()
-        self.key_bindings = self.get_key_bindings()
+        self._handlers = self.get_handlers(True)
+        self._bindings = keybindings.KeyBindings()
 
-        # The length of the message history will be based on how many keys
-        # are bound to the task of providing it.
-        #
-        self.messageListLength = len(self.messageKeys)
-        self._conversationList = ConversationList(self.messageListLength)
+        self._focused_channel_radio_button: Gtk.RadioButton | None = None
+        self._all_channels_radio_button: Gtk.RadioButton | None = None
+        self._all_messages_radio_button: Gtk.RadioButton | None = None
+        self._buddy_typing_check_button: Gtk.CheckButton | None = None
+        self._chat_room_histories_check_button: Gtk.CheckButton | None = None
+        self._speak_name_check_button: Gtk.CheckButton | None = None
 
-        self.focusedChannelRadioButton = None
-        self.allChannelsRadioButton = None
-        self.allMessagesRadioButton = None
-        self.buddyTypingCheckButton = None
-        self.chatRoomHistoriesCheckButton = None
-        self.speakNameCheckButton = None
+    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
+        """Returns the chat handlers."""
 
-    def setup_input_event_handlers(self):
-        """Defines the input event handlers for this chat instance."""
+        if refresh:
+            msg = "CHAT: Refreshing handlers."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._setup_handlers()
 
-        self.input_event_handlers["togglePrefixHandler"] = \
+        return self._handlers
+
+    def _setup_handlers(self) -> None:
+        """Sets up the chat input event handlers."""
+
+        self._handlers = {}
+
+        self._handlers["chat_toggle_room_name_prefix"] = \
             input_event.InputEventHandler(
-                self.togglePrefix,
-                cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX)
+                self.toggle_prefix,
+                cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX,
+                enabled=True)
 
-        self.input_event_handlers["toggleBuddyTypingHandler"] = \
+        self._handlers["chat_toggle_buddy_typing"] = \
             input_event.InputEventHandler(
-                self.toggleBuddyTyping,
-                cmdnames.CHAT_TOGGLE_BUDDY_TYPING)
+                self.toggle_buddy_typing,
+                cmdnames.CHAT_TOGGLE_BUDDY_TYPING,
+                enabled=True)
 
-        self.input_event_handlers["toggleMessageHistoriesHandler"] = \
+        self._handlers["chat_toggle_message_histories"] = \
             input_event.InputEventHandler(
-                self.toggleMessageHistories,
-                cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES)
+                self.toggle_message_histories,
+                cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES,
+                enabled=True)
 
-        self.input_event_handlers["reviewMessage"] = \
+        self._handlers["chat_previous_message"] = \
             input_event.InputEventHandler(
-                self.readPreviousMessage,
-                cmdnames.CHAT_PREVIOUS_MESSAGE)
+                self.present_previous_chat_message,
+                cmdnames.CHAT_PREVIOUS_MESSAGE,
+                enabled=True)
 
-        return
+        self._handlers["chat_next_message"] = \
+            input_event.InputEventHandler(
+                self.present_next_chat_message,
+                cmdnames.CHAT_NEXT_MESSAGE,
+                enabled=True)
 
-    def get_key_bindings(self):
-        """Defines and returns the key bindings for this script."""
+        msg = "CHAT: Handlers set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        keyBindings = keybindings.KeyBindings()
+    def get_bindings(
+        self,
+        refresh: bool = False,
+        is_desktop: bool = True
+    ) -> keybindings.KeyBindings:
+        """Returns the chat keybindings."""
 
-        keyBindings.add(
+        if refresh:
+            msg = f"CHAT: Refreshing bindings. Is desktop: {is_desktop}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._bindings.remove_key_grabs("CHAT: Refreshing bindings.")
+            self._setup_bindings()
+        elif self._bindings.is_empty():
+            self._setup_bindings()
+
+        return self._bindings
+
+    def _setup_bindings(self) -> None:
+        """Sets up the chat key bindings."""
+
+        self._bindings = keybindings.KeyBindings()
+
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["togglePrefixHandler"]))
+                self._handlers["chat_toggle_room_name_prefix"],
+                1,
+                True))
 
-        keyBindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["toggleBuddyTypingHandler"]))
+                self._handlers["chat_toggle_buddy_typing"],
+                1,
+                True))
 
-        keyBindings.add(
+        self._bindings.add(
             keybindings.KeyBinding(
                 "",
                 keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["toggleMessageHistoriesHandler"]))
+                self._handlers["chat_toggle_message_histories"],
+                1,
+                True))
 
-        for messageKey in self.messageKeys:
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    messageKey,
-                    self.messageKeyModifier,
-                    keybindings.ORCA_MODIFIER_MASK,
-                    self.input_event_handlers["reviewMessage"]))
+        self._bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.DEFAULT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers["chat_previous_message"],
+                1,
+                True))
 
-        return keyBindings
+        self._bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.DEFAULT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers["chat_next_message"],
+                1,
+                True))
 
-    def get_app_preferences_gui(self):
-        """Return a GtkGrid containing the application unique configuration
-        GUI items for the current application. """
+        # This pulls in the user's overrides to alternative keys.
+        self._bindings = settings_manager.get_manager().override_key_bindings(
+            self._handlers, self._bindings, False)
 
-        import gi
-        gi.require_version("Gtk", "3.0")
-        from gi.repository import Gtk
+        msg = "CHAT: Bindings set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def get_app_preferences_gui(self) -> Gtk.Grid | None:
+        """Return a GtkGrid, or None if there's no app-specific UI."""
 
         grid = Gtk.Grid()
         grid.set_border_width(12)
 
         label = guilabels.CHAT_SPEAK_ROOM_NAME
-        value = settings_manager.get_manager().get_setting('chatSpeakRoomName')
-        self.speakNameCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
-        self.speakNameCheckButton.set_active(value)
-        grid.attach(self.speakNameCheckButton, 0, 0, 1, 1)
+        value = settings_manager.get_manager().get_setting("chatSpeakRoomName")
+        self._speak_name_check_button = Gtk.CheckButton.new_with_mnemonic(label)
+        self._speak_name_check_button.set_active(value)
+        grid.attach(self._speak_name_check_button, 0, 0, 1, 1)
 
         label = guilabels.CHAT_ANNOUNCE_BUDDY_TYPING
-        value = settings_manager.get_manager().get_setting('chatAnnounceBuddyTyping')
-        self.buddyTypingCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
-        self.buddyTypingCheckButton.set_active(value)
-        grid.attach(self.buddyTypingCheckButton, 0, 1, 1, 1)
+        value = settings_manager.get_manager().get_setting("chatAnnounceBuddyTyping")
+        self._buddy_typing_check_button = Gtk.CheckButton.new_with_mnemonic(label)
+        self._buddy_typing_check_button.set_active(value)
+        grid.attach(self._buddy_typing_check_button, 0, 1, 1, 1)
 
         label = guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES
-        value = settings_manager.get_manager().get_setting('chatRoomHistories')
-        self.chatRoomHistoriesCheckButton = \
+        value = settings_manager.get_manager().get_setting("chatRoomHistories")
+        self._chat_room_histories_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
-        self.chatRoomHistoriesCheckButton.set_active(value)
-        grid.attach(self.chatRoomHistoriesCheckButton, 0, 2, 1, 1)
+        self._chat_room_histories_check_button.set_active(value)
+        grid.attach(self._chat_room_histories_check_button, 0, 2, 1, 1)
 
-        messagesFrame = Gtk.Frame()
-        grid.attach(messagesFrame, 0, 3, 1, 1)
+        messages_frame = Gtk.Frame()
+        grid.attach(messages_frame, 0, 3, 1, 1)
         label = Gtk.Label(f"<b>{guilabels.CHAT_SPEAK_MESSAGES_FROM}</b>")
         label.set_use_markup(True)
-        messagesFrame.set_label_widget(label)
+        messages_frame.set_label_widget(label)
 
-        messagesAlignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
-        messagesAlignment.set_padding(0, 0, 12, 0)
-        messagesFrame.add(messagesAlignment)
-        messagesGrid = Gtk.Grid()
-        messagesAlignment.add(messagesGrid)
+        messages_alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
+        messages_alignment.set_padding(0, 0, 12, 0)
+        messages_frame.add(messages_alignment)
+        messages_grid = Gtk.Grid()
+        messages_alignment.add(messages_grid)
 
-        value = settings_manager.get_manager().get_setting('chatMessageVerbosity')
+        value = settings_manager.get_manager().get_setting("chatMessageVerbosity")
 
         label = guilabels.CHAT_SPEAK_MESSAGES_ALL
         rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb1.set_active(value == settings.CHAT_SPEAK_ALL)
-        self.allMessagesRadioButton = rb1
-        messagesGrid.attach(self.allMessagesRadioButton, 0, 0, 1, 1)
+        self._all_messages_radio_button = rb1
+        messages_grid.attach(self._all_messages_radio_button, 0, 0, 1, 1)
 
         label = guilabels.CHAT_SPEAK_MESSAGES_ACTIVE
         rb2 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb2.join_group(rb1)
         rb2.set_active(value == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
-        self.focusedChannelRadioButton = rb2
-        messagesGrid.attach(self.focusedChannelRadioButton, 0, 1, 1, 1)
+        self._focused_channel_radio_button = rb2
+        messages_grid.attach(self._focused_channel_radio_button, 0, 1, 1, 1)
 
         label = guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED % \
             AXObject.get_name(self._script.app)
         rb3 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb3.join_group(rb1)
         rb3.set_active(value == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
-        self.allChannelsRadioButton = rb3
-        messagesGrid.attach(self.allChannelsRadioButton, 0, 2, 1, 1)
+        self._all_channels_radio_button = rb3
+        messages_grid.attach(self._all_channels_radio_button, 0, 2, 1, 1)
 
         grid.show_all()
 
         return grid
 
-    def get_preferences_from_gui(self):
+    def get_preferences_from_gui(self) -> dict[str, Any]:
         """Returns a dictionary with the app-specific preferences."""
 
-        if self.allChannelsRadioButton.get_active():
+        assert self._all_channels_radio_button
+        assert self._focused_channel_radio_button
+        assert self._speak_name_check_button
+        assert self._buddy_typing_check_button
+        assert self._chat_room_histories_check_button
+
+        if self._all_channels_radio_button.get_active():
             verbosity = settings.CHAT_SPEAK_ALL_IF_FOCUSED
-        elif self.focusedChannelRadioButton.get_active():
+        elif self._focused_channel_radio_button.get_active():
             verbosity = settings.CHAT_SPEAK_FOCUSED_CHANNEL
         else:
             verbosity = settings.CHAT_SPEAK_ALL
 
         return {
-            'chatMessageVerbosity': verbosity,
-            'chatSpeakRoomName': self.speakNameCheckButton.get_active(),
-            'chatAnnounceBuddyTyping': self.buddyTypingCheckButton.get_active(),
-            'chatRoomHistories': self.chatRoomHistoriesCheckButton.get_active(),
+            "chatMessageVerbosity": verbosity,
+            "chatSpeakRoomName": self._speak_name_check_button.get_active(),
+            "chatAnnounceBuddyTyping": self._buddy_typing_check_button.get_active(),
+            "chatRoomHistories": self._chat_room_histories_check_button.get_active(),
         }
 
-    ########################################################################
-    #                                                                      #
-    # InputEvent handlers and supporting utilities                         #
-    #                                                                      #
-    ########################################################################
-
-    def togglePrefix(self, script, inputEvent):
-        """ Toggle whether we prefix chat room messages with the name of
-        the chat room.
-
-        Arguments:
-        - script: the script associated with this event
-        - inputEvent: if not None, the input event that caused this action.
-        """
+    def toggle_prefix(self, script: default.Script, _event: Atspi.Event):
+        """Toggle whether we prefix chat room messages with the name of the chat room."""
 
         line = messages.CHAT_ROOM_NAME_PREFIX_ON
-        speakRoomName = settings_manager.get_manager().get_setting('chatSpeakRoomName')
-        settings_manager.get_manager().set_setting('chatSpeakRoomName', not speakRoomName)
-        if speakRoomName:
+        speak_room_name = settings_manager.get_manager().get_setting("chatSpeakRoomName")
+        settings_manager.get_manager().set_setting("chatSpeakRoomName", not speak_room_name)
+        if speak_room_name:
             line = messages.CHAT_ROOM_NAME_PREFIX_OFF
-        self._script.present_message(line)
-
+        script.present_message(line)
         return True
 
-    def toggleBuddyTyping(self, script, inputEvent):
-        """ Toggle whether we announce when our buddies are typing a message.
-
-        Arguments:
-        - script: the script associated with this event
-        - inputEvent: if not None, the input event that caused this action.
-        """
+    def toggle_buddy_typing(self, script: default.Script, _event: Atspi.Event):
+        """Toggle whether we announce when our buddies are typing a message."""
 
         line = messages.CHAT_BUDDY_TYPING_ON
-        announceTyping = settings_manager.get_manager().get_setting('chatAnnounceBuddyTyping')
-        settings_manager.get_manager().set_setting(
-            'chatAnnounceBuddyTyping', not announceTyping)
-        if announceTyping:
+        announce_typing = settings_manager.get_manager().get_setting("chatAnnounceBuddyTyping")
+        settings_manager.get_manager().set_setting("chatAnnounceBuddyTyping", not announce_typing)
+        if announce_typing:
             line = messages.CHAT_BUDDY_TYPING_OFF
-        self._script.present_message(line)
+        script.present_message(line)
 
         return True
 
-    def toggleMessageHistories(self, script, inputEvent):
-        """ Toggle whether we provide chat room specific message histories.
-
-        Arguments:
-        - script: the script associated with this event
-        - inputEvent: if not None, the input event that caused this action.
-        """
+    def toggle_message_histories(self, script: default.Script, _event: Atspi.Event):
+        """Toggle whether we provide chat room specific message histories."""
 
         line = messages.CHAT_SEPARATE_HISTORIES_ON
-        roomHistories = settings_manager.get_manager().get_setting('chatRoomHistories')
-        settings_manager.get_manager().set_setting('chatRoomHistories', not roomHistories)
-        if roomHistories:
+        room_histories = settings_manager.get_manager().get_setting("chatRoomHistories")
+        settings_manager.get_manager().set_setting("chatRoomHistories", not room_histories)
+        if room_histories:
             line = messages.CHAT_SEPARATE_HISTORIES_OFF
-        self._script.present_message(line)
+        script.present_message(line)
 
         return True
 
-    def readPreviousMessage(self, script, inputEvent=None, index=0):
-        """ Speak/braille a previous chat room message.
+    def _get_message_count(self) -> int:
+        """Returns the message count based on current history setting."""
 
-        Arguments:
-        - script: the script associated with this event
-        - inputEvent: if not None, the input event that caused this action.
-        - index: The index of the message to read -- by default, the most
-          recent message. If we get an inputEvent, however, the value of
-          index is ignored and the index of the keyval_name with respect
-          to self.messageKeys is used instead.
-        """
-
-        try:
-            index = self.messageKeys.index(inputEvent.keyval_name)
-        except Exception:
-            pass
-
-        messageNumber = self.messageListLength - (index + 1)
-        message, chatRoomName = None, None
-
-        if settings_manager.get_manager().get_setting('chatRoomHistories'):
-            conversation = self.getConversation(focus_manager.get_manager().get_locus_of_focus())
+        if settings_manager.get_manager().get_setting("chatRoomHistories"):
+            conversation = self.get_conversation_for_object(
+                focus_manager.get_manager().get_locus_of_focus()
+            )
             if conversation:
-                message = conversation.getNthMessage(messageNumber)
-                chatRoomName = conversation.name
+                return conversation.get_message_count()
+            return 0
+        return self._conversation_list.get_message_count()
+
+    def present_previous_chat_message(self, script: default.Script, _event) -> bool:
+        """Navigate to and present the previous chat message in the history."""
+
+        message_count = self._get_message_count()
+        if message_count == 0:
+            script.present_message(messages.CHAT_NO_MESSAGES)
+            return True
+
+        oldest_index = -message_count
+        if self._current_index == oldest_index:
+            script.present_message(messages.CHAT_LIST_TOP)
+            self._present_message_at_index(oldest_index)
+            return True
+
+        if self._current_index >= 0:
+            self._current_index = -1
         else:
-            message, chatRoomName = \
-                self._conversationList.getNthMessageAndName(messageNumber)
+            self._current_index -= 1
 
-        if message and chatRoomName:
-            self.utterMessage(chatRoomName, message, True)
+        self._present_message_at_index(self._current_index)
+        return True
 
-    def utterMessage(self, chatRoomName, message, focused=True):
-        """ Speak/braille a chat room message.
+    def present_next_chat_message(self, script: default.Script, _event) -> bool:
+        """Navigate to and present the next chat message in the history."""
 
-        Arguments:
-        - chatRoomName: name of the chat room this message came from
-        - message: the chat room message
-        - focused: whether or not the current chatroom has focus. Defaults
-          to True so that we can use this method to present chat history
-          as well as incoming messages.
-        """
+        message_count = self._get_message_count()
+        if message_count == 0:
+            script.present_message(messages.CHAT_NO_MESSAGES)
+            return True
 
-        # Only speak/braille the new message if it matches how the user
-        # wants chat messages spoken.
-        #
+        if self._current_index == -1:
+            script.present_message(messages.CHAT_LIST_BOTTOM)
+            self._present_message_at_index(-1)
+            return True
+
+        if self._current_index >= 0:
+            self._current_index = -1
+        else:
+            self._current_index += 1
+
+        self._present_message_at_index(self._current_index)
+        return True
+
+    def _present_message_at_index(self, index: int) -> None:
+        """Presents the chat message at the specified index."""
+
+        message, chat_room_name = None, None
+
+        if settings_manager.get_manager().get_setting("chatRoomHistories"):
+            conversation = self.get_conversation_for_object(
+                focus_manager.get_manager().get_locus_of_focus()
+            )
+            if conversation:
+                message = conversation.get_message(index)
+                chat_room_name = conversation.get_name()
+        else:
+            message, chat_room_name = self._conversation_list.get_message_and_name(index)
+
+        if message and chat_room_name:
+            self.utter_message(chat_room_name, message, True)
+
+    def utter_message(self, room_name: str, message: str, focused: bool = True) -> None:
+        """Speak/braille a chat room message, taking user settings into account"""
+
         verbosity = settings_manager.get_manager().get_app_setting(
-            self._script.app, 'chatMessageVerbosity')
+            self._script.app, "chatMessageVerbosity")
         script = script_manager.get_manager().get_active_script()
         if script is not None and script.name != self._script.name \
            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED:
             return
-        elif not focused and verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL:
+        if not focused and verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL:
             return
 
         text = ""
-        if chatRoomName and \
-           settings_manager.get_manager().get_app_setting(self._script.app, 'chatSpeakRoomName'):
-            text = messages.CHAT_MESSAGE_FROM_ROOM % chatRoomName
+        if room_name and \
+           settings_manager.get_manager().get_app_setting(self._script.app, "chatSpeakRoomName"):
+            text = messages.CHAT_MESSAGE_FROM_ROOM % room_name
 
         if not settings.presentChatRoomLast:
             text = f"{text} {message}"
         else:
             text = f"{message} {text}"
 
-        if len(text.strip()):
+        if text.strip():
             voice = self._script.speech_generator.voice(string=text)
             self._script.speak_message(text, voice=voice)
         self._script.display_message(text)
 
-    def getMessageFromEvent(self, event):
-        """Get the actual displayed message. This will almost always be the
-        unaltered any_data from an event of type object:text-changed:insert.
+    def present_inserted_text(self, event: Atspi.Event) -> bool:
+        """Gives the Chat class an opportunity to present the text from the event."""
 
-        Arguments:
-        - event: the Event from which to take the text.
-
-        Returns the string which should be presented as the newly-inserted
-        text. (Things like chatroom name prefacing get handled elsewhere.)
-        """
-
-        return event.any_data
-
-    def presentInsertedText(self, event):
-        """Gives the Chat class an opportunity to present the text from the
-        text inserted Event.
-
-        Arguments:
-        - event: the text inserted Event
-
-        Returns True if we handled this event here; otherwise False, which
-        tells the associated script that is not a chat event that requires
-        custom handling.
-        """
-
-        if not event \
-           or not event.type.startswith("object:text-changed:insert") \
-           or not event.any_data:
+        if not event.any_data or AXUtilities.is_text_input(event.source):
             return False
 
-        if self.isGenericTextObject(event.source):
-            # The script should handle non-chat specific text areas (e.g.,
-            # adding a new account).
-            #
-            return False
-
-        if self.isInBuddyList(event.source):
-            # These are status changes. What the Pidgin script currently
-            # does for these is ignore them. It might be nice to add
-            # some options to allow the user to customize what status
-            # changes are presented. But for now, we'll ignore them
-            # across the board.
-            #
+        if self.is_in_buddy_list(event.source):
             return True
 
-        if self.isTypingStatusChangedEvent(event):
-            self.presentTypingStatusChange(event, event.any_data)
+        if self._is_typing_status_changed_event(event):
+            self._present_typing_status_change(event, event.any_data)
             return True
 
-        if self.isChatRoomMsg(event.source):
-            if self.isNewConversation(event.source):
-                name = self.getChatRoomName(event.source)
+        if self.is_chat_room_message(event.source):
+            conversation = self.get_conversation_for_object(event.source)
+            if conversation is None:
+                name = self._get_chat_room_name(event.source)
                 conversation = Conversation(name, event.source)
-            else:
-                conversation = self.getConversation(event.source)
-                name = conversation.name
-            message = self.getMessageFromEvent(event).strip("\n")
+            name = conversation.get_name()
+            message = event.any_data.strip("\n")
             if message:
-                self.addMessageToHistory(message, conversation)
+                conversation.add_message(message)
+                self._conversation_list.add_message(message, conversation)
 
-            # The user may or may not want us to present this message. Also,
-            # don't speak the name if it's the focused chat.
-            #
-            focused = self.isFocusedChat(event.source)
+            focused = self._is_focused_chat(event.source)
             if focused:
                 name = ""
             if message:
-                self.utterMessage(name, message, focused)
+                self.utter_message(name, message, focused)
             return True
 
-        if self.isAutoCompletedTextEvent(event):
+        if self._is_auto_completed_text_event(event):
             text = event.any_data
             voice = self._script.speech_generator.voice(string=text)
             self._script.speak_message(text, voice=voice)
@@ -668,58 +560,22 @@ class Chat:
 
         return False
 
-    def presentTypingStatusChange(self, event, status):
-        """Presents a change in typing status for the current conversation
-        if the status has indeed changed and if the user wants to hear it.
+    def _present_typing_status_change(self, event: Atspi.Event, status: str) -> bool:
+        """Presents a change in typing status for the current conversation."""
 
-        Arguments:
-        - event: the accessible Event
-        - status: a string containing the status change
+        if not settings_manager.get_manager().get_setting("chatAnnounceBuddyTyping"):
+            return False
 
-        Returns True if we spoke the change; False otherwise
-        """
-
-        if settings_manager.get_manager().get_setting('chatAnnounceBuddyTyping'):
-            conversation = self.getConversation(event.source)
-            if conversation and (status != conversation.getTypingStatus()):
-                voice = self._script.speech_generator.voice(string=status)
-                self._script.speak_message(status, voice=voice)
-                conversation.setTypingStatus(status)
-                return True
+        conversation = self.get_conversation_for_object(event.source)
+        if conversation and status != conversation.get_typing_status():
+            voice = self._script.speech_generator.voice(string=status)
+            self._script.speak_message(status, voice=voice)
+            conversation.set_typing_status(status)
+            return True
 
         return False
 
-    def addMessageToHistory(self, message, conversation):
-        """Adds message to both the individual conversation's history
-        as well as to the complete history stored in our conversation
-        list.
-
-        Arguments:
-        - message: a string containing the message to be added
-        - conversation: the instance of the Conversation class to which
-          this message belongs
-        """
-
-        conversation.addMessage(message)
-        self._conversationList.addMessage(message, conversation)
-
-    ########################################################################
-    #                                                                      #
-    # Convenience methods for identifying, locating different accessibles  #
-    #                                                                      #
-    ########################################################################
-
-    def isGenericTextObject(self, obj):
-        """Returns True if the given accessible seems to be something
-        unrelated to the custom handling we're attempting to do here.
-
-        Arguments:
-        - obj: the accessible object to examine.
-        """
-
-        return AXUtilities.is_editable(obj) and AXUtilities.is_single_line(obj)
-
-    def _is_scrollable_list(self, obj):
+    def _is_scrollable_list(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a list-like scrollable widget."""
 
         scroll_pane = AXObject.find_ancestor(obj, AXUtilities.is_scroll_pane)
@@ -729,7 +585,7 @@ class Chat:
         return AXUtilities.is_tree_or_tree_table(obj) \
             or AXUtilities.is_list_box(obj) or AXUtilities.is_list(obj)
 
-    def isBuddyList(self, obj):
+    def is_buddy_list(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is believed to be the buddy list."""
 
         # Note: This is a very simple heuristic based on existing chat apps.
@@ -745,83 +601,46 @@ class Chat:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
-    def isInBuddyList(self, obj, includeList=True):
+    def is_in_buddy_list(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is, or is inside of, the buddy list."""
 
-        if includeList and self.isBuddyList(obj):
+        if self.is_buddy_list(obj):
             return True
 
-        buddy_list =  AXObject.find_ancestor(obj, self._is_scrollable_list)
+        buddy_list = AXObject.find_ancestor(obj, self._is_scrollable_list)
         if buddy_list is None:
             return False
 
-        return self.isBuddyList(buddy_list)
+        return self.is_buddy_list(buddy_list)
 
-    def isNewConversation(self, obj):
-        """Returns True if the given accessible is the chat history
-        associated with a new conversation.
+    def get_conversation_for_object(self, obj: Atspi.Accessible) -> Conversation | None:
+        """Attempts to locate the conversation associated with obj."""
 
-        Arguments:
-        - obj: the accessible object to examine.
-        """
-
-        conversation = self.getConversation(obj)
-        return not self._conversationList.hasConversation(conversation)
-
-    def getConversation(self, obj):
-        """Attempts to locate the conversation associated with obj.
-
-        Arguments:
-        - obj: the accessible of interest
-
-        Returns the conversation if found; None otherwise
-        """
-
-        if not obj:
+        if obj is None:
             return None
 
         name = ""
-        # TODO - JD: If we have multiple chats going on and those
-        # chats have the same name, and we're in the input area,
-        # this approach will fail. What I should probably do instead
-        # is, upon creation of a new conversation, figure out where
-        # the input area is and save it. For now, I just want to get
-        # things working. And people should not be in multiple chat
-        # rooms with identical names anyway. :-)
-        #
-        if (AXUtilities.is_text(obj) or AXUtilities.is_entry(obj)) \
-           and AXUtilities.is_editable(obj):
-            name = self.getChatRoomName(obj)
+        if AXUtilities.is_text_input(obj):
+            name = self._get_chat_room_name(obj)
 
-        for conversation in self._conversationList.conversations:
+        for conversation in self._conversation_list:
             if name:
-                if name == conversation.name:
+                if name == conversation.get_name():
                     return conversation
-            elif obj == conversation.accHistory:
+            elif conversation.is_log(obj):
                 return conversation
 
         return None
 
-    def isChatRoomMsg(self, obj):
-        """Returns True if the given accessible is the text object for
-        associated with a chat room conversation.
-
-        Arguments:
-        - obj: the accessible object to examine.
-        """
+    def is_chat_room_message(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj holds a chat room conversation."""
 
         if AXUtilities.is_text(obj) and AXUtilities.is_scroll_pane(AXObject.get_parent(obj)):
             return not AXUtilities.is_editable(obj) and AXUtilities.is_multi_line(obj)
         return False
 
-    def isFocusedChat(self, obj):
-        """Returns True if we plan to treat this chat as focused for
-        the purpose of deciding whether or not a message should be
-        presented to the user.
-
-        Arguments:
-        - obj: the accessible object to examine.
-        """
+    def _is_focused_chat(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is from the active chat room."""
 
         if AXUtilities.is_showing(obj):
             active = self._script.utilities.top_level_object_is_active_and_current(obj)
@@ -841,21 +660,10 @@ class Chat:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def getChatRoomName(self, obj):
-        """Attempts to find the name of the current chat room.
+    def _get_chat_room_name(self, obj: Atspi.Accessible) -> str:
+        """Attempts to find the name of the current chat room."""
 
-        Arguments:
-        - obj: The accessible of interest
-
-        Returns a string containing what we think is the chat room name.
-        """
-
-        # Most of the time, it seems that the name can be found in the
-        # page tab which is the ancestor of the chat history. Failing
-        # that, we'll look at the frame name. Failing that, scripts
-        # should override this method. :-)
-        #
-        def pred(x):
+        def pred(x: Atspi.Accessible) -> bool:
             if not (AXUtilities.is_page_tab(x) or AXUtilities.is_frame(x)):
                 return False
             return bool(AXObject.get_name(x))
@@ -865,12 +673,8 @@ class Chat:
             return AXObject.get_name(ancestor)
         return ""
 
-    def isAutoCompletedTextEvent(self, event):
-        """Returns True if event is associated with text being autocompleted.
-
-        Arguments:
-        - event: the accessible event being examined
-        """
+    def _is_auto_completed_text_event(self, event: Atspi.Event) -> bool:
+        """Returns True if event is associated with text being autocompleted."""
 
         if not AXUtilities.is_text(event.source):
             return False
@@ -881,7 +685,7 @@ class Chat:
 
         return False
 
-    def isTypingStatusChangedEvent(self, event):
+    def _is_typing_status_changed_event(self, event: Atspi.Event) -> bool:
         """Returns True if event is associated with a change in typing status."""
 
         if not event.type.startswith("object:text-changed:insert"):

@@ -76,7 +76,8 @@ from orca.ax_value import AXValue
 if TYPE_CHECKING:
     import gi
     gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
+    gi.require_version("Gtk", "3.0")
+    from gi.repository import Atspi, Gtk
 
     from orca.sound_generator import Icon, Tone
 
@@ -181,6 +182,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
         self.input_event_handlers.update(self.get_action_presenter().get_handlers())
         self.input_event_handlers.update(self.get_debugging_tools_manager().get_handlers())
+        self.input_event_handlers.update(self.chat.get_handlers())
 
     def get_listeners(self) -> dict[str, Callable]:
         """Sets up the AT-SPI event listeners for this script."""
@@ -314,6 +316,10 @@ class Script(script.Script):
 
         bindings = self.get_live_region_presenter().get_bindings(
             refresh=True, is_desktop=is_desktop)
+        for binding in bindings.key_bindings:
+            key_bindings.add(binding)
+
+        bindings = self.chat.get_bindings(refresh=True, is_desktop=is_desktop)
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
 
@@ -505,7 +511,7 @@ class Script(script.Script):
 
         return braille_bindings
 
-    def get_app_preferences_gui(self) -> None:
+    def get_app_preferences_gui(self) -> Gtk.Grid | None:
         """Return a GtkGrid, or None if there's no app-specific UI."""
 
         return None

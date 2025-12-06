@@ -332,6 +332,11 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_DEBUGGING_TOOLS] = bound
             items += len(bound)
 
+            bound = script.chat.get_bindings(
+                is_desktop=is_desktop).get_bound_bindings()
+            bindings[guilabels.KB_GROUP_CHAT] = bound
+            items += len(bound)
+
             title = messages.shortcuts_found_orca(items)
         else:
             app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME

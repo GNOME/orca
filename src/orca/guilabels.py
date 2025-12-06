@@ -375,6 +375,10 @@ KB_GROUP_BRAILLE = _("Braille Bindings")
 KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to chat applications such as instant messaging.
+KB_GROUP_CHAT = _("Chat")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to the clipboard.
 KB_GROUP_CLIPBOARD = _("Clipboard")
 

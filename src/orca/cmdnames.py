@@ -588,15 +588,19 @@ BYPASS_MODE_TOGGLE = _("Toggle all Orca command keys")
 # Translators: Orca has a command to review previous chat room messages in
 # speech and braille. This string to be translated is associated with the
 # keyboard commands used to review those previous messages.
-CHAT_PREVIOUS_MESSAGE = _("Speak and braille a previous chat room message")
+CHAT_PREVIOUS_MESSAGE = _("Present previous chat room message")
+
+# Translators: Orca has a command to review chat room messages in
+# speech and braille. This string to be translated is associated with the
+# keyboard commands used to review the next message in the history.
+CHAT_NEXT_MESSAGE = _("Present next chat room message")
 
 # Translators: In chat applications, it is often possible to see that a "buddy"
 # is typing currently (e.g. via a keyboard icon or status text). Some users like
 # to have this typing status announced by Orca; others find that announcement
 # unpleasant. Therefore, it is a setting in Orca. This string to be translated
 # is associated with the command to toggle typing status presentation on or off.
-CHAT_TOGGLE_BUDDY_TYPING = \
-    _("Toggle whether we announce when our buddies are typing")
+CHAT_TOGGLE_BUDDY_TYPING = _("Toggle typing announcements")
 
 # Translators: Orca has a command to review previous chat room messages in
 # speech and braille. Some users prefer to have this message history combined
@@ -605,9 +609,7 @@ CHAT_TOGGLE_BUDDY_TYPING = \
 # messages from #a11y). Therefore, this is a setting in Orca. This string to be
 # translated is associated with the command to toggle specific room history on
 # or off.
-CHAT_TOGGLE_MESSAGE_HISTORIES = \
-    _("Toggle whether we provide chat room specific message " \
-      "histories")
+CHAT_TOGGLE_MESSAGE_HISTORIES = _("Toggle chat room specific message histories")
 
 # Translators: In chat applications, Orca automatically presents incoming
 # messages in speech and braille. If a user is in multiple conversations or
@@ -616,9 +618,7 @@ CHAT_TOGGLE_MESSAGE_HISTORIES = \
 # has an option to present the name of the room first ("#a11y <joanie> hello!"
 # instead of "<joanie> hello!"). This string to be translated is associated with
 # the command to toggle room name presentation on or off.
-CHAT_TOGGLE_ROOM_NAME_PREFIX = \
-    _("Toggle whether we prefix chat room messages with " \
-      "the name of the chat room")
+CHAT_TOGGLE_ROOM_NAME_PREFIX = _("Toggle room name presentation")
 
 # Translators: this is a command for a button on a refreshable braille display
 # (an external hardware device used by people who are blind). When pressing the

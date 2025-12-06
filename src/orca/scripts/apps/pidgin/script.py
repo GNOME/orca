@@ -36,7 +36,6 @@ from orca import messages
 from orca import settings
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
-from orca.chat import Chat
 from orca.scripts.toolkits import gtk
 
 from .script_utilities import Utilities
@@ -48,19 +47,11 @@ if TYPE_CHECKING:
     gi.require_version("Gtk", "3.0")
     from gi.repository import Atspi, Gtk
 
-    from orca import keybindings
-
 class Script(gtk.Script):
     """Custom script for pidgin."""
 
-    # Override the base class type annotations
-    chat: Chat
+    # Override the base class type annotation
     utilities: Utilities
-
-    def get_chat(self) -> Chat:
-        """Returns the 'chat' class for this script."""
-
-        return Chat(self)
 
     def get_speech_generator(self) -> SpeechGenerator:
         """Returns the speech generator for this script. """
@@ -71,17 +62,6 @@ class Script(gtk.Script):
         """Returns the utilities for this script."""
 
         return Utilities(self)
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        super().setup_input_event_handlers()
-        self.input_event_handlers.update(self.chat.input_event_handlers)
-
-    def get_app_key_bindings(self) -> keybindings.KeyBindings:
-        """Returns the application-specific keybindings for this script."""
-
-        return self.chat.key_bindings
 
     def get_app_preferences_gui(self) -> Gtk.Grid:
         """Return a GtkGrid containing the application unique configuration items."""
@@ -127,7 +107,7 @@ class Script(gtk.Script):
     def on_name_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-name events."""
 
-        if self.chat.isInBuddyList(event.source):
+        if self.chat.is_in_buddy_list(event.source):
             return True
 
         return super().on_name_changed(event)
@@ -135,7 +115,7 @@ class Script(gtk.Script):
     def on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
-        if self.chat.isInBuddyList(event.source):
+        if self.chat.is_in_buddy_list(event.source):
             return True
 
         return super().on_text_deleted(event)
@@ -143,7 +123,7 @@ class Script(gtk.Script):
     def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
-        if self.chat.presentInsertedText(event):
+        if self.chat.present_inserted_text(event):
             return True
 
         return super().on_text_inserted(event)
@@ -151,7 +131,7 @@ class Script(gtk.Script):
     def on_value_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-value accessibility events."""
 
-        if self.chat.isInBuddyList(event.source):
+        if self.chat.is_in_buddy_list(event.source):
             return True
 
         return super().on_value_changed(event)
@@ -181,7 +161,7 @@ class Script(gtk.Script):
 
         # Overridden here because the event.source is in a hidden column.
         obj = event.source
-        if self.chat.isInBuddyList(obj):
+        if self.chat.is_in_buddy_list(obj):
             obj = AXObject.get_next_sibling(obj)
             self.present_object(obj, alreadyFocused=True)
             return True
