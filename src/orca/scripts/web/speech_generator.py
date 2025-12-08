@@ -96,10 +96,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_ancestors(obj, **args)
 
-        manager = focus_manager.get_manager()
-        if manager.in_say_all() and obj == manager.get_locus_of_focus():
-            return []
-
         result: list[Any] = []
         prior_obj = args.get("priorObj")
         if prior_obj and self._script.utilities.in_document_content(prior_obj):
