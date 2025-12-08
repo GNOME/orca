@@ -1,4 +1,3 @@
-subdir('backends')
 subdir('scripts')
 
 configure_file(

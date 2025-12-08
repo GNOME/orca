@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Settings backend manager."""
+"""Settings manager."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 import importlib
 import os
+from json import load, dump
 from gi.repository import Gio, GLib
 
 from . import debug
@@ -53,7 +54,7 @@ except Exception:
 
 
 class SettingsManager:
-    """Settings backend manager"""
+    """Settings manager"""
 
     _instance = None
 
@@ -62,21 +63,32 @@ class SettingsManager:
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, backend='json'):
-        """Initialize a SettingsManager Object.
-        If backend isn't defined then uses default backend, in this
-        case json-backend.
-        backend parameter can use the follow values:
-        backend='json'
-        """
+    def __init__(self):
+        """Initialize a SettingsManager Object."""
 
         debug.print_message(debug.LEVEL_INFO, 'SETTINGS MANAGER: Initializing', True)
 
-        self.backend_module = None
-        self._backend = None
         self.profile = None
-        self.backend_name = backend
         self._prefs_dir = None
+
+        # File paths for settings persistence (set in activate())
+        self._settings_file = None
+        self._app_prefs_dir = None
+
+        # Cached settings from file
+        self._file_general = {}
+        self._file_pronunciations = {}
+        self._file_keybindings = {}
+        self._file_profiles = {}
+
+        # Default profile structure
+        self._default_profiles = {
+            'default': {
+                'profile': settings.profile,
+                'pronunciations': {},
+                'keybindings': {}
+            }
+        }
 
         # Dictionaries for store the default values
         # The keys and values are defined at orca.settings
@@ -105,9 +117,6 @@ class SettingsManager:
         self._app_general = {}
         self._appPronunciations = {}
         self._appKeybindings = {}
-
-        if not self._load_backend():
-            raise Exception('SettingsManager._load_backend failed.')
 
         self.customized_settings = {}
         self._customization_completed = False
@@ -138,14 +147,17 @@ class SettingsManager:
         self._prefs_dir = prefsDir \
             or os.path.join(GLib.get_user_data_dir(), "orca")
 
-        # Load the backend and the default values
-        self._backend = self.backend_module.Backend(self._prefs_dir)
+        # Set up file paths for settings persistence
+        self._settings_file = os.path.join(self._prefs_dir, "user-settings.conf")
+        self._app_prefs_dir = os.path.join(self._prefs_dir, "app-settings")
+
+        # Load the default values
         self._set_default_general()
         self._set_default_pronunciations()
         self._set_default_keybindings()
         self.general = self.default_general.copy()
         if not self.is_first_start():
-            self.general.update(self._backend.getGeneral())
+            self.general.update(self._get_general_from_file())
         self.pronunciations = self.default_pronunciations.copy()
         self.keybindings = self.default_keybindings.copy()
 
@@ -167,16 +179,6 @@ class SettingsManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.set_profile(self.profile)
-
-    def _load_backend(self):
-        """Loads backend for managing user settings"""
-
-        try:
-            backend = f'.backends.{self.backend_name}_backend'
-            self.backend_module = importlib.import_module(backend, 'orca')
-            return True
-        except Exception:
-            return False
 
     def _create_defaults(self):
         """Creates the initial structure for storing the default settings."""
@@ -216,9 +218,9 @@ class SettingsManager:
             os.close(os.open(userCustomFile, os.O_CREAT, 0o700))
 
         if self.is_first_start():
-            self._backend.saveDefaultSettings(self.default_general,
-                                              self.default_pronunciations,
-                                              self.default_keybindings)
+            self._save_default_settings(self.default_general,
+                                        self.default_pronunciations,
+                                        self.default_keybindings)
 
     def _set_default_pronunciations(self):
         """Get the pronunciations by default from orca.settings"""
@@ -285,6 +287,172 @@ class SettingsManager:
         debug.print_tokens(debug.LEVEL_ALL, tokens, True)
         return success
 
+    # -------------------------------------------------------------------------
+    # Settings file I/O methods
+    # -------------------------------------------------------------------------
+
+    def _load_settings_from_file(self):
+        """Load all settings from the JSON config file."""
+
+        with open(self._settings_file, encoding='utf-8') as settings_file:
+            try:
+                prefs = load(settings_file)
+            except ValueError:
+                return
+        self._file_general = prefs['general'].copy()
+        self._file_pronunciations = prefs['pronunciations']
+        self._file_keybindings = prefs['keybindings']
+        self._file_profiles = prefs['profiles'].copy()
+
+    def _save_default_settings(self, general, pronunciations, keybindings):
+        """Save default settings for all properties from orca.settings."""
+
+        prefs = {
+            'general': general,
+            'profiles': self._default_profiles,
+            'pronunciations': pronunciations,
+            'keybindings': keybindings
+        }
+
+        self._file_general = general
+        self._file_profiles = self._default_profiles
+        self._file_pronunciations = pronunciations
+        self._file_keybindings = keybindings
+
+        with open(self._settings_file, 'w', encoding='utf-8') as settings_file:
+            dump(prefs, settings_file, indent=4)
+
+    def _save_profile_settings(self, profile, general, pronunciations, keybindings):
+        """Save minimal subset defined in the profile against current defaults."""
+
+        if profile is None:
+            profile = 'default'
+
+        general['pronunciations'] = pronunciations
+        general['keybindings'] = keybindings
+
+        with open(self._settings_file, 'r+', encoding='utf-8') as settings_file:
+            prefs = load(settings_file)
+            prefs['profiles'][profile] = general
+            settings_file.seek(0)
+            settings_file.truncate()
+            dump(prefs, settings_file, indent=4)
+
+    def _set_profile_key(self, key, value):
+        """Update a key in the general settings."""
+
+        self._file_general[key] = value
+
+        with open(self._settings_file, 'r+', encoding='utf-8') as settings_file:
+            prefs = load(settings_file)
+            prefs['general'][key] = value
+            settings_file.seek(0)
+            settings_file.truncate()
+            dump(prefs, settings_file, indent=4)
+
+    def _get_general_from_file(self, profile=None):
+        """Get general settings from file, merging default with profile values."""
+
+        self._load_settings_from_file()
+        general_settings = self._file_general.copy()
+        default_profile = general_settings.get('startingProfile', ['Default', 'default'])
+        if profile is None:
+            profile = default_profile[1]
+        profile_settings = self._file_profiles[profile].copy()
+        for key, value in profile_settings.items():
+            if key == 'voices':
+                for voice_type, voice_def in value.items():
+                    value[voice_type] = ACSS(voice_def)
+            if key not in ['startingProfile', 'activeProfile']:
+                general_settings[key] = value
+        try:
+            general_settings['activeProfile'] = profile_settings['profile']
+        except KeyError:
+            general_settings['activeProfile'] = default_profile
+        return general_settings
+
+    def _get_pronunciations_from_file(self, profile='default'):
+        """Get pronunciation settings from file, merging with profile values."""
+
+        self._load_settings_from_file()
+        pronunciations = self._file_pronunciations.copy()
+        profile_settings = self._file_profiles[profile].copy()
+        if 'pronunciations' in profile_settings:
+            pronunciations = profile_settings['pronunciations']
+        return pronunciations
+
+    def _get_keybindings_from_file(self, profile='default'):
+        """Get keybindings settings from file, merging with profile values."""
+
+        self._load_settings_from_file()
+        keybindings = self._file_keybindings.copy()
+        profile_settings = self._file_profiles[profile].copy()
+        if 'keybindings' in profile_settings:
+            keybindings = profile_settings['keybindings']
+        return keybindings
+
+    def _get_app_settings_from_file(self, app_name):
+        """Load app-specific settings from file."""
+
+        file_name = os.path.join(self._app_prefs_dir, f"{app_name}.conf")
+        if os.path.exists(file_name):
+            with open(file_name, 'r', encoding='utf-8') as settings_file:
+                prefs = load(settings_file)
+        else:
+            prefs = {}
+        return prefs
+
+    def _save_app_settings_to_file(self, app_name, profile, general, pronunciations, keybindings):
+        """Save app-specific settings to file."""
+
+        prefs = self._get_app_settings_from_file(app_name)
+        profiles = prefs.get('profiles', {})
+        profiles[profile] = {
+            'general': general,
+            'pronunciations': pronunciations,
+            'keybindings': keybindings
+        }
+        prefs['profiles'] = profiles
+
+        file_name = os.path.join(self._app_prefs_dir, f"{app_name}.conf")
+        with open(file_name, 'w', encoding='utf-8') as settings_file:
+            dump(prefs, settings_file, indent=4)
+
+    def _available_profiles_from_file(self):
+        """List available profiles from file."""
+
+        self._load_settings_from_file()
+        profiles = []
+        for profile_name in self._file_profiles.keys():
+            profile_dict = self._file_profiles[profile_name].copy()
+            profiles.append(profile_dict.get('profile'))
+        return profiles
+
+    def _remove_profile_from_file(self, profile):
+        """Remove an existing profile from file."""
+
+        def remove_profile_from(d):
+            del d[profile]
+            # If we removed the last profile, restore the default ones
+            if len(d) == 0:
+                for profile_name in self._default_profiles:
+                    d[profile_name] = self._default_profiles[profile_name].copy()
+
+        if profile in self._file_profiles:
+            remove_profile_from(self._file_profiles)
+
+        with open(self._settings_file, 'r+', encoding='utf-8') as settings_file:
+            prefs = load(settings_file)
+            if profile in prefs['profiles']:
+                remove_profile_from(prefs['profiles'])
+                settings_file.seek(0)
+                settings_file.truncate()
+                dump(prefs, settings_file, indent=4)
+
+    # -------------------------------------------------------------------------
+    # End of settings file I/O methods
+    # -------------------------------------------------------------------------
+
     def get_prefs_dir(self):
         return self._prefs_dir
 
@@ -323,8 +491,8 @@ class SettingsManager:
         return factories
 
     def _load_profile_settings(self, profile=None):
-        """Get from the active backend all the settings for the current
-        profile and store them in the object's attributes.
+        """Load all the settings for the current profile and store them
+        in the object's attributes.
         A profile can be passed as a parameter. This could be useful for
         change from one profile to another."""
 
@@ -422,7 +590,7 @@ class SettingsManager:
     def set_starting_profile(self, profile=None):
         if profile is None:
             profile = settings.profile
-        self._backend._setProfileKey('startingProfile', profile)
+        self._set_profile_key('startingProfile', profile)
 
     def get_profile(self):
         return self.profile
@@ -454,7 +622,7 @@ class SettingsManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def remove_profile(self, profile):
-        self._backend.remove_profile(profile)
+        self._remove_profile_from_file(profile)
 
     def _set_settings_runtime(self, settingsDict):
         msg = 'SETTINGS MANAGER: Setting runtime settings.'
@@ -479,19 +647,19 @@ class SettingsManager:
         """Return the current general settings.
         Those settings comes from updating the default settings
         with the profiles' ones"""
-        return self._backend.getGeneral(profile)
+        return self._get_general_from_file(profile)
 
     def get_pronunciations(self, profile='default'):
         """Return the current pronunciations settings.
         Those settings comes from updating the default settings
         with the profiles' ones"""
-        return self._backend.get_pronunciations(profile)
+        return self._get_pronunciations_from_file(profile)
 
     def get_keybindings(self, profile='default'):
         """Return the current keybindings settings.
         Those settings comes from updating the default settings
         with the profiles' ones"""
-        return self._backend.get_keybindings(profile)
+        return self._get_keybindings_from_file(profile)
 
     def _set_profile_general(self, general):
         """Set the changed general settings from the defaults' ones
@@ -560,11 +728,11 @@ class SettingsManager:
             if value != profile_keybindings.get(key):
                 appKeybindings[key] = value
 
-        self._backend.saveAppSettings(appName,
-                                      self.profile,
-                                      appGeneral,
-                                      appPronunciations,
-                                      appKeybindings)
+        self._save_app_settings_to_file(appName,
+                                        self.profile,
+                                        appGeneral,
+                                        appPronunciations,
+                                        appKeybindings)
 
     def get_runtime_settings(self):
         """Returns a dictionary with settings toggled at runtime."""
@@ -595,13 +763,13 @@ class SettingsManager:
         self._set_profile_pronunciations(pronunciations)
         self._set_profile_keybindings(keybindings)
 
-        tokens = ["SETTINGS MANAGER: Saving for backend", self._backend]
+        tokens = ["SETTINGS MANAGER: Saving for profile", self.profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self._backend.saveProfileSettings(self.profile,
-                                          self.profile_general,
-                                          self.profile_pronunciations,
-                                          self.profile_keybindings)
+        self._save_profile_settings(self.profile,
+                                    self.profile_general,
+                                    self.profile_pronunciations,
+                                    self.profile_keybindings)
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -664,13 +832,13 @@ class SettingsManager:
         return bindings
 
     def is_first_start(self):
-        """Check if the firstStart key is True or false"""
-        return self._backend.is_first_start()
+        """Check if the settings file exists (i.e., first start if not)."""
+        return not os.path.exists(self._settings_file)
 
     def available_profiles(self):
-        """Get available profiles from active backend"""
+        """Get available profiles."""
 
-        return self._backend.available_profiles()
+        return self._available_profiles_from_file()
 
     def get_app_setting(self, app, settingName, fallbackOnDefault=True):
         """Returns the specified setting for app."""
@@ -678,13 +846,13 @@ class SettingsManager:
         if not app:
             return None
 
-        appPrefs = self._backend.get_app_settings(AXObject.get_name(app))
+        appPrefs = self._get_app_settings_from_file(AXObject.get_name(app))
         profiles = appPrefs.get('profiles', {})
         profilePrefs = profiles.get(self.profile, {})
         general = profilePrefs.get('general', {})
         appSetting = general.get(settingName)
         if appSetting is None and fallbackOnDefault:
-            general = self._backend.getGeneral(self.profile)
+            general = self._get_general_from_file(self.profile)
             appSetting = general.get(settingName)
 
         return appSetting
@@ -700,7 +868,7 @@ class SettingsManager:
         for key in self._appPronunciations.keys():
             self.pronunciations.pop(key)
 
-        prefs = self._backend.get_app_settings(AXObject.get_name(script.app))
+        prefs = self._get_app_settings_from_file(AXObject.get_name(script.app))
         profiles = prefs.get('profiles', {})
         profilePrefs = profiles.get(self.profile, {})
 

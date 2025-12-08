@@ -44,6 +44,7 @@ unit_tests = [
   'unit_tests/test_orca_modifier_manager.py',
   'unit_tests/test_say_all_presenter.py',
   'unit_tests/test_script_manager.py',
+  'unit_tests/test_settings_manager.py',
   'unit_tests/test_sleep_mode_manager.py',
   'unit_tests/test_speech_and_verbosity_manager.py',
   'unit_tests/test_structural_navigator.py',
