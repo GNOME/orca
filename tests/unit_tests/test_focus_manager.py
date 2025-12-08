@@ -482,9 +482,11 @@ class TestFocusManager:
             mock_emit.assert_not_called()
         else:
             assert manager._focus == mock_obj
-            mock_emit.assert_called_once()
             if notify_script:
+                mock_emit.assert_called_once()
                 script_instance.locus_of_focus_changed.assert_called_once()
+            else:
+                mock_emit.assert_not_called()
 
     def test_set_locus_of_focus_null_object(self, test_context: OrcaTestContext) -> None:
         """Test FocusManager.set_locus_of_focus with null object."""

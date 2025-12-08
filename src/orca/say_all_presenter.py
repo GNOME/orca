@@ -24,6 +24,7 @@
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-instance-attributes
 
 """Module for commands related to the current accessible object."""
 
@@ -87,6 +88,7 @@ class SayAllPresenter:
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
         self._contexts: list[speechserver.SayAllContext] = []
         self._current_context: speechserver.SayAllContext | None = None
+        self._say_all_is_running: bool = False
 
         msg = "SayAllPresenter: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -188,6 +190,7 @@ class SayAllPresenter:
         self._contexts = []
         self._contents = []
         self._current_context = None
+        self._say_all_is_running = False
 
         tokens = ["SAY ALL PRESENTER: say_all. Script:", script, "Event:", event,
                   "notify_user:", notify_user]
@@ -345,6 +348,7 @@ class SayAllPresenter:
         self._contexts = []
         self._contents = []
         self._current_context = None
+        self._say_all_is_running = False
 
     def _rewind(
         self,
@@ -408,6 +412,7 @@ class SayAllPresenter:
 
     def _progress_callback(self, context: speechserver.SayAllContext, progress_type: int) -> None:
         self._current_context = context
+        self._say_all_is_running = True
 
         if AXText.character_at_offset_is_eoc(context.obj, context.current_offset):
             return
@@ -435,12 +440,15 @@ class SayAllPresenter:
                     return
                 self._script.interrupt_presentation()
                 AXText.set_caret_offset(context.obj, context.current_offset)
+                self._say_all_is_running = False
         else:
             tokens = ["SAY ALL PROGRESS CALLBACK: Completed", context]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
-        focus_manager.get_manager().emit_region_changed(context.obj, context.current_offset)
+        mode = focus_manager.SAY_ALL if self._say_all_is_running else focus_manager.FOCUS_TRACKING
+        focus_manager.get_manager().emit_region_changed(
+            context.obj, context.current_offset, None, mode)
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
 
     @dbus_service.getter

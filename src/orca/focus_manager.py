@@ -303,7 +303,6 @@ class FocusManager:
                   "to", obj, ". Notify:", notify_script]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._focus = obj
-        self.emit_region_changed(obj, mode=FOCUS_TRACKING)
 
         if not notify_script:
             return
@@ -313,6 +312,7 @@ class FocusManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
+        self.emit_region_changed(obj, mode=FOCUS_TRACKING)
         script.locus_of_focus_changed(event, old_focus, self._focus)
 
     def active_window_is_active(self) -> bool:

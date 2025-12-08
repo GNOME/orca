@@ -548,3 +548,144 @@ class TestSayAllPresenter:
 
         presenter._current_context = mock_context
         assert presenter._current_context is mock_context
+
+    def test_say_all_is_running_initialized_to_false(self, test_context: OrcaTestContext) -> None:
+        """Test that _say_all_is_running is initialized to False."""
+
+        self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        assert presenter._say_all_is_running is False
+
+    def test_say_all_clears_say_all_is_running(self, test_context: OrcaTestContext) -> None:
+        """Test that say_all resets _say_all_is_running to False."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        mock_script = test_context.Mock()
+
+        presenter._say_all_is_running = True
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+        manager_instance.get_locus_of_focus.return_value = None
+
+        messages_mock = essential_modules["orca.messages"]
+        messages_mock.LOCATION_NOT_FOUND_FULL = "Location not found"
+
+        presenter.say_all(mock_script)
+        assert presenter._say_all_is_running is False
+
+    def test_progress_callback_sets_say_all_is_running_true(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that _progress_callback sets _say_all_is_running to True."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        mock_script = test_context.Mock()
+        presenter._script = mock_script
+
+        mock_context = test_context.Mock(spec=speechserver.SayAllContext)
+        mock_context.obj = test_context.Mock()
+        mock_context.current_offset = 5
+        mock_context.current_end_offset = 10
+
+        test_context.patch_object(AXText, "character_at_offset_is_eoc", return_value=False)
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        focus_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = focus_instance
+        focus_manager_mock.SAY_ALL = "say-all"
+
+        assert presenter._say_all_is_running is False
+
+        presenter._progress_callback(mock_context, speechserver.SayAllContext.PROGRESS)
+
+        assert presenter._say_all_is_running is True
+
+    def test_progress_callback_uses_say_all_mode_when_running(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that _progress_callback uses SAY_ALL mode when _say_all_is_running is True."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        mock_script = test_context.Mock()
+        presenter._script = mock_script
+
+        mock_context = test_context.Mock(spec=speechserver.SayAllContext)
+        mock_context.obj = test_context.Mock()
+        mock_context.current_offset = 5
+        mock_context.current_end_offset = 10
+
+        test_context.patch_object(AXText, "character_at_offset_is_eoc", return_value=False)
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        focus_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = focus_instance
+        focus_manager_mock.SAY_ALL = "say-all"
+
+        presenter._progress_callback(mock_context, speechserver.SayAllContext.PROGRESS)
+
+        focus_instance.emit_region_changed.assert_called_once_with(
+            mock_context.obj, mock_context.current_offset, mock_context.current_end_offset,
+            "say-all"
+        )
+
+    def test_progress_callback_uses_focus_tracking_mode_when_interrupted(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that _progress_callback uses FOCUS_TRACKING mode when interrupted by keyboard."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
+        from orca import input_event_manager  # pylint: disable=import-outside-toplevel
+        from orca import focus_manager as fm  # pylint: disable=import-outside-toplevel
+        from orca import settings_manager  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        mock_script = test_context.Mock()
+        presenter._script = mock_script
+
+        mock_context = test_context.Mock(spec=speechserver.SayAllContext)
+        mock_context.obj = test_context.Mock()
+        mock_context.current_offset = 5
+        mock_context.current_end_offset = 10
+
+        test_context.patch_object(AXText, "character_at_offset_is_eoc", return_value=False)
+        test_context.patch_object(AXText, "set_caret_offset", return_value=True)
+
+        focus_instance = test_context.Mock()
+        test_context.patch_object(fm, "get_manager", return_value=focus_instance)
+
+        iem_instance = test_context.Mock()
+        iem_instance.last_event_was_keyboard.return_value = True
+        iem_instance.last_event_was_down.return_value = False
+        iem_instance.last_event_was_up.return_value = False
+        test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
+
+        sm_instance = test_context.Mock()
+        sm_instance.get_setting.return_value = False
+        test_context.patch_object(settings_manager, "get_manager", return_value=sm_instance)
+
+        presenter._progress_callback(mock_context, speechserver.SayAllContext.INTERRUPTED)
+
+        assert presenter._say_all_is_running is False
+        focus_instance.emit_region_changed.assert_called_once_with(
+            mock_context.obj, mock_context.current_offset, None, fm.FOCUS_TRACKING
+        )
