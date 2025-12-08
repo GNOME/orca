@@ -90,8 +90,7 @@ class BraillePresenter:
     def use_braille(self) -> bool:
         """Returns whether braille is to be used."""
 
-        manager = settings_manager.get_manager()
-        result = manager.get_setting("enableBraille") or manager.get_setting("enableBrailleMonitor")
+        result = settings.enableBraille or settings.enableBrailleMonitor
         if not result:
             msg = "BRAILLE PRESENTER: Braille is disabled."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -101,7 +100,7 @@ class BraillePresenter:
     def get_braille_is_enabled(self) -> bool:
         """Returns whether braille is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableBraille")
+        return settings.enableBraille
 
     @dbus_service.setter
     def set_braille_is_enabled(self, value: bool) -> bool:
@@ -121,14 +120,14 @@ class BraillePresenter:
     def use_verbose_braille(self) -> bool:
         """Returns whether the braille verbosity level is set to verbose."""
 
-        level = settings_manager.get_manager().get_setting("brailleVerbosityLevel")
+        level = settings.brailleVerbosityLevel
         return level == settings.VERBOSITY_LEVEL_VERBOSE
 
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
         """Returns the current braille verbosity level for object presentation."""
 
-        int_value = settings_manager.get_manager().get_setting("brailleVerbosityLevel")
+        int_value = settings.brailleVerbosityLevel
         return VerbosityLevel(int_value).string_name
 
     @dbus_service.setter
@@ -150,14 +149,14 @@ class BraillePresenter:
     def use_full_rolenames(self) -> bool:
         """Returns whether full rolenames should be used."""
 
-        level = settings_manager.get_manager().get_setting("brailleRolenameStyle")
+        level = settings.brailleRolenameStyle
         return level == settings.VERBOSITY_LEVEL_VERBOSE
 
     @dbus_service.getter
     def get_rolename_style(self) -> str:
         """Returns the current rolename style for object presentation."""
 
-        int_value = settings_manager.get_manager().get_setting("brailleRolenameStyle")
+        int_value = settings.brailleRolenameStyle
         return RolenameStyle(int_value).string_name
 
     @dbus_service.setter
@@ -180,7 +179,7 @@ class BraillePresenter:
     def get_display_ancestors(self) -> bool:
         """Returns whether ancestors of the current object will be displayed."""
 
-        return settings_manager.get_manager().get_setting("enableBrailleContext")
+        return settings.enableBrailleContext
 
     @dbus_service.setter
     def set_display_ancestors(self, value: bool) -> bool:
@@ -195,7 +194,7 @@ class BraillePresenter:
     def get_contracted_braille_is_enabled(self) -> bool:
         """Returns whether contracted braille is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableContractedBraille")
+        return settings.enableContractedBraille
 
     @dbus_service.setter
     def set_contracted_braille_is_enabled(self, value: bool) -> bool:
@@ -210,7 +209,7 @@ class BraillePresenter:
     def get_contraction_table(self) -> str:
         """Returns the current braille contraction table name."""
 
-        full_path = settings_manager.get_manager().get_setting("brailleContractionTable")
+        full_path = settings.brailleContractionTable
         if not full_path:
             return ""
         return os.path.splitext(os.path.basename(full_path))[0]
@@ -250,7 +249,7 @@ class BraillePresenter:
         """Returns whether the end-of-line indicator is enabled."""
 
         # The setting, unfortunately, is disableBrailleEOL.
-        return not settings_manager.get_manager().get_setting("disableBrailleEOL")
+        return not settings.disableBrailleEOL
 
     @dbus_service.setter
     def set_end_of_line_indicator_is_enabled(self, value: bool) -> bool:
@@ -267,7 +266,7 @@ class BraillePresenter:
     def get_word_wrap_is_enabled(self) -> bool:
         """Returns whether braille word wrap is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableBrailleWordWrap")
+        return settings.enableBrailleWordWrap
 
     @dbus_service.setter
     def set_word_wrap_is_enabled(self, value: bool) -> bool:
@@ -282,7 +281,7 @@ class BraillePresenter:
     def get_flash_messages_are_enabled(self) -> bool:
         """Returns whether 'flash' messages (i.e. announcements) are enabled."""
 
-        return settings_manager.get_manager().get_setting("enableFlashMessages")
+        return settings.enableFlashMessages
 
     @dbus_service.setter
     def set_flash_messages_are_enabled(self, value: bool) -> bool:
@@ -304,7 +303,7 @@ class BraillePresenter:
     def get_flash_message_duration(self) -> int:
         """Returns flash message duration in milliseconds."""
 
-        return settings_manager.get_manager().get_setting("brailleFlashTime")
+        return settings.brailleFlashTime
 
     @dbus_service.setter
     def set_flash_message_duration(self, value: int) -> bool:
@@ -319,7 +318,7 @@ class BraillePresenter:
     def get_flash_messages_are_persistent(self) -> bool:
         """Returns whether 'flash' messages are persistent (as opposed to temporary)."""
 
-        return settings_manager.get_manager().get_setting("flashIsPersistent")
+        return settings.flashIsPersistent
 
     @dbus_service.setter
     def set_flash_messages_are_persistent(self, value: bool) -> bool:
@@ -334,7 +333,7 @@ class BraillePresenter:
     def get_flash_messages_are_detailed(self) -> bool:
         """Returns whether 'flash' messages are detailed (as opposed to brief)."""
 
-        return settings_manager.get_manager().get_setting("flashIsDetailed")
+        return settings.flashIsDetailed
 
     @dbus_service.setter
     def set_flash_messages_are_detailed(self, value: bool) -> bool:
@@ -349,7 +348,7 @@ class BraillePresenter:
     def get_selector_indicator(self) -> str:
         """Returns the braille selector indicator style."""
 
-        int_value = settings_manager.get_manager().get_setting("brailleSelectorIndicator")
+        int_value = settings.brailleSelectorIndicator
         return BrailleIndicator(int_value).string_name
 
     @dbus_service.setter
@@ -372,7 +371,7 @@ class BraillePresenter:
     def get_link_indicator(self) -> str:
         """Returns the braille link indicator style."""
 
-        int_value = settings_manager.get_manager().get_setting("brailleLinkIndicator")
+        int_value = settings.brailleLinkIndicator
         return BrailleIndicator(int_value).string_name
 
     @dbus_service.setter
@@ -395,7 +394,7 @@ class BraillePresenter:
     def get_text_attributes_indicator(self) -> str:
         """Returns the braille text attributes indicator style."""
 
-        int_value = settings_manager.get_manager().get_setting("textAttributesBrailleIndicator")
+        int_value = settings.textAttributesBrailleIndicator
         return BrailleIndicator(int_value).string_name
 
     @dbus_service.setter

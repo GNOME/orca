@@ -52,7 +52,6 @@ from . import keybindings
 from . import messages
 from . import script_manager
 from . import settings
-from . import settings_manager
 from . import speech
 from .ax_object import AXObject
 
@@ -237,7 +236,7 @@ class LearnModePresenter:
     def list_orca_shortcuts(self, script: default.Script, event: input_event.KeyboardEvent) -> bool:
         """Shows a simple gui listing Orca's bound commands."""
 
-        layout = settings_manager.get_manager().get_setting("keyboardLayout")
+        layout = settings.keyboardLayout
         is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
         items = 0

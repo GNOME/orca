@@ -306,19 +306,19 @@ class Chat:
         grid.set_border_width(12)
 
         label = guilabels.CHAT_SPEAK_ROOM_NAME
-        value = settings_manager.get_manager().get_setting("chatSpeakRoomName")
+        value = settings.chatSpeakRoomName
         self._speak_name_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._speak_name_check_button.set_active(value)
         grid.attach(self._speak_name_check_button, 0, 0, 1, 1)
 
         label = guilabels.CHAT_ANNOUNCE_BUDDY_TYPING
-        value = settings_manager.get_manager().get_setting("chatAnnounceBuddyTyping")
+        value = settings.chatAnnounceBuddyTyping
         self._buddy_typing_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._buddy_typing_check_button.set_active(value)
         grid.attach(self._buddy_typing_check_button, 0, 1, 1, 1)
 
         label = guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES
-        value = settings_manager.get_manager().get_setting("chatRoomHistories")
+        value = settings.chatRoomHistories
         self._chat_room_histories_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._chat_room_histories_check_button.set_active(value)
@@ -336,7 +336,7 @@ class Chat:
         messages_grid = Gtk.Grid()
         messages_alignment.add(messages_grid)
 
-        value = settings_manager.get_manager().get_setting("chatMessageVerbosity")
+        value = settings.chatMessageVerbosity
 
         label = guilabels.CHAT_SPEAK_MESSAGES_ALL
         rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
@@ -390,7 +390,7 @@ class Chat:
         """Toggle whether we prefix chat room messages with the name of the chat room."""
 
         line = messages.CHAT_ROOM_NAME_PREFIX_ON
-        speak_room_name = settings_manager.get_manager().get_setting("chatSpeakRoomName")
+        speak_room_name = settings.chatSpeakRoomName
         settings_manager.get_manager().set_setting("chatSpeakRoomName", not speak_room_name)
         if speak_room_name:
             line = messages.CHAT_ROOM_NAME_PREFIX_OFF
@@ -401,7 +401,7 @@ class Chat:
         """Toggle whether we announce when our buddies are typing a message."""
 
         line = messages.CHAT_BUDDY_TYPING_ON
-        announce_typing = settings_manager.get_manager().get_setting("chatAnnounceBuddyTyping")
+        announce_typing = settings.chatAnnounceBuddyTyping
         settings_manager.get_manager().set_setting("chatAnnounceBuddyTyping", not announce_typing)
         if announce_typing:
             line = messages.CHAT_BUDDY_TYPING_OFF
@@ -413,7 +413,7 @@ class Chat:
         """Toggle whether we provide chat room specific message histories."""
 
         line = messages.CHAT_SEPARATE_HISTORIES_ON
-        room_histories = settings_manager.get_manager().get_setting("chatRoomHistories")
+        room_histories = settings.chatRoomHistories
         settings_manager.get_manager().set_setting("chatRoomHistories", not room_histories)
         if room_histories:
             line = messages.CHAT_SEPARATE_HISTORIES_OFF
@@ -424,7 +424,7 @@ class Chat:
     def _get_message_count(self) -> int:
         """Returns the message count based on current history setting."""
 
-        if settings_manager.get_manager().get_setting("chatRoomHistories"):
+        if settings.chatRoomHistories:
             conversation = self.get_conversation_for_object(
                 focus_manager.get_manager().get_locus_of_focus()
             )
@@ -481,7 +481,7 @@ class Chat:
 
         message, chat_room_name = None, None
 
-        if settings_manager.get_manager().get_setting("chatRoomHistories"):
+        if settings.chatRoomHistories:
             conversation = self.get_conversation_for_object(
                 focus_manager.get_manager().get_locus_of_focus()
             )
@@ -563,7 +563,7 @@ class Chat:
     def _present_typing_status_change(self, event: Atspi.Event, status: str) -> bool:
         """Presents a change in typing status for the current conversation."""
 
-        if not settings_manager.get_manager().get_setting("chatAnnounceBuddyTyping"):
+        if not settings.chatAnnounceBuddyTyping:
             return False
 
         conversation = self.get_conversation_for_object(event.source)

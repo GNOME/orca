@@ -359,7 +359,6 @@ class TestChat:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = test_context.Mock()
-        manager_instance.get_setting = test_context.Mock(return_value=False)
         manager_instance.set_setting = test_context.Mock()
         manager_instance.override_key_bindings = test_context.Mock(
             side_effect=lambda h, b, d: b
@@ -367,6 +366,12 @@ class TestChat:
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=manager_instance
         )
+
+        # Set chat-related settings
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.chatSpeakRoomName = False
+        settings_mock.chatAnnounceBuddyTyping = False
+        settings_mock.chatRoomHistories = False
 
         return essential_modules
 
@@ -551,9 +556,8 @@ class TestChat:
         from orca.chat import Chat
 
         # Set initial state: prefix is on
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_setting = test_context.Mock(return_value=True)
+        essential_modules["orca.settings"].chatSpeakRoomName = True
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
@@ -573,9 +577,8 @@ class TestChat:
         from orca.chat import Chat
 
         # Set initial state: prefix is off
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_setting = test_context.Mock(return_value=False)
+        essential_modules["orca.settings"].chatSpeakRoomName = False
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
@@ -594,9 +597,8 @@ class TestChat:
         essential_modules = self._setup_dependencies(test_context)
         from orca.chat import Chat
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_setting = test_context.Mock(return_value=True)
+        essential_modules["orca.settings"].chatAnnounceBuddyTyping = True
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
@@ -615,9 +617,8 @@ class TestChat:
         essential_modules = self._setup_dependencies(test_context)
         from orca.chat import Chat
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_setting = test_context.Mock(return_value=False)
+        essential_modules["orca.settings"].chatAnnounceBuddyTyping = False
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
@@ -636,9 +637,8 @@ class TestChat:
         essential_modules = self._setup_dependencies(test_context)
         from orca.chat import Chat
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_setting = test_context.Mock(return_value=True)
+        essential_modules["orca.settings"].chatRoomHistories = True
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
@@ -657,9 +657,8 @@ class TestChat:
         essential_modules = self._setup_dependencies(test_context)
         from orca.chat import Chat
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_setting = test_context.Mock(return_value=False)
+        essential_modules["orca.settings"].chatRoomHistories = False
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)

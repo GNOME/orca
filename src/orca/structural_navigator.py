@@ -59,6 +59,7 @@ from . import object_properties
 from . import orca_gui_navlist
 from . import say_all_presenter
 from . import script_manager
+from . import settings
 from . import settings_manager
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -1082,7 +1083,7 @@ class StructuralNavigator:
     def get_navigation_wraps(self) -> bool:
         """Returns whether navigation wraps when reaching the top/bottom of the document."""
 
-        return settings_manager.get_manager().get_setting("wrappedStructuralNavigation")
+        return settings.wrappedStructuralNavigation
 
     @dbus_service.setter
     def set_navigation_wraps(self, value: bool) -> bool:
@@ -1097,7 +1098,7 @@ class StructuralNavigator:
     def get_large_object_text_length(self) -> int:
         """Returns the minimum number of characters to be considered a 'large object'."""
 
-        return settings_manager.get_manager().get_setting("largeObjectTextLength")
+        return settings.largeObjectTextLength
 
     @dbus_service.setter
     def set_large_object_text_length(self, value: int) -> bool:
@@ -1112,7 +1113,7 @@ class StructuralNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether structural navigation is enabled."""
 
-        return settings_manager.get_manager().get_setting("structuralNavigationEnabled")
+        return settings.structuralNavigationEnabled
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -1152,7 +1153,7 @@ class StructuralNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether structural navigation triggers focus mode."""
 
-        return settings_manager.get_manager().get_setting("structNavTriggersFocusMode")
+        return settings.structNavTriggersFocusMode
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:

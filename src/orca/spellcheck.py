@@ -47,6 +47,7 @@ from orca import focus_manager
 from orca import guilabels
 from orca import messages
 from orca import object_properties
+from orca import settings
 from orca import settings_manager
 from orca import speech_and_verbosity_manager
 from orca.ax_object import AXObject
@@ -232,7 +233,7 @@ class SpellCheck:
 
         if self.present_mistake(detailed):
             self.present_suggestion(detailed)
-            if detailed or settings_manager.get_manager().get_setting("spellcheckPresentContext"):
+            if detailed or settings.spellcheckPresentContext:
                 self.present_context()
             return True
 
@@ -255,7 +256,7 @@ class SpellCheck:
         msg = messages.MISSPELLED_WORD % word
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speak_message(msg, voice=voice)
-        if detailed or settings_manager.get_manager().get_setting("spellcheckSpellError"):
+        if detailed or settings.spellcheckSpellError:
             self._script.spell_item(word)
 
         return True
@@ -282,7 +283,7 @@ class SpellCheck:
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speak_message(msg, voice=voice)
-        if detailed or settings_manager.get_manager().get_setting("spellcheckSpellSuggestion"):
+        if detailed or settings.spellcheckSpellSuggestion:
             self._script.spell_item(string)
 
         return True
@@ -316,7 +317,7 @@ class SpellCheck:
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
         self._script.speak_message(msg.strip(), voice=voice)
-        if detailed or settings_manager.get_manager().get_setting("spellcheckSpellSuggestion"):
+        if detailed or settings.spellcheckSpellSuggestion:
             self._script.spell_item(string)
 
         if speech_and_verbosity_manager.get_manager().get_speak_position_in_set() \
@@ -437,19 +438,19 @@ class SpellCheck:
         alignment.add(grid)
 
         label = guilabels.SPELL_CHECK_SPELL_ERROR
-        value = settings_manager.get_manager().get_setting('spellcheckSpellError')
+        value = settings.spellcheckSpellError
         self.spell_error_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self.spell_error_check_button.set_active(value)
         grid.attach(self.spell_error_check_button, 0, 0, 1, 1)
 
         label = guilabels.SPELL_CHECK_SPELL_SUGGESTION
-        value = settings_manager.get_manager().get_setting('spellcheckSpellSuggestion')
+        value = settings.spellcheckSpellSuggestion
         self.spell_suggestion_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self.spell_suggestion_check_button.set_active(value)
         grid.attach(self.spell_suggestion_check_button, 0, 1, 1, 1)
 
         label = guilabels.SPELL_CHECK_PRESENT_CONTEXT
-        value = settings_manager.get_manager().get_setting('spellcheckPresentContext')
+        value = settings.spellcheckPresentContext
         self.present_context_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self.present_context_check_button.set_active(value)
         grid.attach(self.present_context_check_button, 0, 2, 1, 1)

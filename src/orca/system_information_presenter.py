@@ -51,6 +51,7 @@ from . import debug
 from . import input_event
 from . import keybindings
 from . import messages
+from . import settings
 from . import settings_manager
 
 class DateFormat(Enum):
@@ -207,18 +208,18 @@ class SystemInformationPresenter:
     def _get_date_format_string(self) -> str:
         """Returns the current date format string for internal use."""
 
-        return settings_manager.get_manager().get_setting("presentDateFormat")
+        return settings.presentDateFormat
 
     def _get_time_format_string(self) -> str:
         """Returns the current time format string for internal use."""
 
-        return settings_manager.get_manager().get_setting("presentTimeFormat")
+        return settings.presentTimeFormat
 
     @dbus_service.getter
     def get_date_format(self) -> str:
         """Returns the current date format name."""
 
-        string_value = settings_manager.get_manager().get_setting("presentDateFormat")
+        string_value = settings.presentDateFormat
         for fmt in DateFormat:
             if fmt.value == string_value:
                 return fmt.string_name
@@ -250,7 +251,7 @@ class SystemInformationPresenter:
     def get_time_format(self) -> str:
         """Returns the current time format name."""
 
-        string_value = settings_manager.get_manager().get_setting("presentTimeFormat")
+        string_value = settings.presentTimeFormat
         for fmt in TimeFormat:
             if fmt.value == string_value:
                 return fmt.string_name

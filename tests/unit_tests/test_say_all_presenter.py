@@ -262,10 +262,8 @@ class TestSayAllPresenter:
         mock_script = test_context.Mock()
         presenter._script = mock_script
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = test_context.Mock()
-        settings_manager_mock.get_manager.return_value = manager_instance
-        manager_instance.get_setting.return_value = enabled
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.rewindAndFastForwardInSayAll = enabled
 
         mock_context = test_context.Mock(spec=speechserver.SayAllContext)
         mock_context.obj = "context_obj" if obj_valid else None
@@ -449,10 +447,8 @@ class TestSayAllPresenter:
         mock_script = test_context.Mock()
         presenter._script = mock_script
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = test_context.Mock()
-        settings_manager_mock.get_manager.return_value = manager_instance
-        manager_instance.get_setting.return_value = setting_enabled
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.rewindAndFastForwardInSayAll = setting_enabled
 
         mock_context = (test_context.Mock(spec=speechserver.SayAllContext)
                         if context_provided else None)
@@ -679,9 +675,9 @@ class TestSayAllPresenter:
         iem_instance.last_event_was_up.return_value = False
         test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
 
-        sm_instance = test_context.Mock()
-        sm_instance.get_setting.return_value = False
-        test_context.patch_object(settings_manager, "get_manager", return_value=sm_instance)
+        from orca import settings as orca_settings
+        test_context.patch_object(orca_settings, "sayAllStyle", new=0)
+        test_context.patch_object(orca_settings, "structNavInSayAll", new=False)
 
         presenter._progress_callback(mock_context, speechserver.SayAllContext.INTERRUPTED)
 

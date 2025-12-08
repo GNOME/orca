@@ -47,7 +47,6 @@ from . import guilabels
 from . import mathsymbols
 from . import speechserver
 from . import settings
-from . import settings_manager
 from .acss import ACSS
 from .ax_utilities import AXUtilities
 from .ssml import SSML, SSMLCapabilities
@@ -327,7 +326,7 @@ class SpeechServer(speechserver.SpeechServer):
                   settings.PUNCTUATION_STYLE_ALL: "ALL"}
 
         punctuation_style = styles.get(
-            settings_manager.get_manager().get_setting("verbalizePunctuationStyle"), "UNKNOWN")
+            settings.verbalizePunctuationStyle, "UNKNOWN")
 
         msg = (
             f"SPEECH DISPATCHER: {prefix}\n"

@@ -77,7 +77,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
     if is_reload:
-        _profile = settings_manager.get_manager().get_setting('activeProfile')[1]
+        _profile = settings.activeProfile[1]
         settings_manager.get_manager().set_profile(_profile)
 
     if script is None:
@@ -98,7 +98,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     if mouse_reviewer.get_is_enabled():
         mouse_reviewer.activate()
 
-    if settings_manager.get_manager().get_setting('enableSound'):
+    if settings.enableSound:
         sound.get_player().init()
 
     # Handle the case where a change was made in the Orca Preferences dialog.

@@ -221,9 +221,9 @@ class Utilities:
         """Returns a (is-update, reason) tuple if updates to obj should be presented."""
 
         # TODO - JD: Move this into the AXUtilities.
-        if not settings_manager.get_manager().get_setting("speakProgressBarUpdates") \
-           and not settings_manager.get_manager().get_setting("brailleProgressBarUpdates") \
-           and not settings_manager.get_manager().get_setting("beepProgressBarUpdates"):
+        if not settings.speakProgressBarUpdates \
+           and not settings.brailleProgressBarUpdates \
+           and not settings.beepProgressBarUpdates:
             return False, "Updates not enabled"
 
         if not AXUtilities.is_progress_bar(obj):
@@ -235,11 +235,11 @@ class Utilities:
         if AXComponent.has_no_size(obj):
             return False, "Has no size"
 
-        if settings_manager.get_manager().get_setting('ignoreStatusBarProgressBars'):
+        if settings.ignoreStatusBarProgressBars:
             if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
                 return False, "Is status bar descendant"
 
-        verbosity = settings_manager.get_manager().get_setting('progressBarVerbosity')
+        verbosity = settings.progressBarVerbosity
         if verbosity == settings.PROGRESS_BAR_ALL:
             return True, "Verbosity is all"
 

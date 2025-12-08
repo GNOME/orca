@@ -45,6 +45,7 @@ from . import keybindings
 from . import messages
 from . import say_all_presenter
 from . import script_manager
+from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -300,7 +301,7 @@ class CaretNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether caret navigation is enabled."""
 
-        return settings_manager.get_manager().get_setting("caretNavigationEnabled")
+        return settings.caretNavigationEnabled
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -323,7 +324,7 @@ class CaretNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether caret navigation triggers focus mode."""
 
-        return settings_manager.get_manager().get_setting("caretNavTriggersFocusMode")
+        return settings.caretNavTriggersFocusMode
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:

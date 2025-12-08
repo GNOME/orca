@@ -1024,11 +1024,8 @@ class TestAXUtilitiesEvent:
             input_event_manager, "get_manager", return_value=mock_input_manager
         )
 
-        mock_settings_manager = test_context.Mock()
-        mock_settings_manager.get_setting.return_value = True
-        test_context.patch_object(
-            settings_manager, "get_manager", return_value=mock_settings_manager
-        )
+        from orca import settings
+        test_context.patch_object(settings, "presentLockingKeys", new=True)
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
@@ -3302,20 +3299,17 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=True)
         test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
 
-        from orca import settings_manager
+        from orca import settings
 
-        mock_settings_manager = test_context.Mock()
-        mock_settings_manager.get_setting.return_value = True
-        test_context.patch_object(
-            settings_manager, "get_manager", return_value=mock_settings_manager
-        )
+        test_context.patch_object(settings, "presentLockingKeys", new=True)
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING_ECHOABLE
 
         mock_event.any_data = "multi-char"
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=False)
-        mock_settings_manager.get_setting.return_value = False
+        test_context.patch_object(settings, "presentLockingKeys", new=False)
+        test_context.patch_object(settings, "enableEchoByCharacter", new=False)
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING

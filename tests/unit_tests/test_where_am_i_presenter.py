@@ -110,20 +110,13 @@ class TestWhereAmIPresenter:
         essential_modules["orca.input_event"].InputEvent = test_context.Mock()
 
         settings_manager_instance = test_context.Mock()
-
-        def get_setting_side_effect(setting_name):
-            if setting_name == "textAttributesToSpeak":
-                return ["weight", "style", "underline"]
-            return []
-
-        settings_manager_instance.get_setting = test_context.Mock(
-            side_effect=get_setting_side_effect
-        )
         essential_modules["orca.settings_manager"].get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )
 
-        essential_modules["orca.settings"].repeatCharacterLimit = 4
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.textAttributesToSpeak = ["weight", "style", "underline"]
+        settings_mock.repeatCharacterLimit = 4
 
         speech_verbosity_instance = test_context.Mock()
         speech_verbosity_instance.get_indentation_description = test_context.Mock(
@@ -337,9 +330,7 @@ class TestWhereAmIPresenter:
             5,
         )
 
-        deps["orca.settings_manager"].get_manager.return_value.get_setting = test_context.Mock(
-            return_value=["weight", "style", "underline"]
-        )
+        deps["orca.settings"].textAttributesToSpeak = ["weight", "style", "underline"]
 
         mock_script = test_context.Mock()
         test_context.patch_object(mock_script, "speak_message")
@@ -359,9 +350,7 @@ class TestWhereAmIPresenter:
         deps = self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import WhereAmIPresenter
 
-        deps["orca.settings_manager"].get_manager.return_value.get_setting = test_context.Mock(
-            return_value=[]
-        )
+        deps["orca.settings"].textAttributesToSpeak = []
 
         default_attr = test_context.Mock()
         default_attr.get_attribute_name.return_value = "weight"

@@ -109,10 +109,14 @@ class TestStructuralNavigator:
             return_value=key_bindings_instance
         )
         settings_manager_instance = test_context.Mock()
-        settings_manager_instance.get_setting.return_value = True
         essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value = settings_manager_instance
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.structuralNavigationEnabled = True
+        settings_mock.structNavTriggersFocusMode = True
+        settings_mock.wrappedStructuralNavigation = True
+        settings_mock.largeObjectTextLength = 75
         controller_mock = test_context.Mock()
         controller_mock.register_decorated_module.return_value = None
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
@@ -588,9 +592,7 @@ class TestStructuralNavigator:
         """Test StructuralNavigator._get_object_in_direction wraps to beginning when at end."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].wrappedStructuralNavigation = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -606,9 +608,7 @@ class TestStructuralNavigator:
         """Test StructuralNavigator._get_object_in_direction wraps to end when at beginning."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].wrappedStructuralNavigation = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1523,25 +1523,18 @@ class TestStructuralNavigator:
         """Test StructuralNavigator.get_is_enabled returns setting value."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structuralNavigationEnabled = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
         result = nav.get_is_enabled()
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.assert_called_with("structuralNavigationEnabled")
 
     def test_set_is_enabled_no_change(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_is_enabled returns early if value unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structuralNavigationEnabled = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1556,9 +1549,7 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules["orca.settings"].structuralNavigationEnabled = False
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -1580,9 +1571,7 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules["orca.settings"].structuralNavigationEnabled = False
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -1602,9 +1591,7 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structuralNavigationEnabled = True
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -1627,9 +1614,7 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structuralNavigationEnabled = True
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -1648,25 +1633,18 @@ class TestStructuralNavigator:
         """Test StructuralNavigator.get_triggers_focus_mode returns setting value."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules["orca.settings"].structNavTriggersFocusMode = False
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
         result = nav.get_triggers_focus_mode()
         assert result is False
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.assert_called_with("structNavTriggersFocusMode")
 
     def test_set_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_triggers_focus_mode updates setting."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structNavTriggersFocusMode = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1682,9 +1660,7 @@ class TestStructuralNavigator:
         """Test StructuralNavigator.set_triggers_focus_mode returns early if unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structNavTriggersFocusMode = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1698,9 +1674,7 @@ class TestStructuralNavigator:
         """Test StructuralNavigator.last_command_prevents_focus_mode returns True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = False
+        essential_modules["orca.settings"].structNavTriggersFocusMode = False
         essential_modules[
             "orca.input_event_manager"
         ].get_manager.return_value.last_event_equals_or_is_release_for_event.return_value = True
@@ -1731,9 +1705,7 @@ class TestStructuralNavigator:
         """Test StructuralNavigator.last_command_prevents_focus_mode returns False if setting True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_setting.return_value = True
+        essential_modules["orca.settings"].structNavTriggersFocusMode = True
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()

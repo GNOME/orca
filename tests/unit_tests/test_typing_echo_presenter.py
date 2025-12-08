@@ -133,6 +133,7 @@ class TestTypingEchoPresenter:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = settings_manager_mock.get_manager.return_value
+        settings_mock = essential_modules["orca.settings"]
 
         value_map = {
             "enableKeyEcho": True,
@@ -150,14 +151,14 @@ class TestTypingEchoPresenter:
             "enableEchoBySentence": True,
         }
 
-        def get_setting(key: str):
-            return value_map.get(key, False)
+        for key, value in value_map.items():
+            setattr(settings_mock, key, value)
 
         def set_setting(key: str, value: bool) -> bool:
             value_map[key] = value
+            setattr(settings_mock, key, value)
             return True
 
-        manager_instance.get_setting.side_effect = get_setting
         manager_instance.set_setting.side_effect = set_setting
 
         from gi.repository import Atspi
@@ -187,13 +188,13 @@ class TestTypingEchoPresenter:
         )
 
         presenter = TypingEchoPresenter()
-        return presenter, manager_instance, value_map, PreferenceCategory, TypingEchoPreference
+        return presenter, manager_instance, value_map, PreferenceCategory, TypingEchoPreference, settings_mock
 
     def test_get_typing_echo_preferences_returns_expected_descriptors(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test that get_typing_echo_preferences returns expected descriptors."""
-        presenter, _manager, value_map, category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager, value_map, category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -216,7 +217,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test that apply_typing_echo_preferences sets values correctly."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -241,7 +242,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test that grid reload and save settings updates presenter correctly."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -252,6 +253,8 @@ class TestTypingEchoPresenter:
 
         value_map["enableKeyEcho"] = False
         value_map["enableAlphabeticKeys"] = False
+        _settings_mock.enableKeyEcho = False
+        _settings_mock.enableAlphabeticKeys = False
         grid.reload()
         assert grid._primary_state.value is False
         assert grid._key_states[0].value is False
@@ -293,7 +296,7 @@ class TestTypingEchoPresenter:
         setting_key: str, test_value: bool
     ) -> None:
         """Test presenter getter and setter methods."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -306,32 +309,22 @@ class TestTypingEchoPresenter:
 
     def test_locking_keys_presented_getter_and_setter(self, test_context: OrcaTestContext) -> None:
         """Test locking keys presented getter and setter with special logic."""
-        presenter, manager_instance, _value_map, _category_enum, _pref_cls = self._setup_presenter(
-            test_context
-        )
+        essential_modules = test_context.setup_shared_dependencies(["gi", "gi.repository"])
+        settings_mock = essential_modules["orca.settings"]
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
+        test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
+        test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
+        from orca.typing_echo_presenter import TypingEchoPresenter
 
-        def get_setting_side_effect(key):
-            if key == "presentLockingKeys":
-                return True
-            return _value_map.get(key, False)
+        presenter = TypingEchoPresenter()
 
-        manager_instance.get_setting.side_effect = get_setting_side_effect
+        settings_mock.presentLockingKeys = True
         assert presenter.get_locking_keys_presented() is True
 
-        def get_setting_side_effect_false(key):
-            if key == "presentLockingKeys":
-                return False
-            return _value_map.get(key, False)
-
-        manager_instance.get_setting.side_effect = get_setting_side_effect_false
+        settings_mock.presentLockingKeys = False
         assert presenter.get_locking_keys_presented() is False
 
-        def get_setting_side_effect_none(key):
-            if key == "presentLockingKeys":
-                return None
-            return _value_map.get(key, False)
-
-        manager_instance.get_setting.side_effect = get_setting_side_effect_none
+        settings_mock.presentLockingKeys = None
 
         speech_manager_patch = test_context.patch("orca.speech_and_verbosity_manager.get_manager")
         speech_manager_instance = speech_manager_patch.return_value
@@ -350,7 +343,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_basic_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method basic state transitions."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -359,6 +352,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = False
         value_map["enableEchoByWord"] = False
         value_map["enableEchoBySentence"] = False
+        _settings_mock.enableKeyEcho = False
+        _settings_mock.enableEchoByWord = False
+        _settings_mock.enableEchoBySentence = False
         manager_instance.set_setting.reset_mock()
 
         result = presenter.cycle_key_echo(script_mock, None, True)
@@ -371,6 +367,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = True
         value_map["enableEchoByWord"] = False
         value_map["enableEchoBySentence"] = False
+        _settings_mock.enableKeyEcho = True
+        _settings_mock.enableEchoByWord = False
+        _settings_mock.enableEchoBySentence = False
         manager_instance.set_setting.reset_mock()
 
         result = presenter.cycle_key_echo(script_mock, None, True)
@@ -382,7 +381,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_advanced_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method advanced state transitions."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -391,6 +390,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = False
         value_map["enableEchoByWord"] = True
         value_map["enableEchoBySentence"] = False
+        _settings_mock.enableKeyEcho = False
+        _settings_mock.enableEchoByWord = True
+        _settings_mock.enableEchoBySentence = False
         manager_instance.set_setting.reset_mock()
 
         result = presenter.cycle_key_echo(script_mock, None, True)
@@ -403,6 +405,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = False
         value_map["enableEchoByWord"] = False
         value_map["enableEchoBySentence"] = True
+        _settings_mock.enableKeyEcho = False
+        _settings_mock.enableEchoByWord = False
+        _settings_mock.enableEchoBySentence = True
         manager_instance.set_setting.reset_mock()
 
         result = presenter.cycle_key_echo(script_mock, None, True)
@@ -415,6 +420,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = True
         value_map["enableEchoByWord"] = True
         value_map["enableEchoBySentence"] = False
+        _settings_mock.enableKeyEcho = True
+        _settings_mock.enableEchoByWord = True
+        _settings_mock.enableEchoBySentence = False
         manager_instance.set_setting.reset_mock()
 
         result = presenter.cycle_key_echo(script_mock, None, True)
@@ -427,6 +435,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = True
         value_map["enableEchoByWord"] = False
         value_map["enableEchoBySentence"] = True
+        _settings_mock.enableKeyEcho = True
+        _settings_mock.enableEchoByWord = False
+        _settings_mock.enableEchoBySentence = True
         manager_instance.set_setting.reset_mock()
 
         result = presenter.cycle_key_echo(script_mock, None, True)
@@ -438,7 +449,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_with_script_presentation(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo calls script.present_message when script is provided."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -447,6 +458,9 @@ class TestTypingEchoPresenter:
         value_map["enableKeyEcho"] = False
         value_map["enableEchoByWord"] = False
         value_map["enableEchoBySentence"] = False
+        _settings_mock.enableKeyEcho = False
+        _settings_mock.enableEchoByWord = False
+        _settings_mock.enableEchoBySentence = False
 
         presenter.cycle_key_echo(script_mock, None, True)
         script_mock.present_message.assert_called_once()
@@ -459,7 +473,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_basic_cases(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for basic cases."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -472,6 +486,7 @@ class TestTypingEchoPresenter:
 
         event_mock.is_pressed_key.return_value = True
         value_map["enableKeyEcho"] = False
+        _settings_mock.enableKeyEcho = False
         event_mock.is_orca_modifier.return_value = False
         event_mock.is_alt_control_or_orca_modified.return_value = False
         event_mock.is_locking_key.return_value = False
@@ -480,7 +495,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_orca_modifier(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for Orca modifier keys."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -496,14 +511,17 @@ class TestTypingEchoPresenter:
         event_mock.get_click_count.return_value = 1
         value_map["enableKeyEcho"] = True
         value_map["enableModifierKeys"] = True
+        _settings_mock.enableKeyEcho = True
+        _settings_mock.enableModifierKeys = True
         assert presenter.should_echo_keyboard_event(event_mock) is True
 
         value_map["enableModifierKeys"] = False
+        _settings_mock.enableModifierKeys = False
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
     def test_should_echo_keyboard_event_modified_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for modified keys."""
-        presenter, _manager_instance, _value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -520,7 +538,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event when character is echoable."""
-        presenter, _manager_instance, _value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -558,7 +576,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext, key_type: str, setting_key: str, expected_result: bool
     ) -> None:
         """Test should_echo_keyboard_event for different key types."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -587,6 +605,8 @@ class TestTypingEchoPresenter:
 
         value_map["enableKeyEcho"] = True
         value_map[setting_key] = expected_result
+        _settings_mock.enableKeyEcho = True
+        setattr(_settings_mock, setting_key, expected_result)
 
         result = presenter.should_echo_keyboard_event(event_mock)
         assert result is expected_result
@@ -595,7 +615,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event for space key with different settings."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -620,25 +640,32 @@ class TestTypingEchoPresenter:
         event_mock.is_diacritical_key.return_value = False
 
         value_map["enableKeyEcho"] = True
+        _settings_mock.enableKeyEcho = True
 
         # Test space key with space setting enabled
         value_map["enableSpace"] = True
         value_map["enableEchoByCharacter"] = False
+        _settings_mock.enableSpace = True
+        _settings_mock.enableEchoByCharacter = False
         assert presenter.should_echo_keyboard_event(event_mock) is True
 
         # Test space key with space disabled but character echo enabled (should echo)
         value_map["enableSpace"] = False
         value_map["enableEchoByCharacter"] = True
+        _settings_mock.enableSpace = False
+        _settings_mock.enableEchoByCharacter = True
         assert presenter.should_echo_keyboard_event(event_mock) is True
 
         # Test space key with both space and character echo disabled
         value_map["enableSpace"] = False
         value_map["enableEchoByCharacter"] = False
+        _settings_mock.enableSpace = False
+        _settings_mock.enableEchoByCharacter = False
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
     def test_should_echo_keyboard_event_locking_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for locking keys."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -652,33 +679,21 @@ class TestTypingEchoPresenter:
         presenter.is_character_echoable = test_context.mocker.MagicMock(return_value=False)
 
         value_map["enableKeyEcho"] = True
-
-        # Set up locking keys presenter logic
-        def get_setting_side_effect(key):
-            if key == "presentLockingKeys":
-                return True
-            return value_map.get(key, False)
-
-        manager_instance = _manager_instance
-        manager_instance.get_setting.side_effect = get_setting_side_effect
+        settings_mock.enableKeyEcho = True
 
         # Test locking key when locking keys are presented
+        settings_mock.presentLockingKeys = True
         assert presenter.should_echo_keyboard_event(event_mock) is True
 
         # Test locking key when locking keys are not presented
-        def get_setting_side_effect_false(key):
-            if key == "presentLockingKeys":
-                return False
-            return value_map.get(key, False)
-
-        manager_instance.get_setting.side_effect = get_setting_side_effect_false
+        settings_mock.presentLockingKeys = False
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
     def test_should_echo_keyboard_event_password_text_obscuring(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event with password text that should be obscured."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -699,6 +714,8 @@ class TestTypingEchoPresenter:
 
         value_map["enableKeyEcho"] = True
         value_map["enableAlphabeticKeys"] = True
+        _settings_mock.enableKeyEcho = True
+        _settings_mock.enableAlphabeticKeys = True
 
         # Test with password text that should be obscured - should not echo
         event_mock.should_obscure.return_value = True
@@ -712,16 +729,18 @@ class TestTypingEchoPresenter:
 
     def test_is_character_echoable(self, test_context: OrcaTestContext) -> None:
         """Test is_character_echoable method."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
         event_mock = test_context.mocker.MagicMock()
 
         value_map["enableEchoByCharacter"] = False
+        _settings_mock.enableEchoByCharacter = False
         assert presenter.is_character_echoable(event_mock) is False
 
         value_map["enableEchoByCharacter"] = True
+        _settings_mock.enableEchoByCharacter = True
 
         event_mock.is_alt_control_or_orca_modified.return_value = True
         assert presenter.is_character_echoable(event_mock) is False
@@ -751,7 +770,7 @@ class TestTypingEchoPresenter:
 
     def test_echo_previous_word(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_word method."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -759,9 +778,11 @@ class TestTypingEchoPresenter:
         obj_mock = test_context.mocker.MagicMock()
 
         value_map["enableEchoByWord"] = False
+        _settings_mock.enableEchoByWord = False
         assert presenter.echo_previous_word(script_mock, obj_mock) is False
 
         value_map["enableEchoByWord"] = True
+        _settings_mock.enableEchoByWord = True
 
         test_context.patch("orca.ax_text.AXText.get_caret_offset", return_value=5)
         test_context.patch("orca.ax_text.AXText.get_character_count", return_value=10)
@@ -795,7 +816,7 @@ class TestTypingEchoPresenter:
 
     def test_echo_previous_sentence(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_sentence method."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 
@@ -803,9 +824,11 @@ class TestTypingEchoPresenter:
         obj_mock = test_context.mocker.MagicMock()
 
         value_map["enableEchoBySentence"] = False
+        _settings_mock.enableEchoBySentence = False
         assert presenter.echo_previous_sentence(script_mock, obj_mock) is False
 
         value_map["enableEchoBySentence"] = True
+        _settings_mock.enableEchoBySentence = True
 
         test_context.patch("orca.ax_text.AXText.get_caret_offset", return_value=10)
 
@@ -831,7 +854,7 @@ class TestTypingEchoPresenter:
 
     def test_get_handlers_and_bindings(self, test_context: OrcaTestContext) -> None:
         """Test get_handlers and get_bindings methods."""
-        presenter, _manager_instance, _value_map, _category_enum, _pref_cls = self._setup_presenter(
+        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
             test_context
         )
 

@@ -54,6 +54,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import script_manager
+from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_event_synthesizer import AXEventSynthesizer
@@ -1497,7 +1498,7 @@ class FlatReviewPresenter:
     def get_is_restricted(self) -> bool:
         """Returns whether flat review is restricted to the current object."""
 
-        return settings_manager.get_manager().get_setting("flatReviewIsRestricted")
+        return settings.flatReviewIsRestricted
 
     @dbus_service.setter
     def set_is_restricted(self, value: bool) -> bool:

@@ -122,13 +122,11 @@ class TestSystemInformationPresenter:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_instance = test_context.Mock()
-        settings_instance.get_setting = test_context.Mock(
-            side_effect=lambda key: {
-                "presentTimeFormat": "%I:%M %p",
-                "presentDateFormat": "%A, %B %d, %Y",
-            }.get(key, "%c")
-        )
         settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
+
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.presentTimeFormat = "%I:%M %p"
+        settings_mock.presentDateFormat = "%A, %B %d, %Y"
 
         psutil_mock = essential_modules["psutil"]
         battery_mock = test_context.Mock()
@@ -350,7 +348,6 @@ class TestSystemInformationPresenter:
         result = method(mock_script, mock_event, debugging_enabled)
 
         if has_event and debugging_enabled:
-            essential_modules["settings_instance"].get_setting.assert_called_with(setting_key)
             essential_modules["orca.debug"].print_tokens.assert_called_once()
 
         mock_strftime.assert_called_once_with(format_string, mock_time_tuple)
@@ -544,9 +541,7 @@ class TestSystemInformationPresenter:
         """Test SystemInformationPresenter.get_date_format returns correct enum name."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["settings_instance"].get_setting = test_context.Mock(
-            return_value=format_value
-        )
+        essential_modules["orca.settings"].presentDateFormat = format_value
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.getter",
@@ -559,7 +554,6 @@ class TestSystemInformationPresenter:
         result = presenter.get_date_format()
 
         assert result == expected_name
-        essential_modules["settings_instance"].get_setting.assert_called_with("presentDateFormat")
 
     @pytest.mark.parametrize(
         "format_name,expected_success,expected_value",
@@ -627,9 +621,7 @@ class TestSystemInformationPresenter:
         """Test SystemInformationPresenter.get_time_format returns correct enum name."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["settings_instance"].get_setting = test_context.Mock(
-            return_value=format_value
-        )
+        essential_modules["orca.settings"].presentTimeFormat = format_value
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.getter",
@@ -642,7 +634,6 @@ class TestSystemInformationPresenter:
         result = presenter.get_time_format()
 
         assert result == expected_name
-        essential_modules["settings_instance"].get_setting.assert_called_with("presentTimeFormat")
 
     @pytest.mark.parametrize(
         "format_name,expected_success,expected_value",
@@ -743,9 +734,7 @@ class TestSystemInformationPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
         expected_format = "%A, %B %-d"
-        essential_modules["settings_instance"].get_setting = test_context.Mock(
-            return_value=expected_format
-        )
+        essential_modules["orca.settings"].presentDateFormat = expected_format
 
         from orca.system_information_presenter import SystemInformationPresenter
 
@@ -753,16 +742,13 @@ class TestSystemInformationPresenter:
         result = presenter._get_date_format_string()
 
         assert result == expected_format
-        essential_modules["settings_instance"].get_setting.assert_called_with("presentDateFormat")
 
     def test_internal_get_time_format_string(self, test_context: OrcaTestContext) -> None:
         """Test SystemInformationPresenter._get_time_format_string returns raw format."""
 
         essential_modules = self._setup_dependencies(test_context)
         expected_format = "%I:%M %p"
-        essential_modules["settings_instance"].get_setting = test_context.Mock(
-            return_value=expected_format
-        )
+        essential_modules["orca.settings"].presentTimeFormat = expected_format
 
         from orca.system_information_presenter import SystemInformationPresenter
 
@@ -770,4 +756,3 @@ class TestSystemInformationPresenter:
         result = presenter._get_time_format_string()
 
         assert result == expected_format
-        essential_modules["settings_instance"].get_setting.assert_called_with("presentTimeFormat")

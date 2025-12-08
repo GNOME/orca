@@ -244,10 +244,11 @@ class TestLearnModePresenter:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
-        settings_manager_instance.get_setting = test_context.Mock(return_value=1)
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )
+        # Set keyboard layout setting
+        settings_mock.keyboardLayout = 1
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()

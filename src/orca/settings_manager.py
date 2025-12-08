@@ -462,11 +462,8 @@ class SettingsManager:
         self._runtime_settings[name] = value
         self._set_settings_runtime({name:value})
 
-    def get_setting(self, settingName):
-        return getattr(settings, settingName, None)
-
     def get_voice_locale(self, voice='default'):
-        voices = self.get_setting('voices')
+        voices = settings.voices
         v = ACSS(voices.get(voice, {}))
         lang = v.getLocale()
         dialect = v.getDialect()
@@ -478,7 +475,7 @@ class SettingsManager:
         """Imports all known SpeechServer factory modules."""
 
         factories = []
-        for module_name in self.get_setting('speechFactoryModules'):
+        for module_name in settings.speechFactoryModules:
             try:
                 module = importlib.import_module(f'orca.{module_name}')
                 factories.append(module)

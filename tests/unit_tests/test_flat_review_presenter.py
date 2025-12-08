@@ -154,7 +154,6 @@ class TestFlatReviewPresenter:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
-        settings_manager_instance.get_setting = test_context.Mock(return_value=False)
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )
@@ -162,6 +161,7 @@ class TestFlatReviewPresenter:
         settings_mock = essential_modules["orca.settings"]
         settings_mock.VERBOSITY_LEVEL_BRIEF = 0
         settings_mock.speechVerbosityLevel = 1
+        settings_mock.flatReviewIsRestricted = False
 
         keybindings_mock = essential_modules["orca.keybindings"]
         bindings_instance = test_context.Mock()

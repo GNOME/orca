@@ -175,7 +175,6 @@ class OrcaTestContext:
         if "orca.settings_manager" in essential_modules:
             settings_manager_mock = essential_modules["orca.settings_manager"]
             manager_instance = self.mocker.Mock()
-            manager_instance.get_setting = self.mocker.Mock(return_value=True)
             manager_instance.set_setting = self.mocker.Mock(return_value=True)
             settings_manager_mock.get_manager = self.mocker.Mock(return_value=manager_instance)
 

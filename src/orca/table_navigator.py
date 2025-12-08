@@ -48,6 +48,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_object import AXObject
@@ -983,7 +984,7 @@ class TableNavigator:
     def get_skip_blank_cells(self) -> bool:
         """Returns whether blank cells should be skipped during navigation."""
 
-        return settings_manager.get_manager().get_setting("skipBlankCells")
+        return settings.skipBlankCells
 
     @dbus_service.setter
     def set_skip_blank_cells(self, value: bool) -> bool:

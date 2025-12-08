@@ -68,12 +68,12 @@ class TestOrcaModifierManager:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
-        settings_manager_instance.get_setting = test_context.Mock(
-            return_value=["Insert", "KP_Insert"]
-        )
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )
+
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.orcaModifierKeys = ["Insert", "KP_Insert"]
 
         gi_repository_mock = essential_modules["gi.repository"]
 
@@ -258,11 +258,9 @@ class TestOrcaModifierManager:
         manager = orca_modifier_manager.OrcaModifierManager()
         manager._grabbed_modifiers = {"Insert": 1, "KP_Insert": 2} if case["is_grabbed"] else {}
 
-        mock_sm = test_context.Mock()
         test_context.patch(
-            "orca.orca_modifier_manager.settings_manager.get_manager", new=mock_sm
+            "orca.orca_modifier_manager.settings.orcaModifierKeys", new=case["orca_modifier_keys"]
         )
-        mock_sm.return_value.get_setting.return_value = case["orca_modifier_keys"]
         result = manager.is_orca_modifier(case["modifier"])
         assert result == case["expected_result"]
 
@@ -388,11 +386,9 @@ class TestOrcaModifierManager:
 
         manager = orca_modifier_manager.OrcaModifierManager()
 
-        mock_sm = test_context.Mock()
         test_context.patch(
-            "orca.orca_modifier_manager.settings_manager.get_manager", new=mock_sm
+            "orca.orca_modifier_manager.settings.orcaModifierKeys", new=orca_modifier_keys
         )
-        mock_sm.return_value.get_setting.return_value = orca_modifier_keys
         mock_add_grab = test_context.Mock()
         test_context.patch_object(manager, "add_modifier_grab", new=mock_add_grab)
         manager.add_grabs_for_orca_modifiers()
@@ -421,11 +417,9 @@ class TestOrcaModifierManager:
 
         manager = orca_modifier_manager.OrcaModifierManager()
 
-        mock_sm = test_context.Mock()
         test_context.patch(
-            "orca.orca_modifier_manager.settings_manager.get_manager", new=mock_sm
+            "orca.orca_modifier_manager.settings.orcaModifierKeys", new=orca_modifier_keys
         )
-        mock_sm.return_value.get_setting.return_value = orca_modifier_keys
         mock_remove_grab = test_context.Mock()
         test_context.patch_object(manager, "remove_modifier_grab", new=mock_remove_grab)
         manager.remove_grabs_for_orca_modifiers()

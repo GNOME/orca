@@ -57,7 +57,6 @@ from . import messages
 from . import object_properties
 from . import say_all_presenter
 from . import settings
-from . import settings_manager
 from . import speech
 from . import speech_and_verbosity_manager
 from .ax_document import AXDocument
@@ -203,8 +202,7 @@ class SpeechGenerator(generator.Generator):
         if not manager.get_insert_pauses_between_utterances() or args.get("eliminatePauses", False):
             return []
 
-        if settings_manager.get_manager().get_setting("verbalizePunctuationStyle") == \
-           settings.PUNCTUATION_STYLE_ALL:
+        if settings.verbalizePunctuationStyle == settings.PUNCTUATION_STYLE_ALL:
             return []
 
         return PAUSE
@@ -213,7 +211,7 @@ class SpeechGenerator(generator.Generator):
         """Returns an array containing a voice."""
 
         voicename = voiceType.get(key or DEFAULT, voiceType.get(DEFAULT))
-        voices = settings_manager.get_manager().get_setting("voices")
+        voices = settings.voices
         voice = acss.ACSS(voices.get(voiceType.get(DEFAULT), acss.ACSS()))
 
         obj = args.get("obj")
@@ -263,7 +261,7 @@ class SpeechGenerator(generator.Generator):
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType.get(UPPERCASE), acss.ACSS()))
 
-            if settings_manager.get_manager().get_setting("enableAutoLanguageSwitching"):
+            if settings.enableAutoLanguageSwitching:
                 # Only update the language if it has changed from the user's preferred voice.
                 # If that occurred, changing the dialect should not be problematic/bothersome.
                 # For now, ignore dialect changes for the same language to avoid two potential
@@ -320,8 +318,7 @@ class SpeechGenerator(generator.Generator):
            or self._only_speak_displayed_text():
             return []
 
-        mgr = settings_manager.get_manager()
-        if args.get("inMouseReview") and not mgr.get_setting("presentToolTips"):
+        if args.get("inMouseReview") and not settings.presentToolTips:
             return []
 
         prior_obj = args.get("priorObj")
@@ -2258,14 +2255,14 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _get_progress_bar_update_interval(self):
-        interval = settings_manager.get_manager().get_setting("progressBarSpeechInterval")
+        interval = settings.progressBarSpeechInterval
         if interval is None:
             interval = super()._get_progress_bar_update_interval()
 
         return int(interval)
 
     def _should_present_progress_bar_update(self, obj, **args):
-        if not settings_manager.get_manager().get_setting("speakProgressBarUpdates"):
+        if not settings.speakProgressBarUpdates:
             return False
 
         return super()._should_present_progress_bar_update(obj, **args)

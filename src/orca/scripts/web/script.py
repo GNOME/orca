@@ -103,9 +103,9 @@ class Script(default.Script):
         self._focus_mode_is_sticky = False
         self._browse_mode_is_sticky = False
 
-        if settings_manager.get_manager().get_setting("sayAllOnLoad") is None:
+        if settings.sayAllOnLoad is None:
             settings_manager.get_manager().set_setting("sayAllOnLoad", True)
-        if settings_manager.get_manager().get_setting("pageSummaryOnLoad") is None:
+        if settings.pageSummaryOnLoad is None:
             settings_manager.get_manager().set_setting("pageSummaryOnLoad", True)
 
         self._changed_lines_only_check_button: Gtk.CheckButton | None = None
@@ -295,25 +295,25 @@ class Script(default.Script):
         general_grid.attach(self._auto_focus_mode_struct_nav_check_button, 0, 3, 1, 1)
 
         label = guilabels.AUTO_FOCUS_MODE_NATIVE_NAV
-        value = settings_manager.get_manager().get_setting("nativeNavTriggersFocusMode")
+        value = settings.nativeNavTriggersFocusMode
         self._auto_focus_mode_native_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._auto_focus_mode_native_nav_check_button.set_active(value)
         general_grid.attach(self._auto_focus_mode_native_nav_check_button, 0, 4, 1, 1)
 
         label = guilabels.READ_PAGE_UPON_LOAD
-        value = settings_manager.get_manager().get_setting("sayAllOnLoad")
+        value = settings.sayAllOnLoad
         self._say_all_on_load_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._say_all_on_load_check_button.set_active(value)
         general_grid.attach(self._say_all_on_load_check_button, 0, 5, 1, 1)
 
         label = guilabels.PAGE_SUMMARY_UPON_LOAD
-        value = settings_manager.get_manager().get_setting("pageSummaryOnLoad")
+        value = settings.pageSummaryOnLoad
         self._page_summary_on_load_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._page_summary_on_load_check_button.set_active(value)
         general_grid.attach(self._page_summary_on_load_check_button, 0, 6, 1, 1)
 
         label = guilabels.CONTENT_LAYOUT_MODE
-        value = settings_manager.get_manager().get_setting("layoutMode")
+        value = settings.layoutMode
         self._layout_mode_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._layout_mode_check_button.set_active(value)
         general_grid.attach(self._layout_mode_check_button, 0, 7, 1, 1)
@@ -375,7 +375,7 @@ class Script(default.Script):
         find_grid = Gtk.Grid()
         find_alignment.add(find_grid)
 
-        verbosity = settings_manager.get_manager().get_setting("findResultsVerbosity")
+        verbosity = settings.findResultsVerbosity
 
         label = guilabels.FIND_SPEAK_RESULTS
         value = verbosity != settings.FIND_SPEAK_NONE
@@ -400,8 +400,7 @@ class Script(default.Script):
         hgrid.attach(self._minimum_find_length_label, 0, 0, 1, 1)
 
         self._minimum_find_length_adjustment = \
-            Gtk.Adjustment(settings_manager.get_manager().get_setting(
-                "findResultsMinimumLength"), 0, 20, 1)
+            Gtk.Adjustment(settings.findResultsMinimumLength, 0, 20, 1)
         self._minimum_find_length_spin_button = Gtk.SpinButton()
         self._minimum_find_length_spin_button.set_adjustment(
             self._minimum_find_length_adjustment)
@@ -484,10 +483,10 @@ class Script(default.Script):
         self.utilities.set_caret_context(obj, offset, document=document)
 
         end = AXText.get_selection_end_offset(obj)
-        if end - start < settings_manager.get_manager().get_setting("findResultsMinimumLength"):
+        if end - start < settings.findResultsMinimumLength:
             return
 
-        verbosity = settings_manager.get_manager().get_setting("findResultsVerbosity")
+        verbosity = settings.findResultsVerbosity
         if verbosity == settings.FIND_SPEAK_NONE:
             return
 
@@ -509,7 +508,7 @@ class Script(default.Script):
     def in_layout_mode(self) -> bool:
         """ Returns True if we're in layout mode."""
 
-        return settings_manager.get_manager().get_setting("layoutMode")
+        return settings.layoutMode
 
     def in_focus_mode(self) -> bool:
         """ Returns True if we're in focus mode."""
@@ -567,7 +566,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not settings_manager.get_manager().get_setting("nativeNavTriggersFocusMode"):
+        if not settings.nativeNavTriggersFocusMode:
             struct_nav = self.get_structural_navigator().last_input_event_was_navigation_command()
             caret_nav = self.get_caret_navigator().last_input_event_was_navigation_command()
             if not (struct_nav or caret_nav):
@@ -960,7 +959,7 @@ class Script(default.Script):
     ) -> bool:
         """Switches between object mode and layout mode for line presentation."""
 
-        layout_mode = not settings_manager.get_manager().get_setting("layoutMode")
+        layout_mode = not settings.layoutMode
         if notify_user:
             if layout_mode:
                 self.present_message(messages.MODE_LAYOUT)
@@ -1309,7 +1308,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if settings_manager.get_manager().get_setting("pageSummaryOnLoad") and should_present:
+        if settings.pageSummaryOnLoad and should_present:
             tokens = ["WEB: Getting page summary for", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             summary = AXDocument.get_document_summary(event.source)
@@ -1362,7 +1361,7 @@ class Script(default.Script):
         if AXDocument.get_document_uri_fragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif not settings_manager.get_manager().get_setting("sayAllOnLoad"):
+        elif not settings.sayAllOnLoad:
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak_contents(self.utilities.get_line_contents_at_offset(obj, offset))

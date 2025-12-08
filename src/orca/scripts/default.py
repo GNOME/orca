@@ -231,7 +231,7 @@ class Script(script.Script):
     def _get_extension_bindings(self) -> keybindings.KeyBindings:
         key_bindings = keybindings.KeyBindings()
 
-        layout = settings_manager.get_manager().get_setting("keyboardLayout")
+        layout = settings.keyboardLayout
         is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
         bindings = self.get_sleep_mode_manager().get_bindings(
@@ -355,7 +355,7 @@ class Script(script.Script):
 
         bindings = keybindings.KeyBindings()
 
-        layout = settings_manager.get_manager().get_setting("keyboardLayout")
+        layout = settings.keyboardLayout
         is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         if is_desktop:
             bindings.add(
@@ -695,9 +695,8 @@ class Script(script.Script):
         """Shows the app Preferences dialog."""
 
         prefs = {}
-        manager = settings_manager.get_manager()
         for key in settings.userCustomizableSettings:
-            prefs[key] = manager.get_setting(key)
+            prefs[key] = getattr(settings, key)
 
         ui = orca_gui_prefs.OrcaSetupGUI(self, prefs)
         ui.showGUI()
@@ -1392,7 +1391,7 @@ class Script(script.Script):
 
         if AXUtilities.is_tool_tip(obj):
             was_f1 = input_event_manager.get_manager().last_event_was_f1()
-            if not was_f1 and not settings_manager.get_manager().get_setting("presentToolTips"):
+            if not was_f1 and not settings.presentToolTips:
                 return True
             if event.detail1:
                 self.present_object(obj, interrupt=True)
@@ -2131,7 +2130,7 @@ class Script(script.Script):
            or (speech_manager.get_only_speak_displayed_text() and not force):
             return
 
-        voices = settings_manager.get_manager().get_setting("voices")
+        voices = settings.voices
         system_voice = voices.get(settings.SYSTEM_VOICE)
         voice = voice or system_voice
         if voice == system_voice and reset_styles:

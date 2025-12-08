@@ -278,7 +278,7 @@ class SayAllPresenter:
         assert self._script is not None, "Script must be set before calling _say_all_iter."
 
         prior_obj = obj
-        style = settings_manager.get_manager().get_setting("sayAllStyle")
+        style = settings.sayAllStyle
         say_all_by_sentence = style == settings.SAYALL_STYLE_SENTENCE
 
         if offset is None:
@@ -356,7 +356,7 @@ class SayAllPresenter:
         override_setting: bool = False
     ) -> bool:
         if not (override_setting
-                or settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll")):
+                or settings.rewindAndFastForwardInSayAll):
             return False
 
         if context is None:
@@ -386,7 +386,7 @@ class SayAllPresenter:
         override_setting: bool = False
     ) -> bool:
         if not (override_setting
-                or settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll")):
+                or settings.rewindAndFastForwardInSayAll):
             return False
 
         if context is None:
@@ -434,7 +434,7 @@ class SayAllPresenter:
                     return
                 if manager.last_event_was_up() and self._rewind(context):
                     return
-                if settings_manager.get_manager().get_setting("structNavInSayAll") \
+                if settings.structNavInSayAll \
                    and self._script.get_structural_navigator().\
                        last_input_event_was_navigation_command():
                     return
@@ -455,7 +455,7 @@ class SayAllPresenter:
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
 
-        return settings_manager.get_manager().get_setting("sayAllContextBlockquote")
+        return settings.sayAllContextBlockquote
 
     @dbus_service.setter
     def set_announce_blockquote(self, value: bool) -> bool:
@@ -470,7 +470,7 @@ class SayAllPresenter:
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
 
-        return settings_manager.get_manager().get_setting("sayAllContextNonLandmarkForm")
+        return settings.sayAllContextNonLandmarkForm
 
     @dbus_service.setter
     def set_announce_form(self, value: bool) -> bool:
@@ -485,7 +485,7 @@ class SayAllPresenter:
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
 
-        return settings_manager.get_manager().get_setting("sayAllContextPanel")
+        return settings.sayAllContextPanel
 
     @dbus_service.setter
     def set_announce_grouping(self, value: bool) -> bool:
@@ -500,7 +500,7 @@ class SayAllPresenter:
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
 
-        return settings_manager.get_manager().get_setting("sayAllContextLandmark")
+        return settings.sayAllContextLandmark
 
     @dbus_service.setter
     def set_announce_landmark(self, value: bool) -> bool:
@@ -515,7 +515,7 @@ class SayAllPresenter:
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
 
-        return settings_manager.get_manager().get_setting("sayAllContextList")
+        return settings.sayAllContextList
 
     @dbus_service.setter
     def set_announce_list(self, value: bool) -> bool:
@@ -530,7 +530,7 @@ class SayAllPresenter:
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
 
-        return settings_manager.get_manager().get_setting("sayAllContextTable")
+        return settings.sayAllContextTable
 
     @dbus_service.setter
     def set_announce_table(self, value: bool) -> bool:
@@ -545,7 +545,7 @@ class SayAllPresenter:
     def get_style(self) -> str:
         """Returns the current Say All style."""
 
-        int_value = settings_manager.get_manager().get_setting("sayAllStyle")
+        int_value = settings.sayAllStyle
         return SayAllStyle(int_value).string_name
 
     @dbus_service.setter
@@ -568,7 +568,7 @@ class SayAllPresenter:
     def get_structural_navigation_enabled(self) -> bool:
         """Returns whether structural navigation keys can be used in Say All."""
 
-        return settings_manager.get_manager().get_setting("structNavInSayAll")
+        return settings.structNavInSayAll
 
     @dbus_service.setter
     def set_structural_navigation_enabled(self, value: bool) -> bool:
@@ -583,7 +583,7 @@ class SayAllPresenter:
     def get_rewind_and_fast_forward_enabled(self) -> bool:
         """Returns whether Up and Down can be used in Say All."""
 
-        return settings_manager.get_manager().get_setting("rewindAndFastForwardInSayAll")
+        return settings.rewindAndFastForwardInSayAll
 
     @dbus_service.setter
     def set_rewind_and_fast_forward_enabled(self, value: bool) -> bool:

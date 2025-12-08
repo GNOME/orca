@@ -45,7 +45,6 @@ from . import cmdnames
 from . import debug
 from . import script_manager
 from . import settings
-from . import settings_manager
 
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
@@ -1059,7 +1058,7 @@ def disableBraille():
         msg = "BRAILLE: BrlApi running and not idle."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if not _idleBraille() and not settings_manager.get_manager().get_setting("enableBraille"):
+        if not _idleBraille() and not settings.enableBraille:
             # BrlAPI before 0.8 and we really want to shut down
             msg = "BRAILLE: could not go idle, completely shut down"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1071,7 +1070,7 @@ def checkBrailleSetting():
     msg = "BRAILLE: Checking braille setting."
     debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    if not settings_manager.get_manager().get_setting("enableBraille"):
+    if not settings.enableBraille:
         disableBraille()
 
 def refresh(panToCursor=True, targetCursorCell=0, indicate_links=True, stopFlash=True):
@@ -1111,8 +1110,7 @@ def refresh(panToCursor=True, targetCursorCell=0, indicate_links=True, stopFlash
         killFlash(restoreSaved=False)
 
     # TODO - JD: This should be taken care of in orca.py.
-    if not settings_manager.get_manager().get_setting("enableBraille") \
-       and not settings_manager.get_manager().get_setting("enableBrailleMonitor"):
+    if not settings.enableBraille and not settings.enableBrailleMonitor:
         if _brlAPIRunning:
             msg = "BRAILLE: FIXME - Braille disabled, but not properly shut down."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1257,10 +1255,10 @@ def refresh(panToCursor=True, targetCursorCell=0, indicate_links=True, stopFlash
 
     submask += '\x00' * (len(substring) - len(submask))
 
-    if settings_manager.get_manager().get_setting("enableBraille"):
+    if settings.enableBraille:
         _enableBraille()
 
-    if settings_manager.get_manager().get_setting("enableBraille") and _brlAPIRunning:
+    if settings.enableBraille and _brlAPIRunning:
         write_struct = brlapi.WriteStruct()
         write_struct.regionBegin = 1
         write_struct.regionSize = len(substring)
@@ -1667,8 +1665,7 @@ def setBrlapiPriority(level=BRLAPI_PRIORITY_DEFAULT):
 
     global idle, brlapi_priority
 
-    if not _brlAPIAvailable or not _brlAPIRunning \
-       or not settings_manager.get_manager().get_setting("enableBraille"):
+    if not _brlAPIAvailable or not _brlAPIRunning or not settings.enableBraille:
         return
 
     if idle:

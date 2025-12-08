@@ -35,6 +35,7 @@ from orca import cmdnames
 from orca import debug
 from orca import focus_manager
 from orca import input_event
+from orca import settings
 from orca import settings_manager
 from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
@@ -59,9 +60,9 @@ class Script(Gecko.Script):
     utilities: "Utilities"
 
     def __init__(self, app: Atspi.Accessible) -> None:
-        if settings_manager.get_manager().get_setting('sayAllOnLoad') is None:
+        if settings.sayAllOnLoad is None:
             settings_manager.get_manager().set_setting('sayAllOnLoad', False)
-        if settings_manager.get_manager().get_setting('pageSummaryOnLoad') is None:
+        if settings.pageSummaryOnLoad is None:
             settings_manager.get_manager().set_setting('pageSummaryOnLoad', False)
 
         super().__init__(app)
@@ -99,10 +100,8 @@ class Script(Gecko.Script):
 
         assert self._say_all_on_load_check_button is not None
         assert self._page_summary_on_load_check_button is not None
-        self._say_all_on_load_check_button.set_active(
-            settings_manager.get_manager().get_setting("sayAllOnLoad"))
-        self._page_summary_on_load_check_button.set_active(
-            settings_manager.get_manager().get_setting("pageSummaryOnLoad"))
+        self._say_all_on_load_check_button.set_active(settings.sayAllOnLoad)
+        self._page_summary_on_load_check_button.set_active(settings.pageSummaryOnLoad)
 
         spellcheck = self.spellcheck.get_app_preferences_gui()
         grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)

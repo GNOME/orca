@@ -139,7 +139,6 @@ class TestFocusManager:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = test_context.Mock()
-        manager_instance.get_setting = test_context.Mock(return_value=True)
         manager_instance.set_setting = test_context.Mock(return_value=True)
         settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 

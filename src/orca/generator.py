@@ -51,7 +51,7 @@ from . import debug
 from . import focus_manager
 from . import messages
 from . import object_properties
-from . import settings_manager
+from . import settings
 from . import speech_and_verbosity_manager
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -1212,7 +1212,7 @@ class Generator:
         return []
 
     def _get_progress_bar_update_interval(self):
-        return int(settings_manager.get_manager().get_setting('progressBarUpdateInterval'))
+        return int(settings.progressBarUpdateInterval)
 
     def _should_present_progress_bar_update(self, obj, **args):
         percent = AXValue.get_value_as_percent(obj)

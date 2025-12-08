@@ -432,9 +432,9 @@ class TypingEchoPresenter:
 
         manager = settings_manager.get_manager()
         (new_key, new_word, new_sentence) = (False, False, False)
-        key = manager.get_setting("enableKeyEcho")
-        word = manager.get_setting("enableEchoByWord")
-        sentence = manager.get_setting("enableEchoBySentence")
+        key = settings.enableKeyEcho
+        word = settings.enableEchoByWord
+        sentence = settings.enableEchoBySentence
 
         if (key, word, sentence) == (False, False, False):
             (new_key, new_word, new_sentence) = (True, False, False)
@@ -472,7 +472,7 @@ class TypingEchoPresenter:
     def get_key_echo_enabled(self) -> bool:
         """Returns whether echo of key presses is enabled. See also get_character_echo_enabled."""
 
-        return settings_manager.get_manager().get_setting("enableKeyEcho")
+        return settings.enableKeyEcho
 
     @dbus_service.setter
     def set_key_echo_enabled(self, value: bool) -> bool:
@@ -487,7 +487,7 @@ class TypingEchoPresenter:
     def get_character_echo_enabled(self) -> bool:
         """Returns whether echo of inserted characters is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableEchoByCharacter")
+        return settings.enableEchoByCharacter
 
     @dbus_service.setter
     def set_character_echo_enabled(self, value: bool) -> bool:
@@ -502,7 +502,7 @@ class TypingEchoPresenter:
     def get_word_echo_enabled(self) -> bool:
         """Returns whether word echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableEchoByWord")
+        return settings.enableEchoByWord
 
     @dbus_service.setter
     def set_word_echo_enabled(self, value: bool) -> bool:
@@ -517,7 +517,7 @@ class TypingEchoPresenter:
     def get_sentence_echo_enabled(self) -> bool:
         """Returns whether sentence echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableEchoBySentence")
+        return settings.enableEchoBySentence
 
     @dbus_service.setter
     def set_sentence_echo_enabled(self, value: bool) -> bool:
@@ -532,7 +532,7 @@ class TypingEchoPresenter:
     def get_alphabetic_keys_enabled(self) -> bool:
         """Returns whether alphabetic keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableAlphabeticKeys")
+        return settings.enableAlphabeticKeys
 
     @dbus_service.setter
     def set_alphabetic_keys_enabled(self, value: bool) -> bool:
@@ -547,7 +547,7 @@ class TypingEchoPresenter:
     def get_numeric_keys_enabled(self) -> bool:
         """Returns whether numeric keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableNumericKeys")
+        return settings.enableNumericKeys
 
     @dbus_service.setter
     def set_numeric_keys_enabled(self, value: bool) -> bool:
@@ -562,7 +562,7 @@ class TypingEchoPresenter:
     def get_punctuation_keys_enabled(self) -> bool:
         """Returns whether punctuation keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enablePunctuationKeys")
+        return settings.enablePunctuationKeys
 
     @dbus_service.setter
     def set_punctuation_keys_enabled(self, value: bool) -> bool:
@@ -577,7 +577,7 @@ class TypingEchoPresenter:
     def get_space_enabled(self) -> bool:
         """Returns whether space key will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableSpace")
+        return settings.enableSpace
 
     @dbus_service.setter
     def set_space_enabled(self, value: bool) -> bool:
@@ -592,7 +592,7 @@ class TypingEchoPresenter:
     def get_modifier_keys_enabled(self) -> bool:
         """Returns whether modifier keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableModifierKeys")
+        return settings.enableModifierKeys
 
     @dbus_service.setter
     def set_modifier_keys_enabled(self, value: bool) -> bool:
@@ -607,7 +607,7 @@ class TypingEchoPresenter:
     def get_function_keys_enabled(self) -> bool:
         """Returns whether function keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableFunctionKeys")
+        return settings.enableFunctionKeys
 
     @dbus_service.setter
     def set_function_keys_enabled(self, value: bool) -> bool:
@@ -622,7 +622,7 @@ class TypingEchoPresenter:
     def get_action_keys_enabled(self) -> bool:
         """Returns whether action keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableActionKeys")
+        return settings.enableActionKeys
 
     @dbus_service.setter
     def set_action_keys_enabled(self, value: bool) -> bool:
@@ -637,7 +637,7 @@ class TypingEchoPresenter:
     def get_navigation_keys_enabled(self) -> bool:
         """Returns whether navigation keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableNavigationKeys")
+        return settings.enableNavigationKeys
 
     @dbus_service.setter
     def set_navigation_keys_enabled(self, value: bool) -> bool:
@@ -652,7 +652,7 @@ class TypingEchoPresenter:
     def get_diacritical_keys_enabled(self) -> bool:
         """Returns whether diacritical keys will be echoed when key echo is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableDiacriticalKeys")
+        return settings.enableDiacriticalKeys
 
     @dbus_service.setter
     def set_diacritical_keys_enabled(self, value: bool) -> bool:
@@ -669,8 +669,7 @@ class TypingEchoPresenter:
 
         # TODO - JD: It turns out there's no UI for this setting, so it defaults to None.
 
-        manager = settings_manager.get_manager()
-        result = manager.get_setting("presentLockingKeys")
+        result = settings.presentLockingKeys
         if result is not None:
             return result
 

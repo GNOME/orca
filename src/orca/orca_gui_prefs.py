@@ -173,7 +173,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # in case the user played with the sliders.
         #
         try:
-            voices = settings_manager.get_manager().get_setting('voices')
+            voices = settings.voices
             defaultVoice = voices[settings.DEFAULT_VOICE]
         except KeyError:
             defaultVoice = {}
@@ -1248,7 +1248,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # Get a dictionary of text attributes that the user cares about, falling back on the
         # default presentable attributes if the user has not specified any.
-        attr_list = settings_manager.get_manager().get_setting("textAttributesToSpeak")
+        attr_list = settings.textAttributesToSpeak
         if not attr_list:
             attr_list = [
                 attr.get_attribute_name()
@@ -1258,7 +1258,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setSpokenTextAttributes(self.getTextAttributesView, attr_list, True, True)
 
         # For braille none should be enabled by default. So only set those the user chose.
-        attr_list = settings_manager.get_manager().get_setting("textAttributesToBraille")
+        attr_list = settings.textAttributesToBraille
         self._setBrailledTextAttributes(self.getTextAttributesView, attr_list, True)
 
         # TODO - JD: Is this still needed (for the purpose of the search column)?
@@ -1856,7 +1856,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # items are consistently at the top.
         self._setSpokenTextAttributes(
                 self.getTextAttributesView,
-                settings_manager.get_manager().get_setting("textAttributesToSpeak"),
+                settings.textAttributesToSpeak,
                 True, True)
 
         if self.script.app:
@@ -2106,7 +2106,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterChat = self._createNode(guilabels.KB_GROUP_CHAT)
 
         if not self.kbindings:
-            layout = settings_manager.get_manager().get_setting('keyboardLayout')
+            layout = settings.keyboardLayout
             isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
             self.kbindings = keybindings.KeyBindings()
@@ -2403,7 +2403,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         rate = widget.get_value()
         voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setRateForVoiceType(voiceType, rate)
-        voices = settings_manager.get_manager().get_setting('voices')
+        voices = settings.voices
         voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.RATE] = rate
         settings_manager.get_manager().set_setting('voices', voices)
 
@@ -2420,7 +2420,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         pitch = widget.get_value()
         voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setPitchForVoiceType(voiceType, pitch)
-        voices = settings_manager.get_manager().get_setting('voices')
+        voices = settings.voices
         voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.AVERAGE_PITCH] = pitch
         settings_manager.get_manager().set_setting('voices', voices)
 
@@ -2437,7 +2437,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         volume = widget.get_value()
         voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setVolumeForVoiceType(voiceType, volume)
-        voices = settings_manager.get_manager().get_setting('voices')
+        voices = settings.voices
         voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.GAIN] = volume
         settings_manager.get_manager().set_setting('voices', voices)
 
@@ -3109,7 +3109,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Restore the default rate/pitch/gain,
         # in case the user played with the sliders.
         #
-        voices = settings_manager.get_manager().get_setting('voices')
+        voices = settings.voices
         defaultVoice = voices.get(settings.DEFAULT_VOICE)
         if defaultVoice is not None:
             defaultVoice[acss.ACSS.GAIN] = self.savedGain
@@ -3234,11 +3234,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.suspendEvents()
 
         if not settings.speechSystemOverride:
-            factory = settings_manager.get_manager().get_setting('speechServerFactory')
+            factory = settings.speechServerFactory
             if factory:
                 self._setSpeechSystemsChoice(factory)
 
-            server = settings_manager.get_manager().get_setting('speechServerInfo')
+            server = settings.speechServerInfo
             if server:
                 self._setSpeechServersChoice(server)
 

@@ -47,7 +47,7 @@ from . import focus_manager
 from . import generator
 from . import messages
 from . import object_properties
-from . import settings_manager
+from . import settings
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -235,8 +235,7 @@ class BrailleGenerator(generator.Generator):
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
 
-        if args.get('isProgressBarUpdate') \
-           and not settings_manager.get_manager().get_setting('brailleProgressBarUpdates'):
+        if args.get("isProgressBarUpdate") and not settings.brailleProgressBarUpdates:
             return []
 
         result = []
@@ -328,14 +327,14 @@ class BrailleGenerator(generator.Generator):
         return result
 
     def _get_progress_bar_update_interval(self) -> int:
-        interval = settings_manager.get_manager().get_setting("progressBarBrailleInterval")
+        interval = settings.progressBarBrailleInterval
         if interval is None:
             return super()._get_progress_bar_update_interval()
 
         return int(interval)
 
     def _should_present_progress_bar_update(self, obj: Atspi.Accessible, **args) -> bool:
-        if not settings_manager.get_manager().get_setting("brailleProgressBarUpdates"):
+        if not settings.brailleProgressBarUpdates:
             return False
 
         return super()._should_present_progress_bar_update(obj, **args)

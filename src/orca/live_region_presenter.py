@@ -47,6 +47,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import script_manager
+from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -599,7 +600,7 @@ class LiveRegionPresenter:
     def get_is_enabled(self) -> bool:
         """Returns whether live region support is enabled."""
 
-        return settings_manager.get_manager().get_setting("enableLiveRegions")
+        return settings.enableLiveRegions
 
     def set_is_enabled(self, value: bool) -> bool:
         """Sets whether live region support is enabled."""
@@ -615,8 +616,7 @@ class LiveRegionPresenter:
     def get_present_live_region_from_inactive_tab(self) -> bool:
         """Returns whether live region messages are presented from inactive tabs."""
 
-        return settings_manager.get_manager().get_setting(
-            "presentLiveRegionFromInactiveTab")
+        return settings.presentLiveRegionFromInactiveTab
 
     def set_present_live_region_from_inactive_tab(self, value: bool) -> bool:
         """Sets whether live region messages are presented from inactive tabs."""

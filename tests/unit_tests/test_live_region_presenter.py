@@ -522,12 +522,16 @@ class TestLiveRegionPresenter:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_instance = test_context.Mock()
-        settings_instance.get_setting = test_context.Mock(return_value=True)
         settings_instance.set_setting = test_context.Mock()
         settings_instance.override_key_bindings = test_context.Mock(
             side_effect=lambda handlers, bindings, is_desktop: bindings
         )
         settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
+
+        # Set live region settings
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.inferLiveRegions = True
+        settings_mock.presentLiveRegionFromInactiveTab = True
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
@@ -655,8 +659,7 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        settings_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-        settings_instance.get_setting.return_value = True
+        essential_modules["orca.settings"].enableLiveRegions = True
 
         presenter = LiveRegionPresenter()
         assert presenter.get_is_enabled() is True
@@ -667,8 +670,8 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
+        essential_modules["orca.settings"].enableLiveRegions = False
         settings_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-        settings_instance.get_setting.return_value = False
 
         presenter = LiveRegionPresenter()
         result = presenter.set_is_enabled(True)
@@ -682,8 +685,7 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        settings_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-        settings_instance.get_setting.return_value = False
+        essential_modules["orca.settings"].enableLiveRegions = False
 
         presenter = LiveRegionPresenter()
         mock_script = test_context.Mock()
@@ -701,8 +703,7 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        settings_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-        settings_instance.get_setting.return_value = True
+        essential_modules["orca.settings"].enableLiveRegions = True
 
         presenter = LiveRegionPresenter()
         mock_script = test_context.Mock()
@@ -758,8 +759,7 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        settings_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-        settings_instance.get_setting.return_value = False
+        essential_modules["orca.settings"].enableLiveRegions = False
 
         presenter = LiveRegionPresenter()
         mock_script = test_context.Mock()
@@ -822,8 +822,7 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        settings_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-        settings_instance.get_setting.return_value = False
+        essential_modules["orca.settings"].enableLiveRegions = False
 
         presenter = LiveRegionPresenter()
         mock_script = test_context.Mock()
@@ -929,12 +928,16 @@ class TestLiveRegionPresenterModule:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_instance = test_context.Mock()
-        settings_instance.get_setting = test_context.Mock(return_value=True)
         settings_instance.set_setting = test_context.Mock()
         settings_instance.override_key_bindings = test_context.Mock(
             side_effect=lambda handlers, bindings, is_desktop: bindings
         )
         settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
+
+        # Set live region settings
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.inferLiveRegions = True
+        settings_mock.presentLiveRegionFromInactiveTab = True
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()

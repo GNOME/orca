@@ -66,6 +66,7 @@ from . import keybindings
 from . import input_event
 from . import messages
 from . import script_manager
+from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
@@ -529,7 +530,7 @@ class MouseReviewer:
     def get_is_enabled(self) -> bool:
         """Returns whether mouse review is enabled (requires Wnck)."""
 
-        return settings_manager.get_manager().get_setting("enableMouseReview")
+        return settings.enableMouseReview
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:

@@ -50,6 +50,7 @@ from gi.repository import Gdk
 from . import debug
 from . import keybindings
 from . import input_event_manager
+from . import settings
 from . import settings_manager
 
 if TYPE_CHECKING:
@@ -89,7 +90,7 @@ class OrcaModifierManager:
     def is_orca_modifier(self, modifier: str) -> bool:
         """Returns True if modifier is one of the user's Orca modifier keys."""
 
-        if modifier not in settings_manager.get_manager().get_setting("orcaModifierKeys"):
+        if modifier not in settings.orcaModifierKeys:
             return False
 
         if modifier in ["Insert", "KP_Insert"]:
@@ -117,7 +118,7 @@ class OrcaModifierManager:
     def add_grabs_for_orca_modifiers(self) -> None:
         """Adds grabs for all of the user's Orca modifier keys."""
 
-        for modifier in settings_manager.get_manager().get_setting("orcaModifierKeys"):
+        for modifier in settings.orcaModifierKeys:
             # TODO - JD: We currently handle CapsLock one way and Insert a different way.
             # Ideally that will stop being the case at some point.
             if modifier in ["Insert", "KP_Insert"]:
@@ -126,7 +127,7 @@ class OrcaModifierManager:
     def remove_grabs_for_orca_modifiers(self) -> None:
         """Removes grabs for all of the user's Orca modifier keys."""
 
-        for modifier in settings_manager.get_manager().get_setting("orcaModifierKeys"):
+        for modifier in settings.orcaModifierKeys:
             # TODO - JD: We currently handle CapsLock one way and Insert a different way.
             # Ideally that will stop being the case at some point.
             if modifier in ["Insert", "KP_Insert"]:
