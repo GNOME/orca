@@ -4539,7 +4539,9 @@ class SpeechGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         result = self._generate_default_prefix(obj, **args)
-        if AXUtilities.is_focusable(obj) and AXUtilities.has_explicit_name(obj):
+        if AXUtilities.is_focusable(obj) \
+           and (AXUtilities.has_explicit_name(obj) \
+               or focus_manager.get_manager().get_in_focus_mode()):
             result += self._generate_accessible_label_and_name(obj, **args)
             result += self._generate_pause(obj, **args)
         if format_type == "ancestor":
