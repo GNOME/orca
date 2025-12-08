@@ -258,15 +258,15 @@ class SayAllPresenter:
         self,
         content: tuple[Atspi.Accessible, int, int, str],
         contents: list[tuple[Atspi.Accessible, int, int, str]] # pylint: disable=unused-argument
-    ) -> bool:
+    ) -> tuple[bool, str]:
         """Returns True if content should be skipped during say-all iteration."""
 
         obj, start_offset, end_offset, _text = content
         if start_offset == end_offset:
-            return True
-        if AXUtilities.get_is_label_for(obj):
-            return True
-        return False
+            return True, "start_offset equals end_offset"
+        if AXUtilities.get_is_label_for(obj) and not AXUtilities.is_focusable(obj):
+            return True, "is non-focusable label for other object"
+        return False, ""
 
     def _say_all_iter(
         self,
@@ -303,8 +303,9 @@ class SayAllPresenter:
                           f"'{text}' ({start}-{end})"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-                if self._say_all_should_skip_content(content, contents):
-                    msg = "SAY ALL PRESENTER: Skipping content - script directive."
+                skip, reason = self._say_all_should_skip_content(content, contents)
+                if skip:
+                    msg = f"SAY ALL PRESENTER: Skipping content - {reason}."
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     continue
 

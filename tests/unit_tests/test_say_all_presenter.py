@@ -79,8 +79,9 @@ class TestSayAllPresenter:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         content = (mock_obj, 0, 0, "test text")
-        result = presenter._say_all_should_skip_content(content, [])
-        assert result is True
+        should_skip, reason = presenter._say_all_should_skip_content(content, [])
+        assert should_skip is True
+        assert reason == "start_offset equals end_offset"
 
     def test_parse_utterances(self, test_context: OrcaTestContext) -> None:
         """Test SayAllPresenter._parse_utterances with various input formats."""
