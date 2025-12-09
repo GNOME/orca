@@ -51,7 +51,6 @@ from . import debug
 from . import keybindings
 from . import input_event_manager
 from . import settings
-from . import settings_manager
 
 if TYPE_CHECKING:
     from .input_event import KeyboardEvent

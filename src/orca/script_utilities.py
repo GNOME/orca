@@ -45,7 +45,6 @@ from . import messages
 from . import object_properties
 from . import script_manager
 from . import settings
-from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
