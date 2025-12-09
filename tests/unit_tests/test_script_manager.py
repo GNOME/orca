@@ -116,7 +116,6 @@ class TestScriptManager:
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
-        settings_manager_instance.get_runtime_settings = test_context.Mock(return_value={})
         settings_manager_instance.set_setting = test_context.Mock()
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
@@ -205,7 +204,6 @@ class TestScriptManager:
 
         deps_settings_manager = test_context.Mock()
         deps_settings_manager_instance = test_context.Mock()
-        deps_settings_manager_instance.get_runtime_settings = test_context.Mock(return_value={})
         deps_settings_manager_instance.set_setting = test_context.Mock()
         deps_settings_manager.get_manager = test_context.Mock(
             return_value=deps_settings_manager_instance
@@ -888,7 +886,6 @@ class TestScriptManager:
         new_script.activate = test_context.Mock()
         new_script.braille_bindings = {"key": "binding"}
         manager_instance = test_context.Mock()
-        manager_instance.get_runtime_settings = test_context.Mock(return_value={"setting": "value"})
         manager_instance.set_setting = test_context.Mock()
         settings_manager.get_manager = test_context.Mock(return_value=manager_instance)
 
@@ -947,16 +944,16 @@ class TestScriptManager:
                 old_script.deactivate.assert_called_once()
             assert manager._active_script is None
 
-    def test_set_active_script_runtime_settings(self, test_context: OrcaTestContext) -> None:
-        """Test ScriptManager.set_active_script preserves runtime settings for same app."""
+    def test_set_active_script_preserves_settings_for_same_app(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test ScriptManager.set_active_script preserves settings for same app."""
 
         essential_modules = self._setup_dependencies(test_context)
         default_script = essential_modules["default_script"]
+        settings_mock = essential_modules["orca.settings"]
         from orca.script_manager import ScriptManager
 
-        settings_patch = "orca.script_manager.settings_manager.get_manager"
-        mock_get_settings_manager = test_context.Mock()
-        test_context.patch(settings_patch, new=mock_get_settings_manager)
         test_context.patch(
             "orca.script_manager.braille.checkBrailleSetting", return_value=None
         )
@@ -966,30 +963,32 @@ class TestScriptManager:
         speech_patch = "orca.script_manager.speech_and_verbosity_manager.get_manager"
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(speech_patch, new=mock_get_speech_manager)
-        manager_instance = test_context.Mock()
-        runtime_settings = {"key1": "value1", "key2": "value2"}
-        manager_instance.get_runtime_settings = test_context.Mock(return_value=runtime_settings)
-        manager_instance.set_setting = test_context.Mock()
-        mock_get_settings_manager.return_value = manager_instance
 
         speech_manager_instance = test_context.Mock()
         mock_get_speech_manager.return_value = speech_manager_instance
+
+        settings_mock.testSetting1 = "original_value1"
+        settings_mock.testSetting2 = "original_value2"
+
         manager = ScriptManager()
         same_app = test_context.Mock()
         old_script = test_context.Mock()
         old_script.app = same_app
         old_script.deactivate = test_context.Mock()
+
+        def modify_setting_on_activate():
+            settings_mock.testSetting1 = "modified_by_activate"
+
         new_script = default_script
         new_script.app = same_app
-        new_script.activate = test_context.Mock()
+        new_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
         new_script.braille_bindings = {}
+
         manager._active_script = old_script
         manager.set_active_script(new_script)
-        expected_calls = [
-            call("key1", "value1"),
-            call("key2", "value2"),
-        ]
-        manager_instance.set_setting.assert_has_calls(expected_calls, any_order=True)
+
+        assert settings_mock.testSetting1 == "original_value1"
+        assert settings_mock.testSetting2 == "original_value2"
 
     @pytest.mark.parametrize(
         "case",

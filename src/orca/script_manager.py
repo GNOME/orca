@@ -39,7 +39,7 @@ from gi.repository import Atspi
 
 from . import braille
 from . import debug
-from . import settings_manager
+from . import settings
 from . import speech_and_verbosity_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -58,7 +58,34 @@ class ScriptManager:
         self._default_script: default.Script | None = None
         self._active_script: default.Script | None = None
         self._active: bool = False
+        self._app_settings_snapshots: dict = {}
         debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Initialized", True)
+
+    def _snapshot_settings(self) -> dict:
+        """Capture all current settings values."""
+
+        snapshot = {}
+        for name in dir(settings):
+            if name.startswith("_"):
+                continue
+            value = getattr(settings, name)
+            if isinstance(value, (bool, int, float, str, list, dict, tuple, type(None))):
+                snapshot[name] = value
+        return snapshot
+
+    def _restore_settings(self, snapshot: dict) -> None:
+        """Restore settings from snapshot."""
+
+        restored = []
+        for name, value in snapshot.items():
+            current = getattr(settings, name, None)
+            if current != value:
+                restored.append(f"{name}: {current} -> {value}")
+                setattr(settings, name, value)
+
+        if restored:
+            msg = f"SCRIPT MANAGER: Restored {len(restored)} runtime settings: {restored}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def activate(self) -> None:
         """Called when this script manager is activated."""
@@ -318,28 +345,29 @@ class ScriptManager:
         if self._active_script == new_script:
             return
 
+        old_script = self._active_script
+
+        # Save settings snapshot for the old app before deactivating.
+        if old_script and old_script.app:
+            self._app_settings_snapshots[old_script.app] = self._snapshot_settings()
+
         if self._active_script is not None:
             tokens = ["SCRIPT MANAGER: Deactivating", self._active_script, "reason:", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._active_script.deactivate()
 
-        old_script = self._active_script
         self._active_script = new_script
         if new_script is None:
             return
-
-        manager = settings_manager.get_manager()
-        runtime_settings = {}
-        if old_script and old_script.app == new_script.app:
-            # Example: old_script is terminal, new_script is mate-terminal (e.g. for UI)
-            runtime_settings = manager.get_runtime_settings()
 
         tokens = ["SCRIPT MANAGER: Setting active script to", new_script, "reason:", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         new_script.activate()
 
-        for key, value in runtime_settings.items():
-            manager.set_setting(key, value)
+        # Restore settings snapshot for this app if we have one.
+        # Example: old_script is terminal, new_script is mate-terminal (e.g. for UI)
+        if new_script.app and new_script.app in self._app_settings_snapshots:
+            self._restore_settings(self._app_settings_snapshots[new_script.app])
 
         braille.checkBrailleSetting()
         braille.setupKeyRanges(new_script.braille_bindings.keys())

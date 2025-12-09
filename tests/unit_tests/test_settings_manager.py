@@ -409,8 +409,8 @@ class TestSettingsManagerFileIO:
                 data = json.load(f)
             assert "profiles" in data
 
-    def test_set_setting_updates_runtime_value(self, test_context: OrcaTestContext) -> None:
-        """Test that set_setting updates the runtime setting value."""
+    def test_set_setting_updates_settings_module(self, test_context: OrcaTestContext) -> None:
+        """Test that set_setting updates the settings module directly."""
 
         essential_modules = self._setup_dependencies(test_context)
 
@@ -422,9 +422,7 @@ class TestSettingsManagerFileIO:
 
             manager.set_setting("enableEchoByWord", False)
 
-            runtime = manager.get_runtime_settings()
-            assert "enableEchoByWord" in runtime
-            assert runtime["enableEchoByWord"] is False
+            assert settings_mock.enableEchoByWord is False
 
     def test_get_prefs_dir(self, test_context: OrcaTestContext) -> None:
         """Test that get_prefs_dir returns the configured preferences directory."""
