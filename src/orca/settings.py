@@ -127,6 +127,8 @@ userCustomizableSettings: list[str] = [
     "caretNavTriggersFocusMode",
     "layoutMode",
     "nativeNavTriggersFocusMode",
+    "sayAllOnLoad",
+    "pageSummaryOnLoad",
     "rewindAndFastForwardInSayAll",
     "structNavInSayAll",
     "speakDescription",
@@ -345,6 +347,8 @@ ignoreStatusBarProgressBars: bool = True
 # Document navigation and content
 nativeNavTriggersFocusMode: bool = True
 layoutMode: bool = True
+sayAllOnLoad: bool = True
+pageSummaryOnLoad: bool = True
 
 # Chat
 chatMessageVerbosity: int = CHAT_SPEAK_ALL

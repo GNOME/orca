@@ -58,14 +58,6 @@ class Script(Gecko.Script):
     spellcheck: SpellCheck
     utilities: "Utilities"
 
-    def __init__(self, app: Atspi.Accessible) -> None:
-        if settings.sayAllOnLoad is None:
-            settings.sayAllOnLoad = False
-        if settings.pageSummaryOnLoad is None:
-            settings.pageSummaryOnLoad = False
-
-        super().__init__(app)
-
     def setup_input_event_handlers(self) -> None:
         """Defines the input event handlers for this script."""
 

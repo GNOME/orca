@@ -102,10 +102,6 @@ class Script(default.Script):
         self._focus_mode_is_sticky = False
         self._browse_mode_is_sticky = False
 
-        if settings.sayAllOnLoad is None:
-            settings.sayAllOnLoad = True
-        if settings.pageSummaryOnLoad is None:
-            settings.pageSummaryOnLoad = True
 
         self._changed_lines_only_check_button: Gtk.CheckButton | None = None
         self._control_caret_navigation_check_button: Gtk.CheckButton | None = None
