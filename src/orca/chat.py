@@ -391,7 +391,7 @@ class Chat:
 
         line = messages.CHAT_ROOM_NAME_PREFIX_ON
         speak_room_name = settings.chatSpeakRoomName
-        settings_manager.get_manager().set_setting("chatSpeakRoomName", not speak_room_name)
+        settings.chatSpeakRoomName = not speak_room_name
         if speak_room_name:
             line = messages.CHAT_ROOM_NAME_PREFIX_OFF
         script.present_message(line)
@@ -402,7 +402,7 @@ class Chat:
 
         line = messages.CHAT_BUDDY_TYPING_ON
         announce_typing = settings.chatAnnounceBuddyTyping
-        settings_manager.get_manager().set_setting("chatAnnounceBuddyTyping", not announce_typing)
+        settings.chatAnnounceBuddyTyping = not announce_typing
         if announce_typing:
             line = messages.CHAT_BUDDY_TYPING_OFF
         script.present_message(line)
@@ -414,7 +414,7 @@ class Chat:
 
         line = messages.CHAT_SEPARATE_HISTORIES_ON
         room_histories = settings.chatRoomHistories
-        settings_manager.get_manager().set_setting("chatRoomHistories", not room_histories)
+        settings.chatRoomHistories = not room_histories
         if room_histories:
             line = messages.CHAT_SEPARATE_HISTORIES_OFF
         script.present_message(line)

@@ -61,7 +61,6 @@ from orca import input_event_manager
 from orca import label_inference
 from orca import messages
 from orca import settings
-from orca import settings_manager
 from orca import speech
 from orca import speech_and_verbosity_manager
 from orca.scripts import default
@@ -104,9 +103,9 @@ class Script(default.Script):
         self._browse_mode_is_sticky = False
 
         if settings.sayAllOnLoad is None:
-            settings_manager.get_manager().set_setting("sayAllOnLoad", True)
+            settings.sayAllOnLoad = True
         if settings.pageSummaryOnLoad is None:
-            settings_manager.get_manager().set_setting("pageSummaryOnLoad", True)
+            settings.pageSummaryOnLoad = True
 
         self._changed_lines_only_check_button: Gtk.CheckButton | None = None
         self._control_caret_navigation_check_button: Gtk.CheckButton | None = None
@@ -965,7 +964,7 @@ class Script(default.Script):
                 self.present_message(messages.MODE_LAYOUT)
             else:
                 self.present_message(messages.MODE_OBJECT)
-        settings_manager.get_manager().set_setting("layoutMode", layout_mode)
+        settings.layoutMode = layout_mode
         return True
 
     def toggle_presentation_mode(

@@ -668,6 +668,7 @@ class TestLiveRegionPresenter:
         """Test LiveRegionPresenter.set_is_enabled."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.live_region_presenter import LiveRegionPresenter
 
         essential_modules["orca.settings"].enableLiveRegions = False
@@ -677,7 +678,7 @@ class TestLiveRegionPresenter:
         result = presenter.set_is_enabled(True)
 
         assert result is True
-        settings_instance.set_setting.assert_called_with("enableLiveRegions", True)
+        assert settings_mock.enableLiveRegions == True
 
     def test_toggle_monitoring_enable(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.toggle_monitoring enables monitoring."""

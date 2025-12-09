@@ -454,11 +454,6 @@ class SettingsManager:
     def get_prefs_dir(self):
         return self._prefs_dir
 
-    def set_setting(self, name, value):
-        """Updates the named setting to value."""
-
-        self._set_settings_runtime({name:value})
-
     def get_voice_locale(self, voice='default'):
         voices = settings.voices
         v = ACSS(voices.get(voice, {}))

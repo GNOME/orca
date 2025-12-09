@@ -55,7 +55,6 @@ from . import keybindings
 from . import messages
 from . import script_manager
 from . import settings
-from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
@@ -1506,7 +1505,7 @@ class FlatReviewPresenter:
 
         msg = f"FLAT REVIEW PRESENTER: Setting is-restricted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("flatReviewIsRestricted", value)
+        settings.flatReviewIsRestricted = value
         return True
 
     @dbus_service.command
@@ -1523,7 +1522,7 @@ class FlatReviewPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._restrict = not self._restrict
-        settings_manager.get_manager().set_setting("flatReviewIsRestricted", self._restrict)
+        settings.flatReviewIsRestricted = self._restrict
 
         if self._restrict:
             if notify_user:

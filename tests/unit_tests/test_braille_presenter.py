@@ -90,6 +90,7 @@ class TestBraillePresenter:
         """Test setting braille enabled status."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -97,11 +98,11 @@ class TestBraillePresenter:
 
         result = presenter.set_braille_is_enabled(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableBraille", True)
+        assert settings_mock.enableBraille == True
 
         result = presenter.set_braille_is_enabled(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableBraille", False)
+        assert settings_mock.enableBraille == False
 
     def test_get_contraction_table(self, test_context: OrcaTestContext):
         """Test getting contraction table."""
@@ -137,22 +138,18 @@ class TestBraillePresenter:
         """Test setting valid contraction table."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        manager_mock = essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_contraction_table("en-us-g2")
         assert result is True
-        manager_mock.set_setting.assert_called_with(
-            "brailleContractionTable", "/usr/share/liblouis/tables/en-us-g2.ctb"
-        )
+        assert settings_mock.brailleContractionTable == "/usr/share/liblouis/tables/en-us-g2.ctb"
 
         result = presenter.set_contraction_table("en-us-g1.ctb")
         assert result is True
-        manager_mock.set_setting.assert_called_with(
-            "brailleContractionTable", "/usr/share/liblouis/tables/en-us-g1.ctb"
-        )
+        assert settings_mock.brailleContractionTable == "/usr/share/liblouis/tables/en-us-g1.ctb"
 
     def test_set_contraction_table_invalid(self, test_context: OrcaTestContext):
         """Test setting invalid contraction table."""
@@ -179,7 +176,7 @@ class TestBraillePresenter:
 
         result = presenter.set_contraction_table("")
         assert result is False
-        manager_mock.set_setting.assert_not_called()
+        # set_setting no longer used - settings are set directly
 
     def test_get_indicator_styles(self, test_context: OrcaTestContext):
         """Test getting indicator styles."""
@@ -203,6 +200,7 @@ class TestBraillePresenter:
         """Test setting indicator styles."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -210,15 +208,15 @@ class TestBraillePresenter:
 
         result = presenter.set_selector_indicator("dots78")
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleSelectorIndicator", 0xc0)
+        assert settings_mock.brailleSelectorIndicator == 0xc0
 
         result = presenter.set_link_indicator("dot8")
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleLinkIndicator", 0x80)
+        assert settings_mock.brailleLinkIndicator == 0x80
 
         result = presenter.set_text_attributes_indicator("none")
         assert result is True
-        manager_mock.set_setting.assert_called_with("textAttributesBrailleIndicator", 0x00)
+        assert settings_mock.textAttributesBrailleIndicator == 0x00
 
         result = presenter.set_selector_indicator("invalid")
         assert result is False
@@ -247,11 +245,11 @@ class TestBraillePresenter:
 
         result = presenter.set_end_of_line_indicator_is_enabled(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("disableBrailleEOL", False)
+        assert settings_mock.disableBrailleEOL == False
 
         result = presenter.set_end_of_line_indicator_is_enabled(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("disableBrailleEOL", True)
+        assert settings_mock.disableBrailleEOL == True
 
     def test_use_braille(self, test_context: OrcaTestContext):
         """Test use_braille method."""
@@ -309,6 +307,7 @@ class TestBraillePresenter:
         """Test setting verbosity level."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -316,11 +315,11 @@ class TestBraillePresenter:
 
         result = presenter.set_verbosity_level("brief")
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleVerbosityLevel", 0)
+        assert settings_mock.brailleVerbosityLevel == 0
 
         result = presenter.set_verbosity_level("verbose")
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleVerbosityLevel", 1)
+        assert settings_mock.brailleVerbosityLevel == 1
 
         result = presenter.set_verbosity_level("invalid")
         assert result is False
@@ -360,6 +359,7 @@ class TestBraillePresenter:
         """Test setting rolename style."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -367,11 +367,11 @@ class TestBraillePresenter:
 
         result = presenter.set_rolename_style("short")
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleRolenameStyle", 0)
+        assert settings_mock.brailleRolenameStyle == 0
 
         result = presenter.set_rolename_style("long")
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleRolenameStyle", 1)
+        assert settings_mock.brailleRolenameStyle == 1
 
         result = presenter.set_rolename_style("invalid")
         assert result is False
@@ -395,6 +395,7 @@ class TestBraillePresenter:
         """Test setting display ancestors."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -402,11 +403,11 @@ class TestBraillePresenter:
 
         result = presenter.set_display_ancestors(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableBrailleContext", True)
+        assert settings_mock.enableBrailleContext == True
 
         result = presenter.set_display_ancestors(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableBrailleContext", False)
+        assert settings_mock.enableBrailleContext == False
 
     def test_get_contracted_braille_is_enabled(self, test_context: OrcaTestContext):
         """Test getting contracted braille enabled status."""
@@ -427,6 +428,7 @@ class TestBraillePresenter:
         """Test setting contracted braille enabled status."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -434,11 +436,11 @@ class TestBraillePresenter:
 
         result = presenter.set_contracted_braille_is_enabled(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableContractedBraille", True)
+        assert settings_mock.enableContractedBraille == True
 
         result = presenter.set_contracted_braille_is_enabled(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableContractedBraille", False)
+        assert settings_mock.enableContractedBraille == False
 
     def test_get_word_wrap_is_enabled(self, test_context: OrcaTestContext):
         """Test getting word wrap enabled status."""
@@ -459,6 +461,7 @@ class TestBraillePresenter:
         """Test setting word wrap enabled status."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -466,11 +469,11 @@ class TestBraillePresenter:
 
         result = presenter.set_word_wrap_is_enabled(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableBrailleWordWrap", True)
+        assert settings_mock.enableBrailleWordWrap == True
 
         result = presenter.set_word_wrap_is_enabled(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableBrailleWordWrap", False)
+        assert settings_mock.enableBrailleWordWrap == False
 
     def test_get_flash_messages_are_enabled(self, test_context: OrcaTestContext):
         """Test getting flash messages enabled status."""
@@ -491,6 +494,7 @@ class TestBraillePresenter:
         """Test setting flash messages enabled status."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -498,11 +502,11 @@ class TestBraillePresenter:
 
         result = presenter.set_flash_messages_are_enabled(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableFlashMessages", True)
+        assert settings_mock.enableFlashMessages == True
 
         result = presenter.set_flash_messages_are_enabled(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("enableFlashMessages", False)
+        assert settings_mock.enableFlashMessages == False
 
     def test_get_flashtime_from_settings(self, test_context: OrcaTestContext):
         """Test getting flashtime from settings."""
@@ -537,6 +541,7 @@ class TestBraillePresenter:
         """Test setting flash message duration."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -544,7 +549,7 @@ class TestBraillePresenter:
 
         result = presenter.set_flash_message_duration(4000)
         assert result is True
-        manager_mock.set_setting.assert_called_with("brailleFlashTime", 4000)
+        assert settings_mock.brailleFlashTime == 4000
 
     def test_get_flash_messages_are_persistent(self, test_context: OrcaTestContext):
         """Test getting flash messages persistent status."""
@@ -565,6 +570,7 @@ class TestBraillePresenter:
         """Test setting flash messages persistent status."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -572,11 +578,11 @@ class TestBraillePresenter:
 
         result = presenter.set_flash_messages_are_persistent(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("flashIsPersistent", True)
+        assert settings_mock.flashIsPersistent == True
 
         result = presenter.set_flash_messages_are_persistent(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("flashIsPersistent", False)
+        assert settings_mock.flashIsPersistent == False
 
     def test_get_flash_messages_are_detailed(self, test_context: OrcaTestContext):
         """Test getting flash messages detailed status."""
@@ -597,6 +603,7 @@ class TestBraillePresenter:
         """Test setting flash messages detailed status."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
@@ -604,8 +611,8 @@ class TestBraillePresenter:
 
         result = presenter.set_flash_messages_are_detailed(True)
         assert result is True
-        manager_mock.set_setting.assert_called_with("flashIsDetailed", True)
+        assert settings_mock.flashIsDetailed == True
 
         result = presenter.set_flash_messages_are_detailed(False)
         assert result is True
-        manager_mock.set_setting.assert_called_with("flashIsDetailed", False)
+        assert settings_mock.flashIsDetailed == False

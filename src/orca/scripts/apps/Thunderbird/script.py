@@ -36,7 +36,6 @@ from orca import debug
 from orca import focus_manager
 from orca import input_event
 from orca import settings
-from orca import settings_manager
 from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
@@ -61,9 +60,9 @@ class Script(Gecko.Script):
 
     def __init__(self, app: Atspi.Accessible) -> None:
         if settings.sayAllOnLoad is None:
-            settings_manager.get_manager().set_setting('sayAllOnLoad', False)
+            settings.sayAllOnLoad = False
         if settings.pageSummaryOnLoad is None:
-            settings_manager.get_manager().set_setting('pageSummaryOnLoad', False)
+            settings.pageSummaryOnLoad = False
 
         super().__init__(app)
 

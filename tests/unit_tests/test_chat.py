@@ -553,6 +553,7 @@ class TestChat:
         """Test toggle_prefix from on to off."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.chat import Chat
 
         # Set initial state: prefix is on
@@ -565,7 +566,7 @@ class TestChat:
         result = chat.toggle_prefix(mock_script, None)
 
         assert result is True
-        manager_instance.set_setting.assert_called_with("chatSpeakRoomName", False)
+        assert settings_mock.chatSpeakRoomName == False
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_OFF
         )
@@ -574,6 +575,7 @@ class TestChat:
         """Test toggle_prefix from off to on."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.chat import Chat
 
         # Set initial state: prefix is off
@@ -586,7 +588,7 @@ class TestChat:
         result = chat.toggle_prefix(mock_script, None)
 
         assert result is True
-        manager_instance.set_setting.assert_called_with("chatSpeakRoomName", True)
+        assert settings_mock.chatSpeakRoomName == True
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_ON
         )
@@ -595,6 +597,7 @@ class TestChat:
         """Test toggle_buddy_typing from on to off."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.chat import Chat
 
         essential_modules["orca.settings"].chatAnnounceBuddyTyping = True
@@ -606,7 +609,7 @@ class TestChat:
         result = chat.toggle_buddy_typing(mock_script, None)
 
         assert result is True
-        manager_instance.set_setting.assert_called_with("chatAnnounceBuddyTyping", False)
+        assert settings_mock.chatAnnounceBuddyTyping == False
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_BUDDY_TYPING_OFF
         )
@@ -615,6 +618,7 @@ class TestChat:
         """Test toggle_buddy_typing from off to on."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.chat import Chat
 
         essential_modules["orca.settings"].chatAnnounceBuddyTyping = False
@@ -626,7 +630,7 @@ class TestChat:
         result = chat.toggle_buddy_typing(mock_script, None)
 
         assert result is True
-        manager_instance.set_setting.assert_called_with("chatAnnounceBuddyTyping", True)
+        assert settings_mock.chatAnnounceBuddyTyping == True
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_BUDDY_TYPING_ON
         )
@@ -635,6 +639,7 @@ class TestChat:
         """Test toggle_message_histories from on to off."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.chat import Chat
 
         essential_modules["orca.settings"].chatRoomHistories = True
@@ -646,7 +651,7 @@ class TestChat:
         result = chat.toggle_message_histories(mock_script, None)
 
         assert result is True
-        manager_instance.set_setting.assert_called_with("chatRoomHistories", False)
+        assert settings_mock.chatRoomHistories == False
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_OFF
         )
@@ -655,6 +660,7 @@ class TestChat:
         """Test toggle_message_histories from off to on."""
 
         essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
         from orca.chat import Chat
 
         essential_modules["orca.settings"].chatRoomHistories = False
@@ -666,7 +672,7 @@ class TestChat:
         result = chat.toggle_message_histories(mock_script, None)
 
         assert result is True
-        manager_instance.set_setting.assert_called_with("chatRoomHistories", True)
+        assert settings_mock.chatRoomHistories == True
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_ON
         )

@@ -409,21 +409,6 @@ class TestSettingsManagerFileIO:
                 data = json.load(f)
             assert "profiles" in data
 
-    def test_set_setting_updates_settings_module(self, test_context: OrcaTestContext) -> None:
-        """Test that set_setting updates the settings module directly."""
-
-        essential_modules = self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            settings_mock = essential_modules["orca.settings"]
-            settings_mock.enableEchoByWord = True
-
-            manager.set_setting("enableEchoByWord", False)
-
-            assert settings_mock.enableEchoByWord is False
-
     def test_get_prefs_dir(self, test_context: OrcaTestContext) -> None:
         """Test that get_prefs_dir returns the configured preferences directory."""
 

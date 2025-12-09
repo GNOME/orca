@@ -461,9 +461,9 @@ class TypingEchoPresenter:
             full = messages.KEY_ECHO_NONE_FULL
             brief = messages.KEY_ECHO_NONE_BRIEF
 
-        manager.set_setting("enableKeyEcho", new_key)
-        manager.set_setting("enableEchoByWord", new_word)
-        manager.set_setting("enableEchoBySentence", new_sentence)
+        settings.enableKeyEcho = new_key
+        settings.enableEchoByWord = new_word
+        settings.enableEchoBySentence = new_sentence
         if script is not None and notify_user:
             script.present_message(full, brief)
         return True
@@ -480,7 +480,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable key echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableKeyEcho", value)
+        settings.enableKeyEcho = value
         return True
 
     @dbus_service.getter
@@ -495,7 +495,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable character echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableEchoByCharacter", value)
+        settings.enableEchoByCharacter = value
         return True
 
     @dbus_service.getter
@@ -510,7 +510,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable word echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableEchoByWord", value)
+        settings.enableEchoByWord = value
         return True
 
     @dbus_service.getter
@@ -525,7 +525,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable sentence echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableEchoBySentence", value)
+        settings.enableEchoBySentence = value
         return True
 
     @dbus_service.getter
@@ -540,7 +540,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable alphabetic keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableAlphabeticKeys", value)
+        settings.enableAlphabeticKeys = value
         return True
 
     @dbus_service.getter
@@ -555,7 +555,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable numeric keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableNumericKeys", value)
+        settings.enableNumericKeys = value
         return True
 
     @dbus_service.getter
@@ -570,7 +570,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable punctuation keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enablePunctuationKeys", value)
+        settings.enablePunctuationKeys = value
         return True
 
     @dbus_service.getter
@@ -585,7 +585,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable space to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableSpace", value)
+        settings.enableSpace = value
         return True
 
     @dbus_service.getter
@@ -600,7 +600,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable modifier keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableModifierKeys", value)
+        settings.enableModifierKeys = value
         return True
 
     @dbus_service.getter
@@ -615,7 +615,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable function keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableFunctionKeys", value)
+        settings.enableFunctionKeys = value
         return True
 
     @dbus_service.getter
@@ -630,7 +630,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable action keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableActionKeys", value)
+        settings.enableActionKeys = value
         return True
 
     @dbus_service.getter
@@ -645,7 +645,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable navigation keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableNavigationKeys", value)
+        settings.enableNavigationKeys = value
         return True
 
     @dbus_service.getter
@@ -660,7 +660,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable diacritical keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableDiacriticalKeys", value)
+        settings.enableDiacriticalKeys = value
         return True
 
     @dbus_service.getter
@@ -681,7 +681,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting present locking keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("presentLockingKeys", value)
+        settings.presentLockingKeys = value
         return True
 
     def echo_previous_sentence(self, script: default.Script, obj: Atspi.Accessible) -> bool:

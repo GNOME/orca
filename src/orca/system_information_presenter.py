@@ -52,7 +52,6 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import settings
-from . import settings_manager
 
 class DateFormat(Enum):
     """Date format enumeration with string values from messages."""
@@ -238,7 +237,7 @@ class SystemInformationPresenter:
 
         msg = f"SYSTEM INFORMATION PRESENTER: Setting date format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("presentDateFormat", fmt.value)
+        settings.presentDateFormat = fmt.value
         return True
 
     @dbus_service.getter
@@ -270,7 +269,7 @@ class SystemInformationPresenter:
 
         msg = f"SYSTEM INFORMATION PRESENTER: Setting time format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("presentTimeFormat", fmt.value)
+        settings.presentTimeFormat = fmt.value
         return True
 
     @dbus_service.getter

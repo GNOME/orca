@@ -314,8 +314,8 @@ def main() -> int:
             if args.speech_system not in factories:
                 raise KeyError
 
-            setattr(settings, "speechSystemOverride", args.speech_system)
-            manager.set_setting("speechServerFactory", args.speech_system)
+            settings.speechSystemOverride = args.speech_system
+            settings.speechServerFactory = args.speech_system
         except (KeyError, AttributeError):
             print(messages.CLI_SPEECH_SYSTEM_ERROR.format(args.speech_system, ", ".join(factories)))
 

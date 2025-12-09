@@ -312,7 +312,7 @@ class CaretNavigator:
 
         msg = f"CARET NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("caretNavigationEnabled", value)
+        settings.caretNavigationEnabled = value
 
         self._last_input_event = None
         if script := script_manager.get_manager().get_active_script():
@@ -335,7 +335,7 @@ class CaretNavigator:
 
         msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("caretNavTriggersFocusMode", value)
+        settings.caretNavTriggersFocusMode = value
         return True
 
     def get_enabled_for_script(self, script: default.Script) -> bool:

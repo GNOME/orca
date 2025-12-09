@@ -51,7 +51,6 @@ from . import keybindings
 from . import messages
 from . import speech
 from . import settings
-from . import settings_manager
 from . import speechserver
 from .acss import ACSS
 from .ax_object import AXObject
@@ -464,7 +463,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllContextBlockquote", value)
+        settings.sayAllContextBlockquote = value
         return True
 
     @dbus_service.getter
@@ -479,7 +478,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce forms to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllContextNonLandmarkForm", value)
+        settings.sayAllContextNonLandmarkForm = value
         return True
 
     @dbus_service.getter
@@ -494,7 +493,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllContextPanel", value)
+        settings.sayAllContextPanel = value
         return True
 
     @dbus_service.getter
@@ -509,7 +508,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllContextLandmark", value)
+        settings.sayAllContextLandmark = value
         return True
 
     @dbus_service.getter
@@ -524,7 +523,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce lists to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllContextList", value)
+        settings.sayAllContextList = value
         return True
 
     @dbus_service.getter
@@ -539,7 +538,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllContextTable", value)
+        settings.sayAllContextTable = value
         return True
 
     @dbus_service.getter
@@ -562,7 +561,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting style to {value} ({style.value})."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("sayAllStyle", style.value)
+        settings.sayAllStyle = style.value
         return True
 
     @dbus_service.getter
@@ -577,7 +576,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting enable structural navigation to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("structNavInSayAll", value)
+        settings.structNavInSayAll = value
         return True
 
     @dbus_service.getter
@@ -592,7 +591,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting enable rewind and fast forward to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("rewindAndFastForwardInSayAll", value)
+        settings.rewindAndFastForwardInSayAll = value
         return True
 
 

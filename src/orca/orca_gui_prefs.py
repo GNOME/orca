@@ -1295,7 +1295,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def pronunciationFocusChange(self, widget, event, isFocused):
         """Callback for the pronunciation tree's focus-{in,out}-event signal."""
 
-        settings_manager.get_manager().set_setting('usePronunciationDictionary', not isFocused)
+        settings.usePronunciationDictionary = not isFocused
 
     def pronunciationCursorChanged(self, widget):
         """Set the search column in the pronunciation dictionary tree view
@@ -2405,7 +2405,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setRateForVoiceType(voiceType, rate)
         voices = settings.voices
         voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.RATE] = rate
-        settings_manager.get_manager().set_setting('voices', voices)
+        settings.voices = voices
 
     def pitchValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the pitchScale
@@ -2422,7 +2422,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setPitchForVoiceType(voiceType, pitch)
         voices = settings.voices
         voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.AVERAGE_PITCH] = pitch
-        settings_manager.get_manager().set_setting('voices', voices)
+        settings.voices = voices
 
     def volumeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the voiceScale
@@ -2439,7 +2439,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setVolumeForVoiceType(voiceType, volume)
         voices = settings.voices
         voices.get(settings.DEFAULT_VOICE, {})[acss.ACSS.GAIN] = volume
-        settings_manager.get_manager().set_setting('voices', voices)
+        settings.voices = voices
 
     def checkButtonToggled(self, widget):
         """Signal handler for "toggled" signal for basic GtkCheckButton

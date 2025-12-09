@@ -37,7 +37,6 @@ from . import dbus_service
 from . import debug
 from . import input_event_manager
 from . import settings
-from . import settings_manager
 from .orca_platform import tablesdir # pylint: disable=import-error
 
 class VerbosityLevel(Enum):
@@ -108,7 +107,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableBraille", value)
+        settings.enableBraille = value
 
         if value:
             braille.init(input_event_manager.get_manager().process_braille_event)
@@ -143,7 +142,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting verbosity level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("brailleVerbosityLevel", level.value)
+        settings.brailleVerbosityLevel = level.value
         return True
 
     def use_full_rolenames(self) -> bool:
@@ -172,7 +171,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting rolename style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("brailleRolenameStyle", style.value)
+        settings.brailleRolenameStyle = style.value
         return True
 
     @dbus_service.getter
@@ -187,7 +186,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable braille context to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableBrailleContext", value)
+        settings.enableBrailleContext = value
         return True
 
     @dbus_service.getter
@@ -202,7 +201,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable contracted braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableContractedBraille", value)
+        settings.enableContractedBraille = value
         return True
 
     @dbus_service.getter
@@ -241,7 +240,7 @@ class BraillePresenter:
         full_path = os.path.join(tablesdir, filename)
         msg = f"BRAILLE PRESENTER: Setting contraction table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("brailleContractionTable", full_path)
+        settings.brailleContractionTable = full_path
         return True
 
     @dbus_service.getter
@@ -259,7 +258,7 @@ class BraillePresenter:
         value = not value
         msg = f"BRAILLE PRESENTER: Setting disable-eol to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("disableBrailleEOL", value)
+        settings.disableBrailleEOL = value
         return True
 
     @dbus_service.getter
@@ -274,7 +273,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable word wrap to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableBrailleWordWrap", value)
+        settings.enableBrailleWordWrap = value
         return True
 
     @dbus_service.getter
@@ -289,7 +288,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable flash messages to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableFlashMessages", value)
+        settings.enableFlashMessages = value
         return True
 
     def get_flashtime_from_settings(self) -> int:
@@ -311,7 +310,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting braille flash time to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("brailleFlashTime", value)
+        settings.brailleFlashTime = value
         return True
 
     @dbus_service.getter
@@ -326,7 +325,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting flash messages are persistent to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("flashIsPersistent", value)
+        settings.flashIsPersistent = value
         return True
 
     @dbus_service.getter
@@ -341,7 +340,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting flash messages are detailed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("flashIsDetailed", value)
+        settings.flashIsDetailed = value
         return True
 
     @dbus_service.getter
@@ -364,7 +363,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting selector indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("brailleSelectorIndicator", indicator.value)
+        settings.brailleSelectorIndicator = indicator.value
         return True
 
     @dbus_service.getter
@@ -387,7 +386,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting link indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("brailleLinkIndicator", indicator.value)
+        settings.brailleLinkIndicator = indicator.value
         return True
 
     @dbus_service.getter
@@ -410,8 +409,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting text attributes indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting(
-            "textAttributesBrailleIndicator", indicator.value)
+        settings.textAttributesBrailleIndicator = indicator.value
         return True
 
 

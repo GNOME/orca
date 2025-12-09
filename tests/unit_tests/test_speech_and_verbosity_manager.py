@@ -838,13 +838,11 @@ class TestSpeechAndVerbosityManager:
         result = manager.set_capitalization_style(case["input_value"])
         assert result == case["expected"]
 
+        settings_mock = essential_modules["orca.settings"]
         if case["expected"]:
-            settings_manager_instance.set_setting.assert_called_with(
-                "capitalizationStyle", case["input_value"]
-            )
+            assert settings_mock.capitalizationStyle == case["input_value"]
             mock_update.assert_called_once()
         else:
-            settings_manager_instance.set_setting.assert_not_called()
             mock_update.assert_not_called()
 
     @pytest.mark.parametrize(
@@ -918,13 +916,11 @@ class TestSpeechAndVerbosityManager:
         result = manager.set_punctuation_level(case["input_value"])
         assert result == case["expected"]
 
+        settings_mock = essential_modules["orca.settings"]
         if case["expected"]:
-            settings_manager_instance.set_setting.assert_called_with(
-                "verbalizePunctuationStyle", case["setting_int"]
-            )
+            assert settings_mock.verbalizePunctuationStyle == case["setting_int"]
             mock_update.assert_called_once()
         else:
-            settings_manager_instance.set_setting.assert_not_called()
             mock_update.assert_not_called()
 
     @pytest.mark.parametrize(
@@ -987,12 +983,9 @@ class TestSpeechAndVerbosityManager:
         result = manager.set_verbosity_level(case["input_value"])
         assert result == case["expected"]
 
+        settings_mock = essential_modules["orca.settings"]
         if case["expected"]:
-            settings_manager_instance.set_setting.assert_called_with(
-                "speechVerbosityLevel", case["setting_int"]
-            )
-        else:
-            settings_manager_instance.set_setting.assert_not_called()
+            assert settings_mock.speechVerbosityLevel == case["setting_int"]
 
     @pytest.mark.parametrize(
         "case",
@@ -1037,9 +1030,8 @@ class TestSpeechAndVerbosityManager:
 
         result = manager.set_speak_numbers_as_digits(case["input_value"])
         assert result == case["expected"]
-        settings_manager_instance.set_setting.assert_called_with(
-            "speakNumbersAsDigits", case["input_value"]
-        )
+        settings_mock = essential_modules["orca.settings"]
+        assert settings_mock.speakNumbersAsDigits == case["input_value"]
 
     @pytest.mark.parametrize(
         "case",
@@ -1084,9 +1076,8 @@ class TestSpeechAndVerbosityManager:
 
         result = manager.set_speech_is_muted(case["input_value"])
         assert result == case["expected"]
-        settings_manager_instance.set_setting.assert_called_with(
-            "silenceSpeech", case["input_value"]
-        )
+        settings_mock = essential_modules["orca.settings"]
+        assert settings_mock.silenceSpeech == case["input_value"]
 
     @pytest.mark.parametrize(
         "case",
@@ -1131,9 +1122,8 @@ class TestSpeechAndVerbosityManager:
 
         result = manager.set_only_speak_displayed_text(case["input_value"])
         assert result == case["expected"]
-        settings_manager_instance.set_setting.assert_called_with(
-            "onlySpeakDisplayedText", case["input_value"]
-        )
+        settings_mock = essential_modules["orca.settings"]
+        assert settings_mock.onlySpeakDisplayedText == case["input_value"]
 
     @pytest.mark.parametrize(
         "case",
@@ -1182,6 +1172,5 @@ class TestSpeechAndVerbosityManager:
 
         result = manager.set_speak_indentation_and_justification(case["input_value"])
         assert result == case["expected"]
-        settings_manager_instance.set_setting.assert_called_with(
-            "enableSpeechIndentation", case["input_value"]
-        )
+        settings_mock = essential_modules["orca.settings"]
+        assert settings_mock.enableSpeechIndentation == case["input_value"]

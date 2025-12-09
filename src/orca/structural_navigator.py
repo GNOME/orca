@@ -985,7 +985,7 @@ class StructuralNavigator:
             return
 
         enabled = mode != NavigationMode.OFF
-        settings_manager.get_manager().set_setting("structuralNavigationEnabled", enabled)
+        settings.structuralNavigationEnabled = enabled
         self.refresh_bindings_and_grabs(script, "Setting structural navigator mode")
 
     def last_input_event_was_navigation_command(self) -> bool:
@@ -1091,7 +1091,7 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting navigation wraps to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("wrappedStructuralNavigation", value)
+        settings.wrappedStructuralNavigation = value
         return True
 
     @dbus_service.getter
@@ -1106,7 +1106,7 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("largeObjectTextLength", value)
+        settings.largeObjectTextLength = value
         return True
 
     @dbus_service.getter
@@ -1124,7 +1124,7 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("structuralNavigationEnabled", value)
+        settings.structuralNavigationEnabled = value
 
         script = script_manager.get_manager().get_active_script()
         if not script:
@@ -1164,7 +1164,7 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("structNavTriggersFocusMode", value)
+        settings.structNavTriggersFocusMode = value
         return True
 
     @dbus_service.command

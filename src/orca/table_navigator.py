@@ -995,7 +995,7 @@ class TableNavigator:
 
         msg = f"TABLE NAVIGATOR: Setting skip blank cells to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("skipBlankCells", value)
+        settings.skipBlankCells = value
         return True
 
 _navigator : TableNavigator = TableNavigator()

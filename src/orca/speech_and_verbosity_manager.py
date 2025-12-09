@@ -54,7 +54,6 @@ from . import messages
 from . import object_properties
 from . import pronunciation_dict
 from . import settings
-from . import settings_manager
 from . import speech
 from . import speechserver
 from .acss import ACSS
@@ -396,7 +395,7 @@ class SpeechAndVerbosityManager:
             return False
 
         self.shutdown_speech()
-        settings_manager.get_manager().set_setting("speechServerFactory", target_module)
+        settings.speechServerFactory = target_module
         self.start_speech()
         return self.get_current_server() == target_server
 
@@ -924,7 +923,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting capitalization style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("capitalizationStyle", style.value)
+        settings.capitalizationStyle = style.value
         self.update_capitalization_style()
         return True
 
@@ -955,7 +954,7 @@ class SpeechAndVerbosityManager:
             full = messages.CAPITALIZATION_NONE_FULL
             brief = messages.CAPITALIZATION_NONE_BRIEF
 
-        settings_manager.get_manager().set_setting("capitalizationStyle", new_style)
+        settings.capitalizationStyle = new_style
         if script is not None and notify_user:
             script.present_message(full, brief)
         self.update_capitalization_style()
@@ -992,7 +991,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting punctuation level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("verbalizePunctuationStyle", style.value)
+        settings.verbalizePunctuationStyle = style.value
         self.update_punctuation_level()
         return True
 
@@ -1027,7 +1026,7 @@ class SpeechAndVerbosityManager:
             full = messages.PUNCTUATION_NONE_FULL
             brief = messages.PUNCTUATION_NONE_BRIEF
 
-        settings_manager.get_manager().set_setting("verbalizePunctuationStyle", new_level)
+        settings.verbalizePunctuationStyle = new_level
         if script is not None and notify_user:
             script.present_message(full, brief)
         self.update_punctuation_level()
@@ -1122,7 +1121,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak misspelled indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakMisspelledIndicator", value)
+        settings.speakMisspelledIndicator = value
         return True
 
     @dbus_service.getter
@@ -1137,7 +1136,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak description to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakDescription", value)
+        settings.speakDescription = value
         return True
 
     @dbus_service.getter
@@ -1152,7 +1151,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak position in set to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enablePositionSpeaking", value)
+        settings.enablePositionSpeaking = value
         return True
 
     @dbus_service.getter
@@ -1167,7 +1166,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak widget mnemonics to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableMnemonicSpeaking", value)
+        settings.enableMnemonicSpeaking = value
         return True
 
     @dbus_service.getter
@@ -1182,7 +1181,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak tutorial messages to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableTutorialMessages", value)
+        settings.enableTutorialMessages = value
         return True
 
     @dbus_service.getter
@@ -1197,7 +1196,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting insert pauses to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enablePauseBreaks", value)
+        settings.enablePauseBreaks = value
         return True
 
     @dbus_service.getter
@@ -1212,7 +1211,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting repeated character limit to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("repeatCharacterLimit", value)
+        settings.repeatCharacterLimit = value
         return True
 
     @dbus_service.getter
@@ -1227,7 +1226,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting use pronunciation dictionary to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("usePronunciationDictionary", value)
+        settings.usePronunciationDictionary = value
         return True
 
     @dbus_service.getter
@@ -1242,7 +1241,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak blank lines to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakBlankLines", value)
+        settings.speakBlankLines = value
         return True
 
     @dbus_service.getter
@@ -1257,7 +1256,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in GUI table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("readFullRowInGUITable", value)
+        settings.readFullRowInGUITable = value
         return True
 
     @dbus_service.getter
@@ -1272,7 +1271,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in document table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("readFullRowInDocumentTable", value)
+        settings.readFullRowInDocumentTable = value
         return True
 
     @dbus_service.getter
@@ -1287,7 +1286,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in spreadsheet to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("readFullRowInSpreadSheet", value)
+        settings.readFullRowInSpreadSheet = value
         return True
 
     @dbus_service.getter
@@ -1302,7 +1301,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell spans to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakCellSpan", value)
+        settings.speakCellSpan = value
         return True
 
     @dbus_service.getter
@@ -1317,7 +1316,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakCellCoordinates", value)
+        settings.speakCellCoordinates = value
         return True
 
     @dbus_service.getter
@@ -1335,7 +1334,7 @@ class SpeechAndVerbosityManager:
             f"{value}."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakSpreadsheetCoordinates", value)
+        settings.speakSpreadsheetCoordinates = value
         return True
 
     @dbus_service.getter
@@ -1353,7 +1352,7 @@ class SpeechAndVerbosityManager:
             f"{value}."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("alwaysSpeakSelectedSpreadsheetRange", value)
+        settings.alwaysSpeakSelectedSpreadsheetRange = value
         return True
 
     @dbus_service.getter
@@ -1368,7 +1367,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell headers to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakCellHeaders", value)
+        settings.speakCellHeaders = value
         return True
 
     @dbus_service.getter
@@ -1383,7 +1382,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakContextBlockquote", value)
+        settings.speakContextBlockquote = value
         return True
 
     @dbus_service.getter
@@ -1398,7 +1397,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce forms to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakContextNonLandmarkForm", value)
+        settings.speakContextNonLandmarkForm = value
         return True
 
     @dbus_service.getter
@@ -1413,7 +1412,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakContextPanel", value)
+        settings.speakContextPanel = value
         return True
 
     @dbus_service.getter
@@ -1428,7 +1427,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakContextLandmark", value)
+        settings.speakContextLandmark = value
         return True
 
     @dbus_service.getter
@@ -1443,7 +1442,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce lists to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakContextList", value)
+        settings.speakContextList = value
         return True
 
     @dbus_service.getter
@@ -1458,7 +1457,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakContextTable", value)
+        settings.speakContextTable = value
         return True
 
     @dbus_service.getter
@@ -1473,7 +1472,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting use color names to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("useColorNames", value)
+        settings.useColorNames = value
         return True
 
     @dbus_service.getter
@@ -1488,7 +1487,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak numbers as digits to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakNumbersAsDigits", value)
+        settings.speakNumbersAsDigits = value
         return True
 
     @dbus_service.command
@@ -1534,7 +1533,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech muted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("silenceSpeech", value)
+        settings.silenceSpeech = value
         return True
 
     @dbus_service.getter
@@ -1549,7 +1548,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableSpeech", value)
+        settings.enableSpeech = value
         return True
 
     @dbus_service.getter
@@ -1564,7 +1563,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting only speak displayed text to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("onlySpeakDisplayedText", value)
+        settings.onlySpeakDisplayedText = value
         return True
 
     @dbus_service.command
@@ -1587,7 +1586,7 @@ class SpeechAndVerbosityManager:
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_ENABLED)
         elif not settings.enableSpeech:
-            settings_manager.get_manager().set_setting("enableSpeech", True)
+            settings.enableSpeech = True
             speech.init()
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_ENABLED)
@@ -1609,7 +1608,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting messages are detailed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("messagesAreDetailed", value)
+        settings.messagesAreDetailed = value
         return True
 
     def use_verbose_speech(self) -> bool:
@@ -1636,7 +1635,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting verbosity level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speechVerbosityLevel", level.value)
+        settings.speechVerbosityLevel = level.value
         return True
 
     @dbus_service.command
@@ -1652,15 +1651,14 @@ class SpeechAndVerbosityManager:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        manager = settings_manager.get_manager()
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_VERBOSITY_VERBOSE)
-            manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_VERBOSE)
+            settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
         else:
             if script is not None and notify_user:
                 script.present_message(messages.SPEECH_VERBOSITY_BRIEF)
-            manager.set_setting("speechVerbosityLevel", settings.VERBOSITY_LEVEL_BRIEF)
+            settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         return True
 
     @dbus_service.getter
@@ -1677,7 +1675,7 @@ class SpeechAndVerbosityManager:
             f"SPEECH AND VERBOSITY MANAGER: Setting speak indentation and justification to {value}."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableSpeechIndentation", value)
+        settings.enableSpeechIndentation = value
         return True
 
     @dbus_service.getter
@@ -1692,7 +1690,7 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak indentation only if changed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("speakIndentationOnlyIfChanged", value)
+        settings.speakIndentationOnlyIfChanged = value
         return True
 
     @dbus_service.command
@@ -1752,9 +1750,8 @@ class SpeechAndVerbosityManager:
         else:
             setting_name = "readFullRowInDocumentTable"
 
-        manager = settings_manager.get_manager()
         speak_row = getattr(settings, setting_name)
-        manager.set_setting(setting_name, not speak_row)
+        setattr(settings, setting_name, not speak_row)
 
         if not speak_row:
             msg = messages.TABLE_MODE_ROW

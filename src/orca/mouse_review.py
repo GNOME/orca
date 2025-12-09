@@ -67,7 +67,6 @@ from . import input_event
 from . import messages
 from . import script_manager
 from . import settings
-from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
@@ -546,7 +545,7 @@ class MouseReviewer:
         if value == self._active:
             return True
 
-        settings_manager.get_manager().set_setting("enableMouseReview", value)
+        settings.enableMouseReview = value
         if value:
             self.activate()
         else:

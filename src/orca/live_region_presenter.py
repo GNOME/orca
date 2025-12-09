@@ -610,7 +610,7 @@ class LiveRegionPresenter:
 
         msg = f"LIVE REGION PRESENTER: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting("enableLiveRegions", value)
+        settings.enableLiveRegions = value
         return True
 
     def get_present_live_region_from_inactive_tab(self) -> bool:
@@ -626,8 +626,7 @@ class LiveRegionPresenter:
 
         msg = f"LIVE REGION PRESENTER: Setting presentLiveRegionFromInactiveTab to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings_manager.get_manager().set_setting(
-            "presentLiveRegionFromInactiveTab", value)
+        settings.presentLiveRegionFromInactiveTab = value
         return True
 
     def toggle_monitoring(self, script: default.Script, _event: input_event.InputEvent) -> bool:

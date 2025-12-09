@@ -1540,9 +1540,6 @@ class TestStructuralNavigator:
         nav = get_navigator()
         result = nav.set_is_enabled(True)
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_setting.assert_not_called()
 
     def test_set_is_enabled_true_with_previous_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_is_enabled restores previous mode when enabling."""
@@ -1647,14 +1644,11 @@ class TestStructuralNavigator:
         essential_modules["orca.settings"].structNavTriggersFocusMode = True
         from orca.structural_navigator import get_navigator
 
+        settings_mock = essential_modules["orca.settings"]
         nav = get_navigator()
         result = nav.set_triggers_focus_mode(False)
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_setting.assert_called_with(
-            "structNavTriggersFocusMode", False
-        )
+        assert settings_mock.structNavTriggersFocusMode is False
 
     def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_triggers_focus_mode returns early if unchanged."""
@@ -1666,9 +1660,6 @@ class TestStructuralNavigator:
         nav = get_navigator()
         result = nav.set_triggers_focus_mode(True)
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_setting.assert_not_called()
 
     def test_last_command_prevents_focus_mode_true(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.last_command_prevents_focus_mode returns True."""

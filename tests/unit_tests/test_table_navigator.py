@@ -2107,15 +2107,14 @@ class TestTableNavigator:
         """Test TableNavigator.set_skip_blank_cells updates setting."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].skipBlankCells = False
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.skipBlankCells = False
         from orca.table_navigator import get_navigator
 
         nav = get_navigator()
         result = nav.set_skip_blank_cells(True)
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_setting.assert_called_with("skipBlankCells", True)
+        assert settings_mock.skipBlankCells is True
 
     def test_set_skip_blank_cells_no_change(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.set_skip_blank_cells returns early if value unchanged."""
@@ -2127,6 +2126,3 @@ class TestTableNavigator:
         nav = get_navigator()
         result = nav.set_skip_blank_cells(True)
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_setting.assert_not_called()

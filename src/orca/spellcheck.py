@@ -48,7 +48,6 @@ from orca import guilabels
 from orca import messages
 from orca import object_properties
 from orca import settings
-from orca import settings_manager
 from orca import speech_and_verbosity_manager
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
