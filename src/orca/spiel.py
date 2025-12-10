@@ -55,7 +55,6 @@ from . import debug
 from . import guilabels
 from . import speechserver
 from . import settings
-from . import settings_manager
 from .acss import ACSS
 from .speechserver import VoiceFamily
 from .ssml import SSML, SSMLCapabilities
@@ -310,7 +309,6 @@ class SpeechServer(speechserver.SpeechServer):
                   settings.PUNCTUATION_STYLE_SOME: "SOME",
                   settings.PUNCTUATION_STYLE_MOST: "MOST",
                   settings.PUNCTUATION_STYLE_ALL: "ALL"}
-        manager = settings_manager.get_manager()
 
         msg = (
             f"SPIEL: {prefix}\n"

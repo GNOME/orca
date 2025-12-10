@@ -52,7 +52,6 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import settings
-from . import settings_manager
 from . import speech
 from . import speech_and_verbosity_manager
 from . import guilabels
@@ -430,7 +429,6 @@ class TypingEchoPresenter:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        manager = settings_manager.get_manager()
         (new_key, new_word, new_sentence) = (False, False, False)
         key = settings.enableKeyEcho
         word = settings.enableEchoByWord
