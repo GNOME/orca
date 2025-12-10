@@ -30,7 +30,7 @@ __license__   = "LGPL"
 import importlib
 import os
 from json import load, dump
-from gi.repository import Gio, GLib
+from gi.repository import GLib
 
 from . import debug
 from . import orca_i18n # pylint: disable=no-name-in-module
@@ -39,18 +39,6 @@ from . import pronunciation_dict
 from .acss import ACSS
 from .ax_object import AXObject
 from .keybindings import KeyBinding
-
-try:
-    _PROXY = Gio.DBusProxy.new_for_bus_sync(
-        Gio.BusType.SESSION,
-        Gio.DBusProxyFlags.NONE,
-        None,
-        'org.a11y.Bus',
-        '/org/a11y/bus',
-        'org.freedesktop.DBus.Properties',
-        None)
-except Exception:
-    _PROXY = None
 
 
 class SettingsManager:
@@ -515,50 +503,6 @@ class SettingsManager:
         msg = 'SETTINGS MANAGER: Settings merged.'
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _enable_accessibility(self):
-        """Enables the GNOME accessibility flag.  Users need to log out and
-        then back in for this to take effect.
-
-        Returns True if an action was taken (i.e., accessibility was not
-        set prior to this call).
-        """
-
-        alreadyEnabled = self.is_accessibility_enabled()
-        if not alreadyEnabled:
-            self.set_accessibility(True)
-
-        return not alreadyEnabled
-
-    def is_accessibility_enabled(self):
-        msg = 'SETTINGS MANAGER: Checking if accessibility is enabled.'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        msg = 'SETTINGS MANAGER: Accessibility enabled: '
-        if not _PROXY:
-            rv = False
-            msg += 'Error (no proxy)'
-        else:
-            rv = _PROXY.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
-            msg += str(rv)
-
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return rv
-
-    def set_accessibility(self, enable):
-        msg = f'SETTINGS MANAGER: Attempting to set accessibility to {enable}.'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if not _PROXY:
-            msg = 'SETTINGS MANAGER: Error (no proxy)'
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        vEnable = GLib.Variant('b', enable)
-        _PROXY.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)
-
-        msg = f'SETTINGS MANAGER: Finished setting accessibility to {enable}.'
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
     def set_starting_profile(self, profile=None):
         if profile is None:
             profile = settings.profile
@@ -740,7 +684,6 @@ class SettingsManager:
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return self._enable_accessibility()
 
     def _adjust_binding_tuple_values(self, bindingTuple):
         """Converts the values of bindingTuple into KeyBinding-ready values."""

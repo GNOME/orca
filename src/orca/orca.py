@@ -36,6 +36,7 @@ import os
 import signal
 import sys
 
+from dasbus.connection import SessionMessageBus
 import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
@@ -203,9 +204,15 @@ def main():
 
     systemd.get_manager().start_watchdog()
 
-    debug.print_message(debug.LEVEL_INFO, "ORCA: Enabling accessibility (if needed).", True)
-    if not settings_manager.get_manager().is_accessibility_enabled():
-        settings_manager.get_manager().set_accessibility(True)
+    bus = SessionMessageBus()
+    proxy = bus.get_proxy("org.a11y.Bus", "/org/a11y/bus", "org.freedesktop.DBus.Properties")
+    enabled = proxy.Get("org.a11y.Status", "IsEnabled")
+    msg = f"ORCA: Accessibility enabled: {enabled}"
+    debug.print_message(debug.LEVEL_INFO, msg, True)
+    if not enabled:
+        msg = "ORCA: Enabling accessibility."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
 
     load_user_settings(is_reload=False)
 

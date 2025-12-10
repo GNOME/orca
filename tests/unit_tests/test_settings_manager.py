@@ -151,10 +151,6 @@ class TestSettingsManagerFileIO:
         settings_manager._manager = None
 
         manager = settings_manager.SettingsManager()
-
-        # Patch _PROXY to None to avoid DBus issues
-        test_context.patch_object(settings_manager, "_PROXY", new=None)
-
         manager.activate(prefsDir=prefs_dir)
         return manager
 
