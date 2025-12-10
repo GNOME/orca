@@ -306,22 +306,19 @@ class Chat:
         grid.set_border_width(12)
 
         label = guilabels.CHAT_SPEAK_ROOM_NAME
-        value = settings.chatSpeakRoomName
         self._speak_name_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._speak_name_check_button.set_active(value)
+        self._speak_name_check_button.set_active(settings.chatSpeakRoomName)
         grid.attach(self._speak_name_check_button, 0, 0, 1, 1)
 
         label = guilabels.CHAT_ANNOUNCE_BUDDY_TYPING
-        value = settings.chatAnnounceBuddyTyping
         self._buddy_typing_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._buddy_typing_check_button.set_active(value)
+        self._buddy_typing_check_button.set_active(settings.chatAnnounceBuddyTyping)
         grid.attach(self._buddy_typing_check_button, 0, 1, 1, 1)
 
         label = guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES
-        value = settings.chatRoomHistories
         self._chat_room_histories_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
-        self._chat_room_histories_check_button.set_active(value)
+        self._chat_room_histories_check_button.set_active(settings.chatRoomHistories)
         grid.attach(self._chat_room_histories_check_button, 0, 2, 1, 1)
 
         messages_frame = Gtk.Frame()
@@ -336,18 +333,16 @@ class Chat:
         messages_grid = Gtk.Grid()
         messages_alignment.add(messages_grid)
 
-        value = settings.chatMessageVerbosity
-
         label = guilabels.CHAT_SPEAK_MESSAGES_ALL
         rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
-        rb1.set_active(value == settings.CHAT_SPEAK_ALL)
+        rb1.set_active(settings.chatMessageVerbosity == settings.CHAT_SPEAK_ALL)
         self._all_messages_radio_button = rb1
         messages_grid.attach(self._all_messages_radio_button, 0, 0, 1, 1)
 
         label = guilabels.CHAT_SPEAK_MESSAGES_ACTIVE
         rb2 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb2.join_group(rb1)
-        rb2.set_active(value == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
+        rb2.set_active(settings.chatMessageVerbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
         self._focused_channel_radio_button = rb2
         messages_grid.attach(self._focused_channel_radio_button, 0, 1, 1, 1)
 
@@ -355,7 +350,7 @@ class Chat:
             AXObject.get_name(self._script.app)
         rb3 = Gtk.RadioButton.new_with_mnemonic(None, label)
         rb3.join_group(rb1)
-        rb3.set_active(value == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
+        rb3.set_active(settings.chatMessageVerbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
         self._all_channels_radio_button = rb3
         messages_grid.attach(self._all_channels_radio_button, 0, 2, 1, 1)
 
@@ -386,7 +381,7 @@ class Chat:
             "chatRoomHistories": self._chat_room_histories_check_button.get_active(),
         }
 
-    def toggle_prefix(self, script: default.Script, _event: Atspi.Event):
+    def toggle_prefix(self, script: default.Script, _event: input_event.InputEvent) -> bool:
         """Toggle whether we prefix chat room messages with the name of the chat room."""
 
         line = messages.CHAT_ROOM_NAME_PREFIX_ON
@@ -397,7 +392,7 @@ class Chat:
         script.present_message(line)
         return True
 
-    def toggle_buddy_typing(self, script: default.Script, _event: Atspi.Event):
+    def toggle_buddy_typing(self, script: default.Script, _event: input_event.InputEvent) -> bool:
         """Toggle whether we announce when our buddies are typing a message."""
 
         line = messages.CHAT_BUDDY_TYPING_ON
@@ -409,7 +404,11 @@ class Chat:
 
         return True
 
-    def toggle_message_histories(self, script: default.Script, _event: Atspi.Event):
+    def toggle_message_histories(
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent
+    ) -> bool:
         """Toggle whether we provide chat room specific message histories."""
 
         line = messages.CHAT_SEPARATE_HISTORIES_ON
@@ -433,7 +432,11 @@ class Chat:
             return 0
         return self._conversation_list.get_message_count()
 
-    def present_previous_chat_message(self, script: default.Script, _event) -> bool:
+    def present_previous_chat_message(
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent
+    ) -> bool:
         """Navigate to and present the previous chat message in the history."""
 
         message_count = self._get_message_count()
@@ -455,7 +458,11 @@ class Chat:
         self._present_message_at_index(self._current_index)
         return True
 
-    def present_next_chat_message(self, script: default.Script, _event) -> bool:
+    def present_next_chat_message(
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent
+    ) -> bool:
         """Navigate to and present the next chat message in the history."""
 
         message_count = self._get_message_count()

@@ -83,7 +83,6 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from . import chat
     from . import label_inference
     from . import spellcheck
 
@@ -167,7 +166,9 @@ class Script:
     def get_chat(self) -> chat.Chat:
         """Returns the 'chat' class for this script."""
 
-        return chat.Chat(self)
+        # TODO - JD: When there is a singleton presenter, this will no longer be needed.
+        # In practice, self will always be an instance/subclass of default.Script.
+        return chat.Chat(self) # type: ignore[arg-type]
 
     def get_spellcheck(self) -> spellcheck.SpellCheck | None:
         """Returns the spellcheck support for this script."""

@@ -210,9 +210,9 @@ class SpeechGenerator(generator.Generator):
     def voice(self, key: str | None = None, **args) -> list[acss.ACSS]:
         """Returns an array containing a voice."""
 
-        voicename = voiceType.get(key or DEFAULT, voiceType.get(DEFAULT))
+        voicename = voiceType.get(key or DEFAULT, voiceType[DEFAULT])
         voices = settings.voices
-        voice = acss.ACSS(voices.get(voiceType.get(DEFAULT), acss.ACSS()))
+        voice = acss.ACSS(voices.get(voiceType[DEFAULT], acss.ACSS()))
 
         obj = args.get("obj")
         language = args.get("language", "")
@@ -257,9 +257,9 @@ class SpeechGenerator(generator.Generator):
         if key in [None, DEFAULT]:
             string = args.get("string", "")
             if AXUtilities.is_link(obj):
-                voice.update(voices.get(voiceType.get(HYPERLINK), acss.ACSS()))
+                voice.update(voices.get(voiceType[HYPERLINK], acss.ACSS()))
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice.update(voices.get(voiceType.get(UPPERCASE), acss.ACSS()))
+                voice.update(voices.get(voiceType[UPPERCASE], acss.ACSS()))
 
             if settings.enableAutoLanguageSwitching:
                 # Only update the language if it has changed from the user's preferred voice.
