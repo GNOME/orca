@@ -559,23 +559,6 @@ class SettingsManager:
         msg = f'SETTINGS MANAGER: Finished setting accessibility to {enable}.'
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def is_screen_reader_service_enabled(self):
-        """Returns True if the screen reader service is enabled. Note that
-        this does not necessarily mean that Orca (or any other screen reader)
-        is running at the moment."""
-
-        msg = 'SETTINGS MANAGER: Is screen reader service enabled? '
-
-        if not _PROXY:
-            rv = False
-            msg += 'Error (no proxy)'
-        else:
-            rv = _PROXY.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
-            msg += str(rv)
-
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return rv
-
     def set_starting_profile(self, profile=None):
         if profile is None:
             profile = settings.profile
