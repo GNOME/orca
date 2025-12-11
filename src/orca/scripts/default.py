@@ -694,10 +694,7 @@ class Script(script.Script):
     def show_app_preferences_gui(self, _event: input_event.InputEvent | None = None) -> bool:
         """Shows the app Preferences dialog."""
 
-        prefs = {}
-        for key in settings.userCustomizableSettings:
-            prefs[key] = getattr(settings, key)
-
+        prefs = settings_manager.get_manager().get_settings()
         ui = orca_gui_prefs.OrcaSetupGUI(self, prefs)
         ui.showGUI()
         return True
@@ -706,7 +703,7 @@ class Script(script.Script):
         """Displays the Preferences dialog."""
 
         manager = settings_manager.get_manager()
-        prefs = manager.get_general_settings(manager.profile or "default")
+        prefs = manager.get_general_settings(manager.get_profile())
         ui = orca_gui_prefs.OrcaSetupGUI(script_manager.get_manager().get_default_script(), prefs)
         ui.showGUI()
         return True
@@ -964,7 +961,7 @@ class Script(script.Script):
         except IndexError:
             name, profile_id = profiles[0]
 
-        settings_manager.get_manager().set_profile(profile_id, updateLocale=True)
+        settings_manager.get_manager().set_profile(profile_id, update_locale=True)
 
         braille.checkBrailleSetting()
         speech_and_verbosity_manager.get_manager().refresh_speech()

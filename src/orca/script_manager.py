@@ -66,7 +66,7 @@ class ScriptManager:
 
         snapshot = {}
         for name in dir(settings):
-            if name.startswith("_"):
+            if name.startswith("_") or name[0].isupper():
                 continue
             value = getattr(settings, name)
             if isinstance(value, (bool, int, float, str, list, dict, tuple, type(None))):

@@ -35,7 +35,6 @@ from __future__ import annotations
 import json
 import os
 import tempfile
-from contextlib import suppress
 from typing import TYPE_CHECKING, Any
 
 import pytest
@@ -61,19 +60,6 @@ class TestSettingsManagerFileIO:
 
         # ModuleType allows settings_manager to set attributes on it dynamically
         settings_obj: Any = ModuleType("orca.settings")
-        settings_obj.userCustomizableSettings = [
-            "enableEchoByWord",
-            "enableEchoByCharacter",
-            "enableKeyEcho",
-            "speechServerFactory",
-            "speechServerInfo",
-            "voices",
-            "profile",
-            "startingProfile",
-            "activeProfile",
-            "enableSpeech",
-            "onlySpeakDisplayedText",
-        ]
         settings_obj.enableEchoByWord = True
         settings_obj.enableEchoByCharacter = True
         settings_obj.enableKeyEcho = True
@@ -146,46 +132,9 @@ class TestSettingsManagerFileIO:
 
         from orca import settings_manager
 
-        with suppress(AttributeError):
-            del settings_manager.SettingsManager._SettingsManager__instance
-        settings_manager._manager = None
-
         manager = settings_manager.SettingsManager()
-        manager.activate(prefsDir=prefs_dir)
+        manager.activate(prefs_dir=prefs_dir)
         return manager
-
-    def test_is_first_start_true_when_no_file(self, test_context: OrcaTestContext) -> None:
-        """Test is_first_start returns True when user-settings.conf doesn't exist."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            nonexistent_dir = os.path.join(temp_dir, "nonexistent")
-            os.makedirs(nonexistent_dir)
-
-            from orca import settings_manager
-
-            with suppress(AttributeError):
-                del settings_manager.SettingsManager._SettingsManager__instance
-            settings_manager._manager = None
-
-            manager = settings_manager.SettingsManager()
-            manager._prefs_dir = nonexistent_dir
-            manager._settings_file = os.path.join(nonexistent_dir, "user-settings.conf")
-
-            assert manager.is_first_start() is True
-
-    def test_is_first_start_false_after_save(self, test_context: OrcaTestContext) -> None:
-        """Test is_first_start returns False after settings have been saved."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            settings_file = os.path.join(temp_dir, "user-settings.conf")
-            assert os.path.exists(settings_file)
-            assert manager.is_first_start() is False
 
     def test_save_settings_creates_file(self, test_context: OrcaTestContext) -> None:
         """Test that save_settings creates the user-settings.conf file."""
@@ -215,7 +164,7 @@ class TestSettingsManagerFileIO:
             mock_script.app = None
 
             test_value = False
-            general_settings = manager.general.copy()
+            general_settings = manager.get_settings()
             general_settings["enableEchoByWord"] = test_value
             general_settings["profile"] = ["Default", "default"]
 
@@ -237,7 +186,7 @@ class TestSettingsManagerFileIO:
             mock_script.app = None
 
             test_pronunciations = {"API": ["API", "A P I"]}
-            general_settings = manager.general.copy()
+            general_settings = manager.get_settings()
             general_settings["profile"] = ["Default", "default"]
 
             manager.save_settings(mock_script, general_settings, test_pronunciations, {})
@@ -258,7 +207,7 @@ class TestSettingsManagerFileIO:
             mock_script.app = None
 
             test_keybindings = {"someHandler": [("a", 1, 0, 1)]}
-            general_settings = manager.general.copy()
+            general_settings = manager.get_settings()
             general_settings["profile"] = ["Default", "default"]
 
             manager.save_settings(mock_script, general_settings, {}, test_keybindings)
@@ -300,13 +249,13 @@ class TestSettingsManagerFileIO:
             mock_script = test_context.Mock()
             mock_script.app = None
 
-            general_work = manager.general.copy()
+            general_work = manager.get_settings()
             general_work["profile"] = ["Work", "work"]
             general_work["enableEchoByWord"] = True
             manager.save_settings(mock_script, general_work, {}, {})
 
             manager.set_profile("default")
-            general_default = manager.general.copy()
+            general_default = manager.get_settings()
             general_default["profile"] = ["Default", "default"]
             general_default["enableEchoByWord"] = False
             manager.save_settings(mock_script, general_default, {}, {})
@@ -330,13 +279,13 @@ class TestSettingsManagerFileIO:
             mock_script = test_context.Mock()
             mock_script.app = None
 
-            general_work = manager.general.copy()
+            general_work = manager.get_settings()
             general_work["profile"] = ["Work", "work"]
             general_work["enableEchoByWord"] = True
             manager.save_settings(mock_script, general_work, {}, {})
 
             manager.set_profile("default")
-            general_default = manager.general.copy()
+            general_default = manager.get_settings()
             general_default["profile"] = ["Default", "default"]
             general_default["enableEchoByWord"] = False
             manager.save_settings(mock_script, general_default, {}, {})
@@ -360,7 +309,7 @@ class TestSettingsManagerFileIO:
             mock_script = test_context.Mock()
             mock_script.app = None
 
-            general_temp = manager.general.copy()
+            general_temp = manager.get_settings()
             general_temp["profile"] = ["Temporary", "temporary"]
             manager.save_settings(mock_script, general_temp, {}, {})
 
@@ -393,7 +342,7 @@ class TestSettingsManagerFileIO:
             mock_app = test_context.Mock()
             mock_script.app = mock_app
 
-            general_settings = manager.general.copy()
+            general_settings = manager.get_settings()
             general_settings["enableEchoByWord"] = True
 
             manager.save_settings(mock_script, general_settings, {}, {})

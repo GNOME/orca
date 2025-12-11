@@ -216,7 +216,7 @@ class DebuggingToolsManager:
         msg = f"OVERRIDDEN SETTINGS: {info}"
         debug.print_message(debug.debugLevel, msg, True)
 
-        info = AXUtilitiesDebugging.as_string(manager.customized_settings)
+        info = AXUtilitiesDebugging.as_string(manager.get_customized_settings_for_debugging())
         msg = f"CUSTOMIZED SETTINGS: {info}"
         debug.print_message(debug.debugLevel, msg, True)
 

@@ -290,11 +290,6 @@ def main() -> int:
 
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
     manager = settings_manager.get_manager()
-    if not manager:
-        print(messages.CLI_SETTINGS_MANAGER_ERROR)
-        return 1
-
-    debug.print_message(debug.LEVEL_INFO, "INFO: About to activate settings manager.", True)
     manager.activate(args.user_prefs, settings_dict)
     sys.path.insert(0, manager.get_prefs_dir())
 
