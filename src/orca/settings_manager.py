@@ -67,6 +67,7 @@ class SettingsManager:
         "brailleBindingsMap",
         "speechFactoryModules",
         "speechSystemOverride",
+        "silenceSpeech",
     }
 
     def __init__(self) -> None:
