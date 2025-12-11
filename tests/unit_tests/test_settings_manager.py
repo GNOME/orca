@@ -405,3 +405,67 @@ class TestSettingsManagerFileIO:
             assert data["startingProfile"] == ["Work", "work"]
             # Legacy key for backwards compatibility with older Orca versions
             assert data["general"]["startingProfile"] == ["Work", "work"]
+
+    def test_configuring_mode(self, test_context: OrcaTestContext) -> None:
+        """Test that set_configuring and is_configuring work correctly."""
+
+        self._setup_dependencies(test_context)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            assert manager.is_configuring() is False
+
+            manager.set_configuring(True)
+            assert manager.is_configuring() is True
+
+            manager.set_configuring(False)
+            assert manager.is_configuring() is False
+
+    def test_rename_profile(self, test_context: OrcaTestContext) -> None:
+        """Test that rename_profile renames a profile's label and internal name."""
+
+        self._setup_dependencies(test_context)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            mock_script = test_context.Mock()
+            mock_script.app = None
+
+            general_old = manager.get_settings()
+            general_old["profile"] = ["Old Name", "old_name"]
+            general_old["enableEchoByWord"] = True
+            manager.save_settings(mock_script, general_old, {}, {})
+
+            profiles_before = manager.available_profiles()
+            assert any("old_name" in str(p) for p in profiles_before)
+
+            manager.rename_profile("old_name", ["New Name", "new_name"])
+
+            manager2 = self._create_fresh_manager(test_context, temp_dir)
+            profiles_after = manager2.available_profiles()
+
+            assert not any("old_name" in str(p) for p in profiles_after)
+            assert any("new_name" in str(p) for p in profiles_after)
+
+            new_settings = manager2.get_general_settings("new_name")
+            assert new_settings.get("enableEchoByWord") is True
+            assert new_settings.get("profile") == ["New Name", "new_name"]
+
+    def test_rename_profile_nonexistent(self, test_context: OrcaTestContext) -> None:
+        """Test that rename_profile does nothing for a nonexistent profile."""
+
+        self._setup_dependencies(test_context)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            profiles_before = manager.available_profiles()
+
+            manager.rename_profile("nonexistent", ["New Name", "new_name"])
+
+            manager2 = self._create_fresh_manager(test_context, temp_dir)
+            profiles_after = manager2.available_profiles()
+
+            assert profiles_before == profiles_after

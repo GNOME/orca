@@ -81,6 +81,7 @@ class SettingsManager:
         self._pronunciations: dict = {}
         self._keybindings: dict = {}
         self._customized_settings: dict | None = None
+        self._configuring: bool = False
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initialized", True)
 
@@ -267,6 +268,18 @@ class SettingsManager:
 
         return self._prefs_dir
 
+    def set_configuring(self, configuring: bool) -> None:
+        """Set whether preferences are currently being configured."""
+
+        self._configuring = configuring
+        msg = f"SETTINGS MANAGER: Configuring mode set to {configuring}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def is_configuring(self) -> bool:
+        """Return whether preferences are currently being configured."""
+
+        return self._configuring
+
     def get_voice_locale(self, voice: str = "default") -> str:
         """Returns the locale for the specified voice."""
 
@@ -385,15 +398,15 @@ class SettingsManager:
         tokens = ["SETTINGS MANAGER: Profile set to:", profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def remove_profile(self, profile: str) -> None:
+    def remove_profile(self, internal_name: str) -> None:
         """Remove an existing profile."""
 
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
             prefs = load(settings_file)
-            if profile not in prefs["profiles"]:
+            if internal_name not in prefs["profiles"]:
                 return
 
-            del prefs["profiles"][profile]
+            del prefs["profiles"][internal_name]
             if not prefs["profiles"]:
                 prefs["profiles"]["default"] = {
                     "profile": settings.profile,
@@ -403,7 +416,26 @@ class SettingsManager:
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
 
+    def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
+        """Rename profile with old_internal_name to new_profile (label, internal_name)."""
+
+        with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
+            prefs = load(settings_file)
+            if old_internal_name not in prefs["profiles"]:
+                return
+
+            profile_data = prefs["profiles"][old_internal_name].copy()
+            profile_data["profile"] = new_profile
+            prefs["profiles"][new_profile[1]] = profile_data
+            del prefs["profiles"][old_internal_name]
+
+            settings_file.seek(0)
+            settings_file.truncate()
+            dump(prefs, settings_file, indent=4)
+
     def _set_settings_runtime(self, settings_dict: dict) -> None:
+        """Apply settings to the runtime settings module."""
+
         msg = "SETTINGS MANAGER: Setting runtime settings."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
