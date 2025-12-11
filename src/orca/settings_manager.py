@@ -155,16 +155,12 @@ class SettingsManager:
 
         if not os.path.exists(self._settings_file):
             prefs = {
-                "general": self._default_settings,
+                "startingProfile": settings.profile,
                 "profiles": {
                     "default": {
                         "profile": settings.profile,
-                        "pronunciations": {},
-                        "keybindings": {}
                     }
                 },
-                "pronunciations": {},
-                "keybindings": {}
             }
             with open(self._settings_file, "w", encoding="utf-8") as settings_file:
                 dump(prefs, settings_file, indent=4)
@@ -217,7 +213,7 @@ class SettingsManager:
                 self._customized_settings[key] = custom_value
 
     def _get_general_from_file(self, profile: str | None = None) -> dict:
-        """Get general settings from file, merging default with profile values."""
+        """Get settings from file, merging defaults with profile values."""
 
         with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
@@ -225,22 +221,27 @@ class SettingsManager:
             except ValueError:
                 return {}
 
-        general_settings = prefs["general"].copy()
-        default_profile = general_settings.get("startingProfile", ["Default", "default"])
+        result = self._default_settings.copy()
+        starting_profile = prefs.get("startingProfile", ["Default", "default"])
+        result["startingProfile"] = starting_profile
+        default_profile = starting_profile
         if profile is None:
             profile = default_profile[1]
-        profile_settings = prefs["profiles"][profile].copy()
+
+        profile_settings = prefs["profiles"].get(profile, {}).copy()
         for key, value in profile_settings.items():
             if key == "voices":
                 for voice_type, voice_def in value.items():
                     value[voice_type] = ACSS(voice_def)
             if key not in ["startingProfile", "activeProfile"]:
-                general_settings[key] = value
+                result[key] = value
+
         try:
-            general_settings["activeProfile"] = profile_settings["profile"]
+            result["activeProfile"] = profile_settings["profile"]
         except KeyError:
-            general_settings["activeProfile"] = default_profile
-        return general_settings
+            result["activeProfile"] = default_profile
+
+        return result
 
     def _get_app_settings_from_file(self, app_name: str) -> dict:
         """Load app-specific settings from file."""
@@ -338,7 +339,7 @@ class SettingsManager:
 
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
             prefs = load(settings_file)
-            prefs["general"]["startingProfile"] = profile
+            prefs["startingProfile"] = profile
             settings_file.seek(0)
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
@@ -384,8 +385,6 @@ class SettingsManager:
             if not prefs["profiles"]:
                 prefs["profiles"]["default"] = {
                     "profile": settings.profile,
-                    "pronunciations": {},
-                    "keybindings": {}
                 }
 
             settings_file.seek(0)
@@ -419,11 +418,8 @@ class SettingsManager:
             except ValueError:
                 return {}
 
-        pronunciations = prefs["pronunciations"].copy()
-        profile_settings = prefs["profiles"][profile].copy()
-        if "pronunciations" in profile_settings:
-            pronunciations = profile_settings["pronunciations"]
-        return pronunciations
+        profile_settings = prefs["profiles"].get(profile, {})
+        return profile_settings.get("pronunciations", {})
 
     def get_keybindings(self, profile: str = "default") -> dict:
         """Return the current keybindings settings."""
@@ -434,11 +430,8 @@ class SettingsManager:
             except ValueError:
                 return {}
 
-        keybindings = prefs["keybindings"].copy()
-        profile_settings = prefs["profiles"][profile].copy()
-        if "keybindings" in profile_settings:
-            keybindings = profile_settings["keybindings"]
-        return keybindings
+        profile_settings = prefs["profiles"].get(profile, {})
+        return profile_settings.get("keybindings", {})
 
     # pylint: disable-next=too-many-locals
     def save_settings(
@@ -490,7 +483,6 @@ class SettingsManager:
 
         _profile = general.get("profile", settings.profile)
         self._profile = _profile[1]
-        self._default_settings["startingProfile"] = general.get("startingProfile", _profile)
 
         # Build the profile settings to save (only non-default values)
         profile_general: dict = {}
@@ -504,8 +496,10 @@ class SettingsManager:
             elif self._settings.get(key) != value:
                 profile_general[key] = value
 
-        profile_general["pronunciations"] = dict(pronunciations)
-        profile_general["keybindings"] = dict(keybindings)
+        if pronunciations:
+            profile_general["pronunciations"] = dict(pronunciations)
+        if keybindings:
+            profile_general["keybindings"] = dict(keybindings)
 
         tokens = ["SETTINGS MANAGER: Saving for profile", self._profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -513,6 +507,11 @@ class SettingsManager:
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
             prefs = load(settings_file)
             prefs["profiles"][self._profile] = profile_general
+            prefs["startingProfile"] = general.get("startingProfile", _profile)
+            # Remove legacy keys if present
+            prefs.pop("general", None)
+            prefs.pop("pronunciations", None)
+            prefs.pop("keybindings", None)
             settings_file.seek(0)
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)

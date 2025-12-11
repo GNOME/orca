@@ -149,7 +149,7 @@ class TestSettingsManagerFileIO:
 
             with open(settings_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            assert "general" in data
+            assert "startingProfile" in data
             assert "profiles" in data
 
     def test_save_settings_persists_general(self, test_context: OrcaTestContext) -> None:
@@ -376,10 +376,8 @@ class TestSettingsManagerFileIO:
             with open(settings_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
 
-            assert "general" in data
+            assert "startingProfile" in data
             assert "profiles" in data
-            assert "pronunciations" in data
-            assert "keybindings" in data
             assert "default" in data["profiles"]
 
     def test_starting_profile_persistence(self, test_context: OrcaTestContext) -> None:
@@ -396,4 +394,4 @@ class TestSettingsManagerFileIO:
             with open(settings_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
 
-            assert data["general"]["startingProfile"] == ["Work", "work"]
+            assert data["startingProfile"] == ["Work", "work"]
