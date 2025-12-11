@@ -161,6 +161,10 @@ class SettingsManager:
                         "profile": settings.profile,
                     }
                 },
+                # Legacy keys for backwards compatibility with older Orca versions
+                "general": {"startingProfile": settings.profile},
+                "pronunciations": {},
+                "keybindings": {},
             }
             with open(self._settings_file, "w", encoding="utf-8") as settings_file:
                 dump(prefs, settings_file, indent=4)
@@ -222,7 +226,10 @@ class SettingsManager:
                 return {}
 
         result = self._default_settings.copy()
-        starting_profile = prefs.get("startingProfile", ["Default", "default"])
+        # Handle both new format (root level) and old format (inside "general")
+        starting_profile = prefs.get("startingProfile")
+        if starting_profile is None:
+            starting_profile = prefs.get("general", {}).get("startingProfile", ["Default", "default"])
         result["startingProfile"] = starting_profile
         default_profile = starting_profile
         if profile is None:
@@ -340,6 +347,10 @@ class SettingsManager:
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
             prefs = load(settings_file)
             prefs["startingProfile"] = profile
+            # Write legacy keys for backwards compatibility with older Orca versions
+            prefs["general"] = {"startingProfile": profile}
+            prefs.setdefault("pronunciations", {})
+            prefs.setdefault("keybindings", {})
             settings_file.seek(0)
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
@@ -507,11 +518,12 @@ class SettingsManager:
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
             prefs = load(settings_file)
             prefs["profiles"][self._profile] = profile_general
-            prefs["startingProfile"] = general.get("startingProfile", _profile)
-            # Remove legacy keys if present
-            prefs.pop("general", None)
-            prefs.pop("pronunciations", None)
-            prefs.pop("keybindings", None)
+            starting_profile = general.get("startingProfile", _profile)
+            prefs["startingProfile"] = starting_profile
+            # Write legacy keys for backwards compatibility with older Orca versions
+            prefs["general"] = {"startingProfile": starting_profile}
+            prefs.setdefault("pronunciations", {})
+            prefs.setdefault("keybindings", {})
             settings_file.seek(0)
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)

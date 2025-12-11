@@ -151,6 +151,10 @@ class TestSettingsManagerFileIO:
                 data = json.load(f)
             assert "startingProfile" in data
             assert "profiles" in data
+            # Legacy keys for backwards compatibility with older Orca versions
+            assert "general" in data
+            assert "pronunciations" in data
+            assert "keybindings" in data
 
     def test_save_settings_persists_general(self, test_context: OrcaTestContext) -> None:
         """Test that general settings are persisted to file and can be reloaded."""
@@ -379,6 +383,10 @@ class TestSettingsManagerFileIO:
             assert "startingProfile" in data
             assert "profiles" in data
             assert "default" in data["profiles"]
+            # Legacy keys for backwards compatibility with older Orca versions
+            assert "general" in data
+            assert "pronunciations" in data
+            assert "keybindings" in data
 
     def test_starting_profile_persistence(self, test_context: OrcaTestContext) -> None:
         """Test that the starting profile setting is persisted correctly."""
@@ -395,3 +403,5 @@ class TestSettingsManagerFileIO:
                 data = json.load(f)
 
             assert data["startingProfile"] == ["Work", "work"]
+            # Legacy key for backwards compatibility with older Orca versions
+            assert data["general"]["startingProfile"] == ["Work", "work"]
