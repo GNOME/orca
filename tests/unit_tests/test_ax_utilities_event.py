@@ -69,6 +69,7 @@ class TestAXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
         AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.clear()
         AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.clear()
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
 
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
@@ -3313,3 +3314,146 @@ class TestAXUtilitiesEvent:
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING
+
+    def test_ignore_name_changes_for_cleared_by_clear_all(self, test_context):
+        """Test that IGNORE_NAME_CHANGES_FOR is cleared by _clear_all_dictionaries."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca import debug
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(mock_obj))
+        assert len(AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR) == 1
+
+        test_context.patch_object(debug, "print_message", new=test_context.Mock())
+
+        AXUtilitiesEvent._clear_all_dictionaries("test clear")
+
+        assert len(AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR) == 0
+
+    def test_is_presentable_name_change_returns_false_when_source_in_ignore_list(
+        self, test_context
+    ):
+        """Test is_presentable_name_change returns False when source is in ignore list."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_source = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = "new name"
+
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(mock_source))
+
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is False
+
+    def test_is_presentable_name_change_list_item_with_progress_bar(self, test_context):
+        """Test is_presentable_name_change returns False for list item with progress bar."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_source = test_context.Mock(spec=Atspi.Accessible)
+        mock_progress_bar = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = "Downloading... 50%"
+
+        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+
+        mock_focus_manager = test_context.Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_source
+        test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
+
+        test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(
+            AXObject, "find_descendant", return_value=mock_progress_bar
+        )
+
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is False
+        assert hash(mock_source) in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR
+
+    def test_is_presentable_name_change_list_item_without_progress_bar(self, test_context):
+        """Test is_presentable_name_change returns True for list item without progress bar."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_source = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = "List item name"
+
+        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+
+        mock_focus_manager = test_context.Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_source
+        test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
+
+        test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(AXObject, "find_descendant", return_value=None)
+
+        result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result is True
+        assert hash(mock_source) not in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR
+
+    def test_is_presentable_name_change_subsequent_calls_ignored(self, test_context):
+        """Test that subsequent name changes are ignored after source added to ignore list."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_object import AXObject
+        from orca import focus_manager
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_source = test_context.Mock(spec=Atspi.Accessible)
+        mock_progress_bar = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_source
+        mock_event.any_data = "Downloading... 50%"
+
+        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+
+        mock_focus_manager = test_context.Mock()
+        mock_focus_manager.get_locus_of_focus.return_value = mock_source
+        test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
+
+        test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(
+            AXObject, "find_descendant", return_value=mock_progress_bar
+        )
+
+        result1 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result1 is False
+        assert hash(mock_source) in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR
+
+        mock_event.any_data = "Downloading... 75%"
+        result2 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result2 is False
+
+        mock_event.any_data = "Download complete"
+        result3 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
+        assert result3 is False

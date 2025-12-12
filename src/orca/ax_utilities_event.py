@@ -111,6 +111,8 @@ class AXUtilitiesEvent:
     LAST_KNOWN_PRESSED: dict[int, bool] = {}
     LAST_KNOWN_SELECTED: dict[int, bool] = {}
 
+    IGNORE_NAME_CHANGES_FOR: list[int] = []
+
     TEXT_EVENT_REASON: dict[Atspi.Event, TextEventReason] = {}
 
     _lock = threading.Lock()
@@ -138,6 +140,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
         AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
         AXUtilitiesEvent.TEXT_EVENT_REASON.clear()
+        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
 
     @staticmethod
     def clear_cache_now(reason: str = "") -> None:
@@ -679,6 +682,11 @@ class AXUtilitiesEvent:
     def is_presentable_name_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a name change."""
 
+        if hash(event.source) in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR:
+            msg = "AXUtilitiesEvent: Ignoring name change for this source."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         if not isinstance(event.any_data, str):
             msg = "AXUtilitiesEvent: The any_data is not a string."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -724,6 +732,15 @@ class AXUtilitiesEvent:
             msg = "AXUtilitiesEvent: The event is not from the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
+
+        if AXUtilitiesRole.is_list_item(event.source):
+            # Inspired by Firefox's downloads list in which the list item's name changes to show
+            # download progress. It's super chatty and stomps on the progress bar announcements.
+            if AXObject.find_descendant(event.source, AXUtilitiesRole.is_progress_bar):
+                msg = "AXUtilitiesEvent: The list item contains a progress bar."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(event.source))
+                return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
         debug.print_message(debug.LEVEL_INFO, msg, True)
