@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-instance-attributes
 
 """Manages Orca's scripts."""
 

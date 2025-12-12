@@ -20,6 +20,9 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-statements
+# pylint: disable=too-many-branches
 
 """Settings manager."""
 
@@ -259,7 +262,8 @@ class SettingsManager:
         # Handle both new format (root level) and old format (inside "general")
         starting_profile = prefs.get("startingProfile")
         if starting_profile is None:
-            starting_profile = prefs.get("general", {}).get("startingProfile", ["Default", "default"])
+            starting_profile = prefs.get(
+                "general", {}).get("startingProfile", ["Default", "default"])
         result["startingProfile"] = starting_profile
         default_profile = starting_profile
         if profile is None:
