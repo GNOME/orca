@@ -1490,6 +1490,21 @@ class SpeechAndVerbosityManager:
         settings.speakNumbersAsDigits = value
         return True
 
+    @dbus_service.getter
+    def get_auto_language_switching(self) -> bool:
+        """Returns whether automatic language switching is enabled."""
+
+        return settings.enableAutoLanguageSwitching
+
+    @dbus_service.setter
+    def set_auto_language_switching(self, value: bool) -> bool:
+        """Sets whether automatic language switching is enabled."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting auto language switching to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.enableAutoLanguageSwitching = value
+        return True
+
     @dbus_service.command
     def change_number_style(
         self,
@@ -1566,6 +1581,51 @@ class SpeechAndVerbosityManager:
         settings.onlySpeakDisplayedText = value
         return True
 
+    @dbus_service.getter
+    def get_speak_progress_bar_updates(self) -> bool:
+        """Returns whether speech progress bar updates are enabled."""
+
+        return settings.speakProgressBarUpdates
+
+    @dbus_service.setter
+    def set_speak_progress_bar_updates(self, value: bool) -> bool:
+        """Sets whether speech progress bar updates are enabled."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak progress bar updates to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.speakProgressBarUpdates = value
+        return True
+
+    @dbus_service.getter
+    def get_progress_bar_speech_interval(self) -> int:
+        """Returns the speech progress bar update interval in seconds."""
+
+        return settings.progressBarSpeechInterval
+
+    @dbus_service.setter
+    def set_progress_bar_speech_interval(self, value: int) -> bool:
+        """Sets the speech progress bar update interval in seconds."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting progress bar speech interval to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.progressBarSpeechInterval = value
+        return True
+
+    @dbus_service.getter
+    def get_progress_bar_speech_verbosity(self) -> int:
+        """Returns the speech progress bar verbosity level."""
+
+        return settings.progressBarSpeechVerbosity
+
+    @dbus_service.setter
+    def set_progress_bar_speech_verbosity(self, value: int) -> bool:
+        """Sets the speech progress bar verbosity level."""
+
+        msg = f"SPEECH AND VERBOSITY MANAGER: Setting progress bar speech verbosity to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.progressBarSpeechVerbosity = value
+        return True
+
     @dbus_service.command
     def toggle_speech(
         self,
@@ -1637,6 +1697,25 @@ class SpeechAndVerbosityManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speechVerbosityLevel = level.value
         return True
+
+    def _get_verbosity_is_verbose(self) -> bool:
+        """Returns True if verbosity level is VERBOSE, False if BRIEF."""
+
+        return self.get_verbosity_level() == VerbosityLevel.VERBOSE.string_name
+
+    def _set_verbosity_from_bool(self, value: bool) -> bool:
+        """Sets verbosity level to VERBOSE if True, BRIEF if False."""
+
+        if value:
+            level_name = VerbosityLevel.VERBOSE.string_name
+        else:
+            level_name = VerbosityLevel.BRIEF.string_name
+        return self.set_verbosity_level(level_name)
+
+    def _speech_enabled_and_not_only_displayed(self) -> bool:
+        """Returns True if speech is enabled AND only-speak-displayed-text is disabled."""
+
+        return self.get_speech_is_enabled() and not self.get_only_speak_displayed_text()
 
     @dbus_service.command
     def toggle_verbosity(

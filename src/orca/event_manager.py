@@ -53,7 +53,6 @@ from . import focus_manager
 from . import input_event
 from . import input_event_manager
 from . import script_manager
-from . import settings
 from . import systemd
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -762,9 +761,9 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_progress_bar(event.source) \
-           and settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
-            msg = f"EVENT MANAGER: Processing {event.type}: progress bar verbosity is 'all'"
+        is_progress_bar_update, reason = event_script.utilities.is_progress_bar_update(event.source)
+        if is_progress_bar_update:
+            msg = f"EVENT MANAGER: Processing {event.type}: is progress bar update ({reason})"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

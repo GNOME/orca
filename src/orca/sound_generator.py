@@ -38,14 +38,14 @@ import os
 from typing import TYPE_CHECKING, Any
 
 import gi
-gi.require_version('Atspi', '2.0')
+gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
 from . import generator
 from . import object_properties
-from . import settings
 from . import settings_manager
+from . import sound_presenter
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
@@ -94,15 +94,15 @@ class Tone:
     ) -> None:
         self.duration = duration
         self.frequency = min(max(0, frequency), 20000)
-        self.volume = settings.soundVolume * volume_multiplier
+        self.volume = sound_presenter.get_presenter().get_sound_volume() * volume_multiplier
         self.wave = wave
 
     def __str__(self) -> str:
         return (
-            f'Tone(duration: {self.duration}, '
-            f'frequency: {self.frequency}, '
-            f'volume: {self.volume}, '
-            f'wave: {self.wave})'
+            f"Tone(duration: {self.duration}, "
+            f"frequency: {self.frequency}, "
+            f"volume: {self.volume}, "
+            f"wave: {self.wave})"
         )
 
 class SoundGenerator(generator.Generator):
@@ -123,30 +123,20 @@ class SoundGenerator(generator.Generator):
     def generate_sound(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds for the complete presentation of obj."""
 
-        if not settings.enableSound:
+        if not sound_presenter.get_presenter().get_sound_is_enabled():
             debug.print_message(debug.LEVEL_INFO, "SOUND GENERATOR: Generation disabled", True)
             return []
 
         return self.generate(obj, **args)
 
-    #####################################################################
-    #                                                                   #
-    # State information                                                 #
-    #                                                                   #
-    #####################################################################
-
     def _generate_state_sensitive(self, obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds indicating obj is grayed out."""
-
-        if not settings.playSoundForState:
-            return []
 
         if AXUtilities.is_sensitive(obj):
             return []
 
         filename = object_properties.STATE_INSENSITIVE_SPEECH
-        result = self._convert_filename_to_icon(filename)
-        if result:
+        if result := self._convert_filename_to_icon(filename):
             return [result]
 
         return []
@@ -154,13 +144,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_checked(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the checked state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_checked(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -168,15 +154,11 @@ class SoundGenerator(generator.Generator):
     def _generate_has_click_action(self, obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds indicating obj is clickable."""
 
-        if not settings.playSoundForState:
-            return []
-
         if not self._script.utilities.is_clickable_element(obj):
             return []
 
         filename = object_properties.STATE_CLICKABLE_SOUND
-        result = self._convert_filename_to_icon(filename)
-        if result:
+        if result := self._convert_filename_to_icon(filename):
             return [result]
 
         return []
@@ -184,13 +166,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the expanded state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_expanded(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -198,13 +176,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_invalid(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the invalid state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_invalid(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -212,15 +186,11 @@ class SoundGenerator(generator.Generator):
     def _generate_has_long_description(self, obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds indicating obj has a longdesc."""
 
-        if not settings.playSoundForState:
-            return []
-
         if not self._script.utilities.has_long_desc(obj):
             return []
 
         filename = object_properties.STATE_HAS_LONGDESC_SOUND
-        result = self._convert_filename_to_icon(filename)
-        if result:
+        if result := self._convert_filename_to_icon(filename):
             return [result]
 
         return []
@@ -228,13 +198,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_multiselectable(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating obj is multiselectable."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_multiselectable(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -242,13 +208,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the selected state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_selected_for_radio_button(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -256,13 +218,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_read_only(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating obj is read only."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_read_only(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -270,13 +228,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_required(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating obj is required."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_required(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -284,13 +238,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_checked_for_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the on/off state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_checked_for_switch(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -298,13 +248,9 @@ class SoundGenerator(generator.Generator):
     def _generate_state_pressed(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the toggled state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         filenames = super()._generate_state_pressed(obj, **args)
         if filenames and filenames[0]:
-            result = self._convert_filename_to_icon(filenames[0])
-            if result:
+            if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
@@ -312,24 +258,17 @@ class SoundGenerator(generator.Generator):
     def _generate_visited_state(self, obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds indicating the visited state of obj."""
 
-        if not settings.playSoundForState:
-            return []
-
         if not AXUtilities.is_visited(obj):
             return []
 
         filename = object_properties.STATE_VISITED_SOUND
-        result = self._convert_filename_to_icon(filename)
-        if result:
+        if result := self._convert_filename_to_icon(filename):
             return [result]
 
         return []
 
     def _generate_value_as_percentage(self, obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds reflecting the percentage of obj."""
-
-        if not settings.playSoundForValue:
-            return []
 
         percent = AXValue.get_value_as_percent(obj)
         if percent is None:
@@ -340,11 +279,9 @@ class SoundGenerator(generator.Generator):
     def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds representing the progress bar value."""
 
-        if args.get('isProgressBarUpdate'):
+        if args.get("isProgressBarUpdate"):
             if not self._should_present_progress_bar_update(obj, **args):
                 return []
-        elif not settings.playSoundForValue:
-            return []
 
         percent = AXValue.get_value_as_percent(obj)
         if percent is None:
@@ -368,23 +305,17 @@ class SoundGenerator(generator.Generator):
         return [Tone(duration, frequency, volume_multiplier, Tone.SINE_WAVE)]
 
     def _get_progress_bar_update_interval(self) -> int:
-        interval = settings.progressBarBeepInterval
-        if interval is None:
-            return super()._get_progress_bar_update_interval()
-
+        interval = sound_presenter.get_presenter().get_progress_bar_beep_interval()
         return int(interval)
 
     def _should_present_progress_bar_update(self, obj: Atspi.Accessible, **args) -> bool:
-        if not settings.beepProgressBarUpdates:
+        if not sound_presenter.get_presenter().get_beep_progress_bar_updates():
             return False
 
         return super()._should_present_progress_bar_update(obj, **args)
 
     def _generate_position_in_set(self, _obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds reflecting the set position of obj."""
-
-        if not settings.playSoundForPositionInSet:
-            return []
 
         # TODO: Implement the result.
         # index = AXUtilities.get_position_in_set(obj)
@@ -396,9 +327,6 @@ class SoundGenerator(generator.Generator):
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the role of obj."""
 
-        if not settings.playSoundForRole:
-            return []
-
         role = args.get("role", AXObject.get_role(obj))
         filenames = [Atspi.role_get_name(role).replace(" ", "-")]
         if filenames and filenames[0]:
@@ -407,8 +335,6 @@ class SoundGenerator(generator.Generator):
                 return [result]
 
         return []
-
-#########################################################################################
 
     def _generate_default_prefix(self, _obj: Atspi.Accessible, **_args) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""

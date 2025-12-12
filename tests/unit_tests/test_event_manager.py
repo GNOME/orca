@@ -2058,32 +2058,28 @@ class TestEventManager:
                 "id": "active_script",
                 "event_script_is_active": True,
                 "present_if_inactive": False,
-                "is_progress_bar": False,
-                "verbosity_all": False,
+                "is_progress_bar_update": False,
                 "expected": True,
             },
             {
                 "id": "inactive_but_presents",
                 "event_script_is_active": False,
                 "present_if_inactive": True,
-                "is_progress_bar": False,
-                "verbosity_all": False,
+                "is_progress_bar_update": False,
                 "expected": True,
             },
             {
-                "id": "progress_bar_all",
+                "id": "progress_bar_update",
                 "event_script_is_active": False,
                 "present_if_inactive": False,
-                "is_progress_bar": True,
-                "verbosity_all": True,
+                "is_progress_bar_update": True,
                 "expected": True,
             },
             {
                 "id": "no_reason_to_process",
                 "event_script_is_active": False,
                 "present_if_inactive": False,
-                "is_progress_bar": False,
-                "verbosity_all": False,
+                "is_progress_bar_update": False,
                 "expected": False,
             },
         ],
@@ -2105,19 +2101,14 @@ class TestEventManager:
         mock_event.source = test_context.Mock()
         event_script = test_context.Mock()
         event_script.present_if_inactive = case["present_if_inactive"]
+        if case["is_progress_bar_update"]:
+            event_script.utilities.is_progress_bar_update.return_value = (True, "test reason")
+        else:
+            event_script.utilities.is_progress_bar_update.return_value = (False, "")
         if case["event_script_is_active"]:
             active_script = event_script
         else:
             active_script = test_context.Mock()
-        mock_settings = test_context.Mock()
-        test_context.patch("orca.event_manager.settings", new=mock_settings)
-        test_context.patch(
-            "orca.event_manager.AXUtilities.is_progress_bar", return_value=case["is_progress_bar"]
-        )
-        if case["verbosity_all"]:
-            mock_settings.progressBarVerbosity = mock_settings.PROGRESS_BAR_ALL
-        else:
-            mock_settings.progressBarVerbosity = 1
         result = manager._should_process_event(mock_event, event_script, active_script)
         assert result == case["expected"]
 

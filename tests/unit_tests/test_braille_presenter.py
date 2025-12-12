@@ -66,8 +66,6 @@ class TestBraillePresenter:
         settings_mock.BRAILLE_UNDERLINE_BOTH = 0xc0
         settings_mock.VERBOSITY_LEVEL_BRIEF = 0
         settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
-        settings_mock.BRAILLE_ROLENAME_STYLE_SHORT = 0
-        settings_mock.BRAILLE_ROLENAME_STYLE_LONG = 1
 
         return essential_modules
 
@@ -350,10 +348,10 @@ class TestBraillePresenter:
         settings_mock = essential_modules["orca.settings"]
 
         settings_mock.brailleRolenameStyle = 0
-        assert presenter.get_rolename_style() == "short"
+        assert presenter.get_rolename_style() == "brief"
 
         settings_mock.brailleRolenameStyle = 1
-        assert presenter.get_rolename_style() == "long"
+        assert presenter.get_rolename_style() == "verbose"
 
     def test_set_rolename_style(self, test_context: OrcaTestContext):
         """Test setting rolename style."""
@@ -365,11 +363,11 @@ class TestBraillePresenter:
         presenter = get_presenter()
         manager_mock = essential_modules["orca.settings_manager"].get_manager.return_value
 
-        result = presenter.set_rolename_style("short")
+        result = presenter.set_rolename_style("brief")
         assert result is True
         assert settings_mock.brailleRolenameStyle == 0
 
-        result = presenter.set_rolename_style("long")
+        result = presenter.set_rolename_style("verbose")
         assert result is True
         assert settings_mock.brailleRolenameStyle == 1
 

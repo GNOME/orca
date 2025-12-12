@@ -19,8 +19,12 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
+# pylint: disable=wrong-import-position
 
 """Provides braille presentation support."""
+
+# This must be the first non-docstring line in the module to make linters happy.
+from __future__ import annotations
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -44,18 +48,6 @@ class VerbosityLevel(Enum):
 
     BRIEF = settings.VERBOSITY_LEVEL_BRIEF
     VERBOSE = settings.VERBOSITY_LEVEL_VERBOSE
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
-
-class RolenameStyle(Enum):
-    """Rolename style enumeration with int values from settings."""
-
-    SHORT = settings.BRAILLE_ROLENAME_STYLE_SHORT
-    LONG = settings.BRAILLE_ROLENAME_STYLE_LONG
 
     @property
     def string_name(self) -> str:
@@ -156,14 +148,14 @@ class BraillePresenter:
         """Returns the current rolename style for object presentation."""
 
         int_value = settings.brailleRolenameStyle
-        return RolenameStyle(int_value).string_name
+        return VerbosityLevel(int_value).string_name
 
     @dbus_service.setter
     def set_rolename_style(self, value: str) -> bool:
         """Sets the current rolename style for object presentation."""
 
         try:
-            style = RolenameStyle[value.upper()]
+            level = VerbosityLevel[value.upper()]
         except KeyError:
             msg = f"BRAILLE PRESENTER: Invalid rolename style: {value}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -171,7 +163,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting rolename style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.brailleRolenameStyle = style.value
+        settings.brailleRolenameStyle = level.value
         return True
 
     @dbus_service.getter
@@ -190,6 +182,51 @@ class BraillePresenter:
         return True
 
     @dbus_service.getter
+    def get_braille_progress_bar_updates(self) -> bool:
+        """Returns whether braille progress bar updates are enabled."""
+
+        return settings.brailleProgressBarUpdates
+
+    @dbus_service.setter
+    def set_braille_progress_bar_updates(self, value: bool) -> bool:
+        """Sets whether braille progress bar updates are enabled."""
+
+        msg = f"BRAILLE PRESENTER: Setting braille progress bar updates to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleProgressBarUpdates = value
+        return True
+
+    @dbus_service.getter
+    def get_progress_bar_braille_interval(self) -> int:
+        """Returns the braille progress bar update interval in seconds."""
+
+        return settings.progressBarBrailleInterval
+
+    @dbus_service.setter
+    def set_progress_bar_braille_interval(self, value: int) -> bool:
+        """Sets the braille progress bar update interval in seconds."""
+
+        msg = f"BRAILLE PRESENTER: Setting progress bar braille interval to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.progressBarBrailleInterval = value
+        return True
+
+    @dbus_service.getter
+    def get_progress_bar_braille_verbosity(self) -> int:
+        """Returns the braille progress bar verbosity level."""
+
+        return settings.progressBarBrailleVerbosity
+
+    @dbus_service.setter
+    def set_progress_bar_braille_verbosity(self, value: int) -> bool:
+        """Sets the braille progress bar verbosity level."""
+
+        msg = f"BRAILLE PRESENTER: Setting progress bar braille verbosity to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.progressBarBrailleVerbosity = value
+        return True
+
+    @dbus_service.getter
     def get_contracted_braille_is_enabled(self) -> bool:
         """Returns whether contracted braille is enabled."""
 
@@ -203,6 +240,11 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableContractedBraille = value
         return True
+
+    def get_contraction_table_path(self) -> str:
+        """Returns the current braille contraction table file path."""
+
+        return settings.brailleContractionTable
 
     @dbus_service.getter
     def get_contraction_table(self) -> str:
@@ -219,6 +261,11 @@ class BraillePresenter:
 
         table_files = braille.get_table_files()
         return [os.path.splitext(filename)[0] for filename in table_files]
+
+    def get_contraction_tables_dict(self) -> dict[str, str]:
+        """Returns a dictionary mapping display names to table file paths."""
+
+        return braille.list_tables()
 
     @dbus_service.setter
     def set_contraction_table(self, value: str) -> bool:
@@ -241,6 +288,14 @@ class BraillePresenter:
         msg = f"BRAILLE PRESENTER: Setting contraction table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.brailleContractionTable = full_path
+        return True
+
+    def set_contraction_table_from_path(self, file_path: str) -> bool:
+        """Sets the current braille contraction table from a file path."""
+
+        msg = f"BRAILLE PRESENTER: Setting contraction table to {file_path}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleContractionTable = file_path
         return True
 
     @dbus_service.getter
@@ -313,6 +368,30 @@ class BraillePresenter:
         settings.brailleFlashTime = value
         return True
 
+    def set_selector_indicator_from_int(self, value: int) -> bool:
+        """Sets the braille selector indicator from an int value."""
+
+        msg = f"BRAILLE PRESENTER: Setting selector indicator to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleSelectorIndicator = value
+        return True
+
+    def set_link_indicator_from_int(self, value: int) -> bool:
+        """Sets the braille link indicator from an int value."""
+
+        msg = f"BRAILLE PRESENTER: Setting link indicator to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleLinkIndicator = value
+        return True
+
+    def set_text_attributes_indicator_from_int(self, value: int) -> bool:
+        """Sets the braille text attributes indicator from an int value."""
+
+        msg = f"BRAILLE PRESENTER: Setting text attributes indicator to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.textAttributesBrailleIndicator = value
+        return True
+
     @dbus_service.getter
     def get_flash_messages_are_persistent(self) -> bool:
         """Returns whether 'flash' messages are persistent (as opposed to temporary)."""
@@ -343,6 +422,11 @@ class BraillePresenter:
         settings.flashIsDetailed = value
         return True
 
+    def _get_selector_indicator_as_int(self) -> int:
+        """Returns the braille selector indicator as an int."""
+
+        return settings.brailleSelectorIndicator
+
     @dbus_service.getter
     def get_selector_indicator(self) -> str:
         """Returns the braille selector indicator style."""
@@ -366,6 +450,11 @@ class BraillePresenter:
         settings.brailleSelectorIndicator = indicator.value
         return True
 
+    def _get_link_indicator_as_int(self) -> int:
+        """Returns the braille link indicator as an int."""
+
+        return settings.brailleLinkIndicator
+
     @dbus_service.getter
     def get_link_indicator(self) -> str:
         """Returns the braille link indicator style."""
@@ -388,6 +477,11 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.brailleLinkIndicator = indicator.value
         return True
+
+    def _get_text_attributes_indicator_as_int(self) -> int:
+        """Returns the braille text attributes indicator as an int."""
+
+        return settings.textAttributesBrailleIndicator
 
     @dbus_service.getter
     def get_text_attributes_indicator(self) -> str:

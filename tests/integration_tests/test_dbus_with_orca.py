@@ -190,6 +190,27 @@ MODULE_CONFIG = {
         "toggle_commands": ["ToggleSleepMode"],
         "skip": [],
     },
+    "SoundPresenter": {
+        "commands": [],
+        "parameterized_commands": [],
+        "getters": [
+            "BeepProgressBarUpdates",
+            "ProgressBarBeepInterval",
+            "ProgressBarBeepVerbosity",
+            "SoundIsEnabled",
+            "SoundVolume",
+        ],
+        "setters": [
+            "BeepProgressBarUpdates",
+            "ProgressBarBeepInterval",
+            "ProgressBarBeepVerbosity",
+            "SoundIsEnabled",
+            "SoundVolume",
+        ],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "SpeechAndVerbosityManager": {
         "commands": [
             "ChangeNumberStyle",
@@ -224,6 +245,7 @@ MODULE_CONFIG = {
             "AnnounceList",
             "AnnounceSpreadsheetCellCoordinates",
             "AnnounceTable",
+            "AutoLanguageSwitching",
             "AvailableServers",
             "AvailableSynthesizers",
             "AvailableVoices",
@@ -235,6 +257,8 @@ MODULE_CONFIG = {
             "MessagesAreDetailed",
             "OnlySpeakDisplayedText",
             "Pitch",
+            "ProgressBarSpeechInterval",
+            "ProgressBarSpeechVerbosity",
             "PunctuationLevel",
             "Rate",
             "RepeatedCharacterLimit",
@@ -245,6 +269,7 @@ MODULE_CONFIG = {
             "SpeakMisspelledIndicator",
             "SpeakNumbersAsDigits",
             "SpeakPositionInSet",
+            "SpeakProgressBarUpdates",
             "SpeakRowInDocumentTable",
             "SpeakRowInGuiTable",
             "SpeakRowInSpreadsheet",
@@ -269,6 +294,7 @@ MODULE_CONFIG = {
             "AnnounceList",
             "AnnounceSpreadsheetCellCoordinates",
             "AnnounceTable",
+            "AutoLanguageSwitching",
             "CapitalizationStyle",
             "CurrentServer",
             "CurrentSynthesizer",
@@ -277,6 +303,8 @@ MODULE_CONFIG = {
             "MessagesAreDetailed",
             "OnlySpeakDisplayedText",
             "Pitch",
+            "ProgressBarSpeechInterval",
+            "ProgressBarSpeechVerbosity",
             "PunctuationLevel",
             "Rate",
             "RepeatedCharacterLimit",
@@ -287,6 +315,7 @@ MODULE_CONFIG = {
             "SpeakMisspelledIndicator",
             "SpeakNumbersAsDigits",
             "SpeakPositionInSet",
+            "SpeakProgressBarUpdates",
             "SpeakRowInDocumentTable",
             "SpeakRowInGuiTable",
             "SpeakRowInSpreadsheet",
@@ -600,39 +629,45 @@ MODULE_CONFIG = {
         "commands": [],
         "parameterized_commands": [],
         "getters": [
+            "AvailableContractionTables",
             "BrailleIsEnabled",
-            "VerbosityLevel",
-            "RolenameStyle",
-            "DisplayAncestors",
+            "BrailleProgressBarUpdates",
             "ContractedBrailleIsEnabled",
             "ContractionTable",
-            "AvailableContractionTables",
+            "DisplayAncestors",
             "EndOfLineIndicatorIsEnabled",
-            "WordWrapIsEnabled",
-            "FlashMessagesAreEnabled",
             "FlashMessageDuration",
-            "FlashMessagesArePersistent",
             "FlashMessagesAreDetailed",
-            "SelectorIndicator",
+            "FlashMessagesAreEnabled",
+            "FlashMessagesArePersistent",
             "LinkIndicator",
+            "ProgressBarBrailleInterval",
+            "ProgressBarBrailleVerbosity",
+            "RolenameStyle",
+            "SelectorIndicator",
             "TextAttributesIndicator",
+            "VerbosityLevel",
+            "WordWrapIsEnabled",
         ],
         "setters": [
             "BrailleIsEnabled",
-            "VerbosityLevel",
-            "RolenameStyle",
-            "DisplayAncestors",
+            "BrailleProgressBarUpdates",
             "ContractedBrailleIsEnabled",
             "ContractionTable",
+            "DisplayAncestors",
             "EndOfLineIndicatorIsEnabled",
-            "WordWrapIsEnabled",
-            "FlashMessagesAreEnabled",
             "FlashMessageDuration",
-            "FlashMessagesArePersistent",
             "FlashMessagesAreDetailed",
-            "SelectorIndicator",
+            "FlashMessagesAreEnabled",
+            "FlashMessagesArePersistent",
             "LinkIndicator",
+            "ProgressBarBrailleInterval",
+            "ProgressBarBrailleVerbosity",
+            "RolenameStyle",
+            "SelectorIndicator",
             "TextAttributesIndicator",
+            "VerbosityLevel",
+            "WordWrapIsEnabled",
         ],
         "ui_commands": [],
         "toggle_commands": [],
@@ -790,7 +825,7 @@ class TestOrcaDBusIntegration:
         modules = list(dbus_service_proxy.ListModules())
         assert isinstance(modules, list)
 
-        expected_modules = set(MODULE_CONFIG.keys())
+        expected_modules = set(MODULE_CONFIG.keys()) - OPTIONAL_MODULES
         actual_modules = set(modules)
         missing_modules = expected_modules - actual_modules
 
@@ -821,6 +856,16 @@ class TestOrcaDBusIntegration:
     @pytest.mark.dbus
     def test_module_capabilities(self, module_proxy_factory, run_with_timeout, module_name, config):
         """Test that each module reports correct capabilities."""
+        # Skip optional modules that aren't available
+        if module_name in OPTIONAL_MODULES:
+            try:
+                proxy = module_proxy_factory(module_name)
+                # Check if module has the required dbus interface
+                if not hasattr(proxy, 'ExecuteRuntimeGetter'):
+                    pytest.skip(f"{module_name} is optional and not available")
+            except (DBusError, AttributeError):
+                pytest.skip(f"{module_name} is optional and not available")
+
         print(f"\n  Testing {module_name} capabilities:")
         for cap_type in ["commands", "parameterized_commands", "getters", "setters"]:
             items = config.get(cap_type, [])
@@ -861,6 +906,16 @@ class TestOrcaDBusIntegration:
     @pytest.mark.dbus
     def test_module_commands(self, module_proxy_factory, run_with_timeout, module_name, config):
         """Test that module commands execute without errors."""
+        # Skip optional modules that aren't available
+        if module_name in OPTIONAL_MODULES:
+            try:
+                proxy = module_proxy_factory(module_name)
+                # Check if module has the required dbus interface
+                if not hasattr(proxy, 'ExecuteRuntimeGetter'):
+                    pytest.skip(f"{module_name} is optional and not available")
+            except (DBusError, AttributeError):
+                pytest.skip(f"{module_name} is optional and not available")
+
         commands = config["commands"]
         ui_commands = config.get("ui_commands", [])
         toggle_commands = config.get("toggle_commands", [])
@@ -990,6 +1045,16 @@ class TestOrcaDBusIntegration:
         self, module_proxy_factory, run_with_timeout, module_name, config
     ):
         """Test that module getter/setter pairs work correctly."""
+        # Skip optional modules that aren't available
+        if module_name in OPTIONAL_MODULES:
+            try:
+                proxy = module_proxy_factory(module_name)
+                # Check if module has the required dbus interface
+                if not hasattr(proxy, 'ExecuteRuntimeGetter'):
+                    pytest.skip(f"{module_name} is optional and not available")
+            except (DBusError, AttributeError):
+                pytest.skip(f"{module_name} is optional and not available")
+
         all_props = sorted(set(config.get("getters", []) + config.get("setters", [])))
         print(f"\n  Testing {module_name} properties ({len(all_props)} total):")
         for prop in all_props:

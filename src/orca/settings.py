@@ -44,9 +44,6 @@ BRAILLE_UNDERLINE_7: int = 0x40 # 01000000
 BRAILLE_UNDERLINE_8: int = 0x80 # 10000000
 BRAILLE_UNDERLINE_BOTH: int = 0xc0 # 11000000
 
-BRAILLE_ROLENAME_STYLE_SHORT: int = 0 # three letter abbreviations
-BRAILLE_ROLENAME_STYLE_LONG: int = 1 # full rolename
-
 PUNCTUATION_STYLE_NONE: int = 3
 PUNCTUATION_STYLE_SOME: int = 2
 PUNCTUATION_STYLE_MOST: int = 1
@@ -109,6 +106,7 @@ enableTutorialMessages: bool = True
 speakDescription: bool = True
 enablePositionSpeaking: bool = False
 enableMnemonicSpeaking: bool = False
+enableAutoLanguageSwitching: bool = True
 speakContextNonLandmarkForm: bool = True
 speakContextBlockquote: bool = True
 speakContextPanel: bool = True
@@ -130,6 +128,9 @@ repeatCharacterLimit: int = 4
 speechVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
 verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
 capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
+speakProgressBarUpdates: bool = True
+progressBarSpeechInterval: int = 10
+progressBarSpeechVerbosity: int = PROGRESS_BAR_APPLICATION
 
 # Managed by say_all_presenter.py
 sayAllContextBlockquote: bool = True
@@ -156,11 +157,14 @@ enableBrailleWordWrap: bool = False
 enableContractedBraille: bool = False
 brailleContractionTable: str = ''
 disableBrailleEOL: bool = False
-brailleRolenameStyle: int = BRAILLE_ROLENAME_STYLE_LONG
+brailleRolenameStyle: int = VERBOSITY_LEVEL_VERBOSE
 brailleSelectorIndicator: int = BRAILLE_UNDERLINE_BOTH
 brailleLinkIndicator: int = BRAILLE_UNDERLINE_BOTH
 textAttributesBrailleIndicator: int = BRAILLE_UNDERLINE_NONE
 brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
+brailleProgressBarUpdates: bool = False
+progressBarBrailleInterval: int = 10
+progressBarBrailleVerbosity: int = PROGRESS_BAR_APPLICATION
 
 # Managed by mouse_review.py
 enableMouseReview: bool = False
@@ -200,13 +204,12 @@ speechSystemOverride: str | None = None
 # Braille Monitor
 enableBrailleMonitor: bool = False
 
-# Sound
+# Managed by sound_presenter.py
+beepProgressBarUpdates: bool = False
+progressBarBeepInterval: int = 0
+progressBarBeepVerbosity: int = PROGRESS_BAR_APPLICATION
 enableSound: bool = True
 soundVolume: float = 0.5
-playSoundForRole: bool = False
-playSoundForState: bool = False
-playSoundForPositionInSet: bool = False
-playSoundForValue: bool = False
 
 # Keyboard
 keyboardLayout: int = GENERAL_KEYBOARD_LAYOUT_DESKTOP
@@ -215,17 +218,6 @@ doubleClickTimeout: float = 0.5
 
 # Mouse
 presentToolTips: bool = False
-
-# Progressbars
-speakProgressBarUpdates: bool = True
-brailleProgressBarUpdates: bool = False
-beepProgressBarUpdates: bool = False
-progressBarUpdateInterval: int = 10
-progressBarSpeechInterval: int | None = None
-progressBarBrailleInterval: int | None = None
-progressBarBeepInterval: int = 0
-progressBarVerbosity: int = PROGRESS_BAR_APPLICATION
-ignoreStatusBarProgressBars: bool = True
 
 # Document navigation and content
 nativeNavTriggersFocusMode: bool = True
@@ -264,4 +256,7 @@ brailleBindingsMap: dict[str, Any] = {}
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 presentChatRoomLast: bool = False
-enableAutoLanguageSwitching: bool = True
+ignoreStatusBarProgressBars: bool = True
+
+# TODO - JD: This is here until the UI conversion is done.
+progressBarUpdateInterval: int = 10

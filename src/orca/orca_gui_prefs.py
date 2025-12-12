@@ -1593,7 +1593,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("enableBrailleCheckButton").set_active( \
                         prefs["enableBraille"])
         state = prefs["brailleRolenameStyle"] == \
-                            settings.BRAILLE_ROLENAME_STYLE_SHORT
+                            settings.VERBOSITY_LEVEL_BRIEF
         self.get_widget("abbrevRolenames").set_active(state)
 
         self.get_widget("disableBrailleEOLCheckButton").set_active(
@@ -2745,10 +2745,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if widget.get_active():
             self.prefsDict["brailleRolenameStyle"] = \
-                settings.BRAILLE_ROLENAME_STYLE_SHORT
+                settings.VERBOSITY_LEVEL_BRIEF
         else:
             self.prefsDict["brailleRolenameStyle"] = \
-                settings.BRAILLE_ROLENAME_STYLE_LONG
+                settings.VERBOSITY_LEVEL_VERBOSE
 
     def brailleVerbosityChanged(self, widget):
         """Signal handler for the "toggled" signal for the brailleBriefButton,

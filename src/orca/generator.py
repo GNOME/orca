@@ -51,6 +51,7 @@ from . import debug
 from . import focus_manager
 from . import messages
 from . import object_properties
+from . import script_manager
 from . import settings
 from . import speech_and_verbosity_manager
 from .ax_hypertext import AXHypertext
@@ -1212,7 +1213,11 @@ class Generator:
         return []
 
     def _get_progress_bar_update_interval(self):
-        return int(settings.progressBarUpdateInterval)
+        return -1
+
+    def _get_progress_bar_verbosity(self):
+        """Returns the verbosity level for this generator. Override in subclasses."""
+        return settings.PROGRESS_BAR_APPLICATION
 
     def _should_present_progress_bar_update(self, obj, **args):
         percent = AXValue.get_value_as_percent(obj)
@@ -1223,10 +1228,44 @@ class Generator:
             return False
 
         if percent == 100:
+            verbosity = self._get_progress_bar_verbosity()
+            if verbosity == settings.PROGRESS_BAR_ALL:
+                return True
+            if verbosity == settings.PROGRESS_BAR_WINDOW:
+                if self._script.utilities.top_level_object(obj) \
+                   == focus_manager.get_manager().get_active_window():
+                    return True
+                return False
+            if verbosity == settings.PROGRESS_BAR_APPLICATION:
+                app = AXUtilities.get_application(obj)
+                active_app = script_manager.get_manager().get_active_script_app()
+                if app == active_app:
+                    return True
+                return False
             return True
 
         interval = int(time.time() - last_time)
-        return interval >= self._get_progress_bar_update_interval()
+        if interval < self._get_progress_bar_update_interval():
+            return False
+
+        verbosity = self._get_progress_bar_verbosity()
+        if verbosity == settings.PROGRESS_BAR_ALL:
+            return True
+
+        if verbosity == settings.PROGRESS_BAR_WINDOW:
+            if self._script.utilities.top_level_object(obj) \
+               == focus_manager.get_manager().get_active_window():
+                return True
+            return False
+
+        if verbosity == settings.PROGRESS_BAR_APPLICATION:
+            app = AXUtilities.get_application(obj)
+            active_app = script_manager.get_manager().get_active_script_app()
+            if app == active_app:
+                return True
+            return False
+
+        return True
 
     def _clean_up_cached_progress_bars(self):
         bars = list(filter(AXObject.is_valid, self._active_progress_bars))

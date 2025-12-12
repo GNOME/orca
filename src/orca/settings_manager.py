@@ -509,7 +509,7 @@ class SettingsManager:
         profile_settings = prefs["profiles"].get(profile, {})
         return profile_settings.get("keybindings", {})
 
-    # pylint: disable-next=too-many-locals
+    # pylint: disable-next=too-many-locals, too-many-branches
     def save_settings(
         self,
         script: Script,

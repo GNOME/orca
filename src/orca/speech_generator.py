@@ -261,7 +261,7 @@ class SpeechGenerator(generator.Generator):
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType[UPPERCASE], acss.ACSS()))
 
-            if settings.enableAutoLanguageSwitching:
+            if speech_and_verbosity_manager.get_manager().get_auto_language_switching():
                 # Only update the language if it has changed from the user's preferred voice.
                 # If that occurred, changing the dialect should not be problematic/bothersome.
                 # For now, ignore dialect changes for the same language to avoid two potential
@@ -2255,14 +2255,14 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _get_progress_bar_update_interval(self):
-        interval = settings.progressBarSpeechInterval
-        if interval is None:
-            interval = super()._get_progress_bar_update_interval()
-
+        interval = speech_and_verbosity_manager.get_manager().get_progress_bar_speech_interval()
         return int(interval)
 
+    def _get_progress_bar_verbosity(self):
+        return speech_and_verbosity_manager.get_manager().get_progress_bar_speech_verbosity()
+
     def _should_present_progress_bar_update(self, obj, **args):
-        if not settings.speakProgressBarUpdates:
+        if not speech_and_verbosity_manager.get_manager().get_speak_progress_bar_updates():
             return False
 
         return super()._should_present_progress_bar_update(obj, **args)

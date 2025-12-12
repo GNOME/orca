@@ -121,6 +121,7 @@ lib_sources = [
   'sleep_mode_manager.py',
   'sound.py',
   'sound_generator.py',
+  'sound_presenter.py',
   'speech_and_verbosity_manager.py',
   'speech.py',
   'spellcheck.py',

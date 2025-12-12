@@ -62,6 +62,7 @@ from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
 from . import sound
+from . import sound_presenter
 from . import systemd
 from .ax_utilities import AXUtilities
 
@@ -99,7 +100,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     if mouse_reviewer.get_is_enabled():
         mouse_reviewer.activate()
 
-    if settings.enableSound:
+    if sound_presenter.get_presenter().get_sound_is_enabled():
         sound.get_player().init()
 
     # Handle the case where a change was made in the Orca Preferences dialog.
@@ -160,13 +161,13 @@ def shutdown(script=None, _event=None, _signum=None):
 
     if braille_presenter.get_presenter().get_braille_is_enabled():
         braille.shutdown()
-    if settings.enableSound:
+    if sound_presenter.get_presenter().get_sound_is_enabled():
         player = sound.get_player()
         player.shutdown()
 
     signal.alarm(0)
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
-    Atspi.event_quit()
+    Atspi.event_quit() # pylint: disable=no-value-for-parameter
     debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
     return True
 
@@ -265,12 +266,12 @@ def main():
         script_manager.get_manager().set_active_script(script, "Launching.")
 
     clipboard.get_presenter().activate()
-    Gdk.notify_startup_complete()
+    Gdk.notify_startup_complete() # pylint: disable=no-value-for-parameter
     systemd.get_manager().notify_ready()
 
     try:
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)
-        Atspi.event_main()
+        Atspi.event_main() # pylint: disable=no-value-for-parameter
     except GLib.Error as error:
         msg = f"ORCA: Exception starting ATSPI registry: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)

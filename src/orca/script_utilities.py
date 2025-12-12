@@ -38,13 +38,14 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from . import braille_presenter
 from . import debug
 from . import focus_manager
 from . import input_event_manager
 from . import messages
 from . import object_properties
-from . import script_manager
 from . import settings
+from . import sound_presenter
 from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
@@ -220,9 +221,9 @@ class Utilities:
         """Returns a (is-update, reason) tuple if updates to obj should be presented."""
 
         # TODO - JD: Move this into the AXUtilities.
-        if not settings.speakProgressBarUpdates \
-           and not settings.brailleProgressBarUpdates \
-           and not settings.beepProgressBarUpdates:
+        if not speech_and_verbosity_manager.get_manager().get_speak_progress_bar_updates() \
+           and not braille_presenter.get_presenter().get_braille_progress_bar_updates() \
+           and not sound_presenter.get_presenter().get_beep_progress_bar_updates():
             return False, "Updates not enabled"
 
         if not AXUtilities.is_progress_bar(obj):
@@ -238,23 +239,7 @@ class Utilities:
             if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
                 return False, "Is status bar descendant"
 
-        verbosity = settings.progressBarVerbosity
-        if verbosity == settings.PROGRESS_BAR_ALL:
-            return True, "Verbosity is all"
-
-        if verbosity == settings.PROGRESS_BAR_WINDOW:
-            if self.top_level_object(obj) == focus_manager.get_manager().get_active_window():
-                return True, "Verbosity is window"
-            return False, "Top-level object is not active window"
-
-        if verbosity == settings.PROGRESS_BAR_APPLICATION:
-            app = AXUtilities.get_application(obj)
-            active_app = script_manager.get_manager().get_active_script_app()
-            if app == active_app:
-                return True, "Verbosity is app"
-            return False, "App is not active app"
-
-        return True, "Not handled by any other case"
+        return True, "Is valid progress bar update"
 
     def description_list_terms(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of all the accessible description list terms in obj."""
