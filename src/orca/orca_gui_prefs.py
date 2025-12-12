@@ -1583,7 +1583,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                   guilabels.PROGRESS_BAR_APPLICATION,
                   guilabels.PROGRESS_BAR_WINDOW]
         self.populateComboBox(comboBox, levels)
-        comboBox.set_active(prefs["progressBarVerbosity"])
+        verbosity = prefs.get("progressBarVerbosity",
+                              prefs.get("progressBarSpeechVerbosity",
+                                        settings.progressBarSpeechVerbosity))
+        comboBox.set_active(verbosity)
 
         enable = prefs["enableMouseReview"]
         self.get_widget("enableMouseReviewCheckButton").set_active(enable)
@@ -2594,14 +2597,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         myIter = widget.get_active_iter()
         progressBarVerbosity = model[myIter][0]
         if progressBarVerbosity == guilabels.PROGRESS_BAR_ALL:
-            self.prefsDict["progressBarVerbosity"] = \
-                settings.PROGRESS_BAR_ALL
+            value = settings.PROGRESS_BAR_ALL
         elif progressBarVerbosity == guilabels.PROGRESS_BAR_WINDOW:
-            self.prefsDict["progressBarVerbosity"] = \
-                settings.PROGRESS_BAR_WINDOW
+            value = settings.PROGRESS_BAR_WINDOW
         else:
-            self.prefsDict["progressBarVerbosity"] = \
-                settings.PROGRESS_BAR_APPLICATION
+            value = settings.PROGRESS_BAR_APPLICATION
+
+        # Set both old and new settings for backwards/forwards compatibility
+        self.prefsDict["progressBarVerbosity"] = value
+        self.prefsDict["progressBarSpeechVerbosity"] = value
+        self.prefsDict["progressBarBrailleVerbosity"] = value
+        self.prefsDict["progressBarBeepVerbosity"] = value
 
     def capitalizationStyleChanged(self, widget):
         model = widget.get_model()
