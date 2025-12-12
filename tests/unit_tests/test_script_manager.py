@@ -970,6 +970,22 @@ class TestScriptManager:
         settings_mock.testSetting1 = "original_value1"
         settings_mock.testSetting2 = "original_value2"
 
+        # Mock the settings_manager snapshot/restore to work with settings_mock
+        settings_manager_instance = essential_modules["settings_manager_instance"]
+
+        def mock_snapshot():
+            return {
+                "testSetting1": settings_mock.testSetting1,
+                "testSetting2": settings_mock.testSetting2,
+            }
+
+        def mock_restore(snapshot):
+            for key, value in snapshot.items():
+                setattr(settings_mock, key, value)
+
+        settings_manager_instance.snapshot_settings = test_context.Mock(side_effect=mock_snapshot)
+        settings_manager_instance.restore_settings = test_context.Mock(side_effect=mock_restore)
+
         manager = ScriptManager()
         same_app = test_context.Mock()
         old_script = test_context.Mock()

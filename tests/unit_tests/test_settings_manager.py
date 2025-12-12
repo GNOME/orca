@@ -469,3 +469,79 @@ class TestSettingsManagerFileIO:
             profiles_after = manager2.available_profiles()
 
             assert profiles_before == profiles_after
+
+    def test_snapshot_settings_captures_values(self, test_context: OrcaTestContext) -> None:
+        """Test that snapshot_settings captures current runtime settings."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_obj = essential_modules["orca.settings"]
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            settings_obj.enableEchoByWord = True
+            settings_obj.enableKeyEcho = False
+
+            snapshot = manager.snapshot_settings()
+
+            assert snapshot.get("enableEchoByWord") is True
+            assert snapshot.get("enableKeyEcho") is False
+
+    def test_snapshot_settings_excludes_excluded_settings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that snapshot_settings excludes settings in _EXCLUDED_SETTINGS."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_obj = essential_modules["orca.settings"]
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            settings_obj.silenceSpeech = True
+
+            snapshot = manager.snapshot_settings()
+
+            assert "silenceSpeech" not in snapshot
+
+    def test_restore_settings_restores_values(self, test_context: OrcaTestContext) -> None:
+        """Test that restore_settings restores values from a snapshot."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_obj = essential_modules["orca.settings"]
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            settings_obj.enableEchoByWord = True
+            settings_obj.enableKeyEcho = False
+            snapshot = manager.snapshot_settings()
+
+            settings_obj.enableEchoByWord = False
+            settings_obj.enableKeyEcho = True
+
+            manager.restore_settings(snapshot)
+
+            assert settings_obj.enableEchoByWord is True
+            assert settings_obj.enableKeyEcho is False
+
+    def test_snapshot_restore_preserves_excluded_settings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that excluded settings are not affected by snapshot/restore."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_obj = essential_modules["orca.settings"]
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            settings_obj.silenceSpeech = False
+            snapshot = manager.snapshot_settings()
+
+            settings_obj.silenceSpeech = True
+
+            manager.restore_settings(snapshot)
+
+            # silenceSpeech should remain True because it's excluded from snapshots
+            assert settings_obj.silenceSpeech is True

@@ -104,6 +104,34 @@ class SettingsManager:
 
         return self._settings.copy()
 
+    def snapshot_settings(self) -> dict:
+        """Capture current runtime settings values for later restoration."""
+
+        snapshot = {}
+        for name in dir(settings):
+            if name.startswith("_") or name[0].isupper():
+                continue
+            if name in self._EXCLUDED_SETTINGS:
+                continue
+            value = getattr(settings, name)
+            if isinstance(value, (bool, int, float, str, list, dict, tuple, type(None))):
+                snapshot[name] = value
+        return snapshot
+
+    def restore_settings(self, snapshot: dict) -> None:
+        """Restore runtime settings from a previously captured snapshot."""
+
+        restored = []
+        for name, value in snapshot.items():
+            current = getattr(settings, name, None)
+            if current != value:
+                restored.append(f"{name}: {current} -> {value}")
+                setattr(settings, name, value)
+
+        if restored:
+            msg = f"SETTINGS MANAGER: Restored {len(restored)} runtime settings: {restored}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
     # pylint: disable-next=too-many-locals
     def activate(self, prefs_dir: str | None = None, custom_settings: dict | None = None) -> None:
         """Activates this manager."""
