@@ -282,6 +282,11 @@ class SettingsManager:
         except KeyError:
             result["activeProfile"] = default_profile
 
+        # Ensure "profile" key is set for saving back to file
+        if "profile" not in result and profile is not None:
+            label = profile.replace("_", " ").title()
+            result["profile"] = [label, profile]
+
         return result
 
     def _get_app_settings_from_file(self, app_name: str) -> dict:
