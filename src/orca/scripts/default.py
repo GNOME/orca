@@ -44,6 +44,7 @@ from typing import Any, Callable, TYPE_CHECKING
 
 from orca import braille
 from orca import braille_presenter
+from orca import chat_presenter
 from orca import cmdnames
 from orca import debug
 from orca import event_manager
@@ -182,7 +183,7 @@ class Script(script.Script):
         self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
         self.input_event_handlers.update(self.get_action_presenter().get_handlers())
         self.input_event_handlers.update(self.get_debugging_tools_manager().get_handlers())
-        self.input_event_handlers.update(self.chat.get_handlers())
+        self.input_event_handlers.update(chat_presenter.get_presenter().get_handlers())
 
     def get_listeners(self) -> dict[str, Callable]:
         """Sets up the AT-SPI event listeners for this script."""
@@ -319,7 +320,7 @@ class Script(script.Script):
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
 
-        bindings = self.chat.get_bindings(refresh=True, is_desktop=is_desktop)
+        bindings = chat_presenter.get_presenter().get_bindings(refresh=True, is_desktop=is_desktop)
         for binding in bindings.key_bindings:
             key_bindings.add(binding)
 

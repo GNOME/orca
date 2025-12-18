@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
+from orca import chat_presenter
 from orca import debug
 from orca import messages
 from orca import settings
@@ -66,12 +67,12 @@ class Script(gtk.Script):
     def get_app_preferences_gui(self) -> Gtk.Grid:
         """Return a GtkGrid containing the application unique configuration items."""
 
-        return self.chat.get_app_preferences_gui()
+        return chat_presenter.get_presenter().get_app_preferences_gui(self.app)
 
     def get_preferences_from_gui(self) -> dict[str, bool | int]:
         """Returns a dictionary with the app-specific preferences."""
 
-        return self.chat.get_preferences_from_gui()
+        return chat_presenter.get_presenter().get_preferences_from_gui()
 
     def on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
@@ -123,7 +124,7 @@ class Script(gtk.Script):
     def on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
-        if self.chat.present_inserted_text(event):
+        if chat_presenter.get_presenter().present_inserted_text(self, event):
             return True
 
         return super().on_text_inserted(event)

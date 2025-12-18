@@ -331,7 +331,7 @@ class LearnModePresenter:
             bindings[guilabels.KB_GROUP_DEBUGGING_TOOLS] = bound
             items += len(bound)
 
-            bound = script.chat.get_bindings(
+            bound = script.get_chat_presenter().get_bindings(
                 is_desktop=is_desktop).get_bound_bindings()
             bindings[guilabels.KB_GROUP_CHAT] = bound
             items += len(bound)

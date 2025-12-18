@@ -576,6 +576,33 @@ MODULE_CONFIG = {
         "toggle_commands": ["ToggleEnabled"],
         "skip": [],
     },
+    "ChatPresenter": {
+        "commands": [
+            "PresentNextMessage",
+            "PresentPreviousMessage",
+            "ToggleBuddyTyping",
+            "ToggleMessageHistories",
+            "TogglePrefix",
+        ],
+        "parameterized_commands": [],
+        "getters": [
+            "AnnounceBuddyTyping",
+            "MessageVerbosity",
+            "RoomHistories",
+            "SpeakRoomName",
+            "SpeakRoomNameLast",
+        ],
+        "setters": [
+            "AnnounceBuddyTyping",
+            "MessageVerbosity",
+            "RoomHistories",
+            "SpeakRoomName",
+            "SpeakRoomNameLast",
+        ],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "SayAllPresenter": {
         "commands": ["SayAll", "Rewind", "FastForward"],
         "parameterized_commands": [],

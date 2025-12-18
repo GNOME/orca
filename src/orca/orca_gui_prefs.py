@@ -2150,7 +2150,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
             debuggingKeyBindings = self.script.get_debugging_tools_manager().get_bindings(
                 is_desktop=isDesktop)
-            chatKeyBindings = self.script.chat.get_bindings(
+            chatKeyBindings = self.script.get_chat_presenter().get_bindings(
                 is_desktop=isDesktop)
 
             for kb in allKeyBindings.key_bindings:

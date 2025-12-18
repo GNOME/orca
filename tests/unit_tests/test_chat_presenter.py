@@ -1,4 +1,4 @@
-# Unit tests for chat.py methods.
+# Unit tests for chat_presenter.py methods.
 #
 # Copyright 2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -22,7 +22,7 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
 
-"""Unit tests for chat.py methods."""
+"""Unit tests for chat_presenter.py methods."""
 
 from __future__ import annotations
 
@@ -63,7 +63,7 @@ class TestConversation:
         """Test Conversation.__init__."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -77,7 +77,7 @@ class TestConversation:
         """Test Conversation.get_name returns the conversation name."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("MyChannel", mock_log)
@@ -88,7 +88,7 @@ class TestConversation:
         """Test Conversation.is_log identifies the log object."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         other_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -101,7 +101,7 @@ class TestConversation:
         """Test Conversation.add_message and get_message."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -116,7 +116,7 @@ class TestConversation:
         """Test Conversation.has_messages and get_message_count."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -135,7 +135,7 @@ class TestConversation:
         """Test that Conversation respects HISTORY_SIZE limit."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -152,7 +152,7 @@ class TestConversation:
         """Test Conversation typing status methods."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -166,7 +166,7 @@ class TestConversation:
         """Test Conversation.get_message raises IndexError for invalid index."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import Conversation
+        from orca.chat_presenter import Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -205,7 +205,7 @@ class TestConversationList:
         """Test ConversationList.__init__."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList
+        from orca.chat_presenter import ConversationList
 
         conv_list = ConversationList()
 
@@ -216,7 +216,7 @@ class TestConversationList:
         """Test ConversationList.add_message with no conversation."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList
+        from orca.chat_presenter import ConversationList
 
         conv_list = ConversationList()
         conv_list.add_message("Hello", None)
@@ -232,7 +232,7 @@ class TestConversationList:
         """Test ConversationList.add_message with a conversation."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList, Conversation
+        from orca.chat_presenter import ConversationList, Conversation
 
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
@@ -248,7 +248,7 @@ class TestConversationList:
         """Test ConversationList iteration."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList, Conversation
+        from orca.chat_presenter import ConversationList, Conversation
 
         mock_log1 = test_context.Mock(spec=Atspi.Accessible)
         mock_log2 = test_context.Mock(spec=Atspi.Accessible)
@@ -268,7 +268,7 @@ class TestConversationList:
         """Test ConversationList iteration when empty."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList
+        from orca.chat_presenter import ConversationList
 
         conv_list = ConversationList()
         conversations = list(conv_list)
@@ -278,7 +278,7 @@ class TestConversationList:
         """Test that ConversationList respects HISTORY_SIZE limit."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList, Conversation
+        from orca.chat_presenter import ConversationList, Conversation
 
         conv_list = ConversationList()
 
@@ -292,7 +292,7 @@ class TestConversationList:
         """Test ConversationList.get_message_and_name raises IndexError for invalid index."""
 
         self._setup_dependencies(test_context)
-        from orca.chat import ConversationList
+        from orca.chat_presenter import ConversationList
 
         conv_list = ConversationList()
 
@@ -375,6 +375,224 @@ class TestChat:
 
         return essential_modules
 
+    def test_init(self, test_context: OrcaTestContext) -> None:
+        """Test Chat.__init__."""
+
+        self._setup_dependencies(test_context)
+        from orca.chat_presenter import Chat
+
+        mock_script = test_context.Mock()
+        chat = Chat(mock_script)
+
+        assert chat._script == mock_script
+
+
+@pytest.mark.unit
+class TestChatPresenter:
+    """Test ChatPresenter class methods."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
+        """Returns dependencies for ChatPresenter class testing."""
+
+        essential_modules = test_context.setup_shared_dependencies([
+            "orca.ax_utilities",
+            "orca.ax_text",
+            "orca.input_event_manager",
+        ])
+
+        debug_mock = essential_modules["orca.debug"]
+        debug_mock.print_message = test_context.Mock()
+        debug_mock.print_tokens = test_context.Mock()
+
+        cmdnames_mock = essential_modules["orca.cmdnames"]
+        cmdnames_mock.CHAT_TOGGLE_ROOM_NAME_PREFIX = "Toggle room name prefix"
+        cmdnames_mock.CHAT_TOGGLE_BUDDY_TYPING = "Toggle buddy typing"
+        cmdnames_mock.CHAT_TOGGLE_MESSAGE_HISTORIES = "Toggle message histories"
+        cmdnames_mock.CHAT_PREVIOUS_MESSAGE = "Previous message"
+        cmdnames_mock.CHAT_NEXT_MESSAGE = "Next message"
+
+        messages_mock = essential_modules["orca.messages"]
+        messages_mock.CHAT_ROOM_NAME_PREFIX_ON = "Room name prefix on"
+        messages_mock.CHAT_ROOM_NAME_PREFIX_OFF = "Room name prefix off"
+        messages_mock.CHAT_BUDDY_TYPING_ON = "Buddy typing on"
+        messages_mock.CHAT_BUDDY_TYPING_OFF = "Buddy typing off"
+        messages_mock.CHAT_SEPARATE_HISTORIES_ON = "Separate histories on"
+        messages_mock.CHAT_SEPARATE_HISTORIES_OFF = "Separate histories off"
+        messages_mock.CHAT_NO_MESSAGES = "No messages"
+        messages_mock.CHAT_LIST_TOP = "Top of chat"
+        messages_mock.CHAT_LIST_BOTTOM = "Bottom of chat"
+        messages_mock.CHAT_MESSAGE_FROM_ROOM = "Message from %s"
+
+        input_event_mock = essential_modules["orca.input_event"]
+        input_event_handler_mock = test_context.Mock()
+        input_event_mock.InputEventHandler = test_context.Mock(
+            return_value=input_event_handler_mock
+        )
+
+        keybindings_mock = essential_modules["orca.keybindings"]
+        keybindings_mock.NO_MODIFIER_MASK = 0
+        keybindings_mock.ORCA_MODIFIER_MASK = 4
+        keybindings_mock.DEFAULT_MODIFIER_MASK = 8
+
+        settings_manager_mock = essential_modules["orca.settings_manager"]
+        manager_instance = test_context.Mock()
+        manager_instance.set_setting = test_context.Mock()
+        manager_instance.override_key_bindings = test_context.Mock(
+            side_effect=lambda h, b, d: b
+        )
+        settings_manager_mock.get_manager = test_context.Mock(
+            return_value=manager_instance
+        )
+
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.chatSpeakRoomName = False
+        settings_mock.chatAnnounceBuddyTyping = False
+        settings_mock.chatRoomHistories = False
+        settings_mock.chatMessageVerbosity = 0
+        settings_mock.presentChatRoomLast = False
+
+        return essential_modules
+
+    def test_get_handlers(self, test_context: OrcaTestContext) -> None:
+        """Test ChatPresenter.get_handlers returns handlers dict."""
+
+        self._setup_dependencies(test_context)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        handlers = presenter.get_handlers()
+
+        assert "chat_previous_message" in handlers
+        assert "chat_next_message" in handlers
+        assert "chat_toggle_room_name_prefix" in handlers
+        assert "chat_toggle_buddy_typing" in handlers
+        assert "chat_toggle_message_histories" in handlers
+
+    def test_get_bindings(self, test_context: OrcaTestContext) -> None:
+        """Test ChatPresenter.get_bindings returns bindings."""
+
+        self._setup_dependencies(test_context)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        bindings = presenter.get_bindings()
+
+        assert bindings is not None
+
+    def test_toggle_prefix_on_to_off(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_prefix from on to off."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.chat_presenter import get_presenter
+
+        settings_mock.chatSpeakRoomName = True
+        mock_script = test_context.Mock()
+
+        presenter = get_presenter()
+        result = presenter.toggle_prefix(mock_script, None)
+
+        assert result is True
+        assert settings_mock.chatSpeakRoomName is False
+        mock_script.present_message.assert_called_with(
+            essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_OFF
+        )
+
+    def test_toggle_prefix_off_to_on(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_prefix from off to on."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.chat_presenter import get_presenter
+
+        settings_mock.chatSpeakRoomName = False
+        mock_script = test_context.Mock()
+
+        presenter = get_presenter()
+        result = presenter.toggle_prefix(mock_script, None)
+
+        assert result is True
+        assert settings_mock.chatSpeakRoomName is True
+        mock_script.present_message.assert_called_with(
+            essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_ON
+        )
+
+    def test_toggle_buddy_typing_on_to_off(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_buddy_typing from on to off."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.chat_presenter import get_presenter
+
+        settings_mock.chatAnnounceBuddyTyping = True
+        mock_script = test_context.Mock()
+
+        presenter = get_presenter()
+        result = presenter.toggle_buddy_typing(mock_script, None)
+
+        assert result is True
+        assert settings_mock.chatAnnounceBuddyTyping is False
+        mock_script.present_message.assert_called_with(
+            essential_modules["orca.messages"].CHAT_BUDDY_TYPING_OFF
+        )
+
+    def test_toggle_buddy_typing_off_to_on(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_buddy_typing from off to on."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.chat_presenter import get_presenter
+
+        settings_mock.chatAnnounceBuddyTyping = False
+        mock_script = test_context.Mock()
+
+        presenter = get_presenter()
+        result = presenter.toggle_buddy_typing(mock_script, None)
+
+        assert result is True
+        assert settings_mock.chatAnnounceBuddyTyping is True
+        mock_script.present_message.assert_called_with(
+            essential_modules["orca.messages"].CHAT_BUDDY_TYPING_ON
+        )
+
+    def test_toggle_message_histories_on_to_off(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_message_histories from on to off."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.chat_presenter import get_presenter
+
+        settings_mock.chatRoomHistories = True
+        mock_script = test_context.Mock()
+
+        presenter = get_presenter()
+        result = presenter.toggle_message_histories(mock_script, None)
+
+        assert result is True
+        assert settings_mock.chatRoomHistories is False
+        mock_script.present_message.assert_called_with(
+            essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_OFF
+        )
+
+    def test_toggle_message_histories_off_to_on(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_message_histories from off to on."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.chat_presenter import get_presenter
+
+        settings_mock.chatRoomHistories = False
+        mock_script = test_context.Mock()
+
+        presenter = get_presenter()
+        result = presenter.toggle_message_histories(mock_script, None)
+
+        assert result is True
+        assert settings_mock.chatRoomHistories is True
+        mock_script.present_message.assert_called_with(
+            essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_ON
+        )
+
     def _setup_navigation_mocks(
         self, test_context: OrcaTestContext, essential_modules: dict[str, Mock]
     ) -> Mock:
@@ -397,55 +615,18 @@ class TestChat:
 
         return mock_script
 
-    def test_init(self, test_context: OrcaTestContext) -> None:
-        """Test Chat.__init__."""
-
-        self._setup_dependencies(test_context)
-        from orca.chat import Chat
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        assert chat._script == mock_script
-        assert chat._handlers is not None
-        assert chat._bindings is not None
-
-    def test_get_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test Chat.get_handlers returns handlers dict."""
-
-        self._setup_dependencies(test_context)
-        from orca.chat import Chat
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        handlers = chat.get_handlers()
-        assert "chat_previous_message" in handlers
-        assert "chat_next_message" in handlers
-        assert "chat_toggle_room_name_prefix" in handlers
-
-    def test_get_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test Chat.get_bindings returns bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.chat import Chat
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        bindings = chat.get_bindings()
-        assert bindings is not None
-
     def test_present_previous_no_messages(self, test_context: OrcaTestContext) -> None:
-        """Test present_previous_chat_message with no messages."""
+        """Test present_previous_message with no messages."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.chat import Chat
+        from orca.chat_presenter import Chat, get_presenter
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
+        mock_script.chat = chat
 
-        result = chat.present_previous_chat_message(mock_script, None)
+        presenter = get_presenter()
+        result = presenter.present_previous_message(mock_script, None)
 
         assert result is True
         mock_script.present_message.assert_called_with(
@@ -453,15 +634,17 @@ class TestChat:
         )
 
     def test_present_next_no_messages(self, test_context: OrcaTestContext) -> None:
-        """Test present_next_chat_message with no messages."""
+        """Test present_next_message with no messages."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.chat import Chat
+        from orca.chat_presenter import Chat, get_presenter
 
         mock_script = test_context.Mock()
         chat = Chat(mock_script)
+        mock_script.chat = chat
 
-        result = chat.present_next_chat_message(mock_script, None)
+        presenter = get_presenter()
+        result = presenter.present_next_message(mock_script, None)
 
         assert result is True
         mock_script.present_message.assert_called_with(
@@ -472,52 +655,49 @@ class TestChat:
         """Test navigation through message history."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.chat import Chat, Conversation
+        from orca.chat_presenter import Chat, Conversation, get_presenter
 
         mock_script = self._setup_navigation_mocks(test_context, essential_modules)
         chat = Chat(mock_script)
+        mock_script.chat = chat
 
-        # Add messages to the global conversation list
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
         chat._conversation_list.add_message("Message 1", conversation)
         chat._conversation_list.add_message("Message 2", conversation)
         chat._conversation_list.add_message("Message 3", conversation)
 
-        # First previous should go to most recent (-1)
-        chat.present_previous_chat_message(mock_script, None)
+        presenter = get_presenter()
+        presenter.present_previous_message(mock_script, None)
         assert chat._current_index == -1
 
-        # Second previous should go to -2
-        chat.present_previous_chat_message(mock_script, None)
+        presenter.present_previous_message(mock_script, None)
         assert chat._current_index == -2
 
-        # Next should go back to -1
-        chat.present_next_chat_message(mock_script, None)
+        presenter.present_next_message(mock_script, None)
         assert chat._current_index == -1
 
     def test_navigation_top_boundary(self, test_context: OrcaTestContext) -> None:
         """Test navigation stops at top boundary."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.chat import Chat, Conversation
+        from orca.chat_presenter import Chat, Conversation, get_presenter
 
         mock_script = self._setup_navigation_mocks(test_context, essential_modules)
         chat = Chat(mock_script)
+        mock_script.chat = chat
 
-        # Add just 2 messages
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
         chat._conversation_list.add_message("Message 1", conversation)
         chat._conversation_list.add_message("Message 2", conversation)
 
-        # Navigate to oldest
-        chat.present_previous_chat_message(mock_script, None)  # -1
-        chat.present_previous_chat_message(mock_script, None)  # -2 (oldest)
+        presenter = get_presenter()
+        presenter.present_previous_message(mock_script, None)
+        presenter.present_previous_message(mock_script, None)
 
-        # Try to go further back - should announce "Top"
         mock_script.present_message.reset_mock()
-        chat.present_previous_chat_message(mock_script, None)
+        presenter.present_previous_message(mock_script, None)
 
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_LIST_TOP
@@ -527,152 +707,23 @@ class TestChat:
         """Test navigation stops at bottom boundary."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.chat import Chat, Conversation
+        from orca.chat_presenter import Chat, Conversation, get_presenter
 
         mock_script = self._setup_navigation_mocks(test_context, essential_modules)
         chat = Chat(mock_script)
+        mock_script.chat = chat
 
-        # Add messages
         mock_log = test_context.Mock(spec=Atspi.Accessible)
         conversation = Conversation("TestRoom", mock_log)
         chat._conversation_list.add_message("Message 1", conversation)
         chat._conversation_list.add_message("Message 2", conversation)
 
-        # Navigate to most recent
-        chat.present_previous_chat_message(mock_script, None)  # -1
+        presenter = get_presenter()
+        presenter.present_previous_message(mock_script, None)
 
-        # Try to go forward - should announce "Bottom"
         mock_script.present_message.reset_mock()
-        chat.present_next_chat_message(mock_script, None)
+        presenter.present_next_message(mock_script, None)
 
         mock_script.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_LIST_BOTTOM
-        )
-
-    def test_toggle_prefix_on_to_off(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_prefix from on to off."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        from orca.chat import Chat
-
-        # Set initial state: prefix is on
-        essential_modules["orca.settings"].chatSpeakRoomName = True
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        result = chat.toggle_prefix(mock_script, None)
-
-        assert result is True
-        assert settings_mock.chatSpeakRoomName == False
-        mock_script.present_message.assert_called_with(
-            essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_OFF
-        )
-
-    def test_toggle_prefix_off_to_on(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_prefix from off to on."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        from orca.chat import Chat
-
-        # Set initial state: prefix is off
-        essential_modules["orca.settings"].chatSpeakRoomName = False
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        result = chat.toggle_prefix(mock_script, None)
-
-        assert result is True
-        assert settings_mock.chatSpeakRoomName == True
-        mock_script.present_message.assert_called_with(
-            essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_ON
-        )
-
-    def test_toggle_buddy_typing_on_to_off(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_buddy_typing from on to off."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        from orca.chat import Chat
-
-        essential_modules["orca.settings"].chatAnnounceBuddyTyping = True
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        result = chat.toggle_buddy_typing(mock_script, None)
-
-        assert result is True
-        assert settings_mock.chatAnnounceBuddyTyping == False
-        mock_script.present_message.assert_called_with(
-            essential_modules["orca.messages"].CHAT_BUDDY_TYPING_OFF
-        )
-
-    def test_toggle_buddy_typing_off_to_on(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_buddy_typing from off to on."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        from orca.chat import Chat
-
-        essential_modules["orca.settings"].chatAnnounceBuddyTyping = False
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        result = chat.toggle_buddy_typing(mock_script, None)
-
-        assert result is True
-        assert settings_mock.chatAnnounceBuddyTyping == True
-        mock_script.present_message.assert_called_with(
-            essential_modules["orca.messages"].CHAT_BUDDY_TYPING_ON
-        )
-
-    def test_toggle_message_histories_on_to_off(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_message_histories from on to off."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        from orca.chat import Chat
-
-        essential_modules["orca.settings"].chatRoomHistories = True
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        result = chat.toggle_message_histories(mock_script, None)
-
-        assert result is True
-        assert settings_mock.chatRoomHistories == False
-        mock_script.present_message.assert_called_with(
-            essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_OFF
-        )
-
-    def test_toggle_message_histories_off_to_on(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_message_histories from off to on."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        from orca.chat import Chat
-
-        essential_modules["orca.settings"].chatRoomHistories = False
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
-
-        mock_script = test_context.Mock()
-        chat = Chat(mock_script)
-
-        result = chat.toggle_message_histories(mock_script, None)
-
-        assert result is True
-        assert settings_mock.chatRoomHistories == True
-        mock_script.present_message.assert_called_with(
-            essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_ON
         )

@@ -76,7 +76,7 @@ lib_sources = [
   'brltablenames.py',
   'bypass_mode_manager.py',
   'caret_navigator.py',
-  'chat.py',
+  'chat_presenter.py',
   'clipboard.py',
   'cmdnames.py',
   'colornames.py',

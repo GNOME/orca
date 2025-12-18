@@ -53,7 +53,7 @@ from . import bypass_mode_manager
 from . import action_presenter
 from . import braille_generator
 from . import caret_navigator
-from . import chat
+from . import chat_presenter
 from . import clipboard
 from . import debug
 from . import debugging_tools_manager
@@ -163,12 +163,16 @@ class Script:
 
         return speech_generator.SpeechGenerator(self)
 
-    def get_chat(self) -> chat.Chat:
-        """Returns the 'chat' class for this script."""
+    def get_chat(self) -> chat_presenter.Chat:
+        """Returns the Chat object for this script."""
 
-        # TODO - JD: When there is a singleton presenter, this will no longer be needed.
         # In practice, self will always be an instance/subclass of default.Script.
-        return chat.Chat(self) # type: ignore[arg-type]
+        return chat_presenter.Chat(self)  # type: ignore[arg-type]
+
+    def get_chat_presenter(self) -> chat_presenter.ChatPresenter:
+        """Returns the chat presenter."""
+
+        return chat_presenter.get_presenter()
 
     def get_spellcheck(self) -> spellcheck.SpellCheck | None:
         """Returns the spellcheck support for this script."""
