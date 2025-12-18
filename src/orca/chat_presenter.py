@@ -245,9 +245,10 @@ class Chat:
 
         name = self.get_chat_room_name(obj)
         for conversation in self._conversation_list:
-            if name and name == conversation.get_name():
-                return conversation
-            if conversation.is_log(obj):
+            if name:
+                if name == conversation.get_name():
+                    return conversation
+            elif conversation.is_log(obj):
                 return conversation
 
         return None

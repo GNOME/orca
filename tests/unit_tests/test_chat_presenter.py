@@ -386,6 +386,27 @@ class TestChat:
 
         assert chat._script == mock_script
 
+    def test_get_conversation_for_object_name_mismatch(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test get_conversation_for_object when name doesn't match log's room."""
+
+        self._setup_dependencies(test_context)
+        from orca.chat_presenter import Chat, Conversation
+
+        mock_script = test_context.Mock()
+        chat = Chat(mock_script)
+
+        mock_log1 = test_context.Mock(spec=Atspi.Accessible)
+        conversation1 = Conversation("Room1", mock_log1)
+        chat._conversation_list.add_message("Hello", conversation1)
+
+        chat.get_chat_room_name = test_context.Mock(return_value="Room2")
+
+        result = chat.get_conversation_for_object(mock_log1)
+
+        assert result is None
+
 
 @pytest.mark.unit
 class TestChatPresenter:
