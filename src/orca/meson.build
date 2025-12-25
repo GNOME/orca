@@ -80,6 +80,7 @@ lib_sources = [
   'clipboard.py',
   'cmdnames.py',
   'colornames.py',
+  'command_manager.py',
   'dbus_service.py',
   'debug.py',
   'debugging_tools_manager.py',
