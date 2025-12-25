@@ -392,6 +392,8 @@ class TestCommandManager:
 
         assert cmd1.get_default_keybinding() == kb1
         assert cmd2.get_default_keybinding() == kb2
+        assert cmd1.get_keybinding() == kb1
+        assert cmd2.get_keybinding() == kb2
 
     def test_set_default_bindings_skips_handlers(self, test_context: OrcaTestContext) -> None:
         """Test that set_default_bindings_from_module respects skip_handlers."""

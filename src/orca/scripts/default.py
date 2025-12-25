@@ -44,11 +44,12 @@ from typing import Any, Callable, TYPE_CHECKING
 
 from orca import braille
 from orca import braille_presenter
-from orca import chat_presenter
 from orca import cmdnames
+from orca import command_manager
 from orca import debug
 from orca import event_manager
 from orca import focus_manager
+from orca import guilabels
 from orca import input_event_manager
 from orca import input_event
 from orca import keybindings
@@ -85,9 +86,43 @@ if TYPE_CHECKING:
 class Script(script.Script):
     """The default Script for presenting information to the user."""
 
+    BRAILLE_HARDWARE_ONLY_HANDLERS = frozenset({
+        "goBrailleHomeHandler",
+        "processRoutingKeyHandler",
+        "processBrailleCutBeginHandler",
+        "processBrailleCutLineHandler"
+    })
+
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
         self.grab_ids: list = [int]
+
+    def _get_all_extensions(self) -> list[tuple[Callable, str]]:
+        """Returns (extension_getter, localized_name) for each extension."""
+
+        return [
+            (self.get_notification_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
+            (self.get_clipboard_presenter, guilabels.KB_GROUP_CLIPBOARD),
+            (self.get_say_all_presenter, guilabels.KB_GROUP_DEFAULT),
+            (self.get_typing_echo_presenter, guilabels.KB_GROUP_DEFAULT),
+            (self.get_speech_and_verbosity_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
+            (self.get_bypass_mode_manager, guilabels.KB_GROUP_DEFAULT),
+            (self.get_sleep_mode_manager, guilabels.KB_GROUP_SLEEP_MODE),
+            (self.get_system_information_presenter, guilabels.KB_GROUP_SYSTEM_INFORMATION),
+            (self.get_object_navigator, guilabels.KB_GROUP_OBJECT_NAVIGATION),
+            (self.get_caret_navigator, guilabels.KB_GROUP_CARET_NAVIGATION),
+            (self.get_structural_navigator, guilabels.KB_GROUP_STRUCTURAL_NAVIGATION),
+            (self.get_table_navigator, guilabels.KB_GROUP_TABLE_NAVIGATION),
+            (self.get_live_region_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
+            (self.get_learn_mode_presenter, guilabels.KB_GROUP_LEARN_MODE),
+            (self.get_mouse_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
+            (self.get_action_presenter, guilabels.KB_GROUP_ACTIONS),
+            (self.get_flat_review_presenter, guilabels.KB_GROUP_FLAT_REVIEW),
+            (self.get_flat_review_finder, guilabels.KB_GROUP_FIND),
+            (self.get_where_am_i_presenter, guilabels.KB_GROUP_WHERE_AM_I),
+            (self.get_debugging_tools_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
+            (self.get_chat_presenter, guilabels.KB_GROUP_CHAT),
+        ]
 
     def setup_input_event_handlers(self) -> None:
         """Defines the input event handlers for this script."""
@@ -119,30 +154,10 @@ class Script(script.Script):
                 cmdnames.PAN_BRAILLE_RIGHT,
                 False) # Do not enable learn mode for this action
 
-        self.input_event_handlers["goBrailleHomeHandler"] = \
-            input_event.InputEventHandler(
-                Script.go_braille_home,
-                cmdnames.GO_BRAILLE_HOME)
-
         self.input_event_handlers["contractedBrailleHandler"] = \
             input_event.InputEventHandler(
                 Script.set_contracted_braille,
                 cmdnames.SET_CONTRACTED_BRAILLE)
-
-        self.input_event_handlers["processRoutingKeyHandler"] = \
-            input_event.InputEventHandler(
-                Script.process_routing_key,
-                cmdnames.PROCESS_ROUTING_KEY)
-
-        self.input_event_handlers["processBrailleCutBeginHandler"] = \
-            input_event.InputEventHandler(
-                Script.process_braille_cut_begin,
-                cmdnames.PROCESS_BRAILLE_CUT_BEGIN)
-
-        self.input_event_handlers["processBrailleCutLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.process_braille_cut_line,
-                cmdnames.PROCESS_BRAILLE_CUT_LINE)
 
         self.input_event_handlers["shutdownHandler"] = \
             input_event.InputEventHandler(
@@ -164,26 +179,42 @@ class Script(script.Script):
                 Script.cycle_settings_profile,
                 cmdnames.CYCLE_SETTINGS_PROFILE)
 
-        self.input_event_handlers.update(self.get_clipboard_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_notification_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_flat_review_finder().get_handlers())
-        self.input_event_handlers.update(self.get_flat_review_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_speech_and_verbosity_manager().get_handlers())
-        self.input_event_handlers.update(self.get_bypass_mode_manager().get_handlers())
-        self.input_event_handlers.update(self.get_system_information_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_object_navigator().get_handlers())
-        self.input_event_handlers.update(self.get_say_all_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_caret_navigator().get_handlers())
-        self.input_event_handlers.update(self.get_structural_navigator().get_handlers())
-        self.input_event_handlers.update(self.get_table_navigator().get_handlers())
-        self.input_event_handlers.update(self.get_live_region_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_typing_echo_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_where_am_i_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_learn_mode_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_mouse_reviewer().get_handlers())
-        self.input_event_handlers.update(self.get_action_presenter().get_handlers())
-        self.input_event_handlers.update(self.get_debugging_tools_manager().get_handlers())
-        self.input_event_handlers.update(chat_presenter.get_presenter().get_handlers())
+        for name, handler in self.input_event_handlers.items():
+            command_manager.get_manager().add_command(command_manager.Command(
+                name, handler, guilabels.KB_GROUP_DEFAULT, handler.description,
+                None, handler.learn_mode_enabled))
+
+        for extension_getter, localized_name in self._get_all_extensions():
+            extension = extension_getter()
+            handlers = extension.get_handlers()
+            self.input_event_handlers.update(handlers)
+            for name, handler in handlers.items():
+                command_manager.get_manager().add_command(command_manager.Command(
+                    name, handler, localized_name, handler.description,
+                    None, handler.learn_mode_enabled))
+
+        # These are strictly for braille hardware keys.
+        # They are NOT added as Commands because they're handled separately
+        # in the Braille Bindings section of the preferences.
+        self.input_event_handlers["goBrailleHomeHandler"] = \
+            input_event.InputEventHandler(
+                Script.go_braille_home,
+                cmdnames.GO_BRAILLE_HOME)
+
+        self.input_event_handlers["processRoutingKeyHandler"] = \
+            input_event.InputEventHandler(
+                Script.process_routing_key,
+                cmdnames.PROCESS_ROUTING_KEY)
+
+        self.input_event_handlers["processBrailleCutBeginHandler"] = \
+            input_event.InputEventHandler(
+                Script.process_braille_cut_begin,
+                cmdnames.PROCESS_BRAILLE_CUT_BEGIN)
+
+        self.input_event_handlers["processBrailleCutLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.process_braille_cut_line,
+                cmdnames.PROCESS_BRAILLE_CUT_LINE)
 
     def get_listeners(self) -> dict[str, Callable]:
         """Sets up the AT-SPI event listeners for this script."""
@@ -229,103 +260,6 @@ class Script(script.Script):
         listeners["window:destroy"] = self.on_window_destroyed
         return listeners
 
-    def _get_extension_bindings(self) -> keybindings.KeyBindings:
-        key_bindings = keybindings.KeyBindings()
-
-        layout = settings.keyboardLayout
-        is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-
-        bindings = self.get_sleep_mode_manager().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_notification_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_clipboard_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_flat_review_finder().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_flat_review_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_where_am_i_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_learn_mode_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_speech_and_verbosity_manager().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_system_information_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_object_navigator().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_caret_navigator().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_structural_navigator().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_table_navigator().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_mouse_reviewer().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_action_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_debugging_tools_manager().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = self.get_live_region_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        bindings = chat_presenter.get_presenter().get_bindings(refresh=True, is_desktop=is_desktop)
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
-
-        return key_bindings
-
     def get_key_bindings(self, enabled_only: bool = True) -> keybindings.KeyBindings:
         """Returns the key bindings for this script."""
 
@@ -333,21 +267,35 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         key_bindings = script.Script.get_key_bindings(self)
+        layout = settings.keyboardLayout
+        is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
 
-        bindings = self.get_default_keybindings_deprecated()
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
+        def update_bindings(handlers, bindings, group_label, update_group_label=True):
+            cmd_mgr = command_manager.get_manager()
+            skip = Script.BRAILLE_HARDWARE_ONLY_HANDLERS
 
-        bindings = self.get_app_key_bindings()
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
+            cmd_mgr.set_default_bindings_from_module(handlers, bindings, skip)
 
-        bindings = self._get_extension_bindings()
-        for binding in bindings.key_bindings:
-            key_bindings.add(binding)
+            settings_mgr = settings_manager.get_manager()
+            customized = settings_mgr.override_key_bindings(handlers, bindings, enabled_only)
+            profile_keybindings = settings_mgr.get_keybindings()
 
-        key_bindings = settings_manager.get_manager().override_key_bindings(
-                self.input_event_handlers, key_bindings, enabled_only)
+            cmd_mgr.clear_deleted_bindings(handlers, profile_keybindings, skip)
+            cmd_mgr.apply_customized_bindings(
+                handlers, customized, group_label, skip, update_group_label)
+
+            for kb in customized.key_bindings:
+                key_bindings.add(kb)
+
+        update_bindings(self.input_event_handlers, self.get_default_keybindings_deprecated(),
+                        guilabels.KB_GROUP_DEFAULT, update_group_label=False)
+        update_bindings(self.input_event_handlers, self.get_app_key_bindings(),
+                        AXObject.get_name(self.app), update_group_label=False)
+        for extension_getter, localized_name in self._get_all_extensions():
+            extension = extension_getter()
+            update_bindings(extension.get_handlers(),
+                            extension.get_bindings(refresh=True, is_desktop=is_desktop),
+                            localized_name)
 
         return key_bindings
 

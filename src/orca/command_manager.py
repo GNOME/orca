@@ -165,6 +165,7 @@ class CommandManager:
                     if cmd := self.get_command(name):
                         if cmd.get_default_keybinding() is None:
                             cmd.set_default_keybinding(kb)
+                            cmd.set_keybinding(kb)
                     break
 
     def clear_deleted_bindings(

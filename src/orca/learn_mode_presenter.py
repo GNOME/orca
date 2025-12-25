@@ -44,6 +44,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
 from . import cmdnames
+from . import command_manager
 from . import debug
 from . import guilabels
 from . import input_event
@@ -51,7 +52,6 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import script_manager
-from . import settings
 from . import speech
 from .ax_object import AXObject
 
@@ -236,105 +236,18 @@ class LearnModePresenter:
     def list_orca_shortcuts(self, script: default.Script, event: input_event.KeyboardEvent) -> bool:
         """Shows a simple gui listing Orca's bound commands."""
 
-        layout = settings.keyboardLayout
-        is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-
         items = 0
-        bindings = {}
+        bindings: dict[str, list[keybindings.KeyBinding]] = {}
         if event is None or event.keyval_name == "F2":
-            bound = script.get_default_keybindings_deprecated().get_bound_bindings()
-            bindings[guilabels.KB_GROUP_DEFAULT] = bound
-            items += len(bound)
+            for cmd in command_manager.get_manager().get_all_commands():
+                keybinding = cmd.get_keybinding()
+                if keybinding is None or not cmd.get_learn_mode_enabled():
+                    continue
 
-            bound = script.get_learn_mode_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_LEARN_MODE] = bound
-            items += len(bound)
-
-            bound = script.get_where_am_i_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_WHERE_AM_I] = bound
-            items += len(bound)
-
-            bound = script.get_speech_and_verbosity_manager().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_SPEECH_VERBOSITY] = bound
-            items += len(bound)
-
-            bound = script.get_sleep_mode_manager().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_SLEEP_MODE] = bound
-            items += len(bound)
-
-            bound = script.get_flat_review_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_FLAT_REVIEW] = bound
-            items += len(bound)
-
-            bound = script.get_flat_review_finder().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_FIND] = bound
-            items += len(bound)
-
-            bound = script.get_object_navigator().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_OBJECT_NAVIGATION] = bound
-            items += len(bound)
-
-            bound = script.get_caret_navigator().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_CARET_NAVIGATION] = bound
-            items += len(bound)
-
-            bound = script.get_structural_navigator().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_STRUCTURAL_NAVIGATION] = bound
-            items += len(bound)
-
-            bound = script.get_table_navigator().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_TABLE_NAVIGATION] = bound
-            items += len(bound)
-
-            bound = script.get_live_region_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_LIVE_REGIONS] = bound
-            items += len(bound)
-
-            bound = script.get_system_information_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_SYSTEM_INFORMATION] = bound
-            items += len(bound)
-
-            bound = script.get_notification_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_NOTIFICATIONS] = bound
-            items += len(bound)
-
-            bound = script.get_clipboard_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_CLIPBOARD] = bound
-            items += len(bound)
-
-            bound = script.get_mouse_reviewer().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_MOUSE_REVIEW] = bound
-            items += len(bound)
-
-            bound = script.get_action_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_ACTIONS] = bound
-            items += len(bound)
-
-            bound = script.get_debugging_tools_manager().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_DEBUGGING_TOOLS] = bound
-            items += len(bound)
-
-            bound = script.get_chat_presenter().get_bindings(
-                is_desktop=is_desktop).get_bound_bindings()
-            bindings[guilabels.KB_GROUP_CHAT] = bound
-            items += len(bound)
+                if cmd.get_group_label() not in bindings:
+                    bindings[cmd.get_group_label()] = []
+                bindings[cmd.get_group_label()].append(keybinding)
+                items += 1
 
             title = messages.shortcuts_found_orca(items)
         else:

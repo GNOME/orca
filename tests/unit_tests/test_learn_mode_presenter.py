@@ -52,6 +52,7 @@ class TestLearnModePresenter:
 
         additional_modules = [
             "gi.repository",
+            "orca.command_manager",
             "orca.input_event_manager",
             "time",
             "orca.speech",
@@ -628,49 +629,19 @@ class TestLearnModePresenter:
         script_manager = essential_modules["orca.script_manager"]
         script = script_manager.get_manager.return_value.get_active_script.return_value
         if not is_f3_event:
-            default_kb = test_context.Mock()
-            default_kb.get_bound_bindings.return_value = []
-            script.get_default_keybindings_deprecated.return_value = default_kb
-            learn_presenter = test_context.Mock()
-            learn_kb = test_context.Mock()
-            learn_kb.get_bound_bindings.return_value = []
-            learn_presenter.get_bindings.return_value = learn_kb
-            script.get_learn_mode_presenter.return_value = learn_presenter
-            where_presenter = test_context.Mock()
-            where_kb = test_context.Mock()
-            where_kb.get_bound_bindings.return_value = []
-            where_presenter.get_bindings.return_value = where_kb
-            script.get_where_am_i_presenter.return_value = where_presenter
-            speech_manager = test_context.Mock()
-            speech_kb = test_context.Mock()
-            speech_kb.get_bound_bindings.return_value = []
-            speech_manager.get_bindings.return_value = speech_kb
-            script.get_speech_and_verbosity_manager.return_value = speech_manager
-            sleep_manager = test_context.Mock()
-            sleep_kb = test_context.Mock()
-            sleep_kb.get_bound_bindings.return_value = []
-            sleep_manager.get_bindings.return_value = sleep_kb
-            script.get_sleep_mode_manager.return_value = sleep_manager
-            flat_review_presenter = test_context.Mock()
-            flat_review_kb = test_context.Mock()
-            flat_review_kb.get_bound_bindings.return_value = []
-            flat_review_presenter.get_bindings.return_value = flat_review_kb
-            script.get_flat_review_presenter.return_value = flat_review_presenter
-            flat_review_finder = test_context.Mock()
-            flat_review_finder_kb = test_context.Mock()
-            flat_review_finder_kb.get_bound_bindings.return_value = []
-            flat_review_finder.get_bindings.return_value = flat_review_finder_kb
-            script.get_flat_review_finder.return_value = flat_review_finder
-            object_navigator = test_context.Mock()
-            object_navigator_kb = test_context.Mock()
-            object_navigator_kb.get_bound_bindings.return_value = []
-            object_navigator.get_bindings.return_value = object_navigator_kb
-            script.get_object_navigator.return_value = object_navigator
-            chat_presenter = test_context.Mock()
-            chat_kb = test_context.Mock()
-            chat_kb.get_bound_bindings.return_value = []
-            chat_presenter.get_bindings.return_value = chat_kb
-            script.get_chat_presenter.return_value = chat_presenter
+            mock_keybinding = test_context.Mock()
+            mock_keybinding.handler = test_context.Mock()
+            mock_keybinding.handler.description = "Test command"
+
+            mock_command = test_context.Mock()
+            mock_command.get_keybinding.return_value = mock_keybinding
+            mock_command.get_learn_mode_enabled.return_value = True
+            mock_command.get_group_label.return_value = "Test Group"
+
+            command_manager_mock = essential_modules["orca.command_manager"]
+            command_manager_mock.get_manager.return_value.get_all_commands.return_value = (
+                mock_command,
+            )
         else:
             key_binding_mock = test_context.Mock()
             key_binding_mock.handler = test_context.Mock()
