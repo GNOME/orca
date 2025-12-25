@@ -28,14 +28,35 @@ __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2025 Igalia, S.L."
 __license__ = "LGPL"
 
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from . import input_event
 from . import keybindings
 
+if TYPE_CHECKING:
+    from .scripts import default
 
-class Command:
-    """Represents an Orca command with its handler and optional key binding."""
+
+class Command:  # pylint: disable=too-many-instance-attributes
+    """Represents an Orca command with its handler and optional key binding.
+
+    Commands have two independent activity states:
+
+    enabled: User preference for whether this command should be active.
+        - Set via user settings or toggle commands (e.g., "toggle caret navigation")
+        - Persists across sessions
+        - Example: User prefers caret navigation on
+
+    suspended: Temporary system override that deactivates the command.
+        - Set by Orca modes (e.g., focus mode suspends browse-mode commands)
+        - Does NOT change the user's enabled preference
+        - When suspension is lifted, command returns to its enabled state
+        - Example: Focus mode suspends structural navigation; leaving focus
+          mode automatically restores it
+
+    A command is active (responds to key events) only when:
+        enabled=True AND suspended=False AND keybinding is not None
+    """
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def __init__(
@@ -45,7 +66,9 @@ class Command:
         group_label: str,
         description: str = "",
         keybinding: keybindings.KeyBinding | None = None,
-        learn_mode_enabled: bool = True
+        learn_mode_enabled: bool = True,
+        enabled: bool = True,
+        suspended: bool = False
     ) -> None:
         """Initializes a command."""
 
@@ -56,6 +79,8 @@ class Command:
         self._default_keybinding = keybinding
         self._keybinding = keybinding
         self._learn_mode_enabled = learn_mode_enabled
+        self._enabled = enabled
+        self._suspended = suspended
 
     def get_handler_name(self) -> str:
         """Returns the handler name."""
@@ -111,6 +136,40 @@ class Command:
         """Sets whether this command is enabled in learn mode."""
 
         self._learn_mode_enabled = enabled
+
+    def is_enabled(self) -> bool:
+        """Returns True if the user has enabled this command."""
+
+        return self._enabled
+
+    def set_enabled(self, enabled: bool) -> None:
+        """Sets whether the user has enabled this command."""
+
+        self._enabled = enabled
+
+    def is_suspended(self) -> bool:
+        """Returns True if this command is temporarily suspended by the system."""
+
+        return self._suspended
+
+    def set_suspended(self, suspended: bool) -> None:
+        """Sets whether this command is temporarily suspended by the system."""
+
+        self._suspended = suspended
+
+    def is_active(self) -> bool:
+        """Returns True if this command should respond to key events."""
+
+        return self._enabled and not self._suspended and self._keybinding is not None
+
+    def execute(
+        self,
+        script: "default.Script",
+        event: input_event.InputEvent | None = None
+    ) -> bool:
+        """Executes this command's handler function and returns True if handled."""
+
+        return self._handler.function(script, event)
 
 
 class CommandManager:
@@ -209,6 +268,75 @@ class CommandManager:
                             name, handler, group_label, handler.description,
                             kb, handler.learn_mode_enabled))
                     break
+
+    def get_command_for_event(
+        self,
+        event: input_event.KeyboardEvent,
+        active_only: bool = True
+    ) -> Command | None:
+        """Returns the command matching the keyboard event, or None."""
+
+        click_count = event.get_click_count()
+        for cmd in self._commands_by_name.values():
+            if active_only and not cmd.is_active():
+                continue
+            kb = cmd.get_keybinding()
+            if kb is None:
+                continue
+            if not kb.matches(event.id, event.hw_code, event.modifiers):
+                continue
+            if kb.modifier_mask == event.modifiers and kb.click_count == click_count:
+                return cmd
+        return None
+
+    def set_group_enabled(self, group_label: str, enabled: bool) -> None:
+        """Sets the enabled state for all commands in a group."""
+
+        for cmd in self.get_commands_by_group_label(group_label):
+            cmd.set_enabled(enabled)
+
+    def set_group_suspended(self, group_label: str, suspended: bool) -> None:
+        """Sets the suspended state for all commands in a group."""
+
+        for cmd in self.get_commands_by_group_label(group_label):
+            cmd.set_suspended(suspended)
+
+    def add_grabs_for_command(self, handler_name: str) -> None:
+        """Adds key grabs for the specified command."""
+
+        cmd = self.get_command(handler_name)
+        if cmd is None or cmd.get_keybinding() is None:
+            return
+        cmd.get_keybinding().add_grabs()
+
+    def remove_grabs_for_command(self, handler_name: str) -> None:
+        """Removes key grabs for the specified command."""
+
+        cmd = self.get_command(handler_name)
+        if cmd is None or cmd.get_keybinding() is None:
+            return
+        cmd.get_keybinding().remove_grabs()
+
+    def add_grabs_for_group(self, group_label: str) -> None:
+        """Adds key grabs for all active commands in a group."""
+
+        for cmd in self.get_commands_by_group_label(group_label):
+            if cmd.is_active():
+                cmd.get_keybinding().add_grabs()
+
+    def remove_grabs_for_group(self, group_label: str) -> None:
+        """Removes key grabs for all commands in a group."""
+
+        for cmd in self.get_commands_by_group_label(group_label):
+            kb = cmd.get_keybinding()
+            if kb is not None:
+                kb.remove_grabs()
+
+    def refresh_grabs_for_group(self, group_label: str) -> None:
+        """Removes existing grabs and adds new grabs for active commands in a group."""
+
+        self.remove_grabs_for_group(group_label)
+        self.add_grabs_for_group(group_label)
 
 
 _manager: CommandManager = CommandManager()
