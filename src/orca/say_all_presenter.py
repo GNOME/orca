@@ -335,8 +335,14 @@ class SayAllPresenter:
 
             if contents:
                 last_obj, last_offset = contents[-1][0], contents[-1][2]
+                # last_offset is the start of the next text unit (per AT-SPI2 semantics).
+                # next_context() looks for the position after the provided offset. In the case of
+                # text, we will wind up with the same text unit for last_offset and last_offset - 1.
+                # However, if the character at last_offset is an embedded object, we'll skip over
+                # its contents if we pass last_offset directly. Therefore decrement last_offset and
+                # let next_context() find the correct next position.
                 obj, offset = self._script.utilities.next_context(
-                    last_obj, last_offset, restrict_to=restrict_to)
+                    last_obj, max(0, last_offset - 1), restrict_to=restrict_to)
             else:
                 obj = self._script.utilities.find_next_object(obj, restrict_to)
                 offset = 0

@@ -581,8 +581,9 @@ class AXText:
         pattern = r"[.!?]+(?=\s|\ufffc|$)"
         for match in re.finditer(pattern, text):
             end_pos = match.end()
-            # Skip whitespace and embedded objects to find start of next sentence.
-            while end_pos < len(text) and (text[end_pos].isspace() or text[end_pos] == "\ufffc"):
+            # Skip whitespace to find start of next sentence. Do not skip embedded object
+            # characters since they represent child objects that must be traversed.
+            while end_pos < len(text) and text[end_pos].isspace():
                 end_pos += 1
             # Only add boundary if we haven't reached the end and it's not a duplicate.
             if end_pos < len(text) and end_pos not in boundaries:

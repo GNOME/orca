@@ -2821,3 +2821,69 @@ class TestAXText:
         # Test: when current_line is empty (and not at end), should return empty
         result = AXText.get_previous_line(mock_obj, 3)
         assert result == ("", 0, 0)
+
+    @pytest.mark.parametrize(
+        "text, expected_boundaries",
+        [
+            pytest.param("", [], id="empty_string"),
+            pytest.param("Hello", [0, 5], id="no_sentence_ending"),
+            pytest.param("Hello.", [0, 6], id="single_sentence"),
+            pytest.param("Hello. World.", [0, 7, 13], id="two_sentences"),
+            pytest.param("Hello! World?", [0, 7, 13], id="exclamation_and_question"),
+            pytest.param("Hello... World.", [0, 9, 15], id="ellipsis"),
+            pytest.param("Hello.  World.", [0, 8, 14], id="double_space_after_period"),
+        ],
+        ids=lambda case: case if isinstance(case, str) else None,
+    )
+    def test_find_sentence_boundaries_basic(
+        self, test_context: OrcaTestContext, text: str, expected_boundaries: list[int]
+    ) -> None:
+        """Test AXText._find_sentence_boundaries with basic text."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        result = AXText._find_sentence_boundaries(text)
+        assert result == expected_boundaries
+
+    @pytest.mark.parametrize(
+        "text, expected_boundaries",
+        [
+            pytest.param(
+                "Hello.\ufffc",
+                [0, 6, 7],
+                id="sentence_ending_before_fffc"
+            ),
+            pytest.param(
+                "Hello. \ufffc",
+                [0, 7, 8],
+                id="sentence_ending_space_fffc"
+            ),
+            pytest.param(
+                "Test 1. Test 2. \ufffc Test 3.",
+                [0, 8, 16, 25],
+                id="fffc_between_sentences"
+            ),
+            pytest.param(
+                "Test 1. Test 2. \ufffcTest 4.",
+                [0, 8, 16, 24],
+                id="nested_element_fffc_no_space_after"
+            ),
+        ],
+        ids=lambda case: case if isinstance(case, str) else None,
+    )
+    def test_find_sentence_boundaries_with_embedded_objects(
+        self, test_context: OrcaTestContext, text: str, expected_boundaries: list[int]
+    ) -> None:
+        """Test AXText._find_sentence_boundaries with embedded object characters (FFFC).
+
+        Embedded object characters represent child accessible objects in the text.
+        The boundary should be set AT the FFFC position so that the child object
+        can be properly traversed, rather than skipping over it.
+        """
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        result = AXText._find_sentence_boundaries(text)
+        assert result == expected_boundaries
