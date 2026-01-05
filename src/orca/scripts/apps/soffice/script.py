@@ -111,18 +111,6 @@ class Script(default.Script):
                 Script.present_input_line,
                 cmdnames.PRESENT_INPUT_LINE)
 
-        self.input_event_handlers["panBrailleLeftHandler"] = \
-            input_event.InputEventHandler(
-                Script.pan_braille_left,
-                cmdnames.PAN_BRAILLE_LEFT,
-                False) # Do not enable learn mode for this action
-
-        self.input_event_handlers["panBrailleRightHandler"] = \
-            input_event.InputEventHandler(
-                Script.pan_braille_right,
-                cmdnames.PAN_BRAILLE_RIGHT,
-                False) # Do not enable learn mode for this action
-
     def get_app_key_bindings(self) -> keybindings.KeyBindings:
         """Returns the application-specific keybindings for this script."""
 
@@ -237,7 +225,7 @@ class Script(default.Script):
         prefs.update(self.spellcheck.get_preferences_from_gui())
         return prefs
 
-    def pan_braille_left(
+    def _pan_braille_left(
         self,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
@@ -249,7 +237,7 @@ class Script(default.Script):
            or not braille.beginningIsShowing \
            or self.utilities.is_spreadsheet_cell(focus) \
            or not AXUtilities.is_paragraph(focus):
-            return super().pan_braille_left(event, pan_amount)
+            return super()._pan_braille_left(event, pan_amount)
 
         start_offset = AXText.get_line_at_offset(focus)[1]
         if 0 < start_offset:
@@ -262,9 +250,9 @@ class Script(default.Script):
             AXText.set_caret_offset_to_end(obj)
             return True
 
-        return super().pan_braille_left(event, pan_amount)
+        return super()._pan_braille_left(event, pan_amount)
 
-    def pan_braille_right(
+    def _pan_braille_right(
         self,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
@@ -276,7 +264,7 @@ class Script(default.Script):
            or not braille.endIsShowing \
            or self.utilities.is_spreadsheet_cell(focus) \
            or not AXUtilities.is_paragraph(focus):
-            return super().pan_braille_right(event, pan_amount)
+            return super()._pan_braille_right(event, pan_amount)
 
         end_offset = AXText.get_line_at_offset(focus)[2]
         if end_offset < AXText.get_character_count(focus):
@@ -289,7 +277,7 @@ class Script(default.Script):
             AXText.set_caret_offset_to_start(obj)
             return True
 
-        return super().pan_braille_right(event, pan_amount)
+        return super()._pan_braille_right(event, pan_amount)
 
     def present_input_line(self, _event: "input_event.InputEvent") -> bool:
         """Presents the contents of the input line for the current cell."""

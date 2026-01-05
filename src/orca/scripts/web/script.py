@@ -192,18 +192,6 @@ class Script(default.Script):
 
         super().setup_input_event_handlers()
 
-        self.input_event_handlers["panBrailleLeftHandler"] = \
-            input_event.InputEventHandler(
-                Script.pan_braille_left,
-                cmdnames.PAN_BRAILLE_LEFT,
-                False) # Do not enable learn mode for this action
-
-        self.input_event_handlers["panBrailleRightHandler"] = \
-            input_event.InputEventHandler(
-                Script.pan_braille_right,
-                cmdnames.PAN_BRAILLE_RIGHT,
-                False) # Do not enable learn mode for this action
-
         self.input_event_handlers["togglePresentationModeHandler"] = \
             input_event.InputEventHandler(
                 Script.toggle_presentation_mode,
@@ -851,7 +839,7 @@ class Script(default.Script):
         contents = self.utilities.get_line_contents_at_offset(obj, offset)
         self.display_contents(contents, documentFrame=document)
 
-    def pan_braille_left(
+    def _pan_braille_left(
         self,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
@@ -860,7 +848,7 @@ class Script(default.Script):
 
         if self.get_flat_review_presenter().is_active() \
            or not self.utilities.in_document_content() or not braille.beginningIsShowing:
-            return super().pan_braille_left(event, pan_amount)
+            return super()._pan_braille_left(event, pan_amount)
 
         contents = self.utilities.get_previous_line_contents()
         if not contents:
@@ -879,7 +867,7 @@ class Script(default.Script):
         braille.refresh(False)
         return True
 
-    def pan_braille_right(
+    def _pan_braille_right(
         self,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
@@ -888,7 +876,7 @@ class Script(default.Script):
 
         if self.get_flat_review_presenter().is_active() \
            or not self.utilities.in_document_content() or not braille.endIsShowing:
-            return super().pan_braille_right(event, pan_amount)
+            return super()._pan_braille_right(event, pan_amount)
 
         contents = self.utilities.get_next_line_contents()
         if not contents:

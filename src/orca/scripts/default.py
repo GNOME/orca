@@ -668,6 +668,21 @@ class Script(script.Script):
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
     ) -> bool:
+        """Pans the braille display to the left."""
+
+        if isinstance(event, input_event.KeyboardEvent) \
+           and not braille_presenter.get_presenter().use_braille():
+            msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return self._pan_braille_left(event, pan_amount)
+
+    def _pan_braille_left(
+        self,
+        event: input_event.InputEvent | None = None,
+        pan_amount: int = 0
+    ) -> bool:
         """Pans the braille display to the left.  If pan_amount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
@@ -676,12 +691,6 @@ class Script(script.Script):
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
-
-        if isinstance(event, input_event.KeyboardEvent) \
-           and not braille_presenter.get_presenter().use_braille():
-            msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
 
         if self.get_flat_review_presenter().is_active():
             return self.get_flat_review_presenter().pan_braille_left(self, event, pan_amount)
@@ -722,6 +731,21 @@ class Script(script.Script):
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
     ) -> bool:
+        """Pans the braille display to the right."""
+
+        if isinstance(event, input_event.KeyboardEvent) \
+           and not braille_presenter.get_presenter().use_braille():
+            msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return self._pan_braille_right(event, pan_amount)
+
+    def _pan_braille_right(
+        self,
+        event: input_event.InputEvent | None = None,
+        pan_amount: int = 0
+    ) -> bool:
         """Pans the braille display to the right.  If pan_amount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
         is panned one full display width.  In flat review mode, panning
@@ -730,12 +754,6 @@ class Script(script.Script):
         In focus tracking mode, the cursor stays at its logical position.
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
-
-        if isinstance(event, input_event.KeyboardEvent) \
-           and not braille_presenter.get_presenter().use_braille():
-            msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
 
         if self.get_flat_review_presenter().is_active():
             return self.get_flat_review_presenter().pan_braille_right(self, event, pan_amount)
