@@ -290,10 +290,12 @@ class KeyBinding:
     def matches(self, keyval: int, keycode: int, modifiers: int) -> bool:
         """Returns true if this key binding matches the given keycode and modifier state."""
 
-        # We lazily bind the keycode.  The primary reason for doing this
-        # is so that atspi does not have to be initialized before setting
-        # keybindings in the user's preferences file.
-        #
+        if not self._enabled:
+            return False
+
+        # We lazily bind the keycode. This is needed because in some environments
+        # (e.g., when the AT-SPI device isn't available), grabs may not be added
+        # and keyval/keycode won't be populated via key_definitions().
         if not self.keycode:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
 
