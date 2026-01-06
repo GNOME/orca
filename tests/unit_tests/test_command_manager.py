@@ -762,7 +762,7 @@ class TestCommandManager:
         handler = self._create_mock_handler(test_context)
         kb = self._create_mock_keybinding(test_context, handler)
         kb.matches.return_value = True
-        kb.modifier_mask = 4
+        kb.modifiers = 4
         kb.click_count = 1
 
         cmd = Command("handler", handler, "Test Group", keybinding=kb)
@@ -812,7 +812,7 @@ class TestCommandManager:
         handler = self._create_mock_handler(test_context)
         kb = self._create_mock_keybinding(test_context, handler)
         kb.matches.return_value = True
-        kb.modifier_mask = 4
+        kb.modifiers = 4
         kb.click_count = 1
 
         cmd = Command("handler", handler, "Test Group", keybinding=kb, suspended=True)
@@ -838,7 +838,7 @@ class TestCommandManager:
         handler = self._create_mock_handler(test_context)
         kb = self._create_mock_keybinding(test_context, handler)
         kb.matches.return_value = True
-        kb.modifier_mask = 4
+        kb.modifiers = 4
         kb.click_count = 1
 
         cmd = Command("handler", handler, "Test Group", keybinding=kb, suspended=True)
@@ -866,7 +866,7 @@ class TestCommandManager:
         handler = self._create_mock_handler(test_context)
         kb = self._create_mock_keybinding(test_context, handler)
         kb.matches.return_value = True
-        kb.modifier_mask = 4
+        kb.modifiers = 4
         kb.click_count = 2
 
         cmd = Command("handler", handler, "Test Group", keybinding=kb)

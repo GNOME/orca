@@ -580,9 +580,7 @@ class KeyBindings:
         click_count = event.get_click_count()
         for binding in self.key_bindings:
             if binding.matches(event.id, event.hw_code, event.modifiers):
-                # Checking the modifier mask ensures we don't consume flat review commands
-                # when NumLock is on.
-                if binding.modifier_mask == event.modifiers and binding.click_count == click_count:
+                if binding.modifiers == event.modifiers and binding.click_count == click_count:
                     matches.append(binding)
                 # If there's no keysymstring, it's unbound and cannot be a match.
                 if binding.keysymstring:
@@ -595,6 +593,9 @@ class KeyBindings:
         if matches:
             return matches[0].handler
 
+        # If there's no exact match and it's a keypad key with NumLock on, don't fall back
+        # to candidates. This prevents flat review commands from being triggered when
+        # the user is typing numbers.
         if event.is_keypad_key_with_numlock_on():
             return None
 

@@ -285,7 +285,7 @@ class CommandManager:
                 continue
             if not kb.matches(event.id, event.hw_code, event.modifiers):
                 continue
-            if kb.modifier_mask == event.modifiers and kb.click_count == click_count:
+            if kb.modifiers == event.modifiers and kb.click_count == click_count:
                 return cmd
         return None
 
