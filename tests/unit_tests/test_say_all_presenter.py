@@ -647,13 +647,12 @@ class TestSayAllPresenter:
     ) -> None:
         """Test that _progress_callback uses FOCUS_TRACKING mode when interrupted by keyboard."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
         from orca import speechserver  # pylint: disable=import-outside-toplevel
         from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
         from orca import input_event_manager  # pylint: disable=import-outside-toplevel
         from orca import focus_manager as fm  # pylint: disable=import-outside-toplevel
-        from orca import settings_manager  # pylint: disable=import-outside-toplevel
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()

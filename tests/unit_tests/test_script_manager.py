@@ -36,7 +36,7 @@ from __future__ import annotations
 
 import sys
 from typing import TYPE_CHECKING
-from unittest.mock import call, Mock
+from unittest.mock import Mock
 
 import pytest
 

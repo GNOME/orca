@@ -825,7 +825,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_capitalization_style method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 
@@ -903,7 +903,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_punctuation_level method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 
@@ -972,7 +972,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_verbosity_level method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 
@@ -1020,7 +1020,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_speak_numbers_as_digits method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 
@@ -1066,7 +1066,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_speech_is_muted method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 
@@ -1112,7 +1112,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_only_speak_displayed_text method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 
@@ -1162,7 +1162,7 @@ class TestSpeechAndVerbosityManager:
         """Test set_speak_indentation_and_justification method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_manager_instance = essential_modules[
+        essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value
 

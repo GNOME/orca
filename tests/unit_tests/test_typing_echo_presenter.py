@@ -307,7 +307,7 @@ class TestTypingEchoPresenter:
         """Test locking keys presented getter and setter with special logic."""
         essential_modules = test_context.setup_shared_dependencies(["gi", "gi.repository"])
         settings_mock = essential_modules["orca.settings"]
-        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
+        essential_modules["orca.settings_manager"].get_manager.return_value
         test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
         test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
         from orca.typing_echo_presenter import TypingEchoPresenter

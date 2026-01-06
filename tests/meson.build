@@ -32,6 +32,7 @@ unit_tests = [
   'unit_tests/test_caret_navigator.py',
   'unit_tests/test_chat_presenter.py',
   'unit_tests/test_command_manager.py',
+  'unit_tests/test_command_registry.py',
   'unit_tests/test_dbus_service.py',
   'unit_tests/test_debugging_tools_manager.py',
   'unit_tests/test_event_manager.py',

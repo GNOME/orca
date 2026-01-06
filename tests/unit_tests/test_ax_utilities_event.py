@@ -997,7 +997,6 @@ class TestAXUtilitiesEvent:
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
         from orca import input_event_manager
-        from orca import settings_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)

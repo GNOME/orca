@@ -682,7 +682,7 @@ class TestCaretNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].caretNavigationEnabled = True
-        settings_manager_mock = essential_modules["orca.settings_manager"].get_manager.return_value
+        essential_modules["orca.settings_manager"].get_manager.return_value
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -697,7 +697,7 @@ class TestCaretNavigator:
         settings_mock = essential_modules["orca.settings"]
         mock_script = test_context.Mock()
         essential_modules["orca.settings"].caretNavigationEnabled = False
-        settings_manager_mock = essential_modules["orca.settings_manager"].get_manager.return_value
+        essential_modules["orca.settings_manager"].get_manager.return_value
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -709,7 +709,7 @@ class TestCaretNavigator:
 
         result = navigator.set_is_enabled(True)
         assert result is True
-        assert settings_mock.caretNavigationEnabled == True
+        assert settings_mock.caretNavigationEnabled
         assert navigator._last_input_event is None
         mock_refresh.assert_called_once()
 
@@ -748,20 +748,20 @@ class TestCaretNavigator:
         essential_modules = self._setup_dependencies(test_context)
         settings_mock = essential_modules["orca.settings"]
         essential_modules["orca.settings"].caretNavTriggersFocusMode = True
-        settings_manager_mock = essential_modules["orca.settings_manager"].get_manager.return_value
+        essential_modules["orca.settings_manager"].get_manager.return_value
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
         result = navigator.set_triggers_focus_mode(False)
         assert result is True
-        assert settings_mock.caretNavTriggersFocusMode == False
+        assert not settings_mock.caretNavTriggersFocusMode
 
     def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_triggers_focus_mode returns early if unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].caretNavTriggersFocusMode = True
-        settings_manager_mock = essential_modules["orca.settings_manager"].get_manager.return_value
+        essential_modules["orca.settings_manager"].get_manager.return_value
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
