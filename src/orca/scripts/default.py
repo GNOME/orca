@@ -93,10 +93,6 @@ class Script(script.Script):
         "processBrailleCutLineHandler"
     })
 
-    def __init__(self, app: Atspi.Accessible) -> None:
-        super().__init__(app)
-        self.grab_ids: list = [int]
-
     def _get_all_extensions(self) -> list[tuple[Callable, str]]:
         """Returns (extension_getter, localized_name) for each extension."""
 
