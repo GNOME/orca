@@ -100,42 +100,36 @@ class ObjectNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["object_navigator_up"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["object_navigator_down"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["object_navigator_next"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["object_navigator_previous"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "Return",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["object_navigator_perform_action"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "s",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["object_navigator_toggle_simplify"]))
 

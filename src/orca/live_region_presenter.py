@@ -281,7 +281,6 @@ class LiveRegionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "backslash",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["toggle_live_region_support"],
                 1,
@@ -290,7 +289,6 @@ class LiveRegionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["advance_live_politeness"],
                 1,
@@ -299,7 +297,6 @@ class LiveRegionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["toggle_live_region_presentation"],
                 1,
@@ -308,7 +305,6 @@ class LiveRegionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["present_previous_live_region_message"],
                 1,
@@ -317,7 +313,6 @@ class LiveRegionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["present_next_live_region_message"],
                 1,

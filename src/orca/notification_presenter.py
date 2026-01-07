@@ -156,28 +156,24 @@ class NotificationPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["present_last_notification"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["present_next_notification"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["present_previous_notification"]))
 
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["show_notification_list"]))
 

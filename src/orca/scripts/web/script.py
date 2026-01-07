@@ -158,14 +158,12 @@ class Script(default.Script):
         key_bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers["togglePresentationModeHandler"]))
 
         key_bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers["enableStickyFocusModeHandler"],
                 2))
@@ -173,7 +171,6 @@ class Script(default.Script):
         key_bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers["enableStickyBrowseModeHandler"],
                 3))
@@ -181,7 +178,6 @@ class Script(default.Script):
         key_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers["toggleLayoutModeHandler"]))
 

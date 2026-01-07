@@ -172,7 +172,6 @@ class SystemInformationPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["presentTimeHandler"],
                 1))
@@ -180,7 +179,6 @@ class SystemInformationPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["presentDateHandler"],
                 2))
@@ -188,7 +186,6 @@ class SystemInformationPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["present_battery_status"],
                 1))
@@ -196,7 +193,6 @@ class SystemInformationPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["present_cpu_and_memory_usage"],
                 1))

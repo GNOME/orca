@@ -2047,7 +2047,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             keyBinds = keybindings.KeyBindings()
             keyBinds = settings_manager.get_manager().override_key_bindings(
                 self.script.input_event_handlers, keyBinds, enabled_only=False)
-            keyBind = keybindings.KeyBinding(None, None, None, None)
+            keyBind = keybindings.KeyBinding(None, None, None)
             treeModel = self.keyBindingsModel
 
             myiter = treeModel.get_iter_first()
@@ -2865,7 +2865,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             return True
 
         self.newBinding = keybindings.KeyBinding(keyName,
-                                                 keybindings.DEFAULT_MODIFIER_MASK,
                                                  modifiers,
                                                  None,
                                                  clickCount)

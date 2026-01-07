@@ -306,7 +306,6 @@ class Script(script.Script):
             bindings.add(
                 keybindings.KeyBinding(
                     "KP_Divide",
-                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.ORCA_MODIFIER_MASK,
                     self.input_event_handlers["routePointerToItemHandler"]))
 
@@ -315,21 +314,18 @@ class Script(script.Script):
             bindings.add(
                 keybindings.KeyBinding(
                     "KP_Divide",
-                    keybindings.ORCA_MODIFIER_MASK,
                     keybindings.NO_MODIFIER_MASK,
                     self.input_event_handlers["leftClickReviewItemHandler"]))
 
             bindings.add(
                 keybindings.KeyBinding(
                     "KP_Multiply",
-                    keybindings.ORCA_MODIFIER_MASK,
                     keybindings.NO_MODIFIER_MASK,
                     self.input_event_handlers["rightClickReviewItemHandler"]))
         else:
             bindings.add(
                 keybindings.KeyBinding(
                     "9",
-                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.ORCA_MODIFIER_MASK,
                     self.input_event_handlers["routePointerToItemHandler"]))
 
@@ -339,55 +335,47 @@ class Script(script.Script):
                 keybindings.KeyBinding(
                     "7",
                     keybindings.ORCA_MODIFIER_MASK,
-                    keybindings.ORCA_MODIFIER_MASK,
                     self.input_event_handlers["leftClickReviewItemHandler"]))
 
             bindings.add(
                 keybindings.KeyBinding(
                     "8",
                     keybindings.ORCA_MODIFIER_MASK,
-                    keybindings.ORCA_MODIFIER_MASK,
                     self.input_event_handlers["rightClickReviewItemHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers["cycleSettingsProfileHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers["panBrailleLeftHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers["panBrailleRightHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self.input_event_handlers["shutdownHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
                 "space",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self.input_event_handlers["preferencesSettingsHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
                 "space",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self.input_event_handlers["appPreferencesSettingsHandler"]))
 

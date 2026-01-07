@@ -120,7 +120,6 @@ class ActionPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["show_actions_list"]))
 

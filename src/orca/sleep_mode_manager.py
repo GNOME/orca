@@ -118,7 +118,6 @@ class SleepModeManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "q",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK,
                 self._handlers["toggle_sleep_mode"]))
 

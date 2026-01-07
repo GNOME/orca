@@ -311,7 +311,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "z",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["structural_navigator_mode_cycle"],
                 1,
@@ -322,7 +321,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "q",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_blockquote"],
                 1,
@@ -331,7 +329,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "q",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_blockquote"],
                 1,
@@ -340,7 +337,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "q",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_blockquotes"],
                 1,
@@ -349,7 +345,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "b",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_button"],
                 1,
@@ -358,7 +353,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "b",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_button"],
                 1,
@@ -367,7 +361,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "b",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_buttons"],
                 1,
@@ -376,7 +369,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "x",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_checkbox"],
                 1,
@@ -385,7 +377,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "x",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_checkbox"],
                 1,
@@ -394,7 +385,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "x",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_checkboxes"],
                 1,
@@ -403,7 +393,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_combobox"],
                 1,
@@ -412,7 +401,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_combobox"],
                 1,
@@ -421,7 +409,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_comboboxes"],
                 1,
@@ -430,7 +417,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "e",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_entry"],
                 1,
@@ -439,7 +425,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "e",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_entry"],
                 1,
@@ -448,7 +433,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "e",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_entries"],
                 1,
@@ -457,7 +441,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "f",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_form_field"],
                 1,
@@ -466,7 +449,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "f",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_form_field"],
                 1,
@@ -475,7 +457,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "f",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_form_fields"],
                 1,
@@ -484,7 +465,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "h",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_heading"],
                 1,
@@ -493,7 +473,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "h",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_heading"],
                 1,
@@ -502,7 +481,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "h",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_headings"],
                 1,
@@ -512,7 +490,6 @@ class StructuralNavigator:
             self._bindings.add(
                 keybindings.KeyBinding(
                     str(i),
-                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.SHIFT_MODIFIER_MASK,
                     self._handlers[f"previous_heading_level_{i}"],
                     1,
@@ -521,7 +498,6 @@ class StructuralNavigator:
             self._bindings.add(
                 keybindings.KeyBinding(
                     str(i),
-                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.NO_MODIFIER_MASK,
                     self._handlers[f"next_heading_level_{i}"],
                     1,
@@ -530,7 +506,6 @@ class StructuralNavigator:
             self._bindings.add(
                 keybindings.KeyBinding(
                     str(i),
-                    keybindings.DEFAULT_MODIFIER_MASK,
                     keybindings.SHIFT_ALT_MODIFIER_MASK,
                     self._handlers[f"list_headings_level_{i}"],
                     1,
@@ -539,7 +514,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_iframe"],
                 1,
@@ -548,7 +522,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_iframe"],
                 1,
@@ -557,7 +530,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_iframes"],
                 1,
@@ -566,7 +538,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "g",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_image"],
                 1,
@@ -575,7 +546,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "g",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_image"],
                 1,
@@ -584,7 +554,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "g",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_images"],
                 1,
@@ -593,7 +562,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "m",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_landmark"],
                 1,
@@ -602,7 +570,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "m",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_landmark"],
                 1,
@@ -611,7 +578,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "m",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_landmarks"],
                 1,
@@ -620,7 +586,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "l",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_list"],
                 1,
@@ -629,7 +594,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "l",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_list"],
                 1,
@@ -638,7 +602,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "l",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_lists"],
                 1,
@@ -647,7 +610,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "i",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_list_item"],
                 1,
@@ -656,7 +618,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "i",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_list_item"],
                 1,
@@ -665,7 +626,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "i",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_list_items"],
                 1,
@@ -674,7 +634,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "d",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_live_region"],
                 1,
@@ -683,7 +642,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "d",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_live_region"],
                 1,
@@ -692,7 +650,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "y",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["last_live_region"],
                 1,
@@ -701,7 +658,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "p",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_paragraph"],
                 1,
@@ -710,7 +666,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "p",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_paragraph"],
                 1,
@@ -719,7 +674,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "p",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_paragraphs"],
                 1,
@@ -728,7 +682,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_radio_button"],
                 1,
@@ -737,7 +690,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_radio_button"],
                 1,
@@ -746,7 +698,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_radio_buttons"],
                 1,
@@ -755,7 +706,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "s",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_separator"],
                 1,
@@ -764,7 +714,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "s",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_separator"],
                 1,
@@ -773,7 +722,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_table"],
                 1,
@@ -782,7 +730,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_table"],
                 1,
@@ -791,7 +738,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_tables"],
                 1,
@@ -800,7 +746,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_link"],
                 1,
@@ -809,7 +754,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_link"],
                 1,
@@ -818,7 +762,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "k",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_links"],
                 1,
@@ -827,7 +770,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "u",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_unvisited_link"],
                 1,
@@ -836,7 +778,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "u",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_unvisited_link"],
                 1,
@@ -845,7 +786,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "u",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_unvisited_links"],
                 1,
@@ -854,7 +794,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "v",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_visited_link"],
                 1,
@@ -863,7 +802,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "v",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_visited_link"],
                 1,
@@ -872,7 +810,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "v",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_visited_links"],
                 1,
@@ -881,7 +818,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "o",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_large_object"],
                 1,
@@ -890,7 +826,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "o",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_large_object"],
                 1,
@@ -899,7 +834,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "o",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_large_objects"],
                 1,
@@ -908,7 +842,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["previous_clickable"],
                 1,
@@ -917,7 +850,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["next_clickable"],
                 1,
@@ -926,7 +858,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "a",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["list_clickables"],
                 1,
@@ -935,7 +866,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "comma",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_MODIFIER_MASK,
                 self._handlers["container_start"],
                 1,
@@ -944,7 +874,6 @@ class StructuralNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "comma",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["container_end"],
                 1,

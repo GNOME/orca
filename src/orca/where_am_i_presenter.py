@@ -163,28 +163,24 @@ class WhereAmIPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "f",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["readCharAttributesHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "e",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["present_default_button"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["presentSizeAndPositionHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["getTitleHandler"],
                 1))
@@ -192,7 +188,6 @@ class WhereAmIPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["getStatusBarHandler"],
                 2))
@@ -200,7 +195,6 @@ class WhereAmIPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["whereAmIBasicHandler"],
                 1))
@@ -208,7 +202,6 @@ class WhereAmIPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Enter",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["whereAmIDetailedHandler"],
                 2))
@@ -216,14 +209,12 @@ class WhereAmIPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["whereAmILinkHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["whereAmISelectionHandler"]))
 
@@ -238,28 +229,24 @@ class WhereAmIPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "f",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["readCharAttributesHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "e",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["present_default_button"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["presentSizeAndPositionHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "slash",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["getTitleHandler"],
                 1))
@@ -267,7 +254,6 @@ class WhereAmIPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "slash",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["getStatusBarHandler"],
                 2))
@@ -275,7 +261,6 @@ class WhereAmIPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Return",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["whereAmIBasicHandler"],
                 1))
@@ -283,7 +268,6 @@ class WhereAmIPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Return",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["whereAmIDetailedHandler"],
                 2))
@@ -291,14 +275,12 @@ class WhereAmIPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["whereAmILinkHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["whereAmISelectionHandler"]))
 

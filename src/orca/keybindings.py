@@ -75,15 +75,9 @@ CTRL_ALT_MODIFIER_MASK        = (1 << Atspi.ModifierType.CONTROL |
 SHIFT_ALT_CTRL_MODIFIER_MASK  = (1 << Atspi.ModifierType.SHIFT |
                                  1 << Atspi.ModifierType.CONTROL |
                                  1 << Atspi.ModifierType.ALT)
-COMMAND_MODIFIER_MASK         = (1 << Atspi.ModifierType.ALT |
-                                 1 << Atspi.ModifierType.CONTROL |
-                                 1 << Atspi.ModifierType.META2 |
-                                 1 << Atspi.ModifierType.META3)
 NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
                                  1 << Atspi.ModifierType.ALT |
                                  1 << Atspi.ModifierType.CONTROL |
-                                 1 << Atspi.ModifierType.META2 |
-                                 1 << Atspi.ModifierType.META3 |
                                  1 << MODIFIER_ORCA)
 DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
 
@@ -243,10 +237,9 @@ def create_key_definitions(keyval: int, modifiers: int) -> list[Atspi.KeyDefinit
     return ret
 
 class KeyBinding:
-    """A single key binding, consisting of a keycode, modifier mask, and InputEventHandler."""
+    """A single key binding, consisting of a keycode, modifiers, and InputEventHandler."""
 
-    # pylint: disable=too-many-positional-arguments
-    def __init__(self, keysymstring: str, modifier_mask: int, modifiers: int,
+    def __init__(self, keysymstring: str, modifiers: int,
                  handler: InputEventHandler, click_count: int = 1, enabled: bool = True):
         """Creates a new key binding.
 
@@ -254,18 +247,26 @@ class KeyBinding:
         - keysymstring: the keysymstring - this is typically a string
           from /usr/include/X11/keysymdef.h with the preceding 'XK_'
           removed (e.g., XK_KP_Enter becomes the string 'KP_Enter').
-        - modifier_mask: bit mask where a set bit tells us what modifiers
-          we care about (see Atspi.ModifierType.*)
-        - modifiers: the state the modifiers we care about must be in for
-          this key binding to match an input event (see also
-          Atspi.ModifierType.*)
+        - modifiers: the required modifier state for this key binding
+          to match an input event (see Atspi.ModifierType.*)
         - handler: the InputEventHandler for this key binding
         - enabled: Whether this binding can be bound and used, i.e. based
           on mode, the feature being enabled/active, etc.
         """
 
+        # Backwards compatibility: detect old 4-arg signature where modifier_mask
+        # was the second argument. In that case, handler will be an int (the actual
+        # modifiers) and click_count will be the handler.
+        if isinstance(handler, int):
+            # Old signature: (keysymstring, modifier_mask, modifiers, handler, ...)
+            # Shift arguments: ignore modifier_mask, use modifiers as handler's modifiers
+            modifiers = handler
+            handler = click_count
+            click_count = enabled if isinstance(enabled, int) else 1
+            enabled = True
+
         self.keysymstring: str = keysymstring
-        self.modifier_mask: int = modifier_mask
+        self.modifier_mask: int = DEFAULT_MODIFIER_MASK
         self.modifiers: int = modifiers
         self.handler: InputEventHandler = handler
         self.click_count: int = click_count
@@ -273,7 +274,6 @@ class KeyBinding:
         self.keyval: int = 0
         self._enabled: bool = enabled
         self._grab_ids: list[int] = []
-    # pylint: enable=too-many-positional-arguments
 
     def __str__(self) -> str:
         if not self.keysymstring:
@@ -394,7 +394,7 @@ class KeyBindings:
     def add(self, key_binding: KeyBinding, include_grabs: bool = False) -> None:
         """Adds KeyBinding instance to this set of keybindings, optionally updating grabs."""
 
-        if key_binding.keysymstring and self.has_key_binding(key_binding, "keysNoMask"):
+        if key_binding.keysymstring and self.has_key_binding(key_binding, "keys"):
             msg = (
                f"KEYBINDINGS: '{key_binding.as_string()}' "
                f"({key_binding.description()}) already in keybindings"
@@ -499,8 +499,7 @@ class KeyBindings:
            The type_of_search can be:
               "strict":      matches description, modifiers, key, and click count
               "description": matches only description
-              "keys":        matches the modifiers, key, modifier mask, and click count
-              "keysNoMask":  matches the modifiers, key, and click count
+              "keys":        matches the modifiers, key, and click count
         """
 
         # pylint:disable=too-many-boolean-expressions
@@ -509,7 +508,6 @@ class KeyBindings:
                 if binding.handler and key_binding.handler \
                    and binding.handler.description == key_binding.handler.description \
                    and binding.keysymstring == key_binding.keysymstring \
-                   and binding.modifier_mask == key_binding.modifier_mask \
                    and binding.modifiers == key_binding.modifiers \
                    and binding.click_count == key_binding.click_count:
                     return True
@@ -518,12 +516,6 @@ class KeyBindings:
                    and binding.handler.description == key_binding.handler.description:
                     return True
             elif type_of_search == "keys":
-                if binding.keysymstring == key_binding.keysymstring \
-                   and binding.modifier_mask == key_binding.modifier_mask \
-                   and binding.modifiers == key_binding.modifiers \
-                   and binding.click_count == key_binding.click_count:
-                    return True
-            elif type_of_search == "keysNoMask":
                 if binding.keysymstring == key_binding.keysymstring \
                    and binding.modifiers == key_binding.modifiers \
                    and binding.click_count == key_binding.click_count:

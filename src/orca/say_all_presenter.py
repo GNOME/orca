@@ -151,7 +151,6 @@ class SayAllPresenter:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Add",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["sayAllHandler"],
                 1))
@@ -167,7 +166,6 @@ class SayAllPresenter:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "semicolon",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["sayAllHandler"],
                 1))

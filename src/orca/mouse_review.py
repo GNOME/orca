@@ -438,7 +438,6 @@ class MouseReviewer:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["toggleMouseReviewHandler"]))
 

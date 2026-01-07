@@ -206,7 +206,6 @@ class TestSleepModeManager:
 
         essential_modules["orca.keybindings"].KeyBinding.assert_called_with(
             "q",
-            1,  # DEFAULT_MODIFIER_MASK
             15,  # SHIFT_ALT_CTRL_MODIFIER_MASK
             manager._handlers["toggle_sleep_mode"],
         )

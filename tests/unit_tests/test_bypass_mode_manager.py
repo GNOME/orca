@@ -199,7 +199,6 @@ class TestBypassModeManager:
 
         essential_modules["orca.keybindings"].KeyBinding.assert_called_with(
             "BackSpace",
-            default_mask,
             alt_mask,
             manager._handlers["bypass_mode_toggle"],
             1,

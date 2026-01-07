@@ -645,12 +645,12 @@ class SettingsManager:
                 bindings.remove(b, True)
 
             for binding_tuple in binding_tuples:
-                keysym, mask, mods, clicks = binding_tuple
+                keysym, _mask, mods, clicks = binding_tuple
                 if not keysym:
-                    keysym, mask, mods, clicks = "", 0, 0, 0
+                    keysym, mods, clicks = "", 0, 0
                 else:
-                    mask, mods, clicks = int(mask), int(mods), int(clicks)
-                new_binding = KeyBinding(keysym, mask, mods, handler, clicks, enabled=was_enabled)
+                    mods, clicks = int(mods), int(clicks)
+                new_binding = KeyBinding(keysym, mods, handler, clicks, enabled=was_enabled)
                 bindings.add(new_binding)
                 tokens = ["SETTINGS MANAGER:", handler, f"is rebound to {binding_tuple}"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)

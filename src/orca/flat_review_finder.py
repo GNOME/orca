@@ -167,21 +167,18 @@ class FlatReviewFinder:
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["findHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["findNextHandler"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
                 "KP_Delete",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["findPreviousHandler"]))
 
@@ -196,21 +193,18 @@ class FlatReviewFinder:
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketleft",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["findHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketright",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["findNextHandler"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
                 "bracketright",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_CTRL_MODIFIER_MASK,
                 self._handlers["findPreviousHandler"]))
 

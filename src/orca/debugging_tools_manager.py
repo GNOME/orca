@@ -124,7 +124,6 @@ class DebuggingToolsManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["cycleDebugLevelHandler"],
                 1,
@@ -133,7 +132,6 @@ class DebuggingToolsManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["clear_atspi_app_cache"],
                 1,
@@ -142,7 +140,6 @@ class DebuggingToolsManager:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["capture_snapshot"],
                 1,

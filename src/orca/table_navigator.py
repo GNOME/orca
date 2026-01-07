@@ -139,7 +139,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "t",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["table_navigator_toggle_enabled"],
                 1,
@@ -148,7 +147,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["table_cell_left"],
                 1,
@@ -157,7 +155,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["table_cell_right"],
                 1,
@@ -166,7 +163,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["table_cell_up"],
                 1,
@@ -175,7 +171,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["table_cell_down"],
                 1,
@@ -184,7 +179,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Home",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["table_cell_first"],
                 1,
@@ -193,7 +187,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "End",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.SHIFT_ALT_MODIFIER_MASK,
                 self._handlers["table_cell_last"],
                 1,
@@ -202,7 +195,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Left",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers["table_cell_beginning_of_row"],
                 1,
@@ -211,7 +203,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Right",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers["table_cell_end_of_row"],
                 1,
@@ -220,7 +211,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Up",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers["table_cell_top_of_column"],
                 1,
@@ -229,7 +219,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "Down",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
                 self._handlers["table_cell_bottom_of_column"],
                 1,
@@ -238,7 +227,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["set_dynamic_column_headers_row"],
                 1,
@@ -247,7 +235,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "r",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["clear_dynamic_column_headers_row"],
                 2,
@@ -256,7 +243,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["set_dynamic_row_headers_column"],
                 1,
@@ -265,7 +251,6 @@ class TableNavigator:
         self._bindings.add(
             keybindings.KeyBinding(
                 "c",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_SHIFT_MODIFIER_MASK,
                 self._handlers["clear_dynamic_row_headers_column"],
                 2,

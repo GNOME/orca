@@ -415,7 +415,6 @@ class ChatPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["chat_toggle_room_name_prefix"],
                 1,
@@ -424,7 +423,6 @@ class ChatPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["chat_toggle_buddy_typing"],
                 1,
@@ -433,7 +431,6 @@ class ChatPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["chat_toggle_message_histories"],
                 1,
@@ -442,7 +439,6 @@ class ChatPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["chat_previous_message"],
                 1,
@@ -451,7 +447,6 @@ class ChatPresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["chat_next_message"],
                 1,

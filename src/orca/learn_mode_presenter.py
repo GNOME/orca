@@ -119,7 +119,6 @@ class LearnModePresenter:
         self._bindings.add(
             keybindings.KeyBinding(
                 "h",
-                keybindings.DEFAULT_MODIFIER_MASK,
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["enterLearnModeHandler"]))
 

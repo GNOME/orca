@@ -361,7 +361,7 @@ class TestActionPresenter:
         presenter._setup_bindings()
 
         mock_key_binding_class.assert_called_once_with(
-            "a", "DEFAULT_MODIFIER", "ORCA_SHIFT_MODIFIER", presenter._handlers["show_actions_list"]
+            "a", "ORCA_SHIFT_MODIFIER", presenter._handlers["show_actions_list"]
         )
         essential_modules["orca.debug"].print_message.assert_called()
 
