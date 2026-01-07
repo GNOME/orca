@@ -7,7 +7,6 @@ src/orca/cmdnames.py
 src/orca/colornames.py
 src/orca/guilabels.py
 src/orca/keynames.py
-src/orca/keybindings.py
 src/orca/mathsymbols.py
 src/orca/messages.py
 src/orca/object_properties.py

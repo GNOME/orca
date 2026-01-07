@@ -30,6 +30,11 @@ from .orca_i18n import _, C_ # pylint: disable=import-error
 # Contains keyboard-label:presentable-name pairs
 _keynames: dict[str, str] = {}
 
+# Translators: this string refers to the "Orca modifier" (typically CapsLock on a laptop
+# and KP_Insert on a desktop). Orca takes over this key in order to provide additional
+# commands without conflicting with the application being used.
+_keynames["Orca"] = C_("keyboard", "Orca")
+
 # Translators: this is how someone would speak the name of the shift key
 _keynames["Shift"] = C_("keyboard", "Shift")
 
@@ -38,6 +43,9 @@ _keynames["Alt"] = C_("keyboard", "Alt")
 
 # Translators: this is how someone would speak the name of the control key
 _keynames["Control"] = C_("keyboard", "Control")
+
+# Translators: this is how someone would speak the name of the super key
+_keynames["Super"] = C_("keyboard", "Super")
 
 # Translators: this is how someone would speak the name of the left shift key
 _keynames["Shift_L"] = _("left shift")
@@ -246,3 +254,16 @@ def localize_key_sequence(keys: str) -> str:
         keys = keys.replace(key, key_name)
 
     return keys
+
+def get_click_count_string(count: int) -> str:
+    """Returns a human-consumable string representing the number of clicks."""
+
+    if count == 2:
+        # Translators: Orca keybindings support double and triple "clicks" or
+        # key presses, similar to using a mouse.
+        return _("double click")
+    if count == 3:
+        # Translators: Orca keybindings support double and triple "clicks"
+        # or key presses, similar to using a mouse.
+        return _("triple click")
+    return ""

@@ -42,8 +42,8 @@ from gi.repository import Gdk
 
 from . import debug
 from . import input_event_manager
+from . import keynames
 from . import settings
-from .orca_i18n import _ # pylint: disable=import-error
 
 if TYPE_CHECKING:
     from .input_event import KeyboardEvent, InputEventHandler
@@ -143,74 +143,28 @@ def get_keycodes(keysym: str) -> tuple[int, int]:
 def get_modifier_names(mods: int) -> str:
     """Returns the modifier names of a numeric modifier mask as a human-consumable string."""
 
-    # TODO - JD: Consider moving these localized strings to one of the dedicated i18n files.
-
     text = ""
     if mods & ORCA_MODIFIER_MASK:
-        if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
-            # Translators: this is presented in a GUI to represent the
-            # "insert" key when used as the Orca modifier.
-            text += _("Insert") + "+"
-        else:
-            # Translators: this is presented in a GUI to represent the
-            # "caps lock" modifier.
-            text += _("Caps_Lock") + "+"
-    elif mods & (1 << Atspi.ModifierType.SHIFTLOCK):
-        # Translators: this is presented in a GUI to represent the
-        # "caps lock" modifier.
-        #
-        text += _("Caps_Lock") + "+"
-    #if mods & (1 << Atspi.ModifierType.NUMLOCK):
-    #    text += _("Num_Lock") + "+"
-    if mods & 128:
-        # Translators: this is presented in a GUI to represent the
-        # "right alt" modifier.
-        #
-        text += _("Alt_R") + "+"
+        name = keynames.get_key_name("Orca")
+        assert name
+        text += name + "+"
     if mods & (1 << Atspi.ModifierType.META3):
-        # Translators: this is presented in a GUI to represent the
-        # "super" modifier.
-        #
-        text += _("Super") + "+"
-    if mods & (1 << Atspi.ModifierType.META2):
-        # Translators: this is presented in a GUI to represent the
-        # "meta 2" modifier.
-        #
-        text += _("Meta2") + "+"
-    #if mods & (1 << Atspi.ModifierType.META):
-    #    text += _("Meta") + "+"
+        name = keynames.get_key_name("Super")
+        assert name
+        text += name + "+"
     if mods & ALT_MODIFIER_MASK:
-        # Translators: this is presented in a GUI to represent the
-        # "alt" modifier.
-        #
-        text += _("Alt") + "+"
+        name = keynames.get_key_name("Alt")
+        assert name
+        text += name + "+"
     if mods & CTRL_MODIFIER_MASK:
-        # Translators: this is presented in a GUI to represent the
-        # "control" modifier.
-        #
-        text += _("Ctrl") + "+"
+        name = keynames.get_key_name("Control")
+        assert name
+        text += name + "+"
     if mods & SHIFT_MODIFIER_MASK:
-        # Translators: this is presented in a GUI to represent the
-        # "shift " modifier.
-        #
-        text += _("Shift") + "+"
+        name = keynames.get_key_name("Shift")
+        assert name
+        text += name + "+"
     return text
-
-def get_click_count_string(count: int) -> str:
-    """Returns a human-consumable string representing the number of clicks."""
-
-    # TODO - JD: Consider moving these localized strings to one of the dedicated i18n files.
-
-    if count == 2:
-        # Translators: Orca keybindings support double and triple "clicks" or key presses, similar
-        # to using a mouse.
-        return _("double click")
-    if count == 3:
-        # Translators: Orca keybindings support double and triple "clicks" or key presses, similar
-        # to using a mouse.
-        return _("triple click")
-    return ""
-
 
 def create_key_definitions(keyval: int, modifiers: int) -> list[Atspi.KeyDefinition]:
     """Returns a list of Atspi key definitions for the given keyval and modifiers."""
@@ -337,7 +291,7 @@ class KeyBinding:
         """Returns a more human-consumable string representing this binding."""
 
         mods = get_modifier_names(self.modifiers)
-        click_count = get_click_count_string(self.click_count)
+        click_count = keynames.get_click_count_string(self.click_count)
         keysym = self.keysymstring
         string = f"{mods}{keysym} {click_count}"
         return string.strip()
