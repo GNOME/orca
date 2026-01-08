@@ -176,7 +176,7 @@ class Script(default.Script):
         self.speak_cell_span_check_button.set_active(value)
         table_grid.attach(self.speak_cell_span_check_button, 0, 1, 1, 1)
 
-        label = guilabels.TABLE_ANNOUNCE_CELL_HEADER
+        label = guilabels.TABLE_SPEAK_CELL_HEADER
         value = speech_manager.get_announce_cell_headers()
         self.speak_cell_headers_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)

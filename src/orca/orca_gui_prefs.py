@@ -347,7 +347,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         presenter = self.script.get_typing_echo_presenter()
         self.typing_echo_grid = presenter.create_preferences_grid()
         notebook = self.get_widget("notebook")
-        echo_label = Gtk.Label(label=guilabels.TABS_ECHO)
+        echo_label = Gtk.Label(label=guilabels.ECHO)
         echo_label.show()
         notebook.insert_page(self.typing_echo_grid, echo_label, 4)
 
