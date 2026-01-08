@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 4.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2025-11-13 13:04+0000\n"
-"PO-Revision-Date: 2025-11-20 17:47+0100\n"
+"POT-Creation-Date: 2025-12-21 14:39+0000\n"
+"PO-Revision-Date: 2026-01-08 16:00+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -1213,10 +1213,8 @@ msgstr "Bytt til neste uttale av tegnsettingsnivå"
 #. available on their system, such as espeak, voxin, mbrola, etc. This string
 #. is the description of the command.
 #: src/orca/cmdnames.py:504
-#, fuzzy
-#| msgid "Cycle to the next key echo level"
 msgid "Cycle to the next speech synthesizer"
-msgstr "Bytt til neste nivå for tasteekko"
+msgstr "Bytt til neste talesynthesizer"
 
 #. Translators: Orca has a feature whereby users can set up different "profiles,"
 #. which are collection of settings which apply to a given task, such as a
@@ -1266,10 +1264,8 @@ msgstr "Bytt feilsøkingsnivå ved kjøring"
 #. fail to notify AT-SPI when something changes resulting in AT-SPI having stale
 #. information which impacts Orca's logic and/or presentation to users.
 #: src/orca/cmdnames.py:546
-#, fuzzy
-#| msgid "Pass the next command on to the current application"
 msgid "Clear the AT-SPI cache for the current application"
-msgstr "Send neste kommando videre til aktivt program"
+msgstr "Tøm AT-SPI buffer for dette programet"
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -1277,7 +1273,7 @@ msgstr "Send neste kommando videre til aktivt program"
 #. applications, etc.
 #: src/orca/cmdnames.py:552
 msgid "Capture snapshot for debugging"
-msgstr ""
+msgstr "Ta et øyeblikksbilde for feilsøking"
 
 #. Translators: this command announces information regarding the relationship of
 #. the given bookmark to the current position. Note that in this context, the
@@ -1331,16 +1327,14 @@ msgstr "Slår av/på forbedringsmodus for mus"
 #. Translators: Orca has a command to present the battery status (e.g. level, whether
 #. or not it is plugged in, etc.). This string is the name of that command.
 #: src/orca/cmdnames.py:592
-#, fuzzy
-#| msgid "Present Unless"
 msgid "Present battery status"
-msgstr "Tilstede med mindre"
+msgstr "Vis batteristatus"
 
 #. Translators: Orca has a command to present the CPU and memory usage as percents.
 #. This string is the name of that command.
 #: src/orca/cmdnames.py:596
 msgid "Present CPU and memory usage"
-msgstr ""
+msgstr "Vis CPU- og minnestatus"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
@@ -1524,10 +1518,8 @@ msgstr "Vis forrige varslingsmelding"
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
 #: src/orca/cmdnames.py:735
-#, fuzzy
-#| msgid "Present last notification message"
 msgid "Present next notification message"
-msgstr "Vis siste varslingsmelding"
+msgstr "Vis neste varslingsmelding"
 
 #. Translators: this is a command related to navigating within a document.
 #: src/orca/cmdnames.py:738
@@ -1865,24 +1857,18 @@ msgstr "Vis en liste med overskrifter på nivå %d"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:959
-#, fuzzy
-#| msgid "Go to previous table"
 msgid "Go to previous internal frame"
-msgstr "Gå til forrige tabell"
+msgstr "Gå til forrige interne frame"
 
 #. Translators: this is for navigating among iframes in a document.
 #: src/orca/cmdnames.py:962
-#, fuzzy
-#| msgid "Go to next table"
 msgid "Go to next internal frame"
-msgstr "Gå til neste tabell"
+msgstr "Gå til neste interne frame"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:965
-#, fuzzy
-#| msgid "Display a list of tables"
 msgid "Display a list of internal frames"
-msgstr "Vis en liste med tabeller"
+msgstr "Vis en liste med interne frames"
 
 #. Translators: this is for navigating among images in a document.
 #: src/orca/cmdnames.py:968
@@ -2034,10 +2020,8 @@ msgstr ""
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
 #: src/orca/cmdnames.py:1066
-#, fuzzy
-#| msgid "Return to object with keyboard focus"
 msgid "Click on the object with navigator focus."
-msgstr "Returner til objektet med tastaturfokus"
+msgstr "Klikk på objektet som har navigasjonsfokus."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
@@ -2137,31 +2121,23 @@ msgstr "Gå en celle opp"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1127
-#, fuzzy
-#| msgid "Go to the beginning of the line"
 msgid "Go to the beginning of the row"
-msgstr "Gå til begynnelsen av linjen"
+msgstr "Gå til begynnelsen av raden"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1130
-#, fuzzy
-#| msgid "Go to the end of the line"
 msgid "Go to the end of the row"
-msgstr "Gå til slutten av linjen"
+msgstr "Gå til slutten av raden"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1133
-#, fuzzy
-#| msgid "Go to the top of the file"
 msgid "Go to the top of the column"
-msgstr "Gå til starten av filen"
+msgstr "Gå til toppen av kolonnen"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1136
-#, fuzzy
-#| msgid "Go to the bottom of the file"
 msgid "Go to the bottom of the column"
-msgstr "Gå til slutten av filen"
+msgstr "Gå til bunnen av kolonnen"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -3701,10 +3677,8 @@ msgstr "_Bryt"
 #. with a group of options related to what constitutes a match. The options are
 #. to match case and to match the entire word only.
 #: src/orca/guilabels.py:287
-#, fuzzy
-#| msgid "Options:"
 msgid "Match options:"
-msgstr "Alternativer:"
+msgstr "Alternativer for treff:"
 
 #. Translators: Orca has a "find" feature which allows the user to search the
 #. active application for on screen text and widgets. This label is associated
@@ -3782,20 +3756,16 @@ msgstr ""
 #. are related to its "learn mode". Please use the same translation as done
 #. in cmdnames.py
 #: src/orca/guilabels.py:342
-#, fuzzy
-#| msgid "Layout mode."
 msgctxt "keybindings"
 msgid "Learn mode"
-msgstr "Utformingsmodus."
+msgstr "Læringsmodus"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting and performing the accessible actions associated
 #. with the current object.
 #: src/orca/guilabels.py:347
-#, fuzzy
-#| msgid "section"
 msgid "Actions"
-msgstr "del"
+msgstr "Handlinger"
 
 #. Translators: An external braille device has buttons on it that permit the
 #. user to create input gestures from the braille device. The braille bindings
@@ -3808,34 +3778,28 @@ msgstr "Braille-bindinger"
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to saving and jumping among objects via "bookmarks".
 #: src/orca/guilabels.py:358
-#, fuzzy
-#| msgid "Save bookmarks"
 msgid "Bookmarks"
-msgstr "Lagre bokmerke"
+msgstr "Bokmerker"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to caret navigation, such as moving by character, word, and line.
 #. These commands are enabled by default for web content and can be optionally
 #. toggled on in other applications.
 #: src/orca/guilabels.py:364
-#, fuzzy
-#| msgid "Control caret navigation"
 msgid "Caret navigation"
-msgstr "Kontroller markørnavigering"
+msgstr "Markørnavigering"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to the clipboard.
 #: src/orca/guilabels.py:368
 msgid "Clipboard"
-msgstr ""
+msgstr "Utklippstavle"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the date and time.
 #: src/orca/guilabels.py:372
-#, fuzzy
-#| msgid "Time and Date"
 msgid "Date and time"
-msgstr "Tid og dato"
+msgstr "Dato og tid"
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -3850,11 +3814,8 @@ msgstr "Tid og dato"
 #. resume working. This string is a label for the group of Orca commands which
 #. are related to sleep mode.
 #: src/orca/guilabels.py:386
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "wrap mode"
 msgid "Sleep mode"
-msgstr "brytningsmodus"
+msgstr "Sovemodus"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting the object under the mouse pointer in speech
@@ -3869,37 +3830,27 @@ msgstr "Forbedringsmodus for mus slått på."
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to object navigation.
 #: src/orca/guilabels.py:396
-#, fuzzy
-#| msgctxt "role"
-#| msgid "navigation"
 msgid "Object navigation"
-msgstr "navigering"
+msgstr "Objektnavigering"
 
 #. Translators: This string is a label for a group of Orca commands which are
 #. related to presenting information about the system, such as date, time,
 #. battery status, CPU status, etc.
 #: src/orca/guilabels.py:401
-#, fuzzy
-#| msgctxt "role"
-#| msgid "information"
 msgid "System information"
-msgstr "informasjon"
+msgstr "Systeminformasjon"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to structural navigation, such as moving to the next heading,
 #. paragraph, form field, etc. in a given direction.
 #: src/orca/guilabels.py:406
-#, fuzzy
-#| msgid "Structural navigation keys on."
 msgid "Structural navigation"
-msgstr "Strukturelle navigasjonstaster er slått på."
+msgstr "Strukturell navigasjon"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to table navigation, such as moving to the next cell in a
 #. given direction.
 #: src/orca/guilabels.py:411
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Table navigation"
 msgstr "Tabellnavigasjon"
 
@@ -3909,10 +3860,8 @@ msgstr "Tabellnavigasjon"
 #. name, role, and location of the currently-focused object; the selected
 #. text in the currently-focused object; etc.
 #: src/orca/guilabels.py:418
-#, fuzzy
-#| msgid "Object mode."
 msgid "Object details"
-msgstr "Objektmodus."
+msgstr "Objektdetaljer"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's "flat review" feature. This feature allows the blind
@@ -3922,10 +3871,8 @@ msgstr "Objektmodus."
 #. the user to explore this text by the {previous,next} {line,word,character}.
 #. Those commands are all listed under this group label.
 #: src/orca/guilabels.py:427
-#, fuzzy
-#| msgid "Leaving flat review."
 msgid "Flat review"
-msgstr "Forlater flat visningsmodus."
+msgstr "Flat visningsmodus"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to Orca's speech and verbosity settings. This group of commands
@@ -3933,10 +3880,8 @@ msgstr "Forlater flat visningsmodus."
 #. particular object, as well certain aspects of the voice with which things
 #. are spoken.
 #: src/orca/guilabels.py:434
-#, fuzzy
-#| msgid "Toggle speech verbosity level"
 msgid "Speech and verbosity"
-msgstr "Bytter detaljnivå for tale"
+msgstr "Tale og detaljnivå"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3948,11 +3893,8 @@ msgstr "Bytter detaljnivå for tale"
 #. flat review representation into a text view to make it easy to review
 #. and copy the text. This string is the title of the window with the text view.
 #: src/orca/guilabels.py:445
-#, fuzzy
-#| msgctxt "role"
-#| msgid "main content"
 msgid "Flat review contents"
-msgstr "hovedinnhold"
+msgstr "Innhold i flat visning"
 
 #. Translators: Modified is a table column header in Orca's preferences dialog.
 #. This column contains a checkbox which indicates whether a key binding
@@ -3975,11 +3917,9 @@ msgstr "_Skrivebord"
 #. column for the time of the notification. This string is a column header
 #. for the text of the notifications.
 #: src/orca/guilabels.py:462
-#, fuzzy
-#| msgid "Notification"
 msgctxt "notification presenter"
 msgid "Notifications"
-msgstr "Varsling"
+msgstr "Varslinger"
 
 #. Translators: Orca has a feature to list all of the notification messages
 #. received, similar to the functionality gnome-shell provides when you press
@@ -3990,15 +3930,13 @@ msgstr "Varsling"
 #: src/orca/guilabels.py:470
 msgctxt "notification presenter"
 msgid "Received"
-msgstr ""
+msgstr "Mottatt"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are associated with presenting notifications.
 #: src/orca/guilabels.py:474
-#, fuzzy
-#| msgid "Notification"
 msgid "Notification presenter"
-msgstr "Varsling"
+msgstr "Varslingsvisning"
 
 #. Translators: Orca's preferences can be configured on a per-application basis,
 #. allowing users to customize Orca's behavior, keybindings, etc. to work one
@@ -4825,12 +4763,11 @@ msgstr "_Kort"
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
 #: src/orca/guilabels.py:1041
-#, fuzzy, python-format
-#| msgid "Notification"
+#, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
-msgstr[0] "Varsling"
-msgstr[1] "Varsling"
+msgstr[0] "%d varsling"
+msgstr[1] "%d varslinger"
 
 #. Translators: this is how someone would speak the name of the shift key
 #: src/orca/keynames.py:34
@@ -5136,9 +5073,6 @@ msgstr "Meta2"
 #. "alt" modifier.
 #.
 #: src/orca/keybindings.py:194
-#, fuzzy
-#| msgctxt "keyboard"
-#| msgid "Alt"
 msgid "Alt"
 msgstr "Alt"
 
@@ -7346,10 +7280,8 @@ msgstr "bokmerket kunne ikke bli lagret"
 #. presented to the user when they try to go to a bookmark, but don't have
 #. any bookmarks.
 #: src/orca/messages.py:93
-#, fuzzy
-#| msgid "No landmark found."
 msgid "No bookmarks found."
-msgstr "Ingen landemerker funnet."
+msgstr "Fant ingen bokmerker."
 
 #. Translators: Orca has a feature in which users can store/save a particular
 #. location in an application window and return to it later by pressing a
@@ -7358,10 +7290,8 @@ msgstr "Ingen landemerker funnet."
 #. index (e.g. bookmark 1 or bookmark 2) but there is no bookmark stored at
 #. that index.
 #: src/orca/messages.py:101
-#, fuzzy
-#| msgid "No landmark found."
 msgid "Bookmark not found."
-msgstr "Ingen landemerker funnet."
+msgstr "Fant ikke bokmerke."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -7372,10 +7302,8 @@ msgstr "Ingen landemerker funnet."
 #. editor. This string is what Orca presents to the user when Orca's commands are
 #. being toggled off.
 #: src/orca/messages.py:111
-#, fuzzy
-#| msgid "Structural navigation keys off."
 msgid "Orca command keys off."
-msgstr "Strukturelle navigasjonstaster er slått av."
+msgstr "Orca kommandotaster er slått av."
 
 #. Translators: Orca has a command which toggles all (other) Orca commands so that
 #. the associated keystroke can by consumed by the native application. For example,
@@ -7387,7 +7315,7 @@ msgstr "Strukturelle navigasjonstaster er slått av."
 #. being toggled back on.
 #: src/orca/messages.py:121
 msgid "Orca command keys on."
-msgstr ""
+msgstr "Orca kommandotaster er slått på."
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -7653,7 +7581,7 @@ msgstr "Opplesningssystem"
 #: src/orca/messages.py:311
 #, python-format
 msgid "Speech system “%s” is unavailable (available: %s)"
-msgstr ""
+msgstr "Talesystem «%s» er ikke tilgjengelig (tilgjengelig: %s)"
 
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
@@ -7946,51 +7874,39 @@ msgstr "alle oppføringer valgt"
 #. Translators: This message is presented when the user is in a date picker and
 #. navigates to the item which reflects the current date.
 #: src/orca/messages.py:544
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current date"
-msgstr "N_åværende lokasjon"
+msgstr "Dagens dato"
 
 #. Translators: This message is presented wwhen the user is in a time picker/schedule
 #. and navigates to the item which reflects the current time.
 #: src/orca/messages.py:548
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current time"
-msgstr "N_åværende lokasjon"
+msgstr "Nåværende tid"
 
 #. Translators: This message is presented when the user is in a map or flow chart and
 #. navigates to the item which reflects the current location.
 #: src/orca/messages.py:552
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current location"
-msgstr "N_åværende lokasjon"
+msgstr "Nåværende lokasjon"
 
 #. Translators: This message is presented when the user is in a table of contents or
 #. other set of pagination links and navigates to the item which reflects the current
 #. page.
 #: src/orca/messages.py:557
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current page"
-msgstr "N_åværende lokasjon"
+msgstr "Denne siden"
 
 #. Translators: This message is presented when the user is in a wizard or other
 #. step-based interface and navigates to the item which reflects the current step.
 #: src/orca/messages.py:561
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current step"
-msgstr "N_åværende lokasjon"
+msgstr "Dette steget"
 
 #. Translators: This message is presented when the user is in a list of generic or
 #. unspecified items and navigates to the link/object which reflects the current item.
 #: src/orca/messages.py:565
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current item"
-msgstr "N_åværende lokasjon"
+msgstr "Denne oppføringen"
 
 #. Translators: Orca has a command to report CPU and memory usage. This message
 #. is presented to the user when they use this command but Orca was unable to
@@ -8011,20 +7927,15 @@ msgstr "CPU: %d%%. Minne: %d%%"
 #. bug. This message is presented when the user tried to clear the cache but
 #. an error occurred.
 #: src/orca/messages.py:580
-#, fuzzy
-#| msgid "leaving details."
 msgid "Clearing cache failed."
-msgstr "forlater detaljer."
+msgstr "Klarte ikke å tømme buffer.."
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user performs the command.
 #: src/orca/messages.py:585
-#, fuzzy
-#| msgctxt "role"
-#| msgid "leaving search."
 msgid "Clearing cache."
-msgstr "forlater søk."
+msgstr "Tømmer buffer."
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -10611,19 +10522,15 @@ msgstr "Ikke i en tabell."
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
 #: src/orca/messages.py:2449
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Table navigation disabled."
-msgstr "Tabellnavigasjon"
+msgstr "Tabellnavigasjon er slått av."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
 #: src/orca/messages.py:2454
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Table navigation enabled."
-msgstr "Tabellnavigasjon"
+msgstr "Tabellnavigasjon er slått på."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
@@ -10913,24 +10820,20 @@ msgstr[1] "%d tegn"
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
 #: src/orca/messages.py:2669
-#, fuzzy, python-format
-#| msgid "%d character too long"
-#| msgid_plural "%d characters too long"
+#, python-format
 msgid "%d character selected"
 msgid_plural "%d characters selected"
-msgstr[0] "%d tegn for lang"
-msgstr[1] "%d tegn for lang"
+msgstr[0] "%d tegn valgt"
+msgstr[1] "%d tegn valgt"
 
 #. Translators: This message describes the number of characters that were just
 #. unselected in a body of text.
 #: src/orca/messages.py:2676
-#, fuzzy, python-format
-#| msgctxt "cell"
-#| msgid "%s unselected"
+#, python-format
 msgid "%d character unselected"
 msgid_plural "%d characters unselected"
-msgstr[0] "Fjernet utvalg for %s"
-msgstr[1] "Fjernet utvalg for %s"
+msgstr[0] "Fjernet utvalg for %d tegn"
+msgstr[1] "Fjernet utvalg for %d tegn"
 
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
@@ -11064,13 +10967,11 @@ msgstr[1] "Liste med %d oppføringer"
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
 #: src/orca/messages.py:2796
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
-msgstr[0] "Liste med %d oppføring"
-msgstr[1] "Liste med %d oppføringer"
+msgstr[0] "Nøstet liste med %d oppføring"
+msgstr[1] "Nøstet liste med %d oppføringer"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -11105,9 +11006,7 @@ msgstr[1] "Liste med %d oppføringer"
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
 #: src/orca/messages.py:2827
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format, fuzzy
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
 msgstr[0] "Liste med %d oppføring"
@@ -11272,13 +11171,11 @@ msgstr "tabell med ukjent størrelse"
 #. rows is unknown, but the number of columns is known. This might occur
 #. in a vertically infinitely scrollable table or grid on the web.
 #: src/orca/messages.py:2979
-#, fuzzy, python-format
-#| msgid "table with %d row"
-#| msgid_plural "table with %d rows"
+#, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
-msgstr[0] "tabell med %d rad"
-msgstr[1] "tabell med %d rader"
+msgstr[0] "tabell med %d kolonne, antall rader ukjent"
+msgstr[1] "tabell med %d kolonner, antall rader ukjent"
 
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
@@ -11304,8 +11201,8 @@ msgstr[1] "tabell med %d rader"
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d sekund siden"
+msgstr[1] "%d sekunder siden"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
@@ -11313,8 +11210,8 @@ msgstr[1] ""
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minutt siden"
+msgstr[1] "%d minutter siden"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
@@ -11322,8 +11219,8 @@ msgstr[1] ""
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d time siden"
+msgstr[1] "%d timer siden"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
@@ -11331,8 +11228,8 @@ msgstr[1] ""
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d dag siden"
+msgstr[1] "%d dager siden"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
@@ -11385,7 +11282,7 @@ msgstr "%(index)d av %(total)d"
 #: src/orca/object_properties.py:55
 #, python-format
 msgid "item %(index)d"
-msgstr ""
+msgstr "oppføring %(index)d"
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
