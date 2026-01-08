@@ -511,6 +511,11 @@ CYCLE_SYNTHESIZER = _("Cycle to the next speech synthesizer")
 # their saved profiles without having to get into a GUI.
 CYCLE_SETTINGS_PROFILE = _("Cycle to the next settings profile")
 
+# Translators: Orca has a feature that allows users to save and load collections
+# of settings into named "profiles". This string to be translated refers to an
+# Orca command which presents the name of the currently active profile.
+PRESENT_CURRENT_PROFILE = _("Present the current profile")
+
 # Translators: Orca uses Speech Dispatcher to present content to users via text-
 # to-speech. Speech Dispatcher has a feature to control how capital letters are
 # presented: Do nothing at all, say the word 'capital' prior to presenting a

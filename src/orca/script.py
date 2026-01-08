@@ -65,6 +65,7 @@ from . import live_region_presenter
 from . import mouse_review
 from . import notification_presenter
 from . import object_navigator
+from . import profile_manager
 from . import say_all_presenter
 from . import script_utilities
 from . import sleep_mode_manager
@@ -267,6 +268,11 @@ class Script:
         """Returns the bypass mode manager for this script."""
 
         return bypass_mode_manager.get_manager()
+
+    def get_profile_manager(self) -> profile_manager.ProfileManager:
+        """Returns the profile manager for this script."""
+
+        return profile_manager.get_manager()
 
     def get_where_am_i_presenter(self) -> where_am_i_presenter.WhereAmIPresenter:
         """Returns the where-am-I presenter for this script."""

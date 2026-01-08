@@ -118,6 +118,7 @@ class Script(script.Script):
             (self.get_where_am_i_presenter, guilabels.KB_GROUP_WHERE_AM_I),
             (self.get_debugging_tools_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
             (self.get_chat_presenter, guilabels.KB_GROUP_CHAT),
+            (self.get_profile_manager, guilabels.GENERAL_PROFILES),
         ]
 
     def setup_input_event_handlers(self) -> None:
@@ -169,11 +170,6 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.show_app_preferences_gui,
                 cmdnames.SHOW_APP_PREFERENCES_GUI)
-
-        self.input_event_handlers["cycleSettingsProfileHandler"] = \
-            input_event.InputEventHandler(
-                Script.cycle_settings_profile,
-                cmdnames.CYCLE_SETTINGS_PROFILE)
 
         for name, handler in self.input_event_handlers.items():
             command_manager.get_manager().add_command(command_manager.Command(
@@ -342,12 +338,6 @@ class Script(script.Script):
                     "8",
                     keybindings.ORCA_MODIFIER_MASK,
                     self.input_event_handlers["rightClickReviewItemHandler"]))
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["cycleSettingsProfileHandler"]))
 
         bindings.add(
             keybindings.KeyBinding(
@@ -885,44 +875,6 @@ class Script(script.Script):
         brief = messages.LOCATION_NOT_FOUND_BRIEF
         self.present_message(full, brief)
         return False
-
-    def cycle_settings_profile(self, _event: input_event.InputEvent | None = None) -> bool:
-        """Cycle through the user's existing settings profiles."""
-
-        profile_names = settings_manager.get_manager().available_profiles()
-        if not profile_names:
-            self.present_message(messages.PROFILE_NOT_FOUND)
-            return True
-
-        # profile_names is now list[list[str]] where each is [display_name, internal_name]
-        profiles = [(profile[0], profile[1]) for profile in profile_names]
-
-        def is_match(x: tuple[str, str]) -> bool:
-            return x[1] == settings_manager.get_manager().get_profile()
-
-        current_matches: list[tuple[str, str]] = list(filter(is_match, profiles))
-        if not current_matches:
-            # If no current match, start with first profile
-            current_index = 0
-        else:
-            current_index = profiles.index(current_matches[0])
-
-        try:
-            name, profile_id = profiles[current_index + 1]
-        except IndexError:
-            name, profile_id = profiles[0]
-
-        settings_manager.get_manager().set_profile(profile_id, update_locale=True)
-
-        braille.checkBrailleSetting()
-        speech_and_verbosity_manager.get_manager().refresh_speech()
-
-        # TODO: This is another "too close to code freeze" hack to cause the
-        # command names to be presented in the correct language.
-        self.setup_input_event_handlers()
-
-        self.present_message(messages.PROFILE_CHANGED % name, name)
-        return True
 
     ########################################################################
     #                                                                      #

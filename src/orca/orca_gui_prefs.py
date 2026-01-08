@@ -2107,6 +2107,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterActionPresenter = self._createNode(guilabels.KB_GROUP_ACTIONS)
         iterDebuggingTools = self._createNode(guilabels.KB_GROUP_DEBUGGING_TOOLS)
         iterChat = self._createNode(guilabels.KB_GROUP_CHAT)
+        iterProfiles = self._createNode(guilabels.GENERAL_PROFILES)
 
         if not self.kbindings:
             layout = settings.keyboardLayout
@@ -2152,6 +2153,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 is_desktop=isDesktop)
             chatKeyBindings = self.script.get_chat_presenter().get_bindings(
                 is_desktop=isDesktop)
+            pmKeyBindings = self.script.get_profile_manager().get_bindings(
+                is_desktop=isDesktop)
 
             for kb in allKeyBindings.key_bindings:
                 if not self.kbindings.has_key_binding(kb, "strict"):
@@ -2192,6 +2195,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterDebuggingTools)
                     elif chatKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterChat)
+                    elif pmKeyBindings.has_key_binding(kb, "description"):
+                        self._insertRow(handl, kb, iterProfiles)
                     elif not defKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterApp)
                     else:

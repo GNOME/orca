@@ -2141,6 +2141,12 @@ PROFILE_CHANGED = _("Profile set to %s.")
 # selected when reading Spanish content.
 PROFILE_NOT_FOUND = _("No profiles found.")
 
+# Translators: This message will be presented when the user requests the
+# name of the currently active profile. A profile is a collection of settings
+# which apply to a given task, such as a "Spanish" profile which would use
+# Spanish text-to-speech and Spanish braille.
+PROFILE_CURRENT = _("Current profile is %s.")
+
 # Translators: this is an index value so that we can present value changes
 # regarding a specific progress bar in environments where there are multiple
 # progress bars (e.g. in the Firefox downloads dialog).

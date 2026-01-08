@@ -167,6 +167,25 @@ MODULE_CONFIG = {
         "toggle_commands": ["ToggleSimplify"],
         "skip": [],
     },
+    "ProfileManager": {
+        "commands": [
+            "CycleSettingsProfile",
+            "PresentCurrentProfile",
+        ],
+        "parameterized_commands": [],
+        "getters": [
+            "ActiveProfile",
+            "AvailableProfiles",
+            "StartingProfile",
+        ],
+        "setters": [
+            "ActiveProfile",
+            "StartingProfile",
+        ],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "NotificationPresenter": {
         "commands": [
             "PresentLastNotification",

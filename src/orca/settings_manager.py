@@ -35,6 +35,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
+import ast
 import importlib
 import importlib.util
 import os
@@ -205,6 +206,16 @@ class SettingsManager:
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Activated", True)
 
         starting_profile = self._settings.get("startingProfile", ["Default", "default"])
+
+        # Handle corrupted data where list was saved as string representation
+        if isinstance(starting_profile, str):
+            msg = f"SETTINGS MANAGER: startingProfile is string '{starting_profile}', fixing."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            try:
+                starting_profile = ast.literal_eval(starting_profile)
+            except (ValueError, SyntaxError):
+                starting_profile = ["Default", "default"]
+
         self._profile = starting_profile[1]
         tokens = ["SETTINGS MANAGER: Current profile is", self._profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -264,6 +275,16 @@ class SettingsManager:
         if starting_profile is None:
             starting_profile = prefs.get(
                 "general", {}).get("startingProfile", ["Default", "default"])
+
+        # Handle corrupted data where list was saved as string representation
+        if isinstance(starting_profile, str):
+            msg = f"SETTINGS MANAGER: startingProfile is string '{starting_profile}', fixing."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            try:
+                starting_profile = ast.literal_eval(starting_profile)
+            except (ValueError, SyntaxError):
+                starting_profile = ["Default", "default"]
+
         result["startingProfile"] = starting_profile
         default_profile = starting_profile
         if profile is None:
@@ -350,15 +371,15 @@ class SettingsManager:
         if profile is None:
             profile = self._profile
 
-        tokens = ["SETTINGS MANAGER: Loading settings for", profile, "profile"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        msg = f"SETTINGS MANAGER: Loading settings for '{profile}' profile"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         profile_general = self.get_general_settings(profile) or {}
         profile_pronunciations = self.get_pronunciations(profile) or {}
         profile_keybindings = self.get_keybindings(profile) or {}
 
-        tokens = ["SETTINGS MANAGER: Settings for", profile, "profile loaded"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        msg = f"SETTINGS MANAGER: Settings for '{profile}' profile loaded"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
         return profile_general, profile_pronunciations, profile_keybindings
 
