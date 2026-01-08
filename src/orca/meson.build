@@ -112,6 +112,7 @@ lib_sources = [
   'orca_gui_profile.py',
   'orca_modifier_manager.py',
   'phonnames.py',
+  'preferences_grid_base.py',
   'pronunciation_dict.py',
   'say_all_presenter.py',
   'script.py',
