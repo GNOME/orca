@@ -39,7 +39,9 @@ from enum import Enum
 from . import braille
 from . import dbus_service
 from . import debug
+from . import guilabels
 from . import input_event_manager
+from . import preferences_grid_base
 from . import settings
 from .orca_platform import tablesdir # pylint: disable=import-error
 
@@ -69,6 +71,315 @@ class BrailleIndicator(Enum):
 
         return self.name.lower()
 
+
+class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Braille Verbosity preferences page."""
+
+    def __init__(self, presenter: BraillePresenter) -> None:
+        controls = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.SPEECH_OBJECT_PRESENTATION_IS_DETAILED,
+                getter=presenter._get_verbosity_is_detailed,
+                setter=presenter._set_verbosity_is_detailed,
+                prefs_key="brailleVerbosityLevel"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_SHOW_CONTEXT,
+                getter=presenter.get_display_ancestors,
+                setter=presenter.set_display_ancestors,
+                prefs_key="enableBrailleContext"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_ABBREVIATED_ROLE_NAMES,
+                getter=presenter._get_use_abbreviated_rolenames,
+                setter=presenter._set_use_abbreviated_rolenames,
+                prefs_key="brailleRolenameStyle"
+            ),
+        ]
+
+        super().__init__(guilabels.VERBOSITY, controls)
+
+
+class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Braille Display Settings preferences page."""
+
+    def __init__(self, presenter: BraillePresenter) -> None:
+        table_dict = presenter.get_contraction_tables_dict()
+        table_names = sorted(table_dict.keys()) if table_dict else []
+        table_paths = [table_dict[name] for name in table_names] if table_dict else []
+
+        self._enable_contracted_control = preferences_grid_base.BooleanPreferenceControl(
+            label=guilabels.BRAILLE_ENABLE_CONTRACTED_BRAILLE,
+            getter=presenter.get_contracted_braille_is_enabled,
+            setter=presenter.set_contracted_braille_is_enabled,
+            prefs_key="enableContractedBraille"
+        )
+
+        controls: list[
+            preferences_grid_base.BooleanPreferenceControl
+            | preferences_grid_base.EnumPreferenceControl
+        ] = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_DISABLE_END_OF_LINE_SYMBOL,
+                getter=presenter._get_disable_eol,
+                setter=presenter._set_disable_eol,
+                prefs_key="disableBrailleEOL"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
+                getter=presenter.get_word_wrap_is_enabled,
+                setter=presenter.set_word_wrap_is_enabled,
+                prefs_key="enableBrailleWordWrap"
+            ),
+            self._enable_contracted_control,
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.BRAILLE_CONTRACTION_TABLE,
+                options=table_names,
+                values=table_paths,
+                getter=presenter.get_contraction_table_path,
+                setter=presenter.set_contraction_table_from_path,
+                prefs_key="brailleContractionTable",
+                determine_sensitivity=self._contracted_enabled
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.BRAILLE_HYPERLINK_INDICATOR,
+                options=[
+                    guilabels.BRAILLE_DOT_NONE,
+                    guilabels.BRAILLE_DOT_7,
+                    guilabels.BRAILLE_DOT_8,
+                    guilabels.BRAILLE_DOT_7_8
+                ],
+                values=[
+                    settings.BRAILLE_UNDERLINE_NONE,
+                    settings.BRAILLE_UNDERLINE_7,
+                    settings.BRAILLE_UNDERLINE_8,
+                    settings.BRAILLE_UNDERLINE_BOTH
+                ],
+                getter=presenter._get_link_indicator_as_int,
+                setter=presenter.set_link_indicator_from_int,
+                prefs_key="brailleLinkIndicator",
+                member_of=guilabels.BRAILLE_INDICATORS
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.BRAILLE_SELECTION_INDICATOR,
+                options=[
+                    guilabels.BRAILLE_DOT_NONE,
+                    guilabels.BRAILLE_DOT_7,
+                    guilabels.BRAILLE_DOT_8,
+                    guilabels.BRAILLE_DOT_7_8
+                ],
+                values=[
+                    settings.BRAILLE_UNDERLINE_NONE,
+                    settings.BRAILLE_UNDERLINE_7,
+                    settings.BRAILLE_UNDERLINE_8,
+                    settings.BRAILLE_UNDERLINE_BOTH
+                ],
+                getter=presenter._get_selector_indicator_as_int,
+                setter=presenter.set_selector_indicator_from_int,
+                prefs_key="brailleSelectorIndicator",
+                member_of=guilabels.BRAILLE_INDICATORS
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.BRAILLE_TEXT_ATTRIBUTES_INDICATOR,
+                options=[
+                    guilabels.BRAILLE_DOT_NONE,
+                    guilabels.BRAILLE_DOT_7,
+                    guilabels.BRAILLE_DOT_8,
+                    guilabels.BRAILLE_DOT_7_8
+                ],
+                values=[
+                    settings.BRAILLE_UNDERLINE_NONE,
+                    settings.BRAILLE_UNDERLINE_7,
+                    settings.BRAILLE_UNDERLINE_8,
+                    settings.BRAILLE_UNDERLINE_BOTH
+                ],
+                getter=presenter._get_text_attributes_indicator_as_int,
+                setter=presenter.set_text_attributes_indicator_from_int,
+                prefs_key="textAttributesBrailleIndicator",
+                member_of=guilabels.BRAILLE_INDICATORS
+            ),
+        ]
+
+        super().__init__(guilabels.BRAILLE_DISPLAY_SETTINGS, controls)
+
+    def _contracted_enabled(self) -> bool:
+        """Check if contracted braille is enabled in the UI."""
+
+        widget = self.get_widget_for_control(self._enable_contracted_control)
+        return widget.get_active() if widget else True
+
+
+class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Braille Flash Messages preferences page."""
+
+    def __init__(self, presenter: BraillePresenter) -> None:
+        self._flash_persistent_control = preferences_grid_base.BooleanPreferenceControl(
+            label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
+            getter=presenter.get_flash_messages_are_persistent,
+            setter=presenter.set_flash_messages_are_persistent,
+            prefs_key="flashIsPersistent"
+        )
+
+        controls: list[
+            preferences_grid_base.BooleanPreferenceControl
+            | preferences_grid_base.IntRangePreferenceControl
+        ] = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_ENABLE_FLASH_MESSAGES,
+                getter=presenter.get_flash_messages_are_enabled,
+                setter=presenter.set_flash_messages_are_enabled,
+                prefs_key="enableFlashMessages"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_MESSAGES_ARE_DETAILED,
+                getter=presenter.get_flash_messages_are_detailed,
+                setter=presenter.set_flash_messages_are_detailed,
+                prefs_key="flashIsDetailed"
+            ),
+            self._flash_persistent_control,
+            preferences_grid_base.IntRangePreferenceControl(
+                label=guilabels.BRAILLE_DURATION_SECS,
+                minimum=1,
+                maximum=100,
+                getter=presenter._get_flash_duration_seconds,
+                setter=presenter._set_flash_duration_seconds,
+                prefs_key="brailleFlashTime",
+                determine_sensitivity=self._flash_not_persistent
+            ),
+        ]
+
+        super().__init__(guilabels.BRAILLE_FLASH_MESSAGES, controls)
+
+    def _flash_not_persistent(self) -> bool:
+        """Check if flash messages are not persistent in the UI."""
+
+        widget = self.get_widget_for_control(self._flash_persistent_control)
+        return not widget.get_active() if widget else True
+
+
+class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Braille Progress Bars preferences page."""
+
+    def __init__(self, presenter: BraillePresenter) -> None:
+        controls: list[preferences_grid_base.ControlType] = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.GENERAL_BRAILLE_UPDATES,
+                getter=presenter.get_braille_progress_bar_updates,
+                setter=presenter.set_braille_progress_bar_updates,
+                prefs_key="brailleProgressBarUpdates"
+            ),
+            preferences_grid_base.IntRangePreferenceControl(
+                label=guilabels.GENERAL_FREQUENCY_SECS,
+                getter=presenter.get_progress_bar_braille_interval,
+                setter=presenter.set_progress_bar_braille_interval,
+                prefs_key="progressBarBrailleInterval",
+                minimum=0,
+                maximum=100
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.GENERAL_APPLIES_TO,
+                getter=presenter.get_progress_bar_braille_verbosity,
+                setter=presenter.set_progress_bar_braille_verbosity,
+                prefs_key="progressBarBrailleVerbosity",
+                options=[
+                    guilabels.PROGRESS_BAR_ALL,
+                    guilabels.PROGRESS_BAR_APPLICATION,
+                    guilabels.PROGRESS_BAR_WINDOW,
+                ],
+                values=[
+                    settings.PROGRESS_BAR_ALL,
+                    settings.PROGRESS_BAR_APPLICATION,
+                    settings.PROGRESS_BAR_WINDOW,
+                ]
+            ),
+        ]
+
+        super().__init__(guilabels.PROGRESS_BARS, controls)
+
+
+class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
+    """GtkGrid containing the Braille preferences page with nested stack navigation."""
+
+    def __init__(
+        self,
+        presenter: BraillePresenter,
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+    ) -> None:
+
+        super().__init__(guilabels.BRAILLE)
+        self._presenter = presenter
+        self._initializing = True
+        self._title_change_callback = title_change_callback
+
+        self._verbosity_grid = BrailleVerbosityPreferencesGrid(presenter)
+        self._display_settings_grid = BrailleDisplaySettingsPreferencesGrid(presenter)
+        self._flash_messages_grid = BrailleFlashMessagesPreferencesGrid(presenter)
+        self._progress_bars_grid = BrailleProgressBarsPreferencesGrid(presenter)
+
+        self._build()
+        self._initializing = False
+        self.refresh()
+
+    def _build(self) -> None:
+        """Build the nested stack UI."""
+
+        row = 0
+
+        categories = [
+            (guilabels.VERBOSITY, "verbosity", self._verbosity_grid),
+            (guilabels.BRAILLE_DISPLAY_SETTINGS, "display_settings", self._display_settings_grid),
+            (guilabels.BRAILLE_FLASH_MESSAGES, "flash_messages", self._flash_messages_grid),
+            (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
+        ]
+
+        enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
+            enable_label=guilabels.BRAILLE_ENABLE_BRAILLE_SUPPORT,
+            enable_getter=self._presenter.get_braille_is_enabled,
+            enable_setter=self._presenter.set_braille_is_enabled,
+            categories=categories,
+            title_change_callback=self._title_change_callback,
+            main_title=guilabels.BRAILLE
+        )
+
+        self.attach(enable_listbox, 0, row, 1, 1)
+        row += 1
+        self.attach(stack, 0, row, 1, 1)
+
+    def on_becoming_visible(self) -> None:
+        """Reset to the categories view when this grid becomes visible."""
+
+        self.multipage_on_becoming_visible()
+
+    def reload(self) -> None:
+        """Fetch fresh values and update UI."""
+
+        self._verbosity_grid.reload()
+        self._display_settings_grid.reload()
+        self._flash_messages_grid.reload()
+        self._progress_bars_grid.reload()
+
+    def save_settings(self) -> dict:
+        """Persist staged values."""
+
+        result = {}
+        result.update(self._verbosity_grid.save_settings())
+        result.update(self._display_settings_grid.save_settings())
+        result.update(self._flash_messages_grid.save_settings())
+        result.update(self._progress_bars_grid.save_settings())
+        return result
+
+    def refresh(self) -> None:
+        """Update widgets from staged values."""
+
+        self._initializing = True
+        self._verbosity_grid.refresh()
+        self._display_settings_grid.refresh()
+        self._flash_messages_grid.refresh()
+        self._progress_bars_grid.refresh()
+        self._initializing = False
+
+
+
 class BraillePresenter:
     """Provides braille presentation support."""
 
@@ -77,6 +388,72 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("BraillePresenter", self)
+
+    def create_preferences_grid(
+        self,
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+    ) -> BraillePreferencesGrid:
+        """Returns the GtkGrid containing the preferences UI."""
+
+        return BraillePreferencesGrid(self, title_change_callback)
+
+    def _get_verbosity_is_detailed(self) -> bool:
+        """Returns whether braille verbosity is set to detailed/verbose."""
+
+        level = settings.brailleVerbosityLevel
+        return level == settings.VERBOSITY_LEVEL_VERBOSE
+
+    def _set_verbosity_is_detailed(self, value: bool) -> bool:
+        """Sets braille verbosity to detailed/verbose if True, brief if False."""
+
+        level = settings.VERBOSITY_LEVEL_VERBOSE if value else settings.VERBOSITY_LEVEL_BRIEF
+        msg = f"BRAILLE PRESENTER: Setting verbosity level to {level}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleVerbosityLevel = level
+        return True
+
+    def _get_disable_eol(self) -> bool:
+        """Returns whether the end-of-line indicator is disabled."""
+
+        return settings.disableBrailleEOL
+
+    def _set_disable_eol(self, value: bool) -> bool:
+        """Sets whether the end-of-line indicator is disabled."""
+
+        msg = f"BRAILLE PRESENTER: Setting disable-eol to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.disableBrailleEOL = value
+        return True
+
+    def _get_use_abbreviated_rolenames(self) -> bool:
+        """Returns whether abbreviated role names are used."""
+
+        style = settings.brailleRolenameStyle
+        return style == settings.VERBOSITY_LEVEL_BRIEF
+
+    def _set_use_abbreviated_rolenames(self, value: bool) -> bool:
+        """Sets whether abbreviated role names are used."""
+
+        if value:
+            style = settings.VERBOSITY_LEVEL_BRIEF
+        else:
+            style = settings.VERBOSITY_LEVEL_VERBOSE
+        msg = f"BRAILLE PRESENTER: Setting rolename style to {'abbreviated' if value else 'full'}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleRolenameStyle = style
+        return True
+
+    def _get_flash_duration_seconds(self) -> int:
+        """Returns flash duration in seconds (converted from milliseconds)."""
+
+        duration_ms = self.get_flash_message_duration()
+        return duration_ms // 1000
+
+    def _set_flash_duration_seconds(self, value: int) -> None:
+        """Sets flash duration in seconds (converts to milliseconds)."""
+
+        duration_ms = value * 1000
+        self.set_flash_message_duration(duration_ms)
 
     def use_braille(self) -> bool:
         """Returns whether braille is to be used."""

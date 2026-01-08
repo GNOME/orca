@@ -1,6 +1,6 @@
 # Unit tests for braille_presenter.py methods.
 #
-# Copyright 2025 Igalia, S.L.
+# Copyright 2025-2026 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
@@ -22,12 +22,16 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
 
 """Unit tests for braille_presenter.py methods."""
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+
+import gi
+gi.require_version("Gtk", "3.0")
 
 import pytest
 
@@ -92,7 +96,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_braille_is_enabled(True)
         assert result is True
@@ -164,17 +167,15 @@ class TestBraillePresenter:
         assert result is False
 
     def test_set_contraction_table_empty_string(self, test_context: OrcaTestContext):
-        """Test setting empty string contraction table returns false and doesn't update setting."""
+        """Test setting empty contraction table returns False."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_contraction_table("")
         assert result is False
-        # set_setting no longer used - settings are set directly
 
     def test_get_indicator_styles(self, test_context: OrcaTestContext):
         """Test getting indicator styles."""
@@ -202,7 +203,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_selector_indicator("dots78")
         assert result is True
@@ -233,7 +233,6 @@ class TestBraillePresenter:
 
         presenter = get_presenter()
         settings_mock = essential_modules["orca.settings"]
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         settings_mock.disableBrailleEOL = False
         assert presenter.get_end_of_line_indicator_is_enabled() is True
@@ -309,7 +308,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_verbosity_level("brief")
         assert result is True
@@ -361,7 +359,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_rolename_style("brief")
         assert result is True
@@ -397,7 +394,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_display_ancestors(True)
         assert result is True
@@ -430,7 +426,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_contracted_braille_is_enabled(True)
         assert result is True
@@ -463,7 +458,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_word_wrap_is_enabled(True)
         assert result is True
@@ -496,7 +490,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_flash_messages_are_enabled(True)
         assert result is True
@@ -543,7 +536,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_flash_message_duration(4000)
         assert result is True
@@ -572,7 +564,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_flash_messages_are_persistent(True)
         assert result is True
@@ -605,7 +596,6 @@ class TestBraillePresenter:
         from orca.braille_presenter import get_presenter
 
         presenter = get_presenter()
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         result = presenter.set_flash_messages_are_detailed(True)
         assert result is True
@@ -614,3 +604,480 @@ class TestBraillePresenter:
         result = presenter.set_flash_messages_are_detailed(False)
         assert result is True
         assert not settings_mock.flashIsDetailed
+
+    def test_get_verbosity_is_detailed(self, test_context: OrcaTestContext):
+        """Test _get_verbosity_is_detailed returns correct boolean."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock = essential_modules["orca.settings"]
+
+        settings_mock.brailleVerbosityLevel = settings_mock.VERBOSITY_LEVEL_VERBOSE
+        assert presenter._get_verbosity_is_detailed() is True
+
+        settings_mock.brailleVerbosityLevel = settings_mock.VERBOSITY_LEVEL_BRIEF
+        assert presenter._get_verbosity_is_detailed() is False
+
+    def test_set_verbosity_is_detailed(self, test_context: OrcaTestContext):
+        """Test _set_verbosity_is_detailed sets verbosity level from boolean."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        result = presenter._set_verbosity_is_detailed(True)
+        assert result is True
+        assert settings_mock.brailleVerbosityLevel == settings_mock.VERBOSITY_LEVEL_VERBOSE
+
+        result = presenter._set_verbosity_is_detailed(False)
+        assert result is True
+        assert settings_mock.brailleVerbosityLevel == settings_mock.VERBOSITY_LEVEL_BRIEF
+
+    def test_get_disable_eol(self, test_context: OrcaTestContext):
+        """Test _get_disable_eol returns the disableBrailleEOL setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock = essential_modules["orca.settings"]
+
+        settings_mock.disableBrailleEOL = True
+        assert presenter._get_disable_eol() is True
+
+        settings_mock.disableBrailleEOL = False
+        assert presenter._get_disable_eol() is False
+
+    def test_set_disable_eol(self, test_context: OrcaTestContext):
+        """Test _set_disable_eol sets the disableBrailleEOL setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        result = presenter._set_disable_eol(True)
+        assert result is True
+        assert settings_mock.disableBrailleEOL is True
+
+        result = presenter._set_disable_eol(False)
+        assert result is True
+        assert settings_mock.disableBrailleEOL is False
+
+    def test_get_use_abbreviated_rolenames(self, test_context: OrcaTestContext):
+        """Test _get_use_abbreviated_rolenames returns True when brief style."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock = essential_modules["orca.settings"]
+
+        settings_mock.brailleRolenameStyle = settings_mock.VERBOSITY_LEVEL_BRIEF
+        assert presenter._get_use_abbreviated_rolenames() is True
+
+        settings_mock.brailleRolenameStyle = settings_mock.VERBOSITY_LEVEL_VERBOSE
+        assert presenter._get_use_abbreviated_rolenames() is False
+
+    def test_set_use_abbreviated_rolenames(self, test_context: OrcaTestContext):
+        """Test _set_use_abbreviated_rolenames sets rolename style from boolean."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        result = presenter._set_use_abbreviated_rolenames(True)
+        assert result is True
+        assert settings_mock.brailleRolenameStyle == settings_mock.VERBOSITY_LEVEL_BRIEF
+
+        result = presenter._set_use_abbreviated_rolenames(False)
+        assert result is True
+        assert settings_mock.brailleRolenameStyle == settings_mock.VERBOSITY_LEVEL_VERBOSE
+
+    def test_get_flash_duration_seconds(self, test_context: OrcaTestContext):
+        """Test _get_flash_duration_seconds converts milliseconds to seconds."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock = essential_modules["orca.settings"]
+
+        settings_mock.brailleFlashTime = 5000
+        assert presenter._get_flash_duration_seconds() == 5
+
+        settings_mock.brailleFlashTime = 2500
+        assert presenter._get_flash_duration_seconds() == 2  # Integer division
+
+        settings_mock.brailleFlashTime = 1000
+        assert presenter._get_flash_duration_seconds() == 1
+
+    def test_set_flash_duration_seconds(self, test_context: OrcaTestContext):
+        """Test _set_flash_duration_seconds converts seconds to milliseconds."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        presenter._set_flash_duration_seconds(5)
+        assert settings_mock.brailleFlashTime == 5000
+
+        presenter._set_flash_duration_seconds(1)
+        assert settings_mock.brailleFlashTime == 1000
+
+        presenter._set_flash_duration_seconds(10)
+        assert settings_mock.brailleFlashTime == 10000
+
+
+@pytest.mark.unit
+class TestBraillePreferencesGridUI:
+    """Test Braille preferences grid UI creation."""
+
+    # pylint: disable-next=too-many-statements
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for braille_presenter GUI dependencies."""
+
+        additional_modules = ["orca.braille", "orca.orca_platform"]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        braille_mock = essential_modules["orca.braille"]
+        braille_mock.get_table_files.return_value = [
+            "en-us-g1.ctb",
+            "en-us-g2.ctb",
+        ]
+        braille_mock.list_tables.return_value = {
+            "en-us-g1": "English Grade 1",
+            "en-us-g2": "English Grade 2",
+        }
+
+        platform_mock = essential_modules["orca.orca_platform"]
+        platform_mock.tablesdir = "/usr/share/liblouis/tables"
+
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.BRAILLE_UNDERLINE_NONE = 0x00
+        settings_mock.BRAILLE_UNDERLINE_7 = 0x40
+        settings_mock.BRAILLE_UNDERLINE_8 = 0x80
+        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xc0
+        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
+        settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
+        settings_mock.PROGRESS_BAR_ALL = 0
+        settings_mock.PROGRESS_BAR_APPLICATION = 1
+        settings_mock.PROGRESS_BAR_WINDOW = 2
+        settings_mock.brailleVerbosityLevel = 0
+        settings_mock.brailleRolenameStyle = 0
+        settings_mock.brailleShowContext = True
+        settings_mock.enableContractedBraille = False
+        settings_mock.disableBrailleEOL = False
+        settings_mock.enableBrailleWordWrap = False
+        settings_mock.brailleContractionTable = ""
+        settings_mock.brailleLinkIndicator = 0x00
+        settings_mock.brailleSelectorIndicator = 0x00
+        settings_mock.textAttributesBrailleIndicator = 0x00
+        settings_mock.enableFlashMessages = True
+        settings_mock.flashIsPersistent = False
+        settings_mock.flashVerbosityLevel = 1
+        settings_mock.brailleFlashTime = 5000
+        settings_mock.brailleProgressBarUpdates = True
+        settings_mock.progressBarBrailleInterval = 10
+        settings_mock.progressBarBrailleVerbosity = 0
+
+        guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.SPEECH_OBJECT_PRESENTATION_IS_DETAILED = "Detailed"
+        guilabels_mock.BRAILLE_SHOW_CONTEXT = "Show context"
+        guilabels_mock.BRAILLE_ABBREVIATED_ROLE_NAMES = "Abbreviated role names"
+        guilabels_mock.VERBOSITY = "Verbosity"
+        guilabels_mock.BRAILLE_ENABLE_CONTRACTED_BRAILLE = "Enable contracted braille"
+        guilabels_mock.BRAILLE_DISABLE_END_OF_LINE_SYMBOL = "Disable end of line symbol"
+        guilabels_mock.BRAILLE_ENABLE_WORD_WRAP = "Enable word wrap"
+        guilabels_mock.BRAILLE_CONTRACTION_TABLE = "Contraction table"
+        guilabels_mock.BRAILLE_HYPERLINK_INDICATOR = "Hyperlink indicator"
+        guilabels_mock.BRAILLE_DOT_NONE = "None"
+        guilabels_mock.BRAILLE_DOT_7 = "Dot 7"
+        guilabels_mock.BRAILLE_DOT_8 = "Dot 8"
+        guilabels_mock.BRAILLE_DOT_7_8 = "Dots 7 and 8"
+        guilabels_mock.BRAILLE_INDICATORS = "Indicators"
+        guilabels_mock.BRAILLE_SELECTION_INDICATOR = "Selection indicator"
+        guilabels_mock.BRAILLE_TEXT_ATTRIBUTES_INDICATOR = "Text attributes indicator"
+        guilabels_mock.BRAILLE_DISPLAY_SETTINGS = "Display Settings"
+        guilabels_mock.BRAILLE_MESSAGES_ARE_PERSISTENT = "Messages are persistent"
+        guilabels_mock.BRAILLE_ENABLE_FLASH_MESSAGES = "Enable flash messages"
+        guilabels_mock.BRAILLE_MESSAGES_ARE_DETAILED = "Messages are detailed"
+        guilabels_mock.BRAILLE_DURATION_SECS = "Duration (secs)"
+        guilabels_mock.BRAILLE_FLASH_MESSAGES = "Flash Messages"
+        guilabels_mock.GENERAL_BRAILLE_UPDATES = "Braille updates"
+        guilabels_mock.GENERAL_FREQUENCY_SECS = "Frequency (secs)"
+        guilabels_mock.GENERAL_APPLIES_TO = "Applies to"
+        guilabels_mock.PROGRESS_BAR_ALL = "All"
+        guilabels_mock.PROGRESS_BAR_APPLICATION = "Application"
+        guilabels_mock.PROGRESS_BAR_WINDOW = "Window"
+        guilabels_mock.PROGRESS_BARS = "Progress Bars"
+        guilabels_mock.BRAILLE = "Braille"
+
+        return essential_modules
+
+    def test_braille_verbosity_grid_creates_widgets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BrailleVerbosityPreferencesGrid creates correct widgets."""
+
+        from gi.repository import Gtk
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleVerbosityPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleVerbosityPreferencesGrid(presenter)
+
+        assert isinstance(grid, Gtk.Grid)
+        assert len(grid._widgets) == 3
+
+    def test_braille_display_settings_grid_creates_widgets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BrailleDisplaySettingsPreferencesGrid creates correct widgets."""
+
+        from gi.repository import Gtk
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleDisplaySettingsPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleDisplaySettingsPreferencesGrid(presenter)
+
+        assert isinstance(grid, Gtk.Grid)
+        assert len(grid._widgets) == 7
+
+    def test_braille_display_settings_grid_has_contracted_control(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BrailleDisplaySettingsPreferencesGrid has contracted control."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleDisplaySettingsPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleDisplaySettingsPreferencesGrid(presenter)
+
+        contracted_switch = grid.get_widget(2)
+        assert contracted_switch is not None
+
+        contraction_table_combo = grid.get_widget(3)
+        assert contraction_table_combo is not None
+
+    def test_braille_flash_messages_grid_creates_widgets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BrailleFlashMessagesPreferencesGrid creates correct widgets."""
+
+        from gi.repository import Gtk
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleFlashMessagesPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleFlashMessagesPreferencesGrid(presenter)
+
+        assert isinstance(grid, Gtk.Grid)
+        assert len(grid._widgets) == 4
+
+    def test_braille_flash_messages_grid_has_persistent_control(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BrailleFlashMessagesPreferencesGrid has persistent control."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleFlashMessagesPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleFlashMessagesPreferencesGrid(presenter)
+
+        persistent_switch = grid.get_widget(2)
+        assert persistent_switch is not None
+
+        duration_spinbutton = grid.get_widget(3)
+        assert duration_spinbutton is not None
+
+    def test_braille_progress_bars_grid_creates_widgets(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BrailleProgressBarsPreferencesGrid creates correct widgets."""
+
+        from gi.repository import Gtk
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleProgressBarsPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleProgressBarsPreferencesGrid(presenter)
+
+        assert isinstance(grid, Gtk.Grid)
+        assert len(grid._widgets) == 3
+
+    def test_braille_preferences_grid_creates_multi_page_stack(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BraillePreferencesGrid creates multi-page stack."""
+
+        from gi.repository import Gtk
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import BraillePresenter, BraillePreferencesGrid
+
+        presenter = BraillePresenter()
+        grid = BraillePreferencesGrid(presenter)
+
+        assert isinstance(grid, Gtk.Grid)
+        assert grid._verbosity_grid is not None
+        assert grid._display_settings_grid is not None
+        assert grid._flash_messages_grid is not None
+        assert grid._progress_bars_grid is not None
+
+    def test_braille_preferences_grid_save_settings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BraillePreferencesGrid save_settings returns combined dict."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import BraillePresenter, BraillePreferencesGrid
+
+        presenter = BraillePresenter()
+        grid = BraillePreferencesGrid(presenter)
+
+        result = grid.save_settings()
+
+        assert isinstance(result, dict)
+        assert "brailleVerbosityLevel" in result
+        assert "disableBrailleEOL" in result
+        assert "enableFlashMessages" in result
+        assert "brailleProgressBarUpdates" in result
+
+    def test_braille_preferences_grid_title_callback(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test BraillePreferencesGrid stores title change callback."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import BraillePresenter, BraillePreferencesGrid
+
+        presenter = BraillePresenter()
+        callback_calls: list[str] = []
+
+        def title_callback(title: str) -> None:
+            callback_calls.append(title)
+
+        grid = BraillePreferencesGrid(presenter, title_change_callback=title_callback)
+
+        assert grid._title_change_callback is title_callback
+
+    def test_verbosity_grid_switch_reflects_initial_value(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test verbosity grid switch shows correct initial value."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.brailleVerbosityLevel = settings_mock.VERBOSITY_LEVEL_VERBOSE
+
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleVerbosityPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleVerbosityPreferencesGrid(presenter)
+
+        detailed_switch = grid.get_widget(0)
+        assert detailed_switch.get_active() is True
+
+    def test_verbosity_grid_switch_toggle_updates_setting(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test toggling verbosity switch updates the setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.brailleVerbosityLevel = settings_mock.VERBOSITY_LEVEL_BRIEF
+
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleVerbosityPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleVerbosityPreferencesGrid(presenter)
+
+        detailed_switch = grid.get_widget(0)
+        assert detailed_switch.get_active() is False
+
+        grid._initializing = False
+        detailed_switch.set_active(True)
+
+        result = grid.save_settings()
+        assert result["brailleVerbosityLevel"] == settings_mock.VERBOSITY_LEVEL_VERBOSE
+
+    def test_flash_messages_duration_initial_value(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test flash duration spinbutton shows correct initial value."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.brailleFlashTime = 3000
+
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleFlashMessagesPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleFlashMessagesPreferencesGrid(presenter)
+
+        duration_spinbutton = grid.get_widget(3)
+        assert duration_spinbutton.get_value() == 3
+
+    def test_display_settings_combobox_initial_value(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test indicator combobox shows correct initial selection."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.brailleLinkIndicator = settings_mock.BRAILLE_UNDERLINE_7
+
+        from orca.braille_presenter import (
+            BraillePresenter,
+            BrailleDisplaySettingsPreferencesGrid,
+        )
+
+        presenter = BraillePresenter()
+        grid = BrailleDisplaySettingsPreferencesGrid(presenter)
+
+        link_combo = grid.get_widget(4)
+        assert link_combo.get_active() == 1
