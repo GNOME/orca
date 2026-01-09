@@ -1760,7 +1760,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        document = self.utilities.get_document_for_object(event.source)
+        document = self.utilities.get_top_level_document_for_object(event.source)
         if not document:
             msg = "WEB: Could not get document for event source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1772,7 +1772,7 @@ class Script(default.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        prev_document = self.utilities.get_document_for_object(focus)
+        prev_document = self.utilities.get_top_level_document_for_object(focus)
         if prev_document != document:
             tokens = ["WEB: document changed from", prev_document, "to", document]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
