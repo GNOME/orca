@@ -1,3 +1,12 @@
+48.8 - 12 January 2026
+
+Web:
+
+* Fix bug causing the default script to beome (re)activated upon launch.
+  (Cherry-picked from the v49 branch)
+
+=========
+
 48.7 - 29 September 2025
 
 General:
