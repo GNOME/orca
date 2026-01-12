@@ -1751,6 +1751,11 @@ class Utilities:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if old_focus == new_focus:
+            msg += "old locusOfFocus is same as new locusOfFocus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         if event.type.startswith("object:active-descendant-changed"):
             msg += "event is active-descendant-changed"
             debug.print_message(debug.LEVEL_INFO, msg, True)
