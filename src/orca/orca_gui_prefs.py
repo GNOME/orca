@@ -2482,13 +2482,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.BRAILLE_DOT_7:
+            label = widget.get_label().replace("_", "")
+            if label == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_UNDERLINE_7
-            elif widget.get_label() == guilabels.BRAILLE_DOT_8:
+            elif label == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_UNDERLINE_8
-            elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
+            elif label == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_UNDERLINE_BOTH
             else:
@@ -2510,13 +2511,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.BRAILLE_DOT_7:
+            label = widget.get_label().replace("_", "")
+            if label == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_UNDERLINE_7
-            elif widget.get_label() == guilabels.BRAILLE_DOT_8:
+            elif label == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_UNDERLINE_8
-            elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
+            elif label == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_UNDERLINE_BOTH
             else:
@@ -2537,13 +2539,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.BRAILLE_DOT_7:
+            label = widget.get_label().replace("_", "")
+            if label == guilabels.BRAILLE_DOT_7:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.BRAILLE_UNDERLINE_7
-            elif widget.get_label() == guilabels.BRAILLE_DOT_8:
+            elif label == guilabels.BRAILLE_DOT_8:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.BRAILLE_UNDERLINE_8
-            elif widget.get_label() == guilabels.BRAILLE_DOT_7_8:
+            elif label == guilabels.BRAILLE_DOT_7_8:
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.BRAILLE_UNDERLINE_BOTH
             else:
