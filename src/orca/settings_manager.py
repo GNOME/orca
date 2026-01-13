@@ -193,6 +193,8 @@ class SettingsManager:
                 "profiles": {
                     "default": {
                         "profile": settings.profile,
+                        # Include orcaModifierKeys for backwards compatibility with older Orca versions
+                        "orcaModifierKeys": settings.orcaModifierKeys,
                     }
                 },
                 # Legacy keys for backwards compatibility with older Orca versions
@@ -602,6 +604,10 @@ class SettingsManager:
             profile_general["pronunciations"] = dict(pronunciations)
         if keybindings:
             profile_general["keybindings"] = dict(keybindings)
+
+        # Always include orcaModifierKeys for backwards compatibility with older Orca versions
+        if "orcaModifierKeys" not in profile_general and "orcaModifierKeys" in general:
+            profile_general["orcaModifierKeys"] = general["orcaModifierKeys"]
 
         tokens = ["SETTINGS MANAGER: Saving for profile", self._profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

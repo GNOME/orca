@@ -71,6 +71,7 @@ class TestSettingsManagerFileIO:
         settings_obj.activeProfile = ["Default", "default"]
         settings_obj.enableSpeech = True
         settings_obj.onlySpeakDisplayedText = False
+        settings_obj.orcaModifierKeys = ["Insert", "KP_Insert"]
 
         essential_modules: dict[str, Any] = {}
 
@@ -387,6 +388,8 @@ class TestSettingsManagerFileIO:
             assert "general" in data
             assert "pronunciations" in data
             assert "keybindings" in data
+            # orcaModifierKeys must be present for backwards compatibility with older Orca versions
+            assert "orcaModifierKeys" in data["profiles"]["default"]
 
     def test_starting_profile_persistence(self, test_context: OrcaTestContext) -> None:
         """Test that the starting profile setting is persisted correctly."""
