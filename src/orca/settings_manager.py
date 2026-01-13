@@ -150,7 +150,7 @@ class SettingsManager:
             if key.startswith("_") or key[0].isupper() or key in self._EXCLUDED_SETTINGS:
                 continue
             value = getattr(settings, key)
-            if callable(value):
+            if callable(value) or isinstance(value, ModuleType):
                 continue
             self._default_settings[key] = value
         self._load_customizations()
@@ -188,17 +188,18 @@ class SettingsManager:
             os.close(os.open(customizations_file, os.O_CREAT, 0o700))
 
         if not os.path.exists(self._settings_file):
+            # Build legacy general dict with all default settings for backwards compatibility
+            legacy_general = self._default_settings.copy()
+            legacy_general["startingProfile"] = settings.profile
             prefs = {
                 "startingProfile": settings.profile,
                 "profiles": {
                     "default": {
                         "profile": settings.profile,
-                        # Include orcaModifierKeys for backwards compatibility with older Orca versions
-                        "orcaModifierKeys": settings.orcaModifierKeys,
                     }
                 },
                 # Legacy keys for backwards compatibility with older Orca versions
-                "general": {"startingProfile": settings.profile},
+                "general": legacy_general,
                 "pronunciations": {},
                 "keybindings": {},
             }
@@ -421,8 +422,10 @@ class SettingsManager:
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
             prefs = load(settings_file)
             prefs["startingProfile"] = profile
-            # Write legacy keys for backwards compatibility with older Orca versions
-            prefs["general"] = {"startingProfile": profile}
+            # Update legacy general key for backwards compatibility with older Orca versions
+            if "general" not in prefs or not isinstance(prefs["general"], dict):
+                prefs["general"] = self._default_settings.copy()
+            prefs["general"]["startingProfile"] = profile
             prefs.setdefault("pronunciations", {})
             prefs.setdefault("keybindings", {})
             settings_file.seek(0)
@@ -605,10 +608,6 @@ class SettingsManager:
         if keybindings:
             profile_general["keybindings"] = dict(keybindings)
 
-        # Always include orcaModifierKeys for backwards compatibility with older Orca versions
-        if "orcaModifierKeys" not in profile_general and "orcaModifierKeys" in general:
-            profile_general["orcaModifierKeys"] = general["orcaModifierKeys"]
-
         tokens = ["SETTINGS MANAGER: Saving for profile", self._profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -617,8 +616,11 @@ class SettingsManager:
             prefs["profiles"][self._profile] = profile_general
             starting_profile = general.get("startingProfile", _profile)
             prefs["startingProfile"] = starting_profile
-            # Write legacy keys for backwards compatibility with older Orca versions
-            prefs["general"] = {"startingProfile": starting_profile}
+            # Write legacy general with all settings for backwards compatibility with older Orca versions
+            legacy_general = self._default_settings.copy()
+            legacy_general.update(general)
+            legacy_general["startingProfile"] = starting_profile
+            prefs["general"] = legacy_general
             prefs.setdefault("pronunciations", {})
             prefs.setdefault("keybindings", {})
             settings_file.seek(0)
