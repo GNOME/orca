@@ -87,6 +87,7 @@ WHERE_AM_I_PRESENTER_HANDLERS = frozenset({
     "readCharAttributesHandler",
     "presentSizeAndPositionHandler",
     "present_default_button",
+    "present_cell_formula",
 })
 
 LIVE_REGION_PRESENTER_HANDLERS = frozenset({
@@ -329,11 +330,6 @@ WEB_SCRIPT_HANDLERS = frozenset({
     "togglePresentationModeHandler",
 })
 
-# App-specific handlers
-SOFFICE_SCRIPT_HANDLERS = frozenset({
-    "presentInputLineHandler",
-})
-
 # Total expected command count for verification
 EXPECTED_TOTAL_COMMANDS = (
     len(FLAT_REVIEW_PRESENTER_HANDLERS) +
@@ -358,8 +354,7 @@ EXPECTED_TOTAL_COMMANDS = (
     len(SAY_ALL_PRESENTER_HANDLERS) +
     len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS) +
     len(DEFAULT_SCRIPT_HANDLERS) +
-    len(WEB_SCRIPT_HANDLERS) +
-    len(SOFFICE_SCRIPT_HANDLERS)
+    len(WEB_SCRIPT_HANDLERS)
 )
 
 
@@ -1130,8 +1125,7 @@ class TestCommandRegistry:
             len(SAY_ALL_PRESENTER_HANDLERS) +
             len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS) +
             len(DEFAULT_SCRIPT_HANDLERS) +
-            len(WEB_SCRIPT_HANDLERS) +
-            len(SOFFICE_SCRIPT_HANDLERS)
+            len(WEB_SCRIPT_HANDLERS)
         )
 
         assert calculated_total == EXPECTED_TOTAL_COMMANDS, (

@@ -41,12 +41,10 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from orca import braille
-from orca import cmdnames
 from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
 from orca import guilabels
-from orca import keybindings
 from orca import input_event
 from orca import messages
 from orca import speech_and_verbosity_manager
@@ -101,29 +99,6 @@ class Script(default.Script):
         """Returns the utilities for this script."""
 
         return Utilities(self)
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        default.Script.setup_input_event_handlers(self)
-        self.input_event_handlers["presentInputLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.present_input_line,
-                cmdnames.PRESENT_INPUT_LINE)
-
-    def get_app_key_bindings(self) -> keybindings.KeyBindings:
-        """Returns the application-specific keybindings for this script."""
-
-        bindings = keybindings.KeyBindings()
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self.input_event_handlers["presentInputLineHandler"]))
-
-
-        return bindings
 
     def get_app_preferences_gui(self) -> Gtk.Grid:
         """Return a GtkGrid containing the application unique configuration
@@ -277,21 +252,6 @@ class Script(default.Script):
             return True
 
         return super()._pan_braille_right(event, pan_amount)
-
-    def present_input_line(self, _event: "input_event.InputEvent") -> bool:
-        """Presents the contents of the input line for the current cell."""
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if not self.utilities.is_spreadsheet_cell(focus):
-            self.present_message(messages.SPREADSHEET_NOT_IN_A)
-            return True
-
-        text = AXTable.get_cell_formula(focus)
-        if not text:
-            text = AXText.get_all_text(focus) or messages.EMPTY
-
-        self.present_message(text)
-        return True
 
     def locus_of_focus_changed(
         self,

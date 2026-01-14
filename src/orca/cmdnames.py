@@ -817,9 +817,9 @@ DYNAMIC_ROW_HEADER_SET = _("Set the column to use as dynamic row headers")
 # as if it contained row headers.
 DYNAMIC_ROW_HEADER_CLEAR = _("Clear the dynamic row headers")
 
-# Translators: This string refers to an Orca command. The "input line" refers
-# to the place where one enters formulas for a spreadsheet.
-PRESENT_INPUT_LINE = _("Present the contents of the input line")
+# Translators: This string refers to an Orca command. The command causes Orca
+# to present the formula for the current table cell.
+PRESENT_CELL_FORMULA = _("Present the formula for the current cell")
 
 # Translators: the structural navigation keys are designed to move around in a
 # document or container by object type. Thus H moves you to the next heading, Shift+H

@@ -232,6 +232,26 @@ class FocusManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._focus
 
+    def _save_object_details(self, obj: Atspi.Accessible) -> None:
+        """Saves details about the object for future reference."""
+
+        # We save the current row and column of a newly focused or selected table cell so that on
+        # subsequent cell focus/selection we only present the changed location.
+        row, column = AXTable.get_cell_coordinates(obj, find_cell=True)
+        self.set_last_cell_coordinates(row, column)
+
+        # We save the offset for text objects because some apps and toolkits emit caret-moved events
+        # immediately after a text object gains focus, even though the caret has not actually moved.
+        # TODO - JD: We should consider making this part of `save_object_info_for_events()` for the
+        # motivation described above. However, we need to audit callers that set/get the position
+        # before doing so.
+        self.set_last_cursor_position(obj, AXText.get_caret_offset(obj))
+        AXText.update_cached_selected_text(obj)
+
+        # We save additional information about the object for events that were received at the same
+        # time as the prioritized focus-change event so we don't double-present aspects about obj.
+        AXUtilities.save_object_info_for_events(obj)
+
     def set_locus_of_focus(
         self,
         event: Atspi.Event | None,
@@ -253,23 +273,6 @@ class FocusManager:
             msg = "FOCUS MANAGER: Setting locus of focus to existing locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
-
-        # We save the current row and column of a newly focused or selected table cell so that on
-        # subsequent cell focus/selection we only present the changed location.
-        row, column = AXTable.get_cell_coordinates(obj, find_cell=True)
-        self.set_last_cell_coordinates(row, column)
-
-        # We save the offset for text objects because some apps and toolkits emit caret-moved events
-        # immediately after a text object gains focus, even though the caret has not actually moved.
-        # TODO - JD: We should consider making this part of `save_object_info_for_events()` for the
-        # motivation described above. However, we need to audit callers that set/get the position
-        # before doing so.
-        self.set_last_cursor_position(obj, AXText.get_caret_offset(obj))
-        AXText.update_cached_selected_text(obj)
-
-        # We save additional information about the object for events that were received at the same
-        # time as the prioritized focus-change event so we don't double-present aspects about obj.
-        AXUtilities.save_object_info_for_events(obj)
 
         # TODO - JD: Consider always updating the active script here.
         script = script_manager.get_manager().get_active_script()
@@ -304,16 +307,11 @@ class FocusManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._focus = obj
 
-        if not notify_script:
-            return
+        if notify_script and script is not None:
+            self.emit_region_changed(self._focus, mode=FOCUS_TRACKING)
+            script.locus_of_focus_changed(event, old_focus, self._focus)
 
-        if script is None:
-            msg = "FOCUS MANAGER: Cannot notify active script because there isn't one"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        self.emit_region_changed(obj, mode=FOCUS_TRACKING)
-        script.locus_of_focus_changed(event, old_focus, self._focus)
+        self._save_object_details(self._focus)
 
     def active_window_is_active(self) -> bool:
         """Returns True if the window we think is currently active is actually active."""

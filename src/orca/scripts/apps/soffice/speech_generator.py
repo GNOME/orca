@@ -141,19 +141,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
-    def _generate_has_formula(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        formula = AXTable.get_cell_formula(obj)
-        if not formula:
-            return []
-
-        if args.get("formatType") == "basicWhereAmI":
-            result: list[Any] = [f"{messages.HAS_FORMULA}. {formula}"]
-        else:
-            result = [messages.HAS_FORMULA]
-
-        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-        return result
-
     @log_generator_output
     def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if focus_manager.get_manager().in_say_all():
@@ -184,11 +171,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if too_long:
             result.extend(self._generate_pause(obj, **args))
             result.extend(too_long)
-
-        has_formula = self._generate_has_formula(obj, **args)
-        if has_formula:
-            result.extend(self._generate_pause(obj, **args))
-            result.extend(has_formula)
 
         if result == speech_generator.PAUSE:
             result = [messages.BLANK]

@@ -43,6 +43,7 @@ from . import settings
 from . import speech_and_verbosity_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
+from .ax_table import AXTable
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 
@@ -132,6 +133,11 @@ class WhereAmIPresenter:
                 self.present_default_button,
                 cmdnames.PRESENT_DEFAULT_BUTTON)
 
+        self._handlers["present_cell_formula"] = \
+            input_event.InputEventHandler(
+                self.present_cell_formula,
+                cmdnames.PRESENT_CELL_FORMULA)
+
         self._handlers["whereAmIBasicHandler"] = \
             input_event.InputEventHandler(
                 self.where_am_i_basic,
@@ -171,6 +177,12 @@ class WhereAmIPresenter:
                 "e",
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["present_default_button"]))
+
+        self._desktop_bindings.add(
+            keybindings.KeyBinding(
+                "equal",
+                keybindings.ORCA_MODIFIER_MASK,
+                self._handlers["present_cell_formula"]))
 
         self._desktop_bindings.add(
             keybindings.KeyBinding(
@@ -237,6 +249,12 @@ class WhereAmIPresenter:
                 "e",
                 keybindings.ORCA_MODIFIER_MASK,
                 self._handlers["present_default_button"]))
+
+        self._laptop_bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers["present_cell_formula"]))
 
         self._laptop_bindings.add(
             keybindings.KeyBinding(
@@ -424,6 +442,34 @@ class WhereAmIPresenter:
             return True
 
         script.present_message(messages.DEFAULT_BUTTON_IS % name)
+        return True
+
+    @dbus_service.command
+    def present_cell_formula(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Presents the formula associated with the current spreadsheet cell."""
+
+        tokens = ["WHERE AM I PRESENTER: present_cell_formula. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        cell = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_cell)
+        if cell is None:
+            if notify_user:
+                script.present_message(messages.TABLE_NOT_IN_A)
+            return True
+
+        text = AXTable.get_cell_formula(cell)
+        if not text:
+            text = AXText.get_all_text(cell) or AXText.get_all_text(focus) or messages.EMPTY
+        if notify_user:
+            script.present_message(text)
+
         return True
 
     @dbus_service.command

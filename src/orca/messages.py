@@ -2327,11 +2327,6 @@ SPEECH_VERBOSITY_VERBOSE = C_("Speech", "Verbosity level: verbose")
 # turns into "Open dot dot dot".
 SPOKEN_ELLIPSIS = _(" dot dot dot")
 
-# Translators: This message is presented when the user attempts to use a
-# command specific to a spreadsheet, such as reading the input line, but is
-# not in a spreadsheet.
-SPREADSHEET_NOT_IN_A = _("Not in a spreadsheet.")
-
 # Translators: This message is presented to the user when Orca is launched.
 START_ORCA = _("Screen reader on.")
 

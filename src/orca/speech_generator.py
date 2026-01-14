@@ -2284,6 +2284,9 @@ class SpeechGenerator(generator.Generator):
             result.append(messages.BLANK)
             if result:
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
+        elif has_formula := self._generate_has_formula(obj, **args):
+            result.extend(self._generate_pause(obj, **args))
+            result.extend(has_formula)
 
         return result
 
@@ -2450,6 +2453,19 @@ class SpeechGenerator(generator.Generator):
 
         result.append(messages.TABLE_COLUMN_DETAILED % {"index" : (col + 1), "total" : columns})
         result.append(messages.TABLE_ROW_DETAILED % {"index" : (row + 1), "total" : rows})
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        return result
+
+    def _generate_has_formula(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        formula = AXTable.get_cell_formula(obj)
+        if not formula:
+            return []
+
+        if args.get("formatType") == "basicWhereAmI":
+            result: list[Any] = [f"{messages.HAS_FORMULA}. {formula}"]
+        else:
+            result = [messages.HAS_FORMULA]
+
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -2707,6 +2723,10 @@ class SpeechGenerator(generator.Generator):
         if result and not isinstance(result[-1], Pause):
             result += self._generate_pause(obj, **args)
         result += self._generate_state_has_popup(obj, **args)
+        if cell := AXObject.find_ancestor(obj, AXUtilities.is_table_cell):
+            result += self._generate_has_formula(cell, **args)
+            if result and not isinstance(result[-1], Pause):
+                result += self._generate_pause(obj, **args)
         if format_type == "unfocused":
             result += self._generate_tutorial(obj, **args)
 

@@ -653,6 +653,7 @@ MODULE_CONFIG = {
     },
     "WhereAmIPresenter": {
         "commands": [
+            "PresentCellFormula",
             "PresentCharacterAttributes",
             "PresentDefaultButton",
             "PresentLink",
