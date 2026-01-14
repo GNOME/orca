@@ -48,7 +48,7 @@ from gi.repository import GLib
 from . import debug
 from . import orca_i18n # pylint: disable=no-name-in-module
 from . import settings
-from . import pronunciation_dict
+from . import pronunciation_dictionary_manager
 from .acss import ACSS
 from .ax_object import AXObject
 from .keybindings import KeyBinding, KeyBindings
@@ -740,10 +740,11 @@ class SettingsManager:
         )
         self._set_settings_runtime(self._settings)
 
-        pronunciation_dict.pronunciation_dict = {}
+        manager = pronunciation_dictionary_manager.get_manager()
+        manager.set_dictionary({})
         for key, value in self._pronunciations.values():
             if key and value:
-                pronunciation_dict.set_pronunciation(key, value)
+                manager.set_pronunciation(key, value)
 
 _manager: SettingsManager = SettingsManager()
 

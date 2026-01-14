@@ -169,16 +169,16 @@ class TestProfileManager:
         assert profile == ["Default", "default"]
 
     def test_set_starting_profile(self, test_context: OrcaTestContext) -> None:
-        """Test setting starting profile."""
+        """Test setting starting profile is a no-op for backwards compatibility."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
-        manager.set_starting_profile(["Spanish", "spanish"])
+        # set_starting_profile is a no-op - it returns True without doing anything
+        result = manager.set_starting_profile(["Spanish", "spanish"])
 
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .set_starting_profile.assert_called_once_with(["Spanish", "spanish"])
+        assert result is True
 
     def test_remove_profile(self, test_context: OrcaTestContext) -> None:
         """Test removing a profile."""
@@ -339,6 +339,9 @@ class TestProfilePreferencesGridUI:
         guilabels_mock.DIALOG_CANCEL = "Cancel"
         guilabels_mock.DIALOG_APPLY = "Apply"
         guilabels_mock.DIALOG_ADD = "Add"
+        guilabels_mock.PROFILES_INFO = "Select a profile to edit or create a new one."
+        guilabels_mock.CURRENT_PROFILE = "Current Profile"
+        guilabels_mock.PROFILE_CREATE_NEW = "_Create New Profile"
 
         return essential_modules
 

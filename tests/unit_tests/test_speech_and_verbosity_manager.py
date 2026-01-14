@@ -52,7 +52,7 @@ class TestSpeechAndVerbosityManager:
         additional_modules = [
             "orca.mathsymbols",
             "orca.object_properties",
-            "orca.pronunciation_dict",
+            "orca.pronunciation_dictionary_manager",
             "orca.speech",
             "orca.speechserver",
             "orca.acss",

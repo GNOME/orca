@@ -34,7 +34,149 @@ __license__   = "LGPL"
 
 from . import dbus_service
 from . import debug
+from . import guilabels
+from . import preferences_grid_base
 from . import settings
+
+
+class SoundGeneralPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Sound General preferences page."""
+
+    def __init__(self, presenter: SoundPresenter) -> None:
+        controls = [
+            preferences_grid_base.FloatRangePreferenceControl(
+                label=guilabels.SOUND_VOLUME,
+                getter=presenter.get_sound_volume,
+                setter=presenter.set_sound_volume,
+                prefs_key="soundVolume",
+                minimum=0.0,
+                maximum=1.0
+            ),
+        ]
+
+        super().__init__(guilabels.GENERAL, controls)
+
+
+class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Sound Progress Bars preferences page."""
+
+    def __init__(self, presenter: SoundPresenter) -> None:
+        controls: list[preferences_grid_base.ControlType] = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.GENERAL_BEEP_UPDATES,
+                getter=presenter.get_beep_progress_bar_updates,
+                setter=presenter.set_beep_progress_bar_updates,
+                prefs_key="beepProgressBarUpdates"
+            ),
+            preferences_grid_base.IntRangePreferenceControl(
+                label=guilabels.GENERAL_FREQUENCY_SECS,
+                getter=presenter.get_progress_bar_beep_interval,
+                setter=presenter.set_progress_bar_beep_interval,
+                prefs_key="progressBarBeepInterval",
+                minimum=0,
+                maximum=100
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.GENERAL_APPLIES_TO,
+                getter=presenter.get_progress_bar_beep_verbosity,
+                setter=presenter.set_progress_bar_beep_verbosity,
+                prefs_key="progressBarBeepVerbosity",
+                options=[
+                    guilabels.PROGRESS_BAR_ALL,
+                    guilabels.PROGRESS_BAR_APPLICATION,
+                    guilabels.PROGRESS_BAR_WINDOW,
+                ],
+                values=[
+                    settings.PROGRESS_BAR_ALL,
+                    settings.PROGRESS_BAR_APPLICATION,
+                    settings.PROGRESS_BAR_WINDOW,
+                ]
+            ),
+        ]
+
+        super().__init__(guilabels.PROGRESS_BARS, controls)
+
+
+class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
+    """GtkGrid containing the Sound preferences page with nested stack navigation."""
+
+    def __init__(
+        self,
+        presenter: SoundPresenter,
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+    ) -> None:
+
+        super().__init__(guilabels.SOUND)
+        self._presenter = presenter
+        self._initializing = True
+        self._title_change_callback = title_change_callback
+
+        self._general_grid = SoundGeneralPreferencesGrid(presenter)
+        self._progress_bars_grid = SoundProgressBarsPreferencesGrid(presenter)
+
+        self._build()
+        self._initializing = False
+        self.refresh()
+
+    def _build(self) -> None:
+        """Build the nested stack UI."""
+
+        row = 0
+
+        categories = [
+            (guilabels.GENERAL, "general", self._general_grid),
+            (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
+        ]
+
+        enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
+            enable_label=guilabels.SOUND_ENABLE_SOUND_SUPPORT,
+            enable_getter=self._presenter.get_sound_is_enabled,
+            enable_setter=self._presenter.set_sound_is_enabled,
+            categories=categories,
+            title_change_callback=self._title_change_callback,
+            main_title=guilabels.SOUND
+        )
+
+        self.attach(enable_listbox, 0, row, 1, 1)
+        row += 1
+        self.attach(stack, 0, row, 1, 1)
+
+    def on_becoming_visible(self) -> None:
+        """Reset to the categories view when this grid becomes visible."""
+
+        self.multipage_on_becoming_visible()
+
+    def reload(self) -> None:
+        """Fetch fresh values and update UI."""
+
+        self._general_grid.reload()
+        self._progress_bars_grid.reload()
+
+    def save_settings(self) -> dict:
+        """Persist staged values."""
+
+        result = {}
+        result.update(self._general_grid.save_settings())
+        result.update(self._progress_bars_grid.save_settings())
+        return result
+
+    def refresh(self) -> None:
+        """Update widgets from staged values."""
+
+        self._initializing = True
+        self._general_grid.refresh()
+        self._progress_bars_grid.refresh()
+        self._initializing = False
+
+    def has_changes(self) -> bool:
+        """Return True if any child grid has unsaved changes."""
+
+        return (
+            self._general_grid.has_changes()
+            or self._progress_bars_grid.has_changes()
+            or self._has_unsaved_changes
+        )
+
 
 class SoundPresenter:
     """Provides sound presentation support."""
@@ -44,6 +186,14 @@ class SoundPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SoundPresenter", self)
+
+    def create_preferences_grid(
+        self,
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+    ) -> SoundPreferencesGrid:
+        """Returns the GtkGrid containing the preferences UI."""
+
+        return SoundPreferencesGrid(self, title_change_callback)
 
     @dbus_service.getter
     def get_sound_is_enabled(self) -> bool:

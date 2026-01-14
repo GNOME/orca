@@ -62,9 +62,11 @@ from . import cmdnames
 from . import dbus_service
 from . import debug
 from . import focus_manager
+from . import guilabels
 from . import keybindings
 from . import input_event
 from . import messages
+from . import preferences_grid_base
 from . import script_manager
 from . import settings
 from . import speech_and_verbosity_manager
@@ -363,6 +365,33 @@ class _ItemContext:
         return True
 
 
+class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Mouse preferences page."""
+
+    def __init__(self, reviewer: "MouseReviewer") -> None:
+        """Initialize the preferences grid."""
+
+        controls = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.GENERAL_PRESENT_TOOLTIPS,
+                getter=reviewer.get_present_tooltips,
+                setter=reviewer.set_present_tooltips,
+                prefs_key="presentToolTips"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
+                getter=reviewer.get_is_enabled,
+                setter=reviewer.set_is_enabled,
+                prefs_key="enableMouseReview"
+            ),
+        ]
+
+        super().__init__(
+            guilabels.MOUSE,
+            controls,
+            info_message=guilabels.MOUSE_WAYLAND_WARNING)
+
+
 class MouseReviewer:
     """Main class for the mouse-review feature."""
 
@@ -393,6 +422,11 @@ class MouseReviewer:
             return
 
         self.activate()
+
+    def create_preferences_grid(self) -> MousePreferencesGrid:
+        """Returns the GtkGrid containing the mouse preferences UI."""
+
+        return MousePreferencesGrid(self)
 
     def get_bindings(self, refresh: bool = False, is_desktop: bool = True):
         """Returns the mouse-review keybindings."""
@@ -523,6 +557,21 @@ class MouseReviewer:
             return None
 
         return obj
+
+    @dbus_service.getter
+    def get_present_tooltips(self) -> bool:
+        """Returns whether tooltips displayed due to mouse hover are spoken (requires X11)."""
+
+        return settings.presentToolTips
+
+    @dbus_service.setter
+    def set_present_tooltips(self, value: bool) -> bool:
+        """Sets whether tooltips displayed due to mouse hover are spoken (requires X11)."""
+
+        msg = f"MOUSE REVIEW: Setting present tooltips to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.presentToolTips = value
+        return True
 
     @dbus_service.getter
     def get_is_enabled(self) -> bool:

@@ -25,6 +25,7 @@
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=wrong-import-position
 
 """Module for commands related to the current accessible object."""
 
@@ -43,6 +44,7 @@ from typing import Generator, TYPE_CHECKING
 
 from . import ax_event_synthesizer
 from . import cmdnames
+from . import guilabels
 from . import dbus_service
 from . import debug
 from . import focus_manager
@@ -50,6 +52,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import preferences_grid_base
 from . import speech
 from . import settings
 from . import speechserver
@@ -77,6 +80,82 @@ class SayAllStyle(Enum):
         """Returns the lowercase string name for this enum value."""
 
         return self.name.lower()
+
+
+class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Say All preferences page."""
+
+    def __init__(self, presenter: SayAllPresenter) -> None:
+        controls: list[preferences_grid_base.ControlType] = [
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.SAY_ALL_BY,
+                options=[guilabels.SAY_ALL_STYLE_SENTENCE, guilabels.SAY_ALL_STYLE_LINE],
+                values=[SayAllStyle.SENTENCE.value, SayAllStyle.LINE.value],
+                getter=presenter.get_style_as_int,
+                setter=presenter.set_style_from_int,
+                prefs_key="sayAllStyle"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
+                getter=presenter.get_rewind_and_fast_forward_enabled,
+                setter=presenter.set_rewind_and_fast_forward_enabled,
+                prefs_key="rewindAndFastForwardInSayAll",
+                member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
+                getter=presenter.get_structural_navigation_enabled,
+                setter=presenter.set_structural_navigation_enabled,
+                prefs_key="structNavInSayAll",
+                member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_BLOCKQUOTES,
+                getter=presenter.get_announce_blockquote,
+                setter=presenter.set_announce_blockquote,
+                prefs_key="sayAllContextBlockquote",
+                member_of=guilabels.ANNOUNCEMENTS
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_FORMS,
+                getter=presenter.get_announce_form,
+                setter=presenter.set_announce_form,
+                prefs_key="sayAllContextNonLandmarkForm",
+                member_of=guilabels.ANNOUNCEMENTS
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_LANDMARKS,
+                getter=presenter.get_announce_landmark,
+                setter=presenter.set_announce_landmark,
+                prefs_key="sayAllContextLandmark",
+                member_of=guilabels.ANNOUNCEMENTS
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_LISTS,
+                getter=presenter.get_announce_list,
+                setter=presenter.set_announce_list,
+                prefs_key="sayAllContextList",
+                member_of=guilabels.ANNOUNCEMENTS
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_PANELS,
+                getter=presenter.get_announce_grouping,
+                setter=presenter.set_announce_grouping,
+                prefs_key="sayAllContextPanel",
+                member_of=guilabels.ANNOUNCEMENTS
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_TABLES,
+                getter=presenter.get_announce_table,
+                setter=presenter.set_announce_table,
+                prefs_key="sayAllContextTable",
+                member_of=guilabels.ANNOUNCEMENTS
+            ),
+        ]
+
+        super().__init__(guilabels.GENERAL_SAY_ALL, controls)
+
+
 class SayAllPresenter:
     """Module for commands related to the current accessible object."""
 
@@ -174,6 +253,25 @@ class SayAllPresenter:
 
         msg = "SAY ALL PRESENTER: Laptop bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def create_preferences_grid(self) -> SayAllPreferencesGrid:
+        """Returns the GtkGrid containing the Say All preferences UI."""
+
+        return SayAllPreferencesGrid(self)
+
+
+    def get_style_as_int(self) -> int:
+        """Returns the current Say All style as an integer value."""
+
+        return settings.sayAllStyle
+
+    def set_style_from_int(self, value: int) -> bool:
+        """Sets the Say All style from an integer value."""
+
+        msg = f"SAY ALL PRESENTER: Setting style to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.sayAllStyle = value
+        return True
 
     @dbus_service.command
     def say_all(

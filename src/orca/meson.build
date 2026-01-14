@@ -114,7 +114,7 @@ lib_sources = [
   'phonnames.py',
   'preferences_grid_base.py',
   'profile_manager.py',
-  'pronunciation_dict.py',
+  'pronunciation_dictionary_manager.py',
   'say_all_presenter.py',
   'script.py',
   'script_manager.py',

@@ -65,7 +65,6 @@ from . import orca_gtkbuilder
 from . import orca_gui_profile
 from . import orca_platform # pylint: disable=no-name-in-module
 from . import profile_manager
-from . import pronunciation_dict
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -1351,11 +1350,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # existing entries in the pronunciation dictionary -- unless it's
         # the default script.
         #
-        if not self.script.app:
-            _profile = self.prefsDict.get('activeProfile')[1]
-            pronDict = settings_manager.get_manager().get_pronunciations(_profile)
-        else:
-            pronDict = pronunciation_dict.pronunciation_dict
+        _profile = self.prefsDict.get('activeProfile')[1]
+        pronDict = settings_manager.get_manager().get_pronunciations(_profile)
         for pronKey in sorted(pronDict.keys()):
             thisIter = model.append()
             try:
@@ -1848,14 +1844,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def getModelDict(self, model):
         """Get the list of values from a list[str,str] model
         """
-        pronunciation_dict.pronunciation_dict = {}
+        modelDict = {}
         currentIter = model.get_iter_first()
         while currentIter is not None:
             key, value = model.get(currentIter, ACTUAL, REPLACEMENT)
             if key and value:
-                pronunciation_dict.set_pronunciation(key, value)
+                modelDict[key.lower()] = [key, value]
             currentIter = model.iter_next(currentIter)
-        modelDict = pronunciation_dict.pronunciation_dict
         return modelDict
 
     def showGUI(self):

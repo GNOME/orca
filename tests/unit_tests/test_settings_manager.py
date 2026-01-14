@@ -102,11 +102,15 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.acss", acss_mock)
         essential_modules["orca.acss"] = acss_mock
 
-        pronun_mock = test_context.Mock()
-        pronun_mock.pronunciation_dict = {}
-        pronun_mock.set_pronunciation = test_context.Mock()
-        test_context.patch_module("orca.pronunciation_dict", pronun_mock)
-        essential_modules["orca.pronunciation_dict"] = pronun_mock
+        pronun_manager_mock = test_context.Mock()
+        pronun_manager_mock.set_dictionary = test_context.Mock()
+        pronun_manager_mock.set_pronunciation = test_context.Mock()
+        pronun_manager_mock.get_pronunciation = test_context.Mock(side_effect=lambda w: w)
+        pronun_manager_mock.get_dictionary = test_context.Mock(return_value={})
+        pronun_module_mock = test_context.Mock()
+        pronun_module_mock.get_manager = test_context.Mock(return_value=pronun_manager_mock)
+        test_context.patch_module("orca.pronunciation_dictionary_manager", pronun_module_mock)
+        essential_modules["orca.pronunciation_dictionary_manager"] = pronun_module_mock
 
         keybindings_mock = test_context.Mock()
         keybindings_mock.KeyBinding = test_context.Mock()

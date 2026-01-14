@@ -744,6 +744,13 @@ class SpeechServer(speechserver.SpeechServer):
                 self._voices_id = None
         self._init()
 
+    def clear_cached_voice_properties(self) -> None:
+        """Clear cached voice properties to force reapplication on next speech."""
+
+        msg = "SPIEL: Clearing cached voice properties"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._current_voice_properties.clear()
+
     def get_voice_families_for_language(
         self,
         language: str,

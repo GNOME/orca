@@ -626,6 +626,13 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._voice_families_cache.clear()
 
+    def clear_cached_voice_properties(self) -> None:
+        """Clear cached voice properties to force reapplication on next speech."""
+
+        msg = "SPEECH DISPATCHER: Clearing cached voice properties"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._current_voice_properties.clear()
+
     # pylint: disable-next=too-many-locals, too-many-statements
     def get_voice_families_for_language(
         self,
@@ -744,6 +751,8 @@ class SpeechServer(speechserver.SpeechServer):
         if self._client is not None:
             self._send_command(self._client.set_output_module, module_id)
             self.clear_voice_families_cache()
+            # Update the default voice name to match the new module
+            self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % module_id
 
     def stop(self) -> None:
         self._cancel()

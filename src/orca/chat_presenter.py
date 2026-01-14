@@ -47,6 +47,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import preferences_grid_base
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -321,6 +322,64 @@ class Chat:
         return float(attr.get("scale", "1")) < 1 or int(attr.get("weight", "400")) < 400
 
 
+class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """Preferences grid for Chat settings."""
+
+    def __init__(self, presenter: ChatPresenter) -> None:
+        options = [
+            guilabels.CHAT_SPEAK_MESSAGES_ALL,
+            guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
+            guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED,
+        ]
+        values = [
+            settings.CHAT_SPEAK_ALL,
+            settings.CHAT_SPEAK_FOCUSED_CHANNEL,
+            settings.CHAT_SPEAK_ALL_IF_FOCUSED,
+        ]
+
+        controls: list[
+            preferences_grid_base.BooleanPreferenceControl
+            | preferences_grid_base.SelectionPreferenceControl
+        ] = [
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.CHAT_SPEAK_ROOM_NAME,
+                getter=presenter.get_speak_room_name,
+                setter=presenter.set_speak_room_name,
+                prefs_key="chatSpeakRoomName",
+                apply_immediately=True
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
+                getter=presenter.get_speak_room_name_last,
+                setter=presenter.set_speak_room_name_last,
+                prefs_key="presentChatRoomLast",
+                determine_sensitivity=presenter.get_speak_room_name
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
+                getter=presenter.get_announce_buddy_typing,
+                setter=presenter.set_announce_buddy_typing,
+                prefs_key="chatAnnounceBuddyTyping"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
+                getter=presenter.get_room_histories,
+                setter=presenter.set_room_histories,
+                prefs_key="chatRoomHistories"
+            ),
+            preferences_grid_base.SelectionPreferenceControl(
+                label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
+                options=options,
+                values=values,
+                getter=presenter.get_message_verbosity,
+                setter=presenter.set_message_verbosity,
+                prefs_key="chatMessageVerbosity"
+            ),
+        ]
+
+        super().__init__(guilabels.KB_GROUP_CHAT, controls)
+
+
 class ChatPresenter:
     """Presenter for chat preferences and commands."""
 
@@ -539,6 +598,11 @@ class ChatPresenter:
             "chatAnnounceBuddyTyping": self._buddy_typing_check_button.get_active(),
             "chatRoomHistories": self._chat_room_histories_check_button.get_active(),
         }
+
+    def create_preferences_grid(self) -> ChatPreferencesGrid:
+        """Create and return the chat preferences grid."""
+
+        return ChatPreferencesGrid(self)
 
     def utter_message(
         self,

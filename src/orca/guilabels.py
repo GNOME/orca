@@ -122,6 +122,20 @@ AUTO_FOCUS_MODE_CARET_NAV = _("Automatic focus mode during caret navigation")
 # navigation" used on sub-pages where the navigation type context is already clear.
 AUTOMATIC_FOCUS_MODE = _("Automatic focus mode")
 
+# Translators: This explains what the "Automatic focus mode" setting does. It appears
+# in info boxes on the Caret Navigation and Structural Navigation preferences pages.
+# Please translate "Automatic focus mode" consistently with the AUTOMATIC_FOCUS_MODE
+# string above.
+AUTOMATIC_FOCUS_MODE_INFO = _(
+    "Automatic focus mode causes Orca to switch to focus mode when you navigate "
+    "into a form field or other interactive widget.")
+
+# Translators: This is an informational message on the Native Navigation
+# preferences page explaining what native navigation means.
+NATIVE_NAVIGATION_INFO = _(
+    "Native navigation refers to keyboard commands handled by the application, "
+    "such as Tab, Page Up, Page Down, and Enter.")
+
 # Translators: Orca has a number of commands that override the default behavior
 # within an application. For instance, if you are at the bottom of an entry and
 # press Down arrow, should you leave the entry? It depends on if you want to
@@ -300,6 +314,11 @@ DEFAULT_SYNTHESIZER = _("Default Synthesizer")
 # speech synthesizer to say what the user finds most helpful.
 PRONUNCIATION_DICTIONARY = _("Pronunciation Dictionary")
 
+# Translators: This is an informational message on the Pronunciation Dictionary
+# preferences page explaining what the dictionary does.
+PRONUNCIATION_DICTIONARY_INFO = _(
+    "Customize how words are spoken. Add a word and its replacement below.")
+
 # Translators: This is a label for a column header in Orca's pronunciation
 # dictionary. The pronunciation dictionary allows the user to correct words
 # which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -473,6 +492,12 @@ KB_GROUP_BRAILLE = _("Braille Bindings")
 # toggled on in other applications.
 KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 
+# Translators: This is an informational message on the Caret Navigation
+# preferences page explaining what caret navigation does.
+CARET_NAVIGATION_INFO = _(
+    "When enabled, Orca handles the arrow keys, Home, and End to move through "
+    "content by character, word, or line.")
+
 # Translators: This string is a label for the group of Orca commands which
 # are related to chat applications such as instant messaging.
 KB_GROUP_CHAT = _("Chat")
@@ -522,6 +547,12 @@ KB_GROUP_SYSTEM_INFORMATION = _("System information")
 # are related to structural navigation, such as moving to the next heading,
 # paragraph, form field, etc. in a given direction.
 KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")
+
+# Translators: This is an informational message on the Structural Navigation
+# preferences page explaining what structural navigation does.
+STRUCTURAL_NAVIGATION_INFO = _(
+    "Use single keys to quickly jump between elements. For example, H moves to "
+    "the next heading, K to the next link. Add Shift to move backwards.")
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to table navigation, such as moving to the next cell in a
@@ -697,6 +728,11 @@ PROFILE_CANNOT_REMOVE_DEFAULT = _("The default profile cannot be removed.")
 # defined profile.
 PROFILE_SAVE_AS_TITLE = _("Save Profile As")
 
+# Translators: This is the label for a button that allows users to create a new
+# profile. A "profile" is a named collection of Orca settings that users can
+# switch between. Creating a new profile copies the current settings.
+PROFILE_CREATE_NEW = _("New Profile")
+
 # Translators: Profiles in Orca make it possible for users to quickly switch
 # amongst a group of pre-defined settings (e.g. an 'English' profile for reading
 # text written in English using an English-language speech synthesizer and
@@ -723,6 +759,14 @@ PROFILE_REMOVE_MESSAGE = _("You are about to remove profile %s. " \
                            "All unsaved settings and settings saved in this " \
                            "profile will be lost. Do you want to continue " \
                            "and remove this profile and all related settings?")
+
+# Translators: This is a message in a dialog shown when the user tries to create
+# a new profile while there are unsaved changes in the preferences dialog.
+# Creating a new profile copies the saved settings, not the unsaved changes.
+PROFILE_CREATE_UNSAVED_WARNING = \
+    _("You have unsaved changes. Creating a new profile will copy your " \
+      "current saved settings, not your unsaved changes. Your unsaved " \
+      "changes will be lost.\n\nDo you want to continue?")
 
 # Translators: Orca has a setting which determines which progress bar updates
 # should be announced. Choosing "All" means that Orca will present progress bar
@@ -1530,8 +1574,23 @@ GENERAL_ENABLE_STRUCTURAL_NAVIGATION_IN_SAY_ALL = \
 # amongst a group of pre-defined settings (e.g. an 'English' profile for reading
 # text written in English using an English-language speech synthesizer and
 # braille rules, and a similar 'Spanish' profile for reading Spanish text. The
-# following string is the label for the group of settings related to profiles.
+# following string is the label for the profiles sidebar item.
 GENERAL_PROFILES = _("Profiles")
+
+# Translators: This is the heading shown at the top of the profiles preferences
+# page, indicating which profile is currently selected and being edited.
+CURRENT_PROFILE = _("Current Profile")
+
+# Translators: This is an informational message shown at the top of the Profiles
+# preferences page. It explains to the user what profiles are and how they work.
+# The quoted profile name is `PROFILE_DEFAULT = C_("Profile", "Default")` defined
+# earlier in this file.
+PROFILES_INFO = _(
+    f"Profiles are collections of settings. The \"{PROFILE_DEFAULT}\" profile is "
+    "loaded at startup. To edit an existing profile, select it below and then "
+    "adjust settings on the other pages. To rename or delete the selected profile, "
+    "use the Tab key to navigate to its associated buttons."
+)
 
 # Translators: This is a label in the Preferences dialog box. It applies to
 # several options related to which progress bars Orca should speak and how
@@ -1775,10 +1834,23 @@ PAGE_LOAD = _("Page load")
 # announces when entering/exiting different types of containers/ancestors.
 ANNOUNCEMENTS = _("Container Announcements")
 
+# Translators: This is a heading for a group of toggleable widgets. Each one controls
+# whether Orca announces entering a type of container (e.g. blockquotes, forms,
+# landmarks, lists, panels, tables). The full meaning is "Announce when entering
+# [container type]" where the container types are listed below this heading.
+ANNOUNCE_WHEN_ENTERING = _("Announce when entering")
+
 # Translators: This is the label of the Echo page in the Orca Preferences dialog.
 # On that page there are a variety of settings related to what Orca will echo
 # as the user types on the keyboard.
 ECHO = _("Echo")
+
+# Translators: This text appears at the top of the Echo preferences page. It explains
+# the difference between key echo (speaking the key pressed) and typing echo (speaking
+# what was inserted as a result of typing).
+ECHO_INFO = _(
+    "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
+    "into the document as a result of your typing.")
 
 # Translators: This is the label of the General page in the Orca Preferences
 # dialog. On that page there are a variety of general Orca settings which do
@@ -1789,6 +1861,11 @@ GENERAL = _("General")
 # dialog. On that page there is a list of all Orca commands and the keystrokes
 # associated with them. The user can customize the keystrokes for any command.
 KEY_BINDINGS = _("Key Bindings")
+
+# Translators: This is the label of the Commands page in the Orca Preferences
+# dialog. On that page there is a list of all Orca commands and the keystrokes
+# associated with them. The user can customize the keystrokes for any command.
+COMMANDS = _("Commands")
 
 # Translators: This is the label of the Mouse page in the Orca Preferences dialog.
 # On that page there are settings related to what information Orca presents when

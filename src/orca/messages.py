@@ -784,6 +784,11 @@ KB_DELETED = _("Key binding deleted. Press enter to confirm.")
 # their input.
 KB_DELETED_CONFIRMATION = _("The keybinding has been removed.")
 
+# Translators: This is a spoken and/or brailled message letting the user know
+# that a pronunciation dictionary entry has been deleted. The string substituted
+# in is the word that was deleted.
+PRONUNCIATION_DELETED = _("%s deleted")
+
 # Translators: This is a spoken and/or brailled message asking the user to press
 # a new key combination (e.g., Alt+Ctrl+g) to create a new key binding for an
 # Orca command.

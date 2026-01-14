@@ -378,6 +378,16 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._progress_bars_grid.refresh()
         self._initializing = False
 
+    def has_changes(self) -> bool:
+        """Return True if any child grid has unsaved changes."""
+
+        return (
+            self._verbosity_grid.has_changes()
+            or self._display_settings_grid.has_changes()
+            or self._flash_messages_grid.has_changes()
+            or self._progress_bars_grid.has_changes()
+            or self._has_unsaved_changes
+        )
 
 
 class BraillePresenter:
@@ -802,7 +812,10 @@ class BraillePresenter:
     def _get_selector_indicator_as_int(self) -> int:
         """Returns the braille selector indicator as an int."""
 
-        return settings.brailleSelectorIndicator
+        value = settings.brailleSelectorIndicator
+        msg = f"BRAILLE PRESENTER: Getting selector indicator: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return value
 
     @dbus_service.getter
     def get_selector_indicator(self) -> str:
@@ -830,7 +843,10 @@ class BraillePresenter:
     def _get_link_indicator_as_int(self) -> int:
         """Returns the braille link indicator as an int."""
 
-        return settings.brailleLinkIndicator
+        value = settings.brailleLinkIndicator
+        msg = f"BRAILLE PRESENTER: Getting link indicator: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return value
 
     @dbus_service.getter
     def get_link_indicator(self) -> str:
@@ -858,7 +874,10 @@ class BraillePresenter:
     def _get_text_attributes_indicator_as_int(self) -> int:
         """Returns the braille text attributes indicator as an int."""
 
-        return settings.textAttributesBrailleIndicator
+        value = settings.textAttributesBrailleIndicator
+        msg = f"BRAILLE PRESENTER: Getting text attributes indicator: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return value
 
     @dbus_service.getter
     def get_text_attributes_indicator(self) -> str:

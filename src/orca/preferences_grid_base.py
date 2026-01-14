@@ -273,7 +273,7 @@ class FocusManagedListBox(Gtk.ListBox):
         return None
 
     def _on_widget_key_press(self, widget: Gtk.Widget, event) -> bool:
-        """Handle Tab and Shift+Tab to navigate between widgets."""
+        """Handle Tab, Shift+Tab, and Left arrow to navigate."""
 
         if event.keyval == Gdk.KEY_Tab:
             try:
@@ -286,6 +286,23 @@ class FocusManagedListBox(Gtk.ListBox):
                 return False
             except ValueError:
                 pass
+            return False
+
+        # Left arrow: exit nested group first, then move to sidebar
+        if event.keyval == Gdk.KEY_Left:
+            parent = self.get_parent()
+            first_grid = None
+            while parent is not None:
+                if isinstance(parent, PreferencesGridBase):
+                    if first_grid is None:
+                        first_grid = parent
+                    if parent._is_in_multipage_detail():
+                        parent._multipage_show_categories()
+                        return True
+                parent = parent.get_parent()
+            if first_grid is not None:
+                first_grid._focus_sidebar()
+                return True
             return False
 
         if event.keyval == Gdk.KEY_ISO_Left_Tab:
@@ -330,6 +347,7 @@ class PreferencesGridBase(Gtk.Grid):
         super().__init__()
         self._tab_label = tab_label
         self._has_unsaved_changes = False
+        self._focus_sidebar_callback: Callable[[], None] | None = None
         self.set_border_width(24)
         self.set_margin_start(100)
         self.set_margin_end(100)
@@ -339,6 +357,7 @@ class PreferencesGridBase(Gtk.Grid):
         self.set_column_spacing(48)
 
         self._stacked_prefs_helper: StackedPreferencesHelper | None = None
+        self._multipage_stack: Gtk.Stack | None = None
 
     @property
     def _stack(self) -> Gtk.Stack | None:
@@ -371,6 +390,29 @@ class PreferencesGridBase(Gtk.Grid):
         """Called when this grid becomes the visible panel in the main stack."""
 
         pass
+
+    def set_focus_sidebar_callback(self, callback: Callable[[], None]) -> None:
+        """Set the callback to focus the sidebar navigation list."""
+
+        self._focus_sidebar_callback = callback
+        # Forward to child grids in multi-page structures
+        if hasattr(self, "_multipage_categories") and self._multipage_categories:
+            for _label, _page_id, grid in self._multipage_categories:
+                grid.set_focus_sidebar_callback(callback)
+
+    def _focus_sidebar(self) -> None:
+        """Move focus to the sidebar navigation list."""
+
+        if self._focus_sidebar_callback:
+            self._focus_sidebar_callback()
+
+    def _is_in_multipage_detail(self) -> bool:
+        """Returns True if this grid has a multipage stack showing a detail page."""
+
+        if self._multipage_stack is None:
+            return False
+        visible_child = self._multipage_stack.get_visible_child_name()
+        return visible_child is not None and visible_child != "categories"
 
     def _create_header_bar_dialog(
         self,
@@ -448,7 +490,7 @@ class PreferencesGridBase(Gtk.Grid):
         _set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.DND)
-        icon.set_valign(Gtk.Align.CENTER)
+        icon.set_valign(Gtk.Align.START)
         hbox.pack_start(icon, False, False, 0)
 
         icon_accessible = icon.get_accessible()
@@ -784,6 +826,9 @@ class PreferencesGridBase(Gtk.Grid):
         hbox.pack_start(label_widget, True, True, 0)
 
         chevron = Gtk.Image.new_from_icon_name("go-next-symbolic", Gtk.IconSize.BUTTON)
+        chevron_accessible = chevron.get_accessible()
+        if chevron_accessible:
+            chevron_accessible.set_name("")
         hbox.pack_end(chevron, False, False, 0)
 
         row.add(hbox)
@@ -1169,6 +1214,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._widgets: list[Gtk.Widget] = []
         self._rows: list[Gtk.ListBoxRow] = []
         self._group_labels: dict[str, Gtk.Label] = {}
+        self._group_listboxes: dict[str, FocusManagedListBox] = {}
         self._info_message = info_message
         self._info_icon = info_icon
         self._info_listbox: Gtk.ListBox | None = None
@@ -1193,6 +1239,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         if self._info_message:
             self._info_listbox = self._create_info_listbox(self._info_message, self._info_icon)
+            self._info_listbox.set_margin_bottom(24)
             content_grid.attach(self._info_listbox, 0, row, 1, 1)
             row += 1
 
@@ -1240,6 +1287,8 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 listbox = FocusManagedListBox()
                 listbox.set_hexpand(True)
                 listbox.set_halign(Gtk.Align.FILL)
+                self._group_listboxes[member] = listbox
+
                 for index, control in groups[member]:
                     widget = self._create_control_row(control, listbox)
                     self._widget_to_control_index[widget] = index
@@ -1251,14 +1300,14 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                     if last_row:
                         self._rows.insert(index, last_row)
 
+                content_grid.attach(listbox, 0, row, 1, 1)
+                row += 1
+
                 label_atk = label.get_accessible()
                 listbox_atk = listbox.get_accessible()
                 atk_relation_set = listbox_atk.ref_relation_set()
                 atk_relation_set.add(Atk.Relation.new(
                     [label_atk], Atk.RelationType.LABELLED_BY))
-
-                content_grid.attach(listbox, 0, row, 1, 1)
-                row += 1
 
         scrolled = Gtk.ScrolledWindow()
         scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -1266,6 +1315,64 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         scrolled.set_hexpand(True)
         scrolled.set_vexpand(True)
         self.attach(scrolled, 0, 0, 1, 1)
+
+    def get_group_listbox(self, group_name: str) -> FocusManagedListBox | None:
+        """Get the listbox for a named group, or None if not found."""
+
+        return self._group_listboxes.get(group_name)
+
+    def add_button_to_group_header(
+        self,
+        group_name: str,
+        icon_name: str,
+        callback: Callable[[Gtk.Button], None],
+        accessible_name: str
+    ) -> Gtk.Button | None:
+        """Add a button to a group's header. Returns the button or None if group not found."""
+
+        label = self._group_labels.get(group_name)
+        if label is None:
+            return None
+
+        parent = label.get_parent()
+        if parent is None:
+            return None
+
+        button = Gtk.Button.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        button.get_accessible().set_name(accessible_name)
+        button.connect("clicked", callback)
+
+        label_text = label.get_label()
+        margin_top = label.get_margin_top()
+        margin_bottom = label.get_margin_bottom()
+
+        header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        header_box.set_margin_top(margin_top)
+        header_box.set_margin_bottom(margin_bottom)
+
+        new_label = Gtk.Label(label=label_text, xalign=0)
+        new_label.get_style_context().add_class("heading")
+        header_box.pack_start(new_label, True, True, 0)
+        header_box.pack_end(button, False, False, 0)
+
+        if isinstance(parent, Gtk.Grid):
+            top = parent.child_get_property(label, "top-attach")
+            left = parent.child_get_property(label, "left-attach")
+            parent.remove(label)
+            parent.attach(header_box, left, top, 1, 1)
+            header_box.show_all()
+
+        self._group_labels[group_name] = new_label
+
+        listbox = self._group_listboxes.get(group_name)
+        if listbox:
+            new_label_atk = new_label.get_accessible()
+            listbox_atk = listbox.get_accessible()
+            atk_relation_set = listbox_atk.ref_relation_set()
+            atk_relation_set.add(Atk.Relation.new(
+                [new_label_atk], Atk.RelationType.LABELLED_BY))
+
+        return button
 
     def _create_control_row(
         self, control: ControlType, listbox: FocusManagedListBox
@@ -1502,13 +1609,25 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         return first_radio
 
     def _on_radio_key_press(self, radio: Gtk.RadioButton, event) -> bool:
-        """Handle Up/Down arrows to navigate within radio button group and Tab for action buttons."""
+        """Handle navigation keys for radio button group."""
 
         if event.keyval == Gdk.KEY_Tab and not event.state & Gdk.ModifierType.SHIFT_MASK:
             if isinstance(radio, RadioButtonWithActions) and radio.action_buttons:
                 radio.action_buttons[0].grab_focus()
                 return True
             return False
+
+        # Left arrow: exit nested group first, then move to sidebar
+        if event.keyval == Gdk.KEY_Left:
+            parent: Gtk.Widget | None = self
+            while parent is not None:
+                if isinstance(parent, PreferencesGridBase):
+                    if parent._is_in_multipage_detail():
+                        parent._multipage_show_categories()
+                        return True
+                parent = parent.get_parent()
+            self._focus_sidebar()
+            return True
 
         if event.keyval in (Gdk.KEY_Up, Gdk.KEY_Down):
             group = radio.get_group()
@@ -1584,6 +1703,18 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             radio.grab_focus()
             return True
 
+        # Left arrow: exit nested group first, then move to sidebar
+        if event.keyval == Gdk.KEY_Left:
+            parent: Gtk.Widget | None = self
+            while parent is not None:
+                if isinstance(parent, PreferencesGridBase):
+                    if parent._is_in_multipage_detail():
+                        parent._multipage_show_categories()
+                        return True
+                parent = parent.get_parent()
+            self._focus_sidebar()
+            return True
+
         return False
 
     def _on_value_changed(self, widget: Gtk.Widget, *_args: Any) -> None:
@@ -1592,14 +1723,18 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         if self._initializing:
             return
 
-        self._has_unsaved_changes = True
+        # For radio buttons, only process the activation (not deactivation)
+        if isinstance(widget, Gtk.RadioButton) and not widget.get_active():
+            return
 
-        # Apply immediate changes first so determine_sensitivity sees updated values.
+        # Check if this is an apply_immediately control - don't mark as unsaved changes
+        applied_immediately = False
         if widget in self._widget_to_control_index:
             control = self._controls[self._widget_to_control_index[widget]]
             if isinstance(control, BooleanPreferenceControl) and control.apply_immediately:
                 assert isinstance(widget, Gtk.Switch)
                 control.setter(widget.get_active())
+                applied_immediately = True
             elif isinstance(control, SelectionPreferenceControl) and control.apply_immediately:
                 if control.setter is not None:
                     if isinstance(widget, Gtk.ComboBoxText):
@@ -1607,10 +1742,14 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                         if active >= 0:
                             value_list = control.values if control.values else control.options
                             control.setter(value_list[active])
+                            applied_immediately = True
                     elif isinstance(widget, Gtk.RadioButton):
-                        if widget.get_active():
-                            if widget in self._radio_to_selection_value:
-                                control.setter(self._radio_to_selection_value[widget])
+                        if widget in self._radio_to_selection_value:
+                            control.setter(self._radio_to_selection_value[widget])
+                            applied_immediately = True
+
+        if not applied_immediately:
+            self._has_unsaved_changes = True
 
         self._update_sensitivity()
 

@@ -291,11 +291,32 @@ class TestTypingEchoPresenter:
         )
         test_context.patch_object(Atspi, "Relation", new=type("Relation", (), {}))
 
-        from orca.typing_echo_presenter import (
-            PreferenceCategory,
-            TypingEchoPreference,
-            TypingEchoPresenter,
-        )
+        # Force reimport of typing_echo_presenter to pick up patched Gtk.Grid
+        import sys
+        import importlib
+
+        # First, ensure gi.repository.Gtk.Grid is patched before any import
+        import gi
+        gi.require_version("Gtk", "3.0")
+        from gi.repository import Gtk
+        original_grid = Gtk.Grid
+        original_check_button = Gtk.CheckButton
+        Gtk.Grid = _FakeGtkGrid
+        Gtk.CheckButton = _FakeCheckButton
+
+        try:
+            # Remove cached module to force reimport with patched Gtk
+            sys.modules.pop("orca.typing_echo_presenter", None)
+
+            from orca.typing_echo_presenter import (
+                PreferenceCategory,
+                TypingEchoPreference,
+                TypingEchoPresenter,
+            )
+        finally:
+            # Restore original Gtk classes for other tests
+            Gtk.Grid = original_grid
+            Gtk.CheckButton = original_check_button
 
         presenter = TypingEchoPresenter()
         return presenter, manager_instance, value_map, PreferenceCategory, TypingEchoPreference, settings_mock

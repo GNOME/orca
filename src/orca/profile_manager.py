@@ -36,6 +36,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import time
+from json import dump, load
 from typing import Callable, TYPE_CHECKING
 
 import gi
@@ -68,9 +69,10 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         manager: ProfileManager,
         profile_loaded_callback: Callable[[list[str]], None],
         is_app_specific: bool = False,
+        labels_update_callback: Callable[[], None] | None = None,
+        unsaved_changes_checker: Callable[[], bool] | None = None,
     ) -> None:
         super().__init__(guilabels.GENERAL_PROFILES)
-        # Clear margins - the embedded AutoPreferencesGrid provides them
         self.set_margin_start(0)
         self.set_margin_end(0)
         self.set_margin_top(0)
@@ -80,55 +82,80 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._manager: ProfileManager = manager
         self._profile_loaded_callback = profile_loaded_callback
         self._is_app_specific: bool = is_app_specific
+        self._labels_update_callback = labels_update_callback
+        self._unsaved_changes_checker = unsaved_changes_checker
         self._initializing: bool = True
         self._default_profile: list[str] = [guilabels.PROFILE_DEFAULT, "default"]
         self._auto_grid: preferences_grid_base.AutoPreferencesGrid | None = None
         self._pending_renames: dict[
             str, list[str]
-        ] = {}  # old_internal_name -> [new_name, new_internal_name]
+        ] = {}
 
         self._build()
         self.refresh()
         self._initializing = False
 
     def _build(self) -> None:
-        row = 0
-
         available_profiles = self._get_available_profiles()
         profile_labels = [p[0] for p in available_profiles]
         profile_values = [p[1] for p in available_profiles]
 
-        # For app-specific preferences, disable changing the global startup profile
-        # but allow switching active profile (to edit app settings for different profiles)
-        starting_profile_setter = None if self._is_app_specific else self._set_starting_profile
-        startup_sensitivity = (lambda: False) if self._is_app_specific else None
-
         controls = [
             preferences_grid_base.SelectionPreferenceControl(
-                label=guilabels.GENERAL_START_UP_PROFILE,
-                options=profile_labels,
-                getter=self._get_starting_profile,
-                setter=starting_profile_setter,
-                values=profile_values,
-                prefs_key="startingProfile",
-                get_actions_for_option=None,
-                determine_sensitivity=startup_sensitivity,
-            ),
-            preferences_grid_base.SelectionPreferenceControl(
-                label=guilabels.GENERAL_PROFILES,
+                label=guilabels.CURRENT_PROFILE,
                 options=profile_labels,
                 getter=self._get_active_profile,
                 setter=self._set_active_profile,
                 values=profile_values,
                 prefs_key="activeProfile",
-                member_of=guilabels.GENERAL_PROFILES,
+                member_of=guilabels.CURRENT_PROFILE,
                 get_actions_for_option=None if self._is_app_specific else self._get_profile_actions,
                 apply_immediately=True,
             ),
         ]
 
-        self._auto_grid = preferences_grid_base.AutoPreferencesGrid(tab_label="", controls=controls)
-        self.attach(self._auto_grid, 0, row, 1, 1)
+        self._auto_grid = preferences_grid_base.AutoPreferencesGrid(
+            tab_label="",
+            controls=controls,
+            info_message=guilabels.PROFILES_INFO
+        )
+        self.attach(self._auto_grid, 0, 0, 1, 1)
+
+        if not self._is_app_specific:
+            self._auto_grid.add_button_to_group_header(
+                guilabels.CURRENT_PROFILE,
+                "list-add-symbolic",
+                self._on_new_profile_clicked,
+                guilabels.PROFILE_CREATE_NEW.replace("_", "")
+            )
+
+    def _on_new_profile_clicked(self, _button: Gtk.Button) -> None:
+        """Handle New Profile button click."""
+
+        if self._unsaved_changes_checker and self._unsaved_changes_checker():
+            dialog = Gtk.MessageDialog(
+                transient_for=self.get_toplevel(),
+                modal=True,
+                message_type=Gtk.MessageType.WARNING,
+                buttons=Gtk.ButtonsType.YES_NO,
+                text=guilabels.PROFILE_CREATE_UNSAVED_WARNING,
+            )
+            response = dialog.run()
+            dialog.destroy()
+            if response != Gtk.ResponseType.YES:
+                return
+
+        new_profile = self.get_new_profile_name()
+        if new_profile is None:
+            return
+
+        if not self._manager.create_profile(new_profile):
+            self._show_error_dialog(guilabels.PROFILE_CONFLICT_MESSAGE % new_profile[0])
+            return
+
+        self._manager.load_profile(new_profile[1])
+        self._rebuild_ui()
+        self._profile_loaded_callback(new_profile)
 
     def _get_available_profiles(self) -> list[list[str]]:
         """Get list of available profiles, including any pending renames."""
@@ -139,15 +166,29 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         result = []
         for profile in profiles:
+            if profile is None:
+                continue
             internal_name = profile[1]
             if internal_name in self._pending_renames:
                 result.append(self._pending_renames[internal_name])
             else:
                 result.append(profile)
-        return result
+        return result if result else [self._default_profile]
 
     def _get_active_profile(self) -> str:
         return self._manager.get_active_profile()
+
+    def get_current_profile_label(self) -> str:
+        """Get the display label for the current profile, including pending renames."""
+
+        internal_name = self._manager.get_active_profile()
+        if internal_name in self._pending_renames:
+            return self._pending_renames[internal_name][0]
+
+        for profile in self._manager.get_available_profiles():
+            if profile is not None and profile[1] == internal_name:
+                return profile[0]
+        return internal_name
 
     def _set_active_profile(self, internal_name: str) -> None:
         if self._initializing:
@@ -174,23 +215,6 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         GLib.idle_add(do_load_profile)
 
-    def _get_starting_profile(self) -> str:
-        """Get the starting profile's internal name."""
-
-        starting_profile = self._manager.get_starting_profile()
-        return starting_profile[1]  # internal name
-
-    def _set_starting_profile(self, internal_name: str) -> None:
-        """Set the starting profile by internal name."""
-
-        if self._initializing:
-            return
-
-        for profile in self._get_available_profiles():
-            if profile[1] == internal_name:
-                self._manager.set_starting_profile(profile)
-                break
-
     def _get_profile_actions(self, internal_name: str) -> list[tuple[str, str, Callable[[], None]]]:
         """Get the list of actions (label, icon_name, callback) for a profile."""
 
@@ -199,14 +223,14 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         return [
             (
-                guilabels.MENU_REMOVE_PROFILE,
-                "user-trash-symbolic",
-                lambda: self._on_remove_profile(internal_name),
-            ),
-            (
                 guilabels.MENU_RENAME,
                 "document-edit-symbolic",
                 lambda: self._on_rename_profile(internal_name),
+            ),
+            (
+                guilabels.MENU_REMOVE_PROFILE,
+                "user-trash-symbolic",
+                lambda: self._on_remove_profile(internal_name),
             ),
         ]
 
@@ -285,16 +309,11 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._manager.remove_profile(internal_name)
 
         active_profile_name = self._manager.get_active_profile()
-        starting_profile = self._manager.get_starting_profile()
-
-        if starting_profile[1] == internal_name:
-            self._manager.set_starting_profile(self._default_profile)
-
         if active_profile_name == internal_name:
             self._manager.set_active_profile(self._default_profile[1])
             self._profile_loaded_callback(self._default_profile)
-        else:
-            self.reload()
+
+        self._rebuild_ui()
 
     def _on_rename_profile(self, internal_name: str) -> None:
         profile = None
@@ -358,6 +377,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
         self._rebuild_ui()
+
+        if self._labels_update_callback:
+            self._labels_update_callback()
 
     def get_new_profile_name(self) -> list[str] | None:
         """Show dialog to get a new profile name. Returns [label, name] or None if cancelled."""
@@ -451,13 +473,18 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return self._auto_grid.has_changes()
         return False
 
+    def set_focus_sidebar_callback(self, callback: Callable[[], None]) -> None:
+        """Set the callback to focus the sidebar navigation list."""
+
+        super().set_focus_sidebar_callback(callback)
+        if self._auto_grid:
+            self._auto_grid.set_focus_sidebar_callback(callback)
+
     def _apply_pending_renames(self) -> dict:
         """Apply all pending profile renames and return updated settings."""
 
         result = {}
-
         active_profile_name = self._manager.get_active_profile()
-        starting_profile = self._manager.get_starting_profile()
 
         for old_internal_name, pending_profile in self._pending_renames.items():
             new_name = pending_profile[0]
@@ -465,10 +492,6 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             new_profile = [new_name, new_internal_name]
 
             self._manager.rename_profile(old_internal_name, new_profile)
-
-            if starting_profile[1] == old_internal_name:
-                self._manager.set_starting_profile(new_profile)
-                result["startingProfile"] = new_profile
 
             if active_profile_name == old_internal_name:
                 self._manager.set_active_profile(new_internal_name)
@@ -591,18 +614,41 @@ class ProfileManager:
         self.set_active_profile(internal_name, update_locale)
         orca.load_user_settings(skip_reload_message=True)
 
+    def create_profile(self, new_profile: list[str]) -> bool:
+        """Create a new profile by copying the current active profile."""
+
+        current_profile = self.get_active_profile()
+        msg = f"PROFILE MANAGER: Creating profile '{new_profile[1]}' from '{current_profile}'."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        settings_file = settings_manager.get_manager().get_settings_file_path()
+        with open(settings_file, "r+", encoding="utf-8") as f:
+            try:
+                prefs = load(f)
+            except ValueError:
+                return False
+            if "profiles" not in prefs or current_profile not in prefs["profiles"]:
+                return False
+
+            profile_data = prefs["profiles"][current_profile].copy()
+            profile_data["profile"] = new_profile
+            prefs["profiles"][new_profile[1]] = profile_data
+
+            f.seek(0)
+            f.truncate()
+            dump(prefs, f, indent=4)
+            return True
+
     @dbus_service.getter
     def get_starting_profile(self) -> list[str]:
-        """Returns the starting profile as [display_name, internal_name]."""
+        """Returns the starting profile (always Default)."""
 
-        prefs = settings_manager.get_manager().get_general_settings()
-        return prefs.get("startingProfile", ["Default", "default"])
+        return ["Default", "default"]
 
     @dbus_service.setter
     def set_starting_profile(self, profile: list[str]) -> bool:
-        """Sets the starting profile."""
+        """No-op for backwards compatibility. Starting profile is always Default."""
 
-        settings_manager.get_manager().set_starting_profile(profile)
         return True
 
     def remove_profile(self, internal_name: str) -> None:
@@ -688,11 +734,18 @@ class ProfileManager:
         return True
 
     def create_preferences_grid(
-        self, profile_loaded_callback: Callable[[list[str]], None], is_app_specific: bool = False
+        self,
+        profile_loaded_callback: Callable[[list[str]], None],
+        is_app_specific: bool = False,
+        labels_update_callback: Callable[[], None] | None = None,
+        unsaved_changes_checker: Callable[[], bool] | None = None,
     ) -> ProfilePreferencesGrid:
         """Returns the GtkGrid containing the profile management UI."""
 
-        return ProfilePreferencesGrid(self, profile_loaded_callback, is_app_specific)
+        return ProfilePreferencesGrid(
+            self, profile_loaded_callback, is_app_specific, labels_update_callback,
+            unsaved_changes_checker
+        )
 
 
 _manager = ProfileManager()

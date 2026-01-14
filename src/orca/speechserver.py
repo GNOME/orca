@@ -209,6 +209,9 @@ class SpeechServer:
     def reset(self) -> None:
         """Resets the speech engine."""
 
+    def clear_cached_voice_properties(self) -> None:
+        """Clear cached voice properties to force reapplication on next speech."""
+
     def get_output_module(self) -> str:
         """Returns the output module associated with this speech server."""
 
