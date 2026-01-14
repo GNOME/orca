@@ -31,10 +31,7 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
-from orca import cmdnames
-from orca import debug
 from orca import focus_manager
-from orca import input_event
 from orca import settings
 from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
@@ -57,26 +54,6 @@ class Script(Gecko.Script):
     # Override the base class type annotations
     spellcheck: SpellCheck
     utilities: "Utilities"
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        super().setup_input_event_handlers()
-
-        self.input_event_handlers["togglePresentationModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggle_presentation_mode,
-                cmdnames.TOGGLE_PRESENTATION_MODE)
-
-        self.input_event_handlers["enableStickyFocusModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.enable_sticky_focus_mode,
-                cmdnames.SET_FOCUS_MODE_STICKY)
-
-        self.input_event_handlers["enableStickyBrowseModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.enable_sticky_browse_mode,
-                cmdnames.SET_BROWSE_MODE_STICKY)
 
     def get_spellcheck(self) -> SpellCheck:
         """Returns the spellcheck support for this script."""
@@ -127,52 +104,6 @@ class Script(Gecko.Script):
             return True
 
         return super().locus_of_focus_changed(event, old_focus, new_focus)
-
-    def use_focus_mode(
-        self,
-        obj: Atspi.Accessible,
-        prev_obj: Atspi.Accessible | None = None
-    ) -> bool:
-        if self.utilities.is_editable_message(obj):
-            tokens = ["THUNDERBIRD: Using focus mode for editable message", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        tokens = ["THUNDERBIRD:", obj, "is not an editable message."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return super().use_focus_mode(obj, prev_obj)
-
-    def enable_sticky_browse_mode(
-        self,
-        event: input_event.InputEvent | None = None,
-        force_message: bool = False
-    ) -> bool:
-        if self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
-            return True
-
-        return super().enable_sticky_browse_mode(event, force_message)
-
-    def enable_sticky_focus_mode(
-        self,
-        event: input_event.InputEvent | None = None,
-        force_message: bool = False
-    ) -> bool:
-        if self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
-            return True
-
-        return super().enable_sticky_focus_mode(event, force_message)
-
-    def toggle_presentation_mode(
-        self,
-        event: input_event.InputEvent | None = None,
-        document: Atspi.Accessible | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        if self._in_focus_mode \
-           and self.utilities.is_editable_message(focus_manager.get_manager().get_locus_of_focus()):
-            return True
-
-        return super().toggle_presentation_mode(event, document)
 
     def on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
