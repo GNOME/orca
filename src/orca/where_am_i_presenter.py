@@ -35,6 +35,7 @@ from typing import TYPE_CHECKING
 from . import cmdnames
 from . import dbus_service
 from . import debug
+from . import flat_review_presenter
 from . import focus_manager
 from . import input_event
 from . import keybindings
@@ -365,8 +366,8 @@ class WhereAmIPresenter:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if script.get_flat_review_presenter().is_active():
-            obj = script.get_flat_review_presenter().get_current_object(script, event)
+        if flat_review_presenter.get_presenter().is_active():
+            obj = flat_review_presenter.get_presenter().get_current_object(script, event)
         else:
             obj = focus_manager.get_manager().get_locus_of_focus()
 

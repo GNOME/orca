@@ -41,6 +41,7 @@ from gi.repository import Atspi
 from . import braille
 from . import debug
 from . import settings_manager
+from . import sleep_mode_manager
 from . import speech_and_verbosity_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -275,7 +276,7 @@ class ScriptManager:
             app_script = self.get_default_script()
 
         assert app_script is not None
-        if app_script.get_sleep_mode_manager().is_active_for_app(app):
+        if sleep_mode_manager.get_manager().is_active_for_app(app):
             tokens = ["SCRIPT MANAGER: Sleep-mode toggled on for", app_script, app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return self.get_or_create_sleep_mode_script(app)

@@ -60,6 +60,7 @@ class TestWhereAmIPresenter:
         """Returns all dependencies needed for WhereAmIPresenter testing."""
 
         additional_modules = [
+            "orca.flat_review_presenter",
             "orca.speech_and_verbosity_manager",
             "orca.ax_component",
             "orca.ax_text",
@@ -371,11 +372,11 @@ class TestWhereAmIPresenter:
         from orca.where_am_i_presenter import WhereAmIPresenter
 
         mock_script = test_context.Mock()
-        flat_review_presenter = test_context.Mock()
-        flat_review_presenter.is_active.return_value = True
+        flat_review_presenter_mock = test_context.Mock()
+        flat_review_presenter_mock.is_active.return_value = True
         current_obj = test_context.Mock()
-        flat_review_presenter.get_current_object.return_value = current_obj
-        mock_script.get_flat_review_presenter.return_value = flat_review_presenter
+        flat_review_presenter_mock.get_current_object.return_value = current_obj
+        deps["orca.flat_review_presenter"].get_presenter.return_value = flat_review_presenter_mock
         mock_script.present_message = test_context.Mock()
 
         rect = test_context.Mock()
@@ -397,9 +398,9 @@ class TestWhereAmIPresenter:
         from orca.where_am_i_presenter import WhereAmIPresenter
 
         mock_script = test_context.Mock()
-        flat_review_presenter = test_context.Mock()
-        flat_review_presenter.is_active.return_value = False
-        mock_script.get_flat_review_presenter.return_value = flat_review_presenter
+        flat_review_presenter_mock = test_context.Mock()
+        flat_review_presenter_mock.is_active.return_value = False
+        deps["orca.flat_review_presenter"].get_presenter.return_value = flat_review_presenter_mock
         mock_script.present_message = test_context.Mock()
 
         focus_obj = test_context.Mock()

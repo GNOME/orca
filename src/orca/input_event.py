@@ -628,7 +628,9 @@ class KeyboardEvent(InputEvent):
         if self.is_pressed_key():
             self._script.interrupt_presentation()
 
-        if self._script.get_learn_mode_presenter().is_active():
+        # pylint: disable=import-outside-toplevel
+        from . import learn_mode_presenter
+        if learn_mode_presenter.get_presenter().is_active():
             return
 
         self._script.present_keyboard_event(self)
@@ -664,8 +666,10 @@ class KeyboardEvent(InputEvent):
                 tokens = ["HANDLER:", str(self._handler)]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            if self._script.get_learn_mode_presenter().is_active():
-                self._consumer = self._script.get_learn_mode_presenter().handle_event
+            # pylint: disable=import-outside-toplevel
+            from . import learn_mode_presenter
+            if learn_mode_presenter.get_presenter().is_active():
+                self._consumer = learn_mode_presenter.get_presenter().handle_event
                 tokens = ["CONSUMER:", str(self._consumer)]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -775,7 +779,9 @@ class BrailleEvent(InputEvent):
     def _process(self):
         handler = self.get_handler()
         if not handler:
-            if self._script.get_learn_mode_presenter().is_active():
+            # pylint: disable=import-outside-toplevel
+            from . import learn_mode_presenter
+            if learn_mode_presenter.get_presenter().is_active():
                 tokens = ["BRAILLE EVENT: Learn mode presenter handles", self]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True

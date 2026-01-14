@@ -32,6 +32,7 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 from orca import messages
+from orca import notification_presenter
 from orca.scripts import default
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -52,4 +53,4 @@ class Script(default.Script):
 
         voice = self.speech_generator.voice(obj=event.source, string=text)
         self.present_message(text, voice=voice)
-        self.get_notification_presenter().save_notification(text)
+        notification_presenter.get_presenter().save_notification(text)

@@ -51,6 +51,12 @@ class TestFlatReviewPresenter:
             "gi.repository.Atspi",
             "gi.repository.Gtk",
             "gi.repository.GLib",
+            "gi.repository.Gio",
+            "dasbus",
+            "dasbus.connection",
+            "dasbus.error",
+            "dasbus.client",
+            "dasbus.client.proxy",
             "orca.flat_review",
             "orca.speech_and_verbosity_manager",
             "orca.ax_event_synthesizer",
@@ -77,6 +83,9 @@ class TestFlatReviewPresenter:
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_error_mock = type("GError", (Exception,), {})
         glib_mock.GError = glib_error_mock
+
+        gio_mock = essential_modules["gi.repository.Gio"]
+        gi_repository_mock.Gio = gio_mock
 
         flat_review_mock = essential_modules["orca.flat_review"]
         flat_review_context_mock = test_context.Mock()

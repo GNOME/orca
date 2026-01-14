@@ -66,6 +66,7 @@ class TestScriptManager:
             "orca.scripts.default",
             "orca.scripts.sleepmode",
             "orca.scripts.toolkits",
+            "orca.sleep_mode_manager",
             "orca.speech_and_verbosity_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
@@ -147,13 +148,6 @@ class TestScriptManager:
                 self.activate = test_context.Mock()
                 self.deactivate = test_context.Mock()
                 self.braille_bindings = {}
-                self._sleep_mode_manager = test_context.Mock()
-                self._sleep_mode_manager.is_active_for_app = test_context.Mock(
-                    return_value=False
-                )
-                self.get_sleep_mode_manager = test_context.Mock(
-                    return_value=self._sleep_mode_manager
-                )
 
             def __or__(self, other):
                 return MockScript
@@ -189,12 +183,18 @@ class TestScriptManager:
         sleepmode_script.activate = test_context.Mock()
         sleepmode_script.deactivate = test_context.Mock()
 
-        sleep_mode_manager = test_context.Mock()
-        sleep_mode_manager.is_active_for_app = test_context.Mock(return_value=False)
+        sleep_mode_manager_instance = test_context.Mock()
+        sleep_mode_manager_instance.is_active_for_app = test_context.Mock(return_value=False)
+
+        # Set up the module-level get_manager mock
+        sleep_mode_manager_mock = essential_modules["orca.sleep_mode_manager"]
+        sleep_mode_manager_mock.get_manager = test_context.Mock(
+            return_value=sleep_mode_manager_instance
+        )
 
         essential_modules["default_script"] = default_script
         essential_modules["sleepmode_script"] = sleepmode_script
-        essential_modules["sleep_mode_manager"] = sleep_mode_manager
+        essential_modules["sleep_mode_manager"] = sleep_mode_manager_instance
 
         default_module = test_context.Mock()
         default_module.Script = test_context.Mock(return_value=test_context.Mock())
@@ -754,7 +754,6 @@ class TestScriptManager:
         sleep_mode_manager.is_active_for_app = test_context.Mock(
             return_value=case["sleep_mode_active"]
         )
-        mock_app_script.get_sleep_mode_manager = test_context.Mock(return_value=sleep_mode_manager)
         test_context.patch_object(
             manager,
             "get_or_create_sleep_mode_script",

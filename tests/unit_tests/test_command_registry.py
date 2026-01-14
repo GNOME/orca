@@ -990,7 +990,7 @@ class TestCommandRegistry:
     ) -> None:
         """Test that all caret navigator handlers are registered."""
 
-        self._setup_dependencies(test_context)
+        self._setup_structural_navigator_dependencies(test_context)
         from orca.caret_navigator import get_navigator
 
         navigator = get_navigator()
@@ -1062,7 +1062,7 @@ class TestCommandRegistry:
     ) -> None:
         """Test that all say all presenter handlers are registered."""
 
-        self._setup_dependencies(test_context)
+        self._setup_structural_navigator_dependencies(test_context)
         from orca.say_all_presenter import get_presenter
 
         presenter = get_presenter()

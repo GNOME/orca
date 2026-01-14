@@ -54,6 +54,7 @@ from . import focus_manager
 from . import guilabels
 from . import input_event_manager
 from . import keybindings
+from . import live_region_presenter
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
@@ -2939,7 +2940,7 @@ class StructuralNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
-        script.get_live_region_presenter().go_last_live_region(script, event)
+        live_region_presenter.get_presenter().go_last_live_region(script, event)
         return True
 
     ########################

@@ -38,6 +38,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from . import ax_event_synthesizer
 from . import braille_presenter
 from . import debug
 from . import focus_manager
@@ -47,6 +48,7 @@ from . import object_properties
 from . import settings
 from . import sound_presenter
 from . import speech_and_verbosity_manager
+from . import table_navigator
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -424,7 +426,7 @@ class Utilities:
         if focus_manager.get_manager().in_say_all():
             return False
 
-        if self._script.get_table_navigator().last_input_event_was_navigation_command():
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
             return False
 
         if not self.cell_row_changed(obj, previous_object):
@@ -882,7 +884,7 @@ class Utilities:
         self.set_caret_context(obj, offset)
 
         scroll_to = max(0, min(offset, AXText.get_character_count(obj) - 1))
-        self._script.get_event_synthesizer().scroll_into_view(obj, scroll_to)
+        ax_event_synthesizer.get_synthesizer().scroll_into_view(obj, scroll_to)
 
     def set_caret_offset(
         self,

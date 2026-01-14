@@ -110,8 +110,118 @@ class TestTypingEchoPresenter:
 
     def _setup_presenter(self, test_context: OrcaTestContext):
         """Set up presenter and dependencies for testing."""
-        additional_modules = ["gi", "gi.repository"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        # Set up cmdnames with all required values for structural_navigator
+        cmdnames = essential_modules["orca.cmdnames"]
+        cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE = "cycle_mode"
+        cmdnames.BLOCKQUOTE_PREV = "previous_blockquote"
+        cmdnames.BLOCKQUOTE_NEXT = "next_blockquote"
+        cmdnames.BLOCKQUOTE_LIST = "list_blockquotes"
+        cmdnames.BUTTON_PREV = "previous_button"
+        cmdnames.BUTTON_NEXT = "next_button"
+        cmdnames.BUTTON_LIST = "list_buttons"
+        cmdnames.CHECK_BOX_PREV = "previous_checkbox"
+        cmdnames.CHECK_BOX_NEXT = "next_checkbox"
+        cmdnames.CHECK_BOX_LIST = "list_checkboxes"
+        cmdnames.COMBO_BOX_PREV = "previous_combobox"
+        cmdnames.COMBO_BOX_NEXT = "next_combobox"
+        cmdnames.COMBO_BOX_LIST = "list_comboboxes"
+        cmdnames.ENTRY_PREV = "previous_entry"
+        cmdnames.ENTRY_NEXT = "next_entry"
+        cmdnames.ENTRY_LIST = "list_entries"
+        cmdnames.FORM_FIELD_PREV = "previous_form_field"
+        cmdnames.FORM_FIELD_NEXT = "next_form_field"
+        cmdnames.FORM_FIELD_LIST = "list_form_fields"
+        cmdnames.HEADING_PREV = "previous_heading"
+        cmdnames.HEADING_NEXT = "next_heading"
+        cmdnames.HEADING_LIST = "list_headings"
+        cmdnames.HEADING_AT_LEVEL_PREV = "previous_heading_level_%d"
+        cmdnames.HEADING_AT_LEVEL_NEXT = "next_heading_level_%d"
+        cmdnames.HEADING_AT_LEVEL_LIST = "list_headings_level_%d"
+        cmdnames.IFRAME_PREV = "previous_iframe"
+        cmdnames.IFRAME_NEXT = "next_iframe"
+        cmdnames.IFRAME_LIST = "list_iframes"
+        cmdnames.IMAGE_PREV = "previous_image"
+        cmdnames.IMAGE_NEXT = "next_image"
+        cmdnames.IMAGE_LIST = "list_images"
+        cmdnames.LANDMARK_PREV = "previous_landmark"
+        cmdnames.LANDMARK_NEXT = "next_landmark"
+        cmdnames.LANDMARK_LIST = "list_landmarks"
+        cmdnames.LIST_PREV = "previous_list"
+        cmdnames.LIST_NEXT = "next_list"
+        cmdnames.LIST_LIST = "list_lists"
+        cmdnames.LIST_ITEM_PREV = "previous_list_item"
+        cmdnames.LIST_ITEM_NEXT = "next_list_item"
+        cmdnames.LIST_ITEM_LIST = "list_list_items"
+        cmdnames.LIVE_REGION_PREV = "previous_live_region"
+        cmdnames.LIVE_REGION_NEXT = "next_live_region"
+        cmdnames.LIVE_REGION_LAST = "last_live_region"
+        cmdnames.PARAGRAPH_PREV = "previous_paragraph"
+        cmdnames.PARAGRAPH_NEXT = "next_paragraph"
+        cmdnames.PARAGRAPH_LIST = "list_paragraphs"
+        cmdnames.RADIO_BUTTON_PREV = "previous_radio_button"
+        cmdnames.RADIO_BUTTON_NEXT = "next_radio_button"
+        cmdnames.RADIO_BUTTON_LIST = "list_radio_buttons"
+        cmdnames.SEPARATOR_PREV = "previous_separator"
+        cmdnames.SEPARATOR_NEXT = "next_separator"
+        cmdnames.TABLE_PREV = "previous_table"
+        cmdnames.TABLE_NEXT = "next_table"
+        cmdnames.TABLE_LIST = "list_tables"
+        cmdnames.UNVISITED_LINK_PREV = "previous_unvisited_link"
+        cmdnames.UNVISITED_LINK_NEXT = "next_unvisited_link"
+        cmdnames.UNVISITED_LINK_LIST = "list_unvisited_links"
+        cmdnames.VISITED_LINK_PREV = "previous_visited_link"
+        cmdnames.VISITED_LINK_NEXT = "next_visited_link"
+        cmdnames.VISITED_LINK_LIST = "list_visited_links"
+        cmdnames.LINK_PREV = "previous_link"
+        cmdnames.LINK_NEXT = "next_link"
+        cmdnames.LINK_LIST = "list_links"
+        cmdnames.CLICKABLE_PREV = "previous_clickable"
+        cmdnames.CLICKABLE_NEXT = "next_clickable"
+        cmdnames.CLICKABLE_LIST = "list_clickables"
+        cmdnames.LARGE_OBJECT_PREV = "previous_large_object"
+        cmdnames.LARGE_OBJECT_NEXT = "next_large_object"
+        cmdnames.LARGE_OBJECT_LIST = "list_large_objects"
+        cmdnames.CONTAINER_START = "container_start"
+        cmdnames.CONTAINER_END = "container_end"
+
+        # Set up settings mock for structural_navigator
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.structuralNavigationEnabled = True
+        settings_mock.structNavTriggersFocusMode = True
+        settings_mock.wrappedStructuralNavigation = True
+        settings_mock.largeObjectTextLength = 75
+
+        essential_modules["orca.orca_i18n"]._ = lambda x: x
+        essential_modules["orca.debug"].print_message = test_context.Mock()
+        essential_modules["orca.debug"].LEVEL_INFO = 800
+
+        controller_mock = test_context.Mock()
+        controller_mock.register_decorated_module.return_value = None
+        essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
+
+        focus_manager_instance = test_context.Mock()
+        focus_manager_instance.get_locus_of_focus.return_value = None
+        essential_modules["orca.focus_manager"].get_manager.return_value = focus_manager_instance
+
+        essential_modules["orca.AXObject"].supports_collection.return_value = True
+        essential_modules["orca.AXUtilities"].is_heading.return_value = False
 
         test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
         test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
@@ -305,14 +415,9 @@ class TestTypingEchoPresenter:
 
     def test_locking_keys_presented_getter_and_setter(self, test_context: OrcaTestContext) -> None:
         """Test locking keys presented getter and setter with special logic."""
-        essential_modules = test_context.setup_shared_dependencies(["gi", "gi.repository"])
-        settings_mock = essential_modules["orca.settings"]
-        essential_modules["orca.settings_manager"].get_manager.return_value
-        test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
-        test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
-        from orca.typing_echo_presenter import TypingEchoPresenter
-
-        presenter = TypingEchoPresenter()
+        presenter, _manager, _value_map, _category_enum, _pref_cls, settings_mock = self._setup_presenter(
+            test_context
+        )
 
         settings_mock.presentLockingKeys = True
         assert presenter.get_locking_keys_presented() is True

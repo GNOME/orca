@@ -44,6 +44,7 @@ from gi.repository import Gtk
 
 from . import braille
 from . import braille_presenter
+from . import clipboard
 from . import cmdnames
 from . import dbus_service
 from . import debug
@@ -1411,7 +1412,7 @@ class FlatReviewPresenter:
                 script.present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
-        script.get_clipboard_presenter().set_text(self._current_contents.rstrip("\n"))
+        clipboard.get_presenter().set_text(self._current_contents.rstrip("\n"))
         if notify_user:
             script.present_message(messages.FLAT_REVIEW_COPIED)
         return True
@@ -1434,7 +1435,7 @@ class FlatReviewPresenter:
                 script.present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
-        script.get_clipboard_presenter().append_text(self._current_contents.rstrip("\n"))
+        clipboard.get_presenter().append_text(self._current_contents.rstrip("\n"))
         if notify_user:
             script.present_message(messages.FLAT_REVIEW_APPENDED)
         return True

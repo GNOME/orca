@@ -42,12 +42,16 @@ from gi.repository import Gtk
 
 from orca import braille
 from orca import debug
+from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
 from orca import guilabels
 from orca import input_event
 from orca import messages
 from orca import speech_and_verbosity_manager
+from orca import structural_navigator
+from orca import table_navigator
+from orca import typing_echo_presenter
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
@@ -159,7 +163,7 @@ class Script(default.Script):
         table_grid.attach(self.speak_cell_headers_check_button, 0, 2, 1, 1)
 
         label = guilabels.TABLE_SKIP_BLANK_CELLS
-        value = self.get_table_navigator().get_skip_blank_cells()
+        value = table_navigator.get_navigator().get_skip_blank_cells()
         self.skip_blank_cells_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self.skip_blank_cells_check_button.set_active(value)
@@ -207,7 +211,7 @@ class Script(default.Script):
         """Pans the braille display to the left."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.get_flat_review_presenter().is_active() \
+        if flat_review_presenter.get_presenter().is_active() \
            or not braille.beginningIsShowing \
            or self.utilities.is_spreadsheet_cell(focus) \
            or not AXUtilities.is_paragraph(focus):
@@ -234,7 +238,7 @@ class Script(default.Script):
         """Pans the braille display to the right."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.get_flat_review_presenter().is_active() \
+        if flat_review_presenter.get_presenter().is_active() \
            or not braille.endIsShowing \
            or self.utilities.is_spreadsheet_cell(focus) \
            or not AXUtilities.is_paragraph(focus):
@@ -264,8 +268,8 @@ class Script(default.Script):
         if self.run_find_command_on:
             return super().locus_of_focus_changed(event, old_focus, new_focus)
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().quit()
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().quit()
 
         if self.spellcheck.is_suggestions_item(new_focus) \
            and not self.spellcheck.is_suggestions_item(old_focus):
@@ -278,7 +282,7 @@ class Script(default.Script):
         if new_focus != old_focus \
              and AXUtilities.is_paragraph(new_focus) and AXUtilities.is_paragraph(old_focus):
             if input_event_manager.get_manager().last_event_was_return():
-                self.get_typing_echo_presenter().echo_previous_word(self, old_focus)
+                typing_echo_presenter.get_presenter().echo_previous_word(self, old_focus)
                 return True
 
             # TODO - JD: And this hack is another one that needs to be done better.
@@ -359,12 +363,12 @@ class Script(default.Script):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self.get_table_navigator().last_input_event_was_navigation_command():
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.get_structural_navigator().last_input_event_was_navigation_command():
+        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was structural navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -424,11 +428,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.get_table_navigator().last_input_event_was_navigation_command():
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self.get_structural_navigator().last_input_event_was_navigation_command():
+        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was structural navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 

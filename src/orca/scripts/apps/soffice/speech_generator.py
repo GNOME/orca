@@ -41,6 +41,7 @@ from orca import focus_manager
 from orca import messages
 from orca import speech_and_verbosity_manager
 from orca import speech_generator
+from orca import table_navigator
 from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -150,7 +151,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         speech_manager = speech_and_verbosity_manager.get_manager()
         if not self._script.utilities.is_spreadsheet_cell(obj):
-            if self._script.get_table_navigator().last_input_event_was_navigation_command():
+            if table_navigator.get_navigator().last_input_event_was_navigation_command():
                 return result
 
             if speech_manager.get_announce_cell_coordinates():

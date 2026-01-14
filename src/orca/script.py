@@ -48,35 +48,14 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
-from . import ax_event_synthesizer
-from . import bypass_mode_manager
-from . import action_presenter
 from . import braille_generator
-from . import caret_navigator
 from . import chat_presenter
-from . import clipboard
 from . import debug
-from . import debugging_tools_manager
-from . import flat_review_finder
-from . import flat_review_presenter
 from . import keybindings
-from . import learn_mode_presenter
-from . import live_region_presenter
-from . import mouse_review
-from . import notification_presenter
-from . import object_navigator
-from . import profile_manager
-from . import say_all_presenter
 from . import script_utilities
-from . import sleep_mode_manager
 from . import sound_generator
-from . import speech_and_verbosity_manager
 from . import speech_generator
 from . import structural_navigator
-from . import system_information_presenter
-from . import table_navigator
-from . import typing_echo_presenter
-from . import where_am_i_presenter
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
@@ -170,30 +149,10 @@ class Script:
         # In practice, self will always be an instance/subclass of default.Script.
         return chat_presenter.Chat(self)  # type: ignore[arg-type]
 
-    def get_chat_presenter(self) -> chat_presenter.ChatPresenter:
-        """Returns the chat presenter."""
-
-        return chat_presenter.get_presenter()
-
     def get_spellcheck(self) -> spellcheck.SpellCheck | None:
         """Returns the spellcheck support for this script."""
 
         return None
-
-    def get_caret_navigator(self) -> caret_navigator.CaretNavigator:
-        """Returns the caret navigator for this script."""
-
-        return caret_navigator.get_navigator()
-
-    def get_clipboard_presenter(self) -> clipboard.ClipboardPresenter:
-        """Returns the clipboard presenter for this script."""
-
-        return clipboard.get_presenter()
-
-    def get_debugging_tools_manager(self) -> debugging_tools_manager.DebuggingToolsManager:
-        """Returns the debugging tools manager for this script."""
-
-        return debugging_tools_manager.get_manager()
 
     def get_utilities(self) -> script_utilities.Utilities:
         """Returns the utilities for this script."""
@@ -204,105 +163,6 @@ class Script:
         """Returns the label inference functionality for this script."""
 
         return None
-
-    def get_say_all_presenter(self) -> say_all_presenter.SayAllPresenter:
-        """Returns the 'say all' presenter for this script."""
-
-        return say_all_presenter.get_presenter()
-
-    def get_structural_navigator(self) -> structural_navigator.StructuralNavigator:
-        """Returns the 'structural navigator' class for this script."""
-
-        return structural_navigator.get_navigator()
-
-    def get_typing_echo_presenter(self) -> typing_echo_presenter.TypingEchoPresenter:
-        """Returns the 'typing echo' presenter for this script."""
-
-        return typing_echo_presenter.get_presenter()
-
-    def get_live_region_presenter(self) -> live_region_presenter.LiveRegionPresenter:
-        """Returns the live region presenter for this script."""
-
-        return live_region_presenter.get_presenter()
-
-    def get_notification_presenter(self) -> notification_presenter.NotificationPresenter:
-        """Returns the notification presenter for this script."""
-
-        return notification_presenter.get_presenter()
-
-    def get_flat_review_finder(self) -> flat_review_finder.FlatReviewFinder:
-        """Returns the flat review finder for this script."""
-
-        return flat_review_finder.get_finder()
-
-    def get_flat_review_presenter(self) -> flat_review_presenter.FlatReviewPresenter:
-        """Returns the flat review presenter for this script."""
-
-        return flat_review_presenter.get_presenter()
-
-    def get_system_information_presenter(
-        self
-    ) -> system_information_presenter.SystemInformationPresenter:
-        """Returns the system information presenter for this script."""
-
-        return system_information_presenter.get_presenter()
-
-    def get_object_navigator(self) -> object_navigator.ObjectNavigator:
-        """Returns the object navigator for this script."""
-
-        return object_navigator.get_navigator()
-
-    def get_table_navigator(self) -> table_navigator.TableNavigator:
-        """Returns the table navigator for this script."""
-
-        return table_navigator.get_navigator()
-
-    def get_speech_and_verbosity_manager(
-        self
-    ) -> speech_and_verbosity_manager.SpeechAndVerbosityManager:
-        """Returns the speech and verbosity manager for this script."""
-
-        return speech_and_verbosity_manager.get_manager()
-
-    def get_bypass_mode_manager(self) -> bypass_mode_manager.BypassModeManager:
-        """Returns the bypass mode manager for this script."""
-
-        return bypass_mode_manager.get_manager()
-
-    def get_profile_manager(self) -> profile_manager.ProfileManager:
-        """Returns the profile manager for this script."""
-
-        return profile_manager.get_manager()
-
-    def get_where_am_i_presenter(self) -> where_am_i_presenter.WhereAmIPresenter:
-        """Returns the where-am-I presenter for this script."""
-
-        return where_am_i_presenter.get_presenter()
-
-    def get_learn_mode_presenter(self) -> learn_mode_presenter.LearnModePresenter:
-        """Returns the learn-mode presenter for this script."""
-
-        return learn_mode_presenter.get_presenter()
-
-    def get_action_presenter(self) -> action_presenter.ActionPresenter:
-        """Returns the action presenter for this script."""
-
-        return action_presenter.get_presenter()
-
-    def get_sleep_mode_manager(self) -> sleep_mode_manager.SleepModeManager:
-        """Returns the sleep mode manager for this script."""
-
-        return sleep_mode_manager.get_manager()
-
-    def get_mouse_reviewer(self) -> mouse_review.MouseReviewer:
-        """Returns the mouse reviewer for this script."""
-
-        return mouse_review.get_reviewer()
-
-    def get_event_synthesizer(self) -> ax_event_synthesizer.AXEventSynthesizer:
-        """Returns the event synthesizer for this script."""
-
-        return ax_event_synthesizer.get_synthesizer()
 
     def _get_queued_event(
         self,

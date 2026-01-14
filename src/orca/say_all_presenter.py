@@ -41,6 +41,7 @@ __license__   = "LGPL"
 from enum import Enum
 from typing import Generator, TYPE_CHECKING
 
+from . import ax_event_synthesizer
 from . import cmdnames
 from . import dbus_service
 from . import debug
@@ -52,6 +53,7 @@ from . import messages
 from . import speech
 from . import settings
 from . import speechserver
+from . import structural_navigator
 from .acss import ACSS
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -327,7 +329,7 @@ class SayAllPresenter:
                     tokens = [context]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     self._script.utilities.set_caret_offset(content_obj, start)
-                    self._script.get_event_synthesizer().scroll_into_view(
+                    ax_event_synthesizer.get_synthesizer().scroll_into_view(
                         context.obj, context.start_offset, context.end_offset)
                     yield [context, voice]
 
@@ -439,7 +441,7 @@ class SayAllPresenter:
                 if manager.last_event_was_up() and self._rewind(context):
                     return
                 if settings.structNavInSayAll \
-                   and self._script.get_structural_navigator().\
+                   and structural_navigator.get_navigator().\
                        last_input_event_was_navigation_command():
                     return
                 self._script.interrupt_presentation()

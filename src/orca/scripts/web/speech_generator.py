@@ -45,6 +45,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca import caret_navigator
 from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
@@ -204,7 +205,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if AXUtilities.is_link(obj, args.get("role")) \
-           and self._script.get_caret_navigator().last_input_event_was_navigation_command():
+           and caret_navigator.get_navigator().last_input_event_was_navigation_command():
             return []
 
         return super()._generate_accessible_description(obj, **args)

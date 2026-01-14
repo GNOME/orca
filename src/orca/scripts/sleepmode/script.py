@@ -41,6 +41,7 @@ from orca import debug
 from orca import focus_manager
 from orca import messages
 from orca import orca_modifier_manager
+from orca import sleep_mode_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -92,7 +93,7 @@ class Script(default.Script):
     def get_key_bindings(self, enabled_only: bool = True) -> Any:
         """Defines and returns the key bindings for this script."""
 
-        return self.get_sleep_mode_manager().get_bindings()
+        return sleep_mode_manager.get_manager().get_bindings()
 
     def add_key_grabs(self, reason: str = "") -> None:
         """Adds key grabs for this script."""
@@ -108,7 +109,7 @@ class Script(default.Script):
     def setup_input_event_handlers(self) -> Any:
         """Defines the input event handlers for this script."""
 
-        return self.get_sleep_mode_manager().get_handlers()
+        return sleep_mode_manager.get_manager().get_handlers()
 
     def update_braille(self, obj: Atspi.Accessible, **args: Any) -> None:
         """Updates the braille display to show the give object."""

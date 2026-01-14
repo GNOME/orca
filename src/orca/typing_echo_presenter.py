@@ -48,13 +48,14 @@ from . import braille
 from . import cmdnames
 from . import dbus_service
 from . import debug
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
 from . import settings
+from . import sleep_mode_manager
 from . import speech
 from . import speech_and_verbosity_manager
-from . import guilabels
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -920,7 +921,7 @@ class TypingEchoPresenter:
     def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
 
-        if script.get_sleep_mode_manager().is_active_for_app(script.app):
+        if sleep_mode_manager.get_manager().is_active_for_app(script.app):
             msg = "TYPING ECHO PRESENTER: Ignoring keyboard event, sleep mode active."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return

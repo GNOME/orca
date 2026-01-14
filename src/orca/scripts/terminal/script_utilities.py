@@ -34,6 +34,7 @@ __license__   = "LGPL"
 import re
 from typing import TYPE_CHECKING
 
+from orca import clipboard
 from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
@@ -67,7 +68,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.get_text_event_reason(event) == TextEventReason.AUTO_INSERTION_PRESENTABLE:
             return event.any_data
 
-        if self._script.get_clipboard_presenter().is_clipboard_text_changed_event(event):
+        if clipboard.get_presenter().is_clipboard_text_changed_event(event):
             return event.any_data
 
         start, end = event.detail1, event.detail1 + len(event.any_data)

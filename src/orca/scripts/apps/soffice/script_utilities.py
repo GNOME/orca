@@ -32,11 +32,13 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
+from orca import caret_navigator
 from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
 from orca import messages
 from orca import script_utilities
+from orca import table_navigator
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_table import AXTable
@@ -101,7 +103,7 @@ class Utilities(script_utilities.Utilities):
     ) -> tuple[str, int, int]:
         """Returns the word in obj at the specified or current offset."""
 
-        if self._script.get_caret_navigator().last_input_event_was_navigation_command():
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
             return super().get_word_at_offset_adjusted_for_navigation(obj, offset)
 
         return AXText.get_word_at_offset(obj, offset)
@@ -113,7 +115,7 @@ class Utilities(script_utilities.Utilities):
     ) -> bool:
         """Returns True if the full row in obj should be read."""
 
-        if self._script.get_table_navigator().last_input_event_was_navigation_command():
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
             return False
 
         if input_event_manager.get_manager().last_event_was_tab_navigation():

@@ -42,29 +42,51 @@ __license__   = "LGPL"
 import re
 from typing import Any, Callable, TYPE_CHECKING
 
+from orca import action_presenter
+from orca import ax_event_synthesizer
 from orca import braille
 from orca import braille_presenter
+from orca import bypass_mode_manager
+from orca import caret_navigator
+from orca import chat_presenter
+from orca import clipboard
 from orca import cmdnames
 from orca import command_manager
 from orca import debug
+from orca import debugging_tools_manager
 from orca import event_manager
+from orca import flat_review_finder
+from orca import flat_review_presenter
 from orca import focus_manager
 from orca import guilabels
 from orca import input_event_manager
 from orca import input_event
 from orca import keybindings
+from orca import learn_mode_presenter
+from orca import live_region_presenter
 from orca import messages
+from orca import mouse_review
+from orca import notification_presenter
+from orca import object_navigator
 from orca import orca
 from orca import orca_gui_prefs
 from orca import orca_modifier_manager
 from orca import phonnames
+from orca import profile_manager
+from orca import say_all_presenter
 from orca import script
 from orca import script_manager
 from orca import settings
 from orca import settings_manager
+from orca import sleep_mode_manager
 from orca import sound
 from orca import speech
 from orca import speech_and_verbosity_manager
+from orca import structural_navigator
+from orca import system_information_presenter
+from orca import table_navigator
+from orca import typing_echo_presenter
+from orca import where_am_i_presenter
 
 from orca.acss import ACSS
 from orca.ax_document import AXDocument
@@ -97,28 +119,28 @@ class Script(script.Script):
         """Returns (extension_getter, localized_name) for each extension."""
 
         return [
-            (self.get_notification_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
-            (self.get_clipboard_presenter, guilabels.KB_GROUP_CLIPBOARD),
-            (self.get_say_all_presenter, guilabels.KB_GROUP_DEFAULT),
-            (self.get_typing_echo_presenter, guilabels.KB_GROUP_DEFAULT),
-            (self.get_speech_and_verbosity_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
-            (self.get_bypass_mode_manager, guilabels.KB_GROUP_DEFAULT),
-            (self.get_sleep_mode_manager, guilabels.KB_GROUP_SLEEP_MODE),
-            (self.get_system_information_presenter, guilabels.KB_GROUP_SYSTEM_INFORMATION),
-            (self.get_object_navigator, guilabels.KB_GROUP_OBJECT_NAVIGATION),
-            (self.get_caret_navigator, guilabels.KB_GROUP_CARET_NAVIGATION),
-            (self.get_structural_navigator, guilabels.KB_GROUP_STRUCTURAL_NAVIGATION),
-            (self.get_table_navigator, guilabels.KB_GROUP_TABLE_NAVIGATION),
-            (self.get_live_region_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
-            (self.get_learn_mode_presenter, guilabels.KB_GROUP_LEARN_MODE),
-            (self.get_mouse_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
-            (self.get_action_presenter, guilabels.KB_GROUP_ACTIONS),
-            (self.get_flat_review_presenter, guilabels.KB_GROUP_FLAT_REVIEW),
-            (self.get_flat_review_finder, guilabels.KB_GROUP_FIND),
-            (self.get_where_am_i_presenter, guilabels.KB_GROUP_WHERE_AM_I),
-            (self.get_debugging_tools_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
-            (self.get_chat_presenter, guilabels.KB_GROUP_CHAT),
-            (self.get_profile_manager, guilabels.GENERAL_PROFILES),
+            (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
+            (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
+            (say_all_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
+            (typing_echo_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
+            (speech_and_verbosity_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
+            (bypass_mode_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
+            (sleep_mode_manager.get_manager, guilabels.KB_GROUP_SLEEP_MODE),
+            (system_information_presenter.get_presenter, guilabels.KB_GROUP_SYSTEM_INFORMATION),
+            (object_navigator.get_navigator, guilabels.KB_GROUP_OBJECT_NAVIGATION),
+            (caret_navigator.get_navigator, guilabels.KB_GROUP_CARET_NAVIGATION),
+            (structural_navigator.get_navigator, guilabels.KB_GROUP_STRUCTURAL_NAVIGATION),
+            (table_navigator.get_navigator, guilabels.KB_GROUP_TABLE_NAVIGATION),
+            (live_region_presenter.get_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
+            (learn_mode_presenter.get_presenter, guilabels.KB_GROUP_LEARN_MODE),
+            (mouse_review.get_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
+            (action_presenter.get_presenter, guilabels.KB_GROUP_ACTIONS),
+            (flat_review_presenter.get_presenter, guilabels.KB_GROUP_FLAT_REVIEW),
+            (flat_review_finder.get_finder, guilabels.KB_GROUP_FIND),
+            (where_am_i_presenter.get_presenter, guilabels.KB_GROUP_WHERE_AM_I),
+            (debugging_tools_manager.get_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
+            (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
+            (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
         ]
 
     def setup_input_event_handlers(self) -> None:
@@ -371,17 +393,17 @@ class Script(script.Script):
 
         # TODO - JD: Move these into the extension commands. That will require a new string
         # and GUI change.
-        bypass_mode_bindings = self.get_bypass_mode_manager().get_bindings(
+        bypass_mode_bindings = bypass_mode_manager.get_manager().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in bypass_mode_bindings.key_bindings:
             bindings.add(binding)
 
-        say_all_bindings = self.get_say_all_presenter().get_bindings(
+        say_all_bindings = say_all_presenter.get_presenter().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in say_all_bindings.key_bindings:
             bindings.add(binding)
 
-        typing_echo_bindings = self.get_typing_echo_presenter().get_bindings(
+        typing_echo_bindings = typing_echo_presenter.get_presenter().get_bindings(
             refresh=True, is_desktop=is_desktop)
         for binding in typing_echo_bindings.key_bindings:
             bindings.add(binding)
@@ -427,7 +449,7 @@ class Script(script.Script):
             tokens = ["DEFAULT: Exception getting braille bindings in", self, ":", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        braille_bindings.update(self.get_flat_review_presenter().get_braille_bindings())
+        braille_bindings.update(flat_review_presenter.get_presenter().get_braille_bindings())
 
         msg = "DEFAULT: Finished getting braille bindings."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -448,8 +470,8 @@ class Script(script.Script):
         """Called when this script is deactivated."""
 
         self.point_of_reference = {}
-        if self.get_bypass_mode_manager().is_active():
-            self.get_bypass_mode_manager().toggle_enabled(self)
+        if bypass_mode_manager.get_manager().is_active():
+            bypass_mode_manager.get_manager().toggle_enabled(self)
 
         self.remove_key_grabs("script deactivation")
         input_event_manager.get_manager().check_grabbed_bindings()
@@ -534,14 +556,14 @@ class Script(script.Script):
         if self.run_find_command_on:
             if self.run_find_command_on == new_focus:
                 self.run_find_command_on = None
-                self.get_flat_review_finder().find(self)
+                flat_review_finder.get_finder().find(self)
             return True
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().quit()
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().quit()
 
-        if self.get_learn_mode_presenter().is_active():
-            self.get_learn_mode_presenter().quit()
+        if learn_mode_presenter.get_presenter().is_active():
+            learn_mode_presenter.get_presenter().quit()
 
         active_window = self.utilities.top_level_object(new_focus)
         focus_manager.get_manager().set_active_window(active_window)
@@ -569,12 +591,12 @@ class Script(script.Script):
         settings_manager.get_manager().load_app_settings(self)
 
         # TODO - JD: Should these be moved into check_speech_setting?
-        self.get_speech_and_verbosity_manager().update_punctuation_level()
-        self.get_speech_and_verbosity_manager().update_capitalization_style()
-        self.get_speech_and_verbosity_manager().update_synthesizer()
+        speech_and_verbosity_manager.get_manager().update_punctuation_level()
+        speech_and_verbosity_manager.get_manager().update_capitalization_style()
+        speech_and_verbosity_manager.get_manager().update_synthesizer()
 
-        self.get_structural_navigator().set_mode(self, self._default_sn_mode)
-        self.get_caret_navigator().set_enabled_for_script(
+        structural_navigator.get_navigator().set_mode(self, self._default_sn_mode)
+        caret_navigator.get_navigator().set_enabled_for_script(
             self, self._default_caret_navigation_enabled)
 
         self.add_key_grabs("script activation")
@@ -666,8 +688,8 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
-        if self.get_flat_review_presenter().is_active():
-            return self.get_flat_review_presenter().pan_braille_left(self, event, pan_amount)
+        if flat_review_presenter.get_presenter().is_active():
+            return flat_review_presenter.get_presenter().pan_braille_left(self, event, pan_amount)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
@@ -690,8 +712,8 @@ class Script(script.Script):
             # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
             #
             if not moved_caret and AXUtilities.is_terminal(focus):
-                self.get_flat_review_presenter().go_start_of_line(self, event)
-                self.get_flat_review_presenter().go_previous_character(self, event)
+                flat_review_presenter.get_presenter().go_start_of_line(self, event)
+                flat_review_presenter.get_presenter().go_previous_character(self, event)
         else:
             braille.panLeft(pan_amount)
             # We might be panning through a flashed message.
@@ -729,8 +751,8 @@ class Script(script.Script):
         In flat review mode, the review cursor moves to character
         associated with cell 0."""
 
-        if self.get_flat_review_presenter().is_active():
-            return self.get_flat_review_presenter().pan_braille_right(self, event, pan_amount)
+        if flat_review_presenter.get_presenter().is_active():
+            return flat_review_presenter.get_presenter().pan_braille_right(self, event, pan_amount)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
@@ -756,8 +778,8 @@ class Script(script.Script):
     def go_braille_home(self, event: input_event.InputEvent | None = None) -> bool:
         """Returns to the component with focus."""
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().quit()
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().quit()
             return True
 
         self.interrupt_presentation()
@@ -811,19 +833,19 @@ class Script(script.Script):
 
         AXText.set_selected_text(obj, start_offset, end_offset)
         text = AXText.get_selected_text(obj)[0]
-        self.get_clipboard_presenter().set_text(text)
+        clipboard.get_presenter().set_text(text)
         return True
 
     def route_pointer_to_item(self, event: input_event.InputEvent | None = None) -> bool:
         """Moves the mouse pointer to the current item."""
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().route_pointer_to_object(self, event)
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().route_pointer_to_object(self, event)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.get_event_synthesizer().route_to_character(focus) \
-           or self.get_event_synthesizer().route_to_object(focus):
+        if ax_event_synthesizer.get_synthesizer().route_to_character(focus) \
+           or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
             self.present_message(messages.MOUSE_MOVED_SUCCESS)
             return True
 
@@ -835,21 +857,21 @@ class Script(script.Script):
     def left_click_item(self, event: input_event.InputEvent | None = None) -> bool:
         """Performs a left mouse button click on the current item."""
 
-        if self.get_flat_review_presenter().is_active():
-            obj = self.get_flat_review_presenter().get_current_object(self, event)
-            if self.get_event_synthesizer().try_all_clickable_actions(obj):
+        if flat_review_presenter.get_presenter().is_active():
+            obj = flat_review_presenter.get_presenter().get_current_object(self, event)
+            if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(obj):
                 return True
-            return self.get_flat_review_presenter().left_click_on_object(self, event)
+            return flat_review_presenter.get_presenter().left_click_on_object(self, event)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.get_event_synthesizer().try_all_clickable_actions(focus):
+        if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(focus):
             return True
 
         if AXText.get_character_count(focus):
-            if self.get_event_synthesizer().click_character(focus, None, 1):
+            if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 1):
                 return True
 
-        if self.get_event_synthesizer().click_object(focus, 1):
+        if ax_event_synthesizer.get_synthesizer().click_object(focus, 1):
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
@@ -860,15 +882,15 @@ class Script(script.Script):
     def right_click_item(self, event: input_event.InputEvent | None = None) -> bool:
         """Performs a right mouse button click on the current item."""
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().right_click_on_object(self, event)
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().right_click_on_object(self, event)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.get_event_synthesizer().click_character(focus, None, 3):
+        if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 3):
             return True
 
-        if self.get_event_synthesizer().click_object(focus, 3):
+        if ax_event_synthesizer.get_synthesizer().click_object(focus, 3):
             return True
 
         full = messages.LOCATION_NOT_FOUND_FULL
@@ -970,8 +992,8 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().quit()
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().quit()
 
         offset = AXText.get_caret_offset(event.source)
 
@@ -1203,12 +1225,12 @@ class Script(script.Script):
                  AXObject.find_descendant(event.source, AXUtilities.is_text_input)):
                 return True
         elif AXUtilities.is_page_tab_list(event.source) \
-            and self.get_flat_review_presenter().is_active():
+            and flat_review_presenter.get_presenter().is_active():
             # If a wizard-like notebook page being reviewed changes, we might not get
             # any events to update the locusOfFocus. As a result, subsequent flat
             # review commands will continue to present the stale content.
             # TODO - JD: We can potentially do some automatic reading here.
-            self.get_flat_review_presenter().quit()
+            flat_review_presenter.get_presenter().quit()
 
         selected_children = self.utilities.selected_children(event.source)
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -1217,7 +1239,7 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        mouse_review_item = self.get_mouse_reviewer().get_current_item()
+        mouse_review_item = mouse_review.get_reviewer().get_current_item()
         for child in selected_children:
             if AXObject.is_ancestor(focus, child):
                 tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
@@ -1286,7 +1308,7 @@ class Script(script.Script):
             self.speak_message(self.speech_generator.get_localized_role_name(obj))
             msg = self.utilities.get_notification_content(obj)
             self.present_message(msg, reset_styles=False)
-            self.get_notification_presenter().save_notification(msg)
+            notification_presenter.get_presenter().save_notification(msg)
             return True
 
         if AXUtilities.is_tool_tip(obj):
@@ -1382,7 +1404,7 @@ class Script(script.Script):
         if reason == TextEventReason.LIVE_REGION_UPDATE:
             msg = "DEFAULT: Event is from live region"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.get_live_region_presenter().handle_event(self, event)
+            live_region_presenter.get_presenter().handle_event(self, event)
             return True
 
         speak_string = True
@@ -1429,7 +1451,7 @@ class Script(script.Script):
            or reason not in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
             return True
 
-        presenter = self.get_typing_echo_presenter()
+        presenter = typing_echo_presenter.get_presenter()
         if presenter.echo_previous_sentence(self, event.source):
             return True
 
@@ -1575,11 +1597,11 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.get_flat_review_presenter().is_active():
-            self.get_flat_review_presenter().quit()
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().quit()
 
-        if self.get_learn_mode_presenter().is_active():
-            self.get_learn_mode_presenter().quit()
+        if learn_mode_presenter.get_presenter().is_active():
+            learn_mode_presenter.get_presenter().quit()
 
         self.point_of_reference = {}
 
@@ -1626,7 +1648,7 @@ class Script(script.Script):
         # and table navigation here. Technically that's not been necessary because
         # it won't match anything below. But it would be cleaner to cover each cause
         # explicitly.
-        if self.get_caret_navigator().last_input_event_was_navigation_command():
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "DEFAULT: Event ignored: Last command was caret nav"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1912,12 +1934,12 @@ class Script(script.Script):
         speech_and_verbosity_manager.get_manager().interrupt_speech()
         if kill_flash:
             braille.killFlash()
-        self.get_live_region_presenter().flush_messages()
+        live_region_presenter.get_presenter().flush_messages()
 
     def present_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
 
-        self.get_typing_echo_presenter().echo_keyboard_event(self, event)
+        typing_echo_presenter.get_presenter().echo_keyboard_event(self, event)
 
     def present_message(
         self,

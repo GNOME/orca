@@ -40,24 +40,43 @@ from gi.repository import Pango
 import time
 
 from . import acss
+from . import action_presenter
+from . import braille
+from . import caret_navigator
+from . import chat_presenter
+from . import clipboard
 from . import debug
+from . import debugging_tools_manager
 from . import event_manager
+from . import flat_review_finder
+from . import flat_review_presenter
 from . import guilabels
+from . import input_event
+from . import input_event_manager
+from . import keybindings
+from . import learn_mode_presenter
+from . import live_region_presenter
 from . import messages
+from . import mouse_review
+from . import notification_presenter
+from . import object_navigator
 from . import orca
 from . import orca_gtkbuilder
 from . import orca_gui_profile
 from . import orca_platform # pylint: disable=no-name-in-module
+from . import profile_manager
+from . import pronunciation_dict
 from . import script_manager
 from . import settings
 from . import settings_manager
-from . import input_event
-from . import input_event_manager
-from . import keybindings
-from . import pronunciation_dict
-from . import braille
+from . import sleep_mode_manager
 from . import speech_and_verbosity_manager
 from . import speechserver
+from . import structural_navigator
+from . import system_information_presenter
+from . import table_navigator
+from . import typing_echo_presenter
+from . import where_am_i_presenter
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 
@@ -344,7 +363,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.window = self.get_widget("orcaSetupWindow")
 
-        presenter = self.script.get_typing_echo_presenter()
+        presenter = typing_echo_presenter.get_presenter()
         self.typing_echo_grid = presenter.create_preferences_grid()
         notebook = self.get_widget("notebook")
         echo_label = Gtk.Label(label=guilabels.ECHO)
@@ -2117,43 +2136,43 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.script.setup_input_event_handlers()
             allKeyBindings = self.script.get_key_bindings(False)
             defKeyBindings = self.script.get_default_keybindings_deprecated()
-            npKeyBindings = self.script.get_notification_presenter().get_bindings(
+            npKeyBindings = notification_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            cbKeyBindings = self.script.get_clipboard_presenter().get_bindings(
+            cbKeyBindings = clipboard.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            svKeyBindings = self.script.get_speech_and_verbosity_manager().get_bindings(
+            svKeyBindings = speech_and_verbosity_manager.get_manager().get_bindings(
                 is_desktop=isDesktop)
-            sysKeyBindings = self.script.get_system_information_presenter().get_bindings(
+            sysKeyBindings = system_information_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            smKeyBindings = self.script.get_sleep_mode_manager().get_bindings(
+            smKeyBindings = sleep_mode_manager.get_manager().get_bindings(
                 is_desktop=isDesktop)
-            onKeyBindings = self.script.get_object_navigator().get_bindings(
+            onKeyBindings = object_navigator.get_navigator().get_bindings(
                 is_desktop=isDesktop)
-            cnKeyBindings = self.script.get_caret_navigator().get_bindings(
+            cnKeyBindings = caret_navigator.get_navigator().get_bindings(
                 is_desktop=isDesktop)
-            snKeyBindings = self.script.get_structural_navigator().get_bindings(
+            snKeyBindings = structural_navigator.get_navigator().get_bindings(
                 is_desktop=isDesktop)
-            tnKeyBindings = self.script.get_table_navigator().get_bindings(
+            tnKeyBindings = table_navigator.get_navigator().get_bindings(
                 is_desktop=isDesktop)
-            lrKeyBindings = self.script.get_live_region_presenter().get_bindings(
+            lrKeyBindings = live_region_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            lmKeyBindings = self.script.get_learn_mode_presenter().get_bindings(
+            lmKeyBindings = learn_mode_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            mrKeyBindings = self.script.get_mouse_reviewer().get_bindings(
+            mrKeyBindings = mouse_review.get_reviewer().get_bindings(
                 is_desktop=isDesktop)
-            acKeyBindings = self.script.get_action_presenter().get_bindings(
+            acKeyBindings = action_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            frKeyBindings = self.script.get_flat_review_presenter().get_bindings(
+            frKeyBindings = flat_review_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            findKeyBindings = self.script.get_flat_review_finder().get_bindings(
+            findKeyBindings = flat_review_finder.get_finder().get_bindings(
                 is_desktop=isDesktop)
-            waiKeyBindings = self.script.get_where_am_i_presenter().get_bindings(
+            waiKeyBindings = where_am_i_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            debuggingKeyBindings = self.script.get_debugging_tools_manager().get_bindings(
+            debuggingKeyBindings = debugging_tools_manager.get_manager().get_bindings(
                 is_desktop=isDesktop)
-            chatKeyBindings = self.script.get_chat_presenter().get_bindings(
+            chatKeyBindings = chat_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
-            pmKeyBindings = self.script.get_profile_manager().get_bindings(
+            pmKeyBindings = profile_manager.get_manager().get_bindings(
                 is_desktop=isDesktop)
 
             for kb in allKeyBindings.key_bindings:
@@ -2627,7 +2646,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_SPELL
         else:
             self.prefsDict["capitalizationStyle"] = settings.CAPITALIZATION_STYLE_NONE
-        self.script.get_speech_and_verbosity_manager().update_capitalization_style()
+        speech_and_verbosity_manager.get_manager().update_capitalization_style()
 
     def sayAllStyleChanged(self, widget):
         """Signal handler for the "changed" signal for the sayAllStyle
@@ -3114,7 +3133,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.script.get_learn_mode_presenter().show_help(page="preferences")
+        learn_mode_presenter.get_presenter().show_help(page="preferences")
 
     def restoreSettings(self):
         """Restore the settings we saved away when opening the preferences

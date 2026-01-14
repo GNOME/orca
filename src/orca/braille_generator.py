@@ -47,6 +47,7 @@ from . import focus_manager
 from . import generator
 from . import messages
 from . import object_properties
+from . import table_navigator
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -274,7 +275,7 @@ class BrailleGenerator(generator.Generator):
     def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not braille_presenter.get_presenter().get_display_ancestors():
             return []
-        if self._script.get_table_navigator().last_input_event_was_navigation_command():
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
             return []
 
         result: list[Any] = []
@@ -363,7 +364,7 @@ class BrailleGenerator(generator.Generator):
         if args.get("isProgressBarUpdate"):
             return []
 
-        if self._script.get_table_navigator().last_input_event_was_navigation_command():
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
             return []
 
         # For multiline text areas, we only show the context if we are on the very first line,

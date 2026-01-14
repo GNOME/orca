@@ -50,7 +50,9 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from orca import caret_navigator
 from orca import debug
+from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
 from orca import script_utilities
@@ -232,8 +234,8 @@ class Utilities(script_utilities.Utilities):
         offset: int,
         document: Atspi.Accessible | None = None
     ) -> None:
-        if self._script.get_flat_review_presenter().is_active():
-            self._script.get_flat_review_presenter().quit()
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().quit()
         grab_focus = self.grab_focus_when_setting_caret(obj)
 
         obj, offset = self.first_context(obj, offset)
@@ -1833,7 +1835,7 @@ class Utilities(script_utilities.Utilities):
 
     def _advance_caret_in_empty_object(self, obj: Atspi.Accessible) -> bool:
         if AXUtilities.is_table_cell(obj) and not self.treat_as_text_object(obj):
-            return not self._script.get_caret_navigator().last_input_event_was_navigation_command()
+            return not caret_navigator.get_navigator().last_input_event_was_navigation_command()
 
         return True
 
@@ -2521,7 +2523,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = self._cached_should_infer_label_for.get(hash(obj))
-        if rv and not self._script.get_caret_navigator().last_input_event_was_navigation_command():
+        if rv and not caret_navigator.get_navigator().last_input_event_was_navigation_command():
             return not focus_manager.get_manager().in_say_all()
         if rv is False:
             return rv
@@ -2541,7 +2543,7 @@ class Utilities(script_utilities.Utilities):
             rv = role in roles and not AXUtilities.get_displayed_label(obj)
 
         self._cached_should_infer_label_for[hash(obj)] = rv
-        if self._script.get_caret_navigator().last_input_event_was_navigation_command() \
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command() \
            and role not in [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]:
             return False
 
