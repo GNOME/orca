@@ -1705,13 +1705,13 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         # Left arrow: exit nested group first, then move to sidebar
         if event.keyval == Gdk.KEY_Left:
-            parent: Gtk.Widget | None = self
-            while parent is not None:
-                if isinstance(parent, PreferencesGridBase):
-                    if parent._is_in_multipage_detail():
-                        parent._multipage_show_categories()
+            widget: Gtk.Widget | None = self
+            while widget is not None:
+                if isinstance(widget, PreferencesGridBase):
+                    if widget._is_in_multipage_detail():
+                        widget._multipage_show_categories()
                         return True
-                parent = parent.get_parent()
+                widget = widget.get_parent()
             self._focus_sidebar()
             return True
 

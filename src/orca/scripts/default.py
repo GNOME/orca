@@ -274,6 +274,15 @@ class Script(script.Script):
         listeners["window:destroy"] = self.on_window_destroyed
         return listeners
 
+    def register_commands(self) -> None:
+        """Updates command keybindings from settings."""
+
+        tokens = ["DEFAULT: Updating command keybindings for", self]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+
+        # get_key_bindings() updates Commands as a side effect while building KeyBindings
+        self.get_key_bindings(enabled_only=False)
+
     def get_key_bindings(self, enabled_only: bool = True) -> keybindings.KeyBindings:
         """Returns the key bindings for this script."""
 
@@ -1313,7 +1322,7 @@ class Script(script.Script):
 
         if AXUtilities.is_tool_tip(obj):
             was_f1 = input_event_manager.get_manager().last_event_was_f1()
-            if not was_f1 and not settings.presentToolTips:
+            if not was_f1 and not mouse_review.get_reviewer().get_present_tooltips():
                 return True
             if event.detail1:
                 self.present_object(obj, interrupt=True)

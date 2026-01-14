@@ -202,7 +202,7 @@ class SpeechGenerator(generator.Generator):
         if not manager.get_insert_pauses_between_utterances() or args.get("eliminatePauses", False):
             return []
 
-        if settings.verbalizePunctuationStyle == settings.PUNCTUATION_STYLE_ALL:
+        if speech_and_verbosity_manager.get_manager().get_punctuation_level() == "all":
             return []
 
         return PAUSE
@@ -316,9 +316,6 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         if not speech_and_verbosity_manager.get_manager().get_speak_description() \
            or self._only_speak_displayed_text():
-            return []
-
-        if args.get("inMouseReview") and not settings.presentToolTips:
             return []
 
         prior_obj = args.get("priorObj")

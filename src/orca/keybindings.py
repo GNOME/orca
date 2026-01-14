@@ -215,7 +215,7 @@ class KeyBinding:
             # Old signature: (keysymstring, modifier_mask, modifiers, handler, ...)
             # Shift arguments: ignore modifier_mask, use modifiers as handler's modifiers
             modifiers = handler
-            handler = click_count
+            handler = click_count  # type: ignore[assignment]
             click_count = enabled if isinstance(enabled, int) else 1
             enabled = True
 

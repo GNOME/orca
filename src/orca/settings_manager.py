@@ -437,6 +437,11 @@ class SettingsManager:
 
         return self._profile
 
+    def get_settings_file_path(self) -> str:
+        """Returns the path to the settings file."""
+
+        return self._settings_file
+
     def set_profile(self, profile: str = "default", update_locale: bool = False) -> None:
         """Set a specific profile as the active one and update settings accordingly."""
 

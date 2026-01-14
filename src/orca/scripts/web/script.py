@@ -492,7 +492,7 @@ class Script(default.Script):
     def in_layout_mode(self) -> bool:
         """ Returns True if we're in layout mode."""
 
-        return settings.layoutMode
+        return caret_navigator.get_navigator().get_layout_mode()
 
     def in_focus_mode(self) -> bool:
         """ Returns True if we're in focus mode."""
@@ -943,13 +943,14 @@ class Script(default.Script):
     ) -> bool:
         """Switches between object mode and layout mode for line presentation."""
 
-        layout_mode = not settings.layoutMode
+        navigator = caret_navigator.get_navigator()
+        layout_mode = not navigator.get_layout_mode()
         if notify_user:
             if layout_mode:
                 self.present_message(messages.MODE_LAYOUT)
             else:
                 self.present_message(messages.MODE_OBJECT)
-        settings.layoutMode = layout_mode
+        navigator.set_layout_mode(layout_mode)
         return True
 
     def toggle_presentation_mode(

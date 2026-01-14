@@ -56,7 +56,6 @@ from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
 from orca import script_utilities
-from orca import settings
 from orca import speech_and_verbosity_manager
 from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
@@ -1209,7 +1208,7 @@ class Utilities(script_utilities.Utilities):
                 return self._cached_line_contents or []
 
         if layout_mode is None:
-            layout_mode = settings.layoutMode \
+            layout_mode = caret_navigator.get_navigator().get_layout_mode() \
                 or self._script.in_focus_mode()
 
         objects = []

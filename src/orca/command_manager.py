@@ -552,7 +552,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if key_name:
                     new_kb = keybindings.KeyBinding(
                         key_name,
-                        keybindings.DEFAULT_MODIFIER_MASK,
                         modifiers,
                         command.get_handler(),
                         click_count
@@ -782,7 +781,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if key_name:
                     new_kb = keybindings.KeyBinding(
                         key_name,
-                        keybindings.DEFAULT_MODIFIER_MASK,
                         modifiers,
                         command.get_handler(),
                         click_count
@@ -1055,24 +1053,24 @@ class CommandManager:
         """Adds key grabs for the specified command."""
 
         cmd = self.get_command(handler_name)
-        if cmd is None or cmd.get_keybinding() is None:
+        if cmd is None or (kb := cmd.get_keybinding()) is None:
             return
-        cmd.get_keybinding().add_grabs()
+        kb.add_grabs()
 
     def remove_grabs_for_command(self, handler_name: str) -> None:
         """Removes key grabs for the specified command."""
 
         cmd = self.get_command(handler_name)
-        if cmd is None or cmd.get_keybinding() is None:
+        if cmd is None or (kb := cmd.get_keybinding()) is None:
             return
-        cmd.get_keybinding().remove_grabs()
+        kb.remove_grabs()
 
     def add_grabs_for_group(self, group_label: str) -> None:
         """Adds key grabs for all active commands in a group."""
 
         for cmd in self.get_commands_by_group_label(group_label):
-            if cmd.is_active():
-                cmd.get_keybinding().add_grabs()
+            if cmd.is_active() and (kb := cmd.get_keybinding()) is not None:
+                kb.add_grabs()
 
     def remove_grabs_for_group(self, group_label: str) -> None:
         """Removes key grabs for all commands in a group."""
