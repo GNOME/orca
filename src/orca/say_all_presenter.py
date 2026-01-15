@@ -387,6 +387,14 @@ class SayAllPresenter:
 
         prev_obj, prev_offset = None, None
         while obj:
+            if obj == prev_obj and offset == prev_offset:
+                obj, offset = self._script.utilities.next_context(obj, offset)
+                tokens = ["SAY ALL PRESENTER: Stuck at", prev_obj, f"offset {prev_offset}.",
+                          "Moving to", obj, f"offset {offset}."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                continue
+            prev_obj, prev_offset = obj, offset
+
             if say_all_by_sentence:
                 contents = self._script.utilities.get_sentence_contents_at_offset(obj, offset)
             else:
@@ -394,10 +402,6 @@ class SayAllPresenter:
                     obj, offset, layout_mode=True, use_cache=False)
 
             contents = self._script.utilities.filter_contents_for_presentation(contents)
-            if obj == prev_obj and offset == prev_offset:
-                obj, offset = self._script.utilities.next_context(obj, offset)
-                continue
-            prev_obj, prev_offset = obj, offset
             self._contents.extend(contents)
             for i, content in enumerate(contents):
                 content_obj, start, end, text = content
