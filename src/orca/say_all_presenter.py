@@ -385,6 +385,7 @@ class SayAllPresenter:
         if AXUtilities.is_text(obj) or AXUtilities.is_terminal(obj):
             restrict_to = obj
 
+        prev_obj, prev_offset = None, None
         while obj:
             if say_all_by_sentence:
                 contents = self._script.utilities.get_sentence_contents_at_offset(obj, offset)
@@ -393,6 +394,10 @@ class SayAllPresenter:
                     obj, offset, layout_mode=True, use_cache=False)
 
             contents = self._script.utilities.filter_contents_for_presentation(contents)
+            if obj == prev_obj and offset == prev_offset:
+                obj, offset = self._script.utilities.next_context(obj, offset)
+                continue
+            prev_obj, prev_offset = obj, offset
             self._contents.extend(contents)
             for i, content in enumerate(contents):
                 content_obj, start, end, text = content
