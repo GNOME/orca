@@ -55,6 +55,7 @@ if TYPE_CHECKING:
     from .input_event import InputEvent
     from .scripts import default
 
+CARET_TRACKING = "caret-tracking"
 CARET_NAVIGATOR = "caret-navigator"
 FOCUS_TRACKING = "focus-tracking"
 FLAT_REVIEW = "flat-review"
