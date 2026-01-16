@@ -176,6 +176,19 @@ class FocusManager:
 
         return self._active_mode == SAY_ALL
 
+    def reset_active_mode(self, reason: str = "") -> None:
+        """Resets the active mode."""
+
+        msg = "FOCUS MANAGER: Resetting active mode"
+        if reason:
+            msg += f": {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._focus is not None:
+            self._active_mode = FOCUS_TRACKING
+            self._focus.emit("mode-changed::" + FOCUS_TRACKING, 1, reason)
+        else:
+            self._active_mode = None
+
     def get_active_mode_and_object_of_interest(
         self
     ) -> tuple[str | None, Atspi.Accessible | None]:

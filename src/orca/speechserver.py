@@ -33,6 +33,8 @@ __license__   = "LGPL"
 
 from typing import Any, Callable, Iterator, TYPE_CHECKING
 
+from .ax_utilities_debugging import AXUtilitiesDebugging
+
 if TYPE_CHECKING:
     import gi
     gi.require_version("Atspi", "2.0")
@@ -90,8 +92,9 @@ class SayAllContext:
         self.current_end_offset = None
 
     def __str__(self) -> str:
+        obj_string = AXUtilitiesDebugging.as_string(self.obj)
         return (
-            f"SAY ALL: {self.obj} '{self.utterance}' ({self.start_offset}-{self.end_offset}, "
+            f"SAY ALL: {obj_string} '{self.utterance}' ({self.start_offset}-{self.end_offset}, "
             f"current: {self.current_offset})"
         )
 

@@ -331,6 +331,15 @@ class SayAllPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._fast_forward(None, True)
 
+    def stop(self) -> None:
+        """Stops the current Say All."""
+
+        self._contexts = []
+        self._contents = []
+        self._current_context = None
+        self._say_all_is_running = False
+        focus_manager.get_manager().reset_active_mode("SAY ALL PRESENTER: Stopped Say All.")
+
     def _parse_utterances(
         self,
         utterances: list[str | ACSS | list]
@@ -458,10 +467,7 @@ class SayAllPresenter:
                 tokens = ["SAY ALL PRESENTER: Updating focus to", obj]
                 focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
 
-        self._contexts = []
-        self._contents = []
-        self._current_context = None
-        self._say_all_is_running = False
+        self.stop()
 
     def _rewind(
         self,

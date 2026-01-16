@@ -760,3 +760,55 @@ class TestFocusManager:
         mock_event = test_context.Mock()
         focus_manager.set_locus_of_focus(mock_event, mock_obj, force=True)
         essential_modules["orca.debug"].print_tokens.assert_called()
+
+    def test_reset_active_mode_with_focus(self, test_context: OrcaTestContext) -> None:
+        """Test reset_active_mode sets FOCUS_TRACKING and emits signal when focus exists."""
+
+        self._setup_dependencies(test_context)
+        from orca.focus_manager import FocusManager, FOCUS_TRACKING
+
+        manager = FocusManager()
+        mock_focus = test_context.Mock(spec=Atspi.Accessible)
+        mock_focus.emit = test_context.Mock()
+        manager._focus = mock_focus
+        manager._active_mode = "say-all"
+
+        manager.reset_active_mode("test reason")
+
+        assert manager._active_mode == FOCUS_TRACKING
+        mock_focus.emit.assert_called_once_with(
+            "mode-changed::" + FOCUS_TRACKING, 1, "test reason"
+        )
+
+    def test_reset_active_mode_without_focus(self, test_context: OrcaTestContext) -> None:
+        """Test reset_active_mode sets None when focus is None."""
+
+        self._setup_dependencies(test_context)
+        from orca.focus_manager import FocusManager
+
+        manager = FocusManager()
+        manager._focus = None
+        manager._active_mode = "say-all"
+
+        manager.reset_active_mode()
+
+        assert manager._active_mode is None
+
+    def test_reset_active_mode_without_reason(self, test_context: OrcaTestContext) -> None:
+        """Test reset_active_mode works without a reason string."""
+
+        self._setup_dependencies(test_context)
+        from orca.focus_manager import FocusManager, FOCUS_TRACKING
+
+        manager = FocusManager()
+        mock_focus = test_context.Mock(spec=Atspi.Accessible)
+        mock_focus.emit = test_context.Mock()
+        manager._focus = mock_focus
+        manager._active_mode = "say-all"
+
+        manager.reset_active_mode()
+
+        assert manager._active_mode == FOCUS_TRACKING
+        mock_focus.emit.assert_called_once_with(
+            "mode-changed::" + FOCUS_TRACKING, 1, ""
+        )

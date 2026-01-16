@@ -881,3 +881,54 @@ class TestSayAllPresenter:
             f"Expected next_context to be called with offset {expected_next_context_offset}, "
             f"but was called with {actual_offset}"
         )
+
+    def test_stop_clears_all_state(self, test_context: OrcaTestContext) -> None:
+        """Test SayAllPresenter.stop clears contexts, contents, current_context and running flag."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca import speechserver  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        presenter._contexts = [test_context.Mock(spec=speechserver.SayAllContext)]
+        presenter._contents = [("obj", 0, 5, "text")]
+        presenter._current_context = test_context.Mock(spec=speechserver.SayAllContext)
+        presenter._say_all_is_running = True
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+
+        presenter.stop()
+
+        assert presenter._contexts == []
+        assert presenter._contents == []
+        assert presenter._current_context is None
+        assert presenter._say_all_is_running is False
+        manager_instance.reset_active_mode.assert_called_once_with(
+            "SAY ALL PRESENTER: Stopped Say All."
+        )
+
+    def test_stop_from_empty_state(self, test_context: OrcaTestContext) -> None:
+        """Test SayAllPresenter.stop works correctly when already in empty state."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+
+        presenter = SayAllPresenter()
+        assert presenter._contexts == []
+        assert presenter._contents == []
+        assert presenter._current_context is None
+        assert presenter._say_all_is_running is False
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+
+        presenter.stop()
+
+        assert presenter._contexts == []
+        assert presenter._contents == []
+        assert presenter._current_context is None
+        assert presenter._say_all_is_running is False
+        manager_instance.reset_active_mode.assert_called_once()
