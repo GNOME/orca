@@ -1342,6 +1342,7 @@ class StructuralNavigator:
             presenter.say_all(script, event=None, obj=obj, offset=offset)
             return
 
+        manager.emit_region_changed(obj, offset, mode=focus_manager.STRUCTURAL_NAVIGATOR)
         if not notify_user:
             msg = "STRUCTURAL NAVIGATOR: _present_line called with notify_user=False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1369,27 +1370,27 @@ class StructuralNavigator:
         if offset is None:
             offset = 0
 
+        manager = focus_manager.get_manager()
         if self.get_mode(script) == NavigationMode.GUI:
-            focus_manager.get_manager().set_locus_of_focus(None, obj)
+            manager.set_locus_of_focus(None, obj)
             AXObject.grab_focus(obj)
             AXObject.clear_cache(obj, False, "Checking state after focus grab")
             if not AXUtilities.is_focused(obj) and notify_user:
                 script.present_message(messages.NOT_FOCUSED)
             return
 
-        manager = focus_manager.get_manager()
         presenter = say_all_presenter.get_presenter()
         if manager.in_say_all() and presenter.get_structural_navigation_enabled():
             presenter.say_all(script, event=None, obj=obj, offset=offset)
             return
 
+        manager.emit_region_changed(obj, offset, mode=focus_manager.STRUCTURAL_NAVIGATOR)
         if not notify_user:
             msg = "STRUCTURAL NAVIGATOR: _present_object called with notify_user=False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             manager.set_locus_of_focus(None, obj, False)
             if AXObject.supports_text(obj):
                 script.utilities.set_caret_position(obj, offset)
-
             return
 
         script.present_object(obj, offset=offset, interrupt=True)

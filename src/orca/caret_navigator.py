@@ -611,6 +611,8 @@ class CaretNavigator:
         self._last_input_event = event
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR)
         if not notify_user:
             return True
 
@@ -638,6 +640,8 @@ class CaretNavigator:
         self._last_input_event = event
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR)
         if not notify_user:
             return True
 
@@ -675,7 +679,7 @@ class CaretNavigator:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = contents[:-1]
 
-        obj, end, string = contents[-1][0], contents[-1][2], contents[-1][3]
+        obj, start, end, string = contents[-1]
         if not self._is_navigable_object(script, obj):
             return False
 
@@ -685,6 +689,8 @@ class CaretNavigator:
         self._last_input_event = event
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
         if not notify_user:
             return True
 
@@ -713,13 +719,16 @@ class CaretNavigator:
         if not contents:
             return False
 
-        obj, start = contents[0][0], contents[0][1]
+        obj, start, end, _string = contents[0]
         if not self._is_navigable_object(script, obj):
             return False
 
         self._last_input_event = event
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
+
         if not notify_user:
             return True
 
@@ -772,10 +781,14 @@ class CaretNavigator:
         script.interrupt_presentation()
 
         if line != contents:
-            obj, offset = contents[0][0], contents[0][1]
+            obj, offset, end, _string = contents[0]
         else:
-            obj, offset = contents[-1][0], contents[-1][2]
+            obj, offset, end, _string = contents[-1]
+
         script.utilities.set_caret_position(obj, offset)
+        focus_manager.get_manager().emit_region_changed(
+            obj, offset, end, focus_manager.CARET_NAVIGATOR)
+
         if not notify_user:
             return True
 
@@ -822,13 +835,16 @@ class CaretNavigator:
         if not contents:
             return False
 
-        obj, start = contents[0][0], contents[0][1]
+        obj, start, end, _string = contents[0]
         if not self._is_navigable_object(script, obj):
             return False
 
         self._last_input_event = event
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
+
         if not notify_user:
             return True
 
@@ -856,9 +872,12 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
-        obj, start = line[0][0], line[0][1]
+        obj, start, end, _string = line[0]
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
+
         if not notify_user:
             return True
 
@@ -884,13 +903,16 @@ class CaretNavigator:
         if not (line and line[0]):
             return False
 
-        obj, end, string = line[-1][0], line[-1][2], line[-1][3]
+        obj, start, end, string = line[-1]
         if string.strip() and string[-1].isspace():
             end -= 1
 
         self._last_input_event = event
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
+
         if not notify_user:
             return True
 
@@ -911,18 +933,21 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        obj, offset = self._get_start_of_file(script)
+        obj, start = self._get_start_of_file(script)
         if obj is None:
             return False
 
-        contents = script.utilities.get_line_contents_at_offset(obj, offset)
+        contents = script.utilities.get_line_contents_at_offset(obj, start)
         if not contents:
             return False
 
         self._last_input_event = event
-        obj, offset = contents[0][0], contents[0][1]
+        obj, start, end, _string = contents[0]
         script.interrupt_presentation()
-        script.utilities.set_caret_position(obj, offset)
+        script.utilities.set_caret_position(obj, start)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
+
         if not notify_user:
             return True
 
@@ -943,18 +968,20 @@ class CaretNavigator:
                   "Event:", event, "notify_user:", notify_user]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        obj, offset = self._get_end_of_file(script)
+        obj, end = self._get_end_of_file(script)
         if obj is None:
             return False
 
-        contents = script.utilities.get_line_contents_at_offset(obj, offset)
+        contents = script.utilities.get_line_contents_at_offset(obj, end)
         if not contents:
             return False
 
         self._last_input_event = event
-        obj, offset = contents[-1][0], contents[-1][2]
+        obj, start, end, _string = contents[-1]
         script.interrupt_presentation()
-        script.utilities.set_caret_position(obj, offset)
+        script.utilities.set_caret_position(obj, end)
+        focus_manager.get_manager().emit_region_changed(
+            obj, start, end, focus_manager.CARET_NAVIGATOR)
         if not notify_user:
             return True
 

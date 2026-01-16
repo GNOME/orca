@@ -942,7 +942,10 @@ class TableNavigator:
             AXObject.grab_focus(cell)
 
         obj = AXObject.find_descendant(cell, AXObject.supports_text) or cell
-        focus_manager.get_manager().set_locus_of_focus(None, obj, False)
+        focus_mgr = focus_manager.get_manager()
+        focus_mgr.set_locus_of_focus(None, obj, False)
+        focus_mgr.emit_region_changed(obj, mode=focus_manager.TABLE_NAVIGATOR)
+
         if AXObject.supports_text(obj) and not script.utilities.is_gui_cell(cell):
             script.utilities.set_caret_position(obj, 0)
 

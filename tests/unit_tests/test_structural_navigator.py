@@ -1704,3 +1704,60 @@ class TestStructuralNavigator:
         nav._last_input_event = mock_event
         result = nav.last_command_prevents_focus_mode()
         assert result is False
+
+    def test_present_line_emits_region_changed(self, test_context: OrcaTestContext) -> None:
+        """Test _present_line emits region_changed with STRUCTURAL_NAVIGATOR mode."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.structural_navigator import get_navigator, NavigationMode
+        from orca import focus_manager
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+        manager_instance.in_say_all.return_value = False
+        focus_manager_mock.STRUCTURAL_NAVIGATOR = focus_manager.STRUCTURAL_NAVIGATOR
+
+        nav = get_navigator()
+        mock_script = test_context.Mock()
+        mock_obj = test_context.Mock()
+        test_offset = 5
+
+        test_context.patch_object(nav, "get_mode", return_value=NavigationMode.DOCUMENT)
+        mock_script.utilities.get_line_contents_at_offset.return_value = [
+            (mock_obj, test_offset, test_offset + 10, "test text")
+        ]
+
+        nav._present_line(mock_script, mock_obj, test_offset, notify_user=True)
+
+        manager_instance.emit_region_changed.assert_called()
+        call_kwargs = manager_instance.emit_region_changed.call_args
+        assert call_kwargs.kwargs.get("mode") == focus_manager.STRUCTURAL_NAVIGATOR
+
+    def test_present_object_emits_region_changed_in_document_mode(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test _present_object emits region_changed with STRUCTURAL_NAVIGATOR mode."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.structural_navigator import get_navigator, NavigationMode
+        from orca import focus_manager
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+        manager_instance.in_say_all.return_value = False
+        focus_manager_mock.STRUCTURAL_NAVIGATOR = focus_manager.STRUCTURAL_NAVIGATOR
+
+        nav = get_navigator()
+        mock_script = test_context.Mock()
+        mock_obj = test_context.Mock()
+        test_offset = 10
+
+        test_context.patch_object(nav, "get_mode", return_value=NavigationMode.DOCUMENT)
+
+        nav._present_object(mock_script, mock_obj, test_offset, notify_user=True)
+
+        manager_instance.emit_region_changed.assert_called()
+        call_kwargs = manager_instance.emit_region_changed.call_args
+        assert call_kwargs.kwargs.get("mode") == focus_manager.STRUCTURAL_NAVIGATOR

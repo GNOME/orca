@@ -975,3 +975,40 @@ class TestCaretNavigator:
         )
         result = navigator.last_command_prevents_focus_mode()
         assert result is False
+
+    def test_successful_navigation_emits_region_changed(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test successful caret navigation emits region_changed with CARET_NAVIGATOR mode."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator
+        from orca import focus_manager
+
+        ax_object_mock = essential_modules["orca.ax_object"]
+        ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None
+        ax_object_mock.AXObject.is_valid.side_effect = lambda obj: obj is not None
+        ax_object_mock.AXObject.is_ancestor.side_effect = (
+            lambda obj, root, same: obj is not None and root is not None
+        )
+
+        focus_manager_mock = essential_modules["orca.focus_manager"]
+        manager_instance = test_context.Mock()
+        focus_manager_mock.get_manager.return_value = manager_instance
+        focus_manager_mock.CARET_NAVIGATOR = focus_manager.CARET_NAVIGATOR
+
+        navigator = CaretNavigator()
+        test_context.patch_object(navigator, "_get_root_object", return_value=None)
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+        mock_obj = test_context.Mock()
+
+        mock_script.utilities.next_context.return_value = (mock_obj, 10)
+
+        result = navigator.next_character(mock_script, mock_event)
+
+        assert result is True
+        manager_instance.emit_region_changed.assert_called()
+        call_kwargs = manager_instance.emit_region_changed.call_args
+        assert call_kwargs.kwargs.get("mode") == focus_manager.CARET_NAVIGATOR

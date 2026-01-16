@@ -2236,3 +2236,55 @@ class TestTableNavigator:
         nav = get_navigator()
         result = nav.set_skip_blank_cells(True)
         assert result is True
+
+    def test_present_cell_emits_region_changed(self, test_context: OrcaTestContext) -> None:
+        """Test _present_cell emits region_changed with TABLE_NAVIGATOR mode."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        test_context.patch(
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=True
+        )
+        test_context.patch(
+            "orca.table_navigator.AXObject.grab_focus", return_value=None
+        )
+        test_context.patch(
+            "orca.table_navigator.AXObject.find_descendant", return_value=None
+        )
+        test_context.patch(
+            "orca.table_navigator.AXObject.supports_text", return_value=False
+        )
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_spans", return_value=(1, 1)
+        )
+        mock_focus_manager = test_context.Mock()
+        essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
+        essential_modules["orca.settings"].skipBlankCells = False
+        essential_modules["orca.settings"].speakCellCoordinates = False
+        essential_modules["orca.settings"].speakCellSpan = False
+
+        from orca import focus_manager
+        essential_modules["orca.focus_manager"].TABLE_NAVIGATOR = focus_manager.TABLE_NAVIGATOR
+
+        mock_controller = test_context.Mock()
+        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
+        mock_keybindings_class = test_context.Mock()
+        mock_keybindings_instance = test_context.Mock()
+        mock_keybindings_class.return_value = mock_keybindings_instance
+        test_context.patch(
+            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+        )
+        from orca.table_navigator import TableNavigator
+
+        navigator = TableNavigator()
+        mock_script = test_context.Mock()
+        mock_script.utilities.grab_focus_when_setting_caret.return_value = False
+        mock_script.utilities.is_gui_cell.return_value = False
+        mock_script.present_object = test_context.Mock()
+        mock_cell = test_context.Mock(spec=Atspi.Accessible)
+        mock_previous_cell = test_context.Mock(spec=Atspi.Accessible)
+
+        navigator._present_cell(mock_script, mock_cell, 1, 2, mock_previous_cell)
+
+        mock_focus_manager.emit_region_changed.assert_called()
+        call_kwargs = mock_focus_manager.emit_region_changed.call_args
+        assert call_kwargs.kwargs.get("mode") == focus_manager.TABLE_NAVIGATOR
