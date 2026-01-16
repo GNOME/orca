@@ -1842,7 +1842,7 @@ class Script(default.Script):
 
             obj, offset = self.utilities.search_for_caret_context(event.source)
             if obj:
-                notify = self.utilities.in_find_container(focus)
+                notify = focus is None or self.utilities.in_find_container(focus)
                 tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
