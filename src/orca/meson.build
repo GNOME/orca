@@ -139,6 +139,7 @@ lib_sources = [
   'system_information_presenter.py',
   'table_navigator.py',
   'text_attribute_names.py',
+  'text_attribute_manager.py',
   'typing_echo_presenter.py',
   'where_am_i_presenter.py',
 ]

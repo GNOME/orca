@@ -524,6 +524,15 @@ MODULE_CONFIG = {
         "toggle_commands": [],
         "skip": ["PresentBatteryStatus"],  # Can timeout on systems without battery
     },
+    "TextAttributeManager": {
+        "commands": [],
+        "parameterized_commands": [],
+        "getters": ["AttributesToBraille", "AttributesToSpeak"],
+        "setters": ["AttributesToBraille", "AttributesToSpeak"],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "TableNavigator": {
         "commands": [
             "ClearDynamicColumnHeadersRow",

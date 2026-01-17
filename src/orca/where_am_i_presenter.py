@@ -40,8 +40,8 @@ from . import focus_manager
 from . import input_event
 from . import keybindings
 from . import messages
-from . import settings
 from . import speech_and_verbosity_manager
+from . import text_attribute_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -341,7 +341,7 @@ class WhereAmIPresenter:
         # default presentable attributes if the user has not specified any.
         attr_list = list(filter(None, map(
             AXTextAttribute.from_string,
-            settings.textAttributesToSpeak)))
+            text_attribute_manager.get_manager().get_attributes_to_speak())))
         if not attr_list:
             attr_list = AXText.get_all_supported_text_attributes()
 

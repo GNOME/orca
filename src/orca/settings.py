@@ -181,6 +181,9 @@ FIND_SPEAK_ALL: int = 2
 findResultsVerbosity: int = FIND_SPEAK_ALL
 findResultsMinimumLength: int = 4
 
+# Managed by text_attribute_manager.py
+textAttributesToSpeak: list[str] = []
+textAttributesToBraille: list[str] = []
 
 # Managed by structural_navigator.py
 largeObjectTextLength: int = 75
@@ -240,9 +243,6 @@ chatRoomHistories: bool = False
 spellcheckSpellError: bool = True
 spellcheckSpellSuggestion: bool = True
 spellcheckPresentContext: bool = True
-
-textAttributesToSpeak: list[str] = []
-textAttributesToBraille: list[str] = []
 
 # Latent support to allow the user to override/define keybindings
 # and braille bindings. Unsupported and undocumented for now.

@@ -45,6 +45,7 @@ from . import cmdnames
 from . import debug
 from . import script_manager
 from . import settings
+from . import text_attribute_manager
 
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
@@ -634,7 +635,7 @@ class Text(Region):
                     region_mask[i] |= link_indicator
 
         if attr_indicator:
-            enabled = settings.textAttributesToBraille
+            enabled = text_attribute_manager.get_manager().get_attributes_to_braille()
             offset = self.line_offset
             while offset < line_end_offset:
                 attributes, start_offset, end_offset = \
