@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-10-23 12:53+0000\n"
-"PO-Revision-Date: 2026-01-17 21:31+0700\n"
+"PO-Revision-Date: 2026-01-17 21:38+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -8877,7 +8877,7 @@ msgstr "กำลังออกจากรูปภาพ"
 #. form and then navigates out of it.
 #: src/orca/messages.py:1333
 msgid "leaving form."
-msgstr "กำลังออกจากแบบฟอร์ม"
+msgstr "กำลังออกจากฟอร์ม"
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A grouping is a container of related
@@ -10575,10 +10575,9 @@ msgstr "แทรกแถวที่ท้ายตารางแล้ว"
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
 #: src/orca/messages.py:2544
-#, fuzzy, python-format
-#| msgid "not selected"
+#, python-format
 msgid "Row %s selected"
-msgstr "ไม่ได้เลือก"
+msgstr "เลือกแถว %s แล้ว"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10588,7 +10587,7 @@ msgstr "ไม่ได้เลือก"
 #: src/orca/messages.py:2551
 #, python-format
 msgid "Rows %s through %s selected"
-msgstr ""
+msgstr "เลือกแถว %s ถึง %s แล้ว"
 
 #. Translators: this message is spoken to announce that multiple table rows just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10598,17 +10597,15 @@ msgstr ""
 #: src/orca/messages.py:2558
 #, python-format
 msgid "Rows %s through %s unselected"
-msgstr ""
+msgstr "เลิกเลือกแถว %s ถึง %s แล้ว"
 
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
 #: src/orca/messages.py:2563
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Row %s unselected"
-msgstr "ไม่ได้เลือก"
+msgstr "เลิกเลือกแถว %s แล้ว"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
@@ -10629,14 +10626,14 @@ msgstr "ไม่ได้เลือก"
 #. it to be presented with.
 #: src/orca/messages.py:2582
 msgid "%H hours, %M minutes and %S seconds"
-msgstr ""
+msgstr "%H ชั่วโมง %M นาที %S วินาที"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
 #: src/orca/messages.py:2587
 msgid "%H hours and %M minutes"
-msgstr ""
+msgstr "%H ชั่วโมง %M นาที"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
@@ -10721,32 +10718,28 @@ msgstr[0] "เซลล์เกยไป %d คอลัมน์"
 
 #. Translators: This message describes the number of characters in a string.
 #: src/orca/messages.py:2662
-#, fuzzy, python-format
+#, python-format
 #| msgid "%d of %d item selected"
 #| msgid_plural "%d of %d items selected"
 msgid "%d characters"
 msgid_plural "%d characters"
-msgstr[0] "เลือกรายการ %d ใน %d รายการ"
+msgstr[0] "อักขระ %d ตัว"
 
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
 #: src/orca/messages.py:2669
-#, fuzzy, python-format
-#| msgid "%d of %d item selected"
-#| msgid_plural "%d of %d items selected"
+#, python-format
 msgid "%d character selected"
 msgid_plural "%d characters selected"
-msgstr[0] "เลือกรายการ %d ใน %d รายการ"
+msgstr[0] "เลือกอักขระ %d ตัวแล้ว"
 
 #. Translators: This message describes the number of characters that were just
 #. unselected in a body of text.
 #: src/orca/messages.py:2676
-#, fuzzy, python-format
-#| msgid "%d of %d item selected"
-#| msgid_plural "%d of %d items selected"
+#, python-format
 msgid "%d character unselected"
 msgid_plural "%d characters unselected"
-msgstr[0] "เลือกรายการ %d ใน %d รายการ"
+msgstr[0] "เลิกเลือกอักขระ %d ตัวแล้ว"
 
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
@@ -10855,7 +10848,7 @@ msgstr[0] "ออกจาก %d รายชื่อ"
 #. known. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2786
 msgid "List of unknown size"
-msgstr ""
+msgstr "รายชื่อไม่ทราบขนาด"
 
 #. Translators: This message describes a bulleted or numbered list.
 #: src/orca/messages.py:2789
@@ -10867,12 +10860,10 @@ msgstr[0] "รายชื่อซึ่งมี %d รายการ"
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
 #: src/orca/messages.py:2796
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
-msgstr[0] "รายชื่อซึ่งมี %d รายการ"
+msgstr[0] "รายชื่อซ้อนซึ่งมี %d รายการ"
 
 #. Translators: This message describes a news/article feed whose size is
 #. unknown, such as can be found on social media sites that have unlimited
@@ -10881,7 +10872,7 @@ msgstr[0] "รายชื่อซึ่งมี %d รายการ"
 #. This is the corresponding message for the unknown-count scenario.
 #: src/orca/messages.py:2807
 msgid "Feed of unknown size"
-msgstr ""
+msgstr "ฟีดไม่ทราบขนาด"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
@@ -10889,28 +10880,24 @@ msgstr ""
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
-msgstr[0] ""
+msgstr[0] "ฟีดซึ่งมี %d รายการ"
 
 #. Translators: This message describes a description list.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
 #. Note that the "term" here corresponds to the "dt" element
 #: src/orca/messages.py:2819
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
-msgstr[0] "รายชื่อซึ่งมี %d รายการ"
+msgstr[0] "รายชื่อคำอธิบายซึ่งมี %d คำ"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
 #: src/orca/messages.py:2827
-#, fuzzy, python-format
-#| msgid "List with %d item"
-#| msgid_plural "List with %d items"
+#, python-format
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
-msgstr[0] "รายชื่อซึ่งมี %d รายการ"
+msgstr[0] "รายชื่อแท็บซึ่งมี %d แท็บ"
 
 #. Translators: This message describes a description list.
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
@@ -10920,7 +10907,7 @@ msgstr[0] "รายชื่อซึ่งมี %d รายการ"
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
-msgstr[0] ""
+msgstr[0] "%d ค่า"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
@@ -11049,27 +11036,25 @@ msgstr[0] "%d ตาราง"
 #. 15 columns"). When both counts are unknown, it presents this.
 #: src/orca/messages.py:2974
 msgid "table of unknown size"
-msgstr ""
+msgstr "ตารางไม่ทราบขนาด"
 
 #. Translators: This message describes a table for which the number of
 #. rows is unknown, but the number of columns is known. This might occur
 #. in a vertically infinitely scrollable table or grid on the web.
 #: src/orca/messages.py:2979
-#, fuzzy, python-format
-#| msgid "table with %d rows and %d columns."
+#, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
-msgstr[0] "ตาราง %d แถว %d คอลัมน์"
+msgstr[0] "ตาราง %d คอลัมน์ ไม่ทราบจำนวนแถว"
 
 #. Translators: This message describes a table for which the number of
 #. columns is unknown, but the number of rows is known. This might occur
 #. in a horizontally infinitely scrollable table or grid on the web.
 #: src/orca/messages.py:2987
-#, fuzzy, python-format
-#| msgid "table with %d rows and %d columns."
+#, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
-msgstr[0] "ตาราง %d แถว %d คอลัมน์"
+msgstr[0] "ตาราง %d แถว ไม่ทราบจำนวนคอลัมน์"
 
 #. Translators: this represents the number of rows in a table.
 #: src/orca/messages.py:2992
@@ -11081,11 +11066,10 @@ msgstr[0] "ตาราง %d แถว"
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
 #: src/orca/messages.py:3008
-#, fuzzy, python-format
-#| msgid "seconds"
+#, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
-msgstr[0] "วินาที"
+msgstr[0] "%d วินาทีก่อน"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
@@ -11093,7 +11077,7 @@ msgstr[0] "วินาที"
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
-msgstr[0] ""
+msgstr[0] "%d นาทีก่อน"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
@@ -11101,7 +11085,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
-msgstr[0] ""
+msgstr[0] "%d ชั่วโมงก่อน"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
@@ -11109,7 +11093,7 @@ msgstr[0] ""
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
-msgstr[0] ""
+msgstr[0] "%d วันก่อน"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
