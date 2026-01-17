@@ -1681,6 +1681,10 @@ class StructuralNavigator:
         def _is_large(obj):
             if AXUtilities.is_heading(obj):
                 return True
+            if AXUtilities.is_list(obj):
+                return True
+            if AXUtilities.is_table(obj):
+                return True
             text = AXText.get_all_text(obj)
             return len(text) > minimum_length and text.count("\ufffc")/len(text) < 0.05
 
