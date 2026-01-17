@@ -613,45 +613,37 @@ class TestLearnModePresenter:
             script.present_message.assert_called_with("Test command")
 
     @pytest.mark.parametrize(
-        "key_name,is_f3_event",
-        [
-            ("F2", False),
-            ("F3", True),
-        ],
+        "key_name",
+        ["F2", "F3"],
     )
     def test_list_orca_shortcuts_events(
-        self, test_context: OrcaTestContext, key_name: str, is_f3_event: bool
+        self, test_context: OrcaTestContext, key_name: str
     ) -> None:
-        """Test LearnModePresenter.list_orca_shortcuts with F2/F3 events."""
+        """Test LearnModePresenter.list_orca_shortcuts with F2/F3 events.
+
+        Note: F2 and F3 now both show all Orca shortcuts (app-specific shortcuts
+        were removed).
+        """
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
 
+        mock_keybinding = test_context.Mock()
+        mock_keybinding.handler = test_context.Mock()
+        mock_keybinding.handler.description = "Test command"
+
+        mock_command = test_context.Mock()
+        mock_command.get_keybinding.return_value = mock_keybinding
+        mock_command.get_learn_mode_enabled.return_value = True
+        mock_command.get_group_label.return_value = "Test Group"
+
+        command_manager_mock = essential_modules["orca.command_manager"]
+        command_manager_mock.get_manager.return_value.get_all_commands.return_value = (
+            mock_command,
+        )
+
         script_manager = essential_modules["orca.script_manager"]
         script = script_manager.get_manager.return_value.get_active_script.return_value
-        if not is_f3_event:
-            mock_keybinding = test_context.Mock()
-            mock_keybinding.handler = test_context.Mock()
-            mock_keybinding.handler.description = "Test command"
 
-            mock_command = test_context.Mock()
-            mock_command.get_keybinding.return_value = mock_keybinding
-            mock_command.get_learn_mode_enabled.return_value = True
-            mock_command.get_group_label.return_value = "Test Group"
-
-            command_manager_mock = essential_modules["orca.command_manager"]
-            command_manager_mock.get_manager.return_value.get_all_commands.return_value = (
-                mock_command,
-            )
-        else:
-            key_binding_mock = test_context.Mock()
-            key_binding_mock.handler = test_context.Mock()
-            key_binding_mock.handler.description = TEST_COMMAND_DESCRIPTION
-            key_binding_mock.as_string = test_context.Mock(return_value="Ctrl+t")
-            app_bindings_mock = test_context.Mock()
-            app_bindings_mock.get_bound_bindings = test_context.Mock(
-                return_value=[key_binding_mock]
-            )
-            script.get_app_key_bindings.return_value = app_bindings_mock
         presenter = LearnModePresenter()
         event = test_context.Mock()
         event.keyval_name = key_name

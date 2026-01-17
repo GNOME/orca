@@ -166,6 +166,7 @@ CARET_NAVIGATOR_HANDLERS = frozenset({
     "start_of_file",
     "start_of_line",
     "toggle_enabled",
+    "toggle_layout_mode",
 })
 
 STRUCTURAL_NAVIGATOR_HANDLERS = frozenset({
@@ -323,11 +324,10 @@ DEFAULT_SCRIPT_HANDLERS = frozenset({
     "shutdownHandler",
 })
 
-WEB_SCRIPT_HANDLERS = frozenset({
-    "enableStickyBrowseModeHandler",
-    "enableStickyFocusModeHandler",
-    "toggleLayoutModeHandler",
-    "togglePresentationModeHandler",
+DOCUMENT_PRESENTER_HANDLERS = frozenset({
+    "enable_sticky_browse_mode",
+    "enable_sticky_focus_mode",
+    "toggle_presentation_mode",
 })
 
 # Total expected command count for verification
@@ -354,7 +354,7 @@ EXPECTED_TOTAL_COMMANDS = (
     len(SAY_ALL_PRESENTER_HANDLERS) +
     len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS) +
     len(DEFAULT_SCRIPT_HANDLERS) +
-    len(WEB_SCRIPT_HANDLERS)
+    len(DOCUMENT_PRESENTER_HANDLERS)
 )
 
 
@@ -1093,6 +1093,24 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in speech_and_verbosity_manager: {missing}"
         assert not extra, f"Unexpected handlers in speech_and_verbosity_manager: {extra}"
 
+    def test_document_presenter_handlers_exist(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that all document presenter handlers are registered."""
+
+        self._setup_structural_navigator_dependencies(test_context)
+        from orca.document_presenter import get_presenter
+
+        presenter = get_presenter()
+        handlers = presenter.get_handlers(True)
+        actual_handlers = frozenset(handlers.keys())
+
+        missing = DOCUMENT_PRESENTER_HANDLERS - actual_handlers
+        extra = actual_handlers - DOCUMENT_PRESENTER_HANDLERS
+
+        assert not missing, f"Missing handlers in document_presenter: {missing}"
+        assert not extra, f"Unexpected handlers in document_presenter: {extra}"
+
     def test_expected_total_command_count(self) -> None:
         """Test that the expected total command count is correct.
 
@@ -1125,7 +1143,7 @@ class TestCommandRegistry:
             len(SAY_ALL_PRESENTER_HANDLERS) +
             len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS) +
             len(DEFAULT_SCRIPT_HANDLERS) +
-            len(WEB_SCRIPT_HANDLERS)
+            len(DOCUMENT_PRESENTER_HANDLERS)
         )
 
         assert calculated_total == EXPECTED_TOTAL_COMMANDS, (

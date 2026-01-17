@@ -1281,10 +1281,8 @@ LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 # Mode.
 LEARN_MODE_START_SPEECH = \
     _("Entering learn mode.  Press any key to hear its function.  " \
-      "To view the screen reader’s documentation, press F1. " \
-      "To get a list of the screen reader’s default shortcuts, press F2. " \
-      "To get a list of the screen reader’s shortcuts for the current application, " \
-      "press F3. " \
+      "To view the screen reader's documentation, press F1. " \
+      "To get a list of the screen reader's shortcuts, press F2. " \
       "To exit learn mode, press the escape key.")
 
 # Translators: This message is presented when a user is navigating within a
@@ -1799,6 +1797,13 @@ MODE_FOCUS_IS_STICKY = _("Focus mode is sticky.")
 # enables setting a "sticky" browse mode which disables all automatic toggling.
 # This string is the message presented when Orca switches to sticky browse mode.
 MODE_BROWSE_IS_STICKY = _("Browse mode is sticky.")
+
+# Translators: Orca has two modes for reading web pages and similar content:
+# focus mode and browse mode. Focus mode passes key presses to the application
+# for handling. Browse mode intercepts keys for Orca commands and caret navigation.
+# This string is the message presented when the user tries to toggle browse mode
+# and is not in document content where this mode is applicable.
+DOCUMENT_NOT_IN_A = _("Not in a document.")
 
 # Translators: When presenting the content of a line on a web page, Orca by
 # default presents the full line, including any links or form fields on that
@@ -2913,22 +2918,11 @@ def shortcuts_found_orca(count):
     """Returns a string description of the number of Orca shortcuts found."""
 
     # Translators: This message is presented when the user is in a list of
-    # shortcuts associated with Orca commands which are not specific to the
-    # current application. It appears as the title of the dialog containing
-    # the list.
-    return ngettext("%d Screen reader default shortcut found.",
-                    "%d Screen reader default shortcuts found.",
+    # shortcuts associated with Orca commands. It appears as the title of the
+    # dialog containing the list.
+    return ngettext("%d Screen reader shortcut found.",
+                    "%d Screen reader shortcuts found.",
                     count) % count
-
-def shortcuts_found_app(count, app_name):
-    """Returns a string description of the number of Orca shortcuts found for a specific app."""
-
-    # Translators: This message is presented when the user is in a list of
-    # shortcuts associated with Orca commands specific to the current
-    # application. It appears as the title of the dialog containing the list.
-    return ngettext("%(count)d Screen reader shortcut for %(application)s found.",
-                    "%(count)d Screen reader shortcuts for %(application)s found.",
-                    count) % {"count" : count, "application" : app_name}
 
 def spaces_count(count):
     """Returns a string description of the number of space characters in a string."""

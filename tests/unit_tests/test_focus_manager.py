@@ -113,6 +113,7 @@ class TestFocusManager:
             "orca.ax_table",
             "orca.ax_text",
             "orca.ax_utilities",
+            "orca.document_presenter",
         ]
         essential_modules = test_context._setup_essential_modules(all_modules)
 
@@ -181,6 +182,11 @@ class TestFocusManager:
         ax_utilities_mock.AXUtilities.save_object_info_for_events = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_active = test_context.Mock(return_value=True)
         ax_utilities_mock.AXUtilities.get_focused_object = test_context.Mock()
+
+        document_presenter_mock = essential_modules["orca.document_presenter"]
+        presenter_instance = test_context.Mock()
+        presenter_instance.in_focus_mode = test_context.Mock(return_value=False)
+        document_presenter_mock.get_presenter = test_context.Mock(return_value=presenter_instance)
 
         return essential_modules
 

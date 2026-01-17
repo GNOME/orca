@@ -118,11 +118,6 @@ class Script:
 
         return keybindings.KeyBindings()
 
-    def get_app_key_bindings(self) -> keybindings.KeyBindings:
-        """Returns the application-specific keybindings for this script."""
-
-        return keybindings.KeyBindings()
-
     def get_braille_bindings(self) -> dict:
         """Returns the braille bindings for this script."""
 

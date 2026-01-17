@@ -1608,3 +1608,18 @@ class Utilities:
             return False
 
         return True
+
+    def is_text_block_element(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a text block element like a paragraph or heading."""
+
+        return False
+
+    def has_name_and_action_and_no_useful_children(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj has a name, supports action, and has no useful children."""
+
+        return False
+
+    def is_content_editable_with_embedded_objects(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is content editable with embedded objects."""
+
+        return False

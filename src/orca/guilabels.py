@@ -487,6 +487,10 @@ ACTIONS_LIST = KB_GROUP_ACTIONS
 KB_GROUP_BRAILLE = _("Braille Bindings")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to documents.
+KB_GROUP_DOCUMENTS = _("Documents")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to caret navigation, such as moving by character, word, and line.
 # These commands are enabled by default for web content and can be optionally
 # toggled on in other applications.

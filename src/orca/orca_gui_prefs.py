@@ -47,6 +47,7 @@ from . import chat_presenter
 from . import clipboard
 from . import debug
 from . import debugging_tools_manager
+from . import document_presenter
 from . import event_manager
 from . import flat_review_finder
 from . import flat_review_presenter
@@ -2114,6 +2115,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterCaretNav = self._createNode(guilabels.KB_GROUP_CARET_NAVIGATION)
         iterStructNav = self._createNode(guilabels.KB_GROUP_STRUCTURAL_NAVIGATION)
         iterTableNav = self._createNode(guilabels.KB_GROUP_TABLE_NAVIGATION)
+        iterDocuments = self._createNode(guilabels.KB_GROUP_DOCUMENTS)
         iterLiveRegionPresenter = self._createNode(guilabels.KB_GROUP_LIVE_REGIONS)
         iterWhereAmIPresenter = self._createNode(guilabels.KB_GROUP_WHERE_AM_I)
         iterLearnMode = self._createNode(guilabels.KB_GROUP_LEARN_MODE)
@@ -2148,6 +2150,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             snKeyBindings = structural_navigator.get_navigator().get_bindings(
                 is_desktop=isDesktop)
             tnKeyBindings = table_navigator.get_navigator().get_bindings(
+                is_desktop=isDesktop)
+            dpKeyBindings = document_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
             lrKeyBindings = live_region_presenter.get_presenter().get_bindings(
                 is_desktop=isDesktop)
@@ -2185,6 +2189,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._insertRow(handl, kb, iterStructNav)
                     elif tnKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterTableNav)
+                    elif dpKeyBindings.has_key_binding(kb, "description"):
+                        self._insertRow(handl, kb, iterDocuments)
                     elif lrKeyBindings.has_key_binding(kb, "description"):
                         self._insertRow(handl, kb, iterLiveRegionPresenter)
                     elif frKeyBindings.has_key_binding(kb, "description"):

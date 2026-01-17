@@ -31,6 +31,7 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
+from orca import document_presenter
 from orca import focus_manager
 from orca import settings
 from orca.scripts.toolkits import Gecko
@@ -112,7 +113,7 @@ class Script(Gecko.Script):
         if self.utilities.is_editable_message(event.source):
             return True
 
-        if self.in_focus_mode():
+        if document_presenter.get_presenter().in_focus_mode(self.app):
             return True
 
         return super().on_busy_changed(event)

@@ -48,6 +48,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import script_manager
 from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
@@ -967,6 +968,29 @@ class TableNavigator:
             rowspan, colspan = AXTable.get_cell_spans(cell)
             if rowspan > 1 or colspan > 1:
                 script.present_message(messages.cell_span(rowspan, colspan))
+
+    @dbus_service.getter
+    def get_is_enabled(self) -> bool:
+        """Returns whether table navigation is enabled."""
+
+        return settings.tableNavigationEnabled
+
+    @dbus_service.setter
+    def set_is_enabled(self, value: bool) -> bool:
+        """Sets whether table navigation is enabled."""
+
+        if self.get_is_enabled() == value:
+            return True
+
+        msg = f"TABLE NAVIGATOR: Setting enabled to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.tableNavigationEnabled = value
+
+        self._last_input_event = None
+        if script := script_manager.get_manager().get_active_script():
+            self.refresh_bindings_and_grabs(script, msg)
+
+        return True
 
     @dbus_service.getter
     def get_skip_blank_cells(self) -> bool:

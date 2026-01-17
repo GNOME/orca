@@ -54,6 +54,7 @@ from orca import cmdnames
 from orca import command_manager
 from orca import debug
 from orca import debugging_tools_manager
+from orca import document_presenter
 from orca import event_manager
 from orca import flat_review_finder
 from orca import flat_review_presenter
@@ -131,6 +132,7 @@ class Script(script.Script):
             (caret_navigator.get_navigator, guilabels.KB_GROUP_CARET_NAVIGATION),
             (structural_navigator.get_navigator, guilabels.KB_GROUP_STRUCTURAL_NAVIGATION),
             (table_navigator.get_navigator, guilabels.KB_GROUP_TABLE_NAVIGATION),
+            (document_presenter.get_presenter, guilabels.KB_GROUP_DOCUMENTS),
             (live_region_presenter.get_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
             (learn_mode_presenter.get_presenter, guilabels.KB_GROUP_LEARN_MODE),
             (mouse_review.get_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
@@ -312,8 +314,6 @@ class Script(script.Script):
 
         update_bindings(self.input_event_handlers, self.get_default_keybindings_deprecated(),
                         guilabels.KB_GROUP_DEFAULT, update_group_label=False)
-        update_bindings(self.input_event_handlers, self.get_app_key_bindings(),
-                        AXObject.get_name(self.app), update_group_label=False)
         for extension_getter, localized_name in self._get_all_extensions():
             extension = extension_getter()
             update_bindings(extension.get_handlers(),
@@ -574,6 +574,9 @@ class Script(script.Script):
         if learn_mode_presenter.get_presenter().is_active():
             learn_mode_presenter.get_presenter().quit()
 
+        document_presenter.get_presenter().update_mode_if_needed(
+            self, old_focus, new_focus)
+
         active_window = self.utilities.top_level_object(new_focus)
         focus_manager.get_manager().set_active_window(active_window)
         self.update_braille(new_focus)
@@ -604,9 +607,15 @@ class Script(script.Script):
         speech_and_verbosity_manager.get_manager().update_capitalization_style()
         speech_and_verbosity_manager.get_manager().update_synthesizer()
 
-        structural_navigator.get_navigator().set_mode(self, self._default_sn_mode)
-        caret_navigator.get_navigator().set_enabled_for_script(
-            self, self._default_caret_navigation_enabled)
+        presenter = document_presenter.get_presenter()
+        if presenter.has_state_for_app(self.app):
+            presenter.restore_mode_for_script(self)
+        else:
+            structural_navigator.get_navigator().set_mode(self, self._default_sn_mode)
+            caret_navigator.get_navigator().set_enabled_for_script(
+                self, self._default_caret_navigation_enabled)
+            reason = "script activation, no prior state"
+            presenter.suspend_navigators(self, True, reason)
 
         self.add_key_grabs("script activation")
         tokens = ["DEFAULT: Script for", self.app, "activated"]
@@ -2135,10 +2144,5 @@ class Script(script.Script):
 
     def browse_mode_is_sticky(self) -> bool:
         """Returns True if we're in 'sticky' browse mode."""
-
-        return False
-
-    def in_layout_mode(self) -> bool:
-        """ Returns True if we're in layout mode."""
 
         return False

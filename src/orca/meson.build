@@ -84,6 +84,7 @@ lib_sources = [
   'dbus_service.py',
   'debug.py',
   'debugging_tools_manager.py',
+  'document_presenter.py',
   'event_manager.py',
   'flat_review.py',
   'flat_review_finder.py',

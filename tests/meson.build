@@ -35,6 +35,7 @@ unit_tests = [
   'unit_tests/test_command_registry.py',
   'unit_tests/test_dbus_service.py',
   'unit_tests/test_debugging_tools_manager.py',
+  'unit_tests/test_document_presenter.py',
   'unit_tests/test_event_manager.py',
   'unit_tests/test_flat_review_presenter.py',
   'unit_tests/test_focus_manager.py',

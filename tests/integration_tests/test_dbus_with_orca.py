@@ -75,23 +75,34 @@ MODULE_CONFIG = {
         "toggle_commands": [],
         "skip": [],
     },
-    "FocusManager": {
+    "DocumentPresenter": {
         "commands": [
             "EnableStickyBrowseMode",
             "EnableStickyFocusMode",
-            "ToggleLayoutMode",
             "TogglePresentationMode",
         ],
         "parameterized_commands": [],
         "getters": [
             "BrowseModeIsSticky",
+            "FindResultsMinimumLength",
             "FocusModeIsSticky",
             "InFocusMode",
-            "InLayoutMode",
+            "NativeNavTriggersFocusMode",
+            "OnlySpeakChangedLines",
+            "PageSummaryOnLoad",
+            "SayAllOnLoad",
+            "SpeakFindResults",
         ],
-        "setters": [],
+        "setters": [
+            "FindResultsMinimumLength",
+            "NativeNavTriggersFocusMode",
+            "OnlySpeakChangedLines",
+            "PageSummaryOnLoad",
+            "SayAllOnLoad",
+            "SpeakFindResults",
+        ],
         "ui_commands": [],
-        "toggle_commands": ["ToggleLayoutMode", "TogglePresentationMode"],
+        "toggle_commands": ["TogglePresentationMode"],
         "skip": [],
     },
     "MouseReviewer": {
@@ -529,8 +540,8 @@ MODULE_CONFIG = {
             "ToggleEnabled",
         ],
         "parameterized_commands": [],
-        "getters": ["SkipBlankCells"],
-        "setters": ["SkipBlankCells"],
+        "getters": ["IsEnabled", "SkipBlankCells"],
+        "setters": ["IsEnabled", "SkipBlankCells"],
         "ui_commands": [],
         "toggle_commands": ["ToggleEnabled"],
         "skip": [],
@@ -577,6 +588,7 @@ MODULE_CONFIG = {
     "CaretNavigator": {
         "commands": [
             "ToggleEnabled",
+            "ToggleLayoutMode",
             "NextCharacter",
             "PreviousCharacter",
             "NextWord",
@@ -592,7 +604,7 @@ MODULE_CONFIG = {
         "getters": ["IsEnabled", "LayoutMode", "TriggersFocusMode"],
         "setters": ["IsEnabled", "LayoutMode", "TriggersFocusMode"],
         "ui_commands": [],
-        "toggle_commands": ["ToggleEnabled"],
+        "toggle_commands": ["ToggleEnabled", "ToggleLayoutMode"],
         "skip": [],
     },
     "ChatPresenter": {

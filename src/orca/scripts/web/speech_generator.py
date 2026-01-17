@@ -47,6 +47,7 @@ from gi.repository import Atspi
 
 from orca import caret_navigator
 from orca import debug
+from orca import document_presenter
 from orca import focus_manager
 from orca import input_event_manager
 from orca import messages
@@ -573,7 +574,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not self._script.in_focus_mode():
+        if not document_presenter.get_presenter().in_focus_mode(self._script.app):
             return []
 
         return super()._generate_state_unselected(obj, **args)
@@ -583,7 +584,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_real_table_cell(obj, **args)
-        if not self._script.in_focus_mode():
+        if not document_presenter.get_presenter().in_focus_mode(self._script.app):
             return result
 
         if speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():

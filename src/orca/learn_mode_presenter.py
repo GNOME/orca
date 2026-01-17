@@ -53,7 +53,6 @@ from . import keybindings
 from . import messages
 from . import script_manager
 from . import speech
-from .ax_object import AXObject
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -237,25 +236,17 @@ class LearnModePresenter:
 
         items = 0
         bindings: dict[str, list[keybindings.KeyBinding]] = {}
-        if event is None or event.keyval_name == "F2":
-            for cmd in command_manager.get_manager().get_all_commands():
-                keybinding = cmd.get_keybinding()
-                if keybinding is None or not cmd.get_learn_mode_enabled():
-                    continue
+        for cmd in command_manager.get_manager().get_all_commands():
+            keybinding = cmd.get_keybinding()
+            if keybinding is None or not cmd.get_learn_mode_enabled():
+                continue
 
-                if cmd.get_group_label() not in bindings:
-                    bindings[cmd.get_group_label()] = []
-                bindings[cmd.get_group_label()].append(keybinding)
-                items += 1
+            if cmd.get_group_label() not in bindings:
+                bindings[cmd.get_group_label()] = []
+            bindings[cmd.get_group_label()].append(keybinding)
+            items += 1
 
-            title = messages.shortcuts_found_orca(items)
-        else:
-            app_name = AXObject.get_name(script.app) or messages.APPLICATION_NO_NAME
-            bound = script.get_app_key_bindings().get_bound_bindings()
-            if bound:
-                bindings[app_name] = bound
-            title = messages.shortcuts_found_app(len(bound), app_name)
-
+        title = messages.shortcuts_found_orca(items)
         if not bindings:
             script.present_message(title)
             return True

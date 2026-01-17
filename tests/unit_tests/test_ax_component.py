@@ -406,6 +406,40 @@ class TestAXComponent:
         rect2.width = 200
         assert AXComponent.is_same_rect(rect1, rect2) is False
 
+    @pytest.mark.parametrize(
+        "rect1_coords, rect2_coords, pixel_delta, expected",
+        [
+            pytest.param((10, 20, 100, 30), (10, 20, 100, 30), 5, True, id="same_rects"),
+            pytest.param((50, 35, 0, 0), (10, 20, 100, 30), 5, True, id="point_in_rect_vertical_range"),
+            pytest.param((50, 10, 0, 0), (10, 20, 100, 30), 5, False, id="point_above_rect"),
+            pytest.param((10, 20, 100, 30), (50, 35, 0, 0), 5, True, id="rect_contains_point"),
+            pytest.param((10, 20, 100, 30), (10, 100, 100, 30), 5, False, id="no_vertical_overlap"),
+            pytest.param((10, 20, 100, 30), (10, 22, 100, 30), 5, True, id="overlapping_same_line"),
+            pytest.param((10, 20, 100, 30), (10, 40, 100, 30), 5, False, id="midpoints_too_far"),
+            pytest.param((10, 20, 100, 30), (10, 40, 100, 30), 20, True, id="midpoints_within_larger_delta"),
+        ],
+    )
+    def test_rects_are_on_same_line(
+        self,
+        test_context: OrcaTestContext,
+        rect1_coords: tuple[int, int, int, int],
+        rect2_coords: tuple[int, int, int, int],
+        pixel_delta: int,
+        expected: bool,
+    ) -> None:
+        """Test AXComponent.rects_are_on_same_line."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_component import AXComponent
+
+        rect1 = Atspi.Rect()
+        rect1.x, rect1.y, rect1.width, rect1.height = rect1_coords
+        rect2 = Atspi.Rect()
+        rect2.x, rect2.y, rect2.width, rect2.height = rect2_coords
+
+        result = AXComponent.rects_are_on_same_line(rect1, rect2, pixel_delta)
+        assert result is expected
+
     def test_get_rect_intersection(self, test_context: OrcaTestContext) -> None:
         """Test AXComponent.get_rect_intersection."""
 

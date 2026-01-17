@@ -51,14 +51,13 @@ from gi.repository import Gtk
 from orca import braille
 from orca import braille_presenter
 from orca import caret_navigator
-from orca import cmdnames
 from orca import debug
+from orca import document_presenter
 from orca import flat_review_presenter
 from orca import focus_manager
 from orca import guilabels
 from orca import input_event
 from orca import input_event_manager
-from orca import keybindings
 from orca import label_inference
 from orca import live_region_presenter
 from orca import messages
@@ -101,12 +100,7 @@ class Script(default.Script):
         self._default_caret_navigation_enabled: bool = True
 
         self._loading_content = False
-        self._made_find_announcement = False
         self._last_mouse_button_context = None, -1
-        self._in_focus_mode = False
-        self._focus_mode_is_sticky = False
-        self._browse_mode_is_sticky = False
-
 
         self._changed_lines_only_check_button: Gtk.CheckButton | None = None
         self._control_caret_navigation_check_button: Gtk.CheckButton | None = None
@@ -126,92 +120,16 @@ class Script(default.Script):
         self._auto_focus_mode_native_nav_check_button: Gtk.CheckButton | None = None
         self._layout_mode_check_button: Gtk.CheckButton | None = None
 
-    def activate(self) -> None:
-        """Called when this script is activated."""
-
-        tokens = ["WEB: Activating script for", self.app]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        in_app = AXUtilities.get_application(focus) == self.app
-        in_doc = self.utilities.in_document_content(focus)
-        suspend = not (in_doc and in_app)
-        reason = f"script activation, not in document content in this app: {suspend}"
-        caret_navigator.get_navigator().suspend_commands(self, suspend, reason)
-        structural_navigator.get_navigator().suspend_commands(self, suspend, reason)
-        live_region_presenter.get_presenter().suspend_commands(self, suspend, reason)
-        table_navigator.get_navigator().suspend_commands(self, suspend, reason)
-        super().activate()
-
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
 
         self._loading_content = False
-        self._made_find_announcement = False
+        document_presenter.get_presenter().reset_find_announcement_state()
         self._last_mouse_button_context = None, -1
         self.utilities.clear_cached_objects()
         reason = "script deactivation"
-        caret_navigator.get_navigator().suspend_commands(self, False, reason)
-        structural_navigator.get_navigator().suspend_commands(self, False, reason)
-        live_region_presenter.get_presenter().suspend_commands(self, False, reason)
-        table_navigator.get_navigator().suspend_commands(self, False, reason)
+        document_presenter.get_presenter().suspend_navigators(self, False, reason)
         super().deactivate()
-
-    def get_app_key_bindings(self) -> keybindings.KeyBindings:
-        """Returns the application-specific keybindings for this script."""
-
-        key_bindings = keybindings.KeyBindings()
-        key_bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self.input_event_handlers["togglePresentationModeHandler"]))
-
-        key_bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self.input_event_handlers["enableStickyFocusModeHandler"],
-                2))
-
-        key_bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self.input_event_handlers["enableStickyBrowseModeHandler"],
-                3))
-
-        key_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["toggleLayoutModeHandler"]))
-
-        return key_bindings
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        super().setup_input_event_handlers()
-
-        self.input_event_handlers["togglePresentationModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggle_presentation_mode,
-                cmdnames.TOGGLE_PRESENTATION_MODE)
-
-        self.input_event_handlers["enableStickyFocusModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.enable_sticky_focus_mode,
-                cmdnames.SET_FOCUS_MODE_STICKY)
-
-        self.input_event_handlers["enableStickyBrowseModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.enable_sticky_browse_mode,
-                cmdnames.SET_BROWSE_MODE_STICKY)
-
-        self.input_event_handlers["toggleLayoutModeHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggle_layout_mode,
-                cmdnames.TOGGLE_LAYOUT_MODE)
 
     def get_braille_generator(self) -> BrailleGenerator:
         """Returns the braille generator for this script."""
@@ -278,26 +196,28 @@ class Script(default.Script):
         self._auto_focus_mode_struct_nav_check_button.set_active(value)
         general_grid.attach(self._auto_focus_mode_struct_nav_check_button, 0, 3, 1, 1)
 
+        doc_presenter = document_presenter.get_presenter()
+
         label = guilabels.AUTO_FOCUS_MODE_NATIVE_NAV
-        value = settings.nativeNavTriggersFocusMode
+        value = doc_presenter.get_native_nav_triggers_focus_mode()
         self._auto_focus_mode_native_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._auto_focus_mode_native_nav_check_button.set_active(value)
         general_grid.attach(self._auto_focus_mode_native_nav_check_button, 0, 4, 1, 1)
 
         label = guilabels.READ_PAGE_UPON_LOAD
-        value = settings.sayAllOnLoad
+        value = doc_presenter.get_say_all_on_load()
         self._say_all_on_load_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._say_all_on_load_check_button.set_active(value)
         general_grid.attach(self._say_all_on_load_check_button, 0, 5, 1, 1)
 
         label = guilabels.PAGE_SUMMARY_UPON_LOAD
-        value = settings.pageSummaryOnLoad
+        value = doc_presenter.get_page_summary_on_load()
         self._page_summary_on_load_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._page_summary_on_load_check_button.set_active(value)
         general_grid.attach(self._page_summary_on_load_check_button, 0, 6, 1, 1)
 
         label = guilabels.CONTENT_LAYOUT_MODE
-        value = settings.layoutMode
+        value = caret_navigator.get_navigator().get_layout_mode()
         self._layout_mode_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._layout_mode_check_button.set_active(value)
         general_grid.attach(self._layout_mode_check_button, 0, 7, 1, 1)
@@ -359,17 +279,15 @@ class Script(default.Script):
         find_grid = Gtk.Grid()
         find_alignment.add(find_grid)
 
-        verbosity = settings.findResultsVerbosity
-
         label = guilabels.FIND_SPEAK_RESULTS
-        value = verbosity != settings.FIND_SPEAK_NONE
+        value = doc_presenter.get_speak_find_results()
         self._speak_results_during_find_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._speak_results_during_find_check_button.set_active(value)
         find_grid.attach(self._speak_results_during_find_check_button, 0, 0, 1, 1)
 
         label = guilabels.FIND_ONLY_SPEAK_CHANGED_LINES
-        value = verbosity == settings.FIND_SPEAK_IF_LINE_CHANGED
+        value = doc_presenter.get_only_speak_changed_lines()
         self._changed_lines_only_check_button = \
             Gtk.CheckButton.new_with_mnemonic(label)
         self._changed_lines_only_check_button.set_active(value)
@@ -384,7 +302,7 @@ class Script(default.Script):
         hgrid.attach(self._minimum_find_length_label, 0, 0, 1, 1)
 
         self._minimum_find_length_adjustment = \
-            Gtk.Adjustment(settings.findResultsMinimumLength, 0, 20, 1)
+            Gtk.Adjustment(doc_presenter.get_find_results_minimum_length(), 0, 20, 1)
         self._minimum_find_length_spin_button = Gtk.SpinButton()
         self._minimum_find_length_spin_button.set_adjustment(
             self._minimum_find_length_adjustment)
@@ -451,145 +369,10 @@ class Script(default.Script):
                 self._skip_blank_cells_check_button.get_active()
         }
 
-    def _present_find_results(self, obj: Atspi.Accessible, offset: int) -> None:
-        """Updates the context and presents the find results if appropriate."""
+    def is_loading_content(self) -> bool:
+        """Returns True if we're currently loading content."""
 
-        document = self.utilities.get_document_for_object(obj)
-        if not document:
-            return
-
-        start = AXText.get_selection_start_offset(obj)
-        if start < 0:
-            return
-
-        offset = max(offset, start)
-        context = self.utilities.get_caret_context(document)
-        self.utilities.set_caret_context(obj, offset, document=document)
-
-        end = AXText.get_selection_end_offset(obj)
-        if end - start < settings.findResultsMinimumLength:
-            return
-
-        verbosity = settings.findResultsVerbosity
-        if verbosity == settings.FIND_SPEAK_NONE:
-            return
-
-        if self._made_find_announcement \
-           and verbosity == settings.FIND_SPEAK_IF_LINE_CHANGED \
-           and self.utilities.contexts_are_on_same_line(context, (obj, offset)):
-            return
-
-        contents = self.utilities.get_line_contents_at_offset(obj, offset)
-        self.speak_contents(contents)
-        self.update_braille(obj)
-
-        results_count = self.utilities.get_find_results_count()
-        if results_count:
-            self.present_message(results_count)
-
-        self._made_find_announcement = True
-
-    def in_layout_mode(self) -> bool:
-        """ Returns True if we're in layout mode."""
-
-        return caret_navigator.get_navigator().get_layout_mode()
-
-    def in_focus_mode(self) -> bool:
-        """ Returns True if we're in focus mode."""
-
-        return self._in_focus_mode
-
-    def focus_mode_is_sticky(self) -> bool:
-        """Returns True if we're in 'sticky' focus mode."""
-
-        return self._focus_mode_is_sticky
-
-    def browse_mode_is_sticky(self) -> bool:
-        """Returns True if we're in 'sticky' browse mode."""
-
-        return self._browse_mode_is_sticky
-
-    def use_focus_mode(
-        self,
-        obj: Atspi.Accessible,
-        prev_obj: Atspi.Accessible | None = None
-    ) -> bool:
-        """Returns True if we should use focus mode in obj."""
-
-        if self._focus_mode_is_sticky:
-            msg = "WEB: Using focus mode because focus mode is sticky"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self._browse_mode_is_sticky:
-            msg = "WEB: Not using focus mode because browse mode is sticky"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if focus_manager.get_manager().in_say_all():
-            msg = "WEB: Not using focus mode because we're in SayAll."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if structural_navigator.get_navigator().last_command_prevents_focus_mode():
-            msg = "WEB: Not using focus mode due to struct nav settings"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "WEB: Not using focus mode because last command was table navigation"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if prev_obj and AXObject.is_dead(prev_obj):
-            prev_obj = None
-
-        if caret_navigator.get_navigator().last_command_prevents_focus_mode() \
-           and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None:
-            msg = "WEB: Not using focus mode due to caret nav settings"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not settings.nativeNavTriggersFocusMode:
-            struct_nav = structural_navigator.get_navigator().last_input_event_was_navigation_command()
-            caret_nav = caret_navigator.get_navigator().last_input_event_was_navigation_command()
-            if not (struct_nav or caret_nav):
-                msg = "WEB: Not changing focus/browse mode due to native nav settings"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return self._in_focus_mode
-
-        if self.utilities.is_focus_mode_widget(obj):
-            tokens = ["WEB: Using focus mode because", obj, "is a focus mode widget"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        do_not_toggle = AXUtilities.is_link(obj) or AXUtilities.is_radio_button(obj)
-        if self._in_focus_mode and do_not_toggle \
-           and input_event_manager.get_manager().last_event_was_unmodified_arrow():
-            tokens = ["WEB: Staying in focus mode due to arrowing in role of", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        was_in_app = AXObject.find_ancestor(prev_obj, AXUtilities.is_embedded)
-        is_in_app = AXObject.find_ancestor(obj, AXUtilities.is_embedded)
-        if not was_in_app and is_in_app:
-            msg = "WEB: Using focus mode because we just entered a web application"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self._in_focus_mode and is_in_app:
-            if self.utilities.force_browse_mode_for_web_app_descendant(obj):
-                tokens = ["WEB: Forcing browse mode for web app descendant", obj]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return False
-
-            msg = "WEB: Staying in focus mode because we're inside a web application"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        tokens = ["WEB: Not using focus mode for", obj, "due to lack of cause"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return False
+        return self._loading_content
 
     def say_character(self, obj: Atspi.Accessible) -> None:
         """Speaks the character at the current caret position."""
@@ -686,7 +469,7 @@ class Script(default.Script):
         if AXUtilities.is_editable(obj) and "\ufffc" not in AXText.get_line_at_offset(obj)[0]:
             msg = "WEB: Object is editable and line has no EOCs."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            if not self._in_focus_mode:
+            if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
             super().say_line(obj)
             return
@@ -704,7 +487,8 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         contents = self.utilities.get_line_contents_at_offset(obj, offset, use_cache=True)
-        if contents and contents[0] and not self._in_focus_mode:
+        if contents and contents[0] \
+           and not document_presenter.get_presenter().in_focus_mode(self.app):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
 
         self.speak_contents(contents, priorObj=prior_obj)
@@ -724,7 +508,7 @@ class Script(default.Script):
             return
 
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
-            if not self._in_focus_mode:
+            if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
             super().present_object(obj, **args)
             return
@@ -762,7 +546,7 @@ class Script(default.Script):
         # 1. Editors like VSCode use the entry role for the code editor.
         # 2. Giant nested lists.
         if AXUtilities.is_entry(obj) or AXUtilities.is_list_item(obj):
-            if not self._in_focus_mode:
+            if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
             super().present_object(obj, **args)
             return
@@ -776,7 +560,8 @@ class Script(default.Script):
         # danger of presented irrelevant context.
         offset = args.get("offset", 0)
         contents = self.utilities.get_object_contents_at_offset(obj, offset, use_cache=False)
-        if contents and contents[0] and not self._in_focus_mode:
+        if contents and contents[0] \
+           and not document_presenter.get_presenter().in_focus_mode(self.app):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
         self.display_contents(contents)
         self.speak_contents(contents, **args)
@@ -799,7 +584,8 @@ class Script(default.Script):
         if not braille_presenter.get_presenter().use_braille():
             return
 
-        if self._in_focus_mode and "\ufffc" not in AXText.get_all_text(obj):
+        if document_presenter.get_presenter().in_focus_mode(self.app) \
+           and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, **args)
@@ -896,101 +682,6 @@ class Script(default.Script):
         braille.refresh(False)
         return True
 
-    def enable_sticky_browse_mode(
-        self,
-        _event: input_event.InputEvent | None = None,
-        force_message: bool = False
-    ) -> bool:
-        """Enables sticky browse mode."""
-
-        if not self._browse_mode_is_sticky or force_message:
-            self.present_message(messages.MODE_BROWSE_IS_STICKY)
-
-        self._in_focus_mode = False
-        self._focus_mode_is_sticky = False
-        self._browse_mode_is_sticky = True
-        reason = "enable sticky browse mode"
-        caret_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        structural_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        live_region_presenter.get_presenter().suspend_commands(self, self._in_focus_mode, reason)
-        table_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        return True
-
-    def enable_sticky_focus_mode(
-        self,
-        _event: input_event.InputEvent | None = None,
-        force_message: bool = False
-    ) -> bool:
-        """Enables sticky focus mode."""
-
-        if not self._focus_mode_is_sticky or force_message:
-            self.present_message(messages.MODE_FOCUS_IS_STICKY)
-
-        self._in_focus_mode = True
-        self._focus_mode_is_sticky = True
-        self._browse_mode_is_sticky = False
-        reason = "enable sticky focus mode"
-        caret_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        structural_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        live_region_presenter.get_presenter().suspend_commands(self, self._in_focus_mode, reason)
-        table_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        return True
-
-    def toggle_layout_mode(
-        self,
-        _event: input_event.InputEvent | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        """Switches between object mode and layout mode for line presentation."""
-
-        navigator = caret_navigator.get_navigator()
-        layout_mode = not navigator.get_layout_mode()
-        if notify_user:
-            if layout_mode:
-                self.present_message(messages.MODE_LAYOUT)
-            else:
-                self.present_message(messages.MODE_OBJECT)
-        navigator.set_layout_mode(layout_mode)
-        return True
-
-    def toggle_presentation_mode(
-        self,
-        event: input_event.InputEvent | None = None,
-        document: Atspi.Accessible | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        """Switches between browse mode and focus mode."""
-
-        obj, _offset = self.utilities.get_caret_context(document)
-        if self._in_focus_mode:
-            parent = AXObject.get_parent(obj)
-            if AXUtilities.is_list_box(parent):
-                self.utilities.set_caret_context(parent, -1)
-            elif AXUtilities.is_menu(parent):
-                self.utilities.set_caret_context(AXObject.get_parent(parent), -1)
-            if notify_user and not self._loading_content:
-                self.present_message(messages.MODE_BROWSE)
-        else:
-            if not self.utilities.grab_focus_when_setting_caret(obj) \
-               and (caret_navigator.get_navigator().last_input_event_was_navigation_command() \
-                    or structural_navigator.get_navigator().last_input_event_was_navigation_command() \
-                    or table_navigator.get_navigator().last_input_event_was_navigation_command() \
-                    or event):
-                AXObject.grab_focus(obj)
-
-            if notify_user:
-                self.present_message(messages.MODE_FOCUS)
-        self._in_focus_mode = not self._in_focus_mode
-        self._focus_mode_is_sticky = False
-        self._browse_mode_is_sticky = False
-
-        reason = "toggling focus/browse mode"
-        caret_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        structural_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        live_region_presenter.get_presenter().suspend_commands(self, self._in_focus_mode, reason)
-        table_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-        return True
-
     def locus_of_focus_changed(
         self,
         event: Atspi.Event | None,
@@ -1018,8 +709,7 @@ class Script(default.Script):
         if not document:
             msg = "WEB: Locus of focus changed to non-document obj"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._made_find_announcement = False
-            self._in_focus_mode = False
+            document_presenter.get_presenter().reset_find_announcement_state()
 
             old_document = self.utilities.get_top_level_document_for_object(old_focus)
             if not document and self.utilities.is_document(old_focus):
@@ -1039,10 +729,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             reason = "locus of focus no longer in document"
-            caret_navigator.get_navigator().suspend_commands(self, True, reason)
-            live_region_presenter.get_presenter().suspend_commands(self, True, reason)
-            structural_navigator.get_navigator().suspend_commands(self, True, reason)
-            table_navigator.get_navigator().suspend_commands(self, True, reason)
+            document_presenter.get_presenter().suspend_navigators(self, True, reason)
             return False
 
         if flat_review_presenter.get_presenter().is_active():
@@ -1116,7 +803,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
         elif event and event.type.startswith("object:children-changed:remove") \
-             and self.utilities.is_focus_mode_widget(new_focus):
+             and document_presenter.get_presenter().is_focus_mode_widget(self, new_focus):
             tokens = ["WEB: New focus", new_focus,
                       "is recovery from removed child. Generating speech."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1150,29 +837,8 @@ class Script(default.Script):
             utterances = self.speech_generator.generate_speech(new_focus, **args)
             speech.speak(utterances)
 
-        if self.utilities.in_top_level_web_app(new_focus) and not self._browse_mode_is_sticky:
-            announce = not self.utilities.in_document_content(old_focus)
-            self.enable_sticky_focus_mode(None, announce)
-            return True
-
-        if not self._focus_mode_is_sticky \
-           and not self._browse_mode_is_sticky \
-           and self.use_focus_mode(new_focus, old_focus) != self._in_focus_mode:
-            dummy_event = input_event.InputEvent("synthetic")
-            self.toggle_presentation_mode(dummy_event, document)
-
-        if not self.utilities.in_document_content(old_focus):
-            if self._focus_mode_is_sticky:
-                self.present_message(messages.MODE_FOCUS_IS_STICKY)
-                return True
-
-            sn_navigator.set_mode(self, NavigationMode.DOCUMENT)
-            reason = "locus of focus now in document"
-            caret_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-            sn_navigator.suspend_commands(self, self._in_focus_mode, reason)
-            live_region_presenter.get_presenter().suspend_commands(self, self._in_focus_mode, reason)
-            table_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-
+        document_presenter.get_presenter().update_mode_if_needed(
+            self, old_focus, new_focus)
         return True
 
     def on_active_changed(self, event: Atspi.Event) -> bool:
@@ -1257,7 +923,9 @@ class Script(default.Script):
             should_present = False
             msg = "WEB: Not presenting because source lacks URI"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif not event.detail1 and self._in_focus_mode and AXObject.is_valid(obj):
+        elif not event.detail1 \
+             and document_presenter.get_presenter().in_focus_mode(self.app) \
+             and AXObject.is_valid(obj):
             should_present = False
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1293,7 +961,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if settings.pageSummaryOnLoad and should_present:
+        if document_presenter.get_presenter().get_page_summary_on_load() and should_present:
             tokens = ["WEB: Getting page summary for", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             summary = AXDocument.get_document_summary(event.source)
@@ -1301,25 +969,15 @@ class Script(default.Script):
                 self.present_message(summary)
 
         obj, offset = self.utilities.get_caret_context()
-        if not AXUtilities.is_busy(event.source) \
-           and self.utilities.is_top_level_web_app(event.source):
-            tokens = ["WEB: Setting locusOfFocus to", obj, "with sticky focus mode"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            focus_manager.get_manager().set_locus_of_focus(event, obj)
-            dummy_event = input_event.InputEvent("synthetic")
-            self.enable_sticky_focus_mode(dummy_event, True)
-            return True
-
-        if self.use_focus_mode(obj) != self._in_focus_mode:
-            dummy_event = input_event.InputEvent("synthetic")
-            self.toggle_presentation_mode(dummy_event)
+        if not AXUtilities.is_busy(event.source):
+            document_presenter.get_presenter().update_mode_if_needed(self, None, obj)
 
         if not obj:
             msg = "WEB: Could not get caret context"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.is_focus_mode_widget(obj):
+        if document_presenter.get_presenter().is_focus_mode_widget(self, obj):
             tokens = ["WEB: Setting locus of focus to focusModeWidget", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             focus_manager.get_manager().set_locus_of_focus(event, obj)
@@ -1346,7 +1004,7 @@ class Script(default.Script):
         if AXDocument.get_document_uri_fragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif not settings.sayAllOnLoad:
+        elif not document_presenter.get_presenter().get_say_all_on_load():
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak_contents(self.utilities.get_line_contents_at_offset(obj, offset))
@@ -1435,7 +1093,7 @@ class Script(default.Script):
         if self.utilities.in_find_container():
             msg = "WEB: Event handled: Presenting find results"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._present_find_results(event.source, event.detail1)
+            document_presenter.get_presenter().present_find_results(event.source, event.detail1)
             return True
 
         if not self.utilities.event_is_from_locus_of_focus_document(event):
@@ -1474,7 +1132,8 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self._in_focus_mode and self.utilities.caret_moved_outside_active_grid(event):
+        if document_presenter.get_presenter().in_focus_mode(self.app) \
+           and self.utilities.caret_moved_outside_active_grid(event):
             msg = "WEB: Event ignored: Caret moved outside active grid during focus mode"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1495,7 +1154,7 @@ class Script(default.Script):
         notify = force = handled = False
         AXObject.clear_cache(event.source, False, "Updating state for caret moved event.")
 
-        if self._in_focus_mode:
+        if document_presenter.get_presenter().in_focus_mode(self.app):
             obj, offset = event.source, event.detail1
         else:
             obj, offset = self.utilities.first_context(event.source, event.detail1)
@@ -1793,7 +1452,7 @@ class Script(default.Script):
             return True
 
         if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
-            if self._browse_mode_is_sticky:
+            if document_presenter.get_presenter().browse_mode_is_sticky(self.app):
                 msg = "WEB: Embedded descendant claimed focus, but browse mode is sticky"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             elif AXUtilities.is_tool_tip(event.source) \
@@ -1848,12 +1507,8 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
                 if not notify and prev_document is None:
                     reason = "updating locus of focus without notification"
-                    caret_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
-                    structural_navigator.get_navigator().suspend_commands(
-                        self, self._in_focus_mode, reason)
-                    live_region_presenter.get_presenter().suspend_commands(
-                        self, self._in_focus_mode, reason)
-                    table_navigator.get_navigator().suspend_commands(self, self._in_focus_mode, reason)
+                    presenter = document_presenter.get_presenter()
+                    presenter.suspend_navigators(self, presenter.in_focus_mode(self.app), reason)
                 self.utilities.set_caret_context(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
@@ -2017,7 +1672,7 @@ class Script(default.Script):
             return True
 
         if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
-            if self._in_focus_mode:
+            if document_presenter.get_presenter().in_focus_mode(self.app):
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.
                 AXObject.clear_cache(event.source,

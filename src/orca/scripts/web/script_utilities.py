@@ -52,6 +52,7 @@ from gi.repository import Atspi
 
 from orca import caret_navigator
 from orca import debug
+from orca import document_presenter
 from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
@@ -80,7 +81,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_context_paths_roles_and_names: dict[int, tuple] = {}
         self._cached_paths: dict[int, list] = {}
         self._cached_in_document_content: dict[int, bool] = {}
-        self._cached_in_top_level_web_app: dict[int, bool] = {}
         self._cached_is_text_block_element: dict[int, bool] = {}
         self._cached_is_content_editable_with_embedded_objects: dict[int, bool] = {}
         self._cached_has_grid_descendant: dict[int, bool] = {}
@@ -93,7 +93,7 @@ class Utilities(script_utilities.Utilities):
         self._cached_is_useless_image: dict[int, bool] = {}
         self._cached_is_redundant_svg: dict[int, bool] = {}
         self._cached_is_useless_empty_element: dict[int, bool] = {}
-        self._cached_has_name_and_action_and_no_useful_children: dict[int, bool] = {}
+        self._cachedhas_name_and_action_and_no_useful_children: dict[int, bool] = {}
         self._cached_inferred_labels: dict[int, tuple[str, list[Atspi.Accessible]]] = {}
         self._cached_should_filter: dict[int, bool] = {}
         self._cached_should_infer_label_for: dict[int, bool] = {}
@@ -149,7 +149,6 @@ class Utilities(script_utilities.Utilities):
 
         debug.print_message(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._cached_in_document_content = {}
-        self._cached_in_top_level_web_app = {}
         self._cached_is_text_block_element = {}
         self._cached_is_content_editable_with_embedded_objects = {}
         self._cached_has_grid_descendant = {}
@@ -162,7 +161,7 @@ class Utilities(script_utilities.Utilities):
         self._cached_is_useless_image = {}
         self._cached_is_redundant_svg = {}
         self._cached_is_useless_empty_element = {}
-        self._cached_has_name_and_action_and_no_useful_children = {}
+        self._cachedhas_name_and_action_and_no_useful_children = {}
         self._cached_inferred_labels = {}
         self._cached_should_filter = {}
         self._cached_should_infer_label_for = {}
@@ -249,10 +248,11 @@ class Utilities(script_utilities.Utilities):
         AXText.set_caret_offset(obj, offset)
 
         # If we return earlier than here, braille cursor routing fails in sticky focus mode.
-        if self._script.focus_mode_is_sticky():
+        if document_presenter.get_presenter().focus_mode_is_sticky(self._script.app):
             return
 
-        if self._script.use_focus_mode(obj, old_focus) != self._script.in_focus_mode():
+        if document_presenter.get_presenter().use_focus_mode(obj, old_focus) \
+           != document_presenter.get_presenter().in_focus_mode(self._script.app):
             self._script.toggle_presentation_mode(None)
 
         # TODO - JD: Can we remove this?
@@ -333,82 +333,33 @@ class Utilities(script_utilities.Utilities):
 
         return obj, offset
 
-    def contexts_are_on_same_line(
-        self,
-        a: tuple[Atspi.Accessible, int],
-        b: tuple[Atspi.Accessible, int]
-    ) -> bool:
-        """Returns true if a and b are on the same line."""
-
-        if a == b:
-            return True
-
-        a_obj, a_offset = a
-        b_obj, b_offset = b
-        a_extents = self._get_extents(a_obj, a_offset, a_offset + 1)
-        b_extents = self._get_extents(b_obj, b_offset, b_offset + 1)
-        return self._extents_are_on_same_line(a_extents, b_extents)
-
-    @staticmethod
-    def _extents_are_on_same_line(
-        a: tuple[int, int, int, int],
-        b: tuple[int, int, int, int],
-        pixel_delta: int = 5
-    ) -> bool:
-        ### TODO - JD: Replace this with an AXComponent utility.
-        if a == b:
-            return True
-
-        _a_x, a_y, a_width, a_height = a
-        _b_x, b_y, b_width, b_height = b
-
-        if a_width == 0 and a_height == 0:
-            return b_y <= a_y <= b_y + b_height
-        if b_width == 0 and b_height == 0:
-            return a_y <= b_y <= a_y + a_height
-
-        highest_bottom = min(a_y + a_height, b_y + b_height)
-        lowest_top = max(a_y, b_y)
-        if lowest_top >= highest_bottom:
-            return False
-
-        a_middle = a_y + a_height / 2
-        b_middle = b_y + b_height / 2
-        if abs(a_middle - b_middle) > pixel_delta:
-            return False
-
-        return True
-
     def _get_extents(
         self,
         obj: Atspi.Accessible | None,
         start_offset: int,
         end_offset: int
-    ) -> tuple[int, int, int, int]:
-        ### TODO - JD: Replace this with an AXComponent utility.
-        if not obj:
-            return (0, 0, 0, 0)
+    ) -> Atspi.Rect:
+        """Returns the extents for the text range, or the component rect as fallback."""
 
-        result = (0, 0, 0, 0)
+        if not obj:
+            return AXComponent.EMPTY_RECT
+
         if self.treat_as_text_object(obj) and 0 <= start_offset < end_offset:
             rect = AXText.get_range_rect(obj, start_offset, end_offset)
-            result = (rect.x, rect.y, rect.width, rect.height)
-            if not (result[0] and result[1] and result[2] == 0 and result[3] == 0 \
+            if not (rect.x and rect.y and rect.width == 0 and rect.height == 0 \
                and AXText.get_substring(obj, start_offset, end_offset).strip()):
-                return result
+                return rect
 
             tokens = ["WEB: Suspected bogus range extents for",
-                      obj, "(chars:", start_offset, ",", end_offset, "):", result]
+                      obj, "(chars:", start_offset, ",", end_offset, "):", rect]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         parent = AXObject.get_parent(obj)
         if (AXUtilities.is_menu(obj) or AXUtilities.is_list_item(obj)) \
             and (AXUtilities.is_combo_box(parent) or AXUtilities.is_list_box(parent)):
-            ext = AXComponent.get_rect(parent)
-        else:
-            ext = AXComponent.get_rect(obj)
+            return AXComponent.get_rect(parent)
 
-        return (ext.x, ext.y, ext.width, ext.height)
+        return AXComponent.get_rect(obj)
 
     def expand_eocs(
         self,
@@ -516,7 +467,8 @@ class Utilities(script_utilities.Utilities):
         if not AXObject.supports_text(obj):
             return False
 
-        if not self.in_document_content(obj) or self._script.browse_mode_is_sticky():
+        if not self.in_document_content(obj) \
+           or document_presenter.get_presenter().browse_mode_is_sticky(self._script.app):
             return True
 
         rv = AXText.get_character_count(obj) > 0 or AXUtilities.is_editable(obj)
@@ -549,11 +501,11 @@ class Utilities(script_utilities.Utilities):
         self._cached_treat_as_text_object[hash(obj)] = rv
         return rv
 
-    def _has_name_and_action_and_no_useful_children(self, obj: Atspi.Accessible) -> bool:
+    def has_name_and_action_and_no_useful_children(self, obj: Atspi.Accessible) -> bool:
         if not (obj and self.in_document_content(obj)):
             return False
 
-        rv = self._cached_has_name_and_action_and_no_useful_children.get(hash(obj))
+        rv = self._cachedhas_name_and_action_and_no_useful_children.get(hash(obj))
         if rv is not None:
             return rv
 
@@ -569,7 +521,7 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB:", obj, "has name and action and no useful children"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        self._cached_has_name_and_action_and_no_useful_children[hash(obj)] = rv
+        self._cachedhas_name_and_action_and_no_useful_children[hash(obj)] = rv
         return rv
 
     def _treat_object_as_whole(self, obj: Atspi.Accessible, offset: int | None = None) -> bool:
@@ -593,7 +545,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if role in descendable:
-            if self._script.in_focus_mode():
+            if document_presenter.get_presenter().in_focus_mode(self._script.app):
                 return True
 
             # This should cause us to initially stop at the large containers before
@@ -610,9 +562,10 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if role == Atspi.Role.TABLE_CELL:
-            if self.is_focus_mode_widget(obj):
-                return not self._script.browse_mode_is_sticky()
-            if self._has_name_and_action_and_no_useful_children(obj):
+            presenter = document_presenter.get_presenter()
+            if presenter.is_focus_mode_widget(self._script, obj):
+                return not presenter.browse_mode_is_sticky(self._script.app)
+            if self.has_name_and_action_and_no_useful_children(obj):
                 return True
 
         if role in [Atspi.Role.COLUMN_HEADER, Atspi.Role.ROW_HEADER] \
@@ -623,7 +576,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         if role in [Atspi.Role.EMBEDDED, Atspi.Role.TREE, Atspi.Role.TREE_TABLE]:
-            return not self._script.browse_mode_is_sticky()
+            return not document_presenter.get_presenter().browse_mode_is_sticky(self._script.app)
 
         if role == Atspi.Role.LINK:
             return AXUtilities.has_explicit_name(obj) or self.has_useless_canvas_descendant(obj)
@@ -944,7 +897,7 @@ class Utilities(script_utilities.Utilities):
 
         granularity = Atspi.TextGranularity.WORD
         objects = self._get_contents_for_obj(obj, offset, granularity)
-        extents = self._get_extents(obj, offset, offset + 1)
+        rect = self._get_extents(obj, offset, offset + 1)
 
         def _include(x):
             if x in objects:
@@ -961,8 +914,8 @@ class Utilities(script_utilities.Utilities):
                and AXUtilities.is_table_cell_or_header(x_obj) and obj != x_obj:
                 return False
 
-            x_extents = self._get_extents(x_obj, x_start, x_start + 1)
-            return self._extents_are_on_same_line(extents, x_extents)
+            x_rect = self._get_extents(x_obj, x_start, x_start + 1)
+            return AXComponent.rects_are_on_same_line(rect, x_rect)
 
         # Check for things in the same word to the left of this object.
         first_obj, first_start, _first_end, first_string = objects[0]
@@ -1125,8 +1078,9 @@ class Utilities(script_utilities.Utilities):
 
         indent = " " * 8
         for i, (acc, start, end, string) in enumerate(contents):
-            extents = self._get_extents(acc, start, end)
-            msg = f"     {i}. chars: {start}-{end}: '{string}' extents={extents}\n"
+            rect = self._get_extents(acc, start, end)
+            msg = f"     {i}. chars: {start}-{end}: '{string}' " \
+                  f"extents=({rect.x}, {rect.y}, {rect.width}, {rect.height})\n"
             msg += AXUtilitiesDebugging.object_details_as_string(acc, indent, False)
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -1154,9 +1108,9 @@ class Utilities(script_utilities.Utilities):
         # the cursor is physically blinking.
         char = AXText.get_character_at_offset(obj, offset)[0]
         if char == "\ufffc":
-            prev_extents = self._get_extents(obj, offset - 1, offset)
-            this_extents = self._get_extents(obj, offset, offset + 1)
-            same_line = self._extents_are_on_same_line(prev_extents, this_extents)
+            prev_rect = self._get_extents(obj, offset - 1, offset)
+            this_rect = self._get_extents(obj, offset, offset + 1)
+            same_line = AXComponent.rects_are_on_same_line(prev_rect, this_rect)
             tokens = ["WEB: ", obj, "offset", offset, "is [obj]. Same line: ",
                       same_line, "Is end of line: ", not same_line]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1209,18 +1163,18 @@ class Utilities(script_utilities.Utilities):
 
         if layout_mode is None:
             layout_mode = caret_navigator.get_navigator().get_layout_mode() \
-                or self._script.in_focus_mode()
+                or document_presenter.get_presenter().in_focus_mode(self._script.app)
 
         objects = []
         if offset > 0 and self.treat_as_end_of_line(obj, offset):
-            extents = self._get_extents(obj, offset - 1, offset)
+            rect = self._get_extents(obj, offset - 1, offset)
         else:
-            extents = self._get_extents(obj, offset, offset + 1)
+            rect = self._get_extents(obj, offset, offset + 1)
 
         if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is not None:
             container = AXObject.find_ancestor(obj, AXUtilities.is_list)
             if container:
-                extents = self._get_extents(container, 0, 1)
+                rect = self._get_extents(container, 0, 1)
 
         obj_banner = AXObject.find_ancestor(obj, AXUtilities.is_landmark_banner)
         obj_row = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_table_row)
@@ -1233,7 +1187,7 @@ class Utilities(script_utilities.Utilities):
             if x_start == x_end:
                 return False
 
-            x_extents = self._get_extents(x_obj, x_start, x_start + 1)
+            x_rect = self._get_extents(x_obj, x_start, x_start + 1)
 
             if obj != x_obj:
                 if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(x_obj):
@@ -1242,7 +1196,7 @@ class Utilities(script_utilities.Utilities):
                     x_obj_banner = AXObject.find_ancestor(x_obj, AXUtilities.is_landmark_banner)
                     if (obj_banner or x_obj_banner) and obj_banner != x_obj_banner:
                         return False
-                    if abs(extents[0] - x_extents[0]) <= 1 and abs(extents[1] - x_extents[1]) <= 1:
+                    if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
                         # This happens with dynamic skip links such as found on Wikipedia.
                         return False
                 elif self._is_block_list_descendant(obj) != self._is_block_list_descendant(x_obj):
@@ -1255,12 +1209,12 @@ class Utilities(script_utilities.Utilities):
                     return False
 
             if AXUtilities.is_math(x_obj) or AXUtilities.is_math_related(obj):
-                on_same_line = self._extents_are_on_same_line(extents, x_extents, extents[3])
+                on_same_line = AXComponent.rects_are_on_same_line(rect, x_rect, rect.height)
             elif AXObject.find_ancestor_inclusive(
                     x_obj, AXUtilities.is_subscript_or_superscript_text):
-                on_same_line = self._extents_are_on_same_line(extents, x_extents, x_extents[3])
+                on_same_line = AXComponent.rects_are_on_same_line(rect, x_rect, x_rect.height)
             else:
-                on_same_line = self._extents_are_on_same_line(extents, x_extents)
+                on_same_line = AXComponent.rects_are_on_same_line(rect, x_rect)
             return on_same_line
 
         granularity = Atspi.TextGranularity.LINE
@@ -1278,8 +1232,8 @@ class Utilities(script_utilities.Utilities):
             return []
 
         first_obj, first_start, first_end, first_string = objects[0]
-        if (extents[2] == 0 and extents[3] == 0) or AXUtilities.is_math_related(first_obj):
-            extents = self._get_extents(first_obj, first_start, first_end)
+        if (rect.width == 0 and rect.height == 0) or AXUtilities.is_math_related(first_obj):
+            rect = self._get_extents(first_obj, first_start, first_end)
 
         last_obj, _last_start, last_end, _last_string = objects[-1]
         if AXUtilities.is_math(last_obj):
@@ -1580,7 +1534,8 @@ class Utilities(script_utilities.Utilities):
     ) -> bool:
         """Handles a change in the selected text."""
 
-        if not self.in_document_content(obj) or self._script.in_focus_mode():
+        if not self.in_document_content(obj) \
+           or document_presenter.get_presenter().in_focus_mode(self._script.app):
             return super().handle_text_selection_change(obj)
 
         old_start, old_end = \
@@ -1610,137 +1565,6 @@ class Utilities(script_utilities.Utilities):
                 super().handle_text_selection_change(descendant, speak_message)
 
         return True
-
-    def in_top_level_web_app(self, obj: Atspi.Accessible | None = None) -> bool:
-        """Returns True if the object is in a top-level web application."""
-
-        if obj is None:
-            obj = focus_manager.get_manager().get_locus_of_focus()
-
-        rv = self._cached_in_top_level_web_app.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        document = self.get_document_for_object(obj)
-        if not document and self.is_document(obj):
-            document = obj
-
-        rv = self.is_top_level_web_app(document)
-        self._cached_in_top_level_web_app[hash(obj)] = rv
-        return rv
-
-    def is_top_level_web_app(self, obj: Atspi.Accessible) -> bool:
-        """Returns True if the object is a top-level web application."""
-
-        if AXUtilities.is_embedded(obj) \
-           and not self.get_document_for_object(AXObject.get_parent(obj)):
-            uri = AXDocument.get_uri(obj)
-            rv = bool(uri and uri.startswith("http"))
-            tokens = ["WEB:", obj, "is top-level web application:", rv, "(URI:", uri, ")"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return rv
-
-        return False
-
-    def force_browse_mode_for_web_app_descendant(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if we should force browse mode for web-app descendant obj."""
-
-        if not AXObject.find_ancestor(obj, AXUtilities.is_embedded):
-            return False
-
-        if AXUtilities.is_tool_tip(obj):
-            return AXUtilities.is_focused(obj)
-
-        if AXUtilities.is_document_web(obj):
-            return not self.is_focus_mode_widget(obj)
-
-        return False
-
-    def is_focus_mode_widget(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj should be treated as a focus-mode widget."""
-
-        if AXUtilities.is_editable(obj):
-            tokens = ["WEB:", obj, "is focus mode widget because it's editable"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if AXUtilities.is_expandable(obj) and AXUtilities.is_focusable(obj) \
-           and not AXUtilities.is_link(obj):
-            tokens = ["WEB:", obj, "is focus mode widget because it's expandable and focusable"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        always_focus_mode_roles = [Atspi.Role.COMBO_BOX,
-                                   Atspi.Role.ENTRY,
-                                   Atspi.Role.LIST_BOX,
-                                   Atspi.Role.MENU,
-                                   Atspi.Role.MENU_ITEM,
-                                   Atspi.Role.CHECK_MENU_ITEM,
-                                   Atspi.Role.RADIO_MENU_ITEM,
-                                   Atspi.Role.PAGE_TAB,
-                                   Atspi.Role.PASSWORD_TEXT,
-                                   Atspi.Role.PROGRESS_BAR,
-                                   Atspi.Role.SLIDER,
-                                   Atspi.Role.SPIN_BUTTON,
-                                   Atspi.Role.TOOL_BAR,
-                                   Atspi.Role.TREE_ITEM,
-                                   Atspi.Role.TREE_TABLE,
-                                   Atspi.Role.TREE]
-
-        role = AXObject.get_role(obj)
-        if role in always_focus_mode_roles:
-            tokens = ["WEB:", obj, "is focus mode widget due to its role"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] \
-           and AXTable.is_layout_table(AXTable.get_table(obj)):
-            tokens = ["WEB:", obj, "is not focus mode widget because it's layout only"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXUtilities.is_list_box_item(obj, role):
-            tokens = ["WEB:", obj, "is focus mode widget because it's a listbox item"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if AXUtilities.is_button_with_popup(obj, role):
-            tokens = ["WEB:", obj, "is focus mode widget because it's a button with popup"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        focus_mode_roles = [Atspi.Role.EMBEDDED,
-                            Atspi.Role.TABLE_CELL,
-                            Atspi.Role.TABLE]
-
-        if role in focus_mode_roles \
-           and not self.is_text_block_element(obj) \
-           and not self._has_name_and_action_and_no_useful_children(obj) \
-           and not AXDocument.is_pdf(self.get_document_for_object(obj)):
-            tokens = ["WEB:", obj, "is focus mode widget based on presumed functionality"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if AXObject.find_ancestor(obj, AXUtilities.is_grid) is not None:
-            tokens = ["WEB:", obj, "is focus mode widget because it's a grid descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if AXObject.find_ancestor(obj, AXUtilities.is_menu) is not None:
-            tokens = ["WEB:", obj, "is focus mode widget because it's a menu descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if AXObject.find_ancestor(obj, AXUtilities.is_tool_bar) is not None:
-            tokens = ["WEB:", obj, "is focus mode widget because it's a toolbar descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if self.is_content_editable_with_embedded_objects(obj):
-            tokens = ["WEB:", obj, "is focus mode widget because it's content editable"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
 
     def _text_block_element_roles(self) -> list[Atspi.Role]:
         # TODO - JD: Move to AXUtilities.
@@ -1825,7 +1649,7 @@ class Utilities(script_utilities.Utilities):
         elif self.is_custom_image(obj):
             rv = False
         elif not AXUtilities.is_focusable(obj):
-            rv = not self._has_name_and_action_and_no_useful_children(obj)
+            rv = not self.has_name_and_action_and_no_useful_children(obj)
         else:
             rv = False
 
@@ -1990,7 +1814,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if AXObject.find_ancestor(obj, AXUtilities.is_grid) is not None:
-            return not self._script.in_focus_mode()
+            return not document_presenter.get_presenter().in_focus_mode(self._script.app)
 
         if input_event_manager.get_manager().last_event_was_line_navigation():
             return False
@@ -2187,7 +2011,7 @@ class Utilities(script_utilities.Utilities):
         obj: Atspi.Accessible,
         contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None
     ) -> bool:
-        if self.is_focus_mode_widget(obj):
+        if document_presenter.get_presenter().is_focus_mode_widget(self._script, obj):
             return False
 
         targets = AXUtilities.get_is_label_for(obj)
@@ -2251,7 +2075,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         rv = False
-        if not self.is_focus_mode_widget(obj):
+        if not document_presenter.get_presenter().is_focus_mode_widget(self._script, obj):
             if not AXUtilities.is_focusable(obj):
                 rv = AXObject.has_action(obj, "click")
             else:

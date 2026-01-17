@@ -180,6 +180,7 @@ caretNavTriggersFocusMode: bool = False
 caretNavigationEnabled: bool = True
 
 # Managed by table_navigator.py
+tableNavigationEnabled: bool = True
 skipBlankCells: bool = False
 
 # Managed by live_region_presenter.py

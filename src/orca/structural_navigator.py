@@ -54,7 +54,6 @@ from . import focus_manager
 from . import guilabels
 from . import input_event_manager
 from . import keybindings
-from . import live_region_presenter
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
@@ -2935,6 +2934,8 @@ class StructuralNavigator:
         notify_user: bool = True
     ) -> bool:
         """Goes to the last live region."""
+
+        from . import live_region_presenter
 
         tokens = ["STRUCTURAL NAVIGATOR: last_live_region. Script:", script,
                   "Event:", event, "notify_user:", notify_user]

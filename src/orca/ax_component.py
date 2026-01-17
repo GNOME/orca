@@ -20,6 +20,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-public-methods
 
 """Utilities for obtaining position-related information about accessible objects."""
 
@@ -44,6 +45,8 @@ from .ax_utilities_role import AXUtilitiesRole
 
 class AXComponent:
     """Utilities for obtaining position-related information about accessible objects."""
+
+    EMPTY_RECT: Atspi.Rect = Atspi.Rect()
 
     @staticmethod
     def get_center_point(obj: Atspi.Accessible) -> tuple[float, float]:
@@ -176,6 +179,27 @@ class AXComponent:
             and rect1.y == rect2.y \
             and rect1.width == rect2.width \
             and rect1.height == rect2.height
+
+    @staticmethod
+    def rects_are_on_same_line(rect1: Atspi.Rect, rect2: Atspi.Rect, pixel_delta: int = 5) -> bool:
+        """Returns True if rect1 and rect2 are on the same horizontal line."""
+
+        if AXComponent.is_same_rect(rect1, rect2):
+            return True
+
+        if rect1.width == 0 and rect1.height == 0:
+            return rect2.y <= rect1.y <= rect2.y + rect2.height
+        if rect2.width == 0 and rect2.height == 0:
+            return rect1.y <= rect2.y <= rect1.y + rect1.height
+
+        highest_bottom = min(rect1.y + rect1.height, rect2.y + rect2.height)
+        lowest_top = max(rect1.y, rect2.y)
+        if lowest_top >= highest_bottom:
+            return False
+
+        rect1_middle = rect1.y + rect1.height / 2
+        rect2_middle = rect2.y + rect2.height / 2
+        return abs(rect1_middle - rect2_middle) <= pixel_delta
 
     @staticmethod
     def object_contains_point(obj: Atspi.Accessible, x: int, y: int) -> bool:
