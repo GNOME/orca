@@ -217,7 +217,7 @@ class Script(default.Script):
         general_grid.attach(self._page_summary_on_load_check_button, 0, 6, 1, 1)
 
         label = guilabels.CONTENT_LAYOUT_MODE
-        value = caret_navigator.get_navigator().get_layout_mode()
+        value = document_presenter.get_presenter().get_layout_mode()
         self._layout_mode_check_button = Gtk.CheckButton.new_with_mnemonic(label)
         self._layout_mode_check_button.set_active(value)
         general_grid.attach(self._layout_mode_check_button, 0, 7, 1, 1)

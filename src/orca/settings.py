@@ -168,6 +168,19 @@ progressBarBrailleVerbosity: int = PROGRESS_BAR_APPLICATION
 
 # Managed by mouse_review.py
 enableMouseReview: bool = False
+presentToolTips: bool = False
+
+# Managed by document_presenter.py
+nativeNavTriggersFocusMode: bool = True
+layoutMode: bool = True
+sayAllOnLoad: bool = True
+pageSummaryOnLoad: bool = True
+FIND_SPEAK_NONE: int = 0
+FIND_SPEAK_IF_LINE_CHANGED: int = 1
+FIND_SPEAK_ALL: int = 2
+findResultsVerbosity: int = FIND_SPEAK_ALL
+findResultsMinimumLength: int = 4
+
 
 # Managed by structural_navigator.py
 largeObjectTextLength: int = 75
@@ -217,15 +230,6 @@ keyboardLayout: int = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout: float = 0.5
 
-# Mouse
-presentToolTips: bool = False
-
-# Document navigation and content
-nativeNavTriggersFocusMode: bool = True
-layoutMode: bool = True
-sayAllOnLoad: bool = True
-pageSummaryOnLoad: bool = True
-
 # Chat
 chatMessageVerbosity: int = CHAT_SPEAK_ALL
 chatSpeakRoomName: bool = False
@@ -236,13 +240,6 @@ chatRoomHistories: bool = False
 spellcheckSpellError: bool = True
 spellcheckSpellSuggestion: bool = True
 spellcheckPresentContext: bool = True
-
-# App search support
-FIND_SPEAK_NONE: int = 0
-FIND_SPEAK_IF_LINE_CHANGED: int = 1
-FIND_SPEAK_ALL: int = 2
-findResultsVerbosity: int = FIND_SPEAK_ALL
-findResultsMinimumLength: int = 4
 
 textAttributesToSpeak: list[str] = []
 textAttributesToBraille: list[str] = []

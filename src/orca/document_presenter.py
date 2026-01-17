@@ -81,7 +81,7 @@ class _AppModeState:
 class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for caret navigation settings within the Documents page."""
 
-    def __init__(self) -> None:
+    def __init__(self, presenter: "DocumentPresenter") -> None:
         nav = caret_navigator.get_navigator()
         controls = [
             preferences_grid_base.BooleanPreferenceControl(
@@ -99,8 +99,8 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CONTENT_LAYOUT_MODE,
-                getter=nav.get_layout_mode,
-                setter=nav.set_layout_mode,
+                getter=presenter.get_layout_mode,
+                setter=presenter.set_layout_mode,
                 prefs_key="layoutMode",
                 determine_sensitivity=nav.get_is_enabled
             ),
@@ -229,7 +229,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
         self._title_change_callback = title_change_callback
 
-        self._caret_grid = CaretNavigationPreferencesGrid()
+        self._caret_grid = CaretNavigationPreferencesGrid(presenter)
         self._structural_grid = StructuralNavigationPreferencesGrid()
         self._table_grid = TableNavigationPreferencesGrid()
         self._native_grid = NativeNavigationPreferencesGrid(presenter)
@@ -333,6 +333,10 @@ class DocumentPresenter:
             self.enable_sticky_browse_mode,
             cmdnames.SET_BROWSE_MODE_STICKY)
 
+        self._handlers["toggle_layout_mode"] = input_event.InputEventHandler(
+            self.toggle_layout_mode,
+            cmdnames.TOGGLE_LAYOUT_MODE)
+
         msg = "DOCUMENT PRESENTER: Handlers set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -364,6 +368,12 @@ class DocumentPresenter:
                 self._handlers["enable_sticky_browse_mode"],
                 3,
                 True))
+
+        self._bindings.add(
+            keybindings.KeyBinding(
+                "",
+                keybindings.NO_MODIFIER_MASK,
+                self._handlers["toggle_layout_mode"]))
 
         self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
@@ -999,6 +1009,42 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting find results minimum length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.findResultsMinimumLength = value
+        return True
+
+    @dbus_service.getter
+    def get_layout_mode(self) -> bool:
+        """Returns whether layout mode is enabled."""
+
+        return settings.layoutMode
+
+    @dbus_service.setter
+    def set_layout_mode(self, value: bool) -> bool:
+        """Sets whether layout mode is enabled."""
+
+        if self.get_layout_mode() == value:
+            return True
+
+        msg = f"DOCUMENT PRESENTER: Setting layout mode to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.layoutMode = value
+        return True
+
+    @dbus_service.command
+    def toggle_layout_mode(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Switches between object mode and layout mode for line presentation."""
+
+        layout_mode = not self.get_layout_mode()
+        if notify_user:
+            if layout_mode:
+                script.present_message(messages.MODE_LAYOUT)
+            else:
+                script.present_message(messages.MODE_OBJECT)
+        self.set_layout_mode(layout_mode)
         return True
 
     # pylint: disable-next=too-many-return-statements

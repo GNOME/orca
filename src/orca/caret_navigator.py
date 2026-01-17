@@ -174,11 +174,6 @@ class CaretNavigator:
                 cmdnames.CARET_NAVIGATION_LINE_END,
                 enabled = enabled)
 
-        self._handlers["toggle_layout_mode"] = \
-            input_event.InputEventHandler(
-                self.toggle_layout_mode,
-                cmdnames.TOGGLE_LAYOUT_MODE)
-
         msg = f"CARET NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -277,12 +272,6 @@ class CaretNavigator:
                 1,
                 enabled))
 
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["toggle_layout_mode"]))
-
         # This pulls in the user's overrides to alternative keys.
         self._bindings = settings_manager.get_manager().override_key_bindings(
             self._handlers, self._bindings, False)
@@ -338,42 +327,6 @@ class CaretNavigator:
         msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.caretNavTriggersFocusMode = value
-        return True
-
-    @dbus_service.getter
-    def get_layout_mode(self) -> bool:
-        """Returns whether layout mode is enabled."""
-
-        return settings.layoutMode
-
-    @dbus_service.setter
-    def set_layout_mode(self, value: bool) -> bool:
-        """Sets whether layout mode is enabled."""
-
-        if self.get_layout_mode() == value:
-            return True
-
-        msg = f"CARET NAVIGATOR: Setting layout mode to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.layoutMode = value
-        return True
-
-    @dbus_service.command
-    def toggle_layout_mode(
-        self,
-        script: default.Script,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True
-    ) -> bool:
-        """Switches between object mode and layout mode for line presentation."""
-
-        layout_mode = not self.get_layout_mode()
-        if notify_user:
-            if layout_mode:
-                script.present_message(messages.MODE_LAYOUT)
-            else:
-                script.present_message(messages.MODE_OBJECT)
-        self.set_layout_mode(layout_mode)
         return True
 
     def create_preferences_grid(self) -> "CaretNavigatorPreferencesGrid":
@@ -1035,12 +988,6 @@ class CaretNavigatorPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=navigator.get_triggers_focus_mode,
                 setter=navigator.set_triggers_focus_mode,
                 prefs_key="caretNavTriggersFocusMode"
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CONTENT_LAYOUT_MODE,
-                getter=navigator.get_layout_mode,
-                setter=navigator.set_layout_mode,
-                prefs_key="layoutMode"
             ),
         ]
 

@@ -1162,7 +1162,7 @@ class Utilities(script_utilities.Utilities):
                 return self._cached_line_contents or []
 
         if layout_mode is None:
-            layout_mode = caret_navigator.get_navigator().get_layout_mode() \
+            layout_mode = document_presenter.get_presenter().get_layout_mode() \
                 or document_presenter.get_presenter().in_focus_mode(self._script.app)
 
         objects = []
