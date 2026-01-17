@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-10-23 12:53+0000\n"
-"PO-Revision-Date: 2025-12-21 21:38+0700\n"
+"PO-Revision-Date: 2026-01-17 21:31+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -5844,7 +5844,7 @@ msgstr "ตัวหนอนกลับหาง"
 #: src/orca/mathsymbols.py:1565
 msgctxt "math symbol"
 msgid "inverted lazy S"
-msgstr "inverted lazy S"
+msgstr "ตัว S ตะแคงข้างกลับด้าน"
 
 #. Translators: this is the spoken representation for the character '∿' (U+223f)
 #: src/orca/mathsymbols.py:1568
@@ -5966,13 +5966,13 @@ msgstr "เท่ากันเชิงเรขาคณิต"
 #: src/orca/mathsymbols.py:1625
 msgctxt "math symbol"
 msgid "approximately equal to or the image of"
-msgstr "เท่ากันโดยประมาณหรือภาพสะท้อนของ"
+msgstr "เท่ากับโดยประมาณหรือเป็นอิมเมจของ"
 
 #. Translators: this is the spoken representation for the character '≓' (U+2253)
 #: src/orca/mathsymbols.py:1628
 msgctxt "math symbol"
 msgid "image of or approximately equal to"
-msgstr "ภาพสะท้อนของหรือเท่ากันโดยประมาณ"
+msgstr "เป็นอิมเมจของหรือเท่ากับโดยประมาณ"
 
 #. Translators: this is the spoken representation for the character '≔' (U+2254)
 #: src/orca/mathsymbols.py:1631
@@ -6341,25 +6341,25 @@ msgstr "ยูเนียนของมัลติเซต"
 #: src/orca/mathsymbols.py:1808
 msgctxt "math symbol"
 msgid "square image of"
-msgstr "เป็นภาพสี่เหลี่ยมของ"
+msgstr "เป็นอิมเมจจัตุรัสของ"
 
 #. Translators: this is the spoken representation for the character '⊐' (U+2290)
 #: src/orca/mathsymbols.py:1811
 msgctxt "math symbol"
 msgid "square original of"
-msgstr "เป็นต้นแบบสี่เหลี่ยมของ"
+msgstr "เป็นต้นแบบจัตุรัสของ"
 
 #. Translators: this is the spoken representation for the character '⊑' (U+2291)
 #: src/orca/mathsymbols.py:1814
 msgctxt "math symbol"
 msgid "square image of or equal to"
-msgstr "เป็นภาพสี่เหลี่ยมของหรือเท่ากับ"
+msgstr "เป็นอิมเมจจัตุรัสของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⊒' (U+2292)
 #: src/orca/mathsymbols.py:1817
 msgctxt "math symbol"
 msgid "square original of or equal to"
-msgstr "เป็นต้นแบบสี่เหลี่ยมของหรือเท่ากับ"
+msgstr "เป็นต้นแบบจัตุรัสของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⊓' (U+2293)
 #: src/orca/mathsymbols.py:1820
@@ -6403,19 +6403,19 @@ msgstr "หารในวงกลม"
 #: src/orca/mathsymbols.py:1838
 msgctxt "math symbol"
 msgid "circled dot operator"
-msgstr "จุดในวงกลม"
+msgstr "ตัวดำเนินการจุดในวงกลม"
 
 #. Translators: this is the spoken representation for the character '⊚' (U+229a)
 #: src/orca/mathsymbols.py:1841
 msgctxt "math symbol"
 msgid "circled ring operator"
-msgstr "วงแหวนในวงกลม"
+msgstr "ตัวดำเนินการวงแหวนในวงกลม"
 
 #. Translators: this is the spoken representation for the character '⊛' (U+229b)
 #: src/orca/mathsymbols.py:1844
 msgctxt "math symbol"
 msgid "circled asterisk operator"
-msgstr "ดอกจันในวงกลม"
+msgstr "ตัวดำเนินการดอกจันในวงกลม"
 
 #. Translators: this is the spoken representation for the character '⊜' (U+229c)
 #: src/orca/mathsymbols.py:1847
@@ -6499,653 +6499,580 @@ msgstr "จริง"
 #: src/orca/mathsymbols.py:1886
 msgctxt "math symbol"
 msgid "forces"
-msgstr ""
+msgstr "บังคับ"
 
 #. Translators: this is the spoken representation for the character '⊪' (U+22aa)
 #: src/orca/mathsymbols.py:1889
 msgctxt "math symbol"
 msgid "triple vertical bar right turnstile"
-msgstr ""
+msgstr "ขีดตั้งสามขีด เทิร์นสไทล์ขวาหนึ่งขีด"
 
 #. Translators: this is the spoken representation for the character '⊫' (U+22ab)
 #: src/orca/mathsymbols.py:1892
 msgctxt "math symbol"
 msgid "double vertical bar double right turnstile"
-msgstr ""
+msgstr "ขีดตั้งสองขีด เทิร์นสไทล์ขวาสองขีด"
 
 #. Translators: this is the spoken representation for the character '⊬' (U+22ac)
 #: src/orca/mathsymbols.py:1895
 msgctxt "math symbol"
 msgid "does not prove"
-msgstr ""
+msgstr "พิสูจน์ไม่ได้"
 
 #. Translators: this is the spoken representation for the character '⊭' (U+22ad)
 #: src/orca/mathsymbols.py:1898
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "true"
 msgctxt "math symbol"
 msgid "not true"
-msgstr "จริง"
+msgstr "ไม่จริง"
 
 #. Translators: this is the spoken representation for the character '⊮' (U+22ae)
 #: src/orca/mathsymbols.py:1901
 msgctxt "math symbol"
 msgid "does not force"
-msgstr ""
+msgstr "ไม่บังคับ"
 
 #. Translators: this is the spoken representation for the character '⊯' (U+22af)
 #: src/orca/mathsymbols.py:1904
 msgctxt "math symbol"
 msgid "negated double vertical bar double right turnstile"
-msgstr ""
+msgstr "นิเสธของขีดตั้งสองขีด เทิร์นสไทล์ขวาสองขีด"
 
 #. Translators: this is the spoken representation for the character '⊰' (U+22b0)
 #: src/orca/mathsymbols.py:1907
 msgctxt "math symbol"
 msgid "precedes under relation"
-msgstr ""
+msgstr "มาก่อนภายใต้ความสัมพันธ์"
 
 #. Translators: this is the spoken representation for the character '⊱' (U+22b1)
 #: src/orca/mathsymbols.py:1910
 msgctxt "math symbol"
 msgid "succeeds under relation"
-msgstr ""
+msgstr "ตามหลังภายใต้ความสัมพันธ์"
 
 #. Translators: this is the spoken representation for the character '⊲' (U+22b2)
 #: src/orca/mathsymbols.py:1913
 msgctxt "math symbol"
 msgid "normal subgroup of"
-msgstr ""
+msgstr "เป็นกรุปย่อยปกติของ"
 
 #. Translators: this is the spoken representation for the character '⊳' (U+22b3)
 #: src/orca/mathsymbols.py:1916
 msgctxt "math symbol"
 msgid "contains as normal subgroup"
-msgstr ""
+msgstr "ครอบคลุมในฐานะกรุปย่อยปกติ"
 
 #. Translators: this is the spoken representation for the character '⊴' (U+22b4)
 #: src/orca/mathsymbols.py:1919
 msgctxt "math symbol"
 msgid "normal subgroup of or equal to"
-msgstr ""
+msgstr "เป็นกรุปย่อยปกติของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⊵' (U+22b5)
 #: src/orca/mathsymbols.py:1922
 msgctxt "math symbol"
 msgid "contains as normal subgroup of or equal to"
-msgstr ""
+msgstr "ครอบคลุมในฐานะกรุปย่อยปกติของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⊶' (U+22b6)
 #: src/orca/mathsymbols.py:1925
-#, fuzzy
-#| msgid "ordinal"
 msgctxt "math symbol"
 msgid "original of"
-msgstr "ออร์ดินัล"
+msgstr "ต้นแบบของ"
 
 #. Translators: this is the spoken representation for the character '⊷' (U+22b7)
 #: src/orca/mathsymbols.py:1928
-#, fuzzy
-#| msgid "image"
 msgctxt "math symbol"
 msgid "image of"
-msgstr "ภาพ"
+msgstr "อิมเมจของ"
 
 #. Translators: this is the spoken representation for the character '⊸' (U+22b8)
 #: src/orca/mathsymbols.py:1931
 msgctxt "math symbol"
 msgid "multimap"
-msgstr ""
+msgstr "มัลติแมป"
 
 #. Translators: this is the spoken representation for the character '⊹' (U+22b9)
 #: src/orca/mathsymbols.py:1934
 msgctxt "math symbol"
 msgid "hermitian conjugate matrix"
-msgstr ""
+msgstr "เมทริกซ์สังยุคแอร์มิต"
 
 #. Translators: this is the spoken representation for the character '⊺' (U+22ba)
 #: src/orca/mathsymbols.py:1937
-#, fuzzy
-#| msgid "internal frame"
 msgctxt "math symbol"
 msgid "intercalate"
-msgstr "กรอบภายใน"
+msgstr "วางสลับ"
 
 #. Translators: this is the spoken representation for the character '⊻' (U+22bb)
 #: src/orca/mathsymbols.py:1940
 msgctxt "math symbol"
 msgid "xor"
-msgstr ""
+msgstr "xor"
 
 #. Translators: this is the spoken representation for the character '⊼' (U+22bc)
 #: src/orca/mathsymbols.py:1943
 msgctxt "math symbol"
 msgid "nand"
-msgstr ""
+msgstr "nand"
 
 #. Translators: this is the spoken representation for the character '⊽' (U+22bd)
 #: src/orca/mathsymbols.py:1946
-#, fuzzy
 #| msgctxt "textattr"
 #| msgid "normal"
 msgctxt "math symbol"
 msgid "nor"
-msgstr "ปกติ"
+msgstr "nor"
 
 #. Translators: this is the spoken representation for the character '⊾' (U+22be)
 #: src/orca/mathsymbols.py:1949
-#, fuzzy
-#| msgid "right single quote"
 msgctxt "math symbol"
 msgid "right angle with arc"
-msgstr "อัญประกาศเดี่ยวปิด"
+msgstr "มุมขวาพร้อมส่วนโค้ง"
 
 #. Translators: this is the spoken representation for the character '⊿' (U+22bf)
 #: src/orca/mathsymbols.py:1952
-#, fuzzy
-#| msgid "right brace"
 msgctxt "math symbol"
 msgid "right triangle"
-msgstr "วงเล็บปีกกาปิด"
+msgstr "สามเหลี่ยมขวา"
 
 #. Translators: this is the spoken representation for the character '⋄' (U+22c4)
 #: src/orca/mathsymbols.py:1967
 msgctxt "math symbol"
 msgid "diamond operator"
-msgstr ""
+msgstr "ตัวดำเนินการข้าวหลามตัด"
 
 #. Translators: this is the spoken representation for the character '⋅' (U+22c5)
 #: src/orca/mathsymbols.py:1970
 msgctxt "math symbol"
 msgid "dot operator"
-msgstr ""
+msgstr "ตัวดำเนินการจุด"
 
 #. Translators: this is the spoken representation for the character '⋆' (U+22c6)
 #: src/orca/mathsymbols.py:1973
-#, fuzzy
-#| msgid "separator"
 msgctxt "math symbol"
 msgid "star operator"
-msgstr "ขีดคั่น"
+msgstr "ตัวดำเนินการดาว"
 
 #. Translators: this is the spoken representation for the character '⋇' (U+22c7)
 #: src/orca/mathsymbols.py:1976
 msgctxt "math symbol"
 msgid "division times"
-msgstr ""
+msgstr "การคูณบนการหาร"
 
 #. Translators: this is the spoken representation for the character '⋈' (U+22c8)
 #: src/orca/mathsymbols.py:1979
 msgctxt "math symbol"
 msgid "bowtie"
-msgstr ""
+msgstr "โบว์ไท"
 
 #. Translators: this is the spoken representation for the character '⋉' (U+22c9)
 #: src/orca/mathsymbols.py:1982
 msgctxt "math symbol"
 msgid "left normal factor semidirect product"
-msgstr ""
+msgstr "ผลคูณกึ่งตรงแบบตัวประกอบปกติซ้าย"
 
 #. Translators: this is the spoken representation for the character '⋊' (U+22ca)
 #: src/orca/mathsymbols.py:1985
 msgctxt "math symbol"
 msgid "right normal factor semidirect product"
-msgstr ""
+msgstr "ผลคูณกึ่งตรงแบบตัวประกอบปกติขวา"
 
 #. Translators: this is the spoken representation for the character '⋋' (U+22cb)
 #: src/orca/mathsymbols.py:1988
 msgctxt "math symbol"
 msgid "left semidirect product"
-msgstr ""
+msgstr "ผลคูณกึ่งตรงซ้าย"
 
 #. Translators: this is the spoken representation for the character '⋌' (U+22cc)
 #: src/orca/mathsymbols.py:1991
 msgctxt "math symbol"
 msgid "right semidirect product"
-msgstr ""
+msgstr "ผลคูณกึ่งตรงขวา"
 
 #. Translators: this is the spoken representation for the character '⋍' (U+22cd)
 #: src/orca/mathsymbols.py:1994
 msgctxt "math symbol"
 msgid "reversed tilde equals"
-msgstr ""
+msgstr "สัญลักษณ์การสมสัณฐานแบบกลับหาง"
 
 #. Translators: this is the spoken representation for the character '⋎' (U+22ce)
 #: src/orca/mathsymbols.py:1997
-#, fuzzy
-#| msgid "logical not"
 msgctxt "math symbol"
 msgid "curly logical or"
-msgstr "นิเสธ"
+msgstr "ลอจิคัล or แบบเส้นโค้ง"
 
 #. Translators: this is the spoken representation for the character '⋏' (U+22cf)
 #: src/orca/mathsymbols.py:2000
-#, fuzzy
-#| msgid "logical not"
 msgctxt "math symbol"
 msgid "curly logical and"
-msgstr "นิเสธ"
+msgstr "ลอจิคัล and แบบเส้นโค้ง"
 
 #. Translators: this is the spoken representation for the character '⋐' (U+22d0)
 #: src/orca/mathsymbols.py:2003
-#, fuzzy
-#| msgid "double prime"
 msgctxt "math symbol"
 msgid "double subset"
-msgstr "ดับเบิลไพรม์"
+msgstr "สับเซตคู่"
 
 #. Translators: this is the spoken representation for the character '⋑' (U+22d1)
 #: src/orca/mathsymbols.py:2006
-#, fuzzy
-#| msgid "double prime"
 msgctxt "math symbol"
 msgid "double superset"
-msgstr "ดับเบิลไพรม์"
+msgstr "ซูเปอร์เซตคู่"
 
 #. Translators: this is the spoken representation for the character '⋒' (U+22d2)
 #: src/orca/mathsymbols.py:2009
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "math symbol"
 msgid "double intersection"
-msgstr "ทิศทางการเขียน"
+msgstr "ส่วนทับซ้อนคู่"
 
 #. Translators: this is the spoken representation for the character '⋓' (U+22d3)
 #: src/orca/mathsymbols.py:2012
-#, fuzzy
-#| msgid "double prime"
 msgctxt "math symbol"
 msgid "double union"
-msgstr "ดับเบิลไพรม์"
+msgstr "ส่วนรวมคู่"
 
 #. Translators: this is the spoken representation for the character '⋔' (U+22d4)
 #: src/orca/mathsymbols.py:2015
 msgctxt "math symbol"
 msgid "pitchfork"
-msgstr ""
+msgstr "ง่าม"
 
 #. Translators: this is the spoken representation for the character '⋕' (U+22d5)
 #: src/orca/mathsymbols.py:2018
 msgctxt "math symbol"
 msgid "equal and parallel to"
-msgstr ""
+msgstr "เท่ากับและขนานกับ"
 
 #. Translators: this is the spoken representation for the character '⋖' (U+22d6)
 #: src/orca/mathsymbols.py:2021
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than with dot"
-msgstr "น้อยกว่าหรือเท่ากับ"
+msgstr "น้อยกว่าพร้อมจุด"
 
 #. Translators: this is the spoken representation for the character '⋗' (U+22d7)
 #: src/orca/mathsymbols.py:2024
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than with dot"
-msgstr "มากกว่าหรือเท่ากับ"
+msgstr "มากกว่าพร้อมจุด"
 
 #. Translators: this is the spoken representation for the character '⋘' (U+22d8)
 #: src/orca/mathsymbols.py:2027
 msgctxt "math symbol"
 msgid "very much less than"
-msgstr ""
+msgstr "น้อยกว่ามาก ๆ"
 
 #. Translators: this is the spoken representation for the character '⋙' (U+22d9)
 #: src/orca/mathsymbols.py:2030
 msgctxt "math symbol"
 msgid "very much greater than"
-msgstr ""
+msgstr "มากกว่ามาก ๆ"
 
 #. Translators: this is the spoken representation for the character '⋚' (U+22da)
 #: src/orca/mathsymbols.py:2033
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than equal to or greater than"
-msgstr "น้อยกว่าหรือเท่ากับ"
+msgstr "น้อยกว่า เท่ากับ หรือมากกว่า"
 
 #. Translators: this is the spoken representation for the character '⋛' (U+22db)
 #: src/orca/mathsymbols.py:2036
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than equal to or less than"
-msgstr "มากกว่าหรือเท่ากับ"
+msgstr "มากกว่า เท่ากับ หรือน้อยกว่า"
 
 #. Translators: this is the spoken representation for the character '⋜' (U+22dc)
 #: src/orca/mathsymbols.py:2039
 msgctxt "math symbol"
 msgid "equal to or less than"
-msgstr ""
+msgstr "เท่ากับหรือน้อยกว่า"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22dd)
 #: src/orca/mathsymbols.py:2042
 msgctxt "math symbol"
 msgid "equal to or greater than"
-msgstr ""
+msgstr "เท่ากับหรือมากกว่า"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22de)
 #: src/orca/mathsymbols.py:2045
 msgctxt "math symbol"
 msgid "equal to or precedes"
-msgstr ""
+msgstr "เท่ากับหรือมาก่อน"
 
 #. Translators: this is the spoken representation for the character '⋝' (U+22df)
 #: src/orca/mathsymbols.py:2048
 msgctxt "math symbol"
 msgid "equal to or succeeds"
-msgstr ""
+msgstr "เท่ากับหรือตามหลัง"
 
 #. Translators: this is the spoken representation for the character '⋠' (U+22e0)
 #: src/orca/mathsymbols.py:2051
 msgctxt "math symbol"
 msgid "does not precede or equal"
-msgstr ""
+msgstr "ไม่มาก่อนหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋡' (U+22e1)
 #: src/orca/mathsymbols.py:2054
 msgctxt "math symbol"
 msgid "does not succeed or equal"
-msgstr ""
+msgstr "ไม่ตามหลังหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋢' (U+22e2)
 #: src/orca/mathsymbols.py:2057
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "not square image of or equal to"
-msgstr "มากกว่าหรือเท่ากับ"
+msgstr "ไม่เป็นอิมเมจจัตุรัสของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋣' (U+22e3)
 #: src/orca/mathsymbols.py:2060
 msgctxt "math symbol"
 msgid "not square original of or equal to"
-msgstr ""
+msgstr "ไม่เป็นต้นแบบจัตุรัสของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋤' (U+22e4)
 #: src/orca/mathsymbols.py:2063
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "square image of or not equal to"
-msgstr "มากกว่าหรือเท่ากับ"
+msgstr "เป็นอิมเมจจัตุรัสของหรือไม่เท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋥' (U+22e5)
 #: src/orca/mathsymbols.py:2066
 msgctxt "math symbol"
 msgid "square original of or not equal to"
-msgstr ""
+msgstr "เป็นต้นแบบจัตุรัสของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋦' (U+22e6)
 #: src/orca/mathsymbols.py:2069
-#, fuzzy
-#| msgid "less than or equal to"
 msgctxt "math symbol"
 msgid "less than but not equivalent to"
-msgstr "น้อยกว่าหรือเท่ากับ"
+msgstr "น้อยกว่าแต่ไม่สมมูลกับ"
 
 #. Translators: this is the spoken representation for the character '⋧' (U+22e7)
 #: src/orca/mathsymbols.py:2072
-#, fuzzy
-#| msgid "greater than or equal to"
 msgctxt "math symbol"
 msgid "greater than but not equivalent to"
-msgstr "มากกว่าหรือเท่ากับ"
+msgstr "มากกว่าแต่ไม่สมมูลกับ"
 
 #. Translators: this is the spoken representation for the character '⋨' (U+22e8)
 #: src/orca/mathsymbols.py:2075
 msgctxt "math symbol"
 msgid "precedes but not equivalent to"
-msgstr ""
+msgstr "มาก่อนแต่ไม่สมมูลกับ"
 
 #. Translators: this is the spoken representation for the character '⋩' (U+22e9)
 #: src/orca/mathsymbols.py:2078
 msgctxt "math symbol"
 msgid "succeeds but not equivalent to"
-msgstr ""
+msgstr "ตามหลังแต่ไม่สมมูลกับ"
 
 #. Translators: this is the spoken representation for the character '⋪' (U+22ea)
 #: src/orca/mathsymbols.py:2081
 msgctxt "math symbol"
 msgid "not normal subgroup of"
-msgstr ""
+msgstr "ไม่เป็นกรุปย่อยปกติของ"
 
 #. Translators: this is the spoken representation for the character '⋫' (U+22eb)
 #: src/orca/mathsymbols.py:2084
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup"
-msgstr ""
+msgstr "ไม่ครอบคลุมในฐานะกรุปย่อยปกติ"
 
 #. Translators: this is the spoken representation for the character '⋬' (U+22ec)
 #: src/orca/mathsymbols.py:2087
 msgctxt "math symbol"
 msgid "not normal subgroup of or equal to"
-msgstr ""
+msgstr "ไม่เป็นกรุปย่อยปกติของหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋭' (U+22ed)
 #: src/orca/mathsymbols.py:2090
 msgctxt "math symbol"
 msgid "does not contain as normal subgroup or equal"
-msgstr ""
+msgstr "ไม่ครอบคลุมในฐานะกรุปย่อยปกติหรือเท่ากับ"
 
 #. Translators: this is the spoken representation for the character '⋮' (U+22ee)
 #: src/orca/mathsymbols.py:2093
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgctxt "math symbol"
 msgid "vertical ellipsis"
-msgstr "การเรียงชิดขอบแนวดิ่ง"
+msgstr "จุดไข่ปลาแนวตั้ง"
 
 #. Translators: this is the spoken representation for the character '⋯' (U+22ef)
 #: src/orca/mathsymbols.py:2096
 msgctxt "math symbol"
 msgid "midline horizontal ellipsis"
-msgstr ""
+msgstr "จุดไข่ปลาแนวนอนกึ่งกลาง"
 
 #. Translators: this is the spoken representation for the character '⋰' (U+22f0)
 #: src/orca/mathsymbols.py:2099
 msgctxt "math symbol"
 msgid "up right diagonal ellipsis"
-msgstr ""
+msgstr "จุดไข่ปลาเฉียงขึ้นขวาบน"
 
 #. Translators: this is the spoken representation for the character '⋱' (U+22f1)
 #: src/orca/mathsymbols.py:2102
 msgctxt "math symbol"
 msgid "down right diagonal ellipsis"
-msgstr ""
+msgstr "จุดไข่ปลาเฉียงลงขวาล่าง"
 
 #. Translators: this is the spoken representation for the character '⋲' (U+22f2)
 #: src/orca/mathsymbols.py:2105
 msgctxt "math symbol"
 msgid "element of with long horizontal stroke"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมขีดแนวนอนยาว"
 
 #: src/orca/mathsymbols.py:2109
 msgctxt "math symbol"
 msgid "element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมขีดแนวตั้งที่ส่วนปลายของเส้นแนวนอน"
 
 #: src/orca/mathsymbols.py:2113
 msgctxt "math symbol"
 msgid "small element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "เป็นสมาชิกของ ขนาดเล็ก พร้อมขีดแนวตั้งที่ส่วนปลายของเส้นแนวนอน"
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
 #: src/orca/mathsymbols.py:2116
 msgctxt "math symbol"
 msgid "element of with dot above"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมจุดด้านบน"
 
 #. Translators: this is the spoken representation for the character '⋶' (U+22f6)
 #: src/orca/mathsymbols.py:2119
 msgctxt "math symbol"
 msgid "element of with overbar"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมขีดด้านบน"
 
 #. Translators: this is the spoken representation for the character '⋷' (U+22f7)
 #: src/orca/mathsymbols.py:2122
 msgctxt "math symbol"
 msgid "small element of with overbar"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมขีดด้านบน ขนาดเล็ก"
 
 #. Translators: this is the spoken representation for the character '⋸' (U+22f8)
 #: src/orca/mathsymbols.py:2125
 msgctxt "math symbol"
 msgid "element of with underbar"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมขีดด้านล่าง"
 
 #. Translators: this is the spoken representation for the character '⋹' (U+22f9)
 #: src/orca/mathsymbols.py:2128
 msgctxt "math symbol"
 msgid "element of with two horizontal strokes"
-msgstr ""
+msgstr "เป็นสมาชิกของ พร้อมขีดแนวนอนสองขีด"
 
 #. Translators: this is the spoken representation for the character '⋺' (U+22fa)
 #: src/orca/mathsymbols.py:2131
 msgctxt "math symbol"
 msgid "contains with long horizontal stroke"
-msgstr ""
+msgstr "มีเป็นสมาชิก พร้อมขีดแนวนอนยาว"
 
 #. Translators: this is the spoken representation for the character '⋻' (U+22fb)
 #: src/orca/mathsymbols.py:2134
 msgctxt "math symbol"
 msgid "contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "มีเป็นสมาชิก พร้อมขีดแนวตั้งที่ส่วนปลายของเส้นแนวนอน"
 
 #: src/orca/mathsymbols.py:2138
 msgctxt "math symbol"
 msgid "small contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "มีเป็นสมาชิก พร้อมขีดแนวตั้งที่ส่วนปลายของเส้นแนวนอน ขนาดเล็ก"
 
 #. Translators: this is the spoken representation for the character '⋽' (U+22fd)
 #: src/orca/mathsymbols.py:2141
 msgctxt "math symbol"
 msgid "contains with overbar"
-msgstr ""
+msgstr "มีเป็นสมาชิก พร้อมขีดด้านบน"
 
 #. Translators: this is the spoken representation for the character '⋾' (U+22fe)
 #: src/orca/mathsymbols.py:2144
 msgctxt "math symbol"
 msgid "small contains with overbar"
-msgstr ""
+msgstr "มีเป็นสมาชิก พร้อมขีดด้านบน ขนาดเล็ก"
 
 #. Translators: this is the spoken representation for the character '⋿' (U+22ff)
 #: src/orca/mathsymbols.py:2147
 msgctxt "math symbol"
 msgid "z notation bag membership"
-msgstr ""
+msgstr "สมาชิกถุงข้อมูล Z notation"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: src/orca/mathsymbols.py:2150
-#, fuzzy
-#| msgid "left paren"
 msgctxt "math symbol"
 msgid "left ceiling"
-msgstr "วงเล็บเปิด"
+msgstr "เพดานซ้าย"
 
 #. Translators: this is the spoken representation for the character '⌉' (U+2309)
 #: src/orca/mathsymbols.py:2153
-#, fuzzy
-#| msgid "right paren"
 msgctxt "math symbol"
 msgid "right ceiling"
-msgstr "วงเล็บปิด"
+msgstr "เพดานขวา"
 
 #. Translators: this is the spoken representation for the character '⌊' (U+230a)
 #: src/orca/mathsymbols.py:2156
-#, fuzzy
-#| msgid "left alt"
 msgctxt "math symbol"
 msgid "left floor"
-msgstr "ปุ่ม alt ซ้าย"
+msgstr "พื้นซ้าย"
 
 #. Translators: this is the spoken representation for the character '⌋' (U+230b)
 #: src/orca/mathsymbols.py:2159
-#, fuzzy
-#| msgid "right alt"
 msgctxt "math symbol"
 msgid "right floor"
-msgstr "ปุ่ม alt ขวา"
+msgstr "พื้นขวา"
 
 #. Translators: this is the spoken representation for the character '⏞' (U+23de)
 #: src/orca/mathsymbols.py:2162
-#, fuzzy
-#| msgid "left brace"
 msgctxt "math symbol"
 msgid "top brace"
-msgstr "วงเล็บปีกกาเปิด"
+msgstr "วงเล็บปีกกาบน"
 
 #. Translators: this is the spoken representation for the character '⏟' (U+23df)
 #: src/orca/mathsymbols.py:2165
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "bottom"
 msgctxt "math symbol"
 msgid "bottom brace"
-msgstr "ล่าง"
+msgstr "วงเล็บปีกกาล่าง"
 
 #. Translators: this is the spoken representation for the character '⟨' (U+27e8)
 #: src/orca/mathsymbols.py:2168
-#, fuzzy
-#| msgid "left double angle bracket"
 msgctxt "math symbol"
 msgid "left angle bracket"
-msgstr "วงเล็บแหลมคู่เปิด"
+msgstr "วงเล็บแหลมซ้าย"
 
 #. Translators: this is the spoken representation for the character '⟩' (U+27e9)
 #: src/orca/mathsymbols.py:2171
-#, fuzzy
-#| msgid "right double angle bracket"
 msgctxt "math symbol"
 msgid "right angle bracket"
-msgstr "วงเล็บแหลมคู่ปิด"
+msgstr "วงเล็บแหลมขวา"
 
 #. Translators: this is the spoken representation for the character '⨀' (U+2a00)
 #: src/orca/mathsymbols.py:2174
-#, fuzzy
-#| msgid "middle dot"
 msgctxt "math symbol"
 msgid "circled dot"
-msgstr "จุดกลาง"
+msgstr "จุดในวงกลม"
 
 #. Translators: this is the spoken representation for the character '⨃' (U+2a03)
 #: src/orca/mathsymbols.py:2182
 msgctxt "math symbol"
 msgid "union with dot"
-msgstr ""
+msgstr "ส่วนรวมพร้อมจุด"
 
 #. Translators: this is the spoken representation for the character '⨄' (U+2a04)
 #: src/orca/mathsymbols.py:2184
 msgctxt "math symbol"
 msgid "union with plus"
-msgstr ""
+msgstr "ส่วนรวมพร้อมเครื่องหมายบวก"
 
 #. Translators: this is the spoken representation for the character '⨅' (U+2a05)
 #: src/orca/mathsymbols.py:2186
-#, fuzzy
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "square intersection"
-msgstr "รากที่สอง"
+msgstr "ส่วนทับซ้อนจัตุรัส"
 
 #. Translators: this is the spoken representation for the character '⨆' (U+2a06)
 #: src/orca/mathsymbols.py:2188
-#, fuzzy
-#| msgid "square root"
 msgctxt "math symbol"
 msgid "square union"
-msgstr "รากที่สอง"
+msgstr "ส่วนรวมจัตุรัส"
 
 #. Translators: this is the spoken representation for the character '■' (U+25a0)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2192
-#, fuzzy
-#| msgid "black square"
 msgctxt "math symbol"
 msgid "black square"
 msgstr "สี่เหลี่ยมทึบ"
@@ -7153,8 +7080,6 @@ msgstr "สี่เหลี่ยมทึบ"
 #. Translators: this is the spoken representation for the character '□' (U+25a1)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2196
-#, fuzzy
-#| msgid "white square"
 msgctxt "math symbol"
 msgid "white square"
 msgstr "สี่เหลี่ยมโปร่ง"
@@ -7162,8 +7087,6 @@ msgstr "สี่เหลี่ยมโปร่ง"
 #. Translators: this is the spoken representation for the character '◆' (U+25c6)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2200
-#, fuzzy
-#| msgid "black diamond"
 msgctxt "math symbol"
 msgid "black diamond"
 msgstr "ข้าวหลามตัดทึบ"
@@ -7171,48 +7094,39 @@ msgstr "ข้าวหลามตัดทึบ"
 #. Translators: this is the spoken representation for the character '○' (U+25cb)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2204
-#, fuzzy
-#| msgid "white circle"
 msgctxt "math symbol"
 msgid "white circle"
-msgstr "วงกลมโปร่ง"
+msgstr "ข้าวหลามตัดโปร่ง"
 
 #. Translators: this is the spoken representation for the character '●' (U+25cf)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2208
-#, fuzzy
-#| msgid "black circle"
 msgctxt "math symbol"
 msgid "black circle"
 msgstr "วงกลมทึบ"
 
 #. Translators: this is the spoken representation for the character '◦' (U+25e6)
 #: src/orca/mathsymbols.py:2211
-#, fuzzy
-#| msgid "white bullet"
 msgctxt "math symbol"
 msgid "white bullet"
-msgstr "bullet โปร่ง"
+msgstr "บูลเล็ตโปร่ง"
 
 #. Translators: this is the spoken representation for the character '◾' (U+25fe)
 #. when used as a geometric shape (i.e. as opposed to a bullet in a list).
 #: src/orca/mathsymbols.py:2215
-#, fuzzy
-#| msgid "black square"
 msgctxt "math symbol"
 msgid "black medium small square"
-msgstr "สี่เหลี่ยมทึบ"
+msgstr "สี่เหลี่ยมทึบขนาดเล็กปานกลาง"
 
 #. Translators: this is the spoken representation for the character '̱' (U+0331)
 #. which combines with the preceding character. '%s' is a placeholder for the
 #. preceding character. Some examples of combined symbols can be seen in this
 #. table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
 #: src/orca/mathsymbols.py:2221
-#, fuzzy, python-format
-#| msgid "underline"
+#, python-format
 msgctxt "math symbol"
 msgid "%s with underline"
-msgstr "ขีดล่าง"
+msgstr "%s พร้อมขีดเส้นใต้"
 
 #. Translators: this is the spoken representation for the character '̸' (U+0338)
 #. which combines with the preceding character. '%s' is a placeholder for the
@@ -7222,19 +7136,17 @@ msgstr "ขีดล่าง"
 #, python-format
 msgctxt "math symbol"
 msgid "%s with slash"
-msgstr ""
+msgstr "%s พร้อมเครื่องหมายทับ"
 
 #. Translators: this is the spoken representation for the character '⃒' (U+20D2)
 #. which combines with the preceding character. '%s' is a placeholder for the
 #. preceding character. Some examples of combined symbols can be seen in this
 #. table: http://www.w3.org/TR/MathML3/appendixc.html#oper-dict.entries-table.
 #: src/orca/mathsymbols.py:2233
-#, fuzzy, python-format
-#| msgctxt "textattr"
-#| msgid "vertical align"
+#, python-format
 msgctxt "math symbol"
 msgid "%s with vertical line"
-msgstr "การเรียงชิดขอบแนวดิ่ง"
+msgstr "%s พร้อมเส้นแนวตั้ง"
 
 #. pylint: disable=import-error
 #. pylint: disable=import-error
@@ -7458,11 +7370,10 @@ msgstr "เซลล์ %s"
 #. substitution is the cell name. In the case of a spreadsheet the cell name
 #. will be something like "B3".
 #: src/orca/messages.py:203
-#, fuzzy, python-format
-#| msgid "selected"
+#, python-format
 msgctxt "cell"
 msgid "%s selected"
-msgstr "เลือกแล้ว"
+msgstr "เลือก %s แล้ว"
 
 #. Translators: this message is spoken to announce that multiple table cells just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -7470,12 +7381,10 @@ msgstr "เลือกแล้ว"
 #. substitution is for the name of the last cell in the range. An example message
 #. for Calc would be "A1 through A30 selected".
 #: src/orca/messages.py:210
-#, fuzzy, python-format
-#| msgid "%d of %d item selected"
-#| msgid_plural "%d of %d items selected"
+#, python-format
 msgctxt "cell"
 msgid "%s through %s selected"
-msgstr "เลือกรายการ %d ใน %d รายการ"
+msgstr "เลือก %s ถึง %s แล้ว"
 
 #. Translators: this message is spoken to announce that multiple table cells just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -7483,24 +7392,20 @@ msgstr "เลือกรายการ %d ใน %d รายการ"
 #. substitution is for the name of the last cell in the range. An example message
 #. for Calc would be "A1 through A30 unselected".
 #: src/orca/messages.py:217
-#, fuzzy, python-format
-#| msgid "%d of %d item selected"
-#| msgid_plural "%d of %d items selected"
+#, python-format
 msgctxt "cell"
 msgid "%s through %s unselected"
-msgstr "เลือกรายการ %d ใน %d รายการ"
+msgstr "เลิกเลือก %s ถึง %s แล้ว"
 
 #. Translators: this message is spoken to announce that a table cell just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the cell name. In the case of a spreadsheet the cell name
 #. will be something like "B3".
 #: src/orca/messages.py:223
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgctxt "cell"
 msgid "%s unselected"
-msgstr "ไม่ได้เลือก"
+msgstr "เลิกเลือก %s แล้ว"
 
 #. Translators: This is the description of command line option '-d, --disable'
 #. which allows the user to specify an option to disable as Orca is started.
@@ -7614,10 +7519,8 @@ msgstr "DIR"
 #. various synthesizers with different voices and languages.
 #. This option can be used to override the configured default speech system.
 #: src/orca/messages.py:304
-#, fuzzy
-#| msgid "Speech _system:"
 msgid "Speech system"
-msgstr "_ระบบเสียงพูด:"
+msgstr "ระบบเสียงพูด"
 
 #. Translators: This message is presented to the user when the specified speech
 #. system is unavailable. A speech system provides various synthesizers with
@@ -7627,15 +7530,13 @@ msgstr "_ระบบเสียงพูด:"
 #: src/orca/messages.py:311
 #, python-format
 msgid "Speech system “%s” is unavailable (available: %s)"
-msgstr ""
+msgstr "ระบบเสียงพูด “%s” ไม่สามารถใช้ได้ (ที่ใช้ได้คือ: %s)"
 
 #. Translators: This is the description of command line option '-v, --version'
 #. which prints the version of Orca. E.g. '1.23.4'.
 #: src/orca/messages.py:319
-#, fuzzy
-#| msgid "Print the known running applications"
 msgid "Version of this application"
-msgstr "พิมพ์โปรแกรมที่รู้จักที่ทำงานอยู่"
+msgstr "รุ่นของโปรแกรมนี้"
 
 #. Translators: This is the description of command line option '-r, --replace'
 #. which tells Orca to replace any existing Orca process that might be running.
@@ -7657,14 +7558,14 @@ msgstr "แสดงข้อความวิธีใช้นี้แล้
 #. start with 'debug' and end with '.out', regardless of the locale.).
 #: src/orca/messages.py:335
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr "ส่งผลลัพธ์การตรวจแก้จุดบกพร่องไปยังไฟล์ debug-YYYY-MM-DD-HH:MM:SS.out"
+msgstr "ส่งผลลัพธ์การดีบั๊กไปยังไฟล์ debug-YYYY-MM-DD-HH:MM:SS.out"
 
 #. Translators: This is the description of command line option '--debug-file'
 #. which allows the user to override the default date-based name of the debugging
 #. output file.
 #: src/orca/messages.py:340
 msgid "Send debug output to the specified file"
-msgstr "ส่งผลลัพธ์การตรวจแก้จุดบกพร่องไปยังไฟล์ที่ระบุ"
+msgstr "ส่งผลลัพธ์การดีบั๊กไปยังไฟล์ที่ระบุ"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '--debug-file' command line option.
@@ -7690,7 +7591,7 @@ msgstr "ตั้งค่าปรับแต่งสำหรับผู้
 #. from the command line and the help text is displayed.
 #: src/orca/messages.py:358
 msgid "Report bugs on https://gitlab.gnome.org/GNOME/orca/-/issues."
-msgstr ""
+msgstr "รายงานบั๊กได้ที่ https://gitlab.gnome.org/GNOME/orca/-/issues."
 
 #. Translators: Orca has a command to present the contents of the clipboard without
 #. the user having to switch to a clipboard manager. This message is spoken by Orca
@@ -7699,7 +7600,7 @@ msgstr ""
 #: src/orca/messages.py:364
 #, python-format
 msgid "Clipboard contains: %s"
-msgstr ""
+msgstr "คลิปบอร์ดมี: %s"
 
 #. Translators: Orca normal speaks the text which was just deleted from a
 #. document via command. Depending on the circumstances, that might be a
@@ -7743,7 +7644,7 @@ msgstr "คัดลอกแล้ว"
 #. is the full/verbose indication.
 #: src/orca/messages.py:396
 msgid "Pasted contents from clipboard."
-msgstr "แปะเนื้อหาจากคลิปบอร์ดแล้ว"
+msgstr "วางเนื้อหาจากคลิปบอร์ดแล้ว"
 
 #. Translators: Orca normal speaks the text which was just inserted into a
 #. document via command. Depending on the circumstances, that might be a
@@ -7754,7 +7655,7 @@ msgstr "แปะเนื้อหาจากคลิปบอร์ดแล
 #: src/orca/messages.py:404
 msgctxt "clipboard"
 msgid "pasted"
-msgstr "แปะแล้ว"
+msgstr "วางแล้ว"
 
 #. Translators: In chat applications, it is often possible to see that a "buddy"
 #. is typing currently (e.g. via a keyboard icon or status text). Some users like
@@ -7842,17 +7743,15 @@ msgstr "แสดงประวัติข้อความเฉพาะข
 #: src/orca/messages.py:489
 msgctxt "content"
 msgid "deletion start"
-msgstr ""
+msgstr "จุดเริ่มต้นการลบ"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'del' element, or the removed code in a diff.
 #: src/orca/messages.py:494
-#, fuzzy
-#| msgid "delete"
 msgctxt "content"
 msgid "deletion end"
-msgstr "delete"
+msgstr "จุดสิ้นสุดการลบ"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked for insertion in a document, such as content which
@@ -7860,17 +7759,15 @@ msgstr "delete"
 #: src/orca/messages.py:499
 msgctxt "content"
 msgid "insertion start"
-msgstr ""
+msgstr "จุดเริ่มต้นการแทรก"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked for deletion in a document, such as content which
 #. is inside an HTML 'ins' element, or the added code in a diff.
 #: src/orca/messages.py:504
-#, fuzzy
-#| msgid "insert"
 msgctxt "content"
 msgid "insertion end"
-msgstr "insert"
+msgstr "จุดสิ้นสุดการแทรก"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is content marked/highlighted in a document, such as content which
@@ -7878,7 +7775,7 @@ msgstr "insert"
 #: src/orca/messages.py:509
 msgctxt "content"
 msgid "highlight start"
-msgstr ""
+msgstr "จุดเริ่มต้นการเน้นข้อความ"
 
 #. Translators: This phrase is spoken to inform the user that they have reached
 #. the end of content marked/highlighted in a document, such as content which
@@ -7886,7 +7783,7 @@ msgstr ""
 #: src/orca/messages.py:514
 msgctxt "content"
 msgid "highlight end"
-msgstr ""
+msgstr "จุดสิ้นสุดการเน้นข้อความ"
 
 #. Translators: This phrase is spoken to inform the user that the content being
 #. presented is the end of an inline suggestion a document. A "suggestion" is a
@@ -7894,11 +7791,9 @@ msgstr ""
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:521
-#, fuzzy
-#| msgid "question"
 msgctxt "content"
 msgid "suggestion end"
-msgstr "ปรัศนี"
+msgstr "จุดสิ้นสุดข้อเสนอแนะ"
 
 #. Translators: This is for navigating document content by moving to the start
 #. or end of a container. Examples of containers include tables, lists, and
@@ -7922,94 +7817,74 @@ msgstr "ไม่อยู่ในเครื่องบรรจุ"
 #. Translators: This message is presented when the user selects all of the items
 #. in a container that supports selection, such as a GUI table or a list of icons.
 #: src/orca/messages.py:540
-#, fuzzy
-#| msgid "listitem|selected"
 msgid "all items selected"
-msgstr "เลือกอยู่"
+msgstr "เลือกรายการทั้งหมดแล้ว"
 
 #. Translators: This message is presented when the user is in a date picker and
 #. navigates to the item which reflects the current date.
 #: src/orca/messages.py:544
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current date"
-msgstr "ตำแหน่ง_ปัจจุบัน"
+msgstr "วันที่ปัจจุบัน"
 
 #. Translators: This message is presented wwhen the user is in a time picker/schedule
 #. and navigates to the item which reflects the current time.
 #: src/orca/messages.py:548
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current time"
-msgstr "ตำแหน่ง_ปัจจุบัน"
+msgstr "เวลาปัจจุบัน"
 
 #. Translators: This message is presented when the user is in a map or flow chart and
 #. navigates to the item which reflects the current location.
 #: src/orca/messages.py:552
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current location"
-msgstr "ตำแหน่ง_ปัจจุบัน"
+msgstr "ตำแหน่งปัจจุบัน"
 
 #. Translators: This message is presented when the user is in a table of contents or
 #. other set of pagination links and navigates to the item which reflects the current
 #. page.
 #: src/orca/messages.py:557
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current page"
-msgstr "ตำแหน่ง_ปัจจุบัน"
+msgstr "หน้าปัจจุบัน"
 
 #. Translators: This message is presented when the user is in a wizard or other
 #. step-based interface and navigates to the item which reflects the current step.
 #: src/orca/messages.py:561
-#, fuzzy
-#| msgid "C_urrent location"
 msgid "Current step"
-msgstr "ตำแหน่ง_ปัจจุบัน"
+msgstr "ขั้นตอนปัจจุบัน"
 
 #. Translators: This message is presented when the user is in a list of generic or
 #. unspecified items and navigates to the link/object which reflects the current item.
 #: src/orca/messages.py:565
-#, fuzzy
-#| msgid "menu item"
 msgid "Current item"
-msgstr "รายการเมนู"
+msgstr "รายการปัจจุบัน"
 
 #. Translators: Orca has a command to report CPU and memory usage. This message
 #. is presented to the user when they use this command but Orca was unable to
 #. retrieve this information.
 #: src/orca/messages.py:570
-#, fuzzy
-#| msgid "Prints memory usage information."
 msgid "CPU and memory usage unknown"
-msgstr "พิมพ์ข้อมูลการใช้หน่วยความจำ"
+msgstr "ไม่ทราบการใช้ CPU และหน่วยความจำ"
 
 #. Translators: Orca has a command to report CPU and memory usage levels. This
 #. message presents the levels to the user.
 #: src/orca/messages.py:574
 #, python-format
 msgid "CPU: %d%%. Memory: %d%%"
-msgstr ""
+msgstr "CPU: %d%% หน่วยความจำ: %d%%"
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user tried to clear the cache but
 #. an error occurred.
 #: src/orca/messages.py:580
-#, fuzzy
-#| msgid "leaving table."
 msgid "Clearing cache failed."
-msgstr "กำลังออกจากตาราง"
+msgstr "การล้างแคชล้มเหลว"
 
 #. Translators: Orca has a command for advanced users and developers to clear
 #. the AT-SPI cache in case there is stale information due to an application
 #. bug. This message is presented when the user performs the command.
 #: src/orca/messages.py:585
-#, fuzzy
-#| msgid "leaving table."
 msgid "Clearing cache."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังล้างแคช"
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -8019,7 +7894,7 @@ msgstr "กำลังออกจากตาราง"
 #. capture has begun.
 #: src/orca/messages.py:593
 msgid "Capturing debugging snapshot"
-msgstr ""
+msgstr "กำลังจับสแนปช็อตสำหรับการดีบัก"
 
 #. Translators: this is a debug message for advanced users and developers. It
 #. describes a command to print detailed debugging information about the current
@@ -8029,7 +7904,7 @@ msgstr ""
 #. capture has begun.
 #: src/orca/messages.py:601
 msgid "Debugging snapshot captured"
-msgstr ""
+msgstr "จับสแนปช็อตสำหรับการดีบักแล้ว"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. The string
@@ -8046,20 +7921,17 @@ msgstr "ปุ่มเริ่มต้นคือ %s"
 #. the button (e.g. "OK" or "Close"). When translating "Grayed," please use
 #. the same word used for the string in object_properties.py.
 #: src/orca/messages.py:614
-#, fuzzy, python-format
-#| msgid "Default button is %s"
+#, python-format
 msgid "Default button is %s. Grayed"
-msgstr "ปุ่มปริยายคือ %s"
+msgstr "ปุ่มเริ่มต้นคือ %s ซึ่งไม่เปิดใช้งาน"
 
 #. Translators: The "default" button in a dialog box is the button that gets
 #. activated when Enter is pressed anywhere within that dialog box. Orca has
 #. a command to present the default button. This is the message Orca will
 #. present if it could not find the default button.
 #: src/orca/messages.py:620
-#, fuzzy
-#| msgid "Default button is %s"
 msgid "Default button not found"
-msgstr "ปุ่มปริยายคือ %s"
+msgstr "ไม่พบปุ่มเริ่มต้น"
 
 #. Translators: This string is part of the presentation of an item that includes
 #. one or several consecutive subscripted characters. For example, 'X' followed
@@ -8083,10 +7955,8 @@ msgstr " %s ตัวยก"
 #. specific to dialog boxes, such as presenting the default button, but is not in
 #. a dialog.
 #: src/orca/messages.py:637
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a dialog"
-msgstr "ไม่อยู่ในตาราง"
+msgstr "ไม่อยู่ในกล่องโต้ตอบ"
 
 #. Translators: when the user selects (highlights) or unselects text in a
 #. document, Orca will speak information about what they have selected or
@@ -8102,10 +7972,8 @@ msgstr "เลือกทั้งเอกสารอยู่"
 #. selected but the user presses a key (e.g. an arrow key) causing the
 #. selection to be completely removed.
 #: src/orca/messages.py:650
-#, fuzzy
-#| msgid "entire document selected"
 msgid "entire document unselected"
-msgstr "เลือกทั้งเอกสารอยู่"
+msgstr "ไม่ได้เลือกทั้งเอกสารอยู่"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This message is
@@ -8219,10 +8087,8 @@ msgstr "ออกจากการสำรวจหน้าจอแบบแ
 #. let the user know that flat review is being restricted to the current
 #. object of interest.
 #: src/orca/messages.py:733
-#, fuzzy
-#| msgid "Moves flat review to the word above the current word."
 msgid "Flat review restricted to the current object"
-msgstr "เลื่อนการสำรวจหน้าจอแบบแบนไปยังคำที่อยู่เหนือคำปัจจุบัน"
+msgstr "การสำรวจหน้าจอแบบแบนถูกจำกัดไว้ที่วัตถุปัจจุบัน"
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -8232,7 +8098,7 @@ msgstr "เลื่อนการสำรวจหน้าจอแบบแ
 #. that is, the entire window can be explored.
 #: src/orca/messages.py:741
 msgid "Flat review unrestricted"
-msgstr ""
+msgstr "การสำรวจหน้าจอแบบแบนไม่ได้ถูกจำกัดไว้"
 
 #. Translators: this means a particular cell in a spreadsheet has a formula
 #. (e.g., "=sum(a1:d1)")
@@ -8243,30 +8109,26 @@ msgstr "มีสูตร"
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a dialog to appear if activated.
 #: src/orca/messages.py:749
-#, fuzzy
-#| msgid "dialog"
 msgid "opens dialog"
-msgstr "กล่องโต้ตอบ"
+msgstr "เปิดกล่องโต้ตอบ"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a grid to appear if activated. A grid is an interactive table.
 #: src/orca/messages.py:753
 msgid "opens grid"
-msgstr ""
+msgstr "เปิดกริด"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a listbox to appear if activated.
 #: src/orca/messages.py:757
 msgid "opens listbox"
-msgstr ""
+msgstr "เปิดกล่องรายการ"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a menu to appear if activated.
 #: src/orca/messages.py:761
-#, fuzzy
-#| msgid "popup menu"
 msgid "opens menu"
-msgstr "เมนูผุดขึ้น"
+msgstr "เปิดเมนู"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a tree to appear if activated. A tree is a list with sub-levels
@@ -8274,13 +8136,13 @@ msgstr "เมนูผุดขึ้น"
 #. email client.
 #: src/orca/messages.py:767
 msgid "opens tree"
-msgstr ""
+msgstr "เปิดต้นไม้"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a popup to appear if activated.
 #: src/orca/messages.py:771
 msgid "opens popup"
-msgstr ""
+msgstr "เปิดกล่องผุดขึ้น"
 
 #. Translators: The following string is spoken to let the user know that he/she
 #. is on a link within an image map. An image map is an image/graphic which has
@@ -8537,7 +8399,7 @@ msgstr "การออกเสียงถูกกำหนดเป็นท
 #, python-format
 msgctxt "math enclosure"
 msgid "Enclosed by: %s"
-msgstr ""
+msgstr "ล้อมรอบด้วย: %s"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8548,7 +8410,7 @@ msgstr ""
 #: src/orca/messages.py:985
 msgctxt "math enclosure"
 msgid "an actuarial symbol"
-msgstr ""
+msgstr "สัญลักษณ์คณิตศาสตร์ประกันภัย"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8559,7 +8421,7 @@ msgstr ""
 #: src/orca/messages.py:993
 msgctxt "math enclosure"
 msgid "a box"
-msgstr ""
+msgstr "กล่อง"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8568,11 +8430,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:1001
-#, fuzzy
-#| msgid "black circle"
 msgctxt "math enclosure"
 msgid "a circle"
-msgstr "วงกลมทึบ"
+msgstr "วงกลม"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8583,7 +8443,7 @@ msgstr "วงกลมทึบ"
 #: src/orca/messages.py:1009
 msgctxt "math enclosure"
 msgid "a long division sign"
-msgstr ""
+msgstr "เครื่องหมายหารยาว"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8594,7 +8454,7 @@ msgstr ""
 #: src/orca/messages.py:1017
 msgctxt "math enclosure"
 msgid "a radical"
-msgstr ""
+msgstr "เครื่องหมายราก"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8605,7 +8465,7 @@ msgstr ""
 #: src/orca/messages.py:1025
 msgctxt "math enclosure"
 msgid "a rounded box"
-msgstr ""
+msgstr "กล่องมุมมน"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8614,11 +8474,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:1033
-#, fuzzy
-#| msgid "horizontal"
 msgctxt "math enclosure"
 msgid "a horizontal strike"
-msgstr "แนวนอน"
+msgstr "ขีดแนวนอน"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8627,11 +8485,9 @@ msgstr "แนวนอน"
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:1041
-#, fuzzy
-#| msgid "vertical bar"
 msgctxt "math enclosure"
 msgid "a vertical strike"
-msgstr "ขีดตั้ง"
+msgstr "ขีดแนวตั้ง"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8642,7 +8498,7 @@ msgstr "ขีดตั้ง"
 #: src/orca/messages.py:1049
 msgctxt "math enclosure"
 msgid "a down diagonal strike"
-msgstr ""
+msgstr "ขีดแนวทแยงลง"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8653,7 +8509,7 @@ msgstr ""
 #: src/orca/messages.py:1057
 msgctxt "math enclosure"
 msgid "an up diagonal strike"
-msgstr ""
+msgstr "ขีดแนวทแยงขึ้น"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8664,7 +8520,7 @@ msgstr ""
 #: src/orca/messages.py:1065
 msgctxt "math enclosure"
 msgid "a northeast arrow"
-msgstr ""
+msgstr "ลูกศรทิศตะวันออกเฉียงเหนือ"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8673,11 +8529,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:1073
-#, fuzzy
-#| msgid "Wrapping to bottom."
 msgctxt "math enclosure"
 msgid "a line at the bottom"
-msgstr "กำลังเริ่มหาใหม่จากท้ายหน้า"
+msgstr "เส้นที่บริเวณด้านล่าง"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8688,7 +8542,7 @@ msgstr "กำลังเริ่มหาใหม่จากท้ายห
 #: src/orca/messages.py:1081
 msgctxt "math enclosure"
 msgid "a line on the left"
-msgstr ""
+msgstr "เส้นที่บริเวณด้านซ้าย"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8697,12 +8551,9 @@ msgstr ""
 #. For more information about the MathML 'menclose' element and its notation
 #. types, see: http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:1089
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "line height"
 msgctxt "math enclosure"
 msgid "a line on the right"
-msgstr "ความสูงบรรทัด"
+msgstr "เส้นที่บริเวณด้านขวา"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8713,7 +8564,7 @@ msgstr "ความสูงบรรทัด"
 #: src/orca/messages.py:1097
 msgctxt "math enclosure"
 msgid "a line at the top"
-msgstr ""
+msgstr "เส้นที่บริเวณด้านบน"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8724,7 +8575,7 @@ msgstr ""
 #: src/orca/messages.py:1105
 msgctxt "math enclosure"
 msgid "a phasor angle"
-msgstr ""
+msgstr "มุมเฟเซอร์"
 
 #. Translators: This phrase is spoken to describe one MathML enclosure notation
 #. associated with a mathematical expression. Because an expression, such as
@@ -8736,7 +8587,7 @@ msgstr ""
 #: src/orca/messages.py:1114
 msgctxt "math enclosure"
 msgid "an arabic factorial symbol"
-msgstr ""
+msgstr "สัญลักษณ์แฟกทอเรียลแบบอาหรับ"
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
@@ -8750,8 +8601,6 @@ msgstr ""
 #. element and its notation types, see:
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.menclose
 #: src/orca/messages.py:1127
-#, fuzzy
-#| msgid "and"
 msgctxt "math enclosure"
 msgid "and"
 msgstr "และ"
@@ -8761,7 +8610,7 @@ msgstr "และ"
 #. would say "fraction start, x+1 over y+2, fraction end."
 #: src/orca/messages.py:1132
 msgid "fraction start"
-msgstr ""
+msgstr "จุดเริ่มต้นเศษส่วน"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical fraction whose bar is not displayed. See
@@ -8774,25 +8623,22 @@ msgstr ""
 #. is installed.
 #: src/orca/messages.py:1143
 msgid "fraction without bar, start"
-msgstr ""
+msgstr "จุดเริ่มต้นเศษส่วนไม่มีขีดคั่น"
 
 #. Translators: This word refers to the line separating the numerator from the
 #. denominator in a mathematical fraction. For instance, given x+1/y+2, Orca
 #. would would say "fraction start, x+1 over y+2, fraction end."
 #: src/orca/messages.py:1148
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "overline"
 msgctxt "math fraction"
 msgid "over"
-msgstr "ขีดเส้นบน"
+msgstr "ส่วน"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical fraction. For instance, given x+1/y+2,
 #. Orca would would say "fraction start, x+1 over y+2, fraction end."
 #: src/orca/messages.py:1153
 msgid "fraction end"
-msgstr ""
+msgstr "จุดสิ้นสุดเศษส่วน"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is a square root. For instance, for √9 Orca would say "square root
@@ -8801,10 +8647,8 @@ msgstr ""
 #. might not even be a simple string; it might be the square root of another
 #. expression such as a fraction.
 #: src/orca/messages.py:1161
-#, fuzzy
-#| msgid "square root"
 msgid "square root of"
-msgstr "รากที่สอง"
+msgstr "รากที่สองของ"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is a cube root. For instance, for the cube root of 9 Orca would
@@ -8813,10 +8657,8 @@ msgstr "รากที่สอง"
 #. is unknown and might not even be a simple string; it might be the cube root
 #. of another expression such as a fraction.
 #: src/orca/messages.py:1169
-#, fuzzy
-#| msgid "cube root"
 msgid "cube root of"
-msgstr "รากที่สาม"
+msgstr "รากที่สามของ"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is an nth root. https://en.wikipedia.org/wiki/Nth_root. For instance,
@@ -8825,10 +8667,8 @@ msgstr "รากที่สาม"
 #. index, which precedes this string, is unknown and might not even be a simple
 #. expression like "fourth"; the index might instead be a fraction.
 #: src/orca/messages.py:1177
-#, fuzzy
-#| msgid "root pane"
 msgid "root of"
-msgstr "ช่องหลัก"
+msgstr "รากของ"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be said is part of a mathematical root (square root, cube root, nth root).
@@ -8838,20 +8678,16 @@ msgstr "ช่องหลัก"
 #. 4, but instead the fraction x/4, beginning the phrase with "root start" can
 #. help the user better understand that x/4 is the index of the root.
 #: src/orca/messages.py:1186
-#, fuzzy
-#| msgid "root pane"
 msgid "root start"
-msgstr "ช่องหลัก"
+msgstr "จุดเริ่มต้นราก"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical root (square root, cube root, nth root).
 #. For instance, for the cube root of 9, Orca would say "cube root of 9, root
 #. end" (assuming the user settings indicate that root endings should be spoken).
 #: src/orca/messages.py:1192
-#, fuzzy
-#| msgid "root pane"
 msgid "root end"
-msgstr "ช่องหลัก"
+msgstr "จุดสิ้นสุดราก"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is subscripted text in a mathematical expression. Note that the
@@ -8859,11 +8695,9 @@ msgstr "ช่องหลัก"
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
 #: src/orca/messages.py:1199
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "subscript"
-msgstr "a ยกขึ้น"
+msgstr "ตัวห้อย"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is superscripted text in a mathematical expression. Note that the
@@ -8871,11 +8705,9 @@ msgstr "a ยกขึ้น"
 #. and in this instance we have no additional context through which a more user-
 #. friendly word or phrase can reliably be chosen.
 #: src/orca/messages.py:1206
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "superscript"
-msgstr "a ยกขึ้น"
+msgstr "ตัวยก"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is subscripted text which precedes the base in a mathematical
@@ -8883,11 +8715,9 @@ msgstr "a ยกขึ้น"
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 #: src/orca/messages.py:1213
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script"
 msgid "pre-subscript"
-msgstr "a ยกขึ้น"
+msgstr "ตัวห้อยนำหน้า"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is superscripted text which precedes the base in a mathematical
@@ -8895,11 +8725,9 @@ msgstr "a ยกขึ้น"
 #. http://www.w3.org/TR/MathML3/chapter3.html#presm.mmultiscripts
 #. https://developer.mozilla.org/en-US/docs/Web/MathML/Element/mmultiscripts
 #: src/orca/messages.py:1220
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script"
 msgid "pre-superscript"
-msgstr "a ยกขึ้น"
+msgstr "ตัวยกนำหน้า"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is underscripted text in a mathematical expression. Note that the
@@ -8909,11 +8737,9 @@ msgstr "a ยกขึ้น"
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.munder
 #. https://reference.wolfram.com/language/ref/Underscript.html
 #: src/orca/messages.py:1229
-#, fuzzy
-#| msgid "underscore"
 msgctxt "math script generic"
 msgid "underscript"
-msgstr "ขีดล่าง"
+msgstr "ตัวเขียนใต้บรรทัด"
 
 #. Translators: This phrase is spoken to inform the user that what is about to
 #. be spoken is overscripted text in a mathematical expression. Note that the
@@ -8923,30 +8749,24 @@ msgstr "ขีดล่าง"
 #. http://www.w3.org/TR/MathML/chapter3.html#presm.mover
 #. https://reference.wolfram.com/language/ref/Overscript.html
 #: src/orca/messages.py:1238
-#, fuzzy
-#| msgid "superscript a"
 msgctxt "math script generic"
 msgid "overscript"
-msgstr "a ยกขึ้น"
+msgstr "ตัวเขียนเหนือบรรทัด"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table.
 #: src/orca/messages.py:1242
-#, fuzzy
-#| msgid "table"
 msgctxt "math table"
 msgid "table end"
-msgstr "ตาราง"
+msgstr "จุดสิ้นสุดตาราง"
 
 #. Translators: This phrase is spoken to inform the user that the last spoken
 #. phrase is the end of a mathematical table which is nested inside another
 #. mathematical table.
 #: src/orca/messages.py:1247
-#, fuzzy
-#| msgid "tree table"
 msgctxt "math table"
 msgid "nested table end"
-msgstr "ตารางแบบต้นไม้"
+msgstr "จุดสิ้นสุดตารางซ้อน"
 
 #. Translators: Inaccessible means that the application cannot be read by Orca.
 #. This usually means the application is not friendly to the assistive technology
@@ -8988,11 +8808,9 @@ msgstr "เปิดการอ่านออกเสียงการร่
 #. this string. When translating this string please use language similar to
 #. that used for `C_("error", "invalid entry")` in object_properties.py.
 #: src/orca/messages.py:1280
-#, fuzzy
-#| msgid "invalid"
 msgctxt "error"
 msgid "Entry valid."
-msgstr "ใช้ไม่ได้"
+msgstr "ช่องป้อนข้อความใช้ได้"
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -9021,10 +8839,8 @@ msgstr ""
 #. Translators: This message is presented when a user is navigating within a
 #. blockquote and then navigates out of it.
 #: src/orca/messages.py:1306
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving blockquote."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบล็อกอ้างคำพูด"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -9036,60 +8852,48 @@ msgstr "กำลังออกจากตาราง"
 #. detailed information about another object.
 #. See https://w3c.github.io/aria/#aria-details
 #: src/orca/messages.py:1317
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving details."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากรายละเอียด"
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1323
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving feed."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากฟีด"
 
 #. Translators: This message is presented when a user is navigating within
 #. an object and then navigates out of it. The word or phrase that follows
 #. "leaving" should be consistent with the translation provided for the
 #. corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1329
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving figure."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากรูปภาพ"
 
 #. Translators: This message is presented when a user is navigating within a
 #. form and then navigates out of it.
 #: src/orca/messages.py:1333
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving form."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากแบบฟอร์ม"
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A grouping is a container of related
 #. widgets.
 #: src/orca/messages.py:1338
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving grouping."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากการจัดกลุ่ม"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1344
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving banner."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากแบนเนอร์"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
@@ -9098,79 +8902,65 @@ msgstr "กำลังออกจากตาราง"
 #: src/orca/messages.py:1350
 msgctxt "role"
 msgid "leaving complementary content."
-msgstr ""
+msgstr "กำลังออกจากเนื้อหาเสริม"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1356
-#, fuzzy
-#| msgid "animation"
 msgctxt "role"
 msgid "leaving information."
-msgstr "ภาพเคลื่อนไหว"
+msgstr "กำลังออกจากข้อมูล"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1362
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving main content."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากเนื้อหาหลัก"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1368
-#, fuzzy
-#| msgid "Page Navigation"
 msgctxt "role"
 msgid "leaving navigation."
-msgstr "การท่องดูหน้าเว็บ"
+msgstr "กำลังออกจากการท่องดู"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1374
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving region."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากพื้นที่"
 
 #. Translators: This message is presented when a user is navigating within
 #. a type of landmark and then navigates out of it. The word or phrase that
 #. follows "leaving" should be consistent with the translation provided for
 #. the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1380
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving search."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากส่วนค้นหา"
 
 #. Translators: This message is presented when a user is navigating within a
 #. list and then navigates out of it.
 #: src/orca/messages.py:1384
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving list."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากรายชื่อ"
 
 #. Translators: This message is presented when a user is navigating within a
 #. panel and then navigates out of it. A panel is a generic container of
 #. objects, such as a group of related form fields.
 #: src/orca/messages.py:1389
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving panel."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากแผง"
 
 #. Translators: This message is presented when a user is navigating within a
 #. table and then navigates out of it.
@@ -9181,219 +8971,179 @@ msgstr "กำลังออกจากตาราง"
 #. Translators: This message is presented when a user is navigating within a
 #. tooltip in a web application and then navigates out of it.
 #: src/orca/messages.py:1397
-#, fuzzy
-#| msgid "leaving table."
 msgid "leaving tooltip."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากคำแนะนำเครื่องมือ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1403
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving abstract."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบทคัดย่อ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1409
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving acknowledgments."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากกิตติกรรมประกาศ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1415
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving afterword."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบทส่งท้าย"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1421
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving appendix."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากภาคผนวก"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1427
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving bibliography."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบรรณานุกรม"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1433
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving chapter."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากตอน"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1439
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving colophon."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบันทึกท้ายเล่ม"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1445
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving conclusion."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากส่วนสรุป"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1451
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving credit."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากรายชื่อผู้จัดทำ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1457
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving credits."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากรายชื่อผู้จัดทำ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1463
-#, fuzzy
-#| msgid "Table Navigation"
 msgctxt "role"
 msgid "leaving dedication."
-msgstr "การท่องดูตาราง"
+msgstr "กำลังออกจากคำอุทิศ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1469
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving endnotes."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากเชิงอรรถ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1475
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving epigraph."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากคำกล่าวนำ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1481
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving epilogue."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบันทึกท้ายเล่ม"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1487
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving errata."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากส่วนความผิดพลาด"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1493
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving example."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากตัวอย่าง"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1499
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving foreword."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากคำนำ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1505
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving glossary."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากอภิธานศัพท์"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1511
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving index."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากดัชนี"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
@@ -9402,73 +9152,61 @@ msgstr "กำลังออกจากตาราง"
 #: src/orca/messages.py:1517
 msgctxt "role"
 msgid "leaving introduction."
-msgstr ""
+msgstr "กำลังออกจากบทนำ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1523
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving page list."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากรายชื่อหน้า"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1529
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving part."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากส่วน"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1535
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving preface."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากอารัมภบท"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1541
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving prologue."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากบันทึกต้นเล่ม"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1547
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving pullquote."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากส่วนอ้างคำพูด"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1553
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving QNA."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากส่วนถาม-ตอบ"
 
 #. Translators: This message is presented when a user is navigating within a
 #. suggestion and then navigates out of it. A "suggestion" is a container with
@@ -9476,22 +9214,18 @@ msgstr "กำลังออกจากตาราง"
 #. of content, and would typically be seen in a collaborative editor, such as
 #. in Google Docs.
 #: src/orca/messages.py:1560
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving suggestion."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากข้อเสนอแนะ"
 
 #. Translators: This message is presented when a user is navigating within
 #. a document container and then navigates out of it. The word or phrase
 #. that follows "leaving" should be consistent with the translation provided
 #. for the corresponding term with context "role" found in object_properties.py
 #: src/orca/messages.py:1566
-#, fuzzy
-#| msgid "leaving table."
 msgctxt "role"
 msgid "leaving table of contents."
-msgstr "กำลังออกจากตาราง"
+msgstr "กำลังออกจากสารบัญ"
 
 #. Translators: Orca has a "Learn Mode" that will allow the user to type any key
 #. on the keyboard and hear what the effects of that key would be.  The effects
@@ -9874,46 +9608,42 @@ msgstr "ผิดพลาด: ไม่สามารถสร้างรา�
 #. has no children.
 #: src/orca/messages.py:1864
 msgid "No children."
-msgstr ""
+msgstr "ไม่มีวัตถุลูก"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no next sibling.
 #: src/orca/messages.py:1869
 msgid "No next."
-msgstr ""
+msgstr "ไม่มีวัตถุถัดไป"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no parent.
 #: src/orca/messages.py:1874
-#, fuzzy
-#| msgid "%d percent."
 msgid "No parent."
-msgstr "%d เปอร์เซ็นต์"
+msgstr "ไม่มีวัตถุแม่"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This message is spoken when the current node in the hierarchy
 #. has no previous sibling.
 #: src/orca/messages.py:1879
-#, fuzzy
-#| msgid "Goes to previous word."
 msgid "No previous."
-msgstr "ไปยังคำก่อนหน้า"
+msgstr "ไม่มีวัตถุก่อนหน้า"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is enabled.
 #: src/orca/messages.py:1884
 msgid "Simplified navigation enabled."
-msgstr ""
+msgstr "เปิดใช้งานการท่องดูวัตถุแบบเรียบง่ายอยู่"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified to aid with navigation. This
 #. message is spoken when the simplified view is disabled.
 #: src/orca/messages.py:1889
 msgid "Simplified navigation disabled."
-msgstr ""
+msgstr "ปิดใช้งานการท่องดูวัตถุแบบเรียบง่ายอยู่"
 
 #. Translators: This message describes a list item in a document. Nesting level
 #. is how "deep" the item is (e.g., a level of 2 represents a list item inside a
@@ -9936,10 +9666,9 @@ msgstr "เพิ่มรายการใหม่แล้ว"
 #. name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
 #. localized rolename if it does not.
 #: src/orca/messages.py:1906
-#, fuzzy, python-format
-#| msgid "No application has focus."
+#, python-format
 msgid "No actions found on: %s"
-msgstr "ไม่มีโปรแกรมใดได้โฟกัสอยู่"
+msgstr "ไม่พบการกระทำใดบน: %s"
 
 #. Translators: This is intended to be a short phrase to present the fact that no
 #. no accessible component has keyboard focus.
@@ -9958,7 +9687,7 @@ msgstr "ไม่มีโปรแกรมใดได้โฟกัสอย
 #. if no more blockquotes can be found.
 #: src/orca/messages.py:1919
 msgid "No more blockquotes."
-msgstr "ไม่มีบล็อคอ้างคำพูดอีก"
+msgstr "ไม่มีบล็อกอ้างคำพูดอีก"
 
 #. Translators: This is for navigating document content by moving from button
 #. to button. This is a detailed message which will be presented to the user
@@ -10142,10 +9871,8 @@ msgstr "ไม่อยู่ในลิงก์"
 #. updating the focus in response to a grab. Therefore Orca will present this
 #. message to indicate that the focus was not updated.
 #: src/orca/messages.py:2053
-#, fuzzy
-#| msgid "No focus"
 msgid "Not focused."
-msgstr "ไม่มีโฟกัส"
+msgstr "ไม่ได้โฟกัส"
 
 #. Translators: This message alerts the user to the fact that what will be
 #. presented next came from a notification.
@@ -10229,13 +9956,13 @@ msgstr "เปิด"
 #. item has started loading.
 #: src/orca/messages.py:2111
 msgid "Loading.  Please wait."
-msgstr "กำลังเรียกอ่าน โปรดรอสักครู่"
+msgstr "กำลังโหลด โปรดรอสักครู่"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading.
 #: src/orca/messages.py:2115
 msgid "Finished loading."
-msgstr "เรียกอ่านเสร็จแล้ว"
+msgstr "โหลดเสร็จแล้ว"
 
 #. Translators: This message is presented to the user when a web page or similar
 #. item has finished loading. The string substitution is for the name of the
@@ -10243,7 +9970,7 @@ msgstr "เรียกอ่านเสร็จแล้ว"
 #: src/orca/messages.py:2120
 #, python-format
 msgid "Finished loading %s."
-msgstr "เรียกอ่าน %s เสร็จแล้ว"
+msgstr "โหลด %s เสร็จแล้ว"
 
 #. Translators: This message is presented to the user when the page of the
 #. current document changes, e.g. as a result of navigation or scrolling.
@@ -10386,7 +10113,7 @@ msgstr "กำลังค้นหา"
 #. user has been completed.
 #: src/orca/messages.py:2218
 msgid "Search complete."
-msgstr "การค้นหาเสร็จสบูรณ์"
+msgstr "การค้นหาเสร็จสมบูรณ์"
 
 #. Translators: This message is presented to the user when Orca's preferences
 #. have been reloaded.
@@ -10427,11 +10154,8 @@ msgstr "เรียกคืนสิ่งที่เลือกแล้ว
 #. selected in a document and no longer is, e.g. as the result of navigating
 #. without holding down the shift key.
 #: src/orca/messages.py:2249
-#, fuzzy
-#| msgctxt "text"
-#| msgid "unselected"
 msgid "Text unselected."
-msgstr "ไม่ได้เลือก"
+msgstr "ไม่ได้เลือกข้อความอยู่"
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the brief/non-verbose output
@@ -10440,7 +10164,7 @@ msgstr "ไม่ได้เลือก"
 #: src/orca/messages.py:2255
 #, python-format
 msgid "Size: %d, %d. Location: %d, %d."
-msgstr ""
+msgstr "ขนาด: %d, %d ตำแหน่ง: %d, %d"
 
 #. Translators: Orca has a command which presents the size and position of the
 #. current object in pixels. This string refers to the full/verbose output
@@ -10449,7 +10173,7 @@ msgstr ""
 #: src/orca/messages.py:2261
 #, python-format
 msgid "Width: %d. Height: %d. %d from left. %d from top."
-msgstr ""
+msgstr "ความกว้าง: %d ความสูง: %d %d จากด้านซ้าย %d จากด้านบน"
 
 #. Translators: This message is presented to the user when speech synthesis
 #. has been temporarily turned off.
@@ -10477,10 +10201,9 @@ msgstr "เปิดใช้งานเสียงพูด"
 #. disabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode disabled for VirtualBox."
 #: src/orca/messages.py:2284
-#, fuzzy, python-format
-#| msgid "Speech disabled."
+#, python-format
 msgid "Sleep mode disabled for %s."
-msgstr "ปิดใช้งานเสียงพูด"
+msgstr "ปิดใช้งานโหมดสลีปสำหรับ %s"
 
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
@@ -10496,10 +10219,9 @@ msgstr "ปิดใช้งานเสียงพูด"
 #. enabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode enabled for VirtualBox."
 #: src/orca/messages.py:2299
-#, fuzzy, python-format
-#| msgid "Bypass mode enabled."
+#, python-format
 msgid "Sleep mode enabled for %s."
-msgstr "เปิดใช้โหมดส่งผ่าน"
+msgstr "เปิดใช้งานโหมดสลีปสำหรับ %s"
 
 #. Translators: This string announces speech rate change.
 #: src/orca/messages.py:2302
@@ -10563,10 +10285,8 @@ msgstr " จุด จุด จุด"
 #. command specific to a spreadsheet, such as reading the input line, but is
 #. not in a spreadsheet.
 #: src/orca/messages.py:2342
-#, fuzzy
-#| msgid "Not in a table."
 msgid "Not in a spreadsheet."
-msgstr "ไม่อยู่ในตาราง"
+msgstr "ไม่อยู่ในตารางคำนวณ"
 
 #. Translators: This message is presented to the user when Orca is launched.
 #: src/orca/messages.py:2345
@@ -10587,20 +10307,16 @@ msgstr "เสียงพูดไม่สามารถใช้งานไ
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2356
-#, fuzzy
-#| msgid "No files found."
 msgctxt "status bar"
 msgid "Not found"
-msgstr "ไม่พบแฟ้ม"
+msgstr "ไม่พบ"
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
 #: src/orca/messages.py:2361
-#, fuzzy
-#| msgid "string not found"
 msgid "Status bar not found"
-msgstr "ไม่พบสตริง"
+msgstr "ไม่พบแถบสถานะ"
 
 #. Translators: the Orca "Find" dialog allows a user to search for text in a
 #. window and then move focus to that text.  For example, they may want to find
@@ -10615,10 +10331,8 @@ msgstr "ไม่พบสตริง"
 #. Shift H to the previous heading, T to the next table, and so on. This message
 #. is presented when the user disables the structural navigation feature of Orca.
 #: src/orca/messages.py:2373
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Structural navigation disabled"
-msgstr "การท่องดูตาราง"
+msgstr "ปิดใช้งานการท่องดูตามโครงสร้างแล้ว"
 
 #. Translators: The structural navigation keys are designed to move around in
 #. a document or other container by object type. H moves you to the next heading,
@@ -10626,10 +10340,8 @@ msgstr "การท่องดูตาราง"
 #. is presented when the user enables the structural navigation feature for
 #. navigating within the current document.
 #: src/orca/messages.py:2380
-#, fuzzy
-#| msgid "Document"
 msgid "Document mode"
-msgstr "เอกสาร"
+msgstr "โหมดเอกสาร"
 
 #. Translators: The structural navigation keys are designed to move around in
 #. a document or other container by object type. H moves you to the next heading,
@@ -10638,7 +10350,7 @@ msgstr "เอกสาร"
 #. navigating within the GUI of the current application.
 #: src/orca/messages.py:2387
 msgid "GUI mode"
-msgstr ""
+msgstr "โหมด GUI"
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -10661,7 +10373,7 @@ msgstr "ไม่พบ"
 #. structural navigation is not available. This is the detailed version.
 #: src/orca/messages.py:2406
 msgid "Not supported for this location."
-msgstr ""
+msgstr "ไม่รองรับสำหรับตำแหน่งนี้"
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -10674,7 +10386,7 @@ msgstr ""
 #: src/orca/messages.py:2417
 msgctxt "structural navigation"
 msgid "Not supported"
-msgstr ""
+msgstr "ไม่รองรับ"
 
 #. Translators: This message describes the (row, col) position of a table cell.
 #: src/orca/messages.py:2420
@@ -10720,27 +10432,21 @@ msgstr "ไม่อยู่ในตาราง"
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
 #: src/orca/messages.py:2449
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Table navigation disabled."
-msgstr "การท่องดูตาราง"
+msgstr "ปิดใช้งานการท่องดูตารางแล้ว"
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
 #: src/orca/messages.py:2454
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Table navigation enabled."
-msgstr "การท่องดูตาราง"
+msgstr "เปิดใช้งานการท่องดูตารางแล้ว"
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
 #: src/orca/messages.py:2458
-#, fuzzy
-#| msgid "ColumnHeader"
 msgid "Columns reordered"
-msgstr "หัวคอลัมน์"
+msgstr "เรียงลำดับคอลัมน์ใหม่แล้ว"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
@@ -10780,11 +10486,9 @@ msgstr "ต้นคอลัมน์"
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: src/orca/messages.py:2485
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Column %s selected"
-msgstr "ไม่ได้เลือก"
+msgstr "เลือกคอลัมน์ %s แล้ว"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became selected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10794,7 +10498,7 @@ msgstr "ไม่ได้เลือก"
 #: src/orca/messages.py:2492
 #, python-format
 msgid "Columns %s through %s selected"
-msgstr ""
+msgstr "เลือกคอลัมน์ %s ถึง %s แล้ว"
 
 #. Translators: this message is spoken to announce that multiple table columns just
 #. became unselected (e.g as a result of navigation via Shift + Arrows). The first
@@ -10804,17 +10508,15 @@ msgstr ""
 #: src/orca/messages.py:2499
 #, python-format
 msgid "Columns %s through %s unselected"
-msgstr ""
+msgstr "เลิกเลือกคอลัมน์ %s ถึง %s แล้ว"
 
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
 #: src/orca/messages.py:2504
-#, fuzzy, python-format
-#| msgctxt "text"
-#| msgid "unselected"
+#, python-format
 msgid "Column %s unselected"
-msgstr "ไม่ได้เลือก"
+msgstr "เลิกเลือกคอลัมน์ %s แล้ว"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
