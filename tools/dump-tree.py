@@ -42,7 +42,8 @@ def as_string(obj: Atspi.Accessible, prefix: str) -> str:
     return (f"{timestamp} {prefix} "
             f"{get_role_as_string(obj)} ({hex(id(obj))}) "
             f"NAME: '{get_name(obj)}' "
-            f"DESCRIPTION: '{get_description(obj)}'"
+            f"DESCRIPTION: '{get_description(obj)}' "
+            f"ACCESSIBLE ID: '{get_accessible_id(obj)}'"
             f"\n{indent}LOCALE: '{get_locale(obj)}'"
             f"\n{indent}PARENT: {get_parent_as_string(obj)} "
             f"INDEX IN PARENT: {get_index_in_parent(obj)}"
@@ -161,6 +162,17 @@ def get_description(obj: Atspi.Accessible, fallback_on_described_by: bool = True
         result = " ".join([get_name(target, False) for target in targets])
         if result:
             result += " (from described-by relation)"
+
+    return result
+
+def get_accessible_id(obj: Atspi.Accessible) -> str:
+    """Get the accessible id of obj"""
+
+    try:
+        result = Atspi.Accessible.get_accessible_id(obj)
+    except GLib.GError as error:
+        print(f"Exception in get_accessible_id: {error}")
+        return ""
 
     return result
 
