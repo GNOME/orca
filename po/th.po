@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-10-23 12:53+0000\n"
-"PO-Revision-Date: 2026-01-18 11:22+0700\n"
+"PO-Revision-Date: 2026-01-18 11:39+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -1608,7 +1608,7 @@ msgstr "เลื่อนระดับความสุภาพของพ
 #. to turn off live regions by default.
 #: src/orca/cmdnames.py:802
 msgid "Set default live region politeness level to off"
-msgstr "กำหนดระดับความสุภาพปริยายของพื้นที่แสดงสดเป็นค่าปิด"
+msgstr "กำหนดระดับความสุภาพเริ่มต้นของพื้นที่แสดงสดเป็นค่าปิด"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
@@ -11641,7 +11641,7 @@ msgstr "สวิตช์"
 #. of icons.
 #: src/orca/object_properties.py:410
 msgid "Icon panel"
-msgstr "พาเนลไอคอน"
+msgstr "แผงไอคอน"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11729,26 +11729,26 @@ msgstr "ลิงก์ที่ดูแล้ว"
 #. to ascending.
 #: src/orca/object_properties.py:473
 msgid "sorted ascending"
-msgstr ""
+msgstr "เรียงลำดับจากน้อยไปมาก"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to descending.
 #: src/orca/object_properties.py:477
 msgid "sorted descending"
-msgstr ""
+msgstr "เรียงลำดับจากมากไปน้อย"
 
 #. Translators: This string refers to a row or column whose sort-order has been set,
 #. but the nature of the sort order is unknown or something other than ascending or
 #. descending.
 #: src/orca/object_properties.py:482
 msgid "sorted"
-msgstr ""
+msgstr "เรียงลำดับ"
 
 #. Translators: This is a state which applies to elements in document content
 #. which have an "onClick" action.
 #: src/orca/object_properties.py:486
 msgid "clickable"
-msgstr ""
+msgstr "คลิกได้"
 
 #. Translators: This is a state which applies to items which can be expanded
 #. or collapsed such as combo boxes and nodes/groups in a treeview. Collapsed
@@ -11768,7 +11768,7 @@ msgstr "ขยาย"
 #. which have a longdesc attribute. http://www.w3.org/TR/WCAG20-TECHS/H45.html
 #: src/orca/object_properties.py:500
 msgid "has long description"
-msgstr ""
+msgstr "มีคำอธิบายยาว"
 
 #. Translators: This is a state which applies to the orientation of widgets
 #. such as sliders and scroll bars.
@@ -11786,8 +11786,6 @@ msgstr "แนวตั้ง"
 #. Please don't use the same translation as for "selected",
 #. or it will be impossible to differentiate a checkbox in a list-item.
 #: src/orca/object_properties.py:513
-#, fuzzy
-#| msgid "checked"
 msgctxt "checkbox"
 msgid "checked"
 msgstr "กาอยู่"
@@ -11796,8 +11794,6 @@ msgstr "กาอยู่"
 #. Please don't use the same translation as for "not selected",
 #. or it will be impossible to differentiate a checkbox in a list-item.
 #: src/orca/object_properties.py:518
-#, fuzzy
-#| msgid "not checked"
 msgctxt "checkbox"
 msgid "not checked"
 msgstr "ไม่ได้กา"
@@ -11805,8 +11801,6 @@ msgstr "ไม่ได้กา"
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: src/orca/object_properties.py:522
-#, fuzzy
-#| msgid "on"
 msgctxt "switch"
 msgid "on"
 msgstr "เปิด"
@@ -11814,32 +11808,24 @@ msgstr "เปิด"
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: src/orca/object_properties.py:526
-#, fuzzy
-#| msgid "off"
 msgctxt "switch"
 msgid "off"
 msgstr "ปิด"
 
 #. Translators: This is a state which applies to a check box.
 #: src/orca/object_properties.py:529
-#, fuzzy
-#| msgid "partially checked"
 msgctxt "checkbox"
 msgid "partially checked"
 msgstr "กาบางส่วน"
 
 #. Translators: This is a state which applies to a toggle button.
 #: src/orca/object_properties.py:532
-#, fuzzy
-#| msgid "pressed"
 msgctxt "togglebutton"
 msgid "pressed"
 msgstr "กดอยู่"
 
 #. Translators: This is a state which applies to a toggle button.
 #: src/orca/object_properties.py:535
-#, fuzzy
-#| msgid "not pressed"
 msgctxt "togglebutton"
 msgid "not pressed"
 msgstr "ไม่ได้กด"
@@ -11847,8 +11833,6 @@ msgstr "ไม่ได้กด"
 #. Translators: This is a state which applies to an item or option
 #. in a selectable list.
 #: src/orca/object_properties.py:539
-#, fuzzy
-#| msgid "not selected"
 msgctxt "listitem"
 msgid "not selected"
 msgstr "ไม่ได้เลือก"
@@ -11867,29 +11851,21 @@ msgstr "ไม่ได้เลือก"
 
 #. Translators: This is a state which applies to a table cell.
 #: src/orca/object_properties.py:548
-#, fuzzy
-#| msgid "not selected"
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "ไม่ได้เลือก"
 
 #. Translators: This is a state which applies to a link.
 #: src/orca/object_properties.py:551
-#, fuzzy
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgctxt "link state"
 msgid "visited"
-msgstr "%d ลิงก์ที่ดูแล้ว"
+msgstr "ดูแล้ว"
 
 #. Translators: This is a state which applies to a link.
 #: src/orca/object_properties.py:554
-#, fuzzy
-#| msgid "%d unvisited link"
-#| msgid_plural "%d unvisited links"
 msgctxt "link state"
 msgid "unvisited"
-msgstr "%d ลิงก์ที่ยังไม่ดู"
+msgstr "ยังไม่ดู"
 
 #. Translators: This state represents an item on the screen that has been set
 #. insensitive (or grayed out).
@@ -11933,11 +11909,9 @@ msgstr "เลือกได้หลายข้อ"
 #. as a form field, has an error. The following string is spoken when all we
 #. know is that an error has occurred, but not the type of error.
 #: src/orca/object_properties.py:593
-#, fuzzy
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid entry"
-msgstr "ใช้ไม่ได้"
+msgstr "ช่องป้อนข้อความใช้ไม่ได้"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -11945,8 +11919,6 @@ msgstr "ใช้ไม่ได้"
 #. We prefer a smaller string than in speech because braille displays have a
 #. limited size.
 #: src/orca/object_properties.py:600
-#, fuzzy
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid"
 msgstr "ใช้ไม่ได้"
@@ -11955,34 +11927,26 @@ msgstr "ใช้ไม่ได้"
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to spelling.
 #: src/orca/object_properties.py:605
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "invalid spelling"
-msgstr "สะกดผิด"
+msgstr "การสะกดไม่ถูกต้อง"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
 #. when the error is related to spelling. We prefer a smaller string than in
 #. speech because braille displays have a limited size.
 #: src/orca/object_properties.py:611
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "spelling"
 msgctxt "error"
 msgid "spelling"
-msgstr "สะกดผิด"
+msgstr "การสะกด"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is spoken when the error
 #. is related to grammar.
 #: src/orca/object_properties.py:616
-#, fuzzy
-#| msgid "invalid"
 msgctxt "error"
 msgid "invalid grammar"
-msgstr "ใช้ไม่ได้"
+msgstr "ไวยากรณ์ไม่ถูกต้อง"
 
 #. Translators: STATE_INVALID_ENTRY indicates that the associated object, such
 #. as a form field, has an error. The following string is displayed in braille
@@ -11991,7 +11955,7 @@ msgstr "ใช้ไม่ได้"
 #: src/orca/object_properties.py:622
 msgctxt "error"
 msgid "grammar"
-msgstr ""
+msgstr "ไวยากรณ์"
 
 #: src/orca/orca-setup.ui:29
 msgid "Default"
@@ -12158,7 +12122,7 @@ msgstr "อ่านออกเสียง_ตารางในการอ�
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a panel has been entered before speaking the new location. At the end of the panel contents, Orca will announce that the panel is being exited. A panel is a generic container of objects, such as a group of related form fields.
 #: src/orca/orca-setup.ui:937
 msgid "Announce _panels in Say All"
-msgstr "อ่านออกเสียง_พาเนลในการออกเสียงทั้งหมด"
+msgstr "อ่านออกเสียงแ_ผงในการออกเสียงทั้งหมด"
 
 #. Translators: Orca has a Say All feature which speaks the entire document. Some users want to hear additional information about what is being spoken. If this checkbox is checked, Orca will announce that a form has been entered before speaking the contents of that form. At the end of the form, Orca will announce that the form is being exited.
 #: src/orca/orca-setup.ui:954
@@ -12224,7 +12188,7 @@ msgstr "การตั้งค่าชนิดเสียง"
 #. Translators: If this setting is enabled, 123 will be spoken as the individual digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely) spoken as one hundred and twenty three.
 #: src/orca/orca-setup.ui:1358
 msgid "Speak _numbers as digits"
-msgstr "อ่านออกเสียง_ตัวเลขต่างๆ ทีละตัว"
+msgstr "อ่านออกเสียง_ตัวเลขต่าง ๆ ทีละตัว"
 
 #: src/orca/orca-setup.ui:1383
 msgid "Global Voice Settings"
@@ -12431,22 +12395,16 @@ msgid "Enable _key echo"
 msgstr "เปิดใช้งานการออกเ_สียงแป้นพิมพ์"
 
 #: src/orca/orca-setup.ui:2647
-#, fuzzy
-#| msgid "Enable _navigation keys"
 msgid "Enable _alphabetic keys"
-msgstr "เปิดใช้งานปุ่มท่อ_งสำรวจ"
+msgstr "เปิดใช้งานปุ่มตัว_อักษร"
 
 #: src/orca/orca-setup.ui:2662
-#, fuzzy
-#| msgid "Enable _modifier keys"
 msgid "Enable n_umeric keys"
-msgstr "เปิดใช้งานปุ่มยกแ_คร่"
+msgstr "เปิดใช้งานปุ่มตัวเ_ลข"
 
 #: src/orca/orca-setup.ui:2677
-#, fuzzy
-#| msgid "Enable _function keys"
 msgid "Enable _punctuation keys"
-msgstr "เปิดใช้งานปุ่ม_ฟังก์ชัน"
+msgstr "เปิดใช้งานปุ่มเ_ครื่องหมายวรรคตอน"
 
 #: src/orca/orca-setup.ui:2692
 msgid "Enable _space"
@@ -12477,10 +12435,8 @@ msgid "Enable echo by _sentence"
 msgstr "เปิดใช้งานการออกเสียงทีละ_ประโยค"
 
 #: src/orca/orca-setup.ui:2845
-#, fuzzy
-#| msgid "Key Echo"
 msgid "Echo"
-msgstr "การออกเสียงแป้นพิมพ์"
+msgstr "การออกเสียง"
 
 #: src/orca/orca-setup.ui:2869
 msgid "Screen Reader _Modifier Key(s):"
@@ -13310,7 +13266,7 @@ msgstr "ตัวเอียง"
 #: src/orca/text_attribute_names.py:563
 msgctxt "textattr"
 msgid "Default"
-msgstr "ปริยาย"
+msgstr "ค่าเริ่มต้น"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "paragraph-style".
