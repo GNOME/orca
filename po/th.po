@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2025-10-23 12:53+0000\n"
-"PO-Revision-Date: 2026-01-17 21:38+0700\n"
+"PO-Revision-Date: 2026-01-18 11:22+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -11185,7 +11185,7 @@ msgstr "ต้นไม้ระดับที่ %d"
 #: src/orca/object_properties.py:89
 #, python-format
 msgid "details for %s"
-msgstr ""
+msgstr "รายละเอียดสำหรับ %s"
 
 #. Translators: In web content, authors can identify an element which contains
 #. detailed information about another element. For instance, for a password
@@ -11203,7 +11203,7 @@ msgstr ""
 #: src/orca/object_properties.py:104
 #, python-format
 msgid "has details in %s"
-msgstr ""
+msgstr "มีรายละเอียดใน %s"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11211,11 +11211,9 @@ msgstr ""
 #. include the insertion and/or deletion of content, and would typically be seen
 #. in a collaborative editor, such as in Google Docs.
 #: src/orca/object_properties.py:111
-#, fuzzy
-#| msgid "question"
 msgctxt "role"
 msgid "suggestion"
-msgstr "ปรัศนี"
+msgstr "ข้อเสนอแนะ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11231,10 +11229,8 @@ msgstr "กล่องคอมโบแก้ไขได้"
 #. This role is to describe elements in web content which have the contenteditable
 #. attribute set to true, indicating that the element can be edited by the user.
 #: src/orca/object_properties.py:124
-#, fuzzy
-#| msgid "html content"
 msgid "editable content"
-msgstr "เนื้อหา html"
+msgstr "เนื้อหาแก้ไขได้"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11244,7 +11240,7 @@ msgstr "เนื้อหา html"
 #: src/orca/object_properties.py:131
 msgctxt "role"
 msgid "feed"
-msgstr ""
+msgstr "ฟีด"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11254,7 +11250,7 @@ msgstr ""
 #: src/orca/object_properties.py:138
 msgctxt "role"
 msgid "figure"
-msgstr ""
+msgstr "รูปภาพ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11263,7 +11259,7 @@ msgstr ""
 #: src/orca/object_properties.py:144
 msgctxt "role"
 msgid "abstract"
-msgstr ""
+msgstr "บทคัดย่อ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11272,19 +11268,16 @@ msgstr ""
 #: src/orca/object_properties.py:150
 msgctxt "role"
 msgid "acknowledgments"
-msgstr ""
+msgstr "กิตติกรรมประกาศ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the afterword in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-afterword
 #: src/orca/object_properties.py:156
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "word"
 msgctxt "role"
 msgid "afterword"
-msgstr "คำ"
+msgstr "บทส่งท้าย"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11293,7 +11286,7 @@ msgstr "คำ"
 #: src/orca/object_properties.py:162
 msgctxt "role"
 msgid "appendix"
-msgstr ""
+msgstr "ภาคผนวก"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11302,7 +11295,7 @@ msgstr ""
 #: src/orca/object_properties.py:168
 msgctxt "role"
 msgid "bibliography entry"
-msgstr ""
+msgstr "รายการบรรณานุกรม"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11311,7 +11304,7 @@ msgstr ""
 #: src/orca/object_properties.py:174
 msgctxt "role"
 msgid "bibliography"
-msgstr ""
+msgstr "บรรณานุกรม"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11320,18 +11313,16 @@ msgstr ""
 #: src/orca/object_properties.py:180
 msgctxt "role"
 msgid "chapter"
-msgstr ""
+msgstr "ตอน"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the colophon in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-colophon
 #: src/orca/object_properties.py:186
-#, fuzzy
-#| msgid "colon"
 msgctxt "role"
 msgid "colophon"
-msgstr "ทวิภาค"
+msgstr "บันทึกท้ายเล่ม"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11340,19 +11331,16 @@ msgstr "ทวิภาค"
 #: src/orca/object_properties.py:192
 msgctxt "role"
 msgid "conclusion"
-msgstr ""
+msgstr "ส่วนสรุป"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the cover in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-cover
 #: src/orca/object_properties.py:198
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "overline"
 msgctxt "role"
 msgid "cover"
-msgstr "ขีดเส้นบน"
+msgstr "หน้าปก"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11361,7 +11349,7 @@ msgstr "ขีดเส้นบน"
 #: src/orca/object_properties.py:204
 msgctxt "role"
 msgid "credit"
-msgstr ""
+msgstr "รายชื่อผู้จัดทำ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11370,19 +11358,16 @@ msgstr ""
 #: src/orca/object_properties.py:210
 msgctxt "role"
 msgid "credits"
-msgstr ""
+msgstr "รายชื่อผู้จัดทำ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the dedication in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-dedication
 #: src/orca/object_properties.py:216
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "dedication"
-msgstr "ทิศทางการเขียน"
+msgstr "คำอุทิศ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11391,7 +11376,7 @@ msgstr "ทิศทางการเขียน"
 #: src/orca/object_properties.py:222
 msgctxt "role"
 msgid "endnote"
-msgstr ""
+msgstr "เชิงอรรถ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11400,18 +11385,16 @@ msgstr ""
 #: src/orca/object_properties.py:228
 msgctxt "role"
 msgid "endnotes"
-msgstr ""
+msgstr "เชิงอรรถ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the epigraph in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-epigraph
 #: src/orca/object_properties.py:234
-#, fuzzy
-#| msgid "paragraph"
 msgctxt "role"
 msgid "epigraph"
-msgstr "ย่อหน้า"
+msgstr "คำกล่าวนำ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11420,7 +11403,7 @@ msgstr "ย่อหน้า"
 #: src/orca/object_properties.py:240
 msgctxt "role"
 msgid "epilogue"
-msgstr ""
+msgstr "บันทึกท้ายเล่ม"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11429,7 +11412,7 @@ msgstr ""
 #: src/orca/object_properties.py:246
 msgctxt "role"
 msgid "errata"
-msgstr ""
+msgstr "ส่วนความผิดพลาด"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11438,19 +11421,16 @@ msgstr ""
 #: src/orca/object_properties.py:252
 msgctxt "role"
 msgid "example"
-msgstr ""
+msgstr "ตัวอย่าง"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the foreword in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-foreword
 #: src/orca/object_properties.py:258
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "word"
 msgctxt "role"
 msgid "foreword"
-msgstr "คำ"
+msgstr "คำนำ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11459,31 +11439,25 @@ msgstr "คำ"
 #: src/orca/object_properties.py:264
 msgctxt "role"
 msgid "glossary"
-msgstr ""
+msgstr "อภิธานศัพท์"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the index in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-index
 #: src/orca/object_properties.py:270
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "indent"
 msgctxt "role"
 msgid "index"
-msgstr "การร่นย่อหน้า"
+msgstr "ดัชนี"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the introduction in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-introduction
 #: src/orca/object_properties.py:276
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "direction"
 msgctxt "role"
 msgid "introduction"
-msgstr "ทิศทางการเขียน"
+msgstr "บทนำ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11492,18 +11466,16 @@ msgstr "ทิศทางการเขียน"
 #: src/orca/object_properties.py:282
 msgctxt "role"
 msgid "page break"
-msgstr ""
+msgstr "ตัวแบ่งหน้า"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a page list in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pagelist
 #: src/orca/object_properties.py:288
-#, fuzzy
-#| msgid "tab list"
 msgctxt "role"
 msgid "page list"
-msgstr "รายการแท็บ"
+msgstr "รายชื่อหน้า"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11512,7 +11484,7 @@ msgstr "รายการแท็บ"
 #: src/orca/object_properties.py:294
 msgctxt "role"
 msgid "part"
-msgstr ""
+msgstr "ส่วน"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11521,7 +11493,7 @@ msgstr ""
 #: src/orca/object_properties.py:300
 msgctxt "role"
 msgid "preface"
-msgstr ""
+msgstr "อารัมภบท"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11530,18 +11502,16 @@ msgstr ""
 #: src/orca/object_properties.py:306
 msgctxt "role"
 msgid "prologue"
-msgstr ""
+msgstr "บันทึกต้นเล่ม"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to a pullquote in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-pullquote
 #: src/orca/object_properties.py:312
-#, fuzzy
-#| msgid "quote"
 msgctxt "role"
 msgid "pullquote"
-msgstr "อัญประกาศ"
+msgstr "ส่วนอ้างคำพูด"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11553,7 +11523,7 @@ msgstr "อัญประกาศ"
 #: src/orca/object_properties.py:321
 msgctxt "role"
 msgid "QNA"
-msgstr ""
+msgstr "ส่วนถาม-ตอบ"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11562,18 +11532,16 @@ msgstr ""
 #: src/orca/object_properties.py:327
 msgctxt "role"
 msgid "subtitle"
-msgstr ""
+msgstr "ชื่อเรื่องย่อย"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. This role refers to the table of contents in a digitally-published document.
 #. https://w3c.github.io/dpub-aria/#doc-toc
 #: src/orca/object_properties.py:333
-#, fuzzy
-#| msgid "html content"
 msgctxt "role"
 msgid "table of contents"
-msgstr "เนื้อหา html"
+msgstr "สารบัญ"
 
 #. Translators: The 'h' in this string represents a heading level attribute for
 #. content that you might find in something such as HTML content (e.g., <h1>).
@@ -11588,10 +11556,9 @@ msgstr "h%d"
 #. For <h3>, the level is 3) and the %(role)s is in reference to a previously
 #. translated rolename for the heading.
 #: src/orca/object_properties.py:344
-#, fuzzy, python-format
-#| msgid "%(role)s level %(level)d"
+#, python-format
 msgid "%(role)s %(level)d"
-msgstr "%(role)s ระดับ %(level)d"
+msgstr "%(role)s %(level)d"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11599,10 +11566,8 @@ msgstr "%(role)s ระดับ %(level)d"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:351
-#, fuzzy
-#| msgid "horizontal"
 msgid "horizontal scroll bar"
-msgstr "แนวนอน"
+msgstr "แถบเลื่อนแนวนอน"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11610,10 +11575,8 @@ msgstr "แนวนอน"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:358
-#, fuzzy
-#| msgid "vertical bar"
 msgid "vertical scroll bar"
-msgstr "ขีดตั้ง"
+msgstr "แถบเลื่อนแนวตั้ง"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11623,10 +11586,8 @@ msgstr "ขีดตั้ง"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:367
-#, fuzzy
-#| msgid "horizontal"
 msgid "horizontal slider"
-msgstr "แนวนอน"
+msgstr "ตัวเลื่อนแนวนอน"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11636,11 +11597,8 @@ msgstr "แนวนอน"
 #. applications and toolkits, it can dictate which keyboard keys should be used
 #. to modify the value of the widget.
 #: src/orca/object_properties.py:376
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgid "vertical slider"
-msgstr "การเรียงชิดขอบแนวดิ่ง"
+msgstr "ตัวเลื่อนแนวตั้ง"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11653,10 +11611,8 @@ msgstr "การเรียงชิดขอบแนวดิ่ง"
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: src/orca/object_properties.py:388
-#, fuzzy
-#| msgid "horizontal"
 msgid "horizontal splitter"
-msgstr "แนวนอน"
+msgstr "แถบคั่นแนวนอน"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11669,22 +11625,17 @@ msgstr "แนวนอน"
 #. as part of the role is because in some applications and toolkits, it can
 #. dictate which keyboard keys should be used to modify the value of the widget.
 #: src/orca/object_properties.py:400
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "vertical align"
 msgid "vertical splitter"
-msgstr "การเรียงชิดขอบแนวดิ่ง"
+msgstr "แถบคั่นแนวตั้ง"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "switch" role is a "light switch" style toggle, such as can be seen in
 #. https://developer.gnome.org/gtk3/stable/GtkSwitch.html
 #: src/orca/object_properties.py:406
-#, fuzzy
-#| msgid "mode switch"
 msgctxt "role"
 msgid "switch"
-msgstr "สลับโหมด"
+msgstr "สวิตช์"
 
 #. Translators: This is an alternative name for the parent object of a series
 #. of icons.
@@ -11700,7 +11651,7 @@ msgstr "พาเนลไอคอน"
 #: src/orca/object_properties.py:417
 msgctxt "role"
 msgid "banner"
-msgstr ""
+msgstr "แบนเนอร์"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11709,11 +11660,9 @@ msgstr ""
 #. similar level in the DOM hierarchy, but remains meaningful when separated from
 #. the main content." See https://www.w3.org/TR/wai-aria-1.1/#complementary
 #: src/orca/object_properties.py:425
-#, fuzzy
-#| msgid "html content"
 msgctxt "role"
 msgid "complementary content"
-msgstr "เนื้อหา html"
+msgstr "เนื้อหาเสริม"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11722,22 +11671,18 @@ msgstr "เนื้อหา html"
 #. Examples of information included in this region of the page are copyrights and
 #. links to privacy statements." See https://www.w3.org/TR/wai-aria-1.1/#contentinfo
 #: src/orca/object_properties.py:433
-#, fuzzy
-#| msgid "Animation"
 msgctxt "role"
 msgid "information"
-msgstr "ภาพเคลื่อนไหว"
+msgstr "ข้อมูล"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
 #. The "main" role is defined in the ARIA specification as "The main content of
 #. a document." See https://www.w3.org/TR/wai-aria-1.1/#main
 #: src/orca/object_properties.py:439
-#, fuzzy
-#| msgid "html content"
 msgctxt "role"
 msgid "main content"
-msgstr "เนื้อหา html"
+msgstr "เนื้อหาหลัก"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11745,11 +11690,9 @@ msgstr "เนื้อหา html"
 #. navigational elements (usually links) for navigating the document or related
 #. documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
 #: src/orca/object_properties.py:446
-#, fuzzy
-#| msgid "Animation"
 msgctxt "role"
 msgid "navigation"
-msgstr "ภาพเคลื่อนไหว"
+msgstr "การท่องดู"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11761,7 +11704,7 @@ msgstr "ภาพเคลื่อนไหว"
 #: src/orca/object_properties.py:455
 msgctxt "role"
 msgid "region"
-msgstr ""
+msgstr "พื้นที่"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11769,11 +11712,9 @@ msgstr ""
 #. that contains a collection of items and objects that, as a whole, combine to
 #. create a search facility." See https://www.w3.org/TR/wai-aria-1.1/#search
 #: src/orca/object_properties.py:462
-#, fuzzy
-#| msgid "Searching."
 msgctxt "role"
 msgid "search"
-msgstr "กำลังค้นหา"
+msgstr "ค้นหา"
 
 #. Translators: This string should be treated as a role describing an object.
 #. Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -11781,11 +11722,8 @@ msgstr "กำลังค้นหา"
 #. possible for users to quickly identify if the link is associated with content
 #. already read.
 #: src/orca/object_properties.py:469
-#, fuzzy
-#| msgid "%d visited link"
-#| msgid_plural "%d visited links"
 msgid "visited link"
-msgstr "%d ลิงก์ที่ดูแล้ว"
+msgstr "ลิงก์ที่ดูแล้ว"
 
 #. Translators: This string refers to a row or column whose sort-order has been set
 #. to ascending.
