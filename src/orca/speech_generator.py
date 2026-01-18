@@ -2593,6 +2593,9 @@ class SpeechGenerator(generator.Generator):
         if not speech_and_verbosity_manager.get_manager().get_speak_indentation_and_justification():
             return []
 
+        if input_event_manager.get_manager().last_event_was_word_navigation():
+            return []
+
         format_type = args.get("formatType", "unfocused")
         only_if_changed = None
         if format_type.endswith("WhereAmI"):
