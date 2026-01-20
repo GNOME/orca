@@ -662,6 +662,8 @@ class Utilities:
                 return False
             if not AXUtilities.object_is_unrelated(x):
                 return False
+            if AXUtilities.is_focusable(x):
+                return False
             if only_showing and not AXUtilities.is_showing(x):
                 return False
             return True
