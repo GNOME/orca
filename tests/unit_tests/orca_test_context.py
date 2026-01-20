@@ -35,6 +35,7 @@ if TYPE_CHECKING:
     from pytest_mock import MockerFixture
     from _pytest.monkeypatch import MonkeyPatch
 
+
 class OrcaTestContext:
     """Test isolation framework for Orca tests."""
 
@@ -61,8 +62,9 @@ class OrcaTestContext:
 
         return self.mocker.Mock(**kwargs)
 
-    def patch_env(self, env_vars: dict[str, str],
-                  remove_vars: list[str] | None = None) -> MagicMock | None:
+    def patch_env(
+        self, env_vars: dict[str, str], remove_vars: list[str] | None = None
+    ) -> MagicMock | None:
         """Convenience method for patching environment variables."""
 
         if remove_vars:

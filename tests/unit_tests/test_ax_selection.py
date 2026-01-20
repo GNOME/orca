@@ -42,6 +42,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXSelection:
     """Test AXSelection class methods."""
@@ -312,9 +313,7 @@ class TestAXSelection:
         from orca.ax_selection import AXSelection
         from orca import debug
 
-        test_context.patch_object(
-            AXSelection, "get_selected_child_count", return_value=child_count
-        )
+        test_context.patch_object(AXSelection, "get_selected_child_count", return_value=child_count)
         test_context.patch_object(
             debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
         )
@@ -347,9 +346,7 @@ class TestAXSelection:
             result = AXSelection.get_selected_children(mock_accessible)
             assert mock_child in result
         elif special_scenario == "none_children":
-            test_context.patch_object(
-                Atspi.Selection, "get_selected_child", return_value=None
-            )
+            test_context.patch_object(Atspi.Selection, "get_selected_child", return_value=None)
 
         if special_scenario not in ["removes_self", "duplicates"]:
             result = AXSelection.get_selected_children(mock_accessible)

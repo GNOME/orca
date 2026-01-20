@@ -30,6 +30,7 @@ from typing import Any
 import pytest
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -56,7 +57,6 @@ class TestPreferenceControlDataclasses:
     def test_boolean_preference_control_creation(self) -> None:
         """Test BooleanPreferenceControl can be created with required fields."""
 
-
         getter_called: list[bool] = [False]
         setter_value: list[bool | None] = [None]
 
@@ -69,10 +69,7 @@ class TestPreferenceControlDataclasses:
             return True
 
         control = BooleanPreferenceControl(
-            label="Test Label",
-            getter=getter,
-            setter=setter,
-            prefs_key="testKey"
+            label="Test Label", getter=getter, setter=setter, prefs_key="testKey"
         )
 
         assert control.label == "Test Label"
@@ -85,12 +82,7 @@ class TestPreferenceControlDataclasses:
     def test_boolean_preference_control_optional_fields(self) -> None:
         """Test BooleanPreferenceControl optional fields have correct defaults."""
 
-
-        control = BooleanPreferenceControl(
-            label="Test",
-            getter=lambda: True,
-            setter=lambda x: True
-        )
+        control = BooleanPreferenceControl(label="Test", getter=lambda: True, setter=lambda x: True)
 
         assert control.prefs_key is None
         assert control.member_of is None
@@ -100,14 +92,13 @@ class TestPreferenceControlDataclasses:
     def test_int_range_preference_control_creation(self) -> None:
         """Test IntRangePreferenceControl can be created with all fields."""
 
-
         control = IntRangePreferenceControl(
             label="Volume",
             minimum=0,
             maximum=100,
             getter=lambda: 50,
             setter=lambda x: True,
-            prefs_key="volume"
+            prefs_key="volume",
         )
 
         assert control.label == "Volume"
@@ -118,13 +109,8 @@ class TestPreferenceControlDataclasses:
     def test_float_range_preference_control_creation(self) -> None:
         """Test FloatRangePreferenceControl can be created with all fields."""
 
-
         control = FloatRangePreferenceControl(
-            label="Rate",
-            minimum=0.0,
-            maximum=1.0,
-            getter=lambda: 0.5,
-            setter=lambda x: True
+            label="Rate", minimum=0.0, maximum=1.0, getter=lambda: 0.5, setter=lambda x: True
         )
 
         assert control.label == "Rate"
@@ -135,13 +121,12 @@ class TestPreferenceControlDataclasses:
     def test_enum_preference_control_creation(self) -> None:
         """Test EnumPreferenceControl can be created with options and values."""
 
-
         control = EnumPreferenceControl(
             label="Style",
             options=["Option A", "Option B", "Option C"],
             values=[1, 2, 3],
             getter=lambda: 2,
-            setter=lambda x: True
+            setter=lambda x: True,
         )
 
         assert control.label == "Style"
@@ -152,7 +137,6 @@ class TestPreferenceControlDataclasses:
     def test_selection_preference_control_creation(self) -> None:
         """Test SelectionPreferenceControl can be created with actions callback."""
 
-
         def get_actions(value: Any) -> list[tuple[str, str, Any]]:
             return [("Edit", "edit-symbolic", lambda: None)]
 
@@ -161,7 +145,7 @@ class TestPreferenceControlDataclasses:
             options=["Default", "Custom"],
             getter=lambda: "Default",
             setter=lambda x: True,
-            get_actions_for_option=get_actions
+            get_actions_for_option=get_actions,
         )
 
         assert control.label == "Profile"
@@ -179,20 +163,17 @@ class TestHelperClasses:
     def test_category_list_box_row_stores_category(self) -> None:
         """Test CategoryListBoxRow stores and returns category identifier."""
 
-
         row = CategoryListBoxRow("speech_settings")
         assert row.category == "speech_settings"
 
     def test_category_list_box_row_is_gtk_list_box_row(self) -> None:
         """Test CategoryListBoxRow inherits from Gtk.ListBoxRow."""
 
-
         row = CategoryListBoxRow("test")
         assert isinstance(row, Gtk.ListBoxRow)
 
     def test_command_list_box_row_properties(self) -> None:
         """Test CommandListBoxRow property getters and setters."""
-
 
         row = CommandListBoxRow()
         assert row.command is None
@@ -214,7 +195,6 @@ class TestHelperClasses:
     def test_radio_button_with_actions_stores_buttons(self) -> None:
         """Test RadioButtonWithActions stores action buttons list."""
 
-
         radio = RadioButtonWithActions(label="Test Option")
         assert radio.action_buttons == []
 
@@ -228,13 +208,11 @@ class TestHelperClasses:
     def test_radio_button_with_actions_is_gtk_radio_button(self) -> None:
         """Test RadioButtonWithActions inherits from Gtk.RadioButton."""
 
-
         radio = RadioButtonWithActions(label="Test")
         assert isinstance(radio, Gtk.RadioButton)
 
     def test_stacked_preferences_helper_initial_state(self) -> None:
         """Test StackedPreferencesHelper initializes with None values."""
-
 
         helper = StackedPreferencesHelper()
         assert helper.stack is None
@@ -246,7 +224,6 @@ class TestHelperClasses:
     def test_stacked_preferences_helper_register_widgets(self) -> None:
         """Test StackedPreferencesHelper can register widgets to disable."""
 
-
         helper = StackedPreferencesHelper()
         button1 = Gtk.Button()
         button2 = Gtk.Button()
@@ -257,7 +234,6 @@ class TestHelperClasses:
 
     def test_stacked_preferences_helper_show_categories(self) -> None:
         """Test StackedPreferencesHelper show_categories enables registered widgets."""
-
 
         helper = StackedPreferencesHelper()
         helper.stack = Gtk.Stack()
@@ -281,7 +257,6 @@ class TestHelperClasses:
 
     def test_stacked_preferences_helper_show_detail(self) -> None:
         """Test StackedPreferencesHelper show_detail disables registered widgets."""
-
 
         helper = StackedPreferencesHelper()
         helper.stack = Gtk.Stack()
@@ -311,14 +286,12 @@ class TestFocusManagedListBox:
     def test_focus_managed_listbox_initial_state(self) -> None:
         """Test FocusManagedListBox initializes with correct settings."""
 
-
         listbox = FocusManagedListBox()
         assert listbox.get_selection_mode() == Gtk.SelectionMode.NONE
         assert listbox.get_can_focus() is False
 
     def test_focus_managed_listbox_add_row_with_widget(self) -> None:
         """Test FocusManagedListBox tracks added rows and widgets."""
-
 
         listbox = FocusManagedListBox()
         row = Gtk.ListBoxRow()
@@ -334,7 +307,6 @@ class TestFocusManagedListBox:
     def test_focus_managed_listbox_get_last_row(self) -> None:
         """Test FocusManagedListBox.get_last_row returns last added row."""
 
-
         listbox = FocusManagedListBox()
         assert listbox.get_last_row() is None
 
@@ -347,7 +319,6 @@ class TestFocusManagedListBox:
 
     def test_focus_managed_listbox_multiple_rows(self) -> None:
         """Test FocusManagedListBox handles multiple rows correctly."""
-
 
         listbox = FocusManagedListBox()
 
@@ -367,7 +338,6 @@ class TestPreferencesGridBase:
     def test_preferences_grid_base_initialization(self) -> None:
         """Test PreferencesGridBase initializes with correct properties."""
 
-
         grid = PreferencesGridBase("Test Tab")
         assert grid._tab_label == "Test Tab"
         assert grid._has_unsaved_changes is False
@@ -375,7 +345,6 @@ class TestPreferencesGridBase:
 
     def test_preferences_grid_base_get_label(self) -> None:
         """Test PreferencesGridBase.get_label returns Gtk.Label."""
-
 
         grid = PreferencesGridBase("My Tab")
         label = grid.get_label()
@@ -386,7 +355,6 @@ class TestPreferencesGridBase:
     def test_preferences_grid_base_has_changes(self) -> None:
         """Test PreferencesGridBase.has_changes tracks unsaved changes."""
 
-
         grid = PreferencesGridBase("Test")
         assert grid.has_changes() is False
 
@@ -395,7 +363,6 @@ class TestPreferencesGridBase:
 
     def test_create_frame_returns_frame_and_grid(self) -> None:
         """Test _create_frame returns Gtk.Frame and content Gtk.Grid."""
-
 
         grid = PreferencesGridBase("Test")
         frame, content = grid._create_frame("Section Label")
@@ -407,7 +374,6 @@ class TestPreferencesGridBase:
     def test_create_label_with_mnemonic(self) -> None:
         """Test _create_label creates label with mnemonic support."""
 
-
         grid = PreferencesGridBase("Test")
         label = grid._create_label("_Test Label")
 
@@ -418,16 +384,13 @@ class TestPreferencesGridBase:
     def test_create_switch_row(self) -> None:
         """Test _create_switch_row creates row with label and switch."""
 
-
         grid = PreferencesGridBase("Test")
         handler_called = [False]
 
         def handler(_switch, _param):
             handler_called[0] = True
 
-        row, switch, label = grid._create_switch_row(
-            "Enable Feature", handler, state=True
-        )
+        row, switch, label = grid._create_switch_row("Enable Feature", handler, state=True)
 
         assert isinstance(row, Gtk.ListBoxRow)
         assert isinstance(switch, Gtk.Switch)
@@ -437,10 +400,10 @@ class TestPreferencesGridBase:
     def test_create_slider_row(self) -> None:
         """Test _create_slider_row creates row with label and scale."""
 
-
         grid = PreferencesGridBase("Test")
-        adjustment = Gtk.Adjustment(value=50, lower=0, upper=100,
-                                     step_increment=1, page_increment=10)
+        adjustment = Gtk.Adjustment(
+            value=50, lower=0, upper=100, step_increment=1, page_increment=10
+        )
 
         row, scale, label = grid._create_slider_row("Volume", adjustment)
 
@@ -452,7 +415,6 @@ class TestPreferencesGridBase:
     def test_create_info_listbox(self) -> None:
         """Test _create_info_listbox creates listbox with info message."""
 
-
         grid = PreferencesGridBase("Test")
         listbox = grid._create_info_listbox("This is an informational message.")
 
@@ -461,7 +423,6 @@ class TestPreferencesGridBase:
 
     def test_create_scrolled_window(self) -> None:
         """Test _create_scrolled_window wraps widget in scrolled container."""
-
 
         grid = PreferencesGridBase("Test")
         label = Gtk.Label(label="Content")
@@ -483,7 +444,7 @@ class TestAutoPreferencesGrid:
             "bool_setting": True,
             "int_setting": 5,
             "float_setting": 0.5,
-            "enum_setting": "Option B"
+            "enum_setting": "Option B",
         }
 
         def set_bool(x: bool) -> bool:
@@ -507,7 +468,7 @@ class TestAutoPreferencesGrid:
                 label="Enable Feature",
                 getter=lambda: values["bool_setting"],
                 setter=set_bool,
-                prefs_key="boolSetting"
+                prefs_key="boolSetting",
             ),
             IntRangePreferenceControl(
                 label="Count",
@@ -515,7 +476,7 @@ class TestAutoPreferencesGrid:
                 maximum=10,
                 getter=lambda: values["int_setting"],
                 setter=set_int,
-                prefs_key="intSetting"
+                prefs_key="intSetting",
             ),
             FloatRangePreferenceControl(
                 label="Rate",
@@ -523,14 +484,14 @@ class TestAutoPreferencesGrid:
                 maximum=1.0,
                 getter=lambda: values["float_setting"],
                 setter=set_float,
-                prefs_key="floatSetting"
+                prefs_key="floatSetting",
             ),
             EnumPreferenceControl(
                 label="Style",
                 options=["Option A", "Option B", "Option C"],
                 getter=lambda: values["enum_setting"],
                 setter=set_enum,
-                prefs_key="enumSetting"
+                prefs_key="enumSetting",
             ),
         ]
 
@@ -590,9 +551,7 @@ class TestAutoPreferencesGrid:
 
         controls = [
             BooleanPreferenceControl(
-                label="Test",
-                getter=lambda: current_value[0],
-                setter=lambda x: True
+                label="Test", getter=lambda: current_value[0], setter=lambda x: True
             ),
         ]
 
@@ -662,9 +621,7 @@ class TestAutoPreferencesGrid:
 
         # Non-existent control should return None
         other_control = BooleanPreferenceControl(
-            label="Other",
-            getter=lambda: True,
-            setter=lambda x: True
+            label="Other", getter=lambda: True, setter=lambda x: True
         )
         assert grid.get_widget_for_control(other_control) is None
 
@@ -672,28 +629,24 @@ class TestAutoPreferencesGrid:
         """Test AutoPreferencesGrid groups controls by member_of field."""
 
         controls = [
-            BooleanPreferenceControl(
-                label="Ungrouped",
-                getter=lambda: True,
-                setter=lambda x: True
-            ),
+            BooleanPreferenceControl(label="Ungrouped", getter=lambda: True, setter=lambda x: True),
             BooleanPreferenceControl(
                 label="Group A Item 1",
                 getter=lambda: True,
                 setter=lambda x: True,
-                member_of="Group A"
+                member_of="Group A",
             ),
             BooleanPreferenceControl(
                 label="Group A Item 2",
                 getter=lambda: False,
                 setter=lambda x: True,
-                member_of="Group A"
+                member_of="Group A",
             ),
             BooleanPreferenceControl(
                 label="Group B Item",
                 getter=lambda: True,
                 setter=lambda x: True,
-                member_of="Group B"
+                member_of="Group B",
             ),
         ]
 
@@ -717,13 +670,13 @@ class TestAutoPreferencesGrid:
                 label="Primary",
                 getter=lambda: primary_enabled[0],
                 setter=set_primary,
-                apply_immediately=True
+                apply_immediately=True,
             ),
             BooleanPreferenceControl(
                 label="Dependent",
                 getter=lambda: True,
                 setter=lambda x: True,
-                determine_sensitivity=lambda: primary_enabled[0]
+                determine_sensitivity=lambda: primary_enabled[0],
             ),
         ]
 
@@ -743,18 +696,10 @@ class TestAutoPreferencesGrid:
         """Test AutoPreferencesGrid displays info message when provided."""
 
         controls = [
-            BooleanPreferenceControl(
-                label="Test",
-                getter=lambda: True,
-                setter=lambda x: True
-            ),
+            BooleanPreferenceControl(label="Test", getter=lambda: True, setter=lambda x: True),
         ]
 
-        grid = AutoPreferencesGrid(
-            "Test",
-            controls,
-            info_message="This is helpful information."
-        )
+        grid = AutoPreferencesGrid("Test", controls, info_message="This is helpful information.")
 
         assert grid._info_listbox is not None
 
@@ -768,10 +713,7 @@ class TestAutoPreferencesGridSelectionControl:
 
         controls = [
             SelectionPreferenceControl(
-                label="Choose",
-                options=["A", "B", "C"],
-                getter=lambda: "B",
-                setter=lambda x: True
+                label="Choose", options=["A", "B", "C"], getter=lambda: "B", setter=lambda x: True
             ),
         ]
 
@@ -793,7 +735,7 @@ class TestAutoPreferencesGridSelectionControl:
                 options=["Default", "Custom"],
                 getter=lambda: "Default",
                 setter=lambda x: True,
-                get_actions_for_option=get_actions
+                get_actions_for_option=get_actions,
             ),
         ]
 
@@ -818,7 +760,7 @@ class TestAutoPreferencesGridSelectionControl:
                 values=[50, 100, 150],
                 getter=lambda: current_value[0],
                 setter=set_level,
-                prefs_key="level"
+                prefs_key="level",
             ),
         ]
 
@@ -841,7 +783,6 @@ class TestPreferencesGridBaseMultiPageStack:
     def test_create_multi_page_stack_basic(self) -> None:
         """Test _create_multi_page_stack creates stack with categories."""
 
-
         class TestGrid(PreferencesGridBase):
             def __init__(self):
                 super().__init__("Test")
@@ -858,7 +799,7 @@ class TestPreferencesGridBaseMultiPageStack:
                         ("General", "general", child1),
                         ("Advanced", "advanced", child2),
                     ],
-                    main_title="Test Settings"
+                    main_title="Test Settings",
                 )
 
                 self.my_enable_listbox = enable_listbox
@@ -875,7 +816,6 @@ class TestPreferencesGridBaseMultiPageStack:
     def test_create_multi_page_stack_without_enable(self) -> None:
         """Test _create_multi_page_stack without enable switch."""
 
-
         class TestGrid(PreferencesGridBase):
             def __init__(self):
                 super().__init__("Test")
@@ -888,7 +828,7 @@ class TestPreferencesGridBaseMultiPageStack:
                     enable_getter=None,
                     enable_setter=None,
                     categories=[("General", "general", child)],
-                    main_title="Test"
+                    main_title="Test",
                 )
 
                 self.my_enable_listbox = enable_listbox
@@ -908,15 +848,13 @@ class TestPreferencesGridBaseStackedPreferences:
     def test_create_stacked_preferences(self) -> None:
         """Test _create_stacked_preferences creates stack with categories and detail."""
 
-
         class TestGrid(PreferencesGridBase):
             def __init__(self):
                 super().__init__("Test")
                 self.activated_row = None
 
                 stack, categories, detail = self._create_stacked_preferences(
-                    on_category_activated=self._on_category,
-                    on_detail_row_activated=None
+                    on_category_activated=self._on_category, on_detail_row_activated=None
                 )
                 self.my_stack = stack
                 self.my_categories = categories
@@ -937,7 +875,6 @@ class TestPreferencesGridBaseStackedPreferences:
     def test_add_stack_category_row(self) -> None:
         """Test _add_stack_category_row adds category with correct properties."""
 
-
         class TestGrid(PreferencesGridBase):
             def __init__(self):
                 super().__init__("Test")
@@ -948,16 +885,13 @@ class TestPreferencesGridBaseStackedPreferences:
 
         grid = TestGrid()
 
-        row = grid._add_stack_category_row(
-            grid.my_categories, "Speech Settings", category="speech"
-        )
+        row = grid._add_stack_category_row(grid.my_categories, "Speech Settings", category="speech")
 
         assert isinstance(row, CategoryListBoxRow)
         assert row.category == "speech"
 
     def test_show_stack_categories_and_detail(self) -> None:
         """Test _show_stack_categories and _show_stack_detail switch views."""
-
 
         class TestGrid(PreferencesGridBase):
             def __init__(self):

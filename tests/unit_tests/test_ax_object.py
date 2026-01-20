@@ -45,6 +45,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXObject:
     """Test AXObject class methods."""
@@ -81,17 +82,11 @@ class TestAXObject:
                 ),
             )
         else:
-            test_context.patch_object(
-                AXObject, "find_ancestor_inclusive", return_value=None
-            )
+            test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
             if has_spreadsheet:
-                test_context.patch_object(
-                    AXObject, "_has_document_spreadsheet", return_value=True
-                )
+                test_context.patch_object(AXObject, "_has_document_spreadsheet", return_value=True)
             else:
-                test_context.patch_object(
-                    AXObject, "_has_document_spreadsheet", return_value=False
-                )
+                test_context.patch_object(AXObject, "_has_document_spreadsheet", return_value=False)
 
         return mock_accessible
 
@@ -1115,18 +1110,14 @@ class TestAXObject:
                     return 1
                 return 0
 
-            test_context.patch_object(
-                Atspi.Accessible, "get_index_in_parent", new=mock_get_index
-            )
+            test_context.patch_object(Atspi.Accessible, "get_index_in_parent", new=mock_get_index)
 
             def mock_get_parent_checked(obj) -> object:
                 if obj == mock_accessible:
                     return mock_parent
                 return None
 
-            test_context.patch_object(
-                AXObject, "get_parent_checked", new=mock_get_parent_checked
-            )
+            test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
 
         elif case["scenario"] == "glib_error":
 
@@ -1212,9 +1203,7 @@ class TestAXObject:
 
         if case["scenario"] == "valid_parent":
             mock_parent = test_context.Mock(spec=Atspi.Accessible)
-            test_context.patch_object(
-                Atspi.Accessible, "get_parent", return_value=mock_parent
-            )
+            test_context.patch_object(Atspi.Accessible, "get_parent", return_value=mock_parent)
             result = AXObject.get_parent(mock_accessible)
             assert result == mock_parent
         elif case["scenario"] == "glib_error":
@@ -1278,9 +1267,7 @@ class TestAXObject:
 
         if case["scenario"] == "valid_object":
             test_context.patch_object(AXObject, "is_valid", return_value=True)
-            test_context.patch_object(
-                Atspi.Accessible, "get_role", return_value=Atspi.Role.BUTTON
-            )
+            test_context.patch_object(Atspi.Accessible, "get_role", return_value=Atspi.Role.BUTTON)
         elif case["scenario"] == "invalid_object":
             test_context.patch_object(AXObject, "is_valid", return_value=False)
         elif case["scenario"] == "glib_error":
@@ -1355,9 +1342,7 @@ class TestAXObject:
 
         if case["scenario"] == "valid_not_localized":
             test_context.patch_object(AXObject, "is_valid", return_value=True)
-            test_context.patch_object(
-                Atspi.Accessible, "get_role_name", return_value="button"
-            )
+            test_context.patch_object(Atspi.Accessible, "get_role_name", return_value="button")
             result = AXObject.get_role_name(mock_accessible, localized=False)
         elif case["scenario"] == "valid_localized":
             test_context.patch_object(AXObject, "is_valid", return_value=True)
@@ -1695,9 +1680,7 @@ class TestAXObject:
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            Atspi.Accessible, "clear_cache_single", new=test_context.Mock()
-        )
+        test_context.patch_object(Atspi.Accessible, "clear_cache_single", new=test_context.Mock())
         AXObject.clear_cache(mock_accessible, recursive=False, reason="test")
         sys.modules["gi.repository"].Atspi.Accessible.clear_cache_single.assert_called_once_with(
             mock_accessible
@@ -2282,9 +2265,7 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(AXObject, "get_attributes_dict", return_value={})
-        test_context.patch_object(
-            AXObject, "_find_first_action_with_keybinding", return_value=-1
-        )
+        test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=-1)
         result = AXObject.get_mnemonic(mock_accessible)
         assert result == ""
 
@@ -2314,12 +2295,8 @@ class TestAXObject:
         test_context.patch_object(
             AXObject, "get_attributes_dict", return_value={"keyshortcuts": "Ctrl+F"}
         )
-        test_context.patch_object(
-            AXObject, "_get_label_for_key_sequence", return_value="Ctrl+F"
-        )
-        test_context.patch_object(
-            AXObject, "_find_first_action_with_keybinding", return_value=-1
-        )
+        test_context.patch_object(AXObject, "_get_label_for_key_sequence", return_value="Ctrl+F")
+        test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=-1)
         result = AXObject.get_mnemonic(mock_accessible)
         assert result == ""
 
@@ -2332,15 +2309,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(AXObject, "get_attributes_dict", return_value={})
-        test_context.patch_object(
-            AXObject, "_find_first_action_with_keybinding", return_value=0
-        )
-        test_context.patch_object(
-            AXObject, "get_action_key_binding", return_value="Alt+F;Alt+F"
-        )
-        test_context.patch_object(
-            AXObject, "_get_label_for_key_sequence", return_value="Alt+F"
-        )
+        test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=0)
+        test_context.patch_object(AXObject, "get_action_key_binding", return_value="Alt+F;Alt+F")
+        test_context.patch_object(AXObject, "_get_label_for_key_sequence", return_value="Alt+F")
         result = AXObject.get_mnemonic(mock_accessible)
         assert result == "Alt+F"
 
@@ -2353,15 +2324,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(AXObject, "get_attributes_dict", return_value={})
-        test_context.patch_object(
-            AXObject, "_find_first_action_with_keybinding", return_value=0
-        )
-        test_context.patch_object(
-            AXObject, "get_action_key_binding", return_value="Ctrl+F;Ctrl+F"
-        )
-        test_context.patch_object(
-            AXObject, "_get_label_for_key_sequence", return_value="Ctrl+F"
-        )
+        test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=0)
+        test_context.patch_object(AXObject, "get_action_key_binding", return_value="Ctrl+F;Ctrl+F")
+        test_context.patch_object(AXObject, "_get_label_for_key_sequence", return_value="Ctrl+F")
         result = AXObject.get_mnemonic(mock_accessible)
         assert result == ""
 
@@ -2374,15 +2339,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(AXObject, "get_attributes_dict", return_value={})
-        test_context.patch_object(
-            AXObject, "_find_first_action_with_keybinding", return_value=0
-        )
-        test_context.patch_object(
-            AXObject, "get_action_key_binding", return_value="space;space"
-        )
-        test_context.patch_object(
-            AXObject, "_get_label_for_key_sequence", return_value="space"
-        )
+        test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=0)
+        test_context.patch_object(AXObject, "get_action_key_binding", return_value="space;space")
+        test_context.patch_object(AXObject, "_get_label_for_key_sequence", return_value="space")
         result = AXObject.get_mnemonic(mock_accessible)
         assert result == ""
 
@@ -2582,9 +2541,7 @@ class TestAXObject:
             debug.debugLevel = 2
             return True
 
-        test_context.patch(
-            "orca.ax_object.Atspi.Component.grab_focus", new=mock_grab_focus
-        )
+        test_context.patch("orca.ax_object.Atspi.Component.grab_focus", new=mock_grab_focus)
         result = AXObject.grab_focus(mock_accessible)
         assert result is True
 
@@ -3301,9 +3258,7 @@ class TestAXObject:
             return_value="mock_rule"
         )
         sys.modules["orca.ax_collection"] = mock_ax_collection
-        test_context.patch_object(
-            AXObject, "find_ancestor_inclusive", return_value=None
-        )
+        test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is False
 
@@ -3323,9 +3278,7 @@ class TestAXObject:
             return_value="mock_rule"
         )
         sys.modules["orca.ax_collection"] = mock_ax_collection
-        test_context.patch_object(
-            AXObject, "find_ancestor_inclusive", return_value=mock_frame
-        )
+        test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=mock_frame)
         sys.modules["gi.repository"].Atspi.Collection.get_matches = test_context.Mock(
             return_value=["match1"]
         )
@@ -3497,9 +3450,7 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(
-            AXObject, "find_ancestor_inclusive", return_value=None
-        )
+        test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is False
 
@@ -3714,9 +3665,7 @@ class TestAXObject:
             AXObject, "_get_label_for_key_sequence", side_effect=lambda seq: seq
         )
 
-        test_context.patch_object(
-            AXObject, "_find_first_action_with_keybinding", return_value=-1
-        )
+        test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=-1)
 
         result = AXObject.get_accelerator(mock_accessible)
 
@@ -3747,9 +3696,7 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
 
-        test_context.patch_object(
-            AXObject, "supports_image", return_value=case["image_support"]
-        )
+        test_context.patch_object(AXObject, "supports_image", return_value=case["image_support"])
 
         if case["image_support"]:
             mock_point = test_context.Mock()
@@ -3858,9 +3805,7 @@ class TestAXObject:
             else:
                 atspi_accessible_mock.get_help_text.return_value = case["expected_result"]
 
-            test_context.patch(
-                "orca.ax_object.Atspi.Accessible", new=atspi_accessible_mock
-            )
+            test_context.patch("orca.ax_object.Atspi.Accessible", new=atspi_accessible_mock)
 
         result = AXObject.get_help_text(mock_accessible)
         assert result == case["expected_result"]
@@ -4169,9 +4114,7 @@ class TestAXObject:
             return None
 
         test_context.patch_object(AXObject, "is_valid", new=mock_is_valid)
-        test_context.patch_object(
-            AXObject, "get_child_count", return_value=case["child_count"]
-        )
+        test_context.patch_object(AXObject, "get_child_count", return_value=case["child_count"])
         test_context.patch_object(AXObject, "get_child", new=mock_get_child)
 
         def pred_func(child):

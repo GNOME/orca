@@ -38,6 +38,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestFlatReviewPresenter:
     """Test FlatReviewPresenter class methods."""
@@ -260,7 +261,7 @@ class TestFlatReviewPresenter:
         mock_controller = test_context.Mock()
         test_context.patch(
             "orca.flat_review_presenter.dbus_service.get_remote_controller",
-            return_value=mock_controller
+            return_value=mock_controller,
         )
         presenter = FlatReviewPresenter()
 
@@ -675,7 +676,7 @@ class TestFlatReviewPresenter:
         mock_controller = test_context.Mock()
         test_context.patch(
             "orca.flat_review_presenter.dbus_service.get_remote_controller",
-            return_value=mock_controller
+            return_value=mock_controller,
         )
         presenter = FlatReviewPresenter()
 

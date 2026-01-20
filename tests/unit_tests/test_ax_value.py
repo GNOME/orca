@@ -42,6 +42,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXValue:
     """Test AXValue class methods."""
@@ -66,9 +67,7 @@ class TestAXValue:
         essential_modules["orca.ax_utilities"].AXUtilities = ax_utilities_class_mock
 
         ax_utilities_state_class_mock = test_context.Mock()
-        ax_utilities_state_class_mock.is_indeterminate = test_context.Mock(
-            return_value=False
-        )
+        ax_utilities_state_class_mock.is_indeterminate = test_context.Mock(return_value=False)
         essential_modules[
             "orca.ax_utilities_state"
         ].AXUtilitiesState = ax_utilities_state_class_mock

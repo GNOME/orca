@@ -31,6 +31,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 
 import pytest
@@ -56,7 +57,7 @@ class TestBraillePresenter:
             "en-us-g2.ctb",
             "en-us-comp8.ctb",
             "fr-bfu-g2.ctb",
-            "de-g2.ctb"
+            "de-g2.ctb",
         ]
 
         platform_mock = essential_modules["orca.orca_platform"]
@@ -67,7 +68,7 @@ class TestBraillePresenter:
         settings_mock.BRAILLE_UNDERLINE_NONE = 0x00
         settings_mock.BRAILLE_UNDERLINE_7 = 0x40
         settings_mock.BRAILLE_UNDERLINE_8 = 0x80
-        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xc0
+        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xC0
         settings_mock.VERBOSITY_LEVEL_BRIEF = 0
         settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
 
@@ -186,7 +187,7 @@ class TestBraillePresenter:
         presenter = get_presenter()
         settings_mock = essential_modules["orca.settings"]
 
-        settings_mock.brailleSelectorIndicator = 0xc0
+        settings_mock.brailleSelectorIndicator = 0xC0
         assert presenter.get_selector_indicator() == "dots78"
 
         settings_mock.brailleLinkIndicator = 0x40
@@ -206,7 +207,7 @@ class TestBraillePresenter:
 
         result = presenter.set_selector_indicator("dots78")
         assert result is True
-        assert settings_mock.brailleSelectorIndicator == 0xc0
+        assert settings_mock.brailleSelectorIndicator == 0xC0
 
         result = presenter.set_link_indicator("dot8")
         assert result is True
@@ -766,7 +767,7 @@ class TestBraillePreferencesGridUI:
         settings_mock.BRAILLE_UNDERLINE_NONE = 0x00
         settings_mock.BRAILLE_UNDERLINE_7 = 0x40
         settings_mock.BRAILLE_UNDERLINE_8 = 0x80
-        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xc0
+        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xC0
         settings_mock.VERBOSITY_LEVEL_BRIEF = 0
         settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
         settings_mock.PROGRESS_BAR_ALL = 0
@@ -824,9 +825,7 @@ class TestBraillePreferencesGridUI:
 
         return essential_modules
 
-    def test_braille_verbosity_grid_creates_widgets(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_braille_verbosity_grid_creates_widgets(self, test_context: OrcaTestContext) -> None:
         """Test BrailleVerbosityPreferencesGrid creates correct widgets."""
 
         from gi.repository import Gtk
@@ -959,9 +958,7 @@ class TestBraillePreferencesGridUI:
         assert grid._flash_messages_grid is not None
         assert grid._progress_bars_grid is not None
 
-    def test_braille_preferences_grid_save_settings(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_braille_preferences_grid_save_settings(self, test_context: OrcaTestContext) -> None:
         """Test BraillePreferencesGrid save_settings returns combined dict."""
 
         self._setup_dependencies(test_context)
@@ -978,9 +975,7 @@ class TestBraillePreferencesGridUI:
         assert "enableFlashMessages" in result
         assert "brailleProgressBarUpdates" in result
 
-    def test_braille_preferences_grid_title_callback(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_braille_preferences_grid_title_callback(self, test_context: OrcaTestContext) -> None:
         """Test BraillePreferencesGrid stores title change callback."""
 
         self._setup_dependencies(test_context)
@@ -1042,9 +1037,7 @@ class TestBraillePreferencesGridUI:
         result = grid.save_settings()
         assert result["brailleVerbosityLevel"] == settings_mock.VERBOSITY_LEVEL_VERBOSE
 
-    def test_flash_messages_duration_initial_value(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_flash_messages_duration_initial_value(self, test_context: OrcaTestContext) -> None:
         """Test flash duration spinbutton shows correct initial value."""
 
         essential_modules = self._setup_dependencies(test_context)
@@ -1062,9 +1055,7 @@ class TestBraillePreferencesGridUI:
         duration_spinbutton = grid.get_widget(3)
         assert duration_spinbutton.get_value() == 3
 
-    def test_display_settings_combobox_initial_value(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_display_settings_combobox_initial_value(self, test_context: OrcaTestContext) -> None:
         """Test indicator combobox shows correct initial selection."""
 
         essential_modules = self._setup_dependencies(test_context)

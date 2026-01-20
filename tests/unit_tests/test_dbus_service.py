@@ -38,10 +38,12 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 class _MockDBusError(Exception):
     def __init__(self, message="DBus error"):
         super().__init__(message)
         self.message = message
+
 
 @pytest.mark.unit
 class TestDBusService:
@@ -112,7 +114,6 @@ class TestDBusService:
         essential_modules["orca.debug"].println = test_context.Mock()
 
         essential_modules["orca.orca_platform"].version = "test-version"
-
 
         return essential_modules
 
@@ -1219,7 +1220,6 @@ class TestDBusService:
             side_effect=lambda module_name, handlers_info: mock_module_iface,
         )
 
-
         # The unpublish_object call should fail but be caught gracefully by the production code
         # The module should still be successfully registered despite the unpublish error
         service.add_module_interface("TestModule", handlers, mock_bus, "/test/path")
@@ -1513,6 +1513,7 @@ class TestDBusService:
         from orca import dbus_service
 
         MockDBusError = self._get_mock_dbus_error()
+
         def mock_session_bus() -> None:
             raise MockDBusError("Bus connection failed")
 
@@ -1965,9 +1966,7 @@ class TestDBusService:
         def mock_remote_controller_event():
             return test_context.Mock()
 
-        test_context.patch_object(
-            dbus_service.script_manager, "get_manager", new=mock_get_manager
-        )
+        test_context.patch_object(dbus_service.script_manager, "get_manager", new=mock_get_manager)
         test_context.patch_object(
             dbus_service.input_event, "RemoteControllerEvent", new=mock_remote_controller_event
         )

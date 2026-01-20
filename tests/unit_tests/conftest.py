@@ -31,6 +31,7 @@ from .orca_test_fixtures import test_context  # noqa: F401  # pylint: disable=un
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
+
 def clean_all_orca_modules() -> None:
     """Aggressively clean all orca modules from sys.modules."""
 
@@ -42,10 +43,12 @@ def clean_all_orca_modules() -> None:
     for module_name in modules_to_remove:
         sys.modules.pop(module_name, None)
 
+
 def pytest_configure(config: pytest.Config) -> None:
     """Register custom markers."""
 
     config.addinivalue_line("markers", "unit: marks tests as unit tests")
+
 
 def pytest_runtest_setup(item: pytest.Item) -> None:  # pylint: disable=unused-argument
     """Clean module cache before each test to prevent cross-test contamination."""

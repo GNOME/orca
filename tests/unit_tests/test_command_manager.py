@@ -96,12 +96,7 @@ class TestCommand:
         handler = self._create_mock_handler(test_context)
         keybinding = self._create_mock_keybinding(test_context)
         command = Command(
-            "fullHandler",
-            handler,
-            "Full Group",
-            "Full description",
-            keybinding,
-            False
+            "fullHandler", handler, "Full Group", "Full description", keybinding, False
         )
 
         assert command.get_handler_name() == "fullHandler"
@@ -214,10 +209,7 @@ class TestCommand:
         from orca.command_manager import Command
 
         handler = self._create_mock_handler(test_context)
-        command = Command(
-            "testHandler", handler, "Test Group",
-            enabled=False, suspended=True
-        )
+        command = Command("testHandler", handler, "Test Group", enabled=False, suspended=True)
 
         assert command.is_enabled() is False
         assert command.is_suspended() is True
@@ -279,8 +271,7 @@ class TestCommand:
         handler = self._create_mock_handler(test_context)
         keybinding = self._create_mock_keybinding(test_context)
         command = Command(
-            "testHandler", handler, "Test Group",
-            keybinding=keybinding, enabled=False
+            "testHandler", handler, "Test Group", keybinding=keybinding, enabled=False
         )
 
         assert command.is_active() is False
@@ -294,8 +285,7 @@ class TestCommand:
         handler = self._create_mock_handler(test_context)
         keybinding = self._create_mock_keybinding(test_context)
         command = Command(
-            "testHandler", handler, "Test Group",
-            keybinding=keybinding, suspended=True
+            "testHandler", handler, "Test Group", keybinding=keybinding, suspended=True
         )
 
         assert command.is_active() is False
@@ -368,7 +358,7 @@ class TestCommandManager:
         self,
         test_context: OrcaTestContext,
         description: str = "Test handler",
-        learn_mode: bool = True
+        learn_mode: bool = True,
     ) -> Mock:
         """Creates a mock InputEventHandler."""
 
@@ -378,11 +368,7 @@ class TestCommandManager:
         handler.learn_mode_enabled = learn_mode
         return handler
 
-    def _create_mock_keybinding(
-        self,
-        test_context: OrcaTestContext,
-        handler: Mock
-    ) -> Mock:
+    def _create_mock_keybinding(self, test_context: OrcaTestContext, handler: Mock) -> Mock:
         """Creates a mock KeyBinding for a handler."""
 
         kb = test_context.Mock()
@@ -697,9 +683,7 @@ class TestCommandManager:
         assert cmd.get_keybinding() == kb
         assert cmd.get_group_label() == "New Group"
 
-    def test_apply_customized_bindings_no_group_update(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_apply_customized_bindings_no_group_update(self, test_context: OrcaTestContext) -> None:
         """Test apply_customized_bindings with update_group_label=False."""
 
         self._setup_dependencies(test_context)
@@ -725,9 +709,7 @@ class TestCommandManager:
         assert cmd.get_keybinding() == new_kb
         assert cmd.get_group_label() == "Original Group"
 
-    def test_apply_customized_bindings_skips_handlers(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_apply_customized_bindings_skips_handlers(self, test_context: OrcaTestContext) -> None:
         """Test that apply_customized_bindings respects skip_handlers."""
 
         self._setup_dependencies(test_context)

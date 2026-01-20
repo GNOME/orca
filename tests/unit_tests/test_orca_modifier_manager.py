@@ -41,6 +41,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestOrcaModifierManager:
     """Test OrcaModifierManager class methods."""
@@ -587,12 +588,10 @@ class TestOrcaModifierManager:
         mock_add_grab = test_context.Mock()
         test_context.patch_object(manager, "add_modifier_grab", new=mock_add_grab)
         mock_timeout = test_context.Mock()
-        test_context.patch(
-            "orca.orca_modifier_manager.GLib.timeout_add", new=mock_timeout
-        )
+        test_context.patch("orca.orca_modifier_manager.GLib.timeout_add", new=mock_timeout)
         test_context.patch(
             "orca.orca_modifier_manager.Atspi.generate_keyboard_event",
-            side_effect=lambda *args, **kwargs: None
+            side_effect=lambda *args, **kwargs: None,
         )
 
         manager._toggle_modifier_grab(mock_keyboard_event)
@@ -642,9 +641,7 @@ class TestOrcaModifierManager:
         self._setup_dependencies(test_context)
         from orca import orca_modifier_manager
 
-        test_context.patch(
-            "orca.orca_modifier_manager.Atspi.ModifierType.SHIFTLOCK", new=1
-        )
+        test_context.patch("orca.orca_modifier_manager.Atspi.ModifierType.SHIFTLOCK", new=1)
         test_context.patch("orca.orca_modifier_manager.Atspi.ModifierType.SHIFT", new=0)
         manager = orca_modifier_manager.OrcaModifierManager()
         mock_keyboard_event = test_context.Mock()
@@ -653,9 +650,7 @@ class TestOrcaModifierManager:
         mock_keyboard_event.modifiers = 0
         mock_keyboard_event.is_pressed_key.return_value = is_pressed
         mock_timeout = test_context.Mock()
-        test_context.patch(
-            "orca.orca_modifier_manager.GLib.timeout_add", new=mock_timeout
-        )
+        test_context.patch("orca.orca_modifier_manager.GLib.timeout_add", new=mock_timeout)
         manager._toggle_modifier_lock(mock_keyboard_event)
         if expected_modifier is not None:
             mock_timeout.assert_called_once()

@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestBypassModeManager:
     """Test BypassModeManager class methods."""

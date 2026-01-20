@@ -42,6 +42,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestFocusManager:
     """Test FocusManager class methods."""
@@ -61,17 +62,11 @@ class TestFocusManager:
         from orca.ax_text import AXText
 
         test_context.patch_object(AXObject, "clear_cache", new=test_context.Mock())
-        test_context.patch_object(
-            AXObject, "is_dead", return_value=is_dead
-        )
-        test_context.patch_object(
-            AXObject, "is_valid", side_effect=lambda obj: obj is not None
-        )
+        test_context.patch_object(AXObject, "is_dead", return_value=is_dead)
+        test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: obj is not None)
 
         if mock_app is not None:
-            test_context.patch_object(
-                AXUtilities, "get_application", return_value=mock_app
-            )
+            test_context.patch_object(AXUtilities, "get_application", return_value=mock_app)
         else:
             test_context.patch_object(AXUtilities, "get_application", new=test_context.Mock())
 
@@ -134,9 +129,7 @@ class TestFocusManager:
         bindings_instance.is_empty = test_context.Mock(return_value=True)
         bindings_instance.add = test_context.Mock()
         keybindings_mock.KeyBindings = test_context.Mock(return_value=bindings_instance)
-        keybindings_mock.KeyBinding = test_context.Mock(
-            return_value=test_context.Mock()
-        )
+        keybindings_mock.KeyBinding = test_context.Mock(return_value=test_context.Mock())
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = test_context.Mock()
@@ -151,9 +144,7 @@ class TestFocusManager:
         script_mgr_instance = test_context.Mock()
         script_instance = test_context.Mock()
         script_instance.locus_of_focus_changed = test_context.Mock()
-        script_mgr_instance.get_active_script = test_context.Mock(
-            return_value=script_instance
-        )
+        script_mgr_instance.get_active_script = test_context.Mock(return_value=script_instance)
         script_mgr_instance.get_script = test_context.Mock(return_value=script_instance)
         script_mgr_instance.set_active_script = test_context.Mock()
         script_manager_mock.get_manager = test_context.Mock(return_value=script_mgr_instance)
@@ -209,12 +200,8 @@ class TestFocusManager:
         from orca.focus_manager import FocusManager
 
         manager = FocusManager()
-        test_context.patch_object(
-            manager, "_focus", new=test_context.Mock(spec=Atspi.Accessible)
-        )
-        test_context.patch_object(
-            manager, "_window", new=test_context.Mock(spec=Atspi.Accessible)
-        )
+        test_context.patch_object(manager, "_focus", new=test_context.Mock(spec=Atspi.Accessible))
+        test_context.patch_object(manager, "_window", new=test_context.Mock(spec=Atspi.Accessible))
         test_context.patch_object(
             manager, "_object_of_interest", new=test_context.Mock(spec=Atspi.Accessible)
         )
@@ -225,9 +212,7 @@ class TestFocusManager:
         assert manager._window is None
         assert manager._object_of_interest is None
         assert manager._active_mode is None
-        test_context.patch_object(
-            manager, "_focus", new=test_context.Mock(spec=Atspi.Accessible)
-        )
+        test_context.patch_object(manager, "_focus", new=test_context.Mock(spec=Atspi.Accessible))
         manager.clear_state("test reason")
         assert manager._focus is None
 
@@ -500,9 +485,7 @@ class TestFocusManager:
         from orca.focus_manager import FocusManager
         from orca.ax_object import AXObject
 
-        test_context.patch_object(
-            AXObject, "is_valid", side_effect=lambda obj: obj is not None
-        )
+        test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: obj is not None)
         manager = FocusManager()
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
         manager._focus = mock_focus
@@ -604,12 +587,8 @@ class TestFocusManager:
         test_context.patch_object(
             manager, "focus_is_in_active_window", return_value=focus_is_in_window
         )
-        test_context.patch_object(
-            AXObject, "has_broken_ancestry", return_value=has_broken_ancestry
-        )
-        test_context.patch_object(
-            AXUtilities, "get_application", return_value=mock_app
-        )
+        test_context.patch_object(AXObject, "has_broken_ancestry", return_value=has_broken_ancestry)
+        test_context.patch_object(AXUtilities, "get_application", return_value=mock_app)
         manager.set_active_window(mock_frame, mock_app, set_window_as_focus, False)
         if not frame_equals_current:
             assert manager._window == mock_frame
@@ -687,9 +666,7 @@ class TestFocusManager:
         from orca.ax_text import AXText
         from orca.ax_object import AXObject
 
-        test_context.patch_object(
-            AXObject, "is_valid", side_effect=lambda obj: obj is not None
-        )
+        test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: obj is not None)
         manager = FocusManager()
 
         mock_get_cell_coordinates = test_context.Mock()
@@ -782,9 +759,7 @@ class TestFocusManager:
         manager.reset_active_mode("test reason")
 
         assert manager._active_mode == FOCUS_TRACKING
-        mock_focus.emit.assert_called_once_with(
-            "mode-changed::" + FOCUS_TRACKING, 1, "test reason"
-        )
+        mock_focus.emit.assert_called_once_with("mode-changed::" + FOCUS_TRACKING, 1, "test reason")
 
     def test_reset_active_mode_without_focus(self, test_context: OrcaTestContext) -> None:
         """Test reset_active_mode sets None when focus is None."""
@@ -815,6 +790,4 @@ class TestFocusManager:
         manager.reset_active_mode()
 
         assert manager._active_mode == FOCUS_TRACKING
-        mock_focus.emit.assert_called_once_with(
-            "mode-changed::" + FOCUS_TRACKING, 1, ""
-        )
+        mock_focus.emit.assert_called_once_with("mode-changed::" + FOCUS_TRACKING, 1, "")

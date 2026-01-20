@@ -29,6 +29,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 
 import pytest
@@ -89,8 +90,9 @@ class TestProfileManager:
         profiles = manager.get_available_profiles()
 
         assert profiles == [["Default", "default"], ["Spanish", "spanish"], ["Work", "work"]]
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .available_profiles.assert_called_once()
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.available_profiles.assert_called_once()
 
     def test_get_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test getting active profile."""
@@ -102,8 +104,9 @@ class TestProfileManager:
         profile = manager.get_active_profile()
 
         assert profile == "default"
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .get_profile.assert_called_once()
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_profile.assert_called_once()
 
     def test_set_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test setting active profile."""
@@ -114,8 +117,9 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.set_active_profile("spanish")
 
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .set_profile.assert_called_once_with("spanish", False)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_profile.assert_called_once_with("spanish", False)
 
     def test_set_active_profile_with_locale_update(self, test_context: OrcaTestContext) -> None:
         """Test setting active profile with locale update."""
@@ -126,8 +130,9 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.set_active_profile("spanish", update_locale=True)
 
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .set_profile.assert_called_once_with("spanish", True)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_profile.assert_called_once_with("spanish", True)
 
     def test_load_profile(self, test_context: OrcaTestContext) -> None:
         """Test loading a profile calls set_active_profile and load_user_settings."""
@@ -138,8 +143,9 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.load_profile("spanish")
 
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .set_profile.assert_called_once_with("spanish", False)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_profile.assert_called_once_with("spanish", False)
         essential_modules["orca.orca"].load_user_settings.assert_called_once_with(
             skip_reload_message=True
         )
@@ -147,7 +153,7 @@ class TestProfileManager:
     def test_get_starting_profile(self, test_context: OrcaTestContext) -> None:
         """Test getting starting profile."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
@@ -159,8 +165,9 @@ class TestProfileManager:
         """Test getting starting profile falls back to default."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .get_general_settings.return_value = {}
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_general_settings.return_value = {}
         from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
@@ -189,8 +196,9 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.remove_profile("spanish")
 
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .remove_profile.assert_called_once_with("spanish")
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
 
     def test_rename_profile(self, test_context: OrcaTestContext) -> None:
         """Test renaming a profile."""
@@ -201,8 +209,11 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.rename_profile("spanish", ["Espanol", "espanol"])
 
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .rename_profile.assert_called_once_with("spanish", ["Espanol", "espanol"])
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.rename_profile.assert_called_once_with(
+            "spanish", ["Espanol", "espanol"]
+        )
 
     def test_get_handlers_returns_dict(self, test_context: OrcaTestContext) -> None:
         """Test get_handlers returns a dictionary of handlers."""
@@ -244,16 +255,18 @@ class TestProfileManager:
         result = manager.cycle_settings_profile(script=mock_script)
 
         assert result is True
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .set_profile.assert_called_with("spanish", True)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_profile.assert_called_with("spanish", True)
         mock_script.present_message.assert_called()
 
     def test_cycle_settings_profile_wraps_around(self, test_context: OrcaTestContext) -> None:
         """Test cycle_settings_profile wraps to first profile at end."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .get_profile.return_value = "work"
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.get_profile.return_value = "work"
         from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
 
@@ -263,15 +276,17 @@ class TestProfileManager:
         result = manager.cycle_settings_profile(script=mock_script)
 
         assert result is True
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .set_profile.assert_called_with("default", True)
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.set_profile.assert_called_with("default", True)
 
     def test_cycle_settings_profile_no_profiles(self, test_context: OrcaTestContext) -> None:
         """Test cycle_settings_profile handles no profiles."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings_manager"].get_manager.return_value \
-            .available_profiles.return_value = []
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.available_profiles.return_value = []
         from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
 
@@ -354,7 +369,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         assert isinstance(grid, Gtk.Grid)
@@ -366,7 +384,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         assert grid._auto_grid is not None
@@ -378,7 +399,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         result = grid.save_settings()
@@ -392,7 +416,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         assert grid.has_changes() is False
@@ -404,7 +431,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         grid._pending_renames["old"] = ["New", "new"]
@@ -414,30 +444,32 @@ class TestProfilePreferencesGridUI:
 
         assert len(grid._pending_renames) == 0
 
-    def test_grid_app_specific_disables_startup_setter(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_grid_app_specific_disables_startup_setter(self, test_context: OrcaTestContext) -> None:
         """Test app-specific grid disables startup profile setter."""
 
         self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback, is_app_specific=True)
 
         assert grid._is_app_specific is True
 
-    def test_validate_profile_name_detects_conflict(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_validate_profile_name_detects_conflict(self, test_context: OrcaTestContext) -> None:
         """Test _validate_profile_name detects existing profile names."""
 
         self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         is_valid, error_msg = grid._validate_profile_name("Default")
@@ -452,7 +484,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         is_valid, error_msg = grid._validate_profile_name("NewProfile")
@@ -469,7 +504,10 @@ class TestProfilePreferencesGridUI:
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
 
         manager = ProfileManager()
-        callback = lambda profile: None
+
+        def callback(profile):
+            return None
+
         grid = ProfilePreferencesGrid(manager, callback)
 
         grid._pending_renames["spanish"] = ["Espanol", "spanish"]

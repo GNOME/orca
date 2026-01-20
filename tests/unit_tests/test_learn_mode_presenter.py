@@ -43,6 +43,7 @@ if TYPE_CHECKING:
 GTK_STOCK_CLOSE = "gtk-close"
 TEST_COMMAND_DESCRIPTION = "Test Command"
 
+
 @pytest.mark.unit
 class TestLearnModePresenter:
     """Test LearnModePresenter class methods."""
@@ -58,16 +59,14 @@ class TestLearnModePresenter:
             "orca.speech",
             "orca.speech_generator",
             "orca.generator",
-            "orca.ax_hypertext"
+            "orca.ax_hypertext",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_repository_mock = essential_modules["gi.repository"]
         gdk_mock = test_context.Mock()
         gdk_mock.Screen = test_context.Mock()
-        gdk_mock.Screen.get_default = test_context.Mock(
-            return_value=test_context.Mock()
-        )
+        gdk_mock.Screen.get_default = test_context.Mock(return_value=test_context.Mock())
 
         gtk_mock = test_context.Mock()
         gtk_mock.show_uri = test_context.Mock()
@@ -151,9 +150,7 @@ class TestLearnModePresenter:
         manager_instance._device = mock_device
         manager_instance.grab_keyboard = test_context.Mock()
         manager_instance.ungrab_keyboard = test_context.Mock()
-        input_event_manager_mock.get_manager = test_context.Mock(
-            return_value=manager_instance
-        )
+        input_event_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
         input_event_manager_mock.InputEventManager = test_context.Mock(
             return_value=manager_instance
         )
@@ -202,7 +199,8 @@ class TestLearnModePresenter:
         )
         script_instance.speech_generator = test_context.Mock()
         script_instance.speech_generator.voice = test_context.Mock(
-            return_value=[test_context.Mock()])
+            return_value=[test_context.Mock()]
+        )
 
         for method_name in [
             "get_learn_mode_presenter",
@@ -224,18 +222,12 @@ class TestLearnModePresenter:
             "get_debugging_tools_manager",
         ]:
             presenter_mock = test_context.Mock()
-            presenter_mock.get_bindings = test_context.Mock(
-                return_value=key_bindings_instance
-            )
+            presenter_mock.get_bindings = test_context.Mock(return_value=key_bindings_instance)
             getattr(script_instance, method_name).return_value = presenter_mock
 
-        script_instance.get_app_key_bindings = test_context.Mock(
-            return_value=key_bindings_instance
-        )
+        script_instance.get_app_key_bindings = test_context.Mock(return_value=key_bindings_instance)
 
-        script_manager_mock.get_manager = test_context.Mock(
-            return_value=test_context.Mock()
-        )
+        script_manager_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
         script_manager_mock.get_manager.return_value.get_active_script = test_context.Mock(
             return_value=script_instance
         )
@@ -616,9 +608,7 @@ class TestLearnModePresenter:
         "key_name",
         ["F2", "F3"],
     )
-    def test_list_orca_shortcuts_events(
-        self, test_context: OrcaTestContext, key_name: str
-    ) -> None:
+    def test_list_orca_shortcuts_events(self, test_context: OrcaTestContext, key_name: str) -> None:
         """Test LearnModePresenter.list_orca_shortcuts with F2/F3 events.
 
         Note: F2 and F3 now both show all Orca shortcuts (app-specific shortcuts

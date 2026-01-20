@@ -40,321 +40,367 @@ if TYPE_CHECKING:
 # Expected handler names for each module.
 # These serve as the source of truth for what handlers should exist.
 
-FLAT_REVIEW_PRESENTER_HANDLERS = frozenset({
-    "toggleFlatReviewModeHandler",
-    "reviewHomeHandler",
-    "reviewEndHandler",
-    "reviewBottomLeftHandler",
-    "reviewPreviousLineHandler",
-    "reviewCurrentLineHandler",
-    "reviewNextLineHandler",
-    "reviewSpellCurrentLineHandler",
-    "reviewPhoneticCurrentLineHandler",
-    "reviewEndOfLineHandler",
-    "reviewPreviousItemHandler",
-    "reviewCurrentItemHandler",
-    "reviewNextItemHandler",
-    "reviewSpellCurrentItemHandler",
-    "reviewPhoneticCurrentItemHandler",
-    "reviewPreviousCharacterHandler",
-    "reviewCurrentCharacterHandler",
-    "reviewNextCharacterHandler",
-    "reviewSpellCurrentCharacterHandler",
-    "reviewUnicodeCurrentCharacterHandler",
-    "reviewCurrentAccessibleHandler",
-    "reviewAboveHandler",
-    "reviewBelowHandler",
-    "showContentsHandler",
-    "flatReviewCopyHandler",
-    "flatReviewAppendHandler",
-    "flatReviewSayAllHandler",
-    "flatReviewToggleRestrictHandler",
-})
+FLAT_REVIEW_PRESENTER_HANDLERS = frozenset(
+    {
+        "toggleFlatReviewModeHandler",
+        "reviewHomeHandler",
+        "reviewEndHandler",
+        "reviewBottomLeftHandler",
+        "reviewPreviousLineHandler",
+        "reviewCurrentLineHandler",
+        "reviewNextLineHandler",
+        "reviewSpellCurrentLineHandler",
+        "reviewPhoneticCurrentLineHandler",
+        "reviewEndOfLineHandler",
+        "reviewPreviousItemHandler",
+        "reviewCurrentItemHandler",
+        "reviewNextItemHandler",
+        "reviewSpellCurrentItemHandler",
+        "reviewPhoneticCurrentItemHandler",
+        "reviewPreviousCharacterHandler",
+        "reviewCurrentCharacterHandler",
+        "reviewNextCharacterHandler",
+        "reviewSpellCurrentCharacterHandler",
+        "reviewUnicodeCurrentCharacterHandler",
+        "reviewCurrentAccessibleHandler",
+        "reviewAboveHandler",
+        "reviewBelowHandler",
+        "showContentsHandler",
+        "flatReviewCopyHandler",
+        "flatReviewAppendHandler",
+        "flatReviewSayAllHandler",
+        "flatReviewToggleRestrictHandler",
+    }
+)
 
-FLAT_REVIEW_FINDER_HANDLERS = frozenset({
-    "findHandler",
-    "findNextHandler",
-    "findPreviousHandler",
-})
+FLAT_REVIEW_FINDER_HANDLERS = frozenset(
+    {
+        "findHandler",
+        "findNextHandler",
+        "findPreviousHandler",
+    }
+)
 
-WHERE_AM_I_PRESENTER_HANDLERS = frozenset({
-    "whereAmIBasicHandler",
-    "whereAmIDetailedHandler",
-    "getTitleHandler",
-    "getStatusBarHandler",
-    "whereAmILinkHandler",
-    "whereAmISelectionHandler",
-    "readCharAttributesHandler",
-    "presentSizeAndPositionHandler",
-    "present_default_button",
-    "present_cell_formula",
-})
+WHERE_AM_I_PRESENTER_HANDLERS = frozenset(
+    {
+        "whereAmIBasicHandler",
+        "whereAmIDetailedHandler",
+        "getTitleHandler",
+        "getStatusBarHandler",
+        "whereAmILinkHandler",
+        "whereAmISelectionHandler",
+        "readCharAttributesHandler",
+        "presentSizeAndPositionHandler",
+        "present_default_button",
+        "present_cell_formula",
+    }
+)
 
-LIVE_REGION_PRESENTER_HANDLERS = frozenset({
-    "toggle_live_region_support",
-    "present_previous_live_region_message",
-    "advance_live_politeness",
-    "toggle_live_region_presentation",
-    "present_next_live_region_message",
-})
+LIVE_REGION_PRESENTER_HANDLERS = frozenset(
+    {
+        "toggle_live_region_support",
+        "present_previous_live_region_message",
+        "advance_live_politeness",
+        "toggle_live_region_presentation",
+        "present_next_live_region_message",
+    }
+)
 
-NOTIFICATION_PRESENTER_HANDLERS = frozenset({
-    "present_last_notification",
-    "present_next_notification",
-    "present_previous_notification",
-    "show_notification_list",
-})
+NOTIFICATION_PRESENTER_HANDLERS = frozenset(
+    {
+        "present_last_notification",
+        "present_next_notification",
+        "present_previous_notification",
+        "show_notification_list",
+    }
+)
 
-CHAT_PRESENTER_HANDLERS = frozenset({
-    "chat_toggle_room_name_prefix",
-    "chat_toggle_buddy_typing",
-    "chat_toggle_message_histories",
-    "chat_previous_message",
-    "chat_next_message",
-})
+CHAT_PRESENTER_HANDLERS = frozenset(
+    {
+        "chat_toggle_room_name_prefix",
+        "chat_toggle_buddy_typing",
+        "chat_toggle_message_histories",
+        "chat_previous_message",
+        "chat_next_message",
+    }
+)
 
-SYSTEM_INFORMATION_PRESENTER_HANDLERS = frozenset({
-    "presentTimeHandler",
-    "presentDateHandler",
-    "present_battery_status",
-    "present_cpu_and_memory_usage",
-})
+SYSTEM_INFORMATION_PRESENTER_HANDLERS = frozenset(
+    {
+        "presentTimeHandler",
+        "presentDateHandler",
+        "present_battery_status",
+        "present_cpu_and_memory_usage",
+    }
+)
 
-LEARN_MODE_PRESENTER_HANDLERS = frozenset({
-    "enterLearnModeHandler",
-})
+LEARN_MODE_PRESENTER_HANDLERS = frozenset(
+    {
+        "enterLearnModeHandler",
+    }
+)
 
-ACTION_PRESENTER_HANDLERS = frozenset({
-    "show_actions_list",
-})
+ACTION_PRESENTER_HANDLERS = frozenset(
+    {
+        "show_actions_list",
+    }
+)
 
-MOUSE_REVIEW_HANDLERS = frozenset({
-    "toggleMouseReviewHandler",
-})
+MOUSE_REVIEW_HANDLERS = frozenset(
+    {
+        "toggleMouseReviewHandler",
+    }
+)
 
-SLEEP_MODE_MANAGER_HANDLERS = frozenset({
-    "toggle_sleep_mode",
-})
+SLEEP_MODE_MANAGER_HANDLERS = frozenset(
+    {
+        "toggle_sleep_mode",
+    }
+)
 
-BYPASS_MODE_MANAGER_HANDLERS = frozenset({
-    "bypass_mode_toggle",
-})
+BYPASS_MODE_MANAGER_HANDLERS = frozenset(
+    {
+        "bypass_mode_toggle",
+    }
+)
 
-DEBUGGING_TOOLS_MANAGER_HANDLERS = frozenset({
-    "cycleDebugLevelHandler",
-    "clear_atspi_app_cache",
-    "capture_snapshot",
-})
+DEBUGGING_TOOLS_MANAGER_HANDLERS = frozenset(
+    {
+        "cycleDebugLevelHandler",
+        "clear_atspi_app_cache",
+        "capture_snapshot",
+    }
+)
 
-CLIPBOARD_HANDLERS = frozenset({
-    "present_clipboard_contents",
-})
+CLIPBOARD_HANDLERS = frozenset(
+    {
+        "present_clipboard_contents",
+    }
+)
 
-TYPING_ECHO_PRESENTER_HANDLERS = frozenset({
-    "cycleKeyEchoHandler",
-})
+TYPING_ECHO_PRESENTER_HANDLERS = frozenset(
+    {
+        "cycleKeyEchoHandler",
+    }
+)
 
-CARET_NAVIGATOR_HANDLERS = frozenset({
-    "end_of_file",
-    "end_of_line",
-    "next_character",
-    "next_line",
-    "next_word",
-    "previous_character",
-    "previous_line",
-    "previous_word",
-    "start_of_file",
-    "start_of_line",
-    "toggle_enabled",
-})
+CARET_NAVIGATOR_HANDLERS = frozenset(
+    {
+        "end_of_file",
+        "end_of_line",
+        "next_character",
+        "next_line",
+        "next_word",
+        "previous_character",
+        "previous_line",
+        "previous_word",
+        "start_of_file",
+        "start_of_line",
+        "toggle_enabled",
+    }
+)
 
-STRUCTURAL_NAVIGATOR_HANDLERS = frozenset({
-    "container_end",
-    "container_start",
-    "last_live_region",
-    "list_blockquotes",
-    "list_buttons",
-    "list_checkboxes",
-    "list_clickables",
-    "list_comboboxes",
-    "list_entries",
-    "list_form_fields",
-    "list_headings",
-    "list_headings_level_1",
-    "list_headings_level_2",
-    "list_headings_level_3",
-    "list_headings_level_4",
-    "list_headings_level_5",
-    "list_headings_level_6",
-    "list_iframes",
-    "list_images",
-    "list_landmarks",
-    "list_large_objects",
-    "list_links",
-    "list_list_items",
-    "list_lists",
-    "list_paragraphs",
-    "list_radio_buttons",
-    "list_tables",
-    "list_unvisited_links",
-    "list_visited_links",
-    "next_blockquote",
-    "next_button",
-    "next_checkbox",
-    "next_clickable",
-    "next_combobox",
-    "next_entry",
-    "next_form_field",
-    "next_heading",
-    "next_heading_level_1",
-    "next_heading_level_2",
-    "next_heading_level_3",
-    "next_heading_level_4",
-    "next_heading_level_5",
-    "next_heading_level_6",
-    "next_iframe",
-    "next_image",
-    "next_landmark",
-    "next_large_object",
-    "next_link",
-    "next_list",
-    "next_list_item",
-    "next_live_region",
-    "next_paragraph",
-    "next_radio_button",
-    "next_separator",
-    "next_table",
-    "next_unvisited_link",
-    "next_visited_link",
-    "previous_blockquote",
-    "previous_button",
-    "previous_checkbox",
-    "previous_clickable",
-    "previous_combobox",
-    "previous_entry",
-    "previous_form_field",
-    "previous_heading",
-    "previous_heading_level_1",
-    "previous_heading_level_2",
-    "previous_heading_level_3",
-    "previous_heading_level_4",
-    "previous_heading_level_5",
-    "previous_heading_level_6",
-    "previous_iframe",
-    "previous_image",
-    "previous_landmark",
-    "previous_large_object",
-    "previous_link",
-    "previous_list",
-    "previous_list_item",
-    "previous_live_region",
-    "previous_paragraph",
-    "previous_radio_button",
-    "previous_separator",
-    "previous_table",
-    "previous_unvisited_link",
-    "previous_visited_link",
-    "structural_navigator_mode_cycle",
-})
+STRUCTURAL_NAVIGATOR_HANDLERS = frozenset(
+    {
+        "container_end",
+        "container_start",
+        "last_live_region",
+        "list_blockquotes",
+        "list_buttons",
+        "list_checkboxes",
+        "list_clickables",
+        "list_comboboxes",
+        "list_entries",
+        "list_form_fields",
+        "list_headings",
+        "list_headings_level_1",
+        "list_headings_level_2",
+        "list_headings_level_3",
+        "list_headings_level_4",
+        "list_headings_level_5",
+        "list_headings_level_6",
+        "list_iframes",
+        "list_images",
+        "list_landmarks",
+        "list_large_objects",
+        "list_links",
+        "list_list_items",
+        "list_lists",
+        "list_paragraphs",
+        "list_radio_buttons",
+        "list_tables",
+        "list_unvisited_links",
+        "list_visited_links",
+        "next_blockquote",
+        "next_button",
+        "next_checkbox",
+        "next_clickable",
+        "next_combobox",
+        "next_entry",
+        "next_form_field",
+        "next_heading",
+        "next_heading_level_1",
+        "next_heading_level_2",
+        "next_heading_level_3",
+        "next_heading_level_4",
+        "next_heading_level_5",
+        "next_heading_level_6",
+        "next_iframe",
+        "next_image",
+        "next_landmark",
+        "next_large_object",
+        "next_link",
+        "next_list",
+        "next_list_item",
+        "next_live_region",
+        "next_paragraph",
+        "next_radio_button",
+        "next_separator",
+        "next_table",
+        "next_unvisited_link",
+        "next_visited_link",
+        "previous_blockquote",
+        "previous_button",
+        "previous_checkbox",
+        "previous_clickable",
+        "previous_combobox",
+        "previous_entry",
+        "previous_form_field",
+        "previous_heading",
+        "previous_heading_level_1",
+        "previous_heading_level_2",
+        "previous_heading_level_3",
+        "previous_heading_level_4",
+        "previous_heading_level_5",
+        "previous_heading_level_6",
+        "previous_iframe",
+        "previous_image",
+        "previous_landmark",
+        "previous_large_object",
+        "previous_link",
+        "previous_list",
+        "previous_list_item",
+        "previous_live_region",
+        "previous_paragraph",
+        "previous_radio_button",
+        "previous_separator",
+        "previous_table",
+        "previous_unvisited_link",
+        "previous_visited_link",
+        "structural_navigator_mode_cycle",
+    }
+)
 
-TABLE_NAVIGATOR_HANDLERS = frozenset({
-    "clear_dynamic_column_headers_row",
-    "clear_dynamic_row_headers_column",
-    "set_dynamic_column_headers_row",
-    "set_dynamic_row_headers_column",
-    "table_cell_beginning_of_row",
-    "table_cell_bottom_of_column",
-    "table_cell_down",
-    "table_cell_end_of_row",
-    "table_cell_first",
-    "table_cell_last",
-    "table_cell_left",
-    "table_cell_right",
-    "table_cell_top_of_column",
-    "table_cell_up",
-    "table_navigator_toggle_enabled",
-})
+TABLE_NAVIGATOR_HANDLERS = frozenset(
+    {
+        "clear_dynamic_column_headers_row",
+        "clear_dynamic_row_headers_column",
+        "set_dynamic_column_headers_row",
+        "set_dynamic_row_headers_column",
+        "table_cell_beginning_of_row",
+        "table_cell_bottom_of_column",
+        "table_cell_down",
+        "table_cell_end_of_row",
+        "table_cell_first",
+        "table_cell_last",
+        "table_cell_left",
+        "table_cell_right",
+        "table_cell_top_of_column",
+        "table_cell_up",
+        "table_navigator_toggle_enabled",
+    }
+)
 
-OBJECT_NAVIGATOR_HANDLERS = frozenset({
-    "object_navigator_down",
-    "object_navigator_next",
-    "object_navigator_perform_action",
-    "object_navigator_previous",
-    "object_navigator_toggle_simplify",
-    "object_navigator_up",
-})
+OBJECT_NAVIGATOR_HANDLERS = frozenset(
+    {
+        "object_navigator_down",
+        "object_navigator_next",
+        "object_navigator_perform_action",
+        "object_navigator_previous",
+        "object_navigator_toggle_simplify",
+        "object_navigator_up",
+    }
+)
 
-SAY_ALL_PRESENTER_HANDLERS = frozenset({
-    "sayAllHandler",
-})
+SAY_ALL_PRESENTER_HANDLERS = frozenset(
+    {
+        "sayAllHandler",
+    }
+)
 
-SPEECH_AND_VERBOSITY_MANAGER_HANDLERS = frozenset({
-    "changeNumberStyleHandler",
-    "cycleCapitalizationStyleHandler",
-    "cycleSpeakingPunctuationLevelHandler",
-    "cycleSynthesizerHandler",
-    "decreaseSpeechPitchHandler",
-    "decreaseSpeechRateHandler",
-    "decreaseSpeechVolumeHandler",
-    "increaseSpeechPitchHandler",
-    "increaseSpeechRateHandler",
-    "increaseSpeechVolumeHandler",
-    "toggleSilenceSpeechHandler",
-    "toggleSpeakingIndentationJustificationHandler",
-    "toggleSpeechVerbosityHandler",
-    "toggleTableCellReadModeHandler",
-})
+SPEECH_AND_VERBOSITY_MANAGER_HANDLERS = frozenset(
+    {
+        "changeNumberStyleHandler",
+        "cycleCapitalizationStyleHandler",
+        "cycleSpeakingPunctuationLevelHandler",
+        "cycleSynthesizerHandler",
+        "decreaseSpeechPitchHandler",
+        "decreaseSpeechRateHandler",
+        "decreaseSpeechVolumeHandler",
+        "increaseSpeechPitchHandler",
+        "increaseSpeechRateHandler",
+        "increaseSpeechVolumeHandler",
+        "toggleSilenceSpeechHandler",
+        "toggleSpeakingIndentationJustificationHandler",
+        "toggleSpeechVerbosityHandler",
+        "toggleTableCellReadModeHandler",
+    }
+)
 
 # Script handlers - these will eventually move to presenter/manager modules
-DEFAULT_SCRIPT_HANDLERS = frozenset({
-    "appPreferencesSettingsHandler",
-    "contractedBrailleHandler",
-    "cycleSettingsProfileHandler",
-    "goBrailleHomeHandler",
-    "leftClickReviewItemHandler",
-    "panBrailleLeftHandler",
-    "panBrailleRightHandler",
-    "preferencesSettingsHandler",
-    "processBrailleCutBeginHandler",
-    "processBrailleCutLineHandler",
-    "processRoutingKeyHandler",
-    "rightClickReviewItemHandler",
-    "routePointerToItemHandler",
-    "shutdownHandler",
-})
+DEFAULT_SCRIPT_HANDLERS = frozenset(
+    {
+        "appPreferencesSettingsHandler",
+        "contractedBrailleHandler",
+        "cycleSettingsProfileHandler",
+        "goBrailleHomeHandler",
+        "leftClickReviewItemHandler",
+        "panBrailleLeftHandler",
+        "panBrailleRightHandler",
+        "preferencesSettingsHandler",
+        "processBrailleCutBeginHandler",
+        "processBrailleCutLineHandler",
+        "processRoutingKeyHandler",
+        "rightClickReviewItemHandler",
+        "routePointerToItemHandler",
+        "shutdownHandler",
+    }
+)
 
-DOCUMENT_PRESENTER_HANDLERS = frozenset({
-    "enable_sticky_browse_mode",
-    "enable_sticky_focus_mode",
-    "toggle_layout_mode",
-    "toggle_presentation_mode",
-})
+DOCUMENT_PRESENTER_HANDLERS = frozenset(
+    {
+        "enable_sticky_browse_mode",
+        "enable_sticky_focus_mode",
+        "toggle_layout_mode",
+        "toggle_presentation_mode",
+    }
+)
 
 # Total expected command count for verification
 EXPECTED_TOTAL_COMMANDS = (
-    len(FLAT_REVIEW_PRESENTER_HANDLERS) +
-    len(FLAT_REVIEW_FINDER_HANDLERS) +
-    len(WHERE_AM_I_PRESENTER_HANDLERS) +
-    len(LIVE_REGION_PRESENTER_HANDLERS) +
-    len(NOTIFICATION_PRESENTER_HANDLERS) +
-    len(CHAT_PRESENTER_HANDLERS) +
-    len(SYSTEM_INFORMATION_PRESENTER_HANDLERS) +
-    len(LEARN_MODE_PRESENTER_HANDLERS) +
-    len(ACTION_PRESENTER_HANDLERS) +
-    len(MOUSE_REVIEW_HANDLERS) +
-    len(SLEEP_MODE_MANAGER_HANDLERS) +
-    len(BYPASS_MODE_MANAGER_HANDLERS) +
-    len(DEBUGGING_TOOLS_MANAGER_HANDLERS) +
-    len(CLIPBOARD_HANDLERS) +
-    len(TYPING_ECHO_PRESENTER_HANDLERS) +
-    len(CARET_NAVIGATOR_HANDLERS) +
-    len(STRUCTURAL_NAVIGATOR_HANDLERS) +
-    len(TABLE_NAVIGATOR_HANDLERS) +
-    len(OBJECT_NAVIGATOR_HANDLERS) +
-    len(SAY_ALL_PRESENTER_HANDLERS) +
-    len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS) +
-    len(DEFAULT_SCRIPT_HANDLERS) +
-    len(DOCUMENT_PRESENTER_HANDLERS)
+    len(FLAT_REVIEW_PRESENTER_HANDLERS)
+    + len(FLAT_REVIEW_FINDER_HANDLERS)
+    + len(WHERE_AM_I_PRESENTER_HANDLERS)
+    + len(LIVE_REGION_PRESENTER_HANDLERS)
+    + len(NOTIFICATION_PRESENTER_HANDLERS)
+    + len(CHAT_PRESENTER_HANDLERS)
+    + len(SYSTEM_INFORMATION_PRESENTER_HANDLERS)
+    + len(LEARN_MODE_PRESENTER_HANDLERS)
+    + len(ACTION_PRESENTER_HANDLERS)
+    + len(MOUSE_REVIEW_HANDLERS)
+    + len(SLEEP_MODE_MANAGER_HANDLERS)
+    + len(BYPASS_MODE_MANAGER_HANDLERS)
+    + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
+    + len(CLIPBOARD_HANDLERS)
+    + len(TYPING_ECHO_PRESENTER_HANDLERS)
+    + len(CARET_NAVIGATOR_HANDLERS)
+    + len(STRUCTURAL_NAVIGATOR_HANDLERS)
+    + len(TABLE_NAVIGATOR_HANDLERS)
+    + len(OBJECT_NAVIGATOR_HANDLERS)
+    + len(SAY_ALL_PRESENTER_HANDLERS)
+    + len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS)
+    + len(DEFAULT_SCRIPT_HANDLERS)
+    + len(DOCUMENT_PRESENTER_HANDLERS)
 )
 
 
@@ -619,9 +665,7 @@ class TestCommandRegistry:
 
         return essential_modules
 
-    def test_flat_review_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_flat_review_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all flat review presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -637,9 +681,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in flat_review_presenter: {missing}"
         assert not extra, f"Unexpected handlers in flat_review_presenter: {extra}"
 
-    def test_flat_review_presenter_bindings_created(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_flat_review_presenter_bindings_created(self, test_context: OrcaTestContext) -> None:
         """Test flat review presenter creates bindings for both layouts."""
 
         self._setup_dependencies(test_context)
@@ -655,9 +697,7 @@ class TestCommandRegistry:
         assert laptop_bindings is not None
         assert laptop_bindings is presenter._laptop_bindings
 
-    def test_flat_review_finder_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_flat_review_finder_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all flat review finder handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -673,9 +713,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in flat_review_finder: {missing}"
         assert not extra, f"Unexpected handlers in flat_review_finder: {extra}"
 
-    def test_flat_review_finder_bindings_created(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_flat_review_finder_bindings_created(self, test_context: OrcaTestContext) -> None:
         """Test flat review finder creates bindings for both layouts."""
 
         self._setup_dependencies(test_context)
@@ -691,9 +729,7 @@ class TestCommandRegistry:
         assert laptop_bindings is not None
         assert laptop_bindings is finder._laptop_bindings
 
-    def test_where_am_i_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_where_am_i_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all where am I presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -709,9 +745,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in where_am_i_presenter: {missing}"
         assert not extra, f"Unexpected handlers in where_am_i_presenter: {extra}"
 
-    def test_where_am_i_presenter_bindings_created(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_where_am_i_presenter_bindings_created(self, test_context: OrcaTestContext) -> None:
         """Test where am I presenter creates bindings for both layouts."""
 
         self._setup_dependencies(test_context)
@@ -725,9 +759,7 @@ class TestCommandRegistry:
         laptop_bindings = presenter.get_bindings(True, is_desktop=False)
         assert laptop_bindings is not None
 
-    def test_notification_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_notification_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all notification presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -743,9 +775,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in notification_presenter: {missing}"
         assert not extra, f"Unexpected handlers in notification_presenter: {extra}"
 
-    def test_notification_presenter_bindings_created(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_notification_presenter_bindings_created(self, test_context: OrcaTestContext) -> None:
         """Test notification presenter creates bindings for both layouts."""
 
         self._setup_dependencies(test_context)
@@ -793,9 +823,7 @@ class TestCommandRegistry:
         laptop_bindings = presenter.get_bindings(True, is_desktop=False)
         assert laptop_bindings is not None
 
-    def test_sleep_mode_manager_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_sleep_mode_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all sleep mode manager handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -811,9 +839,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in sleep_mode_manager: {missing}"
         assert not extra, f"Unexpected handlers in sleep_mode_manager: {extra}"
 
-    def test_sleep_mode_manager_bindings_created(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_sleep_mode_manager_bindings_created(self, test_context: OrcaTestContext) -> None:
         """Test sleep mode manager creates bindings."""
 
         self._setup_dependencies(test_context)
@@ -823,9 +849,7 @@ class TestCommandRegistry:
         bindings = manager.get_bindings(True)
         assert bindings is not None
 
-    def test_live_region_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_live_region_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all live region presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -841,9 +865,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in live_region_presenter: {missing}"
         assert not extra, f"Unexpected handlers in live_region_presenter: {extra}"
 
-    def test_chat_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_chat_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all chat presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -859,9 +881,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in chat_presenter: {missing}"
         assert not extra, f"Unexpected handlers in chat_presenter: {extra}"
 
-    def test_learn_mode_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_learn_mode_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all learn mode presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -877,9 +897,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in learn_mode_presenter: {missing}"
         assert not extra, f"Unexpected handlers in learn_mode_presenter: {extra}"
 
-    def test_action_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_action_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all action presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -895,9 +913,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in action_presenter: {missing}"
         assert not extra, f"Unexpected handlers in action_presenter: {extra}"
 
-    def test_debugging_tools_manager_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_debugging_tools_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all debugging tools manager handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -913,9 +929,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in debugging_tools_manager: {missing}"
         assert not extra, f"Unexpected handlers in debugging_tools_manager: {extra}"
 
-    def test_bypass_mode_manager_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_bypass_mode_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all bypass mode manager handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -931,9 +945,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in bypass_mode_manager: {missing}"
         assert not extra, f"Unexpected handlers in bypass_mode_manager: {extra}"
 
-    def test_mouse_review_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_mouse_review_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all mouse review handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -949,9 +961,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in mouse_review: {missing}"
         assert not extra, f"Unexpected handlers in mouse_review: {extra}"
 
-    def test_typing_echo_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_typing_echo_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all typing echo presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -967,9 +977,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in typing_echo_presenter: {missing}"
         assert not extra, f"Unexpected handlers in typing_echo_presenter: {extra}"
 
-    def test_clipboard_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_clipboard_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all clipboard handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -985,9 +993,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in clipboard: {missing}"
         assert not extra, f"Unexpected handlers in clipboard: {extra}"
 
-    def test_caret_navigator_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_caret_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all caret navigator handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
@@ -1003,9 +1009,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in caret_navigator: {missing}"
         assert not extra, f"Unexpected handlers in caret_navigator: {extra}"
 
-    def test_structural_navigator_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_structural_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all structural navigator handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
@@ -1021,9 +1025,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in structural_navigator: {missing}"
         assert not extra, f"Unexpected handlers in structural_navigator: {extra}"
 
-    def test_table_navigator_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_table_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all table navigator handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -1039,9 +1041,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in table_navigator: {missing}"
         assert not extra, f"Unexpected handlers in table_navigator: {extra}"
 
-    def test_object_navigator_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_object_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all object navigator handlers are registered."""
 
         self._setup_dependencies(test_context)
@@ -1057,9 +1057,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in object_navigator: {missing}"
         assert not extra, f"Unexpected handlers in object_navigator: {extra}"
 
-    def test_say_all_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_say_all_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all say all presenter handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
@@ -1093,9 +1091,7 @@ class TestCommandRegistry:
         assert not missing, f"Missing handlers in speech_and_verbosity_manager: {missing}"
         assert not extra, f"Unexpected handlers in speech_and_verbosity_manager: {extra}"
 
-    def test_document_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_document_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all document presenter handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
@@ -1121,29 +1117,29 @@ class TestCommandRegistry:
 
         # Calculate expected total from all frozensets
         calculated_total = (
-            len(FLAT_REVIEW_PRESENTER_HANDLERS) +
-            len(FLAT_REVIEW_FINDER_HANDLERS) +
-            len(WHERE_AM_I_PRESENTER_HANDLERS) +
-            len(LIVE_REGION_PRESENTER_HANDLERS) +
-            len(NOTIFICATION_PRESENTER_HANDLERS) +
-            len(CHAT_PRESENTER_HANDLERS) +
-            len(SYSTEM_INFORMATION_PRESENTER_HANDLERS) +
-            len(LEARN_MODE_PRESENTER_HANDLERS) +
-            len(ACTION_PRESENTER_HANDLERS) +
-            len(MOUSE_REVIEW_HANDLERS) +
-            len(SLEEP_MODE_MANAGER_HANDLERS) +
-            len(BYPASS_MODE_MANAGER_HANDLERS) +
-            len(DEBUGGING_TOOLS_MANAGER_HANDLERS) +
-            len(CLIPBOARD_HANDLERS) +
-            len(TYPING_ECHO_PRESENTER_HANDLERS) +
-            len(CARET_NAVIGATOR_HANDLERS) +
-            len(STRUCTURAL_NAVIGATOR_HANDLERS) +
-            len(TABLE_NAVIGATOR_HANDLERS) +
-            len(OBJECT_NAVIGATOR_HANDLERS) +
-            len(SAY_ALL_PRESENTER_HANDLERS) +
-            len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS) +
-            len(DEFAULT_SCRIPT_HANDLERS) +
-            len(DOCUMENT_PRESENTER_HANDLERS)
+            len(FLAT_REVIEW_PRESENTER_HANDLERS)
+            + len(FLAT_REVIEW_FINDER_HANDLERS)
+            + len(WHERE_AM_I_PRESENTER_HANDLERS)
+            + len(LIVE_REGION_PRESENTER_HANDLERS)
+            + len(NOTIFICATION_PRESENTER_HANDLERS)
+            + len(CHAT_PRESENTER_HANDLERS)
+            + len(SYSTEM_INFORMATION_PRESENTER_HANDLERS)
+            + len(LEARN_MODE_PRESENTER_HANDLERS)
+            + len(ACTION_PRESENTER_HANDLERS)
+            + len(MOUSE_REVIEW_HANDLERS)
+            + len(SLEEP_MODE_MANAGER_HANDLERS)
+            + len(BYPASS_MODE_MANAGER_HANDLERS)
+            + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
+            + len(CLIPBOARD_HANDLERS)
+            + len(TYPING_ECHO_PRESENTER_HANDLERS)
+            + len(CARET_NAVIGATOR_HANDLERS)
+            + len(STRUCTURAL_NAVIGATOR_HANDLERS)
+            + len(TABLE_NAVIGATOR_HANDLERS)
+            + len(OBJECT_NAVIGATOR_HANDLERS)
+            + len(SAY_ALL_PRESENTER_HANDLERS)
+            + len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS)
+            + len(DEFAULT_SCRIPT_HANDLERS)
+            + len(DOCUMENT_PRESENTER_HANDLERS)
         )
 
         assert calculated_total == EXPECTED_TOTAL_COMMANDS, (

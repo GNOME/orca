@@ -52,6 +52,7 @@ DEFAULT_BUTTON_NOT_FOUND_MSG = "Default button not found"
 STATUS_BAR_NOT_FOUND_FULL_MSG = "Status bar not found"
 STATUS_BAR_NOT_FOUND_BRIEF_MSG = "No status bar"
 
+
 @pytest.mark.unit
 class TestWhereAmIPresenter:
     """Test WhereAmIPresenter class methods."""
@@ -100,10 +101,7 @@ class TestWhereAmIPresenter:
         messages_mock.NOT_ON_A_LINK = "Not on a link"
         messages_mock.NO_SELECTED_TEXT = "No selected text"
         messages_mock.SELECTED_TEXT_IS = "Selected text is %s"
-        messages_mock.selected_items_count = test_context.Mock(
-            return_value="2 of 5 items selected"
-        )
-
+        messages_mock.selected_items_count = test_context.Mock(return_value="2 of 5 items selected")
 
         handler_mock = test_context.Mock()
         essential_modules["orca.input_event"].InputEventHandler = test_context.Mock(
@@ -121,18 +119,16 @@ class TestWhereAmIPresenter:
         settings_mock.repeatCharacterLimit = 4
 
         speech_verbosity_instance = test_context.Mock()
-        speech_verbosity_instance.get_indentation_description = test_context.Mock(
-            return_value=""
-        )
+        speech_verbosity_instance.get_indentation_description = test_context.Mock(return_value="")
         speech_verbosity_instance.adjust_for_presentation = test_context.Mock(
             return_value="adjusted text"
         )
         speech_verbosity_instance.adjust_for_digits = test_context.Mock(
             return_value="adjusted text"
         )
-        essential_modules[
-            "orca.speech_and_verbosity_manager"
-        ].get_manager = test_context.Mock(return_value=speech_verbosity_instance)
+        essential_modules["orca.speech_and_verbosity_manager"].get_manager = test_context.Mock(
+            return_value=speech_verbosity_instance
+        )
 
         ax_component_mock = essential_modules["orca.ax_component"]
         rect_mock = test_context.Mock()
@@ -155,16 +151,10 @@ class TestWhereAmIPresenter:
         ax_text_mock.AXText.get_all_supported_text_attributes = test_context.Mock()
 
         ax_text_attribute_instance = test_context.Mock()
-        ax_text_attribute_instance.get_localized_name = test_context.Mock(
-            return_value="Weight"
-        )
-        ax_text_attribute_instance.get_localized_value = test_context.Mock(
-            return_value="Bold"
-        )
+        ax_text_attribute_instance.get_localized_name = test_context.Mock(return_value="Weight")
+        ax_text_attribute_instance.get_localized_value = test_context.Mock(return_value="Bold")
         ax_text_attribute_instance.value_is_default = test_context.Mock(return_value=False)
-        ax_text_attribute_instance.get_attribute_name = test_context.Mock(
-            return_value="weight"
-        )
+        ax_text_attribute_instance.get_attribute_name = test_context.Mock(return_value="weight")
         ax_text_mock.AXTextAttribute = test_context.Mock()
         ax_text_mock.AXTextAttribute.from_string = test_context.Mock(
             return_value=ax_text_attribute_instance
@@ -414,7 +404,8 @@ class TestWhereAmIPresenter:
         result = presenter.present_size_and_position(mock_script)
         assert result is True
         mock_script.present_message.assert_called_with(
-            LOCATION_NOT_FOUND_MSG, LOCATION_NOT_FOUND_MSG)
+            LOCATION_NOT_FOUND_MSG, LOCATION_NOT_FOUND_MSG
+        )
 
     def test_present_title_valid_focus(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_title with valid focus object."""
@@ -576,7 +567,8 @@ class TestWhereAmIPresenter:
         result = presenter.present_status_bar(mock_script)
         assert result is True
         mock_script.present_message.assert_called_with(
-            STATUS_BAR_NOT_FOUND_FULL_MSG, STATUS_BAR_NOT_FOUND_BRIEF_MSG)
+            STATUS_BAR_NOT_FOUND_FULL_MSG, STATUS_BAR_NOT_FOUND_BRIEF_MSG
+        )
 
     def test_present_link_valid_link(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_link with valid link."""
@@ -680,9 +672,7 @@ class TestWhereAmIPresenter:
         test_context.patch_object(mock_script, "speak_message")
 
         presenter = WhereAmIPresenter()
-        test_context.patch_object(
-            presenter, "_get_all_selected_text", return_value="selected text"
-        )
+        test_context.patch_object(presenter, "_get_all_selected_text", return_value="selected text")
 
         manager = deps["orca.speech_and_verbosity_manager"].get_manager.return_value
         manager.get_indentation_description.return_value = "indent: 2"

@@ -39,6 +39,7 @@ LOCATION_NOT_FOUND_BRIEF_MSG = "Location not found (brief)"
 LOCATION_NOT_FOUND_MSG = "Location not found"
 SHOW_ACTIONS_LIST_CMD = "showActionsList"
 
+
 @pytest.mark.unit
 class TestActionPresenter:
     """Test ActionPresenter class methods."""
@@ -324,9 +325,7 @@ class TestActionPresenter:
             mock_setup = test_context.patch_object(presenter, "_setup_bindings", return_value=None)
 
             if mock_empty:
-                test_context.patch_object(
-                    presenter._bindings, "is_empty", return_value=True
-                )
+                test_context.patch_object(presenter._bindings, "is_empty", return_value=True)
 
             bindings_result = presenter.get_bindings(refresh=refresh, is_desktop=bool(refresh))
             assert bindings_result is presenter._bindings

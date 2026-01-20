@@ -79,9 +79,7 @@ class TestSpellCheckPresenter:
 
         dbus_service_mock = essential_modules["orca.dbus_service"]
         controller = dbus_service_mock.get_remote_controller.return_value
-        controller.register_decorated_module.assert_called_with(
-            "SpellCheckPresenter", presenter
-        )
+        controller.register_decorated_module.assert_called_with("SpellCheckPresenter", presenter)
 
     def test_get_spell_error_true(self, test_context: OrcaTestContext) -> None:
         """Test get_spell_error returns True when setting is True."""

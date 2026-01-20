@@ -293,12 +293,13 @@ class TestTypingEchoPresenter:
 
         # Force reimport of typing_echo_presenter to pick up patched Gtk.Grid
         import sys
-        import importlib
 
         # First, ensure gi.repository.Gtk.Grid is patched before any import
         import gi
+
         gi.require_version("Gtk", "3.0")
         from gi.repository import Gtk
+
         original_grid = Gtk.Grid
         original_check_button = Gtk.CheckButton
         Gtk.Grid = _FakeGtkGrid
@@ -319,14 +320,21 @@ class TestTypingEchoPresenter:
             Gtk.CheckButton = original_check_button
 
         presenter = TypingEchoPresenter()
-        return presenter, manager_instance, value_map, PreferenceCategory, TypingEchoPreference, settings_mock
+        return (
+            presenter,
+            manager_instance,
+            value_map,
+            PreferenceCategory,
+            TypingEchoPreference,
+            settings_mock,
+        )
 
     def test_get_typing_echo_preferences_returns_expected_descriptors(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test that get_typing_echo_preferences returns expected descriptors."""
-        presenter, _manager, value_map, category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager, value_map, category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         preferences = presenter.get_typing_echo_preferences()
@@ -344,12 +352,10 @@ class TestTypingEchoPresenter:
         text_prefs = [p for p in preferences if p.category is category_enum.TEXT]
         assert len(text_prefs) == 3
 
-    def test_apply_typing_echo_preferences_sets_values(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_apply_typing_echo_preferences_sets_values(self, test_context: OrcaTestContext) -> None:
         """Test that apply_typing_echo_preferences sets values correctly."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         preferences = presenter.get_typing_echo_preferences()
@@ -371,8 +377,8 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test that grid reload and save settings updates presenter correctly."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         grid = presenter.create_preferences_grid()
@@ -395,36 +401,65 @@ class TestTypingEchoPresenter:
         assert result["enableAlphabeticKeys"] is True
         assert result["enableKeyEcho"] == _settings_mock.enableKeyEcho
 
-    @pytest.mark.parametrize("getter_name,setter_name,setting_key,test_value", [
-        ("get_key_echo_enabled", "set_key_echo_enabled", "enableKeyEcho", False),
-        ("get_character_echo_enabled", "set_character_echo_enabled",
-         "enableEchoByCharacter", False),
-        ("get_word_echo_enabled", "set_word_echo_enabled", "enableEchoByWord", True),
-        ("get_sentence_echo_enabled", "set_sentence_echo_enabled",
-         "enableEchoBySentence", False),
-        ("get_alphabetic_keys_enabled", "set_alphabetic_keys_enabled",
-         "enableAlphabeticKeys", False),
-        ("get_numeric_keys_enabled", "set_numeric_keys_enabled", "enableNumericKeys", True),
-        ("get_punctuation_keys_enabled", "set_punctuation_keys_enabled",
-         "enablePunctuationKeys", True),
-        ("get_space_enabled", "set_space_enabled", "enableSpace", False),
-        ("get_modifier_keys_enabled", "set_modifier_keys_enabled",
-         "enableModifierKeys", True),
-        ("get_function_keys_enabled", "set_function_keys_enabled",
-         "enableFunctionKeys", False),
-        ("get_action_keys_enabled", "set_action_keys_enabled", "enableActionKeys", True),
-        ("get_navigation_keys_enabled", "set_navigation_keys_enabled",
-         "enableNavigationKeys", False),
-        ("get_diacritical_keys_enabled", "set_diacritical_keys_enabled",
-         "enableDiacriticalKeys", True),
-    ])
+    @pytest.mark.parametrize(
+        "getter_name,setter_name,setting_key,test_value",
+        [
+            ("get_key_echo_enabled", "set_key_echo_enabled", "enableKeyEcho", False),
+            (
+                "get_character_echo_enabled",
+                "set_character_echo_enabled",
+                "enableEchoByCharacter",
+                False,
+            ),
+            ("get_word_echo_enabled", "set_word_echo_enabled", "enableEchoByWord", True),
+            (
+                "get_sentence_echo_enabled",
+                "set_sentence_echo_enabled",
+                "enableEchoBySentence",
+                False,
+            ),
+            (
+                "get_alphabetic_keys_enabled",
+                "set_alphabetic_keys_enabled",
+                "enableAlphabeticKeys",
+                False,
+            ),
+            ("get_numeric_keys_enabled", "set_numeric_keys_enabled", "enableNumericKeys", True),
+            (
+                "get_punctuation_keys_enabled",
+                "set_punctuation_keys_enabled",
+                "enablePunctuationKeys",
+                True,
+            ),
+            ("get_space_enabled", "set_space_enabled", "enableSpace", False),
+            ("get_modifier_keys_enabled", "set_modifier_keys_enabled", "enableModifierKeys", True),
+            ("get_function_keys_enabled", "set_function_keys_enabled", "enableFunctionKeys", False),
+            ("get_action_keys_enabled", "set_action_keys_enabled", "enableActionKeys", True),
+            (
+                "get_navigation_keys_enabled",
+                "set_navigation_keys_enabled",
+                "enableNavigationKeys",
+                False,
+            ),
+            (
+                "get_diacritical_keys_enabled",
+                "set_diacritical_keys_enabled",
+                "enableDiacriticalKeys",
+                True,
+            ),
+        ],
+    )
     def test_presenter_getters_and_setters(
-        self, test_context: OrcaTestContext, getter_name: str, setter_name: str,
-        setting_key: str, test_value: bool
+        self,
+        test_context: OrcaTestContext,
+        getter_name: str,
+        setter_name: str,
+        setting_key: str,
+        test_value: bool,
     ) -> None:
         """Test presenter getter and setter methods."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         getter = getattr(presenter, getter_name)
@@ -436,8 +471,8 @@ class TestTypingEchoPresenter:
 
     def test_locking_keys_presented_getter_and_setter(self, test_context: OrcaTestContext) -> None:
         """Test locking keys presented getter and setter with special logic."""
-        presenter, _manager, _value_map, _category_enum, _pref_cls, settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager, _value_map, _category_enum, _pref_cls, settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         settings_mock.presentLockingKeys = True
@@ -465,8 +500,8 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_basic_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method basic state transitions."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         script_mock = test_context.mocker.MagicMock()
@@ -499,8 +534,8 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_advanced_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method advanced state transitions."""
-        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         script_mock = test_context.mocker.MagicMock()
@@ -559,8 +594,8 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_with_script_presentation(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo calls script.present_message when script is provided."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         script_mock = test_context.mocker.MagicMock()
@@ -583,8 +618,8 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_basic_cases(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for basic cases."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -605,8 +640,8 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_orca_modifier(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for Orca modifier keys."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -631,8 +666,8 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_modified_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for modified keys."""
-        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -648,8 +683,8 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event when character is echoable."""
-        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -662,32 +697,35 @@ class TestTypingEchoPresenter:
         presenter.is_character_echoable = test_context.mocker.MagicMock(return_value=True)
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
-    @pytest.mark.parametrize("key_type,setting_key,expected_result", [
-        # Standard key types - enabled
-        ("alphabetic", "enableAlphabeticKeys", True),
-        ("numeric", "enableNumericKeys", True),
-        ("punctuation", "enablePunctuationKeys", True),
-        ("modifier", "enableModifierKeys", True),
-        ("function", "enableFunctionKeys", True),
-        ("action", "enableActionKeys", True),
-        ("navigation", "enableNavigationKeys", True),
-        ("diacritical", "enableDiacriticalKeys", True),
-        # Standard key types - disabled
-        ("alphabetic", "enableAlphabeticKeys", False),
-        ("numeric", "enableNumericKeys", False),
-        ("punctuation", "enablePunctuationKeys", False),
-        ("modifier", "enableModifierKeys", False),
-        ("function", "enableFunctionKeys", False),
-        ("action", "enableActionKeys", False),
-        ("navigation", "enableNavigationKeys", False),
-        ("diacritical", "enableDiacriticalKeys", False),
-    ])
+    @pytest.mark.parametrize(
+        "key_type,setting_key,expected_result",
+        [
+            # Standard key types - enabled
+            ("alphabetic", "enableAlphabeticKeys", True),
+            ("numeric", "enableNumericKeys", True),
+            ("punctuation", "enablePunctuationKeys", True),
+            ("modifier", "enableModifierKeys", True),
+            ("function", "enableFunctionKeys", True),
+            ("action", "enableActionKeys", True),
+            ("navigation", "enableNavigationKeys", True),
+            ("diacritical", "enableDiacriticalKeys", True),
+            # Standard key types - disabled
+            ("alphabetic", "enableAlphabeticKeys", False),
+            ("numeric", "enableNumericKeys", False),
+            ("punctuation", "enablePunctuationKeys", False),
+            ("modifier", "enableModifierKeys", False),
+            ("function", "enableFunctionKeys", False),
+            ("action", "enableActionKeys", False),
+            ("navigation", "enableNavigationKeys", False),
+            ("diacritical", "enableDiacriticalKeys", False),
+        ],
+    )
     def test_should_echo_keyboard_event_key_types(
         self, test_context: OrcaTestContext, key_type: str, setting_key: str, expected_result: bool
     ) -> None:
         """Test should_echo_keyboard_event for different key types."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -725,8 +763,8 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event for space key with different settings."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -775,8 +813,8 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_locking_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for locking keys."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -803,8 +841,8 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event with password text that should be obscured."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -839,8 +877,8 @@ class TestTypingEchoPresenter:
 
     def test_is_character_echoable(self, test_context: OrcaTestContext) -> None:
         """Test is_character_echoable method."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         event_mock = test_context.mocker.MagicMock()
@@ -880,8 +918,8 @@ class TestTypingEchoPresenter:
 
     def test_echo_previous_word(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_word method."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         script_mock = test_context.mocker.MagicMock()
@@ -926,8 +964,8 @@ class TestTypingEchoPresenter:
 
     def test_echo_previous_sentence(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_sentence method."""
-        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         script_mock = test_context.mocker.MagicMock()
@@ -948,8 +986,9 @@ class TestTypingEchoPresenter:
 
         char_mock_2 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_2.side_effect = [(" ", 9, 10), (".", 8, 9)]
-        test_context.patch("orca.ax_text.AXText.get_sentence_at_offset",
-                          return_value=("Hello world.", 0, 12))
+        test_context.patch(
+            "orca.ax_text.AXText.get_sentence_at_offset", return_value=("Hello world.", 0, 12)
+        )
 
         script_mock.speech_generator.voice.return_value = ["voice"]
 
@@ -964,8 +1003,8 @@ class TestTypingEchoPresenter:
 
     def test_get_handlers_and_bindings(self, test_context: OrcaTestContext) -> None:
         """Test get_handlers and get_bindings methods."""
-        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = self._setup_presenter(
-            test_context
+        presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = (
+            self._setup_presenter(test_context)
         )
 
         handlers = presenter.get_handlers(refresh=False)
@@ -977,7 +1016,7 @@ class TestTypingEchoPresenter:
 
         bindings = presenter.get_bindings(refresh=False)
         assert bindings is not None
-        assert hasattr(bindings, 'is_empty')
+        assert hasattr(bindings, "is_empty")
 
         bindings_refreshed = presenter.get_bindings(refresh=True)
         assert bindings_refreshed is not None

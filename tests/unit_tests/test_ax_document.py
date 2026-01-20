@@ -40,6 +40,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXDocument:
     """Test AXDocument class methods."""
@@ -218,9 +219,7 @@ class TestAXDocument:
         ax_object_mock = essential_modules["orca.ax_object"].AXObject
         ax_object_mock.supports_document.return_value = True
         mock_get_count = test_context.Mock(return_value=25)
-        test_context.patch(
-            "gi.repository.Atspi.Document.get_page_count", new=mock_get_count
-        )
+        test_context.patch("gi.repository.Atspi.Document.get_page_count", new=mock_get_count)
         result = AXDocument.get_page_count(mock_accessible)
         assert result == 25
         mock_get_count.assert_called_once_with(mock_accessible)

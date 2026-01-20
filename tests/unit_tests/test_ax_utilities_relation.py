@@ -40,6 +40,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXUtilitiesRelation:
     """Test AXUtilitiesRelation class methods."""
@@ -362,9 +363,7 @@ class TestAXUtilitiesRelation:
             return
 
         if case["scenario"] == "no_relation":
-            test_context.patch_object(
-                AXUtilitiesRelation, "_get_relation", return_value=None
-            )
+            test_context.patch_object(AXUtilitiesRelation, "_get_relation", return_value=None)
         else:
             mock_relation = test_context.Mock(spec=Atspi.Relation)
             if case["has_self_target"]:
@@ -477,8 +476,6 @@ class TestAXUtilitiesRelation:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         relations = [test_context.Mock(spec=Atspi.Relation)] if case["has_relations"] else []
-        test_context.patch_object(
-            AXUtilitiesRelation, "get_relations", return_value=relations
-        )
+        test_context.patch_object(AXUtilitiesRelation, "get_relations", return_value=relations)
         result = AXUtilitiesRelation.object_is_unrelated(mock_obj)
         assert result is case["expected"]

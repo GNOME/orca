@@ -38,6 +38,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXCollection:
     """Test AXCollection class methods."""
@@ -89,8 +90,9 @@ class TestAXCollection:
         )
 
         attributes = ["class:button", "class:primary"]
-        result = AXCollection.create_match_rule(attributes=attributes,
-                                                attribute_match_type=Atspi.CollectionMatchType.ANY)
+        result = AXCollection.create_match_rule(
+            attributes=attributes, attribute_match_type=Atspi.CollectionMatchType.ANY
+        )
 
         expected_attrs = {"class": "button:primary"}
         mock_match_rule_new.assert_called_once()
@@ -124,7 +126,7 @@ class TestAXCollection:
         essential_modules["orca.ax_object"].AXObject.supports_collection.return_value = True
         test_context.patch(
             "gi.repository.Atspi.Collection.get_matches",
-            side_effect=GLib.GError("Collection error")
+            side_effect=GLib.GError("Collection error"),
         )
         mock_rule = test_context.Mock(spec=Atspi.MatchRule)
         result = AXCollection.get_all_matches(mock_accessible, mock_rule)
@@ -144,7 +146,7 @@ class TestAXCollection:
         essential_modules["orca.ax_object"].AXObject.supports_collection.return_value = True
         test_context.patch(
             "gi.repository.Atspi.Collection.get_matches",
-            side_effect=GLib.GError("First match error")
+            side_effect=GLib.GError("First match error"),
         )
         mock_rule = test_context.Mock(spec=Atspi.MatchRule)
         result = AXCollection.get_first_match(mock_accessible, mock_rule)

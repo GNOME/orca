@@ -940,7 +940,7 @@ class TestOrcaDBusIntegration:
             try:
                 proxy = module_proxy_factory(module_name)
                 # Check if module has the required dbus interface
-                if not hasattr(proxy, 'ExecuteRuntimeGetter'):
+                if not hasattr(proxy, "ExecuteRuntimeGetter"):
                     pytest.skip(f"{module_name} is optional and not available")
             except (DBusError, AttributeError):
                 pytest.skip(f"{module_name} is optional and not available")
@@ -990,7 +990,7 @@ class TestOrcaDBusIntegration:
             try:
                 proxy = module_proxy_factory(module_name)
                 # Check if module has the required dbus interface
-                if not hasattr(proxy, 'ExecuteRuntimeGetter'):
+                if not hasattr(proxy, "ExecuteRuntimeGetter"):
                     pytest.skip(f"{module_name} is optional and not available")
             except (DBusError, AttributeError):
                 pytest.skip(f"{module_name} is optional and not available")
@@ -1129,7 +1129,7 @@ class TestOrcaDBusIntegration:
             try:
                 proxy = module_proxy_factory(module_name)
                 # Check if module has the required dbus interface
-                if not hasattr(proxy, 'ExecuteRuntimeGetter'):
+                if not hasattr(proxy, "ExecuteRuntimeGetter"):
                     pytest.skip(f"{module_name} is optional and not available")
             except (DBusError, AttributeError):
                 pytest.skip(f"{module_name} is optional and not available")

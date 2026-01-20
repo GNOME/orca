@@ -39,6 +39,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestSleepModeManager:
     """Test SleepModeManager class methods."""
@@ -66,9 +67,7 @@ class TestSleepModeManager:
         dbus_service_mock = essential_modules["orca.dbus_service"]
         controller_mock = test_context.Mock()
         controller_mock.register_decorated_module = test_context.Mock()
-        dbus_service_mock.get_remote_controller = test_context.Mock(
-            return_value=controller_mock
-        )
+        dbus_service_mock.get_remote_controller = test_context.Mock(return_value=controller_mock)
         dbus_service_mock.command = lambda func: func
 
         input_event_mock = essential_modules["orca.input_event"]
@@ -96,9 +95,7 @@ class TestSleepModeManager:
         script_manager_instance.get_or_create_sleep_mode_script = test_context.Mock()
         script_manager_instance.set_active_script = test_context.Mock()
         script_manager_instance.get_script = test_context.Mock()
-        script_manager_mock.get_manager = test_context.Mock(
-            return_value=script_manager_instance
-        )
+        script_manager_mock.get_manager = test_context.Mock(return_value=script_manager_instance)
 
         essential_modules["controller"] = controller_mock
         essential_modules["input_event_handler"] = input_event_handler_mock
@@ -279,7 +276,7 @@ class TestSleepModeManager:
 
         test_context.patch(
             "orca.sleep_mode_manager.script_manager.get_manager",
-            return_value=script_manager_instance
+            return_value=script_manager_instance,
         )
 
         result = manager.toggle_sleep_mode(mock_script, mock_event, notify_user=notify_user)

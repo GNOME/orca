@@ -41,6 +41,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXUtilities:
     """Test AXUtilities class methods."""
@@ -404,13 +405,11 @@ class TestAXUtilities:
         for mock_path, mock_value in mocks_config.items():
             if mock_path == "has_explicit_name":
                 test_context.patch(
-                    "orca.ax_utilities.AXUtilities.has_explicit_name",
-                    return_value=mock_value
+                    "orca.ax_utilities.AXUtilities.has_explicit_name", return_value=mock_value
                 )
             elif mock_path == "_is_layout_only":
                 test_context.patch(
-                    "orca.ax_utilities.AXUtilities._is_layout_only",
-                    return_value=mock_value
+                    "orca.ax_utilities.AXUtilities._is_layout_only", return_value=mock_value
                 )
             elif mock_path.startswith("ax_object.find_ancestor"):
                 if mock_value == "desktop":
@@ -550,9 +549,7 @@ class TestAXUtilities:
         self._setup_dependencies(test_context)
         from orca.ax_utilities import AXUtilities
 
-        test_context.patch_object(
-            AXUtilities, "get_set_size", return_value=-1
-        )
+        test_context.patch_object(AXUtilities, "get_set_size", return_value=-1)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_set_size_is_unknown(mock_obj)
         assert result is True
@@ -830,8 +827,7 @@ class TestAXUtilities:
 
         if not supports_collection and get_all_widgets is not None:
             test_context.patch(
-                "orca.ax_utilities.AXUtilities.get_all_widgets",
-                return_value=get_all_widgets
+                "orca.ax_utilities.AXUtilities.get_all_widgets", return_value=get_all_widgets
             )
 
         for check_name, check_value in collection_checks.items():
@@ -913,9 +909,7 @@ class TestAXUtilities:
         ].AXUtilitiesState.is_showing = test_context.Mock(return_value=True)
         from orca.ax_utilities import AXUtilities
 
-        test_context.patch_object(
-            AXUtilities, "can_be_active_window", return_value=False
-        )
+        test_context.patch_object(AXUtilities, "can_be_active_window", return_value=False)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.is_unfocused_alert_or_dialog(mock_obj)
         assert result is True
@@ -1166,9 +1160,7 @@ class TestAXUtilities:
         from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(
-            AXUtilities,
-            "_get_set_members",
-            return_value=[mock_member1, mock_member2]
+            AXUtilities, "_get_set_members", return_value=[mock_member1, mock_member2]
         )
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_set_members(mock_obj)
@@ -1180,9 +1172,7 @@ class TestAXUtilities:
         self._setup_dependencies(test_context)
         from orca.ax_utilities import AXUtilities
 
-        test_context.patch_object(
-            AXUtilities, "_get_set_members", return_value=[]
-        )
+        test_context.patch_object(AXUtilities, "_get_set_members", return_value=[])
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_set_members(mock_obj)
         assert result == []
@@ -1226,9 +1216,7 @@ class TestAXUtilities:
         from orca.ax_utilities import AXUtilities
 
         mock_start_thread = test_context.Mock()
-        test_context.patch_object(
-            AXUtilities, "start_cache_clearing_thread", new=mock_start_thread
-        )
+        test_context.patch_object(AXUtilities, "start_cache_clearing_thread", new=mock_start_thread)
         mock_start_thread()
         mock_start_thread.assert_called_once()
 
@@ -1410,7 +1398,7 @@ class TestAXUtilities:
         test_context.patch_object(
             AXUtilities,
             "get_set_members",
-            side_effect=lambda x: [mock_member1, mock_obj, mock_member2]
+            side_effect=lambda x: [mock_member1, mock_obj, mock_member2],
         )
         result = AXUtilities.get_position_in_set(mock_obj)
         assert result == 1
@@ -1599,9 +1587,7 @@ class TestAXUtilities:
         mock_dead_target = test_context.Mock(spec=Atspi.Accessible)
         mock_live_target = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=True
-        )
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
             side_effect=lambda obj: obj == mock_dead_target
         )
@@ -1626,14 +1612,10 @@ class TestAXUtilities:
         mock_parent = test_context.Mock(spec=Atspi.Accessible)
         mock_next = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=True
-        )
-        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
-            return_value=True
-        )
-        essential_modules["orca.ax_object"].AXObject.get_index_in_parent = (
-            test_context.Mock(return_value=0)
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
+            return_value=0
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
             return_value=mock_parent
@@ -1709,9 +1691,7 @@ class TestAXUtilities:
         mock_dead_source = test_context.Mock(spec=Atspi.Accessible)
         mock_live_source = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=True
-        )
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
             side_effect=lambda obj: obj == mock_dead_source
         )
@@ -1736,14 +1716,10 @@ class TestAXUtilities:
         mock_parent = test_context.Mock(spec=Atspi.Accessible)
         mock_previous = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=True
-        )
-        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
-            return_value=True
-        )
-        essential_modules["orca.ax_object"].AXObject.get_index_in_parent = (
-            test_context.Mock(return_value=1)
+        essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
+            return_value=1
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
             return_value=mock_parent
@@ -2047,7 +2023,8 @@ class TestAXUtilities:
         from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(
-            AXUtilities, "get_set_members", side_effect=lambda x: [mock_other])
+            AXUtilities, "get_set_members", side_effect=lambda x: [mock_other]
+        )
         result = AXUtilities.get_position_in_set(mock_obj)
         assert result == -1
 
@@ -2163,7 +2140,7 @@ class TestAXUtilities:
         test_context.patch_object(
             AXUtilities,
             "get_set_members",
-            side_effect=lambda x: [test_context.Mock(), test_context.Mock(), test_context.Mock()]
+            side_effect=lambda x: [test_context.Mock(), test_context.Mock(), test_context.Mock()],
         )
         result = AXUtilities.get_set_size(mock_obj)
         assert result == 3
@@ -2251,7 +2228,7 @@ class TestAXUtilities:
                 test_context.Mock(),
                 test_context.Mock(),
                 test_context.Mock(),
-            ]
+            ],
         )
         result = AXUtilities.get_set_size(mock_obj)
         assert result == 4

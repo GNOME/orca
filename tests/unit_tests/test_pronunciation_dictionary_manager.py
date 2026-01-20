@@ -74,9 +74,7 @@ class TestPronunciationDictionaryManager:
         settings_manager = essential_modules["orca.settings_manager"]
         manager_instance = settings_manager.get_manager.return_value
         manager_instance.get_pronunciations.return_value = {}
-        manager_instance.get_general_settings.return_value = {
-            "profile": ["Default", "default"]
-        }
+        manager_instance.get_general_settings.return_value = {"profile": ["Default", "default"]}
 
         # Set up speech_and_verbosity_manager
         speech_manager = essential_modules["orca.speech_and_verbosity_manager"]
@@ -86,6 +84,7 @@ class TestPronunciationDictionaryManager:
 
         # Import and return the module
         from orca import pronunciation_dictionary_manager
+
         return pronunciation_dictionary_manager, essential_modules
 
     def test_get_manager_returns_singleton(self, test_context: OrcaTestContext) -> None:
@@ -135,9 +134,7 @@ class TestPronunciationDictionaryManager:
 
         assert result == "hi there"
 
-    def test_get_pronunciation_is_case_insensitive(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_pronunciation_is_case_insensitive(self, test_context: OrcaTestContext) -> None:
         """Test get_pronunciation lookup is case insensitive."""
 
         module, _mocks = self._setup_manager(test_context)
@@ -150,9 +147,7 @@ class TestPronunciationDictionaryManager:
         assert manager.get_pronunciation("Hello") == "hi there"
         assert manager.get_pronunciation("HELLO") == "hi there"
 
-    def test_set_pronunciation_stores_lowercase_key(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_set_pronunciation_stores_lowercase_key(self, test_context: OrcaTestContext) -> None:
         """Test set_pronunciation stores key as lowercase."""
 
         module, _mocks = self._setup_manager(test_context)
@@ -165,9 +160,7 @@ class TestPronunciationDictionaryManager:
         assert "mixedcase" in dictionary
         assert "MixedCase" not in dictionary
 
-    def test_set_dictionary_replaces_entire_dictionary(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_set_dictionary_replaces_entire_dictionary(self, test_context: OrcaTestContext) -> None:
         """Test set_dictionary replaces the entire dictionary."""
 
         module, _mocks = self._setup_manager(test_context)
@@ -180,9 +173,7 @@ class TestPronunciationDictionaryManager:
         assert "old" not in dictionary
         assert dictionary.get("new") == "new replacement"
 
-    def test_multiple_pronunciations(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_multiple_pronunciations(self, test_context: OrcaTestContext) -> None:
         """Test manager handles multiple pronunciations correctly."""
 
         module, _mocks = self._setup_manager(test_context)
@@ -198,9 +189,7 @@ class TestPronunciationDictionaryManager:
         assert manager.get_pronunciation("word3") == "replacement3"
         assert len(manager.get_dictionary()) == 3
 
-    def test_set_pronunciation_overwrites_existing(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_set_pronunciation_overwrites_existing(self, test_context: OrcaTestContext) -> None:
         """Test set_pronunciation overwrites existing entry for same word."""
 
         module, _mocks = self._setup_manager(test_context)
@@ -255,9 +244,7 @@ class TestPronunciationDictionaryManagerIntegration:
         settings_manager = essential_modules["orca.settings_manager"]
         manager_instance = settings_manager.get_manager.return_value
         manager_instance.get_pronunciations.return_value = {}
-        manager_instance.get_general_settings.return_value = {
-            "profile": ["Default", "default"]
-        }
+        manager_instance.get_general_settings.return_value = {"profile": ["Default", "default"]}
 
         # Set up speech_and_verbosity_manager
         speech_manager = essential_modules["orca.speech_and_verbosity_manager"]
@@ -267,11 +254,10 @@ class TestPronunciationDictionaryManagerIntegration:
 
         # Import and return the module
         from orca import pronunciation_dictionary_manager
+
         return pronunciation_dictionary_manager, essential_modules
 
-    def test_pronunciation_application_to_text(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_pronunciation_application_to_text(self, test_context: OrcaTestContext) -> None:
         """Test that pronunciation dictionary can be used to process text."""
 
         module, _mocks = self._setup_manager(test_context)
@@ -290,9 +276,7 @@ class TestPronunciationDictionaryManagerIntegration:
         # CLI becomes "command line interface"
         assert "command line interface" in result
 
-    def test_empty_dictionary_returns_original_words(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_empty_dictionary_returns_original_words(self, test_context: OrcaTestContext) -> None:
         """Test that empty dictionary returns all original words unchanged."""
 
         module, _mocks = self._setup_manager(test_context)

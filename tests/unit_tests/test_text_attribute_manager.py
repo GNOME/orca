@@ -66,9 +66,7 @@ class TestTextAttributeManager:
 
         dbus_service_mock = essential_modules["orca.dbus_service"]
         controller = dbus_service_mock.get_remote_controller.return_value
-        controller.register_decorated_module.assert_called_with(
-            "TextAttributeManager", manager
-        )
+        controller.register_decorated_module.assert_called_with("TextAttributeManager", manager)
 
     def test_get_attributes_to_speak_empty(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_speak returns empty list by default."""
@@ -81,9 +79,7 @@ class TestTextAttributeManager:
         result = manager.get_attributes_to_speak()
         assert result == []
 
-    def test_get_attributes_to_speak_with_values(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_attributes_to_speak_with_values(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_speak returns configured attributes."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -110,9 +106,7 @@ class TestTextAttributeManager:
         assert essential_modules["orca.settings"].textAttributesToSpeak == new_value
         essential_modules["orca.debug"].print_message.assert_called()
 
-    def test_set_attributes_to_speak_same_value(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_set_attributes_to_speak_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_attributes_to_speak returns early when value unchanged."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -131,9 +125,7 @@ class TestTextAttributeManager:
         setting_calls = [c for c in calls if "Setting attributes to speak" in str(c)]
         assert len(setting_calls) == 0
 
-    def test_get_attributes_to_braille_empty(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_attributes_to_braille_empty(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_braille returns empty list by default."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -144,9 +136,7 @@ class TestTextAttributeManager:
         result = manager.get_attributes_to_braille()
         assert result == []
 
-    def test_get_attributes_to_braille_with_values(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_attributes_to_braille_with_values(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_braille returns configured attributes."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -173,9 +163,7 @@ class TestTextAttributeManager:
         assert essential_modules["orca.settings"].textAttributesToBraille == new_value
         essential_modules["orca.debug"].print_message.assert_called()
 
-    def test_set_attributes_to_braille_same_value(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_set_attributes_to_braille_same_value(self, test_context: OrcaTestContext) -> None:
         """Test set_attributes_to_braille returns early when value unchanged."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)

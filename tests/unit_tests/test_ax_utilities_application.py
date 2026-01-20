@@ -41,6 +41,7 @@ from gi.repository import GLib
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
+
 @pytest.mark.unit
 class TestAXUtilitiesApplication:
     """Test AXUtilitiesApplication class methods."""
@@ -95,18 +96,12 @@ class TestAXUtilitiesApplication:
         mock_app = test_context.Mock(spec=Atspi.Accessible)
         method = getattr(AXUtilitiesApplication, method_name)
 
-        test_context.patch_object(
-            AXUtilitiesApplication, "get_application", return_value=None
-        )
+        test_context.patch_object(AXUtilitiesApplication, "get_application", return_value=None)
         result = method(mock_obj)
         assert result == ""
 
-        test_context.patch_object(
-            AXUtilitiesApplication, "get_application", return_value=mock_app
-        )
-        test_context.patch_object(
-            Atspi.Accessible, atspi_method_name, return_value=success_value
-        )
+        test_context.patch_object(AXUtilitiesApplication, "get_application", return_value=mock_app)
+        test_context.patch_object(Atspi.Accessible, atspi_method_name, return_value=success_value)
         result = method(mock_obj)
         assert result == success_value
 
@@ -143,9 +138,7 @@ class TestAXUtilitiesApplication:
         if method_name == "get_desktop":
             mock_desktop = test_context.Mock(spec=Atspi.Accessible)
 
-            test_context.patch_object(
-                atspi_method, mock_method_name, return_value=mock_desktop
-            )
+            test_context.patch_object(atspi_method, mock_method_name, return_value=mock_desktop)
             result = AXUtilitiesApplication.get_desktop()
             assert result == mock_desktop
 
@@ -159,9 +152,7 @@ class TestAXUtilitiesApplication:
             mock_obj = test_context.Mock(spec=Atspi.Accessible)
             method = getattr(AXUtilitiesApplication, method_name)
 
-            test_context.patch_object(
-                atspi_method, mock_method_name, return_value=success_return
-            )
+            test_context.patch_object(atspi_method, mock_method_name, return_value=success_return)
             result = method(mock_obj)
             assert result == success_return
 
@@ -210,9 +201,7 @@ class TestAXUtilitiesApplication:
                 return_value=toolkit_version,
             )
         else:
-            test_context.patch_object(
-                AXUtilitiesApplication, "get_application", return_value=None
-            )
+            test_context.patch_object(AXUtilitiesApplication, "get_application", return_value=None)
         result = AXUtilitiesApplication.application_as_string(mock_obj)
         assert result == expected
 
@@ -236,12 +225,11 @@ class TestAXUtilitiesApplication:
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
         mock_app2 = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXUtilitiesApplication, "get_desktop", return_value=mock_desktop)
         test_context.patch_object(
-            AXUtilitiesApplication, "get_desktop", return_value=mock_desktop
-        )
-        test_context.patch_object(
-            AXObject, "iter_children",
-            side_effect=lambda parent, pred: filter(pred, [mock_app1, mock_app2])
+            AXObject,
+            "iter_children",
+            side_effect=lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         test_context.patch_object(
             AXObject, "get_name", side_effect=lambda obj: "App1" if obj == mock_app1 else "App2"
@@ -261,9 +249,7 @@ class TestAXUtilitiesApplication:
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
         mock_app2 = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesApplication, "get_desktop", return_value=mock_desktop
-        )
+        test_context.patch_object(AXUtilitiesApplication, "get_desktop", return_value=mock_desktop)
         test_context.patch_object(
             AXObject,
             "iter_children",
@@ -294,17 +280,16 @@ class TestAXUtilitiesApplication:
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
         mock_app2 = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesApplication, "get_desktop", return_value=mock_desktop
-        )
+        test_context.patch_object(AXUtilitiesApplication, "get_desktop", return_value=mock_desktop)
         test_context.patch_object(
             AXObject,
             "iter_children",
             side_effect=lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         test_context.patch_object(
-            AXObject, "get_name",
-            side_effect=lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2"
+            AXObject,
+            "get_name",
+            side_effect=lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2",
         )
         result = AXUtilitiesApplication.get_all_applications()
         assert result == [mock_app2]
@@ -321,17 +306,16 @@ class TestAXUtilitiesApplication:
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
         mock_app2 = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesApplication, "get_desktop", return_value=mock_desktop
-        )
+        test_context.patch_object(AXUtilitiesApplication, "get_desktop", return_value=mock_desktop)
         test_context.patch_object(
             AXObject,
             "iter_children",
             side_effect=lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         test_context.patch_object(
-            AXObject, "get_name",
-            side_effect=lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2"
+            AXObject,
+            "get_name",
+            side_effect=lambda obj: "mutter-x11-frames" if obj == mock_app1 else "App2",
         )
         result = AXUtilitiesApplication.get_all_applications(is_debug=True)
         assert result == [mock_app1, mock_app2]
@@ -346,9 +330,7 @@ class TestAXUtilitiesApplication:
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
         mock_app2 = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesApplication, "get_desktop", return_value=mock_desktop
-        )
+        test_context.patch_object(AXUtilitiesApplication, "get_desktop", return_value=mock_desktop)
         test_context.patch_object(
             AXObject,
             "iter_children",

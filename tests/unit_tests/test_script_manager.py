@@ -44,6 +44,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestScriptManager:
     """Test ScriptManager class methods."""
@@ -97,12 +98,8 @@ class TestScriptManager:
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_class_mock = test_context.Mock()
         ax_utilities_class_mock.is_terminal = test_context.Mock(return_value=False)
-        ax_utilities_class_mock.get_application_toolkit_name = test_context.Mock(
-            return_value="gtk"
-        )
-        ax_utilities_class_mock.is_application_in_desktop = test_context.Mock(
-            return_value=True
-        )
+        ax_utilities_class_mock.get_application_toolkit_name = test_context.Mock(return_value="gtk")
+        ax_utilities_class_mock.is_application_in_desktop = test_context.Mock(return_value=True)
         ax_utilities_class_mock.is_frame = test_context.Mock(return_value=False)
         ax_utilities_class_mock.is_status_bar = test_context.Mock(return_value=False)
         ax_utilities_mock.AXUtilities = ax_utilities_class_mock
@@ -125,9 +122,7 @@ class TestScriptManager:
         speech_verbosity_mock = essential_modules["orca.speech_and_verbosity_manager"]
         speech_manager_instance = test_context.Mock()
         speech_manager_instance.check_speech_setting = test_context.Mock()
-        speech_verbosity_mock.get_manager = test_context.Mock(
-            return_value=speech_manager_instance
-        )
+        speech_verbosity_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
 
         scripts_mock = essential_modules["orca.scripts"]
         apps_mock = essential_modules["orca.scripts.apps"]
@@ -228,7 +223,6 @@ class TestScriptManager:
 
         return essential_modules
 
-
     def test_init(self, test_context: OrcaTestContext) -> None:
         """Test ScriptManager.__init__."""
 
@@ -264,9 +258,7 @@ class TestScriptManager:
 
         if case["expects_script_creation"]:
             mock_default_script = test_context.Mock()
-            test_context.patch(
-                "orca.script_manager.default.Script", new=mock_default_script
-            )
+            test_context.patch("orca.script_manager.default.Script", new=mock_default_script)
             mock_default_script.return_value = default_script
 
         from orca.script_manager import ScriptManager
@@ -599,15 +591,9 @@ class TestScriptManager:
         mock_obj = test_context.Mock()
         mock_script = test_context.Mock()
 
-        test_context.patch_object(
-            manager, "get_module_name", return_value=case["module_name"]
-        )
-        test_context.patch_object(
-            manager, "_toolkit_for_object", return_value=None
-        )
-        test_context.patch_object(
-            manager, "get_default_script", return_value=default_script
-        )
+        test_context.patch_object(manager, "get_module_name", return_value=case["module_name"])
+        test_context.patch_object(manager, "_toolkit_for_object", return_value=None)
+        test_context.patch_object(manager, "get_default_script", return_value=default_script)
 
         test_context.patch(
             "orca.script_manager.AXUtilities.get_application_toolkit_name",
@@ -662,9 +648,7 @@ class TestScriptManager:
         from orca.script_manager import ScriptManager
 
         mock_sleepmode_script = test_context.Mock()
-        test_context.patch(
-            "orca.script_manager.sleepmode.Script", new=mock_sleepmode_script
-        )
+        test_context.patch("orca.script_manager.sleepmode.Script", new=mock_sleepmode_script)
         mock_sleepmode_script.return_value = sleepmode_script
         manager = ScriptManager()
         mock_app = test_context.Mock()
@@ -775,13 +759,9 @@ class TestScriptManager:
                 return mock_toolkit_script
             return mock_app_script
 
-        test_context.patch_object(
-            manager, "_create_script", side_effect=create_script_side_effect
-        )
+        test_context.patch_object(manager, "_create_script", side_effect=create_script_side_effect)
         if case["has_custom_script"]:
-            test_context.patch_object(
-                manager, "_new_named_script", return_value=mock_custom_script
-            )
+            test_context.patch_object(manager, "_new_named_script", return_value=mock_custom_script)
         result = manager.get_script(mock_app, mock_obj)
         if case["expected_script_type"] == "default":
             assert result is not None
@@ -804,19 +784,13 @@ class TestScriptManager:
         manager = ScriptManager()
         mock_app = test_context.Mock()
         mock_obj = test_context.Mock()
-        test_context.patch_object(
-            manager, "_script_for_role", return_value=""
-        )
-        test_context.patch_object(
-            manager, "_toolkit_for_object", return_value=None
-        )
+        test_context.patch_object(manager, "_script_for_role", return_value="")
+        test_context.patch_object(manager, "_toolkit_for_object", return_value=None)
 
         def create_script_side_effect(app, obj):
             raise KeyError("Script creation failed")
 
-        test_context.patch_object(
-            manager, "_create_script", side_effect=create_script_side_effect
-        )
+        test_context.patch_object(manager, "_create_script", side_effect=create_script_side_effect)
         result = manager.get_script(mock_app, mock_obj)
         assert result is not None
         assert hasattr(result, "register_event_listeners")
@@ -866,9 +840,7 @@ class TestScriptManager:
             "orca.script_manager.braille.checkBrailleSetting", new=mock_check_braille
         )
         mock_setup_ranges = test_context.Mock()
-        test_context.patch(
-            "orca.script_manager.braille.setupKeyRanges", new=mock_setup_ranges
-        )
+        test_context.patch("orca.script_manager.braille.setupKeyRanges", new=mock_setup_ranges)
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(
             "orca.script_manager.speech_and_verbosity_manager.get_manager",
@@ -953,12 +925,8 @@ class TestScriptManager:
         settings_mock = essential_modules["orca.settings"]
         from orca.script_manager import ScriptManager
 
-        test_context.patch(
-            "orca.script_manager.braille.checkBrailleSetting", return_value=None
-        )
-        test_context.patch(
-            "orca.script_manager.braille.setupKeyRanges", return_value=None
-        )
+        test_context.patch("orca.script_manager.braille.checkBrailleSetting", return_value=None)
+        test_context.patch("orca.script_manager.braille.setupKeyRanges", return_value=None)
         speech_patch = "orca.script_manager.speech_and_verbosity_manager.get_manager"
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(speech_patch, new=mock_get_speech_manager)

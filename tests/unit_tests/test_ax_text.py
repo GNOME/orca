@@ -43,6 +43,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 class MockRect:  # pylint: disable=too-few-public-methods
     """Mock rectangle class for testing."""
 
@@ -446,9 +447,7 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
 
-        test_context.patch_object(
-            AXText, "get_character_at_offset", return_value=("\ufffc", 5, 6)
-        )
+        test_context.patch_object(AXText, "get_character_at_offset", return_value=("\ufffc", 5, 6))
         result = AXText.character_at_offset_is_eoc(test_context.Mock(spec=Atspi.Accessible), 5)
         assert result is True
 
@@ -458,9 +457,7 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
 
-        test_context.patch_object(
-            AXText, "get_character_at_offset", return_value=("a", 5, 6)
-        )
+        test_context.patch_object(AXText, "get_character_at_offset", return_value=("a", 5, 6))
         result = AXText.character_at_offset_is_eoc(test_context.Mock(spec=Atspi.Accessible), 5)
         assert result is False
 
@@ -787,9 +784,7 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
 
-        test_context.patch_object(
-            AXText, "get_selected_ranges", return_value=[(5, 10), (15, 20)]
-        )
+        test_context.patch_object(AXText, "get_selected_ranges", return_value=[(5, 10), (15, 20)])
         test_context.patch_object(
             AXText, "get_substring", side_effect=lambda obj, start, end: f"text{start}-{end}"
         )
@@ -839,9 +834,7 @@ class TestAXText:
         def mock_get_attribute_run(_obj, _offset, include_defaults=True) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_attribute_run", new=mock_get_attribute_run
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_attribute_run", new=mock_get_attribute_run)
         result = AXText.get_text_attributes_at_offset(test_context.Mock(spec=Atspi.Accessible))
         assert result == ({}, 0, 20)
 
@@ -1074,9 +1067,7 @@ class TestAXText:
                 return ("Second sentence.", 12, 25)
             return ("", 0, 0)
 
-        test_context.patch_object(
-            AXText, "get_sentence_at_offset", new=mock_get_sentence_at_offset
-        )
+        test_context.patch_object(AXText, "get_sentence_at_offset", new=mock_get_sentence_at_offset)
         result = list(AXText.iter_sentence(test_context.Mock(spec=Atspi.Accessible)))
         assert result == [("First sentence.", 0, 12), ("Second sentence.", 12, 25)]
 
@@ -1217,9 +1208,7 @@ class TestAXText:
                 def raise_glib_error(_obj, _x, _y, _coord_type) -> None:
                     raise GLib.GError("Test error")
 
-                test_context.patch_object(
-                    Atspi.Text, "get_offset_at_point", new=raise_glib_error
-                )
+                test_context.patch_object(Atspi.Text, "get_offset_at_point", new=raise_glib_error)
             else:
                 test_context.patch_object(
                     Atspi.Text,
@@ -1257,28 +1246,28 @@ class TestAXText:
                 test_context.patch_object(
                     AXText,
                     "get_word_at_offset",
-                    side_effect=lambda obj, offset: case["expected_result"]
+                    side_effect=lambda obj, offset: case["expected_result"],
                 )
                 result = AXText.get_word_at_point(mock_obj, case["x_coord"], case["y_coord"])
             elif case["method_type"] == "line":
                 test_context.patch_object(
                     AXText,
                     "get_line_at_offset",
-                    side_effect=lambda obj, offset: case["expected_result"]
+                    side_effect=lambda obj, offset: case["expected_result"],
                 )
                 result = AXText.get_line_at_point(mock_obj, case["x_coord"], case["y_coord"])
             elif case["method_type"] == "sentence":
                 test_context.patch_object(
                     AXText,
                     "get_sentence_at_offset",
-                    side_effect=lambda obj, offset: case["expected_result"]
+                    side_effect=lambda obj, offset: case["expected_result"],
                 )
                 result = AXText.get_sentence_at_point(mock_obj, case["x_coord"], case["y_coord"])
             elif case["method_type"] == "paragraph":
                 test_context.patch_object(
                     AXText,
                     "get_paragraph_at_offset",
-                    side_effect=lambda obj, offset: case["expected_result"]
+                    side_effect=lambda obj, offset: case["expected_result"],
                 )
                 result = AXText.get_paragraph_at_point(mock_obj, case["x_coord"], case["y_coord"])
 
@@ -1499,9 +1488,7 @@ class TestAXText:
 
         test_context.patch_object(AXObject, "supports_text", return_value=True)
         mock_remove_selection = test_context.Mock()
-        test_context.patch(
-            "gi.repository.Atspi.Text.remove_selection", new=mock_remove_selection
-        )
+        test_context.patch("gi.repository.Atspi.Text.remove_selection", new=mock_remove_selection)
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         AXText._remove_selection(mock_accessible, 0)
         mock_remove_selection.assert_called_once_with(mock_accessible, 0)
@@ -1518,9 +1505,7 @@ class TestAXText:
         def mock_remove_selection(obj, selection_number) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.remove_selection", new=mock_remove_selection
-        )
+        test_context.patch("gi.repository.Atspi.Text.remove_selection", new=mock_remove_selection)
 
         AXText._remove_selection(test_context.Mock(spec=Atspi.Accessible), 0)
 
@@ -1539,9 +1524,7 @@ class TestAXText:
             ]
             return results[selection_num]
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_selection", new=mock_get_selection
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_selection", new=mock_get_selection)
         result = AXText.get_selected_ranges(test_context.Mock(spec=Atspi.Accessible))
         assert result == [(5, 10), (15, 20)]
 
@@ -1556,9 +1539,7 @@ class TestAXText:
         def mock_get_selection(obj, selection_num) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_selection", new=mock_get_selection
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_selection", new=mock_get_selection)
         result = AXText.get_selected_ranges(test_context.Mock(spec=Atspi.Accessible))
         assert not result
 
@@ -1570,9 +1551,7 @@ class TestAXText:
         from orca.ax_object import AXObject
 
         test_context.patch_object(AXObject, "supports_text", return_value=True)
-        test_context.patch(
-            "gi.repository.Atspi.Text.add_selection", return_value=True
-        )
+        test_context.patch("gi.repository.Atspi.Text.add_selection", return_value=True)
         result = AXText._add_new_selection(test_context.Mock(spec=Atspi.Accessible), 5, 10)
         assert result is True
 
@@ -1588,9 +1567,7 @@ class TestAXText:
         def mock_add_selection(obj, start, end) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.add_selection", new=mock_add_selection
-        )
+        test_context.patch("gi.repository.Atspi.Text.add_selection", new=mock_add_selection)
         result = AXText._add_new_selection(test_context.Mock(spec=Atspi.Accessible), 5, 10)
         assert result is False
 
@@ -1602,9 +1579,7 @@ class TestAXText:
         from orca.ax_object import AXObject
 
         test_context.patch_object(AXObject, "supports_text", return_value=True)
-        test_context.patch(
-            "gi.repository.Atspi.Text.set_selection", return_value=True
-        )
+        test_context.patch("gi.repository.Atspi.Text.set_selection", return_value=True)
         result = AXText._update_existing_selection(
             test_context.Mock(spec=Atspi.Accessible), 5, 10, 0
         )
@@ -1622,9 +1597,7 @@ class TestAXText:
         def mock_set_selection(obj, num, start, end) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.set_selection", new=mock_set_selection
-        )
+        test_context.patch("gi.repository.Atspi.Text.set_selection", new=mock_set_selection)
         result = AXText._update_existing_selection(
             test_context.Mock(spec=Atspi.Accessible), 5, 10, 0
         )
@@ -1637,9 +1610,7 @@ class TestAXText:
         from orca.ax_text import AXText
 
         test_context.patch_object(AXText, "_get_n_selections", return_value=1)
-        test_context.patch_object(
-            AXText, "_update_existing_selection", return_value=True
-        )
+        test_context.patch_object(AXText, "_update_existing_selection", return_value=True)
         test_context.patch_object(AXText, "get_substring", return_value="test")
         test_context.patch_object(AXText, "get_selected_text", return_value=("test", 5, 10))
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -1667,9 +1638,7 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
 
-        test_context.patch_object(
-            AXText, "get_selected_text", return_value=("cached text", 5, 15)
-        )
+        test_context.patch_object(AXText, "get_selected_text", return_value=("cached text", 5, 15))
         AXText.CACHED_TEXT_SELECTION.clear()
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         AXText.update_cached_selected_text(mock_accessible)
@@ -1741,9 +1710,7 @@ class TestAXText:
         def mock_get_range_extents(obj, start, end, coord_type) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_range_extents", new=mock_get_range_extents
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_range_extents", new=mock_get_range_extents)
         result = AXText.get_range_rect(test_context.Mock(spec=Atspi.Accessible), 5, 15)
         assert result.x == 0 and result.y == 0
 
@@ -1794,9 +1761,7 @@ class TestAXText:
         def mock_scroll_success(_obj, _start, _end, _location) -> bool:
             return True
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.scroll_substring_to", new=mock_scroll_success
-        )
+        test_context.patch("gi.repository.Atspi.Text.scroll_substring_to", new=mock_scroll_success)
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         result = AXText.scroll_substring_to_location(mock_accessible, mock_scroll_type, 5, 15)
         assert result is True
@@ -1855,9 +1820,7 @@ class TestAXText:
 
         clip_rect = test_context.Mock(x=0, y=0, width=100, height=50)
         test_context.patch_object(AXText, "get_character_count", return_value=100)
-        test_context.patch_object(
-            AXText, "get_line_at_offset", return_value=("First line", 0, 10)
-        )
+        test_context.patch_object(AXText, "get_line_at_offset", return_value=("First line", 0, 10))
         result = AXText.find_first_visible_line(test_context.Mock(spec=Atspi.Accessible), clip_rect)
         assert result == ("First line", 0, 10)
 
@@ -1869,9 +1832,7 @@ class TestAXText:
 
         clip_rect = test_context.Mock(x=0, y=0, width=100, height=50)
         test_context.patch_object(AXText, "get_character_count", return_value=100)
-        test_context.patch_object(
-            AXText, "get_line_at_offset", return_value=("Last line", 90, 100)
-        )
+        test_context.patch_object(AXText, "get_line_at_offset", return_value=("Last line", 90, 100))
         result = AXText.find_last_visible_line(test_context.Mock(spec=Atspi.Accessible), clip_rect)
         assert result == ("Last line", 90, 100)
 
@@ -1984,9 +1945,7 @@ class TestAXText:
             test_context.patch(
                 "gi.repository.Atspi.Text.get_string_at_offset", new=mock_get_string_at_offset
             )
-            test_context.patch(
-                "gi.repository.Atspi.Text.get_text", return_value=""
-            )
+            test_context.patch("gi.repository.Atspi.Text.get_text", return_value="")
         else:
             mock_result = test_context.Mock()
             mock_result.content = "This is a sentence."
@@ -2053,9 +2012,7 @@ class TestAXText:
         from orca.ax_text import AXText
 
         essential_modules["orca.debug"].print_message = test_context.Mock()
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_character_count", return_value=10
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_character_count", return_value=10)
         result = AXText.get_character_at_offset(test_context.Mock(spec=Atspi.Accessible), 15)
         assert result == ("", 0, 0)
         essential_modules["orca.debug"].print_message.assert_called()
@@ -2067,9 +2024,7 @@ class TestAXText:
         from orca.ax_text import AXText
 
         test_context.patch_object(AXText, "get_character_count", return_value=20)
-        test_context.patch_object(
-            Atspi.Text, "get_text", return_value="substring"
-        )
+        test_context.patch_object(Atspi.Text, "get_text", return_value="substring")
         essential_modules["orca.debug"].print_tokens = test_context.Mock()
         result = AXText.get_substring(test_context.Mock(spec=Atspi.Accessible), 5, -1)
         assert result == "substring"
@@ -2690,9 +2645,7 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_character_count", return_value=0
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_character_count", return_value=0)
         result = AXText.get_character_at_offset(test_context.Mock(spec=Atspi.Accessible), 0)
         assert result == ("", 0, 0)
 
@@ -2703,9 +2656,7 @@ class TestAXText:
         from orca.ax_text import AXText
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_character_count", return_value=10
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_character_count", return_value=10)
         test_context.patch_object(AXText, "get_caret_offset", return_value=5)
 
         mock_result = test_context.Mock()
@@ -2729,12 +2680,8 @@ class TestAXText:
         def raise_glib_error(_obj, _offset, _granularity):
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_character_count", return_value=10
-        )
-        test_context.patch(
-            "gi.repository.Atspi.Text.get_string_at_offset", new=raise_glib_error
-        )
+        test_context.patch("gi.repository.Atspi.Text.get_character_count", return_value=10)
+        test_context.patch("gi.repository.Atspi.Text.get_string_at_offset", new=raise_glib_error)
 
         result = AXText.get_character_at_offset(test_context.Mock(spec=Atspi.Accessible), 5)
         assert result == ("", 0, 0)
@@ -2849,25 +2796,15 @@ class TestAXText:
     @pytest.mark.parametrize(
         "text, expected_boundaries",
         [
+            pytest.param("Hello.\ufffc", [0, 6, 7], id="sentence_ending_before_fffc"),
+            pytest.param("Hello. \ufffc", [0, 7, 8], id="sentence_ending_space_fffc"),
             pytest.param(
-                "Hello.\ufffc",
-                [0, 6, 7],
-                id="sentence_ending_before_fffc"
-            ),
-            pytest.param(
-                "Hello. \ufffc",
-                [0, 7, 8],
-                id="sentence_ending_space_fffc"
-            ),
-            pytest.param(
-                "Test 1. Test 2. \ufffc Test 3.",
-                [0, 8, 16, 25],
-                id="fffc_between_sentences"
+                "Test 1. Test 2. \ufffc Test 3.", [0, 8, 16, 25], id="fffc_between_sentences"
             ),
             pytest.param(
                 "Test 1. Test 2. \ufffcTest 4.",
                 [0, 8, 16, 24],
-                id="nested_element_fffc_no_space_after"
+                id="nested_element_fffc_no_space_after",
             ),
         ],
         ids=lambda case: case if isinstance(case, str) else None,

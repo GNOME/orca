@@ -44,6 +44,7 @@ def _dbus_service_proxy() -> Any:
         pytest.skip(f"Orca D-Bus service not available: {str(error)}")
         return None
 
+
 @pytest.fixture(scope="session", name="module_proxy_factory")
 def _module_proxy_factory(dbus_service_proxy: Any) -> Callable[[str], Any]:
     """Factory for creating module-specific D-Bus proxies."""
@@ -52,15 +53,13 @@ def _module_proxy_factory(dbus_service_proxy: Any) -> Callable[[str], Any]:
         # If we got here, dbus_service_proxy succeeded, so Orca is running
         try:
             bus = SessionMessageBus()
-            return bus.get_proxy(
-                "org.gnome.Orca.Service",
-                f"/org/gnome/Orca/Service/{module_name}"
-            )
+            return bus.get_proxy("org.gnome.Orca.Service", f"/org/gnome/Orca/Service/{module_name}")
         except (DBusError, AttributeError, TypeError) as error:
             pytest.skip(f"Could not create proxy for {module_name}: {str(error)}")
             return None
 
     return _create_proxy
+
 
 @pytest.fixture(name="dbus_timeout")
 def dbus_timeout_fixture() -> int:
@@ -68,9 +67,10 @@ def dbus_timeout_fixture() -> int:
 
     return int(os.environ.get("ORCA_DBUS_TIMEOUT", "5"))
 
+
 @pytest.fixture
 def run_with_timeout(
-    dbus_timeout: int
+    dbus_timeout: int,
 ) -> Callable[[Callable[[], Any], int | None], dict[str, Any]]:
     """Run a test function with timeout handling using threading (thread-safe)."""
 
@@ -98,7 +98,7 @@ def run_with_timeout(
             return {
                 "success": False,
                 "result": None,
-                "error": f"TIMEOUT: Test timed out after {timeout_value} seconds"
+                "error": f"TIMEOUT: Test timed out after {timeout_value} seconds",
             }
 
         if "error" in exception_container:
@@ -111,6 +111,7 @@ def run_with_timeout(
         return {"success": True, "result": result_container.get("result"), "error": None}
 
     return _run_test
+
 
 def pytest_configure(config: Any) -> None:
     """Register custom markers."""

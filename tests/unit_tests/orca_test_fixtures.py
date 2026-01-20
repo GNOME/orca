@@ -47,6 +47,7 @@ from .orca_test_context import OrcaTestContext
 if TYPE_CHECKING:
     from pytest_mock import MockerFixture
 
+
 @pytest.fixture
 def test_context(mocker: MockerFixture, monkeypatch) -> Generator[OrcaTestContext, None, None]:
     """Provides clean, isolated Orca test environment.

@@ -41,6 +41,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXComponent:
     """Test AXComponent class methods."""
@@ -109,9 +110,7 @@ class TestAXComponent:
 
         if case["supports_component"] and case["position_result"] == "mock_position":
             mock_position = test_context.Mock(x=25, y=35)
-            test_context.patch_object(
-                Atspi.Component, "get_position", return_value=mock_position
-            )
+            test_context.patch_object(Atspi.Component, "get_position", return_value=mock_position)
         elif case["supports_component"] and case["position_result"]:
             test_context.patch_object(
                 Atspi.Component, "get_position", return_value=case["position_result"]
@@ -214,18 +213,12 @@ class TestAXComponent:
 
         if case["supports_component"] and case["size_result"] == "mock_size":
             mock_size = test_context.Mock(x=150, y=75)
-            test_context.patch_object(
-                Atspi.Component, "get_size", return_value=mock_size
-            )
+            test_context.patch_object(Atspi.Component, "get_size", return_value=mock_size)
         elif case["supports_component"] and case["size_result"]:
-            test_context.patch_object(
-                Atspi.Component, "get_size", return_value=case["size_result"]
-            )
+            test_context.patch_object(Atspi.Component, "get_size", return_value=case["size_result"])
         else:
             mock_negative_size = test_context.Mock(x=-1, y=-1)
-            test_context.patch_object(
-                Atspi.Component, "get_size", return_value=mock_negative_size
-            )
+            test_context.patch_object(Atspi.Component, "get_size", return_value=mock_negative_size)
         result = AXComponent.get_size(mock_accessible)
         assert result == (case["expected_width"], case["expected_height"])
 
@@ -254,9 +247,7 @@ class TestAXComponent:
         from orca.ax_component import AXComponent
 
         if case["supports_component"]:
-            test_context.patch_object(
-                Atspi.Component, "get_extents", return_value=mock_rect
-            )
+            test_context.patch_object(Atspi.Component, "get_extents", return_value=mock_rect)
         else:
 
             def mock_get_extents(obj, coord_type):  # pylint: disable=unused-argument
@@ -410,13 +401,17 @@ class TestAXComponent:
         "rect1_coords, rect2_coords, pixel_delta, expected",
         [
             pytest.param((10, 20, 100, 30), (10, 20, 100, 30), 5, True, id="same_rects"),
-            pytest.param((50, 35, 0, 0), (10, 20, 100, 30), 5, True, id="point_in_rect_vertical_range"),
+            pytest.param(
+                (50, 35, 0, 0), (10, 20, 100, 30), 5, True, id="point_in_rect_vertical_range"
+            ),
             pytest.param((50, 10, 0, 0), (10, 20, 100, 30), 5, False, id="point_above_rect"),
             pytest.param((10, 20, 100, 30), (50, 35, 0, 0), 5, True, id="rect_contains_point"),
             pytest.param((10, 20, 100, 30), (10, 100, 100, 30), 5, False, id="no_vertical_overlap"),
             pytest.param((10, 20, 100, 30), (10, 22, 100, 30), 5, True, id="overlapping_same_line"),
             pytest.param((10, 20, 100, 30), (10, 40, 100, 30), 5, False, id="midpoints_too_far"),
-            pytest.param((10, 20, 100, 30), (10, 40, 100, 30), 20, True, id="midpoints_within_larger_delta"),
+            pytest.param(
+                (10, 20, 100, 30), (10, 40, 100, 30), 20, True, id="midpoints_within_larger_delta"
+            ),
         ],
     )
     def test_rects_are_on_same_line(
@@ -801,9 +796,7 @@ class TestAXComponent:
                 return_value=case["scroll_result"],
             )
         else:
-            test_context.patch_object(
-                Atspi.Component, "scroll_to_point", return_value=False
-            )
+            test_context.patch_object(Atspi.Component, "scroll_to_point", return_value=False)
         result = AXComponent.scroll_object_to_point(mock_accessible, 100, 200)
         assert result is case["expected_result"]
 
@@ -852,9 +845,7 @@ class TestAXComponent:
                 Atspi.Component, "scroll_to", return_value=case["scroll_result"]
             )
         else:
-            test_context.patch_object(
-                Atspi.Component, "scroll_to", return_value=False
-            )
+            test_context.patch_object(Atspi.Component, "scroll_to", return_value=False)
         result = AXComponent.scroll_object_to_location(mock_accessible, Atspi.ScrollType.TOP_LEFT)
         assert result is case["expected_result"]
 

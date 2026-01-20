@@ -192,8 +192,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXObject, "get_attributes_dict", return_value={})
         test_context.patch_object(AXObject, "get_child_count", return_value=0)
         test_context.patch_object(AXObject, "get_parent", return_value=None)
-        test_context.patch_object(AXObject, "is_ancestor",
-                                  side_effect=lambda focus, obj: focus == obj)
+        test_context.patch_object(
+            AXObject, "is_ancestor", side_effect=lambda focus, obj: focus == obj
+        )
         test_context.patch_object(AXObject, "has_state", return_value=True)
 
         test_context.patch_object(AXText, "get_all_text", return_value="")
@@ -384,8 +385,9 @@ class TestAXUtilitiesEvent:
         if case["method_name"] == "checked_change":
             AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(mock_obj)] = case["setup_data"]["last_state"]
             test_context.patch_object(
-                AXUtilitiesState, "is_checked",
-                side_effect=lambda obj: case["setup_data"]["current_state"]
+                AXUtilitiesState,
+                "is_checked",
+                side_effect=lambda obj: case["setup_data"]["current_state"],
             )
             method = AXUtilitiesEvent.is_presentable_checked_change
         elif case["method_name"] == "name_change":
@@ -539,8 +541,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
 
         test_context.patch_object(
-            AXObject, "get_name",
-            side_effect=lambda obj: "test name" if obj == mock_obj else "window name"
+            AXObject,
+            "get_name",
+            side_effect=lambda obj: "test name" if obj == mock_obj else "window name",
         )
         test_context.patch_object(
             AXObject,
@@ -1135,6 +1138,7 @@ class TestAXUtilitiesEvent:
         )
 
         from orca import settings
+
         test_context.patch_object(settings, "presentLockingKeys", new=True)
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
@@ -1377,8 +1381,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
 
         test_context.patch_object(
-            AXObject, "is_ancestor",
-            side_effect=lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus
+            AXObject,
+            "is_ancestor",
+            side_effect=lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus,
         )
 
         result = AXUtilitiesEvent.is_presentable_checked_change(mock_event)
@@ -1408,8 +1413,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
 
         test_context.patch_object(
-            AXObject, "is_ancestor",
-            side_effect=lambda obj1, obj2: obj1 == mock_focus and obj2 == mock_obj
+            AXObject,
+            "is_ancestor",
+            side_effect=lambda obj1, obj2: obj1 == mock_focus and obj2 == mock_obj,
         )
 
         result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
@@ -1532,8 +1538,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         test_context.patch_object(
-            AXObject, "is_ancestor",
-            side_effect=lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus
+            AXObject,
+            "is_ancestor",
+            side_effect=lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus,
         )
 
         result = AXUtilitiesEvent._is_presentable_text_event(mock_event)
@@ -1556,9 +1563,7 @@ class TestAXUtilitiesEvent:
 
         mock_event = test_context.Mock(spec=Atspi.Event)
 
-        test_context.patch_object(
-            AXUtilitiesEvent, "_is_presentable_text_event", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesEvent, "_is_presentable_text_event", return_value=True)
 
         method = getattr(AXUtilitiesEvent, case["method_name"])
         result = method(mock_event)
@@ -1758,9 +1763,7 @@ class TestAXUtilitiesEvent:
         if case["test_scenario"] == "ui_update":
             from orca.ax_object import AXObject
 
-            test_context.patch_object(
-                AXObject, "find_ancestor", return_value=test_context.Mock()
-            )
+            test_context.patch_object(AXObject, "find_ancestor", return_value=test_context.Mock())
 
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == getattr(TextEventReason, case["expected_result"])
@@ -2997,13 +3000,9 @@ class TestAXUtilitiesEvent:
             mock_table = test_context.Mock(spec=Atspi.Accessible)
             mock_focus_manager = test_context.Mock()
             mock_focus_manager.get_locus_of_focus.return_value = mock_focus
-            test_context.patch_object(
-                focus_manager, "get_manager", return_value=mock_focus_manager
-            )
+            test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
             test_context.patch_object(AXUtilitiesRole, "is_table_cell", return_value=True)
-            test_context.patch_object(
-                AXObject, "find_ancestor", return_value=mock_table
-            )
+            test_context.patch_object(AXObject, "find_ancestor", return_value=mock_table)
 
         result = AXUtilitiesEvent.is_presentable_active_descendant_change(mock_event)
         assert result is case["expected_result"]
@@ -3040,9 +3039,7 @@ class TestAXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
 
         if case["test_scenario"] == "ancestor_not_list_tree_item":
-            test_context.patch_object(
-                AXObject, "is_ancestor", return_value=True
-            )
+            test_context.patch_object(AXObject, "is_ancestor", return_value=True)
             test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=False)
             test_context.patch_object(AXUtilitiesRole, "is_tree_item", return_value=False)
         elif case["test_scenario"] == "radio_button_no_space":
@@ -3094,9 +3091,7 @@ class TestAXUtilitiesEvent:
             mock_focus = test_context.Mock(spec=Atspi.Accessible)
             mock_focus_manager = test_context.Mock()
             mock_focus_manager.get_locus_of_focus.return_value = mock_focus
-            test_context.patch_object(
-                focus_manager, "get_manager", return_value=mock_focus_manager
-            )
+            test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
             test_context.patch_object(
                 AXObject, "is_ancestor", side_effect=lambda focus, source: case["is_ancestor"]
             )
@@ -3486,9 +3481,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
-        test_context.patch_object(
-            AXObject, "find_descendant", return_value=mock_progress_bar
-        )
+        test_context.patch_object(AXObject, "find_descendant", return_value=mock_progress_bar)
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is False
@@ -3551,9 +3544,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
-        test_context.patch_object(
-            AXObject, "find_descendant", return_value=mock_progress_bar
-        )
+        test_context.patch_object(AXObject, "find_descendant", return_value=mock_progress_bar)
 
         result1 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result1 is False

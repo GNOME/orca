@@ -41,6 +41,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXUtilitiesRole:
     """Test AXUtilitiesRole class methods."""
@@ -871,12 +872,8 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
         if hasattr(Atspi, "role_get_localized_name"):
             test_context.patch_object(
                 Atspi, "role_get_localized_name", return_value="LocalizedRole"
@@ -884,8 +881,7 @@ class TestAXUtilitiesRole:
         else:
             test_context.patch_object(Atspi, "role_get_name", return_value="LocalizedRole")
         assert (
-            AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.BUTTON)
-            == "LocalizedRole"
+            AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.BUTTON) == "LocalizedRole"
         )
 
     def test_get_localized_role_name_with_non_atspi_role(
@@ -915,32 +911,20 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=True)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_dpub_acknowledgments", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub_acknowledgments", return_value=True)
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LANDMARK)
             == object_properties.ROLE_ACKNOWLEDGMENTS
         )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_dpub_abstract", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub_abstract", return_value=True)
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, "ROLE_DPUB_SECTION")
             == object_properties.ROLE_ABSTRACT
         )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_list_item", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_dpub_biblioref", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_dpub_biblioref", return_value=True)
         assert (
             AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LIST_ITEM)
             == object_properties.ROLE_BIBLIOENTRY
@@ -1023,19 +1007,13 @@ class TestAXUtilitiesRole:
                 side_effect=lambda obj, role=None, m=method: m == case["role_check_method"],
             )
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, case["role"])
         expected = getattr(object_properties, case["expected_result"].split(".")[1])
@@ -1086,44 +1064,22 @@ class TestAXUtilitiesRole:
         from orca import object_properties
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_split_pane", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_horizontal_slider", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_vertical_slider", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_horizontal_scrollbar", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_vertical_scrollbar", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_horizontal_separator", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_vertical_separator", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_split_pane", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_horizontal_slider", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_vertical_slider", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_horizontal_scrollbar", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_vertical_scrollbar", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_horizontal_separator", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_vertical_separator", return_value=False)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
-        test_context.patch_object(
-            Atspi, "role_get_localized_name", return_value="fallback_role"
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
+        test_context.patch_object(Atspi, "role_get_localized_name", return_value="fallback_role")
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.SPLIT_PANE)
         if case["expected_result"]:
@@ -1180,12 +1136,8 @@ class TestAXUtilitiesRole:
             )
 
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.UNKNOWN)
         expected = getattr(object_properties, case["expected_result"].split(".")[1])
@@ -1250,9 +1202,7 @@ class TestAXUtilitiesRole:
         from orca import object_properties
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
 
         landmark_methods = [
             "is_landmark_without_type",
@@ -1272,16 +1222,12 @@ class TestAXUtilitiesRole:
                 side_effect=lambda obj, role=None, m=method: m == case["role_check_method"],
             )
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LANDMARK)
         if case["expected_result"]:
@@ -1303,50 +1249,24 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_form", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_without_type", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_banner", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_complementary", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_contentinfo", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_main", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_navigation", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_region", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark_search", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_form", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_without_type", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_banner", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_complementary", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_contentinfo", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_main", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_navigation", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_region", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_landmark_search", return_value=False)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
-        test_context.patch_object(
-            Atspi, "role_get_localized_name", return_value="form_localized"
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
+        test_context.patch_object(Atspi, "role_get_localized_name", return_value="form_localized")
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.LANDMARK)
         assert result == "form_localized"
@@ -1362,16 +1282,12 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=True)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
         test_context.patch_object(
             Atspi, "role_get_localized_name", return_value="comment_localized"
         )
@@ -1592,36 +1508,20 @@ class TestAXUtilitiesRole:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=True)
         if case["role_context"] == "landmark":
-            test_context.patch_object(
-                AXUtilitiesRole, "is_landmark", return_value=True
-            )
-            test_context.patch_object(
-                AXUtilitiesRole, "is_list_item", return_value=False
-            )
+            test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
+            test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=False)
             role_param = Atspi.Role.LANDMARK
         elif case["role_context"] == "section":
-            test_context.patch_object(
-                AXUtilitiesRole, "is_landmark", return_value=False
-            )
-            test_context.patch_object(
-                AXUtilitiesRole, "is_list_item", return_value=False
-            )
+            test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+            test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=False)
             role_param = "ROLE_DPUB_SECTION"
         elif case["role_context"] == "list_item":
-            test_context.patch_object(
-                AXUtilitiesRole, "is_landmark", return_value=False
-            )
-            test_context.patch_object(
-                AXUtilitiesRole, "is_list_item", return_value=True
-            )
+            test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+            test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
             role_param = Atspi.Role.LIST_ITEM
         else:
-            test_context.patch_object(
-                AXUtilitiesRole, "is_landmark", return_value=False
-            )
-            test_context.patch_object(
-                AXUtilitiesRole, "is_list_item", return_value=False
-            )
+            test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+            test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=False)
             role_param = Atspi.Role.UNKNOWN
 
         dpub_methods = [
@@ -1665,15 +1565,11 @@ class TestAXUtilitiesRole:
                 side_effect=lambda obj, role=None, m=method: m == case["dpub_method"],
             )
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, role_param)
         expected = getattr(object_properties, case["expected_result"].split(".")[1])
@@ -1692,22 +1588,14 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_suggestion", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_suggestion", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_feed", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_figure", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_switch", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "is_comment", return_value=False
-        )
-        test_context.patch_object(
-            Atspi, "role_get_localized_name", return_value="button_localized"
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
+        test_context.patch_object(Atspi, "role_get_localized_name", return_value="button_localized")
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj)
         assert result == "button_localized"
@@ -1740,17 +1628,11 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_table_cell", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_table_cell", return_value=False)
         assert not AXUtilitiesRole.is_grid_cell(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_table_cell", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "_get_xml_roles", return_value=["gridcell"]
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_table_cell", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["gridcell"])
         assert AXUtilitiesRole.is_grid_cell(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["cell"])
@@ -1795,9 +1677,7 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_article", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_article", return_value=False)
         assert not AXUtilitiesRole.is_feed_article(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "is_article", return_value=True)
@@ -1836,20 +1716,14 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         method_to_test = getattr(AXUtilitiesRole, case["method_name"])
-        test_context.patch_object(
-            AXUtilitiesRole, case["base_method_name"], return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, case["base_method_name"], return_value=False)
         assert not method_to_test(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, case["base_method_name"], return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, case["base_method_name"], return_value=True)
         test_context.patch_object(AXUtilitiesRole, "_get_display_style", return_value="block")
         assert not method_to_test(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "_get_display_style", return_value="inline"
-        )
+        test_context.patch_object(AXUtilitiesRole, "_get_display_style", return_value="inline")
         assert method_to_test(mock_obj)
 
     def test_is_list_box_item(self, test_context: OrcaTestContext) -> None:
@@ -1861,14 +1735,10 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_list_item", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=False)
         assert not AXUtilitiesRole.is_list_box_item(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_list_item", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
         mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_list_box_item(mock_obj)
 
@@ -1884,14 +1754,10 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_math_fraction", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_math_fraction", return_value=False)
         assert not AXUtilitiesRole.is_math_fraction_without_bar(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_math_fraction", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_math_fraction", return_value=True)
         mock_ax_object_class.get_attribute = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_math_fraction_without_bar(mock_obj)
 
@@ -1910,14 +1776,10 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_dialog_or_alert", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_dialog_or_alert", return_value=False)
         assert not AXUtilitiesRole.is_modal_dialog(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_dialog_or_alert", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_dialog_or_alert", return_value=True)
         mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_modal_dialog(mock_obj)
 
@@ -2094,23 +1956,15 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
         assert not AXUtilitiesRole.is_landmark_without_type(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=[])
         assert AXUtilitiesRole.is_landmark_without_type(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_landmark", return_value=True
-        )
-        test_context.patch_object(
-            AXUtilitiesRole, "_get_xml_roles", return_value=["navigation"]
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["navigation"])
         assert not AXUtilitiesRole.is_landmark_without_type(mock_obj)
 
     @pytest.mark.parametrize(
@@ -2370,20 +2224,14 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_push_button", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_push_button", return_value=False)
         assert not AXUtilitiesRole.is_default_button(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_push_button", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_push_button", return_value=True)
         mock_ax_object_class.has_state = test_context.Mock(return_value=False)
         assert not AXUtilitiesRole.is_default_button(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_push_button", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_push_button", return_value=True)
         mock_ax_object_class.has_state = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_default_button(mock_obj)
 
@@ -2397,22 +2245,16 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "is_single_line_entry", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_single_line_entry", return_value=False)
         assert not AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_single_line_entry", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_single_line_entry", return_value=True)
         mock_ax_utilities_state_class.supports_autocompletion = test_context.Mock(
             return_value=False
         )
         assert not AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_single_line_entry", return_value=True
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_single_line_entry", return_value=True)
         mock_ax_utilities_state_class.supports_autocompletion = test_context.Mock(return_value=True)
         assert AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
@@ -2622,9 +2464,7 @@ class TestAXUtilitiesRole:
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesRole, "_get_xml_roles", return_value=["doc-abstract"]
-        )
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["doc-abstract"])
         assert AXUtilitiesRole.is_dpub(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["button"])
@@ -2812,9 +2652,7 @@ class TestAXUtilitiesRole:
         )
         assert method(mock_obj)
 
-        test_context.patch_object(
-            AXUtilitiesRole, "_get_xml_roles", return_value=["doc-other"]
-        )
+        test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["doc-other"])
         assert not method(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=[])

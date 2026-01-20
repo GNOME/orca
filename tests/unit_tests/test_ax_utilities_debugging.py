@@ -37,6 +37,7 @@ from gi.repository import Atspi, GLib
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
+
 @pytest.mark.unit
 class TestAXUtilitiesDebugging:
     """Test debugging utility methods."""
@@ -60,9 +61,7 @@ class TestAXUtilitiesDebugging:
         ax_object_class_mock.get_action_name = test_context.Mock(return_value="")
         ax_object_class_mock.get_action_key_binding = test_context.Mock(return_value="")
         ax_object_class_mock.get_attributes_dict = test_context.Mock(return_value={})
-        ax_object_class_mock.get_state_set = test_context.Mock(
-            return_value=test_context.Mock()
-        )
+        ax_object_class_mock.get_state_set = test_context.Mock(return_value=test_context.Mock())
         ax_object_class_mock.supports_text = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
 
@@ -72,9 +71,7 @@ class TestAXUtilitiesDebugging:
 
         relation_class_mock = test_context.Mock()
         relation_class_mock.get_relations = test_context.Mock(return_value=[])
-        relation_class_mock.get_relation_targets_for_debugging = test_context.Mock(
-            return_value=[]
-        )
+        relation_class_mock.get_relation_targets_for_debugging = test_context.Mock(return_value=[])
         essential_modules["orca.ax_utilities_relation"].AXUtilitiesRelation = relation_class_mock
 
         return essential_modules
@@ -106,6 +103,7 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         result = AXUtilitiesDebugging._format_string(input_string)  # pylint: disable=protected-access
         assert result == expected_result
 
@@ -114,14 +112,13 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
         )
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_name", return_value="OK"
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="OK")
         result = AXUtilitiesDebugging.as_string(mock_obj)
         assert "button: 'OK'" in result
         assert hex(id(mock_obj)) in result
@@ -131,14 +128,11 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value=""
-        )
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_name", return_value=""
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_role_name", return_value="")
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="")
         result = AXUtilitiesDebugging.as_string(mock_obj)
         assert "[DEAD" in result
 
@@ -147,6 +141,7 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.type = "focus:in"
         mock_event.source = test_context.Mock(spec=Atspi.Accessible)
@@ -157,12 +152,10 @@ class TestAXUtilitiesDebugging:
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
         )
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_name", return_value="OK"
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="OK")
         test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesApplication.application_as_string",
-            return_value="TestApp"
+            return_value="TestApp",
         )
         result = AXUtilitiesDebugging.as_string(mock_event)
         assert "focus:in for" in result
@@ -173,11 +166,10 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_n_actions", return_value=2
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_n_actions", return_value=2)
 
         def mock_get_action_name(unused_obj, index):
             return ["click", "focus"][index]
@@ -190,7 +182,7 @@ class TestAXUtilitiesDebugging:
         )
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_action_key_binding",
-            new=mock_get_action_key_binding
+            new=mock_get_action_key_binding,
         )
         result = AXUtilitiesDebugging.actions_as_string(mock_obj)
         assert "click (Return)" in result
@@ -202,6 +194,7 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         attributes_dict = {"level": "2", "placeholder-text": "Enter name"}
@@ -218,10 +211,9 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=False
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_valid", return_value=False)
         result = AXUtilitiesDebugging.interfaces_as_string(mock_obj)
         assert result == ""
 
@@ -256,16 +248,13 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=False
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_valid", return_value=False)
         result = AXUtilitiesDebugging.state_set_as_string(mock_obj)
         assert result == ""
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=True
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_valid", return_value=True)
 
         mock_state_set = test_context.Mock()
         mock_state1 = test_context.Mock()
@@ -300,6 +289,7 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         test_context.patch(
@@ -333,6 +323,7 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_role = test_context.Mock(spec=Atspi.Role)
         mock_role.value_nick = "button"
         result = AXUtilitiesDebugging.as_string(mock_role)
@@ -343,6 +334,7 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_rect = test_context.Mock(spec=Atspi.Rect)
         mock_rect.x = 10
         mock_rect.y = 20
@@ -376,9 +368,7 @@ class TestAXUtilitiesDebugging:
         assert result == ""
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_dead", return_value=True
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_dead", return_value=True)
         result = AXUtilitiesDebugging.object_details_as_string(mock_obj)
         assert result == "(exception fetching data)"
 
@@ -433,17 +423,14 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=False
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_valid", return_value=False)
         result = AXUtilitiesDebugging.relations_as_string(mock_obj)
         assert result == ""
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_valid", return_value=True
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_valid", return_value=True)
 
         mock_relation = test_context.Mock()
         mock_relation_type = test_context.Mock()
@@ -453,28 +440,22 @@ class TestAXUtilitiesDebugging:
         mock_target = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesRelation.get_relations",
-            return_value=[mock_relation]
+            return_value=[mock_relation],
         )
         test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesRelation.get_relation_targets_for_debugging",
-            side_effect=lambda obj, rel_type: [mock_target]
+            side_effect=lambda obj, rel_type: [mock_target],
         )
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="label"
         )
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_name", return_value="Username"
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="Username")
         result = AXUtilitiesDebugging.relations_as_string(mock_obj)
         assert "labelled-by" in result
         assert "label: 'Username'" in result
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value=""
-        )
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_name", return_value=""
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_role_name", return_value="")
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="")
         result = AXUtilitiesDebugging.relations_as_string(mock_obj)
         assert "labelled-by" in result
         assert "DEAD" in result
@@ -484,15 +465,14 @@ class TestAXUtilitiesDebugging:
 
         self._setup_dependencies(test_context)
         from orca.ax_utilities_debugging import AXUtilitiesDebugging
+
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.is_dead", return_value=False
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.is_dead", return_value=False)
 
         test_context.patch(
             "orca.ax_utilities_debugging.AXUtilitiesApplication.application_as_string",
-            return_value="TestApp"
+            return_value="TestApp",
         )
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_name", return_value="button name"
@@ -509,9 +489,7 @@ class TestAXUtilitiesDebugging:
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_accessible_id", return_value="btn1"
         )
-        test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_path", return_value=[0, 1, 2]
-        )
+        test_context.patch("orca.ax_utilities_debugging.AXObject.get_path", return_value=[0, 1, 2])
 
         test_context.patch_object(
             AXUtilitiesDebugging, "state_set_as_string", return_value="focused, visible"

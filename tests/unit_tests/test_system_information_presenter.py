@@ -40,6 +40,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestSystemInformationPresenter:
     """Test SystemInformationPresenter class methods."""
@@ -163,8 +164,8 @@ class TestSystemInformationPresenter:
 
         mock_bindings_instance = test_context.Mock()
         mock_keybindings_class = test_context.patch(
-            "orca.system_information_presenter.keybindings.KeyBindings", 
-            return_value=mock_bindings_instance
+            "orca.system_information_presenter.keybindings.KeyBindings",
+            return_value=mock_bindings_instance,
         )
         from orca.system_information_presenter import SystemInformationPresenter
 
@@ -383,9 +384,7 @@ class TestSystemInformationPresenter:
         mock_script.present_message = test_context.Mock()
 
         if psutil_available:
-            test_context.patch(
-                "orca.system_information_presenter._PSUTIL_AVAILABLE", new=True
-            )
+            test_context.patch("orca.system_information_presenter._PSUTIL_AVAILABLE", new=True)
             if has_battery:
                 if power_plugged is not None:
                     essential_modules["battery"].power_plugged = power_plugged
@@ -450,9 +449,7 @@ class TestSystemInformationPresenter:
             if memory_size == "mb":
                 essential_modules["memory"].total = 512 * 1024**2
                 essential_modules["memory"].used = 256 * 1024**2
-            test_context.patch(
-                "orca.system_information_presenter._PSUTIL_AVAILABLE", new=True
-            )
+            test_context.patch("orca.system_information_presenter._PSUTIL_AVAILABLE", new=True)
 
         from orca.system_information_presenter import SystemInformationPresenter
 
@@ -478,9 +475,7 @@ class TestSystemInformationPresenter:
         """Test system_information_presenter.get_presenter singleton functionality."""
 
         self._setup_dependencies(test_context)
-        test_context.patch(
-            "orca.system_information_presenter._PSUTIL_AVAILABLE", new=True
-        )
+        test_context.patch("orca.system_information_presenter._PSUTIL_AVAILABLE", new=True)
         from orca.system_information_presenter import get_presenter
 
         presenter1 = get_presenter()
@@ -544,8 +539,7 @@ class TestSystemInformationPresenter:
         essential_modules["orca.settings"].presentDateFormat = format_value
 
         test_context.patch(
-            "orca.system_information_presenter.dbus_service.getter",
-            new=lambda func: func
+            "orca.system_information_presenter.dbus_service.getter", new=lambda func: func
         )
 
         from orca.system_information_presenter import SystemInformationPresenter
@@ -580,8 +574,7 @@ class TestSystemInformationPresenter:
         original_format = settings_mock.presentDateFormat
 
         test_context.patch(
-            "orca.system_information_presenter.dbus_service.setter",
-            new=lambda func: func
+            "orca.system_information_presenter.dbus_service.setter", new=lambda func: func
         )
 
         from orca.system_information_presenter import SystemInformationPresenter
@@ -623,8 +616,7 @@ class TestSystemInformationPresenter:
         essential_modules["orca.settings"].presentTimeFormat = format_value
 
         test_context.patch(
-            "orca.system_information_presenter.dbus_service.getter",
-            new=lambda func: func
+            "orca.system_information_presenter.dbus_service.getter", new=lambda func: func
         )
 
         from orca.system_information_presenter import SystemInformationPresenter
@@ -659,8 +651,7 @@ class TestSystemInformationPresenter:
         original_format = settings_mock.presentTimeFormat
 
         test_context.patch(
-            "orca.system_information_presenter.dbus_service.setter",
-            new=lambda func: func
+            "orca.system_information_presenter.dbus_service.setter", new=lambda func: func
         )
 
         from orca.system_information_presenter import SystemInformationPresenter
@@ -689,8 +680,7 @@ class TestSystemInformationPresenter:
         self._setup_dependencies(test_context)
 
         test_context.patch(
-            "orca.system_information_presenter.dbus_service.getter",
-            new=lambda func: func
+            "orca.system_information_presenter.dbus_service.getter", new=lambda func: func
         )
 
         from orca.system_information_presenter import SystemInformationPresenter
@@ -711,8 +701,7 @@ class TestSystemInformationPresenter:
         self._setup_dependencies(test_context)
 
         test_context.patch(
-            "orca.system_information_presenter.dbus_service.getter",
-            new=lambda func: func
+            "orca.system_information_presenter.dbus_service.getter", new=lambda func: func
         )
 
         from orca.system_information_presenter import SystemInformationPresenter

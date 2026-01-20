@@ -38,6 +38,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXUtilitiesState:
     """Test AXUtilitiesState class methods."""
@@ -173,9 +174,7 @@ class TestAXUtilitiesState:
         from orca.ax_utilities_state import AXUtilitiesState
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXUtilitiesState, "is_active", return_value=case["is_active"]
-        )
+        test_context.patch_object(AXUtilitiesState, "is_active", return_value=case["is_active"])
         mock_ax_object_class.get_attribute = test_context.Mock(return_value=case["attribute_value"])
         result = AXUtilitiesState.get_current_item_status_string(mock_obj)
         assert result == case["expected_result"]

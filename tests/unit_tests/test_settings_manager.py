@@ -140,9 +140,7 @@ class TestSettingsManagerFileIO:
 
         return essential_modules
 
-    def _create_fresh_manager(
-        self, test_context: OrcaTestContext, prefs_dir: str
-    ) -> Any:
+    def _create_fresh_manager(self, test_context: OrcaTestContext, prefs_dir: str) -> Any:
         """Create a fresh SettingsManager instance for testing."""
 
         from orca import settings_manager
@@ -353,9 +351,8 @@ class TestSettingsManagerFileIO:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
             from orca import settings_manager
-            test_context.patch_object(
-                settings_manager, "AXObject", new=ax_object_mock
-            )
+
+            test_context.patch_object(settings_manager, "AXObject", new=ax_object_mock)
 
             mock_script = test_context.Mock()
             mock_app = test_context.Mock()

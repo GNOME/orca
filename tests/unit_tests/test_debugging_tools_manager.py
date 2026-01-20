@@ -42,6 +42,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestDebuggingToolsManager:
     """Test DebuggingToolsManager class methods."""
@@ -374,19 +375,15 @@ class TestDebuggingToolsManager:
             )
             test_context.patch(
                 "orca.debugging_tools_manager.focus_manager.get_manager",
-                return_value=mock_focus_instance
+                return_value=mock_focus_instance,
             )
 
         test_context.patch(
             "orca.debugging_tools_manager.AXUtilities.get_application", return_value=test_app
         )
 
-        mock_clear_cache = test_context.patch(
-            "orca.debugging_tools_manager.AXObject.clear_cache"
-        )
-        mock_debug_print = test_context.patch(
-            "orca.debugging_tools_manager.debug.print_message"
-        )
+        mock_clear_cache = test_context.patch("orca.debugging_tools_manager.AXObject.clear_cache")
+        mock_debug_print = test_context.patch("orca.debugging_tools_manager.debug.print_message")
 
         result = manager._clear_atspi_app_cache(script_mock)
         assert result

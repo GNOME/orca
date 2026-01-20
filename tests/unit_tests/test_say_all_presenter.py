@@ -41,6 +41,7 @@ from gi.repository import Atspi
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
+
 @pytest.mark.unit
 class TestSayAllPresenter:
     """Test SayAllPresenter class methods."""
@@ -551,8 +552,9 @@ class TestSayAllPresenter:
         settings_mock = essential_modules["orca.settings"]
         settings_mock.rewindAndFastForwardInSayAll = setting_enabled
 
-        mock_context = (test_context.Mock(spec=speechserver.SayAllContext)
-                        if context_provided else None)
+        mock_context = (
+            test_context.Mock(spec=speechserver.SayAllContext) if context_provided else None
+        )
         if context_provided and mock_context is not None:
             mock_context.obj = "provided_obj"
             if direction == "rewind":
@@ -571,8 +573,7 @@ class TestSayAllPresenter:
         if direction == "rewind":
             presenter._contents = [("content_obj", 0, 10, "text")]
         else:
-            presenter._contents = [("first_obj", 0, 5, "first"),
-                                   ("last_obj", 10, 20, "last")]
+            presenter._contents = [("first_obj", 0, 5, "first"), ("last_obj", 10, 20, "last")]
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
@@ -620,6 +621,7 @@ class TestSayAllPresenter:
         debug_mock.print_tokens = test_context.Mock()
 
         from orca import speech  # pylint: disable=import-outside-toplevel
+
         test_context.patch_object(speech, "say_all", return_value=None)
 
         mock_script.utilities.get_caret_context.return_value = ("obj", 10)
@@ -738,8 +740,10 @@ class TestSayAllPresenter:
         presenter._progress_callback(mock_context, speechserver.SayAllContext.PROGRESS)
 
         focus_instance.emit_region_changed.assert_called_once_with(
-            mock_context.obj, mock_context.current_offset, mock_context.current_end_offset,
-            "say-all"
+            mock_context.obj,
+            mock_context.current_offset,
+            mock_context.current_end_offset,
+            "say-all",
         )
 
     def test_progress_callback_uses_focus_tracking_mode_when_interrupted(
@@ -776,6 +780,7 @@ class TestSayAllPresenter:
         test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
 
         from orca import settings as orca_settings
+
         test_context.patch_object(orca_settings, "sayAllStyle", new=0)
         test_context.patch_object(orca_settings, "structNavInSayAll", new=False)
 
@@ -826,13 +831,16 @@ class TestSayAllPresenter:
 
         # Mock utilities - return contents once, then return empty to exit loop
         call_count = [0]
+
         def mock_get_sentence_contents(obj, offset):
             call_count[0] += 1
             if call_count[0] == 1:
                 return [(mock_obj, 0, end_offset, "Test sentence.")]
             return []
 
-        mock_script.utilities.get_sentence_contents_at_offset.side_effect = mock_get_sentence_contents
+        mock_script.utilities.get_sentence_contents_at_offset.side_effect = (
+            mock_get_sentence_contents
+        )
         mock_script.utilities.filter_contents_for_presentation.side_effect = lambda x: x
 
         # next_context returns None to end the loop
@@ -847,8 +855,9 @@ class TestSayAllPresenter:
         ax_utilities_mock.is_terminal.return_value = False
 
         # Mock _say_all_should_skip_content to avoid dependency issues
-        test_context.patch_object(presenter, "_say_all_should_skip_content",
-                                  return_value=(False, ""))
+        test_context.patch_object(
+            presenter, "_say_all_should_skip_content", return_value=(False, "")
+        )
 
         # Mock debug
         debug_mock = essential_modules["orca.debug"]
@@ -862,7 +871,9 @@ class TestSayAllPresenter:
         focus_manager_mock.get_manager.return_value = manager_instance
 
         # Mock event_synthesizer
-        essential_modules["orca.ax_event_synthesizer"].get_synthesizer.return_value.scroll_into_view = test_context.Mock()
+        essential_modules[
+            "orca.ax_event_synthesizer"
+        ].get_synthesizer.return_value.scroll_into_view = test_context.Mock()
 
         # Mock utilities.set_caret_offset
         mock_script.utilities.set_caret_offset = test_context.Mock()

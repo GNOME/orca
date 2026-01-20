@@ -43,6 +43,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXTable:
     """Test AXTable class methods."""
@@ -199,9 +200,7 @@ class TestAXTable:
         if headers is None:
             headers = [test_context.Mock(spec=Atspi.Accessible)]
 
-        test_context.patch_object(
-            AXObject, "supports_table_cell", side_effect=lambda obj: False
-        )
+        test_context.patch_object(AXObject, "supports_table_cell", side_effect=lambda obj: False)
         test_context.patch_object(
             AXTable, "_get_cell_coordinates_from_table", side_effect=lambda obj: coordinates
         )
@@ -572,12 +571,12 @@ class TestAXTable:
         test_context.patch_object(
             Atspi.Table,
             "get_row_extent_at",
-            side_effect=lambda table, row, col: mock_get_extent("row")
+            side_effect=lambda table, row, col: mock_get_extent("row"),
         )
         test_context.patch_object(
             Atspi.Table,
             "get_column_extent_at",
-            side_effect=lambda table, row, col: mock_get_extent("col")
+            side_effect=lambda table, row, col: mock_get_extent("col"),
         )
         result = AXTable.is_non_uniform_table(mock_table)
         assert result == case["expected_result"]
@@ -642,9 +641,7 @@ class TestAXTable:
         from orca.ax_object import AXObject
         from orca import debug
 
-        test_context.patch_object(
-            AXObject, "supports_table", return_value=case["supports_table"]
-        )
+        test_context.patch_object(AXObject, "supports_table", return_value=case["supports_table"])
 
         if case["supports_table"] and not case["raises_error"]:
             test_context.patch_object(
@@ -707,9 +704,7 @@ class TestAXTable:
         from orca.ax_object import AXObject
         from orca import debug
 
-        test_context.patch_object(
-            AXObject, "supports_table", return_value=case["supports_table"]
-        )
+        test_context.patch_object(AXObject, "supports_table", return_value=case["supports_table"])
 
         if case["supports_table"] and not case["raises_error"]:
             selected_columns = [0, 2, 4]
@@ -773,9 +768,7 @@ class TestAXTable:
         from orca.ax_object import AXObject
         from orca import debug
 
-        test_context.patch_object(
-            AXObject, "supports_table", return_value=case["supports_table"]
-        )
+        test_context.patch_object(AXObject, "supports_table", return_value=case["supports_table"])
 
         if case["supports_table"] and not case["raises_error"]:
             test_context.patch_object(Atspi.Table, "get_n_selected_rows", return_value=3)
@@ -836,15 +829,11 @@ class TestAXTable:
         from orca.ax_object import AXObject
         from orca import debug
 
-        test_context.patch_object(
-            AXObject, "supports_table", return_value=case["supports_table"]
-        )
+        test_context.patch_object(AXObject, "supports_table", return_value=case["supports_table"])
 
         if case["supports_table"] and not case["raises_error"]:
             selected_rows = [1, 3, 5]
-            test_context.patch_object(
-                Atspi.Table, "get_selected_rows", return_value=selected_rows
-            )
+            test_context.patch_object(Atspi.Table, "get_selected_rows", return_value=selected_rows)
         elif case["supports_table"] and case["raises_error"]:
 
             def raise_glib_error(obj):
@@ -928,20 +917,14 @@ class TestAXTable:
         from orca.ax_table import AXTable
         from orca.ax_object import AXObject
 
-        test_context.patch_object(
-            AXObject, "supports_table", return_value=case["supports_table"]
-        )
+        test_context.patch_object(AXObject, "supports_table", return_value=case["supports_table"])
 
         if case["supports_table"]:
-            test_context.patch_object(
-                AXTable, "get_row_count", return_value=case["row_count"]
-            )
+            test_context.patch_object(AXTable, "get_row_count", return_value=case["row_count"])
             test_context.patch_object(
                 AXTable, "get_selected_row_count", return_value=case["selected_row_count"]
             )
-            test_context.patch_object(
-                AXTable, "get_column_count", return_value=case["col_count"]
-            )
+            test_context.patch_object(AXTable, "get_column_count", return_value=case["col_count"])
             test_context.patch_object(
                 AXTable, "get_selected_column_count", return_value=case["selected_col_count"]
             )
@@ -986,9 +969,7 @@ class TestAXTable:
         from orca.ax_table import AXTable
         from orca.ax_object import AXObject
 
-        test_context.patch_object(
-            AXObject, "supports_table", return_value=case["supports_table"]
-        )
+        test_context.patch_object(AXObject, "supports_table", return_value=case["supports_table"])
 
         if case["supports_table"] and not case["raises_error"]:
             test_context.patch_object(
@@ -1136,9 +1117,7 @@ class TestAXTable:
         test_context.patch_object(
             AXObject, "supports_table_cell", side_effect=lambda obj: case["supports_table_cell"]
         )
-        test_context.patch_object(
-            AXTable, "_get_cell_spans_from_table_cell", return_value=(2, 1)
-        )
+        test_context.patch_object(AXTable, "_get_cell_spans_from_table_cell", return_value=(2, 1))
         test_context.patch_object(AXTable, "_get_cell_spans_from_table", return_value=(1, 2))
         test_context.patch_object(
             AXTable,
@@ -1549,7 +1528,7 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_cell_spans",
-            side_effect=lambda obj, prefer_attribute: (case["row_span"], 1)
+            side_effect=lambda obj, prefer_attribute: (case["row_span"], 1),
         )
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(
@@ -1626,7 +1605,7 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_cell_spans",
-            side_effect=lambda obj, prefer_attribute: (1, case["col_span"])
+            side_effect=lambda obj, prefer_attribute: (1, case["col_span"]),
         )
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(
@@ -1645,9 +1624,7 @@ class TestAXTable:
 
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_result_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXTable, "get_cell_coordinates", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "get_cell_coordinates", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(
             AXTable, "get_cell_at", side_effect=lambda table, row, col: mock_result_cell
@@ -1665,9 +1642,7 @@ class TestAXTable:
 
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_result_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXTable, "get_cell_coordinates", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "get_cell_coordinates", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(AXTable, "get_column_count", return_value=5)
         test_context.patch_object(
@@ -1686,9 +1661,7 @@ class TestAXTable:
 
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_result_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXTable, "get_cell_coordinates", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "get_cell_coordinates", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(
             AXTable, "get_cell_at", side_effect=lambda table, row, col: mock_result_cell
@@ -1706,9 +1679,7 @@ class TestAXTable:
 
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_result_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXTable, "get_cell_coordinates", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "get_cell_coordinates", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(AXTable, "get_row_count", return_value=8)
         test_context.patch_object(
@@ -1857,7 +1828,7 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_column_count",
-            side_effect=lambda table, prefer_attribute: case["col_count"]
+            side_effect=lambda table, prefer_attribute: case["col_count"],
         )
         result = AXTable.is_last_cell(mock_cell)
         assert result == case["expected_result"]
@@ -1880,7 +1851,7 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_cell_coordinates",
-            side_effect=lambda obj, prefer_attribute: (2, case["cell_col"])
+            side_effect=lambda obj, prefer_attribute: (2, case["cell_col"]),
         )
         result = AXTable.is_start_of_row(mock_cell)
         assert result == case["expected_result"]
@@ -1906,13 +1877,13 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_cell_coordinates",
-            side_effect=lambda obj, prefer_attribute: (2, case["cell_col"])
+            side_effect=lambda obj, prefer_attribute: (2, case["cell_col"]),
         )
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(
             AXTable,
             "get_column_count",
-            side_effect=lambda table, prefer_attribute: case["col_count"]
+            side_effect=lambda table, prefer_attribute: case["col_count"],
         )
         result = AXTable.is_end_of_row(mock_cell)
         assert result == case["expected_result"]
@@ -1935,7 +1906,7 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_cell_coordinates",
-            side_effect=lambda obj, prefer_attribute: (case["cell_row"], 3)
+            side_effect=lambda obj, prefer_attribute: (case["cell_row"], 3),
         )
         result = AXTable.is_top_of_column(mock_cell)
         assert result == case["expected_result"]
@@ -1961,7 +1932,7 @@ class TestAXTable:
         test_context.patch_object(
             AXTable,
             "get_cell_coordinates",
-            side_effect=lambda obj, prefer_attribute: (case["cell_row"], 3)
+            side_effect=lambda obj, prefer_attribute: (case["cell_row"], 3),
         )
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(
@@ -2035,9 +2006,7 @@ class TestAXTable:
         def mock_clear(reason):
             clear_called.append(reason)
 
-        test_context.patch(
-            "orca.ax_table.AXTable._clear_all_dictionaries", new=mock_clear
-        )
+        test_context.patch("orca.ax_table.AXTable._clear_all_dictionaries", new=mock_clear)
         AXTable.clear_cache_now("test reason")
         assert clear_called == ["test reason"]
 
@@ -2175,7 +2144,7 @@ class TestAXTable:
         test_context.patch_object(
             Atspi.Table,
             "get_row_column_extents_at_index",
-            side_effect=lambda table, index: mock_result
+            side_effect=lambda table, index: mock_result,
         )
         test_context.patch_object(
             AXTable, "get_row_count", side_effect=lambda table, prefer_attr: 3
@@ -2487,7 +2456,7 @@ class TestAXTable:
             test_context.patch_object(
                 AXUtilitiesRole,
                 "is_table_cell_or_header",
-                side_effect=lambda obj: obj == mock_ancestor
+                side_effect=lambda obj: obj == mock_ancestor,
             )
             test_context.patch_object(
                 AXObject, "find_ancestor", side_effect=lambda obj, func: mock_ancestor
@@ -2495,7 +2464,7 @@ class TestAXTable:
             test_context.patch_object(
                 AXTable,
                 "get_row_headers",
-                side_effect=lambda obj: mock_headers if obj == mock_cell else []
+                side_effect=lambda obj: mock_headers if obj == mock_cell else [],
             )
             result = AXTable.get_new_row_headers(mock_cell, mock_old_cell)
             assert result == mock_headers
@@ -2548,7 +2517,7 @@ class TestAXTable:
             test_context.patch_object(
                 AXUtilitiesRole,
                 "is_table_cell_or_header",
-                side_effect=lambda obj: obj == mock_ancestor
+                side_effect=lambda obj: obj == mock_ancestor,
             )
             test_context.patch_object(
                 AXObject, "find_ancestor", side_effect=lambda obj, func: mock_ancestor
@@ -2556,15 +2525,13 @@ class TestAXTable:
             test_context.patch_object(
                 AXTable,
                 "get_column_headers",
-                side_effect=lambda obj: mock_headers if obj == mock_cell else []
+                side_effect=lambda obj: mock_headers if obj == mock_cell else [],
             )
             result = AXTable.get_new_column_headers(mock_cell, mock_old_cell)
             assert result == mock_headers
         elif old_cell_type is None:
             mock_headers = [test_context.Mock(spec=Atspi.Accessible)]
-            test_context.patch_object(
-                AXTable, "get_column_headers", return_value=mock_headers
-            )
+            test_context.patch_object(AXTable, "get_column_headers", return_value=mock_headers)
             result = AXTable.get_new_column_headers(mock_cell, None)
             assert result == mock_headers
         else:  # table_cell with different headers
@@ -2618,9 +2585,7 @@ class TestAXTable:
 
         if header_scenario == "dynamic_header":
             mock_header = test_context.Mock(spec=Atspi.Accessible)
-            test_context.patch_object(
-                AXTable, "get_dynamic_row_header", return_value=mock_header
-            )
+            test_context.patch_object(AXTable, "get_dynamic_row_header", return_value=mock_header)
             result = AXTable.get_row_headers(mock_cell)
             assert result == [mock_header]
         elif header_scenario == "multiple_headers":
@@ -2694,9 +2659,7 @@ class TestAXTable:
         from orca.ax_object import AXObject
 
         test_context.patch_object(AXObject, "supports_table_cell", return_value=False)
-        test_context.patch_object(
-            AXTable, "_get_cell_coordinates_from_table", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "_get_cell_coordinates_from_table", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=None)
         result = AXTable._get_row_headers(mock_cell)
         assert result == []
@@ -2794,12 +2757,8 @@ class TestAXTable:
                 test_context.Mock(spec=Atspi.Accessible),
                 test_context.Mock(spec=Atspi.Accessible),
             ]
-            test_context.patch_object(
-                AXTable, "get_dynamic_column_header", return_value=None
-            )
-            test_context.patch_object(
-                AXTable, "_get_column_headers", return_value=mock_headers
-            )
+            test_context.patch_object(AXTable, "get_dynamic_column_header", return_value=None)
+            test_context.patch_object(AXTable, "_get_column_headers", return_value=mock_headers)
             result = AXTable.get_column_headers(mock_cell)
             assert result == mock_headers
         else:  # nested_headers
@@ -2816,9 +2775,7 @@ class TestAXTable:
                     return [mock_header2]
                 return []
 
-            test_context.patch_object(
-                AXTable, "get_dynamic_column_header", return_value=None
-            )
+            test_context.patch_object(AXTable, "get_dynamic_column_header", return_value=None)
             test_context.patch_object(
                 AXTable, "_get_column_headers", side_effect=mock_get_column_headers
             )
@@ -2837,9 +2794,7 @@ class TestAXTable:
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_headers = [test_context.Mock(spec=Atspi.Accessible)]
         test_context.patch_object(AXObject, "supports_table_cell", return_value=False)
-        test_context.patch_object(
-            AXTable, "_get_cell_coordinates_from_table", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "_get_cell_coordinates_from_table", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=mock_table)
         test_context.patch_object(AXTable, "_get_cell_spans_from_table", return_value=(1, 2))
         test_context.patch_object(
@@ -2876,9 +2831,7 @@ class TestAXTable:
         from orca.ax_object import AXObject
 
         test_context.patch_object(AXObject, "supports_table_cell", return_value=False)
-        test_context.patch_object(
-            AXTable, "_get_cell_coordinates_from_table", return_value=(2, 3)
-        )
+        test_context.patch_object(AXTable, "_get_cell_coordinates_from_table", return_value=(2, 3))
         test_context.patch_object(AXTable, "get_table", return_value=None)
         result = AXTable._get_column_headers(mock_cell)
         assert result == []
@@ -2964,9 +2917,7 @@ class TestAXTable:
         from orca.ax_table import AXTable
         from orca.ax_utilities_role import AXUtilitiesRole
 
-        test_context.patch_object(
-            AXUtilitiesRole, "is_table_cell_or_header", return_value=False
-        )
+        test_context.patch_object(AXUtilitiesRole, "is_table_cell_or_header", return_value=False)
         result = AXTable.get_cell_coordinates(mock_cell)
         assert result == (-1, -1)
 
@@ -3160,12 +3111,8 @@ class TestAXTable:
         test_context.patch_object(
             AXObject, "get_name", side_effect=lambda obj: "Header Name" if include_name else ""
         )
-        test_context.patch_object(
-            object_properties, "SORT_ORDER_ASCENDING", new="ascending sort"
-        )
-        test_context.patch_object(
-            object_properties, "SORT_ORDER_DESCENDING", new="descending sort"
-        )
+        test_context.patch_object(object_properties, "SORT_ORDER_ASCENDING", new="ascending sort")
+        test_context.patch_object(object_properties, "SORT_ORDER_DESCENDING", new="descending sort")
         test_context.patch_object(object_properties, "SORT_ORDER_OTHER", new="other sort")
         result = AXTable.get_presentable_sort_order_from_header(mock_cell, include_name)
         if sort_order == "ascending":

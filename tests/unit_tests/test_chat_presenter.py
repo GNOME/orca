@@ -47,11 +47,13 @@ class TestConversation:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
         """Returns dependencies for chat module testing."""
 
-        essential_modules = test_context.setup_shared_dependencies([
-            "orca.ax_utilities",
-            "orca.ax_text",
-            "orca.input_event_manager",
-        ])
+        essential_modules = test_context.setup_shared_dependencies(
+            [
+                "orca.ax_utilities",
+                "orca.ax_text",
+                "orca.input_event_manager",
+            ]
+        )
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -193,11 +195,13 @@ class TestConversationList:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
         """Returns dependencies for chat module testing."""
 
-        essential_modules = test_context.setup_shared_dependencies([
-            "orca.ax_utilities",
-            "orca.ax_text",
-            "orca.input_event_manager",
-        ])
+        essential_modules = test_context.setup_shared_dependencies(
+            [
+                "orca.ax_utilities",
+                "orca.ax_text",
+                "orca.input_event_manager",
+            ]
+        )
 
         return essential_modules
 
@@ -319,11 +323,13 @@ class TestChat:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
         """Returns dependencies for Chat class testing."""
 
-        essential_modules = test_context.setup_shared_dependencies([
-            "orca.ax_utilities",
-            "orca.ax_text",
-            "orca.input_event_manager",
-        ])
+        essential_modules = test_context.setup_shared_dependencies(
+            [
+                "orca.ax_utilities",
+                "orca.ax_text",
+                "orca.input_event_manager",
+            ]
+        )
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -360,12 +366,8 @@ class TestChat:
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = test_context.Mock()
         manager_instance.set_setting = test_context.Mock()
-        manager_instance.override_key_bindings = test_context.Mock(
-            side_effect=lambda h, b, d: b
-        )
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=manager_instance
-        )
+        manager_instance.override_key_bindings = test_context.Mock(side_effect=lambda h, b, d: b)
+        settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
         # Set chat-related settings
         settings_mock = essential_modules["orca.settings"]
@@ -386,9 +388,7 @@ class TestChat:
 
         assert chat._script == mock_script
 
-    def test_get_conversation_for_object_name_mismatch(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_conversation_for_object_name_mismatch(self, test_context: OrcaTestContext) -> None:
         """Test get_conversation_for_object when name doesn't match log's room."""
 
         self._setup_dependencies(test_context)
@@ -415,11 +415,13 @@ class TestChatPresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
         """Returns dependencies for ChatPresenter class testing."""
 
-        essential_modules = test_context.setup_shared_dependencies([
-            "orca.ax_utilities",
-            "orca.ax_text",
-            "orca.input_event_manager",
-        ])
+        essential_modules = test_context.setup_shared_dependencies(
+            [
+                "orca.ax_utilities",
+                "orca.ax_text",
+                "orca.input_event_manager",
+            ]
+        )
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -458,12 +460,8 @@ class TestChatPresenter:
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = test_context.Mock()
         manager_instance.set_setting = test_context.Mock()
-        manager_instance.override_key_bindings = test_context.Mock(
-            side_effect=lambda h, b, d: b
-        )
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=manager_instance
-        )
+        manager_instance.override_key_bindings = test_context.Mock(side_effect=lambda h, b, d: b)
+        settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
         settings_mock = essential_modules["orca.settings"]
         settings_mock.chatSpeakRoomName = False

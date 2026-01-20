@@ -40,6 +40,7 @@ import pytest
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
+
 @pytest.mark.unit
 class TestNotificationPresenter:
     """Test NotificationPresenter class methods."""
@@ -114,9 +115,7 @@ class TestNotificationPresenter:
         dbus_service_mock = essential_modules["orca.dbus_service"]
         controller_mock = test_context.Mock()
         controller_mock.register_decorated_module = test_context.Mock()
-        dbus_service_mock.get_remote_controller = test_context.Mock(
-            return_value=controller_mock
-        )
+        dbus_service_mock.get_remote_controller = test_context.Mock(return_value=controller_mock)
         dbus_service_mock.command = lambda func: func
 
         debug_mock = essential_modules["orca.debug"]
@@ -125,9 +124,7 @@ class TestNotificationPresenter:
         debug_mock.LEVEL_INFO = 800
 
         guilabels_mock = essential_modules["orca.guilabels"]
-        guilabels_mock.notifications_count = test_context.Mock(
-            return_value="Notifications (2)"
-        )
+        guilabels_mock.notifications_count = test_context.Mock(return_value="Notifications (2)")
         guilabels_mock.NOTIFICATIONS_COLUMN_HEADER = "Message"
         guilabels_mock.NOTIFICATIONS_RECEIVED_TIME = "Time"
 
@@ -147,9 +144,7 @@ class TestNotificationPresenter:
             instance.add = test_context.Mock()
             return instance
 
-        keybindings_mock.KeyBindings = test_context.Mock(
-            side_effect=create_keybindings_instance
-        )
+        keybindings_mock.KeyBindings = test_context.Mock(side_effect=create_keybindings_instance)
         keybinding_instance = test_context.Mock()
         keybindings_mock.KeyBinding = test_context.Mock(return_value=keybinding_instance)
         keybindings_mock.DEFAULT_MODIFIER_MASK = 1
@@ -681,9 +676,7 @@ class TestNotificationListGUI:
 
         script_manager_instance = test_context.Mock()
         script_instance = test_context.Mock()
-        script_manager_instance.get_active_script = test_context.Mock(
-            return_value=script_instance
-        )
+        script_manager_instance.get_active_script = test_context.Mock(return_value=script_instance)
         essential_modules["orca.script_manager"].get_manager = test_context.Mock(
             return_value=script_manager_instance
         )
@@ -793,9 +786,7 @@ class TestNotificationPresenterModule:
 
         script_manager_instance = test_context.Mock()
         script_instance = test_context.Mock()
-        script_manager_instance.get_active_script = test_context.Mock(
-            return_value=script_instance
-        )
+        script_manager_instance.get_active_script = test_context.Mock(return_value=script_instance)
         essential_modules["orca.script_manager"].get_manager = test_context.Mock(
             return_value=script_manager_instance
         )

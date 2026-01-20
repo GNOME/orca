@@ -41,6 +41,7 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
 
+
 @pytest.mark.unit
 class TestAXEventSynthesizer:
     """Test AXEventSynthesizer class methods."""
@@ -201,9 +202,7 @@ class TestAXEventSynthesizer:
         mock_device_new = test_context.Mock()
         test_context.patch("gi.repository.Atspi.Device.new", new=mock_device_new)
         mock_generate = test_context.Mock()
-        test_context.patch(
-            "gi.repository.Atspi.Device.generate_mouse_event", new=mock_generate
-        )
+        test_context.patch("gi.repository.Atspi.Device.generate_mouse_event", new=mock_generate)
         mock_device = test_context.Mock()
         mock_device_new.return_value = mock_device
         result = AXEventSynthesizer._generate_mouse_event(mock_accessible, 50, 25, "b1c")
@@ -223,9 +222,7 @@ class TestAXEventSynthesizer:
         mock_device_new = test_context.Mock()
         test_context.patch("gi.repository.Atspi.Device.new", new=mock_device_new)
         mock_generate = test_context.Mock()
-        test_context.patch(
-            "gi.repository.Atspi.Device.generate_mouse_event", new=mock_generate
-        )
+        test_context.patch("gi.repository.Atspi.Device.generate_mouse_event", new=mock_generate)
         mock_device = test_context.Mock()
         mock_device_new.return_value = mock_device
         mock_generate.side_effect = GLib.GError("Test error")
@@ -261,9 +258,7 @@ class TestAXEventSynthesizer:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_event = test_context.Mock()
-        test_context.patch_object(
-            AXEventSynthesizer, "_mouse_event_on_character", new=mock_event
-        )
+        test_context.patch_object(AXEventSynthesizer, "_mouse_event_on_character", new=mock_event)
         mock_event.return_value = True
         result = AXEventSynthesizer.route_to_character(mock_accessible, 15)
         mock_event.assert_called_once_with(mock_accessible, 15, "abs")
@@ -295,9 +290,7 @@ class TestAXEventSynthesizer:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_event = test_context.Mock()
-        test_context.patch_object(
-            AXEventSynthesizer, "_mouse_event_on_character", new=mock_event
-        )
+        test_context.patch_object(AXEventSynthesizer, "_mouse_event_on_character", new=mock_event)
         mock_event.return_value = True
         result = AXEventSynthesizer.click_character(mock_accessible, 20, 2)
         mock_event.assert_called_once_with(mock_accessible, 20, "b2c")
@@ -714,9 +707,7 @@ class TestAXEventSynthesizer:
             nonlocal scroll_call_count
             scroll_call_count += 1
 
-        test_context.patch_object(
-            AXEventSynthesizer, "scroll_into_view", new=mock_scroll_into_view
-        )
+        test_context.patch_object(AXEventSynthesizer, "scroll_into_view", new=mock_scroll_into_view)
         test_context.patch_object(
             AXEventSynthesizer, "_is_scrolled_off_screen", side_effect=lambda obj, offset=None: True
         )
