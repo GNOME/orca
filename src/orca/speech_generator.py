@@ -218,7 +218,7 @@ class SpeechGenerator(generator.Generator):
         obj = args.get("obj")
         language = args.get("language", "")
         dialect = args.get("dialect", "")
-        family = voice.get(acss.ACSS.FAMILY, {})
+        family = voice.get(acss.ACSS.FAMILY, {}).copy()
         tokens = [f"SPEECH GENERATOR: {key} voice requested for", obj,
                   f"language='{language}', dialect='{dialect}'",
                   f"Unmodified voice={voice}"]
@@ -257,10 +257,16 @@ class SpeechGenerator(generator.Generator):
 
         if key in [None, DEFAULT]:
             string = args.get("string", "")
+            voice_override: acss.ACSS | None = None
             if AXUtilities.is_link(obj):
-                voice.update(voices.get(voiceType[HYPERLINK], acss.ACSS()))
+                voice_override = voices.get(voiceType[HYPERLINK])
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice.update(voices.get(voiceType[UPPERCASE], acss.ACSS()))
+                voice_override = voices.get(voiceType[UPPERCASE])
+
+            if voice_override:
+                voice.update(voice_override)
+                if acss.ACSS.FAMILY in voice_override:
+                    family.update(voice_override[acss.ACSS.FAMILY])
 
             if settings_manager.get_manager().is_configuring():
                 auto_lang_switching = False
