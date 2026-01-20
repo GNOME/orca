@@ -1038,6 +1038,10 @@ class DocumentPresenter:
     ) -> bool:
         """Switches between object mode and layout mode for line presentation."""
 
+        tokens = ["DOCUMENT PRESENTER: toggle_layout_mode. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         layout_mode = not self.get_layout_mode()
         if notify_user:
             if layout_mode:
