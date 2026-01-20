@@ -248,12 +248,12 @@ class Utilities(script_utilities.Utilities):
         AXText.set_caret_offset(obj, offset)
 
         # If we return earlier than here, braille cursor routing fails in sticky focus mode.
-        if document_presenter.get_presenter().focus_mode_is_sticky(self._script.app):
+        presenter = document_presenter.get_presenter()
+        if presenter.focus_mode_is_sticky(self._script.app):
             return
 
-        if document_presenter.get_presenter().use_focus_mode(obj, old_focus) \
-           != document_presenter.get_presenter().in_focus_mode(self._script.app):
-            self._script.toggle_presentation_mode(None)
+        if presenter.use_focus_mode(obj, old_focus) != presenter.in_focus_mode(self._script.app):
+            presenter.toggle_presentation_mode(self._script)
 
         # TODO - JD: Can we remove this?
         if obj:
