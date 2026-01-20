@@ -128,7 +128,7 @@ lib_sources = [
   'sound_presenter.py',
   'speech_and_verbosity_manager.py',
   'speech.py',
-  'spellcheck.py',
+  'spellcheck_presenter.py',
   'speechdispatcherfactory.py',
   'speech_generator.py',
   'speechserver.py',

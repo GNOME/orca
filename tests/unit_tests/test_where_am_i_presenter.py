@@ -62,6 +62,7 @@ class TestWhereAmIPresenter:
         additional_modules = [
             "orca.flat_review_presenter",
             "orca.speech_and_verbosity_manager",
+            "orca.spellcheck_presenter",
             "orca.ax_component",
             "orca.ax_text",
             "orca.ax_utilities",
@@ -871,13 +872,14 @@ class TestWhereAmIPresenter:
         spellcheck_mock = test_context.Mock()
         spellcheck_mock.is_active.return_value = True
         spellcheck_mock.present_error_details = test_context.Mock()
+        deps["orca.spellcheck_presenter"].get_presenter.return_value = spellcheck_mock
+
         mock_script = test_context.Mock()
-        mock_script.spellcheck = spellcheck_mock
         mock_script.present_object = test_context.Mock()
         presenter = WhereAmIPresenter()
         result = presenter._do_where_am_i(mock_script, basic_only=False)
         assert result is True
-        spellcheck_mock.present_error_details.assert_called_with(True)
+        spellcheck_mock.present_error_details.assert_called_with(True, mock_script)
 
     def test_where_am_i_basic(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.where_am_i_basic."""

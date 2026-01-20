@@ -48,6 +48,7 @@ from . import object_properties
 from . import settings
 from . import sound_presenter
 from . import speech_and_verbosity_manager
+from . import spellcheck_presenter
 from . import table_navigator
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
@@ -627,7 +628,7 @@ class Utilities:
     ) -> list[Atspi.Accessible]:
         """Returns a list of labels in root that lack a relationship."""
 
-        if self._script.spellcheck and self._script.spellcheck.is_spell_check_window(root):
+        if spellcheck_presenter.get_presenter().is_active():
             return []
 
         label_roles = [Atspi.Role.LABEL, Atspi.Role.STATIC]

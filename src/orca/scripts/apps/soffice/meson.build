@@ -4,7 +4,6 @@ lib_sources = [
   'script.py',
   'script_utilities.py',
   'speech_generator.py',
-  'spellcheck.py',
 ]
 
 python3.install_sources(

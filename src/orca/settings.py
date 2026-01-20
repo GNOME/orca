@@ -239,7 +239,7 @@ chatSpeakRoomName: bool = False
 chatAnnounceBuddyTyping: bool = False
 chatRoomHistories: bool = False
 
-# Spellcheck
+# Managed by spellcheck_presenter.py
 spellcheckSpellError: bool = True
 spellcheckSpellSuggestion: bool = True
 spellcheckPresentContext: bool = True

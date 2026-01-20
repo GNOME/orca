@@ -32,14 +32,10 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 from orca import document_presenter
-from orca import focus_manager
 from orca import settings
 from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
-from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-
-from .spellcheck import SpellCheck
 
 if TYPE_CHECKING:
     import gi
@@ -53,13 +49,7 @@ class Script(Gecko.Script):
     """The script for Thunderbird."""
 
     # Override the base class type annotations
-    spellcheck: SpellCheck
     utilities: "Utilities"
-
-    def get_spellcheck(self) -> SpellCheck:
-        """Returns the spellcheck support for this script."""
-
-        return SpellCheck(self)
 
     def get_app_preferences_gui(self) -> Gtk.Grid:
         """Return a GtkGrid containing the application unique configuration
@@ -71,9 +61,6 @@ class Script(Gecko.Script):
         assert self._page_summary_on_load_check_button is not None
         self._say_all_on_load_check_button.set_active(settings.sayAllOnLoad)
         self._page_summary_on_load_check_button.set_active(settings.pageSummaryOnLoad)
-
-        spellcheck = self.spellcheck.get_app_preferences_gui()
-        grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
         grid.show_all()
 
         return grid
@@ -86,25 +73,8 @@ class Script(Gecko.Script):
         assert self._page_summary_on_load_check_button is not None
         prefs["sayAllOnLoad"] = self._say_all_on_load_check_button.get_active()
         prefs["pageSummaryOnLoad"] = self._page_summary_on_load_check_button.get_active()
-        prefs.update(self.spellcheck.get_preferences_from_gui())
 
         return prefs
-
-    def locus_of_focus_changed(
-        self,
-        event: Atspi.Event | None,
-        old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
-    ) -> bool:
-        """Handles changes of focus of interest. Returns True if this script did all needed work."""
-
-        if self.spellcheck.is_suggestions_item(new_focus):
-            include_label = not self.spellcheck.is_suggestions_item(old_focus)
-            self.update_braille(new_focus)
-            self.spellcheck.present_suggestion_list_item(include_label=include_label)
-            return True
-
-        return super().locus_of_focus_changed(event, old_focus, new_focus)
 
     def on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
@@ -121,45 +91,19 @@ class Script(Gecko.Script):
     def on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
-        if self.utilities.is_editable_message(event.source):
-            if event.detail1 == -1:
-                return True
-            self.spellcheck.set_document_position(event.source, event.detail1)
-            if self.spellcheck.is_active():
-                return True
+        if self.utilities.is_editable_message(event.source) and event.detail1 == -1:
+            return True
 
         return super().on_caret_moved(event)
 
-    def on_name_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:property-change:accessible-name events."""
-
-        if AXObject.get_name(event.source) == self.spellcheck.get_misspelled_word():
-            self.spellcheck.present_error_details()
-            return True
-
-        return super().on_name_changed(event)
-
     def on_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:showing accessibility events."""
-
-        # We present changes when the list has focus via focus-changed events.
-        if event.source == self.spellcheck.get_suggestions_list():
-            return True
+        """Callback for object:selection-changed accessibility events."""
 
         parent = AXObject.get_parent(event.source)
         if AXUtilities.is_combo_box(parent) and not AXUtilities.is_focused(parent):
             return True
 
         return super().on_selection_changed(event)
-
-    def on_sensitive_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:sensitive accessibility events."""
-
-        if event.source == self.spellcheck.get_change_to_entry() \
-           and self.spellcheck.present_completion_message():
-            return True
-
-        return super().on_sensitive_changed(event)
 
     def on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
@@ -177,9 +121,6 @@ class Script(Gecko.Script):
         if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(parent):
             return True
 
-        if len(event.any_data) > 1 and event.source == self.spellcheck.get_change_to_entry():
-            return True
-
         # Try to stop unwanted chatter when a message is being replied to.
         # See bgo#618484.
         if event.type.endswith("system") and self.utilities.is_editable_message(event.source):
@@ -190,35 +131,10 @@ class Script(Gecko.Script):
     def on_text_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-selection-changed accessibility events."""
 
-        if event.source == self.spellcheck.get_change_to_entry():
-            return True
-
-        _reason = AXUtilities.get_text_event_reason(event)
-        if self.utilities.is_editable_message(event.source) and self.spellcheck.is_active():
-            selection_start = AXText.get_selection_start_offset(event.source)
-            if selection_start >= 0:
-                self.spellcheck.set_document_position(event.source, selection_start)
-            return True
-
         return super().on_text_selection_changed(event)
-
-    def on_window_activated(self, event: Atspi.Event) -> bool:
-        """Callback for window:activate accessibility events."""
-
-        super().on_window_activated(event)
-        if not self.spellcheck.is_spell_check_window(event.source):
-            self.spellcheck.deactivate()
-            return True
-
-        self.spellcheck.present_error_details()
-        entry = self.spellcheck.get_change_to_entry()
-        focus_manager.get_manager().set_locus_of_focus(None, entry, False)
-        self.update_braille(entry)
-        return True
 
     def on_window_deactivated(self, event: Atspi.Event) -> bool:
         """Callback for window:deactivate accessibility events."""
 
-        self.spellcheck.deactivate()
         self.utilities.clear_content_cache()
         return super().on_window_deactivated(event)

@@ -41,6 +41,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import speech_and_verbosity_manager
+from . import spellcheck_presenter
 from . import text_attribute_manager
 from .ax_component import AXComponent
 from .ax_object import AXObject
@@ -631,8 +632,9 @@ class WhereAmIPresenter:
     ) -> bool:
         """Presents details about the current location at the specified level."""
 
-        if script.spellcheck and script.spellcheck.is_active():
-            script.spellcheck.present_error_details(not basic_only)
+        presenter = spellcheck_presenter.get_presenter()
+        if presenter.is_active():
+            presenter.present_error_details(not basic_only, script)
 
         if obj is None:
             obj = focus_manager.get_manager().get_locus_of_focus()

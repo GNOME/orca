@@ -64,7 +64,6 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from . import label_inference
-    from . import spellcheck
 
 class Script:
     """The base Script class."""
@@ -89,7 +88,6 @@ class Script:
         # pylint:disable=assignment-from-none
         self.label_inference = self.get_label_inference()
         self.chat = self.get_chat()
-        self.spellcheck = self.get_spellcheck()
         # pylint:enable=assignment-from-none
 
         self.setup_input_event_handlers()
@@ -143,11 +141,6 @@ class Script:
 
         # In practice, self will always be an instance/subclass of default.Script.
         return chat_presenter.Chat(self)  # type: ignore[arg-type]
-
-    def get_spellcheck(self) -> spellcheck.SpellCheck | None:
-        """Returns the spellcheck support for this script."""
-
-        return None
 
     def get_utilities(self) -> script_utilities.Utilities:
         """Returns the utilities for this script."""

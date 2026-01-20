@@ -60,7 +60,6 @@ from orca.scripts import default
 
 from .braille_generator import BrailleGenerator
 from .script_utilities import Utilities
-from .spellcheck import SpellCheck
 from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
@@ -72,7 +71,6 @@ class Script(default.Script):
 
     # Override the base class type annotations
     utilities: Utilities
-    spellcheck: SpellCheck
 
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
@@ -93,11 +91,6 @@ class Script(default.Script):
         """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
-
-    def get_spellcheck(self) -> SpellCheck:
-        """Returns the spellcheck for this script."""
-
-        return SpellCheck(self)
 
     def get_utilities(self) -> Utilities:
         """Returns the utilities for this script."""
@@ -169,8 +162,6 @@ class Script(default.Script):
         self.skip_blank_cells_check_button.set_active(value)
         table_grid.attach(self.skip_blank_cells_check_button, 0, 3, 1, 1)
 
-        spellcheck = self.spellcheck.get_app_preferences_gui()
-        grid.attach(spellcheck, 0, len(grid.get_children()), 1, 1)
         grid.show_all()
 
         return grid
@@ -185,7 +176,7 @@ class Script(default.Script):
         assert self.speak_spreadsheet_coordinates_check_button
         assert self.always_speak_selected_spreadsheet_range_check_button
 
-        prefs = {
+        return {
             "speakCellSpan":
                 self.speak_cell_span_check_button.get_active(),
             "speakCellHeaders":
@@ -199,9 +190,6 @@ class Script(default.Script):
             "alwaysSpeakSelectedSpreadsheetRange":
                 self.always_speak_selected_spreadsheet_range_check_button.get_active(),
         }
-
-        prefs.update(self.spellcheck.get_preferences_from_gui())
-        return prefs
 
     def _pan_braille_left(
         self,
@@ -271,12 +259,6 @@ class Script(default.Script):
         if flat_review_presenter.get_presenter().is_active():
             flat_review_presenter.get_presenter().quit()
 
-        if self.spellcheck.is_suggestions_item(new_focus) \
-           and not self.spellcheck.is_suggestions_item(old_focus):
-            self.update_braille(new_focus)
-            self.spellcheck.present_suggestion_list_item(include_label=True)
-            return True
-
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
         if new_focus != old_focus \
@@ -320,15 +302,6 @@ class Script(default.Script):
 
         if AXUtilities.is_paragraph(focus):
             return super().on_active_descendant_changed(event)
-
-        if event.source == self.spellcheck.get_suggestions_list():
-            if AXUtilities.is_focused(event.source):
-                focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
-                self.update_braille(event.any_data)
-                self.spellcheck.present_suggestion_list_item()
-            else:
-                self.spellcheck.present_error_details()
-            return True
 
         if self.utilities.is_spreadsheet_cell(event.any_data) \
            and not AXUtilities.is_focused(event.any_data) \
@@ -422,9 +395,12 @@ class Script(default.Script):
         if manager.in_say_all():
             return True
 
+        # LibreOffice seems to fire focus events for root panes (in documents) and panels
+        # in the spell-check dialog for ancestors of the actual focus -- for which we also
+        # get events.
         focus = manager.get_locus_of_focus()
-        if AXUtilities.is_root_pane(event.source) and AXObject.is_ancestor(focus, event.source):
-            msg = "SOFFICE: Event ignored: Source is root pane ancestor of current focus."
+        if AXObject.is_ancestor(focus, event.source):
+            msg = "SOFFICE: Event ignored: Source is ancestor of current focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -503,33 +479,4 @@ class Script(default.Script):
             self.utilities.handle_cell_selection_change(event.source)
             return True
 
-        if event.source == self.spellcheck.get_suggestions_list():
-            if focus_manager.get_manager().focus_is_active_window():
-                msg = "SOFFICE: Not presenting because locusOfFocus is window"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-            elif AXUtilities.is_focused(event.source):
-                focus_manager.get_manager().set_locus_of_focus(event, event.any_data, False)
-                self.update_braille(event.any_data)
-                self.spellcheck.present_suggestion_list_item()
-            else:
-                self.spellcheck.present_error_details()
-            return True
-
         return super().on_selection_changed(event)
-
-    def on_window_activated(self, event: Atspi.Event) -> bool:
-        """Callback for window:activate accessibility events."""
-
-        super().on_window_activated(event)
-        if not self.spellcheck.is_spell_check_window(event.source):
-            self.spellcheck.deactivate()
-            return True
-
-        self.spellcheck.present_error_details()
-        return True
-
-    def on_window_deactivated(self, event: Atspi.Event) -> bool:
-        """Callback for window:deactivate accessibility events."""
-
-        self.spellcheck.deactivate()
-        return super().on_window_deactivated(event)

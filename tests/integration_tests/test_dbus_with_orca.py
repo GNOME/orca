@@ -370,6 +370,15 @@ MODULE_CONFIG = {
         ],
         "skip": [],
     },
+    "SpellCheckPresenter": {
+        "commands": [],
+        "parameterized_commands": [],
+        "getters": ["PresentContext", "SpellError", "SpellSuggestion"],
+        "setters": ["PresentContext", "SpellError", "SpellSuggestion"],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "StructuralNavigator": {
         "commands": [
             "ContainerEnd",

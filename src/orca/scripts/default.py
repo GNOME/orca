@@ -83,6 +83,7 @@ from orca import sleep_mode_manager
 from orca import sound
 from orca import speech
 from orca import speech_and_verbosity_manager
+from orca import spellcheck_presenter
 from orca import structural_navigator
 from orca import system_information_presenter
 from orca import table_navigator
@@ -1282,7 +1283,7 @@ class Script(script.Script):
 
         return True
 
-    def on_sensitive_changed(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_sensitive_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:sensitive accessibility events."""
 
         return True
@@ -1479,6 +1480,11 @@ class Script(script.Script):
     def on_text_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-selection-changed accessibility events."""
 
+        if AXUtilities.is_focusable(event.source) and not AXUtilities.is_focused(event.source):
+            msg = "DEFAULT: Ignoring event from focusable but unfocused source"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         # We won't handle undo here as it can lead to double-presentation.
         # If there is an application for which text-changed events are
         # missing upon undo, handle them in an app or toolkit script.
@@ -1574,6 +1580,7 @@ class Script(script.Script):
         if event.source == focus_manager.get_manager().get_active_window():
             msg = "DEFAULT: Event is for active window."
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            spellcheck_presenter.get_presenter().handle_window_event(event, self)
             return True
 
         self.point_of_reference = {}
@@ -1588,7 +1595,8 @@ class Script(script.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, child)
                 return True
 
-        focus_manager.get_manager().set_locus_of_focus(event, event.source)
+        if not spellcheck_presenter.get_presenter().handle_window_event(event, self):
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
         return True
 
     def on_window_created(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
