@@ -66,6 +66,10 @@ class TestSettingsManagerFileIO:
         settings_obj.speechServerFactory = None
         settings_obj.speechServerInfo = None
         settings_obj.voices = {"default": {}}
+        settings_obj.DEFAULT_VOICE = "default"
+        settings_obj.UPPERCASE_VOICE = "uppercase"
+        settings_obj.HYPERLINK_VOICE = "hyperlink"
+        settings_obj.SYSTEM_VOICE = "system"
         settings_obj.profile = ["Default", "default"]
         settings_obj.startingProfile = ["Default", "default"]
         settings_obj.activeProfile = ["Default", "default"]
@@ -95,10 +99,15 @@ class TestSettingsManagerFileIO:
         essential_modules["orca.orca_i18n"] = i18n_mock
 
         acss_mock = test_context.Mock()
-        acss_class_mock = test_context.Mock()
-        acss_class_mock.getLocale = test_context.Mock(return_value="en_US")
-        acss_class_mock.getDialect = test_context.Mock(return_value=None)
-        acss_mock.ACSS = test_context.Mock(return_value=acss_class_mock)
+
+        class MockACSS(dict):
+            def getLocale(self) -> str:
+                return "en_US"
+
+            def getDialect(self) -> str | None:
+                return None
+
+        acss_mock.ACSS = MockACSS
         test_context.patch_module("orca.acss", acss_mock)
         essential_modules["orca.acss"] = acss_mock
 

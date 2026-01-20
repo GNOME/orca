@@ -301,6 +301,12 @@ class SettingsManager:
             if key not in ["startingProfile", "activeProfile"]:
                 result[key] = value
 
+        if "voices" in result:
+            for voice_type in (settings.DEFAULT_VOICE, settings.UPPERCASE_VOICE,
+                               settings.HYPERLINK_VOICE, settings.SYSTEM_VOICE):
+                if voice_type not in result["voices"]:
+                    result["voices"][voice_type] = ACSS({})
+
         try:
             result["activeProfile"] = profile_settings["profile"]
         except KeyError:
@@ -319,7 +325,10 @@ class SettingsManager:
         file_name = os.path.join(self._prefs_dir, "app-settings", f"{app_name}.conf")
         if os.path.exists(file_name):
             with open(file_name, "r", encoding="utf-8") as settings_file:
-                prefs = load(settings_file)
+                try:
+                    prefs = load(settings_file)
+                except ValueError:
+                    prefs = {}
         else:
             prefs = {}
         return prefs
@@ -420,7 +429,11 @@ class SettingsManager:
             profile = settings.profile
 
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
-            prefs = load(settings_file)
+            try:
+                prefs = load(settings_file)
+            except ValueError:
+                prefs = {}
+            prefs.setdefault("profiles", {})
             prefs["startingProfile"] = profile
             # Update legacy general key for backwards compatibility with older Orca versions
             if "general" not in prefs or not isinstance(prefs["general"], dict):
@@ -470,8 +483,11 @@ class SettingsManager:
         """Remove an existing profile."""
 
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
-            prefs = load(settings_file)
-            if internal_name not in prefs["profiles"]:
+            try:
+                prefs = load(settings_file)
+            except ValueError:
+                return
+            if "profiles" not in prefs or internal_name not in prefs["profiles"]:
                 return
 
             del prefs["profiles"][internal_name]
@@ -488,8 +504,11 @@ class SettingsManager:
         """Rename profile with old_internal_name to new_profile (label, internal_name)."""
 
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
-            prefs = load(settings_file)
-            if old_internal_name not in prefs["profiles"]:
+            try:
+                prefs = load(settings_file)
+            except ValueError:
+                return
+            if "profiles" not in prefs or old_internal_name not in prefs["profiles"]:
                 return
 
             profile_data = prefs["profiles"][old_internal_name].copy()
@@ -617,11 +636,16 @@ class SettingsManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
-            prefs = load(settings_file)
+            try:
+                prefs = load(settings_file)
+            except ValueError:
+                prefs = {}
+            prefs.setdefault("profiles", {})
             prefs["profiles"][self._profile] = profile_general
             starting_profile = general.get("startingProfile", _profile)
             prefs["startingProfile"] = starting_profile
-            # Write legacy general with all settings for backwards compatibility with older Orca versions
+            # Write legacy general with all settings for backwards compatibility
+            # with older Orca versions
             legacy_general = self._default_settings.copy()
             legacy_general.update(general)
             legacy_general["startingProfile"] = starting_profile
@@ -700,9 +724,16 @@ class SettingsManager:
             except ValueError:
                 return []
 
+        if "profiles" not in prefs:
+            return []
+
         profiles = []
-        for _profile_name, profile_data in prefs["profiles"].items():
-            profiles.append(profile_data.get("profile"))
+        for profile_name, profile_data in prefs["profiles"].items():
+            profile = profile_data.get("profile")
+            if profile is None:
+                label = profile_name.replace("_", " ").title()
+                profile = [label, profile_name]
+            profiles.append(profile)
         return profiles
 
     def get_app_setting(
@@ -747,9 +778,13 @@ class SettingsManager:
 
         manager = pronunciation_dictionary_manager.get_manager()
         manager.set_dictionary({})
-        for key, value in self._pronunciations.values():
+        for key, value in self._pronunciations.items():
             if key and value:
-                manager.set_pronunciation(key, value)
+                if isinstance(value, list):
+                    replacement = value[1] if len(value) > 1 else value[0]
+                else:
+                    replacement = value
+                manager.set_pronunciation(key, replacement)
 
 _manager: SettingsManager = SettingsManager()
 
