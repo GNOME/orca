@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 from typing import Any
 
-from . import messages
 from .acss import ACSS
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP: int = 1
@@ -204,8 +203,8 @@ enableLiveRegions: bool = True
 presentLiveRegionFromInactiveTab: bool = False
 
 # Managed by system_information_presenter.py
-presentDateFormat: str = messages.DATE_FORMAT_LOCALE
-presentTimeFormat: str = messages.TIME_FORMAT_LOCALE
+presentDateFormat: str = "%x"
+presentTimeFormat: str = "%X"
 
 # Profiles
 startingProfile: list[str] = ['Default', 'default']
@@ -233,11 +232,12 @@ keyboardLayout: int = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout: float = 0.5
 
-# Chat
+# Managed by chat_presenter.py
 chatMessageVerbosity: int = CHAT_SPEAK_ALL
 chatSpeakRoomName: bool = False
 chatAnnounceBuddyTyping: bool = False
 chatRoomHistories: bool = False
+presentChatRoomLast: bool = False
 
 # Managed by spellcheck_presenter.py
 spellcheckSpellError: bool = True
@@ -247,13 +247,11 @@ spellcheckPresentContext: bool = True
 # Latent support to allow the user to override/define keybindings
 # and braille bindings. Unsupported and undocumented for now.
 # Use at your own risk.
-#
 keyBindingsMap: dict[str, Any] = {}
 brailleBindingsMap: dict[str, Any] = {}
 
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
-presentChatRoomLast: bool = False
 ignoreStatusBarProgressBars: bool = True
 
 # TODO - JD: This is here until the UI conversion is done.

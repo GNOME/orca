@@ -48,30 +48,32 @@ except ModuleNotFoundError:
 from . import cmdnames
 from . import dbus_service
 from . import debug
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import preferences_grid_base
 from . import settings
 
 class DateFormat(Enum):
-    """Date format enumeration with string values from messages."""
+    """Date format enumeration with format strings."""
 
-    LOCALE = messages.DATE_FORMAT_LOCALE
-    NUMBERS_DM = messages.DATE_FORMAT_NUMBERS_DM
-    NUMBERS_MD = messages.DATE_FORMAT_NUMBERS_MD
-    NUMBERS_DMY = messages.DATE_FORMAT_NUMBERS_DMY
-    NUMBERS_MDY = messages.DATE_FORMAT_NUMBERS_MDY
-    NUMBERS_YMD = messages.DATE_FORMAT_NUMBERS_YMD
-    FULL_DM = messages.DATE_FORMAT_FULL_DM
-    FULL_MD = messages.DATE_FORMAT_FULL_MD
-    FULL_DMY = messages.DATE_FORMAT_FULL_DMY
-    FULL_MDY = messages.DATE_FORMAT_FULL_MDY
-    FULL_YMD = messages.DATE_FORMAT_FULL_YMD
-    ABBREVIATED_DM = messages.DATE_FORMAT_ABBREVIATED_DM
-    ABBREVIATED_MD = messages.DATE_FORMAT_ABBREVIATED_MD
-    ABBREVIATED_DMY = messages.DATE_FORMAT_ABBREVIATED_DMY
-    ABBREVIATED_MDY = messages.DATE_FORMAT_ABBREVIATED_MDY
-    ABBREVIATED_YMD = messages.DATE_FORMAT_ABBREVIATED_YMD
+    LOCALE = "%x"
+    NUMBERS_DM = "%d/%m"
+    NUMBERS_MD = "%m/%d"
+    NUMBERS_DMY = "%d/%m/%Y"
+    NUMBERS_MDY = "%m/%d/%Y"
+    NUMBERS_YMD = "%Y/%m/%d"
+    FULL_DM = "%A, %-d %B"
+    FULL_MD = "%A, %B %-d"
+    FULL_DMY = "%A, %-d %B, %Y"
+    FULL_MDY = "%A, %B %-d, %Y"
+    FULL_YMD = "%Y. %B %-d, %A"
+    ABBREVIATED_DM = "%a, %-d %b"
+    ABBREVIATED_MD = "%a, %b %-d"
+    ABBREVIATED_DMY = "%a, %-d %b, %Y"
+    ABBREVIATED_MDY = "%a, %b %-d, %Y"
+    ABBREVIATED_YMD = "%Y. %b %-d, %a"
 
     @property
     def string_name(self) -> str:
@@ -80,13 +82,13 @@ class DateFormat(Enum):
         return self.name.lower()
 
 class TimeFormat(Enum):
-    """Time format enumeration with string values from messages."""
+    """Time format enumeration with format strings."""
 
-    LOCALE = messages.TIME_FORMAT_LOCALE
-    TWELVE_HM = messages.TIME_FORMAT_12_HM
-    TWELVE_HMS = messages.TIME_FORMAT_12_HMS
-    TWENTYFOUR_HM = messages.TIME_FORMAT_24_HM
-    TWENTYFOUR_HMS = messages.TIME_FORMAT_24_HMS
+    LOCALE = "%X"
+    TWELVE_HM = "%I:%M %p"
+    TWELVE_HMS = "%I:%M:%S %p"
+    TWENTYFOUR_HM = "%H:%M"
+    TWENTYFOUR_HMS = "%H:%M:%S"
     TWENTYFOUR_HM_WITH_WORDS = messages.TIME_FORMAT_24_HM_WITH_WORDS
     TWENTYFOUR_HMS_WITH_WORDS = messages.TIME_FORMAT_24_HMS_WITH_WORDS
 
@@ -95,6 +97,50 @@ class TimeFormat(Enum):
         """Returns the lowercase string name for this enum value."""
 
         return self.name.lower()
+
+class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Time and Date preferences page."""
+
+    def __init__(self, presenter: "SystemInformationPresenter") -> None:
+        """Initialize the preferences grid."""
+
+        # Generate display options (strftime examples) and values (format strings)
+        date_options = []
+        date_values = []
+        for fmt in DateFormat:
+            example = time.strftime(fmt.value, time.localtime())
+            date_options.append(example)
+            date_values.append(fmt.value)
+
+        time_options = []
+        time_values = []
+        for time_fmt in TimeFormat:
+            example = time.strftime(time_fmt.value, time.localtime())
+            time_options.append(example)
+            time_values.append(time_fmt.value)
+
+        controls = [
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.GENERAL_DATE_FORMAT,
+                options=date_options,
+                values=date_values,
+                getter=presenter._get_date_format_string,
+                setter=presenter._set_date_format_string,
+                prefs_key="presentDateFormat",
+                member_of=guilabels.TIME_AND_DATE
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.GENERAL_TIME_FORMAT,
+                options=time_options,
+                values=time_values,
+                getter=presenter._get_time_format_string,
+                setter=presenter._set_time_format_string,
+                prefs_key="presentTimeFormat",
+                member_of=guilabels.TIME_AND_DATE
+            ),
+        ]
+
+        super().__init__(guilabels.KB_GROUP_SYSTEM_INFORMATION, controls)
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -110,6 +156,11 @@ class SystemInformationPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SystemInformationPresenter", self)
+
+    def create_time_and_date_preferences_grid(self) -> TimeAndDatePreferencesGrid:
+        """Returns the GtkGrid containing the time and date preferences UI."""
+
+        return TimeAndDatePreferencesGrid(self)
 
     def get_bindings(
         self, refresh: bool = False, is_desktop: bool = True
@@ -209,6 +260,18 @@ class SystemInformationPresenter:
         """Returns the current time format string for internal use."""
 
         return settings.presentTimeFormat
+
+    def _set_date_format_string(self, value: str) -> bool:
+        """Sets the date format string directly for internal use."""
+
+        settings.presentDateFormat = value
+        return True
+
+    def _set_time_format_string(self, value: str) -> bool:
+        """Sets the time format string directly for internal use."""
+
+        settings.presentTimeFormat = value
+        return True
 
     @dbus_service.getter
     def get_date_format(self) -> str:
