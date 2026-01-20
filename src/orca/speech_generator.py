@@ -57,6 +57,7 @@ from . import messages
 from . import object_properties
 from . import say_all_presenter
 from . import settings
+from . import settings_manager
 from . import speech
 from . import speech_and_verbosity_manager
 from .ax_document import AXDocument
@@ -261,7 +262,12 @@ class SpeechGenerator(generator.Generator):
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice.update(voices.get(voiceType[UPPERCASE], acss.ACSS()))
 
-            if speech_and_verbosity_manager.get_manager().get_auto_language_switching():
+            if settings_manager.get_manager().is_configuring():
+                auto_lang_switching = False
+            else:
+                speech_manager = speech_and_verbosity_manager.get_manager()
+                auto_lang_switching = speech_manager.get_auto_language_switching()
+            if auto_lang_switching:
                 # Only update the language if it has changed from the user's preferred voice.
                 # If that occurred, changing the dialect should not be problematic/bothersome.
                 # For now, ignore dialect changes for the same language to avoid two potential
@@ -1150,6 +1156,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if args.get("index", 0) + 1 < args.get("total", 1):
+            return []
+
+        if obj != focus_manager.get_manager().get_locus_of_focus():
             return []
 
         result = []
@@ -3029,14 +3038,17 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the combo-box role."""
 
         result = []
-        result += self._generate_accessible_label_and_name(obj, **args)
+        label_and_name = self._generate_accessible_label_and_name(obj, **args)
+        result += label_and_name
         result += self._generate_accessible_role(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
             result += self._generate_state_expanded(obj, **args)
             return result
 
-        result += self._generate_value(obj, **args)
+        value = self._generate_value(obj, **args)
+        if value and value[0] and value[0] not in label_and_name:
+            result += value
         result += self._generate_pause(obj, **args)
         result += self._generate_position_in_list(obj, **args)
         result += self._generate_pause(obj, **args)
@@ -4583,6 +4595,7 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates speech for the section role."""
 
+        # pylint: disable-next=import-outside-toplevel
         from . import document_presenter
 
         format_type = args.get("formatType", "unfocused")
