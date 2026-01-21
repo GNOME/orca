@@ -2502,14 +2502,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            label = widget.get_label().replace("_", "")
-            if label == guilabels.BRAILLE_DOT_7:
+            widget_name = Gtk.Buildable.get_name(widget)
+            if widget_name == "brailleSelection7Button":
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_UNDERLINE_7
-            elif label == guilabels.BRAILLE_DOT_8:
+            elif widget_name == "brailleSelection8Button":
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_UNDERLINE_8
-            elif label == guilabels.BRAILLE_DOT_7_8:
+            elif widget_name == "brailleSelectionBothButton":
                 self.prefsDict["brailleSelectorIndicator"] = \
                     settings.BRAILLE_UNDERLINE_BOTH
             else:
@@ -2531,14 +2531,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            label = widget.get_label().replace("_", "")
-            if label == guilabels.BRAILLE_DOT_7:
+            widget_name = Gtk.Buildable.get_name(widget)
+            if widget_name == "brailleLink7Button":
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_UNDERLINE_7
-            elif label == guilabels.BRAILLE_DOT_8:
+            elif widget_name == "brailleLink8Button":
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_UNDERLINE_8
-            elif label == guilabels.BRAILLE_DOT_7_8:
+            elif widget_name == "brailleLinkBothButton":
                 self.prefsDict["brailleLinkIndicator"] = \
                     settings.BRAILLE_UNDERLINE_BOTH
             else:
@@ -2559,14 +2559,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            label = widget.get_label().replace("_", "")
-            if label == guilabels.BRAILLE_DOT_7:
+            widget_name = Gtk.Buildable.get_name(widget)
+            if widget_name == "textBraille7Button":
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.BRAILLE_UNDERLINE_7
-            elif label == guilabels.BRAILLE_DOT_8:
+            elif widget_name == "textBraille8Button":
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.BRAILLE_UNDERLINE_8
-            elif label == guilabels.BRAILLE_DOT_7_8:
+            elif widget_name == "textBrailleBothButton":
                 self.prefsDict["textAttributesBrailleIndicator"] = \
                     settings.BRAILLE_UNDERLINE_BOTH
             else:
@@ -2586,13 +2586,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.PUNCTUATION_STYLE_NONE:
+            widget_name = Gtk.Buildable.get_name(widget)
+            if widget_name == "noneButton":
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_NONE
-            elif widget.get_label() == guilabels.PUNCTUATION_STYLE_SOME:
+            elif widget_name == "someButton":
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_SOME
-            elif widget.get_label() == guilabels.PUNCTUATION_STYLE_MOST:
+            elif widget_name == "mostButton":
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_MOST
             else:
@@ -2747,7 +2748,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.VERBOSITY_LEVEL_BRIEF:
+            if Gtk.Buildable.get_name(widget) == "speechBriefButton":
                 self.prefsDict["speechVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF
             else:
@@ -2797,7 +2798,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.VERBOSITY_LEVEL_BRIEF:
+            if Gtk.Buildable.get_name(widget) == "brailleBriefButton":
                 self.prefsDict["brailleVerbosityLevel"] = \
                     settings.VERBOSITY_LEVEL_BRIEF
             else:
@@ -3003,7 +3004,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         if widget.get_active():
-            if widget.get_label() == guilabels.KEYBOARD_LAYOUT_DESKTOP:
+            if Gtk.Buildable.get_name(widget) == "generalDesktopButton":
                 self.prefsDict["keyboardLayout"] = \
                     settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
                 self.prefsDict["orcaModifierKeys"] = \
