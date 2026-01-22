@@ -981,6 +981,51 @@ class TestDocumentPresenter:
         assert presenter.in_focus_mode(mock_app) is False
         assert presenter.focus_mode_is_sticky(mock_app) is False
 
+    def test_clear_navigator_suspend_tracking(self, test_context: OrcaTestContext) -> None:
+        """Test clear_navigator_suspend_tracking removes only navigator tracking."""
+
+        from unittest.mock import MagicMock
+
+        module, _mocks = self._setup_presenter(test_context)
+        presenter = module.get_presenter()
+        mock_app = MagicMock()
+        app_hash = hash(mock_app)
+
+        presenter._app_states[app_hash] = module._AppModeState(
+            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
+        )
+        presenter._navigators_suspended[app_hash] = False
+
+        presenter.clear_navigator_suspend_tracking(mock_app)
+
+        assert app_hash in presenter._app_states
+        assert presenter.browse_mode_is_sticky(mock_app) is True
+        assert app_hash not in presenter._navigators_suspended
+
+    def test_clear_navigator_suspend_tracking_allows_refresh_on_reactivation(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that clearing navigator tracking allows bindings to be refreshed."""
+
+        from unittest.mock import MagicMock
+
+        module, mocks = self._setup_presenter(test_context)
+        presenter = module.get_presenter()
+        mock_app = MagicMock()
+        mock_script = MagicMock()
+        mock_script.app = mock_app
+        app_hash = hash(mock_app)
+
+        presenter._app_states[app_hash] = module._AppModeState(
+            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+        )
+
+        result = presenter.suspend_navigators(mock_script, False, "test")
+
+        assert result is True
+        mocks["orca.caret_navigator"].get_navigator.return_value.suspend_commands.assert_called()
+        mocks["orca.structural_navigator"].get_navigator.return_value.suspend_commands.assert_called()
+
     def test_per_app_state_isolation(self, test_context: OrcaTestContext) -> None:
         """Test that different apps have isolated mode state."""
 

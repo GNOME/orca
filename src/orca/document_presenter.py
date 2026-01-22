@@ -832,6 +832,17 @@ class DocumentPresenter:
             tokens = ["DOCUMENT PRESENTER: Cleared state for", app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+    def clear_navigator_suspend_tracking(self, app: Atspi.Accessible | None) -> None:
+        """Clears navigator suspension tracking for the given app."""
+
+        if app is None:
+            return
+        app_hash = hash(app)
+        if app_hash in self._navigators_suspended:
+            del self._navigators_suspended[app_hash]
+            tokens = ["DOCUMENT PRESENTER: Cleared navigator suspension tracking for", app]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
     # pylint: disable-next=too-many-return-statements
     def update_mode_if_needed(
         self,
