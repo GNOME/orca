@@ -657,12 +657,14 @@ class Utilities:
         if AXObject.get_role(root) in skip_roles:
             return []
 
+        root_is_notification = AXUtilities.is_notification(root)
+
         def _include(x):
             if not (x and AXObject.get_role(x) in label_roles):
                 return False
             if not AXUtilities.object_is_unrelated(x):
                 return False
-            if AXUtilities.is_focusable(x):
+            if not root_is_notification and AXUtilities.is_focusable(x):
                 return False
             if only_showing and not AXUtilities.is_showing(x):
                 return False
