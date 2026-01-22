@@ -434,11 +434,8 @@ class DocumentPresenter:
             return False
 
         app_name = AXObject.get_name(app).lower()
-        known_browsers = {
-            "brave", "chromium", "chromium-browser", "edge", "google-chrome",
-            "microsoft-edge", "opera", "vivaldi",
-        }
-        result = app_name not in known_browsers
+        known_browsers = ("brave", "chromium", "edge", "chrome", "opera", "vivaldi")
+        result = not any(browser in app_name for browser in known_browsers)
         tokens = ["DOCUMENT PRESENTER:", app, "is likely Electron app:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
