@@ -1499,14 +1499,9 @@ class Script(default.Script):
 
             obj, offset = self.utilities.search_for_caret_context(event.source)
             if obj:
-                notify = focus is None or self.utilities.in_find_container(focus)
                 tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                focus_manager.get_manager().set_locus_of_focus(event, obj, notify)
-                if not notify and prev_document is None:
-                    reason = "updating locus of focus without notification"
-                    presenter = document_presenter.get_presenter()
-                    presenter.suspend_navigators(self, presenter.in_focus_mode(self.app), reason)
+                focus_manager.get_manager().set_locus_of_focus(event, obj)
                 self.utilities.set_caret_context(obj, offset)
             else:
                 msg = "WEB: Search for caret context failed"
