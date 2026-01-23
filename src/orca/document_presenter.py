@@ -498,7 +498,7 @@ class DocumentPresenter:
         self._get_state_for_app(app).in_focus_mode = value
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments, too-many-branches
-    def set_presentation_mode(
+    def _set_presentation_mode(
         self,
         script: default.Script,
         use_focus_mode: bool,
@@ -508,10 +508,11 @@ class DocumentPresenter:
     ) -> bool:
         """Sets the presentation mode to focus or browse mode."""
 
+        tokens = [f"DOCUMENT PRESENTER: set_presentation_mode. Use focus mode: {use_focus_mode},",
+                    obj, "in", document, f"notify user: {notify_user}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if obj is not None and AXObject.is_dead(obj):
-            tokens = ["DOCUMENT PRESENTER: Clearing dead object",
-                      obj, "for in_document_content check"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             obj = None
 
         if not script.utilities.in_document_content(obj):
@@ -520,20 +521,22 @@ class DocumentPresenter:
             return False
 
         has_state = self.has_state_for_app(script.app)
-        current_mode = self.in_focus_mode(script.app)
-        if has_state and current_mode == use_focus_mode:
+        in_focus_mode = self.in_focus_mode(script.app)
+        if has_state and in_focus_mode == use_focus_mode:
+            msg = "DOCUMENT PRESENTER: Presentation mode already set."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         obj, _offset = script.utilities.get_caret_context(document)
 
-        if current_mode and not use_focus_mode:
+        if in_focus_mode and not use_focus_mode:
             parent = AXObject.get_parent(obj)
             if AXUtilities.is_list_box(parent):
                 script.utilities.set_caret_context(parent, -1)
             elif AXUtilities.is_menu(parent):
                 script.utilities.set_caret_context(AXObject.get_parent(parent), -1)
 
-        if not current_mode and use_focus_mode:
+        if not in_focus_mode and use_focus_mode:
             if caret_navigator.get_navigator().last_input_event_was_navigation_command() \
                or structural_navigator.get_navigator().last_input_event_was_navigation_command() \
                or table_navigator.get_navigator().last_input_event_was_navigation_command():
@@ -740,7 +743,7 @@ class DocumentPresenter:
         if event is not None and use_focus:
             AXObject.grab_focus(obj)
 
-        self.set_presentation_mode(
+        self._set_presentation_mode(
             script, use_focus, obj=obj, document=document, notify_user=notify_user)
         self._get_state_for_app(script.app).user_has_toggled = True
         return True
@@ -817,6 +820,51 @@ class DocumentPresenter:
             tokens = ["DOCUMENT PRESENTER: Cleared state for", app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+    def _handle_entering_document(
+        self,
+        script: default.Script,
+        new_focus: Atspi.Accessible,
+        old_focus: Atspi.Accessible | None
+    ) -> bool:
+        """Handles mode/navigator setup when entering a document from outside."""
+
+        if self.focus_mode_is_sticky(script.app):
+            script.present_message(messages.MODE_FOCUS_IS_STICKY)
+            reason = "locus of focus now in document, focus mode is sticky"
+            self.suspend_navigators(script, True, reason)
+            return True
+
+        if self.browse_mode_is_sticky(script.app):
+            script.present_message(messages.MODE_BROWSE_IS_STICKY)
+            structural_navigator.get_navigator().set_mode(
+                script, structural_navigator.NavigationMode.DOCUMENT)
+            caret_navigator.get_navigator().set_enabled_for_script(script, True)
+            reason = "locus of focus now in document, browse mode is sticky"
+            self.suspend_navigators(script, False, reason)
+            return True
+
+        if self._is_likely_electron_app(script.app):
+            msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.enable_sticky_focus_mode(script, notify_user=True)
+            return True
+
+        if self._is_top_level_web_app(script, new_focus):
+            msg = "DOCUMENT PRESENTER: Top-level web app detected, enabling sticky focus mode"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.enable_sticky_focus_mode(script, notify_user=True)
+            return True
+
+        use_focus = self.use_focus_mode(new_focus, old_focus)
+        if not use_focus:
+            structural_navigator.get_navigator().set_mode(
+                script, structural_navigator.NavigationMode.DOCUMENT)
+            caret_navigator.get_navigator().set_enabled_for_script(script, True)
+
+        reason = "entering document"
+        self.suspend_navigators(script, use_focus, reason)
+        return True
+
     # pylint: disable-next=too-many-return-statements
     def update_mode_if_needed(
         self,
@@ -826,55 +874,44 @@ class DocumentPresenter:
     ) -> bool:
         """Updates focus/browse mode based on a focus change. Returns True if handled."""
 
-        was_in_doc = old_focus is not None and script.utilities.in_document_content(old_focus)
-        in_doc = new_focus is not None and script.utilities.in_document_content(new_focus)
-        if not in_doc and not was_in_doc:
+        old_doc = script.utilities.get_top_level_document_for_object(old_focus)
+        new_doc = script.utilities.get_top_level_document_for_object(new_focus)
+
+        if not (old_doc or new_doc):
             return False
 
         tokens = ["DOCUMENT PRESENTER: Updating mode for focus change.",
-                  "Old focus:", old_focus, "was in doc:", was_in_doc,
-                  "New focus:", new_focus, "in doc:", in_doc]
+                  "Old focus:", old_focus, "old doc:", old_doc,
+                  "New focus:", new_focus, "new doc:", new_doc]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not in_doc:
+        if new_doc is None:
             self.reset_find_announcement_state()
             reason = "locus of focus no longer in document"
             self.suspend_navigators(script, True, reason)
             return True
 
-        if not was_in_doc:
-            if self.focus_mode_is_sticky(script.app):
-                script.present_message(messages.MODE_FOCUS_IS_STICKY)
-                reason = "locus of focus now in document, focus mode is sticky"
-                self.suspend_navigators(script, True, reason)
-                return True
+        if old_doc is None:
+            return self._handle_entering_document(script, new_focus, old_focus)
 
-            if self.browse_mode_is_sticky(script.app):
-                script.present_message(messages.MODE_BROWSE_IS_STICKY)
-                structural_navigator.get_navigator().set_mode(
-                    script, structural_navigator.NavigationMode.DOCUMENT)
-                caret_navigator.get_navigator().set_enabled_for_script(script, True)
-                reason = "locus of focus now in document, browse mode is sticky"
-                self.suspend_navigators(script, False, reason)
-                return True
-
+        # Focus change within document
         if self.focus_mode_is_sticky(script.app) or self.browse_mode_is_sticky(script.app):
             return False
 
         if self._is_likely_electron_app(script.app):
             msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.enable_sticky_focus_mode(script, notify_user=not was_in_doc)
+            self.enable_sticky_focus_mode(script, notify_user=False)
             return True
 
         if self._is_top_level_web_app(script, new_focus):
             msg = "DOCUMENT PRESENTER: Top-level web app detected, enabling sticky focus mode"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.enable_sticky_focus_mode(script, notify_user=not was_in_doc)
+            self.enable_sticky_focus_mode(script, notify_user=False)
             return True
 
         use_focus = self.use_focus_mode(new_focus, old_focus)
-        self.set_presentation_mode(script, use_focus, obj=new_focus)
+        self._set_presentation_mode(script, use_focus, obj=new_focus, document=new_doc)
         return True
 
     def reset_find_announcement_state(self) -> None:
@@ -1108,7 +1145,7 @@ class DocumentPresenter:
     def use_focus_mode(
         self,
         obj: Atspi.Accessible,
-        prev_obj: Atspi.Accessible | None = None
+        prev_obj: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns True if we should use focus mode in obj."""
 
@@ -1133,13 +1170,14 @@ class DocumentPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if structural_navigator.get_navigator().last_command_prevents_focus_mode():
-            msg = "DOCUMENT PRESENTER: Not using focus mode: prevented by structural nav settings"
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "DOCUMENT PRESENTER: Not using focus mode: last command was table navigation"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "DOCUMENT PRESENTER: Not using focus mode: last command was table navigation"
+        _structural_navigator = structural_navigator.get_navigator()
+        if _structural_navigator.last_command_prevents_focus_mode():
+            msg = "DOCUMENT PRESENTER: Not using focus mode: prevented by structural nav settings"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -1153,8 +1191,9 @@ class DocumentPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        _structural_navigator = structural_navigator.get_navigator()
-        if not self.get_native_nav_triggers_focus_mode():
+        old_doc = script.utilities.get_top_level_document_for_object(prev_obj)
+        new_doc = script.utilities.get_top_level_document_for_object(obj)
+        if old_doc == new_doc and not self.get_native_nav_triggers_focus_mode():
             was_struct_nav = _structural_navigator.last_input_event_was_navigation_command()
             was_caret_nav = _caret_navigator.last_input_event_was_navigation_command()
             if not (was_struct_nav or was_caret_nav):

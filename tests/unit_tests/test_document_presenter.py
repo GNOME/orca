@@ -1021,7 +1021,7 @@ class TestDocumentPresenter:
         mocks["orca.messages"].DOCUMENT_NOT_IN_A = "Not in document"
 
         presenter = module.get_presenter()
-        result = presenter.set_presentation_mode(mock_script, True, obj=MagicMock())
+        result = presenter._set_presentation_mode(mock_script, True, obj=MagicMock())
 
         assert result is False
         mock_script.present_message.assert_called_once()
@@ -1043,7 +1043,7 @@ class TestDocumentPresenter:
             in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
         )
 
-        result = presenter.set_presentation_mode(mock_script, True, obj=MagicMock())
+        result = presenter._set_presentation_mode(mock_script, True, obj=MagicMock())
 
         assert result is False
 
@@ -1068,7 +1068,7 @@ class TestDocumentPresenter:
             in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
         )
 
-        result = presenter.set_presentation_mode(mock_script, False, obj=MagicMock())
+        result = presenter._set_presentation_mode(mock_script, False, obj=MagicMock())
 
         assert result is True
         assert presenter.in_focus_mode(mock_app) is False
@@ -1100,7 +1100,7 @@ class TestDocumentPresenter:
             in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
         )
 
-        result = presenter.set_presentation_mode(mock_script, True, obj=MagicMock())
+        result = presenter._set_presentation_mode(mock_script, True, obj=MagicMock())
 
         assert result is True
         assert presenter.in_focus_mode(mock_app) is True
@@ -1134,7 +1134,7 @@ class TestDocumentPresenter:
         )
 
         dead_obj = MagicMock()
-        result = presenter.set_presentation_mode(mock_script, True, obj=dead_obj)
+        result = presenter._set_presentation_mode(mock_script, True, obj=dead_obj)
 
         assert result is True
         mock_script.utilities.in_document_content.assert_called_with(None)
@@ -1338,7 +1338,7 @@ class TestDocumentPresenter:
         module, _mocks = self._setup_presenter(test_context)
 
         mock_script = MagicMock()
-        mock_script.utilities.in_document_content.return_value = False
+        mock_script.utilities.get_top_level_document_for_object.return_value = None
 
         presenter = module.get_presenter()
         result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
@@ -1355,7 +1355,8 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
-        mock_script.utilities.in_document_content.side_effect = [True, False]
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.side_effect = [mock_doc, None]
 
         caret_nav = mocks["orca.caret_navigator"]
 
@@ -1368,7 +1369,7 @@ class TestDocumentPresenter:
         caret_nav.get_navigator.return_value.suspend_commands.assert_called()
 
     def test_update_mode_if_needed_sticky_focus(self, test_context: OrcaTestContext) -> None:
-        """Test update_mode_if_needed with sticky focus mode."""
+        """Test update_mode_if_needed with sticky focus mode when entering document."""
 
         from unittest.mock import MagicMock
 
@@ -1377,7 +1378,8 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
-        mock_script.utilities.in_document_content.return_value = True
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
 
         mocks["orca.caret_navigator"]
 
@@ -1386,13 +1388,13 @@ class TestDocumentPresenter:
             in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
         )
 
-        result = presenter.update_mode_if_needed(mock_script, None, MagicMock())
+        result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
         assert result is True
         mock_script.present_message.assert_called()
 
     def test_update_mode_if_needed_sticky_browse(self, test_context: OrcaTestContext) -> None:
-        """Test update_mode_if_needed with sticky browse mode."""
+        """Test update_mode_if_needed with sticky browse mode when entering document."""
 
         from unittest.mock import MagicMock
 
@@ -1401,7 +1403,8 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
-        mock_script.utilities.in_document_content.return_value = True
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
 
         struct_nav = mocks["orca.structural_navigator"]
         caret_nav = mocks["orca.caret_navigator"]
@@ -1411,12 +1414,55 @@ class TestDocumentPresenter:
             in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
         )
 
-        result = presenter.update_mode_if_needed(mock_script, None, MagicMock())
+        result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
         assert result is True
         mock_script.present_message.assert_called()
         struct_nav.get_navigator.return_value.set_mode.assert_called()
         caret_nav.get_navigator.return_value.set_enabled_for_script.assert_called()
+
+    def test_handle_entering_document_refreshes_commands(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test entering document refreshes commands even when mode unchanged."""
+
+        from unittest.mock import MagicMock, patch
+
+        module, mocks = self._setup_presenter(test_context)
+
+        mock_app = MagicMock()
+        mock_script = MagicMock()
+        mock_script.app = mock_app
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
+
+        caret_nav = mocks["orca.caret_navigator"]
+        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
+        struct_nav = mocks["orca.structural_navigator"]
+        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
+        table_nav = mocks["orca.table_navigator"]
+        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        focus_manager = mocks["orca.focus_manager"]
+        focus_manager.get_manager.return_value.in_say_all.return_value = False
+
+        script_manager = mocks["orca.script_manager"]
+        script_manager.get_manager.return_value.get_active_script.return_value = mock_script
+
+        presenter = module.get_presenter()
+        # Already in browse mode - entering document should still refresh commands
+        presenter._app_states[hash(mock_app)] = module._AppModeState(
+            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+        )
+
+        with patch.object(presenter, "is_focus_mode_widget", return_value=False):
+            result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
+
+        assert result is True
+        # Verify commands were refreshed (suspend_commands called with suspended=False for browse)
+        caret_nav.get_navigator.return_value.suspend_commands.assert_called()
+        struct_nav.get_navigator.return_value.suspend_commands.assert_called()
 
     def test_is_likely_electron_app_true(self, test_context: OrcaTestContext) -> None:
         """Test _is_likely_electron_app returns True for Chromium toolkit non-browser."""
@@ -1472,7 +1518,7 @@ class TestDocumentPresenter:
         assert result is False
 
     def test_update_mode_electron_app_sticky_focus(self, test_context: OrcaTestContext) -> None:
-        """Test update_mode_if_needed enables sticky focus for Electron apps."""
+        """Test update_mode_if_needed enables sticky focus for Electron apps when entering."""
 
         from unittest.mock import MagicMock, patch
 
@@ -1481,12 +1527,14 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
         mock_script.utilities.in_document_content.return_value = True
 
         presenter = module.get_presenter()
 
         with patch.object(presenter, "_is_likely_electron_app", return_value=True):
-            result = presenter.update_mode_if_needed(mock_script, None, MagicMock())
+            result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
         assert result is True
         assert presenter.in_focus_mode(mock_app) is True
@@ -1577,7 +1625,7 @@ class TestDocumentPresenter:
     def test_update_mode_top_level_web_app_sticky_focus(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test update_mode_if_needed enables sticky focus for top-level web apps."""
+        """Test update_mode_if_needed enables sticky focus for top-level web apps when entering."""
 
         from unittest.mock import MagicMock, patch
 
@@ -1586,6 +1634,8 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
         mock_script.utilities.in_document_content.return_value = True
 
         presenter = module.get_presenter()
@@ -1594,7 +1644,7 @@ class TestDocumentPresenter:
             patch.object(presenter, "_is_likely_electron_app", return_value=False),
             patch.object(presenter, "_is_top_level_web_app", return_value=True),
         ):
-            result = presenter.update_mode_if_needed(mock_script, None, MagicMock())
+            result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
         assert result is True
         assert presenter.in_focus_mode(mock_app) is True
@@ -2137,6 +2187,8 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.return_value = mock_doc
         mock_script.utilities.in_document_content.return_value = True
         mock_script.utilities.get_caret_context.return_value = (MagicMock(), 0)
 
@@ -2174,7 +2226,8 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
-        mock_script.utilities.in_document_content.return_value = True
+        mock_doc = MagicMock()
+        mock_script.utilities.get_top_level_document_for_object.return_value = mock_doc
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(

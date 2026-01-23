@@ -723,9 +723,6 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-            tokens = ["WEB: Refreshing grabs because we left document", old_document]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
             reason = "locus of focus no longer in document"
             document_presenter.get_presenter().suspend_navigators(self, True, reason)
             return False
@@ -835,8 +832,7 @@ class Script(default.Script):
             utterances = self.speech_generator.generate_speech(new_focus, **args)
             speech.speak(utterances)
 
-        document_presenter.get_presenter().update_mode_if_needed(
-            self, old_focus, new_focus)
+        document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
         return True
 
     def on_active_changed(self, event: Atspi.Event) -> bool:
