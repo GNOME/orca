@@ -208,11 +208,6 @@ class TestBypassModeManager:
 
         key_bindings_instance = essential_modules["key_bindings_instance"]
         key_bindings_instance.add.assert_called()
-        settings_manager_instance = essential_modules["settings_manager_instance"]
-        settings_manager_instance.override_key_bindings.assert_called_with(
-            manager._handlers, key_bindings_instance, False
-        )
-
     @pytest.mark.parametrize(
         "initial_active,has_event,expected_active,expected_message,"
         "expected_grabs_call,expected_modifier_call",
@@ -333,24 +328,19 @@ class TestBypassModeManager:
         assert result3 is True
         assert manager.is_active() is True
 
-    def test_bindings_with_key_override(self, test_context: OrcaTestContext) -> None:
-        """Test that bindings are properly configured with key overrides."""
+    def test_bindings_no_override(self, test_context: OrcaTestContext) -> None:
+        """Test that bindings setup does not call override_key_bindings."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
 
-        mock_overridden_bindings = test_context.Mock()
         settings_manager_instance = essential_modules["settings_manager_instance"]
-        settings_manager_instance.override_key_bindings.return_value = mock_overridden_bindings
         from orca.bypass_mode_manager import BypassModeManager
 
         manager = BypassModeManager()
         bindings = manager.get_bindings(refresh=True)
-        assert bindings == mock_overridden_bindings
+        assert bindings == essential_modules["key_bindings_instance"]
 
-        key_bindings_instance = essential_modules["key_bindings_instance"]
-        settings_manager_instance.override_key_bindings.assert_called_with(
-            manager._handlers, key_bindings_instance, False
-        )
+        settings_manager_instance.override_key_bindings.assert_not_called()
 
     def test_toggle_enabled_with_minimal_script_interface(
         self, test_context: OrcaTestContext

@@ -57,7 +57,6 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import script_manager
-from . import settings_manager
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
@@ -381,10 +380,6 @@ class ClipboardPresenter:
                 self._handlers["present_clipboard_contents"],
                 1,
                 True))
-
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
 
     @dbus_service.command
     def present_clipboard_contents(

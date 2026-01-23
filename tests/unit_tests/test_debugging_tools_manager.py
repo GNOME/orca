@@ -271,8 +271,6 @@ class TestDebuggingToolsManager:
             assert essential_modules["orca.input_event"].InputEventHandler.call_count >= 3
         elif setup_method == "_setup_bindings":
             essential_modules["orca.keybindings"].KeyBindings.assert_called()
-            settings_instance = essential_modules["settings_manager_instance"]
-            settings_instance.override_key_bindings.assert_called_once()
 
     @pytest.mark.parametrize(
         "initial_level,expected_level,expected_message,expected_brief,has_event",

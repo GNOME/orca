@@ -199,7 +199,7 @@ class Script(script.Script):
         for name, handler in self.input_event_handlers.items():
             command_manager.get_manager().add_command(command_manager.Command(
                 name, handler, guilabels.KB_GROUP_DEFAULT, handler.description,
-                None, handler.learn_mode_enabled))
+                None, handler.learn_mode_enabled, is_group_toggle=handler.is_group_toggle))
 
         for extension_getter, localized_name in self._get_all_extensions():
             extension = extension_getter()
@@ -208,7 +208,7 @@ class Script(script.Script):
             for name, handler in handlers.items():
                 command_manager.get_manager().add_command(command_manager.Command(
                     name, handler, localized_name, handler.description,
-                    None, handler.learn_mode_enabled))
+                    None, handler.learn_mode_enabled, is_group_toggle=handler.is_group_toggle))
 
         # These are strictly for braille hardware keys.
         # They are NOT added as Commands because they're handled separately

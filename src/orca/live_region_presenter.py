@@ -40,15 +40,16 @@ import gi
 from gi.repository import GLib
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
 from . import script_manager
 from . import settings
-from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -244,7 +245,8 @@ class LiveRegionPresenter:
             input_event.InputEventHandler(
                 self.toggle_monitoring,
                 cmdnames.LIVE_REGIONS_MONITOR,
-                enabled = True)
+                enabled=True,
+                is_group_toggle=True)
 
         self._handlers["present_previous_live_region_message"] = \
             input_event.InputEventHandler(
@@ -262,7 +264,8 @@ class LiveRegionPresenter:
             input_event.InputEventHandler(
                 self.toggle_live_region_presentation,
                 cmdnames.LIVE_REGIONS_ARE_ANNOUNCED,
-                enabled = not self._suspended)
+                enabled=not self._suspended,
+                is_group_toggle=True)
 
         self._handlers["present_next_live_region_message"] = \
             input_event.InputEventHandler(
@@ -318,29 +321,8 @@ class LiveRegionPresenter:
                 1,
                 not self._suspended))
 
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
-
         msg = f"LIVE REGION PRESENTER: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
-        """Refreshes live region bindings and grabs for script."""
-
-        msg = "LIVE REGION PRESENTER: Refreshing bindings and grabs"
-        if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, include_grabs=True)
-
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, include_grabs=not self._suspended)
 
     def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
         """Suspends live region commands independent of the enabled setting."""
@@ -353,7 +335,8 @@ class LiveRegionPresenter:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
-        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
+        command_manager.get_manager().set_group_suspended(
+            guilabels.KB_GROUP_LIVE_REGIONS, suspended)
 
     def reset(self) -> None:
         """Reset the live region presenter."""

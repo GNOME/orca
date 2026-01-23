@@ -47,6 +47,7 @@ class TestCaretNavigator:
         """Set up mocks for caret_navigator dependencies."""
 
         additional_modules = [
+            "orca.command_manager",
             "orca.input_event_manager",
             "orca.keybindings",
             "orca.cmdnames",
@@ -307,32 +308,25 @@ class TestCaretNavigator:
         mock_event = test_context.Mock()
 
         if test_method == "suspend_commands":
-            mock_script.key_bindings = test_context.Mock()
-            mock_script.key_bindings.remove = test_context.Mock()
-            mock_script.key_bindings.add = test_context.Mock()
-            test_context.patch_object(navigator, "refresh_bindings_and_grabs")
+            mock_cmd_mgr = test_context.Mock()
+            essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
             test_context.patch_object(navigator, "_is_active_script", return_value=True)
             navigator._suspended = False
             navigator.suspend_commands(mock_script, True, "test reason")
             assert navigator._suspended == expected_result
+            mock_cmd_mgr.set_group_suspended.assert_called_once()
 
         elif test_method == "toggle_enabled":
-            mock_script.key_bindings = test_context.Mock()
-            mock_script.key_bindings.remove = test_context.Mock()
-            mock_script.key_bindings.add = test_context.Mock()
-
-            settings_manager_mock = essential_modules["orca.settings_manager"]
-            manager_instance = test_context.Mock()
-            settings_manager_mock.get_manager.return_value = manager_instance
+            mock_cmd_mgr = test_context.Mock()
+            essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
 
             guilabels_mock = essential_modules["orca.guilabels"]
             guilabels_mock.CARET_NAVIGATION_ENABLED = "Caret navigation enabled"
             guilabels_mock.CARET_NAVIGATION_DISABLED = "Caret navigation disabled"
 
-            test_context.patch_object(navigator, "refresh_bindings_and_grabs")
-
             result = navigator.toggle_enabled(mock_script, mock_event)
             assert result == expected_result
+            mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     @pytest.mark.parametrize(
         "test_method,param_data,expected_checks",
@@ -601,173 +595,6 @@ class TestCaretNavigator:
         if not script_is_active:
             debug_mock.print_tokens.assert_called_once()
 
-    @pytest.mark.parametrize(
-        "script_is_active,suspended,debug_level",
-        [
-            pytest.param(True, False, 0, id="active_script_not_suspended_debug_on"),
-            pytest.param(True, True, 0, id="active_script_suspended_debug_on"),
-            pytest.param(False, False, 0, id="non_active_script_debug_on"),
-            pytest.param(True, False, 1000, id="active_script_debug_off"),
-        ],
-    )
-    def test_add_bindings(
-        self,
-        test_context: OrcaTestContext,
-        script_is_active: bool,
-        suspended: bool,
-        debug_level: int,
-    ) -> None:
-        """Test add_bindings method with various script states."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = CaretNavigator()
-        mock_script = test_context.Mock()
-        mock_script.key_bindings = test_context.Mock()
-        mock_script.key_bindings.add = test_context.Mock()
-        mock_script.key_bindings.get_bindings_with_grabs_for_debugging = test_context.Mock(
-            return_value=[1, 2, 3]
-        )
-
-        navigator._suspended = suspended
-
-        script_manager_mock = essential_modules["orca.script_manager"]
-        manager_instance = test_context.Mock()
-        script_manager_mock.get_manager.return_value = manager_instance
-
-        if script_is_active:
-            manager_instance.get_active_script.return_value = mock_script
-        else:
-            manager_instance.get_active_script.return_value = test_context.Mock()
-
-        debug_mock = essential_modules["orca.debug"]
-        debug_mock.LEVEL_INFO = 800
-        debug_mock.debugLevel = debug_level
-        debug_mock.print_tokens = test_context.Mock()
-
-        mock_bindings = test_context.Mock()
-        mock_bindings.key_bindings = [test_context.Mock(), test_context.Mock()]
-        test_context.patch_object(navigator, "get_handlers", return_value={})
-        test_context.patch_object(navigator, "get_bindings", return_value=mock_bindings)
-
-        navigator.add_bindings(mock_script, "test reason")
-
-        if script_is_active:
-            assert debug_mock.print_tokens.call_count >= 1
-            assert mock_script.key_bindings.add.call_count == len(mock_bindings.key_bindings)
-            if debug_level <= 800:
-                grabs_call_count = 2
-                grabs_method = mock_script.key_bindings.get_bindings_with_grabs_for_debugging
-                actual_grabs_call_count = grabs_method.call_count
-                assert actual_grabs_call_count == grabs_call_count
-        else:
-            assert mock_script.key_bindings.add.call_count == 0
-
-    @pytest.mark.parametrize(
-        "script_is_active,debug_level",
-        [
-            pytest.param(True, 0, id="active_script_debug_on"),
-            pytest.param(False, 0, id="non_active_script_debug_on"),
-            pytest.param(True, 1000, id="active_script_debug_off"),
-        ],
-    )
-    def test_remove_bindings(
-        self,
-        test_context: OrcaTestContext,
-        script_is_active: bool,
-        debug_level: int,
-    ) -> None:
-        """Test remove_bindings method with various script states."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = CaretNavigator()
-        mock_script = test_context.Mock()
-        mock_script.key_bindings = test_context.Mock()
-        mock_script.key_bindings.remove = test_context.Mock()
-        mock_script.key_bindings.get_bindings_with_grabs_for_debugging = test_context.Mock(
-            return_value=[1, 2, 3]
-        )
-
-        mock_bindings = test_context.Mock()
-        mock_bindings.key_bindings = [test_context.Mock(), test_context.Mock()]
-        navigator._bindings = mock_bindings
-
-        script_manager_mock = essential_modules["orca.script_manager"]
-        manager_instance = test_context.Mock()
-        script_manager_mock.get_manager.return_value = manager_instance
-
-        if script_is_active:
-            manager_instance.get_active_script.return_value = mock_script
-        else:
-            manager_instance.get_active_script.return_value = test_context.Mock()
-
-        debug_mock = essential_modules["orca.debug"]
-        debug_mock.LEVEL_INFO = 800
-        debug_mock.debugLevel = debug_level
-        debug_mock.print_tokens = test_context.Mock()
-
-        navigator.remove_bindings(mock_script, "test reason")
-
-        if script_is_active:
-            assert debug_mock.print_tokens.call_count >= 1
-            assert mock_script.key_bindings.remove.call_count == len(mock_bindings.key_bindings)
-            if debug_level <= 800:
-                grabs_call_count = 2
-                grabs_method = mock_script.key_bindings.get_bindings_with_grabs_for_debugging
-                actual_grabs_call_count = grabs_method.call_count
-                assert actual_grabs_call_count == grabs_call_count
-        else:
-            assert mock_script.key_bindings.remove.call_count == 0
-
-    def test_refresh_bindings_updates_script_bindings(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test refresh_bindings_and_grabs properly updates script key bindings."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = CaretNavigator()
-        mock_script = test_context.Mock()
-        mock_script.key_bindings = test_context.Mock()
-        mock_script.key_bindings.remove = test_context.Mock()
-        mock_script.key_bindings.add = test_context.Mock()
-        mock_script.key_bindings.get_bindings_with_grabs_for_debugging = test_context.Mock(
-            return_value=[1, 2, 3]
-        )
-
-        script_manager_mock = essential_modules["orca.script_manager"]
-        manager_instance = test_context.Mock()
-        script_manager_mock.get_manager.return_value = manager_instance
-        manager_instance.get_active_script.return_value = mock_script
-
-        debug_mock = essential_modules["orca.debug"]
-        debug_mock.LEVEL_INFO = 800
-        debug_mock.debugLevel = 0
-        debug_mock.print_message = test_context.Mock()
-        debug_mock.print_tokens = test_context.Mock()
-
-        old_bindings = test_context.Mock()
-        old_bindings.key_bindings = [test_context.Mock()]
-        navigator._bindings = old_bindings
-
-        new_bindings = test_context.Mock()
-        new_bindings.key_bindings = [test_context.Mock(), test_context.Mock()]
-        test_context.patch_object(navigator, "get_handlers", return_value={})
-        test_context.patch_object(navigator, "get_bindings", return_value=new_bindings)
-
-        navigator.refresh_bindings_and_grabs(mock_script, "test reason")
-
-        assert mock_script.key_bindings.remove.call_count == len(old_bindings.key_bindings)
-        assert mock_script.key_bindings.add.call_count == len(new_bindings.key_bindings)
-        assert navigator._handlers == {}
-        assert navigator._bindings == new_bindings
-        debug_mock.print_message.assert_called_once()
-
     def test_get_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test get_is_enabled returns setting value."""
 
@@ -803,35 +630,35 @@ class TestCaretNavigator:
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(navigator, "refresh_bindings_and_grabs", new=mock_refresh)
 
         result = navigator.set_is_enabled(True)
         assert result is True
         assert settings_mock.caretNavigationEnabled
         assert navigator._last_input_event is None
-        mock_refresh.assert_called_once()
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_no_active_script(self, test_context: OrcaTestContext) -> None:
-        """Test set_is_enabled returns early if no active script."""
+        """Test set_is_enabled updates state even with no active script."""
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].caretNavigationEnabled = False
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = None
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(navigator, "refresh_bindings_and_grabs", new=mock_refresh)
 
         result = navigator.set_is_enabled(True)
         assert result is True
-        mock_refresh.assert_not_called()
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test get_triggers_focus_mode returns setting value."""
@@ -903,11 +730,11 @@ class TestCaretNavigator:
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(navigator, "refresh_bindings_and_grabs", new=mock_refresh)
         test_context.patch_object(navigator, "_is_active_script", return_value=True)
 
         navigator.set_enabled_for_script(mock_script, True)

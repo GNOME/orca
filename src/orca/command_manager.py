@@ -20,6 +20,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-statements
+# pylint: disable=too-many-lines
 
 """Manager for script commands and keybindings."""
 
@@ -40,6 +41,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
 
+from . import debug
 from . import guilabels
 from . import input_event
 from . import input_event_manager
@@ -86,7 +88,8 @@ class Command:  # pylint: disable=too-many-instance-attributes
         keybinding: keybindings.KeyBinding | None = None,
         learn_mode_enabled: bool = True,
         enabled: bool = True,
-        suspended: bool = False
+        suspended: bool = False,
+        is_group_toggle: bool = False
     ) -> None:
         """Initializes a command."""
 
@@ -99,6 +102,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self._learn_mode_enabled = learn_mode_enabled
         self._enabled = enabled
         self._suspended = suspended
+        self._is_group_toggle = is_group_toggle
 
     def get_handler_name(self) -> str:
         """Returns the handler name."""
@@ -174,6 +178,16 @@ class Command:  # pylint: disable=too-many-instance-attributes
         """Sets whether this command is temporarily suspended by the system."""
 
         self._suspended = suspended
+
+    def is_group_toggle(self) -> bool:
+        """Returns True if this command toggles its group's enabled state."""
+
+        return self._is_group_toggle
+
+    def set_is_group_toggle(self, value: bool) -> None:
+        """Sets whether this command toggles its group's enabled state."""
+
+        self._is_group_toggle = value
 
     def is_active(self) -> bool:
         """Returns True if this command should respond to key events."""
@@ -456,15 +470,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
             if event.keyval == Gdk.KEY_Escape:
-                self._finish_inline_editing(row, command, vbox, capture_entry, binding_label, canceled=True)
+                self._finish_inline_editing(
+                    row, command, vbox, capture_entry, binding_label, canceled=True)
                 return True
 
             if event.keyval == Gdk.KEY_Return:
-                # Check for duplicates when confirming
                 if self._captured_key[0]:
                     key_name, modifiers, click_count = self._captured_key
                     handler_name = command.get_handler_name()
-                    description_dup = self._find_duplicate_binding(key_name, modifiers, click_count, handler_name)
+                    description_dup = self._find_duplicate_binding(
+                        key_name, modifiers, click_count, handler_name)
                     if description_dup:
                         script = script_manager.get_manager().get_active_script()
                         def present_duplicate_error():
@@ -475,7 +490,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         self._captured_key = ("", 0, 0)
                         return True
 
-                self._finish_inline_editing(row, command, vbox, capture_entry, binding_label, canceled=False)
+                self._finish_inline_editing(
+                    row, command, vbox, capture_entry, binding_label, canceled=False)
                 return True
 
             key_processed = self._process_key_captured(event)
@@ -761,7 +777,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         entry.grab_focus()
         entry.grab_add()
 
-        while Gtk.events_pending():
+        while Gtk.events_pending(): # pylint: disable=no-value-for-parameter
             Gtk.main_iteration()
 
         self._script.remove_key_grabs()
@@ -971,9 +987,11 @@ class CommandManager:
                     continue
                 if handler.function == kb.handler.function:
                     if cmd := self.get_command(name):
+                        cmd.set_is_group_toggle(handler.is_group_toggle)
                         if cmd.get_default_keybinding() is None:
                             cmd.set_default_keybinding(kb)
                             cmd.set_keybinding(kb)
+                            kb.set_enabled(cmd.is_enabled() and not cmd.is_suspended())
                     break
 
     def clear_deleted_bindings(
@@ -992,6 +1010,7 @@ class CommandManager:
                     if cmd := self.get_command(name):
                         cmd.set_keybinding(None)
 
+    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def apply_customized_bindings(
         self,
         handlers: dict[str, input_event.InputEventHandler],
@@ -1009,12 +1028,15 @@ class CommandManager:
                 if handler.function == kb.handler.function:
                     if cmd := self.get_command(name):
                         cmd.set_keybinding(kb)
+                        cmd.set_is_group_toggle(handler.is_group_toggle)
+                        kb.set_enabled(cmd.is_enabled() and not cmd.is_suspended())
                         if group_label and update_group_label:
                             cmd.set_group_label(group_label)
                     else:
                         self.add_command(Command(
                             name, handler, group_label, handler.description,
-                            kb, handler.learn_mode_enabled))
+                            kb, handler.learn_mode_enabled,
+                            is_group_toggle=handler.is_group_toggle))
                     break
 
     def get_command_for_event(
@@ -1040,14 +1062,28 @@ class CommandManager:
     def set_group_enabled(self, group_label: str, enabled: bool) -> None:
         """Sets the enabled state for all commands in a group."""
 
+        msg = f"COMMAND MANAGER: set_group_enabled({group_label}, {enabled})"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         for cmd in self.get_commands_by_group_label(group_label):
+            # Note:Group toggle commands are skipped since they must remain active to re-enable
+            # the group.
+            if cmd.is_group_toggle():
+                msg = f"COMMAND MANAGER: Skipping group toggle command: {cmd.get_handler_name()}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                continue
             cmd.set_enabled(enabled)
+            if kb := cmd.get_keybinding():
+                kb.set_enabled(enabled and not cmd.is_suspended())
+        self.refresh_grabs_for_group(group_label)
 
     def set_group_suspended(self, group_label: str, suspended: bool) -> None:
         """Sets the suspended state for all commands in a group."""
 
         for cmd in self.get_commands_by_group_label(group_label):
             cmd.set_suspended(suspended)
+            if kb := cmd.get_keybinding():
+                kb.set_enabled(cmd.is_enabled() and not suspended)
+        self.refresh_grabs_for_group(group_label)
 
     def add_grabs_for_command(self, handler_name: str) -> None:
         """Adds key grabs for the specified command."""
@@ -1069,7 +1105,16 @@ class CommandManager:
         """Adds key grabs for all active commands in a group."""
 
         for cmd in self.get_commands_by_group_label(group_label):
-            if cmd.is_active() and (kb := cmd.get_keybinding()) is not None:
+            name = cmd.get_handler_name()
+            is_active = cmd.is_active()
+            kb = cmd.get_keybinding()
+            kb_enabled = kb.is_enabled() if kb else None
+            msg = (
+                f"COMMAND MANAGER: add_grabs_for_group: {name} "
+                f"active={is_active} kb_enabled={kb_enabled}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            if is_active and kb is not None:
                 kb.add_grabs()
 
     def remove_grabs_for_group(self, group_label: str) -> None:

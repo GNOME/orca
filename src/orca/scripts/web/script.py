@@ -127,12 +127,6 @@ class Script(default.Script):
         document_presenter.get_presenter().reset_find_announcement_state()
         self._last_mouse_button_context = None, -1
         self.utilities.clear_cached_objects()
-        # Clear navigator suspension tracking so bindings are properly refreshed
-        # when the script is reactivated. Don't call suspend_navigators here
-        # because that could leave _navigators_suspended in a state that causes
-        # the early-return check in suspend_navigators to skip binding refresh
-        # on reactivation.
-        document_presenter.get_presenter().clear_navigator_suspend_tracking(self.app)
         super().deactivate()
 
     def get_braille_generator(self) -> BrailleGenerator:

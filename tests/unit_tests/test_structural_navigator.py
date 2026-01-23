@@ -53,6 +53,7 @@ class TestStructuralNavigator:
 
         additional_modules = [
             "orca.cmdnames",
+            "orca.command_manager",
             "orca.dbus_service",
             "orca.debug",
             "orca.focus_manager",
@@ -428,7 +429,7 @@ class TestStructuralNavigator:
 
     @pytest.mark.parametrize(
         "suspend_value, is_active, initial_suspended, expected_suspended, expects_debug, "
-        "expects_refresh",
+        "expects_cmd_mgr",
         [
             pytest.param(True, True, False, True, True, True, id="suspend_navigation"),
             pytest.param(False, True, True, False, True, True, id="resume_navigation"),
@@ -451,7 +452,7 @@ class TestStructuralNavigator:
         initial_suspended,
         expected_suspended,
         expects_debug,
-        expects_refresh,
+        expects_cmd_mgr,
     ) -> None:
         """Test StructuralNavigator.suspend_commands various scenarios."""
 
@@ -466,8 +467,8 @@ class TestStructuralNavigator:
         nav = get_navigator()
         nav._suspended = initial_suspended
         test_context.patch_object(nav, "_is_active_script", return_value=is_active)
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
 
         nav.suspend_commands(mock_script, suspend_value, "test reason")
 
@@ -480,12 +481,10 @@ class TestStructuralNavigator:
                 True,
             )
 
-        if expects_refresh:
-            mock_refresh.assert_called_once_with(
-                mock_script, f"Suspended changed to {suspend_value}"
-            )
+        if expects_cmd_mgr:
+            mock_cmd_mgr.set_group_suspended.assert_called_once()
         else:
-            mock_refresh.assert_not_called()
+            mock_cmd_mgr.set_group_suspended.assert_not_called()
 
     def test_get_object_in_direction_empty_objects(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator._get_object_in_direction with empty objects list."""
@@ -979,60 +978,6 @@ class TestStructuralNavigator:
         essential_modules["orca.AXObject"].get_role.return_value = None
         result = nav._is_non_document_object(mock_obj)
         assert isinstance(result, bool)
-
-    def test_add_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator.add_bindings method."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.debug"].debugLevel = 0
-        mock_script = test_context.Mock()
-        mock_key_bindings = test_context.Mock()
-        mock_key_bindings.get_bindings_with_grabs_for_debugging.return_value = []
-        mock_script.get_key_bindings.return_value = mock_key_bindings
-        mock_script.key_bindings = mock_key_bindings
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        mock_bindings = test_context.Mock()
-        mock_bindings.key_bindings = []
-        nav._bindings = mock_bindings
-        test_context.patch_object(nav, "_is_active_script", return_value=True)
-        test_context.patch_object(nav, "get_bindings", return_value=mock_bindings)
-        nav.add_bindings(mock_script, "test")
-        essential_modules["orca.debug"].print_tokens.assert_called()
-
-    def test_remove_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator.remove_bindings method."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.debug"].debugLevel = 0
-        mock_script = test_context.Mock()
-        mock_key_bindings = test_context.Mock()
-        mock_key_bindings.get_bindings_with_grabs_for_debugging.return_value = []
-        mock_script.get_key_bindings.return_value = mock_key_bindings
-        mock_script.key_bindings = mock_key_bindings
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        mock_bindings = test_context.Mock()
-        mock_bindings.key_bindings = []
-        nav._bindings = mock_bindings
-        test_context.patch_object(nav, "_is_active_script", return_value=True)
-        nav.remove_bindings(mock_script, "test")
-        essential_modules["orca.debug"].print_tokens.assert_called()
-
-    def test_refresh_bindings_and_grabs(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator.refresh_bindings_and_grabs method."""
-
-        self._setup_dependencies(test_context)
-        mock_script = test_context.Mock()
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        test_context.patch_object(nav, "_is_active_script", return_value=True)
-        test_context.patch_object(nav, "remove_bindings", new=test_context.Mock())
-        test_context.patch_object(nav, "add_bindings", new=test_context.Mock())
-        nav.refresh_bindings_and_grabs(mock_script, "test")
 
     def test_previous_heading_method(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.previous_heading method."""
@@ -1550,18 +1495,18 @@ class TestStructuralNavigator:
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.structural_navigator import get_navigator, NavigationMode
 
         nav = get_navigator()
         nav._previous_mode_for_script[mock_script] = NavigationMode.DOCUMENT
         test_context.patch_object(nav, "_is_active_script", return_value=True)
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
 
         result = nav.set_is_enabled(True)
         assert result is True
         assert nav._mode_for_script[mock_script] == NavigationMode.DOCUMENT
-        mock_refresh.assert_called_once()
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_true_without_previous_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_is_enabled without previous mode when enabling."""
@@ -1572,16 +1517,16 @@ class TestStructuralNavigator:
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
         test_context.patch_object(nav, "_is_active_script", return_value=True)
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
 
         result = nav.set_is_enabled(True)
         assert result is True
-        mock_refresh.assert_called_once()
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_false_saves_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_is_enabled saves current mode when disabling."""
@@ -1592,19 +1537,19 @@ class TestStructuralNavigator:
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.structural_navigator import get_navigator, NavigationMode
 
         nav = get_navigator()
         nav._mode_for_script[mock_script] = NavigationMode.DOCUMENT
         test_context.patch_object(nav, "_is_active_script", return_value=True)
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
 
         result = nav.set_is_enabled(False)
         assert result is True
         assert nav._previous_mode_for_script[mock_script] == NavigationMode.DOCUMENT
         assert nav._mode_for_script[mock_script] == NavigationMode.OFF
-        mock_refresh.assert_called_once()
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_false_already_off(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_is_enabled returns early if already OFF."""
@@ -1615,16 +1560,16 @@ class TestStructuralNavigator:
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.structural_navigator import get_navigator, NavigationMode
 
         nav = get_navigator()
         nav._mode_for_script[mock_script] = NavigationMode.OFF
-        mock_refresh = test_context.Mock()
-        test_context.patch_object(nav, "refresh_bindings_and_grabs", new=mock_refresh)
 
         result = nav.set_is_enabled(False)
         assert result is True
-        mock_refresh.assert_not_called()
+        mock_cmd_mgr.set_group_enabled.assert_not_called()
 
     def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.get_triggers_focus_mode returns setting value."""

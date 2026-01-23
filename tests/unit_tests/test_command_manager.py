@@ -889,6 +889,46 @@ class TestCommandManager:
         assert cmd2.is_enabled() is False
         assert cmd3.is_enabled() is True
 
+    def test_set_group_enabled_skips_group_toggle(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_group_enabled does not disable group toggle commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        toggle_handler = self._create_mock_handler(test_context, "Toggle")
+        regular_handler = self._create_mock_handler(test_context, "Regular")
+
+        toggle_kb = self._create_mock_keybinding(test_context, toggle_handler)
+        regular_kb = self._create_mock_keybinding(test_context, regular_handler)
+
+        toggle_cmd = Command(
+            "toggleHandler",
+            toggle_handler,
+            "Group A",
+            keybinding=toggle_kb,
+            is_group_toggle=True,
+        )
+        regular_cmd = Command(
+            "regularHandler",
+            regular_handler,
+            "Group A",
+            keybinding=regular_kb,
+        )
+
+        manager.add_command(toggle_cmd)
+        manager.add_command(regular_cmd)
+
+        manager.set_group_enabled("Group A", False)
+
+        assert toggle_cmd.is_enabled() is True
+        assert regular_cmd.is_enabled() is False
+        toggle_kb.set_enabled.assert_not_called()
+        regular_kb.set_enabled.assert_called_once()
+
     def test_set_group_suspended(self, test_context: OrcaTestContext) -> None:
         """Test set_group_suspended sets suspended state for all commands in group."""
 
@@ -1102,6 +1142,272 @@ class TestCommandManager:
         kb1.add_grabs.assert_called_once()
         kb2.remove_grabs.assert_called_once()
         kb2.add_grabs.assert_not_called()
+
+    def test_user_binding_different_from_default(self, test_context: OrcaTestContext) -> None:
+        """Test that user bindings can differ from default bindings."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        handler = self._create_mock_handler(test_context)
+        default_kb = self._create_mock_keybinding(test_context, handler)
+        default_kb.keysymstring = "h"
+        default_kb.modifiers = 4  # Orca modifier
+
+        cmd = Command("handler", handler, "Test Group", keybinding=default_kb)
+        manager.add_command(cmd)
+
+        # Simulate user customizing the binding to a different key
+        user_kb = self._create_mock_keybinding(test_context, handler)
+        user_kb.keysymstring = "j"
+        user_kb.modifiers = 4  # Orca modifier
+
+        customized = test_context.Mock()
+        customized.key_bindings = [user_kb]
+
+        handlers = {"handler": handler}
+        skip = frozenset()
+
+        manager.apply_customized_bindings(handlers, customized, "Test Group", skip)
+
+        # Current binding should be user's choice
+        assert cmd.get_keybinding() == user_kb
+        # Default binding should remain unchanged
+        assert cmd.get_default_keybinding() == default_kb
+
+    def test_user_binding_preserved_through_group_enable_disable(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that user's custom binding is preserved when group is disabled/enabled."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        handler = self._create_mock_handler(test_context)
+
+        # Start with default binding
+        default_kb = self._create_mock_keybinding(test_context, handler)
+        default_kb.keysymstring = "h"
+
+        cmd = Command("handler", handler, "Test Group", keybinding=default_kb)
+        manager.add_command(cmd)
+
+        # User changes to different binding
+        user_kb = self._create_mock_keybinding(test_context, handler)
+        user_kb.keysymstring = "j"
+        cmd.set_keybinding(user_kb)
+
+        # Disable the group
+        manager.set_group_enabled("Test Group", False)
+
+        # User's binding should still be set (just disabled)
+        assert cmd.get_keybinding() == user_kb
+        assert cmd.is_enabled() is False
+
+        # Re-enable the group
+        manager.set_group_enabled("Test Group", True)
+
+        # User's binding should still be preserved
+        assert cmd.get_keybinding() == user_kb
+        assert cmd.is_enabled() is True
+
+    def test_is_group_toggle_init(self, test_context: OrcaTestContext) -> None:
+        """Test Command initializes is_group_toggle correctly."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command
+
+        handler = self._create_mock_handler(test_context)
+
+        # Default is False
+        cmd_default = Command("handler1", handler, "Test Group")
+        assert cmd_default.is_group_toggle() is False
+
+        # Explicit True
+        cmd_toggle = Command("handler2", handler, "Test Group", is_group_toggle=True)
+        assert cmd_toggle.is_group_toggle() is True
+
+    def test_is_group_toggle_setter(self, test_context: OrcaTestContext) -> None:
+        """Test Command.set_is_group_toggle."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command
+
+        handler = self._create_mock_handler(test_context)
+        cmd = Command("handler", handler, "Test Group")
+
+        assert cmd.is_group_toggle() is False
+
+        cmd.set_is_group_toggle(True)
+        assert cmd.is_group_toggle() is True
+
+        cmd.set_is_group_toggle(False)
+        assert cmd.is_group_toggle() is False
+
+    def test_set_group_enabled_skips_group_toggle_commands(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that set_group_enabled skips commands marked as group toggle."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        handler1 = self._create_mock_handler(test_context)
+        handler2 = self._create_mock_handler(test_context)
+
+        # Regular command
+        cmd1 = Command("handler1", handler1, "Group A")
+        # Group toggle command (like Orca+Z for structural navigation)
+        cmd2 = Command("handler2", handler2, "Group A", is_group_toggle=True)
+
+        manager.add_command(cmd1)
+        manager.add_command(cmd2)
+
+        # Disable the group
+        manager.set_group_enabled("Group A", False)
+
+        # Regular command should be disabled
+        assert cmd1.is_enabled() is False
+        # Group toggle command should remain enabled
+        assert cmd2.is_enabled() is True
+
+    def test_set_default_bindings_propagates_is_group_toggle(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that set_default_bindings_from_module propagates is_group_toggle from handler."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        handler = self._create_mock_handler(test_context)
+        handler.is_group_toggle = True  # Mark handler as group toggle
+
+        cmd = Command("handler", handler, "Test Group")
+        manager.add_command(cmd)
+
+        kb = self._create_mock_keybinding(test_context, handler)
+
+        module_bindings = test_context.Mock()
+        module_bindings.key_bindings = [kb]
+
+        handlers = {"handler": handler}
+        skip = frozenset()
+
+        manager.set_default_bindings_from_module(handlers, module_bindings, skip)
+
+        # Command should now have is_group_toggle set from handler
+        assert cmd.is_group_toggle() is True
+
+    def test_apply_customized_bindings_propagates_is_group_toggle(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that apply_customized_bindings propagates is_group_toggle from handler."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        handler = self._create_mock_handler(test_context)
+        handler.is_group_toggle = True  # Mark handler as group toggle
+
+        # Command exists but without is_group_toggle set
+        cmd = Command("handler", handler, "Test Group")
+        assert cmd.is_group_toggle() is False
+        manager.add_command(cmd)
+
+        user_kb = self._create_mock_keybinding(test_context, handler)
+        customized = test_context.Mock()
+        customized.key_bindings = [user_kb]
+
+        handlers = {"handler": handler}
+        skip = frozenset()
+
+        manager.apply_customized_bindings(handlers, customized, "Test Group", skip)
+
+        # Command should now have is_group_toggle set from handler
+        assert cmd.is_group_toggle() is True
+
+    def test_apply_customized_bindings_new_command_inherits_is_group_toggle(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that new commands created by apply_customized_bindings inherit is_group_toggle."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+
+        handler = self._create_mock_handler(test_context)
+        handler.is_group_toggle = True
+
+        kb = self._create_mock_keybinding(test_context, handler)
+        customized = test_context.Mock()
+        customized.key_bindings = [kb]
+
+        handlers = {"newHandler": handler}
+        skip = frozenset()
+
+        # No existing command - will create new one
+        manager.apply_customized_bindings(handlers, customized, "New Group", skip)
+
+        cmd = manager.get_command("newHandler")
+        assert cmd is not None
+        assert cmd.is_group_toggle() is True
+
+    def test_group_toggle_command_can_reenable_group(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that group toggle command remains active to allow re-enabling its group."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command, CommandManager
+
+        manager = CommandManager()
+
+        handler_nav = self._create_mock_handler(test_context, "Navigate")
+        handler_toggle = self._create_mock_handler(test_context, "Toggle")
+
+        kb_nav = self._create_mock_keybinding(test_context, handler_nav)
+        kb_toggle = self._create_mock_keybinding(test_context, handler_toggle)
+
+        # Navigation command
+        cmd_nav = Command("navigate", handler_nav, "Navigation", keybinding=kb_nav)
+        # Toggle command for the group
+        cmd_toggle = Command(
+            "toggle", handler_toggle, "Navigation",
+            keybinding=kb_toggle, is_group_toggle=True
+        )
+
+        manager.add_command(cmd_nav)
+        manager.add_command(cmd_toggle)
+
+        # Initially both should be active
+        assert cmd_nav.is_active() is True
+        assert cmd_toggle.is_active() is True
+
+        # Disable the group
+        manager.set_group_enabled("Navigation", False)
+
+        # Navigation command should be inactive
+        assert cmd_nav.is_active() is False
+        # Toggle command should remain active so user can re-enable
+        assert cmd_toggle.is_active() is True
+
+        # Re-enable via toggle
+        manager.set_group_enabled("Navigation", True)
+
+        # Both should be active again
+        assert cmd_nav.is_active() is True
+        assert cmd_toggle.is_active() is True
 
 
 @pytest.mark.unit

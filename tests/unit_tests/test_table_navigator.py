@@ -53,6 +53,8 @@ class TestTableNavigator:
         """Set up dependencies for table_navigator module testing."""
 
         additional_modules = [
+            "orca.command_manager",
+            "orca.guilabels",
             "orca.input_event_manager",
             "orca.cmdnames",
             "orca.messages",
@@ -437,6 +439,8 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
         )
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -444,15 +448,13 @@ class TestTableNavigator:
         mock_script = test_context.Mock()
         mock_script.present_message = test_context.Mock()
         mock_event = test_context.Mock()
-        mock_refresh = test_context.Mock()
-        setattr(navigator, "refresh_bindings_and_grabs", mock_refresh)
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=True)
         assert result is True
         assert navigator._enabled is expected_enabled
         assert navigator._last_input_event is None
         expected_message = getattr(essential_modules["orca.messages"], expected_message_attr)
         mock_script.present_message.assert_called_once_with(expected_message)
-        mock_refresh.assert_called_once_with(mock_script, "toggling table navigation")
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_toggle_enabled_no_notify(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.toggle_enabled does not present message when notify_user=False."""
@@ -466,6 +468,8 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
         )
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -473,11 +477,11 @@ class TestTableNavigator:
         mock_script = test_context.Mock()
         mock_script.present_message = test_context.Mock()
         mock_event = test_context.Mock()
-        setattr(navigator, "refresh_bindings_and_grabs", test_context.Mock())
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=False)
         assert result is True
         assert navigator._enabled is True
         mock_script.present_message.assert_not_called()
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     @pytest.mark.parametrize(
         "initial_suspended,new_suspended,should_refresh",
@@ -506,22 +510,20 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
         )
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
         navigator._suspended = initial_suspended
         mock_script = test_context.Mock()
-        mock_refresh = test_context.Mock()
-        setattr(navigator, "refresh_bindings_and_grabs", mock_refresh)
         reason = "test reason" if new_suspended else ""
         navigator.suspend_commands(mock_script, new_suspended, reason)
         assert navigator._suspended is new_suspended
         if should_refresh:
-            mock_refresh.assert_called_once_with(
-                mock_script, f"Suspended changed to {new_suspended}"
-            )
+            mock_cmd_mgr.set_group_suspended.assert_called_once()
         else:
-            mock_refresh.assert_not_called()
+            mock_cmd_mgr.set_group_suspended.assert_not_called()
 
     @pytest.mark.parametrize(
         "is_focusable, has_name, has_children, is_whitespace, expected_result",
@@ -1255,33 +1257,6 @@ class TestTableNavigator:
         # move_right returns True even at end of row, but presents a message
         assert result is True
         mock_script.present_message.assert_called_once()
-
-    def test_refresh_bindings_and_grabs(self, test_context: OrcaTestContext) -> None:
-        """Test TableNavigator.refresh_bindings_and_grabs removes old bindings and adds new ones."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        mock_controller = test_context.Mock()
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
-        mock_keybindings_class = test_context.Mock()
-        mock_keybindings_instance = test_context.Mock()
-        mock_keybindings_class.return_value = mock_keybindings_instance
-        mock_binding = test_context.Mock()
-        mock_keybindings_instance.key_bindings = [mock_binding]
-        mock_new_bindings = test_context.Mock()
-        mock_new_bindings.key_bindings = [mock_binding]
-        test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
-        )
-        from orca.table_navigator import TableNavigator
-
-        navigator = TableNavigator()
-        setattr(navigator, "get_handlers", test_context.Mock(return_value={}))
-        setattr(navigator, "get_bindings", test_context.Mock(return_value=mock_new_bindings))
-        mock_script = test_context.Mock()
-        navigator.refresh_bindings_and_grabs(mock_script, "test reason")
-        mock_script.key_bindings.remove.assert_called_with(mock_binding, include_grabs=True)
-        mock_script.key_bindings.add.assert_called()
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_move_to_last_cell_not_in_table(self, test_context: OrcaTestContext) -> None:
         """Test move_to_last_cell presents not in table message when current cell is None."""

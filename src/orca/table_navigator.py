@@ -41,16 +41,16 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
+from . import guilabels
 from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
-from . import script_manager
 from . import settings
-from . import settings_manager
 from . import speech_and_verbosity_manager
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -257,10 +257,6 @@ class TableNavigator:
                 2,
                 self._enabled and not self._suspended))
 
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
-
         msg = f"TABLE NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -273,7 +269,8 @@ class TableNavigator:
             input_event.InputEventHandler(
                 self.toggle_enabled,
                 cmdnames.TABLE_NAVIGATION_TOGGLE,
-                enabled=not self._suspended)
+                enabled=not self._suspended,
+                is_group_toggle=True)
 
         self._handlers["table_cell_left"] = \
             input_event.InputEventHandler(
@@ -362,23 +359,6 @@ class TableNavigator:
         msg = f"TABLE NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
-        """Refreshes table navigation bindings and grabs for script."""
-
-        msg = "TABLE NAVIGATOR: Refreshing bindings and grabs"
-        if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, include_grabs=True)
-
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, include_grabs=not self._suspended)
-
     @dbus_service.command
     def toggle_enabled(
         self,
@@ -401,7 +381,8 @@ class TableNavigator:
                 script.present_message(messages.TABLE_NAVIGATION_DISABLED)
 
         self._last_input_event = None
-        self.refresh_bindings_and_grabs(script, "toggling table navigation")
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_TABLE_NAVIGATION, self._enabled)
         return True
 
     def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
@@ -415,7 +396,8 @@ class TableNavigator:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
-        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
+        command_manager.get_manager().set_group_suspended(
+            guilabels.KB_GROUP_TABLE_NAVIGATION, suspended)
 
     def _is_blank(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is empty or consists of only whitespace."""
@@ -987,8 +969,8 @@ class TableNavigator:
         settings.tableNavigationEnabled = value
 
         self._last_input_event = None
-        if script := script_manager.get_manager().get_active_script():
-            self.refresh_bindings_and_grabs(script, msg)
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_TABLE_NAVIGATION, value)
 
         return True
 

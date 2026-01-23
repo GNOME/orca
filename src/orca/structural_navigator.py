@@ -48,6 +48,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
@@ -60,7 +61,6 @@ from . import orca_gui_navlist
 from . import say_all_presenter
 from . import script_manager
 from . import settings
-from . import settings_manager
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -116,7 +116,8 @@ class StructuralNavigator:
             InputEventHandler(
                 self.cycle_mode,
                 cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE,
-                enabled = not self._suspended)
+                enabled=not self._suspended,
+                is_group_toggle=True)
 
         enabled = self.get_is_enabled() and not self._suspended
 
@@ -879,10 +880,6 @@ class StructuralNavigator:
                 1,
                 enabled))
 
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
-
         msg = f"STRUCTURAL NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -915,7 +912,8 @@ class StructuralNavigator:
 
         enabled = mode != NavigationMode.OFF
         settings.structuralNavigationEnabled = enabled
-        self.refresh_bindings_and_grabs(script, "Setting structural navigator mode")
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, enabled)
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
@@ -944,69 +942,6 @@ class StructuralNavigator:
             return False
 
         return not self.get_triggers_focus_mode()
-
-    def add_bindings(self, script: default.Script, reason: str = "") -> None:
-        """Adds structural navigation bindings for script."""
-
-        tokens = ["STRUCTURAL NAVIGATOR: Adding bindings for", script]
-        if reason:
-            tokens.append(f": {reason}")
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not (script and self._is_active_script(script)):
-            return
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["STRUCTURAL NAVIGATOR:", script,
-                      f"had {len(has_grabs)} key grabs prior to adding bindings."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, include_grabs=not self._suspended)
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["STRUCTURAL NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    def remove_bindings(self, script: default.Script, reason: str = "") -> None:
-        """Removes structural navigation bindings for script."""
-
-        tokens = ["STRUCTURAL NAVIGATOR: Removing bindings for", script]
-        if reason:
-            tokens.append(f": {reason}")
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not (script and self._is_active_script(script)):
-            return
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["STRUCTURAL NAVIGATOR:", script,
-                      f"had {len(has_grabs)} key grabs prior to removing bindings."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, include_grabs=True)
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["STRUCTURAL NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
-        """Refreshes structural navigation bindings and grabs for script."""
-
-        reason = " ".join([reason, "(refreshing)"])
-        if not (script and self._is_active_script(script)):
-            return
-
-        self.remove_bindings(script, reason)
-        self.add_bindings(script, reason)
 
     @dbus_service.getter
     def get_navigation_wraps(self) -> bool:
@@ -1075,7 +1010,8 @@ class StructuralNavigator:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._mode_for_script[script] = NavigationMode.OFF
 
-        self.refresh_bindings_and_grabs(script, "D-Bus setter changed enabled state")
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, value)
         return True
 
     @dbus_service.getter
@@ -1148,7 +1084,8 @@ class StructuralNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self._suspended = suspended
-        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
+        command_manager.get_manager().set_group_suspended(
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, suspended)
 
     def _get_container_for_nested_item(self, obj: Atspi.Accessible) -> Atspi.Accessible:
         # If an author put an ARIA heading inside a native heading (or vice versa), obj

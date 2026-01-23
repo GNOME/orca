@@ -39,7 +39,6 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import orca_modifier_manager
-from . import settings_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -99,11 +98,6 @@ class BypassModeManager:
                 1,
                 True,
             )
-        )
-
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False
         )
 
     def is_active(self) -> bool:

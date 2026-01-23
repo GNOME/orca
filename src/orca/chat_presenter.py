@@ -511,10 +511,6 @@ class ChatPresenter:
                 1,
                 True))
 
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
-
         msg = "CHAT PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 

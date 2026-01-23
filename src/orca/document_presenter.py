@@ -54,7 +54,6 @@ from . import messages
 from . import preferences_grid_base
 from . import script_manager
 from . import settings
-from . import settings_manager
 from . import structural_navigator
 from . import table_navigator
 from .ax_component import AXComponent
@@ -308,7 +307,6 @@ class DocumentPresenter:
     def __init__(self) -> None:
         self._made_find_announcement = False
         self._app_states: dict[int, _AppModeState] = {}
-        self._navigators_suspended: dict[int, bool] = {}
         self._handlers: dict[str, input_event.InputEventHandler] = {}
         self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._setup_handlers()
@@ -374,9 +372,6 @@ class DocumentPresenter:
                 "",
                 keybindings.NO_MODIFIER_MASK,
                 self._handlers["toggle_layout_mode"]))
-
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
 
         msg = "DOCUMENT PRESENTER: Bindings set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -567,20 +562,10 @@ class DocumentPresenter:
     def suspend_navigators(self, script: default.Script, suspended: bool, reason: str) -> bool:
         """Suspends or unsuspends navigation commands. Returns True if state changed."""
 
-        app_hash = hash(script.app) if script.app is not None else None
-        if app_hash is not None and self._navigators_suspended.get(app_hash) == suspended:
-            tokens = ["DOCUMENT PRESENTER: Navigators already",
-                      "suspended" if suspended else "unsuspended", "for", script.app]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
         caret_navigator.get_navigator().suspend_commands(script, suspended, reason)
         structural_navigator.get_navigator().suspend_commands(script, suspended, reason)
         live_region_presenter.get_presenter().suspend_commands(script, suspended, reason)
         table_navigator.get_navigator().suspend_commands(script, suspended, reason)
-
-        if app_hash is not None:
-            self._navigators_suspended[app_hash] = suspended
         return True
 
     # pylint: disable-next=too-many-return-statements
@@ -795,6 +780,15 @@ class DocumentPresenter:
             return
 
         state = self._app_states[app_hash]
+
+        # When restoring browse mode, also re-enable the navigators.
+        # This is needed because another script (e.g. file browser) may have
+        # disabled them via set_mode(OFF) while it was active.
+        if not state.in_focus_mode:
+            structural_navigator.get_navigator().set_mode(
+                script, structural_navigator.NavigationMode.DOCUMENT)
+            caret_navigator.get_navigator().set_enabled_for_script(script, True)
+
         reason = "restoring mode state for activated script"
         self.suspend_navigators(script, state.in_focus_mode, reason)
 
@@ -818,26 +812,9 @@ class DocumentPresenter:
         if app is None:
             return
         app_hash = hash(app)
-        cleared = False
         if app_hash in self._app_states:
             del self._app_states[app_hash]
-            cleared = True
-        if app_hash in self._navigators_suspended:
-            del self._navigators_suspended[app_hash]
-            cleared = True
-        if cleared:
             tokens = ["DOCUMENT PRESENTER: Cleared state for", app]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    def clear_navigator_suspend_tracking(self, app: Atspi.Accessible | None) -> None:
-        """Clears navigator suspension tracking for the given app."""
-
-        if app is None:
-            return
-        app_hash = hash(app)
-        if app_hash in self._navigators_suspended:
-            del self._navigators_suspended[app_hash]
-            tokens = ["DOCUMENT PRESENTER: Cleared navigator suspension tracking for", app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     # pylint: disable-next=too-many-return-statements

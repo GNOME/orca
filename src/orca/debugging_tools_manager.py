@@ -145,10 +145,6 @@ class DebuggingToolsManager:
                 1,
                 True))
 
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
-
     def _cycle_debug_level(
         self, script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:

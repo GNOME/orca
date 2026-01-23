@@ -36,6 +36,7 @@ __license__ = "LGPL"
 from typing import TYPE_CHECKING
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
@@ -48,7 +49,6 @@ from . import preferences_grid_base
 from . import say_all_presenter
 from . import script_manager
 from . import settings
-from . import settings_manager
 from .ax_object import AXObject
 from .ax_text import AXText
 
@@ -110,7 +110,8 @@ class CaretNavigator:
             input_event.InputEventHandler(
                 self.toggle_enabled,
                 cmdnames.CARET_NAVIGATION_TOGGLE,
-                enabled = not self._suspended)
+                enabled=not self._suspended,
+                is_group_toggle=True)
 
         enabled = self.get_is_enabled() and not self._suspended
 
@@ -272,10 +273,6 @@ class CaretNavigator:
                 1,
                 enabled))
 
-        # This pulls in the user's overrides to alternative keys.
-        self._bindings = settings_manager.get_manager().override_key_bindings(
-            self._handlers, self._bindings, False)
-
         msg = f"CARET NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -306,8 +303,8 @@ class CaretNavigator:
         settings.caretNavigationEnabled = value
 
         self._last_input_event = None
-        if script := script_manager.get_manager().get_active_script():
-            self.refresh_bindings_and_grabs(script, msg)
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_CARET_NAVIGATION, value)
 
         return True
 
@@ -379,74 +376,6 @@ class CaretNavigator:
 
         return not self.get_triggers_focus_mode()
 
-    def refresh_bindings_and_grabs(self, script: default.Script, reason: str = "") -> None:
-        """Refreshes caret navigation bindings and grabs for script."""
-
-        msg = "CARET NAVIGATOR: Refreshing bindings and grabs"
-        if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        self.remove_bindings(script, reason)
-        self.add_bindings(script, reason)
-
-    def add_bindings(self, script: default.Script, reason: str = "") -> None:
-        """Adds caret navigation bindings for script."""
-
-        tokens = ["CARET NAVIGATOR: Adding bindings for", script]
-        if reason:
-            tokens.append(f": {reason}")
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not (script and self._is_active_script(script)):
-            tokens = ["CARET NAVIGATOR: Not adding bindings for non-active script", script]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["CARET NAVIGATOR:", script,
-                      f"had {len(has_grabs)} key grabs prior to adding bindings."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self._handlers = self.get_handlers(True)
-        self._bindings = self.get_bindings(True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, include_grabs=not self._suspended)
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["CARET NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    def remove_bindings(self, script: default.Script, reason: str = "") -> None:
-        """Removes caret navigation bindings for script."""
-
-        tokens = ["CARET NAVIGATOR: Removing bindings for", script]
-        if reason:
-            tokens.append(f": {reason}")
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not (script and self._is_active_script(script)):
-            tokens = ["CARET NAVIGATOR: Not removing bindings for non-active script", script]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["CARET NAVIGATOR:", script,
-                      f"had {len(has_grabs)} key grabs prior to removing bindings."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.remove(binding, include_grabs=True)
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = script.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["CARET NAVIGATOR:", script, f"now has {len(has_grabs)} key grabs."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
     @dbus_service.command
     def toggle_enabled(
         self,
@@ -485,7 +414,8 @@ class CaretNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self._suspended = suspended
-        self.refresh_bindings_and_grabs(script, f"Suspended changed to {suspended}")
+        command_manager.get_manager().set_group_suspended(
+            guilabels.KB_GROUP_CARET_NAVIGATION, suspended)
 
     def _get_root_object(
         self,

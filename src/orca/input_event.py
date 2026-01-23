@@ -862,12 +862,14 @@ class InputEventHandler:
         function: Callable[..., bool],
         description: str,
         learn_mode_enabled: bool = True,
-        enabled: bool = True
+        enabled: bool = True,
+        is_group_toggle: bool = False
     ) -> None:
         self.function: Callable[..., bool] = function
         self.description: str = description
         self.learn_mode_enabled: bool = learn_mode_enabled
         self._enabled: bool = enabled
+        self.is_group_toggle: bool = is_group_toggle
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, InputEventHandler):
