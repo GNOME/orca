@@ -3557,3 +3557,102 @@ class TestAXUtilitiesEvent:
         mock_event.any_data = "Download complete"
         result3 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result3 is False
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "identical_strings",
+                "str1": "hello world",
+                "str2": "hello world",
+                "expected": True,
+            },
+            {
+                "id": "very_similar_strings",
+                "str1": "Loading...",
+                "str2": "Loading.. ",
+                "expected": True,
+            },
+            {
+                "id": "similar_with_minor_difference",
+                "str1": "File: document.txt",
+                "str2": "File: document.txt ",
+                "expected": True,
+            },
+            {
+                "id": "different_strings",
+                "str1": "hello world",
+                "str2": "goodbye universe",
+                "expected": False,
+            },
+            {
+                "id": "empty_first_string",
+                "str1": "",
+                "str2": "hello",
+                "expected": False,
+            },
+            {
+                "id": "empty_second_string",
+                "str1": "hello",
+                "str2": "",
+                "expected": False,
+            },
+            {
+                "id": "both_empty",
+                "str1": "",
+                "str2": "",
+                "expected": False,
+            },
+            {
+                "id": "none_first_string",
+                "str1": None,
+                "str2": "hello",
+                "expected": False,
+            },
+            {
+                "id": "none_second_string",
+                "str1": "hello",
+                "str2": None,
+                "expected": False,
+            },
+            {
+                "id": "case_insensitive_identical",
+                "str1": "Hello World",
+                "str2": "hello world",
+                "expected": True,
+            },
+            {
+                "id": "moderately_different",
+                "str1": "Button clicked",
+                "str2": "Button pressed",
+                "expected": False,
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_strings_are_redundant(self, test_context, case: dict):
+        """Test AXUtilitiesEvent._strings_are_redundant."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        result = AXUtilitiesEvent._strings_are_redundant(case["str1"], case["str2"])
+        assert result is case["expected"]
+
+    def test_strings_are_redundant_custom_threshold(self, test_context):
+        """Test AXUtilitiesEvent._strings_are_redundant with custom threshold."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        # These strings are ~73% similar
+        str1 = "processing file"
+        str2 = "processing data"
+
+        # Should be False with default 0.85 threshold
+        result_default = AXUtilitiesEvent._strings_are_redundant(str1, str2)
+        assert result_default is False
+
+        # Should be True with lower 0.7 threshold
+        result_lower = AXUtilitiesEvent._strings_are_redundant(str1, str2, threshold=0.7)
+        assert result_lower is True

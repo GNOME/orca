@@ -36,6 +36,7 @@ __license__   = "LGPL"
 import enum
 import threading
 import time
+from difflib import SequenceMatcher
 
 import gi
 gi.require_version("Atspi", "2.0")
@@ -116,6 +117,21 @@ class AXUtilitiesEvent:
     TEXT_EVENT_REASON: dict[Atspi.Event, TextEventReason] = {}
 
     _lock = threading.Lock()
+
+    @staticmethod
+    def _strings_are_redundant(str1: str | None, str2: str | None, threshold: float = 0.85) -> bool:
+        """Returns True if str2 is redundant to str1 based on the similarity threshold."""
+
+        if not (str1 and str2):
+            return False
+
+        similarity = round(SequenceMatcher(None, str1.lower(), str2.lower()).ratio(), 2)
+        msg = (
+            f"AXUtilitiesEvent: Similarity between '{str1}', '{str2}': {similarity} "
+            f"(threshold: {threshold})"
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return similarity >= threshold
 
     @staticmethod
     def _clear_stored_data() -> None:
@@ -569,6 +585,14 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if AXUtilitiesEvent._strings_are_redundant(old_description, new_description):
+            msg = (
+                f"AXUtilitiesEvent: The new description ('{new_description}') "
+                f"is too similar to the old description ('{old_description}')."
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(event.source)] = new_description
         if not new_description:
             msg = "AXUtilitiesEvent: The description is empty."
@@ -696,6 +720,14 @@ class AXUtilitiesEvent:
         new_name = event.any_data
         if old_name == new_name:
             msg = "AXUtilitiesEvent: The new name matches the old name."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilitiesEvent._strings_are_redundant(old_name, new_name):
+            msg = (
+                f"AXUtilitiesEvent: The new name ('{new_name}') "
+                f"is too similar to the old name ('{old_name}')."
+            )
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
