@@ -435,7 +435,7 @@ class Generator:
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus and obj != focus:
+        if focus and obj != focus and not AXUtilities.is_dialog_or_window(obj):
             obj_name = AXObject.get_name(obj) or AXObject.get_description(obj)
             if obj_name and obj_name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
                 return []
