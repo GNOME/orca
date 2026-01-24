@@ -363,7 +363,7 @@ class TestInputEventManager:
                 "has_device": True,
                 "grab_ids": [],
                 "has_grabbed_bindings": False,
-                "expects_debug_tokens": True,
+                "expects_debug_tokens": False,
                 "expects_debug_message": False,
                 "expects_device_calls": False,
             },

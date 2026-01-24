@@ -517,6 +517,10 @@ class StructuralNavigator:
         """Sets whether structural navigation is enabled."""
 
         if self.get_is_enabled() == value:
+            msg = f"STRUCTURAL NAVIGATOR: Enabled already {value}. Refreshing command group."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            command_manager.get_manager().set_group_enabled(
+                guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, value)
             return True
 
         msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."

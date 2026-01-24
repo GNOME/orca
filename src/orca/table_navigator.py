@@ -821,6 +821,10 @@ class TableNavigator:
         """Sets whether table navigation is enabled."""
 
         if self.get_is_enabled() == value:
+            msg = f"TABLE NAVIGATOR: Enabled already {value}. Refreshing command group."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            command_manager.get_manager().set_group_enabled(
+                guilabels.KB_GROUP_TABLE_NAVIGATION, value)
             return True
 
         msg = f"TABLE NAVIGATOR: Setting enabled to {value}."

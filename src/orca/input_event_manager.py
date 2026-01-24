@@ -123,8 +123,6 @@ class InputEventManager:
 
         grab_ids = binding.get_grab_ids()
         if not grab_ids:
-            tokens = ["INPUT EVENT MANAGER:", binding, "doesn't have grabs to remove."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
         for grab_id in grab_ids:

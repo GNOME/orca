@@ -511,12 +511,10 @@ class DocumentPresenter:
         state.focus_mode_is_sticky = False
         state.browse_mode_is_sticky = False
 
-        if not use_focus_mode:
-            structural_navigator.get_navigator().set_mode(
-                script, structural_navigator.NavigationMode.DOCUMENT)
-            caret_navigator.get_navigator().set_enabled_for_script(script, True)
-
         reason = "setting presentation mode"
+        if not use_focus_mode:
+            self._enable_document_navigators(script, reason)
+
         self.suspend_navigators(script, use_focus_mode, reason)
         return True
 
@@ -528,6 +526,16 @@ class DocumentPresenter:
         live_region_presenter.get_presenter().suspend_commands(script, suspended, reason)
         table_navigator.get_navigator().suspend_commands(script, suspended, reason)
         return True
+
+    def _enable_document_navigators(self, script: default.Script, reason: str) -> None:
+        """Enables document navigators for the given script."""
+
+        msg = f"DOCUMENT PRESENTER: _enable_document_navigators. Reason: {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        structural_navigator.get_navigator().set_mode(
+            script, structural_navigator.NavigationMode.DOCUMENT)
+        caret_navigator.get_navigator().set_enabled_for_script(script, True)
 
     # pylint: disable-next=too-many-return-statements
     def is_focus_mode_widget(self, script: default.Script, obj: Atspi.Accessible) -> bool:
@@ -745,12 +753,10 @@ class DocumentPresenter:
         # When restoring browse mode, also re-enable the navigators.
         # This is needed because another script (e.g. file browser) may have
         # disabled them via set_mode(OFF) while it was active.
-        if not state.in_focus_mode:
-            structural_navigator.get_navigator().set_mode(
-                script, structural_navigator.NavigationMode.DOCUMENT)
-            caret_navigator.get_navigator().set_enabled_for_script(script, True)
-
         reason = "restoring mode state for activated script"
+        if not state.in_focus_mode:
+            self._enable_document_navigators(script, reason)
+
         self.suspend_navigators(script, state.in_focus_mode, reason)
 
         tokens = ["DOCUMENT PRESENTER: Restored mode for", script.app,
@@ -794,10 +800,8 @@ class DocumentPresenter:
 
         if self.browse_mode_is_sticky(script.app):
             script.present_message(messages.MODE_BROWSE_IS_STICKY)
-            structural_navigator.get_navigator().set_mode(
-                script, structural_navigator.NavigationMode.DOCUMENT)
-            caret_navigator.get_navigator().set_enabled_for_script(script, True)
             reason = "locus of focus now in document, browse mode is sticky"
+            self._enable_document_navigators(script, reason)
             self.suspend_navigators(script, False, reason)
             return True
 
@@ -814,12 +818,10 @@ class DocumentPresenter:
             return True
 
         use_focus = self.use_focus_mode(new_focus, old_focus)
-        if not use_focus:
-            structural_navigator.get_navigator().set_mode(
-                script, structural_navigator.NavigationMode.DOCUMENT)
-            caret_navigator.get_navigator().set_enabled_for_script(script, True)
-
         reason = "entering document"
+        if not use_focus:
+            self._enable_document_navigators(script, reason)
+
         self.suspend_navigators(script, use_focus, reason)
         return True
 

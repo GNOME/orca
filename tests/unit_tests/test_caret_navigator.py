@@ -551,17 +551,19 @@ class TestCaretNavigator:
         assert result is True
 
     def test_set_is_enabled_no_change(self, test_context: OrcaTestContext) -> None:
-        """Test set_is_enabled returns early if value unchanged."""
+        """Test set_is_enabled still calls set_group_enabled even if value unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].caretNavigationEnabled = True
         essential_modules["orca.settings_manager"].get_manager.return_value
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
         result = navigator.set_is_enabled(True)
         assert result is True
-        # set_setting no longer used - settings are set directly
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_updates_setting(self, test_context: OrcaTestContext) -> None:
         """Test set_is_enabled updates setting and refreshes bindings."""
@@ -666,7 +668,7 @@ class TestCaretNavigator:
         assert result is False
 
     def test_set_enabled_for_script(self, test_context: OrcaTestContext) -> None:
-        """Test set_enabled_for_script updates script-specific state."""
+        """Test set_enabled_for_script updates script-specific state and calls set_is_enabled."""
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
@@ -683,22 +685,50 @@ class TestCaretNavigator:
 
         navigator.set_enabled_for_script(mock_script, True)
         assert navigator._enabled_for_script[mock_script] is True
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_enabled_for_script_inactive_script(self, test_context: OrcaTestContext) -> None:
-        """Test set_enabled_for_script doesn't call set_is_enabled for inactive script."""
+        """Test set_enabled_for_script doesn't call set_group_enabled for inactive script."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
         test_context.patch_object(navigator, "_is_active_script", return_value=False)
-        mock_set_is_enabled = test_context.Mock()
-        test_context.patch_object(navigator, "set_is_enabled", new=mock_set_is_enabled)
 
         navigator.set_enabled_for_script(mock_script, True)
         assert navigator._enabled_for_script[mock_script] is True
-        mock_set_is_enabled.assert_not_called()
+        mock_cmd_mgr.set_group_enabled.assert_not_called()
+
+    def test_set_enabled_for_script_always_calls_set_group_enabled(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_enabled_for_script always calls set_group_enabled even if setting matches.
+
+        This is a regression test for issue #655 where caret navigation commands
+        were not being enabled because set_is_enabled() would early-return when
+        the setting already matched the desired value.
+        """
+
+        essential_modules = self._setup_dependencies(test_context)
+        mock_script = test_context.Mock()
+        essential_modules["orca.settings"].caretNavigationEnabled = True
+        essential_modules[
+            "orca.script_manager"
+        ].get_manager.return_value.get_active_script.return_value = mock_script
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
+        from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
+
+        navigator = CaretNavigator()
+        test_context.patch_object(navigator, "_is_active_script", return_value=True)
+
+        navigator.set_enabled_for_script(mock_script, True)
+        assert navigator._enabled_for_script[mock_script] is True
+        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_last_command_prevents_focus_mode_true(self, test_context: OrcaTestContext) -> None:
         """Test last_command_prevents_focus_mode returns True."""

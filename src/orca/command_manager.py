@@ -1252,22 +1252,47 @@ class CommandManager:
     def add_grabs_for_group(self, group_label: str) -> None:
         """Adds key grabs for all active keyboard commands in a group."""
 
+        active_count = 0
+        disabled_count = 0
+        suspended_count = 0
+        no_keybinding_count = 0
         for cmd in self.get_keyboard_commands_by_group_label(group_label):
-            name = cmd.get_name()
-            is_active = cmd.is_active()
             kb = cmd.get_keybinding()
-            msg = f"COMMAND MANAGER: add_grabs_for_group: {name} active={is_active}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            if is_active and kb is not None:
+            if cmd.is_active() and kb is not None:
                 kb.add_grabs()
+                active_count += 1
+            elif not cmd.is_enabled():
+                disabled_count += 1
+            elif cmd.is_suspended():
+                suspended_count += 1
+            elif kb is None:
+                no_keybinding_count += 1
+
+        inactive_parts = []
+        if disabled_count:
+            inactive_parts.append(f"{disabled_count} disabled")
+        if suspended_count:
+            inactive_parts.append(f"{suspended_count} suspended")
+        if no_keybinding_count:
+            inactive_parts.append(f"{no_keybinding_count} no keybinding")
+        inactive_str = f" ({', '.join(inactive_parts)})" if inactive_parts else ""
+
+        msg = f"COMMAND MANAGER: add_grabs_for_group({group_label}): " \
+              f"{active_count} active{inactive_str}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def remove_grabs_for_group(self, group_label: str) -> None:
         """Removes key grabs for all keyboard commands in a group."""
 
+        removed_count = 0
         for cmd in self.get_keyboard_commands_by_group_label(group_label):
             kb = cmd.get_keybinding()
-            if kb is not None:
+            if kb is not None and kb.get_grab_ids():
                 kb.remove_grabs()
+                removed_count += 1
+
+        msg = f"COMMAND MANAGER: remove_grabs_for_group({group_label}): {removed_count} removed"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def refresh_grabs_for_group(self, group_label: str) -> None:
         """Removes existing grabs and adds new grabs for active commands in a group."""
