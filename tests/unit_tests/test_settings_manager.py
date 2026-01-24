@@ -51,53 +51,29 @@ class FakeKeyBinding:
         self,
         keysymstring: str,
         modifiers: int,
-        handler: Any,
-        click_count: int,
-        enabled: bool = True,
+        click_count: int = 1,
     ) -> None:
         self.keysymstring = keysymstring
         self.modifiers = modifiers
-        self.handler = handler
         self.click_count = click_count
-        self._enabled = enabled
-
-    def is_enabled(self) -> bool:
-        """Return enabled state."""
-
-        return self._enabled
 
 
 class FakeKeyBindings:
-    """Minimal KeyBindings container for override_key_bindings tests."""
+    """Minimal KeyBindings container for tests."""
 
     def __init__(self, bindings: list[FakeKeyBinding] | None = None) -> None:
         self.key_bindings = list(bindings or [])
 
-    def has_handler(self, handler: Any) -> bool:
-        """Return True if handler is present."""
+    def add(self, binding: FakeKeyBinding) -> None:
+        """Add a binding."""
 
-        return any(binding.handler == handler for binding in self.key_bindings)
-
-    def has_enabled_handler(self, handler: Any) -> bool:
-        """Return True if handler is present and enabled."""
-
-        return self.has_handler(handler) and bool(handler.is_enabled())
-
-    def get_bindings_for_handler(self, handler: Any) -> list[FakeKeyBinding]:
-        """Return bindings for handler."""
-
-        return [binding for binding in self.key_bindings if binding.handler == handler]
+        self.key_bindings.append(binding)
 
     def remove(self, binding: FakeKeyBinding, include_grabs: bool = False) -> None:
         """Remove a binding."""
 
         del include_grabs
         self.key_bindings.remove(binding)
-
-    def add(self, binding: FakeKeyBinding) -> None:
-        """Add a binding."""
-
-        self.key_bindings.append(binding)
 
 
 @pytest.mark.unit
@@ -617,73 +593,3 @@ class TestSettingsManagerFileIO:
 
             # silenceSpeech should remain True because it's excluded from snapshots
             assert settings_obj.silenceSpeech is True
-
-
-@pytest.mark.unit
-class TestSettingsManagerOverrides:
-    """Tests for SettingsManager.override_key_bindings."""
-
-    def _setup_dependencies(self, test_context: OrcaTestContext) -> None:
-        """Patch modules needed to import settings_manager."""
-
-        debug_mock = test_context.Mock()
-        debug_mock.LEVEL_INFO = 800
-        debug_mock.print_message = test_context.Mock()
-        debug_mock.print_tokens = test_context.Mock()
-        test_context.patch_module("orca.debug", debug_mock)
-
-        i18n_mock = ModuleType("orca.orca_i18n")
-        i18n_mock._ = lambda x: x
-        i18n_mock.C_ = lambda c, x: x
-        i18n_mock.ngettext = lambda s, p, n: s if n == 1 else p
-        test_context.patch_module("orca.orca_i18n", i18n_mock)
-
-        settings_mock = ModuleType("orca.settings")
-        test_context.patch_module("orca.settings", settings_mock)
-
-        pronunciation_mock = ModuleType("orca.pronunciation_dictionary_manager")
-        pronunciation_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
-        test_context.patch_module("orca.pronunciation_dictionary_manager", pronunciation_mock)
-
-        acss_mock = ModuleType("orca.acss")
-        acss_mock.ACSS = dict
-        test_context.patch_module("orca.acss", acss_mock)
-
-        ax_object_mock = ModuleType("orca.ax_object")
-        ax_object_mock.AXObject = test_context.Mock()
-        test_context.patch_module("orca.ax_object", ax_object_mock)
-
-        keybindings_mock = ModuleType("orca.keybindings")
-        keybindings_mock.KeyBinding = FakeKeyBinding
-        keybindings_mock.KeyBindings = FakeKeyBindings
-        test_context.patch_module("orca.keybindings", keybindings_mock)
-
-    def test_override_key_bindings_applies_user_binding(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test override_key_bindings replaces bindings and preserves enabled state."""
-
-        self._setup_dependencies(test_context)
-        from orca import settings_manager
-
-        manager = settings_manager.SettingsManager()
-
-        handler = test_context.Mock()
-        handler.function = test_context.Mock()
-        handler.is_enabled = test_context.Mock(return_value=True)
-
-        old_binding = FakeKeyBinding("F9", 0, handler, 1, enabled=False)
-        bindings = FakeKeyBindings([old_binding])
-
-        manager._keybindings = {"handler": [("F10", 0, 4, 2)]}
-        handlers = {"handler": handler}
-
-        result = manager.override_key_bindings(handlers, bindings, enabled_only=True)
-
-        assert result is bindings
-        assert len(bindings.key_bindings) == 1
-        new_binding = bindings.key_bindings[0]
-        assert new_binding.keysymstring == "F10"
-        assert new_binding.modifiers == 4
-        assert new_binding.click_count == 2
-        assert new_binding.is_enabled() is False

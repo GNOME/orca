@@ -181,6 +181,7 @@ class TestTableNavigator:
             "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
         )
         from orca.table_navigator import TableNavigator
+        from orca import command_manager
 
         navigator = TableNavigator()
         assert navigator._previous_reported_row is None
@@ -188,105 +189,13 @@ class TestTableNavigator:
         assert navigator._last_input_event is None
         assert navigator._enabled is True
         assert navigator._suspended is False
-        assert navigator._handlers is not None
-        assert navigator._bindings == mock_keybindings_instance
+        # D-Bus registration and commands are registered during setup()
+        navigator.set_up_commands()
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_command("table_navigator_toggle_enabled") is not None
+        assert cmd_manager.get_command("table_cell_down") is not None
         mock_controller.register_decorated_module.assert_called_with("TableNavigator", navigator)
-
-    @pytest.mark.parametrize(
-        "refresh, expects_remove_grabs, expects_is_empty_check",
-        [
-            pytest.param(False, False, True, id="first_time"),
-            pytest.param(True, True, False, id="refresh"),
-        ],
-    )
-    def test_get_bindings_scenarios(
-        self, test_context: OrcaTestContext, refresh, expects_remove_grabs, expects_is_empty_check
-    ) -> None:
-        """Test TableNavigator.get_bindings various scenarios."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        mock_controller = test_context.Mock()
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
-        mock_keybindings_class = test_context.Mock()
-        mock_keybindings_instance = test_context.Mock()
-        mock_keybindings_class.return_value = mock_keybindings_instance
-        if expects_is_empty_check:
-            mock_keybindings_instance.is_empty.return_value = True
-        test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
-        )
-        mock_settings_manager = test_context.Mock()
-        essential_modules["orca.settings_manager"].get_manager.return_value = mock_settings_manager
-        mock_settings_manager.override_key_bindings.return_value = mock_keybindings_instance
-        from orca.table_navigator import TableNavigator
-
-        navigator = TableNavigator()
-        if refresh:
-            result = navigator.get_bindings(refresh=True)
-        else:
-            result = navigator.get_bindings()
-        assert result == mock_keybindings_instance
-
-        if expects_remove_grabs:
-            mock_keybindings_instance.remove_key_grabs.assert_called_once()
-        if expects_is_empty_check:
-            mock_keybindings_instance.is_empty.assert_called()
-
-    def test_get_handlers_first_time(self, test_context: OrcaTestContext) -> None:
-        """Test TableNavigator.get_handlers returns dictionary with all expected handlers."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        mock_controller = test_context.Mock()
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
-        mock_keybindings_class = test_context.Mock()
-        mock_keybindings_instance = test_context.Mock()
-        mock_keybindings_class.return_value = mock_keybindings_instance
-        test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
-        )
-        from orca.table_navigator import TableNavigator
-
-        navigator = TableNavigator()
-        result = navigator.get_handlers()
-        assert isinstance(result, dict)
-        expected_handlers = [
-            "table_navigator_toggle_enabled",
-            "table_cell_left",
-            "table_cell_right",
-            "table_cell_up",
-            "table_cell_down",
-            "table_cell_first",
-            "table_cell_last",
-            "table_cell_beginning_of_row",
-            "table_cell_end_of_row",
-            "table_cell_top_of_column",
-            "table_cell_bottom_of_column",
-            "set_dynamic_column_headers_row",
-            "clear_dynamic_column_headers_row",
-            "set_dynamic_row_headers_column",
-            "clear_dynamic_row_headers_column",
-        ]
-        for handler_name in expected_handlers:
-            assert handler_name in result
-
-    def test_get_handlers_refresh(self, test_context: OrcaTestContext) -> None:
-        """Test TableNavigator.get_handlers prints debug message when refresh=True."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        mock_controller = test_context.Mock()
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
-        mock_keybindings_class = test_context.Mock()
-        mock_keybindings_instance = test_context.Mock()
-        mock_keybindings_class.return_value = mock_keybindings_instance
-        test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
-        )
-        from orca.table_navigator import TableNavigator
-
-        navigator = TableNavigator()
-        result = navigator.get_handlers(refresh=True)
-        assert isinstance(result, dict)
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_is_enabled_default_true(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.is_enabled returns True by default."""
@@ -373,46 +282,6 @@ class TestTableNavigator:
         result = navigator.last_input_event_was_navigation_command()
         assert result is True
         mock_manager.last_event_equals_or_is_release_for_event.assert_called_once_with(mock_event)
-
-    @pytest.mark.parametrize(
-        "enabled, suspended, expected_enabled_state",
-        [
-            pytest.param(True, False, True, id="enabled_not_suspended"),
-            pytest.param(True, True, False, id="enabled_but_suspended"),
-            pytest.param(False, False, False, id="disabled_not_suspended"),
-            pytest.param(False, True, False, id="disabled_and_suspended"),
-        ],
-    )
-    def test_setup_bindings_enabled_states(
-        self, test_context, enabled, suspended, expected_enabled_state
-    ) -> None:
-        """Test TableNavigator._setup_bindings creates KeyBindings with correct enabled state."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        mock_controller = test_context.Mock()
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
-        mock_keybindings_class = test_context.Mock()
-        mock_keybindings_instance = test_context.Mock()
-        mock_keybindings_class.return_value = mock_keybindings_instance
-        test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
-        )
-        mock_keybinding_class = test_context.Mock()
-        test_context.patch("orca.table_navigator.keybindings.KeyBinding", new=mock_keybinding_class)
-        mock_settings_manager = test_context.Mock()
-        essential_modules["orca.settings_manager"].get_manager.return_value = mock_settings_manager
-        mock_settings_manager.override_key_bindings.return_value = mock_keybindings_instance
-        from orca.table_navigator import TableNavigator
-
-        navigator = TableNavigator()
-        navigator._enabled = enabled
-        navigator._suspended = suspended
-        navigator._setup_bindings()
-        calls = mock_keybinding_class.call_args_list
-        navigation_calls = [call for call in calls if len(call[0]) >= 6]
-        if navigation_calls:
-            for call in navigation_calls[1:]:
-                assert call[0][5] == expected_enabled_state
 
     @pytest.mark.parametrize(
         "initial_enabled,expected_enabled,expected_message_attr",

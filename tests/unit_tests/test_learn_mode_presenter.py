@@ -135,6 +135,8 @@ class TestLearnModePresenter:
                 self.is_printable_key = test_context.Mock(return_value=False)
                 self.get_click_count = test_context.Mock(return_value=1)
                 self.get_handler = test_context.Mock(return_value=None)
+                self.get_command = test_context.Mock(return_value=None)
+                self.get_command_name = test_context.Mock(return_value="")
                 self.get_key_name = test_context.Mock(return_value="a")
                 self.keyval_name = "a"
                 self.modifiers = 0
@@ -267,51 +269,19 @@ class TestLearnModePresenter:
         presenter = LearnModePresenter()
         assert presenter._is_active is False
         assert presenter._gui is None
-        assert presenter._handlers is not None
-        assert presenter._bindings is not None
 
-    def test_get_bindings_and_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test LearnModePresenter.get_bindings and get_handlers."""
+    def test_setup_commands(self, test_context: OrcaTestContext) -> None:
+        """Test that commands are registered with CommandManager during setup."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
+        from orca import command_manager
 
         presenter = LearnModePresenter()
-
-        bindings = presenter.get_bindings()
-        assert bindings is not None
-        essential_modules["orca.keybindings"].KeyBindings.assert_called()
-
-        bindings = presenter.get_bindings(refresh=True, is_desktop=True)
-        assert bindings is not None
-        essential_modules["orca.debug"].print_message.assert_called()
-
-        handlers = presenter.get_handlers()
-        assert handlers is not None
-        assert "enterLearnModeHandler" in handlers
-
-    def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test LearnModePresenter._setup_handlers."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import LearnModePresenter
-
-        presenter = LearnModePresenter()
-        presenter._setup_handlers()
-        assert "enterLearnModeHandler" in presenter._handlers
-        essential_modules["orca.input_event"].InputEventHandler.assert_called()
-        essential_modules["orca.debug"].print_message.assert_called()
-
-    def test_setup_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test LearnModePresenter._setup_bindings."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import LearnModePresenter
-
-        presenter = LearnModePresenter()
-        presenter._setup_bindings()
-        essential_modules["orca.keybindings"].KeyBindings.assert_called()
-        essential_modules["orca.keybindings"].KeyBinding.assert_called()
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
+        cmd = cmd_manager.get_keyboard_command("enterLearnModeHandler")
+        assert cmd is not None
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_start_when_inactive(self, test_context: OrcaTestContext) -> None:
@@ -431,29 +401,6 @@ class TestLearnModePresenter:
                 essential_modules["orca.messages"].LEARN_MODE_STOP
             )
 
-    def test_handle_event_when_inactive(self, test_context: OrcaTestContext) -> None:
-        """Test LearnModePresenter.handle_event when learn mode is inactive."""
-
-        self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import LearnModePresenter
-
-        presenter = LearnModePresenter()
-        event = test_context.Mock()
-        result = presenter.handle_event(event)
-        assert result is False
-
-    def test_handle_event_non_keyboard_event(self, test_context: OrcaTestContext) -> None:
-        """Test LearnModePresenter.handle_event with non-keyboard event."""
-
-        self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import LearnModePresenter
-
-        presenter = LearnModePresenter()
-        presenter._is_active = True
-        event = test_context.Mock()
-        result = presenter.handle_event(event)
-        assert result is False
-
     def test_handle_event_no_script(self, test_context: OrcaTestContext) -> None:
         """Test LearnModePresenter.handle_event when no active script."""
 
@@ -464,10 +411,9 @@ class TestLearnModePresenter:
         from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
-        presenter._is_active = True
         keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
         event = keyboard_event_cls()
-        result = presenter.handle_event(event)
+        result = presenter.handle_event(event, None)
         assert result is False
 
     def test_handle_event_basic_key(self, test_context: OrcaTestContext) -> None:
@@ -477,12 +423,11 @@ class TestLearnModePresenter:
         from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
-        presenter._is_active = True
         keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
         event = keyboard_event_cls()
         event.keyval_name = "a"
         event.modifiers = 0
-        result = presenter.handle_event(event)
+        result = presenter.handle_event(event, None)
         assert result is True
         speech_mock = essential_modules["orca.speech"]
         speech_mock.speak_key_event.assert_called()
@@ -494,15 +439,13 @@ class TestLearnModePresenter:
         from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
-        presenter._is_active = True
         keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
         event = keyboard_event_cls()
         event.keyval_name = "a"
         event.is_printable_key.return_value = True
         event.get_click_count.return_value = 2
-        event.get_handler.return_value = None
         event.get_key_name.return_value = "a"
-        result = presenter.handle_event(event)
+        result = presenter.handle_event(event, None)
         assert result is True
         script_manager = essential_modules["orca.script_manager"]
         script = script_manager.get_manager.return_value.get_active_script.return_value
@@ -514,7 +457,6 @@ class TestLearnModePresenter:
             ("Escape", "quit", False),
             ("F1", "show_help", True),
             ("F2", "list_orca_shortcuts", True),
-            ("F3", "list_orca_shortcuts", True),
         ],
     )
     def test_handle_event_special_keys(
@@ -525,7 +467,6 @@ class TestLearnModePresenter:
         from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
-        presenter._is_active = True
         keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
         event = keyboard_event_cls()
         event.keyval_name = key_name
@@ -534,86 +475,48 @@ class TestLearnModePresenter:
         script_manager = essential_modules["orca.script_manager"]
         script_instance = script_manager.get_manager.return_value.get_active_script.return_value
         mock_method = test_context.patch_object(presenter, method_name, return_value=True)
-        result = presenter.handle_event(event)
+        result = presenter.handle_event(event, None)
         assert result is True
         mock_method.assert_called_with(script_instance, event)
 
-    def test_handle_event_with_present_command(self, test_context: OrcaTestContext) -> None:
-        """Test LearnModePresenter.handle_event calls present_command."""
+    def test_handle_event_with_command(self, test_context: OrcaTestContext) -> None:
+        """Test LearnModePresenter.handle_event presents command description."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
-        presenter._is_active = True
         keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
         event = keyboard_event_cls()
         event.keyval_name = "a"
-        mock_present = test_context.patch_object(presenter, "present_command", return_value=True)
-        result = presenter.handle_event(event)
+        command = test_context.Mock()
+        command.get_description.return_value = "Test command"
+        result = presenter.handle_event(event, command)
         assert result is True
-        mock_present.assert_called_with(event)
+        script_manager = essential_modules["orca.script_manager"]
+        script = script_manager.get_manager.return_value.get_active_script.return_value
+        script.present_message.assert_called_with("Test command")
 
-    @pytest.mark.parametrize(
-        "is_keyboard_event,has_handler,handler_enabled,has_description,has_script,"
-        "should_present_message",
-        [
-            (False, False, False, False, True, False),  # Non-keyboard event
-            (True, False, False, False, True, False),  # No handler
-            (True, True, True, False, True, False),  # Handler with no description
-            (True, True, False, True, True, False),  # Disabled handler
-            (True, True, True, True, True, True),  # Enabled handler with description
-            (True, True, True, True, False, False),  # No active script
-        ],
-    )
-    def test_present_command_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        is_keyboard_event: bool,
-        has_handler: bool,
-        handler_enabled: bool,
-        has_description: bool,
-        has_script: bool,
-        should_present_message: bool,
-    ) -> None:
-        """Test LearnModePresenter.present_command under different scenarios."""
+    def test_handle_event_command_no_description(self, test_context: OrcaTestContext) -> None:
+        """Test LearnModePresenter.handle_event with command without description."""
+
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        if not has_script:
-            essential_modules[
-                "orca.script_manager"
-            ].get_manager.return_value.get_active_script.return_value = None
         from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
-        if is_keyboard_event:
-            keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
-            event = keyboard_event_cls()
-            if has_handler:
-                handler = test_context.Mock()
-                handler.learn_mode_enabled = handler_enabled
-                handler.description = "Test command" if has_description else None
-                event.get_handler.return_value = handler
-            else:
-                event.get_handler.return_value = None
-        else:
-            event = test_context.Mock()
-        result = presenter.present_command(event)
+        keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
+        event = keyboard_event_cls()
+        event.keyval_name = "a"
+        command = test_context.Mock()
+        command.get_description.return_value = ""
+        result = presenter.handle_event(event, command)
         assert result is True
-        if should_present_message:
-            script_manager = essential_modules["orca.script_manager"]
-            script = script_manager.get_manager.return_value.get_active_script.return_value
-            script.present_message.assert_called_with("Test command")
+        script_manager = essential_modules["orca.script_manager"]
+        script = script_manager.get_manager.return_value.get_active_script.return_value
+        script.present_message.assert_not_called()
 
-    @pytest.mark.parametrize(
-        "key_name",
-        ["F2", "F3"],
-    )
-    def test_list_orca_shortcuts_events(self, test_context: OrcaTestContext, key_name: str) -> None:
-        """Test LearnModePresenter.list_orca_shortcuts with F2/F3 events.
-
-        Note: F2 and F3 now both show all Orca shortcuts (app-specific shortcuts
-        were removed).
-        """
+    def test_list_orca_shortcuts_events(self, test_context: OrcaTestContext) -> None:
+        """Test LearnModePresenter.list_orca_shortcuts with F2 event."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
 
@@ -623,11 +526,10 @@ class TestLearnModePresenter:
 
         mock_command = test_context.Mock()
         mock_command.get_keybinding.return_value = mock_keybinding
-        mock_command.get_learn_mode_enabled.return_value = True
         mock_command.get_group_label.return_value = "Test Group"
 
         command_manager_mock = essential_modules["orca.command_manager"]
-        command_manager_mock.get_manager.return_value.get_all_commands.return_value = (
+        command_manager_mock.get_manager.return_value.get_all_keyboard_commands.return_value = (
             mock_command,
         )
 
@@ -636,7 +538,7 @@ class TestLearnModePresenter:
 
         presenter = LearnModePresenter()
         event = test_context.Mock()
-        event.keyval_name = key_name
+        event.keyval_name = "F2"
         mock_quit = test_context.patch_object(presenter, "quit")
         mock_gui = test_context.patch("orca.learn_mode_presenter.CommandListGUI")
         result = presenter.list_orca_shortcuts(script, event)
@@ -660,3 +562,50 @@ class TestLearnModePresenter:
         mock_quit.assert_called_with(script, event)
         gi_repository = essential_modules["gi.repository"]
         gi_repository.Gtk.show_uri.assert_called()
+
+    def test_handle_braille_event_no_command(self, test_context: OrcaTestContext) -> None:
+        """Test handle_braille_event with no command returns True (don't execute)."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.learn_mode_presenter import LearnModePresenter
+
+        presenter = LearnModePresenter()
+        script_manager = essential_modules["orca.script_manager"]
+        script = script_manager.get_manager.return_value.get_active_script.return_value
+        event = test_context.Mock()
+        result = presenter.handle_braille_event(script, event, None)
+        assert result is True
+
+    def test_handle_braille_event_with_command(self, test_context: OrcaTestContext) -> None:
+        """Test handle_braille_event speaks description and checks executes_in_learn_mode."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.learn_mode_presenter import LearnModePresenter
+
+        presenter = LearnModePresenter()
+        script_manager = essential_modules["orca.script_manager"]
+        script = script_manager.get_manager.return_value.get_active_script.return_value
+        event = test_context.Mock()
+        command = test_context.Mock()
+        command.get_description.return_value = "Pan braille left"
+        command.executes_in_learn_mode.return_value = False
+        result = presenter.handle_braille_event(script, event, command)
+        assert result is True  # Don't execute
+        script.speak_message.assert_called_with("Pan braille left")
+
+    def test_handle_braille_event_pan_command(self, test_context: OrcaTestContext) -> None:
+        """Test handle_braille_event returns False for pan commands (should execute)."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.learn_mode_presenter import LearnModePresenter
+
+        presenter = LearnModePresenter()
+        script_manager = essential_modules["orca.script_manager"]
+        script = script_manager.get_manager.return_value.get_active_script.return_value
+        event = test_context.Mock()
+        command = test_context.Mock()
+        command.get_description.return_value = "Pan braille left"
+        command.executes_in_learn_mode.return_value = True
+        result = presenter.handle_braille_event(script, event, command)
+        assert result is False  # Should execute
+        script.speak_message.assert_called_with("Pan braille left")

@@ -66,214 +66,96 @@ class CaretNavigator:
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
         self._suspended: bool = False
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_input_event: input_event.InputEvent | None = None
         self._enabled_for_script: dict[default.Script, bool] = {}
+        self._initialized: bool = False
 
         msg = "CARET NAVIGATOR: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("CaretNavigator", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the caret-navigation keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up the caret-navigation commands with CommandManager."""
 
-        if refresh:
-            msg = f"CARET NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("CARET NAVIGATOR: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_CARET_NAVIGATION
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the caret-navigation handlers."""
+        # Keybindings (same for desktop and laptop)
+        kb_f12 = keybindings.KeyBinding("F12", keybindings.ORCA_MODIFIER_MASK)
+        kb_right = keybindings.KeyBinding("Right", keybindings.NO_MODIFIER_MASK)
+        kb_left = keybindings.KeyBinding("Left", keybindings.NO_MODIFIER_MASK)
+        kb_right_ctrl = keybindings.KeyBinding("Right", keybindings.CTRL_MODIFIER_MASK)
+        kb_left_ctrl = keybindings.KeyBinding("Left", keybindings.CTRL_MODIFIER_MASK)
+        kb_down = keybindings.KeyBinding("Down", keybindings.NO_MODIFIER_MASK)
+        kb_up = keybindings.KeyBinding("Up", keybindings.NO_MODIFIER_MASK)
+        kb_end = keybindings.KeyBinding("End", keybindings.NO_MODIFIER_MASK)
+        kb_home = keybindings.KeyBinding("Home", keybindings.NO_MODIFIER_MASK)
+        kb_end_ctrl = keybindings.KeyBinding("End", keybindings.CTRL_MODIFIER_MASK)
+        kb_home_ctrl = keybindings.KeyBinding("Home", keybindings.CTRL_MODIFIER_MASK)
 
-        if refresh:
-            msg = "CARET NAVIGATOR: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the caret-navigation input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["toggle_enabled"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "toggle_enabled",
                 self.toggle_enabled,
+                group_label,
                 cmdnames.CARET_NAVIGATION_TOGGLE,
+                desktop_keybinding=kb_f12,
+                laptop_keybinding=kb_f12,
                 enabled=not self._suspended,
-                is_group_toggle=True)
+                is_group_toggle=True,
+            )
+        )
 
         enabled = self.get_is_enabled() and not self._suspended
 
-        self._handlers["next_character"] = \
-            input_event.InputEventHandler(
-                self.next_character,
-                cmdnames.CARET_NAVIGATION_NEXT_CHAR,
-                enabled = enabled)
-
-        self._handlers["previous_character"] = \
-            input_event.InputEventHandler(
+        # (name, function, description, keybinding)
+        commands_data = [
+            ("next_character", self.next_character, cmdnames.CARET_NAVIGATION_NEXT_CHAR, kb_right),
+            (
+                "previous_character",
                 self.previous_character,
                 cmdnames.CARET_NAVIGATION_PREV_CHAR,
-                enabled = enabled)
-
-        self._handlers["next_word"] = \
-            input_event.InputEventHandler(
-                self.next_word,
-                cmdnames.CARET_NAVIGATION_NEXT_WORD,
-                enabled = enabled)
-
-        self._handlers["previous_word"] = \
-            input_event.InputEventHandler(
+                kb_left,
+            ),
+            ("next_word", self.next_word, cmdnames.CARET_NAVIGATION_NEXT_WORD, kb_right_ctrl),
+            (
+                "previous_word",
                 self.previous_word,
                 cmdnames.CARET_NAVIGATION_PREV_WORD,
-                enabled = enabled)
-
-        self._handlers["next_line"] = \
-            input_event.InputEventHandler(
-                self.next_line,
-                cmdnames.CARET_NAVIGATION_NEXT_LINE,
-                enabled = enabled)
-
-        self._handlers["previous_line"] = \
-            input_event.InputEventHandler(
-                self.previous_line,
-                cmdnames.CARET_NAVIGATION_PREV_LINE,
-                enabled = enabled)
-
-        self._handlers["start_of_file"] = \
-            input_event.InputEventHandler(
+                kb_left_ctrl,
+            ),
+            ("next_line", self.next_line, cmdnames.CARET_NAVIGATION_NEXT_LINE, kb_down),
+            ("previous_line", self.previous_line, cmdnames.CARET_NAVIGATION_PREV_LINE, kb_up),
+            (
+                "start_of_file",
                 self.start_of_file,
                 cmdnames.CARET_NAVIGATION_FILE_START,
-                enabled = enabled)
+                kb_home_ctrl,
+            ),
+            ("end_of_file", self.end_of_file, cmdnames.CARET_NAVIGATION_FILE_END, kb_end_ctrl),
+            ("start_of_line", self.start_of_line, cmdnames.CARET_NAVIGATION_LINE_START, kb_home),
+            ("end_of_line", self.end_of_line, cmdnames.CARET_NAVIGATION_LINE_END, kb_end),
+        ]
 
-        self._handlers["end_of_file"] = \
-            input_event.InputEventHandler(
-                self.end_of_file,
-                cmdnames.CARET_NAVIGATION_FILE_END,
-                enabled = enabled)
+        for name, function, description, kb in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=kb,
+                    laptop_keybinding=kb,
+                    enabled=enabled,
+                )
+            )
 
-        self._handlers["start_of_line"] = \
-            input_event.InputEventHandler(
-                self.start_of_line,
-                cmdnames.CARET_NAVIGATION_LINE_START,
-                enabled = enabled)
-
-        self._handlers["end_of_line"] = \
-            input_event.InputEventHandler(
-                self.end_of_line,
-                cmdnames.CARET_NAVIGATION_LINE_END,
-                enabled = enabled)
-
-        msg = f"CARET NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the caret-navigation key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "F12",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggle_enabled"],
-                1,
-                not self._suspended))
-
-        enabled = self.get_is_enabled() and not self._suspended
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_character"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["previous_character"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                keybindings.CTRL_MODIFIER_MASK,
-                self._handlers["next_word"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                keybindings.CTRL_MODIFIER_MASK,
-                self._handlers["previous_word"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_line"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["previous_line"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "End",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["end_of_line"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Home",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["start_of_line"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "End",
-                keybindings.CTRL_MODIFIER_MASK,
-                self._handlers["end_of_file"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Home",
-                keybindings.CTRL_MODIFIER_MASK,
-                self._handlers["start_of_file"],
-                1,
-                enabled))
-
-        msg = f"CARET NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
+        msg = f"CARET NAVIGATOR: Commands set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _is_active_script(self, script):
@@ -303,8 +185,7 @@ class CaretNavigator:
         settings.caretNavigationEnabled = value
 
         self._last_input_event = None
-        command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_CARET_NAVIGATION, value)
+        command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION, value)
 
         return True
 

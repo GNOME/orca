@@ -192,9 +192,6 @@ class LiveRegionPresenter:
         # the user's preferred setting.
         self._suspended = False
 
-        self._handlers = self.get_handlers(True)
-        self._bindings = keybindings.KeyBindings()
-
         self.msg_cache: list[str] = []
         self._politeness_overrides: dict[int, LivePoliteness] = {}
         self._restore_overrides: dict[int, LivePoliteness] = {}
@@ -203,125 +200,84 @@ class LiveRegionPresenter:
         self._monitoring: bool = True
         # Use QUEUE_SIZE as sentinel to indicate "not yet navigating"
         self._current_index: int = self.QUEUE_SIZE
+        self._initialized: bool = False
 
         msg = "LIVE REGION PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("LiveRegionPresenter", self)
 
-    def get_bindings(
-        self,
-        refresh: bool = False,
-        is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the live-region-presenter keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"LIVE REGION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("LIVE REGION PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_LIVE_REGIONS
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the live-region-presenter handlers."""
+        # Keybinding (same for desktop and laptop)
+        kb_backslash = keybindings.KeyBinding("backslash", keybindings.ORCA_MODIFIER_MASK)
 
-        if refresh:
-            msg = "LIVE REGION PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the live-region-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["toggle_live_region_support"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "toggle_live_region_support",
                 self.toggle_monitoring,
+                group_label,
                 cmdnames.LIVE_REGIONS_MONITOR,
-                enabled=True,
-                is_group_toggle=True)
+                desktop_keybinding=kb_backslash,
+                laptop_keybinding=kb_backslash,
+                is_group_toggle=True,
+            )
+        )
 
-        self._handlers["present_previous_live_region_message"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "present_previous_live_region_message",
                 self.present_previous_live_region_message,
+                group_label,
                 cmdnames.LIVE_REGIONS_PREVIOUS,
-                enabled = not self._suspended)
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+            )
+        )
 
-        self._handlers["advance_live_politeness"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "advance_live_politeness",
                 self._advance_politeness_level,
+                group_label,
                 cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
-                enabled = not self._suspended)
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+            )
+        )
 
-        self._handlers["toggle_live_region_presentation"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "toggle_live_region_presentation",
                 self.toggle_live_region_presentation,
+                group_label,
                 cmdnames.LIVE_REGIONS_ARE_ANNOUNCED,
-                enabled=not self._suspended,
-                is_group_toggle=True)
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+                is_group_toggle=True,
+            )
+        )
 
-        self._handlers["present_next_live_region_message"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "present_next_live_region_message",
                 self.present_next_live_region_message,
+                group_label,
                 cmdnames.LIVE_REGIONS_NEXT,
-                enabled = not self._suspended)
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+            )
+        )
 
-        msg = f"LIVE REGION PRESENTER: Handlers set up. Suspended: {self._suspended}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the live-region-presenter key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "backslash",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggle_live_region_support"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["advance_live_politeness"],
-                1,
-                not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["toggle_live_region_presentation"],
-                1,
-                not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["present_previous_live_region_message"],
-                1,
-                not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["present_next_live_region_message"],
-                1,
-                not self._suspended))
-
-        msg = f"LIVE REGION PRESENTER: Bindings set up. Suspended: {self._suspended}"
+        msg = f"LIVE REGION PRESENTER: Commands set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:

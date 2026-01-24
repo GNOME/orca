@@ -259,41 +259,6 @@ class TestInputEventManager:
         "case",
         [
             {
-                "id": "empty",
-                "binding_count": 0,
-                "expected_call_count": 1,
-                "expected_message_pattern": "0 grabbed key bindings",
-            },
-            {
-                "id": "with_bindings",
-                "binding_count": 2,
-                "expected_call_count": 3,
-                "expected_message_pattern": "2 grabbed key bindings",
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_check_grabbed_bindings_scenarios(self, test_context, case: dict) -> None:
-        """Test InputEventManager.check_grabbed_bindings scenarios."""
-
-        input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-
-        if case["binding_count"] > 0:
-            mock_binding = test_context.Mock()
-            test_context.patch_object(
-                mock_binding, "__str__", new=test_context.Mock(return_value="test_binding")
-            )
-            input_event_manager._grabbed_bindings = {123: mock_binding, 456: mock_binding}
-
-        input_event_manager.check_grabbed_bindings()
-        calls = essential_modules["orca.debug"].print_message.call_args_list
-        assert len(calls) == case["expected_call_count"]
-        assert case["expected_message_pattern"] in calls[0][0][1]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
                 "id": "disabled",
                 "scenario": "disabled",
                 "is_enabled": False,
@@ -3103,12 +3068,3 @@ class TestInputEventManager:
 
         assert input_event_manager._paused is False
 
-    def test_check_grabbed_bindings_debug_output(self, test_context: OrcaTestContext) -> None:
-        """Test InputEventManager.check_grabbed_bindings logs debug information."""
-
-        input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-        mock_binding1 = test_context.Mock()
-        mock_binding2 = test_context.Mock()
-        input_event_manager._grabbed_bindings = {"grab1": mock_binding1, "grab2": mock_binding2}
-        input_event_manager.check_grabbed_bindings()
-        assert essential_modules["orca.debug"].print_message.call_count >= 3  # Summary + 2 bindings

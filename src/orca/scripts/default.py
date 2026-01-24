@@ -110,129 +110,6 @@ if TYPE_CHECKING:
 class Script(script.Script):
     """The default Script for presenting information to the user."""
 
-    BRAILLE_HARDWARE_ONLY_HANDLERS = frozenset({
-        "goBrailleHomeHandler",
-        "processRoutingKeyHandler",
-        "processBrailleCutBeginHandler",
-        "processBrailleCutLineHandler"
-    })
-
-    def _get_all_extensions(self) -> list[tuple[Callable, str]]:
-        """Returns (extension_getter, localized_name) for each extension."""
-
-        return [
-            (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
-            (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
-            (say_all_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
-            (typing_echo_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
-            (speech_and_verbosity_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
-            (bypass_mode_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
-            (sleep_mode_manager.get_manager, guilabels.KB_GROUP_SLEEP_MODE),
-            (system_information_presenter.get_presenter, guilabels.KB_GROUP_SYSTEM_INFORMATION),
-            (object_navigator.get_navigator, guilabels.KB_GROUP_OBJECT_NAVIGATION),
-            (caret_navigator.get_navigator, guilabels.KB_GROUP_CARET_NAVIGATION),
-            (structural_navigator.get_navigator, guilabels.KB_GROUP_STRUCTURAL_NAVIGATION),
-            (table_navigator.get_navigator, guilabels.KB_GROUP_TABLE_NAVIGATION),
-            (document_presenter.get_presenter, guilabels.KB_GROUP_DOCUMENTS),
-            (live_region_presenter.get_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
-            (learn_mode_presenter.get_presenter, guilabels.KB_GROUP_LEARN_MODE),
-            (mouse_review.get_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
-            (action_presenter.get_presenter, guilabels.KB_GROUP_ACTIONS),
-            (flat_review_presenter.get_presenter, guilabels.KB_GROUP_FLAT_REVIEW),
-            (flat_review_finder.get_finder, guilabels.KB_GROUP_FIND),
-            (where_am_i_presenter.get_presenter, guilabels.KB_GROUP_WHERE_AM_I),
-            (debugging_tools_manager.get_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
-            (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
-            (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
-        ]
-
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-        self.input_event_handlers["routePointerToItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.route_pointer_to_item,
-                cmdnames.ROUTE_POINTER_TO_ITEM)
-
-        self.input_event_handlers["leftClickReviewItemHandler"] = \
-            input_event.InputEventHandler(
-                Script.left_click_item,
-                cmdnames.LEFT_CLICK_REVIEW_ITEM)
-
-        self.input_event_handlers["rightClickReviewItemHandler"] = \
-             input_event.InputEventHandler(
-                Script.right_click_item,
-                cmdnames.RIGHT_CLICK_REVIEW_ITEM)
-
-        self.input_event_handlers["panBrailleLeftHandler"] = \
-            input_event.InputEventHandler(
-                Script.pan_braille_left,
-                cmdnames.PAN_BRAILLE_LEFT,
-                False) # Do not enable learn mode for this action
-
-        self.input_event_handlers["panBrailleRightHandler"] = \
-            input_event.InputEventHandler(
-                Script.pan_braille_right,
-                cmdnames.PAN_BRAILLE_RIGHT,
-                False) # Do not enable learn mode for this action
-
-        self.input_event_handlers["contractedBrailleHandler"] = \
-            input_event.InputEventHandler(
-                Script.set_contracted_braille,
-                cmdnames.SET_CONTRACTED_BRAILLE)
-
-        self.input_event_handlers["shutdownHandler"] = \
-            input_event.InputEventHandler(
-                Script.quit_orca,
-                cmdnames.QUIT_ORCA)
-
-        self.input_event_handlers["preferencesSettingsHandler"] = \
-            input_event.InputEventHandler(
-                Script.show_preferences_gui,
-                cmdnames.SHOW_PREFERENCES_GUI)
-
-        self.input_event_handlers["appPreferencesSettingsHandler"] = \
-            input_event.InputEventHandler(
-                Script.show_app_preferences_gui,
-                cmdnames.SHOW_APP_PREFERENCES_GUI)
-
-        for name, handler in self.input_event_handlers.items():
-            command_manager.get_manager().add_command(command_manager.Command(
-                name, handler, guilabels.KB_GROUP_DEFAULT, handler.description,
-                None, handler.learn_mode_enabled, is_group_toggle=handler.is_group_toggle))
-
-        for extension_getter, localized_name in self._get_all_extensions():
-            extension = extension_getter()
-            handlers = extension.get_handlers()
-            self.input_event_handlers.update(handlers)
-            for name, handler in handlers.items():
-                command_manager.get_manager().add_command(command_manager.Command(
-                    name, handler, localized_name, handler.description,
-                    None, handler.learn_mode_enabled, is_group_toggle=handler.is_group_toggle))
-
-        # These are strictly for braille hardware keys.
-        # They are NOT added as Commands because they're handled separately
-        # in the Braille Bindings section of the preferences.
-        self.input_event_handlers["goBrailleHomeHandler"] = \
-            input_event.InputEventHandler(
-                Script.go_braille_home,
-                cmdnames.GO_BRAILLE_HOME)
-
-        self.input_event_handlers["processRoutingKeyHandler"] = \
-            input_event.InputEventHandler(
-                Script.process_routing_key,
-                cmdnames.PROCESS_ROUTING_KEY)
-
-        self.input_event_handlers["processBrailleCutBeginHandler"] = \
-            input_event.InputEventHandler(
-                Script.process_braille_cut_begin,
-                cmdnames.PROCESS_BRAILLE_CUT_BEGIN)
-
-        self.input_event_handlers["processBrailleCutLineHandler"] = \
-            input_event.InputEventHandler(
-                Script.process_braille_cut_line,
-                cmdnames.PROCESS_BRAILLE_CUT_LINE)
-
     def get_listeners(self) -> dict[str, Callable]:
         """Sets up the AT-SPI event listeners for this script."""
 
@@ -277,194 +154,202 @@ class Script(script.Script):
         listeners["window:destroy"] = self.on_window_destroyed
         return listeners
 
-    def register_commands(self) -> None:
-        """Updates command keybindings from settings."""
+    def _get_all_extensions(self) -> list[tuple[Callable, str]]:
+        """Returns (extension_getter, localized_name) for each extension."""
 
-        tokens = ["DEFAULT: Updating command keybindings for", self]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+        return [
+            (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
+            (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
+            (say_all_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
+            (typing_echo_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
+            (speech_and_verbosity_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
+            (bypass_mode_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
+            (sleep_mode_manager.get_manager, guilabels.KB_GROUP_SLEEP_MODE),
+            (system_information_presenter.get_presenter, guilabels.KB_GROUP_SYSTEM_INFORMATION),
+            (object_navigator.get_navigator, guilabels.KB_GROUP_OBJECT_NAVIGATION),
+            (caret_navigator.get_navigator, guilabels.KB_GROUP_CARET_NAVIGATION),
+            (structural_navigator.get_navigator, guilabels.KB_GROUP_STRUCTURAL_NAVIGATION),
+            (table_navigator.get_navigator, guilabels.KB_GROUP_TABLE_NAVIGATION),
+            (document_presenter.get_presenter, guilabels.KB_GROUP_DOCUMENTS),
+            (live_region_presenter.get_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
+            (learn_mode_presenter.get_presenter, guilabels.KB_GROUP_LEARN_MODE),
+            (mouse_review.get_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
+            (action_presenter.get_presenter, guilabels.KB_GROUP_ACTIONS),
+            (flat_review_presenter.get_presenter, guilabels.KB_GROUP_FLAT_REVIEW),
+            (flat_review_finder.get_finder, guilabels.KB_GROUP_FIND),
+            (where_am_i_presenter.get_presenter, guilabels.KB_GROUP_WHERE_AM_I),
+            (debugging_tools_manager.get_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
+            (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
+            (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
+        ]
 
-        # get_key_bindings() updates Commands as a side effect while building KeyBindings
-        self.get_key_bindings(enabled_only=False)
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-    def get_key_bindings(self, enabled_only: bool = True) -> keybindings.KeyBindings:
-        """Returns the key bindings for this script."""
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_DEFAULT
 
-        tokens = ["DEFAULT: Getting keybindings for", self]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+        kb_kp_divide_orca = keybindings.KeyBinding("KP_Divide", keybindings.ORCA_MODIFIER_MASK)
+        kb_kp_divide = keybindings.KeyBinding("KP_Divide", keybindings.NO_MODIFIER_MASK)
+        kb_kp_multiply = keybindings.KeyBinding("KP_Multiply", keybindings.NO_MODIFIER_MASK)
+        kb_9_orca = keybindings.KeyBinding("9", keybindings.ORCA_MODIFIER_MASK)
+        kb_7_orca = keybindings.KeyBinding("7", keybindings.ORCA_MODIFIER_MASK)
+        kb_8_orca = keybindings.KeyBinding("8", keybindings.ORCA_MODIFIER_MASK)
+        kb_space_orca = keybindings.KeyBinding("space", keybindings.ORCA_MODIFIER_MASK)
+        kb_space_ctrl_orca = keybindings.KeyBinding("space", keybindings.ORCA_CTRL_MODIFIER_MASK)
 
-        key_bindings = script.Script.get_key_bindings(self)
-        layout = settings.keyboardLayout
-        is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        script_commands: list[
+            tuple[
+                str,
+                Callable[..., bool],
+                str,
+                keybindings.KeyBinding | None,
+                keybindings.KeyBinding | None,
+            ]
+        ] = [
+            (
+                "routePointerToItemHandler",
+                self.route_pointer_to_item,
+                cmdnames.ROUTE_POINTER_TO_ITEM,
+                kb_kp_divide_orca,
+                kb_9_orca,
+            ),
+            (
+                "leftClickReviewItemHandler",
+                self.left_click_item,
+                cmdnames.LEFT_CLICK_REVIEW_ITEM,
+                kb_kp_divide,
+                kb_7_orca,
+            ),
+            (
+                "rightClickReviewItemHandler",
+                self.right_click_item,
+                cmdnames.RIGHT_CLICK_REVIEW_ITEM,
+                kb_kp_multiply,
+                kb_8_orca,
+            ),
+            (
+                "panBrailleLeftHandler",
+                self.pan_braille_left,
+                cmdnames.PAN_BRAILLE_LEFT,
+                None,
+                None,
+            ),
+            (
+                "panBrailleRightHandler",
+                self.pan_braille_right,
+                cmdnames.PAN_BRAILLE_RIGHT,
+                None,
+                None,
+            ),
+            (
+                "contractedBrailleHandler",
+                self.set_contracted_braille,
+                cmdnames.SET_CONTRACTED_BRAILLE,
+                None,
+                None,
+            ),
+            ("shutdownHandler", self.quit_orca, cmdnames.QUIT_ORCA, None, None),
+            (
+                "preferencesSettingsHandler",
+                self.show_preferences_gui,
+                cmdnames.SHOW_PREFERENCES_GUI,
+                kb_space_orca,
+                kb_space_orca,
+            ),
+            (
+                "appPreferencesSettingsHandler",
+                self.show_app_preferences_gui,
+                cmdnames.SHOW_APP_PREFERENCES_GUI,
+                kb_space_ctrl_orca,
+                kb_space_ctrl_orca,
+            ),
+        ]
 
-        def update_bindings(handlers, bindings, group_label, update_group_label=True):
-            cmd_mgr = command_manager.get_manager()
-            skip = Script.BRAILLE_HARDWARE_ONLY_HANDLERS
+        for (
+            name,
+            function,
+            description,
+            desktop_kb,
+            laptop_kb,
+        ) in script_commands:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=desktop_kb,
+                    laptop_keybinding=laptop_kb,
+                )
+            )
 
-            cmd_mgr.set_default_bindings_from_module(handlers, bindings, skip)
-
-            settings_mgr = settings_manager.get_manager()
-            customized = settings_mgr.override_key_bindings(handlers, bindings, enabled_only)
-            profile_keybindings = settings_mgr.get_keybindings()
-
-            cmd_mgr.clear_deleted_bindings(handlers, profile_keybindings, skip)
-            cmd_mgr.apply_customized_bindings(
-                handlers, customized, group_label, skip, update_group_label)
-
-            for kb in customized.key_bindings:
-                key_bindings.add(kb)
-
-        update_bindings(self.input_event_handlers, self.get_default_keybindings_deprecated(),
-                        guilabels.KB_GROUP_DEFAULT, update_group_label=False)
-        for extension_getter, localized_name in self._get_all_extensions():
-            extension = extension_getter()
-            update_bindings(extension.get_handlers(),
-                            extension.get_bindings(refresh=True, is_desktop=is_desktop),
-                            localized_name)
-
-        return key_bindings
-
-    def get_default_keybindings_deprecated(self) -> keybindings.KeyBindings:
-        """Returns the basic keybindings (i.e. without extension bindings)"""
-
-        bindings = keybindings.KeyBindings()
-
-        layout = settings.keyboardLayout
-        is_desktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        if is_desktop:
-            bindings.add(
-                keybindings.KeyBinding(
-                    "KP_Divide",
-                    keybindings.ORCA_MODIFIER_MASK,
-                    self.input_event_handlers["routePointerToItemHandler"]))
-
-            # We want the user to be able to combine modifiers with the mouse click, therefore we
-            # do not "care" about the modifiers -- unless it's the Orca modifier.
-            bindings.add(
-                keybindings.KeyBinding(
-                    "KP_Divide",
-                    keybindings.NO_MODIFIER_MASK,
-                    self.input_event_handlers["leftClickReviewItemHandler"]))
-
-            bindings.add(
-                keybindings.KeyBinding(
-                    "KP_Multiply",
-                    keybindings.NO_MODIFIER_MASK,
-                    self.input_event_handlers["rightClickReviewItemHandler"]))
-        else:
-            bindings.add(
-                keybindings.KeyBinding(
-                    "9",
-                    keybindings.ORCA_MODIFIER_MASK,
-                    self.input_event_handlers["routePointerToItemHandler"]))
-
-            # We want the user to be able to combine modifiers with the mouse click, therefore we
-            # do not "care" about the modifiers -- unless it's the Orca modifier.
-            bindings.add(
-                keybindings.KeyBinding(
-                    "7",
-                    keybindings.ORCA_MODIFIER_MASK,
-                    self.input_event_handlers["leftClickReviewItemHandler"]))
-
-            bindings.add(
-                keybindings.KeyBinding(
-                    "8",
-                    keybindings.ORCA_MODIFIER_MASK,
-                    self.input_event_handlers["rightClickReviewItemHandler"]))
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["panBrailleLeftHandler"]))
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["panBrailleRightHandler"]))
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self.input_event_handlers["shutdownHandler"]))
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "space",
-                keybindings.ORCA_MODIFIER_MASK,
-                self.input_event_handlers["preferencesSettingsHandler"]))
-
-        bindings.add(
-            keybindings.KeyBinding(
-                "space",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self.input_event_handlers["appPreferencesSettingsHandler"]))
-
-        # TODO - JD: Move these into the extension commands. That will require a new string
-        # and GUI change.
-        bypass_mode_bindings = bypass_mode_manager.get_manager().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in bypass_mode_bindings.key_bindings:
-            bindings.add(binding)
-
-        say_all_bindings = say_all_presenter.get_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in say_all_bindings.key_bindings:
-            bindings.add(binding)
-
-        typing_echo_bindings = typing_echo_presenter.get_presenter().get_bindings(
-            refresh=True, is_desktop=is_desktop)
-        for binding in typing_echo_bindings.key_bindings:
-            bindings.add(binding)
-
-        return bindings
-
-    def get_braille_bindings(self) -> dict:
-        """Returns the braille bindings for this script."""
-
-        msg = "DEFAULT: Getting braille bindings."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        braille_bindings = script.Script.get_braille_bindings(self)
+        braille_bindings: dict[str, tuple[int, ...]] = {}
         try:
-            braille_bindings[braille.brlapi.KEY_CMD_HWINLT]     = \
-                self.input_event_handlers["panBrailleLeftHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_FWINLT]     = \
-                self.input_event_handlers["panBrailleLeftHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_FWINLTSKIP] = \
-                self.input_event_handlers["panBrailleLeftHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_HWINRT]     = \
-                self.input_event_handlers["panBrailleRightHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_FWINRT]     = \
-                self.input_event_handlers["panBrailleRightHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_FWINRTSKIP] = \
-                self.input_event_handlers["panBrailleRightHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_HOME]       = \
-                self.input_event_handlers["goBrailleHomeHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_SIXDOTS]     = \
-                self.input_event_handlers["contractedBrailleHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_ROUTE]     = \
-                self.input_event_handlers["processRoutingKeyHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_CUTBEGIN]   = \
-                self.input_event_handlers["processBrailleCutBeginHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_CUTLINE]   = \
-                self.input_event_handlers["processBrailleCutLineHandler"]
-            braille_bindings[braille.brlapi.KEY_CMD_HOME] = \
-                self.input_event_handlers["goBrailleHomeHandler"]
+            braille_bindings = {
+                "panBrailleLeftHandler": (
+                    braille.brlapi.KEY_CMD_HWINLT,
+                    braille.brlapi.KEY_CMD_FWINLT,
+                    braille.brlapi.KEY_CMD_FWINLTSKIP,
+                ),
+                "panBrailleRightHandler": (
+                    braille.brlapi.KEY_CMD_HWINRT,
+                    braille.brlapi.KEY_CMD_FWINRT,
+                    braille.brlapi.KEY_CMD_FWINRTSKIP,
+                ),
+                "goBrailleHomeHandler": (braille.brlapi.KEY_CMD_HOME,),
+                "contractedBrailleHandler": (braille.brlapi.KEY_CMD_SIXDOTS,),
+                "processRoutingKeyHandler": (braille.brlapi.KEY_CMD_ROUTE,),
+                "processBrailleCutBeginHandler": (braille.brlapi.KEY_CMD_CUTBEGIN,),
+                "processBrailleCutLineHandler": (braille.brlapi.KEY_CMD_CUTLINE,),
+            }
         except AttributeError:
-            tokens = ["DEFAULT: Braille bindings unavailable in", self]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        except (KeyError, TypeError) as error:
-            tokens = ["DEFAULT: Exception getting braille bindings in", self, ":", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            msg = "DEFAULT SCRIPT: Braille bindings unavailable."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        braille_bindings.update(flat_review_presenter.get_presenter().get_braille_bindings())
+        # Braille commands: (name, function, description, executes_in_learn_mode)
+        # Pan/navigation commands execute in learn mode, routing commands don't
+        braille_commands: list[tuple[str, Callable[..., bool], str, bool]] = [
+            ("panBrailleLeftHandler", self.pan_braille_left, cmdnames.PAN_BRAILLE_LEFT, True),
+            ("panBrailleRightHandler", self.pan_braille_right, cmdnames.PAN_BRAILLE_RIGHT, True),
+            (
+                "contractedBrailleHandler",
+                self.set_contracted_braille,
+                cmdnames.SET_CONTRACTED_BRAILLE,
+                True,
+            ),
+            ("goBrailleHomeHandler", self.go_braille_home, cmdnames.GO_BRAILLE_HOME, True),
+            ("processRoutingKeyHandler", self.process_routing_key, cmdnames.PROCESS_ROUTING_KEY, False),
+            (
+                "processBrailleCutBeginHandler",
+                self.process_braille_cut_begin,
+                cmdnames.PROCESS_BRAILLE_CUT_BEGIN,
+                False,
+            ),
+            (
+                "processBrailleCutLineHandler",
+                self.process_braille_cut_line,
+                cmdnames.PROCESS_BRAILLE_CUT_LINE,
+                False,
+            ),
+        ]
 
-        msg = "DEFAULT: Finished getting braille bindings."
+        for name, function, description, executes_in_learn_mode in braille_commands:
+            bb = braille_bindings.get(name, ())
+            manager.add_command(
+                command_manager.BrailleCommand(
+                    name, function, group_label, description, braille_bindings=bb,
+                    executes_in_learn_mode=executes_in_learn_mode
+                )
+            )
+
+        for extension_getter, _localized_name in self._get_all_extensions():
+            extension_getter().set_up_commands()
+
+        command_manager.get_manager().apply_user_overrides()
+
+        msg = "DEFAULT SCRIPT: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        return braille_bindings
 
     def get_app_preferences_gui(self) -> Gtk.Grid | None:
         """Return a GtkGrid, or None if there's no app-specific UI."""
@@ -475,65 +360,6 @@ class Script(script.Script):
         """Returns a dictionary with the app-specific preferences."""
 
         return {}
-
-    def deactivate(self) -> None:
-        """Called when this script is deactivated."""
-
-        self.point_of_reference = {}
-        if bypass_mode_manager.get_manager().is_active():
-            bypass_mode_manager.get_manager().toggle_enabled(self)
-
-        self.remove_key_grabs("script deactivation")
-        input_event_manager.get_manager().check_grabbed_bindings()
-
-    def add_key_grabs(self, reason: str = "") -> None:
-        """ Sets up the key grabs currently needed by this script. """
-
-        tokens = ["DEFAULT: Adding key grabs for", self]
-        if reason:
-            tokens.append(f": {reason}")
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self.key_bindings = self.get_key_bindings()
-        self.key_bindings.add_key_grabs(reason)
-        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = self.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["DEFAULT:", self, f"now has {len(has_grabs)} key grabs."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    def remove_key_grabs(self, reason: str = "") -> None:
-        """ Removes this script's AT-SPI key grabs. """
-
-        tokens = ["DEFAULT: Removing key grabs for", self]
-        if reason:
-            tokens.append(f": {reason}")
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        self.key_bindings.remove_key_grabs(reason)
-
-        if debug.LEVEL_INFO >= debug.debugLevel:
-            has_grabs = self.key_bindings.get_bindings_with_grabs_for_debugging()
-            tokens = ["DEFAULT:", self, f"now has {len(has_grabs)} key grabs."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self.key_bindings = keybindings.KeyBindings()
-
-    def refresh_key_grabs(self, reason: str = "") -> None:
-        """ Refreshes the enabled key grabs for this script. """
-
-        msg = "DEFAULT: refreshing key grabs"
-        if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        # TODO: Should probably avoid removing key grabs and re-adding them.
-        # Otherwise, a key could conceivably leak through while the script is
-        # in the process of updating the bindings.
-        self.remove_key_grabs("refreshing")
-        self.add_key_grabs("refreshing")
 
     def register_event_listeners(self) -> None:
         """Registers for listeners needed by this script."""
@@ -602,6 +428,7 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         settings_manager.get_manager().load_app_settings(self)
+        command_manager.get_manager().apply_user_overrides()
 
         # TODO - JD: Should these be moved into check_speech_setting?
         speech_and_verbosity_manager.get_manager().update_punctuation_level()
@@ -618,9 +445,20 @@ class Script(script.Script):
             reason = "script activation, no prior state"
             presenter.suspend_navigators(self, True, reason)
 
-        self.add_key_grabs("script activation")
+        command_manager.get_manager().add_all_grabs("script activation")
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
         tokens = ["DEFAULT: Script for", self.app, "activated"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+    def deactivate(self) -> None:
+        """Called when this script is deactivated."""
+
+        self.point_of_reference = {}
+        if bypass_mode_manager.get_manager().is_active():
+            bypass_mode_manager.get_manager().toggle_enabled(self)
+
+        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
+        command_manager.get_manager().remove_all_grabs("script deactivation")
 
     def update_braille(self, obj: Atspi.Accessible, **args) -> None:
         """Updates the braille display to show obj."""
@@ -655,7 +493,11 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    def show_app_preferences_gui(self, _event: input_event.InputEvent | None = None) -> bool:
+    def show_app_preferences_gui(
+        self,
+        _script: Script | None = None,
+        _event: input_event.InputEvent | None = None
+    ) -> bool:
         """Shows the app Preferences dialog."""
 
         prefs = settings_manager.get_manager().get_settings()
@@ -663,7 +505,11 @@ class Script(script.Script):
         ui.showGUI()
         return True
 
-    def show_preferences_gui(self, _event: input_event.InputEvent | None = None) -> bool:
+    def show_preferences_gui(
+        self,
+        _script: Script | None = None,
+        _event: input_event.InputEvent | None = None
+    ) -> bool:
         """Displays the Preferences dialog."""
 
         manager = settings_manager.get_manager()
@@ -672,7 +518,11 @@ class Script(script.Script):
         ui.showGUI()
         return True
 
-    def quit_orca(self, _event: input_event.InputEvent | None = None) -> bool:
+    def quit_orca(
+        self,
+        _script: Script | None = None,
+        _event: input_event.InputEvent | None = None
+    ) -> bool:
         """Quit Orca."""
 
         orca.shutdown()
@@ -680,6 +530,7 @@ class Script(script.Script):
 
     def pan_braille_left(
         self,
+        _script: Script | None = None,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
     ) -> bool:
@@ -743,6 +594,7 @@ class Script(script.Script):
 
     def pan_braille_right(
         self,
+        _script: Script | None = None,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0
     ) -> bool:
@@ -794,7 +646,11 @@ class Script(script.Script):
 
         return True
 
-    def go_braille_home(self, event: input_event.InputEvent | None = None) -> bool:
+    def go_braille_home(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Returns to the component with focus."""
 
         if flat_review_presenter.get_presenter().is_active():
@@ -804,13 +660,21 @@ class Script(script.Script):
         self.interrupt_presentation()
         return braille.returnToRegionWithFocus(event)
 
-    def set_contracted_braille(self, event: input_event.InputEvent | None = None) -> bool:
+    def set_contracted_braille(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Toggles contracted braille."""
 
         braille.set_contracted_braille(event)
         return True
 
-    def process_routing_key(self, event: input_event.InputEvent | None = None) -> bool:
+    def process_routing_key(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Processes a cursor routing key."""
 
         # Don't kill flash here because it will restore the previous contents and
@@ -820,7 +684,11 @@ class Script(script.Script):
         braille.process_routing_key(event)
         return True
 
-    def process_braille_cut_begin(self, event: input_event.InputEvent | None = None) -> bool:
+    def process_braille_cut_begin(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Clears the selection and moves the caret offset in the currently
         active text area.
         """
@@ -834,7 +702,11 @@ class Script(script.Script):
         self.utilities.set_caret_offset(obj, offset)
         return True
 
-    def process_braille_cut_line(self, event: input_event.InputEvent | None = None) -> bool:
+    def process_braille_cut_line(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
 
@@ -855,7 +727,11 @@ class Script(script.Script):
         clipboard.get_presenter().set_text(text)
         return True
 
-    def route_pointer_to_item(self, event: input_event.InputEvent | None = None) -> bool:
+    def route_pointer_to_item(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Moves the mouse pointer to the current item."""
 
         if flat_review_presenter.get_presenter().is_active():
@@ -873,7 +749,11 @@ class Script(script.Script):
         self.present_message(full, brief)
         return False
 
-    def left_click_item(self, event: input_event.InputEvent | None = None) -> bool:
+    def left_click_item(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Performs a left mouse button click on the current item."""
 
         if flat_review_presenter.get_presenter().is_active():
@@ -898,7 +778,11 @@ class Script(script.Script):
         self.present_message(full, brief)
         return False
 
-    def right_click_item(self, event: input_event.InputEvent | None = None) -> bool:
+    def right_click_item(
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
         """Performs a right mouse button click on the current item."""
 
         if flat_review_presenter.get_presenter().is_active():

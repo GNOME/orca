@@ -34,7 +34,8 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 from . import cmdnames
-from . import debug
+from . import command_manager
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
@@ -47,56 +48,31 @@ if TYPE_CHECKING:
 class BypassModeManager:
     """Provides means to pass keyboard events to the app being used."""
 
+    COMMAND_NAME = "bypass_mode_toggle"
+
     def __init__(self) -> None:
         self._is_active: bool = False
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the bypass-mode-manager keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"BYPASS MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_DEFAULT
+        kb = keybindings.KeyBinding("BackSpace", keybindings.ALT_MODIFIER_MASK)
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the bypass-mode-manager handlers."""
-
-        if refresh:
-            msg = "BYPASS MODE MANAGER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up and returns the bypass-mode-manager input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["bypass_mode_toggle"] = input_event.InputEventHandler(
-            self.toggle_enabled, cmdnames.BYPASS_MODE_TOGGLE
-        )
-
-    def _setup_bindings(self) -> None:
-        """Sets up and returns the bypass-mode-manager key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "BackSpace",
-                keybindings.ALT_MODIFIER_MASK,
-                self._handlers["bypass_mode_toggle"],
-                1,
-                True,
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                self.COMMAND_NAME,
+                self.toggle_enabled,
+                group_label,
+                cmdnames.BYPASS_MODE_TOGGLE,
+                desktop_keybinding=kb,
+                laptop_keybinding=kb,
             )
         )
 
@@ -111,11 +87,13 @@ class BypassModeManager:
         """Toggles bypass mode."""
 
         self._is_active = not self._is_active
+        manager = command_manager.get_manager()
         if not self._is_active:
             if event is not None:
                 script.present_message(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
-            script.add_key_grabs(reason)
+            manager.add_all_grabs(reason)
+            orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
             orca_modifier_manager.get_manager().refresh_orca_modifiers(reason)
             return True
 
@@ -123,10 +101,12 @@ class BypassModeManager:
             script.present_message(messages.BYPASS_MODE_ENABLED)
 
         reason = "bypass mode enabled"
-        script.remove_key_grabs(reason)
+        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
+        manager.remove_all_grabs(reason)
         orca_modifier_manager.get_manager().unset_orca_modifiers(reason)
-        for binding in self._bindings.key_bindings:
-            script.key_bindings.add(binding, include_grabs=True)
+
+        # Add only the bypass toggle binding so user can exit bypass mode
+        manager.add_grabs_for_command(self.COMMAND_NAME)
 
         return True
 

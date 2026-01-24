@@ -38,9 +38,11 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
@@ -59,119 +61,47 @@ class ObjectNavigator:
         self._last_navigator_focus: Atspi.Accessible | None = None
         self._last_locus_of_focus: Atspi.Accessible | None = None
         self._simplify: bool = True
-        self._handlers: dict = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         msg = "OBJECT NAVIGATOR: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("ObjectNavigator", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the object-navigator keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"OBJECT NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("OBJECT NAVIGATOR: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_OBJECT_NAVIGATION
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the object-navigator handlers."""
+        # (name, function, description, keysymstring, modifiers)
+        # Same bindings on desktop and laptop
+        commands_data = [
+            ("object_navigator_up", self.move_to_parent, cmdnames.NAVIGATOR_UP,
+             "Up", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ("object_navigator_down", self.move_to_first_child, cmdnames.NAVIGATOR_DOWN,
+             "Down", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ("object_navigator_next", self.move_to_next_sibling, cmdnames.NAVIGATOR_NEXT,
+             "Right", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ("object_navigator_previous", self.move_to_previous_sibling, cmdnames.NAVIGATOR_PREVIOUS,
+             "Left", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ("object_navigator_perform_action", self.perform_action, cmdnames.NAVIGATOR_PERFORM_ACTION,
+             "Return", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ("object_navigator_toggle_simplify", self.toggle_simplify, cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED,
+             "s", keybindings.ORCA_CTRL_MODIFIER_MASK),
+        ]
 
-        if refresh:
-            msg = "OBJECT NAVIGATOR: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
+        for name, function, description, keysym, modifiers in commands_data:
+            kb = keybindings.KeyBinding(keysym, modifiers)
+            manager.add_command(command_manager.KeyboardCommand(
+                name, function, group_label, description,
+                desktop_keybinding=kb, laptop_keybinding=kb))
 
-        return self._handlers
-
-    def _setup_bindings(self) -> None:
-        """Sets up the object-navigator key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["object_navigator_up"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["object_navigator_down"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["object_navigator_next"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["object_navigator_previous"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Return",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["object_navigator_perform_action"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "s",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["object_navigator_toggle_simplify"]))
-
-        msg = "OBJECT NAVIGATOR: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_handlers(self) -> None:
-        """Sets up the object-navigator input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["object_navigator_up"] = \
-            input_event.InputEventHandler(
-                self.move_to_parent,
-                cmdnames.NAVIGATOR_UP)
-
-        self._handlers["object_navigator_down"] = \
-            input_event.InputEventHandler(
-                self.move_to_first_child,
-                cmdnames.NAVIGATOR_DOWN)
-
-        self._handlers["object_navigator_next"] = \
-            input_event.InputEventHandler(
-                self.move_to_next_sibling,
-                cmdnames.NAVIGATOR_NEXT)
-
-        self._handlers["object_navigator_previous"] = \
-            input_event.InputEventHandler(
-                self.move_to_previous_sibling,
-                cmdnames.NAVIGATOR_PREVIOUS)
-
-        self._handlers["object_navigator_perform_action"] = \
-            input_event.InputEventHandler(
-                self.perform_action,
-                cmdnames.NAVIGATOR_PERFORM_ACTION)
-
-        self._handlers["object_navigator_toggle_simplify"] = \
-            input_event.InputEventHandler(
-                self.toggle_simplify,
-                cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED)
-
-        msg = "OBJECT NAVIGATOR: Handlers set up."
+        msg = "OBJECT NAVIGATOR: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _include_in_simple_navigation(self, obj: Atspi.Accessible) -> bool:

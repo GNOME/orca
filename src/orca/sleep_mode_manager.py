@@ -35,8 +35,10 @@ from typing import TYPE_CHECKING
 
 from . import braille
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
@@ -53,40 +55,38 @@ if TYPE_CHECKING:
 class SleepModeManager:
     """Provides sleep mode implementation."""
 
+    COMMAND_NAME = "toggle_sleep_mode"
+
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._apps: list[int] = []
+        self._initialized: bool = False
 
         msg = "SLEEP MODE MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SleepModeManager", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the sleep-mode-manager keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"SLEEP MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("SLEEP MODE MANAGER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_SLEEP_MODE
+        kb = keybindings.KeyBinding("q", keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK)
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the sleep-mode-manager handlers."""
+        manager.add_command(command_manager.KeyboardCommand(
+            self.COMMAND_NAME,
+            self.toggle_sleep_mode,
+            group_label,
+            cmdnames.TOGGLE_SLEEP_MODE,
+            desktop_keybinding=kb,
+            laptop_keybinding=kb))
 
-        if refresh:
-            msg = "SLEEP MODE MANAGER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
+        msg = "SLEEP MODE MANAGER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def is_active_for_app(self, app: Atspi.Accessible) -> bool:
         """Returns True if sleep mode is active for app."""
@@ -96,33 +96,6 @@ class SleepModeManager:
             tokens = ["SLEEP MODE MANAGER: Is active for", app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
-
-    def _setup_handlers(self) -> None:
-        """Sets up and returns the sleep-mode-manager input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["toggle_sleep_mode"] = \
-            input_event.InputEventHandler(
-                self.toggle_sleep_mode,
-                cmdnames.TOGGLE_SLEEP_MODE)
-
-        msg = "SLEEP MODE MANAGER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up and returns the sleep-mode-manager key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "q",
-                keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK,
-                self._handlers["toggle_sleep_mode"]))
-
-        msg = "SLEEP MODE MANAGER: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @dbus_service.command
     def toggle_sleep_mode(

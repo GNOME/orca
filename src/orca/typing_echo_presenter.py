@@ -46,11 +46,11 @@ from gi.repository import Gtk
 
 from . import braille
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import guilabels
 from . import input_event
-from . import keybindings
 from . import messages
 from . import settings
 from . import sleep_mode_manager
@@ -242,14 +242,37 @@ class TypingEchoPresenter:
     """Provides typing echo support."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
+        self._initialized: bool = False
 
         msg = "TYPING ECHO PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("TypingEchoPresenter", self)
+
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_DEFAULT
+
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "cycleKeyEchoHandler",
+                self.cycle_key_echo,
+                group_label,
+                cmdnames.CYCLE_KEY_ECHO,
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+            )
+        )
+
+        msg = "TYPING ECHO PRESENTER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def create_preferences_grid(self) -> TypingEchoPreferencesGrid:
         """Returns the GtkGrid containing the Typing Echo preferences UI."""
@@ -363,58 +386,6 @@ class TypingEchoPresenter:
             descriptor.setter(value)
             result[descriptor.prefs_key] = value
         return result
-
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the typing echo presenter keybindings."""
-
-        if refresh:
-            msg = f"TYPING ECHO PRESENTER: Refreshing bindings.  Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("TYPING ECHO PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the typing echo presenter handlers."""
-
-        if refresh:
-            msg = "TYPING ECHO PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the typing echo input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["cycleKeyEchoHandler"] = \
-            input_event.InputEventHandler(
-                self.cycle_key_echo,
-                cmdnames.CYCLE_KEY_ECHO)
-
-        msg = "TYPING ECHO PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the typing echo key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleKeyEchoHandler"]))
-
-        msg = "TYPING ECHO PRESENTER: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @dbus_service.command
     def cycle_key_echo(

@@ -59,11 +59,11 @@ except Exception:
     pass
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import guilabels
-from . import keybindings
 from . import input_event
 from . import messages
 from . import preferences_grid_base
@@ -405,8 +405,7 @@ class MouseReviewer:
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
         self.in_mouse_event: bool = False
         self._event_queue: deque = deque()
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         if not _MOUSE_REVIEW_CAPABLE:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
@@ -418,65 +417,38 @@ class MouseReviewer:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("MouseReviewer", self)
-        if not self._active:
-            return
 
-        self.activate()
+        if self._active:
+            self.activate()
+
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_MOUSE_REVIEW
+
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "toggleMouseReviewHandler",
+                self.toggle,
+                group_label,
+                cmdnames.MOUSE_REVIEW_TOGGLE,
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+            )
+        )
+
+        msg = "MOUSE REVIEW: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def create_preferences_grid(self) -> MousePreferencesGrid:
         """Returns the GtkGrid containing the mouse preferences UI."""
 
         return MousePreferencesGrid(self)
-
-    def get_bindings(self, refresh: bool = False, is_desktop: bool = True):
-        """Returns the mouse-review keybindings."""
-
-        if refresh:
-            msg = f"MOUSE REVIEW: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("MOUSE REVIEW: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the mouse-review handlers."""
-
-        if refresh:
-            msg = "MOUSE REVIEW: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the mouse-review input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["toggleMouseReviewHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle,
-                cmdnames.MOUSE_REVIEW_TOGGLE)
-
-        msg = "MOUSE REVIEW: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the mouse-review key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["toggleMouseReviewHandler"]))
-
-        msg = "MOUSE REVIEW: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def activate(self) -> None:
         """Activates mouse review."""

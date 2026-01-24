@@ -77,38 +77,12 @@ class TableNavigator:
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
         self._suspended: bool = False
-        self._handlers: dict = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         msg = "TABLE NAVIGATOR: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("TableNavigator", self)
-
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the table-navigator keybindings."""
-
-        if refresh:
-            msg = f"TABLE NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("TABLE NAVIGATOR: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the table-navigator handlers."""
-
-        if refresh:
-            msg = "TABLE NAVIGATOR: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
 
     def is_enabled(self) -> bool:
         """Returns true if table-navigation support is enabled."""
@@ -132,231 +106,116 @@ class TableNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def _setup_bindings(self) -> None:
-        """Sets up the table-navigation key bindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        self._bindings = keybindings.KeyBindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "t",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["table_navigator_toggle_enabled"],
-                1,
-                not self._suspended))
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_TABLE_NAVIGATION
 
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["table_cell_left"],
-                1,
-                self._enabled and not self._suspended))
+        # Keybindings (same for desktop and laptop)
+        kb_t = keybindings.KeyBinding("t", keybindings.ORCA_SHIFT_MODIFIER_MASK)
+        kb_left = keybindings.KeyBinding("Left", keybindings.SHIFT_ALT_MODIFIER_MASK)
+        kb_right = keybindings.KeyBinding("Right", keybindings.SHIFT_ALT_MODIFIER_MASK)
+        kb_up = keybindings.KeyBinding("Up", keybindings.SHIFT_ALT_MODIFIER_MASK)
+        kb_down = keybindings.KeyBinding("Down", keybindings.SHIFT_ALT_MODIFIER_MASK)
+        kb_home = keybindings.KeyBinding("Home", keybindings.SHIFT_ALT_MODIFIER_MASK)
+        kb_end = keybindings.KeyBinding("End", keybindings.SHIFT_ALT_MODIFIER_MASK)
+        kb_left_orca = keybindings.KeyBinding("Left", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
+        kb_right_orca = keybindings.KeyBinding("Right", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
+        kb_up_orca = keybindings.KeyBinding("Up", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
+        kb_down_orca = keybindings.KeyBinding("Down", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
+        kb_r = keybindings.KeyBinding("r", keybindings.ORCA_SHIFT_MODIFIER_MASK)
+        kb_r_2 = keybindings.KeyBinding("r", keybindings.ORCA_SHIFT_MODIFIER_MASK, click_count=2)
+        kb_c = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK)
+        kb_c_2 = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK, click_count=2)
 
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["table_cell_right"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["table_cell_up"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["table_cell_down"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Home",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["table_cell_first"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "End",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["table_cell_last"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers["table_cell_beginning_of_row"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers["table_cell_end_of_row"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers["table_cell_top_of_column"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK,
-                self._handlers["table_cell_bottom_of_column"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["set_dynamic_column_headers_row"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["clear_dynamic_column_headers_row"],
-                2,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["set_dynamic_row_headers_column"],
-                1,
-                self._enabled and not self._suspended))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["clear_dynamic_row_headers_column"],
-                2,
-                self._enabled and not self._suspended))
-
-        msg = f"TABLE NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_handlers(self) -> None:
-        """Sets up the table-navigator input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["table_navigator_toggle_enabled"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "table_navigator_toggle_enabled",
                 self.toggle_enabled,
+                group_label,
                 cmdnames.TABLE_NAVIGATION_TOGGLE,
-                enabled=not self._suspended,
-                is_group_toggle=True)
+                desktop_keybinding=kb_t,
+                laptop_keybinding=kb_t,
+                is_group_toggle=True,
+            )
+        )
 
-        self._handlers["table_cell_left"] = \
-            input_event.InputEventHandler(
-                self.move_left,
-                cmdnames.TABLE_CELL_LEFT,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_right"] = \
-            input_event.InputEventHandler(
-                self.move_right,
-                cmdnames.TABLE_CELL_RIGHT,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_up"] = \
-            input_event.InputEventHandler(
-                self.move_up,
-                cmdnames.TABLE_CELL_UP,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_down"] = \
-            input_event.InputEventHandler(
-                self.move_down,
-                cmdnames.TABLE_CELL_DOWN,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_first"] = \
-            input_event.InputEventHandler(
-                self.move_to_first_cell,
-                cmdnames.TABLE_CELL_FIRST,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_last"] = \
-            input_event.InputEventHandler(
-                self.move_to_last_cell,
-                cmdnames.TABLE_CELL_LAST,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_beginning_of_row"] = \
-            input_event.InputEventHandler(
+        # (name, function, description, keybinding)
+        commands_data = [
+            ("table_cell_left", self.move_left, cmdnames.TABLE_CELL_LEFT, kb_left),
+            ("table_cell_right", self.move_right, cmdnames.TABLE_CELL_RIGHT, kb_right),
+            ("table_cell_up", self.move_up, cmdnames.TABLE_CELL_UP, kb_up),
+            ("table_cell_down", self.move_down, cmdnames.TABLE_CELL_DOWN, kb_down),
+            ("table_cell_first", self.move_to_first_cell, cmdnames.TABLE_CELL_FIRST, kb_home),
+            ("table_cell_last", self.move_to_last_cell, cmdnames.TABLE_CELL_LAST, kb_end),
+            (
+                "table_cell_beginning_of_row",
                 self.move_to_beginning_of_row,
                 cmdnames.TABLE_CELL_BEGINNING_OF_ROW,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_end_of_row"] = \
-            input_event.InputEventHandler(
+                kb_left_orca,
+            ),
+            (
+                "table_cell_end_of_row",
                 self.move_to_end_of_row,
                 cmdnames.TABLE_CELL_END_OF_ROW,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_top_of_column"] = \
-            input_event.InputEventHandler(
+                kb_right_orca,
+            ),
+            (
+                "table_cell_top_of_column",
                 self.move_to_top_of_column,
                 cmdnames.TABLE_CELL_TOP_OF_COLUMN,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["table_cell_bottom_of_column"] = \
-            input_event.InputEventHandler(
+                kb_up_orca,
+            ),
+            (
+                "table_cell_bottom_of_column",
                 self.move_to_bottom_of_column,
                 cmdnames.TABLE_CELL_BOTTOM_OF_COLUMN,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["set_dynamic_column_headers_row"] = \
-            input_event.InputEventHandler(
+                kb_down_orca,
+            ),
+            (
+                "set_dynamic_column_headers_row",
                 self.set_dynamic_column_headers_row,
                 cmdnames.DYNAMIC_COLUMN_HEADER_SET,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["clear_dynamic_column_headers_row"] = \
-            input_event.InputEventHandler(
+                kb_r,
+            ),
+            (
+                "clear_dynamic_column_headers_row",
                 self.clear_dynamic_column_headers_row,
                 cmdnames.DYNAMIC_COLUMN_HEADER_CLEAR,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["set_dynamic_row_headers_column"] = \
-            input_event.InputEventHandler(
+                kb_r_2,
+            ),
+            (
+                "set_dynamic_row_headers_column",
                 self.set_dynamic_row_headers_column,
                 cmdnames.DYNAMIC_ROW_HEADER_SET,
-                enabled=self._enabled and not self._suspended)
-
-        self._handlers["clear_dynamic_row_headers_column"] = \
-            input_event.InputEventHandler(
+                kb_c,
+            ),
+            (
+                "clear_dynamic_row_headers_column",
                 self.clear_dynamic_row_headers_column,
                 cmdnames.DYNAMIC_ROW_HEADER_CLEAR,
-                enabled=self._enabled and not self._suspended)
+                kb_c_2,
+            ),
+        ]
 
-        msg = f"TABLE NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
+        for name, function, description, kb in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=kb,
+                    laptop_keybinding=kb,
+                )
+            )
+
+        msg = f"TABLE NAVIGATOR: Commands set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @dbus_service.command

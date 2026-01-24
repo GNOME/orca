@@ -37,6 +37,7 @@ __copyright__ = "Copyright (c) 2023 Igalia, S.L."
 __license__   = "LGPL"
 
 from orca import braille
+from orca import command_manager
 from orca import debug
 from orca import focus_manager
 from orca import messages
@@ -63,14 +64,16 @@ class Script(default.Script):
         tokens = ["SLEEP MODE: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         orca_modifier_manager.get_manager().unset_orca_modifiers("Entering sleep mode.")
-        self.add_key_grabs("script activation")
+        command_manager.get_manager().add_grabs_for_command(
+            sleep_mode_manager.SleepModeManager.COMMAND_NAME)
 
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
 
         tokens = ["SLEEP MODE: De-activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self.remove_key_grabs("script deactivation")
+        command_manager.get_manager().remove_grabs_for_command(
+            sleep_mode_manager.SleepModeManager.COMMAND_NAME)
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Exiting sleep mode.")
 
     def get_braille_generator(self) -> BrailleGenerator:
@@ -83,33 +86,8 @@ class Script(default.Script):
 
         return SpeechGenerator(self)
 
-    def get_braille_bindings(self) -> dict[str, Any]:
-        """Returns the braille bindings for this script."""
-
-        msg = "SLEEP MODE: Has no braille bindings."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return {}
-
-    def get_key_bindings(self, enabled_only: bool = True) -> Any:
-        """Defines and returns the key bindings for this script."""
-
-        return sleep_mode_manager.get_manager().get_bindings()
-
-    def add_key_grabs(self, reason: str = "") -> None:
-        """Adds key grabs for this script."""
-
-        self.key_bindings = self.get_key_bindings()
-        self.key_bindings.add_key_grabs()
-
-    def remove_key_grabs(self, reason: str = "") -> None:
-        """Adds key grabs for this script."""
-
-        self.key_bindings.remove_key_grabs(reason)
-
-    def setup_input_event_handlers(self) -> Any:
-        """Defines the input event handlers for this script."""
-
-        return sleep_mode_manager.get_manager().get_handlers()
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
     def update_braille(self, obj: Atspi.Accessible, **args: Any) -> None:
         """Updates the braille display to show the give object."""

@@ -50,11 +50,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gdk, Gtk
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
+from . import guilabels
 from . import input_event
 from . import input_event_manager
-from . import keybindings
 from . import messages
 from . import script_manager
 from .ax_utilities import AXUtilities
@@ -325,61 +326,36 @@ class ClipboardPresenter:
         self._last_clipboard_update_text: str = ""
         self._last_clipboard_update_time: float = time.time()
         self._manager: _ClipboardManager | None = None
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         msg = "CLIPBOARD PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("ClipboardPresenter", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the clipboard-presenter keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"CLIPBOARD PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("CLIPBOARD PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_CLIPBOARD
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the clipboard-presenter handlers."""
-
-        if refresh:
-            msg = "CLIPBOARD PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up and returns the clipboard-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["present_clipboard_contents"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "present_clipboard_contents",
                 self.present_clipboard_contents,
-                cmdnames.CLIPBOARD_PRESENT_CONTENTS)
+                group_label,
+                cmdnames.CLIPBOARD_PRESENT_CONTENTS,
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+            )
+        )
 
-    def _setup_bindings(self) -> None:
-        """Sets up and returns the clipboard-presenter key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["present_clipboard_contents"],
-                1,
-                True))
+        msg = "CLIPBOARD PRESENTER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @dbus_service.command
     def present_clipboard_contents(

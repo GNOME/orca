@@ -86,20 +86,8 @@ class InputEventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._paused = pause
 
-    def check_grabbed_bindings(self) -> None:
-        """Checks the grabbed key bindings."""
-
-        msg = f"INPUT EVENT MANAGER: {len(self._grabbed_bindings)} grabbed key bindings."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        for grab_id, binding in self._grabbed_bindings.items():
-            msg = f"INPUT EVENT MANAGER: {grab_id} for: {binding}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
     def add_grabs_for_keybinding(self, binding: keybindings.KeyBinding) -> list[int]:
-        """Adds grabs for binding if it is enabled, returns grab IDs."""
-
-        if not (binding.is_enabled() and binding.is_bound()):
-            return []
+        """Adds grabs for binding, returns grab IDs."""
 
         if binding.has_grabs():
             tokens = ["INPUT EVENT MANAGER:", binding, "already has grabs."]

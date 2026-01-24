@@ -52,7 +52,10 @@ class TestObjectNavigator:
                 "gi",
                 "gi.repository",
                 "gi.repository.Atspi",
+                "orca.orca_i18n",
+                "orca.guilabels",
                 "orca.cmdnames",
+                "orca.command_manager",
                 "orca.dbus_service",
                 "orca.debug",
                 "orca.focus_manager",
@@ -64,6 +67,17 @@ class TestObjectNavigator:
                 "orca.ax_utilities",
             ]
         )
+
+        command_manager_mock = essential_modules["orca.command_manager"]
+        manager_instance_mock = test_context.Mock()
+        manager_instance_mock.add_command = test_context.Mock()
+        mock_command = test_context.Mock()
+        mock_command.get_keybinding.return_value = test_context.Mock()
+        mock_command.is_active.return_value = True
+        manager_instance_mock.get_command = test_context.Mock(return_value=mock_command)
+        manager_instance_mock.get_commands_by_group_label = test_context.Mock(return_value=[mock_command])
+        command_manager_mock.get_manager = test_context.Mock(return_value=manager_instance_mock)
+        command_manager_mock.Command = test_context.Mock()
 
         atspi_mock = essential_modules["gi.repository.Atspi"]
         atspi_accessible_mock = test_context.Mock()
@@ -171,11 +185,9 @@ class TestObjectNavigator:
         assert navigator._last_navigator_focus is None
         assert navigator._last_locus_of_focus is None
         assert navigator._simplify is True
-        assert navigator._handlers is not None
-        assert navigator._bindings is not None
 
-    def test_init_registers_dbus_commands(self, test_context: OrcaTestContext) -> None:
-        """Test ObjectNavigator registers D-Bus commands during initialization."""
+    def test_setup_registers_dbus_commands(self, test_context: OrcaTestContext) -> None:
+        """Test ObjectNavigator registers D-Bus commands during setup."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
@@ -184,69 +196,8 @@ class TestObjectNavigator:
         controller = dbus_service.get_remote_controller.return_value
         controller.register_decorated_module.reset_mock()
         navigator = ObjectNavigator()
+        navigator.set_up_commands()
         controller.register_decorated_module.assert_called_once_with("ObjectNavigator", navigator)
-
-    def test_get_bindings_returns_existing_when_not_empty(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test get_bindings returns existing bindings when not empty."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        keybindings_instance = essential_modules["orca.keybindings"].KeyBindings.return_value
-        keybindings_instance.is_empty.return_value = False
-        from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = ObjectNavigator()
-        bindings = navigator.get_bindings()
-        assert bindings is not None
-        assert bindings == navigator._bindings
-
-    def test_get_bindings_creates_new_when_empty(self, test_context: OrcaTestContext) -> None:
-        """Test get_bindings creates new bindings when current bindings are empty."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = ObjectNavigator()
-        bindings = navigator.get_bindings()
-        assert bindings is not None
-        assert essential_modules["orca.keybindings"].KeyBindings.call_count >= 2
-
-    def test_get_bindings_refresh_removes_grabs_and_recreates(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test get_bindings with refresh removes key grabs and recreates bindings."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = ObjectNavigator()
-        keybindings_mock = essential_modules["orca.keybindings"].KeyBindings.return_value
-        bindings = navigator.get_bindings(refresh=True)
-        keybindings_mock.remove_key_grabs.assert_called_once()
-        assert bindings is not None
-
-    @pytest.mark.parametrize(
-        "refresh",
-        [
-            pytest.param(False, id="no_refresh"),
-            pytest.param(True, id="refresh"),
-        ],
-    )
-    def test_get_handlers(self, test_context: OrcaTestContext, refresh: bool) -> None:
-        """Test get_handlers with refresh parameter."""
-
-        self._setup_dependencies(test_context)
-        from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
-
-        navigator = ObjectNavigator()
-        original_handlers = navigator._handlers if not refresh else None
-        handlers = navigator.get_handlers(refresh=refresh)
-        assert handlers is not None
-        assert isinstance(handlers, dict)
-
-        if not refresh:
-            assert handlers == original_handlers
 
     def test_include_in_simple_navigation_basic_object(self, test_context: OrcaTestContext) -> None:
         """Test _include_in_simple_navigation with basic accessible object."""
@@ -572,7 +523,7 @@ class TestObjectNavigator:
     def test_children_with_null_object(self, test_context: OrcaTestContext) -> None:
         """Test _children handles None object gracefully."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = ObjectNavigator()
@@ -580,7 +531,6 @@ class TestObjectNavigator:
         children = navigator._children(mock_script, None)
         assert isinstance(children, list)
         assert len(children) == 0
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_parent_with_null_object_returns_none(self, test_context: OrcaTestContext) -> None:
         """Test _parent returns None when given None object."""
@@ -596,7 +546,7 @@ class TestObjectNavigator:
     def test_move_to_parent_with_null_navigator_focus(self, test_context: OrcaTestContext) -> None:
         """Test move_to_parent handles None navigator focus gracefully."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = ObjectNavigator()
@@ -604,7 +554,6 @@ class TestObjectNavigator:
         mock_script = test_context.Mock()
         result = navigator.move_to_parent(mock_script)
         assert result is True
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_move_to_first_child_with_dead_object(self, test_context: OrcaTestContext) -> None:
         """Test move_to_first_child handles dead AT-SPI objects."""
@@ -622,7 +571,6 @@ class TestObjectNavigator:
 
         result = navigator.move_to_first_child(mock_script)
         assert result is True
-        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_perform_action_with_null_focus_logs_debug_info(
         self, test_context: OrcaTestContext

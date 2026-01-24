@@ -224,133 +224,52 @@ class TestStructuralNavigator:
 
         self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
+        from orca import command_manager
 
         nav = get_navigator()
         assert (
             nav._last_input_event is None or nav._last_input_event is not None
         )  # May be set by other tests
         assert isinstance(nav._suspended, bool)
-        assert isinstance(nav._handlers, dict)
-        assert nav._bindings is not None
         assert isinstance(nav._mode_for_script, dict)
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_command("structural_navigator_mode_cycle") is not None
+        assert cmd_manager.get_command("previous_button") is not None
+        assert cmd_manager.get_command("next_button") is not None
 
-    @pytest.mark.parametrize(
-        "refresh_value, expects_setup_call, expects_debug_message",
-        [
-            pytest.param(True, True, True, id="refresh_true_calls_setup"),
-            pytest.param(False, False, False, id="refresh_false_no_setup"),
-            pytest.param(None, False, False, id="default_no_setup"),
-        ],
-    )
-    def test_get_handlers_refresh_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        refresh_value,
-        expects_setup_call,
-        expects_debug_message,
-    ) -> None:
-        """Test StructuralNavigator.get_handlers with various refresh scenarios."""
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        mock_setup = test_context.Mock()
-        test_context.patch_object(nav, "_setup_handlers", new=mock_setup)
-
-        if refresh_value is None:
-            handlers = nav.get_handlers()
-        else:
-            handlers = nav.get_handlers(refresh=refresh_value)
-
-        assert isinstance(handlers, dict)
-
-        if expects_setup_call:
-            mock_setup.assert_called_once()
-        else:
-            mock_setup.assert_not_called()
-
-        if expects_debug_message:
-            essential_modules["orca.debug"].print_message.assert_any_call(
-                essential_modules["orca.debug"].LEVEL_INFO,
-                "STRUCTURAL NAVIGATOR: Refreshing handlers.",
-                True,
-                True,
-            )
-
-    def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator._setup_handlers creates handler dictionary."""
+    def test_commands_registered(self, test_context: OrcaTestContext) -> None:
+        """Test StructuralNavigator.setup registers commands with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
+        from orca import command_manager
 
         nav = get_navigator()
-        nav._setup_handlers()
-        assert isinstance(nav._handlers, dict)
-        assert len(nav._handlers) > 0
-        assert "structural_navigator_mode_cycle" in nav._handlers
-        assert "previous_button" in nav._handlers
-        assert "next_button" in nav._handlers
-        assert "list_buttons" in nav._handlers
+        nav.set_up_commands()
+        # Commands are now registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_command("structural_navigator_mode_cycle") is not None
+        assert cmd_manager.get_command("previous_button") is not None
+        assert cmd_manager.get_command("next_button") is not None
+        assert cmd_manager.get_command("list_buttons") is not None
 
-    def test_setup_handlers_creates_navigation_handlers(
+    def test_setup_creates_heading_level_commands(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test StructuralNavigator._setup_handlers creates expected navigation handlers."""
+        """Test StructuralNavigator.setup creates heading level commands."""
 
         self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
+        from orca import command_manager
 
         nav = get_navigator()
-        nav._setup_handlers()
-        expected_prefixes = ["previous_", "next_", "list_"]
-        expected_elements = [
-            "blockquote",
-            "button",
-            "checkbox",
-            "combobox",
-            "entry",
-            "form_field",
-            "heading",
-            "iframe",
-            "image",
-            "landmark",
-            "list",
-            "list_item",
-            "live_region",
-            "paragraph",
-            "radio_button",
-            "separator",
-            "table",
-            "link",
-            "large_object",
-            "clickable",
-        ]
-        for element in expected_elements:
-            for prefix in expected_prefixes:
-                if prefix == "list_" and element in ["separator"]:
-                    continue
-                handler_key = f"{prefix}{element}"
-                if element == "list" and prefix == "list_":
-                    handler_key = "list_lists"
-                elif element == "list_item" and prefix == "list_":
-                    handler_key = "list_list_items"
-                if handler_key in nav._handlers:
-                    assert nav._handlers[handler_key] is not None
-
-    def test_setup_handlers_creates_heading_level_handlers(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test StructuralNavigator._setup_handlers creates heading level handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        nav._setup_handlers()
+        nav.set_up_commands()
+        cmd_manager = command_manager.get_manager()
         for level in range(1, 7):
-            assert f"previous_heading_level_{level}" in nav._handlers
-            assert f"next_heading_level_{level}" in nav._handlers
-            assert f"list_headings_level_{level}" in nav._handlers
+            assert cmd_manager.get_command(f"previous_heading_level_{level}") is not None
+            assert cmd_manager.get_command(f"next_heading_level_{level}") is not None
+            assert cmd_manager.get_command(f"list_headings_level_{level}") is not None
 
     @pytest.mark.parametrize(
         "current_mode, expected_next_mode, supports_collection",
@@ -692,56 +611,6 @@ class TestStructuralNavigator:
         assert result is True
         mock_get_buttons.assert_called_once_with(mock_script)
         mock_present.assert_called_once()
-
-    def test_get_bindings_refresh_true(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator.get_bindings with refresh=True updates bindings."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        mock_setup = test_context.Mock()
-        test_context.patch_object(nav, "_setup_bindings", new=mock_setup)
-        bindings = nav.get_bindings(refresh=True)
-        assert bindings.key_bindings is not None
-        essential_modules["orca.debug"].print_message.assert_any_call(
-            essential_modules["orca.debug"].LEVEL_INFO,
-            "STRUCTURAL NAVIGATOR: Refreshing bindings. Is desktop: True",
-            True,
-        )
-        mock_setup.assert_called_once()
-
-    def test_get_bindings_refresh_false(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator.get_bindings with refresh=False returns cached bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        mock_bindings = test_context.Mock()
-        mock_bindings.key_bindings = []
-        test_context.patch_object(nav, "get_bindings", return_value=mock_bindings)
-
-        bindings = nav.get_bindings(refresh=False)
-        assert bindings.key_bindings is not None
-        assert bindings == mock_bindings
-
-    def test_setup_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test StructuralNavigator._setup_bindings creates keybindings."""
-        self._setup_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
-
-        nav = get_navigator()
-        mock_bindings = test_context.Mock()
-        mock_bindings.key_bindings = []
-
-        def mock_setup_bindings():
-            nav._bindings = mock_bindings
-
-        test_context.patch_object(nav, "_setup_bindings", new=mock_setup_bindings)
-        nav._setup_bindings()
-        assert nav._bindings.key_bindings is not None
-        assert nav._bindings == mock_bindings
 
     @pytest.mark.parametrize(
         "is_same_script,expected",

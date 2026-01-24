@@ -33,10 +33,12 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import flat_review_presenter
 from . import focus_manager
+from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
@@ -60,251 +62,128 @@ class WhereAmIPresenter:
     """Module for commands related to the current accessible object."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._desktop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._laptop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
-        msg = "WhereAmIPresenter: Registering D-Bus commands."
+        msg = "WHERE AM I PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("WhereAmIPresenter", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the where-am-i-presenter keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = "WHERE AM I PRESENTER: Refreshing bindings."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._desktop_bindings.remove_key_grabs("WHERE AM I PRESENTER: Refreshing bindings.")
-            self._laptop_bindings.remove_key_grabs("WHERE AM I PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif is_desktop and self._desktop_bindings.is_empty():
-            self._setup_bindings()
-        elif not is_desktop and self._laptop_bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        if is_desktop:
-            return self._desktop_bindings
-        return self._laptop_bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_WHERE_AM_I
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the where-am-i-presenter handlers."""
+        # Common keybindings (same for desktop and laptop)
+        kb_f = keybindings.KeyBinding("f", keybindings.ORCA_MODIFIER_MASK)
+        kb_e = keybindings.KeyBinding("e", keybindings.ORCA_MODIFIER_MASK)
+        kb_up = keybindings.KeyBinding("Up", keybindings.ORCA_SHIFT_MODIFIER_MASK)
 
-        if refresh:
-            msg = "WHERE AM I PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
+        # Desktop-specific keybindings
+        kb_equal = keybindings.KeyBinding("equal", keybindings.ORCA_MODIFIER_MASK)
+        kb_kp_enter_orca = keybindings.KeyBinding("KP_Enter", keybindings.ORCA_MODIFIER_MASK)
+        kb_kp_enter_orca_2 = keybindings.KeyBinding(
+            "KP_Enter", keybindings.ORCA_MODIFIER_MASK, click_count=2
+        )
+        kb_kp_enter = keybindings.KeyBinding("KP_Enter", keybindings.NO_MODIFIER_MASK)
+        kb_kp_enter_2 = keybindings.KeyBinding(
+            "KP_Enter", keybindings.NO_MODIFIER_MASK, click_count=2
+        )
 
-        return self._handlers
+        # Laptop-specific keybindings
+        kb_slash = keybindings.KeyBinding("slash", keybindings.ORCA_MODIFIER_MASK)
+        kb_slash_2 = keybindings.KeyBinding("slash", keybindings.ORCA_MODIFIER_MASK, click_count=2)
+        kb_return = keybindings.KeyBinding("Return", keybindings.ORCA_MODIFIER_MASK)
+        kb_return_2 = keybindings.KeyBinding(
+            "Return", keybindings.ORCA_MODIFIER_MASK, click_count=2
+        )
 
-    def _setup_bindings(self) -> None:
-        """Sets up the where-am-i-presenter key bindings."""
-
-        self._setup_desktop_bindings()
-        self._setup_laptop_bindings()
-
-    def _setup_handlers(self) -> None:
-        """Sets up the where-am-i-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["readCharAttributesHandler"] = \
-            input_event.InputEventHandler(
+        # (name, function, description, desktop_kb, laptop_kb)
+        commands_data = [
+            (
+                "readCharAttributesHandler",
                 self.present_character_attributes,
-                cmdnames.READ_CHAR_ATTRIBUTES)
-
-        self._handlers["presentSizeAndPositionHandler"] = \
-            input_event.InputEventHandler(
+                cmdnames.READ_CHAR_ATTRIBUTES,
+                kb_f,
+                kb_f,
+            ),
+            (
+                "presentSizeAndPositionHandler",
                 self.present_size_and_position,
-                cmdnames.PRESENT_SIZE_AND_POSITION)
-
-        self._handlers["getTitleHandler"] = \
-            input_event.InputEventHandler(
+                cmdnames.PRESENT_SIZE_AND_POSITION,
+                None,
+                None,
+            ),
+            (
+                "getTitleHandler",
                 self.present_title,
-                cmdnames.PRESENT_TITLE)
-
-        self._handlers["getStatusBarHandler"] = \
-            input_event.InputEventHandler(
+                cmdnames.PRESENT_TITLE,
+                kb_kp_enter_orca,
+                kb_slash,
+            ),
+            (
+                "getStatusBarHandler",
                 self.present_status_bar,
-                cmdnames.PRESENT_STATUS_BAR)
-
-        self._handlers["present_default_button"] = \
-            input_event.InputEventHandler(
+                cmdnames.PRESENT_STATUS_BAR,
+                kb_kp_enter_orca_2,
+                kb_slash_2,
+            ),
+            (
+                "present_default_button",
                 self.present_default_button,
-                cmdnames.PRESENT_DEFAULT_BUTTON)
-
-        self._handlers["present_cell_formula"] = \
-            input_event.InputEventHandler(
+                cmdnames.PRESENT_DEFAULT_BUTTON,
+                kb_e,
+                kb_e,
+            ),
+            (
+                "present_cell_formula",
                 self.present_cell_formula,
-                cmdnames.PRESENT_CELL_FORMULA)
-
-        self._handlers["whereAmIBasicHandler"] = \
-            input_event.InputEventHandler(
+                cmdnames.PRESENT_CELL_FORMULA,
+                kb_equal,
+                None,
+            ),
+            (
+                "whereAmIBasicHandler",
                 self.where_am_i_basic,
-                cmdnames.WHERE_AM_I_BASIC)
-
-        self._handlers["whereAmIDetailedHandler"] = \
-            input_event.InputEventHandler(
+                cmdnames.WHERE_AM_I_BASIC,
+                kb_kp_enter,
+                kb_return,
+            ),
+            (
+                "whereAmIDetailedHandler",
                 self.where_am_i_detailed,
-                cmdnames.WHERE_AM_I_DETAILED)
-
-        self._handlers["whereAmILinkHandler"] = \
-            input_event.InputEventHandler(
-                self.present_link,
-                cmdnames.WHERE_AM_I_LINK)
-
-        self._handlers["whereAmISelectionHandler"] = \
-            input_event.InputEventHandler(
+                cmdnames.WHERE_AM_I_DETAILED,
+                kb_kp_enter_2,
+                kb_return_2,
+            ),
+            ("whereAmILinkHandler", self.present_link, cmdnames.WHERE_AM_I_LINK, None, None),
+            (
+                "whereAmISelectionHandler",
                 self.present_selection,
-                cmdnames.WHERE_AM_I_SELECTION)
+                cmdnames.WHERE_AM_I_SELECTION,
+                kb_up,
+                kb_up,
+            ),
+        ]
 
-        msg = "WHERE AM I PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        for name, function, description, desktop_kb, laptop_kb in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=desktop_kb,
+                    laptop_keybinding=laptop_kb,
+                )
+            )
 
-    def _setup_desktop_bindings(self) -> None:
-        """Sets up the where-am-i-presenter desktop key bindings."""
-
-        self._desktop_bindings = keybindings.KeyBindings()
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "f",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["readCharAttributesHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "e",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["present_default_button"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "equal",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["present_cell_formula"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["presentSizeAndPositionHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Enter",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["getTitleHandler"],
-                1))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Enter",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["getStatusBarHandler"],
-                2))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Enter",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["whereAmIBasicHandler"],
-                1))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Enter",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["whereAmIDetailedHandler"],
-                2))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["whereAmILinkHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["whereAmISelectionHandler"]))
-
-        msg = "WHERE AM I PRESENTER: Desktop bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_laptop_bindings(self) -> None:
-        """Sets up the where-am-i-presenter laptop key bindings."""
-
-        self._laptop_bindings = keybindings.KeyBindings()
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "f",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["readCharAttributesHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "e",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["present_default_button"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["present_cell_formula"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["presentSizeAndPositionHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "slash",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["getTitleHandler"],
-                1))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "slash",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["getStatusBarHandler"],
-                2))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "Return",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["whereAmIBasicHandler"],
-                1))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "Return",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["whereAmIDetailedHandler"],
-                2))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["whereAmILinkHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["whereAmISelectionHandler"]))
-
-        msg = "WHERE AM I PRESENTER: Laptop bindings set up."
+        msg = "WHERE AM I PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _localize_text_attribute(self, key, value):

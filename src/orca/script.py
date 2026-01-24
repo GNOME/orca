@@ -21,22 +21,6 @@
 # pylint:disable=too-many-public-methods
 # pylint:disable=unused-argument
 
-"""Each script maintains a set of key bindings, braille bindings, and
-AT-SPI event listeners.  The key bindings are an instance of
-KeyBindings.  The braille bindings are also a dictionary where the
-keys are BrlTTY command integers and the values are instances of
-InputEventHandler.  The listeners field is a dictionary where the keys
-are AT-SPI event names and the values are function pointers.
-
-Instances of scripts are intended to be created solely by the
-script manager.
-
-This Script class is not intended to be instantiated directly.
-Instead, it is expected that subclasses of the Script class will be
-created in their own module.  The module defining the Script subclass
-is also required to have a 'get_script(app)' method that returns an
-instance of the Script subclass.  See default.py for an example."""
-
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
@@ -51,7 +35,6 @@ from typing import TYPE_CHECKING
 from . import braille_generator
 from . import chat_presenter
 from . import debug
-from . import keybindings
 from . import script_utilities
 from . import sound_generator
 from . import speech_generator
@@ -73,10 +56,8 @@ class Script:
         self.name = f"{AXObject.get_name(self.app) or 'default'} (module={self.__module__})"
         self.present_if_inactive: bool = True
         self.run_find_command_on: Atspi.Accessible | None = None
-        self.input_event_handlers: dict = {}
         self.point_of_reference: dict = {}
         self.event_cache: dict = {}
-        self.key_bindings = keybindings.KeyBindings()
 
         self.listeners = self.get_listeners()
         self.utilities = self.get_utilities()
@@ -90,8 +71,7 @@ class Script:
         self.chat = self.get_chat()
         # pylint:enable=assignment-from-none
 
-        self.setup_input_event_handlers()
-        self.braille_bindings = self.get_braille_bindings()
+        self.set_up_commands()
 
         self._default_sn_mode: structural_navigator.NavigationMode = \
             structural_navigator.NavigationMode.OFF
@@ -108,18 +88,8 @@ class Script:
 
         return {}
 
-    def setup_input_event_handlers(self) -> None:
-        """Defines the input event handlers for this script."""
-
-    def get_key_bindings(self, enabled_only: bool = True) -> keybindings.KeyBindings:
-        """Returns the key bindings for this script."""
-
-        return keybindings.KeyBindings()
-
-    def get_braille_bindings(self) -> dict:
-        """Returns the braille bindings for this script."""
-
-        return {}
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
     def get_braille_generator(self) -> braille_generator.BrailleGenerator:
         """Returns the braille generator for this script."""

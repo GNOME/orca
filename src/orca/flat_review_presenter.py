@@ -46,6 +46,7 @@ from . import braille
 from . import braille_presenter
 from . import clipboard
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import flat_review
@@ -75,15 +76,174 @@ class FlatReviewPresenter:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
         self._restrict: bool = self.get_is_restricted()
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._desktop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._laptop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._gui: FlatReviewContextGUI | None = None
+        self._initialized: bool = False
 
         msg = "FLAT REVIEW PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("FlatReviewPresenter", self)
+
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_FLAT_REVIEW
+
+        # Build keybinding mapping: cmd_name -> (desktop_kb, laptop_kb)
+        def kb(keysym: str, mod: int, clicks: int = 1) -> keybindings.KeyBinding:
+            return keybindings.KeyBinding(keysym, mod, click_count=clicks)
+
+        cmd_bindings: dict[str, tuple[keybindings.KeyBinding | None, keybindings.KeyBinding | None]] = {
+            "toggleFlatReviewModeHandler": (
+                kb("KP_Subtract", keybindings.NO_MODIFIER_MASK),
+                kb("p", keybindings.ORCA_MODIFIER_MASK)),
+            "flatReviewSayAllHandler": (
+                kb("KP_Add", keybindings.NO_MODIFIER_MASK, 2),
+                kb("semicolon", keybindings.ORCA_MODIFIER_MASK, 2)),
+            "reviewHomeHandler": (
+                kb("KP_Home", keybindings.ORCA_MODIFIER_MASK),
+                kb("u", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            "reviewPreviousLineHandler": (
+                kb("KP_Home", keybindings.NO_MODIFIER_MASK),
+                kb("u", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewCurrentLineHandler": (
+                kb("KP_Up", keybindings.NO_MODIFIER_MASK),
+                kb("i", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewSpellCurrentLineHandler": (
+                kb("KP_Up", keybindings.NO_MODIFIER_MASK, 2),
+                kb("i", keybindings.ORCA_MODIFIER_MASK, 2)),
+            "reviewPhoneticCurrentLineHandler": (
+                kb("KP_Up", keybindings.NO_MODIFIER_MASK, 3),
+                kb("i", keybindings.ORCA_MODIFIER_MASK, 3)),
+            "reviewNextLineHandler": (
+                kb("KP_Page_Up", keybindings.NO_MODIFIER_MASK),
+                kb("o", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewEndHandler": (
+                kb("KP_Page_Up", keybindings.ORCA_MODIFIER_MASK),
+                kb("o", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            "reviewPreviousItemHandler": (
+                kb("KP_Left", keybindings.NO_MODIFIER_MASK),
+                kb("j", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewAboveHandler": (
+                kb("KP_Left", keybindings.ORCA_MODIFIER_MASK),
+                kb("j", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            "reviewCurrentItemHandler": (
+                kb("KP_Begin", keybindings.NO_MODIFIER_MASK),
+                kb("k", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewSpellCurrentItemHandler": (
+                kb("KP_Begin", keybindings.NO_MODIFIER_MASK, 2),
+                kb("k", keybindings.ORCA_MODIFIER_MASK, 2)),
+            "reviewPhoneticCurrentItemHandler": (
+                kb("KP_Begin", keybindings.NO_MODIFIER_MASK, 3),
+                kb("k", keybindings.ORCA_MODIFIER_MASK, 3)),
+            "reviewCurrentAccessibleHandler": (
+                kb("KP_Begin", keybindings.ORCA_MODIFIER_MASK),
+                kb("k", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            "reviewNextItemHandler": (
+                kb("KP_Right", keybindings.NO_MODIFIER_MASK),
+                kb("l", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewBelowHandler": (
+                kb("KP_Right", keybindings.ORCA_MODIFIER_MASK),
+                kb("l", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            "reviewPreviousCharacterHandler": (
+                kb("KP_End", keybindings.NO_MODIFIER_MASK),
+                kb("m", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewEndOfLineHandler": (
+                kb("KP_End", keybindings.ORCA_MODIFIER_MASK),
+                kb("m", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            "reviewCurrentCharacterHandler": (
+                kb("KP_Down", keybindings.NO_MODIFIER_MASK),
+                kb("comma", keybindings.ORCA_MODIFIER_MASK)),
+            "reviewSpellCurrentCharacterHandler": (
+                kb("KP_Down", keybindings.NO_MODIFIER_MASK, 2),
+                kb("comma", keybindings.ORCA_MODIFIER_MASK, 2)),
+            "reviewUnicodeCurrentCharacterHandler": (
+                kb("KP_Down", keybindings.NO_MODIFIER_MASK, 3),
+                kb("comma", keybindings.ORCA_MODIFIER_MASK, 3)),
+            "reviewNextCharacterHandler": (
+                kb("KP_Page_Down", keybindings.NO_MODIFIER_MASK),
+                kb("period", keybindings.ORCA_MODIFIER_MASK)),
+            # Commands with no keybinding
+            "reviewBottomLeftHandler": (None, None),
+            "showContentsHandler": (None, None),
+            "flatReviewCopyHandler": (None, None),
+            "flatReviewAppendHandler": (None, None),
+            "flatReviewToggleRestrictHandler": (None, None),
+        }
+
+        commands_data = [
+            ("toggleFlatReviewModeHandler", self.toggle_flat_review_mode,
+             cmdnames.TOGGLE_FLAT_REVIEW),
+            ("reviewHomeHandler", self.go_home, cmdnames.REVIEW_HOME),
+            ("reviewEndHandler", self.go_end, cmdnames.REVIEW_END),
+            ("reviewBottomLeftHandler", self.go_bottom_left, cmdnames.REVIEW_BOTTOM_LEFT),
+            ("reviewPreviousLineHandler", self.go_previous_line, cmdnames.REVIEW_PREVIOUS_LINE),
+            ("reviewCurrentLineHandler", self.present_line, cmdnames.REVIEW_CURRENT_LINE),
+            ("reviewNextLineHandler", self.go_next_line, cmdnames.REVIEW_NEXT_LINE),
+            ("reviewSpellCurrentLineHandler", self.spell_line, cmdnames.REVIEW_SPELL_CURRENT_LINE),
+            ("reviewPhoneticCurrentLineHandler", self.phonetic_line,
+             cmdnames.REVIEW_PHONETIC_CURRENT_LINE),
+            ("reviewEndOfLineHandler", self.go_end_of_line, cmdnames.REVIEW_END_OF_LINE),
+            ("reviewPreviousItemHandler", self.go_previous_item, cmdnames.REVIEW_PREVIOUS_ITEM),
+            ("reviewCurrentItemHandler", self.present_item, cmdnames.REVIEW_CURRENT_ITEM),
+            ("reviewNextItemHandler", self.go_next_item, cmdnames.REVIEW_NEXT_ITEM),
+            ("reviewSpellCurrentItemHandler", self.spell_item, cmdnames.REVIEW_SPELL_CURRENT_ITEM),
+            ("reviewPhoneticCurrentItemHandler", self.phonetic_item,
+             cmdnames.REVIEW_PHONETIC_CURRENT_ITEM),
+            ("reviewPreviousCharacterHandler", self.go_previous_character,
+             cmdnames.REVIEW_PREVIOUS_CHARACTER),
+            ("reviewCurrentCharacterHandler", self.present_character,
+             cmdnames.REVIEW_CURRENT_CHARACTER),
+            ("reviewSpellCurrentCharacterHandler", self.spell_character,
+             cmdnames.REVIEW_SPELL_CURRENT_CHARACTER),
+            ("reviewUnicodeCurrentCharacterHandler", self.unicode_current_character,
+             cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER),
+            ("reviewNextCharacterHandler", self.go_next_character,
+             cmdnames.REVIEW_NEXT_CHARACTER),
+            ("reviewCurrentAccessibleHandler", self.present_object,
+             cmdnames.REVIEW_CURRENT_ACCESSIBLE),
+            ("reviewAboveHandler", self.go_above, cmdnames.REVIEW_ABOVE),
+            ("reviewBelowHandler", self.go_below, cmdnames.REVIEW_BELOW),
+            ("showContentsHandler", self.show_contents, cmdnames.FLAT_REVIEW_SHOW_CONTENTS),
+            ("flatReviewCopyHandler", self.copy_to_clipboard, cmdnames.FLAT_REVIEW_COPY),
+            ("flatReviewAppendHandler", self.append_to_clipboard, cmdnames.FLAT_REVIEW_APPEND),
+            ("flatReviewSayAllHandler", self.say_all, cmdnames.SAY_ALL_FLAT_REVIEW),
+            ("flatReviewToggleRestrictHandler", self.toggle_restrict,
+             cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW),
+        ]
+
+        braille_bindings: dict[str, tuple[int, ...]] = {}
+        try:
+            braille_bindings = {
+                "reviewAboveHandler": (braille.brlapi.KEY_CMD_LNUP,),
+                "reviewBelowHandler": (braille.brlapi.KEY_CMD_LNDN,),
+                "toggleFlatReviewModeHandler": (braille.brlapi.KEY_CMD_FREEZE,),
+                "reviewHomeHandler": (braille.brlapi.KEY_CMD_TOP_LEFT,),
+                "reviewBottomLeftHandler": (braille.brlapi.KEY_CMD_BOT_LEFT,),
+            }
+        except AttributeError:
+            msg = "FLAT REVIEW PRESENTER: Braille bindings unavailable."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        for name, function, description in commands_data:
+            desktop_kb, laptop_kb = cmd_bindings.get(name, (None, None))
+            manager.add_command(command_manager.KeyboardCommand(
+                name, function, group_label, description,
+                desktop_keybinding=desktop_kb, laptop_keybinding=laptop_kb))
+            if name in braille_bindings:
+                bb = braille_bindings[name]
+                # All flat review braille commands are navigation and should execute in learn mode
+                manager.add_command(command_manager.BrailleCommand(
+                    name, function, group_label, description, braille_bindings=bb,
+                    executes_in_learn_mode=True))
+
+        msg = "FLAT REVIEW PRESENTER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def is_active(self) -> bool:
         """Returns True if the flat review presenter is active."""
@@ -136,573 +296,6 @@ class FlatReviewPresenter:
             self._context = flat_review.Context(script, obj)
 
         return self._context
-
-    def get_bindings(
-        self,
-        refresh: bool = False,
-        is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the flat-review-presenter keybindings."""
-
-        if refresh:
-            msg = "FLAT REVIEW PRESENTER: Refreshing bindings."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._laptop_bindings.remove_key_grabs("FLAT REVIEW PRESENTER: Refreshing bindings.")
-            self._desktop_bindings.remove_key_grabs("FLAT REVIEW PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif is_desktop and self._desktop_bindings.is_empty():
-            self._setup_bindings()
-        elif not is_desktop and self._laptop_bindings.is_empty():
-            self._setup_bindings()
-
-        if is_desktop:
-            return self._desktop_bindings
-        return self._laptop_bindings
-
-    def get_braille_bindings(self) -> dict[int, input_event.InputEventHandler]:
-        """Returns the flat-review-presenter braille bindings."""
-
-        bindings = {}
-        try:
-            bindings[braille.brlapi.KEY_CMD_LNUP] = \
-                self._handlers["reviewAboveHandler"]
-            bindings[braille.brlapi.KEY_CMD_LNDN] = \
-                self._handlers["reviewBelowHandler"]
-            bindings[braille.brlapi.KEY_CMD_FREEZE] = \
-                self._handlers["toggleFlatReviewModeHandler"]
-            bindings[braille.brlapi.KEY_CMD_TOP_LEFT] = \
-                self._handlers["reviewHomeHandler"]
-            bindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
-                self._handlers["reviewBottomLeftHandler"]
-        except AttributeError as error:
-            tokens = ["FLAT REVIEW PRESENTER: Exception getting braille bindings:", error]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return {}
-        return bindings
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the flat-review-presenter handlers."""
-
-        if refresh:
-            msg = "FLAT REVIEW PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_bindings(self) -> None:
-        """Sets up the flat-review-presenter key bindings."""
-
-        self._setup_desktop_bindings()
-        self._setup_laptop_bindings()
-
-    def _setup_handlers(self) -> None:
-        """Sets up the flat-review-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["toggleFlatReviewModeHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle_flat_review_mode,
-                cmdnames.TOGGLE_FLAT_REVIEW)
-
-        self._handlers["reviewHomeHandler"] = \
-            input_event.InputEventHandler(
-                self.go_home,
-                cmdnames.REVIEW_HOME)
-
-        self._handlers["reviewEndHandler"] = \
-            input_event.InputEventHandler(
-                self.go_end,
-                cmdnames.REVIEW_END)
-
-        self._handlers["reviewBottomLeftHandler"] = \
-            input_event.InputEventHandler(
-                self.go_bottom_left,
-                cmdnames.REVIEW_BOTTOM_LEFT)
-
-        self._handlers["reviewPreviousLineHandler"] = \
-            input_event.InputEventHandler(
-                self.go_previous_line,
-                cmdnames.REVIEW_PREVIOUS_LINE)
-
-        self._handlers["reviewCurrentLineHandler"] = \
-            input_event.InputEventHandler(
-                self.present_line,
-                cmdnames.REVIEW_CURRENT_LINE)
-
-        self._handlers["reviewNextLineHandler"] = \
-            input_event.InputEventHandler(
-                self.go_next_line,
-                cmdnames.REVIEW_NEXT_LINE)
-
-        self._handlers["reviewSpellCurrentLineHandler"] = \
-            input_event.InputEventHandler(
-                self.spell_line,
-                cmdnames.REVIEW_SPELL_CURRENT_LINE)
-
-        self._handlers["reviewPhoneticCurrentLineHandler"] = \
-            input_event.InputEventHandler(
-                self.phonetic_line,
-                cmdnames.REVIEW_PHONETIC_CURRENT_LINE)
-
-        self._handlers["reviewEndOfLineHandler"] = \
-            input_event.InputEventHandler(
-                self.go_end_of_line,
-                cmdnames.REVIEW_END_OF_LINE)
-
-        self._handlers["reviewPreviousItemHandler"] = \
-            input_event.InputEventHandler(
-                self.go_previous_item,
-                cmdnames.REVIEW_PREVIOUS_ITEM)
-
-        self._handlers["reviewCurrentItemHandler"] = \
-            input_event.InputEventHandler(
-                self.present_item,
-                cmdnames.REVIEW_CURRENT_ITEM)
-
-        self._handlers["reviewNextItemHandler"] = \
-            input_event.InputEventHandler(
-                self.go_next_item,
-                cmdnames.REVIEW_NEXT_ITEM)
-
-        self._handlers["reviewSpellCurrentItemHandler"] = \
-            input_event.InputEventHandler(
-                self.spell_item,
-                cmdnames.REVIEW_SPELL_CURRENT_ITEM)
-
-        self._handlers["reviewPhoneticCurrentItemHandler"] = \
-            input_event.InputEventHandler(
-                self.phonetic_item,
-                cmdnames.REVIEW_PHONETIC_CURRENT_ITEM)
-
-        self._handlers["reviewPreviousCharacterHandler"] = \
-            input_event.InputEventHandler(
-                self.go_previous_character,
-                cmdnames.REVIEW_PREVIOUS_CHARACTER)
-
-        self._handlers["reviewCurrentCharacterHandler"] = \
-            input_event.InputEventHandler(
-                self.present_character,
-                cmdnames.REVIEW_CURRENT_CHARACTER)
-
-        self._handlers["reviewSpellCurrentCharacterHandler"] = \
-            input_event.InputEventHandler(
-                self.spell_character,
-                cmdnames.REVIEW_SPELL_CURRENT_CHARACTER)
-
-        self._handlers["reviewUnicodeCurrentCharacterHandler"] = \
-            input_event.InputEventHandler(
-                self.unicode_current_character,
-                cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER)
-
-        self._handlers["reviewNextCharacterHandler"] = \
-            input_event.InputEventHandler(
-                self.go_next_character,
-                cmdnames.REVIEW_NEXT_CHARACTER)
-
-        self._handlers["reviewCurrentAccessibleHandler"] = \
-            input_event.InputEventHandler(
-                self.present_object,
-                cmdnames.REVIEW_CURRENT_ACCESSIBLE)
-
-        self._handlers["reviewAboveHandler"] = \
-            input_event.InputEventHandler(
-                self.go_above,
-                cmdnames.REVIEW_ABOVE)
-
-        self._handlers["reviewBelowHandler"] = \
-            input_event.InputEventHandler(
-                self.go_below,
-                cmdnames.REVIEW_BELOW)
-
-        self._handlers["showContentsHandler"] = \
-            input_event.InputEventHandler(
-                self.show_contents,
-                cmdnames.FLAT_REVIEW_SHOW_CONTENTS)
-
-        self._handlers["flatReviewCopyHandler"] = \
-            input_event.InputEventHandler(
-                self.copy_to_clipboard,
-                cmdnames.FLAT_REVIEW_COPY)
-
-        self._handlers["flatReviewAppendHandler"] = \
-            input_event.InputEventHandler(
-                self.append_to_clipboard,
-                cmdnames.FLAT_REVIEW_APPEND)
-
-        self._handlers["flatReviewSayAllHandler"] = \
-            input_event.InputEventHandler(
-                self.say_all,
-                cmdnames.SAY_ALL_FLAT_REVIEW)
-
-        self._handlers["flatReviewToggleRestrictHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle_restrict,
-                cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW)
-
-        msg = "FLAT REVIEW PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_desktop_bindings(self) -> None:
-        """Sets up the flat-review-presenter desktop key bindings."""
-
-        self._desktop_bindings = keybindings.KeyBindings()
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Subtract",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["toggleFlatReviewModeHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Add",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewSayAllHandler"],
-                2))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Home",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewHomeHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Home",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewPreviousLineHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Up",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewCurrentLineHandler"],
-                1))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Up",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewSpellCurrentLineHandler"],
-                2))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Up",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewPhoneticCurrentLineHandler"],
-                3))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Page_Up",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewNextLineHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Page_Up",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewEndHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Left",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewPreviousItemHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Left",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewAboveHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Begin",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewCurrentItemHandler"],
-                1))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Begin",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewSpellCurrentItemHandler"],
-                2))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Begin",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewPhoneticCurrentItemHandler"],
-                3))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Begin",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewCurrentAccessibleHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Right",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewNextItemHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Right",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewBelowHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_End",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewPreviousCharacterHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_End",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewEndOfLineHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Down",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewCurrentCharacterHandler"],
-                1))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Down",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewSpellCurrentCharacterHandler"],
-                2))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Down",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewUnicodeCurrentCharacterHandler"],
-                3))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Page_Down",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["reviewNextCharacterHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["showContentsHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewCopyHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewAppendHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewToggleRestrictHandler"]))
-
-        msg = "FLAT REVIEW PRESENTER: Desktop bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_laptop_bindings(self) -> None:
-        """Sets up the flat-review-presenter laptop key bindings."""
-
-        self._laptop_bindings = keybindings.KeyBindings()
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "p",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggleFlatReviewModeHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "semicolon",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["flatReviewSayAllHandler"],
-                2))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "u",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewPreviousLineHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "u",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["reviewHomeHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "i",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewCurrentLineHandler"],
-                1))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "i",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewSpellCurrentLineHandler"],
-                2))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "i",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewPhoneticCurrentLineHandler"],
-                3))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "o",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewNextLineHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "o",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["reviewEndHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "j",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewPreviousItemHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "j",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["reviewAboveHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewCurrentItemHandler"],
-                1))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewSpellCurrentItemHandler"],
-                2))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewPhoneticCurrentItemHandler"],
-                3))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["reviewCurrentAccessibleHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "l",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewNextItemHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "l",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["reviewBelowHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "m",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewPreviousCharacterHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "m",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["reviewEndOfLineHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "comma",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewCurrentCharacterHandler"],
-                1))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "comma",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewSpellCurrentCharacterHandler"],
-                2))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "comma",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewUnicodeCurrentCharacterHandler"],
-                3))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "period",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["reviewNextCharacterHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["showContentsHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewCopyHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewAppendHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["flatReviewToggleRestrictHandler"]))
-
-        msg = "FLAT REVIEW PRESENTER: Laptop bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def start(
         self,

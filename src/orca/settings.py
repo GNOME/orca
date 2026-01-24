@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from typing import Any
 
 from .acss import ACSS
 
@@ -243,12 +242,6 @@ presentChatRoomLast: bool = False
 spellcheckSpellError: bool = True
 spellcheckSpellSuggestion: bool = True
 spellcheckPresentContext: bool = True
-
-# Latent support to allow the user to override/define keybindings
-# and braille bindings. Unsupported and undocumented for now.
-# Use at your own risk.
-keyBindingsMap: dict[str, Any] = {}
-brailleBindingsMap: dict[str, Any] = {}
 
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False

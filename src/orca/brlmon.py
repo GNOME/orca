@@ -42,7 +42,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import script_manager
-from .input_event import BrailleEvent
 
 # Attribute/Selection mask strings:
 DOT_7 =   "\x40" # 01000000
@@ -128,11 +127,13 @@ class BrlCell(Gtk.Button):
         if script is None:
             return
 
+        # pylint: disable=import-outside-toplevel
+        from . import input_event
         fake_key_press = {}
         fake_key_press["command"] = KEY_CMD_ROUTE
         fake_key_press["argument"] = self._position
-        event = BrailleEvent(fake_key_press)
-        script.process_routing_key(event)
+        event = input_event.BrailleEvent(fake_key_press)
+        script.process_routing_key(None, event)
 
     def clear(self) -> None:
         """Clears the braille cell."""

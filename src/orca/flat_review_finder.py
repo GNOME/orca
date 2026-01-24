@@ -44,11 +44,11 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Atspi, Gtk
 
 from . import cmdnames
+from . import command_manager
 from . import debug
 from . import flat_review_presenter
 from . import focus_manager
 from . import guilabels
-from . import input_event
 from . import keybindings
 from . import messages
 from . import script_manager
@@ -114,125 +114,49 @@ class FlatReviewFinder:
 
     def __init__(self) -> None:
         self._gui: FlatReviewFinderGUI | None = None
-        self._handlers: dict = self.get_handlers(True)
-        self._desktop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._laptop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_query: SearchQuery | None = None
         self._location: tuple[int, int, int, int] = 0, 0, 0, 0
         self._wrapped: bool = False
         self._match: _SearchQueryMatch | None = None
         self._focus: Atspi.Accessible | None = None
+        self._initialized: bool = False
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the flat-review-presenter keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = "FLAT REVIEW FINDER: Refreshing bindings."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._laptop_bindings.remove_key_grabs("FLAT REVIEW FINDER: Refreshing bindings.")
-            self._desktop_bindings.remove_key_grabs("FLAT REVIEW FINDER: Refreshing bindings.")
-            self._setup_bindings()
-        elif is_desktop and self._desktop_bindings.is_empty():
-            self._setup_bindings()
-        elif not is_desktop and self._laptop_bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        if is_desktop:
-            return self._desktop_bindings
-        return self._laptop_bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_FIND
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the flat-review-finder handlers."""
+        # (name, function, description, desktop_binding, laptop_binding)
+        commands_data = [
+            ("findHandler", self.show_dialog, cmdnames.SHOW_FIND_GUI,
+             keybindings.KeyBinding("KP_Delete", keybindings.NO_MODIFIER_MASK),
+             keybindings.KeyBinding("bracketleft", keybindings.ORCA_MODIFIER_MASK)),
+            ("findNextHandler", self.find_next, cmdnames.FIND_NEXT,
+             keybindings.KeyBinding("KP_Delete", keybindings.ORCA_MODIFIER_MASK),
+             keybindings.KeyBinding("bracketright", keybindings.ORCA_MODIFIER_MASK)),
+            ("findPreviousHandler", self.find_previous, cmdnames.FIND_PREVIOUS,
+             keybindings.KeyBinding("KP_Delete", keybindings.ORCA_SHIFT_MODIFIER_MASK),
+             keybindings.KeyBinding("bracketright", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+        ]
 
-        if refresh:
-            msg = "FLAT REVIEW FINDER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
+        for name, function, description, desktop_kb, laptop_kb in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=desktop_kb,
+                    laptop_keybinding=laptop_kb,
+                )
+            )
 
-        return self._handlers
-
-    def _setup_bindings(self) -> None:
-        """Sets up the flat-review-finder key bindings."""
-
-        self._setup_desktop_bindings()
-        self._setup_laptop_bindings()
-
-    def _setup_desktop_bindings(self) -> None:
-        """Sets up the flat-review-finder desktop key bindings."""
-
-        self._desktop_bindings = keybindings.KeyBindings()
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Delete",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["findHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Delete",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["findNextHandler"]))
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Delete",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["findPreviousHandler"]))
-
-        msg = "FLAT REVIEW FINDER: Desktop bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_laptop_bindings(self) -> None:
-        """Sets up the flat-review-finder laptop key bindings."""
-
-        self._laptop_bindings = keybindings.KeyBindings()
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "bracketleft",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["findHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "bracketright",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["findNextHandler"]))
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "bracketright",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-                self._handlers["findPreviousHandler"]))
-
-        msg = "FLAT REVIEW FINDER: Laptop bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_handlers(self) -> None:
-        """Sets up the flat-review-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["findHandler"] = \
-            input_event.InputEventHandler(
-                self.show_dialog,
-                cmdnames.SHOW_FIND_GUI)
-
-        self._handlers["findNextHandler"] = \
-            input_event.InputEventHandler(
-                self.find_next,
-                cmdnames.FIND_NEXT)
-
-        self._handlers["findPreviousHandler"] = \
-            input_event.InputEventHandler(
-                self.find_previous,
-                cmdnames.FIND_PREVIOUS)
-
-
-        msg = "FLAT REVIEW FINDER: Handlers set up."
+        msg = "FLAT REVIEW FINDER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _on_query(self, query: SearchQuery) -> None:

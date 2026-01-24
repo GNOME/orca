@@ -473,30 +473,21 @@ class TestChatPresenter:
         return essential_modules
 
     def test_get_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test ChatPresenter.get_handlers returns handlers dict."""
+        """Test ChatPresenter registers commands with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.chat_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers()
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        assert "chat_previous_message" in handlers
-        assert "chat_next_message" in handlers
-        assert "chat_toggle_room_name_prefix" in handlers
-        assert "chat_toggle_buddy_typing" in handlers
-        assert "chat_toggle_message_histories" in handlers
-
-    def test_get_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test ChatPresenter.get_bindings returns bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.chat_presenter import get_presenter
-
-        presenter = get_presenter()
-        bindings = presenter.get_bindings()
-
-        assert bindings is not None
+        assert cmd_manager.get_keyboard_command("chat_previous_message") is not None
+        assert cmd_manager.get_keyboard_command("chat_next_message") is not None
+        assert cmd_manager.get_keyboard_command("chat_toggle_room_name_prefix") is not None
+        assert cmd_manager.get_keyboard_command("chat_toggle_buddy_typing") is not None
+        assert cmd_manager.get_keyboard_command("chat_toggle_message_histories") is not None
 
     def test_toggle_prefix_on_to_off(self, test_context: OrcaTestContext) -> None:
         """Test toggle_prefix from on to off."""

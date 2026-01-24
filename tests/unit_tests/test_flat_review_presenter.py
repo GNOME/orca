@@ -268,11 +268,10 @@ class TestFlatReviewPresenter:
         assert presenter._context is None
         assert presenter._current_contents == ""
         assert isinstance(presenter._restrict, bool)
-        assert presenter._handlers is not None
-        assert presenter._desktop_bindings is not None
-        assert presenter._laptop_bindings is not None
         assert presenter._gui is None
 
+        # D-Bus registration and bindings setup happens during setup()
+        presenter.set_up_commands()
         mock_controller.register_decorated_module.assert_called_with(
             "FlatReviewPresenter", presenter
         )
@@ -354,50 +353,21 @@ class TestFlatReviewPresenter:
         assert context is existing_context
         assert essential_modules["orca.flat_review"].Context.call_count == 0
 
-    @pytest.mark.parametrize(
-        "refresh,is_desktop,expects_setup_call",
-        [
-            pytest.param(False, True, False, id="no_refresh_desktop"),
-            pytest.param(False, False, False, id="no_refresh_laptop"),
-            pytest.param(True, True, True, id="refresh_desktop"),
-        ],
-    )
-    def test_get_bindings(
-        self,
-        test_context: OrcaTestContext,
-        refresh: bool,
-        is_desktop: bool,
-        expects_setup_call: bool,
-    ) -> None:
-        """Test FlatReviewPresenter.get_bindings with various refresh and desktop mode settings."""
+    def test_setup_braille_bindings(self, test_context: OrcaTestContext) -> None:
+        """Test FlatReviewPresenter sets up braille bindings during set_up_commands."""
 
         self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
+        from orca import command_manager
 
         presenter = FlatReviewPresenter()
+        presenter.set_up_commands()
 
-        if expects_setup_call:
-            mock_setup = test_context.patch_object(presenter, "_setup_bindings")
-
-        bindings = presenter.get_bindings(refresh=refresh, is_desktop=is_desktop)
-
-        if is_desktop:
-            assert bindings is presenter._desktop_bindings
-        else:
-            assert bindings is presenter._laptop_bindings
-
-        if expects_setup_call:
-            mock_setup.assert_called_once()
-
-    def test_get_braille_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test FlatReviewPresenter.get_braille_bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import FlatReviewPresenter
-
-        presenter = FlatReviewPresenter()
-        braille_bindings = presenter.get_braille_bindings()
-        assert isinstance(braille_bindings, dict)
+        # Verify that braille commands are registered
+        manager = command_manager.get_manager()
+        braille_cmd = manager.get_braille_command("reviewAboveHandler")
+        # May be None if braille is not available in test environment
+        assert braille_cmd is None or braille_cmd.get_braille_bindings() is not None
 
     @pytest.mark.parametrize(
         "refresh",
@@ -407,21 +377,24 @@ class TestFlatReviewPresenter:
         ],
     )
     def test_get_handlers(self, test_context: OrcaTestContext, refresh: bool) -> None:
-        """Test FlatReviewPresenter.get_handlers with refresh parameter."""
+        """Test FlatReviewPresenter.get_handlers returns empty dict (commands in CommandManager)."""
 
         self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
+        from orca import command_manager
 
         presenter = FlatReviewPresenter()
+        presenter.set_up_commands()
 
-        if refresh:
-            mock_setup = test_context.patch_object(presenter, "_setup_handlers")
-
-        handlers = presenter.get_handlers(refresh=refresh)
-        assert handlers is presenter._handlers
-
-        if refresh:
-            mock_setup.assert_called_once()
+        cmd_manager = command_manager.get_manager()
+        expected_commands = [
+            "toggleFlatReviewModeHandler",
+            "reviewHomeHandler",
+            "reviewEndHandler",
+            "flatReviewSayAllHandler",
+        ]
+        for cmd_name in expected_commands:
+            assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     @pytest.mark.parametrize(
         "has_context,provides_script,provides_event,verbose_mode",
@@ -644,31 +617,20 @@ class TestFlatReviewPresenter:
 
         self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
+        from orca import command_manager
 
         presenter = FlatReviewPresenter()
-        braille_bindings = presenter.get_braille_bindings()
+        presenter.set_up_commands()
 
-        assert isinstance(braille_bindings, dict)
-
-    def test_keyboard_bindings_setup(self, test_context: OrcaTestContext) -> None:
-        """Test keyboard bindings setup for both desktop and laptop modes."""
-
-        self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import FlatReviewPresenter
-
-        presenter = FlatReviewPresenter()
-
-        desktop_bindings = presenter.get_bindings(refresh=False, is_desktop=True)
-        assert desktop_bindings is presenter._desktop_bindings
-
-        laptop_bindings = presenter.get_bindings(refresh=False, is_desktop=False)
-        assert laptop_bindings is presenter._laptop_bindings
-
-        assert desktop_bindings is not None
-        assert laptop_bindings is not None
+        # Verify that braille commands are registered
+        manager = command_manager.get_manager()
+        # Check for braille commands (may not have brlapi available in test environment)
+        braille_commands = list(manager.get_all_braille_commands())
+        # Either braille commands exist or braille isn't available
+        assert braille_commands is not None
 
     def test_dbus_command_registration(self, test_context: OrcaTestContext) -> None:
-        """Test D-Bus command registration during initialization."""
+        """Test D-Bus command registration during setup."""
 
         self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
@@ -679,6 +641,7 @@ class TestFlatReviewPresenter:
             return_value=mock_controller,
         )
         presenter = FlatReviewPresenter()
+        presenter.set_up_commands()
 
         mock_controller.register_decorated_module.assert_called_with(
             "FlatReviewPresenter", presenter

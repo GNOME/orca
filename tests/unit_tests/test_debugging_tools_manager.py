@@ -181,96 +181,29 @@ class TestDebuggingToolsManager:
             essential_modules["orca.debug"].debugFile = None
 
         from orca.debugging_tools_manager import DebuggingToolsManager
+        from orca import command_manager
 
         manager = DebuggingToolsManager()
 
         assert manager is not None
-        assert manager._handlers is not None
-        assert manager._bindings is not None
-        assert isinstance(manager._handlers, dict)
+        # Commands are registered with CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager is not None
 
-    @pytest.mark.parametrize(
-        "method_name,refresh,is_empty,expects_remove_grabs,expected_type",
-        [
-            pytest.param("get_bindings", False, True, False, None, id="bindings_no_refresh_empty"),
-            pytest.param("get_bindings", True, True, True, None, id="bindings_refresh_empty"),
-            pytest.param(
-                "get_bindings", False, False, False, None, id="bindings_no_refresh_not_empty"
-            ),
-            pytest.param("get_handlers", False, False, False, dict, id="handlers_no_refresh"),
-            pytest.param("get_handlers", True, False, False, dict, id="handlers_refresh"),
-        ],
-    )
-    def test_get_methods(
-        self,
-        test_context: OrcaTestContext,
-        method_name: str,
-        refresh: bool,
-        is_empty: bool,
-        expects_remove_grabs: bool,
-        expected_type: type | None,
-    ) -> None:
-        """Test DebuggingToolsManager.get_bindings and get_handlers methods."""
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+    def test_setup_registers_commands(self, test_context: OrcaTestContext) -> None:
+        """Test DebuggingToolsManager.setup registers commands."""
+        self._setup_dependencies(test_context)
         from orca.debugging_tools_manager import DebuggingToolsManager
+        from orca import command_manager
 
         manager = DebuggingToolsManager()
+        manager.set_up_commands()
 
-        if method_name == "get_bindings" and not is_empty:
-            test_context.patch_object(manager._bindings, "is_empty", return_value=False)
-
-        method = getattr(manager, method_name)
-        if method_name == "get_bindings":
-            result = method(refresh=refresh, is_desktop=not refresh)
-            if not is_empty and not refresh:
-                assert result == manager._bindings
-        else:
-            result = method(refresh=refresh)
-
-        assert result is not None
-        if expected_type:
-            assert isinstance(result, expected_type)
-
-        if refresh:
-            if method_name == "get_bindings":
-                essential_modules["orca.keybindings"].KeyBindings.assert_called()
-            essential_modules["orca.debug"].print_message.assert_called()
-
-        if expects_remove_grabs:
-            key_bindings_instance = essential_modules["key_bindings_instance"]
-            key_bindings_instance.remove_key_grabs.assert_called_once()
-
-    @pytest.mark.parametrize(
-        "setup_method,expected_attrs",
-        [
-            pytest.param(
-                "_setup_handlers",
-                ["cycleDebugLevelHandler", "clear_atspi_app_cache", "capture_snapshot"],
-                id="setup_handlers",
-            ),
-            pytest.param("_setup_bindings", [], id="setup_bindings"),
-        ],
-    )
-    def test_setup_methods(
-        self,
-        test_context: OrcaTestContext,
-        setup_method: str,
-        expected_attrs: list[str],
-    ) -> None:
-        """Test DebuggingToolsManager setup methods."""
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.debugging_tools_manager import DebuggingToolsManager
-
-        manager = DebuggingToolsManager()
-        method = getattr(manager, setup_method)
-        method()
-
-        if setup_method == "_setup_handlers":
-            for attr in expected_attrs:
-                assert attr in manager._handlers
-            assert essential_modules["orca.input_event"].InputEventHandler.call_count >= 3
-        elif setup_method == "_setup_bindings":
-            essential_modules["orca.keybindings"].KeyBindings.assert_called()
+        # Commands are registered with CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("cycleDebugLevelHandler") is not None
+        assert cmd_manager.get_keyboard_command("clear_atspi_app_cache") is not None
+        assert cmd_manager.get_keyboard_command("capture_snapshot") is not None
 
     @pytest.mark.parametrize(
         "initial_level,expected_level,expected_message,expected_brief,has_event",
@@ -676,10 +609,12 @@ class TestDebuggingToolsManager:
         """Test debugging_tools_manager.get_manager singleton behavior."""
         self._setup_dependencies(test_context)
         from orca import debugging_tools_manager
+        from orca import command_manager
 
         manager1 = debugging_tools_manager.get_manager()
         manager2 = debugging_tools_manager.get_manager()
 
         assert manager1 is manager2
-        assert manager1._handlers is not None
-        assert manager1._bindings is not None
+        # Commands are registered with CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager is not None

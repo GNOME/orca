@@ -45,10 +45,11 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import cmdnames
+from . import command_manager
 from . import debug
 from . import focus_manager
+from . import guilabels
 from . import input_event
-from . import keybindings
 from . import messages
 from . import orca_platform
 from . import settings_manager
@@ -63,87 +64,44 @@ class DebuggingToolsManager:
     """Provides debugging tools."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         if debug.debugFile and os.path.exists(debug.debugFile.name):
             faulthandler.enable(file=debug.debugFile, all_threads=True)
         else:
             faulthandler.enable(all_threads=False)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the debugging-tools-manager keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"DEBUGGING TOOLS MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("DEBUGGING TOOLS MANAGER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_DEBUGGING_TOOLS
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the debugging-tools-manager handlers."""
+        commands_data = [
+            ("cycleDebugLevelHandler", self._cycle_debug_level, cmdnames.DEBUG_CYCLE_LEVEL),
+            ("clear_atspi_app_cache", self._clear_atspi_app_cache,
+             cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION),
+            ("capture_snapshot", self._capture_snapshot, cmdnames.DEBUG_CAPTURE_SNAPSHOT),
+        ]
 
-        if refresh:
-            msg = "DEBUGGING TOOLS MANAGER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
+        for name, function, description in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=None,
+                    laptop_keybinding=None,
+                )
+            )
 
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up and returns the debugging-tools-manager input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["cycleDebugLevelHandler"] = \
-            input_event.InputEventHandler(
-                self._cycle_debug_level,
-                cmdnames.DEBUG_CYCLE_LEVEL)
-
-        self._handlers["clear_atspi_app_cache"] = \
-            input_event.InputEventHandler(
-                self._clear_atspi_app_cache,
-                cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION)
-
-        self._handlers["capture_snapshot"] = \
-            input_event.InputEventHandler(
-                self._capture_snapshot,
-                cmdnames.DEBUG_CAPTURE_SNAPSHOT)
-
-    def _setup_bindings(self) -> None:
-        """Sets up and returns the debugging-tools-manager key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleDebugLevelHandler"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["clear_atspi_app_cache"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["capture_snapshot"],
-                1,
-                True))
+        msg = "DEBUGGING TOOLS MANAGER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _cycle_debug_level(
         self, script: default.Script, _event: input_event.InputEvent | None = None

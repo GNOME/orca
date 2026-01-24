@@ -62,67 +62,39 @@ class LearnModePresenter:
     """Provides implementation of learn mode"""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._is_active: bool = False
         self._gui: CommandListGUI | None = None
+        self._initialized: bool = False
+
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_LEARN_MODE
+        kb = keybindings.KeyBinding("h", keybindings.ORCA_MODIFIER_MASK)
+
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "enterLearnModeHandler",
+                self.start,
+                group_label,
+                cmdnames.ENTER_LEARN_MODE,
+                desktop_keybinding=kb,
+                laptop_keybinding=kb,
+            )
+        )
+
+        msg = "LEARN MODE PRESENTER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def is_active(self) -> bool:
         """Returns True if we're in learn mode"""
 
         return self._is_active
-
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the learn-mode-presenter keybindings."""
-
-        if refresh:
-            msg = f"LEARN MODE PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("LEARN MODE PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the learn-mode-presenter handlers."""
-
-        if refresh:
-            msg = "LEARN MODE PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the learn-mode-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["enterLearnModeHandler"] = \
-            input_event.InputEventHandler(
-                self.start,
-                cmdnames.ENTER_LEARN_MODE)
-
-        msg = "LEARN MODE PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the learn-mode-presenter key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "h",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["enterLearnModeHandler"]))
-
-        msg = "LEARN MODE PRESENTER: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def start(
         self,
@@ -174,14 +146,12 @@ class LearnModePresenter:
         self._is_active = False
         return True
 
-    def handle_event(self, event: input_event.InputEvent | None = None) -> bool:
-        """Handles the event if learn mode is active."""
-
-        if not self._is_active:
-            return False
-
-        if not isinstance(event, input_event.KeyboardEvent):
-            return False
+    def handle_event(
+        self,
+        event: input_event.KeyboardEvent,
+        command: command_manager.KeyboardCommand | None = None
+    ) -> bool:
+        """Handles the keyboard event in learn mode."""
 
         script = script_manager.get_manager().get_active_script()
         if script is None:
@@ -194,8 +164,7 @@ class LearnModePresenter:
         voice = script.speech_generator.voice(string=key_name)
         speech.speak_key_event(event, voice[0] if voice else None)
 
-        if event.is_printable_key() and event.get_click_count() == 2 \
-           and event.get_handler() is None:
+        if event.is_printable_key() and event.get_click_count() == 2 and command is None:
             script.spell_phonetically(event.get_key_name())
 
         if event.keyval_name == "Escape":
@@ -206,54 +175,57 @@ class LearnModePresenter:
             self.show_help(script, event)
             return True
 
-        if event.keyval_name in ["F2", "F3"] and not event.modifiers:
+        if event.keyval_name == "F2" and not event.modifiers:
             self.list_orca_shortcuts(script, event)
             return True
 
-        self.present_command(event)
-        return True
-
-    def present_command(self, event: input_event.InputEvent | None = None) -> bool:
-        """Presents the command bound to event."""
-
-        if not isinstance(event, input_event.KeyboardEvent):
-            return True
-
-        handler = event.get_handler()
-        if handler is None:
-            return True
-
-        if handler.learn_mode_enabled and handler.description:
-            script = script_manager.get_manager().get_active_script()
-            if script is None:
-                return True
-            script.present_message(handler.description)
+        if command is not None:
+            description = command.get_description()
+            if description:
+                script.present_message(description)
 
         return True
+
+    def handle_braille_event(
+        self,
+        script: default.Script,
+        event: input_event.BrailleEvent,
+        command: command_manager.BrailleCommand | None
+    ) -> bool:
+        """Handles braille event in learn mode. Returns True if command should not execute."""
+
+        if command is None:
+            return True
+
+        description = command.get_description()
+        if description:
+            script.speak_message(description)
+
+        return not command.executes_in_learn_mode()
 
     def list_orca_shortcuts(self, script: default.Script, event: input_event.KeyboardEvent) -> bool:
         """Shows a simple gui listing Orca's bound commands."""
 
         items = 0
-        bindings: dict[str, list[keybindings.KeyBinding]] = {}
-        for cmd in command_manager.get_manager().get_all_commands():
+        commands_by_group: dict[str, list[command_manager.KeyboardCommand]] = {}
+        for cmd in command_manager.get_manager().get_all_keyboard_commands():
             keybinding = cmd.get_keybinding()
-            if keybinding is None or not cmd.get_learn_mode_enabled():
+            if keybinding is None:
                 continue
 
-            if cmd.get_group_label() not in bindings:
-                bindings[cmd.get_group_label()] = []
-            bindings[cmd.get_group_label()].append(keybinding)
+            if cmd.get_group_label() not in commands_by_group:
+                commands_by_group[cmd.get_group_label()] = []
+            commands_by_group[cmd.get_group_label()].append(cmd)
             items += 1
 
         title = messages.shortcuts_found_orca(items)
-        if not bindings:
+        if not commands_by_group:
             script.present_message(title)
             return True
 
         self.quit(script, event)
         column_headers = [guilabels.KB_HEADER_FUNCTION, guilabels.KB_HEADER_KEY_BINDING]
-        self._gui = CommandListGUI(script, title, column_headers, bindings)
+        self._gui = CommandListGUI(script, title, column_headers, commands_by_group)
         self._gui.show_gui()
         return True
 
@@ -280,17 +252,17 @@ class CommandListGUI:
         script: default.Script,
         title: str,
         column_headers: list[str],
-        bindings_dict: dict[str, list[keybindings.KeyBinding]]
+        commands_dict: dict[str, list[command_manager.KeyboardCommand]]
     ) -> None:
         self._script: default.Script = script
         self._model: Gtk.TreeStore | None = None
-        self._gui: Gtk.Dialog = self._create_dialog(title, column_headers, bindings_dict)
+        self._gui: Gtk.Dialog = self._create_dialog(title, column_headers, commands_dict)
 
     def _create_dialog(
         self,
         title: str,
         column_headers: list[str],
-        bindings_dict: dict[str, list[keybindings.KeyBinding]]
+        commands_dict: dict[str, list[command_manager.KeyboardCommand]]
     ) -> Gtk.Dialog:
         """Creates the commands-list dialog."""
 
@@ -322,12 +294,14 @@ class CommandListGUI:
 
         self._model = Gtk.TreeStore(*cols)
 
-        for group, bindings in bindings_dict.items():
-            if not bindings:
+        for group, commands in commands_dict.items():
+            if not commands:
                 continue
             group_iter = self._model.append(None, [group, ""])
-            for binding in bindings:
-                self._model.append(group_iter, [binding.handler.description, binding.as_string()])
+            for cmd in commands:
+                kb = cmd.get_keybinding()
+                kb_string = kb.as_string() if kb else ""
+                self._model.append(group_iter, [cmd.get_description(), kb_string])
 
         tree.set_model(self._model)
         tree.expand_all()

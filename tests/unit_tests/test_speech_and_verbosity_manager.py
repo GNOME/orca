@@ -156,18 +156,18 @@ class TestSpeechAndVerbosityManager:
         )
 
     def test_init(self, test_context: OrcaTestContext) -> None:
-        """Test get_handlers method."""
+        """Test manager initialization and command registration."""
 
         (self._setup_dependencies(test_context))
         from orca.speech_and_verbosity_manager import SpeechAndVerbosityManager
+        from orca import command_manager
 
         manager = SpeechAndVerbosityManager()
+        manager.set_up_commands()
 
-        handlers = manager.get_handlers()
-        assert handlers is not None
-
-        handlers_refresh = manager.get_handlers(refresh=True)
-        assert handlers_refresh is not None
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_command("toggleSilenceSpeechHandler") is not None
 
     @pytest.mark.parametrize(
         "case",

@@ -1001,22 +1001,16 @@ class TestTypingEchoPresenter:
         test_context.patch("orca.ax_text.AXText.get_sentence_at_offset", return_value=("", 0, 0))
         assert presenter.echo_previous_sentence(script_mock, obj_mock) is False
 
-    def test_get_handlers_and_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test get_handlers and get_bindings methods."""
+    def test_commands_and_bindings(self, test_context: OrcaTestContext) -> None:
+        """Test commands are registered in CommandManager."""
         presenter, _manager_instance, _value_map, _category_enum, _pref_cls, _settings_mock = (
             self._setup_presenter(test_context)
         )
+        from orca import command_manager
 
-        handlers = presenter.get_handlers(refresh=False)
-        assert "cycleKeyEchoHandler" in handlers
-        assert handlers["cycleKeyEchoHandler"] is not None
+        # Commands are registered during setup()
+        presenter.set_up_commands()
 
-        handlers_refreshed = presenter.get_handlers(refresh=True)
-        assert "cycleKeyEchoHandler" in handlers_refreshed
-
-        bindings = presenter.get_bindings(refresh=False)
-        assert bindings is not None
-        assert hasattr(bindings, "is_empty")
-
-        bindings_refreshed = presenter.get_bindings(refresh=True)
-        assert bindings_refreshed is not None
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("cycleKeyEchoHandler") is not None

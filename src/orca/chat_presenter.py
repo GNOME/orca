@@ -39,13 +39,13 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
 from . import guilabels
 from . import input_event
 from . import input_event_manager
-from . import keybindings
 from . import messages
 from . import preferences_grid_base
 from . import script_manager
@@ -384,134 +384,55 @@ class ChatPresenter:
     """Presenter for chat preferences and commands."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-
         self._focused_channel_radio_button: Gtk.RadioButton | None = None
         self._all_channels_radio_button: Gtk.RadioButton | None = None
         self._all_messages_radio_button: Gtk.RadioButton | None = None
         self._buddy_typing_check_button: Gtk.CheckButton | None = None
         self._chat_room_histories_check_button: Gtk.CheckButton | None = None
         self._speak_name_check_button: Gtk.CheckButton | None = None
+        self._initialized: bool = False
 
         msg = "CHAT PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("ChatPresenter", self)
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the chat presenter handlers."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = "CHAT PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-        elif not self._handlers:
-            self._setup_handlers()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._handlers
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_CHAT
 
-    def _setup_handlers(self) -> None:
-        """Sets up the chat input event handlers."""
+        commands_data = [
+            ("chat_toggle_room_name_prefix", self.toggle_prefix,
+             cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX),
+            ("chat_toggle_buddy_typing", self.toggle_buddy_typing,
+             cmdnames.CHAT_TOGGLE_BUDDY_TYPING),
+            ("chat_toggle_message_histories", self.toggle_message_histories,
+             cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES),
+            ("chat_previous_message", self.present_previous_message,
+             cmdnames.CHAT_PREVIOUS_MESSAGE),
+            ("chat_next_message", self.present_next_message,
+             cmdnames.CHAT_NEXT_MESSAGE),
+        ]
 
-        self._handlers = {}
+        for name, function, description in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=None,
+                    laptop_keybinding=None,
+                )
+            )
 
-        self._handlers["chat_toggle_room_name_prefix"] = \
-            input_event.InputEventHandler(
-                self.toggle_prefix,
-                cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX,
-                enabled=True)
-
-        self._handlers["chat_toggle_buddy_typing"] = \
-            input_event.InputEventHandler(
-                self.toggle_buddy_typing,
-                cmdnames.CHAT_TOGGLE_BUDDY_TYPING,
-                enabled=True)
-
-        self._handlers["chat_toggle_message_histories"] = \
-            input_event.InputEventHandler(
-                self.toggle_message_histories,
-                cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES,
-                enabled=True)
-
-        self._handlers["chat_previous_message"] = \
-            input_event.InputEventHandler(
-                self.present_previous_message,
-                cmdnames.CHAT_PREVIOUS_MESSAGE,
-                enabled=True)
-
-        self._handlers["chat_next_message"] = \
-            input_event.InputEventHandler(
-                self.present_next_message,
-                cmdnames.CHAT_NEXT_MESSAGE,
-                enabled=True)
-
-        msg = "CHAT PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_bindings(
-        self,
-        refresh: bool = False,
-        is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the chat presenter keybindings."""
-
-        if refresh:
-            msg = f"CHAT PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("CHAT PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def _setup_bindings(self) -> None:
-        """Sets up the chat key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["chat_toggle_room_name_prefix"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["chat_toggle_buddy_typing"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["chat_toggle_message_histories"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["chat_previous_message"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["chat_next_message"],
-                1,
-                True))
-
-        msg = "CHAT PRESENTER: Bindings set up."
+        msg = "CHAT PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_app_preferences_gui(self, app: Atspi.Accessible) -> Gtk.Grid:

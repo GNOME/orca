@@ -51,14 +51,12 @@ from . import settings
 from . import pronunciation_dictionary_manager
 from .acss import ACSS
 from .ax_object import AXObject
-from .keybindings import KeyBinding, KeyBindings
 
 if TYPE_CHECKING:
     import gi
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from .input_event import InputEventHandler
     from .script import Script
 
 
@@ -67,8 +65,6 @@ class SettingsManager:
 
     # Settings managed elsewhere or internal implementation details.
     _EXCLUDED_SETTINGS: set[str] = {
-        "keyBindingsMap",
-        "brailleBindingsMap",
         "speechFactoryModules",
         "speechSystemOverride",
         "silenceSpeech",
@@ -553,7 +549,7 @@ class SettingsManager:
         return profile_settings.get("pronunciations", {})
 
     def get_keybindings(self, profile: str = "default") -> dict:
-        """Return the current keybindings settings."""
+        """Return the keybindings from the profile settings file."""
 
         with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
@@ -563,6 +559,11 @@ class SettingsManager:
 
         profile_settings = prefs["profiles"].get(profile, {})
         return profile_settings.get("keybindings", {})
+
+    def get_active_keybindings(self) -> dict:
+        """Return the active keybindings (merged profile + app settings)."""
+
+        return self._keybindings
 
     # pylint: disable-next=too-many-locals, too-many-branches
     def save_settings(
@@ -658,62 +659,6 @@ class SettingsManager:
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    # pylint: disable-next=too-many-locals
-    def override_key_bindings(
-        self,
-        handlers: dict[str, InputEventHandler],
-        bindings: KeyBindings,
-        enabled_only: bool = True
-    ) -> KeyBindings:
-        """Override key bindings based on profile settings."""
-
-        # TODO - JD: See about moving this logic, along with any callers, into KeyBindings.
-        # Establishing and maintaining grabs should JustWork(tm) as part of the overall
-        # keybinding/command process.
-        keybindings_settings = self._keybindings
-        for handler_string, binding_tuples in keybindings_settings.items():
-            handler = handlers.get(handler_string)
-            if not handler:
-                continue
-
-            if enabled_only:
-                if not bindings.has_handler(handler):
-                    tokens = ["SETTINGS MANAGER:", handler, "is not in the bindings provided."]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    continue
-
-                if not bindings.has_enabled_handler(handler):
-                    tokens = ["SETTINGS MANAGER:", handler.function,
-                              "is not enabled. Not overriding."]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    continue
-
-            old_bindings = bindings.get_bindings_for_handler(handler)
-            was_enabled: bool = True
-            for b in old_bindings:
-                tokens = ["SETTINGS MANAGER: Removing old binding for", b]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-                if b.is_enabled() != was_enabled:
-                    msg = "SETTINGS MANAGER: Warning, different enabled values found for binding"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-
-                was_enabled = b.is_enabled()
-                bindings.remove(b, True)
-
-            for binding_tuple in binding_tuples:
-                keysym, _mask, mods, clicks = binding_tuple
-                if not keysym:
-                    keysym, mods, clicks = "", 0, 0
-                else:
-                    mods, clicks = int(mods), int(clicks)
-                new_binding = KeyBinding(keysym, mods, handler, clicks, enabled=was_enabled)
-                bindings.add(new_binding)
-                tokens = ["SETTINGS MANAGER:", handler, f"is rebound to {binding_tuple}"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        return bindings
 
     def available_profiles(self) -> list:
         """Get available profiles."""

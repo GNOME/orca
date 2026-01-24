@@ -46,6 +46,7 @@ except ModuleNotFoundError:
     pass
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import guilabels
@@ -149,107 +150,49 @@ class SystemInformationPresenter:
     """Provides commands to present system information."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         msg = "SYSTEM INFORMATION PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SystemInformationPresenter", self)
 
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_SYSTEM_INFORMATION
+
+        # Keybindings (same for desktop and laptop)
+        kb_t = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK)
+        kb_t_2 = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK, click_count=2)
+
+        # (name, function, description, keybinding)
+        commands_data = [
+            ("presentTimeHandler", self.present_time, cmdnames.PRESENT_CURRENT_TIME, kb_t),
+            ("presentDateHandler", self.present_date, cmdnames.PRESENT_CURRENT_DATE, kb_t_2),
+            ("present_battery_status", self.present_battery_status,
+             cmdnames.PRESENT_BATTERY_STATUS, None),
+            ("present_cpu_and_memory_usage", self.present_cpu_and_memory_usage,
+             cmdnames.PRESENT_CPU_AND_MEMORY_USAGE, None),
+        ]
+
+        for name, function, description, kb in commands_data:
+            manager.add_command(command_manager.KeyboardCommand(
+                name, function, group_label, description,
+                desktop_keybinding=kb, laptop_keybinding=kb))
+
+        msg = "SYSTEM INFORMATION PRESENTER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
     def create_time_and_date_preferences_grid(self) -> TimeAndDatePreferencesGrid:
         """Returns the GtkGrid containing the time and date preferences UI."""
 
         return TimeAndDatePreferencesGrid(self)
-
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the system-information-presenter keybindings."""
-
-        if refresh:
-            msg = f"SYSTEM INFORMATION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("SYSTEM INFORMATION PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the system-information-presenter handlers."""
-
-        if refresh:
-            msg = "SYSTEM INFORMATION PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the system-information-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["presentTimeHandler"] = \
-            input_event.InputEventHandler(
-                self.present_time,
-                cmdnames.PRESENT_CURRENT_TIME)
-
-        self._handlers["presentDateHandler"] = \
-            input_event.InputEventHandler(
-                self.present_date,
-                cmdnames.PRESENT_CURRENT_DATE)
-
-        self._handlers["present_battery_status"] = \
-            input_event.InputEventHandler(
-                self.present_battery_status,
-                cmdnames.PRESENT_BATTERY_STATUS)
-
-        self._handlers["present_cpu_and_memory_usage"] = \
-            input_event.InputEventHandler(
-                self.present_cpu_and_memory_usage,
-                cmdnames.PRESENT_CPU_AND_MEMORY_USAGE)
-
-        msg = "SYSTEM INFORMATION PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the system-information-presenter key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "t",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["presentTimeHandler"],
-                1))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "t",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["presentDateHandler"],
-                2))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["present_battery_status"],
-                1))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["present_cpu_and_memory_usage"],
-                1))
-
-        msg = "SYSTEM INFORMATION PRESENTER: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _get_date_format_string(self) -> str:
         """Returns the current date format string for internal use."""

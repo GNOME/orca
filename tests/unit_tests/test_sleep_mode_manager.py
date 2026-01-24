@@ -109,52 +109,31 @@ class TestSleepModeManager:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.sleep_mode_manager import SleepModeManager
+        from orca import command_manager
 
         manager = SleepModeManager()
-        assert manager._handlers is not None
-        assert manager._bindings is not None
         assert not manager._apps
-        essential_modules["orca.keybindings"].KeyBindings.assert_called()
-
+        # Commands are registered during setup(), not __init__()
+        manager.set_up_commands()
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_command("toggle_sleep_mode") is not None
+        # Bindings are now stored on Commands, not created via KeyBindings class
         assert essential_modules["orca.dbus_service"] is not None
         assert essential_modules["controller"] is not None
 
-    @pytest.mark.parametrize(
-        "is_desktop",
-        [
-            pytest.param(True, id="desktop"),
-            pytest.param(False, id="not_desktop"),
-        ],
-    )
-    def test_get_bindings_refresh(self, test_context: OrcaTestContext, is_desktop: bool) -> None:
-        """Test SleepModeManager.get_bindings with refresh=True and various desktop settings."""
+    def test_commands_registered(self, test_context: OrcaTestContext) -> None:
+        """Test that commands are registered with CommandManager during setup."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.sleep_mode_manager import SleepModeManager
+        from orca import command_manager
 
         manager = SleepModeManager()
-        bindings = manager.get_bindings(refresh=True, is_desktop=is_desktop)
-        assert bindings is not None
-        essential_modules["orca.debug"].print_message.assert_any_call(
-            essential_modules["orca.debug"].LEVEL_INFO,
-            f"SLEEP MODE MANAGER: Refreshing bindings. Is desktop: {is_desktop}",
-            True,
-        )
-
-    def test_get_handlers_refresh_true(self, test_context: OrcaTestContext) -> None:
-        """Test SleepModeManager.get_handlers with refresh=True."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import SleepModeManager
-
-        manager = SleepModeManager()
-        handlers = manager.get_handlers(refresh=True)
-        assert handlers is not None
-        essential_modules["orca.debug"].print_message.assert_any_call(
-            essential_modules["orca.debug"].LEVEL_INFO,
-            "SLEEP MODE MANAGER: Refreshing handlers.",
-            True,
-        )
+        manager.set_up_commands()
+        # Verify command is in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("toggle_sleep_mode") is not None
+        essential_modules["orca.debug"].print_message.assert_called()
 
     def test_is_active_for_app_with_active_app(self, test_context: OrcaTestContext) -> None:
         """Test SleepModeManager.is_active_for_app returns True for active app."""
@@ -177,38 +156,34 @@ class TestSleepModeManager:
         )
 
     def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test SleepModeManager._setup_handlers method."""
+        """Test that commands are registered with CommandManager during setup."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.sleep_mode_manager import SleepModeManager
+        from orca import command_manager
 
         manager = SleepModeManager()
-        manager._setup_handlers()
-        assert "toggle_sleep_mode" in manager._handlers
-        expected_handler = essential_modules["input_event_handler"]
-        assert manager._handlers["toggle_sleep_mode"] == expected_handler
-        input_event = essential_modules["orca.input_event"]
-        input_event.InputEventHandler.assert_called_with(
-            manager.toggle_sleep_mode, "Toggle sleep mode for the current application"
-        )
+        manager.set_up_commands()
+        # Commands are now registered with CommandManager
+        cmd_manager = command_manager.get_manager()
+        cmd = cmd_manager.get_command("toggle_sleep_mode")
+        assert cmd is not None
 
     def test_setup_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test SleepModeManager._setup_bindings method."""
+        """Test that keybindings are created via Command.set_keybinding."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.sleep_mode_manager import SleepModeManager
+        from orca import command_manager
 
         manager = SleepModeManager()
-        manager._setup_bindings()
-
-        essential_modules["orca.keybindings"].KeyBinding.assert_called_with(
-            "q",
-            15,  # SHIFT_ALT_CTRL_MODIFIER_MASK
-            manager._handlers["toggle_sleep_mode"],
-        )
-
-        key_bindings_instance = essential_modules["key_bindings_instance"]
-        key_bindings_instance.add.assert_called()
+        manager.set_up_commands()
+        # Verify the command has a keybinding
+        cmd_manager = command_manager.get_manager()
+        cmd = cmd_manager.get_command("toggle_sleep_mode")
+        assert cmd is not None
+        keybinding = cmd.get_keybinding()
+        assert keybinding is not None
 
     def test_toggle_sleep_mode_no_script(self, test_context: OrcaTestContext) -> None:
         """Test SleepModeManager.toggle_sleep_mode with no script."""

@@ -230,73 +230,15 @@ class TestSayAllPresenter:
 
         self._setup_dependencies(test_context)
         from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca import command_manager
 
         presenter = SayAllPresenter()
         assert presenter is not None
-        assert hasattr(presenter, "get_handlers")
-        assert hasattr(presenter, "get_bindings")
 
-    @pytest.mark.parametrize(
-        "refresh,expected_setup_calls",
-        [
-            pytest.param(True, 1, id="refresh_true_calls_setup"),
-            pytest.param(False, 0, id="refresh_false_uses_cache"),
-        ],
-    )
-    def test_get_handlers(
-        self,
-        test_context: OrcaTestContext,
-        refresh: bool,
-        expected_setup_calls: int,
-    ) -> None:
-        """Test SayAllPresenter.get_handlers with refresh parameter."""
-
-        self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-
-        presenter = SayAllPresenter()
-        original_setup = presenter._setup_handlers
-        setup_calls = [0]
-
-        def mock_setup():
-            setup_calls[0] += 1
-            return original_setup()
-
-        test_context.patch_object(presenter, "_setup_handlers", side_effect=mock_setup)
-        handlers = presenter.get_handlers(refresh=refresh)
-        assert isinstance(handlers, dict)
-        assert setup_calls[0] == expected_setup_calls
-
-    @pytest.mark.parametrize(
-        "is_desktop",
-        [
-            pytest.param(True, id="desktop_bindings"),
-            pytest.param(False, id="laptop_bindings"),
-        ],
-    )
-    def test_get_bindings(
-        self,
-        test_context: OrcaTestContext,
-        is_desktop: bool,
-    ) -> None:
-        """Test SayAllPresenter.get_bindings with different keyboard layouts."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-
-        presenter = SayAllPresenter()
-        mock_bindings = test_context.Mock()
-        keybindings_mock = essential_modules["orca.keybindings"]
-        keybindings_mock.KeyBindings = test_context.Mock(return_value=mock_bindings)
-
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = test_context.Mock()
-        settings_manager_mock.get_manager.return_value = manager_instance
-        manager_instance.is_desktop_keyboard_layout.return_value = is_desktop
-
-        result = presenter.get_bindings(refresh=True)
-        assert result is not None
-        keybindings_mock.KeyBindings.assert_called()
+        # Verify commands are registered after setup
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("sayAllHandler") is not None
 
     def test_say_all_no_object_scenario(self, test_context: OrcaTestContext) -> None:
         """Test SayAllPresenter.say_all with no focus object scenario."""

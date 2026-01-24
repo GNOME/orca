@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 
 @pytest.mark.unit
 class TestCommand:
-    """Test Command class methods."""
+    """Test Command base class methods."""
 
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
         """Returns dependencies for command_manager module testing."""
@@ -54,21 +54,12 @@ class TestCommand:
 
         return essential_modules
 
-    def _create_mock_handler(self, test_context: OrcaTestContext) -> Mock:
-        """Creates a mock InputEventHandler."""
+    def _create_mock_function(self, test_context: OrcaTestContext) -> Mock:
+        """Creates a mock function for a Command."""
 
-        handler = test_context.Mock()
-        handler.function = test_context.Mock()
-        handler.description = "Test handler description"
-        handler.learn_mode_enabled = True
-        return handler
-
-    def _create_mock_keybinding(self, test_context: OrcaTestContext) -> Mock:
-        """Creates a mock KeyBinding."""
-
-        kb = test_context.Mock()
-        kb.handler = self._create_mock_handler(test_context)
-        return kb
+        function = test_context.Mock()
+        function.return_value = True
+        return function
 
     def test_init_minimal(self, test_context: OrcaTestContext) -> None:
         """Test Command.__init__ with minimal arguments."""
@@ -76,16 +67,13 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = Command("testCommand", function, "Test Group")
 
-        assert command.get_handler_name() == "testHandler"
-        assert command.get_handler() == handler
+        assert command.get_name() == "testCommand"
+        assert command.get_function() == function
         assert command.get_group_label() == "Test Group"
         assert command.get_description() == ""
-        assert command.get_keybinding() is None
-        assert command.get_default_keybinding() is None
-        assert command.get_learn_mode_enabled() is True
 
     def test_init_full(self, test_context: OrcaTestContext) -> None:
         """Test Command.__init__ with all arguments."""
@@ -93,52 +81,18 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        keybinding = self._create_mock_keybinding(test_context)
+        function = self._create_mock_function(test_context)
         command = Command(
-            "fullHandler", handler, "Full Group", "Full description", keybinding, False
+            "fullCommand", function, "Full Group", "Full description",
+            enabled=False, suspended=True
         )
 
-        assert command.get_handler_name() == "fullHandler"
-        assert command.get_handler() == handler
+        assert command.get_name() == "fullCommand"
+        assert command.get_function() == function
         assert command.get_group_label() == "Full Group"
         assert command.get_description() == "Full description"
-        assert command.get_keybinding() == keybinding
-        assert command.get_default_keybinding() == keybinding
-        assert command.get_learn_mode_enabled() is False
-
-    def test_set_keybinding(self, test_context: OrcaTestContext) -> None:
-        """Test Command.set_keybinding."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command
-
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
-
-        assert command.get_keybinding() is None
-
-        new_kb = self._create_mock_keybinding(test_context)
-        command.set_keybinding(new_kb)
-        assert command.get_keybinding() == new_kb
-
-        command.set_keybinding(None)
-        assert command.get_keybinding() is None
-
-    def test_set_default_keybinding(self, test_context: OrcaTestContext) -> None:
-        """Test Command.set_default_keybinding."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command
-
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
-
-        assert command.get_default_keybinding() is None
-
-        default_kb = self._create_mock_keybinding(test_context)
-        command.set_default_keybinding(default_kb)
-        assert command.get_default_keybinding() == default_kb
+        assert command.is_enabled() is False
+        assert command.is_suspended() is True
 
     def test_set_group_label(self, test_context: OrcaTestContext) -> None:
         """Test Command.set_group_label."""
@@ -146,49 +100,13 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Original Group")
+        function = self._create_mock_function(test_context)
+        command = Command("testCommand", function, "Original Group")
 
         assert command.get_group_label() == "Original Group"
 
         command.set_group_label("New Group")
         assert command.get_group_label() == "New Group"
-
-    def test_set_learn_mode_enabled(self, test_context: OrcaTestContext) -> None:
-        """Test Command.set_learn_mode_enabled."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command
-
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
-
-        assert command.get_learn_mode_enabled() is True
-
-        command.set_learn_mode_enabled(False)
-        assert command.get_learn_mode_enabled() is False
-
-        command.set_learn_mode_enabled(True)
-        assert command.get_learn_mode_enabled() is True
-
-    def test_keybinding_independence(self, test_context: OrcaTestContext) -> None:
-        """Test that current and default keybindings are independent."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command
-
-        handler = self._create_mock_handler(test_context)
-        initial_kb = self._create_mock_keybinding(test_context)
-        command = Command("testHandler", handler, "Test Group", "", initial_kb)
-
-        assert command.get_keybinding() == initial_kb
-        assert command.get_default_keybinding() == initial_kb
-
-        new_kb = self._create_mock_keybinding(test_context)
-        command.set_keybinding(new_kb)
-
-        assert command.get_keybinding() == new_kb
-        assert command.get_default_keybinding() == initial_kb
 
     def test_init_enabled_suspended_defaults(self, test_context: OrcaTestContext) -> None:
         """Test that enabled defaults to True and suspended defaults to False."""
@@ -196,8 +114,8 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = Command("testCommand", function, "Test Group")
 
         assert command.is_enabled() is True
         assert command.is_suspended() is False
@@ -208,8 +126,8 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group", enabled=False, suspended=True)
+        function = self._create_mock_function(test_context)
+        command = Command("testCommand", function, "Test Group", enabled=False, suspended=True)
 
         assert command.is_enabled() is False
         assert command.is_suspended() is True
@@ -220,8 +138,8 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = Command("testCommand", function, "Test Group")
 
         assert command.is_enabled() is True
 
@@ -237,8 +155,8 @@ class TestCommand:
         self._setup_dependencies(test_context)
         from orca.command_manager import Command
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = Command("testCommand", function, "Test Group")
 
         assert command.is_suspended() is False
 
@@ -248,17 +166,139 @@ class TestCommand:
         command.set_suspended(False)
         assert command.is_suspended() is False
 
+    def test_execute_calls_function(self, test_context: OrcaTestContext) -> None:
+        """Test that execute calls the command's function."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command
+
+        function = self._create_mock_function(test_context)
+        function.return_value = True
+        command = Command("testCommand", function, "Test Group")
+
+        mock_script = test_context.Mock()
+        mock_event = test_context.Mock()
+
+        result = command.execute(mock_script, mock_event)
+
+        function.assert_called_once_with(mock_script, mock_event)
+        assert result is True
+
+    def test_execute_returns_function_result(self, test_context: OrcaTestContext) -> None:
+        """Test that execute returns the function's return value."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import Command
+
+        function = self._create_mock_function(test_context)
+        function.return_value = False
+        command = Command("testCommand", function, "Test Group")
+
+        mock_script = test_context.Mock()
+
+        result = command.execute(mock_script, None)
+
+        assert result is False
+
+
+@pytest.mark.unit
+class TestKeyboardCommand:
+    """Test KeyboardCommand class methods."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
+        """Returns dependencies for command_manager module testing."""
+
+        essential_modules = test_context.setup_shared_dependencies([])
+
+        input_event_mock = essential_modules["orca.input_event"]
+        input_event_mock.InputEventHandler = test_context.Mock
+
+        keybindings_mock = essential_modules["orca.keybindings"]
+        keybindings_mock.KeyBinding = test_context.Mock
+        keybindings_mock.KeyBindings = test_context.Mock
+
+        return essential_modules
+
+    def _create_mock_function(self, test_context: OrcaTestContext) -> Mock:
+        """Creates a mock function for a Command."""
+
+        function = test_context.Mock()
+        function.return_value = True
+        return function
+
+    def _create_mock_keybinding(self, test_context: OrcaTestContext) -> Mock:
+        """Creates a mock KeyBinding."""
+
+        kb = test_context.Mock()
+        return kb
+
+    def test_init_minimal(self, test_context: OrcaTestContext) -> None:
+        """Test KeyboardCommand.__init__ with minimal arguments."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand
+
+        function = self._create_mock_function(test_context)
+        command = KeyboardCommand("testCommand", function, "Test Group")
+
+        assert command.get_name() == "testCommand"
+        assert command.get_function() == function
+        assert command.get_group_label() == "Test Group"
+        assert command.get_description() == ""
+        assert command.get_keybinding() is None
+
+    def test_init_with_keybindings(self, test_context: OrcaTestContext) -> None:
+        """Test KeyboardCommand.__init__ with keybindings."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand
+
+        function = self._create_mock_function(test_context)
+        desktop_kb = self._create_mock_keybinding(test_context)
+        laptop_kb = self._create_mock_keybinding(test_context)
+
+        command = KeyboardCommand(
+            "fullCommand", function, "Full Group", "Full description",
+            desktop_keybinding=desktop_kb, laptop_keybinding=laptop_kb
+        )
+
+        assert command.get_name() == "fullCommand"
+        assert command.get_desktop_keybinding() == desktop_kb
+        assert command.get_laptop_keybinding() == laptop_kb
+
+    def test_set_keybinding(self, test_context: OrcaTestContext) -> None:
+        """Test KeyboardCommand.set_keybinding."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand
+
+        function = self._create_mock_function(test_context)
+        command = KeyboardCommand("testCommand", function, "Test Group")
+
+        assert command.get_keybinding() is None
+
+        new_kb = self._create_mock_keybinding(test_context)
+        command.set_keybinding(new_kb)
+        assert command.get_keybinding() == new_kb
+
+        command.set_keybinding(None)
+        assert command.get_keybinding() is None
+
     def test_is_active_enabled_not_suspended_with_keybinding(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test is_active returns True when enabled, not suspended, and has keybinding."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command
+        from orca.command_manager import KeyboardCommand
 
-        handler = self._create_mock_handler(test_context)
+        function = self._create_mock_function(test_context)
         keybinding = self._create_mock_keybinding(test_context)
-        command = Command("testHandler", handler, "Test Group", keybinding=keybinding)
+        command = KeyboardCommand(
+            "testCommand", function, "Test Group",
+            desktop_keybinding=keybinding
+        )
+        command.set_keybinding(keybinding)
 
         assert command.is_active() is True
 
@@ -266,13 +306,15 @@ class TestCommand:
         """Test is_active returns False when disabled."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command
+        from orca.command_manager import KeyboardCommand
 
-        handler = self._create_mock_handler(test_context)
+        function = self._create_mock_function(test_context)
         keybinding = self._create_mock_keybinding(test_context)
-        command = Command(
-            "testHandler", handler, "Test Group", keybinding=keybinding, enabled=False
+        command = KeyboardCommand(
+            "testCommand", function, "Test Group",
+            desktop_keybinding=keybinding, enabled=False
         )
+        command.set_keybinding(keybinding)
 
         assert command.is_active() is False
 
@@ -280,13 +322,15 @@ class TestCommand:
         """Test is_active returns False when suspended."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command
+        from orca.command_manager import KeyboardCommand
 
-        handler = self._create_mock_handler(test_context)
+        function = self._create_mock_function(test_context)
         keybinding = self._create_mock_keybinding(test_context)
-        command = Command(
-            "testHandler", handler, "Test Group", keybinding=keybinding, suspended=True
+        command = KeyboardCommand(
+            "testCommand", function, "Test Group",
+            desktop_keybinding=keybinding, suspended=True
         )
+        command.set_keybinding(keybinding)
 
         assert command.is_active() is False
 
@@ -294,46 +338,79 @@ class TestCommand:
         """Test is_active returns False when no keybinding is assigned."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command
+        from orca.command_manager import KeyboardCommand
 
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = KeyboardCommand("testCommand", function, "Test Group")
 
         assert command.is_active() is False
 
-    def test_execute_calls_handler_function(self, test_context: OrcaTestContext) -> None:
-        """Test that execute calls the handler's function."""
+    def test_is_group_toggle_init(self, test_context: OrcaTestContext) -> None:
+        """Test KeyboardCommand initializes is_group_toggle correctly."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command
+        from orca.command_manager import KeyboardCommand
 
-        handler = self._create_mock_handler(test_context)
-        handler.function.return_value = True
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
 
-        mock_script = test_context.Mock()
-        mock_event = test_context.Mock()
+        # Default is False
+        cmd_default = KeyboardCommand("cmd1", function, "Test Group")
+        assert cmd_default.is_group_toggle() is False
 
-        result = command.execute(mock_script, mock_event)
+        # Explicit True
+        cmd_toggle = KeyboardCommand("cmd2", function, "Test Group", is_group_toggle=True)
+        assert cmd_toggle.is_group_toggle() is True
 
-        handler.function.assert_called_once_with(mock_script, mock_event)
-        assert result is True
 
-    def test_execute_returns_handler_result(self, test_context: OrcaTestContext) -> None:
-        """Test that execute returns the handler function's return value."""
+@pytest.mark.unit
+class TestBrailleCommand:
+    """Test BrailleCommand class methods."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
+        """Returns dependencies for command_manager module testing."""
+
+        essential_modules = test_context.setup_shared_dependencies([])
+
+        input_event_mock = essential_modules["orca.input_event"]
+        input_event_mock.InputEventHandler = test_context.Mock
+
+        keybindings_mock = essential_modules["orca.keybindings"]
+        keybindings_mock.KeyBinding = test_context.Mock
+        keybindings_mock.KeyBindings = test_context.Mock
+
+        return essential_modules
+
+    def _create_mock_function(self, test_context: OrcaTestContext) -> Mock:
+        """Creates a mock function for a Command."""
+
+        function = test_context.Mock()
+        function.return_value = True
+        return function
+
+    def test_braille_bindings_default_empty(self, test_context: OrcaTestContext) -> None:
+        """Test that braille bindings default to empty tuple."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command
+        from orca.command_manager import BrailleCommand
 
-        handler = self._create_mock_handler(test_context)
-        handler.function.return_value = False
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = BrailleCommand("testCommand", function, "Test Group")
 
-        mock_script = test_context.Mock()
+        assert command.get_braille_bindings() == ()
 
-        result = command.execute(mock_script, None)
+    def test_init_with_braille_bindings(self, test_context: OrcaTestContext) -> None:
+        """Test BrailleCommand.__init__ with braille bindings."""
 
-        assert result is False
+        self._setup_dependencies(test_context)
+        from orca.command_manager import BrailleCommand
+
+        function = self._create_mock_function(test_context)
+        command = BrailleCommand(
+            "testCommand", function, "Test Group", "Test description",
+            braille_bindings=(1, 2, 3)
+        )
+
+        assert command.get_braille_bindings() == (1, 2, 3)
 
 
 @pytest.mark.unit
@@ -354,25 +431,21 @@ class TestCommandManager:
 
         return essential_modules
 
-    def _create_mock_handler(
+    def _create_mock_function(
         self,
         test_context: OrcaTestContext,
-        description: str = "Test handler",
-        learn_mode: bool = True,
+        description: str = "Test function",
     ) -> Mock:
-        """Creates a mock InputEventHandler."""
+        """Creates a mock function for a Command."""
 
-        handler = test_context.Mock()
-        handler.function = test_context.Mock()
-        handler.description = description
-        handler.learn_mode_enabled = learn_mode
-        return handler
+        function = test_context.Mock()
+        function.return_value = True
+        return function
 
-    def _create_mock_keybinding(self, test_context: OrcaTestContext, handler: Mock) -> Mock:
-        """Creates a mock KeyBinding for a handler."""
+    def _create_mock_keybinding(self, test_context: OrcaTestContext) -> Mock:
+        """Creates a mock KeyBinding."""
 
         kb = test_context.Mock()
-        kb.handler = handler
         return kb
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -382,372 +455,107 @@ class TestCommandManager:
         from orca.command_manager import CommandManager
 
         manager = CommandManager()
-        assert manager.get_all_commands() == ()
+        assert manager.get_all_keyboard_commands() == ()
+        assert manager.get_all_braille_commands() == ()
 
-    def test_add_and_get_command(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.add_command and get_command."""
+    def test_add_and_get_keyboard_command(self, test_context: OrcaTestContext) -> None:
+        """Test CommandManager.add_command and get_keyboard_command."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
-        handler = self._create_mock_handler(test_context)
-        command = Command("testHandler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        command = KeyboardCommand("testCommand", function, "Test Group")
 
         manager.add_command(command)
 
-        retrieved = manager.get_command("testHandler")
+        retrieved = manager.get_keyboard_command("testCommand")
         assert retrieved == command
 
-        assert manager.get_command("nonexistent") is None
+        assert manager.get_keyboard_command("nonexistent") is None
 
-    def test_get_all_commands(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.get_all_commands."""
+    def test_add_and_get_braille_command(self, test_context: OrcaTestContext) -> None:
+        """Test CommandManager.add_command and get_braille_command."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import BrailleCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+        command = BrailleCommand("testCommand", function, "Test Group",
+                                  braille_bindings=(100, 200))
+
+        manager.add_command(command)
+
+        retrieved = manager.get_braille_command("testCommand")
+        assert retrieved == command
+
+        assert manager.get_braille_command("nonexistent") is None
+
+    def test_get_all_keyboard_commands(self, test_context: OrcaTestContext) -> None:
+        """Test CommandManager.get_all_keyboard_commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler1 = self._create_mock_handler(test_context, "Handler 1")
-        handler2 = self._create_mock_handler(test_context, "Handler 2")
-        handler3 = self._create_mock_handler(test_context, "Handler 3")
+        function1 = self._create_mock_function(test_context)
+        function2 = self._create_mock_function(test_context)
+        function3 = self._create_mock_function(test_context)
 
-        cmd1 = Command("handler1", handler1, "Group A")
-        cmd2 = Command("handler2", handler2, "Group B")
-        cmd3 = Command("handler3", handler3, "Group A")
+        cmd1 = KeyboardCommand("cmd1", function1, "Group A")
+        cmd2 = KeyboardCommand("cmd2", function2, "Group B")
+        cmd3 = KeyboardCommand("cmd3", function3, "Group A")
 
         manager.add_command(cmd1)
         manager.add_command(cmd2)
         manager.add_command(cmd3)
 
-        all_commands = manager.get_all_commands()
+        all_commands = manager.get_all_keyboard_commands()
         assert len(all_commands) == 3
         assert cmd1 in all_commands
         assert cmd2 in all_commands
         assert cmd3 in all_commands
 
-    def test_get_commands_by_group_label(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.get_commands_by_group_label."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context, "Handler 1")
-        handler2 = self._create_mock_handler(test_context, "Handler 2")
-        handler3 = self._create_mock_handler(test_context, "Handler 3")
-
-        cmd1 = Command("handler1", handler1, "Group A")
-        cmd2 = Command("handler2", handler2, "Group B")
-        cmd3 = Command("handler3", handler3, "Group A")
-
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-        manager.add_command(cmd3)
-
-        group_a = manager.get_commands_by_group_label("Group A")
-        assert len(group_a) == 2
-        assert cmd1 in group_a
-        assert cmd3 in group_a
-        assert cmd2 not in group_a
-
-        group_b = manager.get_commands_by_group_label("Group B")
-        assert len(group_b) == 1
-        assert cmd2 in group_b
-
-        empty_group = manager.get_commands_by_group_label("Nonexistent")
-        assert len(empty_group) == 0
-
     def test_clear_commands(self, test_context: OrcaTestContext) -> None:
         """Test CommandManager.clear_commands."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, BrailleCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        cmd = Command("testHandler", handler, "Test Group")
-        manager.add_command(cmd)
+        function = self._create_mock_function(test_context)
+        kb_cmd = KeyboardCommand("kbCommand", function, "Test Group")
+        br_cmd = BrailleCommand("brCommand", function, "Test Group", braille_bindings=(100,))
+        manager.add_command(kb_cmd)
+        manager.add_command(br_cmd)
 
-        assert len(manager.get_all_commands()) == 1
+        assert len(manager.get_all_keyboard_commands()) == 1
+        assert len(manager.get_all_braille_commands()) == 1
 
         manager.clear_commands()
-        assert len(manager.get_all_commands()) == 0
-        assert manager.get_command("testHandler") is None
-
-    def test_add_command_overwrites_existing(self, test_context: OrcaTestContext) -> None:
-        """Test that adding a command with same name overwrites the existing one."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context, "Original")
-        handler2 = self._create_mock_handler(test_context, "Replacement")
-
-        cmd1 = Command("sameHandler", handler1, "Group A")
-        cmd2 = Command("sameHandler", handler2, "Group B")
-
-        manager.add_command(cmd1)
-        assert manager.get_command("sameHandler").get_group_label() == "Group A"
-
-        manager.add_command(cmd2)
-        assert manager.get_command("sameHandler").get_group_label() == "Group B"
-        assert len(manager.get_all_commands()) == 1
-
-    def test_set_default_bindings_from_module(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.set_default_bindings_from_module."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-
-        cmd1 = Command("handler1", handler1, "Test Group")
-        cmd2 = Command("handler2", handler2, "Test Group")
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-
-        module_bindings = test_context.Mock()
-        module_bindings.key_bindings = [kb1, kb2]
-
-        handlers = {"handler1": handler1, "handler2": handler2}
-        skip = frozenset()
-
-        manager.set_default_bindings_from_module(handlers, module_bindings, skip)
-
-        assert cmd1.get_default_keybinding() == kb1
-        assert cmd2.get_default_keybinding() == kb2
-        assert cmd1.get_keybinding() == kb1
-        assert cmd2.get_keybinding() == kb2
-
-    def test_set_default_bindings_skips_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test that set_default_bindings_from_module respects skip_handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-
-        cmd1 = Command("handler1", handler1, "Test Group")
-        cmd2 = Command("handler2", handler2, "Test Group")
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-
-        module_bindings = test_context.Mock()
-        module_bindings.key_bindings = [kb1, kb2]
-
-        handlers = {"handler1": handler1, "handler2": handler2}
-        skip = frozenset(["handler1"])
-
-        manager.set_default_bindings_from_module(handlers, module_bindings, skip)
-
-        assert cmd1.get_default_keybinding() is None
-        assert cmd2.get_default_keybinding() == kb2
-
-    def test_set_default_bindings_only_when_none(self, test_context: OrcaTestContext) -> None:
-        """Test that set_default_bindings_from_module only sets if default is None."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        existing_kb = self._create_mock_keybinding(test_context, handler)
-        cmd = Command("handler", handler, "Test Group", "", existing_kb)
-        manager.add_command(cmd)
-
-        new_kb = self._create_mock_keybinding(test_context, handler)
-        module_bindings = test_context.Mock()
-        module_bindings.key_bindings = [new_kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset()
-
-        manager.set_default_bindings_from_module(handlers, module_bindings, skip)
-
-        assert cmd.get_default_keybinding() == existing_kb
-
-    def test_clear_deleted_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.clear_deleted_bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-
-        cmd1 = Command("handler1", handler1, "Test Group", "", kb1)
-        cmd2 = Command("handler2", handler2, "Test Group", "", kb2)
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-
-        handlers = {"handler1": handler1, "handler2": handler2}
-        profile_keybindings = {"handler1": []}
-        skip = frozenset()
-
-        manager.clear_deleted_bindings(handlers, profile_keybindings, skip)
-
-        assert cmd1.get_keybinding() is None
-        assert cmd2.get_keybinding() == kb2
-
-    def test_clear_deleted_bindings_skips_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test that clear_deleted_bindings respects skip_handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
-        cmd = Command("handler", handler, "Test Group", "", kb)
-        manager.add_command(cmd)
-
-        handlers = {"handler": handler}
-        profile_keybindings = {"handler": []}
-        skip = frozenset(["handler"])
-
-        manager.clear_deleted_bindings(handlers, profile_keybindings, skip)
-
-        assert cmd.get_keybinding() == kb
-
-    def test_apply_customized_bindings_updates_existing(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that apply_customized_bindings updates existing commands."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        cmd = Command("handler", handler, "Original Group")
-        manager.add_command(cmd)
-
-        new_kb = self._create_mock_keybinding(test_context, handler)
-        customized = test_context.Mock()
-        customized.key_bindings = [new_kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset()
-
-        manager.apply_customized_bindings(handlers, customized, "New Group", skip)
-
-        assert cmd.get_keybinding() == new_kb
-        assert cmd.get_group_label() == "New Group"
-
-    def test_apply_customized_bindings_adds_new(self, test_context: OrcaTestContext) -> None:
-        """Test that apply_customized_bindings adds new commands."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
-        customized = test_context.Mock()
-        customized.key_bindings = [kb]
-
-        handlers = {"newHandler": handler}
-        skip = frozenset()
-
-        manager.apply_customized_bindings(handlers, customized, "New Group", skip)
-
-        cmd = manager.get_command("newHandler")
-        assert cmd is not None
-        assert cmd.get_keybinding() == kb
-        assert cmd.get_group_label() == "New Group"
-
-    def test_apply_customized_bindings_no_group_update(self, test_context: OrcaTestContext) -> None:
-        """Test apply_customized_bindings with update_group_label=False."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        cmd = Command("handler", handler, "Original Group")
-        manager.add_command(cmd)
-
-        new_kb = self._create_mock_keybinding(test_context, handler)
-        customized = test_context.Mock()
-        customized.key_bindings = [new_kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset()
-
-        manager.apply_customized_bindings(
-            handlers, customized, "New Group", skip, update_group_label=False
-        )
-
-        assert cmd.get_keybinding() == new_kb
-        assert cmd.get_group_label() == "Original Group"
-
-    def test_apply_customized_bindings_skips_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test that apply_customized_bindings respects skip_handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        cmd = Command("handler", handler, "Original Group")
-        manager.add_command(cmd)
-
-        new_kb = self._create_mock_keybinding(test_context, handler)
-        customized = test_context.Mock()
-        customized.key_bindings = [new_kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset(["handler"])
-
-        manager.apply_customized_bindings(handlers, customized, "New Group", skip)
-
-        assert cmd.get_keybinding() is None
-        assert cmd.get_group_label() == "Original Group"
+        assert len(manager.get_all_keyboard_commands()) == 0
+        assert len(manager.get_all_braille_commands()) == 0
 
     def test_get_command_for_event_finds_match(self, test_context: OrcaTestContext) -> None:
         """Test get_command_for_event returns matching command."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
         kb.matches.return_value = True
         kb.modifiers = 4
         kb.click_count = 1
 
-        cmd = Command("handler", handler, "Test Group", keybinding=kb)
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
         event = test_context.Mock()
@@ -763,15 +571,16 @@ class TestCommandManager:
         """Test get_command_for_event returns None when no match."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
         kb.matches.return_value = False
 
-        cmd = Command("handler", handler, "Test Group", keybinding=kb)
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
         event = test_context.Mock()
@@ -787,17 +596,18 @@ class TestCommandManager:
         """Test get_command_for_event skips inactive commands by default."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
         kb.matches.return_value = True
         kb.modifiers = 4
         kb.click_count = 1
 
-        cmd = Command("handler", handler, "Test Group", keybinding=kb, suspended=True)
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb, suspended=True)
+        cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
         event = test_context.Mock()
@@ -813,17 +623,18 @@ class TestCommandManager:
         """Test get_command_for_event can include inactive commands."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
         kb.matches.return_value = True
         kb.modifiers = 4
         kb.click_count = 1
 
-        cmd = Command("handler", handler, "Test Group", keybinding=kb, suspended=True)
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb, suspended=True)
+        cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
         event = test_context.Mock()
@@ -835,49 +646,72 @@ class TestCommandManager:
         result = manager.get_command_for_event(event, active_only=False)
         assert result == cmd
 
-    def test_get_command_for_event_click_count_mismatch(
+    def test_get_command_for_braille_event_finds_match(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test get_command_for_event requires matching click count."""
+        """Test get_command_for_braille_event returns matching command."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import BrailleCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
-        kb.matches.return_value = True
-        kb.modifiers = 4
-        kb.click_count = 2
-
-        cmd = Command("handler", handler, "Test Group", keybinding=kb)
+        function = self._create_mock_function(test_context)
+        cmd = BrailleCommand("cmd", function, "Test Group", braille_bindings=(100, 200, 300))
         manager.add_command(cmd)
 
-        event = test_context.Mock()
-        event.get_click_count.return_value = 1
-        event.id = 65
-        event.hw_code = 38
-        event.modifiers = 4
+        result = manager.get_command_for_braille_event(200)
+        assert result == cmd
 
-        result = manager.get_command_for_event(event)
+    def test_get_command_for_braille_event_no_match(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test get_command_for_braille_event returns None when no match."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import BrailleCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        cmd = BrailleCommand("cmd", function, "Test Group", braille_bindings=(100, 200, 300))
+        manager.add_command(cmd)
+
+        result = manager.get_command_for_braille_event(999)
+        assert result is None
+
+    def test_get_command_for_braille_event_empty_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test get_command_for_braille_event returns None when command has no braille bindings."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import BrailleCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        cmd = BrailleCommand("cmd", function, "Test Group")
+        manager.add_command(cmd)
+
+        result = manager.get_command_for_braille_event(100)
         assert result is None
 
     def test_set_group_enabled(self, test_context: OrcaTestContext) -> None:
         """Test set_group_enabled sets enabled state for all commands in group."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-        handler3 = self._create_mock_handler(test_context)
+        function1 = self._create_mock_function(test_context)
+        function2 = self._create_mock_function(test_context)
+        function3 = self._create_mock_function(test_context)
 
-        cmd1 = Command("handler1", handler1, "Group A")
-        cmd2 = Command("handler2", handler2, "Group A")
-        cmd3 = Command("handler3", handler3, "Group B")
+        cmd1 = KeyboardCommand("cmd1", function1, "Group A")
+        cmd2 = KeyboardCommand("cmd2", function2, "Group A")
+        cmd3 = KeyboardCommand("cmd3", function3, "Group B")
 
         manager.add_command(cmd1)
         manager.add_command(cmd2)
@@ -889,61 +723,21 @@ class TestCommandManager:
         assert cmd2.is_enabled() is False
         assert cmd3.is_enabled() is True
 
-    def test_set_group_enabled_skips_group_toggle(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test set_group_enabled does not disable group toggle commands."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        toggle_handler = self._create_mock_handler(test_context, "Toggle")
-        regular_handler = self._create_mock_handler(test_context, "Regular")
-
-        toggle_kb = self._create_mock_keybinding(test_context, toggle_handler)
-        regular_kb = self._create_mock_keybinding(test_context, regular_handler)
-
-        toggle_cmd = Command(
-            "toggleHandler",
-            toggle_handler,
-            "Group A",
-            keybinding=toggle_kb,
-            is_group_toggle=True,
-        )
-        regular_cmd = Command(
-            "regularHandler",
-            regular_handler,
-            "Group A",
-            keybinding=regular_kb,
-        )
-
-        manager.add_command(toggle_cmd)
-        manager.add_command(regular_cmd)
-
-        manager.set_group_enabled("Group A", False)
-
-        assert toggle_cmd.is_enabled() is True
-        assert regular_cmd.is_enabled() is False
-        toggle_kb.set_enabled.assert_not_called()
-        regular_kb.set_enabled.assert_called_once()
-
     def test_set_group_suspended(self, test_context: OrcaTestContext) -> None:
         """Test set_group_suspended sets suspended state for all commands in group."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-        handler3 = self._create_mock_handler(test_context)
+        function1 = self._create_mock_function(test_context)
+        function2 = self._create_mock_function(test_context)
+        function3 = self._create_mock_function(test_context)
 
-        cmd1 = Command("handler1", handler1, "Group A")
-        cmd2 = Command("handler2", handler2, "Group A")
-        cmd3 = Command("handler3", handler3, "Group B")
+        cmd1 = KeyboardCommand("cmd1", function1, "Group A")
+        cmd2 = KeyboardCommand("cmd2", function2, "Group A")
+        cmd3 = KeyboardCommand("cmd3", function3, "Group B")
 
         manager.add_command(cmd1)
         manager.add_command(cmd2)
@@ -959,16 +753,17 @@ class TestCommandManager:
         """Test add_grabs_for_command calls add_grabs on keybinding."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
-        cmd = Command("handler", handler, "Test Group", keybinding=kb)
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
-        manager.add_grabs_for_command("handler")
+        manager.add_grabs_for_command("cmd")
 
         kb.add_grabs.assert_called_once()
 
@@ -989,30 +784,31 @@ class TestCommandManager:
         """Test add_grabs_for_command is no-op if no keybinding."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        cmd = Command("handler", handler, "Test Group")
+        function = self._create_mock_function(test_context)
+        cmd = KeyboardCommand("cmd", function, "Test Group")
         manager.add_command(cmd)
 
-        manager.add_grabs_for_command("handler")
+        manager.add_grabs_for_command("cmd")
 
     def test_remove_grabs_for_command(self, test_context: OrcaTestContext) -> None:
         """Test remove_grabs_for_command calls remove_grabs on keybinding."""
 
         self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
+        from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
 
-        handler = self._create_mock_handler(test_context)
-        kb = self._create_mock_keybinding(test_context, handler)
-        cmd = Command("handler", handler, "Test Group", keybinding=kb)
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
-        manager.remove_grabs_for_command("handler")
+        manager.remove_grabs_for_command("cmd")
 
         kb.remove_grabs.assert_called_once()
 
@@ -1026,388 +822,6 @@ class TestCommandManager:
 
         manager = CommandManager()
         manager.remove_grabs_for_command("nonexistent")
-
-    def test_add_grabs_for_group(self, test_context: OrcaTestContext) -> None:
-        """Test add_grabs_for_group adds grabs for active commands in group."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-        handler3 = self._create_mock_handler(test_context)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-        kb3 = self._create_mock_keybinding(test_context, handler3)
-
-        cmd1 = Command("handler1", handler1, "Group A", keybinding=kb1)
-        cmd2 = Command("handler2", handler2, "Group A", keybinding=kb2, suspended=True)
-        cmd3 = Command("handler3", handler3, "Group B", keybinding=kb3)
-
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-        manager.add_command(cmd3)
-
-        manager.add_grabs_for_group("Group A")
-
-        kb1.add_grabs.assert_called_once()
-        kb2.add_grabs.assert_not_called()
-        kb3.add_grabs.assert_not_called()
-
-    def test_remove_grabs_for_group(self, test_context: OrcaTestContext) -> None:
-        """Test remove_grabs_for_group removes grabs for all commands in group."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-        handler3 = self._create_mock_handler(test_context)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-        kb3 = self._create_mock_keybinding(test_context, handler3)
-
-        cmd1 = Command("handler1", handler1, "Group A", keybinding=kb1)
-        cmd2 = Command("handler2", handler2, "Group A", keybinding=kb2, suspended=True)
-        cmd3 = Command("handler3", handler3, "Group B", keybinding=kb3)
-
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-        manager.add_command(cmd3)
-
-        manager.remove_grabs_for_group("Group A")
-
-        kb1.remove_grabs.assert_called_once()
-        kb2.remove_grabs.assert_called_once()
-        kb3.remove_grabs.assert_not_called()
-
-    def test_refresh_grabs_for_group(self, test_context: OrcaTestContext) -> None:
-        """Test refresh_grabs_for_group removes and adds grabs."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-
-        cmd1 = Command("handler1", handler1, "Group A", keybinding=kb1)
-        cmd2 = Command("handler2", handler2, "Group A", keybinding=kb2)
-
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-
-        manager.refresh_grabs_for_group("Group A")
-
-        kb1.remove_grabs.assert_called_once()
-        kb1.add_grabs.assert_called_once()
-        kb2.remove_grabs.assert_called_once()
-        kb2.add_grabs.assert_called_once()
-
-    def test_refresh_grabs_for_group_respects_active_state(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test refresh_grabs_for_group only adds grabs for active commands."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-
-        kb1 = self._create_mock_keybinding(test_context, handler1)
-        kb2 = self._create_mock_keybinding(test_context, handler2)
-
-        cmd1 = Command("handler1", handler1, "Group A", keybinding=kb1)
-        cmd2 = Command("handler2", handler2, "Group A", keybinding=kb2, enabled=False)
-
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-
-        manager.refresh_grabs_for_group("Group A")
-
-        kb1.remove_grabs.assert_called_once()
-        kb1.add_grabs.assert_called_once()
-        kb2.remove_grabs.assert_called_once()
-        kb2.add_grabs.assert_not_called()
-
-    def test_user_binding_different_from_default(self, test_context: OrcaTestContext) -> None:
-        """Test that user bindings can differ from default bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        default_kb = self._create_mock_keybinding(test_context, handler)
-        default_kb.keysymstring = "h"
-        default_kb.modifiers = 4  # Orca modifier
-
-        cmd = Command("handler", handler, "Test Group", keybinding=default_kb)
-        manager.add_command(cmd)
-
-        # Simulate user customizing the binding to a different key
-        user_kb = self._create_mock_keybinding(test_context, handler)
-        user_kb.keysymstring = "j"
-        user_kb.modifiers = 4  # Orca modifier
-
-        customized = test_context.Mock()
-        customized.key_bindings = [user_kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset()
-
-        manager.apply_customized_bindings(handlers, customized, "Test Group", skip)
-
-        # Current binding should be user's choice
-        assert cmd.get_keybinding() == user_kb
-        # Default binding should remain unchanged
-        assert cmd.get_default_keybinding() == default_kb
-
-    def test_user_binding_preserved_through_group_enable_disable(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that user's custom binding is preserved when group is disabled/enabled."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-
-        # Start with default binding
-        default_kb = self._create_mock_keybinding(test_context, handler)
-        default_kb.keysymstring = "h"
-
-        cmd = Command("handler", handler, "Test Group", keybinding=default_kb)
-        manager.add_command(cmd)
-
-        # User changes to different binding
-        user_kb = self._create_mock_keybinding(test_context, handler)
-        user_kb.keysymstring = "j"
-        cmd.set_keybinding(user_kb)
-
-        # Disable the group
-        manager.set_group_enabled("Test Group", False)
-
-        # User's binding should still be set (just disabled)
-        assert cmd.get_keybinding() == user_kb
-        assert cmd.is_enabled() is False
-
-        # Re-enable the group
-        manager.set_group_enabled("Test Group", True)
-
-        # User's binding should still be preserved
-        assert cmd.get_keybinding() == user_kb
-        assert cmd.is_enabled() is True
-
-    def test_is_group_toggle_init(self, test_context: OrcaTestContext) -> None:
-        """Test Command initializes is_group_toggle correctly."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command
-
-        handler = self._create_mock_handler(test_context)
-
-        # Default is False
-        cmd_default = Command("handler1", handler, "Test Group")
-        assert cmd_default.is_group_toggle() is False
-
-        # Explicit True
-        cmd_toggle = Command("handler2", handler, "Test Group", is_group_toggle=True)
-        assert cmd_toggle.is_group_toggle() is True
-
-    def test_is_group_toggle_setter(self, test_context: OrcaTestContext) -> None:
-        """Test Command.set_is_group_toggle."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command
-
-        handler = self._create_mock_handler(test_context)
-        cmd = Command("handler", handler, "Test Group")
-
-        assert cmd.is_group_toggle() is False
-
-        cmd.set_is_group_toggle(True)
-        assert cmd.is_group_toggle() is True
-
-        cmd.set_is_group_toggle(False)
-        assert cmd.is_group_toggle() is False
-
-    def test_set_group_enabled_skips_group_toggle_commands(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that set_group_enabled skips commands marked as group toggle."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler1 = self._create_mock_handler(test_context)
-        handler2 = self._create_mock_handler(test_context)
-
-        # Regular command
-        cmd1 = Command("handler1", handler1, "Group A")
-        # Group toggle command (like Orca+Z for structural navigation)
-        cmd2 = Command("handler2", handler2, "Group A", is_group_toggle=True)
-
-        manager.add_command(cmd1)
-        manager.add_command(cmd2)
-
-        # Disable the group
-        manager.set_group_enabled("Group A", False)
-
-        # Regular command should be disabled
-        assert cmd1.is_enabled() is False
-        # Group toggle command should remain enabled
-        assert cmd2.is_enabled() is True
-
-    def test_set_default_bindings_propagates_is_group_toggle(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that set_default_bindings_from_module propagates is_group_toggle from handler."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        handler.is_group_toggle = True  # Mark handler as group toggle
-
-        cmd = Command("handler", handler, "Test Group")
-        manager.add_command(cmd)
-
-        kb = self._create_mock_keybinding(test_context, handler)
-
-        module_bindings = test_context.Mock()
-        module_bindings.key_bindings = [kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset()
-
-        manager.set_default_bindings_from_module(handlers, module_bindings, skip)
-
-        # Command should now have is_group_toggle set from handler
-        assert cmd.is_group_toggle() is True
-
-    def test_apply_customized_bindings_propagates_is_group_toggle(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that apply_customized_bindings propagates is_group_toggle from handler."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        handler.is_group_toggle = True  # Mark handler as group toggle
-
-        # Command exists but without is_group_toggle set
-        cmd = Command("handler", handler, "Test Group")
-        assert cmd.is_group_toggle() is False
-        manager.add_command(cmd)
-
-        user_kb = self._create_mock_keybinding(test_context, handler)
-        customized = test_context.Mock()
-        customized.key_bindings = [user_kb]
-
-        handlers = {"handler": handler}
-        skip = frozenset()
-
-        manager.apply_customized_bindings(handlers, customized, "Test Group", skip)
-
-        # Command should now have is_group_toggle set from handler
-        assert cmd.is_group_toggle() is True
-
-    def test_apply_customized_bindings_new_command_inherits_is_group_toggle(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that new commands created by apply_customized_bindings inherit is_group_toggle."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import CommandManager
-
-        manager = CommandManager()
-
-        handler = self._create_mock_handler(test_context)
-        handler.is_group_toggle = True
-
-        kb = self._create_mock_keybinding(test_context, handler)
-        customized = test_context.Mock()
-        customized.key_bindings = [kb]
-
-        handlers = {"newHandler": handler}
-        skip = frozenset()
-
-        # No existing command - will create new one
-        manager.apply_customized_bindings(handlers, customized, "New Group", skip)
-
-        cmd = manager.get_command("newHandler")
-        assert cmd is not None
-        assert cmd.is_group_toggle() is True
-
-    def test_group_toggle_command_can_reenable_group(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that group toggle command remains active to allow re-enabling its group."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import Command, CommandManager
-
-        manager = CommandManager()
-
-        handler_nav = self._create_mock_handler(test_context, "Navigate")
-        handler_toggle = self._create_mock_handler(test_context, "Toggle")
-
-        kb_nav = self._create_mock_keybinding(test_context, handler_nav)
-        kb_toggle = self._create_mock_keybinding(test_context, handler_toggle)
-
-        # Navigation command
-        cmd_nav = Command("navigate", handler_nav, "Navigation", keybinding=kb_nav)
-        # Toggle command for the group
-        cmd_toggle = Command(
-            "toggle", handler_toggle, "Navigation",
-            keybinding=kb_toggle, is_group_toggle=True
-        )
-
-        manager.add_command(cmd_nav)
-        manager.add_command(cmd_toggle)
-
-        # Initially both should be active
-        assert cmd_nav.is_active() is True
-        assert cmd_toggle.is_active() is True
-
-        # Disable the group
-        manager.set_group_enabled("Navigation", False)
-
-        # Navigation command should be inactive
-        assert cmd_nav.is_active() is False
-        # Toggle command should remain active so user can re-enable
-        assert cmd_toggle.is_active() is True
-
-        # Re-enable via toggle
-        manager.set_group_enabled("Navigation", True)
-
-        # Both should be active again
-        assert cmd_nav.is_active() is True
-        assert cmd_toggle.is_active() is True
 
 
 @pytest.mark.unit

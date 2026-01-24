@@ -55,6 +55,7 @@ from gi.repository import GObject
 from gi.repository import Gtk
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
@@ -1632,210 +1633,69 @@ class SpeechAndVerbosityManager:
     """Configures speech and verbosity settings and adjusts strings accordingly."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._last_indentation_description: str = ""
         self._last_error_description: str = ""
         self._families_sorted: bool = False
+        self._initialized: bool = False
 
         msg = "SPEECH AND VERBOSITY MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SpeechAndVerbosityManager", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the speech and verbosity manager keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"SPEECH AND VERBOSITY MANAGER: Refreshing bindings.  Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("SPEECH AND VERBOSITY MANAGER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_SPEECH_VERBOSITY
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the speech and verbosity manager handlers."""
+        # Common keybindings (same for desktop and laptop)
+        kb_s = keybindings.KeyBinding("s", keybindings.ORCA_MODIFIER_MASK)
+        kb_v = keybindings.KeyBinding("v", keybindings.ORCA_MODIFIER_MASK)
+        kb_f11 = keybindings.KeyBinding("F11", keybindings.ORCA_MODIFIER_MASK)
 
-        if refresh:
-            msg = "SPEECH AND VERBOSITY MANAGER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
+        # (name, function, description, desktop_kb, laptop_kb)
+        commands_data = [
+            ("cycleCapitalizationStyleHandler", self.cycle_capitalization_style,
+             cmdnames.CYCLE_CAPITALIZATION_STYLE, None, None),
+            ("cycleSpeakingPunctuationLevelHandler", self.cycle_punctuation_level,
+             cmdnames.CYCLE_PUNCTUATION_LEVEL, None, None),
+            ("cycleSynthesizerHandler", self.cycle_synthesizer,
+             cmdnames.CYCLE_SYNTHESIZER, None, None),
+            ("changeNumberStyleHandler", self.change_number_style,
+             cmdnames.CHANGE_NUMBER_STYLE, None, None),
+            ("toggleSilenceSpeechHandler", self.toggle_speech,
+             cmdnames.TOGGLE_SPEECH, kb_s, kb_s),
+            ("toggleSpeechVerbosityHandler", self.toggle_verbosity,
+             cmdnames.TOGGLE_SPEECH_VERBOSITY, kb_v, kb_v),
+            ("toggleSpeakingIndentationJustificationHandler", self.toggle_indentation_and_justification,
+             cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION, None, None),
+            ("toggleTableCellReadModeHandler", self.toggle_table_cell_reading_mode,
+             cmdnames.TOGGLE_TABLE_CELL_READ_MODE, kb_f11, kb_f11),
+            ("decreaseSpeechRateHandler", self.decrease_rate,
+             cmdnames.DECREASE_SPEECH_RATE, None, None),
+            ("increaseSpeechRateHandler", self.increase_rate,
+             cmdnames.INCREASE_SPEECH_RATE, None, None),
+            ("decreaseSpeechPitchHandler", self.decrease_pitch,
+             cmdnames.DECREASE_SPEECH_PITCH, None, None),
+            ("increaseSpeechPitchHandler", self.increase_pitch,
+             cmdnames.INCREASE_SPEECH_PITCH, None, None),
+            ("decreaseSpeechVolumeHandler", self.decrease_volume,
+             cmdnames.DECREASE_SPEECH_VOLUME, None, None),
+            ("increaseSpeechVolumeHandler", self.increase_volume,
+             cmdnames.INCREASE_SPEECH_VOLUME, None, None),
+        ]
 
-        return self._handlers
+        for name, function, description, desktop_kb, laptop_kb in commands_data:
+            manager.add_command(command_manager.KeyboardCommand(
+                name, function, group_label, description,
+                desktop_keybinding=desktop_kb, laptop_keybinding=laptop_kb))
 
-    def _setup_handlers(self) -> None:
-        """Sets up the speech and verbosity input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["cycleCapitalizationStyleHandler"] = \
-            input_event.InputEventHandler(
-                self.cycle_capitalization_style,
-                cmdnames.CYCLE_CAPITALIZATION_STYLE)
-
-        self._handlers["cycleSpeakingPunctuationLevelHandler"] = \
-            input_event.InputEventHandler(
-                self.cycle_punctuation_level,
-                cmdnames.CYCLE_PUNCTUATION_LEVEL)
-
-        self._handlers["cycleSynthesizerHandler"] = \
-            input_event.InputEventHandler(
-                self.cycle_synthesizer,
-                cmdnames.CYCLE_SYNTHESIZER)
-
-        self._handlers["changeNumberStyleHandler"] = \
-            input_event.InputEventHandler(
-                self.change_number_style,
-                cmdnames.CHANGE_NUMBER_STYLE)
-
-        self._handlers["toggleSilenceSpeechHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle_speech,
-                cmdnames.TOGGLE_SPEECH)
-
-        self._handlers["toggleSpeechVerbosityHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle_verbosity,
-                cmdnames.TOGGLE_SPEECH_VERBOSITY)
-
-        self._handlers["toggleSpeakingIndentationJustificationHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle_indentation_and_justification,
-                cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION)
-
-        self._handlers["toggleTableCellReadModeHandler"] = \
-            input_event.InputEventHandler(
-                self.toggle_table_cell_reading_mode,
-                cmdnames.TOGGLE_TABLE_CELL_READ_MODE)
-
-        self._handlers["decreaseSpeechRateHandler"] = \
-            input_event.InputEventHandler(
-                self.decrease_rate,
-                cmdnames.DECREASE_SPEECH_RATE)
-
-        self._handlers["increaseSpeechRateHandler"] = \
-            input_event.InputEventHandler(
-                self.increase_rate,
-                cmdnames.INCREASE_SPEECH_RATE)
-
-        self._handlers["decreaseSpeechPitchHandler"] = \
-            input_event.InputEventHandler(
-                self.decrease_pitch,
-                cmdnames.DECREASE_SPEECH_PITCH)
-
-        self._handlers["increaseSpeechPitchHandler"] = \
-            input_event.InputEventHandler(
-                self.increase_pitch,
-                cmdnames.INCREASE_SPEECH_PITCH)
-
-        self._handlers["decreaseSpeechVolumeHandler"] = \
-            input_event.InputEventHandler(
-                self.decrease_volume,
-                cmdnames.DECREASE_SPEECH_VOLUME)
-
-        self._handlers["increaseSpeechVolumeHandler"] = \
-            input_event.InputEventHandler(
-                self.increase_volume,
-                cmdnames.INCREASE_SPEECH_VOLUME)
-
-        msg = "SPEECH AND VERBOSITY MANAGER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the speech and verbosity key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleCapitalizationStyleHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleSpeakingPunctuationLevelHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleSynthesizerHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["changeNumberStyleHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["decreaseSpeechRateHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["increaseSpeechRateHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["decreaseSpeechPitchHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["increaseSpeechPitchHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["decreaseSpeechVolumeHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["increaseSpeechVolumeHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["toggleSpeakingIndentationJustificationHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "s",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggleSilenceSpeechHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "v",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggleSpeechVerbosityHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "F11",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggleTableCellReadModeHandler"]))
-
-        msg = "SPEECH AND VERBOSITY MANAGER: Bindings set up."
+        msg = "SPEECH AND VERBOSITY MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _get_server(self) -> SpeechServer | None:

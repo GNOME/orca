@@ -42,6 +42,7 @@ from gi.repository import Atspi
 
 from . import caret_navigator
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
@@ -307,97 +308,54 @@ class DocumentPresenter:
     def __init__(self) -> None:
         self._made_find_announcement = False
         self._app_states: dict[int, _AppModeState] = {}
-        self._handlers: dict[str, input_event.InputEventHandler] = {}
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._setup_handlers()
-        self._setup_bindings()
-        msg = "DOCUMENT PRESENTER: Initialized."
+        self._initialized: bool = False
+
+        msg = "DOCUMENT PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("DocumentPresenter", self)
 
-    def _setup_handlers(self) -> None:
-        """Sets up the input event handlers for document presentation."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        self._handlers["toggle_presentation_mode"] = input_event.InputEventHandler(
-            self.toggle_presentation_mode,
-            cmdnames.TOGGLE_PRESENTATION_MODE)
+        if self._initialized:
+            return
+        self._initialized = True
 
-        self._handlers["enable_sticky_focus_mode"] = input_event.InputEventHandler(
-            self.enable_sticky_focus_mode,
-            cmdnames.SET_FOCUS_MODE_STICKY)
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_DOCUMENTS
 
-        self._handlers["enable_sticky_browse_mode"] = input_event.InputEventHandler(
-            self.enable_sticky_browse_mode,
-            cmdnames.SET_BROWSE_MODE_STICKY)
+        # Keybindings (same for desktop and laptop)
+        kb_a = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK)
+        kb_a_2 = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK, click_count=2)
+        kb_a_3 = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK, click_count=3)
 
-        self._handlers["toggle_layout_mode"] = input_event.InputEventHandler(
-            self.toggle_layout_mode,
-            cmdnames.TOGGLE_LAYOUT_MODE)
+        # (name, function, description, keybinding)
+        commands_data = [
+            ("toggle_presentation_mode", self.toggle_presentation_mode,
+             cmdnames.TOGGLE_PRESENTATION_MODE, kb_a),
+            ("enable_sticky_focus_mode", self.enable_sticky_focus_mode,
+             cmdnames.SET_FOCUS_MODE_STICKY, kb_a_2),
+            ("enable_sticky_browse_mode", self.enable_sticky_browse_mode,
+             cmdnames.SET_BROWSE_MODE_STICKY, kb_a_3),
+            ("toggle_layout_mode", self.toggle_layout_mode,
+             cmdnames.TOGGLE_LAYOUT_MODE, None),
+        ]
 
-        msg = "DOCUMENT PRESENTER: Handlers set up."
+        for name, function, description, kb in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=kb,
+                    laptop_keybinding=kb,
+                )
+            )
+
+        msg = "DOCUMENT PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the keybindings for document presentation."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["toggle_presentation_mode"],
-                1,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["enable_sticky_focus_mode"],
-                2,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["enable_sticky_browse_mode"],
-                3,
-                True))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["toggle_layout_mode"]))
-
-        msg = "DOCUMENT PRESENTER: Bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the input event handlers for document presentation."""
-
-        if refresh:
-            self._setup_handlers()
-        return self._handlers
-
-    def get_bindings(
-        self,
-        refresh: bool = False,
-        is_desktop: bool = True  # pylint: disable=unused-argument
-    ) -> keybindings.KeyBindings:
-        """Returns the keybindings for document presentation."""
-
-        if refresh:
-            msg = f"DOCUMENT PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("DOCUMENT PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-        return self._bindings
 
     def _get_state_for_app(self, app: Atspi.Accessible | None) -> _AppModeState:
         """Returns the mode state for the given app, creating if needed."""

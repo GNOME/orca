@@ -572,59 +572,30 @@ class TestLiveRegionPresenter:
         assert presenter.msg_queue is not None
         assert len(presenter.msg_queue) == 0
         assert presenter._suspended is False
-        assert isinstance(presenter._handlers, dict)
         assert len(presenter.msg_cache) == 0
         assert presenter._monitoring is True
         assert presenter._current_index == 9  # QUEUE_SIZE
 
-    @pytest.mark.parametrize(
-        "refresh",
-        [
-            pytest.param(True, id="refresh_true"),
-            pytest.param(False, id="empty_bindings"),
-        ],
-    )
-    def test_get_bindings(self, test_context: OrcaTestContext, refresh: bool) -> None:
-        """Test LiveRegionPresenter.get_bindings."""
+    def test_commands_registered(self, test_context: OrcaTestContext) -> None:
+        """Test LiveRegionPresenter commands are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
+        from orca import command_manager
 
         presenter = LiveRegionPresenter()
-        bindings = presenter.get_bindings(refresh=refresh, is_desktop=True)
-        assert bindings is not None
+        presenter.set_up_commands()
 
-    @pytest.mark.parametrize(
-        "refresh,check_handler_names",
-        [
-            pytest.param(True, True, id="refresh_true"),
-            pytest.param(False, False, id="no_refresh"),
-        ],
-    )
-    def test_get_handlers(
-        self, test_context: OrcaTestContext, refresh: bool, check_handler_names: bool
-    ) -> None:
-        """Test LiveRegionPresenter.get_handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionPresenter
-
-        presenter = LiveRegionPresenter()
-        handlers = presenter.get_handlers(refresh=refresh)
-
-        assert isinstance(handlers, dict)
-        assert len(handlers) == 5
-
-        if check_handler_names:
-            expected_handlers = [
-                "toggle_live_region_support",
-                "present_previous_live_region_message",
-                "advance_live_politeness",
-                "toggle_live_region_presentation",
-                "present_next_live_region_message",
-            ]
-            for handler_name in expected_handlers:
-                assert handler_name in handlers
+        cmd_manager = command_manager.get_manager()
+        expected_commands = [
+            "toggle_live_region_support",
+            "present_previous_live_region_message",
+            "advance_live_politeness",
+            "toggle_live_region_presentation",
+            "present_next_live_region_message",
+        ]
+        for cmd_name in expected_commands:
+            assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     def test_suspend_commands(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.suspend_commands."""

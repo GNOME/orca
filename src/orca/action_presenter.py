@@ -40,6 +40,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
 
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import focus_manager
@@ -62,68 +63,39 @@ class ActionPresenter:
     """Provides a list for performing accessible actions on an object."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._gui: ActionList | None = None
         self._obj: Atspi.Accessible | None = None
         self._window: Atspi.Accessible | None = None
+        self._initialized: bool = False
 
         msg = "ACTION PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("ActionPresenter", self)
 
-    def get_bindings(
-        self,
-        refresh: bool = False,
-        is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the action-presenter keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = f"ACTION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_ACTIONS
+        kb = keybindings.KeyBinding("a", keybindings.ORCA_SHIFT_MODIFIER_MASK)
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the action-presenter handlers."""
-
-        if refresh:
-            msg = "ACTION PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_handlers(self) -> None:
-        """Sets up the action-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["show_actions_list"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "show_actions_list",
                 self.show_actions_list,
-                cmdnames.SHOW_ACTIONS_LIST)
+                group_label,
+                cmdnames.SHOW_ACTIONS_LIST,
+                desktop_keybinding=kb,
+                laptop_keybinding=kb,
+            )
+        )
 
-        msg = "ACTION PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_bindings(self) -> None:
-        """Sets up the action-presenter key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                self._handlers["show_actions_list"]))
-
-        msg = "ACTION PRESENTER: Bindings set up."
+        msg = "ACTION PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _restore_focus(self) -> None:

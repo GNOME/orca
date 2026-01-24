@@ -44,7 +44,7 @@ class TestBypassModeManager:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns dependencies for bypass_mode_manager module testing."""
 
-        additional_modules = ["orca.orca_modifier_manager"]
+        additional_modules = ["orca.orca_modifier_manager", "orca.command_manager"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         debug_mock = essential_modules["orca.debug"]
@@ -78,8 +78,19 @@ class TestBypassModeManager:
         modifier_manager_instance = test_context.Mock()
         modifier_manager_instance.unset_orca_modifiers = test_context.Mock()
         modifier_manager_instance.refresh_orca_modifiers = test_context.Mock()
+        modifier_manager_instance.add_grabs_for_orca_modifiers = test_context.Mock()
+        modifier_manager_instance.remove_grabs_for_orca_modifiers = test_context.Mock()
         orca_modifier_manager_mock.get_manager = test_context.Mock(
             return_value=modifier_manager_instance
+        )
+
+        command_manager_mock = essential_modules["orca.command_manager"]
+        command_manager_instance = test_context.Mock()
+        command_manager_instance.add_all_grabs = test_context.Mock()
+        command_manager_instance.remove_all_grabs = test_context.Mock()
+        command_manager_instance.add_grabs_for_command = test_context.Mock()
+        command_manager_mock.get_manager = test_context.Mock(
+            return_value=command_manager_instance
         )
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
@@ -94,120 +105,54 @@ class TestBypassModeManager:
         essential_modules["key_bindings_instance"] = key_bindings_instance
         essential_modules["modifier_manager_instance"] = modifier_manager_instance
         essential_modules["settings_manager_instance"] = settings_manager_instance
+        essential_modules["command_manager_instance"] = command_manager_instance
 
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:
         """Test BypassModeManager initialization."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.bypass_mode_manager import BypassModeManager
+        from orca import command_manager
 
         manager = BypassModeManager()
         assert manager._is_active is False
-        assert manager._handlers is not None
-        assert manager._bindings is not None
-        essential_modules["orca.keybindings"].KeyBindings.assert_called()
-
-    @pytest.mark.parametrize(
-        "method_name,is_desktop,expected_log_msg",
-        [
-            pytest.param(
-                "get_bindings",
-                True,
-                "BYPASS MODE MANAGER: Refreshing bindings. Is desktop: True",
-                id="bindings_desktop",
-            ),
-            pytest.param(
-                "get_bindings",
-                False,
-                "BYPASS MODE MANAGER: Refreshing bindings. Is desktop: False",
-                id="bindings_not_desktop",
-            ),
-            pytest.param(
-                "get_handlers",
-                None,
-                "BYPASS MODE MANAGER: Refreshing handlers.",
-                id="handlers_refresh",
-            ),
-        ],
-    )
-    def test_get_bindings_and_handlers_refresh(
-        self,
-        test_context: OrcaTestContext,
-        method_name: str,
-        is_desktop: bool | None,
-        expected_log_msg: str,
-    ) -> None:
-        """Test get_bindings and get_handlers with refresh=True."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.bypass_mode_manager import BypassModeManager
-
-        manager = BypassModeManager()
-        essential_modules["orca.debug"].print_message.reset_mock()
-
-        if method_name == "get_bindings":
-            bindings_result = manager.get_bindings(refresh=True, is_desktop=is_desktop or False)
-            assert bindings_result is not None
-        else:
-            handlers_result = manager.get_handlers(refresh=True)
-            assert handlers_result is not None
-        essential_modules["orca.debug"].print_message.assert_called_with(
-            essential_modules["orca.debug"].LEVEL_INFO,
-            expected_log_msg,
-            True,
-        )
+        # Commands are registered during setup(), not __init__()
+        manager.set_up_commands()
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("bypass_mode_toggle") is not None
 
     def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test _setup_handlers method."""
+        """Test that commands are registered with CommandManager during setup."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.bypass_mode_manager import BypassModeManager
+        from orca import command_manager
 
         manager = BypassModeManager()
-        manager._setup_handlers()
-        assert "bypass_mode_toggle" in manager._handlers
-        expected_handler = essential_modules["input_event_handler"]
-        assert manager._handlers["bypass_mode_toggle"] == expected_handler
-        input_event = essential_modules["orca.input_event"]
-        input_event.InputEventHandler.assert_called_with(
-            manager.toggle_enabled, "Toggle all Orca command keys"
-        )
+        manager.set_up_commands()
+        # Commands are now registered with CommandManager during setup()
+        cmd_manager = command_manager.get_manager()
+        cmd = cmd_manager.get_keyboard_command("bypass_mode_toggle")
+        assert cmd is not None
 
-    @pytest.mark.parametrize(
-        "default_mask,alt_mask",
-        [
-            pytest.param(1, 2, id="original_config"),
-            pytest.param(8, 16, id="custom_config"),
-        ],
-    )
-    def test_setup_bindings(
-        self, test_context: OrcaTestContext, default_mask: int, alt_mask: int
-    ) -> None:
-        """Test _setup_bindings method with different key binding configurations."""
+    def test_setup_bindings(self, test_context: OrcaTestContext) -> None:
+        """Test that keybindings are created via Command.set_keybinding."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-
-        keybindings_mock = essential_modules["orca.keybindings"]
-        keybindings_mock.DEFAULT_MODIFIER_MASK = default_mask
-        keybindings_mock.ALT_MODIFIER_MASK = alt_mask
+        self._setup_dependencies(test_context)
         from orca.bypass_mode_manager import BypassModeManager
+        from orca import command_manager
 
         manager = BypassModeManager()
-        keybindings_mock.KeyBinding.reset_mock()
-        manager._setup_bindings()
+        manager.set_up_commands()
+        # Verify the command has a keybinding
+        cmd_manager = command_manager.get_manager()
+        cmd = cmd_manager.get_keyboard_command("bypass_mode_toggle")
+        assert cmd is not None
+        keybinding = cmd.get_keybinding()
+        assert keybinding is not None
 
-        essential_modules["orca.keybindings"].KeyBinding.assert_called_with(
-            "BackSpace",
-            alt_mask,
-            manager._handlers["bypass_mode_toggle"],
-            1,
-            True,
-        )
-
-        key_bindings_instance = essential_modules["key_bindings_instance"]
-        key_bindings_instance.add.assert_called()
     @pytest.mark.parametrize(
         "initial_active,has_event,expected_active,expected_message,"
         "expected_grabs_call,expected_modifier_call",
@@ -217,7 +162,7 @@ class TestBypassModeManager:
                 True,
                 True,
                 "Orca command keys off.",
-                "remove_key_grabs",
+                "remove_all_grabs",
                 "unset_orca_modifiers",
             ),
             (
@@ -225,7 +170,7 @@ class TestBypassModeManager:
                 False,
                 True,
                 None,
-                "remove_key_grabs",
+                "remove_all_grabs",
                 "unset_orca_modifiers",
             ),
             (
@@ -233,7 +178,7 @@ class TestBypassModeManager:
                 True,
                 False,
                 "Orca command keys on.",
-                "add_key_grabs",
+                "add_all_grabs",
                 "refresh_orca_modifiers",
             ),
             (
@@ -241,7 +186,7 @@ class TestBypassModeManager:
                 False,
                 False,
                 None,
-                "add_key_grabs",
+                "add_all_grabs",
                 "refresh_orca_modifiers",
             ),
         ],
@@ -285,7 +230,8 @@ class TestBypassModeManager:
         else:
             mock_script.present_message.assert_not_called()
 
-        grabs_method = getattr(mock_script, expected_grabs_call)
+        cmd_manager = essential_modules["command_manager_instance"]
+        grabs_method = getattr(cmd_manager, expected_grabs_call)
         if expected_active:
             grabs_method.assert_called_with("bypass mode enabled")
         else:
@@ -297,10 +243,6 @@ class TestBypassModeManager:
             modifier_method.assert_called_with("bypass mode enabled")
         else:
             modifier_method.assert_called_with("bypass mode disabled")
-
-        if not initial_active and key_bindings:
-            mock_script.key_bindings.add.assert_any_call(key_bindings[0], include_grabs=True)
-            mock_script.key_bindings.add.assert_any_call(key_bindings[1], include_grabs=True)
 
     def test_toggle_enabled_multiple_times(self, test_context: OrcaTestContext) -> None:
         """Test toggle_enabled works correctly when called multiple times."""
@@ -328,19 +270,19 @@ class TestBypassModeManager:
         assert result3 is True
         assert manager.is_active() is True
 
-    def test_bindings_no_override(self, test_context: OrcaTestContext) -> None:
-        """Test that bindings setup does not call override_key_bindings."""
+    def test_bindings_created_correctly(self, test_context: OrcaTestContext) -> None:
+        """Test that bindings are properly configured from commands."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-
-        settings_manager_instance = essential_modules["settings_manager_instance"]
+        self._setup_dependencies(test_context)
         from orca.bypass_mode_manager import BypassModeManager
+        from orca import command_manager
 
         manager = BypassModeManager()
-        bindings = manager.get_bindings(refresh=True)
-        assert bindings == essential_modules["key_bindings_instance"]
-
-        settings_manager_instance.override_key_bindings.assert_not_called()
+        manager.set_up_commands()
+        # Verify bypass_mode_toggle command has keybinding set
+        cmd = command_manager.get_manager().get_keyboard_command("bypass_mode_toggle")
+        assert cmd is not None
+        assert cmd.get_keybinding() is not None
 
     def test_toggle_enabled_with_minimal_script_interface(
         self, test_context: OrcaTestContext

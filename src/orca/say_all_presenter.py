@@ -44,6 +44,7 @@ from typing import Generator, TYPE_CHECKING
 
 from . import ax_event_synthesizer
 from . import cmdnames
+from . import command_manager
 from . import guilabels
 from . import dbus_service
 from . import debug
@@ -160,98 +161,44 @@ class SayAllPresenter:
     """Module for commands related to the current accessible object."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._desktop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-        self._laptop_bindings: keybindings.KeyBindings = keybindings.KeyBindings()
-
         self._script: default.Script | None = None
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
         self._contexts: list[speechserver.SayAllContext] = []
         self._current_context: speechserver.SayAllContext | None = None
         self._say_all_is_running: bool = False
+        self._initialized: bool = False
 
-        msg = "SayAllPresenter: Registering D-Bus commands."
+        msg = "SAY ALL PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SayAllPresenter", self)
 
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the say-all-presenter keybindings."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = "SAY ALL PRESENTER: Refreshing bindings."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._desktop_bindings.remove_key_grabs("SAY ALL PRESENTER: Refreshing bindings.")
-            self._laptop_bindings.remove_key_grabs("SAY ALL PRESENTER: Refreshing bindings.")
-            self._setup_bindings()
-        elif is_desktop and self._desktop_bindings.is_empty():
-            self._setup_bindings()
-        elif not is_desktop and self._laptop_bindings.is_empty():
-            self._setup_bindings()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        if is_desktop:
-            return self._desktop_bindings
-        return self._laptop_bindings
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_DEFAULT
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the say-all-presenter handlers."""
+        # Layout-specific keybindings
+        kb_desktop = keybindings.KeyBinding("KP_Add", keybindings.NO_MODIFIER_MASK)
+        kb_laptop = keybindings.KeyBinding("semicolon", keybindings.ORCA_MODIFIER_MASK)
 
-        if refresh:
-            msg = "SAY ALL PRESENTER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
-
-        return self._handlers
-
-    def _setup_bindings(self) -> None:
-        """Sets up the say-all-presenter key bindings."""
-
-        self._setup_desktop_bindings()
-        self._setup_laptop_bindings()
-
-    def _setup_handlers(self) -> None:
-        """Sets up the say-all-presenter input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["sayAllHandler"] = \
-            input_event.InputEventHandler(
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "sayAllHandler",
                 self.say_all,
-                cmdnames.SAY_ALL)
+                group_label,
+                cmdnames.SAY_ALL,
+                desktop_keybinding=kb_desktop,
+                laptop_keybinding=kb_laptop,
+            )
+        )
 
-        msg = "SAY ALL PRESENTER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_desktop_bindings(self) -> None:
-        """Sets up the say-all-presenter desktop key bindings."""
-
-        self._desktop_bindings = keybindings.KeyBindings()
-
-        self._desktop_bindings.add(
-            keybindings.KeyBinding(
-                "KP_Add",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["sayAllHandler"],
-                1))
-
-        msg = "SAY ALL PRESENTER: Desktop bindings set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _setup_laptop_bindings(self) -> None:
-        """Sets up the say-all-presenter laptop key bindings."""
-
-        self._laptop_bindings = keybindings.KeyBindings()
-
-        self._laptop_bindings.add(
-            keybindings.KeyBinding(
-                "semicolon",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["sayAllHandler"],
-                1))
-
-        msg = "SAY ALL PRESENTER: Laptop bindings set up."
+        msg = "SAY ALL PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def create_preferences_grid(self) -> SayAllPreferencesGrid:

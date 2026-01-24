@@ -168,146 +168,64 @@ class TestSystemInformationPresenter:
             return_value=mock_bindings_instance,
         )
         from orca.system_information_presenter import SystemInformationPresenter
+        from orca import command_manager
 
         presenter = SystemInformationPresenter()
 
-        assert presenter._handlers is not None
-        assert len(presenter._handlers) == 4
-        assert "presentTimeHandler" in presenter._handlers
-        assert "presentDateHandler" in presenter._handlers
-        assert "present_battery_status" in presenter._handlers
-        assert "present_cpu_and_memory_usage" in presenter._handlers
+        # Commands are registered during setup(), call it explicitly
+        presenter.set_up_commands()
 
-        assert presenter._bindings is not None
-        mock_keybindings_class.assert_called()
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("presentTimeHandler") is not None
+        assert cmd_manager.get_keyboard_command("presentDateHandler") is not None
+        assert cmd_manager.get_keyboard_command("present_battery_status") is not None
+        assert cmd_manager.get_keyboard_command("present_cpu_and_memory_usage") is not None
 
         mock_controller.register_decorated_module.assert_called_with(
             "SystemInformationPresenter", presenter
         )
 
-    @pytest.mark.parametrize(
-        "is_empty",
-        [
-            pytest.param(True, id="empty_bindings"),
-            pytest.param(False, id="existing_bindings"),
-        ],
-    )
-    def test_get_bindings_no_refresh(self, test_context: OrcaTestContext, is_empty: bool) -> None:
-        """Test SystemInformationPresenter.get_bindings with refresh=False."""
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+    def test_commands_registered(self, test_context: OrcaTestContext) -> None:
+        """Test SystemInformationPresenter commands are registered in CommandManager."""
+
+        self._setup_dependencies(test_context)
         from orca.system_information_presenter import SystemInformationPresenter
+        from orca import command_manager
 
         presenter = SystemInformationPresenter()
-        key_bindings_instance = essential_modules["key_bindings_instance"]
-        is_empty_mock = key_bindings_instance.is_empty
-        is_empty_mock.return_value = is_empty
-        result = presenter.get_bindings(refresh=False, is_desktop=True)
+        presenter.set_up_commands()
 
-        is_empty_mock.assert_called_once()
-        assert result == presenter._bindings
-
-    @pytest.mark.parametrize(
-        "is_desktop",
-        [
-            pytest.param(True, id="desktop"),
-            pytest.param(False, id="not_desktop"),
-        ],
-    )
-    def test_get_bindings_refresh(self, test_context: OrcaTestContext, is_desktop: bool) -> None:
-        """Test SystemInformationPresenter.get_bindings with refresh=True and desktop settings."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.system_information_presenter import SystemInformationPresenter
-
-        presenter = SystemInformationPresenter()
-        result = presenter.get_bindings(refresh=True, is_desktop=is_desktop)
-
-        assert result == presenter._bindings
-
-        if is_desktop:
-            key_bindings_instance = essential_modules["key_bindings_instance"]
-            remove_key_grabs_mock = key_bindings_instance.remove_key_grabs
-            remove_key_grabs_mock.assert_called_once()
-
-        essential_modules["orca.debug"].print_message.assert_any_call(
-            800,
-            f"SYSTEM INFORMATION PRESENTER: Refreshing bindings. Is desktop: {is_desktop}",
-            True,
-        )
-
-    @pytest.mark.parametrize(
-        "refresh",
-        [
-            pytest.param(False, id="no_refresh"),
-            pytest.param(True, id="refresh"),
-        ],
-    )
-    def test_get_handlers(self, test_context: OrcaTestContext, refresh: bool) -> None:
-        """Test SystemInformationPresenter.get_handlers with refresh parameter."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.system_information_presenter import SystemInformationPresenter
-
-        presenter = SystemInformationPresenter()
-        original_handlers = presenter._handlers
-        result = presenter.get_handlers(refresh=refresh)
-
-        assert result == presenter._handlers
-
-        if refresh:
-            essential_modules["orca.debug"].print_message.assert_any_call(
-                800, "SYSTEM INFORMATION PRESENTER: Refreshing handlers.", True
-            )
-        else:
-            assert result == original_handlers
-            assert len(result) == 4
-
-    def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test SystemInformationPresenter._setup_handlers."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.system_information_presenter import SystemInformationPresenter
-
-        presenter = SystemInformationPresenter()
-
-        expected_handlers = [
+        manager = command_manager.get_manager()
+        expected_commands = [
             "presentTimeHandler",
             "presentDateHandler",
             "present_battery_status",
             "present_cpu_and_memory_usage",
         ]
-        for handler_name in expected_handlers:
-            assert handler_name in presenter._handlers
+        for command_name in expected_commands:
+            assert manager.get_keyboard_command(command_name) is not None
 
-        assert essential_modules["input_event_handler"].call_count == 8
+    def test_setup_commands(self, test_context: OrcaTestContext) -> None:
+        """Test SystemInformationPresenter._setup_commands registers commands with CommandManager."""
 
-        essential_modules["orca.debug"].print_message.assert_any_call(
-            800, "SYSTEM INFORMATION PRESENTER: Handlers set up.", True
-        )
-
-    def test_setup_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test SystemInformationPresenter._setup_bindings."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.system_information_presenter import SystemInformationPresenter
+        from orca import command_manager
 
         presenter = SystemInformationPresenter()
+        presenter.set_up_commands()
 
-        keybindings_class_mock = essential_modules["orca.keybindings"].KeyBindings
-        initial_call_count = keybindings_class_mock.call_count
-        essential_modules["orca.debug"].print_message.reset_mock()
-
-        presenter._setup_bindings()
-
-        assert keybindings_class_mock.call_count == initial_call_count + 1
-
-        key_bindings_instance = essential_modules["key_bindings_instance"]
-        add_mock = key_bindings_instance.add
-        assert add_mock.call_count == 4
-
-        essential_modules["orca.debug"].print_message.assert_called_with(
-            800, "SYSTEM INFORMATION PRESENTER: Bindings set up.", True
-        )
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        expected_commands = [
+            "presentTimeHandler",
+            "presentDateHandler",
+            "present_battery_status",
+            "present_cpu_and_memory_usage",
+        ]
+        for cmd_name in expected_commands:
+            assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     @pytest.mark.parametrize(
         "method_name,setting_key,format_string,expected_output",

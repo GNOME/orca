@@ -142,7 +142,6 @@ class TestScriptManager:
                 self.deregister_event_listeners = test_context.Mock()
                 self.activate = test_context.Mock()
                 self.deactivate = test_context.Mock()
-                self.braille_bindings = {}
 
             def __or__(self, other):
                 return MockScript
@@ -169,7 +168,6 @@ class TestScriptManager:
         default_script.deregister_event_listeners = test_context.Mock()
         default_script.activate = test_context.Mock()
         default_script.deactivate = test_context.Mock()
-        default_script.braille_bindings = {}
 
         sleepmode_script = test_context.Mock()
         sleepmode_script.app = test_context.Mock()
@@ -848,6 +846,17 @@ class TestScriptManager:
         )
         mock_speech_manager_instance = test_context.Mock()
         mock_get_speech_manager.return_value = mock_speech_manager_instance
+
+        # Mock command_manager to return commands with braille bindings
+        mock_cmd_manager = test_context.Mock()
+        mock_command = test_context.Mock()
+        mock_command.get_braille_bindings.return_value = (1, 2, 3)
+        mock_cmd_manager.get_all_braille_commands.return_value = [mock_command]
+        test_context.patch(
+            "orca.script_manager.command_manager.get_manager",
+            return_value=mock_cmd_manager,
+        )
+
         manager = ScriptManager()
         old_script = test_context.Mock()
         old_script.app = test_context.Mock()
@@ -855,7 +864,6 @@ class TestScriptManager:
         new_script = default_script
         new_script.app = test_context.Mock()
         new_script.activate = test_context.Mock()
-        new_script.braille_bindings = {"key": "binding"}
         manager_instance = test_context.Mock()
         manager_instance.set_setting = test_context.Mock()
         settings_manager.get_manager = test_context.Mock(return_value=manager_instance)
@@ -867,7 +875,7 @@ class TestScriptManager:
         assert manager._active_script == new_script
 
         mock_check_braille.assert_called_once()
-        mock_setup_ranges.assert_called_once_with(new_script.braille_bindings.keys())
+        mock_setup_ranges.assert_called_once_with({1, 2, 3})
         mock_speech_manager_instance.check_speech_setting.assert_called_once()
 
     @pytest.mark.parametrize(
@@ -931,6 +939,14 @@ class TestScriptManager:
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(speech_patch, new=mock_get_speech_manager)
 
+        # Mock command_manager to return commands with no braille bindings
+        mock_cmd_manager = test_context.Mock()
+        mock_cmd_manager.get_all_braille_commands.return_value = []
+        test_context.patch(
+            "orca.script_manager.command_manager.get_manager",
+            return_value=mock_cmd_manager,
+        )
+
         speech_manager_instance = test_context.Mock()
         mock_get_speech_manager.return_value = speech_manager_instance
 
@@ -965,7 +981,6 @@ class TestScriptManager:
         new_script = default_script
         new_script.app = same_app
         new_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
-        new_script.braille_bindings = {}
 
         manager._active_script = old_script
         manager.set_active_script(new_script)

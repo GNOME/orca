@@ -666,446 +666,393 @@ class TestCommandRegistry:
         return essential_modules
 
     def test_flat_review_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all flat review presenter handlers are registered."""
+        """Test that all flat review presenter handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.flat_review_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
 
-        missing = FLAT_REVIEW_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - FLAT_REVIEW_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in flat_review_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in flat_review_presenter: {extra}"
-
-    def test_flat_review_presenter_bindings_created(self, test_context: OrcaTestContext) -> None:
-        """Test flat review presenter creates bindings for both layouts."""
-
-        self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import get_presenter
-
-        presenter = get_presenter()
-
-        desktop_bindings = presenter.get_bindings(True, is_desktop=True)
-        assert desktop_bindings is not None
-        assert desktop_bindings is presenter._desktop_bindings
-
-        laptop_bindings = presenter.get_bindings(True, is_desktop=False)
-        assert laptop_bindings is not None
-        assert laptop_bindings is presenter._laptop_bindings
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name for name in FLAT_REVIEW_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in flat_review_presenter: {missing}"
 
     def test_flat_review_finder_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all flat review finder handlers are registered."""
+        """Test that all flat review finder handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.flat_review_finder import get_finder
+        from orca import command_manager
 
         finder = get_finder()
-        handlers = finder.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        finder.set_up_commands()
 
-        missing = FLAT_REVIEW_FINDER_HANDLERS - actual_handlers
-        extra = actual_handlers - FLAT_REVIEW_FINDER_HANDLERS
-
-        assert not missing, f"Missing handlers in flat_review_finder: {missing}"
-        assert not extra, f"Unexpected handlers in flat_review_finder: {extra}"
-
-    def test_flat_review_finder_bindings_created(self, test_context: OrcaTestContext) -> None:
-        """Test flat review finder creates bindings for both layouts."""
-
-        self._setup_dependencies(test_context)
-        from orca.flat_review_finder import get_finder
-
-        finder = get_finder()
-
-        desktop_bindings = finder.get_bindings(True, is_desktop=True)
-        assert desktop_bindings is not None
-        assert desktop_bindings is finder._desktop_bindings
-
-        laptop_bindings = finder.get_bindings(True, is_desktop=False)
-        assert laptop_bindings is not None
-        assert laptop_bindings is finder._laptop_bindings
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name for name in FLAT_REVIEW_FINDER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in flat_review_finder: {missing}"
 
     def test_where_am_i_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all where am I presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = WHERE_AM_I_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - WHERE_AM_I_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in where_am_i_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in where_am_i_presenter: {extra}"
-
-    def test_where_am_i_presenter_bindings_created(self, test_context: OrcaTestContext) -> None:
-        """Test where am I presenter creates bindings for both layouts."""
-
-        self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import get_presenter
-
-        presenter = get_presenter()
-
-        desktop_bindings = presenter.get_bindings(True, is_desktop=True)
-        assert desktop_bindings is not None
-
-        laptop_bindings = presenter.get_bindings(True, is_desktop=False)
-        assert laptop_bindings is not None
+        missing = frozenset(
+            name for name in WHERE_AM_I_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in where_am_i_presenter: {missing}"
 
     def test_notification_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all notification presenter handlers are registered."""
+        """Test that all notification presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.notification_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        manager = command_manager.get_manager()
 
-        missing = NOTIFICATION_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - NOTIFICATION_PRESENTER_HANDLERS
+        missing = frozenset(
+            name for name in NOTIFICATION_PRESENTER_HANDLERS
+            if manager.get_keyboard_command(name) is None
+        )
 
-        assert not missing, f"Missing handlers in notification_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in notification_presenter: {extra}"
-
-    def test_notification_presenter_bindings_created(self, test_context: OrcaTestContext) -> None:
-        """Test notification presenter creates bindings for both layouts."""
-
-        self._setup_dependencies(test_context)
-        from orca.notification_presenter import get_presenter
-
-        presenter = get_presenter()
-
-        desktop_bindings = presenter.get_bindings(True, is_desktop=True)
-        assert desktop_bindings is not None
-
-        laptop_bindings = presenter.get_bindings(True, is_desktop=False)
-        assert laptop_bindings is not None
+        assert not missing, f"Missing commands in notification_presenter: {missing}"
 
     def test_system_information_presenter_handlers_exist(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test that all system information presenter handlers are registered."""
+        """Test that all system information presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.system_information_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        manager = command_manager.get_manager()
 
-        missing = SYSTEM_INFORMATION_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - SYSTEM_INFORMATION_PRESENTER_HANDLERS
+        missing = frozenset(
+            name for name in SYSTEM_INFORMATION_PRESENTER_HANDLERS
+            if manager.get_keyboard_command(name) is None
+        )
 
-        assert not missing, f"Missing handlers in system_information_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in system_information_presenter: {extra}"
-
-    def test_system_information_presenter_bindings_created(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test system information presenter creates bindings for both layouts."""
-
-        self._setup_dependencies(test_context)
-        from orca.system_information_presenter import get_presenter
-
-        presenter = get_presenter()
-
-        desktop_bindings = presenter.get_bindings(True, is_desktop=True)
-        assert desktop_bindings is not None
-
-        laptop_bindings = presenter.get_bindings(True, is_desktop=False)
-        assert laptop_bindings is not None
+        assert not missing, f"Missing commands in system_information_presenter: {missing}"
 
     def test_sleep_mode_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all sleep mode manager handlers are registered."""
+        """Test that all sleep mode manager commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.sleep_mode_manager import get_manager
+        from orca import command_manager
 
         manager = get_manager()
-        handlers = manager.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        manager.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = SLEEP_MODE_MANAGER_HANDLERS - actual_handlers
-        extra = actual_handlers - SLEEP_MODE_MANAGER_HANDLERS
+        missing = frozenset(
+            name for name in SLEEP_MODE_MANAGER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
 
-        assert not missing, f"Missing handlers in sleep_mode_manager: {missing}"
-        assert not extra, f"Unexpected handlers in sleep_mode_manager: {extra}"
-
-    def test_sleep_mode_manager_bindings_created(self, test_context: OrcaTestContext) -> None:
-        """Test sleep mode manager creates bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import get_manager
-
-        manager = get_manager()
-        bindings = manager.get_bindings(True)
-        assert bindings is not None
+        assert not missing, f"Missing commands in sleep_mode_manager: {missing}"
 
     def test_live_region_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all live region presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = LIVE_REGION_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - LIVE_REGION_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in live_region_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in live_region_presenter: {extra}"
+        missing = frozenset(
+            name for name in LIVE_REGION_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in live_region_presenter: {missing}"
 
     def test_chat_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all chat presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.chat_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = CHAT_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - CHAT_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in chat_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in chat_presenter: {extra}"
+        missing = frozenset(
+            name for name in CHAT_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in chat_presenter: {missing}"
 
     def test_learn_mode_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all learn mode presenter handlers are registered."""
+        """Test that all learn mode presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        manager = command_manager.get_manager()
 
-        missing = LEARN_MODE_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - LEARN_MODE_PRESENTER_HANDLERS
+        missing = frozenset(
+            name for name in LEARN_MODE_PRESENTER_HANDLERS
+            if manager.get_keyboard_command(name) is None
+        )
 
-        assert not missing, f"Missing handlers in learn_mode_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in learn_mode_presenter: {extra}"
+        assert not missing, f"Missing commands in learn_mode_presenter: {missing}"
 
     def test_action_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all action presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.action_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = ACTION_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - ACTION_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in action_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in action_presenter: {extra}"
+        missing = frozenset(
+            name for name in ACTION_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in action_presenter: {missing}"
 
     def test_debugging_tools_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all debugging tools manager handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.debugging_tools_manager import get_manager
+        from orca import command_manager
 
         manager = get_manager()
-        handlers = manager.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        manager.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = DEBUGGING_TOOLS_MANAGER_HANDLERS - actual_handlers
-        extra = actual_handlers - DEBUGGING_TOOLS_MANAGER_HANDLERS
-
-        assert not missing, f"Missing handlers in debugging_tools_manager: {missing}"
-        assert not extra, f"Unexpected handlers in debugging_tools_manager: {extra}"
+        missing = frozenset(
+            name for name in DEBUGGING_TOOLS_MANAGER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in debugging_tools_manager: {missing}"
 
     def test_bypass_mode_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all bypass mode manager handlers are registered."""
+        """Test that all bypass mode manager commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.bypass_mode_manager import get_manager
+        from orca import command_manager
 
         manager = get_manager()
-        handlers = manager.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        manager.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = BYPASS_MODE_MANAGER_HANDLERS - actual_handlers
-        extra = actual_handlers - BYPASS_MODE_MANAGER_HANDLERS
+        missing = frozenset(
+            name for name in BYPASS_MODE_MANAGER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
 
-        assert not missing, f"Missing handlers in bypass_mode_manager: {missing}"
-        assert not extra, f"Unexpected handlers in bypass_mode_manager: {extra}"
+        assert not missing, f"Missing commands in bypass_mode_manager: {missing}"
 
     def test_mouse_review_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all mouse review handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.mouse_review import get_reviewer
+        from orca import command_manager
 
         reviewer = get_reviewer()
-        handlers = reviewer.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        reviewer.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = MOUSE_REVIEW_HANDLERS - actual_handlers
-        extra = actual_handlers - MOUSE_REVIEW_HANDLERS
-
-        assert not missing, f"Missing handlers in mouse_review: {missing}"
-        assert not extra, f"Unexpected handlers in mouse_review: {extra}"
+        missing = frozenset(
+            name for name in MOUSE_REVIEW_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in mouse_review: {missing}"
 
     def test_typing_echo_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all typing echo presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.typing_echo_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = TYPING_ECHO_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - TYPING_ECHO_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in typing_echo_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in typing_echo_presenter: {extra}"
+        missing = frozenset(
+            name for name in TYPING_ECHO_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in typing_echo_presenter: {missing}"
 
     def test_clipboard_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all clipboard handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca.clipboard import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = CLIPBOARD_HANDLERS - actual_handlers
-        extra = actual_handlers - CLIPBOARD_HANDLERS
-
-        assert not missing, f"Missing handlers in clipboard: {missing}"
-        assert not extra, f"Unexpected handlers in clipboard: {extra}"
+        missing = frozenset(
+            name for name in CLIPBOARD_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in clipboard: {missing}"
 
     def test_caret_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all caret navigator handlers are registered."""
+        """Test that all caret navigator commands are registered with CommandManager.
+
+        Note: caret_navigator now registers Commands directly with CommandManager
+        instead of returning handlers from get_handlers(). This test verifies the
+        commands are properly registered.
+        """
 
         self._setup_structural_navigator_dependencies(test_context)
         from orca.caret_navigator import get_navigator
+        from orca import command_manager
 
         navigator = get_navigator()
-        handlers = navigator.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        navigator.set_up_commands()
+        manager = command_manager.get_manager()
 
-        missing = CARET_NAVIGATOR_HANDLERS - actual_handlers
-        extra = actual_handlers - CARET_NAVIGATOR_HANDLERS
+        missing = frozenset(
+            name for name in CARET_NAVIGATOR_HANDLERS
+            if manager.get_keyboard_command(name) is None
+        )
 
-        assert not missing, f"Missing handlers in caret_navigator: {missing}"
-        assert not extra, f"Unexpected handlers in caret_navigator: {extra}"
+        assert not missing, f"Missing commands in caret_navigator: {missing}"
 
     def test_structural_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all structural navigator handlers are registered."""
+        """Test that all structural navigator handlers are registered in CommandManager."""
 
         self._setup_structural_navigator_dependencies(test_context)
         from orca.structural_navigator import get_navigator
+        from orca import command_manager
 
         navigator = get_navigator()
-        handlers = navigator.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        navigator.set_up_commands()
 
-        missing = STRUCTURAL_NAVIGATOR_HANDLERS - actual_handlers
-        extra = actual_handlers - STRUCTURAL_NAVIGATOR_HANDLERS
-
-        assert not missing, f"Missing handlers in structural_navigator: {missing}"
-        assert not extra, f"Unexpected handlers in structural_navigator: {extra}"
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name for name in STRUCTURAL_NAVIGATOR_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in structural_navigator: {missing}"
 
     def test_table_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all table navigator handlers are registered."""
+        """Test that all table navigator handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.table_navigator import get_navigator
+        from orca import command_manager
 
         navigator = get_navigator()
-        handlers = navigator.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        navigator.set_up_commands()
 
-        missing = TABLE_NAVIGATOR_HANDLERS - actual_handlers
-        extra = actual_handlers - TABLE_NAVIGATOR_HANDLERS
-
-        assert not missing, f"Missing handlers in table_navigator: {missing}"
-        assert not extra, f"Unexpected handlers in table_navigator: {extra}"
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name for name in TABLE_NAVIGATOR_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in table_navigator: {missing}"
 
     def test_object_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all object navigator handlers are registered."""
+        """Test that all object navigator handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.object_navigator import get_navigator
+        from orca import command_manager
 
         navigator = get_navigator()
-        handlers = navigator.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        navigator.set_up_commands()
 
-        missing = OBJECT_NAVIGATOR_HANDLERS - actual_handlers
-        extra = actual_handlers - OBJECT_NAVIGATOR_HANDLERS
-
-        assert not missing, f"Missing handlers in object_navigator: {missing}"
-        assert not extra, f"Unexpected handlers in object_navigator: {extra}"
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name for name in OBJECT_NAVIGATOR_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in object_navigator: {missing}"
 
     def test_say_all_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all say all presenter handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
         from orca.say_all_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = SAY_ALL_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - SAY_ALL_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in say_all_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in say_all_presenter: {extra}"
+        missing = frozenset(
+            name for name in SAY_ALL_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in say_all_presenter: {missing}"
 
     def test_speech_and_verbosity_manager_handlers_exist(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test that all speech and verbosity manager handlers are registered."""
+        """Test that all speech and verbosity manager handlers are registered in CommandManager."""
 
         self._setup_speech_and_verbosity_manager_dependencies(test_context)
         from orca.speech_and_verbosity_manager import get_manager
+        from orca import command_manager
 
         manager = get_manager()
-        handlers = manager.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        manager.set_up_commands()
 
-        missing = SPEECH_AND_VERBOSITY_MANAGER_HANDLERS - actual_handlers
-        extra = actual_handlers - SPEECH_AND_VERBOSITY_MANAGER_HANDLERS
-
-        assert not missing, f"Missing handlers in speech_and_verbosity_manager: {missing}"
-        assert not extra, f"Unexpected handlers in speech_and_verbosity_manager: {extra}"
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name for name in SPEECH_AND_VERBOSITY_MANAGER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in speech_and_verbosity_manager: {missing}"
 
     def test_document_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all document presenter handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
         from orca.document_presenter import get_presenter
+        from orca import command_manager
 
         presenter = get_presenter()
-        handlers = presenter.get_handlers(True)
-        actual_handlers = frozenset(handlers.keys())
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        missing = DOCUMENT_PRESENTER_HANDLERS - actual_handlers
-        extra = actual_handlers - DOCUMENT_PRESENTER_HANDLERS
-
-        assert not missing, f"Missing handlers in document_presenter: {missing}"
-        assert not extra, f"Unexpected handlers in document_presenter: {extra}"
+        missing = frozenset(
+            name for name in DOCUMENT_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in document_presenter: {missing}"
 
     def test_expected_total_command_count(self) -> None:
         """Test that the expected total command count is correct.

@@ -40,43 +40,25 @@ from gi.repository import Pango
 import time
 
 from . import acss
-from . import action_presenter
 from . import braille
-from . import caret_navigator
-from . import chat_presenter
-from . import clipboard
+from . import command_manager
 from . import debug
-from . import debugging_tools_manager
-from . import document_presenter
 from . import event_manager
-from . import flat_review_finder
-from . import flat_review_presenter
 from . import guilabels
-from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import learn_mode_presenter
-from . import live_region_presenter
 from . import messages
-from . import mouse_review
-from . import notification_presenter
-from . import object_navigator
 from . import orca
+from . import orca_modifier_manager
 from . import orca_gtkbuilder
 from . import orca_gui_profile
 from . import orca_platform # pylint: disable=no-name-in-module
-from . import profile_manager
-from . import script_manager
 from . import settings
 from . import settings_manager
-from . import sleep_mode_manager
 from . import speech_and_verbosity_manager
 from . import speechserver
-from . import structural_navigator
-from . import system_information_presenter
-from . import table_navigator
 from . import typing_echo_presenter
-from . import where_am_i_presenter
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 
@@ -136,7 +118,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.getTextAttributesView = None
         self.hyperlinkVoice = None
         self.initializingSpeech = None
-        self.kbindings = None
         self.keyBindingsModel = None
         self.keyBindView = None
         self.newBinding = None
@@ -1975,21 +1956,22 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         return clickCountString
 
-    def _insertRow(self, handl, kb, parent=None, modif=False):
+    def _insertRow(self, handl, kb, parent=None, modif=False, description=None):
         """Appends a new row with the new keybinding data to the treeview
 
         Arguments:
         - handl:  the name of the handler associated to the keyBinding
-        - kb:     the new keybinding.
+        - kb:     the new keybinding (can be None for unbound commands).
         - parent: the parent node of the treeview, where to append the kb
         - modif:  whether to check the modified field or not.
+        - description: the description to display (from Command.get_description())
 
         Returns a Gtk.TreeIter pointing at the new row.
         """
 
         model = self.keyBindingsModel
 
-        if not kb.handler:
+        if not description:
             return None
 
         if parent is None:
@@ -1997,21 +1979,30 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if parent is not None:
             myiter = model.append(parent)
-            if not kb.keysymstring:
+
+            # Handle unbound commands (kb is None)
+            if kb is None:
                 text = None
+                modifier_mask = str(keybindings.DEFAULT_MODIFIER_MASK)
+                modifiers = "0"
+                keysymstring = ""
+                click_count = "1"
             else:
-                clickCount = self._clickCountToString(kb.click_count)
+                clickCountStr = self._clickCountToString(kb.click_count)
                 keysymstring = kb.keysymstring
                 text = keybindings.get_modifier_names(kb.modifiers) \
                        + keysymstring \
-                       + clickCount
+                       + clickCountStr
+                modifier_mask = str(kb.modifier_mask)
+                modifiers = str(kb.modifiers)
+                click_count = str(kb.click_count)
 
             model.set_value(myiter, HANDLER, handl)
-            model.set_value(myiter, DESCRIP, kb.handler.description)
-            model.set_value(myiter, MOD_MASK1, str(kb.modifier_mask))
-            model.set_value(myiter, MOD_USED1, str(kb.modifiers))
-            model.set_value(myiter, KEY1, kb.keysymstring)
-            model.set_value(myiter, CLICK_COUNT1, str(kb.click_count))
+            model.set_value(myiter, DESCRIP, description)
+            model.set_value(myiter, MOD_MASK1, modifier_mask)
+            model.set_value(myiter, MOD_USED1, modifiers)
+            model.set_value(myiter, KEY1, keysymstring)
+            model.set_value(myiter, CLICK_COUNT1, click_count)
             if text is not None:
                 model.set_value(myiter, OLDTEXT1, text)
                 model.set_value(myiter, TEXT1, text)
@@ -2022,16 +2013,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             return None
 
-    def _insertRowBraille(self, handl, com, inputEvHand,
+    def _insertRowBraille(self, command_name, braille_key, command,
                           parent=None, modif=False):
         """Appends a new row with the new braille binding data to the treeview
 
         Arguments:
-        - handl:       the name of the handler associated to the brailleBinding
-        - com:         the BrlTTY command
-        - inputEvHand: the inputEventHandler with the new brailleBinding
-        - parent:      the parent node of the treeview, where to append the kb
-        - modif:       whether to check the modified field or not.
+        - command_name: the name of the command associated to the brailleBinding
+        - braille_key:  the BrlTTY command code
+        - command:      the Command with the brailleBinding
+        - parent:       the parent node of the treeview, where to append the kb
+        - modif:        whether to check the modified field or not.
 
         Returns a Gtk.TreeIter pointing at the new row.
         """
@@ -2043,10 +2034,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if parent is not None:
             myiter = model.append(parent)
-            model.set_value(myiter, HANDLER, handl)
-            model.set_value(myiter, DESCRIP, inputEvHand.description)
-            model.set_value(myiter, KEY1, str(com))
-            model.set_value(myiter, TEXT1, braille.command_name[com])
+            model.set_value(myiter, HANDLER, command_name)
+            model.set_value(myiter, DESCRIP, command.get_description())
+            model.set_value(myiter, KEY1, str(braille_key))
+            model.set_value(myiter, TEXT1, braille.command_name[braille_key])
             model.set_value(myiter, MODIF, modif)
             model.set_value(myiter, EDITABLE, False)
             return myiter
@@ -2058,34 +2049,32 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         try:
-            self.script.setup_input_event_handlers()
-            keyBinds = keybindings.KeyBindings()
-            keyBinds = settings_manager.get_manager().override_key_bindings(
-                self.script.input_event_handlers, keyBinds, enabled_only=False)
-            keyBind = keybindings.KeyBinding(None, None, None)
+            self.script.set_up_commands()
             treeModel = self.keyBindingsModel
+
+            # Get the overridden command names from settings
+            overridden_commands = settings_manager.get_manager().get_active_keybindings()
+
+            # Get descriptions for overridden commands
+            overridden_descriptions = set()
+            for command_name in overridden_commands:
+                command = command_manager.get_manager().get_command(command_name)
+                if command:
+                    desc = command.get_description()
+                    if desc:
+                        overridden_descriptions.add(desc)
 
             myiter = treeModel.get_iter_first()
             while myiter is not None:
                 iterChild = treeModel.iter_children(myiter)
                 while iterChild is not None:
                     descrip = treeModel.get_value(iterChild, DESCRIP)
-                    keyBind.handler = \
-                        input_event.InputEventHandler(None, descrip)
-                    if keyBinds.has_key_binding(keyBind,
-                                              type_of_search="description"):
+                    if descrip in overridden_descriptions:
                         treeModel.set_value(iterChild, MODIF, True)
                     iterChild = treeModel.iter_next(iterChild)
                 myiter = treeModel.iter_next(myiter)
         except Exception:
             debug.print_exception(debug.LEVEL_SEVERE)
-
-    def _get_input_event_handler_key(self, event_handler):
-        for key_name, handler in self.script.input_event_handlers.items():
-            if handler == event_handler:
-                return key_name
-
-        return None
 
     def _populateKeyBindings(self, clearModel=True):
         """Fills the TreeView with the list of Orca keybindings
@@ -2099,140 +2088,37 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.keyBindView.hide()
         if clearModel:
             self.keyBindingsModel.clear()
-            self.kbindings = None
 
-        appName = AXObject.get_name(self.script.app)
-        iterApp = self._createNode(appName)
-        iterOrca = self._createNode(guilabels.KB_GROUP_DEFAULT)
-        iterNotificationPresenter = self._createNode(guilabels.KB_GROUP_NOTIFICATIONS)
-        iterClipboardPresenter = self._createNode(guilabels.KB_GROUP_CLIPBOARD)
-        iterFlatReviewPresenter = self._createNode(guilabels.KB_GROUP_FLAT_REVIEW)
-        iterFind = self._createNode(guilabels.KB_GROUP_FIND)
-        iterSpeechAndVerbosity = self._createNode(guilabels.KB_GROUP_SPEECH_VERBOSITY)
-        iterSystemInfo = self._createNode(guilabels.KB_GROUP_SYSTEM_INFORMATION)
-        iterSleepMode = self._createNode(guilabels.KB_GROUP_SLEEP_MODE)
-        iterObjectNav = self._createNode(guilabels.KB_GROUP_OBJECT_NAVIGATION)
-        iterCaretNav = self._createNode(guilabels.KB_GROUP_CARET_NAVIGATION)
-        iterStructNav = self._createNode(guilabels.KB_GROUP_STRUCTURAL_NAVIGATION)
-        iterTableNav = self._createNode(guilabels.KB_GROUP_TABLE_NAVIGATION)
-        iterDocuments = self._createNode(guilabels.KB_GROUP_DOCUMENTS)
-        iterLiveRegionPresenter = self._createNode(guilabels.KB_GROUP_LIVE_REGIONS)
-        iterWhereAmIPresenter = self._createNode(guilabels.KB_GROUP_WHERE_AM_I)
-        iterLearnMode = self._createNode(guilabels.KB_GROUP_LEARN_MODE)
-        iterMouseReviewer = self._createNode(guilabels.KB_GROUP_MOUSE_REVIEW)
-        iterActionPresenter = self._createNode(guilabels.KB_GROUP_ACTIONS)
-        iterDebuggingTools = self._createNode(guilabels.KB_GROUP_DEBUGGING_TOOLS)
-        iterChat = self._createNode(guilabels.KB_GROUP_CHAT)
-        iterProfiles = self._createNode(guilabels.GENERAL_PROFILES)
+        self.script.set_up_commands()
 
-        if not self.kbindings:
-            layout = settings.keyboardLayout
-            isDesktop = layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        # Build group_to_iter dynamically from commands
+        group_to_iter: dict[str, Gtk.TreeIter] = {}
+        seen_commands: set[str] = set()
 
-            self.kbindings = keybindings.KeyBindings()
-            self.script.setup_input_event_handlers()
-            allKeyBindings = self.script.get_key_bindings(False)
-            defKeyBindings = self.script.get_default_keybindings_deprecated()
-            npKeyBindings = notification_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            cbKeyBindings = clipboard.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            svKeyBindings = speech_and_verbosity_manager.get_manager().get_bindings(
-                is_desktop=isDesktop)
-            sysKeyBindings = system_information_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            smKeyBindings = sleep_mode_manager.get_manager().get_bindings(
-                is_desktop=isDesktop)
-            onKeyBindings = object_navigator.get_navigator().get_bindings(
-                is_desktop=isDesktop)
-            cnKeyBindings = caret_navigator.get_navigator().get_bindings(
-                is_desktop=isDesktop)
-            snKeyBindings = structural_navigator.get_navigator().get_bindings(
-                is_desktop=isDesktop)
-            tnKeyBindings = table_navigator.get_navigator().get_bindings(
-                is_desktop=isDesktop)
-            dpKeyBindings = document_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            lrKeyBindings = live_region_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            lmKeyBindings = learn_mode_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            mrKeyBindings = mouse_review.get_reviewer().get_bindings(
-                is_desktop=isDesktop)
-            acKeyBindings = action_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            frKeyBindings = flat_review_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            findKeyBindings = flat_review_finder.get_finder().get_bindings(
-                is_desktop=isDesktop)
-            waiKeyBindings = where_am_i_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            debuggingKeyBindings = debugging_tools_manager.get_manager().get_bindings(
-                is_desktop=isDesktop)
-            chatKeyBindings = chat_presenter.get_presenter().get_bindings(
-                is_desktop=isDesktop)
-            pmKeyBindings = profile_manager.get_manager().get_bindings(
-                is_desktop=isDesktop)
+        for command in command_manager.get_manager().get_all_keyboard_commands():
+            handl = command.get_name()
+            if handl in seen_commands:
+                continue
+            seen_commands.add(handl)
 
-            for kb in allKeyBindings.key_bindings:
-                if not self.kbindings.has_key_binding(kb, "strict"):
-                    handl = self._get_input_event_handler_key(kb.handler)
-                    if npKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterNotificationPresenter)
-                    elif cbKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterClipboardPresenter)
-                    elif onKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterObjectNav)
-                    elif cnKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterCaretNav)
-                    elif snKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterStructNav)
-                    elif tnKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterTableNav)
-                    elif dpKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterDocuments)
-                    elif lrKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterLiveRegionPresenter)
-                    elif frKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterFlatReviewPresenter)
-                    elif findKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterFind)
-                    elif waiKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterWhereAmIPresenter)
-                    elif svKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterSpeechAndVerbosity)
-                    elif sysKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterSystemInfo)
-                    elif smKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterSleepMode)
-                    elif lmKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterLearnMode)
-                    elif acKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterActionPresenter)
-                    elif mrKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterMouseReviewer)
-                    elif debuggingKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterDebuggingTools)
-                    elif chatKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterChat)
-                    elif pmKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterProfiles)
-                    elif not defKeyBindings.has_key_binding(kb, "description"):
-                        self._insertRow(handl, kb, iterApp)
-                    else:
-                        self._insertRow(handl, kb, iterOrca)
-                    self.kbindings.add(kb)
+            kb = command.get_keybinding()
+            description = command.get_description()
+            group_label = command.get_group_label()
 
-        if not self.keyBindingsModel.iter_has_child(iterApp):
-            self.keyBindingsModel.remove(iterApp)
+            if group_label not in group_to_iter:
+                group_to_iter[group_label] = self._createNode(group_label)
+
+            parent_iter = group_to_iter[group_label]
+            self._insertRow(handl, kb, parent_iter, description=description)
 
         self._updateOrcaModifier()
         self._markModified()
         iterBB = self._createNode(guilabels.KB_GROUP_BRAILLE)
-        self.bbindings = self.script.get_braille_bindings()
-        for com, inputEvHand in self.bbindings.items():
-            handl = self._get_input_event_handler_key(inputEvHand)
-            self._insertRowBraille(handl, com, inputEvHand, iterBB)
+        for command in command_manager.get_manager().get_all_braille_commands():
+            braille_keys = command.get_braille_bindings()
+            if braille_keys:
+                # Use the first braille key for display purposes
+                self._insertRowBraille(command.get_name(), braille_keys[0], command, iterBB)
 
         self.keyBindView.set_model(self.keyBindingsModel)
         self.keyBindView.set_headers_visible(True)
@@ -2814,8 +2700,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def editingKey(self, cell, editable, path, treeModel):
         """Starts user input of a Key for a selected key binding"""
 
-        self._presentMessage(messages.KB_ENTER_NEW_KEY)
-        script_manager.get_manager().get_active_script().remove_key_grabs("Capturing keys")
+        # Use the delay because the keyboard event which triggers this state is processed after
+        # and cuts the speech off.
+        GLib.timeout_add(500, self._presentMessage, messages.KB_ENTER_NEW_KEY)
+        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
+        command_manager.get_manager().remove_all_grabs("Capturing keys")
         input_event_manager.get_manager().unmap_all_modifiers()
         editable.connect('key-press-event', self.kbKeyPressed)
         return
@@ -2824,7 +2713,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Stops user input of a Key for a selected key binding"""
 
         self._capturedKey = []
-        script_manager.get_manager().get_active_script().refresh_key_grabs("Done capturing keys")
+        command_manager.get_manager().refresh_all_grabs("Done capturing keys")
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
         return
 
     def _processKeyCaptured(self, keyPressedEvent):
@@ -2895,22 +2785,18 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.newBinding = keybindings.KeyBinding(keyName,
                                                  modifiers,
-                                                 None,
-                                                 clickCount)
+                                                 click_count=clickCount)
         modifierNames = keybindings.get_modifier_names(modifiers)
         clickCountString = self._clickCountToString(clickCount)
         newString = modifierNames + keyName + clickCountString
         description = self.pendingKeyBindings.get(newString)
 
         if description is None:
-
-            def match(x):
-                return x.keysymstring == keyName and x.modifiers == modifiers \
-                    and x.click_count == clickCount and x.handler
-
-            matches = list(filter(match, self.kbindings.key_bindings))
-            if matches:
-                description = matches[0].handler.description
+            # Look up the command that has this keybinding
+            cmd = command_manager.get_manager().get_command_for_keybinding(
+                keyName, modifiers, clickCount)
+            if cmd:
+                description = cmd.get_description()
 
         if description:
             msg = messages.KB_ALREADY_BOUND % description
@@ -2924,7 +2810,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 self._pending_already_bound_message_id = None
             msg = messages.KB_CAPTURED % newString
             editable.set_text(newString)
-            self._presentMessage(msg)
+            # Use the delay because the keyboard event which triggers this state is processed after
+            # and cuts the speech off.
+            GLib.timeout_add(500, self._presentMessage, msg)
 
         return True
 
@@ -2935,7 +2823,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         self._capturedKey = []
-        script_manager.get_manager().get_active_script().refresh_key_grabs("Done capturing keys")
+        command_manager.get_manager().refresh_all_grabs("Done capturing keys")
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
         myiter = treeModel.get_iter_from_string(path)
         try:
             originalBinding = treeModel.get_value(myiter, text)

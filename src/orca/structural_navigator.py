@@ -66,9 +66,9 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .input_event import InputEvent, InputEventHandler
 
 if TYPE_CHECKING:
+    from .input_event import InputEvent
     from .scripts import default
 
 class NavigationMode(Enum):
@@ -87,800 +87,333 @@ class StructuralNavigator:
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
         self._suspended: bool = False
-        self._handlers: dict = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
         self._mode_for_script: dict[default.Script, NavigationMode] = {}
         self._previous_mode_for_script: dict[default.Script, NavigationMode] = {}
+        self._initialized: bool = False
 
         msg = "STRUCTURAL NAVIGATOR: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("StructuralNavigator", self)
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, InputEventHandler]:
-        """Returns the structural navigation input event handlers."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = "STRUCTURAL NAVIGATOR: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True, True)
-            self._setup_handlers()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._handlers
+        manager = command_manager.get_manager()
+        group_label = guilabels.KB_GROUP_STRUCTURAL_NAVIGATION
 
-    def _setup_handlers(self) -> None:
-        """Sets up the structural navigation input event handlers."""
-
-        self._handlers = {}
-
-        self._handlers["structural_navigator_mode_cycle"] = \
-            InputEventHandler(
+        # Mode cycle command
+        kb_z = keybindings.KeyBinding("z", keybindings.ORCA_MODIFIER_MASK)
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "structural_navigator_mode_cycle",
                 self.cycle_mode,
+                group_label,
                 cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE,
-                enabled=not self._suspended,
-                is_group_toggle=True)
+                desktop_keybinding=kb_z,
+                laptop_keybinding=kb_z,
+                is_group_toggle=True,
+            )
+        )
 
-        enabled = self.get_is_enabled() and not self._suspended
+        # Navigation bindings - (key, prev_mod, next_mod, list_mod, base_name)
+        nav_bindings = [
+            (
+                "q",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "blockquote",
+            ),
+            (
+                "b",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "button",
+            ),
+            (
+                "x",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "checkbox",
+            ),
+            (
+                "c",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "combobox",
+            ),
+            (
+                "e",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "entry",
+            ),
+            (
+                "f",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "form_field",
+            ),
+            (
+                "h",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "heading",
+            ),
+            (
+                "g",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "image",
+            ),
+            (
+                "m",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "landmark",
+            ),
+            (
+                "l",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "list",
+            ),
+            (
+                "i",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "list_item",
+            ),
+            (
+                "p",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "paragraph",
+            ),
+            (
+                "r",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "radio_button",
+            ),
+            (
+                "t",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "table",
+            ),
+            (
+                "k",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "link",
+            ),
+            (
+                "u",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "unvisited_link",
+            ),
+            (
+                "v",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "visited_link",
+            ),
+            (
+                "o",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "large_object",
+            ),
+            (
+                "a",
+                keybindings.SHIFT_MODIFIER_MASK,
+                keybindings.NO_MODIFIER_MASK,
+                keybindings.SHIFT_ALT_MODIFIER_MASK,
+                "clickable",
+            ),
+        ]
 
-        self._handlers["previous_blockquote"] = InputEventHandler(
-            self.previous_blockquote, cmdnames.BLOCKQUOTE_PREV, enabled=enabled)
-        self._handlers["next_blockquote"] = InputEventHandler(
-                self.next_blockquote, cmdnames.BLOCKQUOTE_NEXT, enabled=enabled)
-        self._handlers["list_blockquotes"] = InputEventHandler(
-                self.list_blockquotes, cmdnames.BLOCKQUOTE_LIST, enabled=enabled)
+        # Build command name -> keybinding mapping
+        cmd_bindings: dict[str, keybindings.KeyBinding | None] = {}
+        for key, prev_mod, next_mod, list_mod, base_name in nav_bindings:
+            cmd_bindings[f"previous_{base_name}"] = keybindings.KeyBinding(key, prev_mod)
+            cmd_bindings[f"next_{base_name}"] = keybindings.KeyBinding(key, next_mod)
+            # Handle plurals for list commands
+            if base_name == "entry":
+                plural = "entries"
+            elif base_name in ("checkbox", "combobox"):
+                plural = f"{base_name}es"
+            else:
+                plural = f"{base_name}s"
+            cmd_bindings[f"list_{plural}"] = keybindings.KeyBinding(key, list_mod)
 
-        self._handlers["previous_button"] = InputEventHandler(
-            self.previous_button, cmdnames.BUTTON_PREV, enabled=enabled)
-        self._handlers["next_button"] = InputEventHandler(
-            self.next_button, cmdnames.BUTTON_NEXT, enabled=enabled)
-        self._handlers["list_buttons"] = InputEventHandler(
-            self.list_buttons, cmdnames.BUTTON_LIST, enabled=enabled)
+        # Additional bindings
+        cmd_bindings["previous_separator"] = keybindings.KeyBinding(
+            "s", keybindings.SHIFT_MODIFIER_MASK
+        )
+        cmd_bindings["next_separator"] = keybindings.KeyBinding("s", keybindings.NO_MODIFIER_MASK)
+        cmd_bindings["previous_live_region"] = keybindings.KeyBinding(
+            "d", keybindings.SHIFT_MODIFIER_MASK
+        )
+        cmd_bindings["next_live_region"] = keybindings.KeyBinding("d", keybindings.NO_MODIFIER_MASK)
+        cmd_bindings["last_live_region"] = keybindings.KeyBinding("y", keybindings.NO_MODIFIER_MASK)
+        cmd_bindings["container_start"] = keybindings.KeyBinding(
+            "comma", keybindings.SHIFT_MODIFIER_MASK
+        )
+        cmd_bindings["container_end"] = keybindings.KeyBinding(
+            "comma", keybindings.NO_MODIFIER_MASK
+        )
+        # Commands with no bindings
+        cmd_bindings["previous_iframe"] = None
+        cmd_bindings["next_iframe"] = None
+        cmd_bindings["list_iframes"] = None
 
-        self._handlers["previous_checkbox"] = InputEventHandler(
-            self.previous_checkbox, cmdnames.CHECK_BOX_PREV, enabled=enabled)
-        self._handlers["next_checkbox"] = InputEventHandler(
-            self.next_checkbox, cmdnames.CHECK_BOX_NEXT, enabled=enabled)
-        self._handlers["list_checkboxes"] = InputEventHandler(
-            self.list_checkboxes, cmdnames.CHECK_BOX_LIST, enabled=enabled)
+        commands_data = [
+            ("previous_blockquote", self.previous_blockquote, cmdnames.BLOCKQUOTE_PREV),
+            ("next_blockquote", self.next_blockquote, cmdnames.BLOCKQUOTE_NEXT),
+            ("list_blockquotes", self.list_blockquotes, cmdnames.BLOCKQUOTE_LIST),
+            ("previous_button", self.previous_button, cmdnames.BUTTON_PREV),
+            ("next_button", self.next_button, cmdnames.BUTTON_NEXT),
+            ("list_buttons", self.list_buttons, cmdnames.BUTTON_LIST),
+            ("previous_checkbox", self.previous_checkbox, cmdnames.CHECK_BOX_PREV),
+            ("next_checkbox", self.next_checkbox, cmdnames.CHECK_BOX_NEXT),
+            ("list_checkboxes", self.list_checkboxes, cmdnames.CHECK_BOX_LIST),
+            ("previous_combobox", self.previous_combobox, cmdnames.COMBO_BOX_PREV),
+            ("next_combobox", self.next_combobox, cmdnames.COMBO_BOX_NEXT),
+            ("list_comboboxes", self.list_comboboxes, cmdnames.COMBO_BOX_LIST),
+            ("previous_entry", self.previous_entry, cmdnames.ENTRY_PREV),
+            ("next_entry", self.next_entry, cmdnames.ENTRY_NEXT),
+            ("list_entries", self.list_entries, cmdnames.ENTRY_LIST),
+            ("previous_form_field", self.previous_form_field, cmdnames.FORM_FIELD_PREV),
+            ("next_form_field", self.next_form_field, cmdnames.FORM_FIELD_NEXT),
+            ("list_form_fields", self.list_form_fields, cmdnames.FORM_FIELD_LIST),
+            ("previous_heading", self.previous_heading, cmdnames.HEADING_PREV),
+            ("next_heading", self.next_heading, cmdnames.HEADING_NEXT),
+            ("list_headings", self.list_headings, cmdnames.HEADING_LIST),
+            ("previous_iframe", self.previous_iframe, cmdnames.IFRAME_PREV),
+            ("next_iframe", self.next_iframe, cmdnames.IFRAME_NEXT),
+            ("list_iframes", self.list_iframes, cmdnames.IFRAME_LIST),
+            ("previous_image", self.previous_image, cmdnames.IMAGE_PREV),
+            ("next_image", self.next_image, cmdnames.IMAGE_NEXT),
+            ("list_images", self.list_images, cmdnames.IMAGE_LIST),
+            ("previous_landmark", self.previous_landmark, cmdnames.LANDMARK_PREV),
+            ("next_landmark", self.next_landmark, cmdnames.LANDMARK_NEXT),
+            ("list_landmarks", self.list_landmarks, cmdnames.LANDMARK_LIST),
+            ("previous_list", self.previous_list, cmdnames.LIST_PREV),
+            ("next_list", self.next_list, cmdnames.LIST_NEXT),
+            ("list_lists", self.list_lists, cmdnames.LIST_LIST),
+            ("previous_list_item", self.previous_list_item, cmdnames.LIST_ITEM_PREV),
+            ("next_list_item", self.next_list_item, cmdnames.LIST_ITEM_NEXT),
+            ("list_list_items", self.list_list_items, cmdnames.LIST_ITEM_LIST),
+            ("previous_live_region", self.previous_live_region, cmdnames.LIVE_REGION_PREV),
+            ("next_live_region", self.next_live_region, cmdnames.LIVE_REGION_NEXT),
+            ("last_live_region", self._last_live_region, cmdnames.LIVE_REGION_LAST),
+            ("previous_paragraph", self.previous_paragraph, cmdnames.PARAGRAPH_PREV),
+            ("next_paragraph", self.next_paragraph, cmdnames.PARAGRAPH_NEXT),
+            ("list_paragraphs", self.list_paragraphs, cmdnames.PARAGRAPH_LIST),
+            ("previous_radio_button", self.previous_radio_button, cmdnames.RADIO_BUTTON_PREV),
+            ("next_radio_button", self.next_radio_button, cmdnames.RADIO_BUTTON_NEXT),
+            ("list_radio_buttons", self.list_radio_buttons, cmdnames.RADIO_BUTTON_LIST),
+            ("previous_separator", self.previous_separator, cmdnames.SEPARATOR_PREV),
+            ("next_separator", self.next_separator, cmdnames.SEPARATOR_NEXT),
+            ("previous_table", self.previous_table, cmdnames.TABLE_PREV),
+            ("next_table", self.next_table, cmdnames.TABLE_NEXT),
+            ("list_tables", self.list_tables, cmdnames.TABLE_LIST),
+            ("previous_link", self.previous_link, cmdnames.LINK_PREV),
+            ("next_link", self.next_link, cmdnames.LINK_NEXT),
+            ("list_links", self.list_links, cmdnames.LINK_LIST),
+            ("previous_unvisited_link", self.previous_unvisited_link, cmdnames.UNVISITED_LINK_PREV),
+            ("next_unvisited_link", self.next_unvisited_link, cmdnames.UNVISITED_LINK_NEXT),
+            ("list_unvisited_links", self.list_unvisited_links, cmdnames.UNVISITED_LINK_LIST),
+            ("previous_visited_link", self.previous_visited_link, cmdnames.VISITED_LINK_PREV),
+            ("next_visited_link", self.next_visited_link, cmdnames.VISITED_LINK_NEXT),
+            ("list_visited_links", self.list_visited_links, cmdnames.VISITED_LINK_LIST),
+            ("previous_large_object", self.previous_large_object, cmdnames.LARGE_OBJECT_PREV),
+            ("next_large_object", self.next_large_object, cmdnames.LARGE_OBJECT_NEXT),
+            ("list_large_objects", self.list_large_objects, cmdnames.LARGE_OBJECT_LIST),
+            ("previous_clickable", self.previous_clickable, cmdnames.CLICKABLE_PREV),
+            ("next_clickable", self.next_clickable, cmdnames.CLICKABLE_NEXT),
+            ("list_clickables", self.list_clickables, cmdnames.CLICKABLE_LIST),
+            ("container_start", self.container_start, cmdnames.CONTAINER_START),
+            ("container_end", self.container_end, cmdnames.CONTAINER_END),
+        ]
 
-        self._handlers["previous_combobox"] = InputEventHandler(
-            self.previous_combobox, cmdnames.COMBO_BOX_PREV, enabled=enabled)
-        self._handlers["next_combobox"] = InputEventHandler(
-            self.next_combobox, cmdnames.COMBO_BOX_NEXT, enabled=enabled)
-        self._handlers["list_comboboxes"] = InputEventHandler(
-            self.list_comboboxes, cmdnames.COMBO_BOX_LIST, enabled=enabled)
+        for name, function, description in commands_data:
+            kb = cmd_bindings.get(name)
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=kb,
+                    laptop_keybinding=kb,
+                )
+            )
 
-        self._handlers["previous_entry"] = InputEventHandler(
-            self.previous_entry, cmdnames.ENTRY_PREV, enabled=enabled)
-        self._handlers["next_entry"] = InputEventHandler(
-            self.next_entry, cmdnames.ENTRY_NEXT, enabled=enabled)
-        self._handlers["list_entries"] = InputEventHandler(
-            self.list_entries, cmdnames.ENTRY_LIST, enabled=enabled)
-
-        self._handlers["previous_form_field"] = InputEventHandler(
-            self.previous_form_field, cmdnames.FORM_FIELD_PREV, enabled=enabled)
-        self._handlers["next_form_field"] = InputEventHandler(
-            self.next_form_field, cmdnames.FORM_FIELD_NEXT, enabled=enabled)
-        self._handlers["list_form_fields"] = InputEventHandler(
-            self.list_form_fields, cmdnames.FORM_FIELD_LIST, enabled=enabled)
-
-        self._handlers["previous_heading"] = InputEventHandler(
-            self.previous_heading, cmdnames.HEADING_PREV, enabled=enabled)
-        self._handlers["next_heading"] = InputEventHandler(
-            self.next_heading, cmdnames.HEADING_NEXT, enabled=enabled)
-        self._handlers["list_headings"] = InputEventHandler(
-            self.list_headings, cmdnames.HEADING_LIST, enabled=enabled)
+        # Heading levels 1-6
         for i in range(1, 7):
-            self._handlers[f"previous_heading_level_{i}"] = InputEventHandler(
-                getattr(self, f"previous_heading_level_{i}"),
-                cmdnames.HEADING_AT_LEVEL_PREV % i, enabled=enabled)
-            self._handlers[f"next_heading_level_{i}"] = InputEventHandler(
-                getattr(self, f"next_heading_level_{i}"),
-                cmdnames.HEADING_AT_LEVEL_NEXT % i, enabled=enabled)
-            self._handlers[f"list_headings_level_{i}"] = InputEventHandler(
-                getattr(self, f"list_headings_level_{i}"),
-                cmdnames.HEADING_AT_LEVEL_LIST % i, enabled=enabled)
-
-        self._handlers["previous_iframe"] = InputEventHandler(
-            self.previous_iframe, cmdnames.IFRAME_PREV, enabled=enabled)
-        self._handlers["next_iframe"] = InputEventHandler(
-            self.next_iframe, cmdnames.IFRAME_NEXT, enabled=enabled)
-        self._handlers["list_iframes"] = InputEventHandler(
-            self.list_iframes, cmdnames.IFRAME_LIST, enabled=enabled)
-
-        self._handlers["previous_image"] = InputEventHandler(
-            self.previous_image, cmdnames.IMAGE_PREV, enabled=enabled)
-        self._handlers["next_image"] = InputEventHandler(
-            self.next_image, cmdnames.IMAGE_NEXT, enabled=enabled)
-        self._handlers["list_images"] = InputEventHandler(
-            self.list_images, cmdnames.IMAGE_LIST, enabled=enabled)
-
-        self._handlers["previous_landmark"] = InputEventHandler(
-            self.previous_landmark, cmdnames.LANDMARK_PREV, enabled=enabled)
-        self._handlers["next_landmark"] = InputEventHandler(
-            self.next_landmark, cmdnames.LANDMARK_NEXT, enabled=enabled)
-        self._handlers["list_landmarks"] = InputEventHandler(
-            self.list_landmarks, cmdnames.LANDMARK_LIST, enabled=enabled)
-
-        self._handlers["previous_list"] = InputEventHandler(
-            self.previous_list, cmdnames.LIST_PREV, enabled=enabled)
-        self._handlers["next_list"] = InputEventHandler(
-            self.next_list, cmdnames.LIST_NEXT, enabled=enabled)
-        self._handlers["list_lists"] = InputEventHandler(
-            self.list_lists, cmdnames.LIST_LIST, enabled=enabled)
-
-        self._handlers["previous_list_item"] = InputEventHandler(
-            self.previous_list_item, cmdnames.LIST_ITEM_PREV, enabled=enabled)
-        self._handlers["next_list_item"] = InputEventHandler(
-            self.next_list_item, cmdnames.LIST_ITEM_NEXT, enabled=enabled)
-        self._handlers["list_list_items"] = InputEventHandler(
-            self.list_list_items, cmdnames.LIST_ITEM_LIST, enabled=enabled)
-
-        self._handlers["previous_live_region"] = InputEventHandler(
-            self.previous_live_region, cmdnames.LIVE_REGION_PREV, enabled=enabled)
-        self._handlers["next_live_region"] = InputEventHandler(
-            self.next_live_region, cmdnames.LIVE_REGION_NEXT, enabled=enabled)
-        self._handlers["last_live_region"] = InputEventHandler(
-            self._last_live_region, cmdnames.LIVE_REGION_LAST, enabled=enabled)
-
-        self._handlers["previous_paragraph"] = InputEventHandler(
-            self.previous_paragraph, cmdnames.PARAGRAPH_PREV, enabled=enabled)
-        self._handlers["next_paragraph"] = InputEventHandler(
-            self.next_paragraph, cmdnames.PARAGRAPH_NEXT, enabled=enabled)
-        self._handlers["list_paragraphs"] = InputEventHandler(
-            self.list_paragraphs, cmdnames.PARAGRAPH_LIST, enabled=enabled)
-
-        self._handlers["previous_radio_button"] = InputEventHandler(
-            self.previous_radio_button, cmdnames.RADIO_BUTTON_PREV, enabled=enabled)
-        self._handlers["next_radio_button"] = InputEventHandler(
-            self.next_radio_button, cmdnames.RADIO_BUTTON_NEXT, enabled=enabled)
-        self._handlers["list_radio_buttons"] = InputEventHandler(
-            self.list_radio_buttons, cmdnames.RADIO_BUTTON_LIST, enabled=enabled)
-
-        self._handlers["previous_separator"] = InputEventHandler(
-            self.previous_separator, cmdnames.SEPARATOR_PREV, enabled=enabled)
-        self._handlers["next_separator"] = InputEventHandler(
-            self.next_separator, cmdnames.SEPARATOR_NEXT, enabled=enabled)
-
-        self._handlers["previous_table"] = InputEventHandler(
-            self.previous_table, cmdnames.TABLE_PREV, enabled=enabled)
-        self._handlers["next_table"] = InputEventHandler(
-            self.next_table, cmdnames.TABLE_NEXT, enabled=enabled)
-        self._handlers["list_tables"] = InputEventHandler(
-            self.list_tables, cmdnames.TABLE_LIST, enabled=enabled)
-
-        self._handlers["previous_link"] = InputEventHandler(
-            self.previous_link, cmdnames.LINK_PREV, enabled=enabled)
-        self._handlers["next_link"] = InputEventHandler(
-            self.next_link, cmdnames.LINK_NEXT, enabled=enabled)
-        self._handlers["list_links"] = InputEventHandler(
-            self.list_links, cmdnames.LINK_LIST, enabled=enabled)
-        self._handlers["previous_unvisited_link"] = InputEventHandler(
-            self.previous_unvisited_link, cmdnames.UNVISITED_LINK_PREV, enabled=enabled)
-        self._handlers["next_unvisited_link"] = InputEventHandler(
-            self.next_unvisited_link, cmdnames.UNVISITED_LINK_NEXT, enabled=enabled)
-        self._handlers["list_unvisited_links"] = InputEventHandler(
-            self.list_unvisited_links, cmdnames.UNVISITED_LINK_LIST, enabled=enabled)
-        self._handlers["previous_visited_link"] = InputEventHandler(
-            self.previous_visited_link, cmdnames.VISITED_LINK_PREV, enabled=enabled)
-        self._handlers["next_visited_link"] = InputEventHandler(
-            self.next_visited_link, cmdnames.VISITED_LINK_NEXT, enabled=enabled)
-        self._handlers["list_visited_links"] = InputEventHandler(
-            self.list_visited_links, cmdnames.VISITED_LINK_LIST, enabled=enabled)
-
-        self._handlers["previous_large_object"] = InputEventHandler(
-            self.previous_large_object, cmdnames.LARGE_OBJECT_PREV, enabled=enabled)
-        self._handlers["next_large_object"] = InputEventHandler(
-            self.next_large_object, cmdnames.LARGE_OBJECT_NEXT, enabled=enabled)
-        self._handlers["list_large_objects"] = InputEventHandler(
-            self.list_large_objects, cmdnames.LARGE_OBJECT_LIST, enabled=enabled)
-
-        self._handlers["previous_clickable"] = InputEventHandler(
-            self.previous_clickable, cmdnames.CLICKABLE_PREV, enabled=enabled)
-        self._handlers["next_clickable"] = InputEventHandler(
-            self.next_clickable, cmdnames.CLICKABLE_NEXT, enabled=enabled)
-        self._handlers["list_clickables"] = InputEventHandler(
-            self.list_clickables, cmdnames.CLICKABLE_LIST, enabled=enabled)
-
-        self._handlers["container_start"] = InputEventHandler(
-            self.container_start, cmdnames.CONTAINER_START, enabled=enabled)
-        self._handlers["container_end"] = InputEventHandler(
-            self.container_end, cmdnames.CONTAINER_END, enabled=enabled)
-
-        msg = f"STRUCTURAL NAVIGATOR: Handlers set up. Suspended: {self._suspended}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the structural navigation keybindings."""
-
-        if refresh:
-            msg = f"STRUCTURAL NAVIGATOR: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("STRUCTURAL NAVIGATOR: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def _setup_bindings(self) -> None:
-        """Sets up the structural navigation keybindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "z",
-                keybindings.ORCA_MODIFIER_MASK,
-                self._handlers["structural_navigator_mode_cycle"],
-                1,
-                not self._suspended))
-
-        enabled = self.get_is_enabled() and not self._suspended
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "q",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_blockquote"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "q",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_blockquote"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "q",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_blockquotes"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "b",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_button"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "b",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_button"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "b",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_buttons"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "x",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_checkbox"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "x",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_checkbox"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "x",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_checkboxes"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_combobox"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_combobox"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "c",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_comboboxes"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "e",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_entry"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "e",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_entry"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "e",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_entries"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "f",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_form_field"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "f",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_form_field"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "f",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_form_fields"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "h",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_heading"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "h",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_heading"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "h",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_headings"],
-                1,
-                enabled))
-
-        for i in range(1, 7):
-            self._bindings.add(
-                keybindings.KeyBinding(
-                    str(i),
-                    keybindings.SHIFT_MODIFIER_MASK,
-                    self._handlers[f"previous_heading_level_{i}"],
-                    1,
-                    enabled))
-
-            self._bindings.add(
-                keybindings.KeyBinding(
-                    str(i),
-                    keybindings.NO_MODIFIER_MASK,
-                    self._handlers[f"next_heading_level_{i}"],
-                    1,
-                    enabled))
-
-            self._bindings.add(
-                keybindings.KeyBinding(
-                    str(i),
-                    keybindings.SHIFT_ALT_MODIFIER_MASK,
-                    self._handlers[f"list_headings_level_{i}"],
-                    1,
-                    enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_iframe"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_iframe"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_iframes"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "g",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_image"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "g",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_image"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "g",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_images"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "m",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_landmark"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "m",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_landmark"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "m",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_landmarks"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "l",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_list"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "l",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_list"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "l",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_lists"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "i",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_list_item"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "i",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_list_item"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "i",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_list_items"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "d",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_live_region"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "d",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_live_region"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "y",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["last_live_region"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "p",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_paragraph"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "p",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_paragraph"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "p",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_paragraphs"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_radio_button"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_radio_button"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "r",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_radio_buttons"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "s",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_separator"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "s",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_separator"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "t",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_table"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "t",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_table"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "t",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_tables"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_link"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_link"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "k",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_links"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "u",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_unvisited_link"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "u",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_unvisited_link"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "u",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_unvisited_links"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "v",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_visited_link"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "v",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_visited_link"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "v",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_visited_links"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "o",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_large_object"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "o",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_large_object"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "o",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_large_objects"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["previous_clickable"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["next_clickable"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "a",
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                self._handlers["list_clickables"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "comma",
-                keybindings.SHIFT_MODIFIER_MASK,
-                self._handlers["container_start"],
-                1,
-                enabled))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "comma",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["container_end"],
-                1,
-                enabled))
-
-        msg = f"STRUCTURAL NAVIGATOR: Bindings set up. Suspended: {self._suspended}"
+            kb_prev = keybindings.KeyBinding(str(i), keybindings.SHIFT_MODIFIER_MASK)
+            kb_next = keybindings.KeyBinding(str(i), keybindings.NO_MODIFIER_MASK)
+            kb_list = keybindings.KeyBinding(str(i), keybindings.SHIFT_ALT_MODIFIER_MASK)
+
+            heading_commands = [
+                (
+                    f"previous_heading_level_{i}",
+                    getattr(self, f"previous_heading_level_{i}"),
+                    cmdnames.HEADING_AT_LEVEL_PREV % i,
+                    kb_prev,
+                ),
+                (
+                    f"next_heading_level_{i}",
+                    getattr(self, f"next_heading_level_{i}"),
+                    cmdnames.HEADING_AT_LEVEL_NEXT % i,
+                    kb_next,
+                ),
+                (
+                    f"list_headings_level_{i}",
+                    getattr(self, f"list_headings_level_{i}"),
+                    cmdnames.HEADING_AT_LEVEL_LIST % i,
+                    kb_list,
+                ),
+            ]
+            for name, function, description, kb in heading_commands:
+                manager.add_command(
+                    command_manager.KeyboardCommand(
+                        name,
+                        function,
+                        group_label,
+                        description,
+                        desktop_keybinding=kb,
+                        laptop_keybinding=kb,
+                    )
+                )
+
+        msg = f"STRUCTURAL NAVIGATOR: Commands set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _is_active_script(self, script):
@@ -3587,6 +3120,7 @@ class StructuralNavigator:
         return True
 
 _navigator = StructuralNavigator()
+
 def get_navigator() -> StructuralNavigator:
     """Returns the Structural Navigator"""
 

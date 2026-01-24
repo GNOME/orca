@@ -184,13 +184,16 @@ class TestWhereAmIPresenter:
 
         deps = self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import WhereAmIPresenter
+        from orca import command_manager
 
         presenter = WhereAmIPresenter()
+        presenter.set_up_commands()
 
-        assert presenter._handlers is not None
-        assert isinstance(presenter._handlers, dict)
-        assert presenter._desktop_bindings is not None
-        assert presenter._laptop_bindings is not None
+        # Verify commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_keyboard_command("whereAmIBasicHandler") is not None
+        assert cmd_manager.get_keyboard_command("whereAmIDetailedHandler") is not None
+        assert cmd_manager.get_keyboard_command("readCharAttributesHandler") is not None
 
         dbus_mock = deps["orca.dbus_service"]
         assert dbus_mock.get_remote_controller.call_count >= 1
@@ -198,90 +201,41 @@ class TestWhereAmIPresenter:
         controller.register_decorated_module.assert_called_with("WhereAmIPresenter", presenter)
 
     @pytest.mark.parametrize(
-        "refresh,is_desktop,mock_empty",
+        "refresh",
         [
-            pytest.param(True, True, False, id="desktop_refresh"),
-            pytest.param(True, False, False, id="laptop_refresh"),
-            pytest.param(False, True, True, id="desktop_empty"),
-            pytest.param(False, False, True, id="laptop_empty"),
-        ],
-    )
-    def test_get_bindings(
-        self,
-        test_context: OrcaTestContext,
-        refresh: bool,
-        is_desktop: bool,
-        mock_empty: bool,
-    ) -> None:
-        """Test WhereAmIPresenter.get_bindings with various refresh and desktop settings."""
-
-        self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import WhereAmIPresenter
-
-        presenter = WhereAmIPresenter()
-
-        if mock_empty:
-            bindings_attr = (
-                presenter._desktop_bindings if is_desktop else presenter._laptop_bindings
-            )
-            test_context.patch_object(bindings_attr, "is_empty", return_value=True)
-
-        bindings = presenter.get_bindings(refresh=refresh, is_desktop=is_desktop)
-        assert bindings is not None
-        expected_bindings = (
-            presenter._desktop_bindings if is_desktop else presenter._laptop_bindings
-        )
-        assert bindings == expected_bindings
-
-    @pytest.mark.parametrize(
-        "refresh,check_instance",
-        [
-            pytest.param(True, True, id="with_refresh"),
-            pytest.param(False, False, id="without_refresh"),
+            pytest.param(True, id="with_refresh"),
+            pytest.param(False, id="without_refresh"),
         ],
     )
     def test_get_handlers(
         self,
         test_context: OrcaTestContext,
         refresh: bool,
-        check_instance: bool,
     ) -> None:
-        """Test WhereAmIPresenter.get_handlers with and without refresh."""
+        """Test WhereAmIPresenter commands are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import WhereAmIPresenter
+        from orca import command_manager
 
         presenter = WhereAmIPresenter()
-        handlers = presenter.get_handlers(refresh=refresh)
-        assert handlers is not None
+        presenter.set_up_commands()
 
-        if check_instance:
-            assert isinstance(handlers, dict)
-        else:
-            assert handlers == presenter._handlers
-
-    def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test WhereAmIPresenter._setup_handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import WhereAmIPresenter
-
-        presenter = WhereAmIPresenter()
-        presenter._setup_handlers()
-
-        expected_handlers = [
+        cmd_manager = command_manager.get_manager()
+        expected_commands = [
             "readCharAttributesHandler",
             "presentSizeAndPositionHandler",
             "getTitleHandler",
             "getStatusBarHandler",
             "present_default_button",
+            "present_cell_formula",
             "whereAmIBasicHandler",
             "whereAmIDetailedHandler",
             "whereAmILinkHandler",
             "whereAmISelectionHandler",
         ]
-        for handler_name in expected_handlers:
-            assert handler_name in presenter._handlers
+        for cmd_name in expected_commands:
+            assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     @pytest.mark.parametrize(
         "attribute, value, expected",

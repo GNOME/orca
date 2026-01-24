@@ -48,6 +48,7 @@ from gi.repository import Atspi
 from gi.repository import Gdk
 from gi.repository import GLib
 
+from . import command_manager
 from . import debug
 from . import focus_manager
 from . import keybindings
@@ -55,7 +56,6 @@ from . import keynames
 from . import messages
 from . import orca_modifier_manager
 from . import script_manager
-from . import settings
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
@@ -129,8 +129,7 @@ class KeyboardEvent(InputEvent):
         self._script: default.Script | None = None
         self._window: Atspi.Accessible | None = None
         self._obj: Atspi.Accessible | None = None
-        self._handler: InputEventHandler | None = None
-        self._consumer: Callable[..., bool] | None = None
+        self._handler: Callable[[], bool] | None = None
         self._is_kp_with_numlock: bool = False
 
         # Some implementors don't include numlock in the modifiers. Unfortunately,
@@ -594,33 +593,6 @@ class KeyboardEvent(InputEvent):
 
         self._script = script
 
-    def get_handler(self) -> InputEventHandler | None:
-        """Returns the handler associated with this key event."""
-
-        return self._handler
-
-    def _get_user_handler(self) -> InputEventHandler | None:
-        # TODO - JD: This should go away once plugin support is in place.
-        try:
-            bindings = settings.keyBindingsMap.get(self._script.__module__)
-        except Exception:
-            bindings = None
-        if not bindings:
-            try:
-                bindings = settings.keyBindingsMap.get("default")
-            except Exception:
-                bindings = None
-
-        if bindings is None:
-            return None
-
-        try:
-            handler = bindings.get_input_handler(self)
-        except Exception:
-            handler = None
-
-        return handler
-
     def _present(self) -> None:
         if not self._script:
             return
@@ -660,27 +632,28 @@ class KeyboardEvent(InputEvent):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._script:
-            self._handler = self._get_user_handler() \
-                or self._script.key_bindings.get_input_handler(self)
-            if not should_obscure:
-                tokens = ["HANDLER:", str(self._handler)]
+            script = self._script
+            command = command_manager.get_manager().get_command_for_event(self)
+            if not should_obscure and command is not None:
+                tokens = ["COMMAND:", command.get_name()]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            # pylint: disable=import-outside-toplevel
             from . import learn_mode_presenter
-            if learn_mode_presenter.get_presenter().is_active():
-                self._consumer = learn_mode_presenter.get_presenter().handle_event
-                tokens = ["CONSUMER:", str(self._consumer)]
+            learn_mode = learn_mode_presenter.get_presenter().is_active()
+            if learn_mode:
+                tokens = ["KEYBOARD EVENT: Learn mode is active"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                self._handler = lambda: learn_mode_presenter.get_presenter().handle_event(
+                    self, command)
+            elif command is not None and command.is_enabled():
+                self._handler = lambda: command.execute(script, self)
 
         if self.is_orca_modifier() and self._click_count == 2:
             orca_modifier_manager.get_manager().toggle_modifier(self)
 
         self._present()
 
-        if self.is_pressed_key() and (self._consumer \
-           or (self._handler and self._handler.function is not None \
-           and self._handler.is_enabled())):
+        if self.is_pressed_key() and self._handler:
             GLib.timeout_add(1, self._consume)
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
@@ -697,21 +670,12 @@ class KeyboardEvent(InputEvent):
         msg = f"\nvvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
-        if self._consumer:
-            msg = f"KEYBOARD EVENT: Consumer is {self._consumer.__name__}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._consumer(self)
-        elif self._handler and self._handler.function is not None and self._handler.is_enabled():
-            msg = f"KEYBOARD EVENT: Handler is {self._handler}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._handler:
             try:
-                self._handler.function(self._script, self)
+                self._handler()
             except GLib.GError as error:
-                msg = f"KEYBOARD EVENT: Exception calling handler function: {error}"
+                msg = f"KEYBOARD EVENT: Exception calling handler: {error}"
                 debug.print_message(debug.LEVEL_WARNING, msg, True)
-        else:
-            msg = "KEYBOARD EVENT: No enabled handler or consumer"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -732,34 +696,14 @@ class BrailleEvent(InputEvent):
     def __str__(self) -> str:
         return f"{self.type.upper()} {self.event}"
 
-    def get_handler(self) -> InputEventHandler | None:
-        """Returns the handler associated with this event."""
+    def get_command(self) -> command_manager.BrailleCommand | None:
+        """Returns the BrailleCommand associated with this event."""
 
-        try:
-            assert self._script is not None
-        except AssertionError:
-            tokens = ["BRAILLE EVENT: No active script found for", self]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        command: str = self.event["command"]
-        user_bindings: dict | None = None
-        user_bindings_map: dict = settings.brailleBindingsMap
-        if self._script.name in user_bindings_map:
-            user_bindings = user_bindings_map[self._script.name]
-        else:
-            user_bindings = user_bindings_map.get("default")
-
-        if user_bindings and command in user_bindings:
-            handler: InputEventHandler | None = user_bindings[command]
-            tokens = [f"BRAILLE EVENT: User handler for command {command} is", handler]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return handler
-
-        handler = self._script.braille_bindings.get(command)
-        tokens = [f"BRAILLE EVENT: Handler for command {command} is", handler]
+        braille_key: int = self.event["command"]
+        command = command_manager.get_manager().get_command_for_braille_event(braille_key)
+        tokens = [f"BRAILLE EVENT: Command for braille key {braille_key} is", command]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return handler
+        return command
 
     def process(self):
         """Processes this event."""
@@ -777,24 +721,29 @@ class BrailleEvent(InputEvent):
         return result
 
     def _process(self):
-        handler = self.get_handler()
-        if not handler:
-            # pylint: disable=import-outside-toplevel
-            from . import learn_mode_presenter
-            if learn_mode_presenter.get_presenter().is_active():
-                tokens = ["BRAILLE EVENT: Learn mode presenter handles", self]
+        # pylint: disable=import-outside-toplevel
+        from . import learn_mode_presenter
+        presenter = learn_mode_presenter.get_presenter()
+
+        command = self.get_command()
+        if not command:
+            if presenter.is_active():
+                tokens = ["BRAILLE EVENT: No command, but in learn mode", self]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
 
-            tokens = ["BRAILLE EVENT: No handler found for", self]
+            tokens = ["BRAILLE EVENT: No command found for", self]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        if handler.function:
-            tokens = ["BRAILLE EVENT: Handler is:", handler]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            handler.function(self._script, self)
+        tokens = ["BRAILLE EVENT: Command is:", command]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        if presenter.is_active():
+            if presenter.handle_braille_event(self._script, self, command):
+                return True
+
+        command.execute(self._script, self)
         return True
 
 class MouseButtonEvent(InputEvent):
@@ -853,40 +802,3 @@ class RemoteControllerEvent(InputEvent):
 
     def __init__(self):
         super().__init__(REMOTE_CONTROLLER_EVENT)
-
-class InputEventHandler:
-    """A handler for an input event."""
-
-    def __init__(
-        self,
-        function: Callable[..., bool],
-        description: str,
-        learn_mode_enabled: bool = True,
-        enabled: bool = True,
-        is_group_toggle: bool = False
-    ) -> None:
-        self.function: Callable[..., bool] = function
-        self.description: str = description
-        self.learn_mode_enabled: bool = learn_mode_enabled
-        self._enabled: bool = enabled
-        self.is_group_toggle: bool = is_group_toggle
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, InputEventHandler):
-            return False
-        return self.function == other.function
-
-    def __str__(self) -> str:
-        return f"{self.description} (enabled: {self._enabled})"
-
-    def is_enabled(self) -> bool:
-        """Returns True if this handler is enabled."""
-
-        msg = f"INPUT EVENT HANDLER: {self.description} is enabled: {self._enabled}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return self._enabled
-
-    def set_enabled(self, enabled: bool) -> None:
-        """Sets enabled state of this handler."""
-
-        self._enabled = enabled

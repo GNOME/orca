@@ -215,32 +215,19 @@ class TestProfileManager:
             "spanish", ["Espanol", "espanol"]
         )
 
-    def test_get_handlers_returns_dict(self, test_context: OrcaTestContext) -> None:
-        """Test get_handlers returns a dictionary of handlers."""
+    def test_commands_registered(self, test_context: OrcaTestContext) -> None:
+        """Test that profile manager commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager
+        from orca import command_manager
 
         manager = ProfileManager()
-        handlers = manager.get_handlers()
+        manager.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        assert isinstance(handlers, dict)
-        assert "cycleSettingsProfileHandler" in handlers
-        assert "presentCurrentProfileHandler" in handlers
-
-    def test_get_bindings_returns_keybindings(self, test_context: OrcaTestContext) -> None:
-        """Test get_bindings returns KeyBindings object."""
-
-        self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
-
-        manager = ProfileManager()
-        bindings = manager.get_bindings()
-
-        # Can't use isinstance() since KeyBindings may be mocked.
-        # Check for expected interface instead.
-        assert bindings is not None
-        assert hasattr(bindings, "add")
+        assert cmd_manager.get_keyboard_command("cycleSettingsProfileHandler") is not None
+        assert cmd_manager.get_keyboard_command("presentCurrentProfileHandler") is not None
 
     def test_cycle_settings_profile_cycles_to_next(self, test_context: OrcaTestContext) -> None:
         """Test cycle_settings_profile cycles to next profile."""

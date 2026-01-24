@@ -48,17 +48,19 @@ from . import input_event_manager
 from . import keybindings
 from . import keynames
 from . import messages
+from . import orca_modifier_manager
 from . import preferences_grid_base
 from . import script_manager
 from . import settings
+from . import settings_manager
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
     from .scripts import default
 
 
-class Command:  # pylint: disable=too-many-instance-attributes
-    """Represents an Orca command with its handler and optional key binding.
+class Command:
+    """Base class for Orca commands.
 
     Commands have two independent activity states:
 
@@ -73,46 +75,44 @@ class Command:  # pylint: disable=too-many-instance-attributes
         - When suspension is lifted, command returns to its enabled state
         - Example: Focus mode suspends structural navigation; leaving focus
           mode automatically restores it
-
-    A command is active (responds to key events) only when:
-        enabled=True AND suspended=False AND keybinding is not None
     """
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def __init__(
         self,
-        handler_name: str,
-        handler: input_event.InputEventHandler,
+        name: str,
+        function: Callable[..., bool],
         group_label: str,
         description: str = "",
-        keybinding: keybindings.KeyBinding | None = None,
-        learn_mode_enabled: bool = True,
         enabled: bool = True,
-        suspended: bool = False,
-        is_group_toggle: bool = False
+        suspended: bool = False
     ) -> None:
         """Initializes a command."""
 
-        self._handler_name = handler_name
-        self._handler = handler
+        self._name = name
+        self._function = function
         self._group_label = group_label
         self._description = description
-        self._default_keybinding = keybinding  # The uncustomized default binding
-        self._keybinding = keybinding  # The current binding (after customization)
-        self._learn_mode_enabled = learn_mode_enabled
         self._enabled = enabled
         self._suspended = suspended
-        self._is_group_toggle = is_group_toggle
 
-    def get_handler_name(self) -> str:
-        """Returns the handler name."""
+    def __str__(self) -> str:
+        """Returns a string representation of the command."""
 
-        return self._handler_name
+        parts = [f"Command({self._name})"]
+        if self._suspended:
+            parts.append("SUSPENDED")
+        return " ".join(parts)
 
-    def get_handler(self) -> input_event.InputEventHandler:
-        """Returns the input event handler."""
+    def get_name(self) -> str:
+        """Returns the command name."""
 
-        return self._handler
+        return self._name
+
+    def get_function(self) -> Callable[..., bool]:
+        """Returns the command function."""
+
+        return self._function
 
     def get_group_label(self) -> str:
         """Returns the group label for display grouping."""
@@ -124,40 +124,10 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         return self._description
 
-    def get_keybinding(self) -> keybindings.KeyBinding | None:
-        """Returns the current key binding, or None if unbound."""
-
-        return self._keybinding
-
-    def get_default_keybinding(self) -> keybindings.KeyBinding | None:
-        """Returns the default (uncustomized) key binding, or None if unbound by default."""
-
-        return self._default_keybinding
-
-    def get_learn_mode_enabled(self) -> bool:
-        """Returns whether this command is enabled in learn mode."""
-
-        return self._learn_mode_enabled
-
-    def set_keybinding(self, keybinding: keybindings.KeyBinding | None) -> None:
-        """Sets the current key binding."""
-
-        self._keybinding = keybinding
-
-    def set_default_keybinding(self, keybinding: keybindings.KeyBinding | None) -> None:
-        """Sets the default (uncustomized) key binding."""
-
-        self._default_keybinding = keybinding
-
     def set_group_label(self, group_label: str) -> None:
         """Sets the group label."""
 
         self._group_label = group_label
-
-    def set_learn_mode_enabled(self, enabled: bool) -> None:
-        """Sets whether this command is enabled in learn mode."""
-
-        self._learn_mode_enabled = enabled
 
     def is_enabled(self) -> bool:
         """Returns True if the user has enabled this command."""
@@ -179,6 +149,101 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         self._suspended = suspended
 
+    def execute(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None
+    ) -> bool:
+        """Executes this command's function and returns True if handled."""
+
+        return self._function(script, event)
+
+
+class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
+    """A command that can be bound to keyboard keys."""
+
+    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
+    def __init__(
+        self,
+        name: str,
+        function: Callable[..., bool],
+        group_label: str,
+        description: str = "",
+        desktop_keybinding: keybindings.KeyBinding | None = None,
+        laptop_keybinding: keybindings.KeyBinding | None = None,
+        enabled: bool = True,
+        suspended: bool = False,
+        is_group_toggle: bool = False
+    ) -> None:
+        """Initializes a keyboard command."""
+
+        super().__init__(name, function, group_label, description, enabled, suspended)
+
+        # The default bindings.
+        self._desktop_keybinding = desktop_keybinding
+        self._laptop_keybinding = laptop_keybinding
+
+        # The actual binding, taking into account user overrides.
+        self._keybinding: keybindings.KeyBinding | None = None
+        self._is_group_toggle = is_group_toggle
+
+    def __str__(self) -> str:
+        """Returns a string representation of the command."""
+
+        parts = [f"KeyboardCommand({self._name})"]
+        if self._keybinding:
+            parts.append(str(self._keybinding))
+        else:
+            parts.append("UNBOUND")
+        if self._suspended:
+            parts.append("SUSPENDED")
+        return " ".join(parts)
+
+    def get_keybinding(self) -> keybindings.KeyBinding | None:
+        """Returns the current key binding, or None if unbound."""
+
+        return self._keybinding
+
+    def get_default_keybinding(
+        self,
+        is_desktop: bool | None = None
+    ) -> keybindings.KeyBinding | None:
+        """Returns the default key binding for the specified or current layout."""
+
+        if is_desktop is None:
+            is_desktop = get_manager().is_desktop_layout()
+        return self._desktop_keybinding if is_desktop else self._laptop_keybinding
+
+    def has_default_keybinding(self) -> bool:
+        """Returns True if this command has a default keybinding for either layout."""
+
+        return self._desktop_keybinding is not None or self._laptop_keybinding is not None
+
+    def get_desktop_keybinding(self) -> keybindings.KeyBinding | None:
+        """Returns the default desktop key binding."""
+
+        return self._desktop_keybinding
+
+    def get_laptop_keybinding(self) -> keybindings.KeyBinding | None:
+        """Returns the default laptop key binding."""
+
+        return self._laptop_keybinding
+
+    def set_keybinding(self, keybinding: keybindings.KeyBinding | None) -> None:
+        """Sets the current key binding."""
+
+        self._keybinding = keybinding
+
+    def set_desktop_keybinding(self, keybinding: keybindings.KeyBinding | None) -> None:
+        """Sets the default desktop key binding."""
+
+        self._desktop_keybinding = keybinding
+
+    def set_laptop_keybinding(self, keybinding: keybindings.KeyBinding | None) -> None:
+        """Sets the default laptop key binding."""
+
+        self._laptop_keybinding = keybinding
+
     def is_group_toggle(self) -> bool:
         """Returns True if this command toggles its group's enabled state."""
 
@@ -194,14 +259,53 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         return self._enabled and not self._suspended and self._keybinding is not None
 
-    def execute(
-        self,
-        script: "default.Script",
-        event: input_event.InputEvent | None = None
-    ) -> bool:
-        """Executes this command's handler function and returns True if handled."""
 
-        return self._handler.function(script, event)
+class BrailleCommand(Command):
+    """A command that can only be triggered by braille hardware."""
+
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def __init__(
+        self,
+        name: str,
+        function: Callable[..., bool],
+        group_label: str,
+        description: str = "",
+        enabled: bool = True,
+        suspended: bool = False,
+        braille_bindings: tuple[int, ...] = (),
+        executes_in_learn_mode: bool = False
+    ) -> None:
+        """Initializes a braille command."""
+
+        super().__init__(name, function, group_label, description, enabled, suspended)
+        self._braille_bindings = braille_bindings
+        self._executes_in_learn_mode = executes_in_learn_mode
+
+    def __str__(self) -> str:
+        """Returns a string representation of the command."""
+
+        parts = [f"BrailleCommand({self._name})"]
+        if self._braille_bindings:
+            parts.append(f"braille={self._braille_bindings}")
+        if self._suspended:
+            parts.append("SUSPENDED")
+        return " ".join(parts)
+
+    def get_braille_bindings(self) -> tuple[int, ...]:
+        """Returns the braille bindings (BrlAPI key codes)."""
+
+        return self._braille_bindings
+
+    def set_braille_bindings(self, bindings: tuple[int, ...]) -> None:
+        """Sets the braille bindings (BrlAPI key codes)."""
+
+        self._braille_bindings = bindings
+
+    def executes_in_learn_mode(self) -> bool:
+        """Returns True if this command should execute in learn mode (e.g., pan commands)."""
+
+        return self._executes_in_learn_mode
+
 
 # pylint: disable-next=too-many-instance-attributes
 class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -219,7 +323,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
         self._title_change_callback = title_change_callback
 
-        self._categories: dict[str, list[Command]] = {}
+        self._categories: dict[str, list[KeyboardCommand]] = {}
         self._current_category: str | None = None
         self._captured_key: tuple[str, int, int] = ("", 0, 0)
         self._pending_key_bindings: dict[str, str] = {}
@@ -274,7 +378,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Reload keybindings from the script."""
 
-        self._script.register_commands()
+        get_manager().apply_user_overrides()
         self._populate_keybindings()
         self._has_unsaved_changes = False
         self.refresh()
@@ -293,7 +397,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if app_name:
             self._categories[app_name] = []
 
-        all_commands = get_manager().get_all_commands()
+        all_commands = get_manager().get_all_keyboard_commands()
 
         for cmd in all_commands:
             group_label = cmd.get_group_label()
@@ -397,7 +501,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             vbox.set_margin_top(12)
             vbox.set_margin_bottom(12)
 
-            description = cmd.get_description() if cmd.get_description() else cmd.get_handler_name()
+            description = cmd.get_description() if cmd.get_description() else cmd.get_name()
             desc_label = Gtk.Label(label=description, xalign=0)
             desc_label.set_line_wrap(True)
             desc_label.set_hexpand(True)
@@ -442,7 +546,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _start_inline_editing(
         self,
         row: Gtk.ListBoxRow,
-        command: Command,
+        command: KeyboardCommand,
         vbox: Gtk.Box,
         binding_label: Gtk.Label
     ) -> None:
@@ -466,7 +570,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         capture_entry.grab_focus()
 
         self._captured_key = ("", 0, 0)
-        self._keybinding_being_edited = command.get_handler_name()
+        self._keybinding_being_edited = command.get_name()
 
         def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
             if event.keyval == Gdk.KEY_Escape:
@@ -477,7 +581,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if event.keyval == Gdk.KEY_Return:
                 if self._captured_key[0]:
                     key_name, modifiers, click_count = self._captured_key
-                    handler_name = command.get_handler_name()
+                    handler_name = command.get_name()
                     description_dup = self._find_duplicate_binding(
                         key_name, modifiers, click_count, handler_name)
                     if description_dup:
@@ -534,14 +638,15 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         script = script_manager.get_manager().get_active_script()
         assert script
         script.present_message(messages.KB_ENTER_NEW_KEY)
-        self._script.remove_key_grabs()
+        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
+        get_manager().remove_all_grabs("Capturing keys")
         input_event_manager.get_manager().unmap_all_modifiers()
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments, too-many-locals
     def _finish_inline_editing(
         self,
         row: Gtk.ListBoxRow,
-        command: Command,
+        command: KeyboardCommand,
         vbox: Gtk.Box,
         capture_entry: Gtk.Entry,
         binding_label: Gtk.Label,
@@ -549,7 +654,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     ) -> None:
         """Finish inline editing of a keybinding."""
 
-        self._script.refresh_key_grabs()
+        get_manager().refresh_all_grabs("Done capturing keys")
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
         if not canceled:
             captured_text = capture_entry.get_text().strip()
@@ -566,12 +672,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             else:
                 key_name, modifiers, click_count = self._captured_key
                 if key_name:
-                    new_kb = keybindings.KeyBinding(
-                        key_name,
-                        modifiers,
-                        command.get_handler(),
-                        click_count
-                    )
+                    new_kb = keybindings.KeyBinding(key_name, modifiers, click_count)
                     command.set_keybinding(new_kb)
                     self._has_unsaved_changes = True
 
@@ -605,7 +706,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         for category_commands in self._categories.values():
             for cmd in category_commands:
-                if exclude_handler and cmd.get_handler_name() == exclude_handler:
+                if exclude_handler and cmd.get_name() == exclude_handler:
                     continue
 
                 binding = cmd.get_keybinding()
@@ -615,7 +716,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if (binding.keysymstring == key_name and
                     binding.modifiers == modifiers and
                     binding.click_count == click_count):
-                    return cmd.get_description() or cmd.get_handler_name()
+                    return cmd.get_description() or cmd.get_name()
 
         return None
 
@@ -670,11 +771,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return True
 
     # pylint: disable-next=too-many-locals
-    def _show_key_capture_dialog(self, command: Command) -> None:
+    def _show_key_capture_dialog(self, command: KeyboardCommand) -> None:
         """Show dialog to capture a new key binding for the given command."""
 
-        description = command.get_description() or command.get_handler_name()
-        handler_name = command.get_handler_name()
+        description = command.get_description() or command.get_name()
+        handler_name = command.get_name()
 
         dialog = Gtk.Dialog(transient_for=self.get_toplevel())
         dialog.set_modal(True)
@@ -780,13 +881,15 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         while Gtk.events_pending(): # pylint: disable=no-value-for-parameter
             Gtk.main_iteration()
 
-        self._script.remove_key_grabs()
+        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
+        get_manager().remove_all_grabs("Capturing keys")
         input_event_manager.get_manager().unmap_all_modifiers()
 
         response = dialog.run()
 
         entry.grab_remove()
-        self._script.refresh_key_grabs()
+        get_manager().refresh_all_grabs("Done capturing keys")
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
         if response == Gtk.ResponseType.OK:
             entry_text = entry.get_text().strip()
@@ -795,12 +898,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             else:
                 key_name, modifiers, click_count = self._captured_key
                 if key_name:
-                    new_kb = keybindings.KeyBinding(
-                        key_name,
-                        modifiers,
-                        command.get_handler(),
-                        click_count
-                    )
+                    new_kb = keybindings.KeyBinding(key_name, modifiers, click_count)
                     command.set_keybinding(new_kb)
 
             self._has_unsaved_changes = True
@@ -832,7 +930,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         for category_commands in self._categories.values():
             for cmd in category_commands:
-                handler_name = cmd.get_handler_name()
+                handler_name = cmd.get_name()
                 current_kb = cmd.get_keybinding()
                 default_kb = cmd.get_default_keybinding()
 
@@ -895,16 +993,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             layout_value = model.get_value(tree_iter, 1)
 
             settings.keyboardLayout = layout_value
+            is_desktop = layout_value == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+            get_manager().set_keyboard_layout(is_desktop)
 
             if self._orca_modifier_combo is not None:
-                if layout_value == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+                if is_desktop:
                     self._orca_modifier_combo.set_active(0)
                     settings.orcaModifierKeys = settings.DESKTOP_MODIFIER_KEYS
                 else:
                     self._orca_modifier_combo.set_active(3)
                     settings.orcaModifierKeys = settings.LAPTOP_MODIFIER_KEYS
 
-        self._script.register_commands()
+        get_manager().apply_user_overrides()
         self._populate_keybindings()
         self._has_unsaved_changes = True
 
@@ -935,119 +1035,144 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         return keybindings.get_modifier_names(kb.modifiers) + kb.keysymstring + click_count_str
 
-
-
+# pylint: disable-next=too-many-public-methods
 class CommandManager:
     """Singleton manager for coordinating commands between scripts and UI."""
 
     def __init__(self) -> None:
         """Initializes the command manager."""
 
-        self._commands_by_name: dict[str, Command] = {}
+        self._keyboard_commands: dict[str, KeyboardCommand] = {}
+        self._braille_commands: dict[str, BrailleCommand] = {}
+        self._is_desktop: bool = True  # Default to desktop layout
+
+    def is_desktop_layout(self) -> bool:
+        """Returns True if the current keyboard layout is desktop."""
+
+        return self._is_desktop
+
+    def set_keyboard_layout(self, is_desktop: bool) -> None:
+        """Sets the keyboard layout and updates all command keybindings."""
+
+        if self._is_desktop == is_desktop:
+            return
+
+        self._is_desktop = is_desktop
+        self._apply_layout_to_commands()
+
+        layout = "desktop" if is_desktop else "laptop"
+        msg = f"COMMAND MANAGER: Keyboard layout set to {layout}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def _apply_layout_to_commands(self) -> None:
+        """Updates all keyboard commands' active keybindings based on current layout."""
+
+        for cmd in self._keyboard_commands.values():
+            default_kb = cmd.get_default_keybinding(self._is_desktop)
+            cmd.set_keybinding(default_kb)
 
     def add_command(self, command: Command) -> None:
-        """Adds a command to the registry."""
+        """Adds a command to the registry and sets its active keybinding."""
 
-        self._commands_by_name[command.get_handler_name()] = command
+        if isinstance(command, KeyboardCommand):
+            self._keyboard_commands[command.get_name()] = command
+            default_kb = command.get_default_keybinding(self._is_desktop)
+            command.set_keybinding(default_kb)
+        elif isinstance(command, BrailleCommand):
+            self._braille_commands[command.get_name()] = command
 
-    def get_command(self, handler_name: str) -> Command | None:
-        """Returns the command with the specified handler name, or None."""
+    def get_command(self, command_name: str) -> Command | None:
+        """Returns the command with the specified name, or None."""
 
-        return self._commands_by_name.get(handler_name)
+        if command_name in self._keyboard_commands:
+            return self._keyboard_commands[command_name]
+        return self._braille_commands.get(command_name)
+
+    def get_keyboard_command(self, command_name: str) -> KeyboardCommand | None:
+        """Returns the keyboard command with the specified name, or None."""
+
+        return self._keyboard_commands.get(command_name)
+
+    def get_braille_command(self, command_name: str) -> BrailleCommand | None:
+        """Returns the braille command with the specified name, or None."""
+
+        return self._braille_commands.get(command_name)
 
     def get_all_commands(self) -> tuple[Command, ...]:
         """Returns all registered commands."""
 
-        return tuple(self._commands_by_name.values())
+        return tuple(self._keyboard_commands.values()) + tuple(self._braille_commands.values())
+
+    def get_all_keyboard_commands(self) -> tuple[KeyboardCommand, ...]:
+        """Returns all registered keyboard commands."""
+
+        return tuple(self._keyboard_commands.values())
+
+    def get_all_braille_commands(self) -> tuple[BrailleCommand, ...]:
+        """Returns all registered braille commands."""
+
+        return tuple(self._braille_commands.values())
 
     def get_commands_by_group_label(self, group_label: str) -> tuple[Command, ...]:
         """Returns all commands with the specified group label."""
 
+        keyboard = tuple(
+            cmd for cmd in self._keyboard_commands.values()
+            if cmd.get_group_label() == group_label
+        )
+        braille = tuple(
+            cmd for cmd in self._braille_commands.values()
+            if cmd.get_group_label() == group_label
+        )
+        return keyboard + braille
+
+    def get_keyboard_commands_by_group_label(self, group_label: str) -> tuple[KeyboardCommand, ...]:
+        """Returns all keyboard commands with the specified group label."""
+
         return tuple(
-            cmd for cmd in self._commands_by_name.values()
+            cmd for cmd in self._keyboard_commands.values()
             if cmd.get_group_label() == group_label
         )
 
     def clear_commands(self) -> None:
         """Removes all commands from the registry."""
 
-        self._commands_by_name.clear()
+        self._keyboard_commands.clear()
+        self._braille_commands.clear()
 
-    def set_default_bindings_from_module(
-        self,
-        handlers: dict[str, input_event.InputEventHandler],
-        module_bindings: keybindings.KeyBindings,
-        skip_handlers: frozenset[str]
-    ) -> None:
-        """Sets default keybindings on Commands from module bindings before user customization."""
+    def apply_user_overrides(self) -> None:
+        """Applies user-customized keybindings from settings to Commands."""
 
-        for kb in module_bindings.key_bindings:
-            for name, handler in handlers.items():
-                if name in skip_handlers:
-                    continue
-                if handler.function == kb.handler.function:
-                    if cmd := self.get_command(name):
-                        cmd.set_is_group_toggle(handler.is_group_toggle)
-                        if cmd.get_default_keybinding() is None:
-                            cmd.set_default_keybinding(kb)
-                            cmd.set_keybinding(kb)
-                            kb.set_enabled(cmd.is_enabled() and not cmd.is_suspended())
-                    break
+        keybindings_dict = settings_manager.get_manager().get_active_keybindings()
 
-    def clear_deleted_bindings(
-        self,
-        handlers: dict[str, input_event.InputEventHandler],
-        profile_keybindings: dict[str, Any],
-        skip_handlers: frozenset[str]
-    ) -> None:
-        """Clears keybindings for handlers explicitly unbound in profile settings."""
-
-        for name in handlers:
-            if name in skip_handlers:
+        for command_name, binding_tuples in keybindings_dict.items():
+            cmd = self.get_keyboard_command(command_name)
+            if cmd is None:
                 continue
-            if name in profile_keybindings:
-                if profile_keybindings[name] == []:
-                    if cmd := self.get_command(name):
-                        cmd.set_keybinding(None)
 
-    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
-    def apply_customized_bindings(
-        self,
-        handlers: dict[str, input_event.InputEventHandler],
-        customized: keybindings.KeyBindings,
-        group_label: str,
-        skip_handlers: frozenset[str],
-        update_group_label: bool = True
-    ) -> None:
-        """Updates or adds Commands from customized keybindings."""
+            # Empty list means the user explicitly unbound this command
+            if binding_tuples == []:
+                cmd.set_keybinding(None)
+                continue
 
-        for kb in customized.key_bindings:
-            for name, handler in handlers.items():
-                if name in skip_handlers:
-                    continue
-                if handler.function == kb.handler.function:
-                    if cmd := self.get_command(name):
-                        cmd.set_keybinding(kb)
-                        cmd.set_is_group_toggle(handler.is_group_toggle)
-                        kb.set_enabled(cmd.is_enabled() and not cmd.is_suspended())
-                        if group_label and update_group_label:
-                            cmd.set_group_label(group_label)
-                    else:
-                        self.add_command(Command(
-                            name, handler, group_label, handler.description,
-                            kb, handler.learn_mode_enabled,
-                            is_group_toggle=handler.is_group_toggle))
-                    break
+            # Apply the customized binding
+            for binding_tuple in binding_tuples:
+                keysym, _mask, mods, clicks = binding_tuple
+                if not keysym:
+                    cmd.set_keybinding(None)
+                else:
+                    kb = keybindings.KeyBinding(keysym, int(mods), click_count=int(clicks))
+                    cmd.set_keybinding(kb)
 
     def get_command_for_event(
         self,
         event: input_event.KeyboardEvent,
         active_only: bool = True
-    ) -> Command | None:
-        """Returns the command matching the keyboard event, or None."""
+    ) -> KeyboardCommand | None:
+        """Returns the keyboard command matching the keyboard event, or None."""
 
         click_count = event.get_click_count()
-        for cmd in self._commands_by_name.values():
+        for cmd in self._keyboard_commands.values():
             if active_only and not cmd.is_active():
                 continue
             kb = cmd.get_keybinding()
@@ -1059,21 +1184,42 @@ class CommandManager:
                 return cmd
         return None
 
+    def get_command_for_braille_event(self, braille_key: int) -> BrailleCommand | None:
+        """Returns the braille command matching the braille key code, or None."""
+
+        for cmd in self._braille_commands.values():
+            if braille_key in cmd.get_braille_bindings():
+                return cmd
+        return None
+
+    def get_command_for_keybinding(
+        self, keysymstring: str, modifiers: int, click_count: int
+    ) -> KeyboardCommand | None:
+        """Returns the keyboard command matching the keybinding properties, or None."""
+
+        for cmd in self._keyboard_commands.values():
+            kb = cmd.get_keybinding()
+            if kb is None:
+                continue
+            if (kb.keysymstring == keysymstring
+                    and kb.modifiers == modifiers
+                    and kb.click_count == click_count):
+                return cmd
+        return None
+
     def set_group_enabled(self, group_label: str, enabled: bool) -> None:
         """Sets the enabled state for all commands in a group."""
 
         msg = f"COMMAND MANAGER: set_group_enabled({group_label}, {enabled})"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         for cmd in self.get_commands_by_group_label(group_label):
-            # Note:Group toggle commands are skipped since they must remain active to re-enable
-            # the group.
-            if cmd.is_group_toggle():
-                msg = f"COMMAND MANAGER: Skipping group toggle command: {cmd.get_handler_name()}"
+            # Note: Group toggle commands are skipped since they must remain active to re-enable
+            # the group. Only KeyboardCommands have group toggle functionality.
+            if isinstance(cmd, KeyboardCommand) and cmd.is_group_toggle():
+                msg = f"COMMAND MANAGER: Skipping group toggle command: {cmd.get_name()}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 continue
             cmd.set_enabled(enabled)
-            if kb := cmd.get_keybinding():
-                kb.set_enabled(enabled and not cmd.is_suspended())
         self.refresh_grabs_for_group(group_label)
 
     def set_group_suspended(self, group_label: str, suspended: bool) -> None:
@@ -1081,46 +1227,44 @@ class CommandManager:
 
         for cmd in self.get_commands_by_group_label(group_label):
             cmd.set_suspended(suspended)
-            if kb := cmd.get_keybinding():
-                kb.set_enabled(cmd.is_enabled() and not suspended)
         self.refresh_grabs_for_group(group_label)
 
-    def add_grabs_for_command(self, handler_name: str) -> None:
+    def add_grabs_for_command(self, command_name: str) -> None:
         """Adds key grabs for the specified command."""
 
-        cmd = self.get_command(handler_name)
-        if cmd is None or (kb := cmd.get_keybinding()) is None:
+        cmd = self.get_keyboard_command(command_name)
+        if cmd is None:
             return
-        kb.add_grabs()
+        kb = cmd.get_keybinding()
+        if kb is not None:
+            kb.add_grabs()
 
-    def remove_grabs_for_command(self, handler_name: str) -> None:
+    def remove_grabs_for_command(self, command_name: str) -> None:
         """Removes key grabs for the specified command."""
 
-        cmd = self.get_command(handler_name)
-        if cmd is None or (kb := cmd.get_keybinding()) is None:
+        cmd = self.get_keyboard_command(command_name)
+        if cmd is None:
             return
-        kb.remove_grabs()
+        kb = cmd.get_keybinding()
+        if kb is not None:
+            kb.remove_grabs()
 
     def add_grabs_for_group(self, group_label: str) -> None:
-        """Adds key grabs for all active commands in a group."""
+        """Adds key grabs for all active keyboard commands in a group."""
 
-        for cmd in self.get_commands_by_group_label(group_label):
-            name = cmd.get_handler_name()
+        for cmd in self.get_keyboard_commands_by_group_label(group_label):
+            name = cmd.get_name()
             is_active = cmd.is_active()
             kb = cmd.get_keybinding()
-            kb_enabled = kb.is_enabled() if kb else None
-            msg = (
-                f"COMMAND MANAGER: add_grabs_for_group: {name} "
-                f"active={is_active} kb_enabled={kb_enabled}"
-            )
+            msg = f"COMMAND MANAGER: add_grabs_for_group: {name} active={is_active}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if is_active and kb is not None:
                 kb.add_grabs()
 
     def remove_grabs_for_group(self, group_label: str) -> None:
-        """Removes key grabs for all commands in a group."""
+        """Removes key grabs for all keyboard commands in a group."""
 
-        for cmd in self.get_commands_by_group_label(group_label):
+        for cmd in self.get_keyboard_commands_by_group_label(group_label):
             kb = cmd.get_keybinding()
             if kb is not None:
                 kb.remove_grabs()
@@ -1130,6 +1274,67 @@ class CommandManager:
 
         self.remove_grabs_for_group(group_label)
         self.add_grabs_for_group(group_label)
+
+    def add_all_grabs(self, reason: str = "") -> None:
+        """Adds key grabs for all active keyboard commands."""
+
+        msg = "COMMAND MANAGER: Adding all grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        for cmd in self._keyboard_commands.values():
+            if cmd.is_active() and (kb := cmd.get_keybinding()) is not None:
+                kb.add_grabs()
+
+    def remove_all_grabs(self, reason: str = "") -> None:
+        """Removes key grabs for all keyboard commands."""
+
+        msg = "COMMAND MANAGER: Removing all grabs"
+        if reason:
+            msg += f": {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        for cmd in self._keyboard_commands.values():
+            if (kb := cmd.get_keybinding()) is not None:
+                kb.remove_grabs()
+
+    def refresh_all_grabs(self, reason: str = "") -> None:
+        """Removes existing grabs and adds new grabs for all active commands."""
+
+        # TODO: Should probably avoid removing key grabs and re-adding them.
+        # Otherwise, a key could conceivably leak through while the manager is
+        # in the process of updating the bindings.
+        self.remove_all_grabs(reason)
+        self.add_all_grabs(reason)
+
+    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
+    def register_command(
+        self,
+        name: str,
+        function: Callable[..., bool],
+        description: str = "",
+        key: str = "",
+        modifiers: int = 0,
+        click_count: int = 1,
+        group_label: str = ""
+    ) -> KeyboardCommand:
+        """Convenience method to create and register a command with optional key binding."""
+
+        kb = None
+        if key:
+            kb = keybindings.KeyBinding(key, modifiers, click_count=click_count)
+
+        cmd = KeyboardCommand(
+            name,
+            function,
+            group_label,
+            description,
+            desktop_keybinding=kb,
+            laptop_keybinding=kb
+        )
+        self.add_command(cmd)
+        return cmd
 
     def create_preferences_grid(
         self,

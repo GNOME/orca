@@ -328,77 +328,21 @@ class TestCaretNavigator:
             assert result == expected_result
             mock_cmd_mgr.set_group_enabled.assert_called_once()
 
-    @pytest.mark.parametrize(
-        "test_method,param_data,expected_checks",
-        [
-            pytest.param(
-                "initialization",
-                {},
-                ["_handlers", "_bindings", "_last_input_event", "_suspended"],
-                id="initialization",
-            ),
-            pytest.param(
-                "get_handlers",
-                {"refresh": True, "expected_type": dict},
-                ["isinstance_dict"],
-                id="get_handlers_refresh",
-            ),
-            pytest.param(
-                "get_handlers",
-                {"refresh": False, "expected_type": dict},
-                ["isinstance_dict"],
-                id="get_handlers_cached",
-            ),
-            pytest.param(
-                "get_bindings",
-                {"is_desktop": True, "refresh": True},
-                ["not_none"],
-                id="get_bindings_desktop",
-            ),
-            pytest.param(
-                "get_bindings",
-                {"is_desktop": False, "refresh": True},
-                ["not_none"],
-                id="get_bindings_laptop",
-            ),
-        ],
-    )
-    def test_navigator_setup_and_getter_methods(
-        self,
-        test_context: OrcaTestContext,
-        test_method: str,
-        param_data: dict,
-        expected_checks: list[str],
-    ) -> None:
-        """Test CaretNavigator setup and getter methods."""
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
+    def test_navigator_initialization(self, test_context: OrcaTestContext) -> None:
+        """Test CaretNavigator initialization."""
+        self._setup_dependencies(test_context)
+        from orca.caret_navigator import CaretNavigator
+        from orca import command_manager
 
         navigator = CaretNavigator()
 
-        if test_method == "initialization":
-            for attr in expected_checks:
-                assert hasattr(navigator, attr)
-            assert navigator._handlers is not None
-            assert navigator._bindings is not None
-            assert navigator._last_input_event is None
-            assert navigator._suspended is False
-
-        elif test_method == "get_handlers":
-            handlers = navigator.get_handlers(refresh=param_data["refresh"])
-            if "isinstance_dict" in expected_checks:
-                assert isinstance(handlers, param_data["expected_type"])
-
-        elif test_method == "get_bindings":
-            keybindings_mock = essential_modules["orca.keybindings"]
-            mock_bindings = test_context.Mock()
-            keybindings_mock.KeyBindings = test_context.Mock(return_value=mock_bindings)
-
-            result = navigator.get_bindings(
-                refresh=param_data["refresh"], is_desktop=param_data["is_desktop"]
-            )
-            if "not_none" in expected_checks:
-                assert result is not None
+        assert hasattr(navigator, "_last_input_event")
+        assert hasattr(navigator, "_suspended")
+        assert navigator._last_input_event is None
+        assert navigator._suspended is False
+        # Commands are registered in CommandManager
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager is not None
 
     @pytest.mark.parametrize(
         "navigation_type,in_say_all,current_line,next_prev_contents,expected_result",

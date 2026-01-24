@@ -46,11 +46,11 @@ from gi.repository import GLib, Gtk
 
 from . import braille
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import guilabels
 from . import input_event
-from . import keybindings
 from . import messages
 from . import orca
 from . import preferences_grid_base
@@ -515,75 +515,44 @@ class ProfileManager:
     """Manager for Orca profiles."""
 
     def __init__(self) -> None:
-        self._handlers: dict[str, input_event.InputEventHandler] = self.get_handlers(True)
-        self._bindings: keybindings.KeyBindings = keybindings.KeyBindings()
+        self._initialized: bool = False
 
         msg = "PROFILE MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("ProfileManager", self)
 
-    def get_handlers(self, refresh: bool = False) -> dict[str, input_event.InputEventHandler]:
-        """Returns the profile manager handlers."""
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
 
-        if refresh:
-            msg = "PROFILE MANAGER: Refreshing handlers."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._setup_handlers()
+        if self._initialized:
+            return
+        self._initialized = True
 
-        return self._handlers
+        manager = command_manager.get_manager()
+        group_label = guilabels.GENERAL_PROFILES
 
-    def _setup_handlers(self) -> None:
-        """Sets up the profile manager input event handlers."""
+        # (name, function, description, desktop_binding, laptop_binding)
+        commands_data = [
+            ("cycleSettingsProfileHandler", self.cycle_settings_profile,
+             cmdnames.CYCLE_SETTINGS_PROFILE, None, None),
+            ("presentCurrentProfileHandler", self.present_current_profile,
+             cmdnames.PRESENT_CURRENT_PROFILE, None, None),
+        ]
 
-        self._handlers = {}
+        for name, function, description, desktop_kb, laptop_kb in commands_data:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=desktop_kb,
+                    laptop_keybinding=laptop_kb,
+                )
+            )
 
-        self._handlers["cycleSettingsProfileHandler"] = \
-            input_event.InputEventHandler(
-                self.cycle_settings_profile,
-                cmdnames.CYCLE_SETTINGS_PROFILE)
-
-        self._handlers["presentCurrentProfileHandler"] = \
-            input_event.InputEventHandler(
-                self.present_current_profile,
-                cmdnames.PRESENT_CURRENT_PROFILE)
-
-        msg = "PROFILE MANAGER: Handlers set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_bindings(
-        self, refresh: bool = False, is_desktop: bool = True
-    ) -> keybindings.KeyBindings:
-        """Returns the profile manager keybindings."""
-
-        if refresh:
-            msg = f"PROFILE MANAGER: Refreshing bindings. Is desktop: {is_desktop}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._bindings.remove_key_grabs("PROFILE MANAGER: Refreshing bindings.")
-            self._setup_bindings()
-        elif self._bindings.is_empty():
-            self._setup_bindings()
-
-        return self._bindings
-
-    def _setup_bindings(self) -> None:
-        """Sets up the profile manager key bindings."""
-
-        self._bindings = keybindings.KeyBindings()
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["cycleSettingsProfileHandler"]))
-
-        self._bindings.add(
-            keybindings.KeyBinding(
-                "",
-                keybindings.NO_MODIFIER_MASK,
-                self._handlers["presentCurrentProfileHandler"]))
-
-        msg = "PROFILE MANAGER: Bindings set up."
+        msg = "PROFILE MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @dbus_service.getter
@@ -700,7 +669,7 @@ class ProfileManager:
         speech_and_verbosity_manager.get_manager().refresh_speech()
 
         if script is not None:
-            script.setup_input_event_handlers()
+            script.set_up_commands()
             if notify_user:
                 script.present_message(messages.PROFILE_CHANGED % name, name)
 

@@ -179,29 +179,14 @@ class TestNotificationPresenter:
         presenter = NotificationPresenter()
 
         assert presenter._gui is None
-        assert isinstance(presenter._handlers, dict)
         assert presenter._max_size == 55
         assert presenter._notifications == []
         assert presenter._current_index == -1
 
+        # D-Bus registration happens during setup()
+        presenter.set_up_commands()
         mock_get_controller.assert_called()
         mock_controller.register_decorated_module.assert_called()
-
-    @pytest.mark.parametrize(
-        "refresh",
-        [
-            pytest.param(True, id="refresh_true"),
-            pytest.param(False, id="empty_bindings"),
-        ],
-    )
-    def test_get_bindings(self, test_context: OrcaTestContext, refresh: bool) -> None:
-        """Test NotificationPresenter.get_bindings with various refresh settings."""
-        self._setup_dependencies(test_context)
-        from orca.notification_presenter import NotificationPresenter
-
-        presenter = NotificationPresenter()
-        bindings = presenter.get_bindings(refresh=refresh, is_desktop=bool(refresh))
-        assert bindings is not None
 
     @pytest.mark.parametrize(
         "refresh,check_handler_names",
@@ -213,26 +198,29 @@ class TestNotificationPresenter:
     def test_get_handlers(
         self, test_context: OrcaTestContext, refresh: bool, check_handler_names: bool
     ) -> None:
-        """Test NotificationPresenter.get_handlers with various refresh settings."""
+        """Test NotificationPresenter.get_handlers returns empty dict.
+
+        Note: Commands are now registered directly with CommandManager,
+        so get_handlers() returns an empty dict.
+        """
 
         self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
+        from orca import command_manager
 
         presenter = NotificationPresenter()
-        handlers = presenter.get_handlers(refresh=refresh)
-
-        assert isinstance(handlers, dict)
-        assert len(handlers) == 4
+        presenter.set_up_commands()
 
         if check_handler_names:
-            expected_handlers = [
+            manager = command_manager.get_manager()
+            expected_commands = [
                 "present_last_notification",
                 "present_next_notification",
                 "present_previous_notification",
                 "show_notification_list",
             ]
-            for handler_name in expected_handlers:
-                assert handler_name in handlers
+            for command_name in expected_commands:
+                assert manager.get_keyboard_command(command_name) is not None
 
     def test_save_notification_basic(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.save_notification."""
@@ -283,26 +271,25 @@ class TestNotificationPresenter:
         assert presenter._notifications == []
         assert presenter._current_index == -1
 
-    def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test NotificationPresenter._setup_handlers."""
+    def test_setup_commands(self, test_context: OrcaTestContext) -> None:
+        """Test that commands are registered with CommandManager during setup."""
 
         self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
+        from orca import command_manager
 
         presenter = NotificationPresenter()
-        len(presenter._handlers)
-        presenter._setup_handlers()
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
 
-        assert len(presenter._handlers) == 4
-
-    def test_setup_bindings(self, test_context: OrcaTestContext) -> None:
-        """Test NotificationPresenter._setup_bindings."""
-
-        self._setup_dependencies(test_context)
-        from orca.notification_presenter import NotificationPresenter
-
-        presenter = NotificationPresenter()
-        presenter._setup_bindings()
+        expected_commands = [
+            "present_last_notification",
+            "present_next_notification",
+            "present_previous_notification",
+            "show_notification_list",
+        ]
+        for command_name in expected_commands:
+            assert cmd_manager.get_keyboard_command(command_name) is not None
 
     @pytest.mark.parametrize(
         "time_diff, expected_result",

@@ -48,6 +48,7 @@ from gi.repository import GLib
 from . import braille
 from . import braille_presenter
 from . import clipboard
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import debugging_tools_manager
@@ -86,6 +87,11 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         script = script_manager.get_manager().get_default_script()
 
     settings_manager.get_manager().load_app_settings(script)
+
+    # Update command keybindings based on the keyboard layout setting
+    is_desktop = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+    command_manager.get_manager().set_keyboard_layout(is_desktop)
+
     speech_manager = speech_and_verbosity_manager.get_manager()
     if speech_manager.get_speech_is_enabled():
         speech_manager.start_speech()
