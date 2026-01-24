@@ -602,7 +602,7 @@ class StructuralNavigator:
         if notify_user:
             script.present_message(msg)
         self.set_mode(script, mode)
-        if mode != NavigationMode.OFF:
+        if mode == NavigationMode.DOCUMENT:
             root = self._determine_root_container(script)
             if not AXObject.supports_collection(root) and notify_user:
                 script.present_message(messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL,

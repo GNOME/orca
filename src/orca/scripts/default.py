@@ -439,11 +439,11 @@ class Script(script.Script):
         if presenter.has_state_for_app(self.app):
             presenter.restore_mode_for_script(self)
         else:
+            reason = "script activation, no prior state"
+            presenter.suspend_navigators(self, False, reason)
             structural_navigator.get_navigator().set_mode(self, self._default_sn_mode)
             caret_navigator.get_navigator().set_enabled_for_script(
                 self, self._default_caret_navigation_enabled)
-            reason = "script activation, no prior state"
-            presenter.suspend_navigators(self, True, reason)
 
         command_manager.get_manager().add_all_grabs("script activation")
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()

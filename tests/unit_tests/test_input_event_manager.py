@@ -285,7 +285,8 @@ class TestInputEventManager:
                 "is_bound": True,
                 "has_grabs": True,
                 "has_device": False,
-                "expected_result": [],
+                "existing_grab_ids": [333, 444],
+                "expected_result": [333, 444],
                 "expects_debug_call": True,
             },
             {
@@ -322,6 +323,7 @@ class TestInputEventManager:
         mock_binding.is_enabled.return_value = case["is_enabled"]
         mock_binding.is_bound.return_value = case["is_bound"]
         mock_binding.has_grabs.return_value = case["has_grabs"]
+        mock_binding.get_grab_ids.return_value = case.get("existing_grab_ids", [])
 
         if case["has_device"]:
             mock_device = test_context.Mock()

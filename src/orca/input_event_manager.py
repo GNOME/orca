@@ -92,7 +92,7 @@ class InputEventManager:
         if binding.has_grabs():
             tokens = ["INPUT EVENT MANAGER:", binding, "already has grabs."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return []
+            return binding.get_grab_ids()
 
         if self._device is None:
             tokens = ["INPUT EVENT MANAGER: No device to add grab for", binding]
