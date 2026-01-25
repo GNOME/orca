@@ -50,9 +50,9 @@ from . import keybindings
 from . import learn_mode_presenter
 from . import messages
 from . import orca
-from . import orca_modifier_manager
 from . import orca_gtkbuilder
 from . import orca_gui_profile
+from . import orca_modifier_manager
 from . import orca_platform # pylint: disable=no-name-in-module
 from . import settings
 from . import settings_manager
@@ -155,6 +155,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.profilesComboModel = None
         self.startingProfileCombo = None
         self._capturedKey = []
+        self._saved_commands = {}
         self.script = script
         self.init()
         self._pending_already_bound_message_id = None
@@ -2703,8 +2704,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Use the delay because the keyboard event which triggers this state is processed after
         # and cuts the speech off.
         GLib.timeout_add(500, self._presentMessage, messages.KB_ENTER_NEW_KEY)
+        self._saved_commands = command_manager.get_manager().get_keyboard_commands()
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        command_manager.get_manager().remove_all_grabs("Capturing keys")
+        command_manager.get_manager().set_active_commands({}, "Capturing keys")
         input_event_manager.get_manager().unmap_all_modifiers()
         editable.connect('key-press-event', self.kbKeyPressed)
         return
@@ -2713,7 +2715,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Stops user input of a Key for a selected key binding"""
 
         self._capturedKey = []
-        command_manager.get_manager().refresh_all_grabs("Done capturing keys")
+        command_manager.get_manager().set_active_commands(self._saved_commands, "Done capturing keys")
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
         return
 
@@ -2823,7 +2825,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         self._capturedKey = []
-        command_manager.get_manager().refresh_all_grabs("Done capturing keys")
+        command_manager.get_manager().set_active_commands(self._saved_commands, "Done capturing keys")
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
         myiter = treeModel.get_iter_from_string(path)
         try:

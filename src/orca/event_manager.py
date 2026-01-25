@@ -52,6 +52,7 @@ from . import debug
 from . import focus_manager
 from . import input_event
 from . import input_event_manager
+from . import orca_modifier_manager
 from . import script_manager
 from . import systemd
 from .ax_object import AXObject
@@ -95,6 +96,7 @@ class EventManager:
             return
 
         input_event_manager.get_manager().start_key_watcher()
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
         self._active = True
         debug.print_message(debug.LEVEL_INFO, 'EVENT MANAGER: Activated', True)
 

@@ -72,6 +72,7 @@ SHIFT_ALT_CTRL_MODIFIER_MASK  = (1 << Atspi.ModifierType.SHIFT |
 NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
                                  1 << Atspi.ModifierType.ALT |
                                  1 << Atspi.ModifierType.CONTROL |
+                                 1 << Atspi.ModifierType.META3 |
                                  1 << MODIFIER_ORCA)
 DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
 
@@ -245,6 +246,11 @@ class KeyBinding:
         """Returns the grab IDs for this KeyBinding."""
 
         return self._grab_ids
+
+    def set_grab_ids(self, grab_ids: list[int]) -> None:
+        """Sets the grab IDs for this KeyBinding."""
+
+        self._grab_ids = grab_ids
 
     def has_grabs(self) -> bool:
         """Returns True if there are existing grabs associated with this KeyBinding."""

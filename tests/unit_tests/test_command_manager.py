@@ -267,8 +267,8 @@ class TestKeyboardCommand:
         )
 
         assert command.get_name() == "fullCommand"
-        assert command.get_desktop_keybinding() == desktop_kb
-        assert command.get_laptop_keybinding() == laptop_kb
+        assert command.get_default_keybinding(is_desktop=True) == desktop_kb
+        assert command.get_default_keybinding(is_desktop=False) == laptop_kb
 
     def test_set_keybinding(self, test_context: OrcaTestContext) -> None:
         """Test KeyboardCommand.set_keybinding."""
@@ -483,24 +483,6 @@ class TestCommandManager:
 
         assert manager.get_keyboard_command("nonexistent") is None
 
-    def test_add_and_get_braille_command(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.add_command and get_braille_command."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import BrailleCommand, CommandManager
-
-        manager = CommandManager()
-        function = self._create_mock_function(test_context)
-        command = BrailleCommand("testCommand", function, "Test Group",
-                                  braille_bindings=(100, 200))
-
-        manager.add_command(command)
-
-        retrieved = manager.get_braille_command("testCommand")
-        assert retrieved == command
-
-        assert manager.get_braille_command("nonexistent") is None
-
     def test_get_all_keyboard_commands(self, test_context: OrcaTestContext) -> None:
         """Test CommandManager.get_all_keyboard_commands."""
 
@@ -526,27 +508,6 @@ class TestCommandManager:
         assert cmd1 in all_commands
         assert cmd2 in all_commands
         assert cmd3 in all_commands
-
-    def test_clear_commands(self, test_context: OrcaTestContext) -> None:
-        """Test CommandManager.clear_commands."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import KeyboardCommand, BrailleCommand, CommandManager
-
-        manager = CommandManager()
-
-        function = self._create_mock_function(test_context)
-        kb_cmd = KeyboardCommand("kbCommand", function, "Test Group")
-        br_cmd = BrailleCommand("brCommand", function, "Test Group", braille_bindings=(100,))
-        manager.add_command(kb_cmd)
-        manager.add_command(br_cmd)
-
-        assert len(manager.get_all_keyboard_commands()) == 1
-        assert len(manager.get_all_braille_commands()) == 1
-
-        manager.clear_commands()
-        assert len(manager.get_all_keyboard_commands()) == 0
-        assert len(manager.get_all_braille_commands()) == 0
 
     def test_get_command_for_event_finds_match(self, test_context: OrcaTestContext) -> None:
         """Test get_command_for_event returns matching command."""
@@ -756,80 +717,6 @@ class TestCommandManager:
         assert cmd1.is_suspended() is True
         assert cmd2.is_suspended() is True
         assert cmd3.is_suspended() is False
-
-    def test_add_grabs_for_command(self, test_context: OrcaTestContext) -> None:
-        """Test add_grabs_for_command calls add_grabs on keybinding."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import KeyboardCommand, CommandManager
-
-        manager = CommandManager()
-
-        function = self._create_mock_function(test_context)
-        kb = self._create_mock_keybinding(test_context)
-        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
-        cmd.set_keybinding(kb)
-        manager.add_command(cmd)
-
-        manager.add_grabs_for_command("cmd")
-
-        kb.add_grabs.assert_called_once()
-
-    def test_add_grabs_for_command_no_op_when_not_found(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test add_grabs_for_command is no-op for unknown command."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import CommandManager
-
-        manager = CommandManager()
-        manager.add_grabs_for_command("nonexistent")
-
-    def test_add_grabs_for_command_no_op_when_no_keybinding(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test add_grabs_for_command is no-op if no keybinding."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import KeyboardCommand, CommandManager
-
-        manager = CommandManager()
-
-        function = self._create_mock_function(test_context)
-        cmd = KeyboardCommand("cmd", function, "Test Group")
-        manager.add_command(cmd)
-
-        manager.add_grabs_for_command("cmd")
-
-    def test_remove_grabs_for_command(self, test_context: OrcaTestContext) -> None:
-        """Test remove_grabs_for_command calls remove_grabs on keybinding."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import KeyboardCommand, CommandManager
-
-        manager = CommandManager()
-
-        function = self._create_mock_function(test_context)
-        kb = self._create_mock_keybinding(test_context)
-        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
-        cmd.set_keybinding(kb)
-        manager.add_command(cmd)
-
-        manager.remove_grabs_for_command("cmd")
-
-        kb.remove_grabs.assert_called_once()
-
-    def test_remove_grabs_for_command_no_op_when_not_found(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test remove_grabs_for_command is no-op for unknown command."""
-
-        self._setup_dependencies(test_context)
-        from orca.command_manager import CommandManager
-
-        manager = CommandManager()
-        manager.remove_grabs_for_command("nonexistent")
 
     def test_has_multi_click_bindings_true(self, test_context: OrcaTestContext) -> None:
         """Test has_multi_click_bindings returns True when multi-click binding exists."""
@@ -1069,3 +956,416 @@ class TestGetManager:
 
         manager = get_manager()
         assert isinstance(manager, CommandManager)
+
+
+@pytest.mark.unit
+class TestDiffBasedGrabUpdates:
+    """Test diff-based grab updates in CommandManager."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
+        """Returns dependencies for command_manager module testing."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.orca_modifier_manager"]
+        )
+
+        input_event_mock = essential_modules["orca.input_event"]
+        input_event_mock.InputEventHandler = test_context.Mock
+
+        keybindings_mock = essential_modules["orca.keybindings"]
+        keybindings_mock.KeyBinding = test_context.Mock
+        keybindings_mock.KeyBindings = test_context.Mock
+
+        orca_modifier_manager_mock = essential_modules["orca.orca_modifier_manager"]
+        modifier_manager_instance = test_context.Mock()
+        modifier_manager_instance.refresh_orca_modifiers = test_context.Mock()
+        orca_modifier_manager_mock.get_manager = test_context.Mock(
+            return_value=modifier_manager_instance
+        )
+
+        # Mock settings_manager for apply_user_overrides
+        settings_manager_mock = essential_modules["orca.settings_manager"]
+        settings_manager_instance = test_context.Mock()
+        settings_manager_instance.get_active_keybindings = test_context.Mock(return_value={})
+        settings_manager_mock.get_manager = test_context.Mock(
+            return_value=settings_manager_instance
+        )
+
+        essential_modules["modifier_manager_instance"] = modifier_manager_instance
+        essential_modules["settings_manager_instance"] = settings_manager_instance
+        return essential_modules
+
+    def _create_mock_function(self, test_context: OrcaTestContext) -> Mock:
+        """Creates a mock function for a Command."""
+
+        function = test_context.Mock()
+        function.return_value = True
+        return function
+
+    def _create_mock_keybinding(
+        self,
+        test_context: OrcaTestContext,
+        keysymstring: str = "a",
+        modifiers: int = 0,
+        click_count: int = 1,
+        keyval: int = 65,
+        keycode: int = 38
+    ) -> Mock:
+        """Creates a mock KeyBinding with specified properties."""
+
+        kb = test_context.Mock()
+        kb.keysymstring = keysymstring
+        kb.modifiers = modifiers
+        kb.click_count = click_count
+        kb.keyval = keyval
+        kb.keycode = keycode
+        kb.has_grabs = test_context.Mock(return_value=False)
+        kb.add_grabs = test_context.Mock()
+        kb.remove_grabs = test_context.Mock()
+        kb.get_grab_ids = test_context.Mock(return_value=[])
+        kb.set_grab_ids = test_context.Mock()
+        return kb
+
+    def test_binding_key_returns_tuple(self, test_context: OrcaTestContext) -> None:
+        """Test _binding_key returns correct tuple."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        kb = self._create_mock_keybinding(
+            test_context, keysymstring="h", modifiers=256, click_count=2
+        )
+
+        result = manager._binding_key(kb)
+        assert result == ("h", 256, 2)
+
+    def test_binding_key_returns_none_for_none(self, test_context: OrcaTestContext) -> None:
+        """Test _binding_key returns None for None keybinding."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        assert manager._binding_key(None) is None
+
+    def test_binding_key_returns_none_for_empty_keysymstring(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test _binding_key returns None when keysymstring is empty."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        kb = self._create_mock_keybinding(test_context, keysymstring="")
+        assert manager._binding_key(kb) is None
+
+    def test_diff_transfers_grab_ids_for_matching_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that grab IDs are transferred when bindings match."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Old command with grabs
+        old_kb = self._create_mock_keybinding(test_context, keysymstring="h", modifiers=256)
+        old_kb.has_grabs.return_value = True
+        old_kb.get_grab_ids.return_value = [42, 43]
+        old_cmd = KeyboardCommand("cmd", function, "Group", desktop_keybinding=old_kb)
+        old_cmd.set_keybinding(old_kb)
+        old_commands = {"cmd": old_cmd}
+
+        # New command with same binding but no grabs yet
+        new_kb = self._create_mock_keybinding(test_context, keysymstring="h", modifiers=256)
+        new_kb.has_grabs.return_value = False
+        new_cmd = KeyboardCommand("cmd", function, "Group", desktop_keybinding=new_kb)
+        new_cmd.set_keybinding(new_kb)
+        new_commands = {"cmd": new_cmd}
+
+        manager._keyboard_commands = old_commands
+        manager._diff_and_update_grabs(new_commands, "test")
+
+        # Verify grab IDs were transferred
+        new_kb.set_grab_ids.assert_called_once_with([42, 43])
+        old_kb.set_grab_ids.assert_called_once_with([])
+        # Neither add nor remove should be called
+        new_kb.add_grabs.assert_not_called()
+        old_kb.remove_grabs.assert_not_called()
+
+    def test_diff_removes_grabs_for_old_only_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that grabs are removed for bindings only in old commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Old command with grabs
+        old_kb = self._create_mock_keybinding(test_context, keysymstring="h", modifiers=256)
+        old_kb.has_grabs.return_value = True
+        old_cmd = KeyboardCommand("old_cmd", function, "Group", desktop_keybinding=old_kb)
+        old_cmd.set_keybinding(old_kb)
+        old_commands = {"old_cmd": old_cmd}
+
+        # Empty new commands
+        new_commands: dict = {}
+
+        manager._keyboard_commands = old_commands
+        manager._diff_and_update_grabs(new_commands, "test")
+
+        # Verify grabs were removed
+        old_kb.remove_grabs.assert_called_once()
+
+    def test_diff_adds_grabs_for_new_only_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that grabs are added for bindings only in new commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Empty old commands
+        old_commands: dict = {}
+
+        # New command without grabs
+        new_kb = self._create_mock_keybinding(test_context, keysymstring="h", modifiers=256)
+        new_kb.has_grabs.return_value = False
+        new_cmd = KeyboardCommand("new_cmd", function, "Group", desktop_keybinding=new_kb)
+        new_cmd.set_keybinding(new_kb)
+        new_commands = {"new_cmd": new_cmd}
+
+        manager._keyboard_commands = old_commands
+        manager._diff_and_update_grabs(new_commands, "test")
+
+        # Verify grabs were added
+        new_kb.add_grabs.assert_called_once()
+
+    def test_set_active_commands_uses_diff(self, test_context: OrcaTestContext) -> None:
+        """Test set_active_commands uses diff-based updates."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Add initial command with grabs
+        old_kb = self._create_mock_keybinding(test_context, keysymstring="a")
+        old_kb.has_grabs.return_value = True
+        old_cmd = KeyboardCommand("old_cmd", function, "Group", desktop_keybinding=old_kb)
+        old_cmd.set_keybinding(old_kb)
+        manager.add_command(old_cmd)
+
+        # Set new commands
+        new_kb = self._create_mock_keybinding(test_context, keysymstring="b")
+        new_kb.has_grabs.return_value = False
+        new_cmd = KeyboardCommand("new_cmd", function, "Group", desktop_keybinding=new_kb)
+        new_cmd.set_keybinding(new_kb)
+
+        manager.set_active_commands({"new_cmd": new_cmd}, "test")
+
+        # Old binding should have grabs removed, new binding should have grabs added
+        old_kb.remove_grabs.assert_called_once()
+        new_kb.add_grabs.assert_called_once()
+
+    def test_activate_commands_applies_overrides(self, test_context: OrcaTestContext) -> None:
+        """Test activate_commands applies user overrides."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Add a command
+        kb = self._create_mock_keybinding(test_context, keysymstring="a")
+        cmd = KeyboardCommand("test_cmd", function, "Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Activate commands should apply user overrides
+        settings_manager = essential_modules["settings_manager_instance"]
+        settings_manager.get_active_keybindings.return_value = {}
+
+        manager.activate_commands("test")
+
+        # Should call get_active_keybindings to apply overrides
+        settings_manager.get_active_keybindings.assert_called()
+
+    def test_diff_skips_inactive_commands(self, test_context: OrcaTestContext) -> None:
+        """Test that diff skips inactive commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Old command that is disabled (inactive)
+        old_kb = self._create_mock_keybinding(test_context, keysymstring="h")
+        old_kb.has_grabs.return_value = True
+        old_cmd = KeyboardCommand(
+            "cmd", function, "Group", desktop_keybinding=old_kb, enabled=False
+        )
+        old_cmd.set_keybinding(old_kb)
+        old_commands = {"cmd": old_cmd}
+
+        # New command that is also disabled
+        new_kb = self._create_mock_keybinding(test_context, keysymstring="h")
+        new_cmd = KeyboardCommand(
+            "cmd", function, "Group", desktop_keybinding=new_kb, enabled=False
+        )
+        new_cmd.set_keybinding(new_kb)
+        new_commands = {"cmd": new_cmd}
+
+        manager._keyboard_commands = old_commands
+        manager._diff_and_update_grabs(new_commands, "test")
+
+        # Neither should have grabs modified since both are inactive
+        old_kb.remove_grabs.assert_not_called()
+        new_kb.add_grabs.assert_not_called()
+        new_kb.set_grab_ids.assert_not_called()
+
+    def test_set_group_suspended_removes_grabs_when_suspending(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_group_suspended removes grabs when suspending active commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Active command with grabs
+        kb = self._create_mock_keybinding(test_context, keysymstring="h")
+        kb.has_grabs.return_value = True
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Suspend the group
+        manager.set_group_suspended("Test Group", True)
+
+        # Grabs should be removed
+        kb.remove_grabs.assert_called_once()
+        kb.add_grabs.assert_not_called()
+
+    def test_set_group_suspended_adds_grabs_when_unsuspending(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_group_suspended adds grabs when unsuspending commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Suspended command without grabs
+        kb = self._create_mock_keybinding(test_context, keysymstring="h")
+        kb.has_grabs.return_value = False
+        cmd = KeyboardCommand(
+            "cmd", function, "Test Group", desktop_keybinding=kb, suspended=True
+        )
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Unsuspend the group
+        manager.set_group_suspended("Test Group", False)
+
+        # Grabs should be added
+        kb.add_grabs.assert_called_once()
+        kb.remove_grabs.assert_not_called()
+
+    def test_set_group_suspended_no_change_when_already_in_state(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_group_suspended does nothing when commands already in desired state."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Already suspended command
+        kb = self._create_mock_keybinding(test_context, keysymstring="h")
+        kb.has_grabs.return_value = False
+        cmd = KeyboardCommand(
+            "cmd", function, "Test Group", desktop_keybinding=kb, suspended=True
+        )
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Suspend again (no change)
+        manager.set_group_suspended("Test Group", True)
+
+        # No grabs should be modified
+        kb.add_grabs.assert_not_called()
+        kb.remove_grabs.assert_not_called()
+
+    def test_set_group_enabled_removes_grabs_when_disabling(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_group_enabled removes grabs when disabling active commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Active command with grabs
+        kb = self._create_mock_keybinding(test_context, keysymstring="h")
+        kb.has_grabs.return_value = True
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Disable the group
+        manager.set_group_enabled("Test Group", False)
+
+        # Grabs should be removed
+        kb.remove_grabs.assert_called_once()
+        kb.add_grabs.assert_not_called()
+
+    def test_set_group_enabled_skips_group_toggle_commands(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_group_enabled skips group toggle commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+        function = self._create_mock_function(test_context)
+
+        # Group toggle command with grabs
+        kb = self._create_mock_keybinding(test_context, keysymstring="z")
+        kb.has_grabs.return_value = True
+        cmd = KeyboardCommand(
+            "toggle_cmd", function, "Test Group",
+            desktop_keybinding=kb, is_group_toggle=True
+        )
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Disable the group
+        manager.set_group_enabled("Test Group", False)
+
+        # Group toggle should not have grabs removed (it stays active)
+        kb.remove_grabs.assert_not_called()
+        # Command should still be enabled
+        assert cmd.is_enabled() is True

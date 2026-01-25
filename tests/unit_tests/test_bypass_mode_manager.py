@@ -86,9 +86,9 @@ class TestBypassModeManager:
 
         command_manager_mock = essential_modules["orca.command_manager"]
         command_manager_instance = test_context.Mock()
-        command_manager_instance.add_all_grabs = test_context.Mock()
-        command_manager_instance.remove_all_grabs = test_context.Mock()
-        command_manager_instance.add_grabs_for_command = test_context.Mock()
+        command_manager_instance.get_keyboard_commands = test_context.Mock(return_value={})
+        command_manager_instance.set_active_commands = test_context.Mock()
+        command_manager_instance.get_command = test_context.Mock(return_value=None)
         command_manager_mock.get_manager = test_context.Mock(
             return_value=command_manager_instance
         )
@@ -154,15 +154,13 @@ class TestBypassModeManager:
         assert keybinding is not None
 
     @pytest.mark.parametrize(
-        "initial_active,has_event,expected_active,expected_message,"
-        "expected_grabs_call,expected_modifier_call",
+        "initial_active,has_event,expected_active,expected_message,expected_modifier_call",
         [
             (
                 False,
                 True,
                 True,
                 "Orca command keys off.",
-                "remove_all_grabs",
                 "unset_orca_modifiers",
             ),
             (
@@ -170,7 +168,6 @@ class TestBypassModeManager:
                 False,
                 True,
                 None,
-                "remove_all_grabs",
                 "unset_orca_modifiers",
             ),
             (
@@ -178,7 +175,6 @@ class TestBypassModeManager:
                 True,
                 False,
                 "Orca command keys on.",
-                "add_all_grabs",
                 "refresh_orca_modifiers",
             ),
             (
@@ -186,7 +182,6 @@ class TestBypassModeManager:
                 False,
                 False,
                 None,
-                "add_all_grabs",
                 "refresh_orca_modifiers",
             ),
         ],
@@ -198,7 +193,6 @@ class TestBypassModeManager:
         has_event: bool,
         expected_active: bool,
         expected_message: str | None,
-        expected_grabs_call: str,
         expected_modifier_call: str,
     ) -> None:
         """Test toggle_enabled with various initial states and event conditions."""
@@ -230,12 +224,14 @@ class TestBypassModeManager:
         else:
             mock_script.present_message.assert_not_called()
 
+        # Verify set_active_commands was called
         cmd_manager = essential_modules["command_manager_instance"]
-        grabs_method = getattr(cmd_manager, expected_grabs_call)
+        cmd_manager.set_active_commands.assert_called()
+        call_args = cmd_manager.set_active_commands.call_args
         if expected_active:
-            grabs_method.assert_called_with("bypass mode enabled")
+            assert call_args[0][1] == "bypass mode enabled"
         else:
-            grabs_method.assert_called_with("bypass mode disabled")
+            assert call_args[0][1] == "bypass mode disabled"
 
         modifier_manager = essential_modules["modifier_manager_instance"]
         modifier_method = getattr(modifier_manager, expected_modifier_call)

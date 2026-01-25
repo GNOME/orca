@@ -71,6 +71,7 @@ class TestEventManager:
 
         additional_modules = [
             "orca.input_event_manager",
+            "orca.orca_modifier_manager",
             "orca.ax_utilities_debugging",
             "orca.ax_utilities",
         ]

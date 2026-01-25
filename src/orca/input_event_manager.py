@@ -73,11 +73,16 @@ class InputEventManager:
         self._device.add_key_watcher(self.process_keyboard_event)
 
     def stop_key_watcher(self) -> None:
-        """Starts the watcher for keyboard input events."""
+        """Stops the watcher for keyboard input events."""
 
         msg = "INPUT EVENT MANAGER: Stopping key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._device = None
+
+    def has_device(self) -> bool:
+        """Returns True if there is an active input device."""
+
+        return self._device is not None
 
     def pause_key_watcher(self, pause: bool = True, reason: str = "") -> None:
         """Pauses processing of keyboard input events."""
@@ -299,6 +304,7 @@ class InputEventManager:
     # pylint: enable=too-many-arguments
     # pylint: enable=too-many-positional-arguments
 
+    # pylint: disable-next=too-many-return-statements
     def _determine_keyboard_event_click_count(self, event: input_event.KeyboardEvent) -> int:
         """Determines the click count of event."""
 

@@ -365,9 +365,10 @@ class TestFlatReviewPresenter:
 
         # Verify that braille commands are registered
         manager = command_manager.get_manager()
-        braille_cmd = manager.get_braille_command("reviewAboveHandler")
-        # May be None if braille is not available in test environment
-        assert braille_cmd is None or braille_cmd.get_braille_bindings() is not None
+        braille_cmds = [c for c in manager.get_all_braille_commands()
+                        if c.get_name() == "reviewAboveHandler"]
+        # May be empty if braille is not available in test environment
+        assert len(braille_cmds) == 0 or braille_cmds[0].get_braille_bindings() is not None
 
     @pytest.mark.parametrize(
         "refresh",

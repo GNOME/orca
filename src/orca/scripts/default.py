@@ -71,7 +71,6 @@ from orca import notification_presenter
 from orca import object_navigator
 from orca import orca
 from orca import orca_gui_prefs
-from orca import orca_modifier_manager
 from orca import phonnames
 from orca import profile_manager
 from orca import say_all_presenter
@@ -304,7 +303,7 @@ class Script(script.Script):
                 "processBrailleCutLineHandler": (braille.brlapi.KEY_CMD_CUTLINE,),
             }
         except AttributeError:
-            msg = "DEFAULT SCRIPT: Braille bindings unavailable."
+            msg = "DEFAULT: Braille bindings unavailable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         # Braille commands: (name, function, description, executes_in_learn_mode)
@@ -319,7 +318,12 @@ class Script(script.Script):
                 True,
             ),
             ("goBrailleHomeHandler", self.go_braille_home, cmdnames.GO_BRAILLE_HOME, True),
-            ("processRoutingKeyHandler", self.process_routing_key, cmdnames.PROCESS_ROUTING_KEY, False),
+            (
+                "processRoutingKeyHandler",
+                self.process_routing_key,
+                cmdnames.PROCESS_ROUTING_KEY,
+                False,
+            ),
             (
                 "processBrailleCutBeginHandler",
                 self.process_braille_cut_begin,
@@ -348,7 +352,8 @@ class Script(script.Script):
 
         command_manager.get_manager().apply_user_overrides()
 
-        msg = "DEFAULT SCRIPT: Commands set up."
+        cmd_count = len(command_manager.get_manager().get_all_keyboard_commands())
+        msg = f"DEFAULT: Commands set up: {cmd_count} keyboard commands"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_app_preferences_gui(self) -> Gtk.Grid | None:
@@ -428,7 +433,6 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         settings_manager.get_manager().load_app_settings(self)
-        command_manager.get_manager().apply_user_overrides()
 
         # TODO - JD: Should these be moved into check_speech_setting?
         speech_and_verbosity_manager.get_manager().update_punctuation_level()
@@ -445,10 +449,7 @@ class Script(script.Script):
             caret_navigator.get_navigator().set_enabled_for_script(
                 self, self._default_caret_navigation_enabled)
 
-        command_manager.get_manager().add_all_grabs("script activation")
-        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
-        tokens = ["DEFAULT: Script for", self.app, "activated"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        command_manager.get_manager().activate_commands(f"activated {self.name}")
 
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
@@ -456,9 +457,6 @@ class Script(script.Script):
         self.point_of_reference = {}
         if bypass_mode_manager.get_manager().is_active():
             bypass_mode_manager.get_manager().toggle_enabled(self)
-
-        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        command_manager.get_manager().remove_all_grabs("script deactivation")
 
     def update_braille(self, obj: Atspi.Accessible, **args) -> None:
         """Updates the braille display to show obj."""

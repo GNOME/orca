@@ -412,6 +412,9 @@ class SettingsManager:
         self._pronunciations = profile_pronunciations.copy()
         self._pronunciations.update(app_pronunciations or {})
 
+        # Clear keybindings first to ensure app-specific unbindings don't persist
+        # when switching to an app without those overrides
+        self._keybindings.clear()
         self._keybindings.update(profile_keybindings)
         self._keybindings.update(app_keybindings or {})
 
