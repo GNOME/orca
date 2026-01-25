@@ -323,6 +323,16 @@ class InputEventManager:
             return last_count
         if (event.is_modifier_key() and last_count == 2) or last_count == 3:
             return 1
+
+        # Only increment click count if there are multi-click bindings for this key.
+        # This prevents accidental "double-clicks" from breaking commands that only
+        # have single-click bindings.
+        # pylint: disable-next=import-outside-toplevel
+        from . import command_manager
+        if not command_manager.get_manager().has_multi_click_bindings(
+                event.id, event.hw_code, event.modifiers):
+            return 1
+
         return last_count + 1
 
     def _determine_mouse_event_click_count(self, event: input_event.MouseButtonEvent) -> int:

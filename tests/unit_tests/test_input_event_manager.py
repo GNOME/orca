@@ -3070,3 +3070,129 @@ class TestInputEventManager:
 
         assert input_event_manager._paused is False
 
+    def test_determine_click_count_no_multi_click_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test click count stays at 1 when no multi-click bindings exist for the key."""
+
+        input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
+
+        # Mock command_manager to return False for has_multi_click_bindings
+        command_manager_instance = test_context.Mock()
+        command_manager_instance.has_multi_click_bindings = test_context.Mock(return_value=False)
+        test_context.patch(
+            "orca.command_manager.get_manager", return_value=command_manager_instance
+        )
+
+        # Create first event (press)
+        first_event = essential_modules["orca.input_event"].KeyboardEvent(
+            pressed=True, keycode=79, keysym=65429, modifiers=0, text="KP_Home"
+        )
+        first_event.keyval_name = "KP_Home"
+        first_event.time = 1000.0
+        first_event.is_pressed_key = test_context.Mock(return_value=True)
+        first_event.is_modifier_key = test_context.Mock(return_value=False)
+        first_event.get_click_count = test_context.Mock(return_value=1)
+        first_event.get_object = test_context.Mock(return_value=None)
+
+        # Set first event as last event
+        input_event_manager._last_input_event = first_event
+        input_event_manager._last_non_modifier_key_event = first_event
+
+        # Create release event
+        release_event = essential_modules["orca.input_event"].KeyboardEvent(
+            pressed=False, keycode=79, keysym=65429, modifiers=0, text="KP_Home"
+        )
+        release_event.keyval_name = "KP_Home"
+        release_event.time = 1000.1
+        release_event.is_pressed_key = test_context.Mock(return_value=False)
+        release_event.is_modifier_key = test_context.Mock(return_value=False)
+        release_event.get_click_count = test_context.Mock(return_value=1)
+        release_event.get_object = test_context.Mock(return_value=None)
+
+        # Set release as last event
+        input_event_manager._last_input_event = release_event
+        input_event_manager._last_non_modifier_key_event = release_event
+
+        # Create second press event within doubleClickTimeout
+        second_event = essential_modules["orca.input_event"].KeyboardEvent(
+            pressed=True, keycode=79, keysym=65429, modifiers=0, text="KP_Home"
+        )
+        second_event.keyval_name = "KP_Home"
+        second_event.id = 65429  # keyval for has_multi_click_bindings call
+        second_event.hw_code = 79  # keycode
+        second_event.modifiers = 0
+        second_event.time = 1000.3  # Within 0.5s timeout
+        second_event.is_pressed_key = test_context.Mock(return_value=True)
+        second_event.is_modifier_key = test_context.Mock(return_value=False)
+        second_event.get_object = test_context.Mock(return_value=None)
+
+        # Determine click count - should stay at 1 since no multi-click bindings
+        result = input_event_manager._determine_keyboard_event_click_count(second_event)
+
+        assert result == 1
+        command_manager_instance.has_multi_click_bindings.assert_called_with(65429, 79, 0)
+
+    def test_determine_click_count_with_multi_click_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test click count increments when multi-click bindings exist for the key."""
+
+        input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
+
+        # Mock command_manager to return True for has_multi_click_bindings
+        command_manager_instance = test_context.Mock()
+        command_manager_instance.has_multi_click_bindings = test_context.Mock(return_value=True)
+        test_context.patch(
+            "orca.command_manager.get_manager", return_value=command_manager_instance
+        )
+
+        # Create first event (press)
+        first_event = essential_modules["orca.input_event"].KeyboardEvent(
+            pressed=True, keycode=80, keysym=65431, modifiers=0, text="KP_Up"
+        )
+        first_event.keyval_name = "KP_Up"
+        first_event.time = 1000.0
+        first_event.is_pressed_key = test_context.Mock(return_value=True)
+        first_event.is_modifier_key = test_context.Mock(return_value=False)
+        first_event.get_click_count = test_context.Mock(return_value=1)
+        first_event.get_object = test_context.Mock(return_value=None)
+
+        # Set first event as last event
+        input_event_manager._last_input_event = first_event
+        input_event_manager._last_non_modifier_key_event = first_event
+
+        # Create release event
+        release_event = essential_modules["orca.input_event"].KeyboardEvent(
+            pressed=False, keycode=80, keysym=65431, modifiers=0, text="KP_Up"
+        )
+        release_event.keyval_name = "KP_Up"
+        release_event.time = 1000.1
+        release_event.is_pressed_key = test_context.Mock(return_value=False)
+        release_event.is_modifier_key = test_context.Mock(return_value=False)
+        release_event.get_click_count = test_context.Mock(return_value=1)
+        release_event.get_object = test_context.Mock(return_value=None)
+
+        # Set release as last event
+        input_event_manager._last_input_event = release_event
+        input_event_manager._last_non_modifier_key_event = release_event
+
+        # Create second press event within doubleClickTimeout
+        second_event = essential_modules["orca.input_event"].KeyboardEvent(
+            pressed=True, keycode=80, keysym=65431, modifiers=0, text="KP_Up"
+        )
+        second_event.keyval_name = "KP_Up"
+        second_event.id = 65431  # keyval for has_multi_click_bindings call
+        second_event.hw_code = 80  # keycode
+        second_event.modifiers = 0
+        second_event.time = 1000.3  # Within 0.5s timeout
+        second_event.is_pressed_key = test_context.Mock(return_value=True)
+        second_event.is_modifier_key = test_context.Mock(return_value=False)
+        second_event.get_object = test_context.Mock(return_value=None)
+
+        # Determine click count - should increment to 2 since multi-click bindings exist
+        result = input_event_manager._determine_keyboard_event_click_count(second_event)
+
+        assert result == 2
+        command_manager_instance.has_multi_click_bindings.assert_called_with(65431, 80, 0)
+

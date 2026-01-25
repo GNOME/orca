@@ -823,6 +823,95 @@ class TestCommandManager:
         manager = CommandManager()
         manager.remove_grabs_for_command("nonexistent")
 
+    def test_has_multi_click_bindings_true(self, test_context: OrcaTestContext) -> None:
+        """Test has_multi_click_bindings returns True when multi-click binding exists."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+
+        # Single-click binding (KP_Up keyval = 65431)
+        kb1 = self._create_mock_keybinding(test_context)
+        kb1.matches.return_value = True
+        kb1.click_count = 1
+        cmd1 = KeyboardCommand("readLine", function, "Flat Review", desktop_keybinding=kb1)
+        cmd1.set_keybinding(kb1)
+        manager.add_command(cmd1)
+
+        # Double-click binding for same key
+        kb2 = self._create_mock_keybinding(test_context)
+        kb2.matches.return_value = True
+        kb2.click_count = 2
+        cmd2 = KeyboardCommand("spellLine", function, "Flat Review", desktop_keybinding=kb2)
+        cmd2.set_keybinding(kb2)
+        manager.add_command(cmd2)
+
+        assert manager.has_multi_click_bindings(65431, 80, 0) is True
+
+    def test_has_multi_click_bindings_false_single_only(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test has_multi_click_bindings returns False when only single-click binding exists."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+
+        # Only single-click binding (KP_Home keyval = 65429)
+        kb = self._create_mock_keybinding(test_context)
+        kb.matches.return_value = True
+        kb.click_count = 1
+        cmd = KeyboardCommand("previousLine", function, "Flat Review", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        assert manager.has_multi_click_bindings(65429, 79, 0) is False
+
+    def test_has_multi_click_bindings_false_no_bindings(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test has_multi_click_bindings returns False when no bindings exist for key."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+
+        # KP_Home keyval = 65429, keycode = 79
+        assert manager.has_multi_click_bindings(65429, 79, 0) is False
+
+    def test_has_multi_click_bindings_respects_modifiers(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test has_multi_click_bindings distinguishes by modifiers."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+
+        # Double-click binding with Orca modifier (KP_Up keyval = 65431)
+        kb = self._create_mock_keybinding(test_context)
+        # matches() returns True only when modifiers=256
+        kb.matches.side_effect = lambda kv, kc, mods: mods == 256
+        kb.click_count = 2
+        cmd = KeyboardCommand("someCommand", function, "Test", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # With modifier: has multi-click
+        assert manager.has_multi_click_bindings(65431, 80, 256) is True
+        # Without modifier: no multi-click bindings
+        assert manager.has_multi_click_bindings(65431, 80, 0) is False
+
 
 @pytest.mark.unit
 class TestGetManager:

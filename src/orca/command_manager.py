@@ -1207,6 +1207,17 @@ class CommandManager:
                 return cmd
         return None
 
+    def has_multi_click_bindings(self, keyval: int, keycode: int, modifiers: int) -> bool:
+        """Returns True if there are any bindings for this key with click_count > 1."""
+
+        for cmd in self._keyboard_commands.values():
+            kb = cmd.get_keybinding()
+            if kb is None:
+                continue
+            if kb.matches(keyval, keycode, modifiers) and kb.click_count > 1:
+                return True
+        return False
+
     def set_group_enabled(self, group_label: str, enabled: bool) -> None:
         """Sets the enabled state for all commands in a group."""
 
