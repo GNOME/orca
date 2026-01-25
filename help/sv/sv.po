@@ -1,13 +1,13 @@
 # Swedish translation for orca.
-# Copyright © 2015-2024 orca's COPYRIGHT HOLDER
+# Copyright © 2015-2026 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca main\n"
-"POT-Creation-Date: 2024-06-24 11:12+0000\n"
-"PO-Revision-Date: 2024-08-31 16:13+0200\n"
+"POT-Creation-Date: 2025-10-30 23:10+0000\n"
+"PO-Revision-Date: 2026-01-25 19:08+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,147 +15,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.8\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
 "Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:6
-msgctxt "sort"
-msgid "4. Bookmarks"
-msgstr "4. Bokmärken"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:7
-msgctxt "link"
-msgid "Bookmarks"
-msgstr "Bokmärken"
-
-#. (itstool) path: info/desc
-#: C/commands_bookmarks.page:8
-msgid "Commands to bookmark and retrieve objects"
-msgstr "Kommandon för att bokmärka och återkalla objekt"
-
-#. (itstool) path: credit/name
-#: C/commands_bookmarks.page:12 C/commands_braille.page:12
-#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
-#: C/commands_debugging.page:10 C/commands_find.page:12
-#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
-#: C/commands_mouse.page:13 C/commands.page:8 C/commands_profiles.page:12
-#: C/commands_reading.page:14 C/commands_speech_settings.page:12
-#: C/commands_structural_navigation.page:12 C/commands_table.page:12
-#: C/commands_time_date_notifications.page:12 C/commands_where_am_i.page:12
-#: C/howto_bookmarks.page:7 C/howto_documents.page:10
-#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
-#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
-#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
-#: C/howto_notifications.page:8 C/howto_orca_find.page:8
-#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
-#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
-#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_general.page:11
-#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
-#: C/preferences_key_echo.page:11 C/preferences.page:7
-#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
-#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
-#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
-#: C/preferences_web.page:12
-msgid "Joanmarie Diggs"
-msgstr "Joanmarie Diggs"
-
-#. (itstool) path: license/p
-#: C/commands_bookmarks.page:16 C/commands_braille.page:16
-#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
-#: C/commands_debugging.page:14 C/commands_find.page:16
-#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
-#: C/commands_mouse.page:17 C/commands.page:12 C/commands_profiles.page:16
-#: C/commands_reading.page:18 C/commands_speech_settings.page:16
-#: C/commands_structural_navigation.page:16 C/commands_table.page:16
-#: C/commands_time_date_notifications.page:16 C/commands_where_am_i.page:16
-#: C/howto_bookmarks.page:11 C/howto_documents.page:14
-#: C/howto_flat_review.page:12 C/howto_forms.page:14
-#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
-#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
-#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
-#: C/howto_orca_find.page:12 C/howto_profiles.page:12
-#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
-#: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
-#: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_general.page:15 C/preferences_introduction.page:12
-#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
-#: C/preferences.page:11 C/preferences_pronunciation.page:16
-#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
-#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
-#: C/preferences_voice.page:15 C/preferences_web.page:16
-msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons DelaLika 3.0"
-
-#. (itstool) path: page/title
-#: C/commands_bookmarks.page:19
-msgid "Bookmark Commands"
-msgstr "Bokmärkeskommandon"
-
-#. (itstool) path: page/p
-#: C/commands_bookmarks.page:20
-msgid ""
-"<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later."
-msgstr ""
-"<app>Orca</app> tillhandahåller flera kommandon som kan användas för att "
-"”bokmärka” ett objekt i syfte att navigera tillbaka till det senare."
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:26
-msgid ""
-"Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
-"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Spara ett bokmärke till den numrerade platsen: <keyseq><key>Orca-"
-"modifierare</key> <key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:32
-msgid ""
-"Save the defined bookmarks for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Alt</key><key>B</key></keyseq>"
-msgstr ""
-"Spara de definierade bokmärkena för programmet eller sidan: "
-"<keyseq><key>Orca-modifierare</key><key>Alt</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:38
-msgid ""
-"Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
-"<key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Gå till ett specifikt numrerat bokmärke: <keyseq><key>Orca-modifierare</key> "
-"<key>1</key></keyseq>-<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:44
-msgid ""
-"Go to the previous bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Shift</key><key>B</key> </keyseq>"
-msgstr ""
-"Gå till föregående bokmärke för programmet eller sidan: <keyseq><key>Orca-"
-"modifierare</key><key>Skift</key><key>B</key> </keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:51
-msgid ""
-"Go to the next bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>B</key></keyseq>"
-msgstr ""
-"Gå till nästa bokmärke för programmet eller sidan: <keyseq><key>Orca-"
-"modifierare</key><key>B</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -173,6 +39,62 @@ msgstr "Punktskrift"
 #: C/commands_braille.page:8
 msgid "Commands executable on braille displays"
 msgstr "Kommandon körbara på punktskriftsskärmar"
+
+#. (itstool) path: credit/name
+#: C/commands_braille.page:12 C/commands_chat.page:12
+#: C/commands_controlling_orca.page:11 C/commands_debugging.page:10
+#: C/commands_find.page:12 C/commands_flat_review.page:12
+#: C/commands_live_regions.page:12 C/commands_mouse.page:13 C/commands.page:8
+#: C/commands_profiles.page:12 C/commands_reading.page:14
+#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
+#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
+#: C/commands_where_am_i.page:12 C/howto_documents.page:10
+#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
+#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
+#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
+#: C/howto_notifications.page:7 C/howto_orca_find.page:8
+#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
+#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
+#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
+#: C/introduction.page:10 C/preferences_braille.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#. (itstool) path: license/p
+#: C/commands_braille.page:16 C/commands_chat.page:16
+#: C/commands_controlling_orca.page:15 C/commands_debugging.page:14
+#: C/commands_find.page:16 C/commands_flat_review.page:16
+#: C/commands_live_regions.page:16 C/commands_mouse.page:17 C/commands.page:12
+#: C/commands_profiles.page:16 C/commands_reading.page:18
+#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
+#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
+#: C/commands_where_am_i.page:16 C/howto_documents.page:14
+#: C/howto_flat_review.page:12 C/howto_forms.page:14
+#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
+#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
+#: C/howto_mouse_review.page:12 C/howto_notifications.page:11
+#: C/howto_orca_find.page:12 C/howto_profiles.page:12
+#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
+#: C/howto_tables.page:14 C/howto_text_attributes.page:14
+#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
+#: C/preferences_braille.page:15 C/preferences_chat.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
+msgid "Creative Commons Share Alike 3.0"
+msgstr "Creative Commons DelaLika 3.0"
 
 #. (itstool) path: page/title
 #: C/commands_braille.page:19
@@ -1077,53 +999,45 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
 msgid ""
-"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-"key><key>Backslash</key></keyseq>"
+"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
+"keyseq>"
 msgstr ""
-"Övervaka levande regioner: <keyseq><key>Orca-modifierare</key><key>Skift</"
-"key><key>Omvänt snedstreck</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:33
-msgid "Advance live region politeness setting: <key>Backslash</key>"
-msgstr ""
-"Öka snällhetsinställning för levande region: <key>Omvänt snedstreck</key>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:38
-msgid ""
-"Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
-"key></keyseq>"
-msgstr ""
-"Ställ standardsnällhetsnivå till av: <keyseq><key>Skift</key><key>Omvänt "
+"Övervaka levande regioner: <keyseq><key>Orca-modifierare</key><key>Omvänt "
 "snedstreck</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:44
-msgid ""
-"Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
-msgstr ""
-"Gå till nästa/föregående levande region: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Skift</key><key>D</key></keyseq>"
+#: C/commands_live_regions.page:33
+msgid "Advance live region politeness setting: (Unbound)"
+msgstr "Öka snällhetsinställning för levande region: (Inte bunden)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:50
+#: C/commands_live_regions.page:36
+msgid "Set default politeness level to off: (Unbound)"
+msgstr "Ställ in standardsnällhetsnivå till av: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:39
+msgid ""
+"Go to next/previous live region in the document's reading order: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
+msgstr ""
+"Gå till nästa/föregående levande region i dokumentets läsordning: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Skift</key><key>D</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:45
+msgid "Review the next/previous saved live region message: (Unbound)"
+msgstr ""
+"Granska nästa/föregående sparade meddelande för levande region: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:48
 msgid ""
 "Go to last live region which made an announcement: <keyseq><key>Y</key></"
 "keyseq>"
 msgstr ""
 "Gå till sista levande region som annonserat något: <keyseq><key>Y</key></"
 "keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:56
-msgid ""
-"Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
-"key></keyseq> through <key>F9</key>"
-msgstr ""
-"Granska annonseringar från levande regioner: <keyseq><key>Orca-modifierare</"
-"key><key>F1</key></keyseq> till <key>F9</key>"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
@@ -2614,87 +2528,6 @@ msgstr ""
 "Presentera storlek och plats för aktuellt objekt i bildpunkter: (Inte bunden)"
 
 #. (itstool) path: info/title
-#: C/howto_bookmarks.page:4
-msgctxt "sort"
-msgid "6. Bookmarks"
-msgstr "6. Bokmärken"
-
-#. (itstool) path: info/desc
-#: C/howto_bookmarks.page:5
-msgid "Storing and retrieving objects"
-msgstr "Lagra och åter plocka fram objekt"
-
-#. (itstool) path: page/title
-#: C/howto_bookmarks.page:14
-msgid "Bookmarks"
-msgstr "Bokmärken"
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:15
-msgid ""
-"<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
-"of interest. It includes the following features:"
-msgstr ""
-"<app>Orca</app>s stöd för bokmärken låter dig indikera att ett objekt är "
-"intressant. Det inkluderar följande funktioner:"
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:21
-msgid ""
-"You are not limited to a single object: You can set up to six bookmarks per "
-"environment. You can also save bookmarks so that they will persist from Orca "
-"session to Orca session."
-msgstr ""
-"Du är inte begränsad till ett enstaka objekt: du kan sätta upp till sex "
-"bokmärken per miljö. Du kan också spara bokmärken så att de består från en "
-"Orca-session till en annan."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:28
-msgid ""
-"Having set a bookmark you can navigate to it later, and do so regardless of "
-"whether or not you have chosen to permanently save the bookmarks associated "
-"with your current environment. Navigation can be based on the number of the "
-"bookmark should you wish to jump directly to a specific item. Alternatively, "
-"you can navigate to the next or previous bookmark just like you can a <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> object."
-msgstr ""
-"Då du har satt ett bokmärke kan du navigera till det senare, och kan göra så "
-"oavsett om du har valt att permanent spara bokmärkena som är associerade med "
-"din aktuella miljö eller inte. Navigering kan baseras på bokmärkets nummer "
-"om du skulle vilja hoppa direkt till ett specifikt objekt. Alternativt kan "
-"du navigera till nästa eller föregående bokmärke precis som du kan för ett "
-"objekt i <link xref=\"howto_structural_navigation\">strukturell navigering</"
-"link>."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:39
-msgid ""
-"Bookmarkable objects can be widgets within an application or objects on the "
-"web page you are reading. Which environment you are in determines what "
-"happens as you navigate amongst bookmarks: If you are in web content, the "
-"caret will be moved to the bookmark so that you can continue reading; "
-"otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
-"activated with the bookmark becoming the current review item."
-msgstr ""
-"Objekt som går att bokmärka kan vara komponenter i ett program eller objekt "
-"på webbsidan som du läser. Vilken miljö du är i avgör vad som händer då du "
-"navigerar mellan bokmärken. Om du är i webbinnehåll kommer markören "
-"förflyttas till bokmärket så att du kan fortsätta läsa. I andra fall kommer "
-"<link xref=\"howto_flat_review\">platt granskning</link> att aktiveras med "
-"bokmärket som aktuellt granskningsobjekt."
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"The specific keybindings associated with each of the above tasks can be "
-"found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
-msgstr ""
-"De specifika tangentbindningar som är associerade med var och en av "
-"uppgifterna ovan kan hittas i <link "
-"xref=\"commands_bookmarks\">bokmärkeskommandon</link>."
-
-#. (itstool) path: info/title
 #: C/howto_documents.page:5
 msgctxt "sort"
 msgid "1. Documents"
@@ -3357,14 +3190,14 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or "
-"\"assertive\" to the point of being \"rude.\""
+"within that region. Live regions can be \"off\", \"polite\", or \"assertive."
+"\""
 msgstr ""
 "Levande regioner har en associerad ”snällhets”-nivå som anges av författaren "
 "som ett sätt att uttrycka vikten hos informationen och för att föreslå när "
 "användare ska informeras av deras hjälpmedelsteknik om uppdateringar som "
 "gjorts i den regionen. En levande region kan vara ”av”, ”snäll” eller "
-"”påträngande” till gränsen att vara ”fräck”."
+"”påträngande”."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3491,23 +3324,23 @@ msgstr ""
 "oberoende av varandra."
 
 #. (itstool) path: info/title
-#: C/howto_notifications.page:5
+#: C/howto_notifications.page:4
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Aviseringar"
 
 #. (itstool) path: info/desc
-#: C/howto_notifications.page:6
+#: C/howto_notifications.page:5
 msgid "Reading previously-received messages"
 msgstr "Läsa tidigare mottagna meddelanden"
 
 #. (itstool) path: page/title
-#: C/howto_notifications.page:15
+#: C/howto_notifications.page:14
 msgid "Notifications"
 msgstr "Aviseringar"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:16
+#: C/howto_notifications.page:15
 msgid ""
 "The GNOME Desktop includes a \"notification area\" which can be used by "
 "applications to present information to the user. Examples of notifications "
@@ -3521,7 +3354,7 @@ msgstr ""
 "spela upp och varningar att din batterinivå börjar vara låg."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:23
+#: C/howto_notifications.page:22
 msgid ""
 "Because notifications are intended to present information to users without "
 "interrupting what the user is doing, these messages tend to appear and "
@@ -3541,22 +3374,22 @@ msgstr ""
 "visade aviseringsmeddelanden:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:35
+#: C/howto_notifications.page:34
 msgid "Present the last (most recent) notification message"
 msgstr "Presentera det senaste aviseringsmeddelandet"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:38
+#: C/howto_notifications.page:37
 msgid "Present the previous notification message"
 msgstr "Presentera föregående aviseringsmeddelande"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:41
+#: C/howto_notifications.page:40
 msgid "Present list of all notification messages"
 msgstr "Presentera lista över alla aviseringsmeddelanden"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:44
+#: C/howto_notifications.page:43
 msgid ""
 "The first two commands are designed mainly for quick access to a message you "
 "just received. The last command is the most powerful as it stores your "
@@ -3567,7 +3400,7 @@ msgstr ""
 "eftersom det lagrar din aviseringsmeddelandehistorik."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:49
+#: C/howto_notifications.page:48
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
@@ -3576,37 +3409,37 @@ msgstr ""
 "storlek och ombes göra följande val:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:54
+#: C/howto_notifications.page:53
 msgid "Press H for help."
 msgstr "Tryck H för hjälp."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:55
+#: C/howto_notifications.page:54
 msgid "Use Up, Down, Home or End to navigate in the list."
 msgstr "Använd upp, ner, Home eller End för att navigera i listan."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:56
+#: C/howto_notifications.page:55
 msgid "Press Escape to exit."
 msgstr "Tryck Escape för att avsluta."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:57
+#: C/howto_notifications.page:56
 msgid "Press Space to repeat the last message read."
 msgstr "Tryck blanksteg för att upprepa det senast upplästa meddelandet."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:58
+#: C/howto_notifications.page:57
 msgid "Press one digit to read a specific message."
 msgstr "Tryck en siffra för att läsa ett specifikt meddelande."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:60
+#: C/howto_notifications.page:59
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr "Notera att det senast mottagna meddelandet är högst upp i listan."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:63
+#: C/howto_notifications.page:62
 msgid ""
 "Each of <app>Orca</app>'s notification review commands is unbound by "
 "default. You can bind any or all of them to the shortcut or shortcuts you "
@@ -5111,8 +4944,8 @@ msgstr ""
 #: C/introduction.page:125
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
-"<cmd>--debug</cmd>: Skicka felsökningsutdata till debug-ÅÅÅÅ-MM-DD-TT:MM:SS."
-"out"
+"<cmd>--debug</cmd>: Skicka felsökningsutdata till debug-ÅÅÅÅ-MM-DD-"
+"TT:MM:SS.out"
 
 #. (itstool) path: item/p
 #: C/introduction.page:130
@@ -8129,6 +7962,143 @@ msgstr ""
 #: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Standardvärde: 4"
+
+#~ msgctxt "sort"
+#~ msgid "4. Bookmarks"
+#~ msgstr "4. Bokmärken"
+
+#~ msgctxt "link"
+#~ msgid "Bookmarks"
+#~ msgstr "Bokmärken"
+
+#~ msgid "Commands to bookmark and retrieve objects"
+#~ msgstr "Kommandon för att bokmärka och återkalla objekt"
+
+#~ msgid "Bookmark Commands"
+#~ msgstr "Bokmärkeskommandon"
+
+#~ msgid ""
+#~ "<app>Orca</app> provides several commands which can be used to "
+#~ "\"bookmark\" a given object for the purpose of navigating back to it "
+#~ "later."
+#~ msgstr ""
+#~ "<app>Orca</app> tillhandahåller flera kommandon som kan användas för att "
+#~ "”bokmärka” ett objekt i syfte att navigera tillbaka till det senare."
+
+#~ msgid ""
+#~ "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
+#~ "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Spara ett bokmärke till den numrerade platsen: <keyseq><key>Orca-"
+#~ "modifierare</key> <key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+
+#~ msgid ""
+#~ "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>Alt</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Spara de definierade bokmärkena för programmet eller sidan: "
+#~ "<keyseq><key>Orca-modifierare</key><key>Alt</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
+#~ "<key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Gå till ett specifikt numrerat bokmärke: <keyseq><key>Orca-modifierare</"
+#~ "key> <key>1</key></keyseq>-<key>6</key>"
+
+#~ msgid ""
+#~ "Go to the previous bookmark for the application or page: "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>B</key> </keyseq>"
+#~ msgstr ""
+#~ "Gå till föregående bokmärke för programmet eller sidan: <keyseq><key>Orca-"
+#~ "modifierare</key><key>Skift</key><key>B</key> </keyseq>"
+
+#~ msgid ""
+#~ "Go to the next bookmark for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Gå till nästa bokmärke för programmet eller sidan: <keyseq><key>Orca-"
+#~ "modifierare</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Set default politeness level to off: <keyseq><key>Shift</"
+#~ "key><key>Backslash</key></keyseq>"
+#~ msgstr ""
+#~ "Ställ standardsnällhetsnivå till av: <keyseq><key>Skift</key><key>Omvänt "
+#~ "snedstreck</key></keyseq>"
+
+#~ msgid ""
+#~ "Review live region announcements: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Granska annonseringar från levande regioner: <keyseq><key>Orca-"
+#~ "modifierare</key><key>F1</key></keyseq> till <key>F9</key>"
+
+#~ msgctxt "sort"
+#~ msgid "6. Bookmarks"
+#~ msgstr "6. Bokmärken"
+
+#~ msgid "Storing and retrieving objects"
+#~ msgstr "Lagra och åter plocka fram objekt"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Bokmärken"
+
+#~ msgid ""
+#~ "<app>Orca</app>'s Bookmarks support allows you to indicate that an object "
+#~ "is of interest. It includes the following features:"
+#~ msgstr ""
+#~ "<app>Orca</app>s stöd för bokmärken låter dig indikera att ett objekt är "
+#~ "intressant. Det inkluderar följande funktioner:"
+
+#~ msgid ""
+#~ "You are not limited to a single object: You can set up to six bookmarks "
+#~ "per environment. You can also save bookmarks so that they will persist "
+#~ "from Orca session to Orca session."
+#~ msgstr ""
+#~ "Du är inte begränsad till ett enstaka objekt: du kan sätta upp till sex "
+#~ "bokmärken per miljö. Du kan också spara bokmärken så att de består från "
+#~ "en Orca-session till en annan."
+
+#~ msgid ""
+#~ "Having set a bookmark you can navigate to it later, and do so regardless "
+#~ "of whether or not you have chosen to permanently save the bookmarks "
+#~ "associated with your current environment. Navigation can be based on the "
+#~ "number of the bookmark should you wish to jump directly to a specific "
+#~ "item. Alternatively, you can navigate to the next or previous bookmark "
+#~ "just like you can a <link xref=\"howto_structural_navigation\">Structural "
+#~ "Navigation</link> object."
+#~ msgstr ""
+#~ "Då du har satt ett bokmärke kan du navigera till det senare, och kan göra "
+#~ "så oavsett om du har valt att permanent spara bokmärkena som är "
+#~ "associerade med din aktuella miljö eller inte. Navigering kan baseras på "
+#~ "bokmärkets nummer om du skulle vilja hoppa direkt till ett specifikt "
+#~ "objekt. Alternativt kan du navigera till nästa eller föregående bokmärke "
+#~ "precis som du kan för ett objekt i <link "
+#~ "xref=\"howto_structural_navigation\">strukturell navigering</link>."
+
+#~ msgid ""
+#~ "Bookmarkable objects can be widgets within an application or objects on "
+#~ "the web page you are reading. Which environment you are in determines "
+#~ "what happens as you navigate amongst bookmarks: If you are in web "
+#~ "content, the caret will be moved to the bookmark so that you can continue "
+#~ "reading; otherwise, <link xref=\"howto_flat_review\">Flat Review</link> "
+#~ "will be activated with the bookmark becoming the current review item."
+#~ msgstr ""
+#~ "Objekt som går att bokmärka kan vara komponenter i ett program eller "
+#~ "objekt på webbsidan som du läser. Vilken miljö du är i avgör vad som "
+#~ "händer då du navigerar mellan bokmärken. Om du är i webbinnehåll kommer "
+#~ "markören förflyttas till bokmärket så att du kan fortsätta läsa. I andra "
+#~ "fall kommer <link xref=\"howto_flat_review\">platt granskning</link> att "
+#~ "aktiveras med bokmärket som aktuellt granskningsobjekt."
+
+#~ msgid ""
+#~ "The specific keybindings associated with each of the above tasks can be "
+#~ "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
+#~ msgstr ""
+#~ "De specifika tangentbindningar som är associerade med var och en av "
+#~ "uppgifterna ovan kan hittas i <link "
+#~ "xref=\"commands_bookmarks\">bokmärkeskommandon</link>."
 
 #~ msgid "Speak multicase strings as words"
 #~ msgstr "Läs upp strängar med blandade skiftlägen som ord"
