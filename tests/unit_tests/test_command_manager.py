@@ -920,6 +920,117 @@ class TestCommandManager:
         # Without modifier: no multi-click bindings
         assert manager.has_multi_click_bindings(65431, 80, 0) is False
 
+    def test_get_command_for_event_shifted_key(self, test_context: OrcaTestContext) -> None:
+        """Test get_command_for_event finds command via keycode when keyval differs (shifted)."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        # Command bound to 'h' (keyval=104, keycode=38)
+        kb = self._create_mock_keybinding(test_context, keyval=104, keycode=38)
+        kb.matches.return_value = True
+        kb.click_count = 1
+        cmd = KeyboardCommand("prevHeading", function, "Structural Nav", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Event has 'H' keyval (72) due to Shift, but same keycode (38)
+        event = test_context.Mock()
+        event.get_click_count.return_value = 1
+        event.id = 72  # 'H' keyval (shifted)
+        event.hw_code = 38  # Same keycode as 'h'
+        event.modifiers = 1  # Shift
+
+        result = manager.get_command_for_event(event)
+        assert result == cmd
+
+    def test_get_command_for_event_unshifted_key(self, test_context: OrcaTestContext) -> None:
+        """Test get_command_for_event finds command via keyval for unshifted key."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        # Command bound to 'h' (keyval=104, keycode=38)
+        kb = self._create_mock_keybinding(test_context, keyval=104, keycode=38)
+        kb.matches.return_value = True
+        kb.click_count = 1
+        cmd = KeyboardCommand("nextHeading", function, "Structural Nav", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        # Event has 'h' keyval (104), no shift
+        event = test_context.Mock()
+        event.get_click_count.return_value = 1
+        event.id = 104  # 'h' keyval (unshifted)
+        event.hw_code = 38
+        event.modifiers = 0
+
+        result = manager.get_command_for_event(event)
+        assert result == cmd
+
+    def test_has_multi_click_bindings_shifted_key(self, test_context: OrcaTestContext) -> None:
+        """Test has_multi_click_bindings finds binding via keycode when keyval differs."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        # Single-click binding for 'h' (keyval=104, keycode=38)
+        kb1 = self._create_mock_keybinding(test_context, keyval=104, keycode=38)
+        kb1.matches.return_value = True
+        kb1.click_count = 1
+        cmd1 = KeyboardCommand("nextHeading", function, "Structural Nav", desktop_keybinding=kb1)
+        cmd1.set_keybinding(kb1)
+        manager.add_command(cmd1)
+
+        # Double-click binding for same key
+        kb2 = self._create_mock_keybinding(test_context, keyval=104, keycode=38)
+        kb2.matches.return_value = True
+        kb2.click_count = 2
+        cmd2 = KeyboardCommand("listHeadings", function, "Structural Nav", desktop_keybinding=kb2)
+        cmd2.set_keybinding(kb2)
+        manager.add_command(cmd2)
+
+        # Query with 'H' keyval (72) due to Shift, but same keycode (38)
+        # Should find multi-click binding via keycode
+        assert manager.has_multi_click_bindings(72, 38, 1) is True
+
+    def test_has_multi_click_bindings_unshifted_key(self, test_context: OrcaTestContext) -> None:
+        """Test has_multi_click_bindings finds binding via keyval for unshifted key."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import KeyboardCommand, CommandManager
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        # Single-click binding for 'h' (keyval=104, keycode=38)
+        kb1 = self._create_mock_keybinding(test_context, keyval=104, keycode=38)
+        kb1.matches.return_value = True
+        kb1.click_count = 1
+        cmd1 = KeyboardCommand("nextHeading", function, "Structural Nav", desktop_keybinding=kb1)
+        cmd1.set_keybinding(kb1)
+        manager.add_command(cmd1)
+
+        # Double-click binding for same key
+        kb2 = self._create_mock_keybinding(test_context, keyval=104, keycode=38)
+        kb2.matches.return_value = True
+        kb2.click_count = 2
+        cmd2 = KeyboardCommand("listHeadings", function, "Structural Nav", desktop_keybinding=kb2)
+        cmd2.set_keybinding(kb2)
+        manager.add_command(cmd2)
+
+        # Query with 'h' keyval (104), unshifted - should find via keyval
+        assert manager.has_multi_click_bindings(104, 38, 0) is True
+
 
 @pytest.mark.unit
 class TestGetManager:
