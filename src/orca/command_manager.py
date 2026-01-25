@@ -1044,6 +1044,7 @@ class CommandManager:
 
         self._keyboard_commands: dict[str, KeyboardCommand] = {}
         self._braille_commands: dict[str, BrailleCommand] = {}
+        self._commands_by_keyval: dict[int, list[KeyboardCommand]] = {}
         self._is_desktop: bool = True  # Default to desktop layout
 
     def is_desktop_layout(self) -> bool:
@@ -1068,8 +1069,37 @@ class CommandManager:
         """Updates all keyboard commands' active keybindings based on current layout."""
 
         for cmd in self._keyboard_commands.values():
+            self._remove_from_keyval_index(cmd)
             default_kb = cmd.get_default_keybinding(self._is_desktop)
             cmd.set_keybinding(default_kb)
+            self._add_to_keyval_index(cmd)
+
+    def _add_to_keyval_index(self, cmd: KeyboardCommand) -> None:
+        """Adds a command to the keyval index for fast lookup."""
+
+        kb = cmd.get_keybinding()
+        if kb is None:
+            return
+
+        if not kb.keycode:
+            kb.keyval, kb.keycode = keybindings.get_keycodes(kb.keysymstring)
+
+        if kb.keyval not in self._commands_by_keyval:
+            self._commands_by_keyval[kb.keyval] = []
+        self._commands_by_keyval[kb.keyval].append(cmd)
+
+    def _remove_from_keyval_index(self, cmd: KeyboardCommand) -> None:
+        """Removes a command from the keyval index."""
+
+        kb = cmd.get_keybinding()
+        if kb is None:
+            return
+
+        if kb.keyval in self._commands_by_keyval:
+            try:
+                self._commands_by_keyval[kb.keyval].remove(cmd)
+            except ValueError:
+                pass  # Command wasn't in the list
 
     def add_command(self, command: Command) -> None:
         """Adds a command to the registry and sets its active keybinding."""
@@ -1078,6 +1108,7 @@ class CommandManager:
             self._keyboard_commands[command.get_name()] = command
             default_kb = command.get_default_keybinding(self._is_desktop)
             command.set_keybinding(default_kb)
+            self._add_to_keyval_index(command)
         elif isinstance(command, BrailleCommand):
             self._braille_commands[command.get_name()] = command
 
@@ -1139,6 +1170,7 @@ class CommandManager:
 
         self._keyboard_commands.clear()
         self._braille_commands.clear()
+        self._commands_by_keyval.clear()
 
     def apply_user_overrides(self) -> None:
         """Applies user-customized keybindings from settings to Commands."""
@@ -1149,6 +1181,8 @@ class CommandManager:
             cmd = self.get_keyboard_command(command_name)
             if cmd is None:
                 continue
+
+            self._remove_from_keyval_index(cmd)
 
             # Empty list means the user explicitly unbound this command
             if binding_tuples == []:
@@ -1164,6 +1198,8 @@ class CommandManager:
                     kb = keybindings.KeyBinding(keysym, int(mods), click_count=int(clicks))
                     cmd.set_keybinding(kb)
 
+            self._add_to_keyval_index(cmd)
+
     def get_command_for_event(
         self,
         event: input_event.KeyboardEvent,
@@ -1172,7 +1208,8 @@ class CommandManager:
         """Returns the keyboard command matching the keyboard event, or None."""
 
         click_count = event.get_click_count()
-        for cmd in self._keyboard_commands.values():
+        candidates = self._commands_by_keyval.get(event.id, [])
+        for cmd in candidates:
             if active_only and not cmd.is_active():
                 continue
             kb = cmd.get_keybinding()
@@ -1210,7 +1247,8 @@ class CommandManager:
     def has_multi_click_bindings(self, keyval: int, keycode: int, modifiers: int) -> bool:
         """Returns True if there are any bindings for this key with click_count > 1."""
 
-        for cmd in self._keyboard_commands.values():
+        candidates = self._commands_by_keyval.get(keyval, [])
+        for cmd in candidates:
             kb = cmd.get_keybinding()
             if kb is None:
                 continue

@@ -226,10 +226,14 @@ class TestKeyboardCommand:
         function.return_value = True
         return function
 
-    def _create_mock_keybinding(self, test_context: OrcaTestContext) -> Mock:
-        """Creates a mock KeyBinding."""
+    def _create_mock_keybinding(
+        self, test_context: OrcaTestContext, keyval: int = 65, keycode: int = 38
+    ) -> Mock:
+        """Creates a mock KeyBinding with default keyval/keycode for indexing."""
 
         kb = test_context.Mock()
+        kb.keyval = keyval
+        kb.keycode = keycode
         return kb
 
     def test_init_minimal(self, test_context: OrcaTestContext) -> None:
@@ -442,10 +446,14 @@ class TestCommandManager:
         function.return_value = True
         return function
 
-    def _create_mock_keybinding(self, test_context: OrcaTestContext) -> Mock:
-        """Creates a mock KeyBinding."""
+    def _create_mock_keybinding(
+        self, test_context: OrcaTestContext, keyval: int = 65, keycode: int = 38
+    ) -> Mock:
+        """Creates a mock KeyBinding with default keyval/keycode for indexing."""
 
         kb = test_context.Mock()
+        kb.keyval = keyval
+        kb.keycode = keycode
         return kb
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -833,8 +841,8 @@ class TestCommandManager:
 
         function = self._create_mock_function(test_context)
 
-        # Single-click binding (KP_Up keyval = 65431)
-        kb1 = self._create_mock_keybinding(test_context)
+        # Single-click binding (KP_Up keyval = 65431, keycode = 80)
+        kb1 = self._create_mock_keybinding(test_context, keyval=65431, keycode=80)
         kb1.matches.return_value = True
         kb1.click_count = 1
         cmd1 = KeyboardCommand("readLine", function, "Flat Review", desktop_keybinding=kb1)
@@ -842,7 +850,7 @@ class TestCommandManager:
         manager.add_command(cmd1)
 
         # Double-click binding for same key
-        kb2 = self._create_mock_keybinding(test_context)
+        kb2 = self._create_mock_keybinding(test_context, keyval=65431, keycode=80)
         kb2.matches.return_value = True
         kb2.click_count = 2
         cmd2 = KeyboardCommand("spellLine", function, "Flat Review", desktop_keybinding=kb2)
@@ -863,8 +871,8 @@ class TestCommandManager:
 
         function = self._create_mock_function(test_context)
 
-        # Only single-click binding (KP_Home keyval = 65429)
-        kb = self._create_mock_keybinding(test_context)
+        # Only single-click binding (KP_Home keyval = 65429, keycode = 79)
+        kb = self._create_mock_keybinding(test_context, keyval=65429, keycode=79)
         kb.matches.return_value = True
         kb.click_count = 1
         cmd = KeyboardCommand("previousLine", function, "Flat Review", desktop_keybinding=kb)
@@ -898,8 +906,8 @@ class TestCommandManager:
 
         function = self._create_mock_function(test_context)
 
-        # Double-click binding with Orca modifier (KP_Up keyval = 65431)
-        kb = self._create_mock_keybinding(test_context)
+        # Double-click binding with Orca modifier (KP_Up keyval = 65431, keycode = 80)
+        kb = self._create_mock_keybinding(test_context, keyval=65431, keycode=80)
         # matches() returns True only when modifiers=256
         kb.matches.side_effect = lambda kv, kc, mods: mods == 256
         kb.click_count = 2
