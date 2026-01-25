@@ -435,7 +435,14 @@ class Generator:
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus and obj != focus and not AXUtilities.is_dialog_or_window(obj):
+
+        # TODO - JD: The role check is a quick workaround for issue #535 in which we stopped
+        # presenting Qt table cells because Qt keeps giving us a different object each and
+        # every time we ask for the cell. https://bugreports.qt.io/browse/QTBUG-128558
+        # It was fixed in Qt in 2024, but users are still using apps without the fix, like
+        # TeamTalk.
+        if focus and obj != focus and not AXUtilities.is_dialog_or_window(obj) \
+           and AXObject.get_role(obj) != AXObject.get_role(focus):
             obj_name = AXObject.get_name(obj) or AXObject.get_description(obj)
             if obj_name and obj_name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
                 return []
