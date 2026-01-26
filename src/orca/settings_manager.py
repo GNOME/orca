@@ -289,13 +289,21 @@ class SettingsManager:
         if profile is None:
             profile = default_profile[1]
 
-        profile_settings = prefs["profiles"].get(profile, {}).copy()
-        for key, value in profile_settings.items():
-            if key == "voices":
-                for voice_type, voice_def in value.items():
-                    value[voice_type] = ACSS(voice_def)
-            if key not in ["startingProfile", "activeProfile"]:
-                result[key] = value
+        # First apply the default profile's settings as a base, then overlay
+        # the current profile's settings. This ensures that non-default profiles
+        # inherit settings from the default profile that they don't override.
+        profiles_to_apply = [default_profile[1]]
+        if profile != default_profile[1]:
+            profiles_to_apply.append(profile)
+
+        for profile_name in profiles_to_apply:
+            profile_settings = prefs["profiles"].get(profile_name, {}).copy()
+            for key, value in profile_settings.items():
+                if key == "voices":
+                    for voice_type, voice_def in value.items():
+                        value[voice_type] = ACSS(voice_def)
+                if key not in ["startingProfile", "activeProfile"]:
+                    result[key] = value
 
         if "voices" in result:
             for voice_type in (settings.DEFAULT_VOICE, settings.UPPERCASE_VOICE,
@@ -631,6 +639,10 @@ class SettingsManager:
             elif self._settings.get(key) != value:
                 profile_general[key] = value
 
+        # Ensure profile key is always set
+        if not profile_general.get("profile"):
+            profile_general["profile"] = _profile
+
         if pronunciations:
             profile_general["pronunciations"] = dict(pronunciations)
         if keybindings:
@@ -646,19 +658,27 @@ class SettingsManager:
                 prefs = {}
             prefs.setdefault("profiles", {})
             prefs["profiles"][self._profile] = profile_general
-            starting_profile = general.get("startingProfile", _profile)
-            prefs["startingProfile"] = starting_profile
+            # Always use Default as the starting profile for backwards compatibility
+            default_profile = ["Default", "default"]
+            prefs["startingProfile"] = default_profile
             # Write legacy general with all settings for backwards compatibility
             # with older Orca versions
             legacy_general = self._default_settings.copy()
             legacy_general.update(general)
-            legacy_general["startingProfile"] = starting_profile
+            legacy_general["startingProfile"] = default_profile
+            legacy_general.pop("activeProfile", None)
             prefs["general"] = legacy_general
             prefs.setdefault("pronunciations", {})
             prefs.setdefault("keybindings", {})
             settings_file.seek(0)
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
+
+        # Clear any cached app settings snapshots so they don't overwrite the
+        # newly saved settings when focus returns to the original application.
+        # Use late import to avoid circular dependency.
+        from . import script_manager  # pylint: disable=import-outside-toplevel
+        script_manager.get_manager().clear_app_settings_snapshots()
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

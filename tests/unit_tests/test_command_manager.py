@@ -433,6 +433,11 @@ class TestCommandManager:
         keybindings_mock.KeyBinding = test_context.Mock
         keybindings_mock.KeyBindings = test_context.Mock
 
+        # Configure settings mock so _is_desktop is True (uses desktop keybindings)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
+        settings_mock.keyboardLayout = 1
+
         return essential_modules
 
     def _create_mock_function(
@@ -990,6 +995,11 @@ class TestDiffBasedGrabUpdates:
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )
+
+        # Configure settings mock so _is_desktop is True (uses desktop keybindings)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
+        settings_mock.keyboardLayout = 1
 
         essential_modules["modifier_manager_instance"] = modifier_manager_instance
         essential_modules["settings_manager_instance"] = settings_manager_instance

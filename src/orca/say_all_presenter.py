@@ -154,8 +154,11 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             ),
         ]
 
-        super().__init__(guilabels.GENERAL_SAY_ALL, controls)
-
+        info = (
+            f"{guilabels.SAY_ALL_INFO}\n\n{guilabels.SAY_ALL_NAVIGATION_INFO}"
+            f"\n\n{guilabels.SAY_ALL_CONTAINER_INFO}"
+        )
+        super().__init__(guilabels.GENERAL_SAY_ALL, controls,info_message=info)
 
 class SayAllPresenter:
     """Module for commands related to the current accessible object."""

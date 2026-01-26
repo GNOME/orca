@@ -93,12 +93,17 @@ class TestSettingsManagerFileIO:
 
         # ModuleType allows settings_manager to set attributes on it dynamically
         settings_obj: Any = ModuleType("orca.settings")
-        settings_obj.enableEchoByWord = True
-        settings_obj.enableEchoByCharacter = True
+        settings_obj.enableEchoByWord = False
+        settings_obj.enableEchoByCharacter = False
         settings_obj.enableKeyEcho = True
         settings_obj.speechServerFactory = None
         settings_obj.speechServerInfo = None
-        settings_obj.voices = {"default": {}}
+        settings_obj.voices = {
+            "default": {},
+            "uppercase": {"average-pitch": 7.0},
+            "hyperlink": {},
+            "system": {},
+        }
         settings_obj.DEFAULT_VOICE = "default"
         settings_obj.UPPERCASE_VOICE = "uppercase"
         settings_obj.HYPERLINK_VOICE = "hyperlink"
@@ -110,12 +115,71 @@ class TestSettingsManagerFileIO:
         settings_obj.onlySpeakDisplayedText = False
         settings_obj.orcaModifierKeys = ["Insert", "KP_Insert"]
         settings_obj.presentTimeFormat = "%X"
+        # Voice type constants
+        settings_obj.DEFAULT_VOICE = "default"
+        settings_obj.UPPERCASE_VOICE = "uppercase"
+        settings_obj.HYPERLINK_VOICE = "hyperlink"
+        settings_obj.SYSTEM_VOICE = "system"
+        # Navigator enabled states
+        settings_obj.structuralNavigationEnabled = True
+        settings_obj.tableNavigationEnabled = True
+        settings_obj.caretNavigationEnabled = True
+        # Say all style constants
+        settings_obj.SAYALL_STYLE_LINE = 0
+        settings_obj.SAYALL_STYLE_SENTENCE = 1
+        settings_obj.sayAllStyle = 1
+        # Verbosity constants
+        settings_obj.VERBOSITY_LEVEL_BRIEF = 0
+        settings_obj.VERBOSITY_LEVEL_VERBOSE = 1
+        # Braille constants
+        settings_obj.enableBraille = False
+        settings_obj.BRAILLE_UNDERLINE_NONE = 0x00
+        settings_obj.BRAILLE_UNDERLINE_7 = 0x40
+        settings_obj.BRAILLE_UNDERLINE_8 = 0x80
+        settings_obj.BRAILLE_UNDERLINE_BOTH = 0xc0
+        settings_obj.brailleContractionTable = ""
+        # Punctuation constants
+        settings_obj.PUNCTUATION_STYLE_NONE = 3
+        settings_obj.PUNCTUATION_STYLE_SOME = 2
+        settings_obj.PUNCTUATION_STYLE_MOST = 1
+        settings_obj.PUNCTUATION_STYLE_ALL = 0
+        # Progress bar constants
+        settings_obj.PROGRESS_BAR_ALL = 0
+        settings_obj.PROGRESS_BAR_APPLICATION = 1
+        settings_obj.PROGRESS_BAR_WINDOW = 2
+        # Keyboard layout constants
+        settings_obj.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
+        settings_obj.GENERAL_KEYBOARD_LAYOUT_LAPTOP = 2
+        settings_obj.DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
+        settings_obj.LAPTOP_MODIFIER_KEYS = ["Caps_Lock", "Shift_Lock"]
+        settings_obj.keyboardLayout = 1
+        # Capitalization constants
+        settings_obj.CAPITALIZATION_STYLE_NONE = "none"
+        settings_obj.CAPITALIZATION_STYLE_SPELL = "spell"
+        settings_obj.CAPITALIZATION_STYLE_ICON = "icon"
+        # Chat constants
+        settings_obj.CHAT_SPEAK_ALL = 0
+        settings_obj.CHAT_SPEAK_ALL_IF_FOCUSED = 1
+        settings_obj.CHAT_SPEAK_FOCUSED_CHANNEL = 2
+        # Find constants
+        settings_obj.FIND_SPEAK_NONE = 0
+        settings_obj.FIND_SPEAK_IF_LINE_CHANGED = 1
+        settings_obj.FIND_SPEAK_ALL = 2
+        # Various other settings
+        settings_obj.wrappedStructuralNavigation = True
+        settings_obj.structNavTriggersFocusMode = True
+        settings_obj.largeObjectTextLength = 75
+        settings_obj.enableEchoBySentence = False
+        settings_obj.flatReviewIsRestricted = False
+        settings_obj.enableMouseReview = False
+        settings_obj.mouseDwellDelay = 0
 
         essential_modules: dict[str, Any] = {}
 
         debug_mock = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
         debug_mock.LEVEL_ALL = 0
+        debug_mock.debugFile = None  # Needed for debugging_tools_manager initialization
         debug_mock.print_message = test_context.Mock()
         debug_mock.print_tokens = test_context.Mock()
         test_context.patch_module("orca.debug", debug_mock)
@@ -154,10 +218,34 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.pronunciation_dictionary_manager", pronun_module_mock)
         essential_modules["orca.pronunciation_dictionary_manager"] = pronun_module_mock
 
+        # Mock orca_platform (generated at build time)
+        platform_mock = test_context.Mock()
+        platform_mock.version = "test_version"
+        platform_mock.tablesdir = "/usr/share/liblouis/tables"  # Standard location
+        test_context.patch_module("orca.orca_platform", platform_mock)
+        essential_modules["orca.orca_platform"] = platform_mock
+
+        # Mock messages (uses orca_platform)
+        messages_mock = test_context.Mock()
+        test_context.patch_module("orca.messages", messages_mock)
+        essential_modules["orca.messages"] = messages_mock
+
+        # Mock pronunciation_dictionary_manager (uses messages)
+        pronun_dict_manager_mock = test_context.Mock()
+        pronun_dict_manager_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
+        test_context.patch_module("orca.pronunciation_dictionary_manager", pronun_dict_manager_mock)
+        essential_modules["orca.pronunciation_dictionary_manager"] = pronun_dict_manager_mock
+
         keybindings_mock = test_context.Mock()
         keybindings_mock.KeyBinding = test_context.Mock()
         test_context.patch_module("orca.keybindings", keybindings_mock)
         essential_modules["orca.keybindings"] = keybindings_mock
+
+        # Mock script_manager to avoid cascading dependencies
+        script_manager_mock = test_context.Mock()
+        script_manager_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
+        test_context.patch_module("orca.script_manager", script_manager_mock)
+        essential_modules["orca.script_manager"] = script_manager_mock
 
         ax_object_mock = test_context.Mock()
         ax_object_mock.get_name = test_context.Mock(return_value="TestApp")
@@ -213,7 +301,7 @@ class TestSettingsManagerFileIO:
             mock_script = test_context.Mock()
             mock_script.app = None
 
-            test_value = False
+            test_value = True
             general_settings = manager.get_settings()
             general_settings["enableEchoByWord"] = test_value
             general_settings["profile"] = ["Default", "default"]

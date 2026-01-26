@@ -109,8 +109,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 values=profile_values,
                 prefs_key="activeProfile",
                 member_of=guilabels.CURRENT_PROFILE,
-                get_actions_for_option=None if self._is_app_specific else self._get_profile_actions,
-                apply_immediately=True,
+                get_actions_for_option=None if self._is_app_specific else self._get_profile_actions
             ),
         ]
 

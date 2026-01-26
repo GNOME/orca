@@ -1563,13 +1563,10 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.ANNOUNCEMENTS, "announcements", self._announcements_grid),
         ]
 
-        def _set_enable_speech(enabled: bool) -> None:
-            settings.enableSpeech = enabled
-
         enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
             enable_label=guilabels.SPEECH_ENABLE_SPEECH,
             enable_getter=self._manager.get_speech_is_enabled,
-            enable_setter=_set_enable_speech,
+            enable_setter=self._manager.set_speech_is_enabled,
             categories=categories,
             title_change_callback=self._title_change_callback,
             main_title=guilabels.SPEECH
@@ -1598,7 +1595,8 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def save_settings(self) -> dict:
         """Save all settings from child grids."""
 
-        result = {}
+        result: dict[str, Any] = {}
+        result["enableSpeech"] = self._manager.get_speech_is_enabled()
         result.update(self._voices_grid.save_settings())
         result.update(self._verbosity_grid.save_settings())
         result.update(self._tables_grid.save_settings())
@@ -2943,7 +2941,15 @@ class SpeechAndVerbosityManager:
 
         msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+
         settings.enableSpeech = value
+        if value:
+            self.start_speech()
+            speech.speak(messages.SPEECH_ENABLED)
+        else:
+            speech.speak(messages.SPEECH_DISABLED)
+            self.shutdown_speech()
+
         return True
 
     @dbus_service.getter

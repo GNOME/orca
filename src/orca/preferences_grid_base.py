@@ -18,7 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position, too-many-lines
+# pylint: disable=wrong-import-position
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-nested-blocks
 
 """Base class for preference grid UI components."""
 
@@ -42,15 +46,6 @@ from gi.repository import Atk
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import Gtk
-
-
-def _set_margins(widget: Gtk.Widget, start=0, end=0, top=0, bottom=0) -> None:
-    """Set all margins on a widget at once."""
-
-    widget.set_margin_start(start)
-    widget.set_margin_end(end)
-    widget.set_margin_top(top)
-    widget.set_margin_bottom(bottom)
 
 
 class CategoryListBoxRow(Gtk.ListBoxRow):
@@ -106,6 +101,7 @@ class CommandListBoxRow(Gtk.ListBoxRow):
         self._binding_label = value
 
 
+# pylint: disable-next=too-few-public-methods, c-extension-no-member
 class RadioButtonWithActions(Gtk.RadioButton):
     """RadioButton with associated action buttons for navigation."""
 
@@ -168,7 +164,7 @@ class BooleanPreferenceControl:  # pylint: disable=too-many-instance-attributes
     prefs_key: Optional[str] = None
     member_of: Optional[str] = None
     determine_sensitivity: Optional[Callable[[], bool]] = None
-    apply_immediately: bool = False
+    apply_immediately: bool = True
 
 
 @dataclass
@@ -228,7 +224,7 @@ class SelectionPreferenceControl:  # pylint: disable=too-many-instance-attribute
         Callable[[Any], list[tuple[str, str, Callable[[], None]]]]
     ] = None
     determine_sensitivity: Optional[Callable[[], bool]] = None
-    apply_immediately: bool = False
+    apply_immediately: bool = True
 
 
 # pylint: disable=no-member
@@ -272,6 +268,7 @@ class FocusManagedListBox(Gtk.ListBox):
             return self._rows[-1]
         return None
 
+    # pylint: disable-next=too-many-return-statements
     def _on_widget_key_press(self, widget: Gtk.Widget, event) -> bool:
         """Handle Tab, Shift+Tab, and Left arrow to navigate."""
 
@@ -296,12 +293,12 @@ class FocusManagedListBox(Gtk.ListBox):
                 if isinstance(parent, PreferencesGridBase):
                     if first_grid is None:
                         first_grid = parent
-                    if parent._is_in_multipage_detail():
-                        parent._multipage_show_categories()
+                    if parent.is_in_multipage_detail():
+                        parent.multipage_show_categories()
                         return True
                 parent = parent.get_parent()
             if first_grid is not None:
-                first_grid._focus_sidebar()
+                first_grid.focus_sidebar()
                 return True
             return False
 
@@ -336,7 +333,7 @@ class FocusManagedListBox(Gtk.ListBox):
         return False
 # pylint: enable=no-member
 
-# pylint: disable-next=too-few-public-methods
+# pylint: disable-next=too-few-public-methods, too-many-instance-attributes
 class PreferencesGridBase(Gtk.Grid):
     """Base class for all preferences grid widgets with common UI helpers."""
 
@@ -358,6 +355,22 @@ class PreferencesGridBase(Gtk.Grid):
 
         self._stacked_prefs_helper: StackedPreferencesHelper | None = None
         self._multipage_stack: Gtk.Stack | None = None
+        self._multipage_title_callback: Callable[[str], None] | None = None
+        self._multipage_main_title: str | None = None
+        self._multipage_categories: list[tuple[str, str, PreferencesGridBase]] | None = None
+        self._multipage_category_map: dict[str, tuple[str, PreferencesGridBase]] | None = None
+        self._multipage_enable_listbox: FocusManagedListBox | None = None
+        self._multipage_categories_listbox: Gtk.ListBox | None = None
+
+    @staticmethod
+    def _set_margins(widget: Gtk.Widget, start: int = 0, end: int = 0,
+                     top: int = 0, bottom: int = 0) -> None:
+        """Set all margins on a widget at once."""
+
+        widget.set_margin_start(start)
+        widget.set_margin_end(end)
+        widget.set_margin_top(top)
+        widget.set_margin_bottom(bottom)
 
     @property
     def _stack(self) -> Gtk.Stack | None:
@@ -389,24 +402,22 @@ class PreferencesGridBase(Gtk.Grid):
     def on_becoming_visible(self) -> None:
         """Called when this grid becomes the visible panel in the main stack."""
 
-        pass
-
     def set_focus_sidebar_callback(self, callback: Callable[[], None]) -> None:
         """Set the callback to focus the sidebar navigation list."""
 
         self._focus_sidebar_callback = callback
         # Forward to child grids in multi-page structures
-        if hasattr(self, "_multipage_categories") and self._multipage_categories:
+        if self._multipage_categories:
             for _label, _page_id, grid in self._multipage_categories:
                 grid.set_focus_sidebar_callback(callback)
 
-    def _focus_sidebar(self) -> None:
+    def focus_sidebar(self) -> None:
         """Move focus to the sidebar navigation list."""
 
         if self._focus_sidebar_callback:
             self._focus_sidebar_callback()
 
-    def _is_in_multipage_detail(self) -> bool:
+    def is_in_multipage_detail(self) -> bool:
         """Returns True if this grid has a multipage stack showing a detail page."""
 
         if self._multipage_stack is None:
@@ -487,7 +498,7 @@ class PreferencesGridBase(Gtk.Grid):
         row.set_can_focus(True)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.DND)
         icon.set_valign(Gtk.Align.START)
@@ -568,7 +579,7 @@ class PreferencesGridBase(Gtk.Grid):
             vbox.pack_start(separator, False, False, 0)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         label = None
         if label_text and widget:
@@ -819,7 +830,7 @@ class PreferencesGridBase(Gtk.Grid):
         row.set_activatable(True)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         label_widget = Gtk.Label(label=label, xalign=0)
         label_widget.set_hexpand(True)
@@ -900,6 +911,7 @@ class PreferencesGridBase(Gtk.Grid):
 
         return False
 
+    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def _create_multi_page_stack(
         self,
         enable_label: str | None,
@@ -948,7 +960,9 @@ class PreferencesGridBase(Gtk.Grid):
         self._multipage_title_callback = title_change_callback
         self._multipage_main_title = main_title
         self._multipage_categories = categories
-        self._multipage_category_map = {page_id: (label, grid) for label, page_id, grid in categories}
+        self._multipage_category_map = {
+            page_id: (label, grid) for label, page_id, grid in categories
+        }
 
         enable_listbox: FocusManagedListBox | None = None
         if enable_label is not None and enable_getter is not None and enable_setter is not None:
@@ -1031,10 +1045,20 @@ class PreferencesGridBase(Gtk.Grid):
             return
 
         enabled = switch.get_active()
-        setter(enabled)
 
-        if self._multipage_stack:
-            self._multipage_stack.set_sensitive(enabled)
+        def call_setter():
+            setter(enabled)
+            if self._multipage_stack:
+                self._multipage_stack.set_sensitive(enabled)
+            return False
+
+        if enabled:
+            # The main use case for the delay is presentation. For instance, if the user toggles
+            # speech on, we don't want to present the custom message ("speech enabled") followed
+            # by "on" (switch state).
+            GLib.timeout_add(50, call_setter)
+        else:
+            call_setter()
 
         self._has_unsaved_changes = True
 
@@ -1073,14 +1097,14 @@ class PreferencesGridBase(Gtk.Grid):
             self._multipage_enable_listbox.hide()
 
         self._multipage_stack.set_visible_child_name(category_id)
-        if self._multipage_title_callback:
+        if self._multipage_title_callback and self._multipage_category_map is not None:
             label, grid = self._multipage_category_map.get(
-                category_id, (self._multipage_main_title, None)
+                category_id, (self._multipage_main_title or "", None)
             )
-            self._multipage_title_callback(label)
+            self._multipage_title_callback(label or "")
 
         # Focus first widget in grid
-        if category_id in self._multipage_category_map:
+        if self._multipage_category_map is not None and category_id in self._multipage_category_map:
             _, grid = self._multipage_category_map[category_id]
             if grid:
                 GLib.idle_add(self._multipage_focus_first_widget, grid)
@@ -1102,7 +1126,7 @@ class PreferencesGridBase(Gtk.Grid):
             """Get non-internal children via foreach."""
 
             children = []
-            container.foreach(lambda child: children.append(child))
+            container.foreach(children.append)
             return children
 
         children = get_children_via_foreach(grid)
@@ -1159,16 +1183,16 @@ class PreferencesGridBase(Gtk.Grid):
         """Handle key press in multi-page child grids - Left/Escape to go back."""
 
         if event.keyval in [Gdk.KEY_Left, Gdk.KEY_Escape]:
-            self._multipage_show_categories()
+            self.multipage_show_categories()
             return True
 
         if event.keyval == Gdk.KEY_Left and event.state & Gdk.ModifierType.MOD1_MASK:
-            self._multipage_show_categories()
+            self.multipage_show_categories()
             return True
 
         return False
 
-    def _multipage_show_categories(self) -> None:
+    def multipage_show_categories(self) -> None:
         """Switch back to categories view in multi-page stack."""
 
         if self._multipage_stack:
@@ -1177,7 +1201,7 @@ class PreferencesGridBase(Gtk.Grid):
         if self._multipage_enable_listbox:
             self._multipage_enable_listbox.show()
 
-        if self._multipage_title_callback:
+        if self._multipage_title_callback and self._multipage_main_title is not None:
             self._multipage_title_callback(self._multipage_main_title)
 
         if self._multipage_categories_listbox:
@@ -1189,7 +1213,7 @@ class PreferencesGridBase(Gtk.Grid):
         Call this from your on_becoming_visible() override if using multi-page stack.
         """
 
-        self._multipage_show_categories()
+        self.multipage_show_categories()
 
 ControlType = (BooleanPreferenceControl | IntRangePreferenceControl |
                FloatRangePreferenceControl | EnumPreferenceControl |
@@ -1228,6 +1252,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._initializing = False
         self.refresh()
 
+    # pylint: disable-next=too-many-statements
     def _build(self) -> None:
         """Automatically build UI from controls, grouping by member_of."""
 
@@ -1400,7 +1425,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row.set_activatable(False)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         label = Gtk.Label(label=control.label, xalign=0)
         label.set_use_underline(True)
@@ -1429,7 +1454,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row.set_activatable(False)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         label = Gtk.Label(label=control.label, xalign=0)
         label.set_use_underline(True)
@@ -1461,7 +1486,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row.set_activatable(False)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        _set_margins(vbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(vbox, start=12, end=12, top=12, bottom=12)
 
         label = Gtk.Label(label=control.label, xalign=0)
         label.set_use_underline(True)
@@ -1492,7 +1517,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row.set_activatable(False)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         label = Gtk.Label(label=control.label, xalign=0)
         label.set_use_underline(True)
@@ -1530,7 +1555,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row.set_activatable(False)
 
         hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        _set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         label = Gtk.Label(label=control.label, xalign=0)
         label.set_use_underline(True)
@@ -1560,7 +1585,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         first_radio = None
         current_value = control.getter()
 
-        for i, (option_label, value) in enumerate(zip(control.options, values)):
+        for option_label, value in zip(control.options, values):
             row = Gtk.ListBoxRow()
             row.set_activatable(False)
 
@@ -1608,6 +1633,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         return first_radio
 
+    # pylint: disable-next=too-many-return-statements
     def _on_radio_key_press(self, radio: Gtk.RadioButton, event) -> bool:
         """Handle navigation keys for radio button group."""
 
@@ -1622,11 +1648,11 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             parent: Gtk.Widget | None = self
             while parent is not None:
                 if isinstance(parent, PreferencesGridBase):
-                    if parent._is_in_multipage_detail():
-                        parent._multipage_show_categories()
+                    if parent.is_in_multipage_detail():
+                        parent.multipage_show_categories()
                         return True
                 parent = parent.get_parent()
-            self._focus_sidebar()
+            self.focus_sidebar()
             return True
 
         if event.keyval in (Gdk.KEY_Up, Gdk.KEY_Down):
@@ -1660,6 +1686,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         return False
 
+    # pylint: disable-next=too-many-return-statements
     def _on_action_button_key_press(self, button: Gtk.Button, event) -> bool:
         """Handle Tab/Shift+Tab navigation for action buttons."""
 
@@ -1708,11 +1735,11 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             widget: Gtk.Widget | None = self
             while widget is not None:
                 if isinstance(widget, PreferencesGridBase):
-                    if widget._is_in_multipage_detail():
-                        widget._multipage_show_categories()
+                    if widget.is_in_multipage_detail():
+                        widget.multipage_show_categories()
                         return True
                 widget = widget.get_parent()
-            self._focus_sidebar()
+            self.focus_sidebar()
             return True
 
         return False
@@ -1727,14 +1754,12 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         if isinstance(widget, Gtk.RadioButton) and not widget.get_active():
             return
 
-        # Check if this is an apply_immediately control - don't mark as unsaved changes
-        applied_immediately = False
+        # Check if this is an apply_immediately control
         if widget in self._widget_to_control_index:
             control = self._controls[self._widget_to_control_index[widget]]
             if isinstance(control, BooleanPreferenceControl) and control.apply_immediately:
                 assert isinstance(widget, Gtk.Switch)
                 control.setter(widget.get_active())
-                applied_immediately = True
             elif isinstance(control, SelectionPreferenceControl) and control.apply_immediately:
                 if control.setter is not None:
                     if isinstance(widget, Gtk.ComboBoxText):
@@ -1742,15 +1767,11 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                         if active >= 0:
                             value_list = control.values if control.values else control.options
                             control.setter(value_list[active])
-                            applied_immediately = True
                     elif isinstance(widget, Gtk.RadioButton):
                         if widget in self._radio_to_selection_value:
                             control.setter(self._radio_to_selection_value[widget])
-                            applied_immediately = True
 
-        if not applied_immediately:
-            self._has_unsaved_changes = True
-
+        self._has_unsaved_changes = True
         self._update_sensitivity()
 
     def _update_sensitivity(self) -> None:

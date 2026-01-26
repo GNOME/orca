@@ -45,7 +45,6 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
-from . import preferences_grid_base
 from . import say_all_presenter
 from . import script_manager
 from . import settings
@@ -211,11 +210,6 @@ class CaretNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.caretNavTriggersFocusMode = value
         return True
-
-    def create_preferences_grid(self) -> "CaretNavigatorPreferencesGrid":
-        """Returns the preferences grid for caret navigation settings."""
-
-        return CaretNavigatorPreferencesGrid(self)
 
     def get_enabled_for_script(self, script: default.Script) -> bool:
         """Returns the current caret-navigator enabled state associated with script."""
@@ -786,29 +780,6 @@ class CaretNavigator:
         script.speak_contents(contents)
         script.display_contents(contents)
         return True
-
-
-class CaretNavigatorPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """Preferences grid for caret navigation settings."""
-
-    def __init__(self, navigator: CaretNavigator) -> None:
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.USE_CARET_NAVIGATION,
-                getter=navigator.get_is_enabled,
-                setter=navigator.set_is_enabled,
-                prefs_key="caretNavigationEnabled"
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.AUTO_FOCUS_MODE_CARET_NAV,
-                getter=navigator.get_triggers_focus_mode,
-                setter=navigator.set_triggers_focus_mode,
-                prefs_key="caretNavTriggersFocusMode"
-            ),
-        ]
-
-        super().__init__(guilabels.KB_GROUP_CARET_NAVIGATION, controls)
-
 
 _navigator = CaretNavigator()
 def get_navigator() -> CaretNavigator:

@@ -35,6 +35,7 @@ __license__   = "LGPL"
 
 import os
 from enum import Enum
+from typing import Any
 
 from . import braille
 from . import dbus_service
@@ -361,7 +362,8 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def save_settings(self) -> dict:
         """Persist staged values."""
 
-        result = {}
+        result: dict[str, Any] = {}
+        result["enableBraille"] = self._presenter.get_braille_is_enabled()
         result.update(self._verbosity_grid.save_settings())
         result.update(self._display_settings_grid.save_settings())
         result.update(self._flash_messages_grid.save_settings())

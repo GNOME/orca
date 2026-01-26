@@ -48,10 +48,7 @@ from dasbus.server.publishable import Publishable
 from gi.repository import GLib
 
 from . import debug
-from . import input_event
-from . import input_event_manager
 from . import orca_platform # pylint: disable=no-name-in-module
-from . import script_manager
 
 class HandlerType(enum.Enum):
     """Enumeration of handler types for D-Bus methods."""
@@ -449,6 +446,8 @@ class OrcaDBusServiceInterface(Publishable):
     def ShowPreferences(self) -> bool: # pylint: disable=invalid-name
         """Shows Orca's preferences GUI."""
 
+        from . import script_manager  # pylint: disable=import-outside-toplevel
+
         msg = "DBUS SERVICE: ShowPreferences called."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -464,6 +463,8 @@ class OrcaDBusServiceInterface(Publishable):
 
     def PresentMessage(self, message: str) -> bool: # pylint: disable=invalid-name
         """Presents message to the user."""
+
+        from . import script_manager  # pylint: disable=import-outside-toplevel
 
         msg = f"DBUS SERVICE: PresentMessage called with: '{message}'"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -635,6 +636,10 @@ class OrcaRemoteController:
             )
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
             return
+
+        from . import input_event  # pylint: disable=import-outside-toplevel
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+        from . import script_manager  # pylint: disable=import-outside-toplevel
 
         handlers_info = []
         commands_count = 0

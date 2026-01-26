@@ -221,6 +221,22 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(1, toggle, keyboard_event.modifiers, modifier)
 
+    def get_orca_modifier_keys(self) -> list[str]:
+        """Returns the list of Orca modifier keys."""
+
+        return settings.orcaModifierKeys
+
+    def set_modifiers_for_layout(self, is_desktop: bool) -> None:
+        """Sets the Orca modifier keys based on keyboard layout and refreshes."""
+
+        if is_desktop:
+            settings.orcaModifierKeys = settings.DESKTOP_MODIFIER_KEYS
+        else:
+            settings.orcaModifierKeys = settings.LAPTOP_MODIFIER_KEYS
+
+        layout = "desktop" if is_desktop else "laptop"
+        self.refresh_orca_modifiers(f"Keyboard layout changed to {layout}.")
+
     def refresh_orca_modifiers(self, reason: str = "") -> None:
         """Refreshes the Orca modifier keys."""
 

@@ -87,7 +87,7 @@ class TestPreferenceControlDataclasses:
         assert control.prefs_key is None
         assert control.member_of is None
         assert control.determine_sensitivity is None
-        assert control.apply_immediately is False
+        assert control.apply_immediately is True
 
     def test_int_range_preference_control_creation(self) -> None:
         """Test IntRangePreferenceControl can be created with all fields."""

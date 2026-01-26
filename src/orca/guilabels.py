@@ -290,6 +290,17 @@ CHAT_SPEAK_ROOM_NAME_LAST = _("Speak room name last")
 # both for presentation and navigation.
 CONTENT_LAYOUT_MODE = _("Layout mode")
 
+# Translators: This is an informational message on the Caret Navigation preferences
+# page explaining what layout mode is. When translating "layout mode", please use
+# terminology consistent with that of `CONTENT_LAYOUT_MODE = _("Layout mode")`
+# above.
+
+LAYOUT_MODE_INFO = _(
+    "If layout mode is enabled, Orca will present the full line as it "
+    "appears on the screen. Otherwise, Orca will treat each object as if "
+    "it were on a separate line."
+)
+
 # Translators: Orca's keybindings support double and triple "clicks" or key
 # presses, similar to using a mouse. This string appears in Orca's preferences
 # dialog after a keybinding which requires a double click.
@@ -555,8 +566,30 @@ KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")
 # Translators: This is an informational message on the Structural Navigation
 # preferences page explaining what structural navigation does.
 STRUCTURAL_NAVIGATION_INFO = _(
-    "Use single keys to quickly jump between elements. For example, H moves to "
-    "the next heading, K to the next link. Add Shift to move backwards.")
+    "When enabled, alphanumeric keys can be used to quickly jump between "
+    "elements. For example, H moves to the next heading, K to the next link. "
+    "Add Shift to move backwards."
+)
+
+# Translators: This is a label for a switch that controls whether structural
+# navigation wraps around when reaching the top or bottom of a document.
+STRUCTURAL_NAVIGATION_WRAP_AROUND = _("Wrap around")
+
+# Translators: This is a label for a spin button that sets the minimum number
+# of characters for an object to be considered "large" during structural
+# navigation to large objects.
+STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH = _("Large object length")
+
+# Translators: This is an informational message on the Structural Navigation
+# preferences page explaining what the "Large object length" setting does.
+# When translating "large object", please use terminology consistent with that of
+# `STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH = _("Large object length")` above.
+# See also cmdnames.py's `LARGE_OBJECT_NEXT = _("Go to next large object")`
+# and `LARGE_OBJECT_PREVIOUS = _("Go to previous large object")`.
+LARGE_OBJECT_INFO = _(
+    "Large object length defines the minimum number of characters an element "
+    "must have to be included when using the large object navigation shortcuts."
+)
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to table navigation, such as moving to the next cell in a
@@ -1613,6 +1646,32 @@ GENERAL_SAY_ALL = _("Say All")
 # more natural. If Orca were speaking something like a page of computer
 # commands, doing a say all by line would work better.
 SAY_ALL_BY = _("Say All By")
+
+# Translators: This is an informational message on the Say All preferences page
+# explaining what Say All does. Please translate this message consistent with the
+# strings in `GENERAL_SAY_ALL = _("Say All")` and SAY_ALL_BY = _("Say All By")`
+SAY_ALL_INFO = _(
+    "Say All reads from the current location to the end of the document, "
+    "pausing after each sentence or line based on the \"Say All By\" value. "
+)
+
+# Translators: This is an informational message on the Say All preferences page
+# explaining the options found under the section with the following label:
+# `SAY_ALL_REWIND_AND_FAST_FORWARD_BY = _("Rewind and Fast Forward By")`
+# Please translate "structural navigation" using terminology consistent with
+# `KB_GROUP_STRUCTURAL_NAVIGATION = _("Structural navigation")`
+SAY_ALL_NAVIGATION_INFO = _(
+    "If enabled, you can use the arrow keys and/or structural navigation commands "
+    "to move within the document while Say All is active."
+)
+
+# Translators: This is an informational message on the Say All preferences page
+# explaining the options found under the section with the following label:
+# ANNOUNCEMENTS = _("Container Announcements")
+SAY_ALL_CONTAINER_INFO = _(
+    "The \"Container Announcements\" settings determine what additional details "
+    "will be announced as Say All moves through the document."
+)
 
 GENERAL_SPEAK_OBJECT_UNDER_MOUSE = _("Speak object under mo_use")
 

@@ -96,6 +96,18 @@ class ScriptManager:
         self._active = False
         debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivated", True)
 
+    def clear_app_settings_snapshots(self) -> None:
+        """Clear all cached app settings snapshots.
+
+        This should be called when global preferences are saved to ensure
+        stale snapshots don't overwrite the newly saved settings.
+        """
+
+        if self._app_settings_snapshots:
+            msg = f"SCRIPT MANAGER: Clearing {len(self._app_settings_snapshots)} app settings snapshots"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._app_settings_snapshots.clear()
+
     def get_module_name(self, app: Atspi.Accessible | None) -> str | None:
         """Returns the module name of the script to use for application app."""
 

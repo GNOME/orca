@@ -38,7 +38,8 @@ from typing import Callable, TYPE_CHECKING
 
 import gi
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Atspi, Gtk
 
 from . import caret_navigator
 from . import cmdnames
@@ -83,83 +84,144 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
     def __init__(self, presenter: "DocumentPresenter") -> None:
         nav = caret_navigator.get_navigator()
+
+        # Child controls need to check the enabled switch's UI state (not runtime state)
+        # because the enabled switch has apply_immediately=False.
+        self._enabled_switch: Gtk.Switch | None = None
+
+        def is_enabled() -> bool:
+            if self._enabled_switch is not None:
+                return self._enabled_switch.get_active()
+            return nav.get_is_enabled()
+
         controls = [
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.KB_GROUP_CARET_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key="caretNavigationEnabled"
+                prefs_key="caretNavigationEnabled",
+                apply_immediately=False
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
                 prefs_key="caretNavTriggersFocusMode",
-                determine_sensitivity=nav.get_is_enabled
+                determine_sensitivity=is_enabled
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CONTENT_LAYOUT_MODE,
                 getter=presenter.get_layout_mode,
                 setter=presenter.set_layout_mode,
                 prefs_key="layoutMode",
-                determine_sensitivity=nav.get_is_enabled
+                determine_sensitivity=is_enabled
             ),
         ]
-        info = f"{guilabels.CARET_NAVIGATION_INFO} {guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
+        info = (
+            f"{guilabels.CARET_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
+            f"\n\n{guilabels.LAYOUT_MODE_INFO}"
+        )
         super().__init__(
             guilabels.KB_GROUP_CARET_NAVIGATION,
             controls,
             info_message=info
         )
 
+        self._enabled_switch = self._widgets[0]
+
 class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for structural navigation settings within the Documents page."""
 
     def __init__(self) -> None:
         nav = structural_navigator.get_navigator()
-        controls = [
+
+        # Child controls need to check the enabled switch's UI state (not runtime state)
+        # because the enabled switch has apply_immediately=False.
+        self._enabled_switch: Gtk.Switch | None = None
+
+        def is_enabled() -> bool:
+            if self._enabled_switch is not None:
+                return self._enabled_switch.get_active()
+            return nav.get_is_enabled()
+
+        controls: list[preferences_grid_base.ControlType] = [
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key="structuralNavigationEnabled"
+                prefs_key="structuralNavigationEnabled",
+                apply_immediately=False
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
                 prefs_key="structNavTriggersFocusMode",
-                determine_sensitivity=nav.get_is_enabled
+                determine_sensitivity=is_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
+                getter=nav.get_navigation_wraps,
+                setter=nav.set_navigation_wraps,
+                prefs_key="wrappedStructuralNavigation",
+                determine_sensitivity=is_enabled
+            ),
+            preferences_grid_base.IntRangePreferenceControl(
+                label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
+                minimum=1,
+                maximum=500,
+                getter=nav.get_large_object_text_length,
+                setter=nav.set_large_object_text_length,
+                prefs_key="largeObjectTextLength",
+                determine_sensitivity=is_enabled
             ),
         ]
-        info = f"{guilabels.STRUCTURAL_NAVIGATION_INFO} {guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
+        info = (
+            f"{guilabels.STRUCTURAL_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
+            f"\n\n{guilabels.LARGE_OBJECT_INFO}"
+        )
         super().__init__(
             guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
             controls,
             info_message=info
         )
 
+        self._enabled_switch = self._widgets[0]
+
 class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for table navigation settings within the Documents page."""
 
     def __init__(self) -> None:
         nav = table_navigator.get_navigator()
+
+        # Child controls need to check the enabled switch's UI state (not runtime state)
+        # because the enabled switch has apply_immediately=False.
+        self._enabled_switch: Gtk.Switch | None = None
+
+        def is_enabled() -> bool:
+            if self._enabled_switch is not None:
+                return self._enabled_switch.get_active()
+            return nav.get_is_enabled()
+
         controls = [
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.KB_GROUP_TABLE_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key="tableNavigationEnabled"
+                prefs_key="tableNavigationEnabled",
+                apply_immediately=False
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.TABLE_SKIP_BLANK_CELLS,
                 getter=nav.get_skip_blank_cells,
                 setter=nav.set_skip_blank_cells,
                 prefs_key="skipBlankCells",
-                determine_sensitivity=nav.get_is_enabled
+                determine_sensitivity=is_enabled
             ),
         ]
         super().__init__(guilabels.KB_GROUP_TABLE_NAVIGATION, controls)
+
+        self._enabled_switch = self._widgets[0]
 
 
 class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -212,7 +274,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 member_of=guilabels.PAGE_LOAD
             ),
         ]
-        info = f"{guilabels.NATIVE_NAVIGATION_INFO} {guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
+        info = f"{guilabels.NATIVE_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
         super().__init__(guilabels.NATIVE_NAVIGATION, controls, info_message=info)
 
 

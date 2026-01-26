@@ -345,8 +345,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.CHAT_SPEAK_ROOM_NAME,
                 getter=presenter.get_speak_room_name,
                 setter=presenter.set_speak_room_name,
-                prefs_key="chatSpeakRoomName",
-                apply_immediately=True
+                prefs_key="chatSpeakRoomName"
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,

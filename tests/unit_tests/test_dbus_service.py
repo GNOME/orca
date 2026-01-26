@@ -1324,9 +1324,7 @@ class TestDBusService:
         mock_script.show_preferences_gui.return_value = None
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = mock_script
-        test_context.patch_object(
-            dbus_service.script_manager, "get_manager", return_value=mock_manager
-        )
+        test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
@@ -1343,9 +1341,7 @@ class TestDBusService:
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
         mock_manager.get_default_script.return_value = mock_script
-        test_context.patch_object(
-            dbus_service.script_manager, "get_manager", return_value=mock_manager
-        )
+        test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
@@ -1360,9 +1356,7 @@ class TestDBusService:
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
         mock_manager.get_default_script.return_value = None
-        test_context.patch_object(
-            dbus_service.script_manager, "get_manager", return_value=mock_manager
-        )
+        test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is False
@@ -1377,9 +1371,7 @@ class TestDBusService:
         mock_script.present_message.return_value = None
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = mock_script
-        test_context.patch_object(
-            dbus_service.script_manager, "get_manager", return_value=mock_manager
-        )
+        test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.PresentMessage("Test message")
         assert result is True
@@ -1394,9 +1386,7 @@ class TestDBusService:
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
         mock_manager.get_default_script.return_value = None
-        test_context.patch_object(
-            dbus_service.script_manager, "get_manager", return_value=mock_manager
-        )
+        test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.PresentMessage("Test message")
         assert result is False
@@ -1966,9 +1956,10 @@ class TestDBusService:
         def mock_remote_controller_event():
             return test_context.Mock()
 
-        test_context.patch_object(dbus_service.script_manager, "get_manager", new=mock_get_manager)
-        test_context.patch_object(
-            dbus_service.input_event, "RemoteControllerEvent", new=mock_remote_controller_event
+        # Patch modules directly since they're imported locally in the method
+        test_context.patch("orca.script_manager.get_manager", new=mock_get_manager)
+        test_context.patch(
+            "orca.input_event.RemoteControllerEvent", new=mock_remote_controller_event
         )
         controller._register_decorated_commands_internal("TestModule", mock_module)
         assert controller._total_commands == 2  # command + parameterized command

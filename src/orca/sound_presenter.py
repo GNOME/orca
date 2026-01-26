@@ -32,6 +32,8 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
                 "Copyright (c) 2011-2025 Igalia, S.L."
 __license__   = "LGPL"
 
+from typing import Any
+
 from . import dbus_service
 from . import debug
 from . import guilabels
@@ -155,7 +157,8 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def save_settings(self) -> dict:
         """Persist staged values."""
 
-        result = {}
+        result: dict[str, Any] = {}
+        result["enableSound"] = self._presenter.get_sound_is_enabled()
         result.update(self._general_grid.save_settings())
         result.update(self._progress_bars_grid.save_settings())
         return result

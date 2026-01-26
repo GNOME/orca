@@ -1832,6 +1832,14 @@ MODE_LAYOUT = _("Layout mode.")
 # object-based presentation.
 MODE_OBJECT = _("Object mode.")
 
+# Translators: Orca supports desktop and laptop keyboard layouts. This message
+# is presented when the user switches to the desktop keyboard layout.
+KEYBOARD_LAYOUT_DESKTOP = _("Desktop layout.")
+
+# Translators: Orca supports desktop and laptop keyboard layouts. This message
+# is presented when the user switches to the laptop keyboard layout.
+KEYBOARD_LAYOUT_LAPTOP = _("Laptop layout.")
+
 # Translators: This message is presented to the user when the command to move
 # the mouse pointer to a particular object is believed to have succeeded.
 MOUSE_MOVED_SUCCESS = _("Pointer moved to object.")

@@ -465,6 +465,12 @@ TOGGLE_SLEEP_MODE = _("Toggle sleep mode for the current application")
 # This string describes that command.
 TOGGLE_SPEECH_VERBOSITY = _("Toggle speech verbosity level")
 
+# Translators: Orca supports two keyboard layouts: a "desktop" layout intended
+# for use with a full-size keyboard with a numeric keypad, and a "laptop" layout
+# intended for use with laptop keyboards that lack a numeric keypad. This command
+# toggles between these two layouts at runtime.
+TOGGLE_KEYBOARD_LAYOUT = _("Toggle keyboard layout")
+
 # Translators: this string is associated with the keyboard shortcut to quit
 # Orca.
 QUIT_ORCA = _("Quit the screen reader")

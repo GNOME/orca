@@ -42,6 +42,8 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
 
+from . import cmdnames
+from . import dbus_service
 from . import debug
 from . import guilabels
 from . import input_event
@@ -299,6 +301,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._captured_key: tuple[str, int, int] = ("", 0, 0)
         self._pending_key_bindings: dict[str, str] = {}
         self._pending_already_bound_message_id: int | None = None
+        # Store modified keybindings separately so they survive apply_user_overrides()
+        self._modified_keybindings: dict[str, keybindings.KeyBinding | None] = {}
         self._keybinding_being_edited: str | None = None
         self._saved_commands: dict[str, KeyboardCommand] = {}
 
@@ -352,6 +356,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         get_manager().apply_user_overrides()
         self._populate_keybindings()
+        self._modified_keybindings.clear()
         self._has_unsaved_changes = False
         self.refresh()
 
@@ -633,8 +638,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if not canceled:
             captured_text = capture_entry.get_text().strip()
             script = script_manager.get_manager().get_active_script()
+            handler_name = command.get_name()
             if not captured_text:
                 command.set_keybinding(None)
+                self._modified_keybindings[handler_name] = None
                 self._has_unsaved_changes = True
 
                 def present_delete_confirmation():
@@ -647,6 +654,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if key_name:
                     new_kb = keybindings.KeyBinding(key_name, modifiers, click_count)
                     command.set_keybinding(new_kb)
+                    self._modified_keybindings[handler_name] = new_kb
                     self._has_unsaved_changes = True
 
                     def present_confirmation():
@@ -867,13 +875,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if response == Gtk.ResponseType.OK:
             entry_text = entry.get_text().strip()
+            handler_name = command.get_name()
             if not entry_text:
                 command.set_keybinding(None)
+                self._modified_keybindings[handler_name] = None
             else:
                 key_name, modifiers, click_count = self._captured_key
                 if key_name:
                     new_kb = keybindings.KeyBinding(key_name, modifiers, click_count)
                     command.set_keybinding(new_kb)
+                    self._modified_keybindings[handler_name] = new_kb
 
             self._has_unsaved_changes = True
             if self._current_category:
@@ -883,35 +894,38 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._captured_key = ("", 0, 0)
         self._keybinding_being_edited = None
 
-    def save_settings(self) -> dict[str, list[list[Any]] | int | list[str]]:
-        """Save settings and return a dictionary of the current values for those settings."""
+    def save_settings(
+        self
+    ) -> tuple[dict[str, int | list[str]], dict[str, list[list[Any]]]]:
+        """Save settings and return (general_settings, keybindings) tuple."""
 
-        result: dict[str, list[list[Any]] | int | list[str]] = {}
+        general: dict[str, int | list[str]] = {}
+        keybindings: dict[str, list[list[Any]]] = {}
 
-        if self.keyboard_layout_combo is not None:
-            tree_iter = self.keyboard_layout_combo.get_active_iter()
-            if tree_iter is not None:
-                model = self.keyboard_layout_combo.get_model()
-                layout_value = model.get_value(tree_iter, 1)
-                result["keyboardLayout"] = layout_value
+        general["keyboardLayout"] = get_manager().get_keyboard_layout_value()
 
         if self._orca_modifier_combo is not None:
             tree_iter = self._orca_modifier_combo.get_active_iter()
             if tree_iter is not None:
                 model = self._orca_modifier_combo.get_model()
                 orca_modifier = model.get_value(tree_iter, 0)
-                result["orcaModifierKeys"] = orca_modifier.split(", ")
+                general["orcaModifierKeys"] = orca_modifier.split(", ")
 
         for category_commands in self._categories.values():
             for cmd in category_commands:
                 handler_name = cmd.get_name()
-                current_kb = cmd.get_keybinding()
+                if handler_name in self._modified_keybindings:
+                    current_kb = self._modified_keybindings[handler_name]
+                else:
+                    current_kb = cmd.get_keybinding()
                 default_kb = cmd.get_default_keybinding()
 
                 current_text = self._format_keybinding_text(current_kb)
                 default_text = self._format_keybinding_text(default_kb)
 
                 if current_text != default_text:
+                    msg = f"KEYBINDINGS GRID: Saving {handler_name}: '{current_text}' (was '{default_text}')"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
                     if current_kb and current_kb.keysymstring:
                         binding_data = [
                             current_kb.keysymstring,
@@ -919,13 +933,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             str(current_kb.modifiers),
                             str(current_kb.click_count)
                         ]
-                        result[handler_name] = [binding_data]
+                        keybindings[handler_name] = [binding_data]
                     elif default_kb and default_kb.keysymstring:
                         # Was unbound - save empty list to indicate unbinding
-                        result[handler_name] = []
+                        keybindings[handler_name] = []
 
+        self._modified_keybindings.clear()
         self._has_unsaved_changes = False
-        return result
+        return general, keybindings
 
     def refresh(self) -> None:
         """Refresh the keyboard layout and orca modifier displays."""
@@ -933,7 +948,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
 
         if self.keyboard_layout_combo is not None:
-            current_layout = settings.keyboardLayout
+            current_layout = get_manager().get_keyboard_layout_value()
             model = self.keyboard_layout_combo.get_model()
             if model:
                 for i, row in enumerate(model):
@@ -966,7 +981,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             model = combo.get_model()
             layout_value = model.get_value(tree_iter, 1)
 
-            settings.keyboardLayout = layout_value
             is_desktop = layout_value == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
             get_manager().set_keyboard_layout(is_desktop)
 
@@ -1020,17 +1034,45 @@ class CommandManager:
         self._braille_commands: dict[str, BrailleCommand] = {}
         self._commands_by_keyval: dict[int, list[KeyboardCommand]] = {}
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
-        self._is_desktop: bool = True  # Default to desktop layout
+        self._is_desktop: bool = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        self._initialized: bool = False
+
+        msg = "COMMAND MANAGER: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("CommandManager", self)
 
     def is_desktop_layout(self) -> bool:
         """Returns True if the current keyboard layout is desktop."""
 
         return self._is_desktop
 
-    def set_keyboard_layout(self, is_desktop: bool) -> None:
-        """Sets the keyboard layout and updates all command keybindings."""
+    @dbus_service.getter
+    def get_keyboard_layout_is_desktop(self) -> bool:
+        """Returns True if the current keyboard layout is desktop."""
+
+        return self._is_desktop
+
+    def get_keyboard_layout_value(self) -> int:
+        """Returns the keyboard layout as an integer value for saving."""
+
+        if self._is_desktop:
+            return settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        return settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+
+    @dbus_service.setter
+    def set_keyboard_layout_is_desktop(self, is_desktop: bool) -> bool:
+        """Sets whether the keyboard layout is desktop (True) or laptop (False)."""
+
+        msg = f"COMMAND MANAGER: Setting keyboard layout is_desktop to {is_desktop}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self._is_desktop == is_desktop:
+            return True
 
         self._is_desktop = is_desktop
+        orca_modifier_manager.get_manager().set_modifiers_for_layout(is_desktop)
+
         has_device = input_event_manager.get_manager().has_device()
 
         if has_device:
@@ -1050,6 +1092,55 @@ class CommandManager:
         layout = "desktop" if is_desktop else "laptop"
         msg = f"COMMAND MANAGER: Keyboard layout set to {layout}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    def set_keyboard_layout(self, is_desktop: bool) -> None:
+        """Sets the keyboard layout and updates all command keybindings."""
+
+        self.set_keyboard_layout_is_desktop(is_desktop)
+
+    @dbus_service.command
+    def toggle_keyboard_layout(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True
+    ) -> bool:
+        """Toggles between desktop and laptop keyboard layout."""
+
+        tokens = ["COMMAND MANAGER: toggle_keyboard_layout. Script:", script,
+                  "Event:", event, "notify_user:", notify_user]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        new_is_desktop = not self._is_desktop
+        self.set_keyboard_layout_is_desktop(new_is_desktop)
+
+        if script is not None and notify_user:
+            if new_is_desktop:
+                script.present_message(messages.KEYBOARD_LAYOUT_DESKTOP)
+            else:
+                script.present_message(messages.KEYBOARD_LAYOUT_LAPTOP)
+
+        return True
+
+    def set_up_commands(self) -> None:
+        """Sets up commands owned by CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        msg = "COMMAND MANAGER: Setting up commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        self.add_command(KeyboardCommand(
+            "toggle_keyboard_layout",
+            self.toggle_keyboard_layout,
+            guilabels.KB_GROUP_DEFAULT,
+            cmdnames.TOGGLE_KEYBOARD_LAYOUT,
+            desktop_keybinding=None,
+            laptop_keybinding=None
+        ))
 
     def _apply_layout_to_commands(self) -> None:
         """Updates all keyboard commands' active keybindings based on current layout."""
