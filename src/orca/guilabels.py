@@ -1652,7 +1652,7 @@ SAY_ALL_BY = _("Say All By")
 # strings in `GENERAL_SAY_ALL = _("Say All")` and SAY_ALL_BY = _("Say All By")`
 SAY_ALL_INFO = _(
     "Say All reads from the current location to the end of the document, "
-    "pausing after each sentence or line based on the \"Say All By\" value. "
+    "pausing after each sentence or line based on the \"Say All By\" value."
 )
 
 # Translators: This is an informational message on the Say All preferences page
