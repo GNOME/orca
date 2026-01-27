@@ -889,7 +889,7 @@ class DocumentPresenter:
 
         self.suspend_navigators(script, use_focus, reason)
 
-        if AXObject.get_application(old_focus) != AXObject.get_application(new_focus):
+        if AXUtilities.get_application(old_focus) != AXUtilities.get_application(new_focus):
             if use_focus:
                 script.present_message(messages.MODE_FOCUS)
             else:
