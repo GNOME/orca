@@ -170,6 +170,7 @@ presentToolTips: bool = False
 
 # Managed by document_presenter.py
 nativeNavTriggersFocusMode: bool = True
+autoStickyFocusModeForWebApps: bool = True
 layoutMode: bool = True
 sayAllOnLoad: bool = True
 pageSummaryOnLoad: bool = True

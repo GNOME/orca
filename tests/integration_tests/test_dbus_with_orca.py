@@ -93,6 +93,7 @@ MODULE_CONFIG = {
         ],
         "parameterized_commands": [],
         "getters": [
+            "AutoStickyFocusModeForWebApps",
             "BrowseModeIsSticky",
             "FindResultsMinimumLength",
             "FocusModeIsSticky",
@@ -105,6 +106,7 @@ MODULE_CONFIG = {
             "SpeakFindResults",
         ],
         "setters": [
+            "AutoStickyFocusModeForWebApps",
             "FindResultsMinimumLength",
             "LayoutMode",
             "NativeNavTriggersFocusMode",

@@ -566,13 +566,13 @@ class TestCaretNavigator:
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_set_is_enabled_updates_setting(self, test_context: OrcaTestContext) -> None:
-        """Test set_is_enabled updates setting and refreshes bindings."""
+        """Test set_is_enabled updates setting and calls CommandManager."""
 
         essential_modules = self._setup_dependencies(test_context)
         settings_mock = essential_modules["orca.settings"]
-        mock_script = test_context.Mock()
         essential_modules["orca.settings"].caretNavigationEnabled = False
         essential_modules["orca.settings_manager"].get_manager.return_value
+        mock_script = test_context.Mock()
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script

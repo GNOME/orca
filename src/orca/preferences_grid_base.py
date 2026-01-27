@@ -286,7 +286,10 @@ class FocusManagedListBox(Gtk.ListBox):
             return False
 
         # Left arrow: exit nested group first, then move to sidebar
+        # But not for widgets where arrows have meaning (sliders, spin buttons)
         if event.keyval == Gdk.KEY_Left:
+            if isinstance(widget, (Gtk.Scale, Gtk.SpinButton)):
+                return False
             parent = self.get_parent()
             first_grid = None
             while parent is not None:
@@ -894,10 +897,15 @@ class PreferencesGridBase(Gtk.Grid):
 
     def _on_stack_detail_key_press(
         self,
-        _widget: Gtk.Widget,
+        widget: Gtk.Widget,
         event: Gdk.EventKey
     ) -> bool:
         """Handle key press in detail page - Left/Escape/Alt+Left to go back."""
+
+        # Don't intercept Left for widgets where arrows have meaning
+        focused = widget.get_toplevel().get_focus()
+        if event.keyval == Gdk.KEY_Left and isinstance(focused, (Gtk.Scale, Gtk.SpinButton)):
+            return False
 
         # Left arrow or Escape to go back to categories
         if event.keyval in [Gdk.KEY_Left, Gdk.KEY_Escape]:
@@ -1177,10 +1185,15 @@ class PreferencesGridBase(Gtk.Grid):
 
     def _on_multipage_child_key_press(
         self,
-        _widget: Gtk.Widget,
+        widget: Gtk.Widget,
         event: Gdk.EventKey
     ) -> bool:
         """Handle key press in multi-page child grids - Left/Escape to go back."""
+
+        # Don't intercept Left for widgets where arrows have meaning
+        focused = widget.get_toplevel().get_focus()
+        if event.keyval == Gdk.KEY_Left and isinstance(focused, (Gtk.Scale, Gtk.SpinButton)):
+            return False
 
         if event.keyval in [Gdk.KEY_Left, Gdk.KEY_Escape]:
             self.multipage_show_categories()

@@ -34,29 +34,15 @@ __license__   = "LGPL"
 
 from typing import Any
 
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 from . import dbus_service
 from . import debug
 from . import guilabels
 from . import preferences_grid_base
 from . import settings
-
-
-class SoundGeneralPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Sound General preferences page."""
-
-    def __init__(self, presenter: SoundPresenter) -> None:
-        controls = [
-            preferences_grid_base.FloatRangePreferenceControl(
-                label=guilabels.SOUND_VOLUME,
-                getter=presenter.get_sound_volume,
-                setter=presenter.set_sound_volume,
-                prefs_key="soundVolume",
-                minimum=0.0,
-                maximum=1.0
-            ),
-        ]
-
-        super().__init__(guilabels.GENERAL, controls)
 
 
 class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -113,8 +99,9 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
         self._title_change_callback = title_change_callback
 
-        self._general_grid = SoundGeneralPreferencesGrid(presenter)
         self._progress_bars_grid = SoundProgressBarsPreferencesGrid(presenter)
+        self._volume_scale: Gtk.Scale | None = None
+        self._volume_listbox: preferences_grid_base.FocusManagedListBox | None = None
 
         self._build()
         self._initializing = False
@@ -126,7 +113,6 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row = 0
 
         categories = [
-            (guilabels.GENERAL, "general", self._general_grid),
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
         ]
 
@@ -141,7 +127,65 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.attach(enable_listbox, 0, row, 1, 1)
         row += 1
+
+        # Volume slider on the main page
+        self._volume_listbox = preferences_grid_base.FocusManagedListBox()
+
+        volume_adj = Gtk.Adjustment(
+            value=self._presenter.get_sound_volume(),
+            lower=0.0, upper=1.0, step_increment=0.1, page_increment=0.1
+        )
+        volume_row, self._volume_scale, _volume_label = self._create_slider_row(
+            guilabels.SOUND_VOLUME,
+            volume_adj,
+            changed_handler=self._on_volume_changed,
+            include_top_separator=False
+        )
+        self._volume_listbox.add_row_with_widget(volume_row, self._volume_scale)
+        self._volume_listbox.set_sensitive(self._presenter.get_sound_is_enabled())
+
+        self.attach(self._volume_listbox, 0, row, 1, 1)
+        row += 1
+
         self.attach(stack, 0, row, 1, 1)
+
+    def _on_volume_changed(self, scale: Gtk.Scale) -> None:
+        """Handle volume slider change."""
+
+        if self._initializing:
+            return
+        value = scale.get_value()
+        self._presenter.set_sound_volume(value)
+        self._has_unsaved_changes = True
+
+    def _on_multipage_enable_toggled(
+        self,
+        switch: Gtk.Switch,
+        setter: preferences_grid_base.Callable[[bool], preferences_grid_base.Any]
+    ) -> None:
+        """Handle enable switch toggle - also controls volume slider sensitivity."""
+
+        super()._on_multipage_enable_toggled(switch, setter)
+        if self._volume_listbox is not None:
+            self._volume_listbox.set_sensitive(switch.get_active())
+
+    def _on_multipage_category_activated(
+        self,
+        listbox: Gtk.ListBox,
+        row: Gtk.ListBoxRow
+    ) -> None:
+        """Handle category activation - also hide volume slider."""
+
+        super()._on_multipage_category_activated(listbox, row)
+        if self._volume_listbox is not None:
+            self._volume_listbox.hide()
+
+    def multipage_show_categories(self) -> None:
+        """Switch back to categories view - also show volume slider."""
+
+        super().multipage_show_categories()
+        if self._volume_listbox is not None:
+            self._volume_listbox.show()
 
     def on_becoming_visible(self) -> None:
         """Reset to the categories view when this grid becomes visible."""
@@ -151,7 +195,11 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Fetch fresh values and update UI."""
 
-        self._general_grid.reload()
+        enabled = self._presenter.get_sound_is_enabled()
+        if self._volume_listbox is not None:
+            self._volume_listbox.set_sensitive(enabled)
+        if self._volume_scale is not None:
+            self._volume_scale.set_value(self._presenter.get_sound_volume())
         self._progress_bars_grid.reload()
 
     def save_settings(self) -> dict:
@@ -159,7 +207,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         result: dict[str, Any] = {}
         result["enableSound"] = self._presenter.get_sound_is_enabled()
-        result.update(self._general_grid.save_settings())
+        result["soundVolume"] = self._presenter.get_sound_volume()
         result.update(self._progress_bars_grid.save_settings())
         return result
 
@@ -167,18 +215,15 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Update widgets from staged values."""
 
         self._initializing = True
-        self._general_grid.refresh()
+        if self._volume_scale is not None:
+            self._volume_scale.set_value(self._presenter.get_sound_volume())
         self._progress_bars_grid.refresh()
         self._initializing = False
 
     def has_changes(self) -> bool:
         """Return True if any child grid has unsaved changes."""
 
-        return (
-            self._general_grid.has_changes()
-            or self._progress_bars_grid.has_changes()
-            or self._has_unsaved_changes
-        )
+        return self._progress_bars_grid.has_changes() or self._has_unsaved_changes
 
 
 class SoundPresenter:

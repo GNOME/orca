@@ -60,6 +60,7 @@ class TestLearnModePresenter:
             "orca.speech_generator",
             "orca.generator",
             "orca.ax_hypertext",
+            "orca.command_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 

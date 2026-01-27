@@ -236,6 +236,12 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 prefs_key="nativeNavTriggersFocusMode"
             ),
             preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.AUTO_STICKY_FOCUS_MODE,
+                getter=presenter.get_auto_sticky_focus_mode_for_web_apps,
+                setter=presenter.set_auto_sticky_focus_mode_for_web_apps,
+                prefs_key="autoStickyFocusModeForWebApps"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_SPEAK_RESULTS,
                 getter=presenter.get_speak_find_results,
                 setter=presenter.set_speak_find_results,
@@ -274,7 +280,9 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 member_of=guilabels.PAGE_LOAD
             ),
         ]
-        info = f"{guilabels.NATIVE_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
+        info = (f"{guilabels.NATIVE_NAVIGATION_INFO}\n\n"
+                f"{guilabels.AUTOMATIC_FOCUS_MODE_INFO}\n\n"
+                f"{guilabels.AUTO_STICKY_FOCUS_MODE_INFO}")
         super().__init__(guilabels.NATIVE_NAVIGATION, controls, info_message=info)
 
 
@@ -867,9 +875,10 @@ class DocumentPresenter:
             self.suspend_navigators(script, False, reason)
             return True
 
-        # Only do app-type detection if user hasn't explicitly toggled mode.
-        # This allows the user to escape auto-enabled sticky focus mode.
-        if not self._get_state_for_app(script.app).user_has_toggled:
+        # Only do app-type detection if setting is enabled and user hasn't explicitly
+        # toggled mode. This allows the user to escape auto-enabled sticky focus mode.
+        if self.get_auto_sticky_focus_mode_for_web_apps() \
+           and not self._get_state_for_app(script.app).user_has_toggled:
             if self._is_likely_electron_app(script.app):
                 msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -952,6 +961,24 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting native nav triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.nativeNavTriggersFocusMode = value
+        return True
+
+    @dbus_service.getter
+    def get_auto_sticky_focus_mode_for_web_apps(self) -> bool:
+        """Returns whether to auto-detect web apps and enable sticky focus mode."""
+
+        return settings.autoStickyFocusModeForWebApps
+
+    @dbus_service.setter
+    def set_auto_sticky_focus_mode_for_web_apps(self, value: bool) -> bool:
+        """Sets whether to auto-detect web apps and enable sticky focus mode."""
+
+        if self.get_auto_sticky_focus_mode_for_web_apps() == value:
+            return True
+
+        msg = f"DOCUMENT PRESENTER: Setting auto sticky focus mode for web apps to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.autoStickyFocusModeForWebApps = value
         return True
 
     @dbus_service.getter

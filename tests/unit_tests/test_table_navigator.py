@@ -144,12 +144,13 @@ class TestTableNavigator:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
-        # Set up settings mock for structural_navigator
+        # Set up settings mock for structural_navigator and table_navigator
         settings_mock = essential_modules["orca.settings"]
         settings_mock.structuralNavigationEnabled = True
         settings_mock.structNavTriggersFocusMode = True
         settings_mock.wrappedStructuralNavigation = True
         settings_mock.largeObjectTextLength = 75
+        settings_mock.tableNavigationEnabled = True
 
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.debug"].print_message = test_context.Mock()
@@ -187,7 +188,7 @@ class TestTableNavigator:
         assert navigator._previous_reported_row is None
         assert navigator._previous_reported_col is None
         assert navigator._last_input_event is None
-        assert navigator._enabled is True
+        assert navigator.get_is_enabled() is True
         assert navigator._suspended is False
         # D-Bus registration and commands are registered during setup()
         navigator.set_up_commands()
@@ -212,10 +213,10 @@ class TestTableNavigator:
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        assert navigator.is_enabled() is True
+        assert navigator.get_is_enabled() is True
 
     def test_is_enabled_after_disable(self, test_context: OrcaTestContext) -> None:
-        """Test TableNavigator.is_enabled returns False when disabled."""
+        """Test TableNavigator.get_is_enabled returns False when disabled."""
 
         essential_modules = self._setup_dependencies(test_context)
         mock_controller = test_context.Mock()
@@ -228,9 +229,10 @@ class TestTableNavigator:
         )
         from orca.table_navigator import TableNavigator
 
+        # Override the default True set in _setup_dependencies
+        essential_modules["orca.settings"].tableNavigationEnabled = False
         navigator = TableNavigator()
-        navigator._enabled = False
-        assert navigator.is_enabled() is False
+        assert navigator.get_is_enabled() is False
 
     def test_last_input_event_was_navigation_command_none(
         self, test_context: OrcaTestContext
@@ -312,6 +314,11 @@ class TestTableNavigator:
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
 
+        essential_modules["orca.settings"].tableNavigationEnabled = initial_enabled
+
+        guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.KB_GROUP_TABLE_NAVIGATION = "Table navigation"
+
         navigator = TableNavigator()
         navigator._enabled = initial_enabled
         mock_script = test_context.Mock()
@@ -319,7 +326,7 @@ class TestTableNavigator:
         mock_event = test_context.Mock()
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=True)
         assert result is True
-        assert navigator._enabled is expected_enabled
+        assert navigator.is_enabled() is expected_enabled
         assert navigator._last_input_event is None
         expected_message = getattr(essential_modules["orca.messages"], expected_message_attr)
         mock_script.present_message.assert_called_once_with(expected_message)
@@ -341,19 +348,24 @@ class TestTableNavigator:
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
 
+        essential_modules["orca.settings"].tableNavigationEnabled = False
+
+        guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.KB_GROUP_TABLE_NAVIGATION = "Table navigation"
+
         navigator = TableNavigator()
-        navigator._enabled = False
+        navigator._enabled = False  # Start disabled so toggle enables it
         mock_script = test_context.Mock()
         mock_script.present_message = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=False)
         assert result is True
-        assert navigator._enabled is True
+        assert navigator.is_enabled() is True
         mock_script.present_message.assert_not_called()
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     @pytest.mark.parametrize(
-        "initial_suspended,new_suspended,should_refresh",
+        "initial_suspended,new_suspended,should_update_commands",
         [
             (False, True, True),
             (True, False, True),
@@ -366,7 +378,7 @@ class TestTableNavigator:
         test_context: OrcaTestContext,
         initial_suspended: bool,
         new_suspended: bool,
-        should_refresh: bool,
+        should_update_commands: bool,
     ) -> None:
         """Test TableNavigator.suspend_commands handles state changes appropriately."""
 
@@ -389,7 +401,7 @@ class TestTableNavigator:
         reason = "test reason" if new_suspended else ""
         navigator.suspend_commands(mock_script, new_suspended, reason)
         assert navigator._suspended is new_suspended
-        if should_refresh:
+        if should_update_commands:
             mock_cmd_mgr.set_group_suspended.assert_called_once()
         else:
             mock_cmd_mgr.set_group_suspended.assert_not_called()

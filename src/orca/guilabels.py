@@ -151,6 +151,20 @@ NATIVE_NAVIGATION_INFO = _(
 # automatically gaining focus when the page loads.
 AUTO_FOCUS_MODE_NATIVE_NAV = _("Automatic focus mode during native navigation")
 
+# Translators: This setting controls whether Orca automatically enables sticky
+# focus mode for web applications (such as Facebook Messenger) and Electron apps
+# (such as Visual Studio Code). When enabled, Orca will detect these applications
+# and use focus mode by default. Please translate this string using language
+# consistent with `MODE_FOCUS_IS_STICKY = _("Focus mode is sticky.")` in
+# messages.py.
+AUTO_STICKY_FOCUS_MODE = _("Automatic sticky focus mode for web applications")
+
+# Translators: This explains what the "Automatic sticky focus mode for web
+# applications" setting does.
+AUTO_STICKY_FOCUS_MODE_INFO = _(
+    "Automatic sticky focus mode causes Orca to detect web applications and "
+    "Electron apps and stay in focus mode until toggled off by command.")
+
 # Translators: A single braille cell on a refreshable braille display consists
 # of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 # this option, Dot 7 will be used to 'underline' text of interest, e.g. when

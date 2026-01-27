@@ -375,11 +375,12 @@ class TestStructuralNavigator:
     ) -> None:
         """Test StructuralNavigator.suspend_commands various scenarios."""
 
-        essential_modules = (
-            self._setup_dependencies(test_context)
-            if expects_debug
-            else self._setup_dependencies(test_context)
-        )
+        essential_modules = self._setup_dependencies(test_context)
+
+        # Mock command_manager
+        mock_cmd_mgr = test_context.Mock()
+        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
+
         mock_script = test_context.Mock()
         from orca.structural_navigator import get_navigator
 
