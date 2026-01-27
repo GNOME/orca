@@ -45,8 +45,7 @@ from .speech_generator import SpeechGenerator
 if TYPE_CHECKING:
     import gi
     gi.require_version("Atspi", "2.0")
-    gi.require_version("Gtk", "3.0")
-    from gi.repository import Atspi, Gtk
+    from gi.repository import Atspi
 
 class Script(gtk.Script):
     """Custom script for pidgin."""
@@ -63,16 +62,6 @@ class Script(gtk.Script):
         """Returns the utilities for this script."""
 
         return Utilities(self)
-
-    def get_app_preferences_gui(self) -> Gtk.Grid:
-        """Return a GtkGrid containing the application unique configuration items."""
-
-        return chat_presenter.get_presenter().get_app_preferences_gui(self.app)
-
-    def get_preferences_from_gui(self) -> dict[str, bool | int]:
-        """Returns a dictionary with the app-specific preferences."""
-
-        return chat_presenter.get_presenter().get_preferences_from_gui()
 
     def on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""

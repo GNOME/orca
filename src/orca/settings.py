@@ -247,6 +247,3 @@ spellcheckPresentContext: bool = True
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 ignoreStatusBarProgressBars: bool = True
-
-# TODO - JD: This is here until the UI conversion is done.
-progressBarUpdateInterval: int = 10

@@ -107,10 +107,8 @@ lib_sources = [
   'object_navigator.py',
   'object_properties.py',
   'orca.py',
-  'orca_gtkbuilder.py',
   'orca_gui_navlist.py',
   'orca_gui_prefs.py',
-  'orca_gui_profile.py',
   'orca_modifier_manager.py',
   'phonnames.py',
   'preferences_grid_base.py',
@@ -144,15 +142,6 @@ lib_sources = [
   'where_am_i_presenter.py',
 ]
 
-ui_sources = [
-  'orca-setup.ui',
-]
-
 python3.install_sources(
   [ lib_sources, orca_i18n_py, orca_platform_py ],
   subdir: meson.project_name())
-
-install_data(
-  ui_sources,
-  install_dir: get_option('datadir') / meson.project_name() / 'ui'
-)

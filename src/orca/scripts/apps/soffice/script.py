@@ -36,16 +36,11 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
 from orca import braille
 from orca import debug
 from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
-from orca import guilabels
 from orca import input_event
 from orca import messages
 from orca import speech_and_verbosity_manager
@@ -72,16 +67,6 @@ class Script(default.Script):
     # Override the base class type annotations
     utilities: Utilities
 
-    def __init__(self, app: Atspi.Accessible) -> None:
-        super().__init__(app)
-
-        self.speak_spreadsheet_coordinates_check_button: Gtk.CheckButton | None = None
-        self.always_speak_selected_spreadsheet_range_check_button: Gtk.CheckButton | None = None
-        self.skip_blank_cells_check_button: Gtk.CheckButton | None = None
-        self.speak_cell_coordinates_check_button: Gtk.CheckButton | None = None
-        self.speak_cell_headers_check_button: Gtk.CheckButton | None = None
-        self.speak_cell_span_check_button: Gtk.CheckButton | None = None
-
     def get_braille_generator(self) -> BrailleGenerator:
         """Returns the braille generator for this script."""
 
@@ -96,100 +81,6 @@ class Script(default.Script):
         """Returns the utilities for this script."""
 
         return Utilities(self)
-
-    def get_app_preferences_gui(self) -> Gtk.Grid:
-        """Return a GtkGrid containing the application unique configuration
-        GUI items for the current application."""
-
-        # TODO - JD: All table settings belong in a non-app dialog page.
-
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        grid = Gtk.Grid()
-        grid.set_border_width(12)
-
-        label = guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES
-        value = speech_manager.get_announce_spreadsheet_cell_coordinates()
-        self.speak_spreadsheet_coordinates_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.speak_spreadsheet_coordinates_check_button.set_active(value)
-        grid.attach(self.speak_spreadsheet_coordinates_check_button, 0, 0, 1, 1)
-
-        label = guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE
-        value = speech_manager.get_always_announce_selected_range_in_spreadsheet()
-        self.always_speak_selected_spreadsheet_range_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.always_speak_selected_spreadsheet_range_check_button.set_active(value)
-        grid.attach(self.always_speak_selected_spreadsheet_range_check_button, 0, 1, 1, 1)
-
-        table_frame = Gtk.Frame()
-        grid.attach(table_frame, 0, 2, 1, 1)
-
-        label = Gtk.Label(label=f"<b>{guilabels.TABLE_NAVIGATION}</b>")
-        label.set_use_markup(True)
-        table_frame.set_label_widget(label)
-
-        table_alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
-        table_alignment.set_padding(0, 0, 12, 0)
-        table_frame.add(table_alignment)
-        table_grid = Gtk.Grid()
-        table_alignment.add(table_grid)
-
-        label = guilabels.TABLE_SPEAK_CELL_COORDINATES
-        value = speech_manager.get_announce_cell_coordinates()
-        self.speak_cell_coordinates_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.speak_cell_coordinates_check_button.set_active(value)
-        table_grid.attach(self.speak_cell_coordinates_check_button, 0, 0, 1, 1)
-
-        label = guilabels.TABLE_SPEAK_CELL_SPANS
-        value = speech_manager.get_announce_cell_span()
-        self.speak_cell_span_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.speak_cell_span_check_button.set_active(value)
-        table_grid.attach(self.speak_cell_span_check_button, 0, 1, 1, 1)
-
-        label = guilabels.TABLE_SPEAK_CELL_HEADER
-        value = speech_manager.get_announce_cell_headers()
-        self.speak_cell_headers_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.speak_cell_headers_check_button.set_active(value)
-        table_grid.attach(self.speak_cell_headers_check_button, 0, 2, 1, 1)
-
-        label = guilabels.TABLE_SKIP_BLANK_CELLS
-        value = table_navigator.get_navigator().get_skip_blank_cells()
-        self.skip_blank_cells_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self.skip_blank_cells_check_button.set_active(value)
-        table_grid.attach(self.skip_blank_cells_check_button, 0, 3, 1, 1)
-
-        grid.show_all()
-
-        return grid
-
-    def get_preferences_from_gui(self) -> dict[str, bool]:
-        """Returns a dictionary with the app-specific preferences."""
-
-        assert self.speak_cell_span_check_button
-        assert self.speak_cell_headers_check_button
-        assert self.skip_blank_cells_check_button
-        assert self.speak_cell_coordinates_check_button
-        assert self.speak_spreadsheet_coordinates_check_button
-        assert self.always_speak_selected_spreadsheet_range_check_button
-
-        return {
-            "speakCellSpan":
-                self.speak_cell_span_check_button.get_active(),
-            "speakCellHeaders":
-                self.speak_cell_headers_check_button.get_active(),
-            "skipBlankCells":
-                self.skip_blank_cells_check_button.get_active(),
-            "speakCellCoordinates":
-                self.speak_cell_coordinates_check_button.get_active(),
-            "speakSpreadsheetCoordinates":
-                self.speak_spreadsheet_coordinates_check_button.get_active(),
-            "alwaysSpeakSelectedSpreadsheetRange":
-                self.always_speak_selected_spreadsheet_range_check_button.get_active(),
-        }
 
     def _pan_braille_left(
         self,

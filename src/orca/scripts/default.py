@@ -505,7 +505,7 @@ class Script(script.Script):
         settings_manager.get_manager().load_app_settings(script)
         prefs = settings_manager.get_manager().get_settings()
         ui = orca_gui_prefs.OrcaSetupGUI(script, prefs)
-        ui.showGUI()
+        ui.show_gui()
         return True
 
     def show_preferences_gui(
@@ -518,7 +518,7 @@ class Script(script.Script):
         manager = settings_manager.get_manager()
         prefs = manager.get_general_settings(manager.get_profile())
         ui = orca_gui_prefs.OrcaSetupGUI(script_manager.get_manager().get_default_script(), prefs)
-        ui.showGUI()
+        ui.show_gui()
         return True
 
     def quit_orca(

@@ -32,11 +32,7 @@ __license__   = "LGPL"
 
 from collections import deque
 from dataclasses import dataclass
-from typing import Any, Iterator, TYPE_CHECKING
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from typing import Iterator, TYPE_CHECKING
 
 from . import cmdnames
 from . import command_manager
@@ -56,7 +52,6 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
-    gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from .scripts import default
@@ -383,14 +378,7 @@ class ChatPresenter:
     """Presenter for chat preferences and commands."""
 
     def __init__(self) -> None:
-        self._focused_channel_radio_button: Gtk.RadioButton | None = None
-        self._all_channels_radio_button: Gtk.RadioButton | None = None
-        self._all_messages_radio_button: Gtk.RadioButton | None = None
-        self._buddy_typing_check_button: Gtk.CheckButton | None = None
-        self._chat_room_histories_check_button: Gtk.CheckButton | None = None
-        self._speak_name_check_button: Gtk.CheckButton | None = None
         self._initialized: bool = False
-
         msg = "CHAT PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
@@ -433,87 +421,6 @@ class ChatPresenter:
 
         msg = "CHAT PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_app_preferences_gui(self, app: Atspi.Accessible) -> Gtk.Grid:
-        """Return a GtkGrid containing app-specific chat preferences."""
-
-        grid = Gtk.Grid()
-        grid.set_border_width(12)
-
-        label = guilabels.CHAT_SPEAK_ROOM_NAME
-        self._speak_name_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._speak_name_check_button.set_active(settings.chatSpeakRoomName)
-        grid.attach(self._speak_name_check_button, 0, 0, 1, 1)
-
-        label = guilabels.CHAT_ANNOUNCE_BUDDY_TYPING
-        self._buddy_typing_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._buddy_typing_check_button.set_active(settings.chatAnnounceBuddyTyping)
-        grid.attach(self._buddy_typing_check_button, 0, 1, 1, 1)
-
-        label = guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES
-        self._chat_room_histories_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._chat_room_histories_check_button.set_active(settings.chatRoomHistories)
-        grid.attach(self._chat_room_histories_check_button, 0, 2, 1, 1)
-
-        messages_frame = Gtk.Frame()
-        grid.attach(messages_frame, 0, 3, 1, 1)
-        label = Gtk.Label(f"<b>{guilabels.CHAT_SPEAK_MESSAGES_FROM}</b>")
-        label.set_use_markup(True)
-        messages_frame.set_label_widget(label)
-
-        messages_alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
-        messages_alignment.set_padding(0, 0, 12, 0)
-        messages_frame.add(messages_alignment)
-        messages_grid = Gtk.Grid()
-        messages_alignment.add(messages_grid)
-
-        label = guilabels.CHAT_SPEAK_MESSAGES_ALL
-        rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
-        rb1.set_active(settings.chatMessageVerbosity == settings.CHAT_SPEAK_ALL)
-        self._all_messages_radio_button = rb1
-        messages_grid.attach(self._all_messages_radio_button, 0, 0, 1, 1)
-
-        label = guilabels.CHAT_SPEAK_MESSAGES_ACTIVE
-        rb2 = Gtk.RadioButton.new_with_mnemonic(None, label)
-        rb2.join_group(rb1)
-        rb2.set_active(settings.chatMessageVerbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
-        self._focused_channel_radio_button = rb2
-        messages_grid.attach(self._focused_channel_radio_button, 0, 1, 1, 1)
-
-        label = guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED % AXObject.get_name(app)
-        rb3 = Gtk.RadioButton.new_with_mnemonic(None, label)
-        rb3.join_group(rb1)
-        rb3.set_active(settings.chatMessageVerbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
-        self._all_channels_radio_button = rb3
-        messages_grid.attach(self._all_channels_radio_button, 0, 2, 1, 1)
-
-        grid.show_all()
-
-        return grid
-
-    def get_preferences_from_gui(self) -> dict[str, Any]:
-        """Returns a dictionary with the app-specific preferences."""
-
-        assert self._all_channels_radio_button
-        assert self._focused_channel_radio_button
-        assert self._speak_name_check_button
-        assert self._buddy_typing_check_button
-        assert self._chat_room_histories_check_button
-
-        if self._all_channels_radio_button.get_active():
-            verbosity = settings.CHAT_SPEAK_ALL_IF_FOCUSED
-        elif self._focused_channel_radio_button.get_active():
-            verbosity = settings.CHAT_SPEAK_FOCUSED_CHANNEL
-        else:
-            verbosity = settings.CHAT_SPEAK_ALL
-
-        return {
-            "chatMessageVerbosity": verbosity,
-            "chatSpeakRoomName": self._speak_name_check_button.get_active(),
-            "chatAnnounceBuddyTyping": self._buddy_typing_check_button.get_active(),
-            "chatRoomHistories": self._chat_room_histories_check_button.get_active(),
-        }
 
     def create_preferences_grid(self) -> ChatPreferencesGrid:
         """Create and return the chat preferences grid."""

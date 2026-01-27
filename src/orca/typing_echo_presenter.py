@@ -38,11 +38,7 @@ __license__   = "LGPL"
 import string
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Callable, Iterable
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from typing import Callable, Iterable, TYPE_CHECKING
 
 from . import braille
 from . import cmdnames
@@ -52,6 +48,7 @@ from . import debug
 from . import guilabels
 from . import input_event
 from . import messages
+from . import preferences_grid_base
 from . import settings
 from . import sleep_mode_manager
 from . import speech
@@ -60,6 +57,7 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    import gi
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -84,159 +82,117 @@ class TypingEchoPreference:
     getter: Callable[[], bool]
     setter: Callable[[bool], bool]
 
-# pylint: disable-next=too-many-instance-attributes
-class TypingEchoPreferencesGrid(Gtk.Grid):
+
+class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Typing Echo preferences page."""
 
-    @dataclass
-    class _PreferenceState:
-        descriptor: TypingEchoPreference
-        value: bool
-
-    def __init__(self, presenter: TypingEchoPresenter) -> None:
-        super().__init__()
-        self._presenter = presenter
-        self._initializing = False
-        self._key_buttons: list[
-            tuple[TypingEchoPreferencesGrid._PreferenceState, Gtk.CheckButton]
-        ] = []
-        self._text_buttons: list[
-            tuple[TypingEchoPreferencesGrid._PreferenceState, Gtk.CheckButton]
-        ] = []
-        self._key_echo_button: Gtk.CheckButton | None = None
-
-        descriptors = presenter.get_typing_echo_preferences()
-        states: list[TypingEchoPreferencesGrid._PreferenceState] = []
-        key_states: list[TypingEchoPreferencesGrid._PreferenceState] = []
-        text_states: list[TypingEchoPreferencesGrid._PreferenceState] = []
-        primary_state: TypingEchoPreferencesGrid._PreferenceState | None = None
-        for descriptor in descriptors:
-            state = self._PreferenceState(descriptor, descriptor.getter())
-            states.append(state)
-            if descriptor.category is PreferenceCategory.PRIMARY:
-                primary_state = state
-            elif descriptor.category is PreferenceCategory.KEY:
-                key_states.append(state)
-            else:
-                text_states.append(state)
-
-        if primary_state is None:
-            raise RuntimeError("Typing echo grid requires a primary toggle preference")
-        self._primary_state = primary_state
-        self._states = states
-        self._key_states = key_states
-        self._text_states = text_states
-
-        self.set_border_width(12)  # pylint: disable=no-member
-        self._build()
-        self.refresh()
-        self.show_all()  # pylint: disable=no-member
-
-    def _build(self) -> None:
-        """Create the Gtk widgets composing the grid."""
-
-        self._key_echo_button = self._create_check_button(
-            "keyEchoCheckButton",
-            self._primary_state.descriptor.label,
-            self._on_key_echo_toggled,
-            self._primary_state,
+    def __init__(self, presenter: "TypingEchoPresenter") -> None:
+        self._enable_key_echo_control = preferences_grid_base.BooleanPreferenceControl(
+            label=guilabels.ECHO_ENABLE_KEY_ECHO,
+            getter=presenter.get_key_echo_enabled,
+            setter=presenter.set_key_echo_enabled,
+            prefs_key="enableKeyEcho"
         )
-        self.attach(self._key_echo_button, 0, 0, 1, 1)
 
-        key_options_grid = Gtk.Grid()
-        key_options_grid.set_margin_start(25)
-        self.attach(key_options_grid, 0, 1, 1, 1)
+        controls = [
+            self._enable_key_echo_control,
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_ALPHABETIC_KEYS,
+                getter=presenter.get_alphabetic_keys_enabled,
+                setter=presenter.set_alphabetic_keys_enabled,
+                prefs_key="enableAlphabeticKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_NUMERIC_KEYS,
+                getter=presenter.get_numeric_keys_enabled,
+                setter=presenter.set_numeric_keys_enabled,
+                prefs_key="enableNumericKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_PUNCTUATION_KEYS,
+                getter=presenter.get_punctuation_keys_enabled,
+                setter=presenter.set_punctuation_keys_enabled,
+                prefs_key="enablePunctuationKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_SPACE,
+                getter=presenter.get_space_enabled,
+                setter=presenter.set_space_enabled,
+                prefs_key="enableSpace",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_MODIFIER_KEYS,
+                getter=presenter.get_modifier_keys_enabled,
+                setter=presenter.set_modifier_keys_enabled,
+                prefs_key="enableModifierKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_FUNCTION_KEYS,
+                getter=presenter.get_function_keys_enabled,
+                setter=presenter.set_function_keys_enabled,
+                prefs_key="enableFunctionKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_ACTION_KEYS,
+                getter=presenter.get_action_keys_enabled,
+                setter=presenter.set_action_keys_enabled,
+                prefs_key="enableActionKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_NAVIGATION_KEYS,
+                getter=presenter.get_navigation_keys_enabled,
+                setter=presenter.set_navigation_keys_enabled,
+                prefs_key="enableNavigationKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_DIACRITICAL_KEYS,
+                getter=presenter.get_diacritical_keys_enabled,
+                setter=presenter.set_diacritical_keys_enabled,
+                prefs_key="enableDiacriticalKeys",
+                member_of=guilabels.ECHO_KEYS_TO_ECHO,
+                determine_sensitivity=presenter.get_key_echo_enabled
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_CHARACTER,
+                getter=presenter.get_character_echo_enabled,
+                setter=presenter.set_character_echo_enabled,
+                prefs_key="enableEchoByCharacter",
+                member_of=guilabels.ECHO_TYPING_ECHO
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_WORD,
+                getter=presenter.get_word_echo_enabled,
+                setter=presenter.set_word_echo_enabled,
+                prefs_key="enableEchoByWord",
+                member_of=guilabels.ECHO_TYPING_ECHO
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ECHO_SENTENCE,
+                getter=presenter.get_sentence_echo_enabled,
+                setter=presenter.set_sentence_echo_enabled,
+                prefs_key="enableEchoBySentence",
+                member_of=guilabels.ECHO_TYPING_ECHO
+            ),
+        ]
 
-        for row, state in enumerate(self._key_states):
-            button = self._create_check_button(
-                f"{state.descriptor.prefs_key}CheckButton",
-                state.descriptor.label,
-                self._on_key_option_toggled,
-                state,
-            )
-            key_options_grid.attach(button, 0, row, 1, 1)
-            self._key_buttons.append((state, button))
+        super().__init__(guilabels.ECHO, controls, info_message=guilabels.ECHO_INFO)
 
-        for row, state in enumerate(self._text_states, start=2):
-            button = self._create_check_button(
-                f"{state.descriptor.prefs_key}CheckButton",
-                state.descriptor.label,
-                self._on_text_option_toggled,
-                state,
-            )
-            self.attach(button, 0, row, 1, 1)
-            self._text_buttons.append((state, button))
-
-    def _create_check_button(
-        self,
-        widget_name: str,
-        label: str,
-        handler: Callable[[Gtk.CheckButton, TypingEchoPreferencesGrid._PreferenceState], None],
-        state: TypingEchoPreferencesGrid._PreferenceState,
-    ) -> Gtk.CheckButton:
-        button = Gtk.CheckButton.new_with_mnemonic(label)
-        button.set_name(widget_name)
-        button.set_use_underline(True)
-        button.set_receives_default(False)
-        button.connect("toggled", handler, state)
-        return button
-
-    def reload(self) -> None:
-        """Reload settings from the presenter and refresh the UI."""
-
-        for state in self._states:
-            state.value = state.descriptor.getter()
-        self.refresh()
-
-    def save_settings(self) -> dict[str, bool]:
-        """Persist staged settings via the presenter and return current values."""
-
-        updates = [(state.descriptor, state.value) for state in self._states]
-        return self._presenter.apply_typing_echo_preferences(updates)
-
-    def refresh(self) -> None:
-        """Update toggle states to reflect the staged settings."""
-
-        self._initializing = True
-        key_echo_enabled = self._primary_state.value
-        if self._key_echo_button is not None:
-            self._key_echo_button.set_active(key_echo_enabled)
-
-        for state, button in self._key_buttons:
-            button.set_active(state.value)
-
-        for state, button in self._text_buttons:
-            button.set_active(state.value)
-
-        self._initializing = False
-        self._set_key_option_sensitivity(key_echo_enabled)
-
-    def _on_key_echo_toggled(self, button: Gtk.CheckButton, _data: Any) -> None:
-        """Handle toggles of the main key echo checkbox."""
-
-        self._primary_state.value = button.get_active()
-        if not self._initializing:
-            self._set_key_option_sensitivity(button.get_active())
-
-    def _on_key_option_toggled(
-        self, button: Gtk.CheckButton, state: TypingEchoPreferencesGrid._PreferenceState
-    ) -> None:
-        """Store the new value for a key echo option toggle."""
-
-        state.value = button.get_active()
-
-    def _on_text_option_toggled(
-        self, button: Gtk.CheckButton, state: TypingEchoPreferencesGrid._PreferenceState
-    ) -> None:
-        """Store the new value for a text echo option toggle."""
-
-        state.value = button.get_active()
-
-    def _set_key_option_sensitivity(self, enable: bool) -> None:
-        """Enable or disable key option toggles as needed."""
-
-        for _state, button in self._key_buttons:
-            button.set_sensitive(enable)
 
 class TypingEchoPresenter:
     """Provides typing echo support."""
@@ -445,7 +401,7 @@ class TypingEchoPresenter:
 
     @dbus_service.setter
     def set_key_echo_enabled(self, value: bool) -> bool:
-        """Sets whether echo of key pressses is enabled. See also set_character_echo_enabled."""
+        """Sets whether echo of key presses is enabled. See also set_character_echo_enabled."""
 
         msg = f"TYPING ECHO PRESENTER: Setting enable key echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)

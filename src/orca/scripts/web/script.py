@@ -44,10 +44,6 @@ __license__   = "LGPL"
 
 from typing import TYPE_CHECKING
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
 from orca import braille
 from orca import braille_presenter
 from orca import caret_navigator
@@ -55,14 +51,12 @@ from orca import debug
 from orca import document_presenter
 from orca import flat_review_presenter
 from orca import focus_manager
-from orca import guilabels
 from orca import input_event
 from orca import input_event_manager
 from orca import label_inference
 from orca import live_region_presenter
 from orca import messages
 from orca import say_all_presenter
-from orca import settings
 from orca import speech
 from orca import speech_and_verbosity_manager
 from orca import structural_navigator
@@ -83,7 +77,6 @@ from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
 if TYPE_CHECKING:
-    gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
 class Script(default.Script):
@@ -101,24 +94,6 @@ class Script(default.Script):
 
         self._loading_content = False
         self._last_mouse_button_context = None, -1
-
-        self._changed_lines_only_check_button: Gtk.CheckButton | None = None
-        self._control_caret_navigation_check_button: Gtk.CheckButton | None = None
-        self._minimum_find_length_adjustment: Gtk.Adjustment | None = None
-        self._minimum_find_length_label: Gtk.Label | None = None
-        self._minimum_find_length_spin_button: Gtk.SpinButton | None = None
-        self._page_summary_on_load_check_button: Gtk.CheckButton | None = None
-        self._say_all_on_load_check_button: Gtk.CheckButton | None = None
-        self._skip_blank_cells_check_button: Gtk.CheckButton | None = None
-        self._speak_cell_coordinates_check_button: Gtk.CheckButton | None = None
-        self._speak_cell_headers_check_button: Gtk.CheckButton | None = None
-        self._speak_cell_span_check_button: Gtk.CheckButton | None = None
-        self._speak_results_during_find_check_button: Gtk.CheckButton | None = None
-        self._structural_navigation_check_button: Gtk.CheckButton | None = None
-        self._auto_focus_mode_struct_nav_check_button: Gtk.CheckButton | None = None
-        self._auto_focus_mode_caret_nav_check_button: Gtk.CheckButton | None = None
-        self._auto_focus_mode_native_nav_check_button: Gtk.CheckButton | None = None
-        self._layout_mode_check_button: Gtk.CheckButton | None = None
 
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
@@ -149,223 +124,10 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def get_app_preferences_gui(self) -> Gtk.Grid:
-        """Return a GtkGrid containing app-unique configuration items."""
+    def _present_find_results(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Updates the context and presents the find results if appropriate."""
 
-        grid = Gtk.Grid()
-        grid.set_border_width(12)
-
-        general_frame = Gtk.Frame()
-        grid.attach(general_frame, 0, 0, 1, 1)
-
-        label = Gtk.Label(label=f"<b>{guilabels.PAGE_NAVIGATION}</b>")
-        label.set_use_markup(True)
-        general_frame.set_label_widget(label)
-
-        general_alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
-        general_alignment.set_padding(0, 0, 12, 0)
-        general_frame.add(general_alignment)
-        general_grid = Gtk.Grid()
-        general_alignment.add(general_grid)
-
-        label = guilabels.USE_CARET_NAVIGATION
-        value = caret_navigator.get_navigator().get_is_enabled()
-        self._control_caret_navigation_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._control_caret_navigation_check_button.set_active(value)
-        general_grid.attach(self._control_caret_navigation_check_button, 0, 0, 1, 1)
-
-        label = guilabels.AUTO_FOCUS_MODE_CARET_NAV
-        value = caret_navigator.get_navigator().get_triggers_focus_mode()
-        self._auto_focus_mode_caret_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._auto_focus_mode_caret_nav_check_button.set_active(value)
-        general_grid.attach(self._auto_focus_mode_caret_nav_check_button, 0, 1, 1, 1)
-
-        label = guilabels.USE_STRUCTURAL_NAVIGATION
-        value = structural_navigator.get_navigator().get_is_enabled()
-        self._structural_navigation_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._structural_navigation_check_button.set_active(value)
-        general_grid.attach(self._structural_navigation_check_button, 0, 2, 1, 1)
-
-        label = guilabels.AUTO_FOCUS_MODE_STRUCT_NAV
-        value = structural_navigator.get_navigator().get_triggers_focus_mode()
-        self._auto_focus_mode_struct_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._auto_focus_mode_struct_nav_check_button.set_active(value)
-        general_grid.attach(self._auto_focus_mode_struct_nav_check_button, 0, 3, 1, 1)
-
-        doc_presenter = document_presenter.get_presenter()
-
-        label = guilabels.AUTO_FOCUS_MODE_NATIVE_NAV
-        value = doc_presenter.get_native_nav_triggers_focus_mode()
-        self._auto_focus_mode_native_nav_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._auto_focus_mode_native_nav_check_button.set_active(value)
-        general_grid.attach(self._auto_focus_mode_native_nav_check_button, 0, 4, 1, 1)
-
-        label = guilabels.READ_PAGE_UPON_LOAD
-        value = doc_presenter.get_say_all_on_load()
-        self._say_all_on_load_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._say_all_on_load_check_button.set_active(value)
-        general_grid.attach(self._say_all_on_load_check_button, 0, 5, 1, 1)
-
-        label = guilabels.PAGE_SUMMARY_UPON_LOAD
-        value = doc_presenter.get_page_summary_on_load()
-        self._page_summary_on_load_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._page_summary_on_load_check_button.set_active(value)
-        general_grid.attach(self._page_summary_on_load_check_button, 0, 6, 1, 1)
-
-        label = guilabels.CONTENT_LAYOUT_MODE
-        value = document_presenter.get_presenter().get_layout_mode()
-        self._layout_mode_check_button = Gtk.CheckButton.new_with_mnemonic(label)
-        self._layout_mode_check_button.set_active(value)
-        general_grid.attach(self._layout_mode_check_button, 0, 7, 1, 1)
-
-        table_frame = Gtk.Frame()
-        grid.attach(table_frame, 0, 1, 1, 1)
-
-        # TODO - JD: All table settings belong in a non-app dialog page.
-        speech_manager = speech_and_verbosity_manager.get_manager()
-
-        label = Gtk.Label(label=f"<b>{guilabels.TABLE_NAVIGATION}</b>")
-        label.set_use_markup(True)
-        table_frame.set_label_widget(label)
-
-        table_alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
-        table_alignment.set_padding(0, 0, 12, 0)
-        table_frame.add(table_alignment)
-        table_grid = Gtk.Grid()
-        table_alignment.add(table_grid)
-
-        label = guilabels.TABLE_SPEAK_CELL_COORDINATES
-        value = speech_manager.get_announce_cell_coordinates()
-        self._speak_cell_coordinates_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._speak_cell_coordinates_check_button.set_active(value)
-        table_grid.attach(self._speak_cell_coordinates_check_button, 0, 0, 1, 1)
-
-        label = guilabels.TABLE_SPEAK_CELL_SPANS
-        value = speech_manager.get_announce_cell_span()
-        self._speak_cell_span_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._speak_cell_span_check_button.set_active(value)
-        table_grid.attach(self._speak_cell_span_check_button, 0, 1, 1, 1)
-
-        label = guilabels.TABLE_SPEAK_CELL_HEADER
-        value = speech_manager.get_announce_cell_headers()
-        self._speak_cell_headers_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._speak_cell_headers_check_button.set_active(value)
-        table_grid.attach(self._speak_cell_headers_check_button, 0, 2, 1, 1)
-
-        label = guilabels.TABLE_SKIP_BLANK_CELLS
-        value = table_navigator.get_navigator().get_skip_blank_cells()
-        self._skip_blank_cells_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._skip_blank_cells_check_button.set_active(value)
-        table_grid.attach(self._skip_blank_cells_check_button, 0, 3, 1, 1)
-
-        find_frame = Gtk.Frame()
-        grid.attach(find_frame, 0, 2, 1, 1)
-
-        label = Gtk.Label(label=f"<b>{guilabels.FIND_OPTIONS}</b>")
-        label.set_use_markup(True)
-        find_frame.set_label_widget(label)
-
-        find_alignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
-        find_alignment.set_padding(0, 0, 12, 0)
-        find_frame.add(find_alignment)
-        find_grid = Gtk.Grid()
-        find_alignment.add(find_grid)
-
-        label = guilabels.FIND_SPEAK_RESULTS
-        value = doc_presenter.get_speak_find_results()
-        self._speak_results_during_find_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._speak_results_during_find_check_button.set_active(value)
-        find_grid.attach(self._speak_results_during_find_check_button, 0, 0, 1, 1)
-
-        label = guilabels.FIND_ONLY_SPEAK_CHANGED_LINES
-        value = doc_presenter.get_only_speak_changed_lines()
-        self._changed_lines_only_check_button = \
-            Gtk.CheckButton.new_with_mnemonic(label)
-        self._changed_lines_only_check_button.set_active(value)
-        find_grid.attach(self._changed_lines_only_check_button, 0, 1, 1, 1)
-
-        hgrid = Gtk.Grid()
-        find_grid.attach(hgrid, 0, 2, 1, 1)
-
-        self._minimum_find_length_label = \
-              Gtk.Label(label=guilabels.FIND_MINIMUM_MATCH_LENGTH)
-        self._minimum_find_length_label.set_alignment(0, 0.5)
-        hgrid.attach(self._minimum_find_length_label, 0, 0, 1, 1)
-
-        self._minimum_find_length_adjustment = \
-            Gtk.Adjustment(doc_presenter.get_find_results_minimum_length(), 0, 20, 1)
-        self._minimum_find_length_spin_button = Gtk.SpinButton()
-        self._minimum_find_length_spin_button.set_adjustment(
-            self._minimum_find_length_adjustment)
-        hgrid.attach(self._minimum_find_length_spin_button, 1, 0, 1, 1)
-        self._minimum_find_length_label.set_mnemonic_widget(
-            self._minimum_find_length_spin_button)
-
-        grid.show_all()
-        return grid
-
-    def get_preferences_from_gui(self) -> dict[str, bool | int]:
-        """Returns a dictionary with the app-specific preferences."""
-
-        assert self._speak_results_during_find_check_button is not None
-        assert self._changed_lines_only_check_button is not None
-        assert self._minimum_find_length_spin_button is not None
-        assert self._say_all_on_load_check_button is not None
-        assert self._page_summary_on_load_check_button is not None
-        assert self._structural_navigation_check_button is not None
-        assert self._auto_focus_mode_struct_nav_check_button is not None
-        assert self._control_caret_navigation_check_button is not None
-        assert self._auto_focus_mode_caret_nav_check_button is not None
-        assert self._auto_focus_mode_native_nav_check_button is not None
-        assert self._speak_cell_coordinates_check_button is not None
-        assert self._layout_mode_check_button is not None
-        assert self._speak_cell_span_check_button is not None
-        assert self._speak_cell_headers_check_button is not None
-        assert self._skip_blank_cells_check_button is not None
-
-        if not self._speak_results_during_find_check_button.get_active():
-            verbosity = settings.FIND_SPEAK_NONE
-        elif self._changed_lines_only_check_button.get_active():
-            verbosity = settings.FIND_SPEAK_IF_LINE_CHANGED
-        else:
-            verbosity = settings.FIND_SPEAK_ALL
-
-        return {
-            "findResultsVerbosity": verbosity,
-            "findResultsMinimumLength":
-                self._minimum_find_length_spin_button.get_value(),
-            "sayAllOnLoad":
-                self._say_all_on_load_check_button.get_active(),
-            "pageSummaryOnLoad":
-                self._page_summary_on_load_check_button.get_active(),
-            "structuralNavigationEnabled":
-                self._structural_navigation_check_button.get_active(),
-            "structNavTriggersFocusMode":
-                self._auto_focus_mode_struct_nav_check_button.get_active(),
-            "caretNavigationEnabled":
-                self._control_caret_navigation_check_button.get_active(),
-            "caretNavTriggersFocusMode":
-                self._auto_focus_mode_caret_nav_check_button.get_active(),
-            "nativeNavTriggersFocusMode":
-                self._auto_focus_mode_native_nav_check_button.get_active(),
-            "speakCellCoordinates":
-                self._speak_cell_coordinates_check_button.get_active(),
-            "layoutMode":
-                self._layout_mode_check_button.get_active(),
-            "speakCellSpan":
-                self._speak_cell_span_check_button.get_active(),
-            "speakCellHeaders":
-                self._speak_cell_headers_check_button.get_active(),
-            "skipBlankCells":
-                self._skip_blank_cells_check_button.get_active()
-        }
+        document_presenter.get_presenter().present_find_results(obj, offset)
 
     def is_loading_content(self) -> bool:
         """Returns True if we're currently loading content."""

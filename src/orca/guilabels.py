@@ -82,42 +82,6 @@ ANNOUNCE_PANELS = C_("Context", "Panels")
 # that the table is being exited.
 ANNOUNCE_TABLES = C_("Context", "Tables")
 
-# Translators: Orca has a number of commands that override the default behavior
-# within an application. For instance, on a web page Orca's Structural Navigation
-# command "h" moves you to the next heading. What should happen when you press
-# "h" in an entry on a web page depends: If you want to resume reading content,
-# "h" should move to the next heading; if you want to enter text, "h" should not
-# move you to the next heading. Because Orca doesn't know what you want to do,
-# it has two modes: In browse mode, Orca treats key presses as commands to read
-# the content; in focus mode, Orca treats key presses as something that should be
-# handled by the focused widget. Orca optionally can attempt to detect which mode
-# is appropriate for the current situation and switch automatically. This string
-# is a label for a GUI option to enable such automatic switching when structural
-# navigation commands are used. As an example, if this setting were enabled,
-# pressing "e" to move to the next entry would move focus there and also turn
-# focus mode on so that the next press of "e" would type an "e" into the entry.
-# If this setting is not enabled, the second press of "e" would continue to be
-# a navigation command to move amongst entries.
-AUTO_FOCUS_MODE_STRUCT_NAV = _("Automatic focus mode during structural navigation")
-
-# Translators: Orca has a number of commands that override the default behavior
-# within an application. For instance, if you are at the bottom of an entry and
-# press Down arrow, should you leave the entry? It depends on if you want to
-# resume reading content or if you are editing the text in the entry. Because
-# Orca doesn't know what you want to do, it has two modes: In browse mode, Orca
-# treats key presses as commands to read the content; in focus mode, Orca treats
-# key presses as something that should be handled by the focused widget. Orca
-# optionally can attempt to detect which mode is appropriate for the current
-# situation and switch automatically. This string is a label for a GUI option to
-# enable such automatic switching when caret navigation commands are used. As an
-# example, if this setting were enabled, pressing Down Arrow would allow you to
-# move into an entry but once you had done so, Orca would switch to Focus mode
-# and subsequent presses of Down Arrow would be controlled by the web browser
-# and not by Orca. If this setting is not enabled, Orca would continue to control
-# what happens when you press an arrow key, thus making it possible to arrow out
-# of the entry.
-AUTO_FOCUS_MODE_CARET_NAV = _("Automatic focus mode during caret navigation")
-
 # Translators: This is a shorter version of "Automatic focus mode during caret/structural
 # navigation" used on sub-pages where the navigation type context is already clear.
 AUTOMATIC_FOCUS_MODE = _("Automatic focus mode")
@@ -135,21 +99,6 @@ AUTOMATIC_FOCUS_MODE_INFO = _(
 NATIVE_NAVIGATION_INFO = _(
     "Native navigation refers to keyboard commands handled by the application, "
     "such as Tab, Page Up, Page Down, and Enter.")
-
-# Translators: Orca has a number of commands that override the default behavior
-# within an application. For instance, if you are at the bottom of an entry and
-# press Down arrow, should you leave the entry? It depends on if you want to
-# resume reading content or if you are editing the text in the entry. Because
-# Orca doesn't know what you want to do, it has two modes: In browse mode, Orca
-# treats key presses as commands to read the content; in focus mode, Orca treats
-# key presses as something that should be handled by the focused widget. Orca
-# optionally can attempt to detect which mode is appropriate for the current
-# situation and switch automatically. This string is a label for a GUI option to
-# enable such automatic switching when native navigation commands are used.
-# Here "native" means "not Orca"; it could be a browser navigation command such
-# as the Tab key, or it might be a web page behavior, such as the search field
-# automatically gaining focus when the page loads.
-AUTO_FOCUS_MODE_NATIVE_NAV = _("Automatic focus mode during native navigation")
 
 # Translators: This setting controls whether Orca automatically enables sticky
 # focus mode for web applications (such as Facebook Messenger) and Electron apps
@@ -1292,18 +1241,6 @@ TABLE_SPEAK_CELL_SPANS = _("Speak _multiple cell spans")
 # attributes such as bold, underline, family-name, etc.
 TEXT_ATTRIBUTE_NAME = _("Attribute Name")
 
-# Translators: Gecko native caret navigation is where Firefox itself controls
-# how the arrow keys move the caret around HTML content. It's often broken, so
-# Orca needs to provide its own support. As such, Orca offers the user the
-# ability to switch between the Firefox mode and the Orca mode. This is the
-# label of a widget in which users can indicate their default preference.
-USE_CARET_NAVIGATION = _("Control caret navigation")
-
-# Translators: Orca provides keystrokes to navigate HTML content in a structural
-# manner: go to previous/next header, list item, table, etc. This is the label
-# of a widget in which users can indicate their default preference.
-USE_STRUCTURAL_NAVIGATION = _("Enable _structural navigation")
-
 # Translators: This string is associated with a combo box which allows the user
 # to select the set of symbols to be used when Orca presents print strings on a
 # refreshable braille display. Braille symbols vary from language to language
@@ -1602,24 +1539,6 @@ GENERAL_DATE_FORMAT = _("Dat_e format:")
 # Translators: This is a label for the setting which controls how Orca will
 # present the time.
 GENERAL_TIME_FORMAT = _("_Time format:")
-
-# Translators: Orca has a Say All feature which speaks the entire document.
-# Normally, pressing any key will interrupt Say All presentation. However, if
-# rewind and fast forward is enabled, Up Arrow and Down Arrow can be used
-# within Say All to quickly move within the document to re-hear something which
-# was just read or skip past something of no interest.
-GENERAL_ENABLE_REWIND_AND_FAST_FORWARD_IN_SAY_ALL = \
-    _("Enable _rewind and fast forward in Say All")
-
-# Translators: Orca has a Say All feature which speaks the entire document.
-# Normally, pressing any key will interrupt Say All presentation. However, if
-# structural navigation is enabled for Say All, users can use commands such as
-# H/Shift+H to jump to the next/previous heading, P/Shift+P to jump to the
-# next/previous paragraph, T/Shift+T to jump to the next/previous table, and so
-# on. Thus this setting is like fast forward and rewind, but with semantic
-# awareness for web documents and similar content.
-GENERAL_ENABLE_STRUCTURAL_NAVIGATION_IN_SAY_ALL = \
-    _("Enable _structural navigation in Say All")
 
 # Translators: Profiles in Orca make it possible for users to quickly switch
 # amongst a group of pre-defined settings (e.g. an 'English' profile for reading

@@ -32,7 +32,6 @@ __license__   = "LGPL"
 from typing import TYPE_CHECKING
 
 from orca import document_presenter
-from orca import settings
 from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -40,8 +39,7 @@ from orca.ax_utilities import AXUtilities
 if TYPE_CHECKING:
     import gi
     gi.require_version("Atspi", "2.0")
-    gi.require_version("Gtk", "3.0")
-    from gi.repository import Atspi, Gtk
+    from gi.repository import Atspi
 
     from orca.scripts.toolkits.Gecko.script_utilities import Utilities
 
@@ -50,31 +48,6 @@ class Script(Gecko.Script):
 
     # Override the base class type annotations
     utilities: "Utilities"
-
-    def get_app_preferences_gui(self) -> Gtk.Grid:
-        """Return a GtkGrid containing the application unique configuration
-        GUI items for the current application."""
-
-        grid = super().get_app_preferences_gui()
-
-        assert self._say_all_on_load_check_button is not None
-        assert self._page_summary_on_load_check_button is not None
-        self._say_all_on_load_check_button.set_active(settings.sayAllOnLoad)
-        self._page_summary_on_load_check_button.set_active(settings.pageSummaryOnLoad)
-        grid.show_all()
-
-        return grid
-
-    def get_preferences_from_gui(self) -> dict[str, bool | int]:
-        """Returns a dictionary with the app-specific preferences."""
-
-        prefs = super().get_preferences_from_gui()
-        assert self._say_all_on_load_check_button is not None
-        assert self._page_summary_on_load_check_button is not None
-        prefs["sayAllOnLoad"] = self._say_all_on_load_check_button.get_active()
-        prefs["pageSummaryOnLoad"] = self._page_summary_on_load_check_button.get_active()
-
-        return prefs
 
     def on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
