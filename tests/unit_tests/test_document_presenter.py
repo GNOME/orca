@@ -1331,19 +1331,23 @@ class TestDocumentPresenter:
         )
 
     def test_update_mode_if_needed_not_in_doc(self, test_context: OrcaTestContext) -> None:
-        """Test update_mode_if_needed when neither in document."""
+        """Test update_mode_if_needed when neither in document suspends navigators."""
 
         from unittest.mock import MagicMock
 
-        module, _mocks = self._setup_presenter(test_context)
+        module, mocks = self._setup_presenter(test_context)
 
         mock_script = MagicMock()
         mock_script.utilities.get_top_level_document_for_object.return_value = None
 
+        caret_nav = mocks["orca.caret_navigator"]
+
         presenter = module.get_presenter()
         result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
-        assert result is False
+        # When focus is not in a document, navigators should be suspended
+        assert result is True
+        caret_nav.get_navigator.return_value.suspend_commands.assert_called()
 
     def test_update_mode_if_needed_leaving_doc(self, test_context: OrcaTestContext) -> None:
         """Test update_mode_if_needed when leaving document."""

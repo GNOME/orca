@@ -899,9 +899,6 @@ class DocumentPresenter:
         old_doc = script.utilities.get_top_level_document_for_object(old_focus)
         new_doc = script.utilities.get_top_level_document_for_object(new_focus)
 
-        if not (old_doc or new_doc):
-            return False
-
         tokens = ["DOCUMENT PRESENTER: Updating mode for focus change.",
                   "Old focus:", old_focus, "old doc:", old_doc,
                   "New focus:", new_focus, "new doc:", new_doc]
