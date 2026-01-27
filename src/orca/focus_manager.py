@@ -66,6 +66,7 @@ class FocusManager:
         self._window: Atspi.Accessible | None = None
         self._focus: Atspi.Accessible | None = None
         self._object_of_interest: Atspi.Accessible | None = None
+        self._object_to_restore: Atspi.Accessible | None = None
         self._active_mode: str | None = None
         self._last_cell_coordinates: tuple[int, int] = (-1, -1)
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
@@ -359,11 +360,22 @@ class FocusManager:
             self.set_locus_of_focus(None, self._window, notify_script)
         elif not (self.focus_is_active_window() or self.focus_is_in_active_window()):
             tokens = ["FOCUS MANAGER: Focus", self._focus, "is not in", self._window]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            # Don't update the focus to the active window if we can't get to the active window
-            # from the focused object. https://bugreports.qt.io/browse/QTBUG-130116
-            if not AXObject.has_broken_ancestry(self._focus):
+            if AXUtilities.is_combo_box_popup(frame) and AXUtilities.is_combo_box(self._focus):
+                tokens = ["FOCUS MANAGER: Saving focus to restore later", self._focus]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                self._object_to_restore = self._focus
+            elif AXObject.is_ancestor(self._object_to_restore, frame):
+                self._focus = AXObject.get_parent(self._object_to_restore)
+                tokens = ["FOCUS MANAGER: Restoring focus to", self._object_to_restore,
+                          "after adjusting focus to", self._focus]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                self.set_locus_of_focus(None, self._object_to_restore, notify_script=True)
+                self._object_to_restore = None
+            elif not AXObject.has_broken_ancestry(self._focus):
+                # Don't update the focus to the active window if we can't get to the active window
+                # from the focused object. https://bugreports.qt.io/browse/QTBUG-130116
                 self.set_locus_of_focus(None, self._window, notify_script=True)
 
         app = AXUtilities.get_application(self._focus)

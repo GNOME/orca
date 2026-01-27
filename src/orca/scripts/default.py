@@ -92,6 +92,7 @@ from orca import where_am_i_presenter
 from orca.acss import ACSS
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
+from orca.ax_selection import AXSelection
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -1461,26 +1462,33 @@ class Script(script.Script):
         if not AXUtilities.can_be_active_window(event.source):
             return True
 
-        if event.source == focus_manager.get_manager().get_active_window():
+        manager = focus_manager.get_manager()
+        active_window = manager.get_active_window()
+        if event.source == active_window:
             msg = "DEFAULT: Event is for active window."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             spellcheck_presenter.get_presenter().handle_window_event(event, self)
             return True
 
-        self.point_of_reference = {}
+        manager.set_active_window(event.source)
+        if AXUtilities.is_combo_box_popup(active_window):
+            return True
 
-        focus_manager.get_manager().set_active_window(event.source)
+        self.point_of_reference = {}
         if AXObject.get_child_count(event.source) == 1:
             child = AXObject.get_child(event.source, 0)
             # Popup menus in Chromium live in a menu bar whose first child is a panel.
             if AXUtilities.is_menu_bar(child):
                 child = AXObject.find_descendant(child, AXUtilities.is_menu)
             if AXUtilities.is_menu(child):
-                focus_manager.get_manager().set_locus_of_focus(event, child)
+                selected_item = AXSelection.get_selected_child(child, 0)
+                if AXUtilities.is_selected(selected_item):
+                    child = selected_item
+                manager.set_locus_of_focus(event, child)
                 return True
 
         if not spellcheck_presenter.get_presenter().handle_window_event(event, self):
-            focus_manager.get_manager().set_locus_of_focus(event, event.source)
+            manager.set_locus_of_focus(event, event.source)
         return True
 
     def on_window_created(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
@@ -1496,14 +1504,25 @@ class Script(script.Script):
     def on_window_deactivated(self, event: Atspi.Event) -> bool:
         """Callback for window:deactivate accessibility events."""
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
+        manager = focus_manager.get_manager()
+        focus = manager.get_locus_of_focus()
         if AXObject.find_ancestor_inclusive(focus, AXUtilities.is_menu):
             msg = "DEFAULT: Ignoring event. In menu."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if event.source != focus_manager.get_manager().get_active_window():
+        if event.source != manager.get_active_window():
             msg = "DEFAULT: Ignoring event. Not for active window"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if AXUtilities.is_combo_box_popup(AXUtilities.find_active_window()):
+            msg = "DEFAULT: Ignoring event. Combo box popup is the new active window."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if AXUtilities.is_combo_box_popup(event.source):
+            msg = "DEFAULT: Ignoring event. Combo box popup."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 

@@ -638,6 +638,20 @@ class AXUtilitiesRole:
         return role == Atspi.Role.COMBO_BOX
 
     @staticmethod
+    def is_combo_box_popup(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
+        """Returns True if obj is a popup for a combo box."""
+
+        # Note: This is currently based on GTK with the goal of not doing a full presentation
+        # in response to the window-activate events we get from combo box popups. This function
+        # could be modified to identify other combo box popups should the need arise.
+
+        if not AXUtilitiesRole.is_window(obj, role):
+            return False
+
+        attrs = AXObject.get_attributes_dict(obj)
+        return attrs.get("window-type") == "combo"
+
+    @staticmethod
     def is_comment(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the comment role"""
 

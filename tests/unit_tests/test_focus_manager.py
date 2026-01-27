@@ -588,7 +588,10 @@ class TestFocusManager:
             manager, "focus_is_in_active_window", return_value=focus_is_in_window
         )
         test_context.patch_object(AXObject, "has_broken_ancestry", return_value=has_broken_ancestry)
+        test_context.patch_object(AXObject, "is_ancestor", return_value=False)
         test_context.patch_object(AXUtilities, "get_application", return_value=mock_app)
+        test_context.patch_object(AXUtilities, "is_combo_box_popup", return_value=False)
+        test_context.patch_object(AXUtilities, "is_combo_box", return_value=False)
         manager.set_active_window(mock_frame, mock_app, set_window_as_focus, False)
         if not frame_equals_current:
             assert manager._window == mock_frame

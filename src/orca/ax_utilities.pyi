@@ -354,6 +354,9 @@ class AXUtilities:
     def is_combo_box(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool: ...
 
     @staticmethod
+    def is_combo_box_popup(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool: ...
+
+    @staticmethod
     def is_comment(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool: ...
 
     @staticmethod
