@@ -351,8 +351,6 @@ class FocusManager:
         if frame == self._window:
             msg = "FOCUS MANAGER: Setting active window to existing active window"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif frame is None:
-            self._window = None
         else:
             self._window = frame
 
@@ -362,11 +360,12 @@ class FocusManager:
             tokens = ["FOCUS MANAGER: Focus", self._focus, "is not in", self._window]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            if AXUtilities.is_combo_box_popup(frame) and AXUtilities.is_combo_box(self._focus):
+            if AXUtilities.is_combo_box(self._focus) \
+               and (self._window is None or AXUtilities.is_combo_box_popup(self._window)):
                 tokens = ["FOCUS MANAGER: Saving focus to restore later", self._focus]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._object_to_restore = self._focus
-            elif AXObject.is_ancestor(self._object_to_restore, frame):
+            elif AXObject.is_ancestor(self._object_to_restore, self._window):
                 self._focus = AXObject.get_parent(self._object_to_restore)
                 tokens = ["FOCUS MANAGER: Restoring focus to", self._object_to_restore,
                           "after adjusting focus to", self._focus]
