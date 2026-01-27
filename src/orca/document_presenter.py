@@ -867,17 +867,20 @@ class DocumentPresenter:
             self.suspend_navigators(script, False, reason)
             return True
 
-        if self._is_likely_electron_app(script.app):
-            msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.enable_sticky_focus_mode(script, notify_user=True)
-            return True
+        # Only do app-type detection if user hasn't explicitly toggled mode.
+        # This allows the user to escape auto-enabled sticky focus mode.
+        if not self._get_state_for_app(script.app).user_has_toggled:
+            if self._is_likely_electron_app(script.app):
+                msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                self.enable_sticky_focus_mode(script, notify_user=True)
+                return True
 
-        if self._is_top_level_web_app(script, new_focus):
-            msg = "DOCUMENT PRESENTER: Top-level web app detected, enabling sticky focus mode"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.enable_sticky_focus_mode(script, notify_user=True)
-            return True
+            if self._is_top_level_web_app(script, new_focus):
+                msg = "DOCUMENT PRESENTER: Top-level web app detected, enabling sticky focus mode"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                self.enable_sticky_focus_mode(script, notify_user=True)
+                return True
 
         use_focus = self.use_focus_mode(new_focus, old_focus)
         reason = "entering document"
@@ -885,6 +888,13 @@ class DocumentPresenter:
             self._enable_document_navigators(script, reason)
 
         self.suspend_navigators(script, use_focus, reason)
+
+        if AXObject.get_application(old_focus) != AXObject.get_application(new_focus):
+            if use_focus:
+                script.present_message(messages.MODE_FOCUS)
+            else:
+                script.present_message(messages.MODE_BROWSE)
+
         return True
 
     # pylint: disable-next=too-many-return-statements
@@ -916,18 +926,6 @@ class DocumentPresenter:
         # Focus change within document
         if self.focus_mode_is_sticky(script.app) or self.browse_mode_is_sticky(script.app):
             return False
-
-        if self._is_likely_electron_app(script.app):
-            msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.enable_sticky_focus_mode(script, notify_user=False)
-            return True
-
-        if self._is_top_level_web_app(script, new_focus):
-            msg = "DOCUMENT PRESENTER: Top-level web app detected, enabling sticky focus mode"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.enable_sticky_focus_mode(script, notify_user=False)
-            return True
 
         use_focus = self.use_focus_mode(new_focus, old_focus)
         self._set_presentation_mode(script, use_focus, obj=new_focus, document=new_doc)
