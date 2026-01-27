@@ -2091,6 +2091,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.keyBindingsModel.clear()
 
         self.script.set_up_commands()
+        command_manager.get_manager().apply_user_overrides()
 
         # Build group_to_iter dynamically from commands
         group_to_iter: dict[str, Gtk.TreeIter] = {}

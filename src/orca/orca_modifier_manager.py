@@ -238,12 +238,17 @@ class OrcaModifierManager:
         self.refresh_orca_modifiers(f"Keyboard layout changed to {layout}.")
 
     def refresh_orca_modifiers(self, reason: str = "") -> None:
-        """Refreshes the Orca modifier keys."""
+        """Refreshes the Orca modifier keys, including grabs and xmodmap."""
 
         msg = "ORCA MODIFIER MANAGER: Refreshing Orca modifiers"
         if reason:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        for modifier in list(self._grabbed_modifiers.keys()):
+            self.remove_modifier_grab(modifier)
+        self._is_pressed = False
+        self.add_grabs_for_orca_modifiers()
 
         display = os.environ.get("DISPLAY")
         if not display:

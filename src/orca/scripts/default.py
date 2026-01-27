@@ -160,6 +160,7 @@ class Script(script.Script):
         return [
             (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
             (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
+            (command_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
             (say_all_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
             (typing_echo_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
             (speech_and_verbosity_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
@@ -351,8 +352,6 @@ class Script(script.Script):
         for extension_getter, _localized_name in self._get_all_extensions():
             extension_getter().set_up_commands()
 
-        command_manager.get_manager().apply_user_overrides()
-
         cmd_count = len(command_manager.get_manager().get_all_keyboard_commands())
         msg = f"DEFAULT: Commands set up: {cmd_count} keyboard commands"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -433,12 +432,15 @@ class Script(script.Script):
         tokens = ["DEFAULT: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        settings_manager.get_manager().load_app_settings(self)
+        # Don't reload settings from disk while the preferences dialog is open,
+        # as this would overwrite any unsaved changes the user is making.
+        if not settings_manager.get_manager().is_configuring():
+            settings_manager.get_manager().load_app_settings(self)
 
-        # TODO - JD: Should these be moved into check_speech_setting?
-        speech_and_verbosity_manager.get_manager().update_punctuation_level()
-        speech_and_verbosity_manager.get_manager().update_capitalization_style()
-        speech_and_verbosity_manager.get_manager().update_synthesizer()
+            # TODO - JD: Should these be moved into check_speech_setting?
+            speech_and_verbosity_manager.get_manager().update_punctuation_level()
+            speech_and_verbosity_manager.get_manager().update_capitalization_style()
+            speech_and_verbosity_manager.get_manager().update_synthesizer()
 
         presenter = document_presenter.get_presenter()
         if presenter.has_state_for_app(self.app):

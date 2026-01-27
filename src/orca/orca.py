@@ -88,7 +88,6 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 
     settings_manager.get_manager().load_app_settings(script)
 
-    # Update command keybindings based on the keyboard layout setting
     is_desktop = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
     command_manager.get_manager().set_keyboard_layout(is_desktop)
 

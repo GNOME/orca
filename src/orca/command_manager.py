@@ -434,6 +434,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def on_becoming_visible(self) -> None:
         """Reset to the categories view when this grid becomes visible."""
 
+        self.reload()
         self._show_stack_categories()
         if self._categories_listbox:
             self._categories_listbox.grab_focus()
