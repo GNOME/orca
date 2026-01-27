@@ -493,13 +493,15 @@ class Script(script.Script):
 
     def show_app_preferences_gui(
         self,
-        _script: Script | None = None,
+        script: Script | None = None,
         _event: input_event.InputEvent | None = None
     ) -> bool:
         """Shows the app Preferences dialog."""
 
+        script = script or self
+        settings_manager.get_manager().load_app_settings(script)
         prefs = settings_manager.get_manager().get_settings()
-        ui = orca_gui_prefs.OrcaSetupGUI(self, prefs)
+        ui = orca_gui_prefs.OrcaSetupGUI(script, prefs)
         ui.showGUI()
         return True
 
