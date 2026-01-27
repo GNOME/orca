@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2025-09-05 19:09+0000\n"
+"POT-Creation-Date: 2026-01-19 15:22+0000\n"
 "PO-Revision-Date: 2025-09-20 12:51+0000\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
@@ -17,7 +17,7 @@ msgstr "Project-Id-Version: orca master\n"
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
-msgstr "Asier Saratsua Garmendia <asier.sarasua@gmail.com>, 2023"
+msgstr "Asier Saratsua Garmendia <asier.sarasua@gmail.com>"
 
 #. (itstool) path: info/title
 #: C/commands_bookmarks.page:6
@@ -208,7 +208,7 @@ msgstr "Berrikusi hasieraren kokalekua: Goia ezkerra"
 #. (itstool) path: item/p
 #: C/commands_braille.page:32
 msgid "Contracted braille: Six Dots"
-msgstr ""
+msgstr "Uzkurtutako braille-a: Sei puntu"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:33
@@ -223,7 +223,7 @@ msgstr "Testu-hautapen baten amaiera markatzen du: Ebaki Lerroa"
 #. (itstool) path: item/p
 #: C/commands_braille.page:35
 msgid "Processes a cursor routing key: Cursor Routing"
-msgstr ""
+msgstr "Kurtsorea bideratzeko tekla bat prozesatzen du: Kurtsorearen bideraketa"
 
 #. (itstool) path: item/p
 #: C/commands_braille.page:36
@@ -260,14 +260,14 @@ msgid ""
 "will notice that several of these commands are \"unbound.\" Please see <link "
 "xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
 "how to bind these commands to keystrokes."
-msgstr ""
+msgstr "Hurrengo komandoak <app>Orca</app> aplikazioak onartzen dituen berehalako mezularitzako berriketa-bezeroen informazioa atzitzeko erabili daitezke. Konturatuko zara komando horietako batzuk \"lotu gabeak\" direla. Ikus <link xref=\"howto_key_bindings\">Laster-teklak aldatzea</link> komando horiek tekla-konbinazioei nola lotu jakiteko."
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
 msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
-msgstr ""
+msgstr "Aurkeztu berriketa-gelako aurreko mezuak: <keyseq><key>Orca aldatzailea</key><key>F1</key></keyseq> teklatik <key>F9</key> teklara"
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:36
@@ -1189,7 +1189,7 @@ msgid ""
 "The following command is not \"bound\" to a keystroke. If you would like to "
 "bind it, please see <link xref=\"howto_key_bindings\">Modifying Keybindings</"
 "link>."
-msgstr ""
+msgstr "Hurrengo komandoa ez dago laster-tekla bati \"lotuta\". Lotu nahi baduzu, ikus <link xref=\"howto_key_bindings\">Laster-teklak aldatzea</link>."
 
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
@@ -1224,7 +1224,7 @@ msgid ""
 "In addition to the caret navigation commands which are part of GNOME, "
 "<app>Orca</app> provides a number of commands which you can use to read a "
 "document."
-msgstr ""
+msgstr "GNOMEren parte diren kurtsore-nabigazioko komandoez gain, <app>Orca</app> aplikazioak dokumentuak irakurtzeko erabili daitezkeen komando gehiago eskaintzen ditu."
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:39
@@ -1236,7 +1236,7 @@ msgstr "Zure uneko kokalekua irakurtzea"
 msgid ""
 "The following <app>Orca</app> <link xref=\"commands_flat_review\">Flat "
 "Review Commands</link> can be used to read your current location:"
-msgstr ""
+msgstr "<app>Orca</app> <link xref=\"commands_flat_review\">Berrikuspen laurako komandoak</link> zure uneko kokalekua irakurtzeko erabili daitezke:"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:46
@@ -1283,7 +1283,7 @@ msgstr "Esan dena"
 msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
-msgstr ""
+msgstr "'Esan dena' komandoari esker, <app>Orcak</app> dokumentu osoa irakurriko du zure momentuko kokalekutik hasita."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:164
@@ -1355,7 +1355,7 @@ msgstr "Eramangarria: <keyseq><key>Orca aldatzailea</key><key>Return</key></keys
 msgid ""
 "Speak current selection: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Up</key></keyseq>"
-msgstr ""
+msgstr "Irakurri uneko hautapena: <keyseq><key>Orca aldatzailea</key><key>Shift</key><key>Up</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:230
@@ -1389,28 +1389,28 @@ msgstr "Arakatze- eta fokuratze-moduak"
 msgid ""
 "<app>Orca</app>'s Browse and Focus modes let you switch between reading and "
 "interacting with web content."
-msgstr ""
+msgstr "<app>Orcaren</app> arakatze- eta fokuratze-moduen bidez, web-edukia irakurtzetik harekin aritzera, eta alderantziz, aldatu zaitezke."
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:253
 msgid ""
 "Switch between browse mode and focus mode: <keyseq><key>Orca Modifier</"
 "key><key>A</key></keyseq>"
-msgstr ""
+msgstr "Aldatu arakatze-moduaren eta fokuratze-moduaren artean: <keyseq><key>Orca aldatzailea</key><key>A</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:259
 msgid ""
 "Enable sticky focus mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (double-clicked)"
-msgstr ""
+msgstr "Gaitu fokuratze itsaskorraren modua: <keyseq><key>Orca aldatzailea</key><key>A</key></keyseq> (klik bikoitza)"
 
 #. (itstool) path: item/p
 #: C/commands_reading.page:265
 msgid ""
 "Enable sticky browse mode: <keyseq><key>Orca Modifier</key><key>A</key></"
 "keyseq> (triple-clicked)"
-msgstr ""
+msgstr "Gaitu arakatze itsaskorraren modua: <keyseq><key>Orca aldatzailea</key><key>A</key></keyseq> (klik hirukoitza)"
 
 #. (itstool) path: section/title
 #: C/commands_reading.page:273
@@ -1439,7 +1439,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_reading.page:288
 msgid "Switch between Layout mode and Object mode: (Unbound)"
-msgstr ""
+msgstr "Txandakatu diseinu-moduaren eta objektu-moduaren artean: (Lotu gabea)"
 
 #. (itstool) path: info/title
 #: C/commands_speech_settings.page:6
@@ -1490,7 +1490,7 @@ msgstr "Txandakatu taula baten gelaxken eta errenkaden irakurketaren artean: <ke
 msgid ""
 "Toggle between verbose and brief verbosity levels: <keyseq><key>Orca "
 "Modifier</key><key>V</key></keyseq>"
-msgstr ""
+msgstr "Aldatu xehetasun askoko eta xehetasun gutxiko mailen artean: <keyseq><key>Orca aldatzailea</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_speech_settings.page:46
@@ -1582,7 +1582,7 @@ msgstr ""
 msgid ""
 "Enable/disable Structural Navigation keys: <keyseq><key>Orca Modifier</"
 "key><key>Z</key></keyseq>"
-msgstr ""
+msgstr "Gaitu/desgaitu egitura-nabigazioaren teklak: <keyseq><key>Orca aldatzailea</key><key>Z</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:34
@@ -1767,14 +1767,14 @@ msgstr "Bistaratu aukera-botoien zerrenda bat: <keyseq><key>Alt</key><key>Shift<
 msgid ""
 "Next and previous checkbox: <keyseq><key>X</key></keyseq> and "
 "<keyseq><key>Shift</key><key>X</key></keyseq>"
-msgstr ""
+msgstr "Hurrengo eta aurreko kontrol-laukia: <keyseq><key>X</key></keyseq> eta <keyseq><key>Shift</key><key>X</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:205
 msgid ""
 "Display a list of checkboxes: <keyseq><key>Alt</key><key>Shift</key><key>X</"
 "key></keyseq>"
-msgstr ""
+msgstr "Bistaratu kontrol-laukien zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>X</key></keyseq>"
 
 #. (itstool) path: section/title
 #. (itstool) path: item/p
@@ -1802,28 +1802,28 @@ msgstr "Bistaratu esteken zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><k
 msgid ""
 "Next and previous unvisited link: <keyseq><key>U</key></keyseq> and "
 "<keyseq><key>Shift</key><key>U</key></keyseq>"
-msgstr ""
+msgstr "Bisitatu gabeko hurrengo eta aurreko esteka: <keyseq><key>U</key></keyseq> eta <keyseq><key>Shift</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:236
 msgid ""
 "Display a list of unvisited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>U</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu bisitatu gabeko esteken zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>U</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:242
 msgid ""
 "Next and previous visited link: <keyseq><key>V</key></keyseq> and "
 "<keyseq><key>Shift</key><key>V</key></keyseq>"
-msgstr ""
+msgstr "Bisitatutako hurrengo eta aurreko esteka: <keyseq><key>V</key></keyseq> eta <keyseq><key>Shift</key><key>V</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:249
 msgid ""
 "Display a list of visited links: <keyseq><key>Alt</key><key>Shift</"
 "key><key>V</key></keyseq>"
-msgstr ""
+msgstr "Bistaratu bisitatutako esteken zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>V</key></keyseq>"
 
 #. (itstool) path: section/title
 #: C/commands_structural_navigation.page:257
@@ -1835,7 +1835,7 @@ msgstr "Zerrendak"
 msgid ""
 "Next and previous list: <keyseq><key>L</key></keyseq> and "
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
-msgstr ""
+msgstr "Hurrengo eta aurreko zerrenda: <keyseq><key>L</key></keyseq> eta <keyseq><key>Shift</key><key>L</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:267
@@ -1849,14 +1849,14 @@ msgstr "Bistaratu zerrenden zerrenda bat: <keyseq><key>Alt</key><key>Shift</key>
 msgid ""
 "Next and previous list item: <keyseq><key>I</key></keyseq> and "
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
-msgstr ""
+msgstr "Hurrengo eta aurreko zerrenda-elementua: <keyseq><key>I</key></keyseq> eta <keyseq><key>Shift</key><key>I</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:280
 msgid ""
 "Display a list of list items: <keyseq><key>Alt</key><key>Shift</key><key>I</"
 "key></keyseq>"
-msgstr ""
+msgstr "Bistaratu zerrenda-elementuen zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><key>I</key></keyseq>"
 
 #. (itstool) path: section/title
 #. (itstool) path: page/title
@@ -1869,7 +1869,7 @@ msgstr "Taulak"
 msgid ""
 "Next and previous table: <keyseq><key>T</key></keyseq> and "
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
-msgstr ""
+msgstr "Hurrengo eta aurreko taula: <keyseq><key>T</key></keyseq> eta <keyseq><key>Shift</key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:298
@@ -2023,7 +2023,7 @@ msgstr "Bistaratu irudien zerrenda bat: <keyseq><key>Alt</key><key>Shift</key><k
 msgid ""
 "Start and end of current container: <keyseq><key>Shift</key><key>Comma</"
 "key></keyseq> and <keyseq><key>Comma</key></keyseq>"
-msgstr ""
+msgstr "Uneko edukiontziaren hasiera eta amaiera: <keyseq><key>Shift</key><key>koma</key></keyseq> eta <keyseq><key>koma</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_table.page:6
@@ -2053,35 +2053,35 @@ msgid ""
 "Orca's support for navigation by table cell is part of its <link "
 "xref=\"commands_structural_navigation#tables\">Structural Navigation "
 "commands</link>. In addition you can:"
-msgstr ""
+msgstr "Orcak taula-gelaxketan nabigatu dezake <link xref=\"commands_structural_navigation#tables\">egitura-nabigazioko komandoen</link> bidez. Horrez gain, honakoak ere egin daitezke:"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:27
 msgid ""
 "Set dynamic row headers to current column: <keyseq><key>Orca Modifier</"
 "key><key>C</key></keyseq>"
-msgstr ""
+msgstr "Ezarri errenkada-goiburu dinamikoak uneko zutabean: <keyseq><key>Orca aldatzailea</key><key>C</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:33
 msgid ""
 "Set dynamic column headers to current row: <keyseq><key>Orca Modifier</"
 "key><key>R</key></keyseq>"
-msgstr ""
+msgstr "Ezarri errenkada-goiburu dinamikoak uneko errenkadan: <keyseq><key>Orca aldatzailea</key><key>R</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:39
 msgid ""
 "Clear dynamic row headers: <keyseq><key>Orca Modifier</key><key>C</key></"
 "keyseq> (double-clicked)"
-msgstr ""
+msgstr "Garbitu errenkada-goiburu dinamikoak: <keyseq><key>Orca aldatzailea</key><key>C</key></keyseq> (klik bikoitza)"
 
 #. (itstool) path: item/p
 #: C/commands_table.page:45
 msgid ""
 "Clear dynamic column headers: <keyseq><key>Orca Modifier</key><key>R</key></"
 "keyseq> (double-clicked)"
-msgstr ""
+msgstr "Garbitu zutabe-goiburu dinamikoak: <keyseq><key>Orca aldatzailea</key><key>R</key></keyseq> (klik bikoitza)"
 
 #. (itstool) path: info/title
 #: C/commands_time_date_notifications.page:6
@@ -2110,7 +2110,7 @@ msgstr "Orduaren, dataren eta jakinarazpenen komandoak"
 msgid ""
 "The following commands can be used to obtain the current time and date and "
 "to review previously-displayed notification messages:"
-msgstr ""
+msgstr "Hurrengo komandoak uneko data eta ordua eskuratzeko eta aurretik bistaratutako jakinarazpen-mezuak berrikusteko erabili daitezke:"
 
 #. (itstool) path: section/title
 #: C/commands_time_date_notifications.page:25
@@ -2141,7 +2141,7 @@ msgid ""
 "xref=\"howto_notifications\">notification messages</link>. Please see <link "
 "xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
 "how to bind these commands to keystrokes."
-msgstr ""
+msgstr "Orcak lotu gabeko hiru komando ditu aurretik bistaratutako <link xref=\"howto_notifications\">jakinarazpen-mezuak</link> atzitzeko. Ikusi <link xref=\"howto_key_bindings\">Laster-teklak aldatzea</link> komando horiek tekla-konbinazioei nola lotu jakiteko."
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:50
@@ -2199,7 +2199,7 @@ msgstr ""
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:28
 msgid "<app>Orca</app> provides the following Where Am I commands:"
-msgstr ""
+msgstr "<app>Orcak</app> honako 'Non nago' komandoak eskaintzen ditu:"
 
 #. (itstool) path: page/p
 #: C/commands_where_am_i.page:56
@@ -2207,7 +2207,7 @@ msgid ""
 "In addition to the dedicated Where Am I commands, <app>Orca</app> has "
 "additional commands related to obtaining information about your present "
 "location:"
-msgstr ""
+msgstr "GNOMEren parte diren 'Non nago' komandoez gain, <app>Orca</app> aplikazioak zure uneko kokalekuari buruzko informazioa eskuratzeko komando gehiago eskaintzen ditu."
 
 #. (itstool) path: item/p
 #: C/commands_where_am_i.page:62
@@ -2480,28 +2480,28 @@ msgstr "Inprimaki-eremuen artean mugitzea"
 #. (itstool) path: section/p
 #: C/howto_forms.page:26
 msgid "To navigate amongst form fields, you have several options:"
-msgstr ""
+msgstr "Inprimaki-eremu batetik bestera mugitzeko hainbat aukera daude:"
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:31
 msgid ""
 "Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq> to "
 "navigate amongst focusable objects, regardless of type."
-msgstr ""
+msgstr "Erabili <key>Tab</key> eta <keyseq><key>Shift</key><key>Tab</key></keyseq> teklak fokuragarriak diren objektuen artean mugitzeko, berdin dio zein motatakoak diren."
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:37
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link>."
-msgstr ""
+msgstr "Erabili <app>Orcaren</app> <link xref=\"commands_structural_navigation#forms\"> egitura-nabigazioko komandoak inprimakietarako</link>."
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:43
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate to a given form field."
-msgstr ""
+msgstr "Inprimakiaren eta aplikazioaren arabera, gezi-teklak ere erabili ahal dituzu inprimaki-eremu batera joateko."
 
 #. (itstool) path: note/p
 #: C/howto_forms.page:50
@@ -2528,7 +2528,7 @@ msgid ""
 "Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
 "wish to leave the currently-focused form field and move to the next/previous "
 "focusable object, regardless of type."
-msgstr ""
+msgstr "Erabili <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> teklak unean fokuratutako inprimaki-eremua utzi eta hurrengo/aurreko objektu fokuragarrira joan nahi baduzu, berdin dio zein motatakoak diren."
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:72
@@ -2536,14 +2536,14 @@ msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link> to move to the next or "
 "previous form field."
-msgstr ""
+msgstr "Erabili <app>Orca</app>ren <link xref=\"commands_structural_navigation#forms\">egitura-nabigazioko komandoak inprimakietarako</link> aurreko edo hurrengo inprimaki-eremura joateko."
 
 #. (itstool) path: item/p
 #: C/howto_forms.page:79
 msgid ""
 "Depending on the form and the application, you may also be able to use the "
 "arrow keys to navigate out of a given form field."
-msgstr ""
+msgstr "Inprimakiaren eta aplikazioaren arabera, gezi-teklak ere erabili ahal dituzu inprimaki-eremu batetik irteteko."
 
 #. (itstool) path: note/p
 #: C/howto_forms.page:86
@@ -2576,7 +2576,7 @@ msgid ""
 "Orca has many commands, some of which are bound to a keystroke, others of "
 "which are unbound. You can bind, rebind, and unbind <app>Orca</app>'s "
 "commands by following the steps below."
-msgstr ""
+msgstr "Orcak komando asko ditu, eta batzuk laster-tekla bati lotuta daude eta beste batzuk ez. <app>Orcaren</app> komandoak lotu, birlotu eta deslotzeko, erabili beheko urratsak."
 
 #. (itstool) path: steps/title
 #: C/howto_key_bindings.page:21
@@ -2590,14 +2590,14 @@ msgstr "Lotu gabeko komando bat lotzea"
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
-msgstr ""
+msgstr "Sartu <link xref=\"preferences\">Orcaren hobespenak</link> elkarrizketa-koadroan <keyseq><key>Orca aldatzailea</key><key>zuriunea</key></keyseq> sakatuz."
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:29 C/howto_key_bindings.page:66
 #: C/howto_key_bindings.page:98 C/howto_key_bindings.page:119
 #: C/howto_the_orca_modifier.page:59
 msgid "Move to the <gui>Key Bindings</gui> page."
-msgstr ""
+msgstr "jkoan <gui>Laster-teklak</gui> orrira."
 
 #. (itstool) path: item/p
 #: C/howto_key_bindings.page:32
@@ -2755,7 +2755,7 @@ msgstr "5. Ikasteko modua"
 #. (itstool) path: info/desc
 #: C/howto_learn_modes.page:6
 msgid "Discovering <app>Orca</app>'s commands"
-msgstr ""
+msgstr "<app>Orca</app>ren komandoak aurkitzea"
 
 #. (itstool) path: page/title
 #: C/howto_learn_modes.page:17
@@ -2772,14 +2772,14 @@ msgstr "Ikasteko modua erabiltzea"
 msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key> <key>H</"
 "key></keyseq>."
-msgstr ""
+msgstr "Ikasteko modura joateko, sakatu <keyseq><key>Orca aldatzailea</key> <key>H</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:33
 msgid ""
 "Press any key or keystroke. <app>Orca</app> will announce the keys and any "
 "associated command."
-msgstr ""
+msgstr "Sakatu edozein tekla edo tekla-konbinazio. <app>Orcak</app> tekla horiek eta haiei lotutako komandoak esango ditu."
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:39
@@ -2789,7 +2789,7 @@ msgstr "Sakatu <key>Esc</key> ikasteko modutik irteteko."
 #. (itstool) path: steps/title
 #: C/howto_learn_modes.page:43
 msgid "Getting a List of Shortcuts"
-msgstr ""
+msgstr "Lasterbideen zerrenda bat eskuratzea"
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:51
@@ -2803,12 +2803,12 @@ msgstr ""
 #: C/howto_learn_modes.page:58
 msgid ""
 "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
-msgstr ""
+msgstr "Sakatu <key>Up</key> edo <key>Down</key> zerrendaren edukiak aztertzeko."
 
 #. (itstool) path: item/p
 #: C/howto_learn_modes.page:64
 msgid "Press <key>Esc</key> to exit the list."
-msgstr ""
+msgstr "Sakatu <key>Esc</key> zerrendatik irteteko."
 
 #. (itstool) path: info/title
 #: C/howto_live_regions.page:5
@@ -2855,7 +2855,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
 msgid "<app>Orca</app>'s Support for Live Regions"
-msgstr ""
+msgstr "<app>Orca</app>ren euskarria eskualde aktiboetarako"
 
 #. (itstool) path: section/p
 #: C/howto_live_regions.page:38
@@ -2870,22 +2870,22 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/howto_live_regions.page:47
 msgid "Turn live region support on or off"
-msgstr ""
+msgstr "Aktibatu edo desaktibatu eskualde aktiboak"
 
 #. (itstool) path: item/p
 #: C/howto_live_regions.page:50
 msgid "Jump to the next and previous live region spatially"
-msgstr ""
+msgstr "Joan aurreko edo hurrengo eskualde aktibora espazialki"
 
 #. (itstool) path: item/p
 #: C/howto_live_regions.page:53
 msgid "Jump to the last live region which presented information"
-msgstr ""
+msgstr "Joan informazioa aurkeztu duen azken eskualde aktibora"
 
 #. (itstool) path: item/p
 #: C/howto_live_regions.page:56
 msgid "Review the last nine live region messages which were presented"
-msgstr ""
+msgstr "Berrikusi eskualde aktiboetan aurkeztu diren azken bederatzi mezuak"
 
 #. (itstool) path: info/title
 #: C/howto_mouse_review.page:5
@@ -2935,7 +2935,7 @@ msgstr ""
 #. (itstool) path: note/title
 #: C/howto_mouse_review.page:40
 msgid "Default Settings and Keybindings Are Independent of One Another"
-msgstr ""
+msgstr "Ezarpen lehenetsiak eta laster-teklak elkarrekiko independenteak dirça"
 
 #. (itstool) path: note/p
 #: C/howto_mouse_review.page:43
@@ -2970,7 +2970,7 @@ msgid ""
 "include incoming chat messages, the details associated with the song your "
 "media player is starting to play, and warnings that your battery level is "
 "getting low."
-msgstr ""
+msgstr "GNOMEren mahaigainak \"jakinarazpenen area\" bat du, non aplikazioek informazioa eman diezaieketen erabiltzaileei. Jakinarazpen horiek izan daitezke, adibidez, berriketa-mezuak, erreproduzitzen ari den abestiaren xehetasunak, bateria-maila baxu dagoela ohartarazten duen mezua eta abar."
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:23
@@ -3005,14 +3005,14 @@ msgid ""
 "The first two commands are designed mainly for quick access to a message you "
 "just received. The last command is the most powerful as it stores your "
 "notification message history."
-msgstr ""
+msgstr "Lehen bi komandoak jaso berri duzun mezu bat azkar ikusteko daude diseinatuta. Azken komandoa indartsuagoa da, jakinarazpen-mezuen historia gordetzen baitu."
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:49
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
-msgstr ""
+msgstr "Jakinarazpen-mezuen zerrendan sartzean, zerrendaren tamaina esango da eta honako aukerak eskainiko dizu sistemak:"
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:54
@@ -3022,7 +3022,7 @@ msgstr "Sakatu H letra laguntza jasotzeko."
 #. (itstool) path: item/p
 #: C/howto_notifications.page:55
 msgid "Use Up, Down, Home or End to navigate in the list."
-msgstr ""
+msgstr "Erabili Up, Down, Home edo End zerrendan nabigatzeko."
 
 #. (itstool) path: item/p
 #: C/howto_notifications.page:56
@@ -3042,7 +3042,7 @@ msgstr "Sakatu sigitu bat mezu jakin bat irakurtzeko."
 #. (itstool) path: page/p
 #: C/howto_notifications.page:60
 msgid "Note that the most recently-received message is at the top of the list."
-msgstr ""
+msgstr "Kontuan izan jaso den azken mezua zerrendaren goiko aldean ageriko dela."
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:63
@@ -3309,7 +3309,7 @@ msgstr "Sakatu <gui>Bai</gui> botoia lehendik dagoen profila ezarpen berriekin g
 #. (itstool) path: steps/title
 #: C/howto_profiles.page:98
 msgid "Changing the <gui>Start-up Profile</gui>"
-msgstr ""
+msgstr "<gui>Abioko profila</gui> aldatzea"
 
 #. (itstool) path: item/p
 #: C/howto_profiles.page:105
@@ -3485,7 +3485,7 @@ msgid ""
 "In addition to the aforementioned commands, <app>Orca</app> has a number of "
 "configurable options available specifically for applications in which there "
 "is structural navigation support."
-msgstr ""
+msgstr "Goian aipatutako komandoez gain, <app>Orcak</app> egitura-nabigazioko euskarria duten aplikazioetarako bereziki erabilgarri dauden aukera konfiguragarriak ditu."
 
 #. (itstool) path: steps/title
 #: C/howto_structural_navigation.page:89
@@ -4050,26 +4050,26 @@ msgstr ""
 #: C/index.page:6
 msgctxt "text"
 msgid "<app>Orca</app> Screen Reader"
-msgstr ""
+msgstr "<app>Orca</app> pantaila-irakurlea"
 
 #. (itstool) path: info/title
 #: C/index.page:7
 msgctxt "link:trail"
 msgid "<app>Orca</app> Screen Reader"
-msgstr ""
+msgstr "<app>Orca</app> pantaila-irakurlea"
 
 #. (itstool) path: info/title
 #: C/index.page:8
 msgctxt "link"
 msgid "<app>Orca</app> Screen Reader"
-msgstr ""
+msgstr "<app>Orca</app> pantaila-irakurlea"
 
 #. (itstool) path: info/desc
 #: C/index.page:17
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
-msgstr ""
+msgstr "Orca aplikazioa kode irekiko pantaila-irakurle zalu eta hedagarria da, ahotsaren eta braille lengoaiaren bidez mahaigain grafikoa atzitzeko modua eskaintzen duena."
 
 #. (itstool) path: page/title
 #: C/index.page:22
@@ -4086,7 +4086,7 @@ msgstr "Hasi baino lehen"
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
-msgstr ""
+msgstr "Zure magaigain-inguruneak eskaintzen dituen nabigazio-komandoak oraindik ezagutzen ez badituzu, hasteko irakurri dokumentazioa."
 
 #. (itstool) path: section/title
 #: C/index.page:38
@@ -4120,7 +4120,7 @@ msgid ""
 "<app>Orca</app> is a free, open source, flexible, and extensible screen "
 "reader that provides access to the graphical desktop via speech and "
 "refreshable braille."
-msgstr ""
+msgstr "<app>Orca</app> aplikazioa kode irekiko pantaila-irakurle zalu eta hedagarria da, ahotsaren eta braille lengoaiaren bidez mahaigain grafikoa atzitzeko modua eskaintzen duena."
 
 #. (itstool) path: page/p
 #: C/introduction.page:23
@@ -4155,14 +4155,14 @@ msgstr ""
 msgid ""
 "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
 "key><key>Alt</key><key>S</key></keyseq>."
-msgstr ""
+msgstr "<app>Orca</app> GNOMEn aktibatu eta desaktibatzeko, sakatu <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: item/p
 #: C/introduction.page:48
 msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
-msgstr ""
+msgstr "Idatzi <cmd>orca</cmd>, gehi erabili nahi dituzun aukerako parametroak, terminal batean edo <gui>Exekutatu</gui> elkarrizketa-koadroan eta sakatu <key>Return</key>."
 
 #. (itstool) path: section/title
 #: C/introduction.page:57
@@ -4174,7 +4174,7 @@ msgstr "Karga-garaiko aukerak"
 msgid ""
 "The following options can be specified when launching <app>Orca</app> in a "
 "terminal window or within the <gui>Run</gui> dialog:"
-msgstr ""
+msgstr "<app>Orca</app> terminal batean edo <gui>Exekutatu</gui> elkarrizketa-koadroan abiaraztean zehaztu daitezkeen aukerak honakoak dira:"
 
 #. (itstool) path: item/p
 #: C/introduction.page:64
@@ -4197,14 +4197,14 @@ msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: Konfiguratu erabiltzaile-hobespenak"
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirname</em></cmd>: Use <em>dirname</"
 "em> as the alternate directory for user preferences"
-msgstr ""
+msgstr "<cmd>-u</cmd>, <cmd>--user-prefs=<em>dirizena</em></cmd>: Erabili <em>dirizena</em> erabiltzaile-hobespenak gordetzeko ordezko direktorio gisa"
 
 #. (itstool) path: item/p
 #: C/introduction.page:85
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
-msgstr ""
+msgstr "<cmd>-e</cmd>, <cmd>--enable=<em>aukera</em></cmd>: Behartu aukera erabiltzera, non <em>aukera</em> honakoetako bat den:"
 
 #. (itstool) path: item/p
 #: C/introduction.page:90 C/introduction.page:102
@@ -4226,27 +4226,27 @@ msgstr "<cmd>braille-monitor</cmd>"
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
-msgstr ""
+msgstr "<cmd>-d</cmd>, <cmd>--disable=<em>aukera</em></cmd>: Eragotzi aukera erabiltzea, non <em>aukera</em> honakoetako bat den:"
 
 #. (itstool) path: item/p
 #: C/introduction.page:108
 msgid ""
 "<cmd>-p</cmd>, <cmd>--profile=<em>filename</em></cmd>: Import a profile from "
 "a given <app>Orca</app> profile file"
-msgstr ""
+msgstr "<cmd>-p</cmd>, <cmd>--profile=<em>fitxategi-izena</em></cmd>: Inportatu profil bat emandako <app>Orca</app> profil-fitxategi batetik"
 
 #. (itstool) path: item/p
 #: C/introduction.page:114
 msgid ""
 "<cmd>-r</cmd>, <cmd>--replace</cmd>: Replace a currently-running <app>Orca</"
 "app>"
-msgstr ""
+msgstr "<cmd>-r</cmd>, <cmd>--replace</cmd>: Ordeztu unean exekutatzen ari den <app>Orca</app> instantzia"
 
 #. (itstool) path: item/p
 #: C/introduction.page:119
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
-msgstr ""
+msgstr "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Inprimatu exekutatzen ari diren aplikazio ezagunak"
 
 #. (itstool) path: item/p
 #: C/introduction.page:125
@@ -4258,7 +4258,7 @@ msgstr ""
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
-msgstr ""
+msgstr "<cmd>--debug-file=<em>fitxategi-izena</em></cmd>: Bidali arazketa-irteera zehaztutako fitxategira"
 
 #. (itstool) path: info/title
 #: C/preferences_braille.page:3
@@ -4269,7 +4269,7 @@ msgstr "3. Braille"
 #. (itstool) path: info/desc
 #: C/preferences_braille.page:5
 msgid "Configuring <app>Orca</app>'s braille display support"
-msgstr ""
+msgstr "<app>Orcan</app> braillea bistaratzeko euskarria konfiguratzea"
 
 #. (itstool) path: page/title
 #: C/preferences_braille.page:18
@@ -4313,7 +4313,7 @@ msgstr "Balio lehenetsia: markatu gabe"
 msgid ""
 "If you configure BrlTTY later on, you need to restart <app>Orca</app> in "
 "order to use braille."
-msgstr ""
+msgstr "BrlTTY geroago konfiguratzen baduzu, <app>Orca</app> berrabiarazi beharko da braillea erabiltzeko."
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:38
@@ -4395,7 +4395,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_braille.page:97 C/preferences_speech.page:39
 msgid "Default value: <gui>Verbose</gui>"
-msgstr ""
+msgstr "Balio lehenetsia: <gui>Xehea</gui>"
 
 #. (itstool) path: section/title
 #: C/preferences_braille.page:102
@@ -5072,7 +5072,7 @@ msgstr ""
 #: C/preferences_key_bindings.page:6
 msgctxt "sort"
 msgid "6. Key Bindings"
-msgstr "6. Later-teklak"
+msgstr "6. Laster-teklak"
 
 #. (itstool) path: info/title
 #: C/preferences_key_bindings.page:7
@@ -5496,19 +5496,19 @@ msgstr ""
 #. (itstool) path: steps/title
 #: C/preferences_pronunciation.page:77
 msgid "Deleting an existing dictionary entry"
-msgstr ""
+msgstr "Lehendik dagoen hiztegi-sarrera bat ezabatzea"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:79
 msgid "Move to the entry you wish to delete."
-msgstr ""
+msgstr "Joan ezabatu nahi duzun sarrerara"
 
 #. (itstool) path: item/p
 #: C/preferences_pronunciation.page:82
 msgid ""
 "Press the <gui>Delete</gui> button or <keyseq><key>Alt</key><key>D</key></"
 "keyseq>."
-msgstr ""
+msgstr "Sakatu <gui>Ezabatu</gui> botoia edo <keyseq><key>Alt</key><key>D</key></keyseq>."
 
 #. (itstool) path: info/title
 #: C/preferences_speech.page:5
@@ -5565,7 +5565,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_speech.page:51
 msgid "Default value: <gui>Most</gui>"
-msgstr ""
+msgstr "Balio lehenetsia: <gui>Gehienak</gui>"
 
 #. (itstool) path: section/title
 #: C/preferences_speech.page:55
@@ -5686,7 +5686,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:140
 msgid "Speak misspelled-word indicator"
-msgstr ""
+msgstr "Irakurri gaizki idatzitako hitzen adierazlea"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:141
@@ -5701,7 +5701,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:153
 msgid "Speak object mnemonics"
-msgstr ""
+msgstr "Irakurri objektu mnemoteknikoak"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:154
@@ -5714,7 +5714,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:165
 msgid "Speak child position"
-msgstr ""
+msgstr "Irakurri haurraren posizioa"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:166
@@ -5740,7 +5740,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:188
 msgid "Speak description"
-msgstr ""
+msgstr "Irakurri deskribapena"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:189
@@ -5753,7 +5753,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:200
 msgid "System messages are detailed"
-msgstr ""
+msgstr "Sistema-mezuak xeheak dira"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:201
@@ -5768,7 +5768,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:213
 msgid "Speak colors as names"
-msgstr ""
+msgstr "Irakurri koloreak izen modura"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:214
@@ -5782,7 +5782,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:225
 msgid "Announce blockquotes during navigation"
-msgstr ""
+msgstr "Iragarri aipu-blokeak nabigazioan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:226
@@ -5798,7 +5798,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:239
 msgid "Announce forms during navigation"
-msgstr ""
+msgstr "Iragarri inprimakiak nabigazioan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:240
@@ -5816,7 +5816,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:256
 msgid "Announce landmarks during navigation"
-msgstr ""
+msgstr "Iragarri erreferentzia-puntuak nabigazioan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:257
@@ -5832,7 +5832,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:270
 msgid "Announce lists during navigation"
-msgstr ""
+msgstr "Iragarri zerrendak nabigazioan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:271
@@ -5848,7 +5848,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:284
 msgid "Announce panels during navigation"
-msgstr ""
+msgstr "Iragarri panelak nabigazioan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:285
@@ -5864,7 +5864,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:298
 msgid "Announce tables during navigation"
-msgstr ""
+msgstr "Iragarri taulak nabigazioan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:299
@@ -5880,7 +5880,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:312
 msgid "Speak full row in GUI tables"
-msgstr ""
+msgstr "Irakurri errenkada osoa GUI tauletan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:313
@@ -5894,7 +5894,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:324
 msgid "Speak full row in document tables"
-msgstr ""
+msgstr "Irakurri errenkada osoa dokumentu-tauletan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:325
@@ -5908,7 +5908,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_speech.page:336
 msgid "Speak full row in spreadsheets"
-msgstr ""
+msgstr "Irakurri errenkada osoa kalkulu-orrietan"
 
 #. (itstool) path: section/p
 #: C/preferences_speech.page:337
@@ -5923,23 +5923,23 @@ msgstr ""
 #: C/preferences_spellcheck.page:4
 msgctxt "sort"
 msgid "4. Spell Check"
-msgstr ""
+msgstr "4. Ortografia-egiaztapena"
 
 #. (itstool) path: info/title
 #: C/preferences_spellcheck.page:5
 msgctxt "link"
 msgid "Spell Check"
-msgstr "Zuzentzaile ortografikoa"
+msgstr "Ortografia-egiaztapena"
 
 #. (itstool) path: info/desc
 #: C/preferences_spellcheck.page:6
 msgid "Configuring <app>Orca</app>'s support for Spell Check"
-msgstr ""
+msgstr "<app>Orcak</app> ortografia-egiaztapenerako duen euskarria konfiguratrzea"
 
 #. (itstool) path: page/title
 #: C/preferences_spellcheck.page:17
 msgid "Spell Check Preferences"
-msgstr ""
+msgstr "Ortografia-egiaztapenaren hobespenak"
 
 #. (itstool) path: page/p
 #: C/preferences_spellcheck.page:18
@@ -5953,7 +5953,7 @@ msgstr ""
 #. (itstool) path: note/title
 #: C/preferences_spellcheck.page:25
 msgid "You can have both brief and verbose spell check information"
-msgstr ""
+msgstr "Ortografia-egiaztapen laburra edo xehea eduki dezakezu"
 
 #. (itstool) path: note/p
 #: C/preferences_spellcheck.page:26
@@ -5969,7 +5969,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:36
 msgid "Spell error"
-msgstr ""
+msgstr "Errore ortografikoa"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:37
@@ -5981,7 +5981,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:46
 msgid "Spell suggestion"
-msgstr ""
+msgstr "Ortografia-iradokizuna"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:47
@@ -5993,7 +5993,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_spellcheck.page:56
 msgid "Present context of error"
-msgstr ""
+msgstr "Aurkeztu errorearen testuingurua"
 
 #. (itstool) path: section/p
 #: C/preferences_spellcheck.page:57
@@ -6006,7 +6006,7 @@ msgstr ""
 #: C/preferences_table_navigation.page:8
 msgctxt "sort"
 msgid "2. Table Navigation"
-msgstr ""
+msgstr "2. Taula-nabigazioa"
 
 #. (itstool) path: info/desc
 #: C/preferences_table_navigation.page:10
@@ -6016,7 +6016,7 @@ msgstr ""
 #. (itstool) path: page/title
 #: C/preferences_table_navigation.page:21
 msgid "Table Navigation Preferences"
-msgstr ""
+msgstr "Taula-nabigazioaren hobespenak"
 
 #. (itstool) path: page/p
 #: C/preferences_table_navigation.page:22
@@ -6091,7 +6091,7 @@ msgstr "Testu-atributuak"
 #. (itstool) path: info/desc
 #: C/preferences_text_attributes.page:9
 msgid "Configuring what formatting is presented"
-msgstr ""
+msgstr "Zein formatu aurkezten den konfiguratzea"
 
 #. (itstool) path: page/title
 #: C/preferences_text_attributes.page:20
@@ -6125,7 +6125,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:38
 msgid "<gui>Attribute Name</gui>: The name of the text attribute."
-msgstr ""
+msgstr "<gui>Atributu-izena</gui>: Testu-atributuaren izena."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:43
@@ -6192,7 +6192,7 @@ msgstr ""
 msgid ""
 "<gui>Move to top</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>): moves "
 "the selected attribute to the top of the list."
-msgstr ""
+msgstr "<gui>Eraman gora</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>): hautatutako atributua zerrendaren goiko aldera darama."
 
 #. (itstool) path: item/p
 #: C/preferences_text_attributes.page:98
@@ -6213,7 +6213,7 @@ msgstr ""
 msgid ""
 "<gui>Move to bottom</gui> (<keyseq><key>Alt</key><key>B</key></keyseq>): "
 "moves the selected attribute to the bottom of the list."
-msgstr ""
+msgstr "<gui>Eraman behera</gui> (<keyseq><key>Alt</key><key>B</key></keyseq>): hautatutako atributua zerrendaren beheko aldera darama."
 
 #. (itstool) path: section/title
 #: C/preferences_text_attributes.page:118
@@ -6360,7 +6360,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_voice.page:71
 msgid "<gui>Icon</gui>: Plays a tone"
-msgstr ""
+msgstr "<gui>Ikonoa</gui>: Tonu bat erreproduzitzen du"
 
 #. (itstool) path: item/p
 #: C/preferences_voice.page:72
@@ -6370,13 +6370,13 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/preferences_voice.page:73
 msgid "<gui>None</gui>"
-msgstr ""
+msgstr "<gui>Bat ere ez</gui>"
 
 #. (itstool) path: note/title
 #: C/preferences_voice.page:76 C/preferences_web.page:39
 #: C/preferences_web.page:82
 msgid "This setting can be toggled on the fly"
-msgstr ""
+msgstr "Ezarpen hau dinamikoki aldatu daiteke"
 
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
@@ -6389,7 +6389,7 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_voice.page:83
 msgid "Default value: none"
-msgstr ""
+msgstr "Balio lehenetsia: Bat ere ez"
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:88
@@ -6629,7 +6629,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_web.page:171
 msgid "Table Options"
-msgstr ""
+msgstr "Taula-aukerak"
 
 #. (itstool) path: note/p
 #: C/preferences_web.page:173
@@ -6655,7 +6655,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_web.page:188
 msgid "Speak results during find"
-msgstr ""
+msgstr "Irakurri emaitzak bilaketa egin bitartean"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:189
@@ -6667,7 +6667,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_web.page:198
 msgid "Only speak changed lines during find"
-msgstr ""
+msgstr "Irakurri soilik aldatutako lerroak bilaketa egin bitartean"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:199
@@ -6681,7 +6681,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/preferences_web.page:210
 msgid "Minimum length of matched text"
-msgstr ""
+msgstr "Bat datorren testuaren gutxieneko luzera"
 
 #. (itstool) path: section/p
 #: C/preferences_web.page:211
@@ -6695,4 +6695,4 @@ msgstr ""
 #. (itstool) path: section/p
 #: C/preferences_web.page:218
 msgid "Default value: 4"
-msgstr ""
+msgstr "Balio lehenetsia: 4"
