@@ -330,9 +330,13 @@ class InputEventManager:
         if (event.is_modifier_key() and last_count == 2) or last_count == 3:
             return 1
 
-        # Only increment click count if there are multi-click bindings for this key.
+        # Only increment click count if there are multi-click bindings for this key,
+        # OR if it's an Orca modifier (double-click toggles the locking state).
         # This prevents accidental "double-clicks" from breaking commands that only
         # have single-click bindings.
+        if event.is_orca_modifier():
+            return last_count + 1
+
         # pylint: disable-next=import-outside-toplevel
         from . import command_manager
         if not command_manager.get_manager().has_multi_click_bindings(

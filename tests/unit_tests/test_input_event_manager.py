@@ -3125,6 +3125,7 @@ class TestInputEventManager:
         second_event.time = 1000.3  # Within 0.5s timeout
         second_event.is_pressed_key = test_context.Mock(return_value=True)
         second_event.is_modifier_key = test_context.Mock(return_value=False)
+        second_event.is_orca_modifier = test_context.Mock(return_value=False)
         second_event.get_object = test_context.Mock(return_value=None)
 
         # Determine click count - should stay at 1 since no multi-click bindings
@@ -3188,6 +3189,7 @@ class TestInputEventManager:
         second_event.time = 1000.3  # Within 0.5s timeout
         second_event.is_pressed_key = test_context.Mock(return_value=True)
         second_event.is_modifier_key = test_context.Mock(return_value=False)
+        second_event.is_orca_modifier = test_context.Mock(return_value=False)
         second_event.get_object = test_context.Mock(return_value=None)
 
         # Determine click count - should increment to 2 since multi-click bindings exist
