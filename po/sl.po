@@ -11,17 +11,17 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-01-27 19:28+0000\n"
-"PO-Revision-Date: 2026-01-28 08:22+0100\n"
+"PO-Revision-Date: 2026-01-28 17:42+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
-"n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: orca-autostart.desktop.in:3
 msgid "Orca Screen Reader"
@@ -1061,7 +1061,7 @@ msgstr "Postavi Brajev zaslon desno"
 #. will return the flat review to the object with focus.
 #: src/orca/cmdnames.py:394
 msgid "Return to object with keyboard focus"
-msgstr "Vrni se na predmet s tipkovnico"
+msgstr "Vrni se na predmet s pozornostjo tipkovnice"
 
 #. Translators: braille can be displayed in many ways. Contracted braille
 #. provides a more efficient means to represent text, especially long
@@ -1973,31 +1973,31 @@ msgstr "Skoči na zadnje območje z objavo"
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1033
 msgid "Go to the parent of the object with navigator focus."
-msgstr "Skoči na nadrejeni predmet in ga postavi v žarišče."
+msgstr "Skoči na nadrejeni predmet in ga postavi v središče pozornosti."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1037
 msgid "Go to the first child of the object with navigator focus."
-msgstr "Skoči na prvi podrejen predmet in ga postavi v žarišče."
+msgstr "Skoči na prvi podrejen predmet in ga postavi v središče pozornosti."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1041
 msgid "Go to the next sibling of the object with navigator focus."
-msgstr "Skoči na naslednji predmet in ga postavi v žarišče."
+msgstr "Skoči na naslednji predmet in ga postavi v središče pozornosti."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1045
 msgid "Go to the previous sibling of the object with navigator focus."
-msgstr "Skoči na predhodni predmet in ga postavi v žarišče."
+msgstr "Skoči na predhodni predmet in ga postavi v središče pozornosti."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
 #: src/orca/cmdnames.py:1049
 msgid "Click on the object with navigator focus."
-msgstr "Kliknii na predmet in ga postavi v žarišče."
+msgstr "Kliknii na predmet in ga postavi v središče pozornosti."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
@@ -2144,7 +2144,7 @@ msgstr "Preklopi način razporeditve"
 #. between these two modes.
 #: src/orca/cmdnames.py:1148
 msgid "Switch between browse mode and focus mode"
-msgstr "Preklopi med načinom iskanja in načinom žarišča"
+msgstr "Preklopi med načinom iskanja in načinom pozornosti"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -2157,7 +2157,7 @@ msgstr "Preklopi med načinom iskanja in načinom žarišča"
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: src/orca/cmdnames.py:1159
 msgid "Enable sticky focus mode"
-msgstr "Omogoči lepljiv način žarišča"
+msgstr "Omogoči lepljiv način pozornosti"
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -3256,8 +3256,8 @@ msgid ""
 "Automatic focus mode causes Orca to switch to focus mode when you navigate "
 "into a form field or other interactive widget."
 msgstr ""
-"Samodejni način ostrenja povzroči, da Orca preklopi v način ostrenja, ko se "
-"premikate v polje obrazca ali drug interaktivni gradnik."
+"Samodejni način pozornosti povzroči, da Orca preklopi v način pozornosti, ko "
+"prikrmarite v polje obrazca ali drug interaktivni gradnik."
 
 #: src/orca/guilabels.py:100
 msgid ""
@@ -3274,18 +3274,16 @@ msgstr ""
 #. consistent with `MODE_FOCUS_IS_STICKY = _("Focus mode is sticky.")` in
 #. messages.py.
 #: src/orca/guilabels.py:109
-#, fuzzy
 msgid "Automatic sticky focus mode for web applications"
-msgstr " Samodejni način lepljivega žarišča za spletne aplikacije"
+msgstr " Samodejni lepljivi način pozornosti za spletne aplikacije"
 
 #: src/orca/guilabels.py:114
-#, fuzzy
 msgid ""
 "Automatic sticky focus mode causes Orca to detect web applications and "
 "Electron apps and stay in focus mode until toggled off by command."
 msgstr ""
-"Samodejno lepljivi način žarišča v Orki zaznava spletne aplikacije in "
-"aplikacije Electron ter ostaja v načinu žarišča do izklopa z ukazom."
+"Samodejno lepljivi način pozornosti v Orki zaznava spletne aplikacije in "
+"aplikacije Electron ter ostaja v načinu pozornosti do izklopa z ukazom."
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -10751,7 +10749,7 @@ msgstr "Načina brskanja"
 #. This string is the message presented when Orca switches to focus mode.
 #: src/orca/messages.py:1758
 msgid "Focus mode"
-msgstr "Način žariščenja oken"
+msgstr "Način pozornosti"
 
 #. Translators: Orca has a number of commands that override the default
 #. behavior within an application. For instance, on a web page, "h" moves
@@ -10773,7 +10771,7 @@ msgstr "Način žariščenja oken"
 #: src/orca/messages.py:1777
 #, python-format
 msgid "To enable focus mode press %s."
-msgstr "Za omogočanje načina žarišča pritisnite %s."
+msgstr "Za omogočanje načina pozornosti pritisnite %s."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -10786,7 +10784,7 @@ msgstr "Za omogočanje načina žarišča pritisnite %s."
 #. This string is the message presented when Orca switches to sticky focus mode.
 #: src/orca/messages.py:1788
 msgid "Focus mode is sticky."
-msgstr "Lepljivi način žariščenja."
+msgstr "Lepljivi način pozornosti."
 
 #. Translators: (Please see the previous, detailed translator notes about
 #. Focus mode and Browse mode.) In order to minimize the amount of work Orca
@@ -10953,13 +10951,13 @@ msgstr "Ni najdenih dejavnosti na: %s"
 #. no accessible component has keyboard focus.
 #: src/orca/messages.py:1913
 msgid "No focus"
-msgstr "Ni v žarišču"
+msgstr "Ni v središču pozornosti"
 
 #. Translators: This message presents the fact that no accessible application has
 #. has keyboard focus.
 #: src/orca/messages.py:1917
 msgid "No application has focus."
-msgstr "Noben program nima oken v žarišču."
+msgstr "Noben program nima oken s pozornostjo."
 
 #. Translators: This is for navigating document content by moving from blockquote
 #. to blockquote. This is a detailed message which will be presented to the user
@@ -12069,10 +12067,10 @@ msgstr[3] "(%d pogovorna okna)"
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
-msgstr[0] "%d pogovornih oken izven žarišča"
-msgstr[1] "%d pogovorno okno izven žarišča"
-msgstr[2] "%d pogovorni okni izven žarišča"
-msgstr[3] "%d pogovorna okna izven žarišča"
+msgstr[0] "%d pogovornih oken brez pozornosti"
+msgstr[1] "%d pogovorno okno brez pozornosti"
+msgstr[2] "%d pogovorni okni brez pozornosti"
+msgstr[3] "%d pogovorna okna brez pozornosti"
 
 #. Translators: This is the size of a file in bytes
 #: src/orca/messages.py:2706
