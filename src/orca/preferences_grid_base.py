@@ -843,6 +843,7 @@ class PreferencesGridBase(Gtk.Grid):
         chevron_accessible = chevron.get_accessible()
         if chevron_accessible:
             chevron_accessible.set_name("")
+            chevron_accessible.set_role(Atk.Role.BUTTON)
         hbox.pack_end(chevron, False, False, 0)
 
         row.add(hbox)

@@ -890,6 +890,38 @@ class TestPreferencesGridBaseStackedPreferences:
         assert isinstance(row, CategoryListBoxRow)
         assert row.category == "speech"
 
+    def test_add_stack_category_row_chevron_accessible_role(self) -> None:
+        """Test _add_stack_category_row chevron has PUSH_BUTTON accessible role."""
+
+        gi.require_version("Atk", "1.0")
+        from gi.repository import Atk
+
+        class TestGrid(PreferencesGridBase):
+            def __init__(self):
+                super().__init__("Test")
+                stack, categories, _detail = self._create_stacked_preferences(
+                    on_category_activated=lambda r: None
+                )
+                self.my_categories = categories
+
+        grid = TestGrid()
+        row = grid._add_stack_category_row(grid.my_categories, "Test Category", category="test")
+
+        # Find the chevron image in the row's hbox
+        hbox = row.get_child()
+        chevron = None
+        for child in hbox.get_children():
+            if isinstance(child, Gtk.Image):
+                chevron = child
+                break
+
+        assert chevron is not None, "Chevron image not found in category row"
+
+        chevron_accessible = chevron.get_accessible()
+        assert chevron_accessible is not None
+        assert chevron_accessible.get_role() == Atk.Role.BUTTON
+        assert chevron_accessible.get_name() == ""
+
     def test_show_stack_categories_and_detail(self) -> None:
         """Test _show_stack_categories and _show_stack_detail switch views."""
 
