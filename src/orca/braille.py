@@ -534,7 +534,7 @@ class Text(Region):
         cursor_offset = min(self.caret_offset - self.line_offset, len(string))
         self._max_caret_offset = self.line_offset + len(string)
 
-        if label:
+        if label and label != string:
             self._label = label + " "
         else:
             self._label = ""
