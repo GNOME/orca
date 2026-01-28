@@ -1068,11 +1068,10 @@ class CommandManager:
         msg = f"COMMAND MANAGER: Setting keyboard layout is_desktop to {is_desktop}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self._is_desktop == is_desktop:
-            return True
-
-        self._is_desktop = is_desktop
-        orca_modifier_manager.get_manager().set_modifiers_for_layout(is_desktop)
+        layout_changed = self._is_desktop != is_desktop
+        if layout_changed:
+            self._is_desktop = is_desktop
+            orca_modifier_manager.get_manager().set_modifiers_for_layout(is_desktop)
 
         has_device = input_event_manager.get_manager().has_device()
 
@@ -1080,7 +1079,8 @@ class CommandManager:
             old_bindings = self._get_active_bindings(self._keyboard_commands)
             old_key_to_cmd = self._get_key_to_cmd_mapping(self._keyboard_commands)
 
-        self._apply_layout_to_commands()
+        if layout_changed:
+            self._apply_layout_to_commands()
         self.apply_user_overrides()
 
         if has_device:
@@ -1203,7 +1203,14 @@ class CommandManager:
         """Adds a command to the registry and sets its active keybinding."""
 
         if isinstance(command, KeyboardCommand):
-            self._keyboard_commands[command.get_name()] = command
+            # Remove any existing command with the same name from the key index
+            # before replacing it in the dict
+            name = command.get_name()
+            old_cmd = self._keyboard_commands.get(name)
+            if old_cmd is not None:
+                self._remove_from_key_index(old_cmd)
+
+            self._keyboard_commands[name] = command
             default_kb = command.get_default_keybinding(self._is_desktop)
             command.set_keybinding(default_kb)
             self._add_to_key_index(command)
@@ -1262,6 +1269,8 @@ class CommandManager:
         for command_name, binding_tuples in keybindings_dict.items():
             cmd = self.get_keyboard_command(command_name)
             if cmd is None:
+                msg = f"COMMAND MANAGER: Override for unknown command '{command_name}'"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 continue
 
             old_kb = cmd.get_keybinding()
@@ -1287,6 +1296,10 @@ class CommandManager:
                     if old_key == new_key:
                         # Binding unchanged, skip to preserve grabs
                         continue
+
+                    msg = f"COMMAND MANAGER: Applying override for '{command_name}': " \
+                          f"{old_key} -> {new_key}"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
 
                     self._remove_from_key_index(cmd)
                     kb = keybindings.KeyBinding(keysym, int(mods), click_count=int(clicks))
