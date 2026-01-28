@@ -193,7 +193,11 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self.stack = Gtk.Stack()
         self.stack.set_hexpand(True)
-        self.content_vbox.pack_start(self.stack, True, True, 0)
+        self.stack.set_vhomogeneous(False)
+        stack_scrolled = Gtk.ScrolledWindow()
+        stack_scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        stack_scrolled.add(self.stack)
+        self.content_vbox.pack_start(stack_scrolled, True, True, 0)
 
         self.hbox.pack_start(self.content_vbox, True, True, 0)
 
@@ -332,6 +336,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.left_headerbar.set_size_request(max_width, -1)
         self.sidebar_vbox.set_size_request(max_width, -1)
 
+    def _set_height_from_sidebar(self) -> None:
+        """Set window height to fit the sidebar items, capped at 800px."""
+
+        sidebar_height = self.listbox.get_preferred_height()[1]
+        headerbar_height = self.left_headerbar.get_allocated_height()
+        height = min(sidebar_height + headerbar_height, 800)
+        self.resize(self.get_allocated_width(), height)
+
     def _on_listbox_key_press(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         if event.keyval == Gdk.KEY_Tab:
             self.stack.child_focus(Gtk.DirectionType.TAB_FORWARD)
@@ -445,6 +457,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         OrcaSetupGUI.WINDOW.show_all()
         self._sync_headerbar_widths()
+        self._set_height_from_sidebar()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.stack.set_transition_duration(150)
         OrcaSetupGUI.WINDOW.present_with_time(time.time())
