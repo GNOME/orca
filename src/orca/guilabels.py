@@ -166,8 +166,9 @@ MENU_REMOVE_PROFILE = _("Remove Profile...")
 # Translators: This is the label for a menu item to rename a profile.
 MENU_RENAME = _("Rename...")
 
-# Translators: This is the accessible name for the main preferences menu button.
-MENU_BUTTON_PREFERENCES = _("Preferences")
+# Translators: This is the accessible name for the main menu button in the
+# preferences dialog. The menu contains actions like Help, Apply, Save, and Cancel.
+MENU_BUTTON_OPTIONS = _("Options")
 
 # Translators: This is the primary message in a dialog asking the user to confirm
 # closing the preferences window without saving changes.

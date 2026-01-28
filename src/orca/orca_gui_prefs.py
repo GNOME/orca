@@ -118,7 +118,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.menu_button = Gtk.MenuButton()
         menu_image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.BUTTON)
         self.menu_button.set_image(menu_image)
-        self.menu_button.get_accessible().set_name(guilabels.MENU_BUTTON_PREFERENCES)
+        self.menu_button.get_accessible().set_name(guilabels.MENU_BUTTON_OPTIONS)
 
         popover = Gtk.Popover()
         menu_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
