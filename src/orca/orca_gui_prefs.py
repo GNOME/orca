@@ -106,6 +106,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if script.app is not None:
             self._app_name = AXObject.get_name(script.app) or None
         self._current_page_title: str = ""
+        self._current_panel_id: str | None = None
         self._original_profile: str = profile_manager.get_manager().get_active_profile()
 
         titlebar_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
@@ -405,9 +406,15 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self.stack.set_visible_child_name(panel_id)
 
+        # Only reset multi-page grids when switching to a different panel.
+        # This preserves sub-category state when focus returns to the
+        # sidebar via Shift-Tab without changing the selected row.
         child = self.stack.get_child_by_name(panel_id)
         if isinstance(child, preferences_grid_base.PreferencesGridBase):
-            child.on_becoming_visible()
+            if panel_id != self._current_panel_id:
+                child.on_becoming_visible()
+
+        self._current_panel_id = panel_id
 
     def write_user_preferences(self, pronunciation_dict: dict[str, Any],
                                key_bindings_dict: dict[str, Any]) -> None:
