@@ -170,6 +170,8 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             internal_name = profile[1]
             if internal_name in self._pending_renames:
                 result.append(self._pending_renames[internal_name])
+            elif internal_name == "default":
+                result.append(self._default_profile)
             else:
                 result.append(profile)
         return result if result else [self._default_profile]
@@ -183,6 +185,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         internal_name = self._manager.get_active_profile()
         if internal_name in self._pending_renames:
             return self._pending_renames[internal_name][0]
+
+        if internal_name == "default":
+            return self._default_profile[0]
 
         for profile in self._manager.get_available_profiles():
             if profile is not None and profile[1] == internal_name:
@@ -558,7 +563,12 @@ class ProfileManager:
     def get_available_profiles(self) -> list[list[str]]:
         """Returns list of available profiles as [display_name, internal_name] pairs."""
 
-        return settings_manager.get_manager().available_profiles()
+        profiles = settings_manager.get_manager().available_profiles()
+        for profile in profiles:
+            if profile[1] == "default":
+                profile[0] = guilabels.PROFILE_DEFAULT
+                break
+        return profiles
 
     @dbus_service.getter
     def get_active_profile(self) -> str:

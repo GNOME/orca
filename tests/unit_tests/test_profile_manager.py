@@ -78,6 +78,9 @@ class TestProfileManager:
         messages_mock.PROFILE_CHANGED = "Profile set to %s."
         messages_mock.PROFILE_CURRENT = "Current profile is %s."
 
+        guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.PROFILE_DEFAULT = "Default"
+
         return essential_modules
 
     def test_get_available_profiles(self, test_context: OrcaTestContext) -> None:
