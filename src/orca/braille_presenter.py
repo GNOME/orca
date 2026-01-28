@@ -214,6 +214,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
     """GtkGrid containing the Braille Flash Messages preferences page."""
 
     def __init__(self, presenter: BraillePresenter) -> None:
+        self._presenter = presenter
         self._flash_persistent_control = preferences_grid_base.BooleanPreferenceControl(
             label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
             getter=presenter.get_flash_messages_are_persistent,
@@ -244,7 +245,6 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 maximum=100,
                 getter=presenter._get_flash_duration_seconds,
                 setter=presenter._set_flash_duration_seconds,
-                prefs_key="brailleFlashTime",
                 determine_sensitivity=self._flash_not_persistent
             ),
         ]
@@ -256,6 +256,13 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
 
         widget = self.get_widget_for_control(self._flash_persistent_control)
         return not widget.get_active() if widget else True
+
+    def save_settings(self) -> dict:
+        """Persist staged values, including brailleFlashTime in milliseconds."""
+
+        result = super().save_settings()
+        result["brailleFlashTime"] = self._presenter.get_flash_message_duration()
+        return result
 
 
 class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -459,7 +466,7 @@ class BraillePresenter:
         """Returns flash duration in seconds (converted from milliseconds)."""
 
         duration_ms = self.get_flash_message_duration()
-        return duration_ms // 1000
+        return max(1, duration_ms // 1000)
 
     def _set_flash_duration_seconds(self, value: int) -> None:
         """Sets flash duration in seconds (converts to milliseconds)."""

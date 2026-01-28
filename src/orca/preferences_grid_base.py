@@ -1485,6 +1485,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         spin = Gtk.SpinButton(adjustment=adjustment)
         spin.set_digits(0)
         spin.connect("value-changed", self._on_value_changed)
+        spin.connect("changed", lambda w: w.update())
         label.set_mnemonic_widget(spin)
         hbox.pack_end(spin, False, False, 0)
         row.add(hbox)
