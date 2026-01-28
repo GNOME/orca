@@ -177,6 +177,28 @@ PREFERENCES_CLOSE_WITHOUT_SAVE = _("Save Changes?")
 # closing the preferences window without saving changes.
 PREFERENCES_CHANGES_WILL_BE_LOST = _("Your changes will be lost if you don't save them.")
 
+# Translators: Profiles in Orca make it possible for users to quickly switch
+# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+# text written in English using an English-language speech synthesizer and
+# braille rules, and a similar 'Spanish' profile for reading Spanish text.
+# This message appears in a dialog when the user closes the preferences
+# after switching to a different profile.
+PREFERENCES_PROFILE_SWITCHED = _("You switched profiles.")
+
+# Translators: Profiles in Orca make it possible for users to quickly switch
+# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+# text written in English using an English-language speech synthesizer and
+# braille rules, and a similar 'Spanish' profile for reading Spanish text.
+# This is a button label in the profile switch dialog. %s is the profile name.
+PROFILE_USE = C_("profile", "Use %s")
+
+# Translators: Profiles in Orca make it possible for users to quickly switch
+# amongst a group of pre-defined settings (e.g. an 'English' profile for reading
+# text written in English using an English-language speech synthesizer and
+# braille rules, and a similar 'Spanish' profile for reading Spanish text.
+# This is a button label in the profile switch dialog. %s is the profile name.
+PROFILE_SWITCH_BACK_TO = _("Switch back to %s")
+
 # Translators: Orca uses Speech Dispatcher to present content to users via
 # text-to-speech. Speech Dispatcher has a feature to control how capital
 # letters are presented: Do nothing at all, say the word 'capital' prior to

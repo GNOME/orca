@@ -106,6 +106,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if script.app is not None:
             self._app_name = AXObject.get_name(script.app) or None
         self._current_page_title: str = ""
+        self._original_profile: str = profile_manager.get_manager().get_active_profile()
 
         titlebar_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
 
@@ -605,6 +606,10 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             )
         )
 
+        # Check if profile was switched during this session
+        current_profile = profile_manager.get_manager().get_active_profile()
+        profile_was_switched = current_profile != self._original_profile
+
         if has_unsaved_changes:
             dialog = Gtk.MessageDialog(
                 transient_for=self,
@@ -639,6 +644,33 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
                 self._on_save_profile_as()
             elif response in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
                 return True
+
+        elif profile_was_switched:
+            # Profile was switched but no other changes - show simple dialog
+            current_label = self._get_current_profile_label()
+            original_label = self.profiles_grid.get_profile_label(self._original_profile)
+            dialog = Gtk.MessageDialog(
+                transient_for=self,
+                modal=True,
+                message_type=Gtk.MessageType.QUESTION,
+                buttons=Gtk.ButtonsType.NONE,
+                text=guilabels.PREFERENCES_PROFILE_SWITCHED
+            )
+
+            use_button = dialog.add_button(
+                guilabels.PROFILE_USE % current_label, Gtk.ResponseType.YES)
+            use_button.get_style_context().add_class("suggested-action")
+            dialog.add_button(
+                guilabels.PROFILE_SWITCH_BACK_TO % original_label, Gtk.ResponseType.NO)
+
+            dialog.show_all()
+            dialog.present()
+            use_button.grab_focus()
+            response = dialog.run()
+            dialog.destroy()
+
+            if response == Gtk.ResponseType.NO:
+                profile_manager.get_manager().load_profile(self._original_profile)
 
         self.suspend_events()
         GObject.timeout_add(1000, self.resume_events)

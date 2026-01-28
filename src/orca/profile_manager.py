@@ -54,6 +54,7 @@ from . import input_event
 from . import messages
 from . import orca
 from . import preferences_grid_base
+from . import script_manager
 from . import settings_manager
 from . import speech_and_verbosity_manager
 
@@ -109,7 +110,8 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 values=profile_values,
                 prefs_key="activeProfile",
                 member_of=guilabels.CURRENT_PROFILE,
-                get_actions_for_option=None if self._is_app_specific else self._get_profile_actions
+                get_actions_for_option=None if self._is_app_specific else self._get_profile_actions,
+                tracks_changes=False,
             ),
         ]
 
@@ -179,10 +181,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _get_active_profile(self) -> str:
         return self._manager.get_active_profile()
 
-    def get_current_profile_label(self) -> str:
-        """Get the display label for the current profile, including pending renames."""
+    def get_profile_label(self, internal_name: str) -> str:
+        """Get the display label for a profile by its internal name."""
 
-        internal_name = self._manager.get_active_profile()
         if internal_name in self._pending_renames:
             return self._pending_renames[internal_name][0]
 
@@ -193,6 +194,11 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if profile is not None and profile[1] == internal_name:
                 return profile[0]
         return internal_name
+
+    def get_current_profile_label(self) -> str:
+        """Get the display label for the current profile, including pending renames."""
+
+        return self.get_profile_label(self._manager.get_active_profile())
 
     def _set_active_profile(self, internal_name: str) -> None:
         if self._initializing:
@@ -590,6 +596,7 @@ class ProfileManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.set_active_profile(internal_name, update_locale)
+        script_manager.get_manager().clear_app_settings_snapshots()
         orca.load_user_settings(skip_reload_message=True)
 
     def create_profile(self, new_profile: list[str]) -> bool:

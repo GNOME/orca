@@ -225,6 +225,7 @@ class SelectionPreferenceControl:  # pylint: disable=too-many-instance-attribute
     ] = None
     determine_sensitivity: Optional[Callable[[], bool]] = None
     apply_immediately: bool = True
+    tracks_changes: bool = True
 
 
 # pylint: disable=no-member
@@ -1770,13 +1771,14 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             return
 
         # Check if this is an apply_immediately control
+        tracks_changes = True
         if widget in self._widget_to_control_index:
             control = self._controls[self._widget_to_control_index[widget]]
             if isinstance(control, BooleanPreferenceControl) and control.apply_immediately:
                 assert isinstance(widget, Gtk.Switch)
                 control.setter(widget.get_active())
-            elif isinstance(control, SelectionPreferenceControl) and control.apply_immediately:
-                if control.setter is not None:
+            elif isinstance(control, SelectionPreferenceControl):
+                if control.apply_immediately and control.setter is not None:
                     if isinstance(widget, Gtk.ComboBoxText):
                         active = widget.get_active()
                         if active >= 0:
@@ -1785,8 +1787,10 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                     elif isinstance(widget, Gtk.RadioButton):
                         if widget in self._radio_to_selection_value:
                             control.setter(self._radio_to_selection_value[widget])
+                tracks_changes = control.tracks_changes
 
-        self._has_unsaved_changes = True
+        if tracks_changes:
+            self._has_unsaved_changes = True
         self._update_sensitivity()
 
     def _update_sensitivity(self) -> None:
