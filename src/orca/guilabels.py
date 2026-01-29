@@ -813,20 +813,20 @@ PUNCTUATION_STYLE = _("Punctuation Level")
 
 # Translators: If this setting is chosen, no punctuation symbols will be spoken
 # as a user reads a document.
-PUNCTUATION_STYLE_NONE = C_("punctuation level", "_None")
+PUNCTUATION_STYLE_NONE = C_("punctuation level", "None")
 
 # Translators: If this setting is chosen, common punctuation symbols (like
 # comma, period, question mark) will not be spoken as a user reads a document,
 # but less common symbols (such as #, @, $) will.
-PUNCTUATION_STYLE_SOME = _("So_me")
+PUNCTUATION_STYLE_SOME = C_("punctuation level", "Some")
 
 # Translators: If this setting is chosen, the majority of punctuation symbols
 # will be spoken as a user reads a document.
-PUNCTUATION_STYLE_MOST = _("M_ost")
+PUNCTUATION_STYLE_MOST = C_("punctuation level", "Most")
 
 # Translators: If this setting is chosen, all punctuation symbols will be spoken
 # as a user reads a document.
-PUNCTUATION_STYLE_ALL = _("_All")
+PUNCTUATION_STYLE_ALL = C_("punctuation level", "All")
 
 # Translators: If this setting is chosen and the user is reading over an entire
 # document, Orca will pause at the end of each line.

@@ -41,6 +41,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
 __license__   = "LGPL"
 
 import importlib
+import locale
 import queue
 import re
 import string
@@ -236,7 +237,6 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             _announcements_prefs,
         ) = manager.get_speech_preferences()
 
-        # Text preferences
         text_speak_blank_lines = SpeechPreference(
             "speakBlankLines",
             guilabels.SPEECH_SPEAK_BLANK_LINES,
@@ -262,7 +262,6 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             manager.set_speak_indentation_only_if_changed,
         )
 
-        # Create control objects and store references for sensitivity checking
         self._only_speak_displayed_control = preferences_grid_base.BooleanPreferenceControl(
             label=object_details_prefs[0].label,
             getter=object_details_prefs[0].getter,
@@ -281,7 +280,6 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         )
 
         controls = [
-            # General group
             preferences_grid_base.BooleanPreferenceControl(
                 label=general_prefs[0].label,
                 getter=general_prefs[0].getter,
@@ -296,7 +294,6 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 prefs_key="speechVerbosityLevel",
                 member_of=guilabels.GENERAL
             ),
-            # Object details group
             self._only_speak_displayed_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=object_details_prefs[1].label,
@@ -330,7 +327,6 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
                 determine_sensitivity=self._only_speak_displayed_text_is_off
             ),
-            # Text attributes
             preferences_grid_base.BooleanPreferenceControl(
                 label=text_speak_blank_lines.label,
                 getter=text_speak_blank_lines.getter,
@@ -432,7 +428,6 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         )
 
         controls = [
-            # Table row navigation group
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_gui_rows.label,
                 getter=table_gui_rows.getter,
@@ -454,7 +449,6 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 prefs_key=table_spreadsheet_rows.prefs_key,
                 member_of=guilabels.TABLE_ROW_NAVIGATION
             ),
-            # Table cell navigation group
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_cell_headers.label,
                 getter=table_cell_headers.getter,
@@ -571,24 +565,18 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        # Global Settings (combines voice settings and speech content settings)
         self._global_frame, global_content = self._create_frame(
             guilabels.VOICE_GLOBAL_VOICE_SETTINGS, margin_top=12)
 
         punctuation_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
-        # Strip mnemonics (underscores) for combo box display
         punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_NONE.replace("_", ""),
-            settings.PUNCTUATION_STYLE_NONE])
+            guilabels.PUNCTUATION_STYLE_NONE, settings.PUNCTUATION_STYLE_NONE])
         punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_SOME.replace("_", ""),
-            settings.PUNCTUATION_STYLE_SOME])
+            guilabels.PUNCTUATION_STYLE_SOME, settings.PUNCTUATION_STYLE_SOME])
         punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_MOST.replace("_", ""),
-            settings.PUNCTUATION_STYLE_MOST])
+            guilabels.PUNCTUATION_STYLE_MOST, settings.PUNCTUATION_STYLE_MOST])
         punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_ALL.replace("_", ""),
-            settings.PUNCTUATION_STYLE_ALL])
+            guilabels.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_ALL])
 
         capitalization_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
         capitalization_model.append([
@@ -598,11 +586,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         capitalization_model.append([
             guilabels.CAPITALIZATION_STYLE_SPELL, settings.CAPITALIZATION_STYLE_SPELL])
 
-        # Create a single listbox with combo boxes and switches
         global_listbox = preferences_grid_base.FocusManagedListBox()
         combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
-        # Add combo box rows
         row_data = [
             (guilabels.VOICE_SPEECH_SYSTEM,
              Gtk.ListStore(GObject.TYPE_STRING),
@@ -633,7 +619,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._punctuation_combo = global_combos[2]
         self._capitalization_combo = global_combos[3]
 
-        # Add switch rows for speech content settings to the same listbox
         switch_data = [
             (guilabels.VOICE_SPEAK_NUMBERS_AS_DIGITS,
              self._on_speak_numbers_toggled,
@@ -660,7 +645,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             global_listbox.add_row_with_widget(row_widget, switch)
             switches.append(switch)
 
-        # Store switches for refresh
         self._speak_numbers_switch = switches[0]
         self._use_color_names_switch = switches[1]
         self._enable_pause_breaks_switch = switches[2]
@@ -671,12 +655,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self.attach(self._global_frame, 0, row, 1, 1)
         row += 1
 
-        # Voice Types with settings buttons
         self._voice_types_frame, voice_types_content = self._create_frame(
             guilabels.VOICE_VOICE_TYPE_SETTINGS, margin_top=12
         )
 
-        # Create listbox with button rows for each voice type
         voice_types_listbox, voice_buttons = self._create_button_listbox([
             (guilabels.SPEECH_VOICE_TYPE_DEFAULT, "applications-system-symbolic",
              lambda _btn: self._show_voice_settings_dialog(self.VoiceType.DEFAULT)),
@@ -688,10 +670,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
              lambda _btn: self._show_voice_settings_dialog(self.VoiceType.SYSTEM)),
         ])
 
-        # Set accessible labels and tooltips on buttons
         for button in voice_buttons:
             button.set_tooltip_text(guilabels.VOICE_SETTINGS)
-            # Set accessible name for screen readers
             accessible = button.get_accessible()
             if accessible:
                 accessible.set_name(guilabels.VOICE_SETTINGS)
@@ -702,7 +682,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _show_voice_settings_dialog(self, voice_type: VoicesPreferencesGrid.VoiceType) -> None:
         """Show a dialog for editing settings for a specific voice type."""
 
-        # Get voice type label
         voice_type_labels = {
             self.VoiceType.DEFAULT: guilabels.SPEECH_VOICE_TYPE_DEFAULT,
             self.VoiceType.HYPERLINK: guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
@@ -723,15 +702,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         content_area = dialog.get_content_area()
 
-        # Create listbox with automatic focus management
         voice_listbox = preferences_grid_base.FocusManagedListBox()
-
-        # Create size group for combo boxes
         combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
-        # Language combo
-        # Note: include_top_separator=False because FocusManagedListBox
-        # adds separators automatically
         def on_language_changed(widget: Gtk.ComboBox) -> None:
             self._on_speech_language_changed(widget, voice_type)
 
@@ -744,7 +717,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         combo_size_group.add_widget(lang_combo)
         voice_listbox.add_row_with_widget(lang_row, lang_combo)
 
-        # Person combo
         def on_family_changed(widget: Gtk.ComboBox) -> None:
             self._on_speech_family_changed(widget, voice_type)
 
@@ -757,7 +729,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         combo_size_group.add_widget(person_combo)
         voice_listbox.add_row_with_widget(person_row, person_combo)
 
-        # Rate slider
         def on_rate_changed(widget: Gtk.Scale) -> None:
             self._on_rate_changed(widget, voice_type)
 
@@ -770,7 +741,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         voice_listbox.add_row_with_widget(rate_row, rate_scale)
 
-        # Pitch slider
         def on_pitch_changed(widget: Gtk.Scale) -> None:
             self._on_pitch_changed(widget, voice_type)
 
@@ -784,7 +754,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         voice_listbox.add_row_with_widget(pitch_row, pitch_scale)
 
-        # Volume slider
         def on_volume_changed(widget: Gtk.Scale) -> None:
             self._on_volume_changed(widget, voice_type)
 
@@ -798,11 +767,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         voice_listbox.add_row_with_widget(volume_row, volume_scale)
 
-        # Store widget references
         languages_combo = lang_combo
         families_combo = person_combo
 
-        # Store widget references based on voice type
         if voice_type == self.VoiceType.DEFAULT:
             self._default_languages_combo = languages_combo
             self._default_families_combo = families_combo
@@ -828,17 +795,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._system_pitch_scale = pitch_scale
             self._system_volume_scale = volume_scale
 
-        # Populate combos and set values (with _initializing to prevent spurious handler calls)
         self._populate_languages_for_voice_type(voice_type)
-        self._populate_families_for_voice_type(voice_type)
+        self._populate_families_for_voice_type(voice_type, apply_changes=False)
 
         self._initializing = True
         self._refresh_voice_widgets(voice_type, rate_scale, pitch_scale, volume_scale)
         self._initializing = False
 
-        # Handler for dialog response
         def on_response(dlg, response_id):
-            # Handle response
             if response_id in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
                 # User cancelled - revert local copy and sync to settings.voices
                 voice_acss.clear()
@@ -921,10 +885,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._initializing = True
 
-        # Update speech system and synthesizer combos
         self._populate_speech_systems()
 
-        # Update punctuation combo
         model = self._punctuation_combo.get_model()
         if model:
             for i, row in enumerate(model):
@@ -932,7 +894,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     self._punctuation_combo.set_active(i)
                     break
 
-        # Update capitalization combo
         model = self._capitalization_combo.get_model()
         if model:
             for i, row in enumerate(model):
@@ -940,7 +901,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     self._capitalization_combo.set_active(i)
                     break
 
-        # Update switch states
         self._speak_numbers_switch.set_active(self._manager.get_speak_numbers_as_digits())
         self._use_color_names_switch.set_active(self._manager.get_use_color_names())
         self._enable_pause_breaks_switch.set_active(
@@ -1110,9 +1070,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if selected_synth:
             self._manager.set_current_synthesizer(selected_synth)
 
-        # Fetch voice families once (will be used when dialogs are opened)
         self._voice_families = self._manager.get_voice_families()
-
         self._initializing = False
         # Note: Voice widgets are created on-demand in dialogs, so we don't populate them here
 
@@ -1137,12 +1095,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._initializing = False
             return
 
-        # Sort voice families once (done in _populate_speech_synthesizers)
         if not self._families_sorted:
+            default_marker = guilabels.SPEECH_DEFAULT_VOICE.replace("%s", "").strip().lower()
+
             def _get_sort_key(family):
                 variant = family.get(speechserver.VoiceFamily.VARIANT)
                 name = family.get(speechserver.VoiceFamily.NAME, "")
-                if "default" in name.lower():
+                if default_marker in name.lower() or "default" in name.lower():
                     return (0, "")
                 if variant not in (None, "none", "None"):
                     return (1, variant.lower())
@@ -1175,6 +1134,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_acss = self._get_acss_for_voice_type(voice_type)
         saved_family: speechserver.VoiceFamily | None = voice_acss.get(ACSS.FAMILY)
         selected_index = 0
+        saved_language = ""
 
         if saved_family:
             lang = saved_family.get(speechserver.VoiceFamily.LANG, "")
@@ -1183,11 +1143,27 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 saved_language = f"{lang}-{dialect}"
             else:
                 saved_language = lang
+        elif voice_type == self.VoiceType.DEFAULT:
+            family_locale, _encoding = locale.getlocale(locale.LC_MESSAGES)
+            if family_locale:
+                locale_parts = family_locale.split("_")
+                lang = locale_parts[0]
+                dialect = locale_parts[1] if len(locale_parts) > 1 else ""
+                saved_language = f"{lang}-{dialect}" if dialect else lang
 
+        if saved_language:
+            lang_only = saved_language.partition("-")[0]
+            partial_match = -1
             for i, language in enumerate(languages):
                 if language == saved_language:
                     selected_index = i
                     break
+                if partial_match < 0:
+                    if language == lang_only or language.startswith(f"{lang_only}-"):
+                        partial_match = i
+            else:
+                if partial_match >= 0:
+                    selected_index = partial_match
 
         if len(languages) > 0:
             languages_combo.set_active(selected_index)
@@ -1196,7 +1172,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     def _populate_families_for_voice_type(
         self,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        voice_type: VoicesPreferencesGrid.VoiceType,
+        apply_changes: bool = True
     ) -> None:
         """Populate the families/persons combo for a specific voice type."""
 
@@ -1264,18 +1241,19 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if len(family_choices) > 0:
             families_combo.set_active(selected_index)
 
-            family = family_choices[selected_index]
-            voice_name = family.get(speechserver.VoiceFamily.NAME, "")
+            if apply_changes:
+                family = family_choices[selected_index]
+                voice_name = family.get(speechserver.VoiceFamily.NAME, "")
 
-            voice_acss[ACSS.FAMILY] = family
-            voice_acss["established"] = True
+                voice_acss[ACSS.FAMILY] = family
+                voice_acss["established"] = True
 
-            # Sync to settings.voices so the voice change is heard immediately
-            self._sync_voice_to_settings(voice_type)
+                # Sync to settings.voices so the voice change is heard immediately
+                self._sync_voice_to_settings(voice_type)
 
-            # Only set as current voice if this is the default voice type
-            if voice_type == self.VoiceType.DEFAULT:
-                self._manager.set_current_voice(voice_name)
+                # Only set as current voice if this is the default voice type
+                if voice_type == self.VoiceType.DEFAULT:
+                    self._manager.set_current_voice(voice_name)
 
         self._initializing = False
 
@@ -1455,7 +1433,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._manager.set_current_synthesizer(synth_name)
 
-        # Fetch new voice families immediately
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
 
