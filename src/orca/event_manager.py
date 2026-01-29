@@ -582,7 +582,7 @@ class EventManager:
                     rerun = False  # destroy and don't call again
         except queue.Empty:
             msg = 'EVENT MANAGER: Attempted dequeue, but the event queue is empty'
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             self._gidle_id = 0
             rerun = False # destroy and don't call again
 
