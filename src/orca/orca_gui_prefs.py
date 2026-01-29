@@ -421,10 +421,13 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         """Write out the user's generic Orca preferences."""
 
 
-        # For backwards compatibility (This setting no longer exists, but older versions of
-        # Orca assume this key exists in the prefs dict.)
+        # For backwards compatibility (These settings no longer exist, but older versions of
+        # Orca assume these key exist in the prefs dict.)
         self.prefs_dict["progressBarUpdateInterval"] = \
             self.prefs_dict.get("progressBarSpeechInterval", 10)
+        self.prefs_dict["progressBarVerbosity"] = \
+            self.prefs_dict.get("progressBarSpeechVerbosity", settings.PROGRESS_BAR_APPLICATION)
+
 
         settings.speechSystemOverride = None
         settings_manager.get_manager().save_settings(
