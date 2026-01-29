@@ -579,6 +579,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES DIALOG: Cancel button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
+        for grid in self._page_to_grid.values():
+            grid.revert_changes()
         self.destroy()
 
         msg = "PREFERENCES DIALOG: Handling Cancel button click complete"
@@ -673,6 +675,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
                 self._on_save_profile_as()
             elif response in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
                 return True
+            else:
+                for grid in self._page_to_grid.values():
+                    grid.revert_changes()
 
         elif profile_was_switched:
             # Profile was switched but no other changes - show simple dialog

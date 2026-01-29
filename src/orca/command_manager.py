@@ -306,6 +306,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._keybinding_being_edited: str | None = None
         self._saved_commands: dict[str, KeyboardCommand] = {}
 
+        self._original_keyboard_layout_is_desktop: bool = \
+            get_manager().get_keyboard_layout_is_desktop()
+        self._original_orca_modifier_keys: list[str] = list(settings.orcaModifierKeys)
+
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
         self._orca_modifier_combo: Gtk.ComboBox | None = None
         self._combos_grid: Gtk.Grid | None = None
@@ -359,6 +363,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._modified_keybindings.clear()
         self._has_unsaved_changes = False
         self.refresh()
+
+    def revert_changes(self) -> None:
+        """Revert keyboard layout and orca modifier to their original values."""
+
+        current_is_desktop = get_manager().get_keyboard_layout_is_desktop()
+        if current_is_desktop != self._original_keyboard_layout_is_desktop:
+            get_manager().set_keyboard_layout(self._original_keyboard_layout_is_desktop)
+
+        if settings.orcaModifierKeys != self._original_orca_modifier_keys:
+            settings.orcaModifierKeys = self._original_orca_modifier_keys
 
     def _populate_keybindings(self) -> None:
         """Build categories dictionary and populate the categories list."""

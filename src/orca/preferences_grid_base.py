@@ -403,6 +403,9 @@ class PreferencesGridBase(Gtk.Grid):
 
         return self._has_unsaved_changes
 
+    def revert_changes(self) -> None:
+        """Revert any changes that were applied immediately but not saved."""
+
     def on_becoming_visible(self) -> None:
         """Called when this grid becomes the visible panel in the main stack."""
 
