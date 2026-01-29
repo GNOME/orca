@@ -1953,8 +1953,9 @@ VOICE_SPEECH_SETTINGS = _("Speech Settings")
 # Translators: This is the accessible label for a button in the Voice preferences
 # that opens a dialog to configure settings for a specific voice type (such as
 # default, hyperlink, uppercase, or system). The button displays only an icon
-# (a cog/gear), so this label is for screen reader users.
-VOICE_SETTINGS = _("Settings")
+# (a cog/gear), so this label is for screen reader users. The %s is replaced
+# with the voice type name (e.g., "Default", "Uppercase", "Hyperlink", "System").
+VOICE_TYPE_SETTINGS = C_("VoiceType", "%s Settings")
 
 # Translators: This is a label for a setting that controls whether Orca will
 # automatically switch the speech synthesizer's language based on the language

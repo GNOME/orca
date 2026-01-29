@@ -598,7 +598,8 @@ class PreferencesGridBase(Gtk.Grid):
             label.set_hexpand(label_hexpand)
             hbox.pack_start(label, label_hexpand, label_hexpand, 0)
 
-            label.set_mnemonic_widget(widget)
+            if not isinstance(widget, Gtk.Button):
+                label.set_mnemonic_widget(widget)
             hbox.pack_end(widget, widget_expand, widget_expand, 0)
 
         vbox.pack_start(hbox, False, False, 0)

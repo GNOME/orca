@@ -670,11 +670,18 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
              lambda _btn: self._show_voice_settings_dialog(self.VoiceType.SYSTEM)),
         ])
 
-        for button in voice_buttons:
-            button.set_tooltip_text(guilabels.VOICE_SETTINGS)
+        voice_type_labels = [
+            guilabels.SPEECH_VOICE_TYPE_DEFAULT,
+            guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
+            guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
+            guilabels.SPEECH_VOICE_TYPE_SYSTEM,
+        ]
+        for button, voice_label in zip(voice_buttons, voice_type_labels):
+            accessible_name = guilabels.VOICE_TYPE_SETTINGS % voice_label
+            button.set_tooltip_text(accessible_name)
             accessible = button.get_accessible()
             if accessible:
-                accessible.set_name(guilabels.VOICE_SETTINGS)
+                accessible.set_name(accessible_name)
 
         voice_types_content.add(voice_types_listbox) # pylint: disable=no-member
         self.attach(self._voice_types_frame, 0, row, 1, 1)
