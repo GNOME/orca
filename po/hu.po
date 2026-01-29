@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-01-28 18:06+0000\n"
+"POT-Creation-Date: 2026-01-29 18:50+0000\n"
 "PO-Revision-Date: 2026-01-29 12:31+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
@@ -3403,7 +3403,6 @@ msgstr "Felhasználói profil Á_tnevezés..."
 #. Translators: This is the accessible name for the main menu button in the
 #. preferences dialog. The menu contains actions like Help, Apply, Save, and Cancel.
 #: src/orca/guilabels.py:171
-#| msgid "Find Options"
 msgid "Options"
 msgstr "Opciók"
 
@@ -3426,7 +3425,6 @@ msgstr "A módosítások elvesznek, ha nem menti őket."
 #. This message appears in a dialog when the user closes the preferences
 #. after switching to a different profile.
 #: src/orca/guilabels.py:187
-#| msgid "Load user profile"
 msgid "You switched profiles."
 msgstr "Átváltott egy másik profilra."
 
@@ -4300,28 +4298,39 @@ msgstr "Központozás szintje"
 #. Translators: If this setting is chosen, no punctuation symbols will be spoken
 #. as a user reads a document.
 #: src/orca/guilabels.py:816
+#| msgctxt "braille dots"
+#| msgid "None"
 msgctxt "punctuation level"
-msgid "_None"
-msgstr "_Nincs"
+msgid "None"
+msgstr "Nincs"
 
 #. Translators: If this setting is chosen, common punctuation symbols (like
 #. comma, period, question mark) will not be spoken as a user reads a document,
 #. but less common symbols (such as #, @, $) will.
 #: src/orca/guilabels.py:821
-msgid "So_me"
-msgstr "Né_hány"
+#| msgctxt "spoken punctuation"
+#| msgid "Some"
+msgctxt "punctuation level"
+msgid "Some"
+msgstr "Néhány"
 
 #. Translators: If this setting is chosen, the majority of punctuation symbols
 #. will be spoken as a user reads a document.
 #: src/orca/guilabels.py:825
-msgid "M_ost"
-msgstr "_Legtöbb"
+#| msgctxt "spoken punctuation"
+#| msgid "Most"
+msgctxt "punctuation level"
+msgid "Most"
+msgstr "Legtöbb"
 
 #. Translators: If this setting is chosen, all punctuation symbols will be spoken
 #. as a user reads a document.
 #: src/orca/guilabels.py:829
-msgid "_All"
-msgstr "_Mindent"
+#| msgctxt "ProgressBar"
+#| msgid "All"
+msgctxt "punctuation level"
+msgid "All"
+msgstr "Mindent"
 
 #. Translators: If this setting is chosen and the user is reading over an entire
 #. document, Orca will pause at the end of each line.
@@ -5882,15 +5891,19 @@ msgstr "Beszéd beállításai"
 #. Translators: This is the accessible label for a button in the Voice preferences
 #. that opens a dialog to configure settings for a specific voice type (such as
 #. default, hyperlink, uppercase, or system). The button displays only an icon
-#. (a cog/gear), so this label is for screen reader users.
-#: src/orca/guilabels.py:1957
-msgid "Settings"
-msgstr "Beszéd beállításai"
+#. (a cog/gear), so this label is for screen reader users. The %s is replaced
+#. with the voice type name (e.g., "Default", "Uppercase", "Hyperlink", "System").
+#: src/orca/guilabels.py:1958
+#, python-format
+#| msgid "Settings"
+msgctxt "VoiceType"
+msgid "%s Settings"
+msgstr "%s beállításai"
 
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of the text or UI element being spoken.
-#: src/orca/guilabels.py:1962
+#: src/orca/guilabels.py:1963
 msgid "Automatic language switching"
 msgstr "Automatikus _nyelvváltás engedélyezése"
 
@@ -5898,7 +5911,7 @@ msgstr "Automatikus _nyelvváltás engedélyezése"
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
 #. possible text attributes. The user can select one and then, by using the
 #. Move buttons in this group, adjust when that attribute is spoken by Orca.
-#: src/orca/guilabels.py:1968
+#: src/orca/guilabels.py:1969
 msgid "Adjust selected attribute"
 msgstr ""
 "Kiválasztott attribútum\n"
@@ -5908,7 +5921,7 @@ msgstr ""
 #. braille dot or dots should be used to indicate that character(s) being
 #. shown on the braille display have a particular attribute (e.g. bold). The
 #. "indicator" can be chosen from among: None, Dot 7, Dot 8, Dots 7 and 8.
-#: src/orca/guilabels.py:1974
+#: src/orca/guilabels.py:1975
 msgid "Braille Indicator"
 msgstr "Braille-kiválasztás jelző"
 
@@ -5918,7 +5931,7 @@ msgstr "Braille-kiválasztás jelző"
 #. button, move that attribute down one line in the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:1982
+#: src/orca/guilabels.py:1983
 msgid "Move down one"
 msgstr "Eggyel _lejjebb"
 
@@ -5928,7 +5941,7 @@ msgstr "Eggyel _lejjebb"
 #. button, move that attribute up one line in the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:1990
+#: src/orca/guilabels.py:1991
 msgid "Move up one"
 msgstr "Eggyel _feljebb"
 
@@ -5938,7 +5951,7 @@ msgstr "Eggyel _feljebb"
 #. button, move that attribute to the bottom of the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:1998
+#: src/orca/guilabels.py:1999
 msgid "Move to bottom"
 msgstr "Az aljá_ra"
 
@@ -5948,37 +5961,37 @@ msgstr "Az aljá_ra"
 #. button, move that attribute to the top of the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:2006
+#: src/orca/guilabels.py:2007
 msgid "Move to top"
 msgstr "A _tetejére"
 
 #. Translators: This is a label for a group of widgets associated with how Orca
 #. will present text attributes such as bold, underline, italic, font size,
-#: src/orca/guilabels.py:2010
+#: src/orca/guilabels.py:2011
 msgid "Text attributes"
 msgstr "Szövegattribútumok"
 
 #. Translators: This is the accessible name for a widget in the preferences dialog
 #. that allows the user to reorder text attributes in the list.
-#: src/orca/guilabels.py:2014
+#: src/orca/guilabels.py:2015
 msgid "Reorder"
 msgstr "Újrarendezés"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus. The choices are Brief and Verbose.
-#: src/orca/guilabels.py:2018
+#: src/orca/guilabels.py:2019
 msgid "Verbosity"
 msgstr "Részletesség"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:2022
+#: src/orca/guilabels.py:2023
 msgid "Brie_f"
 msgstr "_Tömör"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:2026
+#: src/orca/guilabels.py:2027
 msgid "Ver_bose"
 msgstr "Rés_zletes"
 
@@ -5986,14 +5999,14 @@ msgstr "Rés_zletes"
 #. will speak regardless of which voice (Default, Hyperlink, System, Uppercase)
 #. is being used. For instance, Orca can speak numbers as individual digits
 #. (e.g. 123 as 1 2 3) or as a whole (e.g. 123 as one hundred and twenty three).
-#: src/orca/guilabels.py:2032
+#: src/orca/guilabels.py:2033
 msgid "Global Voice Settings"
 msgstr "Globális hangbeállítások"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual
 #. digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely)
 #. spoken as one hundred and twenty three.
-#: src/orca/guilabels.py:2037
+#: src/orca/guilabels.py:2038
 msgid "Speak _numbers as digits"
 msgstr "_Számok kimondása számjegyenként"
 
@@ -6005,21 +6018,21 @@ msgstr "_Számok kimondása számjegyenként"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the group of
 #. all of the controls associated with configuring a particular voice type.
-#: src/orca/guilabels.py:2047
+#: src/orca/guilabels.py:2048
 msgid "Voice Type Settings"
 msgstr "Hangtípusok beállításai"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesis system Orca should use. Examples of speech synthesis
 #. systems include Speech Dispatcher and Spiel.
-#: src/orca/guilabels.py:2052
+#: src/orca/guilabels.py:2053
 msgid "Speech _system:"
 msgstr "Beszé_drendszer:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesizer Orca should use. Examples of speech synthesizers
 #. include eSpeak, Festival, and Pico.
-#: src/orca/guilabels.py:2057
+#: src/orca/guilabels.py:2058
 msgid "Speech synthesi_zer:"
 msgstr "Beszédszintetizát_or:"
 
@@ -6030,38 +6043,38 @@ msgstr "Beszédszintetizát_or:"
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca
 #. refers to these things as 'capitalization style'. This string is the text of
 #. the label through which users can choose which of style they would prefer.
-#: src/orca/guilabels.py:2066
+#: src/orca/guilabels.py:2067
 msgid "Capitalization style"
 msgstr "_Nagybetű jelzési stílus:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. the language of the speech synthesizer.
-#: src/orca/guilabels.py:2070
+#: src/orca/guilabels.py:2071
 msgid "_Language:"
 msgstr "Nyel_v"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which voice from the current speech synthesizer should be used. Often voices
 #. have human names such as "Allison". Hence the use of the term person.
-#: src/orca/guilabels.py:2075
+#: src/orca/guilabels.py:2076
 msgid "_Person:"
 msgstr "Személ_y:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. speaking rate of the current voice.
-#: src/orca/guilabels.py:2079
+#: src/orca/guilabels.py:2080
 msgid "_Rate:"
 msgstr "Se_besség:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. pitch of the current voice.
-#: src/orca/guilabels.py:2083
+#: src/orca/guilabels.py:2084
 msgid "Pi_tch:"
 msgstr "Hangmaga_sság:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. volume of the current voice.
-#: src/orca/guilabels.py:2087
+#: src/orca/guilabels.py:2088
 msgid "Vo_lume:"
 msgstr "Hange_rő:"
 
@@ -6073,18 +6086,18 @@ msgstr "Hange_rő:"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the combo box
 #. in which the user selects a voice type to configure.
-#: src/orca/guilabels.py:2097
+#: src/orca/guilabels.py:2098
 msgid "_Voice type:"
 msgstr "_Hangtípus:"
 
 #. Translators: This refers to the voice used by Orca by default.
-#: src/orca/guilabels.py:2100
+#: src/orca/guilabels.py:2101
 msgid "Default"
 msgstr "Alapértelmezett"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which are part of a hyperlink.
-#: src/orca/guilabels.py:2104
+#: src/orca/guilabels.py:2105
 msgid "Hyperlink"
 msgstr "Hiperlink"
 
@@ -6094,13 +6107,13 @@ msgstr "Hiperlink"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: src/orca/guilabels.py:2112
+#: src/orca/guilabels.py:2113
 msgid "System"
 msgstr "Rendszer"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: src/orca/guilabels.py:2116
+#: src/orca/guilabels.py:2117
 msgid "Uppercase"
 msgstr "Nagybetűkké"
 
@@ -6109,7 +6122,7 @@ msgstr "Nagybetűkké"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:2126
+#: src/orca/guilabels.py:2127
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
@@ -14210,6 +14223,19 @@ msgstr "vastag"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "betűtévesztés"
+
+#~ msgctxt "punctuation level"
+#~ msgid "_None"
+#~ msgstr "_Nincs"
+
+#~ msgid "So_me"
+#~ msgstr "Né_hány"
+
+#~ msgid "M_ost"
+#~ msgstr "_Legtöbb"
+
+#~ msgid "_All"
+#~ msgstr "_Mindent"
 
 #~ msgid "Preferences"
 #~ msgstr "_Beállítások"
