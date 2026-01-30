@@ -1145,6 +1145,31 @@ class CommandManager:
 
         return True
 
+    def handle_numlock_toggled(self, numlock_on: bool) -> None:
+        """Handles NumLock state changes by updating grabs for keypad commands."""
+
+        if not self._is_desktop:
+            return
+
+        msg = f"COMMAND MANAGER: NumLock toggled to {'on' if numlock_on else 'off'}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        def update_grabs() -> bool:
+            for cmd in self._keyboard_commands.values():
+                if not cmd.is_active():
+                    continue
+                kb = cmd.get_keybinding()
+                if kb is None or not kb.keysymstring.startswith("KP_"):
+                    continue
+
+                if numlock_on and kb.has_grabs():
+                    kb.remove_grabs()
+                elif not numlock_on and not kb.has_grabs():
+                    kb.add_grabs()
+            return False
+
+        GLib.idle_add(update_grabs)
+
     def set_up_commands(self) -> None:
         """Sets up commands owned by CommandManager."""
 
