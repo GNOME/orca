@@ -1250,16 +1250,39 @@ class CommandManager:
 
         if isinstance(command, KeyboardCommand):
             # Remove any existing command with the same name from the key index
-            # before replacing it in the dict
+            # before replacing it in the dict, and transfer its keybinding and grabs.
             name = command.get_name()
             old_cmd = self._keyboard_commands.get(name)
+
+            old_kb = None
             if old_cmd is not None:
+                old_kb = old_cmd.get_keybinding()
                 self._remove_from_key_index(old_cmd)
 
             self._keyboard_commands[name] = command
+
+            # Preserve user overrides but not script defaults. If the old keybinding
+            # differs from the old command's default, it's a user override and should
+            # be preserved. Otherwise, use the new command's default.
             default_kb = command.get_default_keybinding(self._is_desktop)
-            command.set_keybinding(default_kb)
+            if old_cmd is not None:
+                old_default = old_cmd.get_default_keybinding(self._is_desktop)
+                if old_kb != old_default:
+                    # User override - preserve it
+                    command.set_keybinding(old_kb)
+                    msg = f"COMMAND MANAGER: Preserving user override for '{name}': {old_kb}"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                else:
+                    # Old keybinding was just the default - use new command's default
+                    command.set_keybinding(default_kb)
+                    msg = f"COMMAND MANAGER: Using default keybinding for '{name}': {default_kb}"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+            else:
+                command.set_keybinding(default_kb)
+                msg = f"COMMAND MANAGER: Using default keybinding for '{name}': {default_kb}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             self._add_to_key_index(command)
+
         elif isinstance(command, BrailleCommand):
             self._braille_commands[command.get_name()] = command
 
