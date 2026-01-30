@@ -569,7 +569,10 @@ class AXUtilities:
             AXUtilities.SET_MEMBERS[hash(container)] = result
 
         # In a collapsed combobox, one can arrow to change the selection without showing the items.
-        must_be_showing = not AXObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box)
+        # In a listbox, items scrolled out of view lose the showing state but are still valid members.
+        def is_combo_box_or_list_box(x):
+            return AXUtilitiesRole.is_combo_box(x) or AXUtilitiesRole.is_list_box(x)
+        must_be_showing = not AXObject.find_ancestor(obj, is_combo_box_or_list_box)
         if not must_be_showing:
             return result
 
