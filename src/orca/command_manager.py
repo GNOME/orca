@@ -21,6 +21,7 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-lines
+# pylint: disable=c-extension-no-member
 
 """Manager for script commands and keybindings."""
 
@@ -467,6 +468,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if self._title_change_callback and self._current_category:
             self._title_change_callback(self._current_category)
 
+    # pylint: disable=no-member
+
     def _populate_category_detail(self, category_name: str) -> None:
         """Populate the detail page with keybindings for the given category."""
 
@@ -716,7 +719,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         return None
 
-
     def _process_key_captured(self, event: Gdk.EventKey) -> bool:
         """Process a captured key press event."""
 
@@ -909,13 +911,15 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._captured_key = ("", 0, 0)
         self._keybinding_being_edited = None
 
+    # pylint: enable=no-member
+
     def save_settings(
         self
     ) -> tuple[dict[str, int | list[str]], dict[str, list[list[Any]]]]:
         """Save settings and return (general_settings, keybindings) tuple."""
 
         general: dict[str, int | list[str]] = {}
-        keybindings: dict[str, list[list[Any]]] = {}
+        bindings: dict[str, list[list[Any]]] = {}
 
         general["keyboardLayout"] = get_manager().get_keyboard_layout_value()
 
@@ -939,7 +943,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 default_text = self._format_keybinding_text(default_kb)
 
                 if current_text != default_text:
-                    msg = f"KEYBINDINGS GRID: Saving {handler_name}: '{current_text}' (was '{default_text}')"
+                    msg = (
+                        f"KEYBINDINGS GRID: Saving {handler_name}: '{current_text}' "
+                        f"(was '{default_text}')"
+                    )
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     if current_kb and current_kb.keysymstring:
                         binding_data = [
@@ -948,14 +955,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             str(current_kb.modifiers),
                             str(current_kb.click_count)
                         ]
-                        keybindings[handler_name] = [binding_data]
+                        bindings[handler_name] = [binding_data]
                     elif default_kb and default_kb.keysymstring:
                         # Was unbound - save empty list to indicate unbinding
-                        keybindings[handler_name] = []
+                        bindings[handler_name] = []
 
         self._modified_keybindings.clear()
         self._has_unsaved_changes = False
-        return general, keybindings
+        return general, bindings
 
     def refresh(self) -> None:
         """Refresh the keyboard layout and orca modifier displays."""
@@ -1339,6 +1346,8 @@ class CommandManager:
             if kb is None:
                 continue
             if not kb.matches(event.id, event.hw_code, event.modifiers):
+                continue
+            if event.is_keypad_key_with_numlock_on() and kb.keysymstring.startswith("KP_"):
                 continue
             if kb.click_count == click_count:
                 return cmd

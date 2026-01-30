@@ -459,6 +459,7 @@ class TestCommandManager:
         kb = test_context.Mock()
         kb.keyval = keyval
         kb.keycode = keycode
+        kb.keysymstring = "a"
         return kb
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -537,6 +538,7 @@ class TestCommandManager:
         event.id = 65
         event.hw_code = 38
         event.modifiers = 4
+        event.is_keypad_key_with_numlock_on.return_value = False
 
         result = manager.get_command_for_event(event)
         assert result == cmd
@@ -616,6 +618,7 @@ class TestCommandManager:
         event.id = 65
         event.hw_code = 38
         event.modifiers = 4
+        event.is_keypad_key_with_numlock_on.return_value = False
 
         result = manager.get_command_for_event(event, active_only=False)
         assert result == cmd
@@ -835,6 +838,7 @@ class TestCommandManager:
         event.id = 72  # 'H' keyval (shifted)
         event.hw_code = 38  # Same keycode as 'h'
         event.modifiers = 1  # Shift
+        event.is_keypad_key_with_numlock_on.return_value = False
 
         result = manager.get_command_for_event(event)
         assert result == cmd
@@ -862,6 +866,7 @@ class TestCommandManager:
         event.id = 104  # 'h' keyval (unshifted)
         event.hw_code = 38
         event.modifiers = 0
+        event.is_keypad_key_with_numlock_on.return_value = False
 
         result = manager.get_command_for_event(event)
         assert result == cmd
