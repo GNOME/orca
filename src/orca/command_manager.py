@@ -352,6 +352,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             on_category_activated=self._on_category_activated,
             on_detail_row_activated=self._on_keybinding_activated
         )
+        if self._categories_listbox:
+            self._categories_listbox.get_accessible().set_name(guilabels.COMMANDS)
         self.attach(stack, 0, row, 1, 1)
 
         self._register_stack_disable_widgets(self._combos_grid)
@@ -465,8 +467,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Switch to detail view and update title to category name."""
 
         super()._show_stack_detail()
-        if self._title_change_callback and self._current_category:
-            self._title_change_callback(self._current_category)
+        if self._current_category:
+            if self._title_change_callback:
+                self._title_change_callback(self._current_category)
+            if self._detail_listbox:
+                self._detail_listbox.get_accessible().set_name(self._current_category)
 
     # pylint: disable=no-member
 

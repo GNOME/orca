@@ -1300,6 +1300,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             listbox = FocusManagedListBox()
             listbox.set_hexpand(True)
             listbox.set_halign(Gtk.Align.FILL)
+            listbox.get_accessible().set_name(self._tab_label)
             for index, control in groups[None]:
                 widget = self._create_control_row(control, listbox)
                 self._widget_to_control_index[widget] = index
@@ -1331,6 +1332,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 listbox = FocusManagedListBox()
                 listbox.set_hexpand(True)
                 listbox.set_halign(Gtk.Align.FILL)
+                listbox.get_accessible().set_name(member)
                 self._group_listboxes[member] = listbox
 
                 for index, control in groups[member]:

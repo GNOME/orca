@@ -82,6 +82,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         self._listbox = Gtk.ListBox()
         self._listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        self._listbox.get_accessible().set_name(guilabels.TEXT_ATTRIBUTES)
         self._listbox.get_style_context().add_class("frame")
         scrolled_window = self._create_scrolled_window(self._listbox)
         self.attach(scrolled_window, 0, row, 1, 1)
