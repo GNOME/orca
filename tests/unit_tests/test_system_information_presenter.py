@@ -96,23 +96,6 @@ class TestSystemInformationPresenter:
         messages_mock.memory_usage_gb = test_context.Mock(return_value="5.2GB / 16GB")
         messages_mock.memory_usage_mb = test_context.Mock(return_value="512MB / 1024MB")
 
-        messages_mock.DATE_FORMAT_LOCALE = "%x"
-        messages_mock.DATE_FORMAT_NUMBERS_DM = "%d/%m"
-        messages_mock.DATE_FORMAT_NUMBERS_MD = "%m/%d"
-        messages_mock.DATE_FORMAT_NUMBERS_DMY = "%d/%m/%Y"
-        messages_mock.DATE_FORMAT_NUMBERS_MDY = "%m/%d/%Y"
-        messages_mock.DATE_FORMAT_NUMBERS_YMD = "%Y/%m/%d"
-        messages_mock.DATE_FORMAT_FULL_DM = "%A, %-d %B"
-        messages_mock.DATE_FORMAT_FULL_MD = "%A, %B %-d"
-        messages_mock.DATE_FORMAT_FULL_DMY = "%A, %-d %B, %Y"
-        messages_mock.DATE_FORMAT_FULL_MDY = "%A, %B %-d, %Y"
-        messages_mock.DATE_FORMAT_FULL_YMD = "%Y. %B %-d, %A"
-        messages_mock.DATE_FORMAT_ABBREVIATED_DM = "%a, %-d %b"
-        messages_mock.DATE_FORMAT_ABBREVIATED_MD = "%a, %b %-d"
-        messages_mock.DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
-        messages_mock.DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
-        messages_mock.DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a"
-
         messages_mock.TIME_FORMAT_LOCALE = "%X"
         messages_mock.TIME_FORMAT_24_HMS = "%H:%M:%S"
         messages_mock.TIME_FORMAT_24_HM = "%H:%M"

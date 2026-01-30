@@ -35,12 +35,6 @@ __license__   = "LGPL"
 from .orca_i18n import _, C_, ngettext # pylint: disable=import-error
 from .orca_platform import version # pylint: disable=import-error
 
-# Translators: Sometimes when we attempt to get the name of an accessible
-# software application, we fail because the app or one of its elements is
-# defunct. This is a generic name so that we can still refer to this element
-# in messages.
-APPLICATION_NO_NAME = C_("generic name", "application")
-
 # Translators: Orca has a command to report the battery status. This message
 # is presented to the user when they use this command but Orca was unable to
 # retrieve any information about the battery.
@@ -157,9 +151,6 @@ CARET_CONTROL_APP = _("The application is controlling the caret.")
 # the user the ability to toggle which application is controlling the caret.
 CARET_CONTROL_ORCA = _("The screen reader is controlling the caret.")
 
-# Translators: this is the name of a cell in a spreadsheet.
-CELL = _("Cell %s")
-
 # Translators: this message is spoken to announce that a table cell just became
 # selected (e.g as a result of navigation via Shift + Arrows). The string
 # substitution is the cell name. In the case of a spreadsheet the cell name
@@ -236,11 +227,6 @@ CLI_LOAD_PROFILE_ERROR = _("Profile could not be loaded: %s")
 CLI_NO_DESKTOP_ERROR = \
     _("Cannot start the screen reader because it cannot connect to the Desktop.")
 
-# Translators: This message is presented to the user who attempts to launch Orca
-# but the launch fails due to an error related to the settings manager.
-CLI_SETTINGS_MANAGER_ERROR = \
-    _("Could not activate the settings manager. Exiting.")
-
 # Translators: This message is presented to the user when he/she tries to launch
 # Orca, but Orca is already running.
 CLI_OTHER_ORCAS_ERROR = \
@@ -306,12 +292,6 @@ CLI_DEBUG_FILE = _("Send debug output to the specified file")
 # Translators: This string indicates to the user what should be provided when
 # using the '--debug-file' command line option.
 CLI_DEBUG_FILE_NAME = _("FILE")
-
-# Translators: This is the description of command line option '-t, --text-setup'
-# that will initially display a list of questions in text form, that the user
-# will need to answer, before Orca will startup. For this to happen properly,
-# Orca will need to be run from a terminal window.
-CLI_SETUP = _("Set up user preferences (text version)")
 
 # Translators: This is the description of command line option '-s, --setup'
 # that will place the user in Orca's GUI preferences dialog.
@@ -442,23 +422,6 @@ CHAT_LIST_BOTTOM = C_("chat", "Bottom")
 # history but there are no messages.
 CHAT_NO_MESSAGES = _("No chat messages")
 
-DATE_FORMAT_LOCALE = "%x"
-DATE_FORMAT_NUMBERS_DM = "%d/%m"
-DATE_FORMAT_NUMBERS_MD = "%m/%d"
-DATE_FORMAT_NUMBERS_DMY = "%d/%m/%Y"
-DATE_FORMAT_NUMBERS_MDY = "%m/%d/%Y"
-DATE_FORMAT_NUMBERS_YMD = "%Y/%m/%d"
-DATE_FORMAT_FULL_DM = "%A, %-d %B"
-DATE_FORMAT_FULL_MD = "%A, %B %-d"
-DATE_FORMAT_FULL_DMY = "%A, %-d %B, %Y"
-DATE_FORMAT_FULL_MDY = "%A, %B %-d, %Y"
-DATE_FORMAT_FULL_YMD = "%Y. %B %-d, %A"
-DATE_FORMAT_ABBREVIATED_DM = "%a, %-d %b"
-DATE_FORMAT_ABBREVIATED_MD = "%a, %b %-d"
-DATE_FORMAT_ABBREVIATED_DMY = "%a, %-d %b, %Y"
-DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %-d, %Y"
-DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %-d, %a"
-
 # Translators: This phrase is spoken to inform the user that what is about to
 # be said is content marked for deletion in a document, such as content which
 # is inside an HTML 'del' element, or the removed code in a diff.
@@ -500,15 +463,6 @@ CONTENT_MARKED = C_("content", "highlighted")
 # of content, and would typically be seen in a collaborative editor, such as
 # in Google Docs.
 CONTENT_SUGGESTION_END = C_("content", "suggestion end")
-
-# Translators: This is for navigating document content by moving to the start
-# or end of a container. Examples of containers include tables, lists, and
-# blockquotes. When moving to the end of a container, Orca attempts to place
-# the caret at the content which follows that container. If this is cannot be
-# done (e.g. because the container is the last element on the page), Orca will
-# instead present this message as an indication that the container was not
-# exited as expected.
-CONTAINER_END = _("End of container.")
 
 # Translators: This is for navigating document content by moving to the start
 # or end of a container. Examples of containers include tables, lists, and
@@ -600,18 +554,6 @@ DEFAULT_BUTTON_IS_GRAYED = _("Default button is %s. Grayed")
 # present if it could not find the default button.
 DEFAULT_BUTTON_NOT_FOUND = _("Default button not found")
 
-# Translators: This string is part of the presentation of an item that includes
-# one or several consecutive subscripted characters. For example, 'X' followed
-# by 'subscript 2' followed by 'subscript 3' should be presented to the user as
-# 'X subscript 23'.
-DIGITS_SUBSCRIPT =  _(" subscript %s")
-
-# Translators: This string is part of the presentation of an item that includes
-# one or several consecutive superscripted characters. For example, 'X' followed
-# by 'superscript 2' followed by 'superscript 3' should be presented to the user
-# as 'X superscript 23'.
-DIGITS_SUPERSCRIPT =  _(" superscript %s")
-
 # Translators: this message is presented when the user tries to perform a command
 # specific to dialog boxes, such as presenting the default button, but is not in
 # a dialog.
@@ -662,10 +604,6 @@ FILE_SIZE_KB = _("%.2f kilobytes")
 
 # Translators: This is the size of a file in megabytes
 FILE_SIZE_MB = _("%.2f megabytes")
-
-# Translators: This message is presented to the user after performing a file
-# search to indicate there were no matches.
-FILES_NOT_FOUND = _("No files found.")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -1162,15 +1100,6 @@ MATH_CUBE_ROOT_OF = _("cube root of")
 # expression like "fourth"; the index might instead be a fraction.
 MATH_ROOT_OF = _("root of")
 
-# Translators: This phrase is spoken to inform the user that what is about to
-# be said is part of a mathematical root (square root, cube root, nth root).
-# It is primarily intended to be spoken when the index of the root is not a
-# simple expression. For instance, for the fourth root of 9, simply speaking
-# "fourth root of 9" may be sufficient for the user. But if the index is not
-# 4, but instead the fraction x/4, beginning the phrase with "root start" can
-# help the user better understand that x/4 is the index of the root.
-MATH_ROOT_START = _("root start")
-
 # Translators: This phrase is spoken to inform the user that the last spoken
 # phrase is the end of a mathematical root (square root, cube root, nth root).
 # For instance, for the cube root of 9, Orca would say "cube root of 9, root
@@ -1231,11 +1160,6 @@ MATH_TABLE_END = C_("math table", "table end")
 # phrase is the end of a mathematical table which is nested inside another
 # mathematical table.
 MATH_NESTED_TABLE_END = C_("math table", "nested table end")
-
-# Translators: Inaccessible means that the application cannot be read by Orca.
-# This usually means the application is not friendly to the assistive technology
-# infrastructure.
-INACCESSIBLE = _("inaccessible")
 
 # Translators: This brief message indicates that indentation and
 # justification will be spoken.
@@ -1584,12 +1508,6 @@ LINK_WITH_PROTOCOL = _("%s link")
 # along with the visited state of that link.
 LINK_WITH_PROTOCOL_VISITED = _("visited %s link")
 
-# Translators: The following string instructs the user how to navigate amongst
-# the list of commands presented in learn mode, as well as how to exit the list
-# when finished.
-LIST_NAVIGATION = \
-    _("Use Up and Down Arrow to navigate the list. Press Escape to exit.")
-
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 # The "politeness" level is an indication of when the user wishes to be notified
@@ -1609,15 +1527,6 @@ LIVE_REGIONS_ALL_OFF = _("All live regions set to off")
 # inform the user that Orca's live region's "politeness" level for all live
 # regions has been restored to their original values.
 LIVE_REGIONS_ALL_RESTORED = _("live regions politeness levels restored")
-
-# Translators: A live region is an area of a web page that is periodically
-# updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
-# The "politeness" level is an indication of when the user wishes to be notified
-# about a change to live region content. Examples include: never ("off"), when
-# idle ("polite"), and when there is a change ("assertive"). Orca has several
-# features to facilitate accessing live regions. This message is presented to
-# inform the user of the "politeness" level for the current live region.
-LIVE_REGIONS_LEVEL = _("politeness level %s")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
@@ -1757,25 +1666,6 @@ MODE_BROWSE = _("Browse mode")
 # This string is the message presented when Orca switches to focus mode.
 MODE_FOCUS = _("Focus mode")
 
-# Translators: Orca has a number of commands that override the default
-# behavior within an application. For instance, on a web page, "h" moves
-# you to the next heading. What should happen when you press an "h" in
-# an entry on a web page depends: If you want to resume reading content,
-# "h" should move to the next heading; if you want to enter text, "h"
-# should not move you to the next heading. Similarly, if you are
-# at the bottom of an entry and press Down arrow, should you leave the
-# entry? Again, it depends on if you want to resume reading content or
-# if you are editing the text in the entry. Because Orca doesn't know
-# what you want to do, it has two modes: In browse mode, Orca treats
-# key presses as commands to read the content; in focus mode, Orca treats
-# key presses as something that should be handled by the focused widget.
-# This string is a tutorial message presented to the user who has just
-# navigated to a widget in browse mode to inform them of the keystroke
-# they must press to enable focus mode for the purposes of interacting
-# with the widget. The substituted string is a human-consumable keybinding
-# such as "Alt+Shift+A."
-MODE_FOCUS_TUTORIAL = _("To enable focus mode press %s.")
-
 # Translators: (Please see the previous, detailed translator notes about
 # Focus mode and Browse mode.) In order to minimize the amount of work Orca
 # users need to do to switch between focus mode and browse mode, Orca attempts
@@ -1854,13 +1744,6 @@ MOUSE_REVIEW_DISABLED = _("Mouse review disabled.")
 # the message which Orca will present when mouse review is toggled on via command.
 MOUSE_REVIEW_ENABLED = _("Mouse review enabled.")
 
-# Translators: Orca has a command that presents a list of structural navigation
-# objects in a dialog box so that users can navigate more quickly than they
-# could with native keyboard navigation. This is a message that will be
-# presented to the user when an error (such as the operation timing out) kept us
-# from getting these objects.
-NAVIGATION_DIALOG_ERROR = _("Error: Could not create list of objects.")
-
 # Translators: the object navigator allows users to explore UI objects presented
 # as a hierarchy. This message is spoken when the current node in the hierarchy
 # has no children.
@@ -1891,30 +1774,12 @@ NAVIGATOR_SIMPLIFIED_ENABLED = _("Simplified navigation enabled.")
 # message is spoken when the simplified view is disabled.
 NAVIGATOR_SIMPLIFIED_DISABLED = _("Simplified navigation disabled.")
 
-# Translators: This message describes a list item in a document. Nesting level
-# is how "deep" the item is (e.g., a level of 2 represents a list item inside a
-# list that's inside another list).
-NESTING_LEVEL = _("Nesting level %d")
-
-# Translators: Orca has a command that moves the mouse pointer to the current
-# location on a web page. If moving the mouse pointer caused an item to appear
-# such as a pop-up menu, we want to present that fact.
-NEW_ITEM_ADDED = _("New item has been added")
-
 # Translators: Orca has a command which presents a menu with accessible actions
 # that can be performed on the current object. This is the message that Orca
 # presents when the object has no actions. The string substitution will be the
 # name of the object if it has a name (e.g. "OK" or "Close") or it's accessible,
 # localized rolename if it does not.
 NO_ACTIONS_FOUND_ON = _("No actions found on: %s")
-
-# Translators: This is intended to be a short phrase to present the fact that no
-# no accessible component has keyboard focus.
-NO_FOCUS =  _("No focus")
-
-# Translators: This message presents the fact that no accessible application has
-# has keyboard focus.
-NO_FOCUSED_APPLICATION =  _("No application has focus.")
 
 # Translators: This is for navigating document content by moving from blockquote
 # to blockquote. This is a detailed message which will be presented to the user
@@ -2134,17 +1999,6 @@ PAGE_NUMBER = _("Page %d")
 # as "10 headings, 1 form, 52 links".
 PAGE_SUMMARY_PREFIX = _("Page has %s.")
 
-# Translators: This message appears in a warning dialog when the user performs
-# the command to get into Orca's preferences dialog when the preferences dialog
-# is already open.
-PREFERENCES_WARNING_DIALOG = \
-    _('You already have an instance of an Orca preferences dialog ' \
-      'open.\nPlease close it before opening a new one.')
-
-# Translators: This message is an indication of the position of the focused
-# slide and the total number of slides in the presentation.
-PRESENTATION_SLIDE_POSITION = _("slide %(position)d of %(count)d")
-
 # Translators: This is a detailed message which will be presented as the user
 # cycles amongst his/her saved profiles. A "profile" is a collection of settings
 # which apply to a given task, such as a "Spanish" profile which would use
@@ -2217,14 +2071,6 @@ PUNCTUATION_SOME_BRIEF = C_("spoken punctuation", "Some")
 # All punctuation marks will be spoken, None will be spoken, Most will be
 # spoken, or Some will be spoken.
 PUNCTUATION_SOME_FULL = _("Punctuation level set to some.")
-
-# Translators: This message is presented to indicate that a search has begun
-# or is still taking place.
-SEARCHING = _("Searching.")
-
-# Translators: This message is presented to indicate a search executed by the
-# user has been completed.
-SEARCH_COMPLETE = _("Search complete.")
 
 # Translators: This message is presented to the user when Orca's preferences
 # have been reloaded.
@@ -2339,20 +2185,11 @@ SPEECH_VERBOSITY_BRIEF = C_("Speech", "Verbosity level: brief")
 # this setting via command.
 SPEECH_VERBOSITY_VERBOSE = C_("Speech", "Verbosity level: verbose")
 
-# Translators: We replace the ellipses (both manual and UTF-8) with a spoken
-# string. The extra space you see at the beginning is because we need the
-# speech synthesis engine to speak the new string well. For example, "Open..."
-# turns into "Open dot dot dot".
-SPOKEN_ELLIPSIS = _(" dot dot dot")
-
 # Translators: This message is presented to the user when Orca is launched.
 START_ORCA = _("Screen reader on.")
 
 # Translators: This message is presented to the user when Orca is quit.
 STOP_ORCA = _("Screen reader off.")
-
-# Translators: This message means speech synthesis is not installed or working.
-SPEECH_UNAVAILABLE = _("Speech is unavailable.")
 
 # Translators: Orca has a command to present the contents of the status bar.
 # This is a brief message which will be presented if Orca cannot find the
@@ -2422,10 +2259,6 @@ STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF = \
 
 # Translators: This message describes the (row, col) position of a table cell.
 TABLE_CELL_COORDINATES = _("Row %(row)d, column %(column)d.")
-
-# Translators: This message is presented to indicate the user is in the last
-# cell of a table in a document.
-TABLE_END = _("End of table")
 
 # Translators: When users are navigating a table, they sometimes want the entire
 # row of a table read; other times they want just the current cell presented.
