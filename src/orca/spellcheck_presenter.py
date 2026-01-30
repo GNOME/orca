@@ -751,8 +751,11 @@ class SpellCheckPresenter:
             return True
 
         # Fallback: thunderbird uses frame with tag=body; no ID.
+        # Unfortunately, thunderbird does this for the main window with tons of descendants.
         if app_name == "thunderbird":
-            return AXObject.get_attribute(window, "tag") == "body"
+            if AXObject.get_attribute(window, "tag") != "body":
+                return False
+            return AXObject.find_descendant(window, AXUtilities.is_menu) is None
 
         # Fallback: gedit/pluma uses a modal dialog (gedit) or frame (pluma); no ID.
         if app_name in ("gedit", "pluma"):
