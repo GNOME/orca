@@ -179,6 +179,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.sidebar_scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         self.listbox = Gtk.ListBox()
         self.listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
+        self.listbox.get_accessible().set_name(guilabels.PREFERENCES_CATEGORIES)
         self.listbox.connect("row-selected", self._on_row_selected)
         self.sidebar_scrolled.add(self.listbox)
         self.sidebar_vbox.pack_start(self.sidebar_scrolled, True, True, 0)

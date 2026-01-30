@@ -640,6 +640,10 @@ KB_GROUP_NOTIFICATIONS = _("Notification presenter")
 # "Gedit", "Firefox", etc.
 PREFERENCES_APPLICATION_TITLE = _("Screen Reader Preferences for %s")
 
+# Translators: This is the accessible name for the list of settings categories
+# on the left side of the preferences dialog (e.g. "General", "Speech", "Braille").
+PREFERENCES_CATEGORIES = _("Categories")
+
 # Translators: This is a table column header. This column consists of a single
 # widget. If the widget is enabled, Orca will indicate the associated item
 # or attribute by "marking" it in braille. "Marking" is not the same as writing
