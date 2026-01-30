@@ -287,16 +287,6 @@ LAYOUT_MODE_INFO = _(
     "it were on a separate line."
 )
 
-# Translators: Orca's keybindings support double and triple "clicks" or key
-# presses, similar to using a mouse. This string appears in Orca's preferences
-# dialog after a keybinding which requires a double click.
-CLICK_COUNT_DOUBLE = _("double click")
-
-# Translators: Orca's keybindings support double and triple "clicks" or key
-# presses, similar to using a mouse. This string appears in Orca's preferences
-# dialog after a keybinding which requires a triple click.
-CLICK_COUNT_TRIPLE = _("triple click")
-
 # Translators: This is a label which will appear in the list of available speech
 # engines as a special item. It refers to the default engine configured within
 # the speech subsystem. Apart from this item, the user will have a chance to
@@ -477,12 +467,6 @@ KB_GROUP_LEARN_MODE = C_("keybindings", "Learn mode")
 KB_GROUP_ACTIONS = _("Actions")
 ACTIONS_LIST = KB_GROUP_ACTIONS
 
-# Translators: An external braille device has buttons on it that permit the
-# user to create input gestures from the braille device. The braille bindings
-# are what determine the actions Orca will take when the user presses these
-# buttons.
-KB_GROUP_BRAILLE = _("Braille Bindings")
-
 # Translators: This string is a label for the group of Orca commands which
 # are related to documents.
 KB_GROUP_DOCUMENTS = _("Documents")
@@ -506,10 +490,6 @@ KB_GROUP_CHAT = _("Chat")
 # Translators: This string is a label for the group of Orca commands which
 # are related to the clipboard.
 KB_GROUP_CLIPBOARD = _("Clipboard")
-
-# Translators: This string is a label for the group of Orca commands which
-# are related to presenting the date and time.
-KB_GROUP_DATE_AND_TIME = _("Date and time")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
@@ -616,12 +596,6 @@ KB_GROUP_SPEECH_VERBOSITY = _("Speech and verbosity")
 # and copy the text. This string is the title of the window with the text view.
 FLAT_REVIEW_CONTENTS = _("Flat review contents")
 
-# Translators: Modified is a table column header in Orca's preferences dialog.
-# This column contains a widget which indicates whether a key binding
-# for an Orca command has been changed by the user to something other than its
-# default value.
-KB_MODIFIED = C_("keybindings", "Modified")
-
 # Translators: This is a label for the setting which determines if Orca will
 # use the "desktop" or "laptop" keyboard layout. The desktop layout is
 # intended for use with a full-size keyboard, while the laptop layout is
@@ -688,20 +662,6 @@ PRESENTATION_SPEAK_AND_MARK = _("Speak and mark")
 # be presented. If selected, the attribute will not be presented.
 TEXT_ATTRIBUTES_PRESENTATION_NONE = C_("text attributes", "None")
 
-# Translators: This is the title of a message dialog informing the user that
-# he/she attempted to save a new user profile under a name which already exists.
-# A "user profile" is a collection of settings which apply to a given task, such
-# as a "Spanish" profile which would use Spanish text-to-speech and Spanish
-# braille and selected when reading Spanish content.
-PROFILE_CONFLICT_TITLE = _("Save Profile As Conflict")
-
-# Translators: This is the label of a message dialog informing the user that
-# he/she attempted to save a new user profile under a name which already exists.
-# A "user profile" is a collection of settings which apply to a given task, such
-# as a "Spanish" profile which would use Spanish text-to-speech and Spanish
-# braille and selected when reading Spanish content.
-PROFILE_CONFLICT_LABEL = _("User Profile Conflict!")
-
 # Translators: This is the message in a dialog informing the user that he/she
 # attempted to save a new user profile under a name which already exists.
 # A "user profile" is a collection of settings which apply to a given task, such
@@ -710,26 +670,6 @@ PROFILE_CONFLICT_LABEL = _("User Profile Conflict!")
 PROFILE_CONFLICT_MESSAGE = _("Profile %s already exists.\n" \
                              "Continue updating the existing profile with " \
                              "these new changes?")
-
-# Translators: This text is displayed in a message dialog when a user indicates
-# he/she wants to switch to a new user profile which will cause him/her to lose
-# settings which have been altered but not yet saved. A "user profile" is a
-# collection of settings which apply to a given task such as a "Spanish" profile
-# which would use Spanish text-to-speech and Spanish braille and selected when
-# reading Spanish content.
-PROFILE_LOAD_LABEL = _("Load user profile")
-
-# Translators: This text is displayed in a message dialog when a user indicates
-# he/she wants to switch to a new user profile which will cause him/her to lose
-# settings which have been altered but not yet saved. A "user profile" is a
-# collection of settings which apply to a given task such as a "Spanish" profile
-# which would use Spanish text-to-speech and Spanish braille and selected when
-# reading Spanish content.
-PROFILE_LOAD_MESSAGE = \
-    _("You are about to change the active profile. If you\n" \
-      "have just made changes in your preferences, they will\n" \
-      "be dropped at profile load.\n\n" \
-      "Continue loading profile discarding previous changes?")
 
 # Translators: Profiles in Orca make it possible for users to quickly switch
 # amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -982,21 +922,9 @@ SN_HEADER_ROLE = C_("structural navigation", "Role")
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
-# contains the selected item of a form field.
-SN_HEADER_SELECTED_ITEM = C_("structural navigation", "Selected Item")
-
-# Translators: Orca has a command that presents a list of structural navigation
-# objects in a dialog box so that users can navigate more quickly than they
-# could with native keyboard navigation. This is the title for a column which
 # contains the state of a widget. Examples include "checked"/"not checked",
 # "selected"/"not selected", "visited/not visited", etc.
 SN_HEADER_STATE = C_("structural navigation", "State")
-
-# Translators: Orca has a command that presents a list of structural navigation
-# objects in a dialog box so that users can navigate more quickly than they
-# could with native keyboard navigation. This is the title for a column which
-# contains the text of an entry.
-SN_HEADER_TEXT = C_("structural navigation", "Text")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
@@ -1121,11 +1049,6 @@ SN_TITLE_UNVISITED_LINK = C_("structural navigation", "Unvisited Links")
 # could with native keyboard navigation. This is the title of such a dialog box.
 SN_TITLE_VISITED_LINK = C_("structural navigation", "Visited Links")
 
-# Translators: This is the title of a panel holding options for how to navigate
-# HTML content (e.g., Orca caret navigation, positioning of caret, structural
-# navigation, etc.).
-PAGE_NAVIGATION = _("Page Navigation")
-
 # Translators: When the user loads a new web page, they can optionally have Orca
 # automatically start reading the page from beginning to end. This is the label
 # of a widget in which users can indicate their preference.
@@ -1228,10 +1151,6 @@ SPREADSHEET_SPEAK_SELECTED_RANGE = _("Always speak selected spreadsheet range")
 # header of a table cell in document content.
 TABLE_SPEAK_CELL_HEADER = _("Speak cell header")
 
-# Translators: This is the title of a panel containing options for specifying
-# how to navigate tables in document content.
-TABLE_NAVIGATION = _("Table Navigation")
-
 # Translators: This is a label for a group of settings in the Tables tab of the
 # Orca Preferences dialog. These settings control whether Orca speaks the entire
 # row when the user moves from row to row in different types of tables.
@@ -1246,11 +1165,6 @@ TABLE_CELL_NAVIGATION = _("Cell Navigation")
 # blank cells when navigating tables in document content.
 TABLE_SKIP_BLANK_CELLS = _("Skip _blank cells")
 
-# Translators: When users are navigating a table, they sometimes want the entire
-# row of a table read; other times they want just the current cell presented to
-# them. This label is associated with the default presentation to be used.
-TABLE_SPEAK_CELL = _("Speak _cell")
-
 # Translators: This is a label for an option to tell Orca whether or not it
 # should speak table cell coordinates in document content.
 TABLE_SPEAK_CELL_COORDINATES = _("Speak _cell coordinates")
@@ -1259,10 +1173,6 @@ TABLE_SPEAK_CELL_COORDINATES = _("Speak _cell coordinates")
 # should speak the span size of a table cell (e.g., how many rows and columns
 # a particular table cell spans in a table).
 TABLE_SPEAK_CELL_SPANS = _("Speak _multiple cell spans")
-
-# Translators: This is a table column header. "Attribute" here refers to text
-# attributes such as bold, underline, family-name, etc.
-TEXT_ATTRIBUTE_NAME = _("Attribute Name")
 
 # Translators: This string is associated with a combo box which allows the user
 # to select the set of symbols to be used when Orca presents print strings on a
@@ -2017,10 +1927,6 @@ TEXT_ATTRIBUTES_REORDER = _("Reorder")
 # Translators: This refers to the amount of information Orca provides about a
 # particular object that receives focus. The choices are Brief and Verbose.
 VERBOSITY = _("Verbosity")
-
-# Translators: This refers to the amount of information Orca provides about a
-# particular object that receives focus.
-VERBOSITY_LEVEL_BRIEF = _("Brie_f")
 
 # Translators: This refers to the amount of information Orca provides about a
 # particular object that receives focus.
