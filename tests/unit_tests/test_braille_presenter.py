@@ -436,6 +436,38 @@ class TestBraillePresenter:
         assert result is True
         assert not settings_mock.enableContractedBraille
 
+    def test_get_computer_braille_at_cursor_is_enabled(self, test_context: OrcaTestContext):
+        """Test getting computer braille at cursor enabled status."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock = essential_modules["orca.settings"]
+
+        settings_mock.enableComputerBrailleAtCursor = True
+        assert presenter.get_computer_braille_at_cursor_is_enabled() is True
+
+        settings_mock.enableComputerBrailleAtCursor = False
+        assert presenter.get_computer_braille_at_cursor_is_enabled() is False
+
+    def test_set_computer_braille_at_cursor_is_enabled(self, test_context: OrcaTestContext):
+        """Test setting computer braille at cursor enabled status."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        result = presenter.set_computer_braille_at_cursor_is_enabled(True)
+        assert result is True
+        assert settings_mock.enableComputerBrailleAtCursor
+
+        result = presenter.set_computer_braille_at_cursor_is_enabled(False)
+        assert result is True
+        assert not settings_mock.enableComputerBrailleAtCursor
+
     def test_get_word_wrap_is_enabled(self, test_context: OrcaTestContext):
         """Test getting word wrap enabled status."""
 
@@ -777,6 +809,7 @@ class TestBraillePreferencesGridUI:
         settings_mock.brailleRolenameStyle = 0
         settings_mock.brailleShowContext = True
         settings_mock.enableContractedBraille = False
+        settings_mock.enableComputerBrailleAtCursor = True
         settings_mock.disableBrailleEOL = False
         settings_mock.enableBrailleWordWrap = False
         settings_mock.brailleContractionTable = ""
@@ -797,6 +830,7 @@ class TestBraillePreferencesGridUI:
         guilabels_mock.BRAILLE_ABBREVIATED_ROLE_NAMES = "Abbreviated role names"
         guilabels_mock.VERBOSITY = "Verbosity"
         guilabels_mock.BRAILLE_ENABLE_CONTRACTED_BRAILLE = "Enable contracted braille"
+        guilabels_mock.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR = "Expand word at cursor"
         guilabels_mock.BRAILLE_DISABLE_END_OF_LINE_SYMBOL = "Disable end of line symbol"
         guilabels_mock.BRAILLE_ENABLE_WORD_WRAP = "Enable word wrap"
         guilabels_mock.BRAILLE_CONTRACTION_TABLE = "Contraction table"
@@ -859,7 +893,7 @@ class TestBraillePreferencesGridUI:
         grid = BrailleDisplaySettingsPreferencesGrid(presenter)
 
         assert isinstance(grid, Gtk.Grid)
-        assert len(grid._widgets) == 7
+        assert len(grid._widgets) == 8
 
     def test_braille_display_settings_grid_has_contracted_control(
         self, test_context: OrcaTestContext
@@ -878,7 +912,10 @@ class TestBraillePreferencesGridUI:
         contracted_switch = grid.get_widget(2)
         assert contracted_switch is not None
 
-        contraction_table_combo = grid.get_widget(3)
+        computer_braille_at_cursor_switch = grid.get_widget(3)
+        assert computer_braille_at_cursor_switch is not None
+
+        contraction_table_combo = grid.get_widget(4)
         assert contraction_table_combo is not None
 
     def test_braille_flash_messages_grid_creates_widgets(
@@ -1070,5 +1107,5 @@ class TestBraillePreferencesGridUI:
         presenter = BraillePresenter()
         grid = BrailleDisplaySettingsPreferencesGrid(presenter)
 
-        link_combo = grid.get_widget(4)
+        link_combo = grid.get_widget(5)
         assert link_combo.get_active() == 1

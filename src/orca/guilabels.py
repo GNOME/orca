@@ -1301,6 +1301,12 @@ BRAILLE_SHOW_CONTEXT = _("Show context (ancestors)")
 # braille.
 BRAILLE_ENABLE_CONTRACTED_BRAILLE = _("Contracted Braille")
 
+# Translators: This is the label for a setting which controls whether computer
+# braille (uncontracted) is used for the word at the cursor location when
+# contracted braille is enabled. If disabled, the word at the cursor remains
+# contracted like the rest of the text.
+BRAILLE_COMPUTER_BRAILLE_AT_CURSOR = _("Expand word at cursor")
+
 # Translators: This is the title of the Orca Preferences dialog box.
 DIALOG_SCREEN_READER_PREFERENCES = _("Screen Reader Preferences")
 

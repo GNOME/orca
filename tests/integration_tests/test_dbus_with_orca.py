@@ -722,6 +722,7 @@ MODULE_CONFIG = {
             "AvailableContractionTables",
             "BrailleIsEnabled",
             "BrailleProgressBarUpdates",
+            "ComputerBrailleAtCursorIsEnabled",
             "ContractedBrailleIsEnabled",
             "ContractionTable",
             "DisplayAncestors",
@@ -742,6 +743,7 @@ MODULE_CONFIG = {
         "setters": [
             "BrailleIsEnabled",
             "BrailleProgressBarUpdates",
+            "ComputerBrailleAtCursorIsEnabled",
             "ContractedBrailleIsEnabled",
             "ContractionTable",
             "DisplayAncestors",

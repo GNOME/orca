@@ -133,6 +133,13 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 prefs_key="enableBrailleWordWrap"
             ),
             self._enable_contracted_control,
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR,
+                getter=presenter.get_computer_braille_at_cursor_is_enabled,
+                setter=presenter.set_computer_braille_at_cursor_is_enabled,
+                prefs_key="enableComputerBrailleAtCursor",
+                determine_sensitivity=self._contracted_enabled
+            ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.BRAILLE_CONTRACTION_TABLE,
                 options=table_names,
@@ -635,6 +642,21 @@ class BraillePresenter:
         msg = f"BRAILLE PRESENTER: Setting enable contracted braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableContractedBraille = value
+        return True
+
+    @dbus_service.getter
+    def get_computer_braille_at_cursor_is_enabled(self) -> bool:
+        """Returns whether computer braille is used at the cursor position."""
+
+        return settings.enableComputerBrailleAtCursor
+
+    @dbus_service.setter
+    def set_computer_braille_at_cursor_is_enabled(self, value: bool) -> bool:
+        """Sets whether computer braille is used at the cursor position."""
+
+        msg = f"BRAILLE PRESENTER: Setting enable computer braille at cursor to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.enableComputerBrailleAtCursor = value
         return True
 
     def get_contraction_table_path(self) -> str:
