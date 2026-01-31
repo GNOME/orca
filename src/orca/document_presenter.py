@@ -926,7 +926,10 @@ class DocumentPresenter:
         if new_doc is None:
             self.reset_find_announcement_state()
             reason = "locus of focus no longer in document"
-            self.suspend_navigators(script, True, reason)
+            self.suspend_navigators(script, False, reason)
+            structural_navigator.get_navigator().set_mode(
+                script, structural_navigator.NavigationMode.OFF)
+            caret_navigator.get_navigator().set_enabled_for_script(script, False)
             return True
 
         if old_doc is None:
