@@ -1207,24 +1207,25 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if document_presenter.get_presenter().browse_mode_is_sticky(self.app):
+            msg = "WEB: Element claimed focus, but browse mode is sticky"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
-            if document_presenter.get_presenter().browse_mode_is_sticky(self.app):
-                msg = "WEB: Embedded descendant claimed focus, but browse mode is sticky"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-            elif AXUtilities.is_tool_tip(event.source) \
-              and AXObject.find_ancestor(focus, lambda x: x == event.source):
+            if AXUtilities.is_tool_tip(event.source) and AXObject.is_ancestor(focus, event.source):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
-            else:
-                msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                if self.utilities.should_interrupt_for_locus_of_focus_change(
-                        focus, event.source, event):
-                    self.interrupt_presentation()
 
-                focus_manager.get_manager().set_locus_of_focus(event, event.source)
-                return True
+            msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            if self.utilities.should_interrupt_for_locus_of_focus_change(
+                    focus, event.source, event):
+                self.interrupt_presentation()
+
+            focus_manager.get_manager().set_locus_of_focus(event, event.source)
+            return True
 
         if AXUtilities.is_editable(event.source):
             msg = "WEB: Event source is editable"
