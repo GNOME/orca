@@ -1280,12 +1280,8 @@ class CommandManager:
                 else:
                     # Old keybinding was just the default - use new command's default
                     command.set_keybinding(default_kb)
-                    msg = f"COMMAND MANAGER: Using default keybinding for '{name}': {default_kb}"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
             else:
                 command.set_keybinding(default_kb)
-                msg = f"COMMAND MANAGER: Using default keybinding for '{name}': {default_kb}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
             self._add_to_key_index(command)
 
         elif isinstance(command, BrailleCommand):

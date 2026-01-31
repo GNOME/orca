@@ -667,7 +667,7 @@ class KeyboardEvent(InputEvent):
         self._present()
 
         if self.is_pressed_key() and self._handler:
-            GLib.timeout_add(1, self._consume)
+            GLib.timeout_add(1, self._handle)
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -675,12 +675,12 @@ class KeyboardEvent(InputEvent):
         msg = f"^^^^^ PROCESS {self.type.value_name.upper()}: {data} ^^^^^\n"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
-    def _consume(self) -> bool:
-        """Consumes this input event after a timeout. Returns False to stop the timeout."""
+    def _handle(self) -> bool:
+        """Handles this event after a timeout. Returns False to stop the timeout."""
 
         start_time = time.time()
         data = f"'{self.keyval_name}' ({self.hw_code})"
-        msg = f"\nvvvvv CONSUME {self.type.value_name.upper()}: {data} vvvvv"
+        msg = f"\nvvvvv HANDLE {self.type.value_name.upper()}: {data} vvvvv"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
         if self._handler:
@@ -693,7 +693,7 @@ class KeyboardEvent(InputEvent):
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        msg = f"^^^^^ CONSUME {self.type.value_name.upper()}: {data} ^^^^^\n"
+        msg = f"^^^^^ HANDLE {self.type.value_name.upper()}: {data} ^^^^^\n"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
         return False
