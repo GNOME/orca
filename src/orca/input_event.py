@@ -135,9 +135,8 @@ class KeyboardEvent(InputEvent):
         # Some implementors don't include numlock in the modifiers. Unfortunately,
         # trying to heuristically hack around this just by looking at the event
         # is not reliable. Ditto regarding asking Gdk for the numlock state.
-        if self.keyval_name.startswith("KP"):
-            if self.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
-                self._is_kp_with_numlock = True
+        if self._is_keypad_key() and self.modifiers & (1 << Atspi.ModifierType.NUMLOCK):
+            self._is_kp_with_numlock = True
 
         modifier_manager = orca_modifier_manager.get_manager()
         if self.is_orca_modifier():
@@ -410,6 +409,14 @@ class KeyboardEvent(InputEvent):
 
         return bool(self.modifiers & keybindings.ORCA_MODIFIER_MASK)
 
+    def _is_keypad_key(self) -> bool:
+        """Return True if this is a keypad key based on keyval name or hardware keycode."""
+
+        if self.keyval_name.startswith("KP"):
+            return True
+        keypad_keycodes = {63, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 104, 106}
+        return self.hw_code in keypad_keycodes
+
     def is_keypad_key_with_numlock_on(self) -> bool:
         """Return True if this is a key pad key with numlock on."""
 
@@ -638,6 +645,7 @@ class KeyboardEvent(InputEvent):
                 tokens = ["COMMAND:", command.get_name()]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+            # pylint: disable-next=import-outside-toplevel
             from . import learn_mode_presenter
             learn_mode = learn_mode_presenter.get_presenter().is_active()
             if learn_mode:
@@ -726,7 +734,7 @@ class BrailleEvent(InputEvent):
         return result
 
     def _process(self):
-        # pylint: disable=import-outside-toplevel
+        # pylint: disable-next=import-outside-toplevel
         from . import learn_mode_presenter
         presenter = learn_mode_presenter.get_presenter()
 
@@ -757,7 +765,7 @@ class MouseButtonEvent(InputEvent):
     # TODO - JD: Remove this and the validation logic once we have a fix for
     # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/194.
     try:
-        display = Gdk.Display.get_default()
+        display = Gdk.Display.get_default() # pylint: disable=no-value-for-parameter
         seat = Gdk.Display.get_default_seat(display)
         _pointer = seat.get_pointer()
     except Exception:
