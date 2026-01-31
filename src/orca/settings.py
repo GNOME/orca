@@ -153,7 +153,8 @@ flashIsPersistent: bool = False
 flashIsDetailed: bool = True
 enableBrailleWordWrap: bool = False
 enableContractedBraille: bool = False
-brailleContractionTable: str = ''
+brailleContractionTable: str = ""
+enableComputerBrailleAtCursor: bool = True
 disableBrailleEOL: bool = False
 brailleRolenameStyle: int = VERBOSITY_LEVEL_VERBOSE
 brailleSelectorIndicator: int = BRAILLE_UNDERLINE_BOTH
@@ -247,4 +248,3 @@ spellcheckPresentContext: bool = True
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 ignoreStatusBarProgressBars: bool = True
-enableComputerBrailleAtCursor: bool = True
