@@ -247,3 +247,4 @@ spellcheckPresentContext: bool = True
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 ignoreStatusBarProgressBars: bool = True
+enableComputerBrailleAtCursor: bool = True

@@ -357,7 +357,10 @@ class Region:
         if not expand_on_cursor or cursor_on_space:
             mode = 0
         else:
-            mode = louis.compbrlAtCursor
+            if settings.enableComputerBrailleAtCursor:
+                mode = louis.compbrlAtCursor
+            else:
+                mode = 0
 
         contracted, in_position, out_position, cursor_position = \
             louis.translate([self._contraction_table],
