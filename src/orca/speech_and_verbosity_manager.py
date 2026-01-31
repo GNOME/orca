@@ -686,6 +686,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_types_content.add(voice_types_listbox) # pylint: disable=no-member
         self.attach(self._voice_types_frame, 0, row, 1, 1)
 
+        self.show_all()
+
     def _show_voice_settings_dialog(self, voice_type: VoicesPreferencesGrid.VoiceType) -> None:
         """Show a dialog for editing settings for a specific voice type."""
 
