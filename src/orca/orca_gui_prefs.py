@@ -796,7 +796,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if self._app_name:
             base_title = guilabels.PREFERENCES_APPLICATION_TITLE % self._app_name
         else:
-            base_title = guilabels.DIALOG_SCREEN_READER_PREFERENCES
+            base_title = guilabels.DIALOG_SCREEN_READER_PREFERENCES_ACCESSIBLE
 
         profile_label = self._get_current_profile_label()
 

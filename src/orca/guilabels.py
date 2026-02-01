@@ -1308,7 +1308,10 @@ BRAILLE_ENABLE_CONTRACTED_BRAILLE = _("Contracted Braille")
 BRAILLE_COMPUTER_BRAILLE_AT_CURSOR = _("Expand word at cursor")
 
 # Translators: This is the title of the Orca Preferences dialog box.
-DIALOG_SCREEN_READER_PREFERENCES = _("Screen Reader Preferences")
+DIALOG_SCREEN_READER_PREFERENCES = _("Screen Reader")
+
+# Translators: This is the accessible name for the Orca Preferences dialog box.
+DIALOG_SCREEN_READER_PREFERENCES_ACCESSIBLE = _("Screen Reader Preferences")
 
 # Translators: This is the label for a widget in the preferences dialog.
 DIALOG_ADD = _("Add")
