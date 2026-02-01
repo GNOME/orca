@@ -1,3 +1,131 @@
+50.beta - 1 February 2026
+
+New features:
+
+* Orca has a brand new preferences window. It is still GTK3, but has
+  an appearance more consistent with other GNOME applications.
+
+* All settings and commands are now global, eliminating the need to
+  save settings on a per-application basis e.g. for web browsers.
+  Settings can, of course, still be saved on a per-application basis
+  when doing so is desired.
+
+* Automatic language switching has been added both for web content
+  and for UI. Because this can have unexpected results, it can be
+  turned off within the preferences window.
+
+* It is now possible to keep contrated braille enabled at the cursor
+  location, and to display object mnemonics in braille.
+
+* Browse mode now works in all document content; not just web content.
+
+* Sticky focus mode should be automatically enabled for all Electron
+  apps.
+
+Bug fixes:
+
+* Fix orphaned key grabs for non-numeric KeyPad keys when NumLock is
+  toggled on.
+
+* Fix presentation of terminal-app window title when the speak-title
+  command is used.
+
+* Filter out name and description changes that are too similar, e.g.
+  from busy indicators.
+
+* Fix presentation when Alt+Tabbing back into Firefox without receiving
+  the expected window-activate event.
+
+* Don't announce indentation during word navigation.
+
+* Always treat lists and tables as "large objects" for the purpose of
+  structural navigation.
+
+* Fix Learn Mode incorrectly reporting unbound/disabled commands
+
+* Fix skipping over elements in web pages during Say All.
+
+* Work around Firefox downloads list chattiness.
+
+* Prevent muted speech from being re-enabled by the switcher script.
+
+* Fix double-presentation of lines with new line characters in web
+  content.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 twlvnn kraftwerk
+  de              German                    Tim Sabsch
+  el              Greek                     Efstathios Iosifidis
+  eo              Esperanto                 Kristjan SCHMIDT
+  eu              Basque                    Asier Saratsua Garmendia
+  hu              Hungarian                 Attila Hammer
+  id              Indonesian                Andika Triwidada
+  ka              Georgian                  Ekaterine Papava
+  ka              Georgian                  Zurab Kargareteli
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  pt_BR           Brazilian Portuguese      Álvaro Burns
+  ro              Romanian                  Antonio Marin
+  sl              Slovenian                 Martin
+  sr@latin        Serbian (Latin)           Милош Поповић
+  sr              Serbian                   Милош Поповић
+  sv              Swedish                   Anders Jonsson
+  th              Thai                      Aefgh Threenine
+  ug              Uighur                    Abduqadir Abliz
+  uk              Ukrainian                 Yuri Chornoivan
+
+=========
+
+49.5 - 25 November 2025
+
+Web:
+
+* Fix double prsentation of lines with new line characters.
+
+* Fix several chattiness issues.
+
+General:
+
+* Treat space as a printable character during password input.
+
+* Don't say "grayed" in editable table cells regardless of state.
+
+* Fall back on descendants when presenting editable table cell content.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  id              Indonesian                Andika Triwidada
+  nb              Norwegian Bokmål          Kjartan Maraas
+  sr@latin        Serbian (Latin)           Милош Поповић
+  sr              Serbian                   Милош Поповић
+  ug              Uighur                    Abduqadir Abliz
+
+=========
+
+49.4 - 16 October 2025
+
+Web:
+
+* Fix regression in which table navigation in a grid switches to focus
+  mode.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  el              Greek                     Efstathios Iosifidis
+
+=========
+
+49.3 - 13 October 2025
+
+Remote Controller:
+
+* Add additional getters for browse/focus modes.
+
+* Fix integration test failure resulting from differences in Wayland
+  versus X11 with respect to MouseReview.
+
+=========
+
 49.2 - 13 October 2025
 
 Web:
