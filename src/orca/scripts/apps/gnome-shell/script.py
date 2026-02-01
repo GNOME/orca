@@ -37,6 +37,7 @@ from .script_utilities import Utilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -61,13 +62,17 @@ class Script(default.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
         # TODO - JD: This workaround no longer works because the window has a name.
-        if event is not None and event.type == "window:activate" \
-          and new_focus is not None and not AXObject.get_name(new_focus):
+        if (
+            event is not None
+            and event.type == "window:activate"
+            and new_focus is not None
+            and not AXObject.get_name(new_focus)
+        ):
             queued_event = self._get_queued_event("object:state-changed:focused", True)
             if queued_event and queued_event.source != event.source:
                 msg = "GNOME SHELL: Have matching focused event. Not announcing nameless window."
@@ -93,8 +98,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not AXObject.get_name(event.source) and AXUtilities.is_menu_item(event.source) \
-           and not AXUtilities.get_is_labelled_by(event.source):
+        if (
+            not AXObject.get_name(event.source)
+            and AXUtilities.is_menu_item(event.source)
+            and not AXUtilities.get_is_labelled_by(event.source)
+        ):
             descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
             if descendant is not None:
                 focus_manager.get_manager().set_locus_of_focus(event, descendant)
@@ -111,7 +119,8 @@ class Script(default.Script):
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
         dialog = AXObject.find_ancestor(
-            focus_manager.get_manager().get_locus_of_focus(), AXUtilities.is_dialog)
+            focus_manager.get_manager().get_locus_of_focus(), AXUtilities.is_dialog
+        )
         tokens = ["GNOME SHELL: focus is in dialog:", dialog]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if dialog and AXObject.is_ancestor(event.source, dialog):

@@ -47,8 +47,10 @@ from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(default.Script):
     """The sleep-mode script."""
@@ -60,8 +62,9 @@ class Script(default.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         manager = command_manager.get_manager()
         sleep_cmd = manager.get_keyboard_command(sleep_mode_manager.SleepModeManager.COMMAND_NAME)
-        sleep_commands = {
-            sleep_mode_manager.SleepModeManager.COMMAND_NAME: sleep_cmd} if sleep_cmd else {}
+        sleep_commands = (
+            {sleep_mode_manager.SleepModeManager.COMMAND_NAME: sleep_cmd} if sleep_cmd else {}
+        )
         manager.set_active_commands(sleep_commands, "Entering sleep mode")
         orca_modifier_manager.get_manager().unset_orca_modifiers("Entering sleep mode.")
 
@@ -94,7 +97,7 @@ class Script(default.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 

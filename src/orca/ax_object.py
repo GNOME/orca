@@ -25,13 +25,13 @@
 
 """Utilities for obtaining information about accessible objects."""
 
-
 import re
 import threading
 import time
 from typing import Callable, Generator
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
@@ -105,9 +105,11 @@ class AXObject:
         # longer needed.
 
         # https://bugzilla.mozilla.org/show_bug.cgi?id=1879750
-        if AXObject.get_role(obj) == Atspi.Role.SECTION \
-           and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME \
-           and AXObject.get_toolkit_name(obj) == "gecko":
+        if (
+            AXObject.get_role(obj) == Atspi.Role.SECTION
+            and AXObject.get_role(AXObject.get_parent(obj)) == Atspi.Role.FRAME
+            and AXObject.get_toolkit_name(obj) == "gecko"
+        ):
             tokens = ["AXObject:", obj, "is bogus. See mozilla bug 1879750."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
             return True
@@ -210,16 +212,19 @@ class AXObject:
     def _has_document_spreadsheet(obj: Atspi.Accessible) -> bool:
         # To avoid circular import. pylint: disable=import-outside-toplevel
         from .ax_collection import AXCollection
+
         rule = AXCollection.create_match_rule(roles=[Atspi.Role.DOCUMENT_SPREADSHEET])
         if rule is None:
             return False
 
         frame = AXObject.find_ancestor_inclusive(
-            obj, lambda x: AXObject.get_role(x) == Atspi.Role.FRAME)
+            obj, lambda x: AXObject.get_role(x) == Atspi.Role.FRAME
+        )
         if frame is None:
             return False
-        return bool(Atspi.Collection.get_matches(
-            frame, rule, Atspi.CollectionSortOrder.CANONICAL, 1, True))
+        return bool(
+            Atspi.Collection.get_matches(frame, rule, Atspi.CollectionSortOrder.CANONICAL, 1, True)
+        )
 
     @staticmethod
     def supports_collection(obj: Atspi.Accessible) -> bool:
@@ -247,7 +252,8 @@ class AXObject:
             return iface is not None
 
         if AXObject.find_ancestor_inclusive(
-            obj, lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT):
+            obj, lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT
+        ):
             return True
 
         if AXObject._has_document_spreadsheet(obj):
@@ -272,7 +278,6 @@ class AXObject:
             return False
 
         return iface is not None
-
 
     @staticmethod
     def supports_document(obj: Atspi.Accessible) -> bool:
@@ -489,8 +494,10 @@ class AXObject:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
-        if parent is None \
-           and AXObject.get_role(obj) not in [Atspi.Role.INVALID, Atspi.Role.DESKTOP_FRAME]:
+        if parent is None and AXObject.get_role(obj) not in [
+            Atspi.Role.INVALID,
+            Atspi.Role.DESKTOP_FRAME,
+        ]:
             tokens = ["AXObject:", obj, "claims to have no parent"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -520,8 +527,17 @@ class AXObject:
         index = AXObject.get_index_in_parent(obj)
         n_children = AXObject.get_child_count(parent)
         if index < 0 or index >= n_children:
-            tokens = ["AXObject:", obj, "has index", index,
-                      "; parent", parent, "has", n_children, "children"]
+            tokens = [
+                "AXObject:",
+                obj,
+                "has index",
+                index,
+                "; parent",
+                parent,
+                "has",
+                n_children,
+                "children",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return parent
 
@@ -543,8 +559,7 @@ class AXObject:
 
     @staticmethod
     def get_common_ancestor(
-        obj1: Atspi.Accessible,
-        obj2: Atspi.Accessible
+        obj1: Atspi.Accessible, obj2: Atspi.Accessible
     ) -> Atspi.Accessible | None:
         """Returns the common ancestor of obj1 and obj2."""
 
@@ -571,8 +586,7 @@ class AXObject:
 
     @staticmethod
     def find_ancestor_inclusive(
-        obj: Atspi.Accessible,
-        pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
     ) -> Atspi.Accessible | None:
         """Returns obj, or the ancestor of obj, for which the function pred is true"""
 
@@ -583,8 +597,7 @@ class AXObject:
 
     @staticmethod
     def find_ancestor(
-        obj: Atspi.Accessible,
-        pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
     ) -> Atspi.Accessible | None:
         """Returns the ancestor of obj if the function pred is true"""
 
@@ -596,8 +609,12 @@ class AXObject:
         parent = AXObject.get_parent_checked(obj)
         while parent:
             if parent in objects:
-                tokens = ["AXObject: Circular tree suspected in find_ancestor. ",
-                          parent, "already in: ", objects]
+                tokens = [
+                    "AXObject: Circular tree suspected in find_ancestor. ",
+                    parent,
+                    "already in: ",
+                    objects,
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return None
 
@@ -611,9 +628,7 @@ class AXObject:
 
     @staticmethod
     def is_ancestor(
-        obj: Atspi.Accessible,
-        ancestor: Atspi.Accessible,
-        inclusive: bool = False
+        obj: Atspi.Accessible, ancestor: Atspi.Accessible, inclusive: bool = False
     ) -> bool:
         """Returns true if ancestor is an ancestor of obj or, if inclusive, obj is ancestor."""
 
@@ -660,9 +675,7 @@ class AXObject:
         return child
 
     @staticmethod
-    def get_child_checked(
-        obj: Atspi.Accessible, index: int
-    ) -> Atspi.Accessible | None:
+    def get_child_checked(obj: Atspi.Accessible, index: int) -> Atspi.Accessible | None:
         """Returns the nth child of obj, doing checks for tree validity"""
 
         if not AXObject.is_valid(obj):
@@ -681,8 +694,7 @@ class AXObject:
 
     @staticmethod
     def get_active_descendant_checked(
-        container: Atspi.Accessible,
-        reported_child: Atspi.Accessible
+        container: Atspi.Accessible, reported_child: Atspi.Accessible
     ) -> Atspi.Accessible | None:
         """Checks the reported active descendant and return the real/valid one."""
 
@@ -699,8 +711,12 @@ class AXObject:
 
         if real_child != reported_child:
             tokens = [
-                "AXObject: ", container, f"'s child at {index} is ", real_child,
-                "; not reported child", reported_child
+                "AXObject: ",
+                container,
+                f"'s child at {index} is ",
+                real_child,
+                "; not reported child",
+                reported_child,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -708,8 +724,7 @@ class AXObject:
 
     @staticmethod
     def _find_descendant(
-        obj: Atspi.Accessible,
-        pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
     ) -> Atspi.Accessible | None:
         """Returns the descendant of obj if the function pred is true"""
 
@@ -730,8 +745,7 @@ class AXObject:
 
     @staticmethod
     def find_descendant(
-        obj: Atspi.Accessible,
-        pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
     ) -> Atspi.Accessible | None:
         """Returns the descendant of obj if the function pred is true"""
 
@@ -759,7 +773,7 @@ class AXObject:
         obj: Atspi.Accessible,
         include_if: Callable[[Atspi.Accessible], bool] | None,
         exclude_if: Callable[[Atspi.Accessible], bool] | None,
-        matches: list[Atspi.Accessible]
+        matches: list[Atspi.Accessible],
     ) -> None:
         """Returns all descendants which match the specified inclusion and exclusion"""
 
@@ -779,7 +793,7 @@ class AXObject:
     def find_all_descendants(
         root: Atspi.Accessible,
         include_if: Callable[[Atspi.Accessible], bool] | None = None,
-        exclude_if: Callable[[Atspi.Accessible], bool] | None = None
+        exclude_if: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants which match the specified inclusion and exclusion"""
 
@@ -969,8 +983,7 @@ class AXObject:
 
     @staticmethod
     def iter_children(
-        obj: Atspi.Accessible,
-        pred: Callable[[Atspi.Accessible], bool] | None = None
+        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
     ) -> Generator[Atspi.Accessible, None, None]:
         """Generator to iterate through obj's children. If the function pred is
         specified, children for which pred is False will be skipped."""
@@ -1087,11 +1100,7 @@ class AXObject:
         return AXObject.get_state_set(obj).contains(state)
 
     @staticmethod
-    def clear_cache(
-        obj: Atspi.Accessible,
-        recursive: bool = False,
-        reason: str = ""
-    ) -> None:
+    def clear_cache(obj: Atspi.Accessible, recursive: bool = False, reason: str = "") -> None:
         """Clears the Atspi cached information associated with obj"""
 
         if obj is None:
@@ -1155,10 +1164,7 @@ class AXObject:
         return False
 
     @staticmethod
-    def get_attributes_dict(
-        obj: Atspi.Accessible,
-        use_cache: bool = True
-    ) -> dict[str, str]:
+    def get_attributes_dict(obj: Atspi.Accessible, use_cache: bool = True) -> dict[str, str]:
         """Returns the object attributes of obj as a dictionary."""
 
         if not AXObject.is_valid(obj):
@@ -1183,11 +1189,7 @@ class AXObject:
         return attributes
 
     @staticmethod
-    def get_attribute(
-        obj: Atspi.Accessible,
-        attribute_name: str,
-        use_cache: bool = True
-    ) -> str:
+    def get_attribute(obj: Atspi.Accessible, attribute_name: str, use_cache: bool = True) -> str:
         """Returns the value of the specified attribute as a string."""
 
         if not AXObject.is_valid(obj):
@@ -1219,8 +1221,8 @@ class AXObject:
         if not action_name:
             return ""
 
-        name = re.sub(r'(?<=[a-z])([A-Z])', r'-\1', action_name).lower()
-        name = re.sub('[!\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]', '-', name)
+        name = re.sub(r"(?<=[a-z])([A-Z])", r"-\1", action_name).lower()
+        name = re.sub("[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~]", "-", name)
         return name
 
     @staticmethod
@@ -1475,5 +1477,6 @@ class AXObject:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
+
 
 AXObject.start_cache_clearing_thread()

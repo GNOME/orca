@@ -19,7 +19,7 @@
 
 # pylint: disable=invalid-name
 
-""" Custom script for notification daemon."""
+"""Custom script for notification daemon."""
 
 # https://gitlab.gnome.org/GNOME/orca/-/issues/358
 # ruff: noqa: F401

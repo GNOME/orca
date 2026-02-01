@@ -82,9 +82,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing: bool = True
         self._default_profile: list[str] = [guilabels.PROFILE_DEFAULT, "default"]
         self._auto_grid: preferences_grid_base.AutoPreferencesGrid | None = None
-        self._pending_renames: dict[
-            str, list[str]
-        ] = {}
+        self._pending_renames: dict[str, list[str]] = {}
 
         self._build()
         self.refresh()
@@ -110,9 +108,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         ]
 
         self._auto_grid = preferences_grid_base.AutoPreferencesGrid(
-            tab_label="",
-            controls=controls,
-            info_message=guilabels.PROFILES_INFO
+            tab_label="", controls=controls, info_message=guilabels.PROFILES_INFO
         )
         self.attach(self._auto_grid, 0, 0, 1, 1)
 
@@ -121,7 +117,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 guilabels.CURRENT_PROFILE,
                 "list-add-symbolic",
                 self._on_new_profile_clicked,
-                guilabels.PROFILE_CREATE_NEW.replace("_", "")
+                guilabels.PROFILE_CREATE_NEW.replace("_", ""),
             )
 
     def _on_new_profile_clicked(self, _button: Gtk.Button) -> None:
@@ -538,10 +534,20 @@ class ProfileManager:
 
         # (name, function, description, desktop_binding, laptop_binding)
         commands_data = [
-            ("cycleSettingsProfileHandler", self.cycle_settings_profile,
-             cmdnames.CYCLE_SETTINGS_PROFILE, None, None),
-            ("presentCurrentProfileHandler", self.present_current_profile,
-             cmdnames.PRESENT_CURRENT_PROFILE, None, None),
+            (
+                "cycleSettingsProfileHandler",
+                self.cycle_settings_profile,
+                cmdnames.CYCLE_SETTINGS_PROFILE,
+                None,
+                None,
+            ),
+            (
+                "presentCurrentProfileHandler",
+                self.present_current_profile,
+                cmdnames.PRESENT_CURRENT_PROFILE,
+                None,
+                None,
+            ),
         ]
 
         for name, function, description, desktop_kb, laptop_kb in commands_data:
@@ -645,12 +651,18 @@ class ProfileManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Cycle through the user's existing settings profiles."""
 
-        tokens = ["PROFILE MANAGER: cycle_settings_profile. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "PROFILE MANAGER: cycle_settings_profile. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         profile_names = self.get_available_profiles()
@@ -690,12 +702,18 @@ class ProfileManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Present the name of the currently active profile."""
 
-        tokens = ["PROFILE MANAGER: present_current_profile. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "PROFILE MANAGER: present_current_profile. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         profile_names = self.get_available_profiles()
@@ -722,8 +740,11 @@ class ProfileManager:
         """Returns the GtkGrid containing the profile management UI."""
 
         return ProfilePreferencesGrid(
-            self, profile_loaded_callback, is_app_specific, labels_update_callback,
-            unsaved_changes_checker
+            self,
+            profile_loaded_callback,
+            is_app_specific,
+            labels_update_callback,
+            unsaved_changes_checker,
         )
 
 

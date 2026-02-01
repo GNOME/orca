@@ -34,8 +34,10 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(script_utilities.Utilities):
     """Custom script utilities for Qt"""
@@ -46,9 +48,7 @@ class Utilities(script_utilities.Utilities):
         return AXUtilities.is_application(AXObject.get_parent(obj))
 
     def top_level_object(
-        self,
-        obj: Atspi.Accessible,
-        use_fallback_search: bool = False
+        self, obj: Atspi.Accessible, use_fallback_search: bool = False
     ) -> Atspi.Accessible | None:
         """Returns the top level object for obj."""
 
@@ -63,8 +63,7 @@ class Utilities(script_utilities.Utilities):
         return result
 
     def frame_and_dialog(
-        self,
-        obj: Atspi.Accessible | None = None
+        self, obj: Atspi.Accessible | None = None
     ) -> list[Atspi.Accessible | None]:
         """Returns the frame and (possibly) the dialog containing obj."""
 

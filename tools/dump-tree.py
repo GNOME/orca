@@ -31,28 +31,32 @@ from datetime import datetime
 import sys
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
+
 
 def as_string(obj: Atspi.Accessible, prefix: str) -> str:
     "Convert an accessible object to a string representation."
 
     timestamp = f"{datetime.now():%H:%M:%S}"
     indent = " " * (len(prefix) + len(timestamp) + 2)
-    return (f"{timestamp} {prefix} "
-            f"{get_role_as_string(obj)} ({hex(id(obj))}) "
-            f"NAME: '{get_name(obj)}' "
-            f"DESCRIPTION: '{get_description(obj)}' "
-            f"ACCESSIBLE ID: '{get_accessible_id(obj)}'"
-            f"\n{indent}LOCALE: '{get_locale(obj)}'"
-            f"\n{indent}PARENT: {get_parent_as_string(obj)} "
-            f"INDEX IN PARENT: {get_index_in_parent(obj)}"
-            f"\n{indent}ATTRIBUTES: {get_attributes_as_string(obj)}"
-            f"\n{indent}RECT: {get_rect_as_string(obj)}"
-            f"\n{indent}STATES: {get_states_as_string(obj)}"
-            f"\n{indent}RELATIONS: {get_relations_as_string(obj)}"
-            f"\n{indent}TEXT: {get_text(obj)}"
-            )
+    return (
+        f"{timestamp} {prefix} "
+        f"{get_role_as_string(obj)} ({hex(id(obj))}) "
+        f"NAME: '{get_name(obj)}' "
+        f"DESCRIPTION: '{get_description(obj)}' "
+        f"ACCESSIBLE ID: '{get_accessible_id(obj)}'"
+        f"\n{indent}LOCALE: '{get_locale(obj)}'"
+        f"\n{indent}PARENT: {get_parent_as_string(obj)} "
+        f"INDEX IN PARENT: {get_index_in_parent(obj)}"
+        f"\n{indent}ATTRIBUTES: {get_attributes_as_string(obj)}"
+        f"\n{indent}RECT: {get_rect_as_string(obj)}"
+        f"\n{indent}STATES: {get_states_as_string(obj)}"
+        f"\n{indent}RELATIONS: {get_relations_as_string(obj)}"
+        f"\n{indent}TEXT: {get_text(obj)}"
+    )
+
 
 def get_rect_as_string(obj: Atspi.Accessible) -> str:
     "Get the rectangle dimensions of an accessible object as a string."
@@ -70,6 +74,7 @@ def get_rect_as_string(obj: Atspi.Accessible) -> str:
         print(f"Exception in get_extents: {error}")
         return ""
     return f"X:{rect.x}, Y:{rect.y}, WIDTH:{rect.width}, HEIGHT:{rect.height}"
+
 
 def get_relations_as_string(obj: Atspi.Accessible) -> str:
     "Get the relations of an accessible object as a string."
@@ -92,6 +97,7 @@ def get_relations_as_string(obj: Atspi.Accessible) -> str:
 
     return " ".join(result) or "(none)"
 
+
 def get_states_as_string(obj: Atspi.Accessible) -> str:
     "Get the states of an accessible object as a string."
 
@@ -101,6 +107,7 @@ def get_states_as_string(obj: Atspi.Accessible) -> str:
         print(f"Exception in get_state_set: {error}")
         return ""
     return " ".join([s.value_nick for s in state_set.get_states()]) or "(none)"
+
 
 def get_name(obj: Atspi.Accessible, fallback_on_labelled_by: bool = True) -> str:
     "Get the name of an accessible object."
@@ -134,6 +141,7 @@ def get_name(obj: Atspi.Accessible, fallback_on_labelled_by: bool = True) -> str
 
     return result
 
+
 def get_description(obj: Atspi.Accessible, fallback_on_described_by: bool = True) -> str:
     "Get the description of an accessible object."
 
@@ -165,6 +173,7 @@ def get_description(obj: Atspi.Accessible, fallback_on_described_by: bool = True
 
     return result
 
+
 def get_accessible_id(obj: Atspi.Accessible) -> str:
     """Get the accessible id of obj"""
 
@@ -175,6 +184,7 @@ def get_accessible_id(obj: Atspi.Accessible) -> str:
         return ""
 
     return result
+
 
 def get_attributes_as_string(obj: Atspi.Accessible) -> str:
     "Get the attributes of an accessible object as a string."
@@ -196,6 +206,7 @@ def get_attributes_as_string(obj: Atspi.Accessible) -> str:
 
     return ", ".join(result)
 
+
 def get_role_as_string(obj: Atspi.Accessible) -> str:
     "Get the role of an accessible object."
 
@@ -204,6 +215,7 @@ def get_role_as_string(obj: Atspi.Accessible) -> str:
     except GLib.GError as error:
         print(f"Exception in get_role: {error}")
         return "(unknown role)"
+
 
 def get_locale(obj: Atspi.Accessible) -> str:
     """Returns the locale of obj"""
@@ -215,6 +227,7 @@ def get_locale(obj: Atspi.Accessible) -> str:
         return ""
 
     return locale
+
 
 def get_text(obj: Atspi.Accessible) -> str:
     "Get the text of an accessible object."
@@ -229,6 +242,7 @@ def get_text(obj: Atspi.Accessible) -> str:
     if len(result) > 80:
         result = result[:80] + "[...]"
     return f"'{result}'"
+
 
 def get_parent(obj: Atspi.Accessible) -> Atspi.Accessible:
     "Get the parent of an accessible object."
@@ -246,6 +260,7 @@ def get_parent(obj: Atspi.Accessible) -> Atspi.Accessible:
         print(f"Exception in get_parent: {error}")
         return None
 
+
 def get_parent_as_string(obj: Atspi.Accessible) -> str:
     "Get the parent of an accessible object."
 
@@ -253,6 +268,7 @@ def get_parent_as_string(obj: Atspi.Accessible) -> str:
     if parent:
         return f"{get_role_as_string(parent)} ({hex(id(parent))})"
     return ""
+
 
 def get_index_in_parent(obj: Atspi.Accessible) -> int:
     "Get the index of an accessible object in its parent's children."
@@ -273,10 +289,13 @@ def get_index_in_parent(obj: Atspi.Accessible) -> int:
 
     child = Atspi.Accessible.get_child_at_index(parent, index)
     if child != obj:
-        print(f"WARNING: Object {hex(id(obj))} at index {index} in parent {hex(id(parent))} "
-              f"is not the expected child {hex(id(child))}")
+        print(
+            f"WARNING: Object {hex(id(obj))} at index {index} in parent {hex(id(parent))} "
+            f"is not the expected child {hex(id(child))}"
+        )
 
     return index
+
 
 def get_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
     "Get the children of an accessible object."
@@ -297,6 +316,7 @@ def get_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
 
     return children
 
+
 def clear_cache_single(obj: Atspi.Accessible) -> None:
     "Clear the cache for a single accessible object."
 
@@ -304,6 +324,7 @@ def clear_cache_single(obj: Atspi.Accessible) -> None:
         Atspi.Accessible.clear_cache_single(obj)
     except GLib.GError as error:
         print(f"Exception in clear_cache_single: {error}")
+
 
 def print_tree(root: Atspi.Accessible, indent: int = 0) -> None:
     "Print the tree structure of accessible objects."
@@ -313,6 +334,7 @@ def print_tree(root: Atspi.Accessible, indent: int = 0) -> None:
     print(f"{as_string(root, prefix)}")
     for child in get_children(root):
         print_tree(child, indent + 1)
+
 
 def find_application_with_name(app_name: str) -> Atspi.Accessible:
     "Find the accessible application with the specified name."
@@ -336,6 +358,7 @@ def find_application_with_name(app_name: str) -> Atspi.Accessible:
     )
     return None
 
+
 def main():
     """Starts the tree dumper and waits for events."""
 
@@ -349,6 +372,7 @@ def main():
 
     print_tree(app)
     print("Tree dump complete.")
+
 
 if __name__ == "__main__":
     main()

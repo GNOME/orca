@@ -77,17 +77,17 @@ class Script(default.Script):
         return Utilities(self)
 
     def _pan_braille_left(
-        self,
-        event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
     ) -> bool:
         """Pans the braille display to the left."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if flat_review_presenter.get_presenter().is_active() \
-           or not braille.beginningIsShowing \
-           or self.utilities.is_spreadsheet_cell(focus) \
-           or not AXUtilities.is_paragraph(focus):
+        if (
+            flat_review_presenter.get_presenter().is_active()
+            or not braille.beginningIsShowing
+            or self.utilities.is_spreadsheet_cell(focus)
+            or not AXUtilities.is_paragraph(focus)
+        ):
             return super()._pan_braille_left(event, pan_amount)
 
         start_offset = AXText.get_line_at_offset(focus)[1]
@@ -104,17 +104,17 @@ class Script(default.Script):
         return super()._pan_braille_left(event, pan_amount)
 
     def _pan_braille_right(
-        self,
-        event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
     ) -> bool:
         """Pans the braille display to the right."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if flat_review_presenter.get_presenter().is_active() \
-           or not braille.endIsShowing \
-           or self.utilities.is_spreadsheet_cell(focus) \
-           or not AXUtilities.is_paragraph(focus):
+        if (
+            flat_review_presenter.get_presenter().is_active()
+            or not braille.endIsShowing
+            or self.utilities.is_spreadsheet_cell(focus)
+            or not AXUtilities.is_paragraph(focus)
+        ):
             return super()._pan_braille_right(event, pan_amount)
 
         end_offset = AXText.get_line_at_offset(focus)[2]
@@ -134,7 +134,7 @@ class Script(default.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
@@ -146,8 +146,11 @@ class Script(default.Script):
 
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
-        if new_focus != old_focus \
-             and AXUtilities.is_paragraph(new_focus) and AXUtilities.is_paragraph(old_focus):
+        if (
+            new_focus != old_focus
+            and AXUtilities.is_paragraph(new_focus)
+            and AXUtilities.is_paragraph(old_focus)
+        ):
             if input_event_manager.get_manager().last_event_was_return():
                 typing_echo_presenter.get_presenter().echo_previous_word(self, old_focus)
                 return True
@@ -162,7 +165,7 @@ class Script(default.Script):
                     self.speak_message(string, voice=voice)
                     self.update_braille(new_focus)
                     offset = AXText.get_caret_offset(new_focus)
-                    focus_manager.get_manager().set_last_cursor_position(new_focus,offset)
+                    focus_manager.get_manager().set_last_cursor_position(new_focus, offset)
                     return True
 
         return super().locus_of_focus_changed(event, old_focus, new_focus)
@@ -188,9 +191,11 @@ class Script(default.Script):
         if AXUtilities.is_paragraph(focus):
             return super().on_active_descendant_changed(event)
 
-        if self.utilities.is_spreadsheet_cell(event.any_data) \
-           and not AXUtilities.is_focused(event.any_data) \
-           and not AXUtilities.is_focused(event.source) :
+        if (
+            self.utilities.is_spreadsheet_cell(event.any_data)
+            and not AXUtilities.is_focused(event.any_data)
+            and not AXUtilities.is_focused(event.source)
+        ):
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             AXObject.clear_cache(event.source, False, msg)
 
@@ -214,9 +219,9 @@ class Script(default.Script):
 
         if AXUtilities.is_paragraph(event.source) and not AXUtilities.is_focused(event.source):
             # TODO - JD: Can we remove this?
-            AXObject.clear_cache(event.source,
-                                 False,
-                                 "Caret-moved event from object which lacks focused state.")
+            AXObject.clear_cache(
+                event.source, False, "Caret-moved event from object which lacks focused state."
+            )
             if AXUtilities.is_focused(event.source):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
                 debug.print_message(debug.LEVEL_INFO, msg, True)

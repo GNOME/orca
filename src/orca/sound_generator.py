@@ -33,6 +33,7 @@ import os
 from typing import TYPE_CHECKING, Any
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -48,6 +49,7 @@ from .ax_value import AXValue
 if TYPE_CHECKING:
     from . import script
 
+
 class Icon:
     """Sound file representing a particular aspect of an object."""
 
@@ -57,11 +59,12 @@ class Icon:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def __str__(self) -> str:
-        return f'Icon(path: {self.path}, is_valid: {self.is_valid()})'
+        return f"Icon(path: {self.path}, is_valid: {self.is_valid()})"
 
     def is_valid(self) -> bool:
         """Returns True if the path associated with this icon is valid."""
         return os.path.isfile(self.path)
+
 
 class Tone:
     """Tone representing a particular aspect of an object."""
@@ -81,11 +84,7 @@ class Tone:
     INVERTED_RED_NOISE = 12
 
     def __init__(
-        self,
-        duration: float,
-        frequency: int,
-        volume_multiplier: float = 1,
-        wave: int = SINE_WAVE
+        self, duration: float, frequency: int, volume_multiplier: float = 1, wave: int = SINE_WAVE
     ) -> None:
         self.duration = duration
         self.frequency = min(max(0, frequency), 20000)
@@ -99,6 +98,7 @@ class Tone:
             f"volume: {self.volume}, "
             f"wave: {self.wave})"
         )
+
 
 class SoundGenerator(generator.Generator):
     """Takes accessible objects and produces the sound(s) to be played."""
@@ -1238,13 +1238,15 @@ class SoundGenerator(generator.Generator):
         result = []
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_state_expanded(obj, **args) \
-                or self._generate_state_pressed(obj, **args)
+            return self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
+                obj, **args
+            )
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_role(obj, **args)
-        result += (self._generate_state_expanded(obj, **args) \
-                or self._generate_state_pressed(obj, **args))
+        result += self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
+            obj, **args
+        )
         result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result

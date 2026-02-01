@@ -39,8 +39,10 @@ from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(gtk.Script):
     """Custom script for pidgin."""
@@ -49,7 +51,7 @@ class Script(gtk.Script):
     utilities: Utilities
 
     def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script. """
+        """Returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 

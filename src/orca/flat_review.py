@@ -32,6 +32,7 @@ from __future__ import annotations
 import re
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -45,6 +46,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+
 
 class Char:
     """A character's worth of presentable information."""
@@ -67,10 +69,7 @@ class Char:
         text = self._string.replace("\n", "\\n")
         rect = self.get_rect()
         rect_string = f"({rect.x}, {rect.y}, {rect.width}, {rect.height})"
-        return (
-            f"CHAR: '{text}' ({self._start_offset}-{self._start_offset + 1}) "
-            f"rect: {rect_string}"
-        )
+        return f"CHAR: '{text}' ({self._start_offset}-{self._start_offset + 1}) rect: {rect_string}"
 
     def get_string(self) -> str:
         """Returns the string being displayed for this Char."""
@@ -90,6 +89,7 @@ class Char:
             self._rect = AXText.get_character_rect(obj, self._start_offset)
 
         return self._rect
+
 
 class Word:
     """A single chunk (word or object) of presentable information."""
@@ -122,14 +122,21 @@ class Word:
         if not isinstance(other, Word):
             return False
 
-        if self._zone != other._zone or self._start_offset != other._start_offset or \
-           self._string != other._string:
+        if (
+            self._zone != other._zone
+            or self._start_offset != other._start_offset
+            or self._string != other._string
+        ):
             return False
 
         this_rect = self.get_rect()
         other_rect = other.get_rect()
-        return this_rect.x == other_rect.x and this_rect.y == other_rect.y and \
-               this_rect.width == other_rect.width and this_rect.height == other_rect.height
+        return (
+            this_rect.x == other_rect.x
+            and this_rect.y == other_rect.y
+            and this_rect.width == other_rect.width
+            and this_rect.height == other_rect.height
+        )
 
     def get_characters(self) -> list[Char]:
         """Returns a list of Char instances for this Word."""
@@ -184,6 +191,7 @@ class Word:
 
         return self._zone.get_object()
 
+
 class Zone:
     """Represents text that is a portion of a single horizontal line."""
 
@@ -203,7 +211,7 @@ class Zone:
         self._string: str = string
         self._rect: Atspi.Rect = rect
         self._words: list[Word] = []
-        self.line: 'Line' | None = None
+        self.line: "Line" | None = None
         self._braille_region: braille.Region | None = None
         self._word_rect_cache: dict[tuple[int, int], Atspi.Rect] = {}
         self._word_index_map: dict[tuple[int, str], int] = {}  # (start_offset, string) -> index
@@ -359,15 +367,12 @@ class Zone:
 
         return None, -1
 
+
 class TextZone(Zone):
     """A Zone whose purpose is to display text of an object."""
 
     def __init__(
-        self,
-        obj: Atspi.Accessible,
-        start_offset: int,
-        string: str,
-        rect: Atspi.Rect
+        self, obj: Atspi.Accessible, start_offset: int, string: str, rect: Atspi.Rect
     ) -> None:
         """Creates a new TextZone.
 
@@ -498,6 +503,8 @@ class StateZone(Zone):
 
         result = script.speech_generator.get_state_indicator(self._obj)
         return " ".join([r for r in result if isinstance(r, str)])
+
+
 class ValueZone(Zone):
     """A Zone whose purpose is to display the value of an object."""
 
@@ -603,13 +610,14 @@ class Line:
 
         return regions
 
+
 class Context:
     """Contains the flat review regions for the current top-level object."""
 
-    CHAR   = 0
-    WORD   = 1
-    ZONE   = 2
-    LINE   = 3
+    CHAR = 0
+    WORD = 1
+    ZONE = 2
+    LINE = 3
     WINDOW = 4
 
     def __init__(self, script, root: Atspi.Accessible | None = None) -> None:
@@ -625,8 +633,7 @@ class Context:
         self._focus_zone: Zone | None = None
         self._container: Atspi.Accessible | None = None
         self._object_to_zone_map: dict[Atspi.Accessible, list[Zone]] = {}
-        self._focus_obj: Atspi.Accessible | None = \
-            focus_manager.get_manager().get_locus_of_focus()
+        self._focus_obj: Atspi.Accessible | None = focus_manager.get_manager().get_locus_of_focus()
         self._top_level: Atspi.Accessible | None = None
         self._rect: Atspi.Rect = Atspi.Rect()
 
@@ -676,18 +683,14 @@ class Context:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _split_text_into_zones(
-        self,
-        obj: Atspi.Accessible,
-        string: str,
-        start_offset: int,
-        cliprect: Atspi.Rect
+        self, obj: Atspi.Accessible, string: str, start_offset: int, cliprect: Atspi.Rect
     ) -> list[TextZone]:
         """Returns a list of TextZones with embedded object characters removed."""
 
         zones: list[TextZone] = []
         ranges = [(*m.span(), m.group(0)) for m in re.finditer(r"[^\ufffc]+", string)]
         ranges = list(map(lambda x: (x[0] + start_offset, x[1] + start_offset, x[2]), ranges))
-        for (start, end, substring) in ranges:
+        for start, end, substring in ranges:
             rect = AXText.get_range_rect(obj, start, end)
             intersection = AXComponent.get_rect_intersection(rect, cliprect)
             if not AXComponent.is_empty_rect(intersection):
@@ -760,9 +763,12 @@ class Context:
     def set_current_to_zone_with_object(self, obj: Atspi.Accessible) -> bool:
         """Attempts to set the current zone to obj, if obj is in the current context."""
 
-        tokens = ["FLAT REVIEW: Current", self.get_current_object(),
-                  f"line: {self._line_index}, zone: {self._zone_index},",
-                  f"word: {self._word_index}, char: {self._char_index})"]
+        tokens = [
+            "FLAT REVIEW: Current",
+            self.get_current_object(),
+            f"line: {self._line_index}, zone: {self._zone_index},",
+            f"word: {self._word_index}, char: {self._char_index})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         zone = self._find_zone_with_object(obj)
@@ -790,9 +796,12 @@ class Context:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        tokens = ["FLAT REVIEW: Updated", self.get_current_object(),
-                  f"line: {self._line_index}, zone: {self._zone_index},",
-                  f"word: {self._word_index}, char: {self._char_index})"]
+        tokens = [
+            "FLAT REVIEW: Updated",
+            self.get_current_object(),
+            f"line: {self._line_index}, zone: {self._zone_index},",
+            f"word: {self._word_index}, char: {self._char_index})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
@@ -821,9 +830,7 @@ class Context:
         return None
 
     def _get_showing_zones(
-        self,
-        root: Atspi.Accessible,
-        boundingbox: Atspi.Rect | None = None
+        self, root: Atspi.Accessible, boundingbox: Atspi.Rect | None = None
     ) -> list[Zone]:
         """Returns an unsorted list of all the zones under root."""
 
@@ -1236,7 +1243,7 @@ class Context:
             return True
 
         while self.go_next_character():
-            rect= self._get_current_character_rect()
+            rect = self._get_current_character_rect()
             if rect.x + rect.width >= target_x:
                 break
 

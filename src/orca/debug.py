@@ -21,7 +21,6 @@
 
 """Handles writing debugging messages to the debug file or stderr."""
 
-
 import inspect
 import traceback
 import re
@@ -46,12 +45,14 @@ debugFile: TextIO | None = None
 
 _printing = threading.local()
 
+
 def print_exception(level: int) -> None:
     """Prints out information regarding the current exception."""
     if level >= debugLevel:
         _print_text(level)
         traceback.print_exc(100, debugFile)
         _print_text(level)
+
 
 def print_tokens(
     level: int, tokens: list[Any], timestamp: bool = False, stack: bool = False
@@ -65,6 +66,7 @@ def print_tokens(
     text = re.sub(r" (?=[,.:)])(?![\n])", "", text)
     _print_text(level, text, timestamp, stack)
 
+
 def print_message(level: int, text: str, timestamp: bool = False, stack: bool = False) -> None:
     """Prints out text."""
 
@@ -72,6 +74,7 @@ def print_message(level: int, text: str, timestamp: bool = False, stack: bool = 
         return
 
     _print_text(level, text, timestamp, stack)
+
 
 def _stack_as_string(max_frames: int = 4) -> str:
     callers = []
@@ -92,6 +95,7 @@ def _stack_as_string(max_frames: int = 4) -> str:
 
     callers.reverse()
     return " > ".join(map(AXUtilitiesDebugging.as_string, callers))
+
 
 def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool = False) -> None:
     if level < debugLevel:

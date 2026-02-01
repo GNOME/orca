@@ -33,8 +33,10 @@ from orca.scripts.toolkits import gtk
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(gtk.Script):
     """Custom script for Smuxi."""

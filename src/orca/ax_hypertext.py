@@ -22,18 +22,19 @@
 
 """Utilities for obtaining information about accessible hypertext and hyperlinks."""
 
-
 import os
 import re
 from urllib.parse import urlparse
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
 from . import debug
 from .ax_object import AXObject
+
 
 class AXHypertext:
     """Utilities for obtaining information about accessible hypertext and hyperlinks."""
@@ -81,12 +82,17 @@ class AXHypertext:
         links = []
         for i in range(AXHypertext._get_link_count(obj)):
             link = AXHypertext._get_link_at_index(obj, i)
-            if start_offset <= AXHypertext.get_link_start_offset(link) < end_offset \
-               or start_offset < AXHypertext.get_link_end_offset(link) <= end_offset:
+            if (
+                start_offset <= AXHypertext.get_link_start_offset(link) < end_offset
+                or start_offset < AXHypertext.get_link_end_offset(link) <= end_offset
+            ):
                 links.append(link)
 
-        tokens = [f"AXHypertext: {len(links)} hyperlinks found in", obj,
-                  f"between start: {start_offset} and end: {end_offset}"]
+        tokens = [
+            f"AXHypertext: {len(links)} hyperlinks found in",
+            obj,
+            f"between start: {start_offset} and end: {end_offset}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return links
 
@@ -183,7 +189,7 @@ class AXHypertext:
             return ""
 
         parsed_uri = urlparse(uri)
-        basename =  os.path.basename(parsed_uri.path)
+        basename = os.path.basename(parsed_uri.path)
         if remove_extension:
             basename = os.path.splitext(basename)[0]
             basename = re.sub(r"[-_]", " ", basename)
@@ -202,16 +208,26 @@ class AXHypertext:
         if child_before := AXHypertext.get_child_at_offset(obj, offset - 1):
             offset_in_parent = AXHypertext.get_character_offset_in_parent(child_before)
             if offset_in_parent == offset:
-                tokens = [f"AXHypertext: Corrected child at offset {offset} in", obj, "is",
-                          child_before, f"at offset {offset - 1}"]
+                tokens = [
+                    f"AXHypertext: Corrected child at offset {offset} in",
+                    obj,
+                    "is",
+                    child_before,
+                    f"at offset {offset - 1}",
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return child_before
 
         if child_after := AXHypertext.get_child_at_offset(obj, offset + 1):
             offset_in_parent = AXHypertext.get_character_offset_in_parent(child_after)
             if offset_in_parent == offset:
-                tokens = [f"AXHypertext: Corrected child at offset {offset} in", obj, "is",
-                          child_after, f"at offset {offset + 1}"]
+                tokens = [
+                    f"AXHypertext: Corrected child at offset {offset} in",
+                    obj,
+                    "is",
+                    child_after,
+                    f"at offset {offset + 1}",
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return child_after
 

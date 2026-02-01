@@ -32,22 +32,24 @@ except ImportError:
     KEY_CMD_ROUTE = None
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import script_manager
 
 # Attribute/Selection mask strings:
-DOT_7 =   "\x40" # 01000000
-DOT_8 =   "\x80" # 10000000
-DOTS_78 = "\xc0" # 11000000
+DOT_7 = "\x40"  # 01000000
+DOT_8 = "\x80"  # 10000000
+DOTS_78 = "\xc0"  # 11000000
+
 
 class BrlDot(Gtk.Alignment):
     """A single braille dot."""
 
-    MARKUP_NORMAL  = "<tt><small>%s</small></tt>"
-    SYMBOL_LOWERED = "\u25CB" # "○"
-    SYMBOL_RAISED  = "\u25CF" # "●"
+    MARKUP_NORMAL = "<tt><small>%s</small></tt>"
+    SYMBOL_LOWERED = "\u25cb"  # "○"
+    SYMBOL_RAISED = "\u25cf"  # "●"
 
     def __init__(self, dot_number: int, is_raised: bool = False) -> None:
         """Create a new BrlDot.
@@ -83,10 +85,11 @@ class BrlDot(Gtk.Alignment):
         self.set(0.5, 0.5, 0, 0)
         self.label.set_markup(self.MARKUP_NORMAL % self.SYMBOL_LOWERED)
 
+
 class BrlCell(Gtk.Button):
     """A single graphical braille cell with cursor routing capability."""
 
-    MARKUP_NORMAL      = "<tt><big>%s</big></tt>"
+    MARKUP_NORMAL = "<tt><big>%s</big></tt>"
     MARKUP_CURSOR_CELL = "<b><u>%s</u></b>"
 
     def __init__(self, position: int) -> None:
@@ -123,6 +126,7 @@ class BrlCell(Gtk.Button):
 
         # pylint: disable=import-outside-toplevel
         from . import input_event
+
         fake_key_press = {}
         fake_key_press["command"] = KEY_CMD_ROUTE
         fake_key_press["argument"] = self._position
@@ -161,6 +165,7 @@ class BrlCell(Gtk.Button):
             self._dot7.raise_dot()
         if mask in [DOT_8, DOTS_78]:
             self._dot8.raise_dot()
+
 
 class BrlMon(Gtk.Window):
     """Displays a GUI braille monitor that mirrors what would be displayed

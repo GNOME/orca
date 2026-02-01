@@ -22,8 +22,8 @@
 
 """Utilities for obtaining information about containers supporting selection."""
 
-
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -94,7 +94,8 @@ class AXSelection:
         count = AXSelection.get_selected_child_count(obj)
         if not count and AXUtilitiesRole.is_combo_box(obj):
             container = AXObject.find_descendant(
-                obj, lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x))
+                obj, lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x)
+            )
             return AXSelection.get_selected_children(container)
 
         children = set()

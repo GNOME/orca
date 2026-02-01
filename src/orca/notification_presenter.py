@@ -36,7 +36,8 @@ import time
 from typing import Callable, TYPE_CHECKING
 
 import gi
-gi.require_version('Gtk', '3.0')
+
+gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -50,6 +51,7 @@ from . import messages
 
 if TYPE_CHECKING:
     from .scripts import default
+
 
 class NotificationPresenter:
     """Provides access to the notification history."""
@@ -82,14 +84,26 @@ class NotificationPresenter:
         group_label = guilabels.KB_GROUP_NOTIFICATIONS
 
         commands_data = [
-            ("present_last_notification", self.present_last_notification,
-             cmdnames.NOTIFICATION_MESSAGES_LAST),
-            ("present_next_notification", self.present_next_notification,
-             cmdnames.NOTIFICATION_MESSAGES_NEXT),
-            ("present_previous_notification", self.present_previous_notification,
-             cmdnames.NOTIFICATION_MESSAGES_PREVIOUS),
-            ("show_notification_list", self.show_notification_list,
-             cmdnames.NOTIFICATION_MESSAGES_LIST),
+            (
+                "present_last_notification",
+                self.present_last_notification,
+                cmdnames.NOTIFICATION_MESSAGES_LAST,
+            ),
+            (
+                "present_next_notification",
+                self.present_next_notification,
+                cmdnames.NOTIFICATION_MESSAGES_NEXT,
+            ),
+            (
+                "present_previous_notification",
+                self.present_previous_notification,
+                cmdnames.NOTIFICATION_MESSAGES_PREVIOUS,
+            ),
+            (
+                "show_notification_list",
+                self.show_notification_list,
+                cmdnames.NOTIFICATION_MESSAGES_LIST,
+            ),
         ]
 
         for name, function, description in commands_data:
@@ -145,12 +159,18 @@ class NotificationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the last notification."""
 
-        tokens = ["NOTIFICATION PRESENTER: present_last_notification. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "NOTIFICATION PRESENTER: present_last_notification. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._notifications:
@@ -169,13 +189,20 @@ class NotificationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the previous notification."""
 
-        tokens = ["NOTIFICATION PRESENTER: present_previous_notification. Script:", script,
-                  "Event:", event, "notify_user:", notify_user, "Current index:",
-                  self._current_index]
+        tokens = [
+            "NOTIFICATION PRESENTER: present_previous_notification. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+            "Current index:",
+            self._current_index,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._notifications:
@@ -184,7 +211,7 @@ class NotificationPresenter:
             return True
 
         # This is the first (oldest) message in the list.
-        if self._current_index == 0 :
+        if self._current_index == 0:
             script.present_message(messages.NOTIFICATION_LIST_TOP)
             message, timestamp = self._notifications[self._current_index]
         else:
@@ -207,13 +234,20 @@ class NotificationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the next notification."""
 
-        tokens = ["NOTIFICATION PRESENTER: present_next_notification. Script:", script,
-                  "Event:", event, "notify_user:", notify_user, "Current index:",
-                  self._current_index]
+        tokens = [
+            "NOTIFICATION PRESENTER: present_next_notification. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+            "Current index:",
+            self._current_index,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._notifications:
@@ -245,12 +279,18 @@ class NotificationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Opens a dialog with a list of the notifications."""
 
-        tokens = ["NOTIFICATION PRESENTER: show_notification_list. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "NOTIFICATION PRESENTER: show_notification_list. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._notifications:
@@ -264,13 +304,18 @@ class NotificationPresenter:
             self._gui.show_gui()
             return True
 
-        rows = [(message, self._timestamp_to_string(timestamp)) \
-                    for message, timestamp in reversed(self._notifications)]
+        rows = [
+            (message, self._timestamp_to_string(timestamp))
+            for message, timestamp in reversed(self._notifications)
+        ]
         title = guilabels.notifications_count(len(self._notifications))
-        column_headers = [guilabels.NOTIFICATIONS_COLUMN_HEADER,
-                          guilabels.NOTIFICATIONS_RECEIVED_TIME]
+        column_headers = [
+            guilabels.NOTIFICATIONS_COLUMN_HEADER,
+            guilabels.NOTIFICATIONS_RECEIVED_TIME,
+        ]
         self._gui = NotificationListGUI(
-            script, title, column_headers, rows, self.on_dialog_destroyed)
+            script, title, column_headers, rows, self.on_dialog_destroyed
+        )
         self._gui.show_gui()
         return True
 
@@ -278,6 +323,7 @@ class NotificationPresenter:
         """Handler for the 'destroyed' signal of the dialog."""
 
         self._gui = None
+
 
 class NotificationListGUI:
     """The dialog containing the notifications list."""
@@ -288,7 +334,7 @@ class NotificationListGUI:
         title: str,
         column_headers: list[str],
         rows: list[tuple[str, str]],
-        destroyed_callback: Callable[[Gtk.Dialog], None]
+        destroyed_callback: Callable[[Gtk.Dialog], None],
     ):
         self._script: default.Script = script
         self._model: Gtk.ListStore | None = None
@@ -296,16 +342,14 @@ class NotificationListGUI:
         self._gui.connect("destroy", destroyed_callback)
 
     def _create_dialog(
-            self,
-            title: str,
-            column_headers: list[str],
-            rows: list[tuple[str, str]]
-        ) -> Gtk.Dialog:
-        dialog = Gtk.Dialog(title,
-                            None,
-                            Gtk.DialogFlags.MODAL,
-                            (Gtk.STOCK_CLEAR, Gtk.ResponseType.APPLY,
-                             Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
+        self, title: str, column_headers: list[str], rows: list[tuple[str, str]]
+    ) -> Gtk.Dialog:
+        dialog = Gtk.Dialog(
+            title,
+            None,
+            Gtk.DialogFlags.MODAL,
+            (Gtk.STOCK_CLEAR, Gtk.ResponseType.APPLY, Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE),
+        )
         dialog.set_default_size(600, 400)
 
         grid = Gtk.Grid()
@@ -313,12 +357,12 @@ class NotificationListGUI:
         content_area.add(grid)
 
         scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window) # pylint: disable=no-member
+        grid.add(scrolled_window)  # pylint: disable=no-member
 
         tree = Gtk.TreeView()
         tree.set_hexpand(True)
         tree.set_vexpand(True)
-        scrolled_window.add(tree) # pylint: disable=no-member
+        scrolled_window.add(tree)  # pylint: disable=no-member
 
         cols = len(column_headers) * [GObject.TYPE_STRING]
         for i, header in enumerate(column_headers):
@@ -355,10 +399,12 @@ class NotificationListGUI:
     def show_gui(self) -> None:
         """Shows the notifications list dialog."""
 
-        self._gui.show_all() # pylint: disable=no-member
+        self._gui.show_all()  # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
+
 _presenter: NotificationPresenter = NotificationPresenter()
+
 
 def get_presenter() -> NotificationPresenter:
     """Returns the Notification Presenter"""

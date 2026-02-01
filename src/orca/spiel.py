@@ -41,6 +41,7 @@ import gi
 try:
     gi.require_version("Spiel", "1.0")
     from gi.repository import Spiel
+
     _SPIEL_AVAILABLE = True
 except Exception:
     _SPIEL_AVAILABLE = False
@@ -55,6 +56,7 @@ from .ssml import SSML, SSMLCapabilities
 
 if TYPE_CHECKING:
     from . import input_event
+
 
 class SpeechServer(speechserver.SpeechServer):
     """Spiel speech server for Orca."""
@@ -154,8 +156,10 @@ class SpeechServer(speechserver.SpeechServer):
 
         # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
         # the user's chosen server (synthesizer) might be from speech-dispatcher.
-        if server_id != SpeechServer.DEFAULT_SERVER_ID \
-           and server_id not in SpeechServer._active_providers:
+        if (
+            server_id != SpeechServer.DEFAULT_SERVER_ID
+            and server_id not in SpeechServer._active_providers
+        ):
             server_id = SpeechServer.DEFAULT_SERVER_ID
 
         self._id = server_id
@@ -171,7 +175,7 @@ class SpeechServer(speechserver.SpeechServer):
             (ACSS.AVERAGE_PITCH, 5.0),
             (ACSS.GAIN, 5.0),
             (ACSS.FAMILY, {}),
-            )
+        )
         if not _SPIEL_AVAILABLE:
             msg = "ERROR: Spiel is not available"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -290,7 +294,8 @@ class SpeechServer(speechserver.SpeechServer):
             pitch_val = self._get_pitch(self._current_voice_properties.get(ACSS.AVERAGE_PITCH, 5.0))
             volume_val = self._get_volume(self._current_voice_properties.get(ACSS.GAIN, 5.0))
             language = self._get_language(
-                self._current_voice_properties.get(ACSS.FAMILY, VoiceFamily(None)))
+                self._current_voice_properties.get(ACSS.FAMILY, VoiceFamily(None))
+            )
             rate = str(rate_val)
             pitch = str(pitch_val)
             volume = str(volume_val)
@@ -299,10 +304,12 @@ class SpeechServer(speechserver.SpeechServer):
 
         family = self._current_voice_properties.get(ACSS.FAMILY)
 
-        styles = {settings.PUNCTUATION_STYLE_NONE: "NONE",
-                  settings.PUNCTUATION_STYLE_SOME: "SOME",
-                  settings.PUNCTUATION_STYLE_MOST: "MOST",
-                  settings.PUNCTUATION_STYLE_ALL: "ALL"}
+        styles = {
+            settings.PUNCTUATION_STYLE_NONE: "NONE",
+            settings.PUNCTUATION_STYLE_SOME: "SOME",
+            settings.PUNCTUATION_STYLE_MOST: "MOST",
+            settings.PUNCTUATION_STYLE_ALL: "ALL",
+        }
 
         msg = (
             f"SPIEL: {prefix}\n"
@@ -331,14 +338,16 @@ class SpeechServer(speechserver.SpeechServer):
         # Maintain a speaker singleton for all providers
         if SpeechServer.DEFAULT_SPEAKER is None:
             SpeechServer.DEFAULT_SPEAKER = Spiel.Speaker.new_sync(None)
-            SpeechServer.DEFAULT_SPEAKER.props.providers.connect("items-changed",
-                                                                 SpeechServer._update_providers)
+            SpeechServer.DEFAULT_SPEAKER.props.providers.connect(
+                "items-changed", SpeechServer._update_providers
+            )
             SpeechServer._update_providers(SpeechServer.DEFAULT_SPEAKER.props.providers)
 
         self._speaker = SpeechServer.DEFAULT_SPEAKER
         self._current_voice_properties = {}
-        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % \
-            SpeechServer._SERVER_NAMES.get(self._id, self._id)
+        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % SpeechServer._SERVER_NAMES.get(
+            self._id, self._id
+        )
 
         if not SpeechServer._active_providers:
             msg = "ERROR: No Spiel providers available."
@@ -351,8 +360,9 @@ class SpeechServer(speechserver.SpeechServer):
 
         # Load the provider voices for this server
         if self._id != SpeechServer.DEFAULT_SERVER_ID:
-            self._voices_id = self._provider.props.voices.connect("items-changed",
-                                                                  self.update_voices)
+            self._voices_id = self._provider.props.voices.connect(
+                "items-changed", self.update_voices
+            )
             msg = (
                 f"SPIEL: Connected voices signal with ID {self._voices_id} for provider {self._id}"
             )
@@ -382,12 +392,9 @@ class SpeechServer(speechserver.SpeechServer):
             text = SSML.markup_text(text, SSMLCapabilities.MARK)
             is_ssml = True
 
-        return Spiel.Utterance(text=text,
-                               pitch=pitch,
-                               rate=rate,
-                               volume=volume,
-                               voice=voice,
-                               is_ssml=is_ssml)
+        return Spiel.Utterance(
+            text=text, pitch=pitch, rate=rate, volume=volume, voice=voice, is_ssml=is_ssml
+        )
 
     def _speak_utterance(self, utterance: Any, acss: ACSS) -> None:
         if not utterance:
@@ -431,13 +438,17 @@ class SpeechServer(speechserver.SpeechServer):
 
         families = []
         for name, lang, variant in voices:
-
-            families.append(speechserver.VoiceFamily({ \
-              speechserver.VoiceFamily.NAME: name,
-              #speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
-              speechserver.VoiceFamily.LANG: lang.partition("-")[0],
-              speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
-              speechserver.VoiceFamily.VARIANT: variant}))
+            families.append(
+                speechserver.VoiceFamily(
+                    {
+                        speechserver.VoiceFamily.NAME: name,
+                        # speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
+                        speechserver.VoiceFamily.LANG: lang.partition("-")[0],
+                        speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
+                        speechserver.VoiceFamily.VARIANT: variant,
+                    }
+                )
+            )
 
         return families
 
@@ -454,9 +465,11 @@ class SpeechServer(speechserver.SpeechServer):
 
         features = voice.props.features
         if features & Spiel.VoiceFeature.SSML_SAY_AS_CHARACTERS_GLYPHS:
-            text = ("<speak>"
-                    f'<say-as interpret-as="characters" format="glyphs">{character}</say-as>'
-                    "</speak>")
+            text = (
+                "<speak>"
+                f'<say-as interpret-as="characters" format="glyphs">{character}</say-as>'
+                "</speak>"
+            )
         elif features & Spiel.VoiceFeature.SSML_SAY_AS_CHARACTERS:
             text = f'<speak><say-as interpret-as="characters">{character}</say-as></speak>'
         else:
@@ -465,11 +478,7 @@ class SpeechServer(speechserver.SpeechServer):
         utterance = self._create_utterance(text, acss)
         self._speak_utterance(utterance, acss)
 
-    def speak_key_event(
-        self,
-        event: input_event.KeyboardEvent,
-        acss: ACSS | None = None
-    ) -> None:
+    def speak_key_event(self, event: input_event.KeyboardEvent, acss: ACSS | None = None) -> None:
         """Speaks event."""
 
         event_string = event.get_key_name()
@@ -486,10 +495,7 @@ class SpeechServer(speechserver.SpeechServer):
             self.speak(event_string, acss=acss)
 
     def speak(
-        self,
-        text: str | None = None,
-        acss: ACSS | None = None,
-        interrupt: bool = True
+        self, text: str | None = None, acss: ACSS | None = None, interrupt: bool = True
     ) -> None:
         if not text:
             return
@@ -515,7 +521,7 @@ class SpeechServer(speechserver.SpeechServer):
     def say_all(
         self,
         utterance_iterator: Iterator[tuple[speechserver.SayAllContext, dict[str, Any]]],
-        progress_callback: Callable[[speechserver.SayAllContext, int], None]
+        progress_callback: Callable[[speechserver.SayAllContext, int], None],
     ) -> None:
         """Iterates through the given utterance_iterator, speaking each utterance."""
 
@@ -526,6 +532,7 @@ class SpeechServer(speechserver.SpeechServer):
         except StopIteration:
             pass
         else:
+
             def _utterance_started(_speaker, utterance, sayall_data):
                 debug.print_message(debug.LEVEL_INFO, f"STARTED: {utterance.props.text}")
                 (callback, current_utterance, _) = sayall_data
@@ -612,21 +619,21 @@ class SpeechServer(speechserver.SpeechServer):
                 features = 0
             if self._speaker is not None:
                 if features & Spiel.VoiceFeature.EVENTS_WORD:
-                    handlers.append(self._speaker.connect("word-started",
-                                                          _word_started,
-                                                          sayall_data))
+                    handlers.append(
+                        self._speaker.connect("word-started", _word_started, sayall_data)
+                    )
                 if features & Spiel.VoiceFeature.EVENTS_SENTENCE:
-                    handlers.append(self._speaker.connect("sentence-started",
-                                                          _sentence_started,
-                                                          sayall_data))
+                    handlers.append(
+                        self._speaker.connect("sentence-started", _sentence_started, sayall_data)
+                    )
                 if features & Spiel.VoiceFeature.EVENTS_RANGE:
-                    handlers.append(self._speaker.connect("range-started",
-                                                          _range_started,
-                                                          sayall_data))
+                    handlers.append(
+                        self._speaker.connect("range-started", _range_started, sayall_data)
+                    )
                 if features & Spiel.VoiceFeature.EVENTS_SSML_MARK:
-                    handlers.append(self._speaker.connect("mark-reached",
-                                                          _mark_reached,
-                                                          sayall_data))
+                    handlers.append(
+                        self._speaker.connect("mark-reached", _mark_reached, sayall_data)
+                    )
 
             self._speak_utterance(spiel_utterance, acss)
 
@@ -684,7 +691,6 @@ class SpeechServer(speechserver.SpeechServer):
 
         SpeechServer.DEFAULT_SPEAKER = None
         return True
-
 
     def increase_speech_rate(self, step: int = 5) -> None:
         self._change_default_speech_rate(step)
@@ -750,7 +756,7 @@ class SpeechServer(speechserver.SpeechServer):
         language: str,
         dialect: str = "",
         variant: str | None = None,
-        maximum: int | None = None
+        maximum: int | None = None,
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
 
@@ -762,8 +768,9 @@ class SpeechServer(speechserver.SpeechServer):
         result: list[tuple[str, str, str | None]] = []
         all_voices = self._current_voice_profiles
         for voice in all_voices:
-            normalized_language, normalized_dialect = \
-                self._normalized_language_and_dialect(voice[1])
+            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
+                voice[1]
+            )
             if normalized_language != target_language:
                 continue
             if variant is not None and voice[2] != variant:
@@ -832,7 +839,8 @@ class SpeechServer(speechserver.SpeechServer):
 
         if self._id != SpeechServer.DEFAULT_SERVER_ID:
             self._voices_id = self._provider.props.voices.connect(
-                "items-changed", self.update_voices)
+                "items-changed", self.update_voices
+            )
             msg = (
                 f"SPIEL: Connected voices signal with ID {self._voices_id} "
                 f"for new provider {self._id}"
@@ -840,8 +848,9 @@ class SpeechServer(speechserver.SpeechServer):
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.update_voices(self._provider.props.voices)
-        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % \
-            SpeechServer._SERVER_NAMES.get(self._id, self._id)
+        self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % SpeechServer._SERVER_NAMES.get(
+            self._id, self._id
+        )
 
         msg = f"SPIEL: Switched from {old_id} to {self._id}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -866,10 +875,10 @@ class SpeechServer(speechserver.SpeechServer):
         dialect = lang_parts[2]
         return speechserver.VoiceFamily(
             {
-               speechserver.VoiceFamily.NAME: voice_name,
-               speechserver.VoiceFamily.LANG: lang,
-               speechserver.VoiceFamily.DIALECT: dialect,
-               speechserver.VoiceFamily.VARIANT: None
+                speechserver.VoiceFamily.NAME: voice_name,
+                speechserver.VoiceFamily.LANG: lang,
+                speechserver.VoiceFamily.DIALECT: dialect,
+                speechserver.VoiceFamily.VARIANT: None,
             }
         )
 

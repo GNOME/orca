@@ -35,8 +35,10 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(default.Script):
     """Custom script for GTK."""
@@ -45,7 +47,7 @@ class Script(default.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
@@ -108,8 +110,10 @@ class Script(default.Script):
         """Callback for object:state-changed:selected accessibility events."""
 
         # Handle changes within an entry completion popup.
-        if AXUtilities.is_table_cell(event.source) \
-           and AXObject.find_ancestor(event.source, AXUtilities.is_window) is not None:
+        if (
+            AXUtilities.is_table_cell(event.source)
+            and AXObject.find_ancestor(event.source, AXUtilities.is_window) is not None
+        ):
             if event.detail1:
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
                 return True
@@ -117,8 +121,9 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, None)
                 return True
 
-        if AXUtilities.is_icon_or_canvas(event.source) \
-           and self.utilities.handle_container_selection_change(AXObject.get_parent(event.source)):
+        if AXUtilities.is_icon_or_canvas(
+            event.source
+        ) and self.utilities.handle_container_selection_change(AXObject.get_parent(event.source)):
             return True
 
         return super().on_selected_changed(event)
@@ -127,16 +132,21 @@ class Script(default.Script):
         """Callback for object:selection-changed accessibility events."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_toggle_button(focus) and AXUtilities.is_combo_box(event.source) \
-           and AXObject.is_ancestor(focus, event.source):
+        if (
+            AXUtilities.is_toggle_button(focus)
+            and AXUtilities.is_combo_box(event.source)
+            and AXObject.is_ancestor(focus, event.source)
+        ):
             return super().on_selection_changed(event)
 
         is_focused = AXUtilities.is_focused(event.source)
         if AXUtilities.is_combo_box(event.source) and not is_focused:
             return True
 
-        if AXUtilities.is_layered_pane(event.source) \
-           and self.utilities.selected_child_count(event.source) > 1:
+        if (
+            AXUtilities.is_layered_pane(event.source)
+            and self.utilities.selected_child_count(event.source) > 1
+        ):
             return True
 
         return super().on_selection_changed(event)
@@ -147,9 +157,11 @@ class Script(default.Script):
         if not event.detail1:
             return super().on_showing_changed(event)
 
-        if AXUtilities.get_is_popup_for(event.source) \
-           or AXUtilities.is_alert(event.source) \
-           or AXUtilities.is_info_bar(event.source):
+        if (
+            AXUtilities.get_is_popup_for(event.source)
+            or AXUtilities.is_alert(event.source)
+            or AXUtilities.is_info_bar(event.source)
+        ):
             if AXUtilities.is_application(AXObject.get_parent(event.source)):
                 return True
             self.present_object(event.source, interrupt=True)

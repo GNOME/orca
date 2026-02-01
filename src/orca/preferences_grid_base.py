@@ -34,6 +34,7 @@ from dataclasses import dataclass
 from typing import Any, Callable, Optional, Sequence
 
 import gi
+
 gi.require_version("Atk", "1.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
@@ -215,9 +216,9 @@ class SelectionPreferenceControl:  # pylint: disable=too-many-instance-attribute
     values: Optional[list[Any]] = None
     prefs_key: Optional[str] = None
     member_of: Optional[str] = None
-    get_actions_for_option: Optional[
-        Callable[[Any], list[tuple[str, str, Callable[[], None]]]]
-    ] = None
+    get_actions_for_option: Optional[Callable[[Any], list[tuple[str, str, Callable[[], None]]]]] = (
+        None
+    )
     determine_sensitivity: Optional[Callable[[], bool]] = None
     apply_immediately: bool = True
     tracks_changes: bool = True
@@ -330,7 +331,10 @@ class FocusManagedListBox(Gtk.ListBox):
 
         GLib.idle_add(activate_widget)
         return False
+
+
 # pylint: enable=no-member
+
 
 # pylint: disable-next=too-few-public-methods, too-many-instance-attributes
 class PreferencesGridBase(Gtk.Grid):
@@ -362,8 +366,9 @@ class PreferencesGridBase(Gtk.Grid):
         self._multipage_categories_listbox: Gtk.ListBox | None = None
 
     @staticmethod
-    def _set_margins(widget: Gtk.Widget, start: int = 0, end: int = 0,
-                     top: int = 0, bottom: int = 0) -> None:
+    def _set_margins(
+        widget: Gtk.Widget, start: int = 0, end: int = 0, top: int = 0, bottom: int = 0
+    ) -> None:
         """Set all margins on a widget at once."""
 
         widget.set_margin_start(start)
@@ -428,11 +433,7 @@ class PreferencesGridBase(Gtk.Grid):
         return visible_child is not None and visible_child != "categories"
 
     def _create_header_bar_dialog(
-        self,
-        title: str,
-        cancel_label: str,
-        ok_label: str,
-        width: int = 600
+        self, title: str, cancel_label: str, ok_label: str, width: int = 600
     ) -> tuple[Gtk.Dialog, Gtk.Button]:
         """Create a dialog with header bar, no close button, and consistent styling."""
 
@@ -441,7 +442,7 @@ class PreferencesGridBase(Gtk.Grid):
             transient_for=self.get_toplevel(),
             modal=True,
             destroy_with_parent=True,
-            use_header_bar=True
+            use_header_bar=True,
         )
         dialog.set_default_size(width, -1)
         dialog.set_deletable(False)
@@ -464,11 +465,7 @@ class PreferencesGridBase(Gtk.Grid):
 
         return dialog, ok_button
 
-    def _create_frame(
-        self,
-        label: str,
-        margin_top: int = 0
-    ) -> tuple[Gtk.Frame, Gtk.Grid]:
+    def _create_frame(self, label: str, margin_top: int = 0) -> tuple[Gtk.Frame, Gtk.Grid]:
         """Create a labeled frame."""
 
         frame = Gtk.Frame()
@@ -489,9 +486,7 @@ class PreferencesGridBase(Gtk.Grid):
         return frame, content_container
 
     def _create_info_row(
-        self,
-        message: str,
-        icon_name: str = "dialog-information-symbolic"
+        self, message: str, icon_name: str = "dialog-information-symbolic"
     ) -> Gtk.ListBoxRow:
         """Create a single-row informational message with icon."""
 
@@ -526,9 +521,7 @@ class PreferencesGridBase(Gtk.Grid):
         return row
 
     def _create_info_listbox(
-        self,
-        message: str,
-        icon_name: str = "dialog-information-symbolic"
+        self, message: str, icon_name: str = "dialog-information-symbolic"
     ) -> Gtk.ListBox:
         """Create a listbox with a single info row with proper accessibility."""
 
@@ -546,10 +539,7 @@ class PreferencesGridBase(Gtk.Grid):
         return listbox
 
     def _create_label(
-        self,
-        text: str,
-        halign: Gtk.Align = Gtk.Align.END,
-        valign: Gtk.Align = Gtk.Align.FILL
+        self, text: str, halign: Gtk.Align = Gtk.Align.END, valign: Gtk.Align = Gtk.Align.FILL
     ) -> Gtk.Label:
         """Create a label with mnemonic support."""
 
@@ -567,7 +557,7 @@ class PreferencesGridBase(Gtk.Grid):
         label_xalign: float | None = None,
         label_halign: Gtk.Align | None = None,
         label_hexpand: bool = True,
-        widget_expand: bool = False
+        widget_expand: bool = False,
     ) -> tuple[Gtk.ListBoxRow, Gtk.Box, Gtk.Label | None]:
         """Create basic row structure with optional label+widget pair."""
 
@@ -610,7 +600,7 @@ class PreferencesGridBase(Gtk.Grid):
         label_text: str,
         model: Gtk.ListStore,
         changed_handler: Callable[[Gtk.ComboBox], None],
-        include_top_separator: bool = True
+        include_top_separator: bool = True,
     ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBox, Gtk.Label]:
         """Create a single listbox row with label and combo box."""
 
@@ -623,7 +613,8 @@ class PreferencesGridBase(Gtk.Grid):
         combo.connect("changed", changed_handler)
 
         row, _hbox, label = self._create_row_structure(
-            include_top_separator, label_text, combo, label_halign=Gtk.Align.START)
+            include_top_separator, label_text, combo, label_halign=Gtk.Align.START
+        )
 
         return row, combo, label
 
@@ -632,7 +623,7 @@ class PreferencesGridBase(Gtk.Grid):
         label_text: str,
         changed_handler: Callable[[Gtk.Switch, Any], None],
         state: bool,
-        include_top_separator: bool = True
+        include_top_separator: bool = True,
     ) -> tuple[Gtk.ListBoxRow, Gtk.Switch, Gtk.Label]:
         """Create a single listbox row with label and switch."""
 
@@ -645,7 +636,8 @@ class PreferencesGridBase(Gtk.Grid):
         switch_accessible.set_role(Atk.Role.SWITCH)
 
         row, _hbox, label = self._create_row_structure(
-            include_top_separator, label_text, switch, label_xalign=0)
+            include_top_separator, label_text, switch, label_xalign=0
+        )
 
         return row, switch, label
 
@@ -654,7 +646,7 @@ class PreferencesGridBase(Gtk.Grid):
         label_text: str,
         adjustment: Gtk.Adjustment,
         changed_handler: Optional[Callable[[Gtk.Scale], None]] = None,
-        include_top_separator: bool = True
+        include_top_separator: bool = True,
     ) -> tuple[Gtk.ListBoxRow, Gtk.Scale, Gtk.Label]:
         """Create a single listbox row with label and horizontal slider."""
 
@@ -667,14 +659,18 @@ class PreferencesGridBase(Gtk.Grid):
             scale.connect("value-changed", changed_handler)
 
         row, _hbox, label = self._create_row_structure(
-            include_top_separator, label_text, scale,
-            label_halign=Gtk.Align.START, label_hexpand=False, widget_expand=True)
+            include_top_separator,
+            label_text,
+            scale,
+            label_halign=Gtk.Align.START,
+            label_hexpand=False,
+            widget_expand=True,
+        )
 
         return row, scale, label
 
     def _create_button_listbox(
-        self,
-        items: list[tuple[str, str | None, Callable[[Gtk.Button], None]]]
+        self, items: list[tuple[str, str | None, Callable[[Gtk.Button], None]]]
     ) -> tuple[FocusManagedListBox, list[Gtk.Button]]:
         """Create a listbox with one or more label+button rows."""
 
@@ -696,7 +692,7 @@ class PreferencesGridBase(Gtk.Grid):
         label_text: str,
         icon_name: str | None,
         clicked_handler: Callable[[Gtk.Button], None],
-        include_top_separator: bool = True
+        include_top_separator: bool = True,
     ) -> tuple[Gtk.ListBoxRow, Gtk.Button, Gtk.Label]:
         """Create a single listbox row with label and button."""
 
@@ -708,7 +704,8 @@ class PreferencesGridBase(Gtk.Grid):
         button.connect("clicked", clicked_handler)
 
         row, _hbox, label = self._create_row_structure(
-            include_top_separator, label_text, button, label_halign=Gtk.Align.START)
+            include_top_separator, label_text, button, label_halign=Gtk.Align.START
+        )
 
         return row, button, label
 
@@ -717,7 +714,7 @@ class PreferencesGridBase(Gtk.Grid):
         label_text: str,
         entry: Gtk.Entry,
         include_top_separator: bool = True,
-        label_size_group: Gtk.SizeGroup | None = None
+        label_size_group: Gtk.SizeGroup | None = None,
     ) -> Gtk.ListBoxRow:
         """Create a ListBoxRow with a label and entry field."""
 
@@ -737,9 +734,7 @@ class PreferencesGridBase(Gtk.Grid):
         return row
 
     def _create_combo_box(
-        self,
-        model: Gtk.ListStore,
-        changed_handler: Callable[[Gtk.ComboBox], None]
+        self, model: Gtk.ListStore, changed_handler: Callable[[Gtk.ComboBox], None]
     ) -> Gtk.ComboBox:
         """Create a combo box with standard formatting."""
 
@@ -752,13 +747,13 @@ class PreferencesGridBase(Gtk.Grid):
         combo.connect("changed", changed_handler)
         return combo
 
-    def _create_labeled_combo_box( # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def _create_labeled_combo_box(  # pylint: disable=too-many-arguments, too-many-positional-arguments
         self,
         grid: Gtk.Grid,
         row: int,
         label_text: str,
         model: Gtk.ListStore,
-        changed_handler: Callable[[Gtk.ComboBox], None]
+        changed_handler: Callable[[Gtk.ComboBox], None],
     ) -> Gtk.ComboBox:
         """Create a label and combo box pair, attach to grid, and return the combo."""
 
@@ -771,10 +766,7 @@ class PreferencesGridBase(Gtk.Grid):
 
         return combo
 
-    def _create_scrolled_window(
-        self,
-        widget: Gtk.Widget
-    ) -> Gtk.ScrolledWindow:
+    def _create_scrolled_window(self, widget: Gtk.Widget) -> Gtk.ScrolledWindow:
         """Create a scrolled window containing the widget with standard settings."""
 
         scrolled = Gtk.ScrolledWindow()
@@ -790,7 +782,7 @@ class PreferencesGridBase(Gtk.Grid):
     def _create_stacked_preferences(
         self,
         on_category_activated: Callable[[Gtk.ListBoxRow], None],
-        on_detail_row_activated: Callable[[Gtk.ListBox, Gtk.ListBoxRow], None] | None = None
+        on_detail_row_activated: Callable[[Gtk.ListBox, Gtk.ListBoxRow], None] | None = None,
     ) -> tuple[Gtk.Stack, Gtk.ListBox, Gtk.ListBox]:
         """Create a stack-based drill-down preferences UI with ListBox detail view."""
 
@@ -821,10 +813,7 @@ class PreferencesGridBase(Gtk.Grid):
         return (helper.stack, helper.categories_listbox, helper.detail_listbox)
 
     def _add_stack_category_row(
-        self,
-        listbox: Gtk.ListBox,
-        label: str,
-        **custom_attrs
+        self, listbox: Gtk.ListBox, label: str, **custom_attrs
     ) -> CategoryListBoxRow:
         """Add a category row to the categories listbox with chevron icon."""
 
@@ -870,21 +859,13 @@ class PreferencesGridBase(Gtk.Grid):
         if self._stacked_prefs_helper:
             self._stacked_prefs_helper.show_detail()
 
-    def _on_stack_category_activated(
-        self,
-        _listbox: Gtk.ListBox,
-        row: Gtk.ListBoxRow
-    ) -> None:
+    def _on_stack_category_activated(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
         """Internal handler for category activation - delegates to callback."""
 
         if self._stacked_prefs_helper and self._stacked_prefs_helper.on_category_activated_callback:
             self._stacked_prefs_helper.on_category_activated_callback(row)
 
-    def _on_stack_categories_key_press(
-        self,
-        _widget: Gtk.Widget,
-        event: Gdk.EventKey
-    ) -> bool:
+    def _on_stack_categories_key_press(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         """Handle key press in categories page - Right arrow activates focused row."""
 
         if event.keyval == Gdk.KEY_Right:
@@ -896,11 +877,7 @@ class PreferencesGridBase(Gtk.Grid):
                     return True
         return False
 
-    def _on_stack_detail_key_press(
-        self,
-        widget: Gtk.Widget,
-        event: Gdk.EventKey
-    ) -> bool:
+    def _on_stack_detail_key_press(self, widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         """Handle key press in detail page - Left/Escape/Alt+Left to go back."""
 
         # Don't intercept Left for widgets where arrows have meaning
@@ -928,7 +905,7 @@ class PreferencesGridBase(Gtk.Grid):
         enable_setter: Callable[[bool], Any] | None,
         categories: list[tuple[str, str, "PreferencesGridBase"]],
         title_change_callback: Callable[[str], None] | None = None,
-        main_title: str | None = None
+        main_title: str | None = None,
     ) -> tuple[FocusManagedListBox | None, Gtk.Stack, Gtk.ListBox]:
         """Create a multi-page nested stack with optional enable switch and category navigation.
 
@@ -980,7 +957,7 @@ class PreferencesGridBase(Gtk.Grid):
                 enable_label,
                 lambda switch, _param: self._on_multipage_enable_toggled(switch, enable_setter),
                 enable_getter(),
-                include_top_separator=False
+                include_top_separator=False,
             )
             enable_listbox.add_row_with_widget(enable_row, enable_switch)
         self._multipage_enable_listbox = enable_listbox
@@ -1044,9 +1021,7 @@ class PreferencesGridBase(Gtk.Grid):
             row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
 
     def _on_multipage_enable_toggled(
-        self,
-        switch: Gtk.Switch,
-        setter: Callable[[bool], Any]
+        self, switch: Gtk.Switch, setter: Callable[[bool], Any]
     ) -> None:
         """Handle enable switch toggle in multi-page stack."""
 
@@ -1071,11 +1046,7 @@ class PreferencesGridBase(Gtk.Grid):
 
         self._has_unsaved_changes = True
 
-    def _on_multipage_categories_key_press(
-        self,
-        _widget: Gtk.Widget,
-        event: Gdk.EventKey
-    ) -> bool:
+    def _on_multipage_categories_key_press(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         """Handle key press in multi-page categories - Right arrow activates focused row."""
 
         if event.keyval == Gdk.KEY_Right:
@@ -1088,11 +1059,7 @@ class PreferencesGridBase(Gtk.Grid):
                     return True
         return False
 
-    def _on_multipage_category_activated(
-        self,
-        _listbox: Gtk.ListBox,
-        row: Gtk.ListBoxRow
-    ) -> None:
+    def _on_multipage_category_activated(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
         """Handle category activation in multi-page stack."""
 
         if not isinstance(row, CategoryListBoxRow):
@@ -1184,11 +1151,7 @@ class PreferencesGridBase(Gtk.Grid):
 
         return False
 
-    def _on_multipage_child_key_press(
-        self,
-        widget: Gtk.Widget,
-        event: Gdk.EventKey
-    ) -> bool:
+    def _on_multipage_child_key_press(self, widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         """Handle key press in multi-page child grids - Left/Escape to go back."""
 
         # Don't intercept Left for widgets where arrows have meaning
@@ -1229,9 +1192,14 @@ class PreferencesGridBase(Gtk.Grid):
 
         self.multipage_show_categories()
 
-ControlType = (BooleanPreferenceControl | IntRangePreferenceControl |
-               FloatRangePreferenceControl | EnumPreferenceControl |
-               SelectionPreferenceControl)
+
+ControlType = (
+    BooleanPreferenceControl
+    | IntRangePreferenceControl
+    | FloatRangePreferenceControl
+    | EnumPreferenceControl
+    | SelectionPreferenceControl
+)
 
 
 class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-instance-attributes
@@ -1243,7 +1211,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         tab_label: str,
         controls: Sequence[ControlType],
         info_message: str = "",
-        info_icon: str = "dialog-information-symbolic"
+        info_icon: str = "dialog-information-symbolic",
     ) -> None:
         """Initialize the grid with a list of controls."""
 
@@ -1347,8 +1315,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 label_atk = label.get_accessible()
                 listbox_atk = listbox.get_accessible()
                 atk_relation_set = listbox_atk.ref_relation_set()
-                atk_relation_set.add(Atk.Relation.new(
-                    [label_atk], Atk.RelationType.LABELLED_BY))
+                atk_relation_set.add(Atk.Relation.new([label_atk], Atk.RelationType.LABELLED_BY))
 
         scrolled = Gtk.ScrolledWindow()
         scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -1367,7 +1334,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         group_name: str,
         icon_name: str,
         callback: Callable[[Gtk.Button], None],
-        accessible_name: str
+        accessible_name: str,
     ) -> Gtk.Button | None:
         """Add a button to a group's header. Returns the button or None if group not found."""
 
@@ -1410,14 +1377,11 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             new_label_atk = new_label.get_accessible()
             listbox_atk = listbox.get_accessible()
             atk_relation_set = listbox_atk.ref_relation_set()
-            atk_relation_set.add(Atk.Relation.new(
-                [new_label_atk], Atk.RelationType.LABELLED_BY))
+            atk_relation_set.add(Atk.Relation.new([new_label_atk], Atk.RelationType.LABELLED_BY))
 
         return button
 
-    def _create_control_row(
-        self, control: ControlType, listbox: FocusManagedListBox
-    ) -> Gtk.Widget:
+    def _create_control_row(self, control: ControlType, listbox: FocusManagedListBox) -> Gtk.Widget:
         """Create a row for any type of control."""
 
         if isinstance(control, BooleanPreferenceControl):
@@ -1482,7 +1446,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             lower=control.minimum,
             upper=control.maximum,
             step_increment=1,
-            page_increment=10
+            page_increment=10,
         )
         spin = Gtk.SpinButton(adjustment=adjustment)
         spin.set_digits(0)
@@ -1513,7 +1477,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             Gtk.Orientation.HORIZONTAL,
             control.minimum,
             control.maximum,
-            (control.maximum - control.minimum) / 100
+            (control.maximum - control.minimum) / 100,
         )
         scale.set_draw_value(True)
         scale.set_value_pos(Gtk.PositionType.RIGHT)
@@ -1739,8 +1703,9 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 action_buttons[current_index + 1].grab_focus()
                 return True
             return False
-        if event.keyval == Gdk.KEY_ISO_Left_Tab or \
-           (event.keyval == Gdk.KEY_Tab and (event.state & Gdk.ModifierType.SHIFT_MASK)):
+        if event.keyval == Gdk.KEY_ISO_Left_Tab or (
+            event.keyval == Gdk.KEY_Tab and (event.state & Gdk.ModifierType.SHIFT_MASK)
+        ):
             if current_index > 0:
                 action_buttons[current_index - 1].grab_focus()
                 return True

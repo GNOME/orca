@@ -38,6 +38,7 @@ from dasbus.error import DBusError
 from dasbus.client.proxy import InterfaceProxy
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
@@ -56,6 +57,7 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from .scripts import default
+
 
 class _ClipboardManager:
     """Base class for interacting with clipboard managers."""
@@ -99,6 +101,7 @@ class _ClipboardManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._contents = self._get_contents()
         self._change_callback(self._contents)
+
 
 class _ClipboardManagerFallback(_ClipboardManager):
     """Class for interacting with the clipboard via Gtk.Clipboard."""
@@ -153,6 +156,7 @@ class _ClipboardManagerFallback(_ClipboardManager):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
         clipboard.set_text(text, -1)
+
 
 class _ClipboardManagerGPaste(_ClipboardManager):
     """Class for interacting with the clipboard via GPaste."""
@@ -246,6 +250,7 @@ class _ClipboardManagerGPaste(_ClipboardManager):
 
         self._gpaste_proxy.Add(text)
 
+
 class _ClipboardManagerKlipper(_ClipboardManager):
     """Class for interacting with the clipboard via Klipper ."""
 
@@ -312,6 +317,7 @@ class _ClipboardManagerKlipper(_ClipboardManager):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._klipper_proxy.setClipboardContents(text)
 
+
 class ClipboardPresenter:
     """Manages clipboard-related functionality."""
 
@@ -356,12 +362,18 @@ class ClipboardPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the clipboard contents."""
 
-        tokens = ["CLIPBOARD PRESENTER: present_clipboard_contents. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CLIPBOARD PRESENTER: present_clipboard_contents. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._manager is None:
@@ -512,8 +524,10 @@ class ClipboardPresenter:
         msg = f"CLIPBOARD PRESENTER: Contents changed to: '{string}'"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if string == self._last_clipboard_update_text \
-           and time.time() - self._last_clipboard_update_time < 1:
+        if (
+            string == self._last_clipboard_update_text
+            and time.time() - self._last_clipboard_update_time < 1
+        ):
             msg = "CLIPBOARD PRESENTER: Not presenting change: likely duplicate."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -550,6 +564,8 @@ class ClipboardPresenter:
 
 
 _presenter: ClipboardPresenter = ClipboardPresenter()
+
+
 def get_presenter() -> ClipboardPresenter:
     """Returns the Clipboard Presenter singleton."""
 

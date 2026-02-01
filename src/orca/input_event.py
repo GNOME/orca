@@ -36,6 +36,7 @@ import unicodedata
 from typing import Callable, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
@@ -55,10 +56,11 @@ from .ax_utilities import AXUtilities
 if TYPE_CHECKING:
     from .scripts import default
 
-KEYBOARD_EVENT     = "keyboard"
-BRAILLE_EVENT      = "braille"
+KEYBOARD_EVENT = "keyboard"
+BRAILLE_EVENT = "braille"
 MOUSE_BUTTON_EVENT = "mouse:button"
 REMOTE_CONTROLLER_EVENT = "remote controller"
+
 
 class InputEvent:
     """Provides support for handling input events."""
@@ -85,19 +87,13 @@ class InputEvent:
 
         return f"{self.type}"
 
+
 class KeyboardEvent(InputEvent):
     """Provides support for handling keyboard events."""
 
     # pylint:disable=too-many-arguments
     # pylint:disable=too-many-positional-arguments
-    def __init__(
-        self,
-        pressed: bool,
-        keycode: int,
-        keysym: int,
-        modifiers: int,
-        text: str
-    ) -> None:
+    def __init__(self, pressed: bool, keycode: int, keysym: int, modifiers: int, text: str) -> None:
         """Creates a new InputEvent of type KEYBOARD_EVENT.
 
         Arguments:
@@ -115,9 +111,9 @@ class KeyboardEvent(InputEvent):
         )
         self.hw_code: int = keycode
         self._text: str = text
-        self.modifiers: int = modifiers & Gdk.ModifierType.MODIFIER_MASK # pylint: disable=no-member
+        self.modifiers: int = modifiers & Gdk.ModifierType.MODIFIER_MASK  # pylint: disable=no-member
         if modifiers & (1 << Atspi.ModifierType.NUMLOCK):
-            self.modifiers |= (1 << Atspi.ModifierType.NUMLOCK)
+            self.modifiers |= 1 << Atspi.ModifierType.NUMLOCK
         self.keyval_name: str = Gdk.keyval_name(keysym) or ""
         self.timestamp: float = time.time()
         self._script: default.Script | None = None
@@ -160,14 +156,16 @@ class KeyboardEvent(InputEvent):
             keyval_name = self.keyval_name
             text = self._text
 
-        return f"KEYBOARD_EVENT:  type={self.type.value_name.upper()}\n" \
-             + f"                 id={keyid}\n" \
-             + f"                 hw_code={hw_code}\n" \
-             + f"                 modifiers={modifiers}\n" \
-             + f"                 text='{text}'\n" \
-             + f"                 keyval_name='{keyval_name}'\n" \
-             + f"                 timestamp={self.timestamp}\n" \
-             + f"                 clickCount={self._click_count}"
+        return (
+            f"KEYBOARD_EVENT:  type={self.type.value_name.upper()}\n"
+            + f"                 id={keyid}\n"
+            + f"                 hw_code={hw_code}\n"
+            + f"                 modifiers={modifiers}\n"
+            + f"                 text='{text}'\n"
+            + f"                 keyval_name='{keyval_name}'\n"
+            + f"                 timestamp={self.timestamp}\n"
+            + f"                 clickCount={self._click_count}"
+        )
 
     def as_single_line_string(self) -> str:
         """Returns a single-line string representation of this event."""
@@ -176,16 +174,17 @@ class KeyboardEvent(InputEvent):
             return "(obscured)"
 
         return (
-            f"'{self.keyval_name}' ({self.hw_code}) mods: {self.modifiers} "
-            f"{self.type.value_nick}"
+            f"'{self.keyval_name}' ({self.hw_code}) mods: {self.modifiers} {self.type.value_nick}"
         )
 
     def is_alt_control_or_orca_modified(self) -> bool:
         """Return True if this key is Alt, Control, or Orca modified."""
 
-        if self.modifiers & keybindings.CTRL_MODIFIER_MASK \
-           or self.modifiers & keybindings.ALT_MODIFIER_MASK \
-           or self.modifiers & keybindings.ORCA_MODIFIER_MASK:
+        if (
+            self.modifiers & keybindings.CTRL_MODIFIER_MASK
+            or self.modifiers & keybindings.ALT_MODIFIER_MASK
+            or self.modifiers & keybindings.ORCA_MODIFIER_MASK
+        ):
             return True
 
         return False
@@ -603,6 +602,7 @@ class KeyboardEvent(InputEvent):
 
         # pylint: disable=import-outside-toplevel
         from . import learn_mode_presenter
+
         if learn_mode_presenter.get_presenter().is_active():
             return
 
@@ -620,7 +620,7 @@ class KeyboardEvent(InputEvent):
 
         debug.print_message(debug.LEVEL_INFO, f"\n{self}")
 
-        msg = f'\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv'
+        msg = f"\nvvvvv PROCESS {self.type.value_name.upper()}: {data} vvvvv"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
         tokens = ["SCRIPT:", self._script]
@@ -641,12 +641,14 @@ class KeyboardEvent(InputEvent):
 
             # pylint: disable-next=import-outside-toplevel
             from . import learn_mode_presenter
+
             learn_mode = learn_mode_presenter.get_presenter().is_active()
             if learn_mode:
                 tokens = ["KEYBOARD EVENT: Learn mode is active"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._handler = lambda: learn_mode_presenter.get_presenter().handle_event(
-                    self, command)
+                    self, command
+                )
             elif command is not None and command.is_enabled():
                 self._handler = lambda: command.execute(script, self)
 
@@ -692,6 +694,7 @@ class KeyboardEvent(InputEvent):
 
         return False
 
+
 class BrailleEvent(InputEvent):
     """Provides support for handling braille events."""
 
@@ -730,6 +733,7 @@ class BrailleEvent(InputEvent):
     def _process(self):
         # pylint: disable-next=import-outside-toplevel
         from . import learn_mode_presenter
+
         presenter = learn_mode_presenter.get_presenter()
 
         command = self.get_command()
@@ -753,13 +757,14 @@ class BrailleEvent(InputEvent):
         command.execute(self._script, self)
         return True
 
+
 class MouseButtonEvent(InputEvent):
     """Provides support for handling mouse button events."""
 
     # TODO - JD: Remove this and the validation logic once we have a fix for
     # https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/194.
     try:
-        display = Gdk.Display.get_default() # pylint: disable=no-value-for-parameter
+        display = Gdk.Display.get_default()  # pylint: disable=no-value-for-parameter
         seat = Gdk.Display.get_default_seat(display)
         _pointer = seat.get_pointer()
     except Exception:
@@ -769,8 +774,8 @@ class MouseButtonEvent(InputEvent):
         super().__init__(MOUSE_BUTTON_EVENT)
         self.x = event.detail1
         self.y = event.detail2
-        self.pressed = event.type.endswith('p')
-        self.button = event.type[len("mouse:button:"):-1]
+        self.pressed = event.type.endswith("p")
+        self.button = event.type[len("mouse:button:") : -1]
         self._script = script_manager.get_manager().get_active_script()
         self.window = focus_manager.get_manager().get_active_window()
         self.app = None
@@ -794,15 +799,15 @@ class MouseButtonEvent(InputEvent):
             return
 
         x, y = self._pointer.get_position()[1:]
-        if math.sqrt((self.x - x)**2 + (self.y - y)**2) < 25:
+        if math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2) < 25:
             return
 
         msg = (
-            f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. "
-            f"Updating to ({x}, {y})"
+            f"WARNING: Event coordinates ({self.x}, {self.y}) may be bogus. Updating to ({x}, {y})"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.x, self.y = x, y
+
 
 class RemoteControllerEvent(InputEvent):
     """A simple input event whose main purpose is identification of the origin."""

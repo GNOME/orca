@@ -28,29 +28,28 @@ ACSS definitions into engine-specific markup codes.
 
 
 class ACSS(dict):
-
     """Holds ACSS representation of a voice."""
 
-    FAMILY        = 'family'
-    RATE          = 'rate'
-    GAIN          = 'gain'
-    AVERAGE_PITCH = 'average-pitch'
-    PITCH_RANGE   = 'pitch-range'
-    STRESS        = 'stress'
-    RICHNESS      = 'richness'
-    PUNCTUATIONS  = 'punctuations'
+    FAMILY = "family"
+    RATE = "rate"
+    GAIN = "gain"
+    AVERAGE_PITCH = "average-pitch"
+    PITCH_RANGE = "pitch-range"
+    STRESS = "stress"
+    RICHNESS = "richness"
+    PUNCTUATIONS = "punctuations"
 
     # A value of None means use the engine's default value.
     #
     settings = {
-        FAMILY :        None,
-        RATE :          50,
-        GAIN :          10,
-        AVERAGE_PITCH : 5,
-        PITCH_RANGE :   5,
-        STRESS :        5,
-        RICHNESS :      5,
-        PUNCTUATIONS :  'all'
+        FAMILY: None,
+        RATE: 50,
+        GAIN: 10,
+        AVERAGE_PITCH: 5,
+        PITCH_RANGE: 5,
+        STRESS: 5,
+        RICHNESS: 5,
+        PUNCTUATIONS: "all",
     }
 
     def __init__(self, props=None):
@@ -59,7 +58,7 @@ class ACSS(dict):
         props = props or {}
         if props:
             for k in props:
-                if k == 'established' or k in ACSS.settings:
+                if k == "established" or k in ACSS.settings:
                     # Do a 'deep copy' of the family.  Otherwise,
                     # the new ACSS shares the actual data with the
                     # props passed in.  This can cause unexpected
@@ -72,7 +71,7 @@ class ACSS(dict):
                     else:
                         self[k] = props[k]
         else:
-            self['established'] = False
+            self["established"] = False
 
     def __eq__(self, other):
         if not isinstance(other, ACSS):
@@ -85,7 +84,7 @@ class ACSS(dict):
             return False
         return True
 
-    def __setitem__ (self, key, value):
+    def __setitem__(self, key, value):
         """Update name when we change values."""
         dict.__setitem__(self, key, value)
 
@@ -94,26 +93,26 @@ class ACSS(dict):
         dict.__delitem__(self, key)
 
     def name(self):
-        _name = 'acss-'
+        _name = "acss-"
         names = list(self.keys())
         if names:
             names.sort()
-            for  k in names:
+            for k in names:
                 _name += f"{k}-{self[k]}:"
         _name = _name[:-1]
         return _name
 
     def getLocale(self):
         family = self.get(ACSS.FAMILY, {})
-        return family.get('locale')
+        return family.get("locale")
 
     def getDialect(self):
         family = self.get(ACSS.FAMILY, {})
-        return family.get('dialect')
+        return family.get("dialect")
 
     def update(self, newDict):
         family = newDict.get(ACSS.FAMILY)
-        if isinstance(family, dict) and family.get('name') is None:
+        if isinstance(family, dict) and family.get("name") is None:
             newDict.pop(ACSS.FAMILY)
 
         return super().update(newDict)

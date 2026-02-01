@@ -32,6 +32,7 @@ from __future__ import annotations
 from typing import Any, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -55,20 +56,25 @@ if TYPE_CHECKING:
 class Space:
     """A dummy class to indicate we want to insert a space into an
     utterance, but only if there is text prior to the space."""
+
     def __init__(self, delimiter: str = " ") -> None:
         self.delimiter = delimiter
 
+
 SPACE = [Space()]
+
 
 class BrailleGenerator(generator.Generator):
     """Produces a list of braille Regions for accessible objects."""
 
-    SKIP_CONTEXT_ROLES = (Atspi.Role.MENU,
-                          Atspi.Role.MENU_BAR,
-                          Atspi.Role.PAGE_TAB_LIST,
-                          Atspi.Role.REDUNDANT_OBJECT,
-                          Atspi.Role.UNKNOWN,
-                          Atspi.Role.COMBO_BOX)
+    SKIP_CONTEXT_ROLES = (
+        Atspi.Role.MENU,
+        Atspi.Role.MENU_BAR,
+        Atspi.Role.PAGE_TAB_LIST,
+        Atspi.Role.REDUNDANT_OBJECT,
+        Atspi.Role.UNKNOWN,
+        Atspi.Role.COMBO_BOX,
+    )
 
     def __init__(self, script: script.Script) -> None:
         super().__init__(script, "braille")
@@ -82,6 +88,7 @@ class BrailleGenerator(generator.Generator):
             tokens = [f"BRAILLE GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -90,8 +97,9 @@ class BrailleGenerator(generator.Generator):
         if not braille_presenter.get_presenter().use_braille():
             return [[], None]
 
-        if obj == focus_manager.get_manager().get_locus_of_focus() \
-           and not args.get("formatType", None):
+        if obj == focus_manager.get_manager().get_locus_of_focus() and not args.get(
+            "formatType", None
+        ):
             args["formatType"] = "focused"
         result = self.generate(obj, **args)
 
@@ -113,12 +121,18 @@ class BrailleGenerator(generator.Generator):
             if isinstance(region, (braille.Component, braille.Text)) and region.accessible == obj:
                 focused_region = region
                 break
-            if isinstance(region, braille.Text) and AXUtilities.is_combo_box(obj) \
-               and AXObject.get_parent(region.accessible) == obj:
+            if (
+                isinstance(region, braille.Text)
+                and AXUtilities.is_combo_box(obj)
+                and AXObject.get_parent(region.accessible) == obj
+            ):
                 focused_region = region
                 break
-            if isinstance(region, braille.Component) and AXUtilities.is_table_cell(obj) \
-               and AXObject.get_parent(region.accessible) == obj:
+            if (
+                isinstance(region, braille.Component)
+                and AXUtilities.is_table_cell(obj)
+                and AXObject.get_parent(region.accessible) == obj
+            ):
                 focused_region = region
                 break
         else:
@@ -133,8 +147,12 @@ class BrailleGenerator(generator.Generator):
                 return AXObject.get_name(obj) == AXObject.get_name(region.accessible)
 
             candidates = list(filter(pred, result))
-            tokens = ["BRAILLE GENERATOR: Could not determine focused region for",
-                      obj, "Candidates:", candidates]
+            tokens = [
+                "BRAILLE GENERATOR: Could not determine focused region for",
+                obj,
+                "Candidates:",
+                candidates,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if len(candidates) == 1:
                 focused_region = candidates[0]
@@ -155,9 +173,7 @@ class BrailleGenerator(generator.Generator):
         return last_char.isalnum()
 
     def generate_contents(  # type: ignore[override]
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
+        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
     ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         """Generates braille for the specified contents."""
 
@@ -168,8 +184,14 @@ class BrailleGenerator(generator.Generator):
         for i, content in enumerate(contents):
             acc, start, end, string = content
             regions, f_region = self.generate_braille(
-                acc, startOffset=start, endOffset=end, caretOffset=offset, string=string,
-                index=i, total=len(contents))
+                acc,
+                startOffset=start,
+                endOffset=end,
+                caretOffset=offset,
+                string=string,
+                index=i,
+                total=len(contents),
+            )
             if not regions:
                 continue
 
@@ -229,18 +251,21 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
-
-        if args.get("isProgressBarUpdate") \
-           and not braille_presenter.get_presenter().get_braille_progress_bar_updates():
+        if (
+            args.get("isProgressBarUpdate")
+            and not braille_presenter.get_presenter().get_braille_progress_bar_updates()
+        ):
             return []
 
         result = []
-        role = args.get('role', AXObject.get_role(obj))
-        do_not_present = [Atspi.Role.UNKNOWN,
-                        Atspi.Role.REDUNDANT_OBJECT,
-                        Atspi.Role.FILLER,
-                        Atspi.Role.EXTENDED,
-                        Atspi.Role.LINK]
+        role = args.get("role", AXObject.get_role(obj))
+        do_not_present = [
+            Atspi.Role.UNKNOWN,
+            Atspi.Role.REDUNDANT_OBJECT,
+            Atspi.Role.FILLER,
+            Atspi.Role.EXTENDED,
+            Atspi.Role.LINK,
+        ]
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if AXUtilities.is_list_box(AXObject.get_parent(obj)):
@@ -253,7 +278,7 @@ class BrailleGenerator(generator.Generator):
         level = AXUtilities.get_heading_level(obj)
         if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
-        elif is_verbose and not args.get('readingRow', False) and role not in do_not_present:
+        elif is_verbose and not args.get("readingRow", False) and role not in do_not_present:
             result.append(self.get_localized_role_name(obj, **args))
         return result
 
@@ -304,8 +329,10 @@ class BrailleGenerator(generator.Generator):
         return result
 
     def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not (braille_presenter.get_presenter().get_present_mnemonics()
-                or args.get("forceMnemonic", False)):
+        if not (
+            braille_presenter.get_presenter().get_present_mnemonics()
+            or args.get("forceMnemonic", False)
+        ):
             return []
 
         return super()._generate_keyboard_mnemonic(obj, **args)
@@ -317,7 +344,7 @@ class BrailleGenerator(generator.Generator):
         acc = self._get_most_recent_progress_bar_update()[0]
         if acc != obj:
             number = self._get_progress_bar_number_and_count(obj)[0]
-            return [f'{number}']
+            return [f"{number}"]
 
         return []
 
@@ -354,7 +381,6 @@ class BrailleGenerator(generator.Generator):
 
         return [object_properties.EOL_INDICATOR_BRAILLE]
 
-
     ################################### PER-ROLE ####################################
 
     def _generate_default_prefix(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -388,21 +414,31 @@ class BrailleGenerator(generator.Generator):
         """Provides a default/role-agnostic presentation of obj."""
 
         if args.get("formatType") == "ancestor":
-            result = [braille.Component(
-                obj, self._as_string(
-                    self._generate_accessible_label_and_name(obj, **args) +
-                    self._generate_accessible_role(obj, **args)))]
+            result = [
+                braille.Component(
+                    obj,
+                    self._as_string(
+                        self._generate_accessible_label_and_name(obj, **args)
+                        + self._generate_accessible_role(obj, **args)
+                    ),
+                )
+            ]
             return result
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_text_content(obj, **args) +
-                self._generate_value(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_state_required(obj, **args) +
-                self._generate_state_invalid(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_text_content(obj, **args)
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_state_required(obj, **args)
+                    + self._generate_state_invalid(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -425,15 +461,19 @@ class BrailleGenerator(generator.Generator):
         """Provides a default/role-agnostic generation of text objects."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Text(
-            obj,
-            self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) \
-                    or self._generate_accessible_placeholder_text(obj, **args)),
-            self._as_string(self._generate_eol(obj, **args)),
-            args.get("startOffset"),
-            args.get("endOffset"),
-            args.get("caretOffset"))]
+        result += [
+            braille.Text(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    or self._generate_accessible_placeholder_text(obj, **args)
+                ),
+                self._as_string(self._generate_eol(obj, **args)),
+                args.get("startOffset"),
+                args.get("endOffset"),
+                args.get("caretOffset"),
+            )
+        ]
 
         # TODO - JD: The lines below reflect what we've been doing, but only make sense
         # for text fields. Historically we've also used generic text object generation
@@ -445,11 +485,11 @@ class BrailleGenerator(generator.Generator):
 
         required = self._generate_state_required(obj, **args)
         if required:
-            result +=[braille.Region(" " + self._as_string(required))]
+            result += [braille.Region(" " + self._as_string(required))]
 
         readonly = self._generate_state_read_only(obj, **args)
         if readonly:
-            result +=[braille.Region(" " + self._as_string(readonly))]
+            result += [braille.Region(" " + self._as_string(readonly))]
 
         result += self._generate_default_suffix(obj, **args)
         return result
@@ -466,10 +506,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -482,10 +527,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the application role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -501,10 +551,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -515,10 +570,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -536,9 +596,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the block-quote role."""
 
         result = self._generate_text_object(obj, **args)
-        result += [braille.Region(" " + self._as_string(
-            self._generate_accessible_role(obj, **args) +
-            self._generate_nesting_level(obj, **args)))]
+        result += [
+            braille.Region(
+                " "
+                + self._as_string(
+                    self._generate_accessible_role(obj, **args)
+                    + self._generate_nesting_level(obj, **args)
+                )
+            )
+        ]
         return result
 
     def _generate_calendar(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -550,11 +616,18 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the canvas role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                (self._generate_accessible_image_description(obj, **args) \
-                    or self._generate_accessible_role(obj, **args))))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + (
+                        self._generate_accessible_image_description(obj, **args)
+                        or self._generate_accessible_role(obj, **args)
+                    )
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -572,13 +645,18 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the check-box role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_state_required(obj, **args) +
-                self._generate_state_invalid(obj, **args)),
-            indicator=self._as_string(self._generate_state_checked(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_state_required(obj, **args)
+                    + self._generate_state_invalid(obj, **args)
+                ),
+                indicator=self._as_string(self._generate_state_checked(obj, **args)),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -586,12 +664,17 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the check-menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_keyboard_accelerator(obj, **args)),
-            indicator=self._as_string(self._generate_state_checked(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_accelerator(obj, **args)
+                ),
+                indicator=self._as_string(self._generate_state_checked(obj, **args)),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -608,10 +691,16 @@ class BrailleGenerator(generator.Generator):
         else:
             line = self._generate_accessible_label_and_name(obj, **args)
 
-        result = [braille.Component(
-            obj, self._as_string(
-                line + self._generate_accessible_role(obj, **args) + \
-                    self._generate_table_sort_order(obj, **args)))]
+        result = [
+            braille.Component(
+                obj,
+                self._as_string(
+                    line
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_table_sort_order(obj, **args)
+                ),
+            )
+        ]
 
         return result
 
@@ -625,10 +714,17 @@ class BrailleGenerator(generator.Generator):
         else:
             offset = 0
 
-        result += [braille.Component(
-            obj, self._as_string(label +
-                               self._generate_value(obj, **args) +
-                               self._generate_accessible_role(obj, **args)), offset)]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    label
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+                offset,
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -666,8 +762,9 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the description-term role."""
 
         result = self._generate_text_object(obj, **args)
-        result += [braille.Region(" " + self._as_string(
-            self._generate_term_value_count(obj, **args)))]
+        result += [
+            braille.Region(" " + self._as_string(self._generate_term_value_count(obj, **args)))
+        ]
         return result
 
     def _generate_description_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -689,11 +786,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the dial role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_value(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -701,11 +803,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the dialog role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_accessible_static_text(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_accessible_static_text(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -718,11 +825,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for document-related roles."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Text(
-            obj, "",
-            self._as_string(self._generate_eol(obj, **args)),
-            args.get("startOffset"),
-            args.get("endOffset"))]
+        result += [
+            braille.Text(
+                obj,
+                "",
+                self._as_string(self._generate_eol(obj, **args)),
+                args.get("startOffset"),
+                args.get("endOffset"),
+            )
+        ]
         return result
 
     def _generate_document_email(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -822,10 +933,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -833,11 +949,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the frame role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_alert_and_dialog_count(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_alert_and_dialog_count(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -853,10 +974,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -869,8 +995,9 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the heading role."""
 
         result = self._generate_text_object(obj, **args)
-        result += [braille.Region(" " + self._as_string(
-            self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Region(" " + self._as_string(self._generate_accessible_role(obj, **args)))
+        ]
         return result
 
     def _generate_html_container(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -882,11 +1009,18 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the icon role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                (self._generate_accessible_image_description(obj, **args) \
-                    or self._generate_accessible_role(obj, **args))))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + (
+                        self._generate_accessible_image_description(obj, **args)
+                        or self._generate_accessible_role(obj, **args)
+                    )
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -894,10 +1028,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the image role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -940,11 +1079,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the level-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_value(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -952,10 +1096,17 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the link role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Link(
-            obj, self._as_string(
-                (self._generate_accessible_label_and_name(obj, **args) \
-                    or self._generate_text_content(obj, **args))))]
+        result += [
+            braille.Link(
+                obj,
+                self._as_string(
+                    (
+                        self._generate_accessible_label_and_name(obj, **args)
+                        or self._generate_text_content(obj, **args)
+                    )
+                ),
+            )
+        ]
 
         rolename = self._generate_accessible_role(obj, **args)
         if rolename:
@@ -979,10 +1130,17 @@ class BrailleGenerator(generator.Generator):
         else:
             offset = 0
 
-        result += [braille.Component(
-            obj, self._as_string(label +
-                               self._generate_focused_item(obj, **args) +
-                               self._generate_accessible_role(obj, **args)), offset)]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    label
+                    + self._generate_focused_item(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+                offset,
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -995,18 +1153,27 @@ class BrailleGenerator(generator.Generator):
         result = self._generate_default_prefix(obj, **args)
         line = self._generate_text_line(obj, **args)
         if line and AXUtilities.is_editable(obj):
-            result += [braille.Text(
-                obj,
-                "",
-                self._as_string(self._generate_eol(obj, **args)),
-                args.get("startOffset"),
-                args.get("endOffset"),
-                args.get("caretOffset"))]
+            result += [
+                braille.Text(
+                    obj,
+                    "",
+                    self._as_string(self._generate_eol(obj, **args)),
+                    args.get("startOffset"),
+                    args.get("endOffset"),
+                    args.get("caretOffset"),
+                )
+            ]
         else:
-            result += [braille.Component(
-                obj,
-                self._as_string(line or self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_state_expanded(obj, **args)))]
+            result += [
+                braille.Component(
+                    obj,
+                    self._as_string(
+                        line
+                        or self._generate_accessible_label_and_name(obj, **args)
+                        + self._generate_state_expanded(obj, **args)
+                    ),
+                )
+            ]
 
         level = self._generate_nesting_level(obj, **args)
         if level:
@@ -1084,10 +1251,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the menu role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1100,12 +1272,17 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_state_expanded(obj, **args) +
-                self._generate_keyboard_accelerator(obj, **args)),
-            indicator=self._as_string(self._generate_state_checked_if_checkable(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_state_expanded(obj, **args)
+                    + self._generate_keyboard_accelerator(obj, **args)
+                ),
+                indicator=self._as_string(self._generate_state_checked_if_checkable(obj, **args)),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1116,10 +1293,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1137,11 +1319,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the page-tab role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_keyboard_accelerator(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_accelerator(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1157,10 +1344,15 @@ class BrailleGenerator(generator.Generator):
             return self._generate_text_object(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1182,8 +1374,9 @@ class BrailleGenerator(generator.Generator):
     def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the progress-bar role."""
 
-        if not args.get("isProgressBarUpdate") \
-           or not self._should_present_progress_bar_update(obj, **args):
+        if not args.get("isProgressBarUpdate") or not self._should_present_progress_bar_update(
+            obj, **args
+        ):
             return []
 
         value = self._generate_progress_bar_value(obj, **args)
@@ -1191,12 +1384,17 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                value +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_progress_bar_index(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + value
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_progress_bar_index(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1204,11 +1402,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the push-button role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_state_expanded(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_state_expanded(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1225,11 +1428,18 @@ class BrailleGenerator(generator.Generator):
         if group:
             result += [braille.Region(" " + self._as_string(group))]
 
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)),
-            indicator=self._as_string(self._generate_state_selected_for_radio_button(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+                indicator=self._as_string(
+                    self._generate_state_selected_for_radio_button(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1237,12 +1447,19 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the radio-menu-item role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_keyboard_accelerator(obj, **args)),
-            indicator=self._as_string(self._generate_state_selected_for_radio_button(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_accelerator(obj, **args)
+                ),
+                indicator=self._as_string(
+                    self._generate_state_selected_for_radio_button(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1269,10 +1486,16 @@ class BrailleGenerator(generator.Generator):
         else:
             line = self._generate_accessible_label_and_name(obj, **args)
 
-        result = [braille.Component(
-            obj, self._as_string(
-                line + self._generate_accessible_role(obj, **args) +\
-                    self._generate_table_sort_order(obj, **args)))]
+        result = [
+            braille.Component(
+                obj,
+                self._as_string(
+                    line
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_table_sort_order(obj, **args)
+                ),
+            )
+        ]
 
         return result
 
@@ -1285,11 +1508,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the scroll-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_value(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1312,11 +1540,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the slider role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_value(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1339,10 +1572,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the status-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += [braille.Region(" ")]
         result += self._generate_descendants(obj, **args)
         result += self._generate_default_suffix(obj, **args)
@@ -1367,11 +1605,16 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the switch role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)),
-            indicator=self._as_string(self._generate_state_checked_for_switch(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+                indicator=self._as_string(self._generate_state_checked_for_switch(obj, **args)),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1395,12 +1638,19 @@ class BrailleGenerator(generator.Generator):
 
         result = []
         result += self._generate_state_checked_for_cell(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_column_header_if_toggle_and_no_text(obj, **args) +
-                (self._generate_real_active_descendant_displayed_text(obj, **args) \
-                    or self._generate_accessible_label_and_name(obj, **args)) +
-                self._generate_state_expanded(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_column_header_if_toggle_and_no_text(obj, **args)
+                    + (
+                        self._generate_real_active_descendant_displayed_text(obj, **args)
+                        or self._generate_accessible_label_and_name(obj, **args)
+                    )
+                    + self._generate_state_expanded(obj, **args)
+                ),
+            )
+        ]
         result += suffix
         result += self._generate_default_suffix(obj, **args)
         return result
@@ -1433,15 +1683,20 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the table-row role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_text_content(obj, **args) +
-                self._generate_value(obj, **args) +
-                self._generate_accessible_role(obj, **args) +
-                self._generate_state_required(obj, **args) +
-                self._generate_state_invalid(obj, **args) +
-                self._generate_state_expanded(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_text_content(obj, **args)
+                    + self._generate_value(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_state_required(obj, **args)
+                    + self._generate_state_invalid(obj, **args)
+                    + self._generate_state_expanded(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1458,11 +1713,14 @@ class BrailleGenerator(generator.Generator):
     def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the terminal role."""
 
-        result = [braille.Text(
-            obj,
-            start_offset=args.get("startOffset"),
-            end_offset=args.get("endOffset"),
-            caret_offset=args.get("caretOffset", args.get("offset")))]
+        result = [
+            braille.Text(
+                obj,
+                start_offset=args.get("startOffset"),
+                end_offset=args.get("endOffset"),
+                caret_offset=args.get("caretOffset", args.get("offset")),
+            )
+        ]
         return result
 
     def _generate_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -1484,12 +1742,17 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the toggle-button role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_state_expanded(obj, **args) +
-                self._generate_accessible_role(obj, **args)),
-            indicator=self._as_string(self._generate_state_pressed(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_state_expanded(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+                indicator=self._as_string(self._generate_state_pressed(obj, **args)),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1497,10 +1760,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the tool-bar role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1513,10 +1781,15 @@ class BrailleGenerator(generator.Generator):
         """Generates braille for the tree role."""
 
         result = self._generate_default_prefix(obj, **args)
-        result += [braille.Component(
-            obj, self._as_string(
-                self._generate_accessible_label_and_name(obj, **args) +
-                self._generate_accessible_role(obj, **args)))]
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj, **args)
+                    + self._generate_accessible_role(obj, **args)
+                ),
+            )
+        ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1526,14 +1799,19 @@ class BrailleGenerator(generator.Generator):
         if self._generate_text_substring(obj, **args):
             result = self._generate_text_object(obj, **args)
         else:
-            result = [braille.Component(
-                obj, self._as_string(
-                    self._generate_accessible_label_and_name(obj, **args) +
-                    self._generate_state_expanded(obj, **args)))]
+            result = [
+                braille.Component(
+                    obj,
+                    self._as_string(
+                        self._generate_accessible_label_and_name(obj, **args)
+                        + self._generate_state_expanded(obj, **args)
+                    ),
+                )
+            ]
 
         node_level = self._generate_tree_item_level(obj, **args)
         if node_level:
-            result +=[braille.Region(" " + self._as_string(node_level))]
+            result += [braille.Region(" " + self._as_string(node_level))]
 
         return result
 

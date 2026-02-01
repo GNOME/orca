@@ -35,6 +35,7 @@ import subprocess
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
@@ -48,6 +49,7 @@ from . import settings
 
 if TYPE_CHECKING:
     from .input_event import KeyboardEvent
+
 
 class OrcaModifierManager:
     """Manages the Orca modifier."""
@@ -251,8 +253,9 @@ class OrcaModifierManager:
             return
 
         self.unset_orca_modifiers(reason)
-        with subprocess.Popen(["xkbcomp", display, "-"],
-                              stdout=subprocess.PIPE, stderr=subprocess.DEVNULL) as p:
+        with subprocess.Popen(
+            ["xkbcomp", display, "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
+        ) as p:
             self._original_xmodmap, _ = p.communicate()
         self._create_orca_xmodmap()
 
@@ -289,8 +292,9 @@ class OrcaModifierManager:
             return
 
         self._caps_lock_cleared = False
-        with subprocess.Popen(["xkbcomp", "-w0", "-", display],
-                              stdin=subprocess.PIPE, stdout=None, stderr=None) as p:
+        with subprocess.Popen(
+            ["xkbcomp", "-w0", "-", display], stdin=subprocess.PIPE, stdout=None, stderr=None
+        ) as p:
             p.communicate(self._original_xmodmap)
 
         msg = "ORCA MODIFIER MANAGER: Original xmodmap restored"
@@ -315,19 +319,22 @@ class OrcaModifierManager:
             return
 
         interpret_caps_line_prog = re.compile(
-            r'^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$', re.I)
+            r"^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$", re.I
+        )
         normal_caps_line_prog = re.compile(
-            r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$', re.I)
+            r"^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$", re.I
+        )
         interpret_shift_line_prog = re.compile(
-            r'^\s*interpret\s+Shift[_+]Lock[_+]AnyOf\s*\(\s*Shift\s*\+\s*Lock\s*\)\s*{\s*$', re.I)
+            r"^\s*interpret\s+Shift[_+]Lock[_+]AnyOf\s*\(\s*Shift\s*\+\s*Lock\s*\)\s*{\s*$", re.I
+        )
         normal_shift_line_prog = re.compile(
-            r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Shift\s*\)\s*;\s*$', re.I)
-        disabled_mod_line_prog = re.compile(
-            r'^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$', re.I)
-        normal_caps_line = '        action= LockMods(modifiers=Lock);'
-        normal_shift_line = '        action= LockMods(modifiers=Shift);'
-        disabled_mod_line = '        action= NoAction();'
-        lines = self._original_xmodmap.decode('UTF-8').split('\n')
+            r"^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Shift\s*\)\s*;\s*$", re.I
+        )
+        disabled_mod_line_prog = re.compile(r"^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$", re.I)
+        normal_caps_line = "        action= LockMods(modifiers=Lock);"
+        normal_shift_line = "        action= LockMods(modifiers=Shift);"
+        disabled_mod_line = "        action= NoAction();"
+        lines = self._original_xmodmap.decode("UTF-8").split("\n")
         found_caps_interpret_section = False
         found_shift_interpret_section = False
         modified = False
@@ -346,7 +353,7 @@ class OrcaModifierManager:
                     if disabled_mod_line_prog.match(line):
                         lines[i] = normal_caps_line
                         modified = True
-                if line.find('}'):
+                if line.find("}"):
                     found_caps_interpret_section = False
             elif found_shift_interpret_section:
                 if enable:
@@ -357,22 +364,23 @@ class OrcaModifierManager:
                     if disabled_mod_line_prog.match(line):
                         lines[i] = normal_shift_line
                         modified = True
-                if line.find('}'):
+                if line.find("}"):
                     found_shift_interpret_section = False
         if modified:
             msg = "ORCA MODIFIER MANAGER: Updating xmodmap"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-
-            with subprocess.Popen(["xkbcomp", "-w0", "-", display],
-                              stdin=subprocess.PIPE, stdout=None, stderr=None) as p:
-                p.communicate(bytes('\n'.join(lines), 'UTF-8'))
+            with subprocess.Popen(
+                ["xkbcomp", "-w0", "-", display], stdin=subprocess.PIPE, stdout=None, stderr=None
+            ) as p:
+                p.communicate(bytes("\n".join(lines), "UTF-8"))
         else:
             msg = "ORCA MODIFIER MANAGER: Not updating xmodmap"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
 
 _manager: OrcaModifierManager = OrcaModifierManager()
+
 
 def get_manager() -> OrcaModifierManager:
     """Returns the OrcaModifierManager singleton."""

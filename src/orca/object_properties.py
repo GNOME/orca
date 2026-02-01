@@ -22,8 +22,7 @@
 so that we can present them in the correct language when users change the
 language on the fly without having to reload a bunch of modules."""
 
-
-from .orca_i18n import _, C_ # pylint: disable=import-error
+from .orca_i18n import _, C_  # pylint: disable=import-error
 
 # Translators: this is the action name for the 'toggle' action. It must be the
 # same string used in the *.po file for gail.
@@ -437,7 +436,7 @@ ROLE_LANDMARK_MAIN = C_("role", "main content")
 # The "navigation" role is defined in the ARIA specification as "A collection of
 # navigational elements (usually links) for navigating the document or related
 # documents." See https://www.w3.org/TR/wai-aria-1.1/#navigation
-ROLE_LANDMARK_NAVIGATION =  C_("role", "navigation")
+ROLE_LANDMARK_NAVIGATION = C_("role", "navigation")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -446,7 +445,7 @@ ROLE_LANDMARK_NAVIGATION =  C_("role", "navigation")
 # purpose and sufficiently important that users will likely want to be able to
 # navigate to the section easily and to have it listed in a summary of the page."
 # See https://www.w3.org/TR/wai-aria-1.1/#region
-ROLE_LANDMARK_REGION =  C_("role", "region")
+ROLE_LANDMARK_REGION = C_("role", "region")
 
 # Translators: This string should be treated as a role describing an object.
 # Examples of roles include "checkbox", "radio button", "paragraph", and "link."
@@ -499,7 +498,7 @@ STATE_HORIZONTAL = _("horizontal")
 
 # Translators: This is a state which applies to the orientation of widgets
 # such as sliders and scroll bars.
-STATE_VERTICAL =  _("vertical")
+STATE_VERTICAL = _("vertical")
 
 # Translators: This is a state which applies to a check box.
 # Please don't use the same translation as for "selected",
@@ -567,7 +566,7 @@ STATE_READ_ONLY_SPEECH = C_("text", "read only")
 # It is assumed that form fields will be editable; if they lack this state,
 # we need to present that information to the user. This string is the braille
 # version. (Because braille displays have limited real estate, we abbreviate.)
-STATE_READ_ONLY_BRAILLE =  C_("text", "rdonly")
+STATE_READ_ONLY_BRAILLE = C_("text", "rdonly")
 
 # Translators: Certain objects (such as form controls on web pages) can have
 # STATE_REQUIRED set to inform the user that this field must be filled out.
@@ -617,27 +616,26 @@ STATE_INVALID_GRAMMAR_BRAILLE = C_("error", "grammar")
 
 # TODO: Look at why we're doing this as lists.
 
-CHECK_BOX_INDICATORS_SPEECH = \
-    [STATE_NOT_CHECKED, STATE_CHECKED, STATE_PARTIALLY_CHECKED]
-EXPANSION_INDICATORS_SPEECH = \
-    [STATE_COLLAPSED, STATE_EXPANDED]
-INVALID_INDICATORS_SPEECH = \
-    [STATE_INVALID_SPEECH,
-     STATE_INVALID_SPELLING_SPEECH,
-     STATE_INVALID_GRAMMAR_SPEECH]
-RADIO_BUTTON_INDICATORS_SPEECH = \
-    [STATE_UNSELECTED_RADIO_BUTTON, STATE_SELECTED_RADIO_BUTTON]
+CHECK_BOX_INDICATORS_SPEECH = [STATE_NOT_CHECKED, STATE_CHECKED, STATE_PARTIALLY_CHECKED]
+EXPANSION_INDICATORS_SPEECH = [STATE_COLLAPSED, STATE_EXPANDED]
+INVALID_INDICATORS_SPEECH = [
+    STATE_INVALID_SPEECH,
+    STATE_INVALID_SPELLING_SPEECH,
+    STATE_INVALID_GRAMMAR_SPEECH,
+]
+RADIO_BUTTON_INDICATORS_SPEECH = [STATE_UNSELECTED_RADIO_BUTTON, STATE_SELECTED_RADIO_BUTTON]
 
 SWITCH_INDICATORS_SPEECH = [STATE_OFF_SWITCH, STATE_ON_SWITCH]
-TOGGLE_BUTTON_INDICATORS_SPEECH = \
-    [STATE_NOT_PRESSED, STATE_PRESSED]
+TOGGLE_BUTTON_INDICATORS_SPEECH = [STATE_NOT_PRESSED, STATE_PRESSED]
 
-CHECK_BOX_INDICATORS_BRAILLE     = ["< >", "<x>", "<->"]
-EXPANSION_INDICATORS_BRAILLE     = [STATE_COLLAPSED, STATE_EXPANDED]
-INVALID_INDICATORS_BRAILLE       = [STATE_INVALID_BRAILLE,
-                                    STATE_INVALID_SPELLING_BRAILLE,
-                                    STATE_INVALID_GRAMMAR_BRAILLE]
-RADIO_BUTTON_INDICATORS_BRAILLE  = ["& y", "&=y"]
+CHECK_BOX_INDICATORS_BRAILLE = ["< >", "<x>", "<->"]
+EXPANSION_INDICATORS_BRAILLE = [STATE_COLLAPSED, STATE_EXPANDED]
+INVALID_INDICATORS_BRAILLE = [
+    STATE_INVALID_BRAILLE,
+    STATE_INVALID_SPELLING_BRAILLE,
+    STATE_INVALID_GRAMMAR_BRAILLE,
+]
+RADIO_BUTTON_INDICATORS_BRAILLE = ["& y", "&=y"]
 SWITCH_INDICATORS_BRAILLE = ["& y", "&=y"]
 TOGGLE_BUTTON_INDICATORS_BRAILLE = ["& y", "&=y"]
 

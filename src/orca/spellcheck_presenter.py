@@ -33,6 +33,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -167,8 +168,9 @@ class SpellCheckPresenter:
             self.deactivate()
             return
 
-        if AXUtilities.get_application(event.source) \
-           != AXUtilities.get_application(self._widgets.window):
+        if AXUtilities.get_application(event.source) != AXUtilities.get_application(
+            self._widgets.window
+        ):
             return
 
         debug.print_message(debug.LEVEL_INFO, "\nvvvvv PROCESS SPELL CHECK EVENT vvvvv")
@@ -181,8 +183,10 @@ class SpellCheckPresenter:
 
         if event.type.startswith("object:property-change:accessible-name"):
             self._handle_name_changed(event)
-        elif event.type.startswith("object:state-changed:sensitive") \
-             and self._widgets.change_to_entry:
+        elif (
+            event.type.startswith("object:state-changed:sensitive")
+            and self._widgets.change_to_entry
+        ):
             self._handle_change_to_entry_sensitive_changed(event)
         elif event.type.startswith("object:selection-changed"):
             self._handle_suggestions_list_change(event)
@@ -268,8 +272,9 @@ class SpellCheckPresenter:
                 return False
             if not AXObject.supports_text(obj):
                 return False
-            if not AXUtilities.is_editable(obj) \
-               and not AXObject.find_ancestor(obj, AXUtilities.is_editable):
+            if not AXUtilities.is_editable(obj) and not AXObject.find_ancestor(
+                obj, AXUtilities.is_editable
+            ):
                 return False
             return True
 
@@ -289,8 +294,9 @@ class SpellCheckPresenter:
         if self._widgets is None:
             return ""
 
-        text = AXText.get_all_text(self._widgets.error_widget) \
-            or AXObject.get_name(self._widgets.error_widget)
+        text = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
+            self._widgets.error_widget
+        )
         if not text:
             return ""
 
@@ -366,8 +372,10 @@ class SpellCheckPresenter:
     def _handle_change_to_entry_sensitive_changed(self, event: Atspi.Event) -> bool:
         """Handles sensitive state change on the change-to entry."""
 
-        tokens = ["SPELL CHECK PRESENTER: Handling change-to entry sensitive change for",
-                  event.source]
+        tokens = [
+            "SPELL CHECK PRESENTER: Handling change-to entry sensitive change for",
+            event.source,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._widgets is None or event.source != self._widgets.change_to_entry:
@@ -402,8 +410,12 @@ class SpellCheckPresenter:
     def _handle_suggestions_list_change(self, event: Atspi.Event) -> bool:
         """Handles selection-changed and active-descendant-changed events for suggestions list."""
 
-        tokens = ["SPELL CHECK PRESENTER: Handling suggestions list change for", event.source,
-                  "Event type:", event.type]
+        tokens = [
+            "SPELL CHECK PRESENTER: Handling suggestions list change for",
+            event.source,
+            "Event type:",
+            event.type,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self._widgets is None or event.source != self._widgets.suggestions_list:
@@ -425,14 +437,17 @@ class SpellCheckPresenter:
                 if not AXObject.is_ancestor(current_focus, self._widgets.suggestions_list):
                     self._state.last_presented_suggestion = None
                 focus_manager.get_manager().set_locus_of_focus(
-                    None, selected_item, notify_script=False)
+                    None, selected_item, notify_script=False
+                )
                 self._script.update_braille(selected_item)
                 self._present_suggestion_list_item()
             return True
 
         if selected_item == self._state.last_presented_suggestion:
-            tokens = ["SPELL CHECK PRESENTER: Selection unchanged since last presentation:",
-                      selected_item]
+            tokens = [
+                "SPELL CHECK PRESENTER: Selection unchanged since last presentation:",
+                selected_item,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
@@ -466,8 +481,9 @@ class SpellCheckPresenter:
             return self._present_completion_message()
 
         # Check full error widget text first - if it changed, we have a new error
-        error_widget_text = AXText.get_all_text(self._widgets.error_widget) or \
-            AXObject.get_name(self._widgets.error_widget)
+        error_widget_text = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
+            self._widgets.error_widget
+        )
         error_text_changed = error_widget_text != self._state.error_widget_text
 
         current_word = self._get_misspelled_word()
@@ -477,8 +493,9 @@ class SpellCheckPresenter:
             return False
 
         # Multi-word content in non-editable widget is not a misspelled word (may be completion msg)
-        if len(current_word.split()) > 1 \
-           and not AXUtilities.is_editable(self._widgets.error_widget):
+        if len(current_word.split()) > 1 and not AXUtilities.is_editable(
+            self._widgets.error_widget
+        ):
             return self._present_completion_message()
 
         # Check if context line changed (detects same word at different position)
@@ -487,8 +504,10 @@ class SpellCheckPresenter:
             current_context_line = AXText.get_line_at_offset(self._widgets.document)
         context_changed = current_context_line != self._state.context_line
 
-        msg = f"SPELL CHECK PRESENTER: error_text_changed={error_text_changed} " \
-              f"context_changed={context_changed}"
+        msg = (
+            f"SPELL CHECK PRESENTER: error_text_changed={error_text_changed} "
+            f"context_changed={context_changed}"
+        )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not error_text_changed and not context_changed:
@@ -524,7 +543,8 @@ class SpellCheckPresenter:
         if self._widgets is not None and self._widgets.change_to_entry is not None:
             assert self._script is not None
             focus_manager.get_manager().set_locus_of_focus(
-                None, self._widgets.change_to_entry, False)
+                None, self._widgets.change_to_entry, False
+            )
             self._script.update_braille(self._widgets.change_to_entry)
         return True
 
@@ -596,17 +616,16 @@ class SpellCheckPresenter:
             return False
 
         braille.clear()
-        msg = AXText.get_all_text(self._widgets.error_widget) \
-            or AXObject.get_name(self._widgets.error_widget)
+        msg = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
+            self._widgets.error_widget
+        )
         voice = self._script.speech_generator.voice(string=msg)
         self._script.present_message(msg, voice=voice[0] if voice else None)
         self._state.completion_announced = True
         return True
 
     def present_error_details(
-        self,
-        detailed: bool = False,
-        script: default.Script | None = None
+        self, detailed: bool = False, script: default.Script | None = None
     ) -> bool:
         """Presents the details of the error."""
 
@@ -665,8 +684,9 @@ class SpellCheckPresenter:
         if self._script is None:
             return False
 
-        label = AXUtilities.get_displayed_label(self._widgets.change_to_entry) \
-            or AXObject.get_name(self._widgets.change_to_entry)
+        label = AXUtilities.get_displayed_label(self._widgets.change_to_entry) or AXObject.get_name(
+            self._widgets.change_to_entry
+        )
         string = AXText.get_substring(self._widgets.change_to_entry, 0, -1)
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
@@ -702,8 +722,9 @@ class SpellCheckPresenter:
         self._state.last_presented_suggestion = items[0]
 
         if include_label:
-            label = AXUtilities.get_displayed_label(self._widgets.suggestions_list) \
-                or AXObject.get_name(self._widgets.suggestions_list)
+            label = AXUtilities.get_displayed_label(
+                self._widgets.suggestions_list
+            ) or AXObject.get_name(self._widgets.suggestions_list)
         else:
             label = ""
         string = AXObject.get_name(items[0])
@@ -714,8 +735,10 @@ class SpellCheckPresenter:
         if detailed or self.get_spell_suggestion():
             self._script.spell_item(string)
 
-        if speech_and_verbosity_manager.get_manager().get_speak_position_in_set() \
-           and items[0] == focus_manager.get_manager().get_locus_of_focus():
+        if (
+            speech_and_verbosity_manager.get_manager().get_speak_position_in_set()
+            and items[0] == focus_manager.get_manager().get_locus_of_focus()
+        ):
             index = AXUtilities.get_position_in_set(items[0]) + 1
             total = AXUtilities.get_set_size(items[0])
             msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}
@@ -825,21 +848,35 @@ class SpellCheckPresenter:
             return None, None, None
 
         error_widget = AXObject.find_descendant(
-            window, lambda obj: self._could_be_error_widget(obj, app_name))
+            window, lambda obj: self._could_be_error_widget(obj, app_name)
+        )
         suggestions_list = AXObject.find_descendant(
-            window, lambda obj: self._could_be_suggestions_list(obj, app_name))
-        change_to_entry = None if app_name == "soffice" else AXObject.find_descendant(
-            window, lambda obj: self._could_be_change_to_entry(obj, app_name))
+            window, lambda obj: self._could_be_suggestions_list(obj, app_name)
+        )
+        change_to_entry = (
+            None
+            if app_name == "soffice"
+            else AXObject.find_descendant(
+                window, lambda obj: self._could_be_change_to_entry(obj, app_name)
+            )
+        )
 
         # soffice: errorsentence ID is on panel; get text child if needed
         if error_widget is not None and not AXObject.supports_text(error_widget):
             if text_child := AXObject.find_descendant(error_widget, AXObject.supports_text):
                 error_widget = text_child
 
-        tokens = ["SPELL CHECK PRESENTER: Error widget:", error_widget,
-                  "Suggestions list:", suggestions_list, "Change-to entry:", change_to_entry]
+        tokens = [
+            "SPELL CHECK PRESENTER: Error widget:",
+            error_widget,
+            "Suggestions list:",
+            suggestions_list,
+            "Change-to entry:",
+            change_to_entry,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return error_widget, suggestions_list, change_to_entry
+
 
 class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Spell Check preferences page."""
@@ -850,27 +887,29 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPELL_CHECK_SPELL_ERROR,
                 getter=presenter.get_spell_error,
                 setter=presenter.set_spell_error,
-                prefs_key="spellcheckSpellError"
+                prefs_key="spellcheckSpellError",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
                 getter=presenter.get_spell_suggestion,
                 setter=presenter.set_spell_suggestion,
-                prefs_key="spellcheckSpellSuggestion"
+                prefs_key="spellcheckSpellSuggestion",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
                 getter=presenter.get_present_context,
                 setter=presenter.set_present_context,
-                prefs_key="spellcheckPresentContext"
+                prefs_key="spellcheckPresentContext",
             ),
         ]
 
         super().__init__(
-            guilabels.SPELL_CHECK, controls, info_message=guilabels.SPELL_CHECK_DESCRIPTION)
+            guilabels.SPELL_CHECK, controls, info_message=guilabels.SPELL_CHECK_DESCRIPTION
+        )
 
 
 _presenter: SpellCheckPresenter = SpellCheckPresenter()
+
 
 def get_presenter() -> SpellCheckPresenter:
     """Returns the Spell Check Presenter"""

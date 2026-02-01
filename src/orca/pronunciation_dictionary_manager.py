@@ -27,6 +27,7 @@ from typing import Callable, TYPE_CHECKING
 
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -42,12 +43,11 @@ if TYPE_CHECKING:
 
 
 class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instance-attributes
-        preferences_grid_base.PreferencesGridBase):
+    preferences_grid_base.PreferencesGridBase
+):
     """GtkGrid containing the Pronunciation Dictionary preferences page."""
 
-    def __init__(
-        self, manager: "PronunciationDictionaryManager", script: default.Script
-    ) -> None:
+    def __init__(self, manager: "PronunciationDictionaryManager", script: default.Script) -> None:
         super().__init__(guilabels.PRONUNCIATION)
         self._manager: PronunciationDictionaryManager = manager
         self._script: default.Script = script
@@ -61,7 +61,8 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         # Size group to ensure all left labels (phrases) have the same width
         self._left_label_size_group: Gtk.SizeGroup = Gtk.SizeGroup(
-            mode=Gtk.SizeGroupMode.HORIZONTAL)
+            mode=Gtk.SizeGroupMode.HORIZONTAL
+        )
 
         self._build()
         self.refresh()
@@ -113,7 +114,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         edit_handler: Callable[[Gtk.Button], None] | None = None,
         delete_handler: Callable[[Gtk.Button], None] | None = None,
         include_top_separator: bool = True,
-        left_label_size_group: Gtk.SizeGroup | None = None
+        left_label_size_group: Gtk.SizeGroup | None = None,
     ) -> Gtk.ListBoxRow:
         """Create a single listbox row with two labels and optional edit/delete buttons."""
 
@@ -147,8 +148,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         delete_button = None
         if delete_handler:
-            delete_button = Gtk.Button.new_from_icon_name(
-                "user-trash-symbolic", Gtk.IconSize.DND)
+            delete_button = Gtk.Button.new_from_icon_name("user-trash-symbolic", Gtk.IconSize.DND)
             delete_button.set_relief(Gtk.ReliefStyle.NONE)
             delete_button.get_accessible().set_name(guilabels.DICTIONARY_DELETE)
             delete_button.connect("clicked", delete_handler)
@@ -156,8 +156,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         edit_button = None
         if edit_handler:
-            edit_button = Gtk.Button.new_from_icon_name(
-                "document-edit-symbolic", Gtk.IconSize.DND)
+            edit_button = Gtk.Button.new_from_icon_name("document-edit-symbolic", Gtk.IconSize.DND)
             edit_button.set_relief(Gtk.ReliefStyle.NONE)
             edit_button.get_accessible().set_name(guilabels.DIALOG_EDIT)
             edit_button.connect("clicked", edit_handler)
@@ -184,7 +183,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             edit_handler=self._on_edit_clicked,
             delete_handler=self._on_delete_clicked,
             include_top_separator=include_top_separator,
-            left_label_size_group=self._left_label_size_group
+            left_label_size_group=self._left_label_size_group,
         )
         # Store row_index as Python attributes
         row.pronunciation_row_index = row_index
@@ -243,9 +242,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         speech_manager.set_use_pronunciation_dictionary(False)
 
         dialog, add_button = self._create_header_bar_dialog(
-            guilabels.ADD_NEW_PRONUNCIATION,
-            guilabels.DIALOG_CANCEL,
-            guilabels.DIALOG_ADD
+            guilabels.ADD_NEW_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_ADD
         )
 
         content_area = dialog.get_content_area()
@@ -259,16 +256,21 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         phrase_entry = Gtk.Entry()
         phrase_entry.set_size_request(-1, 40)
         phrase_row = self._create_labeled_entry_row(
-            guilabels.DICTIONARY_ACTUAL_STRING, phrase_entry, include_top_separator=False,
-            label_size_group=label_size_group)
+            guilabels.DICTIONARY_ACTUAL_STRING,
+            phrase_entry,
+            include_top_separator=False,
+            label_size_group=label_size_group,
+        )
         listbox.add_row_with_widget(phrase_row, phrase_entry)
 
         # Replacement string row
         substitution_entry = Gtk.Entry()
         substitution_entry.set_size_request(-1, 40)
         substitution_row = self._create_labeled_entry_row(
-            guilabels.DICTIONARY_REPLACEMENT_STRING, substitution_entry,
-            label_size_group=label_size_group)
+            guilabels.DICTIONARY_REPLACEMENT_STRING,
+            substitution_entry,
+            label_size_group=label_size_group,
+        )
         listbox.add_row_with_widget(substitution_row, substitution_entry)
 
         def on_entry_activate(_entry):
@@ -298,7 +300,8 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         phrase_entry.grab_focus()
 
     def _show_edit_dialog(  # pylint: disable=too-many-locals
-            self, phrase: str, substitution: str, row_index: int) -> None:
+        self, phrase: str, substitution: str, row_index: int
+    ) -> None:
         """Show dialog to edit an existing pronunciation."""
 
         speech_manager = speech_and_verbosity_manager.get_manager()
@@ -306,9 +309,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         speech_manager.set_use_pronunciation_dictionary(False)
 
         dialog, edit_button = self._create_header_bar_dialog(
-            guilabels.EDIT_PRONUNCIATION,
-            guilabels.DIALOG_CANCEL,
-            guilabels.DIALOG_EDIT
+            guilabels.EDIT_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_EDIT
         )
 
         content_area = dialog.get_content_area()
@@ -323,8 +324,11 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         phrase_entry.set_text(phrase)
         phrase_entry.set_size_request(-1, 40)
         phrase_row = self._create_labeled_entry_row(
-            guilabels.DICTIONARY_ACTUAL_STRING, phrase_entry, include_top_separator=False,
-            label_size_group=label_size_group)
+            guilabels.DICTIONARY_ACTUAL_STRING,
+            phrase_entry,
+            include_top_separator=False,
+            label_size_group=label_size_group,
+        )
         listbox.add_row_with_widget(phrase_row, phrase_entry)
 
         # Replacement string row
@@ -332,8 +336,10 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         substitution_entry.set_text(substitution)
         substitution_entry.set_size_request(-1, 40)
         substitution_row = self._create_labeled_entry_row(
-            guilabels.DICTIONARY_REPLACEMENT_STRING, substitution_entry,
-            label_size_group=label_size_group)
+            guilabels.DICTIONARY_REPLACEMENT_STRING,
+            substitution_entry,
+            label_size_group=label_size_group,
+        )
         listbox.add_row_with_widget(substitution_row, substitution_entry)
 
         def on_entry_activate(_entry):
@@ -418,8 +424,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         if self._pronunciations:
             for index, (phrase, substitution) in enumerate(self._pronunciations):
-                row = self._create_row(
-                    phrase, substitution, index, include_top_separator=index > 0)
+                row = self._create_row(phrase, substitution, index, include_top_separator=index > 0)
                 self._listbox.add(row)
         else:
             empty_row = self._create_info_row(guilabels.DICTIONARY_EMPTY)
@@ -470,6 +475,7 @@ class PronunciationDictionaryManager:
 
 
 _manager = PronunciationDictionaryManager()
+
 
 def get_manager() -> PronunciationDictionaryManager:
     """Returns the pronunciation-dictionary-manager singleton."""

@@ -62,6 +62,7 @@ else:
     else:
         _SPEECHD_VERSION_OK = True
 
+
 class SpeechServer(speechserver.SpeechServer):
     """Speech Dispatcher speech server for Orca."""
 
@@ -122,15 +123,14 @@ class SpeechServer(speechserver.SpeechServer):
         self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
         self._voice_families_cache: dict[
-            tuple[str, str, str | None, int | None],
-            list[tuple[str, str, str | None]]
+            tuple[str, str, str | None, int | None], list[tuple[str, str, str | None]]
         ] = {}
         self._acss_manipulators = (
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
             (ACSS.GAIN, self._set_volume),
             (ACSS.FAMILY, self._set_family),
-            )
+        )
         if not _SPEECHD_AVAILABLE:
             msg = "ERROR: Speech Dispatcher is not available"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -146,17 +146,17 @@ class SpeechServer(speechserver.SpeechServer):
         except Exception:
             most = speechd.PunctuationMode.SOME
         self._punctuation_mode_map = {
-            settings.PUNCTUATION_STYLE_ALL:  speechd.PunctuationMode.ALL,
+            settings.PUNCTUATION_STYLE_ALL: speechd.PunctuationMode.ALL,
             settings.PUNCTUATION_STYLE_MOST: most,
             settings.PUNCTUATION_STYLE_SOME: speechd.PunctuationMode.SOME,
             settings.PUNCTUATION_STYLE_NONE: speechd.PunctuationMode.NONE,
-            }
+        }
         self._callback_type_map = {
             speechd.CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
             speechd.CallbackType.CANCEL: speechserver.SayAllContext.INTERRUPTED,
             speechd.CallbackType.END: speechserver.SayAllContext.COMPLETED,
-            speechd.CallbackType.INDEX_MARK:speechserver.SayAllContext.PROGRESS,
-            }
+            speechd.CallbackType.INDEX_MARK: speechserver.SayAllContext.PROGRESS,
+        }
 
         self._default_voice_name = guilabels.SPEECH_DEFAULT_VOICE % server_id
 
@@ -220,7 +220,7 @@ class SpeechServer(speechserver.SpeechServer):
             pass
 
     def update_punctuation_level(self) -> None:
-        """ Punctuation level changed, inform this speechServer. """
+        """Punctuation level changed, inform this speechServer."""
         if self._client is None:
             return
         mode = self._punctuation_mode_map[settings.verbalizePunctuationStyle]
@@ -314,13 +314,14 @@ class SpeechServer(speechserver.SpeechServer):
 
         family = self._current_voice_properties.get(ACSS.FAMILY) or {}
 
-        styles = {settings.PUNCTUATION_STYLE_NONE: "NONE",
-                  settings.PUNCTUATION_STYLE_SOME: "SOME",
-                  settings.PUNCTUATION_STYLE_MOST: "MOST",
-                  settings.PUNCTUATION_STYLE_ALL: "ALL"}
+        styles = {
+            settings.PUNCTUATION_STYLE_NONE: "NONE",
+            settings.PUNCTUATION_STYLE_SOME: "SOME",
+            settings.PUNCTUATION_STYLE_MOST: "MOST",
+            settings.PUNCTUATION_STYLE_ALL: "ALL",
+        }
 
-        punctuation_style = styles.get(
-            settings.verbalizePunctuationStyle, "UNKNOWN")
+        punctuation_style = styles.get(settings.verbalizePunctuationStyle, "UNKNOWN")
 
         msg = (
             f"SPEECH DISPATCHER: {prefix}\n"
@@ -370,7 +371,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _say_all(
         self,
         iterator: Iterator[tuple[speechserver.SayAllContext, dict[str, Any]]],
-        orca_callback: Callable[[speechserver.SayAllContext, int], None]
+        orca_callback: Callable[[speechserver.SayAllContext, int], None],
     ) -> bool:
         """Process another sayAll chunk.
 
@@ -382,6 +383,7 @@ class SpeechServer(speechserver.SpeechServer):
         except StopIteration:
             pass
         else:
+
             def callback(callback_type, index_mark=None):
                 # This callback is called in Speech Dispatcher listener thread.
                 # No subsequent Speech Dispatcher interaction is allowed here,
@@ -409,9 +411,14 @@ class SpeechServer(speechserver.SpeechServer):
                 GLib.idle_add(orca_callback, context.copy(), t)
                 if t == speechserver.SayAllContext.COMPLETED:
                     GLib.idle_add(self._say_all, iterator, orca_callback)
-            self._speak(context.utterance, acss, callback=callback,
-                        event_types=list(self._callback_type_map.keys()))
-        return False # to indicate, that we don't want to be called again.
+
+            self._speak(
+                context.utterance,
+                acss,
+                callback=callback,
+                event_types=list(self._callback_type_map.keys()),
+            )
+        return False  # to indicate, that we don't want to be called again.
 
     def _cancel(self) -> None:
         if self._client is not None:
@@ -495,21 +502,22 @@ class SpeechServer(speechserver.SpeechServer):
 
         families = []
         for name, lang, variant in voices:
-
-            families.append(speechserver.VoiceFamily({ \
-              speechserver.VoiceFamily.NAME: name,
-              #speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
-              speechserver.VoiceFamily.LANG: lang.partition("-")[0],
-              speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
-              speechserver.VoiceFamily.VARIANT: variant}))
+            families.append(
+                speechserver.VoiceFamily(
+                    {
+                        speechserver.VoiceFamily.NAME: name,
+                        # speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
+                        speechserver.VoiceFamily.LANG: lang.partition("-")[0],
+                        speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
+                        speechserver.VoiceFamily.VARIANT: variant,
+                    }
+                )
+            )
 
         return families
 
     def speak(
-        self,
-        text: str | None = None,
-        acss: dict[str, Any] | None = None,
-        interrupt: bool = True
+        self, text: str | None = None, acss: dict[str, Any] | None = None, interrupt: bool = True
     ) -> None:
         if not text:
             return
@@ -519,7 +527,7 @@ class SpeechServer(speechserver.SpeechServer):
         # do not result in the intial utterances getting cut off before they
         # can be heard by the user. Anyone needing to interrupt speech can
         # do so by using the default script's method interrupt_presentation.
-        #if interrupt:
+        # if interrupt:
         #    self._cancel()
 
         if len(text) == 1:
@@ -536,7 +544,7 @@ class SpeechServer(speechserver.SpeechServer):
     def say_all(
         self,
         utterance_iterator: Iterator[tuple[speechserver.SayAllContext, dict[str, Any]]],
-        progress_callback: Callable[[speechserver.SayAllContext, int], None]
+        progress_callback: Callable[[speechserver.SayAllContext, int], None],
     ) -> None:
         """Iterates through the given utterance_iterator, speaking each utterance."""
 
@@ -563,9 +571,7 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(name, acss)
 
     def speak_key_event(
-        self,
-        event: input_event.KeyboardEvent,
-        acss: dict[str, Any] | None = None
+        self, event: input_event.KeyboardEvent, acss: dict[str, Any] | None = None
     ) -> None:
         """Speaks event."""
 
@@ -633,7 +639,7 @@ class SpeechServer(speechserver.SpeechServer):
         language: str,
         dialect: str = "",
         variant: str | None = None,
-        maximum: int | None = None
+        maximum: int | None = None,
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
 
@@ -695,8 +701,9 @@ class SpeechServer(speechserver.SpeechServer):
         candidates = []
         fallbacks = []
         for voice in voices:
-            normalized_language, normalized_dialect = \
-                self._normalized_language_and_dialect(voice[1])
+            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
+                voice[1]
+            )
             if normalized_language != target_language:
                 continue
             if normalized_dialect == target_dialect:
@@ -718,10 +725,7 @@ class SpeechServer(speechserver.SpeechServer):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         if not candidates and fallbacks:
-            msg = (
-                f"SPEECH DISPATCHER: No direct matches found, "
-                f"using {len(fallbacks)} fallback(s)."
-            )
+            msg = f"SPEECH DISPATCHER: No direct matches found, using {len(fallbacks)} fallback(s)."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             candidates = fallbacks
 
@@ -810,10 +814,10 @@ class SpeechServer(speechserver.SpeechServer):
         dialect = lang_parts[2]
         return speechserver.VoiceFamily(
             {
-               speechserver.VoiceFamily.NAME: voice_name,
-               speechserver.VoiceFamily.LANG: lang,
-               speechserver.VoiceFamily.DIALECT: dialect,
-               speechserver.VoiceFamily.VARIANT: None
+                speechserver.VoiceFamily.NAME: voice_name,
+                speechserver.VoiceFamily.LANG: lang,
+                speechserver.VoiceFamily.DIALECT: dialect,
+                speechserver.VoiceFamily.VARIANT: None,
             }
         )
 

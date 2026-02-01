@@ -75,7 +75,9 @@ class TestObjectNavigator:
         mock_command.get_keybinding.return_value = test_context.Mock()
         mock_command.is_active.return_value = True
         manager_instance_mock.get_command = test_context.Mock(return_value=mock_command)
-        manager_instance_mock.get_commands_by_group_label = test_context.Mock(return_value=[mock_command])
+        manager_instance_mock.get_commands_by_group_label = test_context.Mock(
+            return_value=[mock_command]
+        )
         command_manager_mock.get_manager = test_context.Mock(return_value=manager_instance_mock)
         command_manager_mock.Command = test_context.Mock()
 

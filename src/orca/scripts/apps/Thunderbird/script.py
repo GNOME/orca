@@ -33,10 +33,12 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from orca.scripts.toolkits.Gecko.script_utilities import Utilities
+
 
 class Script(Gecko.Script):
     """The script for Thunderbird."""
@@ -76,8 +78,9 @@ class Script(Gecko.Script):
     def on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
-        if AXUtilities.is_label(event.source) \
-           and AXUtilities.is_status_bar(AXObject.get_parent(event.source)):
+        if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(
+            AXObject.get_parent(event.source)
+        ):
             return True
 
         return super().on_text_deleted(event)

@@ -37,6 +37,7 @@ import re
 from typing import Generator
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -48,6 +49,7 @@ from . import text_attribute_names
 from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
 
 class AXTextAttribute(enum.Enum):
     """Enum representing an accessible text attribute."""
@@ -174,6 +176,7 @@ class AXTextAttribute(enum.Enum):
 
         return False
 
+
 class AXText:
     """Utilities for obtaining information about accessible text."""
 
@@ -181,8 +184,7 @@ class AXText:
 
     @staticmethod
     def get_character_at_offset(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the (character, start, end) for the current or specified offset."""
 
@@ -211,8 +213,11 @@ class AXText:
             return "", 0, 0
 
         debug_string = result.content.replace("\n", "\\n")
-        tokens = [f"AXText: Character at offset {offset} in", obj,
-                  f"'{debug_string}' ({result.start_offset}-{result.end_offset})"]
+        tokens = [
+            f"AXText: Character at offset {offset} in",
+            obj,
+            f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result.content, result.start_offset, result.end_offset
 
@@ -228,8 +233,7 @@ class AXText:
 
     @staticmethod
     def get_next_character(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the next (character, start, end) for the current or specified offset."""
 
@@ -253,8 +257,7 @@ class AXText:
 
     @staticmethod
     def get_previous_character(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the previous (character, start, end) for the current or specified offset."""
 
@@ -280,8 +283,7 @@ class AXText:
 
     @staticmethod
     def iter_character(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by character in obj starting with the character at offset."""
 
@@ -301,8 +303,7 @@ class AXText:
 
     @staticmethod
     def get_word_at_offset(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the (word, start, end) for the current or specified offset."""
 
@@ -326,8 +327,11 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
-        tokens = [f"AXText: Word at offset {offset} in", obj,
-                  f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
+        tokens = [
+            f"AXText: Word at offset {offset} in",
+            obj,
+            f"'{result.content}' ({result.start_offset}-{result.end_offset})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result.content, result.start_offset, result.end_offset
 
@@ -342,10 +346,7 @@ class AXText:
         return AXText.get_word_at_offset(obj, offset)
 
     @staticmethod
-    def get_next_word(
-        obj: Atspi.Accessible,
-        offset: int | None = None
-    ) -> tuple[str, int, int]:
+    def get_next_word(obj: Atspi.Accessible, offset: int | None = None) -> tuple[str, int, int]:
         """Returns the next (word, start, end) for the current or specified offset."""
 
         if offset is None:
@@ -367,10 +368,7 @@ class AXText:
         return "", 0, 0
 
     @staticmethod
-    def get_previous_word(
-        obj: Atspi.Accessible,
-        offset: int | None = None
-    ) -> tuple[str, int, int]:
+    def get_previous_word(obj: Atspi.Accessible, offset: int | None = None) -> tuple[str, int, int]:
         """Returns the previous (word, start, end) for the current or specified offset."""
 
         if offset is None:
@@ -395,8 +393,7 @@ class AXText:
 
     @staticmethod
     def iter_word(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by word in obj starting with the word at offset."""
 
@@ -416,8 +413,7 @@ class AXText:
 
     @staticmethod
     def get_line_at_offset(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the (line, start, end) for the current or specified offset."""
 
@@ -431,8 +427,11 @@ class AXText:
         # Don't adjust the length in multiline text because we want to say "blank" at the end.
         # This may or may not be sufficient. GTK3 seems to give us the correct, empty line. But
         # (at least) Chromium does not. See comment below.
-        if not AXUtilitiesState.is_multi_line(obj) \
-           and not AXUtilitiesRole.is_paragraph(obj) and not AXUtilitiesRole.is_section(obj):
+        if (
+            not AXUtilitiesState.is_multi_line(obj)
+            and not AXUtilitiesRole.is_paragraph(obj)
+            and not AXUtilitiesRole.is_section(obj)
+        ):
             offset = min(max(0, offset), length - 1)
         else:
             offset = max(0, offset)
@@ -455,8 +454,11 @@ class AXText:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
 
         debug_string = result.content.replace("\n", "\\n")
-        tokens = [f"AXText: Line at offset {offset} in", obj,
-                  f"'{debug_string}' ({result.start_offset}-{result.end_offset})"]
+        tokens = [
+            f"AXText: Line at offset {offset} in",
+            obj,
+            f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if 0 <= offset < result.start_offset:
@@ -466,8 +468,11 @@ class AXText:
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
 
             debug_string = result.content.replace("\n", "\\n")
-            tokens = [f"AXText: Line at offset {offset} in", obj,
-                    f"'{debug_string}' ({result.start_offset}-{result.end_offset})"]
+            tokens = [
+                f"AXText: Line at offset {offset} in",
+                obj,
+                f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result.content, result.start_offset, result.end_offset
@@ -483,10 +488,7 @@ class AXText:
         return AXText.get_line_at_offset(obj, offset)
 
     @staticmethod
-    def get_next_line(
-        obj: Atspi.Accessible,
-        offset: int | None = None
-    ) -> tuple[str, int, int]:
+    def get_next_line(obj: Atspi.Accessible, offset: int | None = None) -> tuple[str, int, int]:
         """Returns the next (line, start, end) for the current or specified offset."""
 
         if offset is None:
@@ -508,10 +510,7 @@ class AXText:
         return "", 0, 0
 
     @staticmethod
-    def get_previous_line(
-        obj: Atspi.Accessible,
-        offset: int | None = None
-    ) -> tuple[str, int, int]:
+    def get_previous_line(obj: Atspi.Accessible, offset: int | None = None) -> tuple[str, int, int]:
         """Returns the previous (line, start, end) for the current or specified offset."""
 
         if offset is None:
@@ -538,8 +537,7 @@ class AXText:
 
     @staticmethod
     def iter_line(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by line in obj starting with the line at offset."""
 
@@ -596,8 +594,7 @@ class AXText:
 
     @staticmethod
     def _get_sentence_at_offset_fallback(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Fallback sentence detection for broken implementations."""
 
@@ -616,15 +613,17 @@ class AXText:
                 fallback_text, fallback_start, fallback_end = text[start:end], start, end
                 break
 
-        tokens = ["AXText: Fallback sentence in", obj,
-                  f" at offset {offset}: '{fallback_text}' ({fallback_start}-{fallback_end})"]
+        tokens = [
+            "AXText: Fallback sentence in",
+            obj,
+            f" at offset {offset}: '{fallback_text}' ({fallback_start}-{fallback_end})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return fallback_text, fallback_start, fallback_end
 
     @staticmethod
     def get_sentence_at_offset(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the (sentence, start, end) for the current or specified offset."""
 
@@ -651,12 +650,18 @@ class AXText:
         if result.start_offset == result.end_offset == -1 or not result.content:
             return AXText._get_sentence_at_offset_fallback(obj, offset)
 
-        if (result.start_offset == result.end_offset and
-            result.start_offset in [0, -1] and not result.content):
+        if (
+            result.start_offset == result.end_offset
+            and result.start_offset in [0, -1]
+            and not result.content
+        ):
             return AXText._get_sentence_at_offset_fallback(obj, offset)
 
-        tokens = [f"AXText: Sentence at offset {offset} in", obj,
-                  f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
+        tokens = [
+            f"AXText: Sentence at offset {offset} in",
+            obj,
+            f"'{result.content}' ({result.start_offset}-{result.end_offset})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result.content, result.start_offset, result.end_offset
 
@@ -671,10 +676,7 @@ class AXText:
         return AXText.get_sentence_at_offset(obj, offset)
 
     @staticmethod
-    def get_next_sentence(
-        obj: Atspi.Accessible,
-        offset: int | None = None
-    ) -> tuple[str, int, int]:
+    def get_next_sentence(obj: Atspi.Accessible, offset: int | None = None) -> tuple[str, int, int]:
         """Returns the next (sentence, start, end) for the current or specified offset."""
 
         if offset is None:
@@ -697,8 +699,7 @@ class AXText:
 
     @staticmethod
     def get_previous_sentence(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the previous (sentence, start, end) for the current or specified offset."""
 
@@ -724,8 +725,7 @@ class AXText:
 
     @staticmethod
     def iter_sentence(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> Generator[tuple[str, int, int], None, None]:
         """Generator to iterate by sentence in obj starting with the sentence at offset."""
 
@@ -749,8 +749,7 @@ class AXText:
 
     @staticmethod
     def get_paragraph_at_offset(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the (paragraph, start, end) for the current or specified offset."""
 
@@ -774,8 +773,11 @@ class AXText:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 0
 
-        tokens = [f"AXText: Paragraph at offset {offset} in", obj,
-                  f"'{result.content}' ({result.start_offset}-{result.end_offset})"]
+        tokens = [
+            f"AXText: Paragraph at offset {offset} in",
+            obj,
+            f"'{result.content}' ({result.start_offset}-{result.end_offset})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result.content, result.start_offset, result.end_offset
 
@@ -791,8 +793,7 @@ class AXText:
 
     @staticmethod
     def get_next_paragraph(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the next (paragraph, start, end) for the current or specified offset."""
 
@@ -816,8 +817,7 @@ class AXText:
 
     @staticmethod
     def get_previous_paragraph(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the previous (paragraph, start, end) for the current or specified offset."""
 
@@ -1130,8 +1130,11 @@ class AXText:
         else:
             debug_string = text
 
-        tokens = ["AXText: Selected text of", obj,
-                  f"'{debug_string}' ({start_offset}-{end_offset})"]
+        tokens = [
+            "AXText: Selected text of",
+            obj,
+            f"'{debug_string}' ({start_offset}-{end_offset})",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return text, start_offset, end_offset
 
@@ -1153,10 +1156,7 @@ class AXText:
 
     @staticmethod
     def _update_existing_selection(
-        obj: Atspi.Accessible,
-        start_offset: int,
-        end_offset: int,
-        selection_number: int = 0
+        obj: Atspi.Accessible, start_offset: int, end_offset: int, selection_number: int = 0
     ) -> bool:
         """Modifies specified selection in obj to the specified range."""
 
@@ -1196,8 +1196,7 @@ class AXText:
     # TODO - JD: This should be converted to return AXTextAttribute values.
     @staticmethod
     def get_text_attributes_at_offset(
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[dict[str, str], int, int]:
         """Returns a (dict, start, end) tuple for attributes at offset in obj."""
 
@@ -1238,9 +1237,7 @@ class AXText:
 
     @staticmethod
     def get_all_text_attributes(
-        obj: Atspi.Accessible,
-        start_offset: int = 0,
-        end_offset: int = -1
+        obj: Atspi.Accessible, start_offset: int = 0, end_offset: int = -1
     ) -> list[tuple[int, int, dict[str, str]]]:
         """Returns a list of (start, end, attrs dict) tuples for obj."""
 
@@ -1339,9 +1336,12 @@ class AXText:
     def _rect_is_fully_contained_in(rect1: Atspi.Rect, rect2: Atspi.Rect) -> bool:
         """Returns true if rect1 is fully contained in rect2"""
 
-        return rect2.x <= rect1.x and rect2.y <= rect1.y \
-            and rect2.x + rect2.width >= rect1.x + rect1.width \
+        return (
+            rect2.x <= rect1.x
+            and rect2.y <= rect1.y
+            and rect2.x + rect2.width >= rect1.x + rect1.width
             and rect2.y + rect2.height >= rect1.y + rect1.height
+        )
 
     @staticmethod
     def _line_comparison(line_rect: Atspi.Rect, clip_rect: Atspi.Rect) -> int:
@@ -1360,8 +1360,7 @@ class AXText:
 
     @staticmethod
     def get_visible_lines(
-        obj: Atspi.Accessible,
-        clip_rect: Atspi.Rect
+        obj: Atspi.Accessible, clip_rect: Atspi.Rect
     ) -> list[tuple[str, int, int]]:
         """Returns a list of (string, start, end) for lines of obj inside clip_rect."""
 
@@ -1389,8 +1388,7 @@ class AXText:
 
     @staticmethod
     def find_first_visible_line(
-        obj: Atspi.Accessible,
-        clip_rect: Atspi.Rect
+        obj: Atspi.Accessible, clip_rect: Atspi.Rect
     ) -> tuple[str, int, int]:
         """Returns the first (string, start, end) visible line of obj inside clip_rect."""
 
@@ -1434,8 +1432,7 @@ class AXText:
 
     @staticmethod
     def find_last_visible_line(
-        obj: Atspi.Accessible,
-        clip_rect: Atspi.Rect
+        obj: Atspi.Accessible, clip_rect: Atspi.Rect
     ) -> tuple[str, int, int]:
         """Returns the last (string, start, end) visible line of obj inside clip_rect."""
 
@@ -1544,7 +1541,7 @@ class AXText:
         x: int,
         y: int,
         start_offset: int | None = None,
-        end_offset: int | None = None
+        end_offset: int | None = None,
     ) -> bool:
         """Attempts to scroll obj to the specified point."""
 
@@ -1559,14 +1556,19 @@ class AXText:
 
         try:
             result = Atspi.Text.scroll_substring_to_point(
-                obj, start_offset, end_offset, Atspi.CoordType.WINDOW, x, y)
+                obj, start_offset, end_offset, Atspi.CoordType.WINDOW, x, y
+            )
         except GLib.GError as error:
             msg = f"AXText: Exception in scroll_substring_to_point: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        tokens = ["AXText: Scrolled", obj, f"substring ({start_offset}-{end_offset}) to",
-                  f"{x}, {y}: {result}"]
+        tokens = [
+            "AXText: Scrolled",
+            obj,
+            f"substring ({start_offset}-{end_offset}) to",
+            f"{x}, {y}: {result}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -1575,7 +1577,7 @@ class AXText:
         obj: Atspi.Accessible,
         location: Atspi.ScrollType,
         start_offset: int | None = None,
-        end_offset: int | None = None
+        end_offset: int | None = None,
     ) -> bool:
         """Attempts to scroll the substring to the specified Atspi.ScrollType location."""
 
@@ -1595,7 +1597,12 @@ class AXText:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        tokens = ["AXText: Scrolled", obj, f"substring ({start_offset}-{end_offset}) to",
-                  location, f": {result}"]
+        tokens = [
+            "AXText: Scrolled",
+            obj,
+            f"substring ({start_offset}-{end_offset}) to",
+            location,
+            f": {result}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result

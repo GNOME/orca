@@ -52,11 +52,13 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from .input_event import InputEvent
     from .scripts import default
+
 
 class TableNavigator:
     """Provides Orca-controlled navigation for tabular content."""
@@ -216,14 +218,20 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles table navigation."""
 
         self._enabled = not self._enabled
 
-        tokens = ["TABLE NAVIGATOR: toggle_enabled. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: toggle_enabled. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if notify_user:
@@ -234,7 +242,8 @@ class TableNavigator:
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_TABLE_NAVIGATION, self._enabled)
+            guilabels.KB_GROUP_TABLE_NAVIGATION, self._enabled
+        )
         return True
 
     def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
@@ -249,7 +258,8 @@ class TableNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_TABLE_NAVIGATION, suspended)
+            guilabels.KB_GROUP_TABLE_NAVIGATION, suspended
+        )
 
     def _is_blank(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is empty or consists of only whitespace."""
@@ -315,7 +325,8 @@ class TableNavigator:
         # we presented in order to facilitate more linear movement. Therefore, if the cell at the
         # stored coordinates is the same as cell, we prefer the stored coordinates.
         last_cell = AXTable.get_cell_at(
-            AXTable.get_table(cell), self._previous_reported_row, self._previous_reported_col)
+            AXTable.get_table(cell), self._previous_reported_row, self._previous_reported_col
+        )
         if last_cell == cell:
             return self._previous_reported_row, self._previous_reported_col
 
@@ -326,12 +337,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the cell on the left."""
 
-        tokens = ["TABLE NAVIGATOR: move_left. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_left. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -361,12 +378,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the cell on the right."""
 
-        tokens = ["TABLE NAVIGATOR: move_right. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_right. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -396,12 +419,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the cell above."""
 
-        tokens = ["TABLE NAVIGATOR: move_up. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_up. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -431,12 +460,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the cell below."""
 
-        tokens = ["TABLE NAVIGATOR: move_down. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_down. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -466,12 +501,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the first cell."""
 
-        tokens = ["TABLE NAVIGATOR: move_to_first_cell. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_to_first_cell. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -491,12 +532,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the last cell."""
 
-        tokens = ["TABLE NAVIGATOR: move_to_last_cell. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_to_last_cell. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -509,8 +556,12 @@ class TableNavigator:
         table = AXTable.get_table(current)
         cell = AXTable.get_last_cell(table)
         self._present_cell(
-            script, cell, AXTable.get_row_count(table), AXTable.get_column_count(table),
-            current, notify_user
+            script,
+            cell,
+            AXTable.get_row_count(table),
+            AXTable.get_column_count(table),
+            current,
+            notify_user,
         )
         return True
 
@@ -519,12 +570,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the beginning of the row."""
 
-        tokens = ["TABLE NAVIGATOR: move_to_beginning_of_row. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_to_beginning_of_row. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -549,12 +606,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the end of the row."""
 
-        tokens = ["TABLE NAVIGATOR: move_to_end_of_row. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_to_end_of_row. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -579,12 +642,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the top of the column."""
 
-        tokens = ["TABLE NAVIGATOR: move_to_top_of_column. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_to_top_of_column. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -610,12 +679,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the bottom of the column."""
 
-        tokens = ["TABLE NAVIGATOR: move_to_bottom_of_column. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: move_to_bottom_of_column. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -641,12 +716,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Sets the row for the dynamic header columns to the current row."""
 
-        tokens = ["TABLE NAVIGATOR: set_dynamic_column_headers_row. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: set_dynamic_column_headers_row. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -670,12 +751,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Clears the row for the dynamic column headers."""
 
-        tokens = ["TABLE NAVIGATOR: clear_dynamic_column_headers_row. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: clear_dynamic_column_headers_row. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -699,12 +786,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Sets the column for the dynamic row headers to the current column."""
 
-        tokens = ["TABLE NAVIGATOR: set_dynamic_row_headers_column. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: set_dynamic_row_headers_column. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -720,8 +813,9 @@ class TableNavigator:
             AXTable.set_dynamic_row_headers_column(table, column)
             if notify_user:
                 script.present_message(
-                    messages.DYNAMIC_ROW_HEADER_SET % script.utilities.convert_column_to_string(
-                        column + 1))
+                    messages.DYNAMIC_ROW_HEADER_SET
+                    % script.utilities.convert_column_to_string(column + 1)
+                )
 
         return True
 
@@ -730,12 +824,18 @@ class TableNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Clears the column for the dynamic row headers."""
 
-        tokens = ["TABLE NAVIGATOR: clear_dynamic_row_headers_column. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TABLE NAVIGATOR: clear_dynamic_row_headers_column. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -761,7 +861,7 @@ class TableNavigator:
         row: int,
         col: int,
         previous_cell: Atspi.Accessible,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> None:
         """Presents cell to the user."""
 
@@ -795,7 +895,8 @@ class TableNavigator:
         # TODO - JD: This should be part of the normal table cell presentation.
         if manager.get_announce_cell_coordinates():
             script.present_message(
-                messages.TABLE_CELL_COORDINATES % {"row" : row + 1, "column" : col + 1})
+                messages.TABLE_CELL_COORDINATES % {"row": row + 1, "column": col + 1}
+            )
 
         # TODO - JD: Ditto.
         if manager.get_announce_cell_span():
@@ -817,7 +918,8 @@ class TableNavigator:
             msg = f"TABLE NAVIGATOR: Enabled already {value}. Refreshing command group."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             command_manager.get_manager().set_group_enabled(
-                guilabels.KB_GROUP_TABLE_NAVIGATION, value)
+                guilabels.KB_GROUP_TABLE_NAVIGATION, value
+            )
             return True
 
         msg = f"TABLE NAVIGATOR: Setting enabled to {value}."
@@ -825,8 +927,7 @@ class TableNavigator:
         settings.tableNavigationEnabled = value
 
         self._last_input_event = None
-        command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_TABLE_NAVIGATION, value)
+        command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_TABLE_NAVIGATION, value)
 
         return True
 
@@ -848,7 +949,9 @@ class TableNavigator:
         settings.skipBlankCells = value
         return True
 
-_navigator : TableNavigator = TableNavigator()
+
+_navigator: TableNavigator = TableNavigator()
+
 
 def get_navigator() -> TableNavigator:
     """Returns the Table Navigator"""

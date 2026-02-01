@@ -26,12 +26,12 @@
 
 """Utilities for obtaining information about accessible tables."""
 
-
 import threading
 import time
 from typing import Generator
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -347,8 +347,12 @@ class AXTable:
         try:
             cell = Atspi.Table.get_accessible_at(table, row, column)
         except GLib.GError as error:
-            tokens = [f"AXTable: Exception getting cell at row: {row} col: {column} in", table,
-                      ":", error]
+            tokens = [
+                f"AXTable: Exception getting cell at row: {row} col: {column} in",
+                table,
+                ":",
+                error,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
@@ -397,9 +401,7 @@ class AXTable:
         return row_span, col_span
 
     @staticmethod
-    def _get_cell_spans_from_attribute(
-        cell: Atspi.Accessible
-    ) -> tuple[str | None, str | None]:
+    def _get_cell_spans_from_attribute(cell: Atspi.Accessible) -> tuple[str | None, str | None]:
         """Returns the row and column spans exposed via object attribute, or None, None."""
 
         if hash(cell) in AXTable.PRESENTABLE_SPANS:
@@ -445,8 +447,12 @@ class AXTable:
             return -1, -1
 
         if result is None:
-            tokens = ["AXTable: get_row_column_extents_at_index failed for", cell,
-                      f"at index {index} in", table]
+            tokens = [
+                "AXTable: get_row_column_extents_at_index failed for",
+                cell,
+                f"at index {index} in",
+                table,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return -1, -1
 
@@ -456,21 +462,30 @@ class AXTable:
         row_span = result.row_extents
         row_count = AXTable.get_row_count(table, False)
         if row_span > row_count:
-            tokens = ["AXTable: Table iface row span for", cell,
-                      f"{row_span} is greater than row count: {row_count}"]
+            tokens = [
+                "AXTable: Table iface row span for",
+                cell,
+                f"{row_span} is greater than row count: {row_count}",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             row_span = 1
 
         col_span = result.col_extents
         col_count = AXTable.get_column_count(table, False)
         if col_span > col_count:
-            tokens = ["AXTable: Table iface col span for", cell,
-                      f"{col_span} is greater than col count: {col_count}"]
+            tokens = [
+                "AXTable: Table iface col span for",
+                cell,
+                f"{col_span} is greater than col count: {col_count}",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             col_span = 1
 
-        tokens = ["AXTable: Table iface spans for", cell,
-                  f"are rowspan: {row_span}, colspan: {col_span}"]
+        tokens = [
+            "AXTable: Table iface spans for",
+            cell,
+            f"are rowspan: {row_span}, colspan: {col_span}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_SPANS_FROM_TABLE[hash(cell)] = row_span, col_span
         return row_span, col_span
@@ -495,8 +510,11 @@ class AXTable:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return -1, -1
 
-        tokens = ["AXTable: TableCell iface spans for", cell,
-                  f"are rowspan: {row_span}, colspan: {col_span}"]
+        tokens = [
+            "AXTable: TableCell iface spans for",
+            cell,
+            f"are rowspan: {row_span}, colspan: {col_span}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         AXTable.PHYSICAL_SPANS_FROM_CELL[hash(cell)] = row_span, col_span
         return row_span, col_span
@@ -599,10 +617,9 @@ class AXTable:
 
     @staticmethod
     def get_new_row_headers(
-        cell: Atspi.Accessible,
-        old_cell: Atspi.Accessible | None
+        cell: Atspi.Accessible, old_cell: Atspi.Accessible | None
     ) -> list[Atspi.Accessible]:
-        """Returns row headers of cell that are not also headers of old_cell. """
+        """Returns row headers of cell that are not also headers of old_cell."""
 
         if old_cell and not AXUtilitiesRole.is_table_cell_or_header(old_cell):
             old_cell = AXObject.find_ancestor(old_cell, AXUtilitiesRole.is_table_cell_or_header)
@@ -616,10 +633,9 @@ class AXTable:
 
     @staticmethod
     def get_new_column_headers(
-        cell: Atspi.Accessible,
-        old_cell: Atspi.Accessible | None
+        cell: Atspi.Accessible, old_cell: Atspi.Accessible | None
     ) -> list[Atspi.Accessible]:
-        """Returns column headers of cell that are not also headers of old_cell. """
+        """Returns column headers of cell that are not also headers of old_cell."""
 
         if old_cell and not AXUtilitiesRole.is_table_cell_or_header(old_cell):
             old_cell = AXObject.find_ancestor(old_cell, AXUtilitiesRole.is_table_cell_or_header)
@@ -787,9 +803,7 @@ class AXTable:
 
     @staticmethod
     def get_cell_coordinates(
-        cell: Atspi.Accessible,
-        prefer_attribute: bool = True,
-        find_cell: bool = False
+        cell: Atspi.Accessible, prefer_attribute: bool = True, find_cell: bool = False
     ) -> tuple[int, int]:
         """Returns the 0-based row and column indices."""
 
@@ -873,7 +887,7 @@ class AXTable:
 
     @staticmethod
     def _get_cell_coordinates_from_attribute(
-        cell: Atspi.Accessible
+        cell: Atspi.Accessible,
     ) -> tuple[str | None, str | None]:
         """Returns the 1-based indices for cell exposed via object attribute, or None, None."""
 
@@ -908,8 +922,7 @@ class AXTable:
 
     @staticmethod
     def get_presentable_sort_order_from_header(
-        obj: Atspi.Accessible,
-        include_name: bool = False
+        obj: Atspi.Accessible, include_name: bool = False
     ) -> str:
         """Returns the end-user-consumable row/column sort order from its header."""
 
@@ -952,8 +965,11 @@ class AXTable:
                     return table
 
         def is_table(x):
-            if AXUtilitiesRole.is_table(x) \
-               or AXUtilitiesRole.is_tree_table(x) or AXUtilitiesRole.is_tree(x):
+            if (
+                AXUtilitiesRole.is_table(x)
+                or AXUtilitiesRole.is_tree_table(x)
+                or AXUtilitiesRole.is_tree(x)
+            ):
                 return AXObject.supports_table(x)
             return False
 
@@ -1078,8 +1094,9 @@ class AXTable:
         if table is None:
             return False
 
-        return row + 1 == AXTable.get_row_count(table, prefer_attribute=False) \
-            and col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
+        return row + 1 == AXTable.get_row_count(
+            table, prefer_attribute=False
+        ) and col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
 
     @staticmethod
     def is_start_of_row(cell: Atspi.Accessible) -> bool:
@@ -1265,7 +1282,8 @@ class AXTable:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         last_cell = AXComponent.get_descendant_at_point(
-            table, rect.x + rect.width - 1, rect.y + rect.height - 1)
+            table, rect.x + rect.width - 1, rect.y + rect.height - 1
+        )
         tokens = ["AXTable: Last visible cell for", table, "is", last_cell]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -1282,8 +1300,9 @@ class AXTable:
             tokens = ["AXTable: Adjusted last cell is at row", end[0], "column", end[1]]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if AXUtilitiesRole.is_table_cell(last_cell) \
-           and not AXUtilitiesRole.is_table_cell_or_header(first_cell):
+        if AXUtilitiesRole.is_table_cell(last_cell) and not AXUtilitiesRole.is_table_cell_or_header(
+            first_cell
+        ):
             candidate = AXTable.get_cell_above(last_cell)
             while candidate and AXComponent.object_intersects_rect(candidate, rect):
                 first_cell = candidate
@@ -1324,8 +1343,7 @@ class AXTable:
 
     @staticmethod
     def get_showing_cells_in_same_row(
-        cell: Atspi.Accessible,
-        clip_to_window: bool = False
+        cell: Atspi.Accessible, clip_to_window: bool = False
     ) -> list[Atspi.Accessible]:
         """Returns a list of all the cells in the same row as obj that are showing."""
 
@@ -1337,10 +1355,9 @@ class AXTable:
         start_index, end_index = 0, AXTable.get_column_count(table, False)
         if clip_to_window:
             rect = AXComponent.get_rect(table)
-            if (cell := AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y)):
+            if cell := AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y):
                 start_index = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
-            if (cell := AXComponent.get_descendant_at_point(
-                    table, rect.x + rect.width - 1, rect.y)):
+            if cell := AXComponent.get_descendant_at_point(table, rect.x + rect.width - 1, rect.y):
                 end_index = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1] + 1
 
         if start_index == end_index:

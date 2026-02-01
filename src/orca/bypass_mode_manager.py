@@ -103,7 +103,9 @@ class BypassModeManager:
 
         return True
 
+
 _manager: BypassModeManager = BypassModeManager()
+
 
 def get_manager() -> BypassModeManager:
     """Returns the bypass-mode-manager singleton."""

@@ -28,6 +28,7 @@ from __future__ import annotations
 
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
@@ -40,36 +41,34 @@ from . import settings
 _keycode_cache = {}
 
 MODIFIER_ORCA = 8
-NO_MODIFIER_MASK              =  0
-ALT_MODIFIER_MASK             =  1 << Atspi.ModifierType.ALT
-CTRL_MODIFIER_MASK            =  1 << Atspi.ModifierType.CONTROL
-ORCA_MODIFIER_MASK            =  1 << MODIFIER_ORCA
-ORCA_ALT_MODIFIER_MASK        = (1 << MODIFIER_ORCA |
-                                 1 << Atspi.ModifierType.ALT)
-ORCA_CTRL_MODIFIER_MASK       = (1 << MODIFIER_ORCA |
-                                 1 << Atspi.ModifierType.CONTROL)
-ORCA_CTRL_ALT_MODIFIER_MASK   = (1 << MODIFIER_ORCA |
-                                 1 << Atspi.ModifierType.CONTROL |
-                                 1 << Atspi.ModifierType.ALT)
-ORCA_SHIFT_MODIFIER_MASK      = (1 << MODIFIER_ORCA |
-                                 1 << Atspi.ModifierType.SHIFT)
-ORCA_ALT_SHIFT_MODIFIER_MASK  = (1 << MODIFIER_ORCA |
-                                 1 << Atspi.ModifierType.ALT |
-                                 1 << Atspi.ModifierType.SHIFT)
-SHIFT_MODIFIER_MASK           =  1 << Atspi.ModifierType.SHIFT
-SHIFT_ALT_MODIFIER_MASK       = (1 << Atspi.ModifierType.SHIFT |
-                                 1 << Atspi.ModifierType.ALT)
-CTRL_ALT_MODIFIER_MASK        = (1 << Atspi.ModifierType.CONTROL |
-                                 1 << Atspi.ModifierType.ALT)
-SHIFT_ALT_CTRL_MODIFIER_MASK  = (1 << Atspi.ModifierType.SHIFT |
-                                 1 << Atspi.ModifierType.CONTROL |
-                                 1 << Atspi.ModifierType.ALT)
-NON_LOCKING_MODIFIER_MASK     = (1 << Atspi.ModifierType.SHIFT |
-                                 1 << Atspi.ModifierType.ALT |
-                                 1 << Atspi.ModifierType.CONTROL |
-                                 1 << Atspi.ModifierType.META3 |
-                                 1 << MODIFIER_ORCA)
+NO_MODIFIER_MASK = 0
+ALT_MODIFIER_MASK = 1 << Atspi.ModifierType.ALT
+CTRL_MODIFIER_MASK = 1 << Atspi.ModifierType.CONTROL
+ORCA_MODIFIER_MASK = 1 << MODIFIER_ORCA
+ORCA_ALT_MODIFIER_MASK = 1 << MODIFIER_ORCA | 1 << Atspi.ModifierType.ALT
+ORCA_CTRL_MODIFIER_MASK = 1 << MODIFIER_ORCA | 1 << Atspi.ModifierType.CONTROL
+ORCA_CTRL_ALT_MODIFIER_MASK = (
+    1 << MODIFIER_ORCA | 1 << Atspi.ModifierType.CONTROL | 1 << Atspi.ModifierType.ALT
+)
+ORCA_SHIFT_MODIFIER_MASK = 1 << MODIFIER_ORCA | 1 << Atspi.ModifierType.SHIFT
+ORCA_ALT_SHIFT_MODIFIER_MASK = (
+    1 << MODIFIER_ORCA | 1 << Atspi.ModifierType.ALT | 1 << Atspi.ModifierType.SHIFT
+)
+SHIFT_MODIFIER_MASK = 1 << Atspi.ModifierType.SHIFT
+SHIFT_ALT_MODIFIER_MASK = 1 << Atspi.ModifierType.SHIFT | 1 << Atspi.ModifierType.ALT
+CTRL_ALT_MODIFIER_MASK = 1 << Atspi.ModifierType.CONTROL | 1 << Atspi.ModifierType.ALT
+SHIFT_ALT_CTRL_MODIFIER_MASK = (
+    1 << Atspi.ModifierType.SHIFT | 1 << Atspi.ModifierType.CONTROL | 1 << Atspi.ModifierType.ALT
+)
+NON_LOCKING_MODIFIER_MASK = (
+    1 << Atspi.ModifierType.SHIFT
+    | 1 << Atspi.ModifierType.ALT
+    | 1 << Atspi.ModifierType.CONTROL
+    | 1 << Atspi.ModifierType.META3
+    | 1 << MODIFIER_ORCA
+)
 DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
+
 
 def get_keycodes(keysym: str) -> tuple[int, int]:
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
@@ -130,6 +129,7 @@ def get_keycodes(keysym: str) -> tuple[int, int]:
 
     return _keycode_cache[keysym]
 
+
 def get_modifier_names(mods: int) -> str:
     """Returns the modifier names of a numeric modifier mask as a human-consumable string."""
 
@@ -156,10 +156,11 @@ def get_modifier_names(mods: int) -> str:
         text += name + "+"
     return text
 
+
 class KeyBinding:
     """A single key binding, consisting of a keysymstring, modifiers, and click count."""
 
-    def __init__(self, keysymstring: str, modifiers: int, click_count: int=1):
+    def __init__(self, keysymstring: str, modifiers: int, click_count: int = 1):
         self.keysymstring: str = keysymstring
         self.modifier_mask: int = DEFAULT_MODIFIER_MASK
         self.modifiers: int = modifiers

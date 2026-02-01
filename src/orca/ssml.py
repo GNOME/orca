@@ -59,21 +59,22 @@ class SSMLCapabilities(Enum):
     TOKEN = auto()
     ALL = auto()
 
+
 class SSML(dict[str, Any]):
     """Holds SSML representation of an utterance."""
 
     def __init__(self, text: str = "", features: SSMLCapabilities = SSMLCapabilities.ALL) -> None:
         """Create and initialize ACSS structure."""
         dict.__init__(self)
-        self['text'] = text or ""
-        self['features'] = SSMLCapabilities(features)
+        self["text"] = text or ""
+        self["features"] = SSMLCapabilities(features)
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, SSML):
             return False
-        if self.get('text') != other.get('text'):
+        if self.get("text") != other.get("text"):
             return False
-        if self.get('features') != other.get('features'):
+        if self.get("features") != other.get("features"):
             return False
         return True
 
@@ -107,7 +108,7 @@ class SSML(dict[str, Any]):
                 if is_numeric:
                     # We had a wholy numeric word, possibly next word is as well.
                     # Skip to next word
-                    for j in range(i+1, len(text)):
+                    for j in range(i + 1, len(text)):
                         if not text[j].isspace():
                             break
                     else:
@@ -171,9 +172,9 @@ class SSML(dict[str, Any]):
                     ssml += f'<mark name="{offsets[i][0]}:{offsets[i][1]}"/>'
                 i += 1
             # Disable for now, until speech dispatcher properly parses them (version 0.8.9 or later)
-            #elif c == '"':
+            # elif c == '"':
             #  ssml += '&quot;'
-            #elif c == "'":
+            # elif c == "'":
             #  ssml += '&apos;'
             elif c == "<":
                 ssml += "&lt;"

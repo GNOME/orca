@@ -89,7 +89,6 @@ class TestSettingsManagerFileIO:
         """
 
         import sys
-        from types import ModuleType
 
         # ModuleType allows settings_manager to set attributes on it dynamically
         settings_obj: Any = ModuleType("orca.settings")
@@ -136,7 +135,7 @@ class TestSettingsManagerFileIO:
         settings_obj.BRAILLE_UNDERLINE_NONE = 0x00
         settings_obj.BRAILLE_UNDERLINE_7 = 0x40
         settings_obj.BRAILLE_UNDERLINE_8 = 0x80
-        settings_obj.BRAILLE_UNDERLINE_BOTH = 0xc0
+        settings_obj.BRAILLE_UNDERLINE_BOTH = 0xC0
         settings_obj.brailleContractionTable = ""
         # Punctuation constants
         settings_obj.PUNCTUATION_STYLE_NONE = 3

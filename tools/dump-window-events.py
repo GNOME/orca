@@ -28,8 +28,10 @@
 """Command-line tool to dump window activation and deactivation events."""
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
+
 
 def clear_atspi_cache(obj):
     """Clear the AT-SPI cache for a specific object."""
@@ -48,6 +50,7 @@ def clear_atspi_cache(obj):
     else:
         return
 
+
 def get_all_applications():
     """Get all running accessible applications."""
 
@@ -64,6 +67,7 @@ def get_all_applications():
             continue
 
     return apps
+
 
 def find_all_active_windows(apps=None):
     """Find all windows which claim to be active.."""
@@ -86,6 +90,7 @@ def find_all_active_windows(apps=None):
 
     return active_windows
 
+
 def get_name_and_role(obj):
     """Get the name and role of an accessible object."""
 
@@ -95,6 +100,7 @@ def get_name_and_role(obj):
         return f"'{name}' {role}"
     except GLib.GError as error:
         return f"(error getting name and role: {error})"
+
 
 def get_top_level_object(obj):
     """Get the highest level accessible object for a given object."""
@@ -124,12 +130,14 @@ def get_top_level_object(obj):
 
     return result
 
+
 def get_object_info(obj):
     """Returns basic info about an accessible object."""
 
     name_and_role = get_name_and_role(obj)
     top_level_name_and_role = get_name_and_role(get_top_level_object(obj))
     return f"{name_and_role} from: {top_level_name_and_role}"
+
 
 def on_window_event(e):
     """Handle window activation and deactivation events."""
@@ -143,9 +151,9 @@ def on_window_event(e):
         print("No windows have the active state. The following applications are known to AT-SPI2:")
         for i, app in enumerate(apps):
             try:
-                print(f"{i+1:2}. {Atspi.Accessible.get_name(app)}")
+                print(f"{i + 1:2}. {Atspi.Accessible.get_name(app)}")
             except GLib.GError as error:
-                print(f"{i+1:2}. {error}")
+                print(f"{i + 1:2}. {error}")
         return
 
     if len(active_windows) == 1:
@@ -155,9 +163,10 @@ def on_window_event(e):
     print(f"{len(active_windows)} windows claim they are active:")
     for i, win in enumerate(active_windows):
         try:
-            print(f"{i+1:2}. {get_object_info(win)}")
+            print(f"{i + 1:2}. {get_object_info(win)}")
         except GLib.GError as error:
-            print(f"{i+1:2}. {error}")
+            print(f"{i + 1:2}. {error}")
+
 
 def on_focus_event(e):
     """Handle focus events for exit condition."""
@@ -172,6 +181,7 @@ def on_focus_event(e):
     except GLib.GError:
         pass
 
+
 def main():
     """Starts the window event dumper and waits for events."""
 
@@ -184,6 +194,7 @@ def main():
 
     print("Listening for window activation/deactivation events. Focus a terminal to exit.")
     Atspi.event_main()
+
 
 if __name__ == "__main__":
     main()

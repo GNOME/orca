@@ -34,8 +34,10 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(default.Script):
     """Custom script for The notification daemon."""

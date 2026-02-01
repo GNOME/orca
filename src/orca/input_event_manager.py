@@ -32,6 +32,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -45,6 +46,7 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from . import keybindings
+
 
 class InputEventManager:
     """Provides utilities for managing input events."""
@@ -240,7 +242,7 @@ class InputEventManager:
         keycode: int,
         keysym: int,
         modifiers: int,
-        text: str
+        text: str,
     ) -> bool:
         """Processes this Atspi keyboard event."""
 
@@ -311,9 +313,11 @@ class InputEventManager:
             last_event = self._last_non_modifier_key_event or self._last_input_event
 
         assert isinstance(last_event, input_event.KeyboardEvent)
-        if (event.time - last_event.time > settings.doubleClickTimeout) or \
-           (event.keyval_name != last_event.keyval_name) or \
-           (event.get_object() != last_event.get_object()):
+        if (
+            (event.time - last_event.time > settings.doubleClickTimeout)
+            or (event.keyval_name != last_event.keyval_name)
+            or (event.get_object() != last_event.get_object())
+        ):
             return 1
 
         last_count = last_event.get_click_count()
@@ -333,8 +337,10 @@ class InputEventManager:
 
         # pylint: disable-next=import-outside-toplevel
         from . import command_manager
+
         if not command_manager.get_manager().has_multi_click_bindings(
-                event.id, event.hw_code, event.modifiers):
+            event.id, event.hw_code, event.modifiers
+        ):
             return 1
 
         return last_count + 1
@@ -371,16 +377,19 @@ class InputEventManager:
         if event1 is None or event2 is None:
             return False
 
-        if not isinstance(event1, input_event.KeyboardEvent) \
-           or not isinstance(event2, input_event.KeyboardEvent):
+        if not isinstance(event1, input_event.KeyboardEvent) or not isinstance(
+            event2, input_event.KeyboardEvent
+        ):
             return False
 
         if event1.is_pressed_key() or not event2.is_pressed_key():
             return False
 
-        result = event1.id == event2.id \
-            and event1.hw_code == event2.hw_code \
+        result = (
+            event1.id == event2.id
+            and event1.hw_code == event2.hw_code
             and event1.keyval_name == event2.keyval_name
+        )
 
         if result and not event1.is_modifier_key:
             result = event1.modifiers == event2.modifiers
@@ -465,12 +474,14 @@ class InputEventManager:
     def last_event_was_caret_navigation(self):
         """Returns True if the last event is believed to be caret navigation."""
 
-        return self.last_event_was_character_navigation() \
-            or self.last_event_was_word_navigation() \
-            or self.last_event_was_line_navigation() \
-            or self.last_event_was_line_boundary_navigation() \
-            or self.last_event_was_file_boundary_navigation() \
+        return (
+            self.last_event_was_character_navigation()
+            or self.last_event_was_word_navigation()
+            or self.last_event_was_line_navigation()
+            or self.last_event_was_line_boundary_navigation()
+            or self.last_event_was_file_boundary_navigation()
             or self.last_event_was_page_navigation()
+        )
 
     def last_event_was_caret_selection(self):
         """Returns True if the last event is believed to be caret selection."""
@@ -725,9 +736,11 @@ class InputEventManager:
         if string not in ["Left", "Right", "Up", "Down"]:
             return False
 
-        if mods & 1 << Atspi.ModifierType.CONTROL \
-           or mods & 1 << Atspi.ModifierType.SHIFT \
-           or mods & 1 << Atspi.ModifierType.ALT:
+        if (
+            mods & 1 << Atspi.ModifierType.CONTROL
+            or mods & 1 << Atspi.ModifierType.SHIFT
+            or mods & 1 << Atspi.ModifierType.ALT
+        ):
             return False
 
         # TODO: JD - 8 is the value of keybindings.MODIFIER_ORCA, but we need to
@@ -894,8 +907,7 @@ class InputEventManager:
             rv = mods & 1 << Atspi.ModifierType.CONTROL and mods & 1 << Atspi.ModifierType.SHIFT
         elif string.lower() == "y":
             # LibreOffice
-            rv = mods & 1 << Atspi.ModifierType.CONTROL \
-                and not mods & 1 << Atspi.ModifierType.SHIFT
+            rv = mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT
         else:
             rv = False
 
@@ -911,7 +923,7 @@ class InputEventManager:
         if string.lower() != "a":
             return False
 
-        if (mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT):
+        if mods & 1 << Atspi.ModifierType.CONTROL and not mods & 1 << Atspi.ModifierType.SHIFT:
             msg = "INPUT EVENT MANAGER: Last event was select all"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1003,6 +1015,8 @@ class InputEventManager:
 
 
 _manager = InputEventManager()
+
+
 def get_manager():
     """Returns the Input Event Manager singleton."""
     return _manager

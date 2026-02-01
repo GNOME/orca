@@ -70,16 +70,11 @@ def get_module_info(bus, module_name):
             "commands": sorted(commands, key=lambda x: x[0]),
             "parameterized_commands": sorted(parameterized_commands, key=lambda x: x[0]),
             "getters": sorted(getters, key=lambda x: x[0]),
-            "setters": sorted(setters, key=lambda x: x[0])
+            "setters": sorted(setters, key=lambda x: x[0]),
         }
     except DBusError as e:
         print(f"Error getting info for module {module_name}: {e}", file=sys.stderr)
-        return {
-            "commands": [],
-            "parameterized_commands": [],
-            "getters": [],
-            "setters": []
-        }
+        return {"commands": [], "parameterized_commands": [], "getters": [], "setters": []}
 
 
 def format_system_commands(commands):
@@ -129,7 +124,7 @@ def _group_structural_navigator_commands(commands):
         # Extract the object type from command names like NextHeading, ListButtons, etc.
         if name.startswith("Next") or name.startswith("Previous"):
             prefix = "Next" if name.startswith("Next") else "Previous"
-            obj_type = name[len(prefix):]
+            obj_type = name[len(prefix) :]
             normalized = normalize_obj_type(obj_type)
             if normalized not in groups:
                 if normalized == "Heading":
@@ -157,6 +152,7 @@ def _group_structural_navigator_commands(commands):
             other.append((name, description))
 
     return groups, other
+
 
 # pylint: disable-next=too-many-branches,too-many-statements,too-many-locals
 def format_module_commands(module_name, info):
@@ -186,7 +182,9 @@ def format_module_commands(module_name, info):
                 name, _ = cmd_tuple
                 # Define groups and their order
                 groups = {
-                    "Rate": 0, "Pitch": 1, "Volume": 2,
+                    "Rate": 0,
+                    "Pitch": 1,
+                    "Volume": 2,
                 }
                 # Check if it's an Increase/Decrease command
                 for group_name, group_order in groups.items():
@@ -333,12 +331,11 @@ def format_module_commands(module_name, info):
     if info["getters"] or info["setters"]:
         lines.append("#### Settings")
         lines.append("")
-        lines.append("**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`")
-        lines.append("")
         lines.append(
-            "**Parameters:** `PropertyName` (string), "
-            "`Value` (variant, setter only)"
+            "**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`"
         )
+        lines.append("")
+        lines.append("**Parameters:** `PropertyName` (string), `Value` (variant, setter only)")
         lines.append("")
 
         # Build a merged dictionary of properties

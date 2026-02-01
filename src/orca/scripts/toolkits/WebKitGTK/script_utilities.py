@@ -34,8 +34,10 @@ from orca.scripts import web
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(web.Utilities):
     """Script utilities for WebKitGTK."""
@@ -47,7 +49,7 @@ class Utilities(web.Utilities):
             return False
 
         attrs = AXObject.get_attributes_dict(obj)
-        return attrs.get('toolkit', '') in ['WebKitGtk', 'WebKitGTK']
+        return attrs.get("toolkit", "") in ["WebKitGtk", "WebKitGTK"]
 
     def in_document_content(self, obj: Atspi.Accessible | None = None) -> bool:
         """Returns True if obj is in document content."""

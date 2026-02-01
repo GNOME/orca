@@ -83,8 +83,7 @@ class TestCommand:
 
         function = self._create_mock_function(test_context)
         command = Command(
-            "fullCommand", function, "Full Group", "Full description",
-            enabled=False, suspended=True
+            "fullCommand", function, "Full Group", "Full description", enabled=False, suspended=True
         )
 
         assert command.get_name() == "fullCommand"
@@ -262,8 +261,12 @@ class TestKeyboardCommand:
         laptop_kb = self._create_mock_keybinding(test_context)
 
         command = KeyboardCommand(
-            "fullCommand", function, "Full Group", "Full description",
-            desktop_keybinding=desktop_kb, laptop_keybinding=laptop_kb
+            "fullCommand",
+            function,
+            "Full Group",
+            "Full description",
+            desktop_keybinding=desktop_kb,
+            laptop_keybinding=laptop_kb,
         )
 
         assert command.get_name() == "fullCommand"
@@ -299,8 +302,7 @@ class TestKeyboardCommand:
         function = self._create_mock_function(test_context)
         keybinding = self._create_mock_keybinding(test_context)
         command = KeyboardCommand(
-            "testCommand", function, "Test Group",
-            desktop_keybinding=keybinding
+            "testCommand", function, "Test Group", desktop_keybinding=keybinding
         )
         command.set_keybinding(keybinding)
 
@@ -315,8 +317,7 @@ class TestKeyboardCommand:
         function = self._create_mock_function(test_context)
         keybinding = self._create_mock_keybinding(test_context)
         command = KeyboardCommand(
-            "testCommand", function, "Test Group",
-            desktop_keybinding=keybinding, enabled=False
+            "testCommand", function, "Test Group", desktop_keybinding=keybinding, enabled=False
         )
         command.set_keybinding(keybinding)
 
@@ -331,8 +332,7 @@ class TestKeyboardCommand:
         function = self._create_mock_function(test_context)
         keybinding = self._create_mock_keybinding(test_context)
         command = KeyboardCommand(
-            "testCommand", function, "Test Group",
-            desktop_keybinding=keybinding, suspended=True
+            "testCommand", function, "Test Group", desktop_keybinding=keybinding, suspended=True
         )
         command.set_keybinding(keybinding)
 
@@ -410,8 +410,7 @@ class TestBrailleCommand:
 
         function = self._create_mock_function(test_context)
         command = BrailleCommand(
-            "testCommand", function, "Test Group", "Test description",
-            braille_bindings=(1, 2, 3)
+            "testCommand", function, "Test Group", "Test description", braille_bindings=(1, 2, 3)
         )
 
         assert command.get_braille_bindings() == (1, 2, 3)
@@ -623,9 +622,7 @@ class TestCommandManager:
         result = manager.get_command_for_event(event, active_only=False)
         assert result == cmd
 
-    def test_get_command_for_braille_event_finds_match(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_command_for_braille_event_finds_match(self, test_context: OrcaTestContext) -> None:
         """Test get_command_for_braille_event returns matching command."""
 
         self._setup_dependencies(test_context)
@@ -640,9 +637,7 @@ class TestCommandManager:
         result = manager.get_command_for_braille_event(200)
         assert result == cmd
 
-    def test_get_command_for_braille_event_no_match(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_get_command_for_braille_event_no_match(self, test_context: OrcaTestContext) -> None:
         """Test get_command_for_braille_event returns None when no match."""
 
         self._setup_dependencies(test_context)
@@ -975,9 +970,7 @@ class TestDiffBasedGrabUpdates:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
         """Returns dependencies for command_manager module testing."""
 
-        essential_modules = test_context.setup_shared_dependencies(
-            ["orca.orca_modifier_manager"]
-        )
+        essential_modules = test_context.setup_shared_dependencies(["orca.orca_modifier_manager"])
 
         input_event_mock = essential_modules["orca.input_event"]
         input_event_mock.InputEventHandler = test_context.Mock
@@ -1024,7 +1017,7 @@ class TestDiffBasedGrabUpdates:
         modifiers: int = 0,
         click_count: int = 1,
         keyval: int = 65,
-        keycode: int = 38
+        keycode: int = 38,
     ) -> Mock:
         """Creates a mock KeyBinding with specified properties."""
 
@@ -1112,9 +1105,7 @@ class TestDiffBasedGrabUpdates:
         new_kb.add_grabs.assert_not_called()
         old_kb.remove_grabs.assert_not_called()
 
-    def test_diff_removes_grabs_for_old_only_bindings(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_diff_removes_grabs_for_old_only_bindings(self, test_context: OrcaTestContext) -> None:
         """Test that grabs are removed for bindings only in old commands."""
 
         self._setup_dependencies(test_context)
@@ -1139,9 +1130,7 @@ class TestDiffBasedGrabUpdates:
         # Verify grabs were removed
         old_kb.remove_grabs.assert_called_once()
 
-    def test_diff_adds_grabs_for_new_only_bindings(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_diff_adds_grabs_for_new_only_bindings(self, test_context: OrcaTestContext) -> None:
         """Test that grabs are added for bindings only in new commands."""
 
         self._setup_dependencies(test_context)
@@ -1291,9 +1280,7 @@ class TestDiffBasedGrabUpdates:
         # Suspended command without grabs
         kb = self._create_mock_keybinding(test_context, keysymstring="h")
         kb.has_grabs.return_value = False
-        cmd = KeyboardCommand(
-            "cmd", function, "Test Group", desktop_keybinding=kb, suspended=True
-        )
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb, suspended=True)
         cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
@@ -1318,9 +1305,7 @@ class TestDiffBasedGrabUpdates:
         # Already suspended command
         kb = self._create_mock_keybinding(test_context, keysymstring="h")
         kb.has_grabs.return_value = False
-        cmd = KeyboardCommand(
-            "cmd", function, "Test Group", desktop_keybinding=kb, suspended=True
-        )
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb, suspended=True)
         cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
@@ -1371,8 +1356,7 @@ class TestDiffBasedGrabUpdates:
         kb = self._create_mock_keybinding(test_context, keysymstring="z")
         kb.has_grabs.return_value = True
         cmd = KeyboardCommand(
-            "toggle_cmd", function, "Test Group",
-            desktop_keybinding=kb, is_group_toggle=True
+            "toggle_cmd", function, "Test Group", desktop_keybinding=kb, is_group_toggle=True
         )
         cmd.set_keybinding(kb)
         manager.add_command(cmd)

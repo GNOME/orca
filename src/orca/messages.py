@@ -25,9 +25,8 @@ have been put in their own module so that we can present them in
 the correct language when users change the synthesizer language
 on the fly without having to reload a bunch of modules."""
 
-
-from .orca_i18n import _, C_, ngettext # pylint: disable=import-error
-from .orca_platform import version # pylint: disable=import-error
+from .orca_i18n import _, C_, ngettext  # pylint: disable=import-error
+from .orca_platform import version  # pylint: disable=import-error
 
 # Translators: Orca has a command to report the battery status. This message
 # is presented to the user when they use this command but Orca was unable to
@@ -218,15 +217,15 @@ CLI_LOAD_PROFILE_ERROR = _("Profile could not be loaded: %s")
 
 # Translators: This message is presented to the user who attempts to launch Orca
 # from some other environment than the graphical desktop.
-CLI_NO_DESKTOP_ERROR = \
-    _("Cannot start the screen reader because it cannot connect to the Desktop.")
+CLI_NO_DESKTOP_ERROR = _("Cannot start the screen reader because it cannot connect to the Desktop.")
 
 # Translators: This message is presented to the user when he/she tries to launch
 # Orca, but Orca is already running.
-CLI_OTHER_ORCAS_ERROR = \
-    _('Another screen reader process is already running for this ' \
-      'session.\nRun “orca --replace” to replace that ' \
-      'process with a new one.')
+CLI_OTHER_ORCAS_ERROR = _(
+    "Another screen reader process is already running for this "
+    "session.\nRun “orca --replace” to replace that "
+    "process with a new one."
+)
 
 # Translators: This string indicates to the user what should be provided when
 # using the '-p, --profile' command line option.
@@ -393,8 +392,7 @@ CHAT_ROOM_NAME_PREFIX_ON = _("speak chat room name.")
 # from). Other users prefer to have specific room history (e.g. the last ten
 # messages from #a11y). Therefore, this is a setting in Orca. This string to be
 # translated is presented when the value of the setting is toggled.
-CHAT_SEPARATE_HISTORIES_OFF = \
-    _("Do not provide chat room specific message histories.")
+CHAT_SEPARATE_HISTORIES_OFF = _("Do not provide chat room specific message histories.")
 
 # Translators: Orca has a command to review previous chat room messages in
 # speech and braille. Some users prefer to have this message history combined
@@ -1157,23 +1155,19 @@ MATH_NESTED_TABLE_END = C_("math table", "nested table end")
 
 # Translators: This brief message indicates that indentation and
 # justification will be spoken.
-INDENTATION_JUSTIFICATION_OFF_BRIEF = \
-    C_("indentation and justification", "Disabled")
+INDENTATION_JUSTIFICATION_OFF_BRIEF = C_("indentation and justification", "Disabled")
 
 # Translators: This detailed message indicates that indentation and
 # justification will not be spoken.
-INDENTATION_JUSTIFICATION_OFF_FULL = \
-    _("Speaking of indentation and justification disabled.")
+INDENTATION_JUSTIFICATION_OFF_FULL = _("Speaking of indentation and justification disabled.")
 
 # Translators: This brief message indicates that indentation and
 # justification will be spoken.
-INDENTATION_JUSTIFICATION_ON_BRIEF = \
-    C_("indentation and justification", "Enabled")
+INDENTATION_JUSTIFICATION_ON_BRIEF = C_("indentation and justification", "Enabled")
 
 # Translators: This detailed message indicates that indentation and
 # justification will be spoken.
-INDENTATION_JUSTIFICATION_ON_FULL = \
-    _("Speaking of indentation and justification enabled.")
+INDENTATION_JUSTIFICATION_ON_FULL = _("Speaking of indentation and justification enabled.")
 
 # Translators: Orca announces when a widget has an associated error, such as
 # disallowed characters in an input, or a must-check box that is not checked
@@ -1197,11 +1191,12 @@ LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 # combination, or they might just be to echo the name of the key if Orca doesn't
 # have a handler. This message is what is spoken to the user when entering Learn
 # Mode.
-LEARN_MODE_START_SPEECH = \
-    _("Entering learn mode.  Press any key to hear its function.  " \
-      "To view the screen reader's documentation, press F1. " \
-      "To get a list of the screen reader's shortcuts, press F2. " \
-      "To exit learn mode, press the escape key.")
+LEARN_MODE_START_SPEECH = _(
+    "Entering learn mode.  Press any key to hear its function.  "
+    "To view the screen reader's documentation, press F1. "
+    "To get a list of the screen reader's shortcuts, press F2. "
+    "To exit learn mode, press the escape key."
+)
 
 # Translators: This message is presented when a user is navigating within a
 # blockquote and then navigates out of it.
@@ -1267,13 +1262,13 @@ LEAVING_LANDMARK_MAIN = C_("role", "leaving main content.")
 # a type of landmark and then navigates out of it. The word or phrase that
 # follows "leaving" should be consistent with the translation provided for
 # the corresponding term with context "role" found in object_properties.py
-LEAVING_LANDMARK_NAVIGATION =  C_("role", "leaving navigation.")
+LEAVING_LANDMARK_NAVIGATION = C_("role", "leaving navigation.")
 
 # Translators: This message is presented when a user is navigating within
 # a type of landmark and then navigates out of it. The word or phrase that
 # follows "leaving" should be consistent with the translation provided for
 # the corresponding term with context "role" found in object_properties.py
-LEAVING_LANDMARK_REGION =  C_("role", "leaving region.")
+LEAVING_LANDMARK_REGION = C_("role", "leaving region.")
 
 # Translators: This message is presented when a user is navigating within
 # a type of landmark and then navigates out of it. The word or phrase that
@@ -2157,13 +2152,13 @@ SPEECH_SLOWER = _("slower.")
 SPEECH_HIGHER = _("higher.")
 
 # Translators: This string announces speech pitch change.
-SPEECH_LOWER  = _("lower.")
+SPEECH_LOWER = _("lower.")
 
 # Translators: This string announces speech volume change.
 SPEECH_LOUDER = _("louder.")
 
 # Translators: This string announces speech volume change.
-SPEECH_SOFTER  = _("softer.")
+SPEECH_SOFTER = _("softer.")
 
 # Translators: Orca's verbosity levels control how much (or how little)
 # Orca will speak when presenting objects as the user navigates within
@@ -2237,8 +2232,7 @@ STRUCTURAL_NAVIGATION_NOT_FOUND = C_("structural navigation", "Not found")
 # the AtspiCollection interface. If an object claims to not support that
 # interface, Orca will present this message to the user to indicate that
 # structural navigation is not available. This is the detailed version.
-STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL = \
-    _("Not supported for this location.")
+STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL = _("Not supported for this location.")
 
 # Translators: Orca has a command that allows the user to move to the next
 # structural navigation object. In Orca, "structural navigation" refers to
@@ -2248,8 +2242,7 @@ STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL = \
 # the AtspiCollection interface. If an object claims to not support that
 # interface, Orca will present this message to the user to indicate that
 # structural navigation is not available. This is the brief version.
-STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF = \
-    C_("structural navigation", "Not supported")
+STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF = C_("structural navigation", "Not supported")
 
 # Translators: This message describes the (row, col) position of a table cell.
 TABLE_CELL_COORDINATES = _("Row %(row)d, column %(column)d.")
@@ -2447,6 +2440,7 @@ WRAPPING_TO_TOP = _("Wrapping to top.")
 # indicate the current layered pane or table contains zero items.
 ZERO_ITEMS = _("0 items")
 
+
 def cell_span(rowspan, colspan):
     """Returns a string description of the cell span in a table."""
 
@@ -2455,36 +2449,30 @@ def cell_span(rowspan, colspan):
         # Translators: The cell here refers to a cell within a table within a
         # document. We need to announce when the cell occupies or "spans" more
         # than a single row and/or column.
-        span_string = ngettext("Cell spans %d row",
-                              "Cell spans %d rows",
-                              rowspan) % rowspan
+        span_string = ngettext("Cell spans %d row", "Cell spans %d rows", rowspan) % rowspan
 
         # Translators: this represents the number of columns in a table.
-        span_string += ngettext(" %d column",
-                               " %d columns",
-                               colspan) % colspan
+        span_string += ngettext(" %d column", " %d columns", colspan) % colspan
     elif colspan > 1:
         # Translators: The cell here refers to a cell within a table within a
         # document. We need to announce when the cell occupies or "spans" more
         # than a single row and/or column.
-        span_string = ngettext("Cell spans %d column",
-                              "Cell spans %d columns",
-                              colspan) % colspan
+        span_string = ngettext("Cell spans %d column", "Cell spans %d columns", colspan) % colspan
     elif rowspan > 1:
         # Translators: The cell here refers to a cell within a table within a
         # document. We need to announce when the cell occupies or "spans" more
         # than a single row and/or column.
-        span_string = ngettext("Cell spans %d row",
-                              "Cell spans %d rows",
-                              rowspan) % rowspan
+        span_string = ngettext("Cell spans %d row", "Cell spans %d rows", rowspan) % rowspan
 
     return span_string
+
 
 def character_count(count):
     """Returns a string description of the number of characters in a string."""
 
     # Translators: This message describes the number of characters in a string.
     return ngettext("%d characters", "%d characters", count) % count
+
 
 def selected_character_count(count):
     """Returns a string description of the number of selected characters in a string."""
@@ -2493,6 +2481,7 @@ def selected_character_count(count):
     # selected in a body of text.
     return ngettext("%d character selected", "%d characters selected", count) % count
 
+
 def unselected_character_count(count):
     """Returns a string description of the number of unselected characters in a string."""
 
@@ -2500,15 +2489,15 @@ def unselected_character_count(count):
     # unselected in a body of text.
     return ngettext("%d character unselected", "%d characters unselected", count) % count
 
+
 def characters_too_long(count):
     """Returns a string description of the number of characters that don't fit in a cell."""
 
     # Translators: People can enter a string of text that is too wide to be
     # fully displayed in a spreadsheet cell. This message will be spoken if
     # such a cell is encountered.
-    return ngettext("%d character too long",
-                    "%d characters too long",
-                    count) % count
+    return ngettext("%d character too long", "%d characters too long", count) % count
+
 
 def dialog_count_braille(count):
     """Returns a string description for braille of the number of unfocused alerts and dialogs."""
@@ -2518,6 +2507,7 @@ def dialog_count_braille(count):
     # end of a braille message containing the app which just claimed focus.
     return ngettext("(%d dialog)", "(%d dialogs)", count) % count
 
+
 def dialog_count_speech(count):
     """Returns a string description for speech of the number of unfocused alerts and dialogs."""
 
@@ -2526,11 +2516,13 @@ def dialog_count_speech(count):
     # end of a spoken message containing the app which just claimed focus.
     return ngettext("%d unfocused dialog", "%d unfocused dialogs", count) % count
 
+
 def file_size_bytes(size):
     """Returns a string description of the size of a file in bytes."""
 
     # Translators: This is the size of a file in bytes
     return ngettext("%d byte", "%d bytes", size) % size
+
 
 def files_found(count):
     """Returns a string description of the number of files found."""
@@ -2538,6 +2530,7 @@ def files_found(count):
     # Translators: This message informs the user hoq many files were found as
     # a result of a search.
     return ngettext("%d file found", "%d files found", count) % count
+
 
 def form_count(count, only_if_found=True):
     """Returns a string description of the number of forms in a document."""
@@ -2548,6 +2541,7 @@ def form_count(count, only_if_found=True):
     # Translators: This message presents the number of forms in a document.
     return ngettext("%d form", "%d forms", count) % count
 
+
 def heading_count(count, only_if_found=True):
     """Returns a string description of the number of headings in a document."""
 
@@ -2557,12 +2551,14 @@ def heading_count(count, only_if_found=True):
     # Translators: This message presents the number of headings in a document.
     return ngettext("%d heading", "%d headings", count) % count
 
+
 def item_count(count):
     """Returns a string description of the number of items in a layered pane or table."""
 
     # Translators: This message presents the number of items in a layered pane
     # or table.
     return ngettext("%d item", "%d items", count) % count
+
 
 def landmark_count(count, only_if_found=True):
     """Returns a string description of the number of landmarks in a document."""
@@ -2575,6 +2571,7 @@ def landmark_count(count, only_if_found=True):
     # identify important part of webpage like banners, main context, search etc.
     return ngettext("%d landmark", "%d landmarks", count) % count
 
+
 def items_found(count):
     """Returns a string description of the number of items found in a search."""
 
@@ -2582,6 +2579,7 @@ def items_found(count):
     # of, objects based on one or more criteria. This is a message that will be
     # presented to the user to indicate how many matching items were found.
     return ngettext("%d item found", "%d items found", count) % count
+
 
 def leaving_n_blockquotes(count):
     """Returns a string description of the number of blockquotes being exited."""
@@ -2591,12 +2589,14 @@ def leaving_n_blockquotes(count):
     # and then navigates out of several levels at once.
     return ngettext("Leaving %d blockquote.", "Leaving %d blockquotes.", count) % count
 
+
 def leaving_n_lists(count):
     """Returns a string description of the number of lists being exited."""
 
     # Translators: This message is presented when a user is navigating within a
     # series of nested lists and then navigates out of several levels at once.
     return ngettext("Leaving %d list.", "Leaving %d lists.", count) % count
+
 
 def list_item_count(count):
     """Returns a string description of the number of items in a list."""
@@ -2613,12 +2613,14 @@ def list_item_count(count):
     # Translators: This message describes a bulleted or numbered list.
     return ngettext("List with %d item", "List with %d items", count) % count
 
+
 def nested_list_item_count(count):
     """Returns a string description of the number of items in a nested list."""
 
     # Translators: This message describes the number of items of a bulleted or numbered list
     # that is inside of another list.
     return ngettext("Nested list with %d item", "Nested list with %d items", count) % count
+
 
 def feed_article_count(count):
     """Returns a string description of the number of articles in a feed."""
@@ -2635,14 +2637,17 @@ def feed_article_count(count):
     # social media posts, etc.) in a feed.
     return ngettext("Feed with %d article", "Feed with %d articles", count) % count
 
+
 def description_list_term_count(count):
     """Returns a string description of the number of terms in a description list."""
 
     # Translators: This message describes a description list.
     # See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
     # Note that the "term" here corresponds to the "dt" element
-    return ngettext("Description list with %d term",
-                    "Description list with %d terms", count) % count
+    return (
+        ngettext("Description list with %d term", "Description list with %d terms", count) % count
+    )
+
 
 def tab_list_item_count(count):
     """Returns a string description of the number of items in a tab list."""
@@ -2650,6 +2655,7 @@ def tab_list_item_count(count):
     # Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
     # example of a "tab list". This message describes the tab list to the user.
     return ngettext("Tab list with %d tab", "Tab list with %d tabs", count) % count
+
 
 def value_count_for_term(count):
     """Returns a string description of the number of values for a term in a description list."""
@@ -2660,20 +2666,18 @@ def value_count_for_term(count):
     # See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
     return ngettext("%d value", "%d values", count) % count
 
+
 def math_table_size(n_rows, n_columns):
     """Returns a string description of the size of a mathematical table."""
 
     # Translators: this represents the number of rows in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-    row_string = ngettext("math table with %d row",
-                          "math table with %d rows",
-                          n_rows) % n_rows
+    row_string = ngettext("math table with %d row", "math table with %d rows", n_rows) % n_rows
     # Translators: this represents the number of columns in a mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-    col_string = ngettext("%d column",
-                          "%d columns",
-                          n_columns) % n_columns
+    col_string = ngettext("%d column", "%d columns", n_columns) % n_columns
     return row_string + " " + col_string
+
 
 def math_nested_table_size(n_rows, n_columns):
     """Returns a string description of the size of a nested mathematical table."""
@@ -2681,17 +2685,16 @@ def math_nested_table_size(n_rows, n_columns):
     # Translators: this represents the number of rows in a mathematical table
     # which is nested inside another mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-    row_string = ngettext("nested math table with %d row",
-                          "nested math table with %d rows",
-                           n_rows) % n_rows
+    row_string = (
+        ngettext("nested math table with %d row", "nested math table with %d rows", n_rows) % n_rows
+    )
     # Translators: this represents the number of rows in a mathematic table
     # which is nested inside another mathematical table.
     # See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-    col_string = ngettext("%d column",
-                          "%d columns",
-                           n_columns) % n_columns
+    col_string = ngettext("%d column", "%d columns", n_columns) % n_columns
 
     return row_string + " " + col_string
+
 
 def messages_count(count):
     """Returns a string description of the number of messages in a list."""
@@ -2700,6 +2703,7 @@ def messages_count(count):
     # messages in a list.
     return ngettext("%d message.\n", "%d messages.\n", count) % count
 
+
 def percentage(value):
     """Returns a string description of a percentage value."""
 
@@ -2707,15 +2711,15 @@ def percentage(value):
     # a slider, progress bar, or other such component.
     return ngettext("%d percent.", "%d percent.", value) % value
 
+
 def percent_read(value):
     """Returns a string description of the percentage of a document that has been read."""
 
     # Translators: This message announces the percentage of the document that
     # has been read. The value is calculated by knowing the index of the current
     # position divided by the total number of objects on the page.
-    return ngettext ("%d percent of document read",
-                     "%d percent of document read",
-                     value) % value
+    return ngettext("%d percent of document read", "%d percent of document read", value) % value
+
 
 def pixel_count(n_pixels):
     """Returns a string description of the number of pixels in a measurement."""
@@ -2724,24 +2728,27 @@ def pixel_count(n_pixels):
     # a margin, indentation, font size, etc.
     return ngettext("%d pixel", "%d pixels", n_pixels) % n_pixels
 
+
 def repeated_char_count(repeated_char, count):
     """Returns a string description of the number of repeated characters in a line."""
 
     # Translators: Orca will tell you how many characters are repeated on a line
     # of text. For example: "22 space characters". The %d is the number and the
     # %s is the spoken word for the character.
-    return ngettext("%(count)d %(repeatChar)s character",
-                    "%(count)d %(repeatChar)s characters",
-                    count) % {"count" : count, "repeatChar": repeated_char}
+    return ngettext(
+        "%(count)d %(repeatChar)s character", "%(count)d %(repeatChar)s characters", count
+    ) % {"count": count, "repeatChar": repeated_char}
+
 
 def selected_items_count(selected, total):
     """Returns a string description of the number of selected items in a group."""
 
     # Translators: This message is presented to indicate the number of selected
     # objects (e.g. icons) and the total number of those objects.
-    return ngettext("%(index)d of %(total)d item selected",
-                    "%(index)d of %(total)d items selected",
-                    total) % {"index" : selected, "total" : total}
+    return ngettext(
+        "%(index)d of %(total)d item selected", "%(index)d of %(total)d items selected", total
+    ) % {"index": selected, "total": total}
+
 
 def shortcuts_found_orca(count):
     """Returns a string description of the number of Orca shortcuts found."""
@@ -2749,9 +2756,11 @@ def shortcuts_found_orca(count):
     # Translators: This message is presented when the user is in a list of
     # shortcuts associated with Orca commands. It appears as the title of the
     # dialog containing the list.
-    return ngettext("%d Screen reader shortcut found.",
-                    "%d Screen reader shortcuts found.",
-                    count) % count
+    return (
+        ngettext("%d Screen reader shortcut found.", "%d Screen reader shortcuts found.", count)
+        % count
+    )
+
 
 def spaces_count(count):
     """Returns a string description of the number of space characters in a string."""
@@ -2760,12 +2769,14 @@ def spaces_count(count):
     # space characters in a string.
     return ngettext("%d space", "%d spaces", count) % count
 
+
 def tabs_count(count):
     """Returns a string description of the number of tab characters in a string."""
 
     # Translators: This message is presented to inform the user of the number of
     # tab characters in a string.
     return ngettext("%d tab", "%d tabs", count) % count
+
 
 def table_count(count, only_if_found=True):
     """Returns a string description of the number of tables in a document."""
@@ -2775,6 +2786,7 @@ def table_count(count, only_if_found=True):
 
     # Translators: This message presents the number of tables in a document.
     return ngettext("%d table", "%d tables", count) % count
+
 
 def table_size(n_rows, n_columns):
     """Returns a string description of the size of a table."""
@@ -2790,29 +2802,36 @@ def table_size(n_rows, n_columns):
         # Translators: This message describes a table for which the number of
         # rows is unknown, but the number of columns is known. This might occur
         # in a vertically infinitely scrollable table or grid on the web.
-        return ngettext("table with %d column, row count unknown",
-                        "table with %d columns, row count unknown",
-                        n_columns) % n_columns
+        return (
+            ngettext(
+                "table with %d column, row count unknown",
+                "table with %d columns, row count unknown",
+                n_columns,
+            )
+            % n_columns
+        )
 
     if n_columns == -1:
         # Translators: This message describes a table for which the number of
         # columns is unknown, but the number of rows is known. This might occur
         # in a horizontally infinitely scrollable table or grid on the web.
-        return ngettext("table with %d row, column count unknown",
-                        "table with %d rows, column count unknown",
-                        n_rows) % n_rows
+        return (
+            ngettext(
+                "table with %d row, column count unknown",
+                "table with %d rows, column count unknown",
+                n_rows,
+            )
+            % n_rows
+        )
 
     # Translators: this represents the number of rows in a table.
-    row_string = ngettext("table with %d row",
-                         "table with %d rows",
-                         n_rows) % n_rows
+    row_string = ngettext("table with %d row", "table with %d rows", n_rows) % n_rows
 
     # Translators: this represents the number of columns in a table.
-    col_string = ngettext("%d column",
-                         "%d columns",
-                         n_columns) % n_columns
+    col_string = ngettext("%d column", "%d columns", n_columns) % n_columns
 
     return row_string + " " + col_string
+
 
 def seconds_ago(count):
     """Returns a string description of how long ago something took place in seconds."""
@@ -2821,12 +2840,14 @@ def seconds_ago(count):
     # place in terms of seconds.
     return ngettext("%d second ago", "%d seconds ago", count) % count
 
+
 def minutes_ago(count):
     """Returns a string description of how long ago something took place in minutes."""
 
     # Translators: This message informs the user how long ago something took
     # place in terms of minutes.
     return ngettext("%d minute ago", "%d minutes ago", count) % count
+
 
 def hours_ago(count):
     """Returns a string description of how long ago something took place in hours."""
@@ -2835,12 +2856,14 @@ def hours_ago(count):
     # place in terms of hours.
     return ngettext("%d hour ago", "%d hours ago", count) % count
 
+
 def days_ago(count):
     """Returns a string description of how long ago something took place in days."""
 
     # Translators: This message informs the user how long ago something took
     # place in terms of days.
     return ngettext("%d day ago", "%d days ago", count) % count
+
 
 def memory_usage_gb(used, total):
     """Returns a string description of the memory usage in GB."""
@@ -2849,12 +2872,14 @@ def memory_usage_gb(used, total):
     # message presents the amount of memory used and total amount in GB.
     return f"{used:.1f} of {total:.1f} GB used."
 
+
 def memory_usage_mb(used, total):
     """Returns a string description of the memory usage in MB."""
 
     # Translators: Orca has a command to report CPU and memory usage levels. This
     # message presents the amount of memory used and total amount in MB.
     return f"{used:.1f} of {total:.1f} MB used."
+
 
 def unvisited_link_count(count, only_if_found=True):
     """Returns a string description of the number of unvisited links in a document."""
@@ -2865,6 +2890,7 @@ def unvisited_link_count(count, only_if_found=True):
     # Translators: This message presents the number of unvisited links in a
     # document.
     return ngettext("%d unvisited link", "%d unvisited links", count) % count
+
 
 def visited_link_count(count, only_if_found=True):
     """Returns a string description of the number of visited links in a document."""

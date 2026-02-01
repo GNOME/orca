@@ -38,7 +38,8 @@ from . import guilabels
 from . import input_event_manager
 from . import preferences_grid_base
 from . import settings
-from .orca_platform import tablesdir # pylint: disable=import-error
+from .orca_platform import tablesdir  # pylint: disable=import-error
+
 
 class VerbosityLevel(Enum):
     """Verbosity level enumeration with int values from settings."""
@@ -51,6 +52,7 @@ class VerbosityLevel(Enum):
         """Returns the lowercase string name for this enum value."""
 
         return self.name.lower()
+
 
 class BrailleIndicator(Enum):
     """Braille indicator enumeration with int values from settings."""
@@ -77,13 +79,13 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=presenter._get_verbosity_is_detailed,
                 setter=presenter._set_verbosity_is_detailed,
-                prefs_key="brailleVerbosityLevel"
+                prefs_key="brailleVerbosityLevel",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_SHOW_CONTEXT,
                 getter=presenter.get_display_ancestors,
                 setter=presenter.set_display_ancestors,
-                prefs_key="enableBrailleContext"
+                prefs_key="enableBrailleContext",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ABBREVIATED_ROLE_NAMES,
@@ -94,7 +96,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.PRESENT_OBJECT_MNEMONICS,
                 getter=presenter.get_present_mnemonics,
                 setter=presenter.set_present_mnemonics,
-                prefs_key="displayObjectMnemonic"
+                prefs_key="displayObjectMnemonic",
             ),
         ]
 
@@ -120,7 +122,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
             label=guilabels.BRAILLE_ENABLE_CONTRACTED_BRAILLE,
             getter=presenter.get_contracted_braille_is_enabled,
             setter=presenter.set_contracted_braille_is_enabled,
-            prefs_key="enableContractedBraille"
+            prefs_key="enableContractedBraille",
         )
 
         controls: list[
@@ -131,13 +133,13 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 label=guilabels.BRAILLE_DISABLE_END_OF_LINE_SYMBOL,
                 getter=presenter._get_disable_eol,
                 setter=presenter._set_disable_eol,
-                prefs_key="disableBrailleEOL"
+                prefs_key="disableBrailleEOL",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
                 getter=presenter.get_word_wrap_is_enabled,
                 setter=presenter.set_word_wrap_is_enabled,
-                prefs_key="enableBrailleWordWrap"
+                prefs_key="enableBrailleWordWrap",
             ),
             self._enable_contracted_control,
             preferences_grid_base.BooleanPreferenceControl(
@@ -145,7 +147,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 getter=presenter.get_computer_braille_at_cursor_is_enabled,
                 setter=presenter.set_computer_braille_at_cursor_is_enabled,
                 prefs_key="enableComputerBrailleAtCursor",
-                determine_sensitivity=self._contracted_enabled
+                determine_sensitivity=self._contracted_enabled,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.BRAILLE_CONTRACTION_TABLE,
@@ -154,7 +156,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 getter=presenter.get_contraction_table_path,
                 setter=presenter.set_contraction_table_from_path,
                 prefs_key="brailleContractionTable",
-                determine_sensitivity=self._contracted_enabled
+                determine_sensitivity=self._contracted_enabled,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.BRAILLE_HYPERLINK_INDICATOR,
@@ -162,18 +164,18 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     guilabels.BRAILLE_DOT_NONE,
                     guilabels.BRAILLE_DOT_7,
                     guilabels.BRAILLE_DOT_8,
-                    guilabels.BRAILLE_DOT_7_8
+                    guilabels.BRAILLE_DOT_7_8,
                 ],
                 values=[
                     settings.BRAILLE_UNDERLINE_NONE,
                     settings.BRAILLE_UNDERLINE_7,
                     settings.BRAILLE_UNDERLINE_8,
-                    settings.BRAILLE_UNDERLINE_BOTH
+                    settings.BRAILLE_UNDERLINE_BOTH,
                 ],
                 getter=presenter._get_link_indicator_as_int,
                 setter=presenter.set_link_indicator_from_int,
                 prefs_key="brailleLinkIndicator",
-                member_of=guilabels.BRAILLE_INDICATORS
+                member_of=guilabels.BRAILLE_INDICATORS,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.BRAILLE_SELECTION_INDICATOR,
@@ -181,18 +183,18 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     guilabels.BRAILLE_DOT_NONE,
                     guilabels.BRAILLE_DOT_7,
                     guilabels.BRAILLE_DOT_8,
-                    guilabels.BRAILLE_DOT_7_8
+                    guilabels.BRAILLE_DOT_7_8,
                 ],
                 values=[
                     settings.BRAILLE_UNDERLINE_NONE,
                     settings.BRAILLE_UNDERLINE_7,
                     settings.BRAILLE_UNDERLINE_8,
-                    settings.BRAILLE_UNDERLINE_BOTH
+                    settings.BRAILLE_UNDERLINE_BOTH,
                 ],
                 getter=presenter._get_selector_indicator_as_int,
                 setter=presenter.set_selector_indicator_from_int,
                 prefs_key="brailleSelectorIndicator",
-                member_of=guilabels.BRAILLE_INDICATORS
+                member_of=guilabels.BRAILLE_INDICATORS,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.BRAILLE_TEXT_ATTRIBUTES_INDICATOR,
@@ -200,18 +202,18 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     guilabels.BRAILLE_DOT_NONE,
                     guilabels.BRAILLE_DOT_7,
                     guilabels.BRAILLE_DOT_8,
-                    guilabels.BRAILLE_DOT_7_8
+                    guilabels.BRAILLE_DOT_7_8,
                 ],
                 values=[
                     settings.BRAILLE_UNDERLINE_NONE,
                     settings.BRAILLE_UNDERLINE_7,
                     settings.BRAILLE_UNDERLINE_8,
-                    settings.BRAILLE_UNDERLINE_BOTH
+                    settings.BRAILLE_UNDERLINE_BOTH,
                 ],
                 getter=presenter._get_text_attributes_indicator_as_int,
                 setter=presenter.set_text_attributes_indicator_from_int,
                 prefs_key="textAttributesBrailleIndicator",
-                member_of=guilabels.BRAILLE_INDICATORS
+                member_of=guilabels.BRAILLE_INDICATORS,
             ),
         ]
 
@@ -233,7 +235,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
             label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
             getter=presenter.get_flash_messages_are_persistent,
             setter=presenter.set_flash_messages_are_persistent,
-            prefs_key="flashIsPersistent"
+            prefs_key="flashIsPersistent",
         )
 
         controls: list[
@@ -244,13 +246,13 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 label=guilabels.BRAILLE_ENABLE_FLASH_MESSAGES,
                 getter=presenter.get_flash_messages_are_enabled,
                 setter=presenter.set_flash_messages_are_enabled,
-                prefs_key="enableFlashMessages"
+                prefs_key="enableFlashMessages",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_MESSAGES_ARE_DETAILED,
                 getter=presenter.get_flash_messages_are_detailed,
                 setter=presenter.set_flash_messages_are_detailed,
-                prefs_key="flashIsDetailed"
+                prefs_key="flashIsDetailed",
             ),
             self._flash_persistent_control,
             preferences_grid_base.IntRangePreferenceControl(
@@ -259,7 +261,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 maximum=100,
                 getter=presenter._get_flash_duration_seconds,
                 setter=presenter._set_flash_duration_seconds,
-                determine_sensitivity=self._flash_not_persistent
+                determine_sensitivity=self._flash_not_persistent,
             ),
         ]
 
@@ -288,7 +290,7 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                 label=guilabels.GENERAL_BRAILLE_UPDATES,
                 getter=presenter.get_braille_progress_bar_updates,
                 setter=presenter.set_braille_progress_bar_updates,
-                prefs_key="brailleProgressBarUpdates"
+                prefs_key="brailleProgressBarUpdates",
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
@@ -296,7 +298,7 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                 setter=presenter.set_progress_bar_braille_interval,
                 prefs_key="progressBarBrailleInterval",
                 minimum=0,
-                maximum=100
+                maximum=100,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.GENERAL_APPLIES_TO,
@@ -312,7 +314,7 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                     settings.PROGRESS_BAR_ALL,
                     settings.PROGRESS_BAR_APPLICATION,
                     settings.PROGRESS_BAR_WINDOW,
-                ]
+                ],
             ),
         ]
 
@@ -325,9 +327,8 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def __init__(
         self,
         presenter: BraillePresenter,
-        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None,
     ) -> None:
-
         super().__init__(guilabels.BRAILLE)
         self._presenter = presenter
         self._initializing = True
@@ -360,7 +361,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             enable_setter=self._presenter.set_braille_is_enabled,
             categories=categories,
             title_change_callback=self._title_change_callback,
-            main_title=guilabels.BRAILLE
+            main_title=guilabels.BRAILLE,
         )
 
         self.attach(enable_listbox, 0, row, 1, 1)
@@ -423,8 +424,7 @@ class BraillePresenter:
         controller.register_decorated_module("BraillePresenter", self)
 
     def create_preferences_grid(
-        self,
-        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+        self, title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
     ) -> BraillePreferencesGrid:
         """Returns the GtkGrid containing the preferences UI."""
 
@@ -957,6 +957,7 @@ class BraillePresenter:
 
 
 _presenter: BraillePresenter = BraillePresenter()
+
 
 def get_presenter() -> BraillePresenter:
     """Returns the Braille Presenter"""

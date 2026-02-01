@@ -95,11 +95,13 @@ from orca.ax_value import AXValue
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     gi.require_version("Gtk", "3.0")
     from gi.repository import Atspi, Gtk
 
     from orca.sound_generator import Icon, Tone
+
 
 class Script(script.Script):
     """The default Script for presenting information to the user."""
@@ -124,7 +126,7 @@ class Script(script.Script):
         listeners["object:column-reordered"] = self.on_column_reordered
         listeners["object:property-change:accessible-description"] = self.on_description_changed
         listeners["object:property-change:accessible-name"] = self.on_name_changed
-        listeners["object:property-change:accessible-value"] =  self.on_value_changed
+        listeners["object:property-change:accessible-value"] = self.on_value_changed
         listeners["object:row-reordered"] = self.on_row_reordered
         listeners["object:selection-changed"] = self.on_selection_changed
         listeners["object:state-changed:active"] = self.on_active_changed
@@ -350,8 +352,12 @@ class Script(script.Script):
             bb = braille_bindings.get(name, ())
             manager.add_command(
                 command_manager.BrailleCommand(
-                    name, function, group_label, description, braille_bindings=bb,
-                    executes_in_learn_mode=executes_in_learn_mode
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    braille_bindings=bb,
+                    executes_in_learn_mode=executes_in_learn_mode,
                 )
             )
 
@@ -412,8 +418,7 @@ class Script(script.Script):
         if learn_mode_presenter.get_presenter().is_active():
             learn_mode_presenter.get_presenter().quit()
 
-        document_presenter.get_presenter().update_mode_if_needed(
-            self, old_focus, new_focus)
+        document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
 
         active_window = self.utilities.top_level_object(new_focus)
         focus_manager.get_manager().set_active_window(active_window)
@@ -422,12 +427,9 @@ class Script(script.Script):
         if old_focus is None:
             old_focus = active_window
 
-        utterances = self.speech_generator.generate_speech(
-            new_focus,
-            priorObj=old_focus)
+        utterances = self.speech_generator.generate_speech(new_focus, priorObj=old_focus)
 
-        if self.utilities.should_interrupt_for_locus_of_focus_change(
-           old_focus, new_focus, event):
+        if self.utilities.should_interrupt_for_locus_of_focus_change(old_focus, new_focus, event):
             self.interrupt_presentation()
         speech.speak(utterances, interrupt=False)
         return True
@@ -456,7 +458,8 @@ class Script(script.Script):
             presenter.suspend_navigators(self, False, reason)
             structural_navigator.get_navigator().set_mode(self, self._default_sn_mode)
             caret_navigator.get_navigator().set_enabled_for_script(
-                self, self._default_caret_navigation_enabled)
+                self, self._default_caret_navigation_enabled
+            )
 
         command_manager.get_manager().activate_commands(f"activated {self.name}")
 
@@ -501,9 +504,7 @@ class Script(script.Script):
     ########################################################################
 
     def show_app_preferences_gui(
-        self,
-        script: Script | None = None,
-        _event: input_event.InputEvent | None = None
+        self, script: Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Shows the app Preferences dialog."""
 
@@ -515,9 +516,7 @@ class Script(script.Script):
         return True
 
     def show_preferences_gui(
-        self,
-        _script: Script | None = None,
-        _event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Displays the Preferences dialog."""
 
@@ -528,9 +527,7 @@ class Script(script.Script):
         return True
 
     def quit_orca(
-        self,
-        _script: Script | None = None,
-        _event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Quit Orca."""
 
@@ -541,12 +538,14 @@ class Script(script.Script):
         self,
         _script: Script | None = None,
         event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        pan_amount: int = 0,
     ) -> bool:
         """Pans the braille display to the left."""
 
-        if isinstance(event, input_event.KeyboardEvent) \
-           and not braille_presenter.get_presenter().use_braille():
+        if (
+            isinstance(event, input_event.KeyboardEvent)
+            and not braille_presenter.get_presenter().use_braille()
+        ):
             msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -554,9 +553,7 @@ class Script(script.Script):
         return self._pan_braille_left(event, pan_amount)
 
     def _pan_braille_left(
-        self,
-        event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
     ) -> bool:
         """Pans the braille display to the left.  If pan_amount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
@@ -605,12 +602,14 @@ class Script(script.Script):
         self,
         _script: Script | None = None,
         event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        pan_amount: int = 0,
     ) -> bool:
         """Pans the braille display to the right."""
 
-        if isinstance(event, input_event.KeyboardEvent) \
-           and not braille_presenter.get_presenter().use_braille():
+        if (
+            isinstance(event, input_event.KeyboardEvent)
+            and not braille_presenter.get_presenter().use_braille()
+        ):
             msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -618,9 +617,7 @@ class Script(script.Script):
         return self._pan_braille_right(event, pan_amount)
 
     def _pan_braille_right(
-        self,
-        event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
     ) -> bool:
         """Pans the braille display to the right.  If pan_amount is non-zero,
         the display is panned by that many cells.  If it is 0, the display
@@ -656,9 +653,7 @@ class Script(script.Script):
         return True
 
     def go_braille_home(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Returns to the component with focus."""
 
@@ -670,9 +665,7 @@ class Script(script.Script):
         return braille.returnToRegionWithFocus(event)
 
     def set_contracted_braille(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Toggles contracted braille."""
 
@@ -680,9 +673,7 @@ class Script(script.Script):
         return True
 
     def process_routing_key(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Processes a cursor routing key."""
 
@@ -694,9 +685,7 @@ class Script(script.Script):
         return True
 
     def process_braille_cut_begin(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Clears the selection and moves the caret offset in the currently
         active text area.
@@ -712,9 +701,7 @@ class Script(script.Script):
         return True
 
     def process_braille_cut_line(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
@@ -726,7 +713,7 @@ class Script(script.Script):
         self.interrupt_presentation()
         start_offset = AXText.get_selection_start_offset(obj)
         end_offset = AXText.get_selection_end_offset(obj)
-        if (start_offset < 0 or end_offset < 0):
+        if start_offset < 0 or end_offset < 0:
             caret_offset = AXText.get_caret_offset(obj)
             start_offset = min(offset, caret_offset)
             end_offset = max(offset, caret_offset)
@@ -737,9 +724,7 @@ class Script(script.Script):
         return True
 
     def route_pointer_to_item(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Moves the mouse pointer to the current item."""
 
@@ -748,8 +733,9 @@ class Script(script.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if ax_event_synthesizer.get_synthesizer().route_to_character(focus) \
-           or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
+        if ax_event_synthesizer.get_synthesizer().route_to_character(
+            focus
+        ) or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
             self.present_message(messages.MOUSE_MOVED_SUCCESS)
             return True
 
@@ -759,9 +745,7 @@ class Script(script.Script):
         return False
 
     def left_click_item(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Performs a left mouse button click on the current item."""
 
@@ -788,9 +772,7 @@ class Script(script.Script):
         return False
 
     def right_click_item(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Performs a right mouse button click on the current item."""
 
@@ -846,7 +828,8 @@ class Script(script.Script):
                 msg = "DEFAULT: Updating active window."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_active_window(
-                    window, set_window_as_focus=True, notify_script=True)
+                    window, set_window_as_focus=True, notify_script=True
+                )
 
         return True
 
@@ -858,7 +841,7 @@ class Script(script.Script):
 
         return True
 
-    def on_busy_changed(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_busy_changed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for object:state-changed:busy accessibility events."""
 
         return True
@@ -913,10 +896,12 @@ class Script(script.Script):
         manager.set_last_cursor_position(event.source, offset)
         self.utilities.set_caret_context(event.source, offset)
 
-        ignore = [TextEventReason.CUT,
-                  TextEventReason.PASTE,
-                  TextEventReason.REDO,
-                  TextEventReason.UNDO]
+        ignore = [
+            TextEventReason.CUT,
+            TextEventReason.PASTE,
+            TextEventReason.REDO,
+            TextEventReason.UNDO,
+        ]
         if reason in ignore:
             msg = f"DEFAULT: Ignoring event due to reason ({reason})"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -947,22 +932,22 @@ class Script(script.Script):
             self.present_message(event.any_data)
         return True
 
-    def on_document_attributes_changed(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_document_attributes_changed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for document:attributes-changed accessibility events."""
 
         return True
 
-    def on_document_reload(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_document_reload(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for document:reload accessibility events."""
 
         return True
 
-    def on_document_load_complete(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_document_load_complete(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for document:load-complete accessibility events."""
 
         return True
 
-    def on_document_load_stopped(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_document_load_stopped(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for document:load-stopped accessibility events."""
 
         return True
@@ -1071,8 +1056,9 @@ class Script(script.Script):
         manager = input_event_manager.get_manager()
         if manager.last_event_was_space():
             announce_state = True
-        elif (manager.last_event_was_up() or manager.last_event_was_down()) \
-                and AXUtilities.is_table_cell(event.source):
+        elif (
+            manager.last_event_was_up() or manager.last_event_was_down()
+        ) and AXUtilities.is_table_cell(event.source):
             announce_state = AXUtilities.is_selected(event.source)
 
         if not announce_state:
@@ -1134,10 +1120,13 @@ class Script(script.Script):
 
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
             if AXUtilities.is_focused(
-                 AXObject.find_descendant(event.source, AXUtilities.is_text_input)):
+                AXObject.find_descendant(event.source, AXUtilities.is_text_input)
+            ):
                 return True
-        elif AXUtilities.is_page_tab_list(event.source) \
-            and flat_review_presenter.get_presenter().is_active():
+        elif (
+            AXUtilities.is_page_tab_list(event.source)
+            and flat_review_presenter.get_presenter().is_active()
+        ):
             # If a wizard-like notebook page being reviewed changes, we might not get
             # any events to update the locusOfFocus. As a result, subsequent flat
             # review commands will continue to present the stale content.
@@ -1163,9 +1152,12 @@ class Script(script.Script):
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
 
-            if AXUtilities.is_page_tab(child) and focus \
-               and AXObject.get_name(child) == AXObject.get_name(focus) \
-               and not AXUtilities.is_focused(event.source):
+            if (
+                AXUtilities.is_page_tab(child)
+                and focus
+                and AXObject.get_name(child) == AXObject.get_name(focus)
+                and not AXUtilities.is_focused(event.source)
+            ):
                 tokens = ["DEFAULT:", child, "'s selection redundant to", focus]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 break
@@ -1359,8 +1351,10 @@ class Script(script.Script):
                 text = manager.adjust_for_presentation(event.source, text)
                 self.speak_message(text, voice)
 
-        if len(text) != 1 \
-           or reason not in [TextEventReason.TYPING, TextEventReason.TYPING_ECHOABLE]:
+        if len(text) != 1 or reason not in [
+            TextEventReason.TYPING,
+            TextEventReason.TYPING_ECHOABLE,
+        ]:
             return True
 
         presenter = typing_echo_presenter.get_presenter()
@@ -1458,10 +1452,16 @@ class Script(script.Script):
             self.interrupt_presentation()
 
         self.update_braille(event.source, isProgressBarUpdate=is_progress_bar_update)
-        speech.speak(self.speech_generator.generate_speech(
-            event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update))
-        self.__play(self.sound_generator.generate_sound(
-            event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update))
+        speech.speak(
+            self.speech_generator.generate_speech(
+                event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update
+            )
+        )
+        self.__play(
+            self.sound_generator.generate_sound(
+                event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update
+            )
+        )
         return True
 
     def on_window_activated(self, event: Atspi.Event) -> bool:
@@ -1499,12 +1499,12 @@ class Script(script.Script):
             manager.set_locus_of_focus(event, event.source)
         return True
 
-    def on_window_created(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_window_created(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for window:create accessibility events."""
 
         return True
 
-    def on_window_destroyed(self, event: Atspi.Event) -> bool: # pylint: disable=unused-argument
+    def on_window_destroyed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for window:destroy accessibility events."""
 
         return True
@@ -1574,7 +1574,7 @@ class Script(script.Script):
         self,
         event: Atspi.Event,
         obj: Atspi.Accessible | None = None,
-        reason: TextEventReason = TextEventReason.UNKNOWN
+        reason: TextEventReason = TextEventReason.UNKNOWN,
     ) -> bool:
         """Presents text at the new position, based on heuristics. Returns True if handled."""
 
@@ -1636,7 +1636,8 @@ class Script(script.Script):
 
         character, start_offset, end_offset = AXText.get_character_at_offset(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
+            obj, start_offset, end_offset, focus_manager.CARET_TRACKING
+        )
 
         if not character or character == "\r":
             character = "\n"
@@ -1682,7 +1683,8 @@ class Script(script.Script):
 
             end_offset = start_offset + len(line)
             focus_manager.get_manager().emit_region_changed(
-                obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
+                obj, start_offset, end_offset, focus_manager.CARET_TRACKING
+            )
 
             utterance = []
             split = self.utilities.split_substring_by_language(obj, start_offset, end_offset)
@@ -1696,7 +1698,8 @@ class Script(script.Script):
 
                 # TODO - JD: This needs to be done in the generators.
                 voice = self.speech_generator.voice(
-                    obj=obj, string=text, language=language, dialect=dialect)
+                    obj=obj, string=text, language=language, dialect=dialect
+                )
                 text = manager.adjust_for_presentation(obj, text, start)
 
                 # Some synthesizers will verbalize initial whitespace.
@@ -1724,7 +1727,8 @@ class Script(script.Script):
                 self.speak_message(result)
 
             focus_manager.get_manager().emit_region_changed(
-                obj, start_offset, end_offset, focus_manager.CARET_TRACKING)
+                obj, start_offset, end_offset, focus_manager.CARET_TRACKING
+            )
 
             voice = self.speech_generator.voice(obj=obj, string=phrase)
             phrase = manager.adjust_for_presentation(obj, phrase)
@@ -1745,8 +1749,9 @@ class Script(script.Script):
         else:
             offset = AXText.get_caret_offset(obj)
 
-        word, start_offset, end_offset = \
-            self.utilities.get_word_at_offset_adjusted_for_navigation(obj, offset)
+        word, start_offset, end_offset = self.utilities.get_word_at_offset_adjusted_for_navigation(
+            obj, offset
+        )
 
         speech_manager = speech_and_verbosity_manager.get_manager()
         if "\n" in word:
@@ -1772,10 +1777,7 @@ class Script(script.Script):
             word = AXText.get_substring(obj, start_offset, end_offset)
 
         text = word.replace("\n", "\\n")
-        msg = (
-            f"DEFAULT: Final word at offset {offset} is '{text}' "
-            f"({start_offset}-{end_offset})"
-        )
+        msg = f"DEFAULT: Final word at offset {offset} is '{text}' ({start_offset}-{end_offset})"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if error := speech_manager.get_error_description(obj, start_offset):
@@ -1801,9 +1803,7 @@ class Script(script.Script):
         speech.speak(utterances, interrupt=interrupt)
 
     def speak_contents(
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
+        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
     ) -> None:
         """Speaks the specified contents."""
 
@@ -1813,9 +1813,7 @@ class Script(script.Script):
         speech.speak(utterances)
 
     def display_contents(
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
+        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
     ) -> None:
         """Displays contents in braille."""
 
@@ -1835,8 +1833,12 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        tokens = ["DEFAULT: Generated result", regions_list,
-                  "focused region", focused_region or "None"]
+        tokens = [
+            "DEFAULT: Generated result",
+            regions_list,
+            "focused region",
+            focused_region or "None",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for regions in regions_list:
@@ -1884,7 +1886,7 @@ class Script(script.Script):
         brief: str | None = None,
         voice: ACSS | None = None,
         reset_styles: bool = True,
-        force: bool = False
+        force: bool = False,
     ) -> None:
         """Convenience method to speak a message and 'flash' it in braille."""
 
@@ -1972,7 +1974,7 @@ class Script(script.Script):
         interrupt: bool = True,
         reset_styles: bool = True,
         force: bool = False,
-        obj: Atspi.Accessible | None = None
+        obj: Atspi.Accessible | None = None,
     ) -> None:
         """Method to speak a single string."""
 
@@ -1985,8 +1987,9 @@ class Script(script.Script):
             return
 
         speech_manager = speech_and_verbosity_manager.get_manager()
-        if speech_manager.get_speech_is_muted() \
-           or (speech_manager.get_only_speak_displayed_text() and not force):
+        if speech_manager.get_speech_is_muted() or (
+            speech_manager.get_only_speak_displayed_text() and not force
+        ):
             return
 
         voices = settings.voices

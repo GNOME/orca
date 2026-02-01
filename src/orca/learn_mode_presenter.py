@@ -33,6 +33,7 @@ import time
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
@@ -91,9 +92,7 @@ class LearnModePresenter:
         return self._is_active
 
     def start(
-        self,
-        script: default.Script | None = None,
-        _event: input_event.InputEvent | None = None
+        self, script: default.Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Starts learn mode."""
 
@@ -118,9 +117,7 @@ class LearnModePresenter:
         return True
 
     def quit(
-        self,
-        script: default.Script | None = None,
-        _event: input_event.InputEvent | None = None
+        self, script: default.Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Quits learn mode."""
 
@@ -145,7 +142,7 @@ class LearnModePresenter:
     def handle_event(
         self,
         event: input_event.KeyboardEvent,
-        command: command_manager.KeyboardCommand | None = None
+        command: command_manager.KeyboardCommand | None = None,
     ) -> bool:
         """Handles the keyboard event in learn mode."""
 
@@ -186,7 +183,7 @@ class LearnModePresenter:
         self,
         script: default.Script,
         event: input_event.BrailleEvent,
-        command: command_manager.BrailleCommand | None
+        command: command_manager.BrailleCommand | None,
     ) -> bool:
         """Handles braille event in learn mode. Returns True if command should not execute."""
 
@@ -229,7 +226,7 @@ class LearnModePresenter:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        page: str = ""
+        page: str = "",
     ) -> bool:
         """Displays Orca's documentation."""
 
@@ -240,6 +237,7 @@ class LearnModePresenter:
         Gtk.show_uri(Gdk.Screen.get_default(), uri, time.time())
         return True
 
+
 class CommandListGUI:
     """Shows a list of commands and their bindings."""
 
@@ -248,7 +246,7 @@ class CommandListGUI:
         script: default.Script,
         title: str,
         column_headers: list[str],
-        commands_dict: dict[str, list[command_manager.KeyboardCommand]]
+        commands_dict: dict[str, list[command_manager.KeyboardCommand]],
     ) -> None:
         self._script: default.Script = script
         self._model: Gtk.TreeStore | None = None
@@ -258,14 +256,13 @@ class CommandListGUI:
         self,
         title: str,
         column_headers: list[str],
-        commands_dict: dict[str, list[command_manager.KeyboardCommand]]
+        commands_dict: dict[str, list[command_manager.KeyboardCommand]],
     ) -> Gtk.Dialog:
         """Creates the commands-list dialog."""
 
-        dialog = Gtk.Dialog(title,
-                            None,
-                            Gtk.DialogFlags.MODAL,
-                            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
+        dialog = Gtk.Dialog(
+            title, None, Gtk.DialogFlags.MODAL, (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        )
         dialog.set_default_size(1000, 800)
 
         grid = Gtk.Grid()
@@ -273,12 +270,12 @@ class CommandListGUI:
         content_area.add(grid)
 
         scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window) # pylint: disable=no-member
+        grid.add(scrolled_window)  # pylint: disable=no-member
 
         tree = Gtk.TreeView()
         tree.set_hexpand(True)
         tree.set_vexpand(True)
-        scrolled_window.add(tree) # pylint: disable=no-member
+        scrolled_window.add(tree)  # pylint: disable=no-member
 
         cols = len(column_headers) * [GObject.TYPE_STRING]
         for i, header in enumerate(column_headers):
@@ -313,11 +310,13 @@ class CommandListGUI:
     def show_gui(self) -> None:
         """Shows the dialog."""
 
-        self._gui.show_all() # pylint: disable=no-member
+        self._gui.show_all()  # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
 
 _presenter: LearnModePresenter = LearnModePresenter()
+
+
 def get_presenter() -> LearnModePresenter:
     """Returns the Learn Mode Presenter"""
 

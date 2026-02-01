@@ -42,10 +42,12 @@ from .ax_object import AXObject
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from .scripts import default
+
 
 class SleepModeManager:
     """Provides sleep mode implementation."""
@@ -72,13 +74,16 @@ class SleepModeManager:
         group_label = guilabels.KB_GROUP_SLEEP_MODE
         kb = keybindings.KeyBinding("q", keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK)
 
-        manager.add_command(command_manager.KeyboardCommand(
-            self.COMMAND_NAME,
-            self.toggle_sleep_mode,
-            group_label,
-            cmdnames.TOGGLE_SLEEP_MODE,
-            desktop_keybinding=kb,
-            laptop_keybinding=kb))
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                self.COMMAND_NAME,
+                self.toggle_sleep_mode,
+                group_label,
+                cmdnames.TOGGLE_SLEEP_MODE,
+                desktop_keybinding=kb,
+                laptop_keybinding=kb,
+            )
+        )
 
         msg = "SLEEP MODE MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -97,12 +102,18 @@ class SleepModeManager:
         self,
         script: default.Script | None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles sleep mode for the active application."""
 
-        tokens = ["SLEEP MODE MANAGER: toggle_sleep_mode. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SLEEP MODE MANAGER: toggle_sleep_mode. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (script and script.app):
@@ -114,7 +125,8 @@ class SleepModeManager:
             new_script = _script_manager.get_script(script.app)
             if notify_user:
                 new_script.present_message(
-                    messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app))
+                    messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app)
+                )
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
@@ -122,12 +134,14 @@ class SleepModeManager:
         if notify_user:
             script.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
         _script_manager.set_active_script(
-            _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on")
+            _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on"
+        )
         self._apps.append(hash(script.app))
         return True
 
 
 _manager: SleepModeManager = SleepModeManager()
+
 
 def get_manager() -> SleepModeManager:
     """Returns the Sleep Mode Manager singleton."""

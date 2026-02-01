@@ -254,9 +254,7 @@ class TestStructuralNavigator:
         assert cmd_manager.get_command("next_button") is not None
         assert cmd_manager.get_command("list_buttons") is not None
 
-    def test_setup_creates_heading_level_commands(
-        self, test_context: OrcaTestContext
-    ) -> None:
+    def test_setup_creates_heading_level_commands(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.setup creates heading level commands."""
 
         self._setup_dependencies(test_context)

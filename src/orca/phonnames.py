@@ -19,8 +19,7 @@
 
 """Dictionary of phonetic names for letters of the alphabet."""
 
-
-from .orca_i18n import _ # pylint: disable=import-error
+from .orca_i18n import _  # pylint: disable=import-error
 
 # Translators: this is a structure to assist in the generation of
 # spoken military-style spelling.  For example, 'abc' becomes 'alpha
@@ -44,21 +43,24 @@ from .orca_i18n import _ # pylint: disable=import-error
 # interesting tidbits about local conventions in the sections
 # "Additions in German, Danish and Norwegian" and "Variants".
 #
-__phonlist = _("a : alpha, b : bravo, c : charlie, "
-               "d : delta, e : echo, f : foxtrot, "
-               "g : golf, h : hotel, i : india, "
-               "j : juliet, k : kilo, l : lima, "
-               "m : mike, n : november, o : oscar, "
-               "p : papa, q : quebec, r : romeo, "
-               "s : sierra, t : tango, u : uniform, "
-               "v : victor, w : whiskey, x : xray, "
-               "y : yankee, z : zulu")
+__phonlist = _(
+    "a : alpha, b : bravo, c : charlie, "
+    "d : delta, e : echo, f : foxtrot, "
+    "g : golf, h : hotel, i : india, "
+    "j : juliet, k : kilo, l : lima, "
+    "m : mike, n : november, o : oscar, "
+    "p : papa, q : quebec, r : romeo, "
+    "s : sierra, t : tango, u : uniform, "
+    "v : victor, w : whiskey, x : xray, "
+    "y : yankee, z : zulu"
+)
 
 __phonnames = {}
 
 for __pair in __phonlist.split(","):
     __w = __pair.split(":")
     __phonnames[__w[0].strip()] = __w[1].strip()
+
 
 def get_phonetic_name(character):
     """Given a character, return its phonetic name (e.g. 'a' -> 'alpha')."""

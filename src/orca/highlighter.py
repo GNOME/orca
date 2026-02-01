@@ -35,8 +35,10 @@ from . import debug
 try:
     import cairo
     import gi
+
     gi.require_version("Gtk", "3.0")
     from gi.repository import Gtk
+
     CAIRO_AVAILABLE = True
 except (ImportError, ModuleNotFoundError) as error:
     tokens = ["HIGHLIGHTER: GtkHighlighter unavailable:", error]
@@ -45,10 +47,12 @@ except (ImportError, ModuleNotFoundError) as error:
 
 if TYPE_CHECKING:
     from typing import Any
+
     if CAIRO_AVAILABLE:
         from gi.repository import Gtk as GtkType
     else:
         GtkType = Any
+
 
 class Highlighter:
     """Base class of all highlighters supported by Orca."""
@@ -80,7 +84,7 @@ class Highlighter:
         thickness: int,
         padding: int,
         fill_color: tuple[float, float, float] | None,
-        fill_alpha: float | None
+        fill_alpha: float | None,
     ) -> None:
         self._highlight_type = highlight_type
         self._color = color
@@ -89,7 +93,7 @@ class Highlighter:
         self._padding = padding
         self._fill_color = fill_color
         self._fill_alpha = fill_alpha
-        self._gui = self._create_gui() # pylint: disable=assignment-from-none
+        self._gui = self._create_gui()  # pylint: disable=assignment-from-none
 
     def _create_gui(self) -> Any:
         """Creates the gui for the overlay."""
@@ -115,14 +119,16 @@ class Highlighter:
 class GtkHighlighter(Highlighter):
     """Highlighter that uses a GtkWindow to highlight items."""
 
-    def __init__(self,
-                 highlight_type: str = Highlighter.UNDERLINE,
-                 color: tuple[float, float, float] = Highlighter.GREEN,
-                 alpha: float = 1.0,
-                 thickness: int = 5,
-                 padding: int = 5,
-                 fill_color: tuple[float, float, float] | None = None,
-                 fill_alpha: float | None = None) -> None:
+    def __init__(
+        self,
+        highlight_type: str = Highlighter.UNDERLINE,
+        color: tuple[float, float, float] = Highlighter.GREEN,
+        alpha: float = 1.0,
+        thickness: int = 5,
+        padding: int = 5,
+        fill_color: tuple[float, float, float] | None = None,
+        fill_alpha: float | None = None,
+    ) -> None:
         if not CAIRO_AVAILABLE:
             msg = "GTK HIGHLIGHTER: Unavailable. Is Cairo installed?"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -171,9 +177,9 @@ class GtkHighlighter(Highlighter):
 
         fill = (*self._fill_color, self._fill_alpha)
         painter.set_source_rgba(*fill)
-        painter.set_operator(cairo.OPERATOR_SOURCE) # pylint: disable=no-member
+        painter.set_operator(cairo.OPERATOR_SOURCE)  # pylint: disable=no-member
         painter.paint()
-        painter.set_operator(cairo.OPERATOR_OVER) # pylint: disable=no-member
+        painter.set_operator(cairo.OPERATOR_OVER)  # pylint: disable=no-member
 
     def _draw_rectangle(self, painter: Any) -> None:
         """Called by highlight to draw a rectangle around the item."""

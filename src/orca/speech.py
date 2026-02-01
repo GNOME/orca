@@ -42,8 +42,8 @@ if TYPE_CHECKING:
 #
 _speechserver: speechserver.SpeechServer | None = None
 
-def _init_speech_server(module_name: str, speech_server_info: list[str] | None) -> None:
 
+def _init_speech_server(module_name: str, speech_server_info: list[str] | None) -> None:
     global _speechserver
 
     if not module_name:
@@ -78,6 +78,7 @@ def _init_speech_server(module_name: str, speech_server_info: list[str] | None) 
     if not _speechserver:
         msg = f"SPEECH: No speech server for factory: {module_name}"
         debug.print_message(debug.LEVEL_WARNING, msg, True)
+
 
 def init() -> None:
     """Initializes the speech server."""
@@ -115,6 +116,7 @@ def init() -> None:
 
     debug.print_message(debug.LEVEL_INFO, "SPEECH: Initialized", True)
 
+
 def __resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = None) -> ACSS:
     if isinstance(acss, ACSS):
         family = acss.get(acss.FAMILY)
@@ -131,6 +133,7 @@ def __resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = N
     voices = settings.voices
     return ACSS(voices[settings.DEFAULT_VOICE])
 
+
 def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
     """Speaks each item in the utterance_iterator."""
 
@@ -142,6 +145,7 @@ def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> N
         for [context, _acss] in utterance_iterator:
             log_line = f"SPEECH OUTPUT: '{context.utterance}'"
             debug.print_message(debug.LEVEL_INFO, log_line, True)
+
 
 def _speak(text: str, acss: ACSS | dict[str, Any] | None, interrupt: bool) -> None:
     """Speaks the individual string using the given ACSS."""
@@ -162,6 +166,7 @@ def _speak(text: str, acss: ACSS | dict[str, Any] | None, interrupt: bool) -> No
     msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
     _speechserver.speak(text, resolved_voice, interrupt)
+
 
 def speak(content: Any, acss: ACSS | dict[str, Any] | None = None, interrupt: bool = True) -> None:
     """Speaks the given content.  The content can be either a simple
@@ -228,9 +233,9 @@ def speak(content: Any, acss: ACSS | dict[str, Any] | None = None, interrupt: bo
         string = " ".join(to_speak)
         _speak(string, active_voice, interrupt)
 
+
 def speak_key_event(
-    event: input_event.KeyboardEvent,
-    acss: ACSS | dict[str, Any] | None = None
+    event: input_event.KeyboardEvent, acss: ACSS | dict[str, Any] | None = None
 ) -> None:
     """Speaks event immediately using the voice specified by acss."""
 
@@ -245,6 +250,7 @@ def speak_key_event(
     if _speechserver:
         _speechserver.speak_key_event(event, acss)
 
+
 def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -> None:
     """Speaks character immediately using the voice specified by acss."""
 
@@ -258,10 +264,12 @@ def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -
     if _speechserver:
         _speechserver.speak_character(character, acss=acss)
 
+
 def get_speech_server() -> speechserver.SpeechServer | None:
     """Returns the current speech server."""
 
     return _speechserver
+
 
 def deprecated_clear_server() -> None:
     """This is a sad workaround for the current global _speechserver."""

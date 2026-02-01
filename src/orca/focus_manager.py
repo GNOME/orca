@@ -31,6 +31,7 @@ from __future__ import annotations
 
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -52,6 +53,7 @@ OBJECT_NAVIGATOR = "object-navigator"
 SAY_ALL = "say-all"
 STRUCTURAL_NAVIGATOR = "structural-navigator"
 TABLE_NAVIGATOR = "table-navigator"
+
 
 class FocusManager:
     """Manages the focused object, window, etc."""
@@ -120,10 +122,11 @@ class FocusManager:
         return self._focus is not None and AXObject.is_ancestor(self._focus, self._window)
 
     def emit_region_changed(
-        self, obj: Atspi.Accessible,
+        self,
+        obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-        mode: str | None = None
+        mode: str | None = None,
     ) -> None:
         """Notifies interested clients that the current region of interest has changed."""
 
@@ -152,8 +155,12 @@ class FocusManager:
             obj.emit("region-changed", start_offset, end_offset)
 
         if obj != self._object_of_interest:
-            tokens = ["FOCUS MANAGER: Switching object of interest from",
-                      self._object_of_interest, "to", obj]
+            tokens = [
+                "FOCUS MANAGER: Switching object of interest from",
+                self._object_of_interest,
+                "to",
+                obj,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._object_of_interest = obj
 
@@ -175,13 +182,15 @@ class FocusManager:
         else:
             self._active_mode = None
 
-    def get_active_mode_and_object_of_interest(
-        self
-    ) -> tuple[str | None, Atspi.Accessible | None]:
+    def get_active_mode_and_object_of_interest(self) -> tuple[str | None, Atspi.Accessible | None]:
         """Returns the current mode and associated object of interest"""
 
-        tokens = ["FOCUS MANAGER: Active mode:", self._active_mode,
-                  "Object of interest:", self._object_of_interest]
+        tokens = [
+            "FOCUS MANAGER: Active mode:",
+            self._active_mode,
+            "Object of interest:",
+            self._object_of_interest,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._active_mode, self._object_of_interest
 
@@ -256,7 +265,7 @@ class FocusManager:
         event: Atspi.Event | None,
         obj: Atspi.Accessible | None,
         notify_script: bool = True,
-        force: bool = False
+        force: bool = False,
     ) -> None:
         """Sets the locus of focus (i.e., the object with visual focus)."""
 
@@ -301,8 +310,14 @@ class FocusManager:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return
 
-        tokens = ["FOCUS MANAGER: Changing locus of focus from", old_focus,
-                  "to", obj, ". Notify:", notify_script]
+        tokens = [
+            "FOCUS MANAGER: Changing locus of focus from",
+            old_focus,
+            "to",
+            obj,
+            ". Notify:",
+            notify_script,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._focus = obj
 
@@ -333,7 +348,7 @@ class FocusManager:
         frame: Atspi.Accessible | None,
         app: Atspi.Accessible | None = None,
         set_window_as_focus: bool = False,
-        notify_script: bool = False
+        notify_script: bool = False,
     ) -> None:
         """Sets the active window."""
 
@@ -354,15 +369,20 @@ class FocusManager:
             tokens = ["FOCUS MANAGER: Focus", self._focus, "is not in", self._window]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            if AXUtilities.is_combo_box(self._focus) \
-               and (self._window is None or AXUtilities.is_combo_box_popup(self._window)):
+            if AXUtilities.is_combo_box(self._focus) and (
+                self._window is None or AXUtilities.is_combo_box_popup(self._window)
+            ):
                 tokens = ["FOCUS MANAGER: Saving focus to restore later", self._focus]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._object_to_restore = self._focus
             elif AXObject.is_ancestor(self._object_to_restore, self._window):
                 self._focus = AXObject.get_parent(self._object_to_restore)
-                tokens = ["FOCUS MANAGER: Restoring focus to", self._object_to_restore,
-                          "after adjusting focus to", self._focus]
+                tokens = [
+                    "FOCUS MANAGER: Restoring focus to",
+                    self._object_to_restore,
+                    "after adjusting focus to",
+                    self._focus,
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self.set_locus_of_focus(None, self._object_to_restore, notify_script=True)
                 self._object_to_restore = None
@@ -377,6 +397,7 @@ class FocusManager:
 
 
 _manager: FocusManager = FocusManager()
+
 
 def get_manager() -> FocusManager:
     """Returns the focus manager singleton."""

@@ -19,7 +19,6 @@
 
 """Utilities for playing sounds."""
 
-
 import gi
 from gi.repository import GLib
 
@@ -33,6 +32,7 @@ else:
 
 from . import debug
 from .sound_generator import Icon, Tone
+
 
 class Player:
     """Plays Icons and Tones."""
@@ -175,7 +175,9 @@ class Player:
         self._initialized = False
         self._gstreamer_available = False
 
+
 _player: Player = Player()
+
 
 def get_player() -> Player:
     """Returns the Player singleton."""

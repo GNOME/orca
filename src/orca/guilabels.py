@@ -24,8 +24,7 @@
 can present them in the correct language when users change the language on the
 fly without having to reload a bunch of modules."""
 
-
-from .orca_i18n import _, C_, ngettext # pylint: disable=import-error
+from .orca_i18n import _, C_, ngettext  # pylint: disable=import-error
 
 # Translators: This string appears on a button in a dialog. "Activating" the
 # selected item will perform the action that one would expect to occur if the
@@ -86,13 +85,15 @@ AUTOMATIC_FOCUS_MODE = _("Automatic focus mode")
 # string above.
 AUTOMATIC_FOCUS_MODE_INFO = _(
     "Automatic focus mode causes Orca to switch to focus mode when you navigate "
-    "into a form field or other interactive widget.")
+    "into a form field or other interactive widget."
+)
 
 # Translators: This is an informational message on the Native Navigation
 # preferences page explaining what native navigation means.
 NATIVE_NAVIGATION_INFO = _(
     "Native navigation refers to keyboard commands handled by the application, "
-    "such as Tab, Page Up, Page Down, and Enter.")
+    "such as Tab, Page Up, Page Down, and Enter."
+)
 
 # Translators: This setting controls whether Orca automatically enables sticky
 # focus mode for web applications (such as Facebook Messenger) and Electron apps
@@ -106,7 +107,8 @@ AUTO_STICKY_FOCUS_MODE = _("Automatic sticky focus mode for web applications")
 # applications" setting does.
 AUTO_STICKY_FOCUS_MODE_INFO = _(
     "Automatic sticky focus mode causes Orca to detect web applications and "
-    "Electron apps and stay in focus mode until toggled off by command.")
+    "Electron apps and stay in focus mode until toggled off by command."
+)
 
 # Translators: A single braille cell on a refreshable braille display consists
 # of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -298,7 +300,8 @@ PRONUNCIATION_DICTIONARY = _("Pronunciation Dictionary")
 # Translators: This is an informational message on the Pronunciation Dictionary
 # preferences page explaining what the dictionary does.
 PRONUNCIATION_DICTIONARY_INFO = _(
-    "Customize how words are spoken. Add a word and its replacement below.")
+    "Customize how words are spoken. Add a word and its replacement below."
+)
 
 # Translators: This is a label for a column header in Orca's pronunciation
 # dictionary. The pronunciation dictionary allows the user to correct words
@@ -475,7 +478,8 @@ KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 # preferences page explaining what caret navigation does.
 CARET_NAVIGATION_INFO = _(
     "When enabled, Orca handles the arrow keys, Home, and End to move through "
-    "content by character, word, or line.")
+    "content by character, word, or line."
+)
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to chat applications such as instant messaging.
@@ -665,9 +669,9 @@ TEXT_ATTRIBUTES_PRESENTATION_NONE = C_("text attributes", "None")
 # A "user profile" is a collection of settings which apply to a given task, such
 # as a "Spanish" profile which would use Spanish text-to-speech and Spanish
 # braille and selected when reading Spanish content.
-PROFILE_CONFLICT_MESSAGE = _("Profile %s already exists.\n" \
-                             "Continue updating the existing profile with " \
-                             "these new changes?")
+PROFILE_CONFLICT_MESSAGE = _(
+    "Profile %s already exists.\nContinue updating the existing profile with these new changes?"
+)
 
 # Translators: Profiles in Orca make it possible for users to quickly switch
 # amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -716,18 +720,21 @@ PROFILE_REMOVE_LABEL = _("Remove user profile")
 # braille rules, and a similar 'Spanish' profile for reading Spanish text.
 # The following is a message in a dialog informing the user that he/she
 # is about to remove a user profile, an action that cannot be undone.
-PROFILE_REMOVE_MESSAGE = _("You are about to remove profile %s. " \
-                           "All unsaved settings and settings saved in this " \
-                           "profile will be lost. Do you want to continue " \
-                           "and remove this profile and all related settings?")
+PROFILE_REMOVE_MESSAGE = _(
+    "You are about to remove profile %s. "
+    "All unsaved settings and settings saved in this "
+    "profile will be lost. Do you want to continue "
+    "and remove this profile and all related settings?"
+)
 
 # Translators: This is a message in a dialog shown when the user tries to create
 # a new profile while there are unsaved changes in the preferences dialog.
 # Creating a new profile copies the saved settings, not the unsaved changes.
-PROFILE_CREATE_UNSAVED_WARNING = \
-    _("You have unsaved changes. Creating a new profile will copy your " \
-      "current saved settings, not your unsaved changes. Your unsaved " \
-      "changes will be lost.\n\nDo you want to continue?")
+PROFILE_CREATE_UNSAVED_WARNING = _(
+    "You have unsaved changes. Creating a new profile will copy your "
+    "current saved settings, not your unsaved changes. Your unsaved "
+    "changes will be lost.\n\nDo you want to continue?"
+)
 
 # Translators: Orca has a setting which determines which progress bar updates
 # should be announced. Choosing "All" means that Orca will present progress bar
@@ -1050,8 +1057,7 @@ SN_TITLE_VISITED_LINK = C_("structural navigation", "Visited Links")
 # Translators: When the user loads a new web page, they can optionally have Orca
 # automatically start reading the page from beginning to end. This is the label
 # of a widget in which users can indicate their preference.
-READ_PAGE_UPON_LOAD = \
-    _("Automatically start speaking a page when it is first _loaded")
+READ_PAGE_UPON_LOAD = _("Automatically start speaking a page when it is first _loaded")
 
 # Translators: When the user loads a new web page, they can optionally have Orca
 # automatically summarize details about the page, such as the number of elements
@@ -1110,8 +1116,10 @@ SPELL_CHECK = C_("OptionGroup", "Spell Check")
 # preferences page. It explains that these settings only work when the screen
 # reader can identify the components of an application's spell checker (e.g., the
 # misspelled word, suggestions list, etc.).
-SPELL_CHECK_DESCRIPTION = _("These settings apply when the screen reader can identify the "
-                            "elements of the application's spell check dialog.")
+SPELL_CHECK_DESCRIPTION = _(
+    "These settings apply when the screen reader can identify the "
+    "elements of the application's spell check dialog."
+)
 
 # Translators: This is a label for a widget associated with an Orca setting.
 # When this option is enabled, Orca will spell out the current error in addition
@@ -1496,7 +1504,7 @@ CURRENT_PROFILE = _("Current Profile")
 # The quoted profile name is `PROFILE_DEFAULT = C_("Profile", "Default")` defined
 # earlier in this file.
 PROFILES_INFO = _(
-    f"Profiles are collections of settings. The \"{PROFILE_DEFAULT}\" profile is "
+    f'Profiles are collections of settings. The "{PROFILE_DEFAULT}" profile is '
     "loaded at startup. To edit an existing profile, select it below and then "
     "adjust settings on the other pages. To rename or delete the selected profile, "
     "use the Tab key to navigate to its associated buttons."
@@ -1525,7 +1533,7 @@ SAY_ALL_BY = _("Say All By")
 # strings in `GENERAL_SAY_ALL = _("Say All")` and SAY_ALL_BY = _("Say All By")`
 SAY_ALL_INFO = _(
     "Say All reads from the current location to the end of the document, "
-    "pausing after each sentence or line based on the \"Say All By\" value."
+    'pausing after each sentence or line based on the "Say All By" value.'
 )
 
 # Translators: This is an informational message on the Say All preferences page
@@ -1542,7 +1550,7 @@ SAY_ALL_NAVIGATION_INFO = _(
 # explaining the options found under the section with the following label:
 # ANNOUNCEMENTS = _("Container Announcements")
 SAY_ALL_CONTAINER_INFO = _(
-    "The \"Container Announcements\" settings determine what additional details "
+    'The "Container Announcements" settings determine what additional details '
     "will be announced as Say All moves through the document."
 )
 
@@ -1786,7 +1794,8 @@ ECHO = _("Echo")
 # what was inserted as a result of typing).
 ECHO_INFO = _(
     "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
-    "into the document as a result of your typing.")
+    "into the document as a result of your typing."
+)
 
 # Translators: This is the label of the General page in the Orca Preferences
 # dialog. On that page there are a variety of general Orca settings which do
@@ -1856,7 +1865,8 @@ TEXT_ATTRIBUTES = _("Text Attributes")
 # and that the order of the attributes controls the order in which they are presented.
 TEXT_ATTRIBUTES_INFO = _(
     "Configure which text attributes are spoken and/or marked in braille, "
-    "and the order in which they are presented.")
+    "and the order in which they are presented."
+)
 
 # Translators: This is the label of the Voice page in the Orca Preferences
 # dialog.
@@ -2028,6 +2038,7 @@ VOICE_TYPE_SYSTEM = _("System")
 # Translators: This refers to the voice used by Orca when presenting one or more
 # characters which is written in uppercase.
 VOICE_TYPE_UPPERCASE = _("Uppercase")
+
 
 def notifications_count(count):
     """Returns the gui label representing the notifications count."""

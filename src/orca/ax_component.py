@@ -24,10 +24,10 @@
 
 """Utilities for obtaining position-related information about accessible objects."""
 
-
 import functools
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -134,7 +134,7 @@ class AXComponent:
         """Returns True if obj has a width and height of 0."""
 
         rect = AXComponent.get_rect(obj)
-        return not(rect.width or rect.height)
+        return not (rect.width or rect.height)
 
     @staticmethod
     def has_no_size_or_invalid_rect(obj: Atspi.Accessible) -> bool:
@@ -147,12 +147,12 @@ class AXComponent:
         if rect.x == rect.y == rect.width == rect.height == -1:
             return True
 
-        if (rect.width < -1 or rect.height < -1):
+        if rect.width < -1 or rect.height < -1:
             tokens = ["WARNING: ", obj, "has a broken rect:", rect]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             AXObject.clear_cache(obj)
             rect = AXComponent.get_rect(obj)
-            if (rect.width < -1 or rect.height < -1):
+            if rect.width < -1 or rect.height < -1:
                 msg = "AXComponent: Clearing cache did not fix the rect"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
@@ -169,10 +169,12 @@ class AXComponent:
     def is_same_rect(rect1: Atspi.Rect, rect2: Atspi.Rect) -> bool:
         """Returns True if rect1 and rect2 represent the same bounding box."""
 
-        return rect1.x == rect2.x \
-            and rect1.y == rect2.y \
-            and rect1.width == rect2.width \
+        return (
+            rect1.x == rect2.x
+            and rect1.y == rect2.y
+            and rect1.width == rect2.width
             and rect1.height == rect2.height
+        )
 
     @staticmethod
     def rects_are_on_same_line(rect1: Atspi.Rect, rect2: Atspi.Rect, pixel_delta: int = 5) -> bool:
@@ -255,14 +257,15 @@ class AXComponent:
     def objects_have_same_rect(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool:
         """Returns True if obj1 and obj2 have the same rect."""
 
-        return AXComponent.is_same_rect(AXComponent.get_rect(obj1),AXComponent.get_rect(obj2))
+        return AXComponent.is_same_rect(AXComponent.get_rect(obj1), AXComponent.get_rect(obj2))
 
     @staticmethod
     def objects_overlap(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool:
         """Returns True if the rects associated with obj1 and obj2 overlap."""
 
         intersection = AXComponent.get_rect_intersection(
-            AXComponent.get_rect(obj1), AXComponent.get_rect(obj2))
+            AXComponent.get_rect(obj1), AXComponent.get_rect(obj2)
+        )
         return not AXComponent.is_empty_rect(intersection)
 
     @staticmethod
@@ -297,9 +300,7 @@ class AXComponent:
         return rect.width > 0 and rect.height > 0
 
     @staticmethod
-    def _find_descendant_at_point(
-        obj: Atspi.Accessible, x: int, y: int
-    ) -> Atspi.Accessible | None:
+    def _find_descendant_at_point(obj: Atspi.Accessible, x: int, y: int) -> Atspi.Accessible | None:
         """Checks each child to see if it has a descendant at the specified point."""
 
         for child in AXObject.iter_children(obj):
@@ -329,9 +330,7 @@ class AXComponent:
         return result
 
     @staticmethod
-    def _get_descendant_at_point(
-        obj: Atspi.Accessible, x: int, y: int
-    ) -> Atspi.Accessible | None:
+    def _get_descendant_at_point(obj: Atspi.Accessible, x: int, y: int) -> Atspi.Accessible | None:
         """Returns the deepest descendant of obj at the specified point."""
 
         child = AXComponent._get_object_at_point(obj, x, y)
@@ -350,9 +349,7 @@ class AXComponent:
         return child
 
     @staticmethod
-    def get_descendant_at_point(
-        obj: Atspi.Accessible, x: int, y: int
-    ) -> Atspi.Accessible | None:
+    def get_descendant_at_point(obj: Atspi.Accessible, x: int, y: int) -> Atspi.Accessible | None:
         """Returns the deepest descendant of obj at the specified point."""
 
         result = AXComponent._get_descendant_at_point(obj, x, y)

@@ -20,7 +20,6 @@
 
 """Orca's integration with the systemd service manager"""
 
-
 import errno
 import os
 import socket
@@ -28,6 +27,7 @@ import time
 from gi.repository import GLib
 
 from . import debug
+
 
 class Systemd:
     """Orca's integration with the systemd service manager"""
@@ -39,11 +39,11 @@ class Systemd:
 
         socket_path = os.environ.get("NOTIFY_SOCKET")
         if socket_path:
-            if socket_path[0] == "@": # Abstract socket
+            if socket_path[0] == "@":  # Abstract socket
                 socket_path = "\0" + socket_path[1:]
-            elif socket_path[0] == "/": # Normal filesystem socket
+            elif socket_path[0] == "/":  # Normal filesystem socket
                 pass
-            else: # VSOCK, etc
+            else:  # VSOCK, etc
                 raise OSError(errno.EAFNOSUPPORT, "Unsupported NOTIFY_SOCKET type")
 
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM | socket.SOCK_CLOEXEC)
@@ -52,7 +52,7 @@ class Systemd:
 
         watchdog_usec = os.environ.get("WATCHDOG_USEC")
         if watchdog_usec:
-            self._watchdog_interval = int(watchdog_usec) // 1000 # µs -> ms
+            self._watchdog_interval = int(watchdog_usec) // 1000  # µs -> ms
 
     def _notify(self, message: bytes) -> None:
         """Send systemd a raw sd_notify notification"""
@@ -60,7 +60,8 @@ class Systemd:
         # https://freedesktop.org/software/systemd/man/sd_notify.html#Standalone%20Implementations
         if self._notify_socket:
             debug.print_message(
-                debug.LEVEL_INFO, f"SYSTEMD: Sending: {message.decode('utf-8')}", True)
+                debug.LEVEL_INFO, f"SYSTEMD: Sending: {message.decode('utf-8')}", True
+            )
             self._notify_socket.sendall(message)
 
     def notify_ready(self) -> None:
@@ -112,14 +113,17 @@ class Systemd:
         # easier to just ping 2x as fast. Use a high priority so that it is
         # scheduled ahead of other work done on the main loop (e.g. event
         # processing during a flood).
-        GLib.timeout_add(self._watchdog_interval // 2, _on_watchdog_tick,
-                         priority=GLib.PRIORITY_HIGH)
+        GLib.timeout_add(
+            self._watchdog_interval // 2, _on_watchdog_tick, priority=GLib.PRIORITY_HIGH
+        )
 
     def is_systemd_managed(self) -> bool:
         """Returns whether or not Orca is being managed by systemd"""
         return self._notify_socket is not None
 
+
 _manager: Systemd = Systemd()
+
 
 def get_manager() -> Systemd:
     """Returns the Systemd singleton."""

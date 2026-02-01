@@ -42,8 +42,10 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(script_utilities.Utilities):
     """Custom script utilities for LibreOffice"""
@@ -69,18 +71,14 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: Is this still needed? See also _get_cell_name_for_coordinates.
         name_list = AXObject.get_name(cell).split()
         for name in name_list:
-            name = name.replace('.', '')
+            name = name.replace(".", "")
             if not name.isalpha() and name.isalnum():
                 return name
 
-        return ''
+        return ""
 
     def _get_cell_name_for_coordinates(
-        self,
-        obj: Atspi.Accessible,
-        row: int,
-        col: int,
-        include_contents: bool = False
+        self, obj: Atspi.Accessible, row: int, col: int, include_contents: bool = False
     ) -> str:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
         cell = AXTable.get_cell_at(obj, row, col)
@@ -92,9 +90,7 @@ class Utilities(script_utilities.Utilities):
         return name.strip()
 
     def get_word_at_offset_adjusted_for_navigation(
-        self,
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        self, obj: Atspi.Accessible, offset: int | None = None
     ) -> tuple[str, int, int]:
         """Returns the word in obj at the specified or current offset."""
 
@@ -104,9 +100,7 @@ class Utilities(script_utilities.Utilities):
         return AXText.get_word_at_offset(obj, offset)
 
     def should_read_full_row(
-        self,
-        obj: Atspi.Accessible,
-        previous_object: Atspi.Accessible | None = None
+        self, obj: Atspi.Accessible, previous_object: Atspi.Accessible | None = None
     ) -> bool:
         """Returns True if the full row in obj should be read."""
 
@@ -133,19 +127,18 @@ class Utilities(script_utilities.Utilities):
         base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
         if column <= len(base26):
-            return base26[column-1]
+            return base26[column - 1]
 
         res = ""
         while column > 0:
             digit = column % len(base26)
-            res = " " + base26[digit-1] + res
+            res = " " + base26[digit - 1] + res
             column = int(column / len(base26))
 
         return res
 
     def _get_coordinates_for_selected_range(
-        self,
-        obj: Atspi.Accessible
+        self, obj: Atspi.Accessible
     ) -> tuple[tuple[int, int], tuple[int, int]]:
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             tokens = ["SOFFICE:", obj, "does not implement both selection and table"]
@@ -184,8 +177,8 @@ class Utilities(script_utilities.Utilities):
             return True
 
         current_list: list[tuple[int, int]] = []
-        for r in range(first_coords[0], last_coords[0]+1):
-            current_list.extend((r, c) for c in range(first_coords[1], last_coords[1]+1))
+        for r in range(first_coords[0], last_coords[0] + 1):
+            current_list.extend((r, c) for c in range(first_coords[1], last_coords[1] + 1))
 
         current = set(current_list)
         previous = set(self._calc_selected_cells)
@@ -195,7 +188,8 @@ class Utilities(script_utilities.Utilities):
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
         focus_coords = AXTable.get_cell_coordinates(
-            focus_manager.get_manager().get_locus_of_focus())
+            focus_manager.get_manager().get_locus_of_focus()
+        )
         if focus_coords in selected:
             selected.remove(focus_coords)
 
@@ -226,10 +220,7 @@ class Utilities(script_utilities.Utilities):
 
         return bool(msgs)
 
-    def handle_row_and_column_selection_change(
-        self,
-        obj: Atspi.Accessible
-    ) -> bool:
+    def handle_row_and_column_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Presents the selection change for obj."""
 
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
@@ -242,7 +233,7 @@ class Utilities(script_utilities.Utilities):
         unselected_cols = sorted(set(self._calc_selected_columns).difference(cols))
 
         def convert_column(x):
-            return self.convert_column_to_string(x+1)
+            return self.convert_column_to_string(x + 1)
 
         def convert_row(x):
             return x + 1
@@ -272,20 +263,23 @@ class Utilities(script_utilities.Utilities):
         if len(unselected_cols) == 1:
             msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselected_cols[0])
         elif len(unselected_cols) > 1:
-            msgs.append(messages.TABLE_COLUMN_RANGE_UNSELECTED % \
-                        (unselected_cols[0], unselected_cols[-1]))
+            msgs.append(
+                messages.TABLE_COLUMN_RANGE_UNSELECTED % (unselected_cols[0], unselected_cols[-1])
+            )
 
         if len(unselected_rows) == 1:
             msgs.append(messages.TABLE_ROW_UNSELECTED % unselected_rows[0])
         elif len(unselected_rows) > 1:
-            msgs.append(messages.TABLE_ROW_RANGE_UNSELECTED % \
-                        (unselected_rows[0], unselected_rows[-1]))
+            msgs.append(
+                messages.TABLE_ROW_RANGE_UNSELECTED % (unselected_rows[0], unselected_rows[-1])
+            )
 
         if len(selected_cols) == 1:
             msgs.append(messages.TABLE_COLUMN_SELECTED % selected_cols[0])
         elif len(selected_cols) > 1:
             msgs.append(
-                messages.TABLE_COLUMN_RANGE_SELECTED % (selected_cols[0], selected_cols[-1]))
+                messages.TABLE_COLUMN_RANGE_SELECTED % (selected_cols[0], selected_cols[-1])
+            )
 
         if len(selected_rows) == 1:
             msgs.append(messages.TABLE_ROW_SELECTED % selected_rows[0])

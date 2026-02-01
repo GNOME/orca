@@ -34,6 +34,7 @@ from typing import TYPE_CHECKING
 _PSUTIL_AVAILABLE = False
 try:
     import psutil  # type: ignore
+
     _PSUTIL_AVAILABLE = True
 except ModuleNotFoundError:
     pass
@@ -48,6 +49,7 @@ from . import keybindings
 from . import messages
 from . import preferences_grid_base
 from . import settings
+
 
 class DateFormat(Enum):
     """Date format enumeration with format strings."""
@@ -75,6 +77,7 @@ class DateFormat(Enum):
 
         return self.name.lower()
 
+
 class TimeFormat(Enum):
     """Time format enumeration with format strings."""
 
@@ -91,6 +94,7 @@ class TimeFormat(Enum):
         """Returns the lowercase string name for this enum value."""
 
         return self.name.lower()
+
 
 class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Time and Date preferences page."""
@@ -121,7 +125,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=presenter._get_date_format_string,
                 setter=presenter._set_date_format_string,
                 prefs_key="presentDateFormat",
-                member_of=guilabels.TIME_AND_DATE
+                member_of=guilabels.TIME_AND_DATE,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.GENERAL_TIME_FORMAT,
@@ -130,14 +134,16 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=presenter._get_time_format_string,
                 setter=presenter._set_time_format_string,
                 prefs_key="presentTimeFormat",
-                member_of=guilabels.TIME_AND_DATE
+                member_of=guilabels.TIME_AND_DATE,
             ),
         ]
 
         super().__init__(guilabels.KB_GROUP_SYSTEM_INFORMATION, controls)
 
+
 if TYPE_CHECKING:
     from .scripts import default
+
 
 class SystemInformationPresenter:
     """Provides commands to present system information."""
@@ -168,16 +174,31 @@ class SystemInformationPresenter:
         commands_data = [
             ("presentTimeHandler", self.present_time, cmdnames.PRESENT_CURRENT_TIME, kb_t),
             ("presentDateHandler", self.present_date, cmdnames.PRESENT_CURRENT_DATE, kb_t_2),
-            ("present_battery_status", self.present_battery_status,
-             cmdnames.PRESENT_BATTERY_STATUS, None),
-            ("present_cpu_and_memory_usage", self.present_cpu_and_memory_usage,
-             cmdnames.PRESENT_CPU_AND_MEMORY_USAGE, None),
+            (
+                "present_battery_status",
+                self.present_battery_status,
+                cmdnames.PRESENT_BATTERY_STATUS,
+                None,
+            ),
+            (
+                "present_cpu_and_memory_usage",
+                self.present_cpu_and_memory_usage,
+                cmdnames.PRESENT_CPU_AND_MEMORY_USAGE,
+                None,
+            ),
         ]
 
         for name, function, description, kb in commands_data:
-            manager.add_command(command_manager.KeyboardCommand(
-                name, function, group_label, description,
-                desktop_keybinding=kb, laptop_keybinding=kb))
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=kb,
+                    laptop_keybinding=kb,
+                )
+            )
 
         msg = "SYSTEM INFORMATION PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -278,12 +299,18 @@ class SystemInformationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current time."""
 
-        tokens = ["SYSTEM INFORMATION PRESENTER: present_time. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SYSTEM INFORMATION PRESENTER: present_time. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         time_format = self._get_time_format_string()
@@ -295,12 +322,18 @@ class SystemInformationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current date."""
 
-        tokens = ["SYSTEM INFORMATION PRESENTER: present_date. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SYSTEM INFORMATION PRESENTER: present_date. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         date_format = self._get_date_format_string()
@@ -312,12 +345,18 @@ class SystemInformationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the battery status."""
 
-        tokens = ["SYSTEM INFORMATION PRESENTER: present_battery_status. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SYSTEM INFORMATION PRESENTER: present_battery_status. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (_PSUTIL_AVAILABLE and psutil.sensors_battery()):
@@ -338,12 +377,18 @@ class SystemInformationPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the cpu and memory usage."""
 
-        tokens = ["SYSTEM INFORMATION PRESENTER: present_cpu_and_memory_usage. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SYSTEM INFORMATION PRESENTER: present_cpu_and_memory_usage. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not _PSUTIL_AVAILABLE:
@@ -353,13 +398,11 @@ class SystemInformationPresenter:
         cpu_usage = round(psutil.cpu_percent())
 
         memory = psutil.virtual_memory()
-        memory_percent= round(memory.percent)
-        if memory.total > 1024 ** 3:
-            details = messages.memory_usage_gb(
-                memory.used / (1024 ** 3), memory.total / (1024 ** 3))
+        memory_percent = round(memory.percent)
+        if memory.total > 1024**3:
+            details = messages.memory_usage_gb(memory.used / (1024**3), memory.total / (1024**3))
         else:
-            details = messages.memory_usage_mb(
-                memory.used / (1024 ** 2), memory.total / (1024 ** 2))
+            details = messages.memory_usage_mb(memory.used / (1024**2), memory.total / (1024**2))
 
         msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_percent)}. {details}"
         script.present_message(msg)
@@ -367,6 +410,8 @@ class SystemInformationPresenter:
 
 
 _presenter = SystemInformationPresenter()
+
+
 def get_presenter() -> SystemInformationPresenter:
     """Returns the system-information-presenter singleton."""
 

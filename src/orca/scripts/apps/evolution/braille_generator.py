@@ -35,10 +35,12 @@ from orca.scripts import web
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from . import script
+
 
 class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator):
     """Produces braille presentation for accessible objects."""
@@ -55,13 +57,12 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
             tokens = [f"EVOLUTION BRAILLE GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self,
-        obj: Atspi.Accessible,
-        **args
+        self, obj: Atspi.Accessible, **args
     ) -> list[Any]:
         if self._script.utilities.is_message_list_status_cell(obj):
             return []

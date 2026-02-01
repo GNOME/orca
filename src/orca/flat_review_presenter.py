@@ -33,6 +33,7 @@ import time
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -92,76 +93,101 @@ class FlatReviewPresenter:
         def kb(keysym: str, mod: int, clicks: int = 1) -> keybindings.KeyBinding:
             return keybindings.KeyBinding(keysym, mod, click_count=clicks)
 
-        cmd_bindings: dict[str, tuple[keybindings.KeyBinding | None, keybindings.KeyBinding | None]] = {
+        cmd_bindings: dict[
+            str, tuple[keybindings.KeyBinding | None, keybindings.KeyBinding | None]
+        ] = {
             "toggleFlatReviewModeHandler": (
                 kb("KP_Subtract", keybindings.NO_MODIFIER_MASK),
-                kb("p", keybindings.ORCA_MODIFIER_MASK)),
+                kb("p", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "flatReviewSayAllHandler": (
                 kb("KP_Add", keybindings.NO_MODIFIER_MASK, 2),
-                kb("semicolon", keybindings.ORCA_MODIFIER_MASK, 2)),
+                kb("semicolon", keybindings.ORCA_MODIFIER_MASK, 2),
+            ),
             "reviewHomeHandler": (
                 kb("KP_Home", keybindings.ORCA_MODIFIER_MASK),
-                kb("u", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+                kb("u", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
             "reviewPreviousLineHandler": (
                 kb("KP_Home", keybindings.NO_MODIFIER_MASK),
-                kb("u", keybindings.ORCA_MODIFIER_MASK)),
+                kb("u", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewCurrentLineHandler": (
                 kb("KP_Up", keybindings.NO_MODIFIER_MASK),
-                kb("i", keybindings.ORCA_MODIFIER_MASK)),
+                kb("i", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewSpellCurrentLineHandler": (
                 kb("KP_Up", keybindings.NO_MODIFIER_MASK, 2),
-                kb("i", keybindings.ORCA_MODIFIER_MASK, 2)),
+                kb("i", keybindings.ORCA_MODIFIER_MASK, 2),
+            ),
             "reviewPhoneticCurrentLineHandler": (
                 kb("KP_Up", keybindings.NO_MODIFIER_MASK, 3),
-                kb("i", keybindings.ORCA_MODIFIER_MASK, 3)),
+                kb("i", keybindings.ORCA_MODIFIER_MASK, 3),
+            ),
             "reviewNextLineHandler": (
                 kb("KP_Page_Up", keybindings.NO_MODIFIER_MASK),
-                kb("o", keybindings.ORCA_MODIFIER_MASK)),
+                kb("o", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewEndHandler": (
                 kb("KP_Page_Up", keybindings.ORCA_MODIFIER_MASK),
-                kb("o", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+                kb("o", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
             "reviewPreviousItemHandler": (
                 kb("KP_Left", keybindings.NO_MODIFIER_MASK),
-                kb("j", keybindings.ORCA_MODIFIER_MASK)),
+                kb("j", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewAboveHandler": (
                 kb("KP_Left", keybindings.ORCA_MODIFIER_MASK),
-                kb("j", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+                kb("j", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
             "reviewCurrentItemHandler": (
                 kb("KP_Begin", keybindings.NO_MODIFIER_MASK),
-                kb("k", keybindings.ORCA_MODIFIER_MASK)),
+                kb("k", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewSpellCurrentItemHandler": (
                 kb("KP_Begin", keybindings.NO_MODIFIER_MASK, 2),
-                kb("k", keybindings.ORCA_MODIFIER_MASK, 2)),
+                kb("k", keybindings.ORCA_MODIFIER_MASK, 2),
+            ),
             "reviewPhoneticCurrentItemHandler": (
                 kb("KP_Begin", keybindings.NO_MODIFIER_MASK, 3),
-                kb("k", keybindings.ORCA_MODIFIER_MASK, 3)),
+                kb("k", keybindings.ORCA_MODIFIER_MASK, 3),
+            ),
             "reviewCurrentAccessibleHandler": (
                 kb("KP_Begin", keybindings.ORCA_MODIFIER_MASK),
-                kb("k", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+                kb("k", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
             "reviewNextItemHandler": (
                 kb("KP_Right", keybindings.NO_MODIFIER_MASK),
-                kb("l", keybindings.ORCA_MODIFIER_MASK)),
+                kb("l", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewBelowHandler": (
                 kb("KP_Right", keybindings.ORCA_MODIFIER_MASK),
-                kb("l", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+                kb("l", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
             "reviewPreviousCharacterHandler": (
                 kb("KP_End", keybindings.NO_MODIFIER_MASK),
-                kb("m", keybindings.ORCA_MODIFIER_MASK)),
+                kb("m", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewEndOfLineHandler": (
                 kb("KP_End", keybindings.ORCA_MODIFIER_MASK),
-                kb("m", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+                kb("m", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
             "reviewCurrentCharacterHandler": (
                 kb("KP_Down", keybindings.NO_MODIFIER_MASK),
-                kb("comma", keybindings.ORCA_MODIFIER_MASK)),
+                kb("comma", keybindings.ORCA_MODIFIER_MASK),
+            ),
             "reviewSpellCurrentCharacterHandler": (
                 kb("KP_Down", keybindings.NO_MODIFIER_MASK, 2),
-                kb("comma", keybindings.ORCA_MODIFIER_MASK, 2)),
+                kb("comma", keybindings.ORCA_MODIFIER_MASK, 2),
+            ),
             "reviewUnicodeCurrentCharacterHandler": (
                 kb("KP_Down", keybindings.NO_MODIFIER_MASK, 3),
-                kb("comma", keybindings.ORCA_MODIFIER_MASK, 3)),
+                kb("comma", keybindings.ORCA_MODIFIER_MASK, 3),
+            ),
             "reviewNextCharacterHandler": (
                 kb("KP_Page_Down", keybindings.NO_MODIFIER_MASK),
-                kb("period", keybindings.ORCA_MODIFIER_MASK)),
+                kb("period", keybindings.ORCA_MODIFIER_MASK),
+            ),
             # Commands with no keybinding
             "reviewBottomLeftHandler": (None, None),
             "showContentsHandler": (None, None),
@@ -171,8 +197,11 @@ class FlatReviewPresenter:
         }
 
         commands_data = [
-            ("toggleFlatReviewModeHandler", self.toggle_flat_review_mode,
-             cmdnames.TOGGLE_FLAT_REVIEW),
+            (
+                "toggleFlatReviewModeHandler",
+                self.toggle_flat_review_mode,
+                cmdnames.TOGGLE_FLAT_REVIEW,
+            ),
             ("reviewHomeHandler", self.go_home, cmdnames.REVIEW_HOME),
             ("reviewEndHandler", self.go_end, cmdnames.REVIEW_END),
             ("reviewBottomLeftHandler", self.go_bottom_left, cmdnames.REVIEW_BOTTOM_LEFT),
@@ -180,35 +209,58 @@ class FlatReviewPresenter:
             ("reviewCurrentLineHandler", self.present_line, cmdnames.REVIEW_CURRENT_LINE),
             ("reviewNextLineHandler", self.go_next_line, cmdnames.REVIEW_NEXT_LINE),
             ("reviewSpellCurrentLineHandler", self.spell_line, cmdnames.REVIEW_SPELL_CURRENT_LINE),
-            ("reviewPhoneticCurrentLineHandler", self.phonetic_line,
-             cmdnames.REVIEW_PHONETIC_CURRENT_LINE),
+            (
+                "reviewPhoneticCurrentLineHandler",
+                self.phonetic_line,
+                cmdnames.REVIEW_PHONETIC_CURRENT_LINE,
+            ),
             ("reviewEndOfLineHandler", self.go_end_of_line, cmdnames.REVIEW_END_OF_LINE),
             ("reviewPreviousItemHandler", self.go_previous_item, cmdnames.REVIEW_PREVIOUS_ITEM),
             ("reviewCurrentItemHandler", self.present_item, cmdnames.REVIEW_CURRENT_ITEM),
             ("reviewNextItemHandler", self.go_next_item, cmdnames.REVIEW_NEXT_ITEM),
             ("reviewSpellCurrentItemHandler", self.spell_item, cmdnames.REVIEW_SPELL_CURRENT_ITEM),
-            ("reviewPhoneticCurrentItemHandler", self.phonetic_item,
-             cmdnames.REVIEW_PHONETIC_CURRENT_ITEM),
-            ("reviewPreviousCharacterHandler", self.go_previous_character,
-             cmdnames.REVIEW_PREVIOUS_CHARACTER),
-            ("reviewCurrentCharacterHandler", self.present_character,
-             cmdnames.REVIEW_CURRENT_CHARACTER),
-            ("reviewSpellCurrentCharacterHandler", self.spell_character,
-             cmdnames.REVIEW_SPELL_CURRENT_CHARACTER),
-            ("reviewUnicodeCurrentCharacterHandler", self.unicode_current_character,
-             cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER),
-            ("reviewNextCharacterHandler", self.go_next_character,
-             cmdnames.REVIEW_NEXT_CHARACTER),
-            ("reviewCurrentAccessibleHandler", self.present_object,
-             cmdnames.REVIEW_CURRENT_ACCESSIBLE),
+            (
+                "reviewPhoneticCurrentItemHandler",
+                self.phonetic_item,
+                cmdnames.REVIEW_PHONETIC_CURRENT_ITEM,
+            ),
+            (
+                "reviewPreviousCharacterHandler",
+                self.go_previous_character,
+                cmdnames.REVIEW_PREVIOUS_CHARACTER,
+            ),
+            (
+                "reviewCurrentCharacterHandler",
+                self.present_character,
+                cmdnames.REVIEW_CURRENT_CHARACTER,
+            ),
+            (
+                "reviewSpellCurrentCharacterHandler",
+                self.spell_character,
+                cmdnames.REVIEW_SPELL_CURRENT_CHARACTER,
+            ),
+            (
+                "reviewUnicodeCurrentCharacterHandler",
+                self.unicode_current_character,
+                cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER,
+            ),
+            ("reviewNextCharacterHandler", self.go_next_character, cmdnames.REVIEW_NEXT_CHARACTER),
+            (
+                "reviewCurrentAccessibleHandler",
+                self.present_object,
+                cmdnames.REVIEW_CURRENT_ACCESSIBLE,
+            ),
             ("reviewAboveHandler", self.go_above, cmdnames.REVIEW_ABOVE),
             ("reviewBelowHandler", self.go_below, cmdnames.REVIEW_BELOW),
             ("showContentsHandler", self.show_contents, cmdnames.FLAT_REVIEW_SHOW_CONTENTS),
             ("flatReviewCopyHandler", self.copy_to_clipboard, cmdnames.FLAT_REVIEW_COPY),
             ("flatReviewAppendHandler", self.append_to_clipboard, cmdnames.FLAT_REVIEW_APPEND),
             ("flatReviewSayAllHandler", self.say_all, cmdnames.SAY_ALL_FLAT_REVIEW),
-            ("flatReviewToggleRestrictHandler", self.toggle_restrict,
-             cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW),
+            (
+                "flatReviewToggleRestrictHandler",
+                self.toggle_restrict,
+                cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW,
+            ),
         ]
 
         braille_bindings: dict[str, tuple[int, ...]] = {}
@@ -226,15 +278,29 @@ class FlatReviewPresenter:
 
         for name, function, description in commands_data:
             desktop_kb, laptop_kb = cmd_bindings.get(name, (None, None))
-            manager.add_command(command_manager.KeyboardCommand(
-                name, function, group_label, description,
-                desktop_keybinding=desktop_kb, laptop_keybinding=laptop_kb))
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=desktop_kb,
+                    laptop_keybinding=laptop_kb,
+                )
+            )
             if name in braille_bindings:
                 bb = braille_bindings[name]
                 # All flat review braille commands are navigation and should execute in learn mode
-                manager.add_command(command_manager.BrailleCommand(
-                    name, function, group_label, description, braille_bindings=bb,
-                    executes_in_learn_mode=True))
+                manager.add_command(
+                    command_manager.BrailleCommand(
+                        name,
+                        function,
+                        group_label,
+                        description,
+                        braille_bindings=bb,
+                        executes_in_learn_mode=True,
+                    )
+                )
 
         msg = "FLAT REVIEW PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -258,7 +324,8 @@ class FlatReviewPresenter:
                 self._context = flat_review.Context(script)
 
             focus_manager.get_manager().emit_region_changed(
-                self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
+                self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+            )
 
             return self._context
 
@@ -276,10 +343,17 @@ class FlatReviewPresenter:
         # present the text at the location of the object of interest.
         mode, obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
-        if mode != focus_manager.FLAT_REVIEW and obj != self._context.get_current_object() \
-           and not self._restrict:
-            tokens = ["FLAT REVIEW PRESENTER: Attempting to update location from",
-                      self._context.get_current_object(), "to", obj]
+        if (
+            mode != focus_manager.FLAT_REVIEW
+            and obj != self._context.get_current_object()
+            and not self._restrict
+        ):
+            tokens = [
+                "FLAT REVIEW PRESENTER: Attempting to update location from",
+                self._context.get_current_object(),
+                "to",
+                obj,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._context.set_current_to_zone_with_object(obj)
 
@@ -292,9 +366,7 @@ class FlatReviewPresenter:
         return self._context
 
     def start(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, script: default.Script | None = None, event: input_event.InputEvent | None = None
     ) -> None:
         """Starts flat review."""
 
@@ -319,9 +391,7 @@ class FlatReviewPresenter:
         self._item_presentation(script, event)
 
     def quit(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None
+        self, script: default.Script | None = None, event: input_event.InputEvent | None = None
     ) -> None:
         """Quits flat review."""
 
@@ -348,12 +418,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False
+        notify_user: bool = False,
     ) -> bool:
         """Toggles between flat review mode and focus tracking mode."""
 
-        tokens = ["FLAT REVIEW PRESENTER: toggle_flat_review_mode. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: toggle_flat_review_mode. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if self.is_active():
@@ -368,12 +444,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the top left of the current window."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_home. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_home. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -386,12 +468,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the bottom right of the current window."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_end. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_end. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -404,12 +492,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the bottom left of the current window."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_bottom_left. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_bottom_left. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -423,12 +517,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the previous line."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_previous_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_previous_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -441,12 +541,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current line."""
 
-        tokens = ["FLAT REVIEW PRESENTER: present_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: present_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._line_presentation(script, event, 1)
@@ -457,12 +563,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the next line."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_next_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_next_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -475,12 +587,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current line letter by letter."""
 
-        tokens = ["FLAT REVIEW PRESENTER: spell_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: spell_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._line_presentation(script, event, 2)
@@ -491,12 +609,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current line letter by letter phonetically."""
 
-        tokens = ["FLAT REVIEW PRESENTER: phonetic_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: phonetic_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._line_presentation(script, event, 3)
@@ -507,12 +631,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the beginning of the current line."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_start_of_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_start_of_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -525,12 +655,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the end of the line."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_end_of_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_end_of_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -543,12 +679,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the previous item or word."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_previous_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_previous_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -561,12 +703,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current item/word."""
 
-        tokens = ["FLAT REVIEW PRESENTER: present_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: present_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._item_presentation(script, event, 1)
@@ -577,12 +725,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the next item or word."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_next_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_next_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -595,12 +749,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current item/word letter by letter."""
 
-        tokens = ["FLAT REVIEW PRESENTER: spell_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: spell_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._item_presentation(script, event, 2)
@@ -611,12 +771,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current word letter by letter phonetically."""
 
-        tokens = ["FLAT REVIEW PRESENTER: phonetic_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: phonetic_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._item_presentation(script, event, 3)
@@ -627,12 +793,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the previous character."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_previous_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_previous_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -645,12 +817,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current character."""
 
-        tokens = ["FLAT REVIEW PRESENTER: present_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: present_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._character_presentation(script, event, 1)
@@ -661,12 +839,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the next character."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_next_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_next_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -679,12 +863,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current character phonetically."""
 
-        tokens = ["FLAT REVIEW PRESENTER: spell_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: spell_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._character_presentation(script, event, 2)
@@ -695,12 +885,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current character's unicode value."""
 
-        tokens = ["FLAT REVIEW PRESENTER: unicode_current_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: unicode_current_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._character_presentation(script, event, 3)
@@ -711,12 +907,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the character above."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_above. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_above. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -729,12 +931,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the character below."""
 
-        tokens = ["FLAT REVIEW PRESENTER: go_below. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: go_below. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -747,12 +955,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> Atspi.Accessible:
         """Returns the current accessible object."""
 
-        tokens = ["FLAT REVIEW PRESENTER: get_current_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: get_current_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -763,12 +977,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the current accessible object."""
 
-        tokens = ["FLAT REVIEW PRESENTER: present_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: present_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -776,7 +996,8 @@ class FlatReviewPresenter:
             script.present_object(self._context.get_current_object(), speechonly=True)
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
+            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+        )
         return True
 
     @dbus_service.command
@@ -784,12 +1005,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Attempts to synthesize a left click on the current accessible."""
 
-        tokens = ["FLAT REVIEW PRESENTER: left_click_on_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: left_click_on_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -804,12 +1031,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Attempts to synthesize a right click on the current accessible."""
 
-        tokens = ["FLAT REVIEW PRESENTER: right_click_on_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: right_click_on_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -824,12 +1057,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Routes the mouse pointer to the current accessible."""
 
-        tokens = ["FLAT REVIEW PRESENTER: route_pointer_to_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: route_pointer_to_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
@@ -862,7 +1101,7 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         _event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        pan_amount: int = 0,
     ) -> bool:
         """Pans the braille display left."""
 
@@ -896,7 +1135,7 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         _event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        pan_amount: int = 0,
     ) -> bool:
         """Pans the braille display right."""
 
@@ -924,9 +1163,7 @@ class FlatReviewPresenter:
         return True
 
     def _get_all_lines(
-        self,
-        script: default.Script,
-        _event: input_event.InputEvent | None = None
+        self, script: default.Script, _event: input_event.InputEvent | None = None
     ) -> tuple[list[str], tuple[int, int, int, int]]:
         """Returns a (textual lines, current location) tuple."""
 
@@ -947,12 +1184,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Speaks the contents of the entire window."""
 
-        tokens = ["FLAT REVIEW PRESENTER: say_all. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: say_all. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for string in self._get_all_lines(script, event)[0]:
@@ -966,12 +1209,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Displays the entire flat review contents in a text view."""
 
-        tokens = ["FLAT REVIEW PRESENTER: show_contents. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: show_contents. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         lines, location = self._get_all_lines(script, event)
@@ -986,12 +1235,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Copies the string just presented to the clipboard."""
 
-        tokens = ["FLAT REVIEW PRESENTER: copy_to_clipboard. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: copy_to_clipboard. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.is_active():
@@ -1009,12 +1264,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Appends the string just presented to the clipboard."""
 
-        tokens = ["FLAT REVIEW PRESENTER: append_to_clipboard. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: append_to_clipboard. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.is_active():
@@ -1047,12 +1308,18 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
-        """ Toggles the restricting of flat review to the current object. """
+        """Toggles the restricting of flat review to the current object."""
 
-        tokens = ["FLAT REVIEW PRESENTER: toggle_restrict. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "FLAT REVIEW PRESENTER: toggle_restrict. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._restrict = not self._restrict
@@ -1075,7 +1342,7 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        speech_type: int = 1
+        speech_type: int = 1,
     ) -> bool:
         """Presents the current line."""
 
@@ -1097,11 +1364,13 @@ class FlatReviewPresenter:
             else:
                 manager = speech_and_verbosity_manager.get_manager()
                 line_string = manager.adjust_for_presentation(
-                    self._context.get_current_object(), line_string)
+                    self._context.get_current_object(), line_string
+                )
                 script.speak_message(line_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
+            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+        )
         self._update_braille(script)
         self._current_contents = line_string
         return True
@@ -1110,7 +1379,7 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        speech_type: int = 1
+        speech_type: int = 1,
     ) -> bool:
         """Presents the current item/word."""
 
@@ -1135,11 +1404,13 @@ class FlatReviewPresenter:
                 elif speech_type == 1:
                     manager = speech_and_verbosity_manager.get_manager()
                     word_string = manager.adjust_for_presentation(
-                        self._context.get_current_object(), word_string)
+                        self._context.get_current_object(), word_string
+                    )
                     script.speak_message(word_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
+            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+        )
         self._update_braille(script)
         self._current_contents = word_string
         return True
@@ -1148,7 +1419,7 @@ class FlatReviewPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        speech_type: int = 1
+        speech_type: int = 1,
     ) -> bool:
         """Presents the current character."""
 
@@ -1175,36 +1446,30 @@ class FlatReviewPresenter:
             return True
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW)
+            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+        )
         self._update_braille(script)
         self._current_contents = char_string
         return True
+
 
 class FlatReviewContextGUI:
     """Presents the entire flat review context in a text view"""
 
     def __init__(
-        self,
-        script: default.Script,
-        title: str,
-        text: str,
-        location: tuple[int, int, int, int]
+        self, script: default.Script, title: str, text: str, location: tuple[int, int, int, int]
     ) -> None:
         self._script: default.Script = script
         self._gui: Gtk.Dialog = self._create_dialog(title, text, location)
 
     def _create_dialog(
-        self,
-        title: str,
-        text: str,
-        location: tuple[int, int, int, int]
+        self, title: str, text: str, location: tuple[int, int, int, int]
     ) -> Gtk.Dialog:
         """Creates the dialog."""
 
-        dialog = Gtk.Dialog(title,
-                            None,
-                            Gtk.DialogFlags.MODAL,
-                            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
+        dialog = Gtk.Dialog(
+            title, None, Gtk.DialogFlags.MODAL, (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        )
         dialog.set_default_size(800, 600)
 
         scrolled_window = Gtk.ScrolledWindow()
@@ -1237,7 +1502,7 @@ class FlatReviewContextGUI:
 
         textview = Gtk.TextView(buffer=textbuffer)
         textview.set_wrap_mode(Gtk.WrapMode.WORD)
-        scrolled_window.add(textview) # pylint: disable=no-member
+        scrolled_window.add(textview)  # pylint: disable=no-member
         dialog.get_content_area().pack_start(scrolled_window, True, True, 0)
         dialog.connect("response", self.on_response)
         return dialog
@@ -1251,11 +1516,12 @@ class FlatReviewContextGUI:
     def show_gui(self) -> None:
         """Shows the dialog."""
 
-        self._gui.show_all() # pylint: disable=no-member
+        self._gui.show_all()  # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
 
 _presenter: FlatReviewPresenter = FlatReviewPresenter()
+
 
 def get_presenter() -> FlatReviewPresenter:
     """Returns the Flat Review Presenter"""

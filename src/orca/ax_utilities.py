@@ -36,6 +36,7 @@ import threading
 import time
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -170,10 +171,7 @@ class AXUtilities:
 
         # Some electron apps running in the background claim to be active even when they
         # are not. These are the ones we know about. We can add others as we go.
-        suspect_apps = ["slack",
-                        "discord",
-                        "outline-client",
-                        "whatsapp-desktop-linux"]
+        suspect_apps = ["slack", "discord", "outline-client", "whatsapp-desktop-linux"]
         filtered = []
         for frame in candidates:
             if AXObject.get_name(AXUtilitiesApplication.get_application(frame)) in suspect_apps:
@@ -220,7 +218,8 @@ class AXUtilities:
         result = list(AXObject.iter_children(app, AXUtilities.is_unfocused_alert_or_dialog))
 
         frame = AXObject.find_ancestor(
-            obj, lambda x: AXUtilitiesRole.is_application(AXObject.get_parent(x)))
+            obj, lambda x: AXUtilitiesRole.is_application(AXObject.get_parent(x))
+        )
         result.extend(list(AXObject.iter_children(frame, AXUtilities.is_unfocused_alert_or_dialog)))
 
         tokens = ["AXUtilities: Unfocused alerts and dialogs for", obj, ":", result]
@@ -231,7 +230,7 @@ class AXUtilities:
     def get_all_widgets(
         obj: Atspi.Accessible,
         must_be_showing_and_visible: bool = True,
-        exclude_push_button: bool = False
+        exclude_push_button: bool = False,
     ) -> list[Atspi.Accessible]:
         """Returns all the descendants of obj with a widget role"""
 
@@ -245,8 +244,7 @@ class AXUtilities:
                 result = AXUtilitiesCollection.find_all_with_role(obj, roles)
             else:
                 states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
-                result = AXUtilitiesCollection.find_all_with_role_and_all_states(
-                    obj, roles, states)
+                result = AXUtilitiesCollection.find_all_with_role_and_all_states(obj, roles, states)
 
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
@@ -461,8 +459,9 @@ class AXUtilities:
         if obj1 == obj2:
             return False
 
-        if AXObject.get_name(obj1) != AXObject.get_name(obj2) \
-           or AXObject.get_role(obj1) != AXObject.get_role(obj2):
+        if AXObject.get_name(obj1) != AXObject.get_name(obj2) or AXObject.get_role(
+            obj1
+        ) != AXObject.get_role(obj2):
             return False
 
         tokens = ["AXUtilities:", obj2, "is redundant to", obj1]
@@ -567,6 +566,7 @@ class AXUtilities:
         # In a listbox, items scrolled out of view lose the showing state but are still valid members.
         def is_combo_box_or_list_box(x):
             return AXUtilitiesRole.is_combo_box(x) or AXUtilitiesRole.is_list_box(x)
+
         must_be_showing = not AXObject.find_ancestor(obj, is_combo_box_or_list_box)
         if not must_be_showing:
             return result
@@ -589,8 +589,9 @@ class AXUtilities:
         if AXUtilitiesRole.is_table_row(obj):
             return AXTable.get_row_count(AXTable.get_table(obj))
 
-        if AXUtilitiesRole.is_table_cell_or_header(obj) \
-           and not AXUtilitiesRole.is_table_row(AXObject.get_parent(obj)):
+        if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
+            AXObject.get_parent(obj)
+        ):
             return AXTable.get_row_count(AXTable.get_table(obj))
 
         if AXUtilitiesRole.is_combo_box(obj):
@@ -649,8 +650,9 @@ class AXUtilities:
                 # ARIA posinset is 1-based.
                 return int(result) - 1
 
-        if AXUtilitiesRole.is_table_cell_or_header(obj) \
-           and not AXUtilitiesRole.is_table_row(AXObject.get_parent(obj)):
+        if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
+            AXObject.get_parent(obj)
+        ):
             return AXTable.get_cell_coordinates(obj)[0]
 
         if AXUtilitiesRole.is_combo_box(obj):
@@ -685,8 +687,11 @@ class AXUtilities:
 
         labels = AXUtilitiesRelation.get_is_labelled_by(obj)
         for label in labels:
-            if AXUtilitiesRole.is_caption(label) \
-               and AXUtilitiesState.is_showing(label) and AXUtilitiesState.is_visible(label):
+            if (
+                AXUtilitiesRole.is_caption(label)
+                and AXUtilitiesState.is_showing(label)
+                and AXUtilitiesState.is_visible(label)
+            ):
                 return True
 
         return False
@@ -806,10 +811,7 @@ class AXUtilities:
         return previous_object
 
     @staticmethod
-    def is_on_screen(
-        obj: Atspi.Accessible,
-        bounding_box: Atspi.Rect | None = None
-    ) -> bool:
+    def is_on_screen(obj: Atspi.Accessible, bounding_box: Atspi.Rect | None = None) -> bool:
         """Returns true if obj should be treated as being on screen."""
 
         AXObject.clear_cache(obj, False, "Updating to check if object is on screen.")
@@ -846,8 +848,13 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["AXUtilities:", obj, "is not off screen. Checking",
-                  bounding_box, "intersection..."]
+        tokens = [
+            "AXUtilities:",
+            obj,
+            "is not off screen. Checking",
+            bounding_box,
+            "intersection...",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if bounding_box is not None and not AXComponent.object_intersects_rect(obj, bounding_box):
@@ -885,9 +892,8 @@ class AXUtilities:
     def _get_on_screen_objects(
         root: Atspi.Accessible,
         cancellation_event: threading.Event,
-        bounding_box: Atspi.Rect | None = None
+        bounding_box: Atspi.Rect | None = None,
     ) -> list:
-
         tokens = ["AXUtilities: Getting on-screen objects in", root, f"({hex(id(root))})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -936,9 +942,7 @@ class AXUtilities:
 
     @staticmethod
     def get_on_screen_objects(
-        root: Atspi.Accessible,
-        bounding_box: Atspi.Rect | None = None,
-        timeout: float = 5.0
+        root: Atspi.Accessible, bounding_box: Atspi.Rect | None = None, timeout: float = 5.0
     ) -> list:
         """Returns a list of onscreen objects in the given root."""
 
@@ -971,6 +975,7 @@ class AXUtilities:
         tokens = [f"AXUtilities: {len(result)} onscreen objects found in", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
+
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)

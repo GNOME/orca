@@ -34,6 +34,7 @@ import time
 from typing import Any, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk
 from gi.repository import GLib
@@ -83,8 +84,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
     WINDOW: OrcaSetupGUI | None = None
 
-    def __init__(self, script: 'default.Script', prefs_dict: dict[str, Any]) -> None:
-
+    def __init__(self, script: "default.Script", prefs_dict: dict[str, Any]) -> None:
         if OrcaSetupGUI.WINDOW is not None:
             return
 
@@ -228,23 +228,18 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self._add_navigation_row("speech", self.speech_grid.get_label().get_text())
 
         braille_pres = braille_presenter.get_presenter()
-        self.braille_grid = braille_pres.create_preferences_grid(
-            title_change_callback=update_title
-        )
+        self.braille_grid = braille_pres.create_preferences_grid(title_change_callback=update_title)
         self.stack.add_named(self.braille_grid, "braille")
         self._add_navigation_row("braille", self.braille_grid.get_label().get_text())
 
         sound_pres = sound_presenter.get_presenter()
-        self.sound_grid = sound_pres.create_preferences_grid(
-            title_change_callback=update_title
-        )
+        self.sound_grid = sound_pres.create_preferences_grid(title_change_callback=update_title)
         self.stack.add_named(self.sound_grid, "sound")
         self._add_navigation_row("sound", self.sound_grid.get_label().get_text())
 
         cmd_manager = command_manager.get_manager()
         self.keybindings_grid = cmd_manager.create_preferences_grid(
-            self.script,
-            title_change_callback=update_title
+            self.script, title_change_callback=update_title
         )
         self.stack.add_named(self.keybindings_grid, "keybindings")
         self._add_navigation_row("keybindings", self.keybindings_grid.get_label().get_text())
@@ -272,8 +267,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         pronunciation_manager = pronunciation_dictionary_manager.get_manager()
         self.pronunciation_grid = pronunciation_manager.create_preferences_grid(self.script)
         self.stack.add_named(self.pronunciation_grid, "pronunciation")
-        self._add_navigation_row(
-            "pronunciation", self.pronunciation_grid.get_label().get_text())
+        self._add_navigation_row("pronunciation", self.pronunciation_grid.get_label().get_text())
 
         spellcheck_pres = spellcheck_presenter.get_presenter()
         self.spellcheck_grid = spellcheck_pres.create_preferences_grid()
@@ -289,14 +283,13 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.text_attributes_grid = text_attr_mgr.create_preferences_grid()
         self.stack.add_named(self.text_attributes_grid, "text_attributes")
         self._add_navigation_row(
-            "text_attributes", self.text_attributes_grid.get_label().get_text())
+            "text_attributes", self.text_attributes_grid.get_label().get_text()
+        )
 
         system_info_presenter = system_information_presenter.get_presenter()
-        self.time_and_date_grid = (
-            system_info_presenter.create_time_and_date_preferences_grid())
+        self.time_and_date_grid = system_info_presenter.create_time_and_date_preferences_grid()
         self.stack.add_named(self.time_and_date_grid, "time_and_date")
-        self._add_navigation_row(
-            "time_and_date", self.time_and_date_grid.get_label().get_text())
+        self._add_navigation_row("time_and_date", self.time_and_date_grid.get_label().get_text())
 
         self._page_to_grid = {
             "speech": self.speech_grid,
@@ -359,11 +352,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         else:
             self.listbox.grab_focus()
 
-    def _add_navigation_row(
-        self,
-        panel_id: str,
-        label_text: str
-    ) -> NavigationRow:
+    def _add_navigation_row(self, panel_id: str, label_text: str) -> NavigationRow:
         """Add a navigation row to the sidebar listbox and return it."""
 
         row = NavigationRow(panel_id=panel_id)
@@ -411,22 +400,24 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self._current_panel_id = panel_id
 
-    def write_user_preferences(self, pronunciation_dict: dict[str, Any],
-                               key_bindings_dict: dict[str, Any]) -> None:
+    def write_user_preferences(
+        self, pronunciation_dict: dict[str, Any], key_bindings_dict: dict[str, Any]
+    ) -> None:
         """Write out the user's generic Orca preferences."""
-
 
         # For backwards compatibility (These settings no longer exist, but older versions of
         # Orca assume these key exist in the prefs dict.)
-        self.prefs_dict["progressBarUpdateInterval"] = \
-            self.prefs_dict.get("progressBarSpeechInterval", 10)
-        self.prefs_dict["progressBarVerbosity"] = \
-            self.prefs_dict.get("progressBarSpeechVerbosity", settings.PROGRESS_BAR_APPLICATION)
-
+        self.prefs_dict["progressBarUpdateInterval"] = self.prefs_dict.get(
+            "progressBarSpeechInterval", 10
+        )
+        self.prefs_dict["progressBarVerbosity"] = self.prefs_dict.get(
+            "progressBarSpeechVerbosity", settings.PROGRESS_BAR_APPLICATION
+        )
 
         settings.speechSystemOverride = None
         settings_manager.get_manager().save_settings(
-            self.script, self.prefs_dict, pronunciation_dict, key_bindings_dict)
+            self.script, self.prefs_dict, pronunciation_dict, key_bindings_dict
+        )
 
     def _init_gui_state(self, include_profiles: bool = False) -> None:
         """Adjust the settings of the various widgets based on user settings."""
@@ -441,7 +432,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             settings_manager.get_manager().set_configuring(True)
 
             return False
-
 
         if OrcaSetupGUI.WINDOW is not None:
             OrcaSetupGUI.WINDOW.present()
@@ -477,6 +467,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         def set_accessible_name() -> bool:
             self.update_menu_labels()
             return False
+
         GLib.idle_add(set_accessible_name)
 
         # Enable configuring mode after a brief delay to allow initial setup to complete
@@ -612,24 +603,21 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES DIALOG: Window is being closed"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        has_unsaved_changes = (
-            not self._settings_applied
-            and (
-                self.speech_grid.has_changes()
-                or self.braille_grid.has_changes()
-                or self.sound_grid.has_changes()
-                or self.typing_echo_grid.has_changes()
-                or self.say_all_grid.has_changes()
-                or self.spellcheck_grid.has_changes()
-                or self.chat_grid.has_changes()
-                or self.mouse_grid.has_changes()
-                or self.document_grid.has_changes()
-                or self.time_and_date_grid.has_changes()
-                or self.text_attributes_grid.has_changes()
-                or (not self._app_name and self.profiles_grid.has_changes())
-                or self.pronunciation_grid.has_changes()
-                or self.keybindings_grid.has_changes()
-            )
+        has_unsaved_changes = not self._settings_applied and (
+            self.speech_grid.has_changes()
+            or self.braille_grid.has_changes()
+            or self.sound_grid.has_changes()
+            or self.typing_echo_grid.has_changes()
+            or self.say_all_grid.has_changes()
+            or self.spellcheck_grid.has_changes()
+            or self.chat_grid.has_changes()
+            or self.mouse_grid.has_changes()
+            or self.document_grid.has_changes()
+            or self.time_and_date_grid.has_changes()
+            or self.text_attributes_grid.has_changes()
+            or (not self._app_name and self.profiles_grid.has_changes())
+            or self.pronunciation_grid.has_changes()
+            or self.keybindings_grid.has_changes()
         )
 
         # Check if profile was switched during this session
@@ -642,13 +630,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
                 modal=True,
                 message_type=Gtk.MessageType.QUESTION,
                 buttons=Gtk.ButtonsType.NONE,
-                text=guilabels.PREFERENCES_CLOSE_WITHOUT_SAVE
+                text=guilabels.PREFERENCES_CLOSE_WITHOUT_SAVE,
             )
             dialog.format_secondary_text(guilabels.PREFERENCES_CHANGES_WILL_BE_LOST)
 
             profile_label = self._get_current_profile_label()
             save_button = dialog.add_button(
-                guilabels.MENU_SAVE_PROFILE % profile_label, Gtk.ResponseType.YES)
+                guilabels.MENU_SAVE_PROFILE % profile_label, Gtk.ResponseType.YES
+            )
             save_button.get_style_context().add_class("suggested-action")
 
             # Only show "New Profile" for global preferences (profiles are global)
@@ -683,14 +672,16 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
                 modal=True,
                 message_type=Gtk.MessageType.QUESTION,
                 buttons=Gtk.ButtonsType.NONE,
-                text=guilabels.PREFERENCES_PROFILE_SWITCHED
+                text=guilabels.PREFERENCES_PROFILE_SWITCHED,
             )
 
             use_button = dialog.add_button(
-                guilabels.PROFILE_USE % current_label, Gtk.ResponseType.YES)
+                guilabels.PROFILE_USE % current_label, Gtk.ResponseType.YES
+            )
             use_button.get_style_context().add_class("suggested-action")
             dialog.add_button(
-                guilabels.PROFILE_SWITCH_BACK_TO % original_label, Gtk.ResponseType.NO)
+                guilabels.PROFILE_SWITCH_BACK_TO % original_label, Gtk.ResponseType.NO
+            )
 
             dialog.show_all()
             dialog.present()

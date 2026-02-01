@@ -23,12 +23,12 @@
 
 """Utilities for obtaining document-related information about accessible objects."""
 
-
 import threading
 import time
 import urllib.parse
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -40,6 +40,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
 
 class AXDocument:
     """Utilities for obtaining document-related information about accessible objects."""
@@ -216,21 +217,26 @@ class AXDocument:
     def _get_object_counts(document: Atspi.Accessible) -> dict[str, int]:
         """Returns a dictionary of object counts used in a document summary."""
 
-        result = {"forms": 0,
-                  "landmarks": 0,
-                  "headings": 0,
-                  "tables": 0,
-                  "unvisited_links": 0,
-                  "visited_links": 0}
+        result = {
+            "forms": 0,
+            "landmarks": 0,
+            "headings": 0,
+            "tables": 0,
+            "unvisited_links": 0,
+            "visited_links": 0,
+        }
 
-        roles = [Atspi.Role.HEADING,
-                 Atspi.Role.LINK,
-                 Atspi.Role.TABLE,
-                 Atspi.Role.FORM,
-                 Atspi.Role.LANDMARK]
+        roles = [
+            Atspi.Role.HEADING,
+            Atspi.Role.LINK,
+            Atspi.Role.TABLE,
+            Atspi.Role.FORM,
+            Atspi.Role.LANDMARK,
+        ]
 
         rule = AXCollection.create_match_rule(
-            roles=roles, role_match_type=Atspi.CollectionMatchType.ANY)
+            roles=roles, role_match_type=Atspi.CollectionMatchType.ANY
+        )
         matches = AXCollection.get_all_matches(document, rule)
 
         for obj in matches:
@@ -261,8 +267,9 @@ class AXDocument:
         result.append(messages.form_count(counts.get("forms", 0), only_if_found))
         result.append(messages.table_count(counts.get("tables", 0), only_if_found))
         result.append(messages.visited_link_count(counts.get("visited_links", 0), only_if_found))
-        result.append(messages.unvisited_link_count(
-            counts.get("unvisited_links", 0), only_if_found))
+        result.append(
+            messages.unvisited_link_count(counts.get("unvisited_links", 0), only_if_found)
+        )
         result = list(filter(lambda x: x, result))
         if not result:
             return ""

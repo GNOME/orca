@@ -88,7 +88,7 @@ class LiveRegionMessage:
         text: str,
         politeness: LivePoliteness,
         obj: Atspi.Accessible,
-        timestamp: float | None = None
+        timestamp: float | None = None,
     ) -> None:
         self.text = text
         self.politeness = politeness
@@ -155,18 +155,14 @@ class LiveRegionMessageQueue:
         current_time = time.time()
 
         self._heap = [
-            msg for msg in self._heap
-            if msg.timestamp + self.MSG_KEEPALIVE_TIME > current_time
+            msg for msg in self._heap if msg.timestamp + self.MSG_KEEPALIVE_TIME > current_time
         ]
         heapq.heapify(self._heap)
 
     def purge_by_priority(self, priority: LivePoliteness) -> None:
         """Purge items from the queue that have a lower than or equal priority to priority."""
 
-        self._heap = [
-            msg for msg in self._heap
-            if msg.politeness.priority < priority.priority
-        ]
+        self._heap = [msg for msg in self._heap if msg.politeness.priority < priority.priority]
         heapq.heapify(self._heap)
 
     def __len__(self) -> int:
@@ -287,7 +283,8 @@ class LiveRegionPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_LIVE_REGIONS, suspended)
+            guilabels.KB_GROUP_LIVE_REGIONS, suspended
+        )
 
     def reset(self) -> None:
         """Reset the live region presenter."""
@@ -310,11 +307,7 @@ class LiveRegionPresenter:
         if not text:
             return
 
-        message = LiveRegionMessage(
-            text=text,
-            politeness=politeness,
-            obj=event.source
-        )
+        message = LiveRegionMessage(text=text, politeness=politeness, obj=event.source)
 
         # Check for duplicate and update tracking.
         if message.is_duplicate_of(self._last_presented_message):
@@ -329,7 +322,7 @@ class LiveRegionPresenter:
 
         self.msg_queue.enqueue(message)
 
-    def is_presentable_live_region_event(self, script: default.Script,event: Atspi.Event) -> bool:
+    def is_presentable_live_region_event(self, script: default.Script, event: Atspi.Event) -> bool:
         """Returns whether the given event is a presentable live region event."""
 
         # Live regions were invented to work with web content. At the time the ARIA working group
@@ -359,8 +352,12 @@ class LiveRegionPresenter:
             this_doc = script.utilities.get_top_level_document_for_object(event.source)
             active_doc = script.utilities.active_document()
             if this_doc and active_doc and this_doc != active_doc:
-                tokens = ["LIVE REGION PRESENTER: Event from", this_doc,
-                          "but active document is", active_doc]
+                tokens = [
+                    "LIVE REGION PRESENTER: Event from",
+                    this_doc,
+                    "but active document is",
+                    active_doc,
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
@@ -401,9 +398,7 @@ class LiveRegionPresenter:
         return len(self.msg_queue) > 0
 
     def _advance_politeness_level(
-        self,
-        script: default.Script,
-        _event: input_event.InputEvent
+        self, script: default.Script, _event: input_event.InputEvent
     ) -> bool:
         """Advance the politeness level of the given object"""
 
@@ -434,9 +429,7 @@ class LiveRegionPresenter:
         return True
 
     def go_last_live_region(
-        self,
-        script: default.Script,
-        _event: input_event.InputEvent | None
+        self, script: default.Script, _event: input_event.InputEvent | None
     ) -> bool:
         """Move to the last announced live region and speak the contents of that object."""
 
@@ -455,9 +448,7 @@ class LiveRegionPresenter:
         return True
 
     def present_previous_live_region_message(
-        self,
-        script: default.Script,
-        _event: input_event.InputEvent | None
+        self, script: default.Script, _event: input_event.InputEvent | None
     ) -> bool:
         """Presents the previous live region message."""
 
@@ -465,8 +456,12 @@ class LiveRegionPresenter:
             script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
             return False
 
-        tokens = ["LIVE REGION PRESENTER: present_previous_live_region_message. Script:", script,
-                  "Current index:", self._current_index]
+        tokens = [
+            "LIVE REGION PRESENTER: present_previous_live_region_message. Script:",
+            script,
+            "Current index:",
+            self._current_index,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.msg_cache:
@@ -490,9 +485,7 @@ class LiveRegionPresenter:
         return True
 
     def present_next_live_region_message(
-        self,
-        script: default.Script,
-        _event: input_event.InputEvent | None
+        self, script: default.Script, _event: input_event.InputEvent | None
     ) -> bool:
         """Presents the next live region message."""
 
@@ -500,8 +493,12 @@ class LiveRegionPresenter:
             script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
             return False
 
-        tokens = ["LIVE REGION PRESENTER: present_next_live_region_message. Script:", script,
-                  "Current index:", self._current_index]
+        tokens = [
+            "LIVE REGION PRESENTER: present_next_live_region_message. Script:",
+            script,
+            "Current index:",
+            self._current_index,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.msg_cache:
@@ -573,9 +570,7 @@ class LiveRegionPresenter:
         return True
 
     def toggle_live_region_presentation(
-        self,
-        script: default.Script,
-        _event: input_event.InputEvent
+        self, script: default.Script, _event: input_event.InputEvent
     ) -> bool:
         """Toggles between presenting live regions and not presenting them."""
 
@@ -635,7 +630,8 @@ class LiveRegionPresenter:
                 content = event.any_data
             else:
                 content = script.utilities.expand_eocs(
-                    event.source, event.detail1, event.detail1 + event.detail2)
+                    event.source, event.detail1, event.detail1 + event.detail2
+                )
         else:
             container = self._find_container(event.source)
             content = script.utilities.expand_eocs(container)
@@ -675,9 +671,11 @@ class LiveRegionPresenter:
         """Returns the HTML 'id' or a path to the object is an HTML id is unavailable."""
 
         attrs = AXObject.get_attributes_dict(obj, False)
-        return hash (attrs.get("id") or obj)
+        return hash(attrs.get("id") or obj)
+
 
 _presenter: LiveRegionPresenter = LiveRegionPresenter()
+
 
 def get_presenter() -> LiveRegionPresenter:
     """Returns the Live Region Presenter singleton."""

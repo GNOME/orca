@@ -25,8 +25,7 @@ have been put in their own module so that we can present them in
 the correct language when users change the synthesizer language
 on the fly without having to reload a bunch of modules."""
 
-
-from .orca_i18n import _ # pylint: disable=import-error
+from .orca_i18n import _  # pylint: disable=import-error
 
 # Translators: this command will move the mouse pointer to the current item,
 # typically a widget, without clicking on it.
@@ -150,8 +149,7 @@ REVIEW_END = _("Move flat review to the end position")
 # the text from all objects in a window (e.g., buttons, labels, etc.) as a
 # sequence of words in a sequence of lines.  The flat review feature allows
 # the user to explore this text by the {previous,next} {line,word,character}.
-REVIEW_PREVIOUS_LINE = \
-    _("Move flat review to the beginning of the previous line")
+REVIEW_PREVIOUS_LINE = _("Move flat review to the beginning of the previous line")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -176,8 +174,7 @@ REVIEW_SPELL_CURRENT_LINE = _("Spell the current flat review line")
 # the user to explore this text by the {previous,next} {line,word,character}.
 # This particular command will cause Orca to spell the current line character
 # by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
-REVIEW_PHONETIC_CURRENT_LINE = \
-    _("Phonetically spell the current flat review line")
+REVIEW_PHONETIC_CURRENT_LINE = _("Phonetically spell the current flat review line")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -220,8 +217,7 @@ REVIEW_SPELL_CURRENT_ITEM = _("Spell the current flat review item or word")
 # This particular command will cause Orca to spell the current word or item
 # character by character phonetically, saying "Alpha" for "a", "Bravo" for "b"
 # and so on.
-REVIEW_PHONETIC_CURRENT_ITEM = \
-    _("Phonetically spell the current flat review item or word")
+REVIEW_PHONETIC_CURRENT_ITEM = _("Phonetically spell the current flat review item or word")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -284,8 +280,7 @@ REVIEW_CURRENT_CHARACTER = _("Speak the current flat review character")
 # the user to explore this text by the {previous,next} {line,word,character}.
 # This particular command will cause Orca to present the character phonetically,
 # saying "Alpha" for "a", "Bravo" for "b" and so on.
-REVIEW_SPELL_CURRENT_CHARACTER = \
-    _("Phonetically speak the current flat review character")
+REVIEW_SPELL_CURRENT_CHARACTER = _("Phonetically speak the current flat review character")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -294,8 +289,7 @@ REVIEW_SPELL_CURRENT_CHARACTER = \
 # the user to explore this text by the {previous,next} {line,word,character}.
 # This particular command will cause Orca to present the character's unicode
 # value.
-REVIEW_UNICODE_CURRENT_CHARACTER = \
-    _("Speak unicode value of the current flat review character")
+REVIEW_UNICODE_CURRENT_CHARACTER = _("Speak unicode value of the current flat review character")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -338,8 +332,7 @@ FLAT_REVIEW_COPY = _("Copy the contents under flat review to the clipboard")
 # the user to explore this text by the {previous,next} {line,word,character}.
 # This command lets the user append the contents currently being reviewed to
 # the existing contents of the clipboard.
-FLAT_REVIEW_APPEND = \
-    _("Append the contents under flat review to the clipboard")
+FLAT_REVIEW_APPEND = _("Append the contents under flat review to the clipboard")
 
 # Translators: the 'flat review' feature of Orca allows the blind user to
 # explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -355,13 +348,13 @@ FLAT_REVIEW_SHOW_CONTENTS = _("Show flat review contents")
 # Translators: when users are navigating a table, they sometimes want the
 # entire row of a table read; other times they just want the current cell
 # to be presented to them.
-TOGGLE_TABLE_CELL_READ_MODE = \
-    _("Toggle whether to read just the current table cell or the whole row")
+TOGGLE_TABLE_CELL_READ_MODE = _(
+    "Toggle whether to read just the current table cell or the whole row"
+)
 
 # Translators: the attributes being presented are the text attributes, such as
 # bold, italic, font name, font size, etc.
-READ_CHAR_ATTRIBUTES = \
-    _("Read the attributes associated with the current text character")
+READ_CHAR_ATTRIBUTES = _("Read the attributes associated with the current text character")
 
 # Translators: a refreshable braille display is an external hardware device that
 # presents braille characters to the user. There are a limited number of cells
@@ -475,13 +468,13 @@ SHOW_PREFERENCES_GUI = _("Display the preferences configuration dialog")
 
 # Translators: the preferences configuration dialog is the dialog that allows
 # users to set their preferences for a specific application within Orca.
-SHOW_APP_PREFERENCES_GUI = \
-    _("Display the application preferences configuration dialog")
+SHOW_APP_PREFERENCES_GUI = _("Display the application preferences configuration dialog")
 
 # Translators: Orca allows the user to enable/disable speaking of indentation
 # and justification.
-TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION = \
-    _("Toggle the speaking of indentation and justification")
+TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION = _(
+    "Toggle the speaking of indentation and justification"
+)
 
 # Translators: Orca has a setting through which users can control how a number is
 # spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
@@ -547,8 +540,7 @@ DEBUG_CYCLE_LEVEL = _("Cycle the debug level at run time")
 # the currently-running application. This is sometimes needed because applications
 # fail to notify AT-SPI when something changes resulting in AT-SPI having stale
 # information which impacts Orca's logic and/or presentation to users.
-DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION = \
-    _("Clear the AT-SPI cache for the current application")
+DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION = _("Clear the AT-SPI cache for the current application")
 
 # Translators: this is a debug message for advanced users and developers. It
 # describes a command to print detailed debugging information about the current
@@ -668,7 +660,7 @@ BRAILLE_HOME = _("Cursor Position")
 # Translators: this is a command for a button on a refreshable braille display
 # (an external hardware device used by people who are blind). When pressing the
 # button, the display toggles between six-dot braille and eight-dot braille.
-BRAILLE_SIX_DOTS  = _("Six Dots")
+BRAILLE_SIX_DOTS = _("Six Dots")
 
 # Translators: this is a command for a button on a refreshable braille display
 # (an external hardware device used by people who are blind). This command
@@ -745,15 +737,13 @@ CARET_NAVIGATION_PREV_OBJECT = _("Go to the previous object")
 
 # Translators: this is for causing a collapsed combo box which was reached
 # by Orca's caret navigation to be expanded.
-CARET_NAVIGATION_EXPAND_COMBO_BOX = \
-    _("Cause the current combo box to be expanded")
+CARET_NAVIGATION_EXPAND_COMBO_BOX = _("Cause the current combo box to be expanded")
 
 # Translators: Gecko native caret navigation is where Firefox (or Thunderbird)
 # itself controls how the arrow keys move the caret around HTML content. It's
 # often broken, so Orca needs to provide its own support. As such, Orca offers
 # the user the ability to toggle which application is controlling the caret.
-CARET_NAVIGATION_TOGGLE = \
-    _("Switch between native and screen-reader caret navigation")
+CARET_NAVIGATION_TOGGLE = _("Switch between native and screen-reader caret navigation")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
@@ -771,8 +761,7 @@ LIVE_REGIONS_ADVANCE_POLITENESS = _("Advance live region politeness setting")
 # idle ("polite"), and when there is a change ("assertive"). Orca has several
 # features to facilitate accessing live regions. This string refers to a command
 # to turn off live regions by default.
-LIVE_REGIONS_ARE_ANNOUNCED = \
-    _("Set default live region politeness level to off")
+LIVE_REGIONS_ARE_ANNOUNCED = _("Set default live region politeness level to off")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region

@@ -28,6 +28,7 @@ from __future__ import annotations
 import enum
 
 import gi
+
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk
@@ -44,6 +45,7 @@ from .preferences_grid_base import PreferencesGridBase
 
 class PresentationMode(enum.IntEnum):
     """How a text attribute should be presented."""
+
     NONE = 0
     SPEAK = 1
     BRAILLE = 2
@@ -94,8 +96,11 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
     # pylint: disable-next=too-many-locals,too-many-statements
     def _create_attribute_row(
-        self, attribute: AXTextAttribute, presentation_mode: PresentationMode, index: int,
-        include_top_separator: bool = True
+        self,
+        attribute: AXTextAttribute,
+        presentation_mode: PresentationMode,
+        index: int,
+        include_top_separator: bool = True,
     ) -> Gtk.ListBoxRow:
         """Create a ListBoxRow for a text attribute."""
 
@@ -172,17 +177,16 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         row.attribute_index = index
         row.presentation_combo = presentation_combo
 
-        target_entry = Gtk.TargetEntry.new(
-            "text/plain", Gtk.TargetFlags.SAME_APP, 0)
+        target_entry = Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, 0)
 
         drag_area.drag_source_set(
-            Gdk.ModifierType.BUTTON1_MASK, [target_entry], Gdk.DragAction.MOVE)
+            Gdk.ModifierType.BUTTON1_MASK, [target_entry], Gdk.DragAction.MOVE
+        )
         drag_area.connect("drag-begin", self._on_drag_begin, row)
         drag_area.connect("drag-data-get", self._on_drag_data_get, row)
         drag_area.connect("drag-end", self._on_drag_end, row)
 
-        row.drag_dest_set(
-            Gtk.DestDefaults.ALL, [target_entry], Gdk.DragAction.MOVE)
+        row.drag_dest_set(Gtk.DestDefaults.ALL, [target_entry], Gdk.DragAction.MOVE)
         row.connect("drag-data-received", self._on_drag_data_received)
 
         return row
@@ -216,12 +220,16 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
             self._attributes.insert(0, attribute)
             new_index = 0
         elif direction == "up" and index > 0:
-            self._attributes[index], self._attributes[index - 1] = \
-                self._attributes[index - 1], self._attributes[index]
+            self._attributes[index], self._attributes[index - 1] = (
+                self._attributes[index - 1],
+                self._attributes[index],
+            )
             new_index = index - 1
         elif direction == "down" and index < len(self._attributes) - 1:
-            self._attributes[index], self._attributes[index + 1] = \
-                self._attributes[index + 1], self._attributes[index]
+            self._attributes[index], self._attributes[index + 1] = (
+                self._attributes[index + 1],
+                self._attributes[index],
+            )
             new_index = index + 1
         elif direction == "bottom":
             attribute = self._attributes.pop(index)
@@ -246,7 +254,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         data: Gtk.SelectionData,
         _info: int,
         _time: int,
-        row: Gtk.ListBoxRow
+        row: Gtk.ListBoxRow,
     ) -> None:
         """Handle drag data get - send source index."""
 
@@ -260,7 +268,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         _y: int,
         data: Gtk.SelectionData,
         _info: int,
-        _time: int
+        _time: int,
     ) -> None:
         """Handle drag data received - perform the move."""
 
@@ -352,7 +360,8 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         for index, (attribute, mode) in enumerate(self._attributes):
             row = self._create_attribute_row(
-                attribute, mode, index, include_top_separator=index > 0)
+                attribute, mode, index, include_top_separator=index > 0
+            )
             self._listbox.add(row)
 
         self._listbox.show_all()
@@ -383,7 +392,9 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
             "textAttributesToSpeak": spoken_attributes,
             "textAttributesToBraille": brailled_attributes,
         }
+
     # pylint: enable=no-member, c-extension-no-member
+
 
 class TextAttributeManager:
     """Manager for text attribute presentation settings."""
@@ -437,6 +448,7 @@ class TextAttributeManager:
 
 
 _manager = TextAttributeManager()
+
 
 def get_manager() -> TextAttributeManager:
     """Return the singleton TextAttributeManager instance."""

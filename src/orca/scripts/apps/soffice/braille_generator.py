@@ -35,6 +35,7 @@ from orca.ax_text import AXText
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -56,6 +57,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             tokens = [f"SOFFICE BRAILLE GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     @log_generator_output
@@ -82,6 +84,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return result
 
         object_text = AXText.get_substring(obj, 0, -1)
-        cell_name = AXTable.get_label_for_cell_coordinates(obj) \
-                or self._script.utilities.spreadsheet_cell_name(obj)
+        cell_name = AXTable.get_label_for_cell_coordinates(
+            obj
+        ) or self._script.utilities.spreadsheet_cell_name(obj)
         return [braille.Component(obj, " ".join((object_text, cell_name)))]

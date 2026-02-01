@@ -28,6 +28,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -62,6 +63,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             tokens = [f"SOFFICE SPEECH GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     @log_generator_output
@@ -153,10 +155,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(AXObject.get_name(obj))
             return result
 
-        if speech_manager.get_announce_spreadsheet_cell_coordinates() \
-           or args.get("formatType") == "basicWhereAmI":
-            label = AXTable.get_label_for_cell_coordinates(obj) \
-                or self._script.utilities.spreadsheet_cell_name(obj)
+        if (
+            speech_manager.get_announce_spreadsheet_cell_coordinates()
+            or args.get("formatType") == "basicWhereAmI"
+        ):
+            label = AXTable.get_label_for_cell_coordinates(
+                obj
+            ) or self._script.utilities.spreadsheet_cell_name(obj)
             result.append(label)
 
         if self._script.utilities.should_read_full_row(obj, args.get("priorObj")):
@@ -176,8 +181,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._script.utilities.is_spreadsheet_cell(obj) \
-           and self._script.utilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
+        if self._script.utilities.is_spreadsheet_cell(
+            obj
+        ) and self._script.utilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
             return []
 
         return super()._generate_new_ancestors(obj, **args)

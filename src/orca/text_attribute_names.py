@@ -19,8 +19,7 @@
 
 """Dictionaries of localized text attribute names and values."""
 
-
-from .orca_i18n import C_ # pylint: disable=import-error
+from .orca_i18n import C_  # pylint: disable=import-error
 
 attribute_names = {}
 
@@ -404,7 +403,7 @@ attribute_values["Heading"] = C_("textattr", "Heading")
 # Translators: this is one of the text attribute values for the following
 # text attributes: "vertical-align".
 # See:
-#http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+# http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 # http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #
 attribute_values["baseline"] = C_("textattr", "baseline")

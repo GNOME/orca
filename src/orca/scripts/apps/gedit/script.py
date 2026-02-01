@@ -30,4 +30,3 @@ from orca.scripts.toolkits import gtk
 
 class Script(gtk.Script):
     """Custom script for gedit."""
-

@@ -38,6 +38,7 @@ from enum import Enum
 from typing import Callable, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -65,12 +66,14 @@ if TYPE_CHECKING:
     from .input_event import InputEvent
     from .scripts import default
 
+
 class NavigationMode(Enum):
     """Represents the structural navigation modes available."""
 
     OFF = "OFF"
     DOCUMENT = "DOCUMENT"
     GUI = "GUI"
+
 
 class StructuralNavigator:
     """Implements the structural navigation support available to scripts."""
@@ -440,7 +443,8 @@ class StructuralNavigator:
         enabled = mode != NavigationMode.OFF
         settings.structuralNavigationEnabled = enabled
         command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, enabled)
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, enabled
+        )
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
@@ -456,8 +460,7 @@ class StructuralNavigator:
             string = "None"
 
         msg = (
-            f"STRUCTURAL NAVIGATOR: Last navigation event ({string}) "
-            f"is last input event: {result}"
+            f"STRUCTURAL NAVIGATOR: Last navigation event ({string}) is last input event: {result}"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
@@ -514,7 +517,8 @@ class StructuralNavigator:
             msg = f"STRUCTURAL NAVIGATOR: Enabled already {value}. Refreshing command group."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             command_manager.get_manager().set_group_enabled(
-                guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, value)
+                guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, value
+            )
             return True
 
         msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
@@ -542,7 +546,8 @@ class StructuralNavigator:
             self._mode_for_script[script] = NavigationMode.OFF
 
         command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, value)
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, value
+        )
         return True
 
     @dbus_service.getter
@@ -565,15 +570,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def cycle_mode(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Cycles among the structural navigation modes."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: cycle_mode. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: cycle_mode. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (script and self._is_active_script(script)):
@@ -599,8 +607,10 @@ class StructuralNavigator:
         if mode == NavigationMode.DOCUMENT:
             root = self._determine_root_container(script)
             if not AXObject.supports_collection(root) and notify_user:
-                script.present_message(messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL,
-                                      messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF)
+                script.present_message(
+                    messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL,
+                    messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF,
+                )
         return True
 
     def suspend_commands(self, script, suspended, reason=""):
@@ -616,7 +626,8 @@ class StructuralNavigator:
 
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, suspended)
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, suspended
+        )
 
     def _get_container_for_nested_item(self, obj: Atspi.Accessible) -> Atspi.Accessible:
         # If an author put an ARIA heading inside a native heading (or vice versa), obj
@@ -625,8 +636,13 @@ class StructuralNavigator:
         # the inner heading, we'll get stuck. Thanks authors.
         if AXUtilities.is_heading(obj):
             if ancestor := AXObject.find_ancestor(obj, AXUtilities.is_heading):
-                tokens = ["STRUCTURAL NAVIGATOR: Current heading", obj, "is inside another heading",
-                          ancestor, "Treating the outer heading as current."]
+                tokens = [
+                    "STRUCTURAL NAVIGATOR: Current heading",
+                    obj,
+                    "is inside another heading",
+                    ancestor,
+                    "Treating the outer heading as current.",
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return ancestor
             return obj
@@ -636,8 +652,14 @@ class StructuralNavigator:
             while ancestor := AXObject.find_ancestor(candidate, AXUtilities.is_live_region):
                 candidate = ancestor
             if candidate != obj:
-                tokens = ["STRUCTURAL NAVIGATOR: Current live region", obj, "is inside another ",
-                          "live region", candidate, "Treating the outer region as current."]
+                tokens = [
+                    "STRUCTURAL NAVIGATOR: Current live region",
+                    obj,
+                    "is inside another ",
+                    "live region",
+                    candidate,
+                    "Treating the outer region as current.",
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return candidate
@@ -648,7 +670,7 @@ class StructuralNavigator:
         objects: list[Atspi.Accessible],
         is_next: bool,
         should_wrap: bool | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> Atspi.Accessible | None:
         """Returns the next/previous object in relation to the current location."""
 
@@ -748,8 +770,12 @@ class StructuralNavigator:
         if obj is None:
             return ""
 
-        result = AXObject.get_name(obj) or AXObject.get_description(obj) \
-            or AXUtilities.get_displayed_label(obj) or AXUtilities.get_displayed_description(obj)
+        result = (
+            AXObject.get_name(obj)
+            or AXObject.get_description(obj)
+            or AXUtilities.get_displayed_label(obj)
+            or AXUtilities.get_displayed_description(obj)
+        )
         if result:
             return result
 
@@ -797,9 +823,8 @@ class StructuralNavigator:
         script: default.Script,
         obj: Atspi.Accessible | None = None,
         offset: int | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> None:
-
         if obj is None:
             return
 
@@ -827,7 +852,7 @@ class StructuralNavigator:
         obj: Atspi.Accessible | None = None,
         not_found_message: str = messages.STRUCTURAL_NAVIGATION_NOT_FOUND,
         offset: int | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> None:
         if obj is None:
             if notify_user:
@@ -869,7 +894,7 @@ class StructuralNavigator:
         dialog_title: str,
         column_headers: list[str],
         row_data_func: Callable,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> None:
         dialog_title = f"{dialog_title}: {messages.items_found(len(objects))}"
         if not objects:
@@ -925,15 +950,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_blockquote(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous blockquote."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_blockquote. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_blockquote. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -944,15 +972,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_blockquote(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next blockquote."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_blockquote. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_blockquote. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -963,15 +994,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_blockquotes(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of blockquotes."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_blockquotes. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_blockquotes. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -981,7 +1015,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_BLOCKQUOTE,
             [guilabels.SN_HEADER_BLOCKQUOTE],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -1001,15 +1035,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_button(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous button."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_button. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_button. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1020,15 +1057,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_button(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next button."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_button. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_button. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1039,15 +1079,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_buttons(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of buttons."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_buttons. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_buttons. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1057,7 +1100,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_BUTTON,
             [guilabels.SN_HEADER_BUTTON],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -1077,15 +1120,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_checkbox(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous checkbox."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_checkbox. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_checkbox. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1096,15 +1142,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_checkbox(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next checkbox."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_checkbox. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_checkbox. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1115,15 +1164,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_checkboxes(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of checkboxes."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_checkboxes. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_checkboxes. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1133,7 +1185,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_CHECK_BOX,
             [guilabels.SN_HEADER_CHECK_BOX, guilabels.SN_HEADER_STATE],
             lambda obj: [self._get_item_string(script, obj), self._get_state_string(obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -1154,64 +1206,71 @@ class StructuralNavigator:
             if AXUtilities.is_table(obj):
                 return True
             text = AXText.get_all_text(obj)
-            return len(text) > minimum_length and text.count("\ufffc")/len(text) < 0.05
+            return len(text) > minimum_length and text.count("\ufffc") / len(text) < 0.05
 
         root = self._determine_root_container(script)
-        roles = AXUtilities.get_large_container_roles() + \
-            [Atspi.Role.HEADING, Atspi.Role.PARAGRAPH, Atspi.Role.SECTION]
+        roles = AXUtilities.get_large_container_roles() + [
+            Atspi.Role.HEADING,
+            Atspi.Role.PARAGRAPH,
+            Atspi.Role.SECTION,
+        ]
         return AXUtilities.find_all_with_role(root, roles, pred=_is_large)
 
     @dbus_service.command
     def previous_large_object(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous large object."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_large_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_large_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_large_objects(script)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_LARGE_OBJECTS, notify_user=notify_user)
+            script, result, messages.NO_MORE_LARGE_OBJECTS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_large_object(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next large object."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_large_object. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_large_object. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_large_objects(script)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_LARGE_OBJECTS, notify_user=notify_user)
+            script, result, messages.NO_MORE_LARGE_OBJECTS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_large_objects(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of large objects."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_large_objects. Script:", script,
-                  "Event:", event]
+        tokens = ["STRUCTURAL NAVIGATOR: list_large_objects. Script:", script, "Event:", event]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1220,9 +1279,11 @@ class StructuralNavigator:
             self._get_all_large_objects(script),
             guilabels.SN_TITLE_LARGE_OBJECT,
             [guilabels.SN_HEADER_OBJECT, guilabels.SN_HEADER_ROLE],
-            lambda obj: [self._get_item_string(script, obj),
-                         AXUtilities.get_localized_role_name(obj)],
-            notify_user=notify_user
+            lambda obj: [
+                self._get_item_string(script, obj),
+                AXUtilities.get_localized_role_name(obj),
+            ],
+            notify_user=notify_user,
         )
         return True
 
@@ -1242,15 +1303,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_combobox(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous combo box."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_combobox. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_combobox. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1261,15 +1325,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_combobox(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next combo box."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_combobox. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_combobox. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1280,15 +1347,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_comboboxes(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of combo boxes."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_comboboxes. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_comboboxes. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1298,7 +1368,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_COMBO_BOX,
             [guilabels.SN_HEADER_COMBO_BOX],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -1314,6 +1384,7 @@ class StructuralNavigator:
             return parent is not None and not AXUtilities.is_editable(parent)
 
         if self.get_mode(script) == NavigationMode.GUI:
+
             def pred(x):
                 return self._is_non_document_object(x)
         else:
@@ -1324,15 +1395,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_entry(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous entry."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_entry. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_entry. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1343,15 +1417,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_entry(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next entry."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_entry. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_entry. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1362,15 +1439,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_entries(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of entries."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_entries. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_entries. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1380,7 +1460,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_ENTRY,
             [guilabels.SN_HEADER_LABEL, guilabels.SN_HEADER_VALUE],
             lambda obj: [self._get_item_string(script, obj), AXText.get_all_text(obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -1406,15 +1486,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_form_field(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous form field."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_form_field. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_form_field. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1425,15 +1508,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_form_field(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next form field."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_form_field. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_form_field. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1444,15 +1530,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_form_fields(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of form fields."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_form_fields. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_form_fields. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1461,10 +1550,12 @@ class StructuralNavigator:
             self._get_all_form_fields(script),
             guilabels.SN_TITLE_FORM_FIELD,
             [guilabels.SN_HEADER_LABEL, guilabels.SN_HEADER_ROLE, guilabels.SN_HEADER_VALUE],
-            lambda obj: [self._get_item_string(script, obj),
-                         AXUtilities.get_localized_role_name(obj),
-                         AXText.get_all_text(obj)],
-            notify_user=notify_user
+            lambda obj: [
+                self._get_item_string(script, obj),
+                AXUtilities.get_localized_role_name(obj),
+                AXText.get_all_text(obj),
+            ],
+            notify_user=notify_user,
         )
         return True
 
@@ -1474,11 +1565,9 @@ class StructuralNavigator:
     #                      #
     ########################
 
-    def _get_all_headings(self,
-        script: default.Script,
-        level: int | None = None
+    def _get_all_headings(
+        self, script: default.Script, level: int | None = None
     ) -> list[Atspi.Accessible]:
-
         pred = None
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
@@ -1490,15 +1579,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_heading(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1509,15 +1601,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_heading(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1528,15 +1623,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_headings(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1545,63 +1643,76 @@ class StructuralNavigator:
             self._get_all_headings(script),
             guilabels.SN_TITLE_HEADING,
             [guilabels.SN_HEADER_HEADING, guilabels.SN_HEADER_LEVEL],
-            lambda obj: [self._get_item_string(script, obj),
-                         str(AXUtilities.get_heading_level(obj))],
-            notify_user=notify_user
+            lambda obj: [
+                self._get_item_string(script, obj),
+                str(AXUtilities.get_heading_level(obj)),
+            ],
+            notify_user=notify_user,
         )
         return True
 
     @dbus_service.command
     def previous_heading_level_1(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous level 1 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading_level_1. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading_level_1. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 1)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 1, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 1, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_heading_level_1(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next level 1 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading_level_1. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading_level_1. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 1)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 1, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 1, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_headings_level_1(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of level 1 headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings_level_1. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings_level_1. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1611,61 +1722,72 @@ class StructuralNavigator:
             guilabels.SN_TITLE_HEADING_AT_LEVEL % 1,
             [guilabels.SN_HEADER_HEADING],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
     @dbus_service.command
     def previous_heading_level_2(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous level 2 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading_level_2. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading_level_2. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 2)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 2, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 2, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_heading_level_2(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next level 2 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading_level_2. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading_level_2. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 2)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 2, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 2, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_headings_level_2(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of level 2 headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings_level_2. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings_level_2. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1675,61 +1797,72 @@ class StructuralNavigator:
             guilabels.SN_TITLE_HEADING_AT_LEVEL % 2,
             [guilabels.SN_HEADER_HEADING],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
     @dbus_service.command
     def previous_heading_level_3(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous level 3 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading_level_3. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading_level_3. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 3)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 3, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 3, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_heading_level_3(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next level 3 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading_level_3. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading_level_3. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 3)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 3, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 3, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_headings_level_3(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of level 3 headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings_level_3. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings_level_3. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1739,61 +1872,72 @@ class StructuralNavigator:
             guilabels.SN_TITLE_HEADING_AT_LEVEL % 3,
             [guilabels.SN_HEADER_HEADING],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
     @dbus_service.command
     def previous_heading_level_4(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous level 4 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading_level_4. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading_level_4. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 4)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 4, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 4, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_heading_level_4(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next level 4 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading_level_4. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading_level_4. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 4)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 4, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 4, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_headings_level_4(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of level 4 headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings_level_4. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings_level_4. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1803,61 +1947,72 @@ class StructuralNavigator:
             guilabels.SN_TITLE_HEADING_AT_LEVEL % 4,
             [guilabels.SN_HEADER_HEADING],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
     @dbus_service.command
     def previous_heading_level_5(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous level 5 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading_level_5. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading_level_5. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 5)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 5, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 5, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_heading_level_5(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next level 5 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading_level_5. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading_level_5. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 5)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 5, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 5, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_headings_level_5(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of level 5 headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings_level_5. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings_level_5. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1867,61 +2022,72 @@ class StructuralNavigator:
             guilabels.SN_TITLE_HEADING_AT_LEVEL % 5,
             [guilabels.SN_HEADER_HEADING],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
     @dbus_service.command
     def previous_heading_level_6(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous level 6 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_heading_level_6. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_heading_level_6. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 6)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 6, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 6, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_heading_level_6(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next level 6 heading."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_heading_level_6. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_heading_level_6. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_headings(script, 6)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 6, notify_user=notify_user)
+            script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 6, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_headings_level_6(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of level 6 headings."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_headings_level_6. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_headings_level_6. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1931,7 +2097,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_HEADING_AT_LEVEL % 6,
             [guilabels.SN_HEADER_HEADING],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -1946,21 +2112,23 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_internal_frames(root, pred=pred)
 
     @dbus_service.command
     def previous_iframe(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous iframe."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_iframe. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_iframe. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1971,15 +2139,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_iframe(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next iframe."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_iframe. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_iframe. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -1990,15 +2161,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_iframes(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of iframes."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_iframes. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_iframes. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2008,7 +2182,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_IFRAME,
             [guilabels.SN_HEADER_IFRAME],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2023,21 +2197,23 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_images_and_image_maps(root, pred=pred)
 
     @dbus_service.command
     def previous_image(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous image."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_image. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_image. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2048,15 +2224,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_image(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next image."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_image. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_image. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2067,15 +2246,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_images(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of images."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_images. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_images. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2085,7 +2267,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_IMAGE,
             [guilabels.SN_HEADER_IMAGE],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2100,15 +2282,11 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_landmarks(root, pred=pred)
 
     def _present_landmark(
-        self,
-        script: default.Script,
-        obj: Atspi.Accessible,
-        notify_user: bool
+        self, script: default.Script, obj: Atspi.Accessible, notify_user: bool
     ) -> None:
         if obj is None:
             self._present_object(script, obj, messages.NO_LANDMARK_FOUND, notify_user=notify_user)
@@ -2120,15 +2298,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_landmark(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous landmark."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_landmark. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_landmark. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2139,15 +2320,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_landmark(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next landmark."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_landmark. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_landmark. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2158,15 +2342,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_landmarks(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of landmarks."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_landmarks. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_landmarks. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2175,9 +2362,11 @@ class StructuralNavigator:
             self._get_all_landmarks(script),
             guilabels.SN_TITLE_LANDMARK,
             [guilabels.SN_HEADER_LANDMARK, guilabels.SN_HEADER_ROLE],
-            lambda obj: [self._get_item_string(script, obj),
-                         AXUtilities.get_localized_role_name(obj)],
-            notify_user=notify_user
+            lambda obj: [
+                self._get_item_string(script, obj),
+                AXUtilities.get_localized_role_name(obj),
+            ],
+            notify_user=notify_user,
         )
         return True
 
@@ -2194,7 +2383,8 @@ class StructuralNavigator:
 
         root = self._determine_root_container(script)
         return AXUtilities.find_all_lists(
-            root, include_description_lists=True, include_tab_lists=True, pred=pred)
+            root, include_description_lists=True, include_tab_lists=True, pred=pred
+        )
 
     def _get_first_item(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         # The reason we present the item (or first child) rather than the full list are twofold:
@@ -2207,15 +2397,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_list(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous list."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_list. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_list. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2227,15 +2420,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_list(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next list."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_list. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_list. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2247,15 +2443,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_lists(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of lists."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_lists. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_lists. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2265,7 +2464,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_LIST,
             [guilabels.SN_HEADER_LIST],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2282,19 +2481,23 @@ class StructuralNavigator:
 
         root = self._determine_root_container(script)
         return AXUtilities.find_all_list_items(
-            root, include_description_terms=True, include_tabs=True, pred=pred)
+            root, include_description_terms=True, include_tabs=True, pred=pred
+        )
 
     @dbus_service.command
     def previous_list_item(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous list item."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_list_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_list_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2305,15 +2508,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_list_item(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next list item."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_list_item. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_list_item. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2324,15 +2530,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_list_items(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of list items."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_list_items. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_list_items. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2342,7 +2551,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_LIST_ITEM,
             [guilabels.SN_HEADER_LIST_ITEM],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2362,35 +2571,40 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_live_region(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous live region."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_live_region. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_live_region. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_live_regions(script)
         result = self._get_object_in_direction(script, matches, False)
-        self._present_object(
-            script, result, messages.NO_MORE_LIVE_REGIONS, notify_user=notify_user)
+        self._present_object(script, result, messages.NO_MORE_LIVE_REGIONS, notify_user=notify_user)
         return True
 
     @dbus_service.command
     def next_live_region(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next live region."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_live_region. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_live_region. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2400,17 +2614,20 @@ class StructuralNavigator:
         return True
 
     def _last_live_region(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the last live region."""
 
         from . import live_region_presenter
 
-        tokens = ["STRUCTURAL NAVIGATOR: last_live_region. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: last_live_region. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2442,15 +2659,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_paragraph(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous paragraph."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_paragraph. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_paragraph. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2461,15 +2681,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_paragraph(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next paragraph."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_paragraph. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_paragraph. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2480,15 +2703,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_paragraphs(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of paragraphs."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_paragraphs. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_paragraphs. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2498,7 +2724,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_PARAGRAPH,
             [guilabels.SN_HEADER_PARAGRAPH],
             lambda obj: [self._get_item_string(script, obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2513,61 +2739,71 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_radio_buttons(root, pred=pred)
 
     @dbus_service.command
     def previous_radio_button(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous radio button."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_radio_button. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_radio_button. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_radio_buttons(script)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_RADIO_BUTTONS, notify_user=notify_user)
+            script, result, messages.NO_MORE_RADIO_BUTTONS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_radio_button(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next radio button."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_radio_button. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_radio_button. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_radio_buttons(script)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_RADIO_BUTTONS, notify_user=notify_user)
+            script, result, messages.NO_MORE_RADIO_BUTTONS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_radio_buttons(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of radio buttons."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_radio_buttons. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_radio_buttons. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2577,7 +2813,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_RADIO_BUTTON,
             [guilabels.SN_HEADER_RADIO_BUTTON, guilabels.SN_HEADER_STATE],
             lambda obj: [self._get_item_string(script, obj), self._get_state_string(obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2592,21 +2828,23 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_separators(root, pred=pred)
 
     @dbus_service.command
     def previous_separator(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous separator."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_separator. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_separator. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2617,15 +2855,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_separator(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next separator."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_separator. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_separator. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2644,7 +2885,6 @@ class StructuralNavigator:
         pred = None
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
-
 
         root = self._determine_root_container(script)
         return AXUtilities.find_all_tables(root, pred=pred)
@@ -2673,15 +2913,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_table(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous table."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_table. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_table. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2693,15 +2936,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_table(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next table."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_table. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_table. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2713,15 +2959,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_tables(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of tables."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_tables. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_tables. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2730,9 +2979,11 @@ class StructuralNavigator:
             self._get_all_tables(script),
             guilabels.SN_TITLE_TABLE,
             [guilabels.SN_HEADER_CAPTION, guilabels.SN_HEADER_DESCRIPTION],
-            lambda obj: [self._get_item_string(script, obj),
-                         AXTable.get_table_description_for_presentation(obj)],
-            notify_user=notify_user
+            lambda obj: [
+                self._get_item_string(script, obj),
+                AXTable.get_table_description_for_presentation(obj),
+            ],
+            notify_user=notify_user,
         )
         return True
 
@@ -2747,61 +2998,71 @@ class StructuralNavigator:
         if self.get_mode(script) == NavigationMode.GUI:
             pred = self._is_non_document_object
 
-
         root = self._determine_root_container(script)
         return AXUtilities.find_all_unvisited_links(root, pred=pred)
 
     @dbus_service.command
     def previous_unvisited_link(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous unvisited link."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_unvisited_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_unvisited_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_unvisited_links(script)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_UNVISITED_LINKS, notify_user=notify_user)
+            script, result, messages.NO_MORE_UNVISITED_LINKS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_unvisited_link(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next unvisited link."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_unvisited_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_unvisited_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_unvisited_links(script)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_UNVISITED_LINKS, notify_user=notify_user)
+            script, result, messages.NO_MORE_UNVISITED_LINKS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_unvisited_links(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of unvisited links."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_unvisited_links. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_unvisited_links. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2811,7 +3072,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_UNVISITED_LINK,
             [guilabels.SN_HEADER_LINK, guilabels.SN_HEADER_URI],
             lambda obj: [self._get_item_string(script, obj), AXHypertext.get_link_uri(obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2831,55 +3092,66 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_visited_link(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous visited link."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_visited_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_visited_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_visited_links(script)
         result = self._get_object_in_direction(script, matches, False)
         self._present_object(
-            script, result, messages.NO_MORE_VISITED_LINKS, notify_user=notify_user)
+            script, result, messages.NO_MORE_VISITED_LINKS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def next_visited_link(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next visited link."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_visited_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_visited_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
         matches = self._get_all_visited_links(script)
         result = self._get_object_in_direction(script, matches, True)
         self._present_object(
-            script, result, messages.NO_MORE_VISITED_LINKS, notify_user=notify_user)
+            script, result, messages.NO_MORE_VISITED_LINKS, notify_user=notify_user
+        )
         return True
 
     @dbus_service.command
     def list_visited_links(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of visited links."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_visited_links. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_visited_links. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2889,7 +3161,7 @@ class StructuralNavigator:
             guilabels.SN_TITLE_VISITED_LINK,
             [guilabels.SN_HEADER_LINK, guilabels.SN_HEADER_URI],
             lambda obj: [self._get_item_string(script, obj), AXHypertext.get_link_uri(obj)],
-            notify_user=notify_user
+            notify_user=notify_user,
         )
         return True
 
@@ -2909,15 +3181,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_link(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous link."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2928,15 +3203,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_link(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next link."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2947,15 +3225,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_links(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of links."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_links. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_links. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -2964,10 +3245,12 @@ class StructuralNavigator:
             self._get_all_links(script),
             guilabels.SN_TITLE_LINK,
             [guilabels.SN_HEADER_LINK, guilabels.SN_HEADER_STATE, guilabels.SN_HEADER_URI],
-            lambda obj: [self._get_item_string(script, obj),
-                         self._get_state_string(obj),
-                         AXHypertext.get_link_uri(obj)],
-            notify_user=notify_user
+            lambda obj: [
+                self._get_item_string(script, obj),
+                self._get_state_string(obj),
+                AXHypertext.get_link_uri(obj),
+            ],
+            notify_user=notify_user,
         )
         return True
 
@@ -2989,15 +3272,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def previous_clickable(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the previous clickable."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: previous_clickable. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_clickable. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -3008,15 +3294,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def next_clickable(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the next clickable."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: next_clickable. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_clickable. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -3027,15 +3316,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def list_clickables(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Displays a list of clickables."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: list_clickables. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_clickables. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -3044,8 +3336,10 @@ class StructuralNavigator:
             self._get_all_clickables(script),
             guilabels.SN_TITLE_CLICKABLE,
             [guilabels.SN_HEADER_CLICKABLE, guilabels.SN_HEADER_ROLE],
-            lambda obj: [self._get_item_string(script, obj),
-                         AXUtilities.get_localized_role_name(obj)],
+            lambda obj: [
+                self._get_item_string(script, obj),
+                AXUtilities.get_localized_role_name(obj),
+            ],
         )
         return True
 
@@ -3065,15 +3359,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def container_start(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Moves to the start of the current container."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: container_start. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: container_start. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -3089,15 +3386,18 @@ class StructuralNavigator:
 
     @dbus_service.command
     def container_end(
-        self,
-        script: default.Script,
-        event: InputEvent | None = None,
-        notify_user: bool = True
+        self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Moves to the end of the current container."""
 
-        tokens = ["STRUCTURAL NAVIGATOR: container_end. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "STRUCTURAL NAVIGATOR: container_end. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._last_input_event = event
@@ -3117,7 +3417,9 @@ class StructuralNavigator:
         self._present_line(script, next_object, next_offset, notify_user)
         return True
 
+
 _navigator = StructuralNavigator()
+
 
 def get_navigator() -> StructuralNavigator:
     """Returns the Structural Navigator"""

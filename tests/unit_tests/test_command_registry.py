@@ -677,7 +677,8 @@ class TestCommandRegistry:
 
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
-            name for name in FLAT_REVIEW_PRESENTER_HANDLERS
+            name
+            for name in FLAT_REVIEW_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in flat_review_presenter: {missing}"
@@ -694,7 +695,8 @@ class TestCommandRegistry:
 
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
-            name for name in FLAT_REVIEW_FINDER_HANDLERS
+            name
+            for name in FLAT_REVIEW_FINDER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in flat_review_finder: {missing}"
@@ -711,7 +713,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in WHERE_AM_I_PRESENTER_HANDLERS
+            name
+            for name in WHERE_AM_I_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in where_am_i_presenter: {missing}"
@@ -728,7 +731,8 @@ class TestCommandRegistry:
         manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in NOTIFICATION_PRESENTER_HANDLERS
+            name
+            for name in NOTIFICATION_PRESENTER_HANDLERS
             if manager.get_keyboard_command(name) is None
         )
 
@@ -748,7 +752,8 @@ class TestCommandRegistry:
         manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in SYSTEM_INFORMATION_PRESENTER_HANDLERS
+            name
+            for name in SYSTEM_INFORMATION_PRESENTER_HANDLERS
             if manager.get_keyboard_command(name) is None
         )
 
@@ -766,7 +771,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in SLEEP_MODE_MANAGER_HANDLERS
+            name
+            for name in SLEEP_MODE_MANAGER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
 
@@ -784,7 +790,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in LIVE_REGION_PRESENTER_HANDLERS
+            name
+            for name in LIVE_REGION_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in live_region_presenter: {missing}"
@@ -801,7 +808,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in CHAT_PRESENTER_HANDLERS
+            name
+            for name in CHAT_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in chat_presenter: {missing}"
@@ -818,7 +826,8 @@ class TestCommandRegistry:
         manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in LEARN_MODE_PRESENTER_HANDLERS
+            name
+            for name in LEARN_MODE_PRESENTER_HANDLERS
             if manager.get_keyboard_command(name) is None
         )
 
@@ -836,7 +845,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in ACTION_PRESENTER_HANDLERS
+            name
+            for name in ACTION_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in action_presenter: {missing}"
@@ -853,7 +863,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in DEBUGGING_TOOLS_MANAGER_HANDLERS
+            name
+            for name in DEBUGGING_TOOLS_MANAGER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in debugging_tools_manager: {missing}"
@@ -870,7 +881,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in BYPASS_MODE_MANAGER_HANDLERS
+            name
+            for name in BYPASS_MODE_MANAGER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
 
@@ -888,8 +900,7 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in MOUSE_REVIEW_HANDLERS
-            if cmd_manager.get_keyboard_command(name) is None
+            name for name in MOUSE_REVIEW_HANDLERS if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in mouse_review: {missing}"
 
@@ -905,7 +916,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in TYPING_ECHO_PRESENTER_HANDLERS
+            name
+            for name in TYPING_ECHO_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in typing_echo_presenter: {missing}"
@@ -922,8 +934,7 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in CLIPBOARD_HANDLERS
-            if cmd_manager.get_keyboard_command(name) is None
+            name for name in CLIPBOARD_HANDLERS if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in clipboard: {missing}"
 
@@ -944,8 +955,7 @@ class TestCommandRegistry:
         manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in CARET_NAVIGATOR_HANDLERS
-            if manager.get_keyboard_command(name) is None
+            name for name in CARET_NAVIGATOR_HANDLERS if manager.get_keyboard_command(name) is None
         )
 
         assert not missing, f"Missing commands in caret_navigator: {missing}"
@@ -962,7 +972,8 @@ class TestCommandRegistry:
 
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
-            name for name in STRUCTURAL_NAVIGATOR_HANDLERS
+            name
+            for name in STRUCTURAL_NAVIGATOR_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in structural_navigator: {missing}"
@@ -979,7 +990,8 @@ class TestCommandRegistry:
 
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
-            name for name in TABLE_NAVIGATOR_HANDLERS
+            name
+            for name in TABLE_NAVIGATOR_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in table_navigator: {missing}"
@@ -996,7 +1008,8 @@ class TestCommandRegistry:
 
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
-            name for name in OBJECT_NAVIGATOR_HANDLERS
+            name
+            for name in OBJECT_NAVIGATOR_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in object_navigator: {missing}"
@@ -1013,7 +1026,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in SAY_ALL_PRESENTER_HANDLERS
+            name
+            for name in SAY_ALL_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in say_all_presenter: {missing}"
@@ -1032,7 +1046,8 @@ class TestCommandRegistry:
 
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
-            name for name in SPEECH_AND_VERBOSITY_MANAGER_HANDLERS
+            name
+            for name in SPEECH_AND_VERBOSITY_MANAGER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in speech_and_verbosity_manager: {missing}"
@@ -1049,7 +1064,8 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in DOCUMENT_PRESENTER_HANDLERS
+            name
+            for name in DOCUMENT_PRESENTER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
         assert not missing, f"Missing commands in document_presenter: {missing}"

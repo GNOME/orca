@@ -48,10 +48,12 @@ from .ax_text import AXText
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from .scripts import default
+
 
 class CaretNavigator:
     """Implements the caret navigation support available to scripts."""
@@ -175,7 +177,8 @@ class CaretNavigator:
             msg = f"CARET NAVIGATOR: Enabled already {value}. Refreshing command group."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             command_manager.get_manager().set_group_enabled(
-                guilabels.KB_GROUP_CARET_NAVIGATION, value)
+                guilabels.KB_GROUP_CARET_NAVIGATION, value
+            )
             return True
 
         msg = f"CARET NAVIGATOR: Setting enabled to {value}."
@@ -183,8 +186,7 @@ class CaretNavigator:
         settings.caretNavigationEnabled = value
 
         self._last_input_event = None
-        command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_CARET_NAVIGATION, value)
+        command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION, value)
 
         return True
 
@@ -256,12 +258,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles caret navigation."""
 
-        tokens = ["CARET NAVIGATOR: toggle_enabled. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: toggle_enabled. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         enabled = not self.get_is_enabled()
@@ -290,13 +298,12 @@ class CaretNavigator:
 
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_CARET_NAVIGATION, suspended)
+            guilabels.KB_GROUP_CARET_NAVIGATION, suspended
+        )
 
     def _get_root_object(
-        self,
-        script: default.Script,
-        obj: Atspi.Accessible | None = None
-        ) -> Atspi.Accessible | None:
+        self, script: default.Script, obj: Atspi.Accessible | None = None
+    ) -> Atspi.Accessible | None:
         """Returns the object which should be treated as the root/container for navigation."""
 
         root = script.utilities.active_document()
@@ -311,10 +318,7 @@ class CaretNavigator:
         return root
 
     def _is_navigable_object(
-        self,
-        script: default.Script,
-        obj: Atspi.Accessible,
-        root: Atspi.Accessible | None = None
+        self, script: default.Script, obj: Atspi.Accessible, root: Atspi.Accessible | None = None
     ) -> bool:
         """Returns True if obj is a valid location for navigation."""
 
@@ -334,7 +338,7 @@ class CaretNavigator:
     def _line_contains_context(
         self,
         line: list[tuple[Atspi.Accessible, int, int, str]],
-        context: tuple[Atspi.Accessible, int]
+        context: tuple[Atspi.Accessible, int],
     ) -> bool:
         """Returns True if line contains the (obj, offset) context."""
 
@@ -383,12 +387,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the next character."""
 
-        tokens = ["CARET NAVIGATOR: next_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: next_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.next_context()
@@ -399,7 +409,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR)
+            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR
+        )
         if not notify_user:
             return True
 
@@ -412,12 +423,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the previous character."""
 
-        tokens = ["CARET NAVIGATOR: previous_character. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: previous_character. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.previous_context()
@@ -428,7 +445,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR)
+            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR
+        )
         if not notify_user:
             return True
 
@@ -441,12 +459,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the next word."""
 
-        tokens = ["CARET NAVIGATOR: next_word. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: next_word. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.next_context(skip_space=True)
@@ -477,7 +501,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
         if not notify_user:
             return True
 
@@ -490,12 +515,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the previous word."""
 
-        tokens = ["CARET NAVIGATOR: previous_word. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: previous_word. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.previous_context(skip_space=True)
@@ -514,7 +545,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
 
         if not notify_user:
             return True
@@ -528,16 +560,24 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the next line."""
 
-        tokens = ["CARET NAVIGATOR: next_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: next_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if focus_manager.get_manager().in_say_all() and \
-           say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled():
+        if (
+            focus_manager.get_manager().in_say_all()
+            and say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled()
+        ):
             msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
             debug.print_message(debug.LEVEL_INFO, msg)
             return True
@@ -574,7 +614,8 @@ class CaretNavigator:
 
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, offset, end, focus_manager.CARET_NAVIGATOR)
+            obj, offset, end, focus_manager.CARET_NAVIGATOR
+        )
 
         if not notify_user:
             return True
@@ -589,16 +630,24 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the previous line."""
 
-        tokens = ["CARET NAVIGATOR: previous_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: previous_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if focus_manager.get_manager().in_say_all() and \
-           say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled():
+        if (
+            focus_manager.get_manager().in_say_all()
+            and say_all_presenter.get_presenter().get_rewind_and_fast_forward_enabled()
+        ):
             msg = "CARET NAVIGATOR: In say all and rewind/fast-forward is enabled"
             debug.print_message(debug.LEVEL_INFO, msg)
             return True
@@ -630,7 +679,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
 
         if not notify_user:
             return True
@@ -645,12 +695,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the start of the line."""
 
-        tokens = ["CARET NAVIGATOR: start_of_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: start_of_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.get_caret_context()
@@ -663,7 +719,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
 
         if not notify_user:
             return True
@@ -677,12 +734,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the end of the line."""
 
-        tokens = ["CARET NAVIGATOR: end_of_line. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: end_of_line. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, offset = script.utilities.get_caret_context()
@@ -698,7 +761,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
 
         if not notify_user:
             return True
@@ -712,12 +776,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the start of the file."""
 
-        tokens = ["CARET NAVIGATOR: start_of_file. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: start_of_file. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, start = self._get_start_of_file(script)
@@ -733,7 +803,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
 
         if not notify_user:
             return True
@@ -747,12 +818,18 @@ class CaretNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves to the end of the file."""
 
-        tokens = ["CARET NAVIGATOR: end_of_file. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CARET NAVIGATOR: end_of_file. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj, end = self._get_end_of_file(script)
@@ -768,7 +845,8 @@ class CaretNavigator:
         script.interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR)
+            obj, start, end, focus_manager.CARET_NAVIGATOR
+        )
         if not notify_user:
             return True
 
@@ -776,7 +854,10 @@ class CaretNavigator:
         script.display_contents(contents)
         return True
 
+
 _navigator = CaretNavigator()
+
+
 def get_navigator() -> CaretNavigator:
     """Returns the Caret Navigator."""
 

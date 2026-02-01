@@ -38,8 +38,10 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(web.Utilities):
     """Custom script utilities for Chromium"""
@@ -96,8 +98,11 @@ class Utilities(web.Utilities):
             return False
 
         if len(AXUtilities.find_all_separators(obj)) != 1:
-            tokens = ["CHROMIUM:", obj,
-                      "not believed to be find-in-page container (separator count)"]
+            tokens = [
+                "CHROMIUM:",
+                obj,
+                "not believed to be find-in-page container (separator count)",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 

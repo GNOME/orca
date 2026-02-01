@@ -26,13 +26,13 @@
 
 """Utilities for obtaining event-related information."""
 
-
 import enum
 import threading
 import time
 from difflib import SequenceMatcher
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -43,6 +43,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
 
 class TextEventReason(enum.Enum):
     """Enum representing the reason for an object:text- event."""
@@ -169,8 +170,9 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_NAME[hash(obj)] = AXObject.get_name(obj)
         AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(obj)] = AXUtilitiesState.is_checked(obj)
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(obj)] = AXUtilitiesState.is_expanded(obj)
-        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(obj)] = \
-            AXUtilitiesState.is_indeterminate(obj)
+        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(obj)] = AXUtilitiesState.is_indeterminate(
+            obj
+        )
         AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(obj)] = AXUtilitiesState.is_pressed(obj)
         AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(obj)] = AXUtilitiesState.is_selected(obj)
 
@@ -217,7 +219,8 @@ class AXUtilitiesEvent:
     def _get_caret_moved_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        from . import input_event_manager # pylint: disable=import-outside-toplevel
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+
         mgr = input_event_manager.get_manager()
 
         reason = TextEventReason.UNKNOWN
@@ -293,7 +296,8 @@ class AXUtilitiesEvent:
     def _get_text_deletion_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        from . import input_event_manager # pylint: disable=import-outside-toplevel
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+
         mgr = input_event_manager.get_manager()
 
         reason = TextEventReason.UNKNOWN
@@ -322,8 +326,9 @@ class AXUtilitiesEvent:
             elif mgr.last_event_was_printable_key():
                 reason = TextEventReason.TYPING
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
-                if AXUtilitiesRole.is_spin_button(obj) \
-                   or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
+                if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
+                    obj, AXUtilitiesRole.is_spin_button
+                ):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
                 else:
                     reason = TextEventReason.AUTO_DELETION
@@ -341,7 +346,8 @@ class AXUtilitiesEvent:
     def _get_text_insertion_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        from . import input_event_manager # pylint: disable=import-outside-toplevel
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+
         mgr = input_event_manager.get_manager()
 
         reason = TextEventReason.UNKNOWN
@@ -352,8 +358,7 @@ class AXUtilitiesEvent:
             reason = TextEventReason.LIVE_REGION_UPDATE
         elif mgr.last_event_was_page_switch():
             reason = TextEventReason.PAGE_SWITCH
-        elif AXUtilitiesState.is_editable(obj) \
-                or AXUtilitiesRole.is_terminal(obj):
+        elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
             selected_text, _start, _end = AXText.get_selected_text(obj)
             if selected_text and event.any_data == selected_text:
                 reason = TextEventReason.SELECTED_TEXT_INSERTION
@@ -391,7 +396,8 @@ class AXUtilitiesEvent:
                     reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
                 else:
                     reason = TextEventReason.TYPING
-                    from . import typing_echo_presenter # pylint: disable=import-outside-toplevel
+                    from . import typing_echo_presenter  # pylint: disable=import-outside-toplevel
+
                     presenter = typing_echo_presenter.get_presenter()
                     if AXUtilitiesRole.is_password_text(obj):
                         echo = presenter.get_key_echo_enabled()
@@ -402,8 +408,9 @@ class AXUtilitiesEvent:
             elif mgr.last_event_was_middle_click() or mgr.last_event_was_middle_release():
                 reason = TextEventReason.MOUSE_MIDDLE_BUTTON
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
-                if AXUtilitiesRole.is_spin_button(obj) \
-                   or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
+                if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
+                    obj, AXUtilitiesRole.is_spin_button
+                ):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
                 else:
                     reason = TextEventReason.AUTO_INSERTION_PRESENTABLE
@@ -429,7 +436,8 @@ class AXUtilitiesEvent:
     def _get_text_selection_changed_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        from . import input_event_manager # pylint: disable=import-outside-toplevel
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+
         mgr = input_event_manager.get_manager()
 
         reason = TextEventReason.UNKNOWN
@@ -494,8 +502,9 @@ class AXUtilitiesEvent:
             elif mgr.last_event_was_printable_key():
                 reason = TextEventReason.TYPING
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
-                if AXUtilitiesRole.is_spin_button(obj) \
-                   or AXObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button):
+                if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
+                    obj, AXUtilitiesRole.is_spin_button
+                ):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
         return reason
 
@@ -508,8 +517,9 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not (AXUtilitiesState.is_focused(event.source) \
-           or AXUtilitiesState.is_focused(event.any_data)):
+        if not (
+            AXUtilitiesState.is_focused(event.source) or AXUtilitiesState.is_focused(event.any_data)
+        ):
             msg = "AXUtilitiesEvent: Neither source nor child have focused state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -549,7 +559,8 @@ class AXUtilitiesEvent:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-        from . import input_event_manager # pylint: disable=import-outside-toplevel
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+
         mgr = input_event_manager.get_manager()
 
         # Radio buttons normally change their state when you arrow to them, so we handle the
@@ -744,8 +755,11 @@ class AXUtilitiesEvent:
 
             # Example: Typing the subject in an email client causing the window name to change.
             focus = focus_manager.get_manager().get_locus_of_focus()
-            if AXUtilitiesState.is_editable(focus) and AXText.get_character_count(focus) \
-               and AXText.get_all_text(focus) in event.any_data:
+            if (
+                AXUtilitiesState.is_editable(focus)
+                and AXText.get_character_count(focus)
+                and AXText.get_all_text(focus) in event.any_data
+            ):
                 msg = "AXUtilitiesEvent: Event is redundant notification for the locus of focus."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
@@ -818,8 +832,9 @@ class AXUtilitiesEvent:
     def _is_presentable_text_event(event: Atspi.Event) -> bool:
         """Returns True if this text event should be presented."""
 
-        if not (AXUtilitiesState.is_editable(event.source) or \
-               AXUtilitiesRole.is_terminal(event.source)):
+        if not (
+            AXUtilitiesState.is_editable(event.source) or AXUtilitiesRole.is_terminal(event.source)
+        ):
             msg = "AXUtilitiesEvent: The source is neither editable nor a terminal."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False

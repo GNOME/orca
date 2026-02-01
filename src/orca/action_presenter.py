@@ -30,6 +30,7 @@ import time
 from typing import Any, Callable, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
@@ -134,12 +135,18 @@ class ActionPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Shows a list of all the accessible actions exposed by the focused object."""
 
-        tokens = ["ACTION PRESENTER: show_actions_list. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "ACTION PRESENTER: show_actions_list. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         manager = focus_manager.get_manager()
@@ -155,9 +162,12 @@ class ActionPresenter:
             name = AXObject.get_action_name(obj, i)
             localized_name = AXObject.get_action_localized_name(obj, i)
             description = AXObject.get_action_description(obj, i)
-            tokens = [f"ACTION PRESENTER: Action {i} on", obj,
-                      f": '{name}' localized name: '{localized_name}' ",
-                      f"localized description: '{description}'"]
+            tokens = [
+                f"ACTION PRESENTER: Action {i} on",
+                obj,
+                f": '{name}' localized name: '{localized_name}' ",
+                f"localized description: '{description}'",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             actions[name] = localized_name or description or name
 
@@ -180,7 +190,7 @@ class ActionList(Gtk.Window):
         self,
         actions: dict[str, str],
         action_handler: Callable[[str], None],
-        cleanup_handler: Callable[[], None]
+        cleanup_handler: Callable[[], None],
     ) -> None:
         super().__init__(window_position=Gtk.WindowPosition.MOUSE, transient_for=None)
         self.set_title(guilabels.ACTIONS_LIST)
@@ -201,11 +211,11 @@ class ActionList(Gtk.Window):
             label = Gtk.Label(label=description, xalign=0)
             label.set_margin_start(10)
             label.set_margin_end(10)
-            row.add(label) # pylint: disable=no-member
+            row.add(label)  # pylint: disable=no-member
             setattr(row, "_action_name", name)
-            self._list_box.add(row) # pylint: disable=no-member
+            self._list_box.add(row)  # pylint: disable=no-member
 
-        self.add(self._list_box) # pylint: disable=no-member
+        self.add(self._list_box)  # pylint: disable=no-member
 
         self.connect("key-press-event", self._on_key_press)
 
@@ -234,12 +244,14 @@ class ActionList(Gtk.Window):
     def show_gui(self) -> None:
         """Shows the window"""
 
-        self.show_all() # pylint: disable=no-member
+        self.show_all()  # pylint: disable=no-member
         self.present_with_time(time.time())
         self._list_box.grab_focus()
 
 
 _presenter = ActionPresenter()
+
+
 def get_presenter() -> ActionPresenter:
     """Returns the action presenter."""
 

@@ -33,6 +33,7 @@ import time
 from typing import TYPE_CHECKING, Any
 
 import gi
+
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
@@ -54,11 +55,7 @@ class OrcaNavListGUI:
     """A GUI for displaying navigation lists in Orca."""
 
     def __init__(
-        self,
-        title: str,
-        column_headers: list[str],
-        rows: list[tuple[Any, ...]],
-        selected_row: int
+        self, title: str, column_headers: list[str], rows: list[tuple[Any, ...]], selected_row: int
     ) -> None:
         """Initialize the navigation list GUI."""
         self._tree: Gtk.TreeView | None = None
@@ -67,17 +64,14 @@ class OrcaNavListGUI:
         self._gui: Gtk.Dialog = self._create_nav_list_dialog(column_headers, rows, selected_row)
         self._gui.set_title(title)
         self._gui.set_modal(True)
-        self._gui.set_keep_above(True) # pylint: disable=no-member
-        self._gui.set_focus_on_map(True) # pylint: disable=no-member
-        self._gui.set_accept_focus(True) # pylint: disable=no-member
+        self._gui.set_keep_above(True)  # pylint: disable=no-member
+        self._gui.set_focus_on_map(True)  # pylint: disable=no-member
+        self._gui.set_accept_focus(True)  # pylint: disable=no-member
         self._script: default.Script | None = script_manager.get_manager().get_active_script()
         self._document: Atspi.Accessible | None = None
 
     def _create_nav_list_dialog(
-        self,
-        column_headers: list[str],
-        rows: list[tuple[Any, ...]],
-        selected_row: int
+        self, column_headers: list[str], rows: list[tuple[Any, ...]], selected_row: int
     ) -> Gtk.Dialog:
         """Create the navigation list dialog."""
         dialog = Gtk.Dialog()
@@ -88,12 +82,12 @@ class OrcaNavListGUI:
         content_area.add(grid)
 
         scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window) # pylint: disable=no-member
+        grid.add(scrolled_window)  # pylint: disable=no-member
 
         self._tree = Gtk.TreeView()
         self._tree.set_hexpand(True)
         self._tree.set_vexpand(True)
-        scrolled_window.add(self._tree) # pylint: disable=no-member
+        scrolled_window.add(self._tree)  # pylint: disable=no-member
 
         cols: list[type] = [GObject.TYPE_OBJECT, GObject.TYPE_INT]
         cols.extend(len(column_headers) * [GObject.TYPE_STRING])
@@ -142,7 +136,7 @@ class OrcaNavListGUI:
 
     def show_gui(self) -> None:
         """Show the navigation list GUI."""
-        self._gui.show_all() # pylint: disable=no-member
+        self._gui.show_all()  # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
     def _on_cursor_changed(self, _widget: Gtk.Widget) -> None:

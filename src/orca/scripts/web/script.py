@@ -72,6 +72,7 @@ from .script_utilities import Utilities
 if TYPE_CHECKING:
     from gi.repository import Atspi
 
+
 class Script(default.Script):
     """Provides support for accessing user-agent-agnostic web-content."""
 
@@ -240,8 +241,11 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         contents = self.utilities.get_line_contents_at_offset(obj, offset, use_cache=True)
-        if contents and contents[0] \
-           and not document_presenter.get_presenter().in_focus_mode(self.app):
+        if (
+            contents
+            and contents[0]
+            and not document_presenter.get_presenter().in_focus_mode(self.app)
+        ):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
 
         self.speak_contents(contents, priorObj=prior_obj)
@@ -267,10 +271,13 @@ class Script(default.Script):
             return
 
         prior_obj = args.get("priorObj")
-        if caret_navigator.get_navigator().last_input_event_was_navigation_command() \
-           or structural_navigator.get_navigator().last_input_event_was_navigation_command() \
-           or table_navigator.get_navigator().last_input_event_was_navigation_command() \
-           or args.get("includeContext") or AXTable.get_table(obj):
+        if (
+            caret_navigator.get_navigator().last_input_event_was_navigation_command()
+            or structural_navigator.get_navigator().last_input_event_was_navigation_command()
+            or table_navigator.get_navigator().last_input_event_was_navigation_command()
+            or args.get("includeContext")
+            or AXTable.get_table(obj)
+        ):
             prior_context = self.utilities.get_prior_context()
             if prior_context is not None:
                 prior_obj, _prior_offset = prior_context
@@ -289,7 +296,8 @@ class Script(default.Script):
             tokens = ["WEB:", obj, "believed to be destroyed after scroll."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             replicant = AXObject.find_descendant(
-                document, lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role)
+                document, lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role
+            )
             if replicant:
                 obj = replicant
                 tokens = ["WEB: Replacing destroyed object with", obj]
@@ -313,8 +321,11 @@ class Script(default.Script):
         # danger of presented irrelevant context.
         offset = args.get("offset", 0)
         contents = self.utilities.get_object_contents_at_offset(obj, offset, use_cache=False)
-        if contents and contents[0] \
-           and not document_presenter.get_presenter().in_focus_mode(self.app):
+        if (
+            contents
+            and contents[0]
+            and not document_presenter.get_presenter().in_focus_mode(self.app)
+        ):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
         self.display_contents(contents)
         self.speak_contents(contents, **args)
@@ -337,8 +348,9 @@ class Script(default.Script):
         if not braille_presenter.get_presenter().use_braille():
             return
 
-        if document_presenter.get_presenter().in_focus_mode(self.app) \
-           and "\ufffc" not in AXText.get_all_text(obj):
+        if document_presenter.get_presenter().in_focus_mode(
+            self.app
+        ) and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, **args)
@@ -353,12 +365,14 @@ class Script(default.Script):
 
         is_content_editable = self.utilities.is_content_editable_with_embedded_objects(obj)
 
-        if not caret_navigator.get_navigator().last_input_event_was_navigation_command() \
-           and not structural_navigator.get_navigator().last_input_event_was_navigation_command() \
-           and not table_navigator.get_navigator().last_input_event_was_navigation_command() \
-           and not is_content_editable \
-           and not AXDocument.is_plain_text(document) \
-           and not input_event_manager.get_manager().last_event_was_caret_selection():
+        if (
+            not caret_navigator.get_navigator().last_input_event_was_navigation_command()
+            and not structural_navigator.get_navigator().last_input_event_was_navigation_command()
+            and not table_navigator.get_navigator().last_input_event_was_navigation_command()
+            and not is_content_editable
+            and not AXDocument.is_plain_text(document)
+            and not input_event_manager.get_manager().last_event_was_caret_selection()
+        ):
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, **args)
@@ -370,24 +384,23 @@ class Script(default.Script):
         # such side effects from happening in the first place.
         offset = args.get("offset")
         if offset is None:
-            obj, offset = self.utilities.get_caret_context(
-                document, get_replicant=True)
-        if offset > 0 and is_content_editable \
-           and self.utilities.treat_as_text_object(obj):
+            obj, offset = self.utilities.get_caret_context(document, get_replicant=True)
+        if offset > 0 and is_content_editable and self.utilities.treat_as_text_object(obj):
             offset = min(offset, AXText.get_character_count(obj))
 
         contents = self.utilities.get_line_contents_at_offset(obj, offset)
         self.display_contents(contents, documentFrame=document)
 
     def _pan_braille_left(
-        self,
-        event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
     ) -> bool:
         """Pans braille to the left."""
 
-        if flat_review_presenter.get_presenter().is_active() \
-           or not self.utilities.in_document_content() or not braille.beginningIsShowing:
+        if (
+            flat_review_presenter.get_presenter().is_active()
+            or not self.utilities.in_document_content()
+            or not braille.beginningIsShowing
+        ):
             return super()._pan_braille_left(event, pan_amount)
 
         contents = self.utilities.get_previous_line_contents()
@@ -408,14 +421,15 @@ class Script(default.Script):
         return True
 
     def _pan_braille_right(
-        self,
-        event: input_event.InputEvent | None = None,
-        pan_amount: int = 0
+        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
     ) -> bool:
         """Pans braille to the right."""
 
-        if flat_review_presenter.get_presenter().is_active() \
-           or not self.utilities.in_document_content() or not braille.endIsShowing:
+        if (
+            flat_review_presenter.get_presenter().is_active()
+            or not self.utilities.in_document_content()
+            or not braille.endIsShowing
+        ):
             return super()._pan_braille_right(event, pan_amount)
 
         contents = self.utilities.get_next_line_contents()
@@ -439,7 +453,7 @@ class Script(default.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
@@ -486,9 +500,10 @@ class Script(default.Script):
             flat_review_presenter.get_presenter().quit()
 
         caret_offset = 0
-        if self.utilities.in_find_container(old_focus) \
-           or (self.utilities.is_document(new_focus) \
-               and old_focus == focus_manager.get_manager().get_active_window()):
+        if self.utilities.in_find_container(old_focus) or (
+            self.utilities.is_document(new_focus)
+            and old_focus == focus_manager.get_manager().get_active_window()
+        ):
             context_obj, context_offset = self.utilities.get_caret_context(document)
             if context_obj and AXObject.is_valid(context_obj):
                 new_focus, caret_offset = context_obj, context_offset
@@ -508,24 +523,36 @@ class Script(default.Script):
 
         contents = None
         args = {}
-        last_command_was_caret_nav = \
+        last_command_was_caret_nav = (
             caret_navigator.get_navigator().last_input_event_was_navigation_command()
-        last_command_was_struct_nav = last_command_was_struct_nav \
+        )
+        last_command_was_struct_nav = (
+            last_command_was_struct_nav
             or table_navigator.get_navigator().last_input_event_was_navigation_command()
+        )
         manager = input_event_manager.get_manager()
-        last_command_was_line_nav = manager.last_event_was_line_navigation() \
-            and not last_command_was_caret_nav
+        last_command_was_line_nav = (
+            manager.last_event_was_line_navigation() and not last_command_was_caret_nav
+        )
 
         args["priorObj"] = old_focus
-        if manager.last_event_was_mouse_button() and event \
-             and event.type.startswith("object:text-caret-moved"):
+        if (
+            manager.last_event_was_mouse_button()
+            and event
+            and event.type.startswith("object:text-caret-moved")
+        ):
             msg = "WEB: Last input event was mouse button. Generating line."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
-        elif self.utilities.is_content_editable_with_embedded_objects(new_focus) \
-           and (last_command_was_caret_nav \
-                or last_command_was_struct_nav or last_command_was_line_nav) \
-           and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus)):
+        elif (
+            self.utilities.is_content_editable_with_embedded_objects(new_focus)
+            and (
+                last_command_was_caret_nav
+                or last_command_was_struct_nav
+                or last_command_was_line_nav
+            )
+            and not (AXUtilities.is_table_cell(new_focus) and AXObject.get_name(new_focus))
+        ):
             tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
@@ -533,9 +560,11 @@ class Script(default.Script):
             tokens = ["WEB: New focus", new_focus, "is anchor. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
-        elif input_event_manager.get_manager().last_event_was_page_navigation() \
-             and not AXTable.get_table(new_focus) \
-             and not AXUtilities.is_feed_article(new_focus):
+        elif (
+            input_event_manager.get_manager().last_event_was_page_navigation()
+            and not AXTable.get_table(new_focus)
+            and not AXUtilities.is_feed_article(new_focus)
+        ):
             tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
@@ -552,17 +581,24 @@ class Script(default.Script):
             tokens = ["WEB: Source", event.source, "is same page fragment. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
-        elif event and event.type.startswith("object:children-changed:remove") \
-             and document_presenter.get_presenter().is_focus_mode_widget(self, new_focus):
-            tokens = ["WEB: New focus", new_focus,
-                      "is recovery from removed child. Generating speech."]
+        elif (
+            event
+            and event.type.startswith("object:children-changed:remove")
+            and document_presenter.get_presenter().is_focus_mode_widget(self, new_focus)
+        ):
+            tokens = [
+                "WEB: New focus",
+                new_focus,
+                "is recovery from removed child. Generating speech.",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         elif last_command_was_line_nav and not AXObject.is_valid(old_focus):
             msg = "WEB: Last input event was line nav; old_focus is invalid. Generating line."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
-        elif last_command_was_line_nav and event \
-             and event.type.startswith("object:children-changed"):
+        elif (
+            last_command_was_line_nav and event and event.type.startswith("object:children-changed")
+        ):
             msg = "WEB: Last input event was line nav and children changed. Generating line."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
@@ -643,8 +679,9 @@ class Script(default.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if not AXUtilities.is_document_web(event.source) \
-           and not AXObject.is_ancestor(focus, event.source, True):
+        if not AXUtilities.is_document_web(event.source) and not AXObject.is_ancestor(
+            focus, event.source, True
+        ):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -672,9 +709,11 @@ class Script(default.Script):
             should_present = False
             msg = "WEB: Not presenting because source lacks URI"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif not event.detail1 \
-             and document_presenter.get_presenter().in_focus_mode(self.app) \
-             and AXObject.is_valid(obj):
+        elif (
+            not event.detail1
+            and document_presenter.get_presenter().in_focus_mode(self.app)
+            and AXObject.is_valid(obj)
+        ):
             should_present = False
             tokens = ["WEB: Not presenting due to focus mode for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -703,9 +742,11 @@ class Script(default.Script):
         if AXObject.is_dead(obj):
             obj = None
 
-        if not focus_manager.get_manager().focus_is_dead() \
-           and not self.utilities.in_document_content(focus) \
-           and AXUtilities.is_focused(focus):
+        if (
+            not focus_manager.get_manager().focus_is_dead()
+            and not self.utilities.in_document_content(focus)
+            and AXUtilities.is_focused(focus)
+        ):
             msg = "WEB: Not presenting content, focus is outside of document"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -869,9 +910,11 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         i_e_manager = input_event_manager.get_manager()
-        if self.utilities.is_item_for_editable_combo_box(focus, event.source) \
-           and not i_e_manager.last_event_was_character_navigation() \
-           and not i_e_manager.last_event_was_line_boundary_navigation():
+        if (
+            self.utilities.is_item_for_editable_combo_box(focus, event.source)
+            and not i_e_manager.last_event_was_character_navigation()
+            and not i_e_manager.last_event_was_line_boundary_navigation()
+        ):
             msg = "WEB: Event ignored: Editable combobox noise"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -881,8 +924,9 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if document_presenter.get_presenter().in_focus_mode(self.app) \
-           and self.utilities.caret_moved_outside_active_grid(event):
+        if document_presenter.get_presenter().in_focus_mode(
+            self.app
+        ) and self.utilities.caret_moved_outside_active_grid(event):
             msg = "WEB: Event ignored: Caret moved outside active grid during focus mode"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -894,8 +938,9 @@ class Script(default.Script):
             self._present_caret_moved_event(event)
             return True
 
-        if not self.utilities.treat_as_text_object(event.source) \
-           and not AXUtilities.is_editable(event.source):
+        if not self.utilities.treat_as_text_object(event.source) and not AXUtilities.is_editable(
+            event.source
+        ):
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -918,13 +963,16 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = True
 
-        elif event.source != focus and AXUtilities.is_editable(event.source) and \
-             (AXUtilities.is_focused(event.source) or not AXUtilities.is_focusable(event.source)):
+        elif (
+            event.source != focus
+            and AXUtilities.is_editable(event.source)
+            and (AXUtilities.is_focused(event.source) or not AXUtilities.is_focusable(event.source))
+        ):
             msg = "WEB: Editable object is not (yet) the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            notify = force = handled = \
-                i_e_manager.last_event_was_line_navigation() or \
-                i_e_manager.last_event_was_return()
+            notify = force = handled = (
+                i_e_manager.last_event_was_line_navigation() or i_e_manager.last_event_was_return()
+            )
 
         elif i_e_manager.last_event_was_caret_navigation():
             msg = "WEB: Caret moved due to native caret navigation."
@@ -1214,7 +1262,8 @@ class Script(default.Script):
             msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if self.utilities.should_interrupt_for_locus_of_focus_change(
-                    focus, event.source, event):
+                focus, event.source, event
+            ):
                 self.interrupt_presentation()
 
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
@@ -1420,9 +1469,9 @@ class Script(default.Script):
             if document_presenter.get_presenter().in_focus_mode(self.app):
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.
-                AXObject.clear_cache(event.source,
-                                     True,
-                                     "Workaround for missing events on descendants.")
+                AXObject.clear_cache(
+                    event.source, True, "Workaround for missing events on descendants."
+                )
                 msg = "WEB: Event source is embedded descendant and we're in focus mode"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
@@ -1518,8 +1567,11 @@ class Script(default.Script):
             return True
 
         obj, _offset = self.utilities.get_caret_context(get_replicant=False)
-        if obj and obj != event.source \
-           and not AXObject.find_ancestor(obj, lambda x: x == event.source):
+        if (
+            obj
+            and obj != event.source
+            and not AXObject.find_ancestor(obj, lambda x: x == event.source)
+        ):
             tokens = ["WEB: Ignoring event because it isn't", obj, "or its ancestor"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -1538,8 +1590,9 @@ class Script(default.Script):
             msg = "WEB: Unable to get valid context object"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if not AXUtilities.is_editable(event.source) \
-           and not self.utilities.is_content_editable_with_embedded_objects(event.source):
+        if not AXUtilities.is_editable(
+            event.source
+        ) and not self.utilities.is_content_editable_with_embedded_objects(event.source):
             msg = "WEB: Done processing non-editable source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1621,8 +1674,11 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(None, event.source, force=True)
                 return True
 
-        if not source_is_focus and AXUtilities.is_text_input(event.source) \
-           and AXUtilities.is_focused(event.source):
+        if (
+            not source_is_focus
+            and AXUtilities.is_text_input(event.source)
+            and AXUtilities.is_focused(event.source)
+        ):
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1669,8 +1725,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if event.source != focus and AXUtilities.is_text_input(event.source) \
-           and AXUtilities.is_focused(event.source):
+        if (
+            event.source != focus
+            and AXUtilities.is_text_input(event.source)
+            and AXUtilities.is_focused(event.source)
+        ):
             msg = "WEB: Focused entry is not the locus of focus. Waiting for focus event."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1692,8 +1751,11 @@ class Script(default.Script):
 
         char = AXText.get_character_at_offset(event.source)[0]
         manager = input_event_manager.get_manager()
-        if char == "\ufffc" and not manager.last_event_was_caret_selection() \
-           and not manager.last_event_was_command():
+        if (
+            char == "\ufffc"
+            and not manager.last_event_was_caret_selection()
+            and not manager.last_event_was_command()
+        ):
             msg = "WEB: Ignoring: Not selecting and event offset is at embedded object"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

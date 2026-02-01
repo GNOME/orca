@@ -353,9 +353,7 @@ class TestTypingEchoPresenter:
         test_value: bool,
     ) -> None:
         """Test presenter getter and setter methods."""
-        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(
-            test_context
-        )
+        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(test_context)
 
         getter = getattr(presenter, getter_name)
         setter = getattr(presenter, setter_name)
@@ -366,9 +364,7 @@ class TestTypingEchoPresenter:
 
     def test_locking_keys_presented_getter_and_setter(self, test_context: OrcaTestContext) -> None:
         """Test locking keys presented getter and setter with special logic."""
-        presenter, _manager, _value_map, settings_mock = self._setup_presenter(
-            test_context
-        )
+        presenter, _manager, _value_map, settings_mock = self._setup_presenter(test_context)
 
         settings_mock.presentLockingKeys = True
         assert presenter.get_locking_keys_presented() is True
@@ -395,9 +391,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_basic_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method basic state transitions."""
-        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(
-            test_context
-        )
+        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -429,9 +423,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_advanced_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method advanced state transitions."""
-        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(
-            test_context
-        )
+        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -708,9 +700,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_locking_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for locking keys."""
-        presenter, _manager_instance, value_map, settings_mock = self._setup_presenter(
-            test_context
-        )
+        presenter, _manager_instance, value_map, settings_mock = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -898,8 +888,8 @@ class TestTypingEchoPresenter:
 
     def test_commands_and_bindings(self, test_context: OrcaTestContext) -> None:
         """Test commands are registered in CommandManager."""
-        presenter, _manager_instance, _value_map, _settings_mock = (
-            self._setup_presenter(test_context)
+        presenter, _manager_instance, _value_map, _settings_mock = self._setup_presenter(
+            test_context
         )
         from orca import command_manager
 

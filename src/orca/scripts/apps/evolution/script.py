@@ -37,8 +37,10 @@ from .script_utilities import Utilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(WebKitGTK.Script, gtk.Script):
     """Custom script for Evolution."""

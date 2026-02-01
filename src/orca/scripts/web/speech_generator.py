@@ -35,6 +35,7 @@ from __future__ import annotations
 from typing import Any, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -71,6 +72,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             tokens = [f"WEB SPEECH GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     @log_generator_output
@@ -99,27 +101,32 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if prior_doc != doc and not self._script.utilities.get_document_for_object(doc):
                 result = [super()._generate_accessible_name(doc)]
 
-        if not AXTable.get_table(obj) \
-           and (AXUtilities.is_landmark(obj) \
-                or AXUtilities.is_math_related(obj) \
-                or AXUtilities.is_tool_tip(obj) \
-                or AXUtilities.is_status_bar(obj)):
+        if not AXTable.get_table(obj) and (
+            AXUtilities.is_landmark(obj)
+            or AXUtilities.is_math_related(obj)
+            or AXUtilities.is_tool_tip(obj)
+            or AXUtilities.is_status_bar(obj)
+        ):
             return result
 
         if self._script.utilities.is_item_for_editable_combo_box(obj, prior_obj):
             return result
 
-        args["stop_at_roles"] = [Atspi.Role.DOCUMENT_WEB,
-                               Atspi.Role.EMBEDDED,
-                               Atspi.Role.INTERNAL_FRAME,
-                               Atspi.Role.MATH,
-                               Atspi.Role.MENU_BAR]
-        args["skipRoles"] = [Atspi.Role.PARAGRAPH,
-                             Atspi.Role.HEADING,
-                             Atspi.Role.LABEL,
-                             Atspi.Role.LINK,
-                             Atspi.Role.LIST_ITEM,
-                             Atspi.Role.TEXT]
+        args["stop_at_roles"] = [
+            Atspi.Role.DOCUMENT_WEB,
+            Atspi.Role.EMBEDDED,
+            Atspi.Role.INTERNAL_FRAME,
+            Atspi.Role.MATH,
+            Atspi.Role.MENU_BAR,
+        ]
+        args["skipRoles"] = [
+            Atspi.Role.PARAGRAPH,
+            Atspi.Role.HEADING,
+            Atspi.Role.LABEL,
+            Atspi.Role.LINK,
+            Atspi.Role.LIST_ITEM,
+            Atspi.Role.TEXT,
+        ]
         args["stop_after_roles"] = [Atspi.Role.TOOL_BAR]
 
         if AXObject.find_ancestor(obj, AXUtilities.is_editable_combo_box):
@@ -198,8 +205,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXUtilities.is_text(obj, args.get("role")) and format_type != "basicWhereAmI":
             return []
 
-        if AXUtilities.is_link(obj, args.get("role")) \
-           and caret_navigator.get_navigator().last_input_event_was_navigation_command():
+        if (
+            AXUtilities.is_link(obj, args.get("role"))
+            and caret_navigator.get_navigator().last_input_event_was_navigation_command()
+        ):
             return []
 
         return super()._generate_accessible_description(obj, **args)
@@ -292,15 +301,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         manager = input_event_manager.get_manager()
         if manager.last_event_was_forward_caret_navigation() and args.get("startOffset"):
             return []
-        if manager.last_event_was_backward_caret_navigation() \
-           and self._script.utilities.treat_as_text_object(obj) \
-           and args.get("endOffset") not in [None, AXText.get_character_count(obj)]:
+        if (
+            manager.last_event_was_backward_caret_navigation()
+            and self._script.utilities.treat_as_text_object(obj)
+            and args.get("endOffset") not in [None, AXText.get_character_count(obj)]
+        ):
             return []
 
         result: list[Any] = []
         for o in objs:
-            string = self._script.utilities.expand_eocs(o) or AXObject.get_name(o) \
+            string = (
+                self._script.utilities.expand_eocs(o)
+                or AXObject.get_name(o)
                 or self.get_localized_role_name(o)
+            )
             words = string.split()
             if len(words) > 5:
                 words = words[0:5] + ["..."]
@@ -316,12 +330,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_accessible_label_and_name(obj, **args)
 
-        if self._script.utilities.is_text_block_element(obj) \
-           and AXText.has_presentable_text(obj)  \
-           and not AXUtilities.is_landmark(obj, args.get("role")) \
-           and not self._script.utilities.is_document(obj) \
-           and not AXUtilities.is_dpub(obj, args.get("role")) \
-           and not AXUtilities.is_suggestion(obj, args.get("role")):
+        if (
+            self._script.utilities.is_text_block_element(obj)
+            and AXText.has_presentable_text(obj)
+            and not AXUtilities.is_landmark(obj, args.get("role"))
+            and not self._script.utilities.is_document(obj)
+            and not AXUtilities.is_dpub(obj, args.get("role"))
+            and not AXUtilities.is_suggestion(obj, args.get("role"))
+        ):
             return []
 
         if obj == args.get("priorObj") and AXUtilities.is_editable(obj):
@@ -337,11 +353,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_accessible_name(obj, **args)
 
-        if self._script.utilities.is_text_block_element(obj) \
-           and AXText.has_presentable_text(obj)  \
-           and not AXUtilities.is_landmark(obj, args.get("role")) \
-           and not AXUtilities.is_dpub(obj, args.get("role")) \
-           and not args.get("inFlatReview"):
+        if (
+            self._script.utilities.is_text_block_element(obj)
+            and AXText.has_presentable_text(obj)
+            and not AXUtilities.is_landmark(obj, args.get("role"))
+            and not AXUtilities.is_dpub(obj, args.get("role"))
+            and not args.get("inFlatReview")
+        ):
             return []
 
         if AXUtilities.is_link(obj) and args.get("string"):
@@ -393,9 +411,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not args.get("leaving"):
             return []
 
-        if self._script.utilities.in_document_content(obj) \
-           and not self._script.utilities.in_document_content(
-               focus_manager.get_manager().get_locus_of_focus()):
+        if self._script.utilities.in_document_content(
+            obj
+        ) and not self._script.utilities.in_document_content(
+            focus_manager.get_manager().get_locus_of_focus()
+        ):
             result: list[Any] = [""]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
@@ -413,17 +433,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text() \
-           or not speech_and_verbosity_manager.get_manager().use_verbose_speech():
+        if (
+            self._only_speak_displayed_text()
+            or not speech_and_verbosity_manager.get_manager().use_verbose_speech()
+        ):
             return []
 
         # We handle things even for non-document content due to issues in
         # other toolkits (e.g. exposing list items to us that are not
         # exposed to sighted users)
-        roles = [Atspi.Role.DESCRIPTION_LIST,
-                 Atspi.Role.LIST,
-                 Atspi.Role.LIST_BOX,
-                 "ROLE_FEED"]
+        roles = [Atspi.Role.DESCRIPTION_LIST, Atspi.Role.LIST, Atspi.Role.LIST_BOX, "ROLE_FEED"]
         role = args.get("role", AXObject.get_role(obj))
         if role not in roles:
             return super()._generate_number_of_children(obj, **args)
@@ -459,9 +478,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self,
-        obj: Atspi.Accessible,
-        **args
+        self, obj: Atspi.Accessible, **args
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
@@ -499,23 +516,29 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         mgr = input_event_manager.get_manager()
         is_editable = AXUtilities.is_editable(obj)
-        if is_editable \
-           and not self._script.utilities.is_content_editable_with_embedded_objects(obj):
+        if is_editable and not self._script.utilities.is_content_editable_with_embedded_objects(
+            obj
+        ):
             if focus_manager.get_manager().in_say_all() and start:
                 return []
             if mgr.last_event_was_forward_caret_navigation() and start:
                 return []
-            if mgr.last_event_was_backward_caret_navigation() \
-               and self._script.utilities.treat_as_text_object(obj) \
-               and end not in [None, AXText.get_character_count(obj)]:
+            if (
+                mgr.last_event_was_backward_caret_navigation()
+                and self._script.utilities.treat_as_text_object(obj)
+                and end not in [None, AXText.get_character_count(obj)]
+            ):
                 return []
             result.append(self.get_localized_role_name(obj, **args))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif is_editable and self._script.utilities.is_document(obj):
             parent = AXObject.get_parent(obj)
-            if parent and not AXUtilities.is_editable(parent) \
-               and not mgr.last_event_was_caret_navigation():
+            if (
+                parent
+                and not AXUtilities.is_editable(parent)
+                and not mgr.last_event_was_caret_navigation()
+            ):
                 result.append(object_properties.ROLE_EDITABLE_CONTENT)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
@@ -523,9 +546,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if index == total - 1 or not self._script.utilities.is_focusable_with_math_child(obj):
                 level = AXUtilities.get_heading_level(obj)
                 if level:
-                    result.append(object_properties.ROLE_HEADING_LEVEL_SPEECH % {
-                        "role": self.get_localized_role_name(obj, **args),
-                        "level": level})
+                    result.append(
+                        object_properties.ROLE_HEADING_LEVEL_SPEECH
+                        % {"role": self.get_localized_role_name(obj, **args), "level": level}
+                    )
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 else:
                     result.append(self.get_localized_role_name(obj, **args))
@@ -539,8 +563,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if self._script.utilities.has_useless_canvas_descendant(obj):
                     result.append(self.get_localized_role_name(obj, role=Atspi.Role.IMAGE))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-                if index == total - 1 \
-                   or not self._script.utilities.is_focusable_with_math_child(obj):
+                if index == total - 1 or not self._script.utilities.is_focusable_with_math_child(
+                    obj
+                ):
                     result.append(self.get_localized_role_name(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
@@ -621,8 +646,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         start = args.get("startOffset", 0)
         end = args.get("endOffset", -1)
-        args["language"], args["dialect"] = \
+        args["language"], args["dialect"] = (
             self._script.utilities.get_language_and_dialect_for_substring(obj, start, end)
+        )
 
         if not result:
             result = list(filter(lambda x: x, super().generate_speech(obj, **args)))
@@ -632,9 +658,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def generate_contents(
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
+        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
     ) -> list[Any]:
         if not contents:
             return []
@@ -650,20 +674,30 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             index = args.pop("index", i)
             total = args.pop("total", len(contents))
             utterance = self.generate_speech(
-                obj, startOffset=start, endOffset=end, string=string,
-                index=index, total=total, **args)
+                obj,
+                startOffset=start,
+                endOffset=end,
+                string=string,
+                index=index,
+                total=total,
+                **args,
+            )
             if isinstance(utterance, list):
+
                 def is_not_empty_list(x):
                     return not (isinstance(x, list) and not x)
+
                 utterance = list(filter(is_not_empty_list, utterance))
             if utterance and utterance[0]:
                 result.append(utterance)
                 args["priorObj"] = obj
 
         if not result:
-            if focus_manager.get_manager().in_say_all() \
-               or not speech_and_verbosity_manager.get_manager().get_speak_blank_lines() \
-               or args.get("formatType") == "ancestor":
+            if (
+                focus_manager.get_manager().in_say_all()
+                or not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+                or args.get("formatType") == "ancestor"
+            ):
                 string = ""
             else:
                 string = messages.BLANK

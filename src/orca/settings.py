@@ -19,8 +19,6 @@
 
 """Settings managed by Orca."""
 
-
-
 from .acss import ACSS
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP: int = 1
@@ -32,10 +30,10 @@ LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
 VERBOSITY_LEVEL_BRIEF: int = 0
 VERBOSITY_LEVEL_VERBOSE: int = 1
 
-BRAILLE_UNDERLINE_NONE: int = 0x00 # 00000000
-BRAILLE_UNDERLINE_7: int = 0x40 # 01000000
-BRAILLE_UNDERLINE_8: int = 0x80 # 10000000
-BRAILLE_UNDERLINE_BOTH: int = 0xc0 # 11000000
+BRAILLE_UNDERLINE_NONE: int = 0x00  # 00000000
+BRAILLE_UNDERLINE_7: int = 0x40  # 01000000
+BRAILLE_UNDERLINE_8: int = 0x80  # 10000000
+BRAILLE_UNDERLINE_BOTH: int = 0xC0  # 11000000
 
 PUNCTUATION_STYLE_NONE: int = 3
 PUNCTUATION_STYLE_SOME: int = 2
@@ -64,7 +62,7 @@ SYSTEM_VOICE: str = "system"
 
 voices: dict[str, ACSS] = {
     DEFAULT_VOICE: ACSS({}),
-    UPPERCASE_VOICE: ACSS({ACSS.AVERAGE_PITCH : 7.0}),
+    UPPERCASE_VOICE: ACSS({ACSS.AVERAGE_PITCH: 7.0}),
     HYPERLINK_VOICE: ACSS({}),
     SYSTEM_VOICE: ACSS({}),
 }
@@ -204,14 +202,14 @@ presentDateFormat: str = "%x"
 presentTimeFormat: str = "%X"
 
 # Profiles
-startingProfile: list[str] = ['Default', 'default']
-activeProfile: list[str] = ['Default', 'default']
-profile: list[str] = ['Default', 'default']
+startingProfile: list[str] = ["Default", "default"]
+activeProfile: list[str] = ["Default", "default"]
+profile: list[str] = ["Default", "default"]
 
 # Speech
 speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
 speechServerFactory: str = "speechdispatcherfactory"
-speechServerInfo: list[str] | None = None # None means let the factory decide.
+speechServerInfo: list[str] | None = None  # None means let the factory decide.
 speechSystemOverride: str | None = None
 
 # Braille Monitor

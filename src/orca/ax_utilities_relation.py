@@ -24,11 +24,11 @@
 
 """Utilities for obtaining relation-related information."""
 
-
 import threading
 import time
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -106,8 +106,7 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def _get_relation(
-        obj: Atspi.Accessible,
-        relation_type: Atspi.RelationType
+        obj: Atspi.Accessible, relation_type: Atspi.RelationType
     ) -> Atspi.Relation | None:
         """Returns the specified Atspi.Relation for obj"""
 
@@ -127,8 +126,7 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def _get_relation_targets(
-        obj: Atspi.Accessible,
-        relation_type: Atspi.RelationType
+        obj: Atspi.Accessible, relation_type: Atspi.RelationType
     ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
@@ -279,8 +277,7 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def get_is_labelled_by(
-        obj: Atspi.Accessible,
-        exclude_ancestors: bool = True
+        obj: Atspi.Accessible, exclude_ancestors: bool = True
     ) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is labelled by."""
 
@@ -373,5 +370,6 @@ class AXUtilitiesRelation:
         """Returns True if obj does not have any relations."""
 
         return not AXUtilitiesRelation.get_relations(obj)
+
 
 AXUtilitiesRelation.start_cache_clearing_thread()

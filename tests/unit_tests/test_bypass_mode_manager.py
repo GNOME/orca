@@ -89,9 +89,7 @@ class TestBypassModeManager:
         command_manager_instance.get_keyboard_commands = test_context.Mock(return_value={})
         command_manager_instance.set_active_commands = test_context.Mock()
         command_manager_instance.get_command = test_context.Mock(return_value=None)
-        command_manager_mock.get_manager = test_context.Mock(
-            return_value=command_manager_instance
-        )
+        command_manager_mock.get_manager = test_context.Mock(return_value=command_manager_instance)
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()

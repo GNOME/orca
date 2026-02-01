@@ -23,10 +23,10 @@
 
 """Utilities for obtaining objects via the collection interface."""
 
-
 import time
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -51,7 +51,8 @@ class AXCollection:
         role_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
         interfaces: list[str] | None = None,
         interface_match_type: Atspi.CollectionMatchType = Atspi.CollectionMatchType.ALL,
-        invert: bool = False) -> Atspi.MatchRule | None:
+        invert: bool = False,
+    ) -> Atspi.MatchRule | None:
         """Creates a match rule based on the supplied criteria."""
 
         if states is None:
@@ -79,29 +80,32 @@ class AXCollection:
                     attributes_dict[key] = value
 
         try:
-            rule = Atspi.MatchRule.new(state_set,
-                                       state_match_type,
-                                       attributes_dict,
-                                       attribute_match_type,
-                                       roles,
-                                       role_match_type,
-                                       interfaces,
-                                       interface_match_type,
-                                       invert)
+            rule = Atspi.MatchRule.new(
+                state_set,
+                state_match_type,
+                attributes_dict,
+                attribute_match_type,
+                roles,
+                role_match_type,
+                interfaces,
+                interface_match_type,
+                invert,
+            )
         except GLib.GError as error:
             tokens = ["AXCollection: Exception in create_match_rule:", error]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         return rule
+
     # pylint: enable=R0913,R0914
 
     @staticmethod
     def get_all_matches(
         obj: Atspi.Accessible,
         rule: Atspi.MatchRule,
-            order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL
-        ) -> list[Atspi.Accessible]:
+        order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL,
+    ) -> list[Atspi.Accessible]:
         """Returns a list of objects matching the specified rule."""
 
         if not AXObject.supports_collection(obj):
@@ -130,7 +134,7 @@ class AXCollection:
     def get_first_match(
         obj: Atspi.Accessible,
         rule: Atspi.MatchRule,
-        order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL
+        order: Atspi.CollectionSortOrder = Atspi.CollectionSortOrder.CANONICAL,
     ) -> Atspi.Accessible | None:
         """Returns the first object matching the specified rule."""
 

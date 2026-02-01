@@ -39,8 +39,10 @@ from .script_utilities import Utilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(web.Script):
     """Custom script for Gecko."""
@@ -58,7 +60,7 @@ class Script(web.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
@@ -75,8 +77,11 @@ class Script(web.Script):
         if super().on_active_changed(event):
             return True
 
-        if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not AXUtilities.can_be_active_window(event.source):
+        if (
+            event.detail1
+            and AXUtilities.is_frame(event.source)
+            and not AXUtilities.can_be_active_window(event.source)
+        ):
             return True
 
         msg = "GECKO: Passing along event to default script"
@@ -262,8 +267,11 @@ class Script(web.Script):
         if super().on_showing_changed(event):
             return True
 
-        if event.detail1 and AXUtilities.is_menu(event.source) \
-           and not self.utilities.in_document_content(event.source):
+        if (
+            event.detail1
+            and AXUtilities.is_menu(event.source)
+            and not self.utilities.in_document_content(event.source)
+        ):
             msg = "GECKO: Setting locus of focus to newly shown menu."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             focus_manager.get_manager().set_locus_of_focus(event, event.source)

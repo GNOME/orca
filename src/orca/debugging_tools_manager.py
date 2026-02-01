@@ -35,6 +35,7 @@ import time
 from typing import Generator, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -53,6 +54,7 @@ from .ax_utilities_debugging import AXUtilitiesDebugging
 
 if TYPE_CHECKING:
     from .scripts import default
+
 
 class DebuggingToolsManager:
     """Provides debugging tools."""
@@ -77,8 +79,11 @@ class DebuggingToolsManager:
 
         commands_data = [
             ("cycleDebugLevelHandler", self._cycle_debug_level, cmdnames.DEBUG_CYCLE_LEVEL),
-            ("clear_atspi_app_cache", self._clear_atspi_app_cache,
-             cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION),
+            (
+                "clear_atspi_app_cache",
+                self._clear_atspi_app_cache,
+                cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION,
+            ),
             ("capture_snapshot", self._capture_snapshot, cmdnames.DEBUG_CAPTURE_SNAPSHOT),
         ]
 
@@ -196,7 +201,7 @@ class DebuggingToolsManager:
             if is_command_line:
                 prefix = f"{time.strftime('%H:%M:%S', time.localtime()):<12}"
             else:
-                prefix = f"{i+1:3}."
+                prefix = f"{i + 1:3}."
 
             msg = f"{prefix} pid: {pid:<10} {name:<25} {cmdline}"
             yield msg
@@ -241,7 +246,9 @@ class DebuggingToolsManager:
             msg = f"DEBUGGING TOOLS MANAGER: {msg}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
+
 _manager: DebuggingToolsManager = DebuggingToolsManager()
+
 
 def get_manager() -> DebuggingToolsManager:
     """Returns the debugging tools manager."""

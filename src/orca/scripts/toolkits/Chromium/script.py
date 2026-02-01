@@ -41,8 +41,10 @@ from .script_utilities import Utilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(web.Script):
     """Custom script for Chromium."""
@@ -60,7 +62,7 @@ class Script(web.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
@@ -77,8 +79,11 @@ class Script(web.Script):
         if super().on_active_changed(event):
             return True
 
-        if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not AXUtilities.can_be_active_window(event.source):
+        if (
+            event.detail1
+            and AXUtilities.is_frame(event.source)
+            and not AXUtilities.can_be_active_window(event.source)
+        ):
             return True
 
         msg = "CHROMIUM: Passing along event to default script"
@@ -98,8 +103,9 @@ class Script(web.Script):
     def on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
-        if not AXUtilities.is_web_element(event.source) \
-           and AXUtilities.is_web_element(AXObject.get_parent(event.source)):
+        if not AXUtilities.is_web_element(event.source) and AXUtilities.is_web_element(
+            AXObject.get_parent(event.source)
+        ):
             msg = "CHROMIUM: Ignoring because source is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -134,8 +140,9 @@ class Script(web.Script):
     def on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
 
-        if AXUtilities.is_web_element(event.source) \
-           and not AXUtilities.is_web_element(event.any_data):
+        if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
+            event.any_data
+        ):
             msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -150,8 +157,9 @@ class Script(web.Script):
     def on_children_removed(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:removed accessibility events."""
 
-        if AXUtilities.is_web_element(event.source) \
-           and not AXUtilities.is_web_element(event.any_data):
+        if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
+            event.any_data
+        ):
             msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -216,7 +224,7 @@ class Script(web.Script):
     def on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
-        if (self.utilities.is_document(event.source) and not AXDocument.get_uri(event.source)):
+        if self.utilities.is_document(event.source) and not AXDocument.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from document with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -332,8 +340,9 @@ class Script(web.Script):
     def on_text_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-selection-changed accessibility events."""
 
-        if not AXUtilities.is_web_element(event.source) \
-           and AXUtilities.is_web_element(AXObject.get_parent(event.source)):
+        if not AXUtilities.is_web_element(event.source) and AXUtilities.is_web_element(
+            AXObject.get_parent(event.source)
+        ):
             msg = "CHROMIUM: Ignoring because source is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

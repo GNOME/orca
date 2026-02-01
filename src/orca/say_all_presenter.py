@@ -59,10 +59,12 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from .scripts import default
+
 
 class SayAllStyle(Enum):
     """Style enumeration with int values from settings."""
@@ -88,63 +90,63 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=[SayAllStyle.SENTENCE.value, SayAllStyle.LINE.value],
                 getter=presenter.get_style_as_int,
                 setter=presenter.set_style_from_int,
-                prefs_key="sayAllStyle"
+                prefs_key="sayAllStyle",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                 getter=presenter.get_rewind_and_fast_forward_enabled,
                 setter=presenter.set_rewind_and_fast_forward_enabled,
                 prefs_key="rewindAndFastForwardInSayAll",
-                member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY
+                member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
                 getter=presenter.get_structural_navigation_enabled,
                 setter=presenter.set_structural_navigation_enabled,
                 prefs_key="structNavInSayAll",
-                member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY
+                member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_BLOCKQUOTES,
                 getter=presenter.get_announce_blockquote,
                 setter=presenter.set_announce_blockquote,
                 prefs_key="sayAllContextBlockquote",
-                member_of=guilabels.ANNOUNCEMENTS
+                member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_FORMS,
                 getter=presenter.get_announce_form,
                 setter=presenter.set_announce_form,
                 prefs_key="sayAllContextNonLandmarkForm",
-                member_of=guilabels.ANNOUNCEMENTS
+                member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_LANDMARKS,
                 getter=presenter.get_announce_landmark,
                 setter=presenter.set_announce_landmark,
                 prefs_key="sayAllContextLandmark",
-                member_of=guilabels.ANNOUNCEMENTS
+                member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_LISTS,
                 getter=presenter.get_announce_list,
                 setter=presenter.set_announce_list,
                 prefs_key="sayAllContextList",
-                member_of=guilabels.ANNOUNCEMENTS
+                member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_PANELS,
                 getter=presenter.get_announce_grouping,
                 setter=presenter.set_announce_grouping,
                 prefs_key="sayAllContextPanel",
-                member_of=guilabels.ANNOUNCEMENTS
+                member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_TABLES,
                 getter=presenter.get_announce_table,
                 setter=presenter.set_announce_table,
                 prefs_key="sayAllContextTable",
-                member_of=guilabels.ANNOUNCEMENTS
+                member_of=guilabels.ANNOUNCEMENTS,
             ),
         ]
 
@@ -152,7 +154,8 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             f"{guilabels.SAY_ALL_INFO}\n\n{guilabels.SAY_ALL_NAVIGATION_INFO}"
             f"\n\n{guilabels.SAY_ALL_CONTAINER_INFO}"
         )
-        super().__init__(guilabels.GENERAL_SAY_ALL, controls,info_message=info)
+        super().__init__(guilabels.GENERAL_SAY_ALL, controls, info_message=info)
+
 
 class SayAllPresenter:
     """Module for commands related to the current accessible object."""
@@ -203,7 +206,6 @@ class SayAllPresenter:
 
         return SayAllPreferencesGrid(self)
 
-
     def get_style_as_int(self) -> int:
         """Returns the current Say All style as an integer value."""
 
@@ -224,7 +226,7 @@ class SayAllPresenter:
         event: input_event.InputEvent | None = None,
         notify_user: bool = True,
         obj: Atspi.Accessible | None = None,
-        offset: int | None = None
+        offset: int | None = None,
     ) -> bool:
         """Speaks the entire document or text, starting from the current position."""
 
@@ -233,8 +235,14 @@ class SayAllPresenter:
         self._current_context = None
         self._say_all_is_running = False
 
-        tokens = ["SAY ALL PRESENTER: say_all. Script:", script, "Event:", event,
-                  "notify_user:", notify_user]
+        tokens = [
+            "SAY ALL PRESENTER: say_all. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._script = script
@@ -256,8 +264,14 @@ class SayAllPresenter:
     ) -> bool:
         """Jumps back in the current Say All."""
 
-        tokens = ["SAY ALL PRESENTER: rewind. Script:", script, "Event:", event,
-                  "notify_user:", notify_user]
+        tokens = [
+            "SAY ALL PRESENTER: rewind. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._rewind(None, True)
 
@@ -270,8 +284,14 @@ class SayAllPresenter:
     ) -> bool:
         """Jumps forward in the current Say All."""
 
-        tokens = ["SAY ALL PRESENTER: fast_forward. Script:", script, "Event:", event,
-                  "notify_user:", notify_user]
+        tokens = [
+            "SAY ALL PRESENTER: fast_forward. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._fast_forward(None, True)
 
@@ -285,8 +305,7 @@ class SayAllPresenter:
         focus_manager.get_manager().reset_active_mode("SAY ALL PRESENTER: Stopped Say All.")
 
     def _parse_utterances(
-        self,
-        utterances: list[str | ACSS | list]
+        self, utterances: list[str | ACSS | list]
     ) -> tuple[list[str], list[ACSS]]:
         """Parse utterances into elements and voices lists."""
 
@@ -307,7 +326,7 @@ class SayAllPresenter:
     def _say_all_should_skip_content(
         self,
         content: tuple[Atspi.Accessible, int, int, str],
-        contents: list[tuple[Atspi.Accessible, int, int, str]] # pylint: disable=unused-argument
+        contents: list[tuple[Atspi.Accessible, int, int, str]],  # pylint: disable=unused-argument
     ) -> tuple[bool, str]:
         """Returns True if content should be skipped during say-all iteration."""
 
@@ -319,9 +338,7 @@ class SayAllPresenter:
         return False, ""
 
     def _say_all_iter(
-        self,
-        obj: Atspi.Accessible,
-        offset: int | None = None
+        self, obj: Atspi.Accessible, offset: int | None = None
     ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
         """A generator used by Say All."""
 
@@ -342,8 +359,14 @@ class SayAllPresenter:
         while obj:
             if obj == prev_obj and offset == prev_offset:
                 obj, offset = self._script.utilities.next_context(obj, offset)
-                tokens = ["SAY ALL PRESENTER: Stuck at", prev_obj, f"offset {prev_offset}.",
-                          "Moving to", obj, f"offset {offset}."]
+                tokens = [
+                    "SAY ALL PRESENTER: Stuck at",
+                    prev_obj,
+                    f"offset {prev_offset}.",
+                    "Moving to",
+                    obj,
+                    f"offset {offset}.",
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
             prev_obj, prev_offset = obj, offset
@@ -352,14 +375,18 @@ class SayAllPresenter:
                 contents = self._script.utilities.get_sentence_contents_at_offset(obj, offset)
             else:
                 contents = self._script.utilities.get_line_contents_at_offset(
-                    obj, offset, layout_mode=True, use_cache=False)
+                    obj, offset, layout_mode=True, use_cache=False
+                )
 
             contents = self._script.utilities.filter_contents_for_presentation(contents)
             self._contents.extend(contents)
             for i, content in enumerate(contents):
                 content_obj, start, end, text = content
-                tokens = [f"SAY ALL PRESENTER: CONTENT: {i}.", content_obj,
-                          f"'{text}' ({start}-{end})"]
+                tokens = [
+                    f"SAY ALL PRESENTER: CONTENT: {i}.",
+                    content_obj,
+                    f"'{text}' ({start}-{end})",
+                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
                 skip, reason = self._say_all_should_skip_content(content, contents)
@@ -369,14 +396,20 @@ class SayAllPresenter:
                     continue
 
                 utterances = self._script.speech_generator.generate_contents(
-                    [content], eliminatePauses=True, priorObj=prior_obj,
-                    index=i, total=len(contents))
+                    [content],
+                    eliminatePauses=True,
+                    priorObj=prior_obj,
+                    index=i,
+                    total=len(contents),
+                )
                 prior_obj = content_obj
                 elements, voices = self._parse_utterances(utterances)
                 if len(elements) != len(voices):
-                    tokens = ["SAY ALL PRESENTER: Skipping content - elements/voices mismatch:",
-                              content_obj,
-                              f"'{text}', elements: {len(elements)}, voices: {len(voices)}"]
+                    tokens = [
+                        "SAY ALL PRESENTER: Skipping content - elements/voices mismatch:",
+                        content_obj,
+                        f"'{text}', elements: {len(elements)}, voices: {len(voices)}",
+                    ]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     continue
 
@@ -390,7 +423,8 @@ class SayAllPresenter:
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     self._script.utilities.set_caret_offset(content_obj, start)
                     ax_event_synthesizer.get_synthesizer().scroll_into_view(
-                        context.obj, context.start_offset, context.end_offset)
+                        context.obj, context.start_offset, context.end_offset
+                    )
                     yield [context, voice]
 
             if contents:
@@ -402,7 +436,8 @@ class SayAllPresenter:
                 # its contents if we pass last_offset directly. Therefore decrement last_offset and
                 # let next_context() find the correct next position.
                 obj, offset = self._script.utilities.next_context(
-                    last_obj, max(0, last_offset - 1), restrict_to=restrict_to)
+                    last_obj, max(0, last_offset - 1), restrict_to=restrict_to
+                )
             else:
                 obj = self._script.utilities.find_next_object(obj, restrict_to)
                 offset = 0
@@ -414,12 +449,9 @@ class SayAllPresenter:
         self.stop()
 
     def _rewind(
-        self,
-        context: speechserver.SayAllContext | None,
-        override_setting: bool = False
+        self, context: speechserver.SayAllContext | None, override_setting: bool = False
     ) -> bool:
-        if not (override_setting
-                or settings.rewindAndFastForwardInSayAll):
+        if not (override_setting or settings.rewindAndFastForwardInSayAll):
             return False
 
         if context is None:
@@ -444,12 +476,9 @@ class SayAllPresenter:
         return True
 
     def _fast_forward(
-        self,
-        context: speechserver.SayAllContext | None,
-        override_setting: bool = False
+        self, context: speechserver.SayAllContext | None, override_setting: bool = False
     ) -> bool:
-        if not (override_setting
-                or settings.rewindAndFastForwardInSayAll):
+        if not (override_setting or settings.rewindAndFastForwardInSayAll):
             return False
 
         if context is None:
@@ -482,8 +511,11 @@ class SayAllPresenter:
 
         if progress_type == speechserver.SayAllContext.PROGRESS:
             focus_manager.get_manager().emit_region_changed(
-                context.obj, context.current_offset, context.current_end_offset,
-                focus_manager.SAY_ALL)
+                context.obj,
+                context.current_offset,
+                context.current_end_offset,
+                focus_manager.SAY_ALL,
+            )
             return
 
         assert self._script is not None, "Script must be set before calling _progress_callback."
@@ -497,9 +529,10 @@ class SayAllPresenter:
                     return
                 if manager.last_event_was_up() and self._rewind(context):
                     return
-                if settings.structNavInSayAll \
-                   and structural_navigator.get_navigator().\
-                       last_input_event_was_navigation_command():
+                if (
+                    settings.structNavInSayAll
+                    and structural_navigator.get_navigator().last_input_event_was_navigation_command()
+                ):
                     return
                 self._script.interrupt_presentation()
                 AXText.set_caret_offset(context.obj, context.current_offset)
@@ -511,7 +544,8 @@ class SayAllPresenter:
         focus_manager.get_manager().set_locus_of_focus(None, context.obj, notify_script=False)
         mode = focus_manager.SAY_ALL if self._say_all_is_running else focus_manager.FOCUS_TRACKING
         focus_manager.get_manager().emit_region_changed(
-            context.obj, context.current_offset, None, mode)
+            context.obj, context.current_offset, None, mode
+        )
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
 
     @dbus_service.getter
@@ -658,7 +692,8 @@ class SayAllPresenter:
         return True
 
 
-_presenter : SayAllPresenter = SayAllPresenter()
+_presenter: SayAllPresenter = SayAllPresenter()
+
 
 def get_presenter() -> SayAllPresenter:
     """Returns the Say All Presenter"""

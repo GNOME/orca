@@ -29,6 +29,7 @@ from __future__ import annotations
 from typing import Any
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -48,7 +49,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                 label=guilabels.GENERAL_BEEP_UPDATES,
                 getter=presenter.get_beep_progress_bar_updates,
                 setter=presenter.set_beep_progress_bar_updates,
-                prefs_key="beepProgressBarUpdates"
+                prefs_key="beepProgressBarUpdates",
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
@@ -56,7 +57,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                 setter=presenter.set_progress_bar_beep_interval,
                 prefs_key="progressBarBeepInterval",
                 minimum=0,
-                maximum=100
+                maximum=100,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.GENERAL_APPLIES_TO,
@@ -72,7 +73,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                     settings.PROGRESS_BAR_ALL,
                     settings.PROGRESS_BAR_APPLICATION,
                     settings.PROGRESS_BAR_WINDOW,
-                ]
+                ],
             ),
         ]
 
@@ -85,9 +86,8 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def __init__(
         self,
         presenter: SoundPresenter,
-        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None,
     ) -> None:
-
         super().__init__(guilabels.SOUND)
         self._presenter = presenter
         self._initializing = True
@@ -116,7 +116,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             enable_setter=self._presenter.set_sound_is_enabled,
             categories=categories,
             title_change_callback=self._title_change_callback,
-            main_title=guilabels.SOUND
+            main_title=guilabels.SOUND,
         )
 
         self.attach(enable_listbox, 0, row, 1, 1)
@@ -127,13 +127,16 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         volume_adj = Gtk.Adjustment(
             value=self._presenter.get_sound_volume(),
-            lower=0.0, upper=1.0, step_increment=0.1, page_increment=0.1
+            lower=0.0,
+            upper=1.0,
+            step_increment=0.1,
+            page_increment=0.1,
         )
         volume_row, self._volume_scale, _volume_label = self._create_slider_row(
             guilabels.SOUND_VOLUME,
             volume_adj,
             changed_handler=self._on_volume_changed,
-            include_top_separator=False
+            include_top_separator=False,
         )
         self._volume_listbox.add_row_with_widget(volume_row, self._volume_scale)
         self._volume_listbox.set_sensitive(self._presenter.get_sound_is_enabled())
@@ -155,7 +158,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_multipage_enable_toggled(
         self,
         switch: Gtk.Switch,
-        setter: preferences_grid_base.Callable[[bool], preferences_grid_base.Any]
+        setter: preferences_grid_base.Callable[[bool], preferences_grid_base.Any],
     ) -> None:
         """Handle enable switch toggle - also controls volume slider sensitivity."""
 
@@ -163,11 +166,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if self._volume_listbox is not None:
             self._volume_listbox.set_sensitive(switch.get_active())
 
-    def _on_multipage_category_activated(
-        self,
-        listbox: Gtk.ListBox,
-        row: Gtk.ListBoxRow
-    ) -> None:
+    def _on_multipage_category_activated(self, listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
         """Handle category activation - also hide volume slider."""
 
         super()._on_multipage_category_activated(listbox, row)
@@ -230,8 +229,7 @@ class SoundPresenter:
         controller.register_decorated_module("SoundPresenter", self)
 
     def create_preferences_grid(
-        self,
-        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+        self, title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
     ) -> SoundPreferencesGrid:
         """Returns the GtkGrid containing the preferences UI."""
 
@@ -314,6 +312,7 @@ class SoundPresenter:
 
 
 _presenter: SoundPresenter = SoundPresenter()
+
 
 def get_presenter() -> SoundPresenter:
     """Returns the Sound Presenter"""

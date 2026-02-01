@@ -32,6 +32,7 @@ from orca import debug
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -48,6 +49,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             tokens = [f"TERMINAL BRAILLE GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     @log_generator_output

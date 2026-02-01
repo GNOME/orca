@@ -3197,4 +3197,3 @@ class TestInputEventManager:
 
         assert result == 2
         command_manager_instance.has_multi_click_bindings.assert_called_with(65431, 80, 0)
-

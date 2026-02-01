@@ -27,8 +27,8 @@
 
 """Utilities for obtaining role-related information."""
 
-
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -36,6 +36,7 @@ from . import debug
 from . import object_properties
 from .ax_object import AXObject
 from .ax_utilities_state import AXUtilitiesState
+
 
 class AXUtilitiesRole:
     """Utilities for obtaining role-related information."""
@@ -56,10 +57,7 @@ class AXUtilitiesRole:
         return attrs.get("xml-roles", "").split()
 
     @staticmethod
-    def children_are_presentational(
-        obj: Atspi.Accessible,
-        role: Atspi.Role | None = None
-    ) -> bool:
+    def children_are_presentational(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if the descendants of obj should be ignored. See ARIA spec."""
 
         # Note: We are deliberately leaving out listbox options because they can be complex,
@@ -96,9 +94,7 @@ class AXUtilitiesRole:
     def get_dialog_roles(include_alert_as_dialog: bool = True) -> list[Atspi.Role]:
         """Returns the list of roles we consider documents"""
 
-        roles = [Atspi.Role.COLOR_CHOOSER,
-                 Atspi.Role.DIALOG,
-                 Atspi.Role.FILE_CHOOSER]
+        roles = [Atspi.Role.COLOR_CHOOSER, Atspi.Role.DIALOG, Atspi.Role.FILE_CHOOSER]
         if include_alert_as_dialog:
             roles.append(Atspi.Role.ALERT)
         return roles
@@ -107,29 +103,33 @@ class AXUtilitiesRole:
     def get_document_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider documents"""
 
-        roles = [Atspi.Role.DOCUMENT_EMAIL,
-                 Atspi.Role.DOCUMENT_FRAME,
-                 Atspi.Role.DOCUMENT_PRESENTATION,
-                 Atspi.Role.DOCUMENT_SPREADSHEET,
-                 Atspi.Role.DOCUMENT_TEXT,
-                 Atspi.Role.DOCUMENT_WEB]
+        roles = [
+            Atspi.Role.DOCUMENT_EMAIL,
+            Atspi.Role.DOCUMENT_FRAME,
+            Atspi.Role.DOCUMENT_PRESENTATION,
+            Atspi.Role.DOCUMENT_SPREADSHEET,
+            Atspi.Role.DOCUMENT_TEXT,
+            Atspi.Role.DOCUMENT_WEB,
+        ]
         return roles
 
     @staticmethod
     def get_form_field_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider form fields"""
 
-        roles = [Atspi.Role.BUTTON,
-                 Atspi.Role.CHECK_BOX,
-                 Atspi.Role.RADIO_BUTTON,
-                 Atspi.Role.COMBO_BOX,
-                 Atspi.Role.DOCUMENT_FRAME, # rich text editing pred recommended
-                 Atspi.Role.TEXT, # predicate recommended to check it is editable
-                 Atspi.Role.LIST_BOX,
-                 Atspi.Role.ENTRY,
-                 Atspi.Role.PASSWORD_TEXT,
-                 Atspi.Role.SPIN_BUTTON,
-                 Atspi.Role.TOGGLE_BUTTON]
+        roles = [
+            Atspi.Role.BUTTON,
+            Atspi.Role.CHECK_BOX,
+            Atspi.Role.RADIO_BUTTON,
+            Atspi.Role.COMBO_BOX,
+            Atspi.Role.DOCUMENT_FRAME,  # rich text editing pred recommended
+            Atspi.Role.TEXT,  # predicate recommended to check it is editable
+            Atspi.Role.LIST_BOX,
+            Atspi.Role.ENTRY,
+            Atspi.Role.PASSWORD_TEXT,
+            Atspi.Role.SPIN_BUTTON,
+            Atspi.Role.TOGGLE_BUTTON,
+        ]
         return roles
 
     @staticmethod
@@ -139,22 +139,24 @@ class AXUtilitiesRole:
         # Note: We are deliberately leaving out sections because those are often DIVs
         # which are generic and often not large. The primary consumer of this function
         # is structural navigation which uses it for the jump-to-edge functionality.
-        roles = [Atspi.Role.ARTICLE,
-                 Atspi.Role.BLOCK_QUOTE,
-                 Atspi.Role.DESCRIPTION_LIST,
-                 Atspi.Role.FORM,
-                 Atspi.Role.FOOTER,
-                 Atspi.Role.GROUPING,
-                 Atspi.Role.HEADER,
-                 Atspi.Role.HTML_CONTAINER,
-                 Atspi.Role.LANDMARK,
-                 Atspi.Role.LOG,
-                 Atspi.Role.LIST,
-                 Atspi.Role.MARQUEE,
-                 Atspi.Role.PANEL,
-                 Atspi.Role.TABLE,
-                 Atspi.Role.TREE,
-                 Atspi.Role.TREE_TABLE]
+        roles = [
+            Atspi.Role.ARTICLE,
+            Atspi.Role.BLOCK_QUOTE,
+            Atspi.Role.DESCRIPTION_LIST,
+            Atspi.Role.FORM,
+            Atspi.Role.FOOTER,
+            Atspi.Role.GROUPING,
+            Atspi.Role.HEADER,
+            Atspi.Role.HTML_CONTAINER,
+            Atspi.Role.LANDMARK,
+            Atspi.Role.LOG,
+            Atspi.Role.LIST,
+            Atspi.Role.MARQUEE,
+            Atspi.Role.PANEL,
+            Atspi.Role.TABLE,
+            Atspi.Role.TREE,
+            Atspi.Role.TREE_TABLE,
+        ]
 
         return roles
 
@@ -162,70 +164,80 @@ class AXUtilitiesRole:
     def get_layout_only_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider are for layout only"""
 
-        roles = [Atspi.Role.AUTOCOMPLETE,
-                 Atspi.Role.FILLER,
-                 Atspi.Role.REDUNDANT_OBJECT,
-                 Atspi.Role.UNKNOWN,
-                 Atspi.Role.SCROLL_PANE,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = [
+            Atspi.Role.AUTOCOMPLETE,
+            Atspi.Role.FILLER,
+            Atspi.Role.REDUNDANT_OBJECT,
+            Atspi.Role.UNKNOWN,
+            Atspi.Role.SCROLL_PANE,
+            Atspi.Role.TEAROFF_MENU_ITEM,
+        ]
         return roles
 
     @staticmethod
     def get_menu_item_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider menu items"""
 
-        roles = [Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = [
+            Atspi.Role.MENU_ITEM,
+            Atspi.Role.CHECK_MENU_ITEM,
+            Atspi.Role.RADIO_MENU_ITEM,
+            Atspi.Role.TEAROFF_MENU_ITEM,
+        ]
         return roles
 
     @staticmethod
     def get_menu_related_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider menu related"""
 
-        roles = [Atspi.Role.MENU,
-                 Atspi.Role.MENU_BAR,
-                 Atspi.Role.POPUP_MENU,
-                 Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.TEAROFF_MENU_ITEM]
+        roles = [
+            Atspi.Role.MENU,
+            Atspi.Role.MENU_BAR,
+            Atspi.Role.POPUP_MENU,
+            Atspi.Role.MENU_ITEM,
+            Atspi.Role.CHECK_MENU_ITEM,
+            Atspi.Role.RADIO_MENU_ITEM,
+            Atspi.Role.TEAROFF_MENU_ITEM,
+        ]
         return roles
 
     @staticmethod
     def get_roles_to_exclude_from_clickables_list() -> list[Atspi.Role]:
         """Returns the list of roles we want to exclude from the list of clickables"""
 
-        roles = [Atspi.Role.COMBO_BOX,
-                 Atspi.Role.ENTRY,
-                 Atspi.Role.LIST_BOX,
-                 Atspi.Role.MENU,
-                 Atspi.Role.MENU_ITEM,
-                 Atspi.Role.CHECK_MENU_ITEM,
-                 Atspi.Role.RADIO_MENU_ITEM,
-                 Atspi.Role.PAGE_TAB,
-                 Atspi.Role.PAGE_TAB_LIST,
-                 Atspi.Role.PASSWORD_TEXT,
-                 Atspi.Role.PROGRESS_BAR,
-                 Atspi.Role.SLIDER,
-                 Atspi.Role.SPIN_BUTTON,
-                 Atspi.Role.TOOL_BAR,
-                 Atspi.Role.TREE_ITEM,
-                 Atspi.Role.TREE_TABLE,
-                 Atspi.Role.TREE]
+        roles = [
+            Atspi.Role.COMBO_BOX,
+            Atspi.Role.ENTRY,
+            Atspi.Role.LIST_BOX,
+            Atspi.Role.MENU,
+            Atspi.Role.MENU_ITEM,
+            Atspi.Role.CHECK_MENU_ITEM,
+            Atspi.Role.RADIO_MENU_ITEM,
+            Atspi.Role.PAGE_TAB,
+            Atspi.Role.PAGE_TAB_LIST,
+            Atspi.Role.PASSWORD_TEXT,
+            Atspi.Role.PROGRESS_BAR,
+            Atspi.Role.SLIDER,
+            Atspi.Role.SPIN_BUTTON,
+            Atspi.Role.TOOL_BAR,
+            Atspi.Role.TREE_ITEM,
+            Atspi.Role.TREE_TABLE,
+            Atspi.Role.TREE,
+        ]
         return roles
 
     @staticmethod
     def get_set_container_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider a set container"""
 
-        roles = [Atspi.Role.LIST,
-                 Atspi.Role.MENU,
-                 Atspi.Role.PAGE_TAB_LIST,
-                 Atspi.Role.TABLE,
-                 Atspi.Role.TREE,
-                 Atspi.Role.TREE_TABLE]
+        roles = [
+            Atspi.Role.LIST,
+            Atspi.Role.MENU,
+            Atspi.Role.PAGE_TAB_LIST,
+            Atspi.Role.TABLE,
+            Atspi.Role.TREE,
+            Atspi.Role.TREE_TABLE,
+        ]
         return roles
 
     @staticmethod
@@ -234,32 +246,40 @@ class AXUtilitiesRole:
 
         roles = [Atspi.Role.TABLE_CELL]
         if include_headers:
-            roles.extend([Atspi.Role.TABLE_COLUMN_HEADER,
-                          Atspi.Role.TABLE_ROW_HEADER,
-                          Atspi.Role.COLUMN_HEADER,
-                          Atspi.Role.ROW_HEADER])
+            roles.extend(
+                [
+                    Atspi.Role.TABLE_COLUMN_HEADER,
+                    Atspi.Role.TABLE_ROW_HEADER,
+                    Atspi.Role.COLUMN_HEADER,
+                    Atspi.Role.ROW_HEADER,
+                ]
+            )
         return roles
 
     @staticmethod
     def get_table_header_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider table headers"""
 
-        roles = [Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = [
+            Atspi.Role.TABLE_COLUMN_HEADER,
+            Atspi.Role.TABLE_ROW_HEADER,
+            Atspi.Role.COLUMN_HEADER,
+            Atspi.Role.ROW_HEADER,
+        ]
         return roles
 
     @staticmethod
     def get_table_related_roles(include_caption: bool = False) -> list[Atspi.Role]:
         """Returns the list of roles we consider table related"""
 
-        roles = [Atspi.Role.TABLE,
-                 Atspi.Role.TABLE_CELL,
-                 Atspi.Role.TABLE_COLUMN_HEADER,
-                 Atspi.Role.TABLE_ROW_HEADER,
-                 Atspi.Role.COLUMN_HEADER,
-                 Atspi.Role.ROW_HEADER]
+        roles = [
+            Atspi.Role.TABLE,
+            Atspi.Role.TABLE_CELL,
+            Atspi.Role.TABLE_COLUMN_HEADER,
+            Atspi.Role.TABLE_ROW_HEADER,
+            Atspi.Role.COLUMN_HEADER,
+            Atspi.Role.ROW_HEADER,
+        ]
         if include_caption:
             roles.append(Atspi.Role.CAPTION)
         return roles
@@ -268,37 +288,34 @@ class AXUtilitiesRole:
     def get_text_ui_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider UI that displays static text"""
 
-        roles = [Atspi.Role.INFO_BAR,
-                 Atspi.Role.LABEL,
-                 Atspi.Role.PAGE_TAB,
-                 Atspi.Role.STATUS_BAR]
+        roles = [Atspi.Role.INFO_BAR, Atspi.Role.LABEL, Atspi.Role.PAGE_TAB, Atspi.Role.STATUS_BAR]
         return roles
 
     @staticmethod
     def get_tree_related_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider tree related"""
 
-        roles = [Atspi.Role.TREE,
-                 Atspi.Role.TREE_ITEM,
-                 Atspi.Role.TREE_TABLE]
+        roles = [Atspi.Role.TREE, Atspi.Role.TREE_ITEM, Atspi.Role.TREE_TABLE]
         return roles
 
     @staticmethod
     def get_widget_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider widgets"""
 
-        roles = [Atspi.Role.BUTTON,
-                 Atspi.Role.CHECK_BOX,
-                 Atspi.Role.COMBO_BOX,
-                 Atspi.Role.ENTRY,
-                 Atspi.Role.LIST_BOX,
-                 Atspi.Role.PASSWORD_TEXT,
-                 Atspi.Role.RADIO_BUTTON,
-                 Atspi.Role.SLIDER,
-                 Atspi.Role.SPIN_BUTTON,
-                 Atspi.Role.SWITCH,
-                 Atspi.Role.TEXT, # predicate recommended to check it is editable
-                 Atspi.Role.TOGGLE_BUTTON]
+        roles = [
+            Atspi.Role.BUTTON,
+            Atspi.Role.CHECK_BOX,
+            Atspi.Role.COMBO_BOX,
+            Atspi.Role.ENTRY,
+            Atspi.Role.LIST_BOX,
+            Atspi.Role.PASSWORD_TEXT,
+            Atspi.Role.RADIO_BUTTON,
+            Atspi.Role.SLIDER,
+            Atspi.Role.SPIN_BUTTON,
+            Atspi.Role.SWITCH,
+            Atspi.Role.TEXT,  # predicate recommended to check it is editable
+            Atspi.Role.TOGGLE_BUTTON,
+        ]
         return roles
 
     @staticmethod
@@ -605,8 +622,10 @@ class AXUtilitiesRole:
     def is_code(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the code or code-like role"""
 
-        return "code" in AXUtilitiesRole._get_xml_roles(obj) \
-            or AXUtilitiesRole._get_tag(obj) in ["code", "pre"]
+        return "code" in AXUtilitiesRole._get_xml_roles(obj) or AXUtilitiesRole._get_tag(obj) in [
+            "code",
+            "pre",
+        ]
 
     @staticmethod
     def is_color_chooser(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -660,9 +679,11 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.CONTENT_DELETION \
-                or "deletion" in AXUtilitiesRole._get_xml_roles(obj) \
-                or "del" == AXUtilitiesRole._get_tag(obj)
+        return (
+            role == Atspi.Role.CONTENT_DELETION
+            or "deletion" in AXUtilitiesRole._get_xml_roles(obj)
+            or "del" == AXUtilitiesRole._get_tag(obj)
+        )
 
     @staticmethod
     def is_content_insertion(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -670,9 +691,11 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.CONTENT_INSERTION \
-                or "insertion" in AXUtilitiesRole._get_xml_roles(obj) \
-                or "ins" == AXUtilitiesRole._get_tag(obj)
+        return (
+            role == Atspi.Role.CONTENT_INSERTION
+            or "insertion" in AXUtilitiesRole._get_xml_roles(obj)
+            or "ins" == AXUtilitiesRole._get_tag(obj)
+        )
 
     @staticmethod
     def is_date_editor(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -686,8 +709,9 @@ class AXUtilitiesRole:
     def is_default_button(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the push button role the is-default state"""
 
-        return AXUtilitiesRole.is_push_button(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.IS_DEFAULT)
+        return AXUtilitiesRole.is_push_button(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.IS_DEFAULT
+        )
 
     @staticmethod
     def is_definition(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -703,8 +727,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_LIST \
-            or "dl" == AXUtilitiesRole._get_tag(obj)
+        return role == Atspi.Role.DESCRIPTION_LIST or "dl" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_description_term(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -712,8 +735,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_TERM \
-            or "dt" == AXUtilitiesRole._get_tag(obj)
+        return role == Atspi.Role.DESCRIPTION_TERM or "dt" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_description_value(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -721,8 +743,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_VALUE \
-            or "dd" == AXUtilitiesRole._get_tag(obj)
+        return role == Atspi.Role.DESCRIPTION_VALUE or "dd" == AXUtilitiesRole._get_tag(obj)
 
     @staticmethod
     def is_desktop_frame(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1150,8 +1171,10 @@ class AXUtilitiesRole:
     def is_figure(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the figure role or tag."""
 
-        return "figure" in AXUtilitiesRole._get_xml_roles(obj) \
+        return (
+            "figure" in AXUtilitiesRole._get_xml_roles(obj)
             or AXUtilitiesRole._get_tag(obj) == "figure"
+        )
 
     @staticmethod
     def is_file_chooser(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1299,22 +1322,25 @@ class AXUtilitiesRole:
     def is_horizontal_scrollbar(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a horizontal scrollbar"""
 
-        return AXUtilitiesRole.is_scroll_bar(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.HORIZONTAL)
+        return AXUtilitiesRole.is_scroll_bar(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.HORIZONTAL
+        )
 
     @staticmethod
     def is_horizontal_separator(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a horizontal separator"""
 
-        return AXUtilitiesRole.is_separator(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.HORIZONTAL)
+        return AXUtilitiesRole.is_separator(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.HORIZONTAL
+        )
 
     @staticmethod
     def is_horizontal_slider(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a horizontal slider"""
 
-        return AXUtilitiesRole.is_slider(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.HORIZONTAL)
+        return AXUtilitiesRole.is_slider(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.HORIZONTAL
+        )
 
     @staticmethod
     def is_icon(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1446,9 +1472,7 @@ class AXUtilitiesRole:
         return "banner" in AXUtilitiesRole._get_xml_roles(obj)
 
     @staticmethod
-    def is_landmark_complementary(
-        obj: Atspi.Accessible, _role: Atspi.Role | None = None
-    ) -> bool:
+    def is_landmark_complementary(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the complementary landmark role"""
 
         return "complementary" in AXUtilitiesRole._get_xml_roles(obj)
@@ -1585,9 +1609,11 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.MARK \
-               or "mark" in AXUtilitiesRole._get_xml_roles(obj) \
-               or "mark" == AXUtilitiesRole._get_tag(obj)
+        return (
+            role == Atspi.Role.MARK
+            or "mark" in AXUtilitiesRole._get_xml_roles(obj)
+            or "mark" == AXUtilitiesRole._get_tag(obj)
+        )
 
     @staticmethod
     def is_marquee(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1626,9 +1652,7 @@ class AXUtilitiesRole:
         return role == Atspi.Role.MATH_FRACTION
 
     @staticmethod
-    def is_math_fraction_without_bar(
-        obj: Atspi.Accessible, role: Atspi.Role | None = None
-    ) -> bool:
+    def is_math_fraction_without_bar(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the math fraction role and lacks the fraction bar"""
 
         if not AXUtilitiesRole.is_math_fraction(obj, role):
@@ -1648,8 +1672,14 @@ class AXUtilitiesRole:
     def is_math_layout_only(obj: Atspi.Accessible) -> bool:
         """Returns True if obj has a layout-only math role"""
 
-        return AXUtilitiesRole._get_tag(obj) \
-            in ["mrow", "mstyle", "merror", "mpadded", "none", "semantics"]
+        return AXUtilitiesRole._get_tag(obj) in [
+            "mrow",
+            "mstyle",
+            "merror",
+            "mpadded",
+            "none",
+            "semantics",
+        ]
 
     @staticmethod
     def is_math_multi_script(obj: Atspi.Accessible) -> bool:
@@ -1665,46 +1695,48 @@ class AXUtilitiesRole:
             role = AXObject.get_role(obj)
         if role in [Atspi.Role.MATH, Atspi.Role.MATH_FRACTION, Atspi.Role.MATH_ROOT]:
             return True
-        return AXUtilitiesRole._get_tag(obj) in ["math",
-                                                 "maction",
-                                                 "maligngroup",
-                                                 "malignmark",
-                                                 "menclose",
-                                                 "merror",
-                                                 "mfenced",
-                                                 "mfrac",
-                                                 "mglyph",
-                                                 "mi",
-                                                 "mlabeledtr",
-                                                 "mlongdiv",
-                                                 "mmultiscripts",
-                                                 "mn",
-                                                 "mo",
-                                                 "mover",
-                                                 "mpadded",
-                                                 "mphantom",
-                                                 "mprescripts",
-                                                 "mroot",
-                                                 "mrow",
-                                                 "ms",
-                                                 "mscarries",
-                                                 "mscarry",
-                                                 "msgroup",
-                                                 "msline",
-                                                 "mspace",
-                                                 "msqrt",
-                                                 "msrow",
-                                                 "mstack",
-                                                 "mstyle",
-                                                 "msub",
-                                                 "msup",
-                                                 "msubsup",
-                                                 "mtable",
-                                                 "mtd",
-                                                 "mtext",
-                                                 "mtr",
-                                                 "munder",
-                                                 "munderover"]
+        return AXUtilitiesRole._get_tag(obj) in [
+            "math",
+            "maction",
+            "maligngroup",
+            "malignmark",
+            "menclose",
+            "merror",
+            "mfenced",
+            "mfrac",
+            "mglyph",
+            "mi",
+            "mlabeledtr",
+            "mlongdiv",
+            "mmultiscripts",
+            "mn",
+            "mo",
+            "mover",
+            "mpadded",
+            "mphantom",
+            "mprescripts",
+            "mroot",
+            "mrow",
+            "ms",
+            "mscarries",
+            "mscarry",
+            "msgroup",
+            "msline",
+            "mspace",
+            "msqrt",
+            "msrow",
+            "mstack",
+            "mstyle",
+            "msub",
+            "msup",
+            "msubsup",
+            "mtable",
+            "mtd",
+            "mtext",
+            "mtr",
+            "munder",
+            "munderover",
+        ]
 
     @staticmethod
     def is_math_root(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1796,15 +1828,17 @@ class AXUtilitiesRole:
     def is_modal_dialog(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the alert or dialog role and modal state"""
 
-        return AXUtilitiesRole.is_dialog_or_alert(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.MODAL)
+        return AXUtilitiesRole.is_dialog_or_alert(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.MODAL
+        )
 
     @staticmethod
     def is_multi_line_entry(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the entry role and multiline state"""
 
-        return AXUtilitiesRole.is_entry(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.MULTI_LINE)
+        return AXUtilitiesRole.is_entry(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.MULTI_LINE
+        )
 
     @staticmethod
     def is_notification(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2071,9 +2105,7 @@ class AXUtilitiesRole:
         return role == Atspi.Role.SUBSCRIPT
 
     @staticmethod
-    def is_subscript_or_superscript(
-        obj: Atspi.Accessible, role: Atspi.Role | None = None
-    ) -> bool:
+    def is_subscript_or_superscript(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the subscript or superscript role"""
 
         if role is None:
@@ -2096,8 +2128,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.SUGGESTION \
-              or "suggestion" in AXUtilitiesRole._get_xml_roles(obj)
+        return role == Atspi.Role.SUGGESTION or "suggestion" in AXUtilitiesRole._get_xml_roles(obj)
 
     @staticmethod
     def is_superscript(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2169,9 +2200,7 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_table_related(
-        obj: Atspi.Accessible,
-        role: Atspi.Role | None = None,
-        include_caption: bool = False
+        obj: Atspi.Accessible, role: Atspi.Role | None = None, include_caption: bool = False
     ) -> bool:
         """Returns True if obj has a table-related role"""
 
@@ -2336,8 +2365,9 @@ class AXUtilitiesRole:
     def is_time(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the time role"""
 
-        return "time" in AXUtilitiesRole._get_xml_roles(obj) \
-            or "time" == AXUtilitiesRole._get_tag(obj)
+        return "time" in AXUtilitiesRole._get_xml_roles(obj) or "time" == AXUtilitiesRole._get_tag(
+            obj
+        )
 
     @staticmethod
     def is_timer(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2399,9 +2429,7 @@ class AXUtilitiesRole:
     def is_tree_related(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has a tree-related role"""
 
-        roles = [Atspi.Role.TREE,
-                 Atspi.Role.TREE_ITEM,
-                 Atspi.Role.TREE_TABLE]
+        roles = [Atspi.Role.TREE, Atspi.Role.TREE_ITEM, Atspi.Role.TREE_TABLE]
         if role is None:
             role = AXObject.get_role(obj)
         return role in roles
@@ -2442,22 +2470,25 @@ class AXUtilitiesRole:
     def is_vertical_scrollbar(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a vertical scrollbar"""
 
-        return AXUtilitiesRole.is_scroll_bar(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.VERTICAL)
+        return AXUtilitiesRole.is_scroll_bar(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.VERTICAL
+        )
 
     @staticmethod
     def is_vertical_separator(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a vertical separator"""
 
-        return AXUtilitiesRole.is_separator(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.VERTICAL)
+        return AXUtilitiesRole.is_separator(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.VERTICAL
+        )
 
     @staticmethod
     def is_vertical_slider(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a vertical slider"""
 
-        return AXUtilitiesRole.is_slider(obj, role) \
-            and AXObject.has_state(obj, Atspi.StateType.VERTICAL)
+        return AXUtilitiesRole.is_slider(obj, role) and AXObject.has_state(
+            obj, Atspi.StateType.VERTICAL
+        )
 
     @staticmethod
     def is_video(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2511,12 +2542,14 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
 
-        roles = [Atspi.Role.COMBO_BOX,
-                 Atspi.Role.LIST_BOX,
-                 Atspi.Role.MENU,
-                 Atspi.Role.SPIN_BUTTON,
-                 Atspi.Role.TREE,
-                 Atspi.Role.TREE_TABLE]
+        roles = [
+            Atspi.Role.COMBO_BOX,
+            Atspi.Role.LIST_BOX,
+            Atspi.Role.MENU,
+            Atspi.Role.SPIN_BUTTON,
+            Atspi.Role.TREE,
+            Atspi.Role.TREE_TABLE,
+        ]
         if role in roles:
             return True
 
@@ -2526,10 +2559,12 @@ class AXUtilitiesRole:
         if not AXUtilitiesState.is_vertical(obj):
             return False
 
-        return role in [Atspi.Role.SCROLL_BAR,
-                        Atspi.Role.SEPARATOR,
-                        Atspi.Role.SLIDER,
-                        Atspi.Role.SPLIT_PANE]
+        return role in [
+            Atspi.Role.SCROLL_BAR,
+            Atspi.Role.SEPARATOR,
+            Atspi.Role.SLIDER,
+            Atspi.Role.SPLIT_PANE,
+        ]
 
     @staticmethod
     def is_window(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:

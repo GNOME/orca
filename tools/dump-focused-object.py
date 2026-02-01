@@ -29,8 +29,10 @@
 """Command-line tool to dump the focused object and its ancestors."""
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
+
 
 def as_string(obj):
     """Convert an accessible object to a string representation."""
@@ -39,10 +41,13 @@ def as_string(obj):
         help_text = Atspi.Accessible.get_help_text(obj)
     except GLib.GError as error:
         help_text = f"({error})"
-    return (f"{Atspi.Accessible.get_role(obj).value_name} "
-            f"name:'{get_name(obj)}' "
-            f"description:'{get_description(obj)}' "
-            f"help text: '{help_text}'")
+    return (
+        f"{Atspi.Accessible.get_role(obj).value_name} "
+        f"name:'{get_name(obj)}' "
+        f"description:'{get_description(obj)}' "
+        f"help text: '{help_text}'"
+    )
+
 
 def get_name(obj):
     """Get the name of an accessible object."""
@@ -60,6 +65,7 @@ def get_name(obj):
 
     return ""
 
+
 def get_description(obj):
     """Get the description of an accessible object."""
 
@@ -75,6 +81,7 @@ def get_description(obj):
         return " ".join([target.name for target in targets])
 
     return ""
+
 
 def on_event(e):
     """Handle focus events."""
@@ -102,6 +109,7 @@ def on_event(e):
         print("Exiting.")
         Atspi.event_quit()
 
+
 def main():
     """Starts the focus dumper and waits for events."""
 
@@ -109,6 +117,7 @@ def main():
     listener.register("object:state-changed:focused")
     print("Listening for focus events. Return focus to your terminal to exit.")
     Atspi.event_main()
+
 
 if __name__ == "__main__":
     main()

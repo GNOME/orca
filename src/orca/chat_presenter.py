@@ -51,6 +51,7 @@ if TYPE_CHECKING:
 
     from .scripts import default
 
+
 class Conversation:
     """Represents a conversation or chat room."""
 
@@ -197,8 +198,11 @@ class Chat:
         if not scroll_pane:
             return False
 
-        return AXUtilities.is_tree_or_tree_table(obj) \
-            or AXUtilities.is_list_box(obj) or AXUtilities.is_list(obj)
+        return (
+            AXUtilities.is_tree_or_tree_table(obj)
+            or AXUtilities.is_list_box(obj)
+            or AXUtilities.is_list(obj)
+        )
 
     def is_buddy_list(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is believed to be the buddy list."""
@@ -291,8 +295,11 @@ class Chat:
         if not AXUtilities.is_text(event.source):
             return False
 
-        if input_event_manager.get_manager().last_event_was_tab() \
-           and event.any_data and event.any_data != "\t":
+        if (
+            input_event_manager.get_manager().last_event_was_tab()
+            and event.any_data
+            and event.any_data != "\t"
+        ):
             return True
 
         return False
@@ -335,26 +342,26 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.CHAT_SPEAK_ROOM_NAME,
                 getter=presenter.get_speak_room_name,
                 setter=presenter.set_speak_room_name,
-                prefs_key="chatSpeakRoomName"
+                prefs_key="chatSpeakRoomName",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
                 getter=presenter.get_speak_room_name_last,
                 setter=presenter.set_speak_room_name_last,
                 prefs_key="presentChatRoomLast",
-                determine_sensitivity=presenter.get_speak_room_name
+                determine_sensitivity=presenter.get_speak_room_name,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
                 getter=presenter.get_announce_buddy_typing,
                 setter=presenter.set_announce_buddy_typing,
-                prefs_key="chatAnnounceBuddyTyping"
+                prefs_key="chatAnnounceBuddyTyping",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
                 getter=presenter.get_room_histories,
                 setter=presenter.set_room_histories,
-                prefs_key="chatRoomHistories"
+                prefs_key="chatRoomHistories",
             ),
             preferences_grid_base.SelectionPreferenceControl(
                 label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
@@ -362,7 +369,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=values,
                 getter=presenter.get_message_verbosity,
                 setter=presenter.set_message_verbosity,
-                prefs_key="chatMessageVerbosity"
+                prefs_key="chatMessageVerbosity",
             ),
         ]
 
@@ -390,16 +397,27 @@ class ChatPresenter:
         group_label = guilabels.KB_GROUP_CHAT
 
         commands_data = [
-            ("chat_toggle_room_name_prefix", self.toggle_prefix,
-             cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX),
-            ("chat_toggle_buddy_typing", self.toggle_buddy_typing,
-             cmdnames.CHAT_TOGGLE_BUDDY_TYPING),
-            ("chat_toggle_message_histories", self.toggle_message_histories,
-             cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES),
-            ("chat_previous_message", self.present_previous_message,
-             cmdnames.CHAT_PREVIOUS_MESSAGE),
-            ("chat_next_message", self.present_next_message,
-             cmdnames.CHAT_NEXT_MESSAGE),
+            (
+                "chat_toggle_room_name_prefix",
+                self.toggle_prefix,
+                cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX,
+            ),
+            (
+                "chat_toggle_buddy_typing",
+                self.toggle_buddy_typing,
+                cmdnames.CHAT_TOGGLE_BUDDY_TYPING,
+            ),
+            (
+                "chat_toggle_message_histories",
+                self.toggle_message_histories,
+                cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES,
+            ),
+            (
+                "chat_previous_message",
+                self.present_previous_message,
+                cmdnames.CHAT_PREVIOUS_MESSAGE,
+            ),
+            ("chat_next_message", self.present_next_message, cmdnames.CHAT_NEXT_MESSAGE),
         ]
 
         for name, function, description in commands_data:
@@ -423,18 +441,17 @@ class ChatPresenter:
         return ChatPreferencesGrid(self)
 
     def utter_message(
-        self,
-        script: default.Script,
-        room_name: str,
-        message: str,
-        focused: bool = True
+        self, script: default.Script, room_name: str, message: str, focused: bool = True
     ) -> None:
         """Speak/braille a chat room message, taking user settings into account."""
 
         verbosity = self.get_message_verbosity(script.app)
         active_script = script_manager.get_manager().get_active_script()
-        if active_script is not None and active_script.name != script.name \
-           and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED:
+        if (
+            active_script is not None
+            and active_script.name != script.name
+            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED
+        ):
             return
         if not focused and verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL:
             return
@@ -513,10 +530,7 @@ class ChatPresenter:
         return False
 
     def _present_typing_status_change(
-        self,
-        script: default.Script,
-        event: Atspi.Event,
-        status: str
+        self, script: default.Script, event: Atspi.Event, status: str
     ) -> bool:
         """Presents a change in typing status for the current conversation."""
 
@@ -538,12 +552,18 @@ class ChatPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Navigate to and present the previous chat message in the history."""
 
-        tokens = ["CHAT PRESENTER: present_previous_message. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CHAT PRESENTER: present_previous_message. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         chat = script.chat
@@ -579,12 +599,18 @@ class ChatPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Navigate to and present the next chat message in the history."""
 
-        tokens = ["CHAT PRESENTER: present_next_message. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CHAT PRESENTER: present_next_message. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         chat = script.chat
@@ -693,12 +719,18 @@ class ChatPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles whether we prefix chat room messages with the name of the chat room."""
 
-        tokens = ["CHAT PRESENTER: toggle_prefix. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CHAT PRESENTER: toggle_prefix. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         line = messages.CHAT_ROOM_NAME_PREFIX_ON
@@ -715,12 +747,18 @@ class ChatPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles whether we announce when our buddies are typing a message."""
 
-        tokens = ["CHAT PRESENTER: toggle_buddy_typing. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CHAT PRESENTER: toggle_buddy_typing. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         line = messages.CHAT_BUDDY_TYPING_ON
@@ -737,12 +775,18 @@ class ChatPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles whether we provide chat room specific message histories."""
 
-        tokens = ["CHAT PRESENTER: toggle_message_histories. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "CHAT PRESENTER: toggle_message_histories. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         line = messages.CHAT_SEPARATE_HISTORIES_ON

@@ -47,10 +47,12 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from .scripts import default
+
 
 class WhereAmIPresenter:
     """Module for commands related to the current accessible object."""
@@ -200,12 +202,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the font and formatting details for the current character."""
 
-        tokens = ["WHERE AM I PRESENTER: present_character_attributes. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_character_attributes. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -213,9 +221,15 @@ class WhereAmIPresenter:
 
         # Get a dictionary of text attributes that the user cares about, falling back on the
         # default presentable attributes if the user has not specified any.
-        attr_list = list(filter(None, map(
-            AXTextAttribute.from_string,
-            text_attribute_manager.get_manager().get_attributes_to_speak())))
+        attr_list = list(
+            filter(
+                None,
+                map(
+                    AXTextAttribute.from_string,
+                    text_attribute_manager.get_manager().get_attributes_to_speak(),
+                ),
+            )
+        )
         if not attr_list:
             attr_list = AXText.get_all_supported_text_attributes()
 
@@ -232,12 +246,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the size and position of the current object."""
 
-        tokens = ["WHERE AM I PRESENTER: present_size_and_position. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_size_and_position. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if flat_review_presenter.get_presenter().is_active():
@@ -262,12 +282,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the title of the current window."""
 
-        tokens = ["WHERE AM I PRESENTER: present_title. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_title. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -279,7 +305,7 @@ class WhereAmIPresenter:
             return True
 
         title = script.speech_generator.generate_window_title(obj)
-        for (string, voice) in title:
+        for string, voice in title:
             script.present_message(string, voice=voice)
         return True
 
@@ -289,12 +315,18 @@ class WhereAmIPresenter:
         script: default.Script,
         event: input_event.InputEvent | None = None,
         dialog: Atspi.Accessible | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the default button of the current dialog."""
 
-        tokens = ["WHERE AM I PRESENTER: present_default_button. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_default_button. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -324,12 +356,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the formula associated with the current spreadsheet cell."""
 
-        tokens = ["WHERE AM I PRESENTER: present_cell_formula. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_cell_formula. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -352,12 +390,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the status bar and info bar of the current window."""
 
-        tokens = ["WHERE AM I PRESENTER: present_status_bar. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_status_bar. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -382,12 +426,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents details about the current link."""
 
-        tokens = ["WHERE AM I PRESENTER: present_link. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_link. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         link = focus_manager.get_manager().get_locus_of_focus()
@@ -428,12 +478,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the selected text."""
 
-        tokens = ["WHERE AM I PRESENTER: present_selected_text. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_selected_text. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -458,12 +514,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents the selected text or selected objects."""
 
-        tokens = ["WHERE AM I PRESENTER: present_selection. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: present_selection. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -501,7 +563,7 @@ class WhereAmIPresenter:
         script: default.Script,
         basic_only: bool = True,
         obj: Atspi.Accessible | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents details about the current location at the specified level."""
 
@@ -532,8 +594,9 @@ class WhereAmIPresenter:
                 return AXUtilities.is_table_cell_or_header(x) or AXUtilities.is_list_item(x)
 
             ancestor = AXObject.find_ancestor(acc, pred)
-            if ancestor is not None \
-              and not AXUtilities.is_layout_only(AXObject.get_parent(ancestor)):
+            if ancestor is not None and not AXUtilities.is_layout_only(
+                AXObject.get_parent(ancestor)
+            ):
                 acc = ancestor
 
             return acc
@@ -545,7 +608,8 @@ class WhereAmIPresenter:
             forceMnemonic=True,
             forceList=True,
             forceTutorial=True,
-            speechOnly=True)
+            speechOnly=True,
+        )
 
         return True
 
@@ -554,12 +618,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents basic information about the current location."""
 
-        tokens = ["WHERE AM I PRESENTER: where_am_i_basic. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: where_am_i_basic. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._do_where_am_i(script, notify_user=notify_user)
 
@@ -568,12 +638,18 @@ class WhereAmIPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Presents detailed information about the current location."""
 
-        tokens = ["WHERE AM I PRESENTER: where_am_i_detailed. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "WHERE AM I PRESENTER: where_am_i_detailed. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # TODO - JD: For some reason, we are starting the basic where am I
@@ -583,7 +659,10 @@ class WhereAmIPresenter:
         script.interrupt_presentation()
         return self._do_where_am_i(script, False, notify_user=notify_user)
 
+
 _presenter = WhereAmIPresenter()
+
+
 def get_presenter() -> WhereAmIPresenter:
     """Returns the Where Am I Presenter"""
 

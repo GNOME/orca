@@ -40,8 +40,10 @@ from .script_utilities import Utilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(web.Script, gtk.Script):
     """Custom script for WebKitGTK."""
@@ -64,7 +66,7 @@ class Script(web.Script, gtk.Script):
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 
@@ -81,8 +83,11 @@ class Script(web.Script, gtk.Script):
         if super().on_active_changed(event):
             return True
 
-        if event.detail1 and AXUtilities.is_frame(event.source) \
-           and not AXUtilities.can_be_active_window(event.source):
+        if (
+            event.detail1
+            and AXUtilities.is_frame(event.source)
+            and not AXUtilities.can_be_active_window(event.source)
+        ):
             return True
 
         msg = "WEBKITGTK: Passing along event to gtk script"

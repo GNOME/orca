@@ -28,6 +28,7 @@ from __future__ import annotations
 from typing import Any, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -36,6 +37,7 @@ from orca import speech_generator
 
 if TYPE_CHECKING:
     from . import script
+
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Produces speech presentation for accessible objects."""
@@ -52,6 +54,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             tokens = [f"PIDGIN SPEECH GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     @log_generator_output

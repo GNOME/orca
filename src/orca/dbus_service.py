@@ -30,7 +30,6 @@
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
-
 import enum
 import inspect
 from typing import Callable
@@ -43,7 +42,8 @@ from dasbus.server.publishable import Publishable
 from gi.repository import GLib
 
 from . import debug
-from . import orca_platform # pylint: disable=no-name-in-module
+from . import orca_platform  # pylint: disable=no-name-in-module
+
 
 class HandlerType(enum.Enum):
     """Enumeration of handler types for D-Bus methods."""
@@ -52,6 +52,7 @@ class HandlerType(enum.Enum):
     PARAMETERIZED_COMMAND = enum.auto()
     GETTER = enum.auto()
     SETTER = enum.auto()
+
 
 def command(func):
     """Decorator to mark a method as a D-Bus command using its docstring.
@@ -65,6 +66,7 @@ def command(func):
     description = func.__doc__ or f"D-Bus command: {func.__name__}"
     func.dbus_command_description = description
     return func
+
 
 def parameterized_command(func):
     """Decorator to mark a method as a D-Bus parameterized command using its docstring.
@@ -86,6 +88,7 @@ def parameterized_command(func):
     func.dbus_parameterized_command_description = description
     return func
 
+
 def getter(func):
     """Decorator to mark a method as a D-Bus getter using its docstring.
 
@@ -98,6 +101,7 @@ def getter(func):
     description = func.__doc__ or f"D-Bus getter: {func.__name__}"
     func.dbus_getter_description = description
     return func
+
 
 def setter(func):
     """Decorator to mark a method as a D-Bus setter using its docstring.
@@ -145,7 +149,7 @@ class _HandlerInfo:
         description: str,
         action: Callable[..., bool],
         handler_type: HandlerType = HandlerType.COMMAND,
-        parameters: list[tuple[str, str]] | None = None
+        parameters: list[tuple[str, str]] | None = None,
     ):
         self.python_function_name: str = python_function_name
         self.description: str = description
@@ -158,9 +162,7 @@ class _HandlerInfo:
 class OrcaModuleDBusInterface(Publishable):
     """A D-Bus interface representing a specific Orca module (e.g., a manager)."""
 
-    def __init__(self,
-                 module_name: str,
-                 handlers_info: list[_HandlerInfo]):
+    def __init__(self, module_name: str, handlers_info: list[_HandlerInfo]):
         super().__init__()
         self._module_name = module_name
         self._commands: dict[str, _HandlerInfo] = {}
@@ -188,7 +190,7 @@ class OrcaModuleDBusInterface(Publishable):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def ExecuteRuntimeGetter(self, getter_name: str) -> GLib.Variant: # pylint: disable=invalid-name
+    def ExecuteRuntimeGetter(self, getter_name: str) -> GLib.Variant:  # pylint: disable=invalid-name
         """Executes the named getter returning the value as a GLib.Variant for D-Bus marshalling."""
 
         handler_info = self._getters.get(getter_name)
@@ -202,7 +204,7 @@ class OrcaModuleDBusInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return self._to_variant(result)
 
-    def ExecuteRuntimeSetter(self, setter_name: str, value: GLib.Variant) -> bool: # pylint: disable=invalid-name
+    def ExecuteRuntimeSetter(self, setter_name: str, value: GLib.Variant) -> bool:  # pylint: disable=invalid-name
         """Executes the named setter, returning True if succeeded."""
 
         handler_info = self._setters.get(setter_name)
@@ -217,7 +219,7 @@ class OrcaModuleDBusInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def ListCommands(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
+    def ListCommands(self) -> list[tuple[str, str]]:  # pylint: disable=invalid-name
         """Returns a list of (command_name, description) for this module (commands only)."""
 
         command_list = []
@@ -235,7 +237,7 @@ class OrcaModuleDBusInterface(Publishable):
             command_list.append((camel_case_name, info.description, info.parameters))
         return command_list
 
-    def ListRuntimeGetters(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
+    def ListRuntimeGetters(self) -> list[tuple[str, str]]:  # pylint: disable=invalid-name
         """Returns a list of (getter_name, description) for this module."""
 
         getter_list = []
@@ -243,7 +245,7 @@ class OrcaModuleDBusInterface(Publishable):
             getter_list.append((camel_case_name, info.description))
         return getter_list
 
-    def ListRuntimeSetters(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
+    def ListRuntimeSetters(self) -> list[tuple[str, str]]:  # pylint: disable=invalid-name
         """Returns a list of (setter_name, description) for this module."""
 
         setter_list = []
@@ -251,7 +253,7 @@ class OrcaModuleDBusInterface(Publishable):
             setter_list.append((camel_case_name, info.description))
         return setter_list
 
-    def ExecuteCommand(self, command_name: str, notify_user: bool) -> bool: # pylint: disable=invalid-name
+    def ExecuteCommand(self, command_name: str, notify_user: bool) -> bool:  # pylint: disable=invalid-name
         """Executes the named command and returns True if the command succeeded."""
 
         if command_name not in self._commands:
@@ -270,11 +272,8 @@ class OrcaModuleDBusInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def ExecuteParameterizedCommand( # pylint: disable=invalid-name
-        self,
-        command_name: str,
-        parameters: dict[str, GLib.Variant],
-        notify_user: bool
+    def ExecuteParameterizedCommand(  # pylint: disable=invalid-name
+        self, command_name: str, parameters: dict[str, GLib.Variant], notify_user: bool
     ) -> GLib.Variant:
         """Executes the named command with parameters and returns the result."""
 
@@ -299,12 +298,11 @@ class OrcaModuleDBusInterface(Publishable):
     def for_publication(self):
         """Returns the D-Bus interface XML for publication."""
 
-        return self.__dbus_xml__ # pylint: disable=no-member
+        return self.__dbus_xml__  # pylint: disable=no-member
 
     @staticmethod
     def _normalize_handler_name(
-        function_name: str,
-        handler_type: HandlerType = HandlerType.COMMAND
+        function_name: str, handler_type: HandlerType = HandlerType.COMMAND
     ) -> str:
         """Normalizes a Python function name for D-Bus exposure (getter/setter/command)."""
 
@@ -327,8 +325,7 @@ class OrcaModuleDBusInterface(Publishable):
         if isinstance(result, str):
             return GLib.Variant("s", result)
         if isinstance(result, dict):
-            return GLib.Variant(
-                "a{sv}", {str(k): GLib.Variant("v", v) for k, v in result.items()})
+            return GLib.Variant("a{sv}", {str(k): GLib.Variant("v", v) for k, v in result.items()})
         if isinstance(result, (list, tuple)):
             if all(isinstance(x, str) for x in result):
                 return GLib.Variant("as", list(result))
@@ -367,7 +364,7 @@ class OrcaDBusServiceInterface(Publishable):
         module_name: str,
         handlers_info: list[_HandlerInfo],
         bus: SessionMessageBus,
-        object_path_base: str
+        object_path_base: str,
     ) -> None:
         """Creates and prepares a D-Bus interface for an Orca module."""
 
@@ -395,10 +392,7 @@ class OrcaDBusServiceInterface(Publishable):
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     def remove_module_interface(
-        self,
-        module_name: str,
-        bus: SessionMessageBus,
-        object_path_base: str
+        self, module_name: str, bus: SessionMessageBus, object_path_base: str
     ) -> bool:
         """Removes and unpublishes a D-Bus interface for an Orca module."""
 
@@ -419,12 +413,12 @@ class OrcaDBusServiceInterface(Publishable):
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-    def ListModules(self) -> list[str]: # pylint: disable=invalid-name
+    def ListModules(self) -> list[str]:  # pylint: disable=invalid-name
         """Returns a list of registered module names."""
 
         return list(self._registered_modules)
 
-    def ListCommands(self) -> list[tuple[str, str]]: # pylint: disable=invalid-name
+    def ListCommands(self) -> list[tuple[str, str]]:  # pylint: disable=invalid-name
         """Returns available commands on the main service interface."""
 
         commands = []
@@ -432,13 +426,14 @@ class OrcaDBusServiceInterface(Publishable):
             if not attr_name.startswith("_") and attr_name[0].isupper():
                 attr = getattr(self, attr_name)
                 if callable(attr) and hasattr(attr, "__doc__"):
-                    description = (attr.__doc__.strip() if attr.__doc__
-                                 else f"Service command: {attr_name}")
+                    description = (
+                        attr.__doc__.strip() if attr.__doc__ else f"Service command: {attr_name}"
+                    )
                     commands.append((attr_name, description))
 
         return sorted(commands)
 
-    def ShowPreferences(self) -> bool: # pylint: disable=invalid-name
+    def ShowPreferences(self) -> bool:  # pylint: disable=invalid-name
         """Shows Orca's preferences GUI."""
 
         from . import script_manager  # pylint: disable=import-outside-toplevel
@@ -456,7 +451,7 @@ class OrcaDBusServiceInterface(Publishable):
         script.show_preferences_gui()
         return True
 
-    def PresentMessage(self, message: str) -> bool: # pylint: disable=invalid-name
+    def PresentMessage(self, message: str) -> bool:  # pylint: disable=invalid-name
         """Presents message to the user."""
 
         from . import script_manager  # pylint: disable=import-outside-toplevel
@@ -474,7 +469,7 @@ class OrcaDBusServiceInterface(Publishable):
         script.present_message(message)
         return True
 
-    def GetVersion(self) -> str: # pylint: disable=invalid-name
+    def GetVersion(self) -> str:  # pylint: disable=invalid-name
         """Returns Orca's version and revision if available."""
 
         result = orca_platform.version
@@ -485,7 +480,7 @@ class OrcaDBusServiceInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def Quit(self) -> bool: # pylint: disable=invalid-name
+    def Quit(self) -> bool:  # pylint: disable=invalid-name
         """Quits Orca. Returns True if the quit request was accepted."""
 
         msg = "DBUS SERVICE: Quit called."
@@ -521,6 +516,7 @@ class OrcaDBusServiceInterface(Publishable):
                 msg = f"DBUS SERVICE: Error unpublishing interface for {module_name}: {e}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
         self._registered_modules.clear()
+
 
 class OrcaRemoteController:
     """Manages Orca's D-Bus service for remote control."""
@@ -581,8 +577,7 @@ class OrcaRemoteController:
 
         self._is_running = True
         msg = (
-            f"REMOTE CONTROLLER: Service started name={self.SERVICE_NAME} "
-            f"path={self.OBJECT_PATH}."
+            f"REMOTE CONTROLLER: Service started name={self.SERVICE_NAME} path={self.OBJECT_PATH}."
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._process_pending_registrations()
@@ -646,6 +641,7 @@ class OrcaRemoteController:
             # Command
             if callable(attr) and hasattr(attr, "dbus_command_description"):
                 description = attr.dbus_command_description
+
                 def _create_wrapper(method=attr):
                     def _wrapper(notify_user):
                         event = input_event.RemoteControllerEvent()
@@ -657,18 +653,21 @@ class OrcaRemoteController:
                         # events just like any others, rather than have the caller here.
                         input_event_manager.get_manager().process_remote_controller_event(event)
                         return rv
+
                     return _wrapper
+
                 handler_info = _HandlerInfo(
                     python_function_name=attr_name,
                     description=description,
                     action=_create_wrapper(),
-                    handler_type=HandlerType.COMMAND
+                    handler_type=HandlerType.COMMAND,
                 )
                 handlers_info.append(handler_info)
                 commands_count += 1
             # Parameterized Command
             elif callable(attr) and hasattr(attr, "dbus_parameterized_command_description"):
                 description = attr.dbus_parameterized_command_description
+
                 def _create_parameterized_wrapper(method=attr):
                     def _wrapper(**kwargs):
                         event = input_event.RemoteControllerEvent()
@@ -680,43 +679,51 @@ class OrcaRemoteController:
                         # events just like any others, rather than have the caller here.
                         input_event_manager.get_manager().process_remote_controller_event(event)
                         return rv
+
                     return _wrapper
+
                 handler_info = _HandlerInfo(
                     python_function_name=attr_name,
                     description=description,
                     action=_create_parameterized_wrapper(),
                     handler_type=HandlerType.PARAMETERIZED_COMMAND,
-                    parameters=_extract_function_parameters(attr)
+                    parameters=_extract_function_parameters(attr),
                 )
                 handlers_info.append(handler_info)
                 commands_count += 1
             # Getter
             elif callable(attr) and hasattr(attr, "dbus_getter_description"):
                 description = attr.dbus_getter_description
+
                 def _create_getter_wrapper(method=attr):
                     def _wrapper(_notify_user=None):
                         return method()
+
                     return _wrapper
+
                 handler_info = _HandlerInfo(
                     python_function_name=attr_name,
                     description=description,
                     action=_create_getter_wrapper(),
-                    handler_type=HandlerType.GETTER
+                    handler_type=HandlerType.GETTER,
                 )
                 handlers_info.append(handler_info)
                 getters_count += 1
             # Setter
             elif callable(attr) and hasattr(attr, "dbus_setter_description"):
                 description = attr.dbus_setter_description
+
                 def _create_setter_wrapper(method=attr):
                     def _wrapper(value):
                         return method(value)
+
                     return _wrapper
+
                 handler_info = _HandlerInfo(
                     python_function_name=attr_name,
                     description=description,
                     action=_create_setter_wrapper(),
-                    handler_type=HandlerType.SETTER
+                    handler_type=HandlerType.SETTER,
                 )
                 handlers_info.append(handler_info)
                 setters_count += 1
@@ -730,7 +737,8 @@ class OrcaRemoteController:
         self._total_modules += 1
 
         self._dbus_service_interface.add_module_interface(
-            module_name, handlers_info, self._bus, self.OBJECT_PATH)
+            module_name, handlers_info, self._bus, self.OBJECT_PATH
+        )
         msg = (
             f"REMOTE CONTROLLER: Successfully registered {len(handlers_info)} "
             f"commands/getters/setters for module {module_name}."
@@ -755,7 +763,8 @@ class OrcaRemoteController:
             return False
 
         return self._dbus_service_interface.remove_module_interface(
-            module_name, self._bus, self.OBJECT_PATH)
+            module_name, self._bus, self.OBJECT_PATH
+        )
 
     def shutdown(self) -> None:
         """Shuts down the D-Bus service."""
@@ -829,7 +838,9 @@ class OrcaRemoteController:
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+
 _remote_controller: OrcaRemoteController = OrcaRemoteController()
+
 
 def get_remote_controller() -> OrcaRemoteController:
     """Returns the OrcaRemoteController singleton."""

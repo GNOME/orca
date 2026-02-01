@@ -767,27 +767,6 @@ MODULE_CONFIG = {
         "toggle_commands": [],
         "skip": [],
     },
-    "SoundPresenter": {
-        "commands": [],
-        "parameterized_commands": [],
-        "getters": [
-            "BeepProgressBarUpdates",
-            "ProgressBarBeepInterval",
-            "ProgressBarBeepVerbosity",
-            "SoundIsEnabled",
-            "SoundVolume",
-        ],
-        "setters": [
-            "BeepProgressBarUpdates",
-            "ProgressBarBeepInterval",
-            "ProgressBarBeepVerbosity",
-            "SoundIsEnabled",
-            "SoundVolume",
-        ],
-        "ui_commands": [],
-        "toggle_commands": [],
-        "skip": [],
-    },
 }
 
 PARAMETERIZED_TEST_PARAMS = {

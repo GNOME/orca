@@ -19,8 +19,7 @@
 
 """A dictionary that maps key events into localized descriptions."""
 
-
-from .orca_i18n import _, C_ # pylint: disable=import-error
+from .orca_i18n import _, C_  # pylint: disable=import-error
 
 # Contains keyboard-label:presentable-name pairs
 _keynames: dict[str, str] = {}
@@ -240,6 +239,7 @@ def get_key_name(key: str) -> str | None:
 
     return _keynames.get(key)
 
+
 def localize_key_sequence(keys: str) -> str:
     """Localizes key sequences such as 'Shift Control A'."""
 
@@ -249,6 +249,7 @@ def localize_key_sequence(keys: str) -> str:
         keys = keys.replace(key, key_name)
 
     return keys
+
 
 def get_click_count_string(count: int) -> str:
     """Returns a human-consumable string representing the number of clicks."""

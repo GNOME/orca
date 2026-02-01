@@ -45,6 +45,7 @@ from enum import Enum
 from typing import Any, Callable, Iterable, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -80,12 +81,14 @@ if TYPE_CHECKING:
     from .scripts import default
     from .speechserver import SpeechServer
 
+
 class CapitalizationStyle(Enum):
     """Capitalization style enumeration with string values from settings."""
 
     NONE = settings.CAPITALIZATION_STYLE_NONE
     SPELL = settings.CAPITALIZATION_STYLE_SPELL
     ICON = settings.CAPITALIZATION_STYLE_ICON
+
 
 class PunctuationStyle(Enum):
     """Punctuation style enumeration with int values from settings."""
@@ -101,6 +104,7 @@ class PunctuationStyle(Enum):
 
         return self.name.lower()
 
+
 class VerbosityLevel(Enum):
     """Verbosity level enumeration with int values from settings."""
 
@@ -113,6 +117,7 @@ class VerbosityLevel(Enum):
 
         return self.name.lower()
 
+
 @dataclass(frozen=True)
 class SpeechPreference:
     """Descriptor for a single preference."""
@@ -121,6 +126,7 @@ class SpeechPreference:
     label: str
     getter: Callable[[], bool]
     setter: Callable[[bool], bool]
+
 
 class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Container Announcements preferences page."""
@@ -138,42 +144,42 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=announcements_prefs[0].getter,
                 setter=announcements_prefs[0].setter,
                 prefs_key=announcements_prefs[0].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING
+                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=announcements_prefs[1].label,
                 getter=announcements_prefs[1].getter,
                 setter=announcements_prefs[1].setter,
                 prefs_key=announcements_prefs[1].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING
+                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=announcements_prefs[2].label,
                 getter=announcements_prefs[2].getter,
                 setter=announcements_prefs[2].setter,
                 prefs_key=announcements_prefs[2].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING
+                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=announcements_prefs[3].label,
                 getter=announcements_prefs[3].getter,
                 setter=announcements_prefs[3].setter,
                 prefs_key=announcements_prefs[3].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING
+                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=announcements_prefs[4].label,
                 getter=announcements_prefs[4].getter,
                 setter=announcements_prefs[4].setter,
                 prefs_key=announcements_prefs[4].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING
+                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=announcements_prefs[5].label,
                 getter=announcements_prefs[5].getter,
                 setter=announcements_prefs[5].setter,
                 prefs_key=announcements_prefs[5].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING
+                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
             ),
         ]
 
@@ -189,7 +195,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_SPEAK_UPDATES,
                 getter=manager.get_speak_progress_bar_updates,
                 setter=manager.set_speak_progress_bar_updates,
-                prefs_key="speakProgressBarUpdates"
+                prefs_key="speakProgressBarUpdates",
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
@@ -197,7 +203,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=manager.set_progress_bar_speech_interval,
                 prefs_key="progressBarSpeechInterval",
                 minimum=0,
-                maximum=100
+                maximum=100,
             ),
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.GENERAL_APPLIES_TO,
@@ -213,7 +219,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     settings.PROGRESS_BAR_ALL,
                     settings.PROGRESS_BAR_APPLICATION,
                     settings.PROGRESS_BAR_WINDOW,
-                ]
+                ],
             ),
         ]
 
@@ -261,7 +267,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             getter=object_details_prefs[0].getter,
             setter=object_details_prefs[0].setter,
             prefs_key=object_details_prefs[0].prefs_key,
-            member_of=guilabels.SPEECH_OBJECT_DETAILS
+            member_of=guilabels.SPEECH_OBJECT_DETAILS,
         )
 
         self._enable_indentation_control = preferences_grid_base.BooleanPreferenceControl(
@@ -270,7 +276,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             setter=text_speak_indentation.setter,
             prefs_key=text_speak_indentation.prefs_key,
             member_of=guilabels.SPEECH_OBJECT_DETAILS,
-            determine_sensitivity=self._only_speak_displayed_text_is_off
+            determine_sensitivity=self._only_speak_displayed_text_is_off,
         )
 
         controls = [
@@ -279,14 +285,14 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=general_prefs[0].getter,
                 setter=general_prefs[0].setter,
                 prefs_key=general_prefs[0].prefs_key,
-                member_of=guilabels.GENERAL
+                member_of=guilabels.GENERAL,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=manager._get_verbosity_is_verbose,
                 setter=manager._set_verbosity_from_bool,
                 prefs_key="speechVerbosityLevel",
-                member_of=guilabels.GENERAL
+                member_of=guilabels.GENERAL,
             ),
             self._only_speak_displayed_control,
             preferences_grid_base.BooleanPreferenceControl(
@@ -295,7 +301,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=object_details_prefs[1].setter,
                 prefs_key=object_details_prefs[1].prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=object_details_prefs[2].label,
@@ -303,7 +309,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=object_details_prefs[2].setter,
                 prefs_key=object_details_prefs[2].prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=object_details_prefs[3].label,
@@ -311,7 +317,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=object_details_prefs[3].setter,
                 prefs_key=object_details_prefs[3].prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=object_details_prefs[4].label,
@@ -319,7 +325,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=object_details_prefs[4].setter,
                 prefs_key=object_details_prefs[4].prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=text_speak_blank_lines.label,
@@ -327,7 +333,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=text_speak_blank_lines.setter,
                 prefs_key=text_speak_blank_lines.prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=text_speak_misspelled.label,
@@ -335,7 +341,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=text_speak_misspelled.setter,
                 prefs_key=text_speak_misspelled.prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             self._enable_indentation_control,
             preferences_grid_base.BooleanPreferenceControl(
@@ -344,7 +350,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=text_indentation_only_if_changed.setter,
                 prefs_key=text_indentation_only_if_changed.prefs_key,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._indentation_enabled
+                determine_sensitivity=self._indentation_enabled,
             ),
         ]
 
@@ -427,56 +433,56 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=table_gui_rows.getter,
                 setter=table_gui_rows.setter,
                 prefs_key=table_gui_rows.prefs_key,
-                member_of=guilabels.TABLE_ROW_NAVIGATION
+                member_of=guilabels.TABLE_ROW_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_doc_rows.label,
                 getter=table_doc_rows.getter,
                 setter=table_doc_rows.setter,
                 prefs_key=table_doc_rows.prefs_key,
-                member_of=guilabels.TABLE_ROW_NAVIGATION
+                member_of=guilabels.TABLE_ROW_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_spreadsheet_rows.label,
                 getter=table_spreadsheet_rows.getter,
                 setter=table_spreadsheet_rows.setter,
                 prefs_key=table_spreadsheet_rows.prefs_key,
-                member_of=guilabels.TABLE_ROW_NAVIGATION
+                member_of=guilabels.TABLE_ROW_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_cell_headers.label,
                 getter=table_cell_headers.getter,
                 setter=table_cell_headers.setter,
                 prefs_key=table_cell_headers.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION
+                member_of=guilabels.TABLE_CELL_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_cell_coords.label,
                 getter=table_cell_coords.getter,
                 setter=table_cell_coords.setter,
                 prefs_key=table_cell_coords.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION
+                member_of=guilabels.TABLE_CELL_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_spreadsheet_coords.label,
                 getter=table_spreadsheet_coords.getter,
                 setter=table_spreadsheet_coords.setter,
                 prefs_key=table_spreadsheet_coords.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION
+                member_of=guilabels.TABLE_CELL_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_cell_span.label,
                 getter=table_cell_span.getter,
                 setter=table_cell_span.setter,
                 prefs_key=table_cell_span.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION
+                member_of=guilabels.TABLE_CELL_NAVIGATION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=table_selected_range.label,
                 getter=table_selected_range.getter,
                 setter=table_selected_range.setter,
                 prefs_key=table_selected_range.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION
+                member_of=guilabels.TABLE_CELL_NAVIGATION,
             ),
         ]
 
@@ -560,42 +566,52 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row = 0
 
         self._global_frame, global_content = self._create_frame(
-            guilabels.VOICE_GLOBAL_VOICE_SETTINGS, margin_top=12)
+            guilabels.VOICE_GLOBAL_VOICE_SETTINGS, margin_top=12
+        )
 
         punctuation_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
-        punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_NONE, settings.PUNCTUATION_STYLE_NONE])
-        punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_SOME, settings.PUNCTUATION_STYLE_SOME])
-        punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_MOST, settings.PUNCTUATION_STYLE_MOST])
-        punctuation_model.append([
-            guilabels.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_ALL])
+        punctuation_model.append(
+            [guilabels.PUNCTUATION_STYLE_NONE, settings.PUNCTUATION_STYLE_NONE]
+        )
+        punctuation_model.append(
+            [guilabels.PUNCTUATION_STYLE_SOME, settings.PUNCTUATION_STYLE_SOME]
+        )
+        punctuation_model.append(
+            [guilabels.PUNCTUATION_STYLE_MOST, settings.PUNCTUATION_STYLE_MOST]
+        )
+        punctuation_model.append([guilabels.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_ALL])
 
         capitalization_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
-        capitalization_model.append([
-            guilabels.CAPITALIZATION_STYLE_NONE, settings.CAPITALIZATION_STYLE_NONE])
-        capitalization_model.append([
-            guilabels.CAPITALIZATION_STYLE_ICON, settings.CAPITALIZATION_STYLE_ICON])
-        capitalization_model.append([
-            guilabels.CAPITALIZATION_STYLE_SPELL, settings.CAPITALIZATION_STYLE_SPELL])
+        capitalization_model.append(
+            [guilabels.CAPITALIZATION_STYLE_NONE, settings.CAPITALIZATION_STYLE_NONE]
+        )
+        capitalization_model.append(
+            [guilabels.CAPITALIZATION_STYLE_ICON, settings.CAPITALIZATION_STYLE_ICON]
+        )
+        capitalization_model.append(
+            [guilabels.CAPITALIZATION_STYLE_SPELL, settings.CAPITALIZATION_STYLE_SPELL]
+        )
 
         global_listbox = preferences_grid_base.FocusManagedListBox()
         combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
         row_data = [
-            (guilabels.VOICE_SPEECH_SYSTEM,
-             Gtk.ListStore(GObject.TYPE_STRING),
-             self._on_speech_system_changed),
-            (guilabels.VOICE_SPEECH_SYNTHESIZER,
-             Gtk.ListStore(GObject.TYPE_STRING),
-             self._on_speech_synthesizer_changed),
-            (guilabels.PUNCTUATION_STYLE,
-             punctuation_model,
-             self._on_punctuation_changed),
-            (guilabels.VOICE_CAPITALIZATION_STYLE,
-             capitalization_model,
-             self._on_capitalization_changed),
+            (
+                guilabels.VOICE_SPEECH_SYSTEM,
+                Gtk.ListStore(GObject.TYPE_STRING),
+                self._on_speech_system_changed,
+            ),
+            (
+                guilabels.VOICE_SPEECH_SYNTHESIZER,
+                Gtk.ListStore(GObject.TYPE_STRING),
+                self._on_speech_synthesizer_changed,
+            ),
+            (guilabels.PUNCTUATION_STYLE, punctuation_model, self._on_punctuation_changed),
+            (
+                guilabels.VOICE_CAPITALIZATION_STYLE,
+                capitalization_model,
+                self._on_capitalization_changed,
+            ),
         ]
 
         global_combos = []
@@ -614,21 +630,31 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._capitalization_combo = global_combos[3]
 
         switch_data = [
-            (guilabels.VOICE_SPEAK_NUMBERS_AS_DIGITS,
-             self._on_speak_numbers_toggled,
-             self._manager.get_speak_numbers_as_digits()),
-            (guilabels.SPEECH_SPEAK_COLORS_AS_NAMES,
-             self._on_use_color_names_toggled,
-             self._manager.get_use_color_names()),
-            (guilabels.SPEECH_BREAK_INTO_CHUNKS,
-             self._on_enable_pause_breaks_toggled,
-             self._manager.get_insert_pauses_between_utterances()),
-            (guilabels.SPEECH_USE_PRONUNCIATION_DICTIONARY,
-             self._on_use_pronunciation_dict_toggled,
-             self._manager.get_use_pronunciation_dictionary()),
-            (guilabels.AUTO_LANGUAGE_SWITCHING,
-             self._on_auto_language_switching_toggled,
-             self._manager.get_auto_language_switching()),
+            (
+                guilabels.VOICE_SPEAK_NUMBERS_AS_DIGITS,
+                self._on_speak_numbers_toggled,
+                self._manager.get_speak_numbers_as_digits(),
+            ),
+            (
+                guilabels.SPEECH_SPEAK_COLORS_AS_NAMES,
+                self._on_use_color_names_toggled,
+                self._manager.get_use_color_names(),
+            ),
+            (
+                guilabels.SPEECH_BREAK_INTO_CHUNKS,
+                self._on_enable_pause_breaks_toggled,
+                self._manager.get_insert_pauses_between_utterances(),
+            ),
+            (
+                guilabels.SPEECH_USE_PRONUNCIATION_DICTIONARY,
+                self._on_use_pronunciation_dict_toggled,
+                self._manager.get_use_pronunciation_dictionary(),
+            ),
+            (
+                guilabels.AUTO_LANGUAGE_SWITCHING,
+                self._on_auto_language_switching_toggled,
+                self._manager.get_auto_language_switching(),
+            ),
         ]
 
         switches = []
@@ -645,7 +671,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._use_pronunciation_dict_switch = switches[3]
         self._auto_language_switching_switch = switches[4]
 
-        global_content.add(global_listbox) # pylint: disable=no-member
+        global_content.add(global_listbox)  # pylint: disable=no-member
         self.attach(self._global_frame, 0, row, 1, 1)
         row += 1
 
@@ -653,16 +679,30 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             guilabels.VOICE_VOICE_TYPE_SETTINGS, margin_top=12
         )
 
-        voice_types_listbox, voice_buttons = self._create_button_listbox([
-            (guilabels.SPEECH_VOICE_TYPE_DEFAULT, "applications-system-symbolic",
-             lambda _btn: self._show_voice_settings_dialog(self.VoiceType.DEFAULT)),
-            (guilabels.SPEECH_VOICE_TYPE_HYPERLINK, "applications-system-symbolic",
-             lambda _btn: self._show_voice_settings_dialog(self.VoiceType.HYPERLINK)),
-            (guilabels.SPEECH_VOICE_TYPE_UPPERCASE, "applications-system-symbolic",
-             lambda _btn: self._show_voice_settings_dialog(self.VoiceType.UPPERCASE)),
-            (guilabels.SPEECH_VOICE_TYPE_SYSTEM, "applications-system-symbolic",
-             lambda _btn: self._show_voice_settings_dialog(self.VoiceType.SYSTEM)),
-        ])
+        voice_types_listbox, voice_buttons = self._create_button_listbox(
+            [
+                (
+                    guilabels.SPEECH_VOICE_TYPE_DEFAULT,
+                    "applications-system-symbolic",
+                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.DEFAULT),
+                ),
+                (
+                    guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
+                    "applications-system-symbolic",
+                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.HYPERLINK),
+                ),
+                (
+                    guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
+                    "applications-system-symbolic",
+                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.UPPERCASE),
+                ),
+                (
+                    guilabels.SPEECH_VOICE_TYPE_SYSTEM,
+                    "applications-system-symbolic",
+                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.SYSTEM),
+                ),
+            ]
+        )
 
         voice_type_labels = [
             guilabels.SPEECH_VOICE_TYPE_DEFAULT,
@@ -677,7 +717,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if accessible:
                 accessible.set_name(accessible_name)
 
-        voice_types_content.add(voice_types_listbox) # pylint: disable=no-member
+        voice_types_content.add(voice_types_listbox)  # pylint: disable=no-member
         self.attach(self._voice_types_frame, 0, row, 1, 1)
 
         self.show_all()
@@ -698,9 +738,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         saved_acss = ACSS(dict(voice_acss))
 
         dialog, ok_button = self._create_header_bar_dialog(
-            title,
-            guilabels.BTN_CANCEL,
-            guilabels.BTN_OK
+            title, guilabels.BTN_CANCEL, guilabels.BTN_OK
         )
 
         content_area = dialog.get_content_area()
@@ -715,7 +753,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             guilabels.VOICE_LANGUAGE,
             Gtk.ListStore(GObject.TYPE_STRING),
             on_language_changed,
-            include_top_separator=False
+            include_top_separator=False,
         )
         combo_size_group.add_widget(lang_combo)
         voice_listbox.add_row_with_widget(lang_row, lang_combo)
@@ -727,7 +765,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             guilabels.VOICE_PERSON,
             Gtk.ListStore(GObject.TYPE_STRING),
             on_family_changed,
-            include_top_separator=False
+            include_top_separator=False,
         )
         combo_size_group.add_widget(person_combo)
         voice_listbox.add_row_with_widget(person_row, person_combo)
@@ -740,7 +778,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             guilabels.VOICE_RATE,
             rate_adj,
             changed_handler=on_rate_changed,
-            include_top_separator=False
+            include_top_separator=False,
         )
         voice_listbox.add_row_with_widget(rate_row, rate_scale)
 
@@ -748,12 +786,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._on_pitch_changed(widget, voice_type)
 
         pitch_adj = Gtk.Adjustment(
-            value=5.0, lower=0, upper=10, step_increment=0.1, page_increment=1)
+            value=5.0, lower=0, upper=10, step_increment=0.1, page_increment=1
+        )
         pitch_row, pitch_scale, _pitch_label = self._create_slider_row(
             guilabels.VOICE_PITCH,
             pitch_adj,
             changed_handler=on_pitch_changed,
-            include_top_separator=False
+            include_top_separator=False,
         )
         voice_listbox.add_row_with_widget(pitch_row, pitch_scale)
 
@@ -761,12 +800,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._on_volume_changed(widget, voice_type)
 
         volume_adj = Gtk.Adjustment(
-            value=10.0, lower=0, upper=10, step_increment=0.1, page_increment=1)
+            value=10.0, lower=0, upper=10, step_increment=0.1, page_increment=1
+        )
         volume_row, volume_scale, _volume_label = self._create_slider_row(
             guilabels.VOICE_VOLUME,
             volume_adj,
             changed_handler=on_volume_changed,
-            include_top_separator=False
+            include_top_separator=False,
         )
         voice_listbox.add_row_with_widget(volume_row, volume_scale)
 
@@ -819,7 +859,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         dialog.connect("response", on_response)
 
-        parent = self.get_toplevel() # pylint: disable=no-member
+        parent = self.get_toplevel()  # pylint: disable=no-member
+
         def on_parent_destroy(*_args):
             if not dialog.get_property("visible"):
                 return
@@ -829,7 +870,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         parent.connect("destroy", on_parent_destroy)
 
         content_area.pack_start(voice_listbox, True, True, 0)
-        dialog.show_all() # pylint: disable=no-member
+        dialog.show_all()  # pylint: disable=no-member
         ok_button.grab_default()
 
     # TODO - JD: Remove this function if it continues to prove unnecessary
@@ -907,11 +948,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._speak_numbers_switch.set_active(self._manager.get_speak_numbers_as_digits())
         self._use_color_names_switch.set_active(self._manager.get_use_color_names())
         self._enable_pause_breaks_switch.set_active(
-            self._manager.get_insert_pauses_between_utterances())
+            self._manager.get_insert_pauses_between_utterances()
+        )
         self._use_pronunciation_dict_switch.set_active(
-            self._manager.get_use_pronunciation_dictionary())
-        self._auto_language_switching_switch.set_active(
-            self._manager.get_auto_language_switching())
+            self._manager.get_use_pronunciation_dictionary()
+        )
+        self._auto_language_switching_switch.set_active(self._manager.get_auto_language_switching())
 
         # Note: Voice type widgets are created on-demand in dialogs, so no need to refresh them here
 
@@ -922,7 +964,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_type: VoicesPreferencesGrid.VoiceType,
         rate_scale: Gtk.Scale,
         pitch_scale: Gtk.Scale,
-        volume_scale: Gtk.Scale
+        volume_scale: Gtk.Scale,
     ) -> None:
         """Update widgets for a specific voice type."""
 
@@ -956,35 +998,42 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return self._default_voice
 
     def _get_widgets_for_voice_type(
-        self,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> tuple[Gtk.ComboBox, Gtk.ComboBox, list[speechserver.VoiceFamily]]:
         """Return the widgets and family choices for a given voice type."""
 
         if voice_type == self.VoiceType.DEFAULT:
-            return (self._default_languages_combo,
-                   self._default_families_combo,
-                   self._default_family_choices)
+            return (
+                self._default_languages_combo,
+                self._default_families_combo,
+                self._default_family_choices,
+            )
         if voice_type == self.VoiceType.HYPERLINK:
-            return (self._hyperlink_languages_combo,
-                   self._hyperlink_families_combo,
-                   self._hyperlink_family_choices)
+            return (
+                self._hyperlink_languages_combo,
+                self._hyperlink_families_combo,
+                self._hyperlink_family_choices,
+            )
         if voice_type == self.VoiceType.UPPERCASE:
-            return (self._uppercase_languages_combo,
-                   self._uppercase_families_combo,
-                   self._uppercase_family_choices)
+            return (
+                self._uppercase_languages_combo,
+                self._uppercase_families_combo,
+                self._uppercase_family_choices,
+            )
         if voice_type == self.VoiceType.SYSTEM:
-            return (self._system_languages_combo,
-                   self._system_families_combo,
-                   self._system_family_choices)
-        return (self._default_languages_combo,
-               self._default_families_combo,
-               self._default_family_choices)
+            return (
+                self._system_languages_combo,
+                self._system_families_combo,
+                self._system_family_choices,
+            )
+        return (
+            self._default_languages_combo,
+            self._default_families_combo,
+            self._default_family_choices,
+        )
 
     def _set_family_choices_for_voice_type(
-        self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
-        choices: list[speechserver.VoiceFamily]
+        self, voice_type: VoicesPreferencesGrid.VoiceType, choices: list[speechserver.VoiceFamily]
     ) -> None:
         """Set the family choices for a given voice type."""
 
@@ -996,7 +1045,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._uppercase_family_choices = choices
         elif voice_type == self.VoiceType.SYSTEM:
             self._system_family_choices = choices
-
 
     def _populate_speech_systems(self) -> None:
         """Populate the speech systems combo."""
@@ -1078,8 +1126,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # Note: Voice widgets are created on-demand in dialogs, so we don't populate them here
 
     def _populate_languages_for_voice_type(
-        self,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
         """Populate the languages combo for a specific voice type."""
 
@@ -1174,9 +1221,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
 
     def _populate_families_for_voice_type(
-        self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
-        apply_changes: bool = True
+        self, voice_type: VoicesPreferencesGrid.VoiceType, apply_changes: bool = True
     ) -> None:
         """Populate the families/persons combo for a specific voice type."""
 
@@ -1279,9 +1324,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             server.clear_cached_voice_properties()
 
     def _on_rate_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, widget: Gtk.Scale, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
         """Handle rate slider change for a specific voice type."""
 
@@ -1296,9 +1339,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
     def _on_pitch_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, widget: Gtk.Scale, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
         """Handle pitch slider change for a specific voice type."""
 
@@ -1313,9 +1354,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
     def _on_volume_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, widget: Gtk.Scale, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
         """Handle volume slider change for a specific voice type."""
 
@@ -1440,8 +1479,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._families_sorted = False
 
         # Clear family for all voice types when synthesizer changes
-        for voice_type in [self.VoiceType.DEFAULT, self.VoiceType.HYPERLINK,
-                          self.VoiceType.UPPERCASE, self.VoiceType.SYSTEM]:
+        for voice_type in [
+            self.VoiceType.DEFAULT,
+            self.VoiceType.HYPERLINK,
+            self.VoiceType.UPPERCASE,
+            self.VoiceType.SYSTEM,
+        ]:
             voice_acss = self._get_acss_for_voice_type(voice_type)
             if ACSS.FAMILY in voice_acss:
                 del voice_acss[ACSS.FAMILY]
@@ -1449,9 +1492,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
     def _on_speech_language_changed(
-        self,
-        widget: Gtk.ComboBox,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, widget: Gtk.ComboBox, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
         """Handle speech language combo change for a specific voice type."""
 
@@ -1480,9 +1521,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._sync_voice_to_settings(voice_type)
 
     def _on_speech_family_changed(
-        self,
-        widget: Gtk.ComboBox,
-        voice_type: VoicesPreferencesGrid.VoiceType
+        self, widget: Gtk.ComboBox, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
         """Handle speech family combo change for a specific voice type."""
 
@@ -1509,13 +1548,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._has_unsaved_changes = True
 
+
 class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Main speech preferences grid with enable toggle and categorized settings."""
 
     def __init__(
         self,
         manager: SpeechAndVerbosityManager,
-        title_change_callback: Callable[[str], None] | None = None
+        title_change_callback: Callable[[str], None] | None = None,
     ) -> None:
         super().__init__(guilabels.SPEECH)
         self._manager = manager
@@ -1549,7 +1589,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             enable_setter=self._manager.set_speech_is_enabled,
             categories=categories,
             title_change_callback=self._title_change_callback,
-            main_title=guilabels.SPEECH
+            main_title=guilabels.SPEECH,
         )
 
         self.attach(enable_listbox, 0, row, 1, 1)
@@ -1588,12 +1628,14 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def has_changes(self) -> bool:
         """Check if any child grid has changes."""
 
-        return (self._has_unsaved_changes or
-                self._voices_grid.has_changes() or
-                self._verbosity_grid.has_changes() or
-                self._tables_grid.has_changes() or
-                self._progress_bars_grid.has_changes() or
-                self._announcements_grid.has_changes())
+        return (
+            self._has_unsaved_changes
+            or self._voices_grid.has_changes()
+            or self._verbosity_grid.has_changes()
+            or self._tables_grid.has_changes()
+            or self._progress_bars_grid.has_changes()
+            or self._announcements_grid.has_changes()
+        )
 
     def refresh(self) -> None:
         """Refresh all child grids."""
@@ -1638,41 +1680,111 @@ class SpeechAndVerbosityManager:
 
         # (name, function, description, desktop_kb, laptop_kb)
         commands_data = [
-            ("cycleCapitalizationStyleHandler", self.cycle_capitalization_style,
-             cmdnames.CYCLE_CAPITALIZATION_STYLE, None, None),
-            ("cycleSpeakingPunctuationLevelHandler", self.cycle_punctuation_level,
-             cmdnames.CYCLE_PUNCTUATION_LEVEL, None, None),
-            ("cycleSynthesizerHandler", self.cycle_synthesizer,
-             cmdnames.CYCLE_SYNTHESIZER, None, None),
-            ("changeNumberStyleHandler", self.change_number_style,
-             cmdnames.CHANGE_NUMBER_STYLE, None, None),
-            ("toggleSilenceSpeechHandler", self.toggle_speech,
-             cmdnames.TOGGLE_SPEECH, kb_s, kb_s),
-            ("toggleSpeechVerbosityHandler", self.toggle_verbosity,
-             cmdnames.TOGGLE_SPEECH_VERBOSITY, kb_v, kb_v),
-            ("toggleSpeakingIndentationJustificationHandler",
-             self.toggle_indentation_and_justification,
-             cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION, None, None),
-            ("toggleTableCellReadModeHandler", self.toggle_table_cell_reading_mode,
-             cmdnames.TOGGLE_TABLE_CELL_READ_MODE, kb_f11, kb_f11),
-            ("decreaseSpeechRateHandler", self.decrease_rate,
-             cmdnames.DECREASE_SPEECH_RATE, None, None),
-            ("increaseSpeechRateHandler", self.increase_rate,
-             cmdnames.INCREASE_SPEECH_RATE, None, None),
-            ("decreaseSpeechPitchHandler", self.decrease_pitch,
-             cmdnames.DECREASE_SPEECH_PITCH, None, None),
-            ("increaseSpeechPitchHandler", self.increase_pitch,
-             cmdnames.INCREASE_SPEECH_PITCH, None, None),
-            ("decreaseSpeechVolumeHandler", self.decrease_volume,
-             cmdnames.DECREASE_SPEECH_VOLUME, None, None),
-            ("increaseSpeechVolumeHandler", self.increase_volume,
-             cmdnames.INCREASE_SPEECH_VOLUME, None, None),
+            (
+                "cycleCapitalizationStyleHandler",
+                self.cycle_capitalization_style,
+                cmdnames.CYCLE_CAPITALIZATION_STYLE,
+                None,
+                None,
+            ),
+            (
+                "cycleSpeakingPunctuationLevelHandler",
+                self.cycle_punctuation_level,
+                cmdnames.CYCLE_PUNCTUATION_LEVEL,
+                None,
+                None,
+            ),
+            (
+                "cycleSynthesizerHandler",
+                self.cycle_synthesizer,
+                cmdnames.CYCLE_SYNTHESIZER,
+                None,
+                None,
+            ),
+            (
+                "changeNumberStyleHandler",
+                self.change_number_style,
+                cmdnames.CHANGE_NUMBER_STYLE,
+                None,
+                None,
+            ),
+            ("toggleSilenceSpeechHandler", self.toggle_speech, cmdnames.TOGGLE_SPEECH, kb_s, kb_s),
+            (
+                "toggleSpeechVerbosityHandler",
+                self.toggle_verbosity,
+                cmdnames.TOGGLE_SPEECH_VERBOSITY,
+                kb_v,
+                kb_v,
+            ),
+            (
+                "toggleSpeakingIndentationJustificationHandler",
+                self.toggle_indentation_and_justification,
+                cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION,
+                None,
+                None,
+            ),
+            (
+                "toggleTableCellReadModeHandler",
+                self.toggle_table_cell_reading_mode,
+                cmdnames.TOGGLE_TABLE_CELL_READ_MODE,
+                kb_f11,
+                kb_f11,
+            ),
+            (
+                "decreaseSpeechRateHandler",
+                self.decrease_rate,
+                cmdnames.DECREASE_SPEECH_RATE,
+                None,
+                None,
+            ),
+            (
+                "increaseSpeechRateHandler",
+                self.increase_rate,
+                cmdnames.INCREASE_SPEECH_RATE,
+                None,
+                None,
+            ),
+            (
+                "decreaseSpeechPitchHandler",
+                self.decrease_pitch,
+                cmdnames.DECREASE_SPEECH_PITCH,
+                None,
+                None,
+            ),
+            (
+                "increaseSpeechPitchHandler",
+                self.increase_pitch,
+                cmdnames.INCREASE_SPEECH_PITCH,
+                None,
+                None,
+            ),
+            (
+                "decreaseSpeechVolumeHandler",
+                self.decrease_volume,
+                cmdnames.DECREASE_SPEECH_VOLUME,
+                None,
+                None,
+            ),
+            (
+                "increaseSpeechVolumeHandler",
+                self.increase_volume,
+                cmdnames.INCREASE_SPEECH_VOLUME,
+                None,
+                None,
+            ),
         ]
 
         for name, function, description, desktop_kb, laptop_kb in commands_data:
-            manager.add_command(command_manager.KeyboardCommand(
-                name, function, group_label, description,
-                desktop_keybinding=desktop_kb, laptop_keybinding=laptop_kb))
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=desktop_kb,
+                    laptop_keybinding=laptop_kb,
+                )
+            )
 
         msg = "SPEECH AND VERBOSITY MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1866,13 +1978,22 @@ class SpeechAndVerbosityManager:
         variant: str = "",
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False
+        notify_user: bool = False,
     ) -> list[tuple[str, str, str]]:
         """Returns a list of available voices for the specified language."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: get_voices_for_language. Language:", language,
-                  "Variant:", variant, "Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: get_voices_for_language. Language:",
+            language,
+            "Variant:",
+            variant,
+            "Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -1965,12 +2086,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False
+        notify_user: bool = False,
     ) -> bool:
         """Starts the speech server."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: start_speech. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: start_speech. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         speech.init()
         return True
@@ -1980,12 +2107,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False
+        notify_user: bool = False,
     ) -> bool:
         """Interrupts the speech server."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: interrupt_speech. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: interrupt_speech. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if server := self._get_server():
@@ -1998,12 +2131,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False
+        notify_user: bool = False,
     ) -> bool:
         """Shuts down the speech server."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: shutdown_speech. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: shutdown_speech. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if server := self._get_server():
@@ -2017,12 +2156,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False
+        notify_user: bool = False,
     ) -> bool:
         """Shuts down and re-initializes speech."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: refresh_speech. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: refresh_speech. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self.shutdown_speech()
@@ -2062,12 +2207,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Decreases the speech rate."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_rate. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: decrease_rate. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2087,12 +2238,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Increases the speech rate."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: increase_rate. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: increase_rate. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2140,12 +2297,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Decreases the speech pitch"""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_pitch. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: decrease_pitch. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2165,12 +2328,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Increase the speech pitch"""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: increase_pitch. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: increase_pitch. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2218,12 +2387,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Decreases the speech volume"""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: decrease_volume. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: decrease_volume. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2243,12 +2418,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Increases the speech volume"""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: increase_volume. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: increase_volume. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2291,12 +2472,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Cycle through the speech-dispatcher capitalization styles."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_capitalization_style. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: cycle_capitalization_style. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         current_style = settings.capitalizationStyle
@@ -2359,12 +2546,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Cycles through punctuation levels for speech."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_punctuation_level. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: cycle_punctuation_level. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         current_level = settings.verbalizePunctuationStyle
@@ -2430,12 +2623,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Cycles through available speech synthesizers."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: cycle_synthesizer. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: cycle_synthesizer. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         server = self._get_server()
@@ -2869,12 +3068,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Changes spoken number style between digits and words."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: change_number_style. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: change_number_style. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         speak_digits = self.get_speak_numbers_as_digits()
@@ -2998,12 +3203,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles speech on and off."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_speech. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: toggle_speech. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if script is not None:
@@ -3089,12 +3300,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles speech verbosity level between verbose and brief."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_verbosity. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: toggle_verbosity. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
@@ -3144,12 +3361,19 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles the speaking of indentation and justification."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_indentation_and_justification. ",
-                  "Script:", script, "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: toggle_indentation_and_justification. ",
+            "Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         value = self.get_speak_indentation_and_justification()
@@ -3169,12 +3393,18 @@ class SpeechAndVerbosityManager:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles between speak cell and speak row."""
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: toggle_table_cell_reading_mode. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "SPEECH AND VERBOSITY MANAGER: toggle_table_cell_reading_mode. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # TODO - JD: This is due to the requirement on script utilities.
@@ -3277,8 +3507,10 @@ class SpeechAndVerbosityManager:
         # If the user has set their punctuation level to All, then the synthesizer will
         # do the work for us. If the user has set their punctuation level to None, then
         # they really don't want punctuation and we mustn't override that.
-        if settings.verbalizePunctuationStyle in [settings.PUNCTUATION_STYLE_ALL,
-                                                   settings.PUNCTUATION_STYLE_NONE]:
+        if settings.verbalizePunctuationStyle in [
+            settings.PUNCTUATION_STYLE_ALL,
+            settings.PUNCTUATION_STYLE_NONE,
+        ]:
             return False
 
         return True
@@ -3307,21 +3539,19 @@ class SpeechAndVerbosityManager:
         words = re.split(r"(\W+)", text)
         return "".join(map(manager.get_pronunciation, words))
 
-    def get_indentation_description(
-        self,
-        line: str,
-        only_if_changed: bool | None = None
-    ) -> str:
+    def get_indentation_description(self, line: str, only_if_changed: bool | None = None) -> str:
         """Returns a description of the indentation in the given line."""
 
-        if self.get_only_speak_displayed_text() \
-           or not self.get_speak_indentation_and_justification():
+        if (
+            self.get_only_speak_displayed_text()
+            or not self.get_speak_indentation_and_justification()
+        ):
             return ""
 
         line = line.replace("\u00a0", " ")
         end = re.search("[^ \t]", line)
         if end:
-            line = line[:end.start()]
+            line = line[: end.start()]
 
         result = ""
         spaces = [m.span() for m in re.finditer(" +", line)]
@@ -3348,10 +3578,7 @@ class SpeechAndVerbosityManager:
         return result
 
     def get_error_description(
-        self,
-        obj: Atspi.Accessible,
-        offset: int | None = None,
-        only_if_changed: bool | None = True
+        self, obj: Atspi.Accessible, offset: int | None = None, only_if_changed: bool | None = True
     ) -> str:
         """Returns a description of the error at the current offset."""
 
@@ -3378,15 +3605,15 @@ class SpeechAndVerbosityManager:
         return msg
 
     def adjust_for_presentation(
-        self,
-        obj: Atspi.Accessible,
-        text: str,
-        start_offset: int | None = None
+        self, obj: Atspi.Accessible, text: str, start_offset: int | None = None
     ) -> str:
         """Adjusts text for spoken presentation."""
 
-        tokens = [f"SPEECH AND VERBOSITY MANAGER: Adjusting '{text}' from",
-                  obj, f"start_offset: {start_offset}"]
+        tokens = [
+            f"SPEECH AND VERBOSITY MANAGER: Adjusting '{text}' from",
+            obj,
+            f"start_offset: {start_offset}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilities.is_math_related(obj):
@@ -3400,13 +3627,12 @@ class SpeechAndVerbosityManager:
         text = self._adjust_for_verbalized_punctuation(obj, text)
         text = self._apply_pronunciation_dictionary(text)
 
-        msg = F"SPEECH AND VERBOSITY MANAGER: Adjusted text: '{text}'"
+        msg = f"SPEECH AND VERBOSITY MANAGER: Adjusted text: '{text}'"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return text
 
     def create_speech_preferences_grid(
-        self,
-        title_change_callback: Callable[[str], None] | None = None
+        self, title_change_callback: Callable[[str], None] | None = None
     ) -> SpeechPreferencesGrid:
         """Returns the GtkGrid containing the combined speech preferences UI."""
 
@@ -3515,7 +3741,9 @@ class SpeechAndVerbosityManager:
             result[descriptor.prefs_key] = value
         return result
 
+
 _manager: SpeechAndVerbosityManager = SpeechAndVerbosityManager()
+
 
 def get_manager() -> SpeechAndVerbosityManager:
     """Returns the Speech and Verbosity Manager"""

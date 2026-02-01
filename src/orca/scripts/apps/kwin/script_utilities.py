@@ -33,8 +33,10 @@ from orca.scripts.toolkits.Qt.script_utilities import Utilities as QtUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(switcher.Utilities, QtUtilities):
     """Custom script utilities for kwin."""

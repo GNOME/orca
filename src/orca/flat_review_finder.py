@@ -25,16 +25,15 @@
 
 """Provides support for a flat review find."""
 
-
-
 import copy
 import re
 import time
 from typing import Callable
 
 import gi
+
 gi.require_version("Atspi", "2.0")
-gi.require_version('Gtk', '3.0')
+gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gtk
 
 from . import cmdnames
@@ -69,11 +68,14 @@ class _SearchQueryMatch:
         if not isinstance(other, _SearchQueryMatch):
             return False
 
-        return self._line_string == other._line_string and \
-               self._line == other._line and \
-               self._zone == other._zone and \
-               self._word == other._word and \
-               self._char == other._char
+        return (
+            self._line_string == other._line_string
+            and self._line == other._line
+            and self._zone == other._zone
+            and self._word == other._word
+            and self._char == other._char
+        )
+
 
 class SearchQuery:
     """Represents a search that the user wants to perform."""
@@ -103,6 +105,7 @@ class SearchQuery:
             string += f" Options: {', '.join(options)}"
         return string
 
+
 class FlatReviewFinder:
     """Provides tools to search the current window's flat-review contents."""
 
@@ -127,15 +130,27 @@ class FlatReviewFinder:
 
         # (name, function, description, desktop_binding, laptop_binding)
         commands_data = [
-            ("findHandler", self.show_dialog, cmdnames.SHOW_FIND_GUI,
-             keybindings.KeyBinding("KP_Delete", keybindings.NO_MODIFIER_MASK),
-             keybindings.KeyBinding("bracketleft", keybindings.ORCA_MODIFIER_MASK)),
-            ("findNextHandler", self.find_next, cmdnames.FIND_NEXT,
-             keybindings.KeyBinding("KP_Delete", keybindings.ORCA_MODIFIER_MASK),
-             keybindings.KeyBinding("bracketright", keybindings.ORCA_MODIFIER_MASK)),
-            ("findPreviousHandler", self.find_previous, cmdnames.FIND_PREVIOUS,
-             keybindings.KeyBinding("KP_Delete", keybindings.ORCA_SHIFT_MODIFIER_MASK),
-             keybindings.KeyBinding("bracketright", keybindings.ORCA_CTRL_MODIFIER_MASK)),
+            (
+                "findHandler",
+                self.show_dialog,
+                cmdnames.SHOW_FIND_GUI,
+                keybindings.KeyBinding("KP_Delete", keybindings.NO_MODIFIER_MASK),
+                keybindings.KeyBinding("bracketleft", keybindings.ORCA_MODIFIER_MASK),
+            ),
+            (
+                "findNextHandler",
+                self.find_next,
+                cmdnames.FIND_NEXT,
+                keybindings.KeyBinding("KP_Delete", keybindings.ORCA_MODIFIER_MASK),
+                keybindings.KeyBinding("bracketright", keybindings.ORCA_MODIFIER_MASK),
+            ),
+            (
+                "findPreviousHandler",
+                self.find_previous,
+                cmdnames.FIND_PREVIOUS,
+                keybindings.KeyBinding("KP_Delete", keybindings.ORCA_SHIFT_MODIFIER_MASK),
+                keybindings.KeyBinding("bracketright", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            ),
         ]
 
         for name, function, description, desktop_kb, laptop_kb in commands_data:
@@ -292,12 +307,14 @@ class FlatReviewFinder:
         if self._match != _SearchQueryMatch(context, pattern):
             return True
 
-        if self._move(query, context, Context.WORD) \
-           and self._find_match_in(query, context, pattern, Context.WORD):
+        if self._move(query, context, Context.WORD) and self._find_match_in(
+            query, context, pattern, Context.WORD
+        ):
             return True
 
-        if self._move(query, context, Context.ZONE) \
-           and self._find_match_in(query, context, pattern, Context.ZONE):
+        if self._move(query, context, Context.ZONE) and self._find_match_in(
+            query, context, pattern, Context.ZONE
+        ):
             return True
 
         if self._move(query, context, Context.LINE):
@@ -348,6 +365,7 @@ class FlatReviewFinder:
         context.set_current_location(self._location)
         self._location = 0, 0, 0, 0
 
+
 class FlatReviewFinderGUI:
     """The dialog containing the find options."""
 
@@ -364,24 +382,27 @@ class FlatReviewFinderGUI:
 
         def _frame_with_grid(label, widgets):
             frame = Gtk.Frame()
-            frame.set_shadow_type(Gtk.ShadowType.NONE) # pylint: disable=no-member
+            frame.set_shadow_type(Gtk.ShadowType.NONE)  # pylint: disable=no-member
             label = Gtk.Label(f"<b>{label}</b>")
             label.set_use_markup(True)
             frame.set_label_widget(label)
             grid = Gtk.Grid()
             for i, widget in enumerate(widgets):
                 grid.attach(widget, 0, i, 1, 1)
-            frame.add(grid) # pylint: disable=no-member
+            frame.add(grid)  # pylint: disable=no-member
             return frame
 
         dialog = Gtk.Dialog(
-            guilabels.FIND_DIALOG_TITLE, None, Gtk.DialogFlags.MODAL,
-            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE, Gtk.STOCK_FIND, Gtk.ResponseType.APPLY))
+            guilabels.FIND_DIALOG_TITLE,
+            None,
+            Gtk.DialogFlags.MODAL,
+            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE, Gtk.STOCK_FIND, Gtk.ResponseType.APPLY),
+        )
         dialog.set_default_response(Gtk.ResponseType.APPLY)
         grid = Gtk.Grid()
         grid.set_row_spacing(20)
         grid.set_column_spacing(20)
-        grid.set_border_width(12) # pylint: disable=no-member
+        grid.set_border_width(12)  # pylint: disable=no-member
         dialog.get_content_area().add(grid)
 
         entry_grid = Gtk.Grid()
@@ -400,10 +421,12 @@ class FlatReviewFinderGUI:
         grid.attach(entry_grid, 0, 0, 3, 1)
 
         rb1 = Gtk.RadioButton.new_with_mnemonic_from_widget(
-            None, guilabels.FIND_START_AT_CURRENT_LOCATION)
+            None, guilabels.FIND_START_AT_CURRENT_LOCATION
+        )
         rb1.connect("toggled", self.on_current_location_toggled)
         rb2 = Gtk.RadioButton.new_with_mnemonic_from_widget(
-            rb1, guilabels.FIND_START_AT_TOP_OF_WINDOW)
+            rb1, guilabels.FIND_START_AT_TOP_OF_WINDOW
+        )
         grid.attach(_frame_with_grid(guilabels.FIND_START_FROM, (rb1, rb2)), 0, 1, 1, 1)
 
         cb1 = Gtk.CheckButton.new_with_mnemonic(guilabels.FIND_SEARCH_BACKWARDS)
@@ -467,11 +490,13 @@ class FlatReviewFinderGUI:
         """Shows the find dialog."""
 
         self._focus = focus
-        self._gui.show_all() # pylint: disable=no-member
+        self._gui.show_all()  # pylint: disable=no-member
         self._gui.present_with_time(time.time())
 
 
 _finder: FlatReviewFinder = FlatReviewFinder()
+
+
 def get_finder() -> FlatReviewFinder:
     """Returns the Flat Review Finder"""
 

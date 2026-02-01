@@ -31,8 +31,10 @@ from orca import braille_generator
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
     """Braille Generator for Sleep Mode. Does nothing."""

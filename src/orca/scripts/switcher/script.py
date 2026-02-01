@@ -37,8 +37,10 @@ from .script_utilities import Utilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Script(default.Script):
     """Custom script for basic switchers like Metacity."""
@@ -77,15 +79,16 @@ class Script(default.Script):
         self.interrupt_presentation()
         focus_manager.get_manager().set_active_window(self.utilities.top_level_object(event.source))
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.present_message(self.utilities.get_selection_name(event.source),
-                            reset_styles=False, force=True)
+        self.present_message(
+            self.utilities.get_selection_name(event.source), reset_styles=False, force=True
+        )
         return True
 
     def locus_of_focus_changed(
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 

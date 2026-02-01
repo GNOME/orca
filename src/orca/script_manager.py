@@ -23,10 +23,10 @@
 
 """Manages Orca's scripts."""
 
-
 import importlib
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -117,13 +117,15 @@ class ScriptManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
-        app_names = {"gtk-window-decorator": "switcher",
-                     "marco": "switcher",
-                     "mate-notification-daemon": "notification-daemon",
-                     "metacity": "switcher",
-                     "budgie-daemon": "switcher",
-                     "pluma": "gedit",
-                     "xfce4-notifyd": "notification-daemon"}
+        app_names = {
+            "gtk-window-decorator": "switcher",
+            "marco": "switcher",
+            "mate-notification-daemon": "notification-daemon",
+            "metacity": "switcher",
+            "budgie-daemon": "switcher",
+            "pluma": "gedit",
+            "xfce4-notifyd": "notification-daemon",
+        }
         alt_names = list(app_names.keys())
         if name.endswith((".py", ".bin")):
             name = name.split(".")[0]
@@ -300,8 +302,11 @@ class ScriptManager:
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
-        if toolkit_script and not (AXUtilities.is_frame(obj) or AXUtilities.is_status_bar(obj)) \
-           and not issubclass(app_script.__class__, toolkit_script.__class__):
+        if (
+            toolkit_script
+            and not (AXUtilities.is_frame(obj) or AXUtilities.is_status_bar(obj))
+            and not issubclass(app_script.__class__, toolkit_script.__class__)
+        ):
             tokens = ["SCRIPT MANAGER: Script is toolkit script", toolkit_script]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return toolkit_script
@@ -337,8 +342,9 @@ class ScriptManager:
 
         # Save settings snapshot for the old app before deactivating.
         if old_script and old_script.app:
-            self._app_settings_snapshots[old_script.app] = \
+            self._app_settings_snapshots[old_script.app] = (
                 settings_manager.get_manager().snapshot_settings()
+            )
 
         if self._active_script is not None:
             tokens = ["SCRIPT MANAGER: Deactivating", self._active_script, "reason:", reason]
@@ -357,7 +363,8 @@ class ScriptManager:
         # Example: old_script is terminal, new_script is mate-terminal (e.g. for UI)
         if new_script.app and new_script.app in self._app_settings_snapshots:
             settings_manager.get_manager().restore_settings(
-                self._app_settings_snapshots[new_script.app])
+                self._app_settings_snapshots[new_script.app]
+            )
 
         braille.checkBrailleSetting()
         all_braille_keys: set[int] = set()
@@ -404,7 +411,9 @@ class ScriptManager:
             except KeyError:
                 pass
 
+
 _manager: ScriptManager = ScriptManager()
+
 
 def get_manager() -> ScriptManager:
     """Returns the Script Manager singleton."""

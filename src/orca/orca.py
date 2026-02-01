@@ -24,13 +24,13 @@
 
 """The main module for the Orca screen reader."""
 
-
 import os
 import signal
 import sys
 
 from dasbus.connection import SessionMessageBus
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
@@ -60,10 +60,11 @@ from . import sound_presenter
 from . import systemd
 from .ax_utilities import AXUtilities
 
+
 def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     """(Re)Loads the user settings module, re-initializing things such as speech if necessary."""
 
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Loading User Settings', True)
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Loading User Settings", True)
 
     if is_reload:
         sound.get_player().shutdown()
@@ -109,6 +110,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     manager = debugging_tools_manager.get_manager()
     manager.print_session_details()
     manager.print_running_applications(force=False)
+
 
 def shutdown(script=None, _event=None, _signum=None):
     """Exits Orca. Returns True if shutdown ran to completion."""
@@ -164,16 +166,17 @@ def shutdown(script=None, _event=None, _signum=None):
         player.shutdown()
 
     signal.alarm(0)
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Quitting Atspi main event loop', True)
-    Atspi.event_quit() # pylint: disable=no-value-for-parameter
-    debug.print_message(debug.LEVEL_INFO, 'ORCA: Shutdown complete', True)
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Quitting Atspi main event loop", True)
+    Atspi.event_quit()  # pylint: disable=no-value-for-parameter
+    debug.print_message(debug.LEVEL_INFO, "ORCA: Shutdown complete", True)
     return True
+
 
 def main():
     """The main entry point for Orca."""
 
     def _reload_on_signal(signum, frame):
-        signal_string = f'({signal.strsignal(signum)})'
+        signal_string = f"({signal.strsignal(signum)})"
         tokens = [f"ORCA: Reloading due to signal={signum} {signal_string}", frame]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         systemd.get_manager().notify_reloading()
@@ -181,13 +184,13 @@ def main():
         systemd.get_manager().notify_ready()
 
     def _shutdown_on_signal(signum, frame):
-        signal_string = f'({signal.strsignal(signum)})'
+        signal_string = f"({signal.strsignal(signum)})"
         tokens = [f"ORCA: Shutting down and exiting due to signal={signum} {signal_string}", frame]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         shutdown()
 
     def _show_preferences_on_signal(signum, frame):
-        signal_string = f'({signal.strsignal(signum)})'
+        signal_string = f"({signal.strsignal(signum)})"
         tokens = [f"ORCA: Showing preferences due to signal={signum} {signal_string}", frame]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         manager = script_manager.get_manager()
@@ -228,7 +231,8 @@ def main():
 
         try:
             _a11y_applications_gsetting = Gio.Settings(
-                schema_id="org.gnome.desktop.a11y.applications")
+                schema_id="org.gnome.desktop.a11y.applications"
+            )
             connection = _a11y_applications_gsetting.connect("changed", _on_enabled_changed)
             msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -239,8 +243,7 @@ def main():
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
         except (AttributeError, TypeError) as error:
             msg = (
-                "ORCA: EXCEPTION connecting to a11y applications (version incompatibility):"
-                f"{error}"
+                f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility):{error}"
             )
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
@@ -254,7 +257,8 @@ def main():
     if window and not focus_manager.get_manager().get_locus_of_focus():
         app = AXUtilities.get_application(window)
         focus_manager.get_manager().set_active_window(
-            window, app, set_window_as_focus=True, notify_script=True)
+            window, app, set_window_as_focus=True, notify_script=True
+        )
 
         focused_object = focus_manager.get_manager().find_focused_object()
         if focused_object:
@@ -264,17 +268,18 @@ def main():
         script_manager.get_manager().set_active_script(script, "Launching.")
 
     clipboard.get_presenter().activate()
-    Gdk.notify_startup_complete() # pylint: disable=no-value-for-parameter
+    Gdk.notify_startup_complete()  # pylint: disable=no-value-for-parameter
     systemd.get_manager().notify_ready()
 
     try:
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)
-        Atspi.event_main() # pylint: disable=no-value-for-parameter
+        Atspi.event_main()  # pylint: disable=no-value-for-parameter
     except GLib.Error as error:
         msg = f"ORCA: Exception starting ATSPI registry: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
         os.kill(os.getpid(), signal.SIGKILL)
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

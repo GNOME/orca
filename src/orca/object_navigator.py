@@ -29,6 +29,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -47,6 +48,7 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from .scripts import default
+
 
 class ObjectNavigator:
     """Provides ability to navigate objects hierarchically."""
@@ -76,25 +78,62 @@ class ObjectNavigator:
         # (name, function, description, keysymstring, modifiers)
         # Same bindings on desktop and laptop
         commands_data = [
-            ("object_navigator_up", self.move_to_parent, cmdnames.NAVIGATOR_UP,
-             "Up", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ("object_navigator_down", self.move_to_first_child, cmdnames.NAVIGATOR_DOWN,
-             "Down", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ("object_navigator_next", self.move_to_next_sibling, cmdnames.NAVIGATOR_NEXT,
-             "Right", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ("object_navigator_previous", self.move_to_previous_sibling, cmdnames.NAVIGATOR_PREVIOUS,
-             "Left", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ("object_navigator_perform_action", self.perform_action, cmdnames.NAVIGATOR_PERFORM_ACTION,
-             "Return", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ("object_navigator_toggle_simplify", self.toggle_simplify, cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED,
-             "s", keybindings.ORCA_CTRL_MODIFIER_MASK),
+            (
+                "object_navigator_up",
+                self.move_to_parent,
+                cmdnames.NAVIGATOR_UP,
+                "Up",
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+            ),
+            (
+                "object_navigator_down",
+                self.move_to_first_child,
+                cmdnames.NAVIGATOR_DOWN,
+                "Down",
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+            ),
+            (
+                "object_navigator_next",
+                self.move_to_next_sibling,
+                cmdnames.NAVIGATOR_NEXT,
+                "Right",
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+            ),
+            (
+                "object_navigator_previous",
+                self.move_to_previous_sibling,
+                cmdnames.NAVIGATOR_PREVIOUS,
+                "Left",
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+            ),
+            (
+                "object_navigator_perform_action",
+                self.perform_action,
+                cmdnames.NAVIGATOR_PERFORM_ACTION,
+                "Return",
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+            ),
+            (
+                "object_navigator_toggle_simplify",
+                self.toggle_simplify,
+                cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED,
+                "s",
+                keybindings.ORCA_CTRL_MODIFIER_MASK,
+            ),
         ]
 
         for name, function, description, keysym, modifiers in commands_data:
             kb = keybindings.KeyBinding(keysym, modifiers)
-            manager.add_command(command_manager.KeyboardCommand(
-                name, function, group_label, description,
-                desktop_keybinding=kb, laptop_keybinding=kb))
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    name,
+                    function,
+                    group_label,
+                    description,
+                    desktop_keybinding=kb,
+                    laptop_keybinding=kb,
+                )
+            )
 
         msg = "OBJECT NAVIGATOR: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -174,8 +213,9 @@ class ObjectNavigator:
 
         mode, region = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         obj = region or focus_manager.get_manager().get_locus_of_focus()
-        if self._last_locus_of_focus == obj \
-           or (region is None and mode == focus_manager.FLAT_REVIEW):
+        if self._last_locus_of_focus == obj or (
+            region is None and mode == focus_manager.FLAT_REVIEW
+        ):
             return
 
         self._navigator_focus = obj
@@ -187,7 +227,8 @@ class ObjectNavigator:
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().emit_region_changed(
-            self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR)
+            self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR
+        )
         if not notify_user:
             msg = "OBJECT NAVIGATOR: _present called with notify_user=False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -200,12 +241,18 @@ class ObjectNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves the navigator focus to the parent of the current focus."""
 
-        tokens = ["OBJECT NAVIGATOR: move_to_parent. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "OBJECT NAVIGATOR: move_to_parent. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._update()
@@ -222,12 +269,18 @@ class ObjectNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves the navigator focus to the first child of the current focus."""
 
-        tokens = ["OBJECT NAVIGATOR: move_to_first_child. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "OBJECT NAVIGATOR: move_to_first_child. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._update()
@@ -246,12 +299,18 @@ class ObjectNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves the navigator focus to the next sibling of the current focus."""
 
-        tokens = ["OBJECT NAVIGATOR: move_to_next_sibling. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "OBJECT NAVIGATOR: move_to_next_sibling. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._update()
@@ -265,7 +324,7 @@ class ObjectNavigator:
         if self._navigator_focus in siblings:
             index = siblings.index(self._navigator_focus)
             if index < len(siblings) - 1:
-                self._set_navigator_focus(siblings[index+1])
+                self._set_navigator_focus(siblings[index + 1])
                 self._present(script, notify_user)
             elif notify_user:
                 script.present_message(messages.NAVIGATOR_NO_NEXT)
@@ -279,12 +338,18 @@ class ObjectNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Moves the navigator focus to the previous sibling of the current focus."""
 
-        tokens = ["OBJECT NAVIGATOR: move_to_previous_sibling. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "OBJECT NAVIGATOR: move_to_previous_sibling. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._update()
@@ -298,7 +363,7 @@ class ObjectNavigator:
         if self._navigator_focus in siblings:
             index = siblings.index(self._navigator_focus)
             if index > 0:
-                self._set_navigator_focus(siblings[index-1])
+                self._set_navigator_focus(siblings[index - 1])
                 self._present(script, notify_user)
             elif notify_user:
                 script.present_message(messages.NAVIGATOR_NO_PREVIOUS)
@@ -312,12 +377,18 @@ class ObjectNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Toggles simplified navigation."""
 
-        tokens = ["OBJECT NAVIGATOR: toggle_simplify. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "OBJECT NAVIGATOR: toggle_simplify. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._simplify = not self._simplify
@@ -333,12 +404,18 @@ class ObjectNavigator:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Attempts to click on the current focus."""
 
-        tokens = ["OBJECT NAVIGATOR: perform_action. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "OBJECT NAVIGATOR: perform_action. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXEventSynthesizer.try_all_clickable_actions(self._navigator_focus):
@@ -349,6 +426,8 @@ class ObjectNavigator:
 
 
 _navigator: ObjectNavigator = ObjectNavigator()
+
+
 def get_navigator() -> ObjectNavigator:
     """Returns the Object Navigator"""
 

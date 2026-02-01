@@ -32,27 +32,29 @@ from .ax_utilities_debugging import AXUtilitiesDebugging
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
     from . import input_event
     from .acss import ACSS
 
+
 class VoiceFamily(dict):
     """Holds the family description for a voice."""
 
-    NAME   = "name"
+    NAME = "name"
     GENDER = "gender"
-    LANG   = "lang"
+    LANG = "lang"
     DIALECT = "dialect"
     VARIANT = "variant"
 
-    MALE   = "male"
+    MALE = "male"
     FEMALE = "female"
 
     settings = {
-        NAME   : None,
-        GENDER : None,
-        LANG   : None,
+        NAME: None,
+        GENDER: None,
+        LANG: None,
         DIALECT: None,
         VARIANT: None,
     }
@@ -65,19 +67,16 @@ class VoiceFamily(dict):
         if props:
             self.update(props)
 
+
 class SayAllContext:
     """Contains information about the current state of a Say All operation."""
 
-    PROGRESS    = 0
+    PROGRESS = 0
     INTERRUPTED = 1
-    COMPLETED   = 2
+    COMPLETED = 2
 
     def __init__(
-        self,
-        obj: Atspi.Accessible,
-        utterance: str,
-        start_offset: int = -1,
-        end_offset: int = -1
+        self, obj: Atspi.Accessible, utterance: str, start_offset: int = -1, end_offset: int = -1
     ) -> None:
         self.obj = obj
         self.utterance = utterance
@@ -104,10 +103,12 @@ class SayAllContext:
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, SayAllContext):
             return False
-        return (self.start_offset == other.start_offset and
-                self.end_offset == other.end_offset and
-                self.obj == other.obj and
-                self.utterance == other.utterance)
+        return (
+            self.start_offset == other.start_offset
+            and self.end_offset == other.end_offset
+            and self.obj == other.obj
+            and self.utterance == other.utterance
+        )
 
 
 class SpeechServer:
@@ -160,17 +161,14 @@ class SpeechServer:
         """Speaks event."""
 
     def speak(
-        self,
-        text: str | None = None,
-        acss: ACSS | None = None,
-        interrupt: bool = True
+        self, text: str | None = None, acss: ACSS | None = None, interrupt: bool = True
     ) -> None:
         """Speaks text using the voice specified by acss."""
 
     def say_all(
         self,
         utterance_iterator: Iterator[tuple[SayAllContext, ACSS]],
-        progress_callback: Callable[[SayAllContext, int], None]
+        progress_callback: Callable[[SayAllContext, int], None],
     ) -> None:
         """Iterates through the given utterance_iterator, speaking each utterance."""
 
@@ -228,7 +226,7 @@ class SpeechServer:
         language: str,
         dialect: str = "",
         variant: str | None = None,
-        maximum: int | None = None
+        maximum: int | None = None,
     ) -> list[tuple[str, str, str | None]]:
         """Returns the families for language available in the current synthesizer."""
 

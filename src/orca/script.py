@@ -38,10 +38,12 @@ from .ax_object import AXObject
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
     from . import label_inference
+
 
 class Script:
     """The base Script class."""
@@ -68,8 +70,9 @@ class Script:
 
         self.set_up_commands()
 
-        self._default_sn_mode: structural_navigator.NavigationMode = \
+        self._default_sn_mode: structural_navigator.NavigationMode = (
             structural_navigator.NavigationMode.OFF
+        )
         self._default_caret_navigation_enabled: bool = False
 
         msg = f"SCRIPT: {self.name} initialized"
@@ -118,11 +121,7 @@ class Script:
         return None
 
     def _get_queued_event(
-        self,
-        event_type: str,
-        detail1: int | None = None,
-        detail2: int | None = None,
-        any_data=None
+        self, event_type: str, detail1: int | None = None, detail2: int | None = None, any_data=None
     ) -> Atspi.Event | None:
         cached_event = self.event_cache.get(event_type, [None, 0])[0]
         if not cached_event:
@@ -131,20 +130,32 @@ class Script:
             return None
 
         if detail1 is not None and detail1 != cached_event.detail1:
-            tokens = ["SCRIPT: Queued event's detail1 (", str(cached_event.detail1),
-                      ") doesn't match", str(detail1)]
+            tokens = [
+                "SCRIPT: Queued event's detail1 (",
+                str(cached_event.detail1),
+                ") doesn't match",
+                str(detail1),
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if detail2 is not None and detail2 != cached_event.detail2:
-            tokens = ["SCRIPT: Queued event's detail2 (", str(cached_event.detail2),
-                      ") doesn't match", str(detail2)]
+            tokens = [
+                "SCRIPT: Queued event's detail2 (",
+                str(cached_event.detail2),
+                ") doesn't match",
+                str(detail2),
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
         if any_data is not None and any_data != cached_event.any_data:
-            tokens = ["SCRIPT: Queued event's any_data (",
-                      cached_event.any_data, ") doesn't match", any_data]
+            tokens = [
+                "SCRIPT: Queued event's any_data (",
+                cached_event.any_data,
+                ") doesn't match",
+                any_data,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
 
@@ -156,7 +167,7 @@ class Script:
         self,
         event: Atspi.Event | None,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles changes of focus of interest. Returns True if this script did all needed work."""
 

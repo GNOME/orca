@@ -52,6 +52,7 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -85,7 +86,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             label=guilabels.ECHO_ENABLE_KEY_ECHO,
             getter=presenter.get_key_echo_enabled,
             setter=presenter.set_key_echo_enabled,
-            prefs_key="enableKeyEcho"
+            prefs_key="enableKeyEcho",
         )
 
         controls = [
@@ -96,7 +97,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_alphabetic_keys_enabled,
                 prefs_key="enableAlphabeticKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_NUMERIC_KEYS,
@@ -104,7 +105,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_numeric_keys_enabled,
                 prefs_key="enableNumericKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_PUNCTUATION_KEYS,
@@ -112,7 +113,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_punctuation_keys_enabled,
                 prefs_key="enablePunctuationKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_SPACE,
@@ -120,7 +121,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_space_enabled,
                 prefs_key="enableSpace",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_MODIFIER_KEYS,
@@ -128,7 +129,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_modifier_keys_enabled,
                 prefs_key="enableModifierKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_FUNCTION_KEYS,
@@ -136,7 +137,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_function_keys_enabled,
                 prefs_key="enableFunctionKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_ACTION_KEYS,
@@ -144,7 +145,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_action_keys_enabled,
                 prefs_key="enableActionKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_NAVIGATION_KEYS,
@@ -152,7 +153,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_navigation_keys_enabled,
                 prefs_key="enableNavigationKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_DIACRITICAL_KEYS,
@@ -160,28 +161,28 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_diacritical_keys_enabled,
                 prefs_key="enableDiacriticalKeys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
-                determine_sensitivity=presenter.get_key_echo_enabled
+                determine_sensitivity=presenter.get_key_echo_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_CHARACTER,
                 getter=presenter.get_character_echo_enabled,
                 setter=presenter.set_character_echo_enabled,
                 prefs_key="enableEchoByCharacter",
-                member_of=guilabels.ECHO_TYPING_ECHO
+                member_of=guilabels.ECHO_TYPING_ECHO,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_WORD,
                 getter=presenter.get_word_echo_enabled,
                 setter=presenter.set_word_echo_enabled,
                 prefs_key="enableEchoByWord",
-                member_of=guilabels.ECHO_TYPING_ECHO
+                member_of=guilabels.ECHO_TYPING_ECHO,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_SENTENCE,
                 getter=presenter.get_sentence_echo_enabled,
                 setter=presenter.set_sentence_echo_enabled,
                 prefs_key="enableEchoBySentence",
-                member_of=guilabels.ECHO_TYPING_ECHO
+                member_of=guilabels.ECHO_TYPING_ECHO,
             ),
         ]
 
@@ -342,12 +343,18 @@ class TypingEchoPresenter:
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Cycle through the key echo levels."""
 
-        tokens = ["TYPING ECHO PRESENTER: cycle_key_echo. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "TYPING ECHO PRESENTER: cycle_key_echo. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         (new_key, new_word, new_sentence) = (False, False, False)
@@ -873,7 +880,9 @@ class TypingEchoPresenter:
 
         self._speak_key_event(script, event)
 
+
 _presenter: TypingEchoPresenter = TypingEchoPresenter()
+
 
 def get_presenter() -> TypingEchoPresenter:
     """Returns the Typing Echo Presenter"""

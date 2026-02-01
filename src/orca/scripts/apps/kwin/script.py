@@ -21,10 +21,10 @@
 
 """Custom script for kwin."""
 
-
 from orca.scripts import switcher
 from orca.scripts.toolkits import Qt
 from .script_utilities import Utilities
+
 
 class Script(switcher.Script, Qt.Script):
     """Custom script for kwin."""

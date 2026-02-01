@@ -32,6 +32,7 @@ from dataclasses import dataclass
 from typing import Callable, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gtk
@@ -95,34 +96,31 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
                 prefs_key="caretNavigationEnabled",
-                apply_immediately=False
+                apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
                 prefs_key="caretNavTriggersFocusMode",
-                determine_sensitivity=is_enabled
+                determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CONTENT_LAYOUT_MODE,
                 getter=presenter.get_layout_mode,
                 setter=presenter.set_layout_mode,
                 prefs_key="layoutMode",
-                determine_sensitivity=is_enabled
+                determine_sensitivity=is_enabled,
             ),
         ]
         info = (
             f"{guilabels.CARET_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
             f"\n\n{guilabels.LAYOUT_MODE_INFO}"
         )
-        super().__init__(
-            guilabels.KB_GROUP_CARET_NAVIGATION,
-            controls,
-            info_message=info
-        )
+        super().__init__(guilabels.KB_GROUP_CARET_NAVIGATION, controls, info_message=info)
 
         self._enabled_switch = self._widgets[0]
+
 
 class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for structural navigation settings within the Documents page."""
@@ -145,21 +143,21 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
                 prefs_key="structuralNavigationEnabled",
-                apply_immediately=False
+                apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
                 prefs_key="structNavTriggersFocusMode",
-                determine_sensitivity=is_enabled
+                determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
                 getter=nav.get_navigation_wraps,
                 setter=nav.set_navigation_wraps,
                 prefs_key="wrappedStructuralNavigation",
-                determine_sensitivity=is_enabled
+                determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
@@ -168,20 +166,17 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 getter=nav.get_large_object_text_length,
                 setter=nav.set_large_object_text_length,
                 prefs_key="largeObjectTextLength",
-                determine_sensitivity=is_enabled
+                determine_sensitivity=is_enabled,
             ),
         ]
         info = (
             f"{guilabels.STRUCTURAL_NAVIGATION_INFO}\n\n{guilabels.AUTOMATIC_FOCUS_MODE_INFO}"
             f"\n\n{guilabels.LARGE_OBJECT_INFO}"
         )
-        super().__init__(
-            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
-            controls,
-            info_message=info
-        )
+        super().__init__(guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, controls, info_message=info)
 
         self._enabled_switch = self._widgets[0]
+
 
 class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for table navigation settings within the Documents page."""
@@ -204,14 +199,14 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
                 prefs_key="tableNavigationEnabled",
-                apply_immediately=False
+                apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.TABLE_SKIP_BLANK_CELLS,
                 getter=nav.get_skip_blank_cells,
                 setter=nav.set_skip_blank_cells,
                 prefs_key="skipBlankCells",
-                determine_sensitivity=is_enabled
+                determine_sensitivity=is_enabled,
             ),
         ]
         super().__init__(guilabels.KB_GROUP_TABLE_NAVIGATION, controls)
@@ -228,20 +223,20 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=presenter.get_native_nav_triggers_focus_mode,
                 setter=presenter.set_native_nav_triggers_focus_mode,
-                prefs_key="nativeNavTriggersFocusMode"
+                prefs_key="nativeNavTriggersFocusMode",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTO_STICKY_FOCUS_MODE,
                 getter=presenter.get_auto_sticky_focus_mode_for_web_apps,
                 setter=presenter.set_auto_sticky_focus_mode_for_web_apps,
-                prefs_key="autoStickyFocusModeForWebApps"
+                prefs_key="autoStickyFocusModeForWebApps",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_SPEAK_RESULTS,
                 getter=presenter.get_speak_find_results,
                 setter=presenter.set_speak_find_results,
                 prefs_key="findResultsVerbosity",
-                member_of=guilabels.FIND_OPTIONS
+                member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_ONLY_SPEAK_CHANGED_LINES,
@@ -249,7 +244,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 setter=presenter.set_only_speak_changed_lines,
                 prefs_key="findResultsVerbosity",
                 determine_sensitivity=presenter.get_speak_find_results,
-                member_of=guilabels.FIND_OPTIONS
+                member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.FIND_MINIMUM_MATCH_LENGTH,
@@ -258,26 +253,28 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 getter=presenter.get_find_results_minimum_length,
                 setter=presenter.set_find_results_minimum_length,
                 prefs_key="findResultsMinimumLength",
-                member_of=guilabels.FIND_OPTIONS
+                member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.READ_PAGE_UPON_LOAD,
                 getter=presenter.get_say_all_on_load,
                 setter=presenter.set_say_all_on_load,
                 prefs_key="sayAllOnLoad",
-                member_of=guilabels.PAGE_LOAD
+                member_of=guilabels.PAGE_LOAD,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.PAGE_SUMMARY_UPON_LOAD,
                 getter=presenter.get_page_summary_on_load,
                 setter=presenter.set_page_summary_on_load,
                 prefs_key="pageSummaryOnLoad",
-                member_of=guilabels.PAGE_LOAD
+                member_of=guilabels.PAGE_LOAD,
             ),
         ]
-        info = (f"{guilabels.NATIVE_NAVIGATION_INFO}\n\n"
-                f"{guilabels.AUTOMATIC_FOCUS_MODE_INFO}\n\n"
-                f"{guilabels.AUTO_STICKY_FOCUS_MODE_INFO}")
+        info = (
+            f"{guilabels.NATIVE_NAVIGATION_INFO}\n\n"
+            f"{guilabels.AUTOMATIC_FOCUS_MODE_INFO}\n\n"
+            f"{guilabels.AUTO_STICKY_FOCUS_MODE_INFO}"
+        )
         super().__init__(guilabels.NATIVE_NAVIGATION, controls, info_message=info)
 
 
@@ -287,7 +284,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def __init__(
         self,
         presenter: DocumentPresenter,
-        title_change_callback: Callable[[str], None] | None = None
+        title_change_callback: Callable[[str], None] | None = None,
     ) -> None:
         super().__init__(guilabels.DOCUMENTS)
         self._presenter = presenter
@@ -316,7 +313,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             enable_setter=None,
             categories=categories,
             title_change_callback=self._title_change_callback,
-            main_title=guilabels.DOCUMENTS
+            main_title=guilabels.DOCUMENTS,
         )
 
         self.attach(stack, 0, 0, 1, 1)
@@ -350,11 +347,13 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def has_changes(self) -> bool:
         """Check if any child grid has changes."""
 
-        return (self._has_unsaved_changes or
-                self._caret_grid.has_changes() or
-                self._structural_grid.has_changes() or
-                self._table_grid.has_changes() or
-                self._native_grid.has_changes())
+        return (
+            self._has_unsaved_changes
+            or self._caret_grid.has_changes()
+            or self._structural_grid.has_changes()
+            or self._table_grid.has_changes()
+            or self._native_grid.has_changes()
+        )
 
     def refresh(self) -> None:
         """Refresh all child grids."""
@@ -397,14 +396,25 @@ class DocumentPresenter:
 
         # (name, function, description, keybinding)
         commands_data = [
-            ("toggle_presentation_mode", self.toggle_presentation_mode,
-             cmdnames.TOGGLE_PRESENTATION_MODE, kb_a),
-            ("enable_sticky_focus_mode", self.enable_sticky_focus_mode,
-             cmdnames.SET_FOCUS_MODE_STICKY, kb_a_2),
-            ("enable_sticky_browse_mode", self.enable_sticky_browse_mode,
-             cmdnames.SET_BROWSE_MODE_STICKY, kb_a_3),
-            ("toggle_layout_mode", self.toggle_layout_mode,
-             cmdnames.TOGGLE_LAYOUT_MODE, None),
+            (
+                "toggle_presentation_mode",
+                self.toggle_presentation_mode,
+                cmdnames.TOGGLE_PRESENTATION_MODE,
+                kb_a,
+            ),
+            (
+                "enable_sticky_focus_mode",
+                self.enable_sticky_focus_mode,
+                cmdnames.SET_FOCUS_MODE_STICKY,
+                kb_a_2,
+            ),
+            (
+                "enable_sticky_browse_mode",
+                self.enable_sticky_browse_mode,
+                cmdnames.SET_BROWSE_MODE_STICKY,
+                kb_a_3,
+            ),
+            ("toggle_layout_mode", self.toggle_layout_mode, cmdnames.TOGGLE_LAYOUT_MODE, None),
         ]
 
         for name, function, description, kb in commands_data:
@@ -527,12 +537,17 @@ class DocumentPresenter:
         use_focus_mode: bool,
         obj: Atspi.Accessible | None = None,
         document: Atspi.Accessible | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Sets the presentation mode to focus or browse mode."""
 
-        tokens = [f"DOCUMENT PRESENTER: set_presentation_mode. Use focus mode: {use_focus_mode},",
-                    obj, "in", document, f"notify user: {notify_user}"]
+        tokens = [
+            f"DOCUMENT PRESENTER: set_presentation_mode. Use focus mode: {use_focus_mode},",
+            obj,
+            "in",
+            document,
+            f"notify user: {notify_user}",
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if obj is not None and AXObject.is_dead(obj):
@@ -560,9 +575,11 @@ class DocumentPresenter:
                 script.utilities.set_caret_context(AXObject.get_parent(parent), -1)
 
         if not in_focus_mode and use_focus_mode:
-            if caret_navigator.get_navigator().last_input_event_was_navigation_command() \
-               or structural_navigator.get_navigator().last_input_event_was_navigation_command() \
-               or table_navigator.get_navigator().last_input_event_was_navigation_command():
+            if (
+                caret_navigator.get_navigator().last_input_event_was_navigation_command()
+                or structural_navigator.get_navigator().last_input_event_was_navigation_command()
+                or table_navigator.get_navigator().last_input_event_was_navigation_command()
+            ):
                 AXObject.grab_focus(obj)
 
         if notify_user:
@@ -599,7 +616,8 @@ class DocumentPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         structural_navigator.get_navigator().set_mode(
-            script, structural_navigator.NavigationMode.DOCUMENT)
+            script, structural_navigator.NavigationMode.DOCUMENT
+        )
         caret_navigator.get_navigator().set_enabled_for_script(script, True)
 
     # pylint: disable-next=too-many-return-statements
@@ -611,29 +629,37 @@ class DocumentPresenter:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if AXUtilities.is_expandable(obj) and AXUtilities.is_focusable(obj) \
-           and not AXUtilities.is_link(obj):
-            tokens = ["DOCUMENT PRESENTER:", obj,
-                      "is focus mode widget: it's expandable and focusable"]
+        if (
+            AXUtilities.is_expandable(obj)
+            and AXUtilities.is_focusable(obj)
+            and not AXUtilities.is_link(obj)
+        ):
+            tokens = [
+                "DOCUMENT PRESENTER:",
+                obj,
+                "is focus mode widget: it's expandable and focusable",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        always_focus_mode_roles = [Atspi.Role.COMBO_BOX,
-                                   Atspi.Role.ENTRY,
-                                   Atspi.Role.LIST_BOX,
-                                   Atspi.Role.MENU,
-                                   Atspi.Role.MENU_ITEM,
-                                   Atspi.Role.CHECK_MENU_ITEM,
-                                   Atspi.Role.RADIO_MENU_ITEM,
-                                   Atspi.Role.PAGE_TAB,
-                                   Atspi.Role.PASSWORD_TEXT,
-                                   Atspi.Role.PROGRESS_BAR,
-                                   Atspi.Role.SLIDER,
-                                   Atspi.Role.SPIN_BUTTON,
-                                   Atspi.Role.TOOL_BAR,
-                                   Atspi.Role.TREE_ITEM,
-                                   Atspi.Role.TREE_TABLE,
-                                   Atspi.Role.TREE]
+        always_focus_mode_roles = [
+            Atspi.Role.COMBO_BOX,
+            Atspi.Role.ENTRY,
+            Atspi.Role.LIST_BOX,
+            Atspi.Role.MENU,
+            Atspi.Role.MENU_ITEM,
+            Atspi.Role.CHECK_MENU_ITEM,
+            Atspi.Role.RADIO_MENU_ITEM,
+            Atspi.Role.PAGE_TAB,
+            Atspi.Role.PASSWORD_TEXT,
+            Atspi.Role.PROGRESS_BAR,
+            Atspi.Role.SLIDER,
+            Atspi.Role.SPIN_BUTTON,
+            Atspi.Role.TOOL_BAR,
+            Atspi.Role.TREE_ITEM,
+            Atspi.Role.TREE_TABLE,
+            Atspi.Role.TREE,
+        ]
 
         role = AXObject.get_role(obj)
         if role in always_focus_mode_roles:
@@ -641,8 +667,9 @@ class DocumentPresenter:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] \
-           and AXTable.is_layout_table(AXTable.get_table(obj)):
+        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] and AXTable.is_layout_table(
+            AXTable.get_table(obj)
+        ):
             tokens = ["DOCUMENT PRESENTER:", obj, "is not focus mode widget: it's layout only"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -657,16 +684,19 @@ class DocumentPresenter:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        focus_mode_roles = [Atspi.Role.EMBEDDED,
-                            Atspi.Role.TABLE_CELL,
-                            Atspi.Role.TABLE]
+        focus_mode_roles = [Atspi.Role.EMBEDDED, Atspi.Role.TABLE_CELL, Atspi.Role.TABLE]
 
-        if role in focus_mode_roles \
-           and not script.utilities.is_text_block_element(obj) \
-           and not script.utilities.has_name_and_action_and_no_useful_children(obj) \
-           and not AXDocument.is_pdf(script.utilities.get_document_for_object(obj)):
-            tokens = ["DOCUMENT PRESENTER:", obj,
-                      "is focus mode widget based on presumed functionality"]
+        if (
+            role in focus_mode_roles
+            and not script.utilities.is_text_block_element(obj)
+            and not script.utilities.has_name_and_action_and_no_useful_children(obj)
+            and not AXDocument.is_pdf(script.utilities.get_document_for_object(obj))
+        ):
+            tokens = [
+                "DOCUMENT PRESENTER:",
+                obj,
+                "is focus mode widget based on presumed functionality",
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
@@ -697,7 +727,7 @@ class DocumentPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Enables sticky browse mode."""
 
@@ -728,7 +758,7 @@ class DocumentPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Enables sticky focus mode."""
 
@@ -760,7 +790,7 @@ class DocumentPresenter:
         script: default.Script,
         event: input_event.InputEvent | None = None,
         document: Atspi.Accessible | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Switches between browse mode and focus mode (user-initiated)."""
 
@@ -775,7 +805,8 @@ class DocumentPresenter:
             AXObject.grab_focus(obj)
 
         self._set_presentation_mode(
-            script, use_focus, obj=obj, document=document, notify_user=notify_user)
+            script, use_focus, obj=obj, document=document, notify_user=notify_user
+        )
         self._get_state_for_app(script.app).user_has_toggled = True
         return True
 
@@ -824,11 +855,18 @@ class DocumentPresenter:
 
         self.suspend_navigators(script, state.in_focus_mode, reason)
 
-        tokens = ["DOCUMENT PRESENTER: Restored mode for", script.app,
-                  ". Focus mode:", state.in_focus_mode,
-                  "Focus sticky:", state.focus_mode_is_sticky,
-                  "Browse sticky:", state.browse_mode_is_sticky,
-                  "User toggled:", state.user_has_toggled]
+        tokens = [
+            "DOCUMENT PRESENTER: Restored mode for",
+            script.app,
+            ". Focus mode:",
+            state.in_focus_mode,
+            "Focus sticky:",
+            state.focus_mode_is_sticky,
+            "Browse sticky:",
+            state.browse_mode_is_sticky,
+            "User toggled:",
+            state.user_has_toggled,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def has_state_for_app(self, app: Atspi.Accessible | None) -> bool:
@@ -853,7 +891,7 @@ class DocumentPresenter:
         self,
         script: default.Script,
         new_focus: Atspi.Accessible,
-        old_focus: Atspi.Accessible | None
+        old_focus: Atspi.Accessible | None,
     ) -> bool:
         """Handles mode/navigator setup when entering a document from outside."""
 
@@ -872,8 +910,10 @@ class DocumentPresenter:
 
         # Only do app-type detection if setting is enabled and user hasn't explicitly
         # toggled mode. This allows the user to escape auto-enabled sticky focus mode.
-        if self.get_auto_sticky_focus_mode_for_web_apps() \
-           and not self._get_state_for_app(script.app).user_has_toggled:
+        if (
+            self.get_auto_sticky_focus_mode_for_web_apps()
+            and not self._get_state_for_app(script.app).user_has_toggled
+        ):
             if self._is_likely_electron_app(script.app):
                 msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -906,16 +946,24 @@ class DocumentPresenter:
         self,
         script: default.Script,
         old_focus: Atspi.Accessible | None,
-        new_focus: Atspi.Accessible | None
+        new_focus: Atspi.Accessible | None,
     ) -> bool:
         """Updates focus/browse mode based on a focus change. Returns True if handled."""
 
         old_doc = script.utilities.get_top_level_document_for_object(old_focus)
         new_doc = script.utilities.get_top_level_document_for_object(new_focus)
 
-        tokens = ["DOCUMENT PRESENTER: Updating mode for focus change.",
-                  "Old focus:", old_focus, "old doc:", old_doc,
-                  "New focus:", new_focus, "new doc:", new_doc]
+        tokens = [
+            "DOCUMENT PRESENTER: Updating mode for focus change.",
+            "Old focus:",
+            old_focus,
+            "old doc:",
+            old_doc,
+            "New focus:",
+            new_focus,
+            "new doc:",
+            new_doc,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if new_doc is None:
@@ -923,7 +971,8 @@ class DocumentPresenter:
             reason = "locus of focus no longer in document"
             self.suspend_navigators(script, False, reason)
             structural_navigator.get_navigator().set_mode(
-                script, structural_navigator.NavigationMode.OFF)
+                script, structural_navigator.NavigationMode.OFF
+            )
             caret_navigator.get_navigator().set_enabled_for_script(script, False)
             return True
 
@@ -1098,12 +1147,18 @@ class DocumentPresenter:
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True
+        notify_user: bool = True,
     ) -> bool:
         """Switches between object mode and layout mode for line presentation."""
 
-        tokens = ["DOCUMENT PRESENTER: toggle_layout_mode. Script:", script,
-                  "Event:", event, "notify_user:", notify_user]
+        tokens = [
+            "DOCUMENT PRESENTER: toggle_layout_mode. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         layout_mode = not self.get_layout_mode()
@@ -1166,9 +1221,7 @@ class DocumentPresenter:
         return True
 
     def _force_browse_mode_for_web_app_descendant(
-        self,
-        script: default.Script,
-        obj: Atspi.Accessible
+        self, script: default.Script, obj: Atspi.Accessible
     ) -> bool:
         """Returns True if we should force browse mode for web-app descendant obj."""
 
@@ -1227,8 +1280,10 @@ class DocumentPresenter:
             prev_obj = None
 
         _caret_navigator = caret_navigator.get_navigator()
-        if _caret_navigator.last_command_prevents_focus_mode() \
-           and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None:
+        if (
+            _caret_navigator.last_command_prevents_focus_mode()
+            and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None
+        ):
             msg = "DOCUMENT PRESENTER: Not using focus mode: prevented by caret nav settings"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -1249,8 +1304,11 @@ class DocumentPresenter:
             return True
 
         do_not_toggle = AXUtilities.is_link(obj) or AXUtilities.is_radio_button(obj)
-        if self.in_focus_mode(script.app) and do_not_toggle \
-           and input_event_manager.get_manager().last_event_was_unmodified_arrow():
+        if (
+            self.in_focus_mode(script.app)
+            and do_not_toggle
+            and input_event_manager.get_manager().last_event_was_unmodified_arrow()
+        ):
             tokens = ["DOCUMENT PRESENTER: Staying in focus mode: arrowing in", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -1277,14 +1335,15 @@ class DocumentPresenter:
         return False
 
     def create_preferences_grid(
-        self,
-        title_change_callback: Callable[[str], None] | None = None
+        self, title_change_callback: Callable[[str], None] | None = None
     ) -> DocumentPreferencesGrid:
         """Returns the preferences grid for document settings."""
 
         return DocumentPreferencesGrid(self, title_change_callback)
 
+
 _presenter = DocumentPresenter()
+
 
 def get_presenter() -> DocumentPresenter:
     """Returns the Document Presenter."""

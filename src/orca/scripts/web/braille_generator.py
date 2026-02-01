@@ -31,6 +31,7 @@ from __future__ import annotations
 from typing import Any, TYPE_CHECKING
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
@@ -63,6 +64,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             tokens = [f"WEB BRAILLE GENERATOR: {func.__name__}:", result]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
         return wrapper
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
@@ -87,34 +89,42 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             return [role_description]
 
         # TODO - JD: Can this logic be moved to the default braille generator?
-        do_not_display = [Atspi.Role.FORM,
-                          Atspi.Role.PARAGRAPH,
-                          Atspi.Role.STATIC,
-                          Atspi.Role.SECTION,
-                          Atspi.Role.REDUNDANT_OBJECT,
-                          Atspi.Role.UNKNOWN]
+        do_not_display = [
+            Atspi.Role.FORM,
+            Atspi.Role.PARAGRAPH,
+            Atspi.Role.STATIC,
+            Atspi.Role.SECTION,
+            Atspi.Role.REDUNDANT_OBJECT,
+            Atspi.Role.UNKNOWN,
+        ]
 
         if not AXUtilities.is_focusable(obj):
-            do_not_display.extend([Atspi.Role.LIST,
-                                   Atspi.Role.LIST_ITEM,
-                                   Atspi.Role.COLUMN_HEADER,
-                                   Atspi.Role.ROW_HEADER,
-                                   Atspi.Role.TABLE_CELL,
-                                   Atspi.Role.PANEL])
+            do_not_display.extend(
+                [
+                    Atspi.Role.LIST,
+                    Atspi.Role.LIST_ITEM,
+                    Atspi.Role.COLUMN_HEADER,
+                    Atspi.Role.ROW_HEADER,
+                    Atspi.Role.TABLE_CELL,
+                    Atspi.Role.PANEL,
+                ]
+            )
 
         if args.get("startOffset") is not None and args.get("endOffset") is not None:
             do_not_display.append(Atspi.Role.ALERT)
 
         result = []
-        role = args.get('role', AXObject.get_role(obj))
+        role = args.get("role", AXObject.get_role(obj))
 
         level = AXUtilities.get_heading_level(obj)
         if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
             return result
 
-        if self._script.utilities.is_link(obj) \
-           and obj == focus_manager.get_manager().get_locus_of_focus():
+        if (
+            self._script.utilities.is_link(obj)
+            and obj == focus_manager.get_manager().get_locus_of_focus()
+        ):
             if AXUtilities.is_image(AXObject.get_parent(obj)):
                 result.append(messages.IMAGE_MAP_LINK)
 
@@ -125,9 +135,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             else:
                 result = super()._generate_accessible_role(obj, **args)
 
-        if args.get("index", 0) == args.get("total", 1) - 1 \
-           and (AXUtilities.is_image(obj, args.get("role")) \
-               or self._script.utilities.treat_as_text_object(obj)):
+        if args.get("index", 0) == args.get("total", 1) - 1 and (
+            AXUtilities.is_image(obj, args.get("role"))
+            or self._script.utilities.treat_as_text_object(obj)
+        ):
             heading = AXObject.find_ancestor(obj, AXUtilities.is_heading)
             if heading is not None:
                 result.extend(self._generate_accessible_role(heading))
@@ -156,7 +167,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if AXUtilities.is_editable(obj) and AXObject.find_ancestor(obj, AXUtilities.is_code):
             return []
 
-        role = args.get('role', AXObject.get_role(obj))
+        role = args.get("role", AXObject.get_role(obj))
         if role == Atspi.Role.LABEL and AXObject.supports_text(obj):
             return []
 
@@ -201,9 +212,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self,
-        obj: Atspi.Accessible,
-        **args
+        self, obj: Atspi.Accessible, **args
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
@@ -241,9 +250,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def generate_contents(  # type: ignore[override]
-        self,
-        contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args
+        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
     ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         if not contents:
             return [], None
@@ -260,8 +267,14 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         for i, content in enumerate(contents):
             acc, start, end, string = content
             regions, f_region = self.generate_braille(
-                acc, startOffset=start, endOffset=end, caretOffset=offset, string=string,
-                index=i, total=len(contents))
+                acc,
+                startOffset=start,
+                endOffset=end,
+                caretOffset=offset,
+                string=string,
+                index=i,
+                total=len(contents),
+            )
             if not regions:
                 continue
 

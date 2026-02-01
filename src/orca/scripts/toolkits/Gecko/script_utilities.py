@@ -37,8 +37,10 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(web.Utilities):
     """Custom script utilities for Gecko"""
@@ -170,7 +172,7 @@ class Utilities(web.Utilities):
         self,
         root: Atspi.Accessible | None = None,
         only_showing: bool = True,
-        minimum_words: int = 3
+        minimum_words: int = 3,
     ) -> list[Atspi.Accessible]:
         """Returns a list of labels in root that lack a relationship."""
 

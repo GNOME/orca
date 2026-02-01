@@ -23,11 +23,11 @@
 
 """Utilities for obtaining value-related information about accessible objects."""
 
-
 import threading
 import time
 
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
@@ -35,6 +35,7 @@ from gi.repository import GLib
 from . import debug
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+
 
 class AXValue:
     """Utilities for obtaining value-related information about accessible objects."""
@@ -132,7 +133,7 @@ class AXValue:
         current = AXValue.get_current_value(obj)
         if abs(current) < 1 and current != 0:
             str_current = str(current)
-            decimal_places = len(str_current.split('.')[1])
+            decimal_places = len(str_current.split(".")[1])
         else:
             decimal_places = 0
 
@@ -196,5 +197,6 @@ class AXValue:
         tokens = ["AXValue: Maximum value of", obj, f"is {value}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
+
 
 AXValue.start_cache_clearing_thread()

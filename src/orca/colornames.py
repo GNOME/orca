@@ -23,10 +23,9 @@
 
 """Provides localized color names."""
 
-
 import re
 
-from .orca_i18n import C_ # pylint: disable=import-error
+from .orca_i18n import C_  # pylint: disable=import-error
 
 css_names = {}
 
@@ -586,6 +585,7 @@ css_names["#ffff00"] = C_("color name", "yellow")
 # can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 css_names["#9acd32"] = C_("color name", "yellow green")
 
+
 def _rgb_from_string(rgb_string):
     try:
         regex = re.compile(r"rgb|[^\w,]", re.IGNORECASE)
@@ -597,10 +597,11 @@ def _rgb_from_string(rgb_string):
         return -1, -1, -1
     return red, green, blue
 
+
 def _rgb_to_name(red, green, blue):
     """Returns the localized name for the RGB value."""
 
-    hex_string = f'#{red:02x}{green:02x}{blue:02x}'
+    hex_string = f"#{red:02x}{green:02x}{blue:02x}"
     css_name = css_names.get(hex_string)
     if css_name:
         return css_name
@@ -626,6 +627,7 @@ def _rgb_to_name(red, green, blue):
 
     return css_names.get(match)
 
+
 def rgb_string_to_color_name(rgb_string):
     """Returns the localized color name for the RGB string."""
 
@@ -633,6 +635,7 @@ def rgb_string_to_color_name(rgb_string):
     if red < 0 or green < 0 or blue < 0:
         return ""
     return _rgb_to_name(red, green, blue)
+
 
 def normalize_rgb_string(rgb_string):
     """Returns a normalized RGB string so end users always get the same thing."""
@@ -642,10 +645,12 @@ def normalize_rgb_string(rgb_string):
         return ""
     return f"{red} {green} {blue}"
 
+
 def get_presentable_color_name(value):
     """Returns a presentable color name based on the user's settings."""
 
-    from . import speech_and_verbosity_manager # pylint: disable=import-outside-toplevel
+    from . import speech_and_verbosity_manager  # pylint: disable=import-outside-toplevel
+
     if speech_and_verbosity_manager.get_manager().get_use_color_names():
         return rgb_string_to_color_name(value)
     return normalize_rgb_string(value)

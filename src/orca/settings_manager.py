@@ -41,7 +41,7 @@ from typing import TYPE_CHECKING
 from gi.repository import GLib
 
 from . import debug
-from . import orca_i18n # pylint: disable=no-name-in-module
+from . import orca_i18n  # pylint: disable=no-name-in-module
 from . import settings
 from . import pronunciation_dictionary_manager
 from .acss import ACSS
@@ -49,6 +49,7 @@ from .ax_object import AXObject
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -267,8 +268,9 @@ class SettingsManager:
         # Handle both new format (root level) and old format (inside "general")
         starting_profile = prefs.get("startingProfile")
         if starting_profile is None:
-            starting_profile = prefs.get(
-                "general", {}).get("startingProfile", ["Default", "default"])
+            starting_profile = prefs.get("general", {}).get(
+                "startingProfile", ["Default", "default"]
+            )
 
         # Handle corrupted data where list was saved as string representation
         if isinstance(starting_profile, str):
@@ -301,8 +303,12 @@ class SettingsManager:
                     result[key] = value
 
         if "voices" in result:
-            for voice_type in (settings.DEFAULT_VOICE, settings.UPPERCASE_VOICE,
-                               settings.HYPERLINK_VOICE, settings.SYSTEM_VOICE):
+            for voice_type in (
+                settings.DEFAULT_VOICE,
+                settings.UPPERCASE_VOICE,
+                settings.HYPERLINK_VOICE,
+                settings.SYSTEM_VOICE,
+            ):
                 if voice_type not in result["voices"]:
                     result["voices"][voice_type] = ACSS({})
 
@@ -402,7 +408,7 @@ class SettingsManager:
         profile_keybindings: dict,
         app_general: dict | None = None,
         app_pronunciations: dict | None = None,
-        app_keybindings: dict | None = None
+        app_keybindings: dict | None = None,
     ) -> None:
         """Merge profile and app settings into the active settings."""
 
@@ -573,11 +579,7 @@ class SettingsManager:
 
     # pylint: disable-next=too-many-locals, too-many-branches
     def save_settings(
-        self,
-        script: Script,
-        general: dict,
-        pronunciations: dict,
-        keybindings: dict
+        self, script: Script, general: dict, pronunciations: dict, keybindings: dict
     ) -> None:
         """Save the settings provided for the script provided."""
 
@@ -611,7 +613,7 @@ class SettingsManager:
             profiles[self._profile] = {
                 "general": app_general,
                 "pronunciations": app_pronunciations,
-                "keybindings": app_keybindings
+                "keybindings": app_keybindings,
             }
             prefs["profiles"] = profiles
             file_name = os.path.join(self._prefs_dir, "app-settings", f"{app_name}.conf")
@@ -673,6 +675,7 @@ class SettingsManager:
         # newly saved settings when focus returns to the original application.
         # Use late import to avoid circular dependency.
         from . import script_manager  # pylint: disable=import-outside-toplevel
+
         script_manager.get_manager().clear_app_settings_snapshots()
 
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
@@ -734,8 +737,12 @@ class SettingsManager:
 
         profile_general, profile_pronunciations, profile_keybindings = self._load_profile_settings()
         self._apply_profile_and_app_settings(
-            profile_general, profile_pronunciations, profile_keybindings,
-            app_general, app_pronunciations, app_keybindings
+            profile_general,
+            profile_pronunciations,
+            profile_keybindings,
+            app_general,
+            app_pronunciations,
+            app_keybindings,
         )
         self._set_settings_runtime(self._settings)
 
@@ -749,7 +756,9 @@ class SettingsManager:
                     replacement = value
                 manager.set_pronunciation(key, replacement)
 
+
 _manager: SettingsManager = SettingsManager()
+
 
 def get_manager() -> SettingsManager:
     """Returns the Settings Manager singleton."""

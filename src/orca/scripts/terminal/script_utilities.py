@@ -40,8 +40,10 @@ from orca.ax_utilities_event import TextEventReason
 
 if TYPE_CHECKING:
     import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
 
 class Utilities(script_utilities.Utilities):
     """Script utilities for terminal presentation."""
@@ -51,7 +53,7 @@ class Utilities(script_utilities.Utilities):
         if not match:
             return event.any_data
 
-        adjusted = event.any_data[:match.start()]
+        adjusted = event.any_data[: match.start()]
         tokens = ["TERMINAL: Adjusted deletion: '", adjusted, "'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return adjusted
