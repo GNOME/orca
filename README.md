@@ -1,4 +1,4 @@
-# Orca v50.alpha
+# Orca v50.beta
 
 [TOC]
 
@@ -15,23 +15,17 @@ combinations of speech and/or braille.
 
 Orca works with applications and toolkits that support the assistive
 technology service provider interface (AT-SPI), which is the primary
-assistive technology infrastructure for the Solaris and Linux
-operating environments.  Applications and toolkits supporting the
-AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
-toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
-for the KDE Qt toolkit is currently being pursued.
+assistive technology infrastructure for Solaris and Linux. While Orca
+is part of the GNOME Project, it can be used in any accessible desktop
+environment.
 
-See also <https://orca.gnome.org> for detailed information on Orca,
+See <https://orca.gnome.org> for detailed information on Orca,
 including how to run Orca, how to communicate with the Orca user
 community, and where to log bugs and feature requests.
 
 ## Dependencies
 
-Orca v50.x is supported on GNOME 50.x only.  We highly suggest you
-use the latest releases of GNOME because they contain accessibility
-infrastructure and application bug fixes that help Orca work better.
-
-Orca also has the following dependencies:
+Orca has the following dependencies:
 
 * meson            - The build system used by Orca
 * Python 3         - Python platform
