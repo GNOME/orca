@@ -83,7 +83,8 @@ linters:
   allow_failure: true
 
 # Auto-format code with ruff and commit back to the branch.
-# Only runs on merge requests where we have push access.
+# Only runs on merge requests from branches in this project (not forks),
+# since the CI_JOB_TOKEN cannot push to external repositories.
 # If changes are pushed, exits with failure to stop this pipeline;
 # a new pipeline will start with the formatted code.
 auto-format:
@@ -97,7 +98,8 @@ auto-format:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TITLE =~ /^Draft:/'
       when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    # Only run for MRs from branches in this project, not forks (CI token can't push to forks)
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH == $CI_PROJECT_PATH'
   script:
     - source ci/env.sh
     - ruff format src/orca
