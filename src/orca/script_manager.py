@@ -271,6 +271,8 @@ class ScriptManager:
             toolkit_scripts = self.toolkit_scripts.get(app, {})
             toolkit_script = toolkit_scripts.get(obj_toolkit)
             if not toolkit_script:
+                tokens = ["SCRIPT MANAGER: Creating toolkit script for", app, obj, obj_toolkit]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 toolkit_script = self._create_script(app, obj)
                 toolkit_scripts[obj_toolkit] = toolkit_script
             self.toolkit_scripts[app] = toolkit_scripts
@@ -281,6 +283,8 @@ class ScriptManager:
             elif app in self.app_scripts:
                 app_script = self.app_scripts[app]
             else:
+                tokens = ["SCRIPT MANAGER: Creating app script for", app]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 app_script = self._create_script(app, None)
                 self.app_scripts[app] = app_script
         except (KeyError, AttributeError, ImportError) as error:

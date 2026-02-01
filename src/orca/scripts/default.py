@@ -110,6 +110,8 @@ if TYPE_CHECKING:
 class Script(script.Script):
     """The default Script for presenting information to the user."""
 
+    _commands_initialized: bool = False
+
     def get_listeners(self) -> dict[str, Callable]:
         """Sets up the AT-SPI event listeners for this script."""
 
@@ -186,6 +188,16 @@ class Script(script.Script):
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
+
+        tokens = ["DEFAULT: Setting up commands for", self.app]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if Script._commands_initialized:
+            msg = "DEFAULT: Commands already initialized."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        Script._commands_initialized = True
 
         manager = command_manager.get_manager()
         group_label = guilabels.KB_GROUP_DEFAULT

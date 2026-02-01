@@ -120,6 +120,7 @@ class LearnModePresenter:
         msg = "LEARN MODE PRESENTER: Is now active"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = True
+        command_manager.get_manager().set_learn_mode_active(True)
         return True
 
     def quit(
@@ -144,6 +145,7 @@ class LearnModePresenter:
         msg = "LEARN MODE PRESENTER: Is now inactive"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = False
+        command_manager.get_manager().set_learn_mode_active(False)
         return True
 
     def handle_event(

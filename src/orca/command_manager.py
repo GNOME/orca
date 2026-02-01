@@ -1063,6 +1063,8 @@ class CommandManager:
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
         self._is_desktop: bool = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
         self._initialized: bool = False
+        self._numlock_on: bool = False
+        self._learn_mode_active: bool = False
 
         msg = "COMMAND MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1150,13 +1152,38 @@ class CommandManager:
 
         return True
 
+    def set_learn_mode_active(self, active: bool) -> None:
+        """Called by learn_mode_presenter to notify of learn mode state changes."""
+
+        self._learn_mode_active = active
+        msg = f"COMMAND MANAGER: Learn mode is now {'active' if active else 'inactive'}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if not active and self._is_desktop:
+            self._update_numlock_grabs()
+
     def handle_numlock_toggled(self, numlock_on: bool) -> None:
         """Handles NumLock state changes by updating grabs for keypad commands."""
+
+        self._numlock_on = numlock_on
 
         if not self._is_desktop:
             return
 
         msg = f"COMMAND MANAGER: NumLock toggled to {'on' if numlock_on else 'off'}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self._learn_mode_active:
+            msg = "COMMAND MANAGER: Skipping grab updates while in learn mode."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        self._update_numlock_grabs()
+
+    def _update_numlock_grabs(self) -> None:
+        """Updates KP_* grabs based on current NumLock state."""
+
+        msg = f"COMMAND MANAGER: Updating NumLock grabs. NumLock is on: {self._numlock_on}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         def update_grabs() -> bool:
@@ -1167,9 +1194,9 @@ class CommandManager:
                 if kb is None or not kb.keysymstring.startswith("KP_"):
                     continue
 
-                if numlock_on and kb.has_grabs():
+                if self._numlock_on and kb.has_grabs():
                     kb.remove_grabs()
-                elif not numlock_on and not kb.has_grabs():
+                elif not self._numlock_on and not kb.has_grabs():
                     kb.add_grabs()
             return False
 
@@ -1254,34 +1281,15 @@ class CommandManager:
         """Adds a command to the registry and sets its active keybinding."""
 
         if isinstance(command, KeyboardCommand):
-            # Remove any existing command with the same name from the key index
-            # before replacing it in the dict, and transfer its keybinding and grabs.
             name = command.get_name()
             old_cmd = self._keyboard_commands.get(name)
-
-            old_kb = None
             if old_cmd is not None:
-                old_kb = old_cmd.get_keybinding()
+                tokens = ["COMMAND MANAGER: Unexpected re-registration of", command]
+                debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
                 self._remove_from_key_index(old_cmd)
 
             self._keyboard_commands[name] = command
-
-            # Preserve user overrides but not script defaults. If the old keybinding
-            # differs from the old command's default, it's a user override and should
-            # be preserved. Otherwise, use the new command's default.
-            default_kb = command.get_default_keybinding(self._is_desktop)
-            if old_cmd is not None:
-                old_default = old_cmd.get_default_keybinding(self._is_desktop)
-                if old_kb != old_default:
-                    # User override - preserve it
-                    command.set_keybinding(old_kb)
-                    msg = f"COMMAND MANAGER: Preserving user override for '{name}': {old_kb}"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                else:
-                    # Old keybinding was just the default - use new command's default
-                    command.set_keybinding(default_kb)
-            else:
-                command.set_keybinding(default_kb)
+            command.set_keybinding(command.get_default_keybinding(self._is_desktop))
             self._add_to_key_index(command)
 
         elif isinstance(command, BrailleCommand):
@@ -1348,6 +1356,8 @@ class CommandManager:
             # Empty list means the user explicitly unbound this command
             if binding_tuples == []:
                 if old_kb is not None:
+                    tokens = ["COMMAND MANAGER: Unbinding", command_name, "(user override)"]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     self._remove_from_key_index(cmd)
                     cmd.set_keybinding(None)
                 continue
@@ -1357,6 +1367,8 @@ class CommandManager:
                 keysym, _mask, mods, clicks = binding_tuple
                 if not keysym:
                     if old_kb is not None:
+                        tokens = ["COMMAND MANAGER: Unbinding", command_name, "(empty keysym)"]
+                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                         self._remove_from_key_index(cmd)
                         cmd.set_keybinding(None)
                 else:
@@ -1544,6 +1556,8 @@ class CommandManager:
         transferred_keys = set(transferred)
         for key, new_kb in new_bindings.items():
             if key not in transferred_keys and not new_kb.has_grabs():
+                if self._is_desktop and self._numlock_on and key[0].startswith("KP_"):
+                    continue
                 new_kb.add_grabs()
                 if new_kb.has_grabs():
                     added.append(key)
