@@ -1,6 +1,6 @@
 # -*- indent-tabs-mode: nil -*-
 #
-# Continuous Integration configuration for at-spi2-core
+# Continuous Integration configuration for Orca
 #
 # Full documentation for Gitlab CI: https://docs.gitlab.com/ee/ci/
 #
@@ -99,7 +99,7 @@ auto-format:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TITLE =~ /^Draft:/'
       when: never
     # Only run for MRs from branches in this project, not forks (CI token can't push to forks)
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH == $CI_PROJECT_PATH'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH == $CI_MERGE_REQUEST_PROJECT_PATH'
   script:
     - source ci/env.sh
     - ruff format src/orca
