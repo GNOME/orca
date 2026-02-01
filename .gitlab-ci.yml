@@ -95,6 +95,8 @@ auto-format:
     - job: opensuse-container@x86_64
       artifacts: false
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TITLE =~ /^Draft:/'
+      when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
     - source ci/env.sh
