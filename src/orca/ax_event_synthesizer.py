@@ -23,12 +23,6 @@
 
 """Provides support for synthesizing accessible input events."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
-                "Copyright (c) 2018-2023 Igalia, S.L."
-__license__   = "LGPL"
 
 import gi
 gi.require_version("Atspi", "2.0")

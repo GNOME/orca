@@ -23,11 +23,6 @@
 
 """Provides localized color names."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2014 Igalia, S.L."
-__license__   = "LGPL"
 
 import re
 

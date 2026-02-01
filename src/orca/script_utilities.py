@@ -26,11 +26,6 @@
 
 """Utilities for providing app/toolkit-specific information about objects and events."""
 
-__id__ = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
-__license__   = "LGPL"
 
 from typing import Callable
 

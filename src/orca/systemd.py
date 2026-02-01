@@ -20,11 +20,6 @@
 
 """Orca's integration with the systemd service manager"""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2025 Red Hat"
-__license__   = "LGPL"
 
 import errno
 import os

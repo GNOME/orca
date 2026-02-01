@@ -25,12 +25,6 @@
 
 """Provides support for a flat review find."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc." \
-                "Copyright (c) 2022 Igalia, S.L."
-__license__   = "LGPL"
 
 
 import copy

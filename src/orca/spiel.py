@@ -31,12 +31,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-__id__ = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__author__    = "<andyholmes@gnome.org>"
-__copyright__ = "Copyright © 2024 GNOME Foundation Inc. "
-__license__   = "LGPL"
 
 import locale
 import time

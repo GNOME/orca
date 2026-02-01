@@ -24,11 +24,6 @@
 
 """Utilities for obtaining state-related information."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2023 Igalia, S.L."
-__license__   = "LGPL"
 
 import gi
 gi.require_version("Atspi", "2.0")

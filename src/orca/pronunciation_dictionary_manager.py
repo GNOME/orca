@@ -25,11 +25,6 @@
 from __future__ import annotations
 from typing import Callable, TYPE_CHECKING
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 import gi
 gi.require_version("Gtk", "3.0")

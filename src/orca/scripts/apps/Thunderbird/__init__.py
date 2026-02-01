@@ -21,11 +21,6 @@
 
 """Custom script for Thunderbird."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 # https://gitlab.gnome.org/GNOME/orca/-/issues/358
 # ruff: noqa: F401

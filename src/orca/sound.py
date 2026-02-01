@@ -19,11 +19,6 @@
 
 """Utilities for playing sounds."""
 
-__id__        = "$Id:$"
-__version__   = "$Revision:$"
-__date__      = "$Date:$"
-__copyright__ = "Copyright (c) 2016 Orca Team"
-__license__   = "LGPL"
 
 import gi
 from gi.repository import GLib

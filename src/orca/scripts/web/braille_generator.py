@@ -27,13 +27,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
-                "Copyright (c) 2010-2011 Orca Team" \
-                "Copyright (c) 2011-2015 Igalia, S.L."
-__license__   = "LGPL"
 
 from typing import Any, TYPE_CHECKING
 

@@ -19,11 +19,6 @@
 
 """Dictionary of phonetic names for letters of the alphabet."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 from .orca_i18n import _ # pylint: disable=import-error
 

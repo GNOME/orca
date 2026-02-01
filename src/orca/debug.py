@@ -21,11 +21,6 @@
 
 """Handles writing debugging messages to the debug file or stderr."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 import inspect
 import traceback

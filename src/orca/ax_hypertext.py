@@ -22,11 +22,6 @@
 
 """Utilities for obtaining information about accessible hypertext and hyperlinks."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2024 Igalia, S.L."
-__license__   = "LGPL"
 
 import os
 import re

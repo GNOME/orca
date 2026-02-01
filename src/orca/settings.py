@@ -19,11 +19,6 @@
 
 """Settings managed by Orca."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 
 from .acss import ACSS

@@ -30,11 +30,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2023 Igalia, S.L."
-__license__   = "LGPL"
 
 from orca import braille
 from orca import command_manager

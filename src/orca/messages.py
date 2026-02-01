@@ -25,12 +25,6 @@ have been put in their own module so that we can present them in
 the correct language when users change the synthesizer language
 on the fly without having to reload a bunch of modules."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
-                "Copyright (c) 2010-2013 The Orca Team"
-__license__   = "LGPL"
 
 from .orca_i18n import _, C_, ngettext # pylint: disable=import-error
 from .orca_platform import version # pylint: disable=import-error

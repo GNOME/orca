@@ -27,12 +27,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-__id__ = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__author__    = "Tomas Cerha <cerha@brailcom.org>"
-__copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
-__license__   = "LGPL"
 
 import gc
 import locale

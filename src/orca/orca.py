@@ -24,13 +24,6 @@
 
 """The main module for the Orca screen reader."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
-                "Copyright (c) 2010-2011 The Orca Team" \
-                "Copyright (c) 2012 Igalia, S.L."
-__license__   = "LGPL"
 
 import os
 import signal

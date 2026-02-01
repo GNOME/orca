@@ -30,11 +30,6 @@
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2025 Valve Corporation."
-__license__   = "LGPL"
 
 import enum
 import inspect

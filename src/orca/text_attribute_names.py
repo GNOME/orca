@@ -19,11 +19,6 @@
 
 """Dictionaries of localized text attribute names and values."""
 
-__id__ = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 from .orca_i18n import C_ # pylint: disable=import-error
 

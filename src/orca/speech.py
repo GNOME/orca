@@ -23,11 +23,6 @@
 
 from __future__ import annotations
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
-__license__   = "LGPL"
 
 import importlib
 from typing import Any, Callable, TYPE_CHECKING

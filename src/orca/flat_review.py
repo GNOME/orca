@@ -28,12 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
-                "Copyright (c) 2016-2025 Igalia, S.L."
-__license__   = "LGPL"
 
 import re
 

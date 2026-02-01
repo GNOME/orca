@@ -24,12 +24,6 @@
 
 from __future__ import annotations
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
-                "Copyright (c) 2011-2026 Igalia, S.L."
-__license__   = "LGPL"
 
 import enum
 

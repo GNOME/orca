@@ -21,11 +21,6 @@
 
 """Custom script for kwin."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2019 Igalia, S.L."
-__license__   = "LGPL"
 
 from orca.scripts import switcher
 from orca.scripts.toolkits import Qt

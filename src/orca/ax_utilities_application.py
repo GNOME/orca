@@ -23,12 +23,6 @@
 
 """Utilities for obtaining information about accessible applications."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2023-2024 Igalia, S.L." \
-                "Copyright (c) 2024 GNOME Foundation Inc."
-__license__   = "LGPL"
 
 import subprocess
 

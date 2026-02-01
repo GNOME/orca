@@ -23,11 +23,6 @@
 
 """Utilities for obtaining objects via the collection interface."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2023 Igalia, S.L."
-__license__   = "LGPL"
 
 import time
 
