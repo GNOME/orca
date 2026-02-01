@@ -20,6 +20,7 @@ include:
 stages:
   - container-build
   - build
+  - format
   - lint
   - pages
   - release
@@ -72,11 +73,48 @@ linters:
   needs:
     - job: opensuse-container@x86_64
       artifacts: false
+    - job: auto-format
+      optional: true
   script:
     - source ci/env.sh
+    - ruff format --check src/orca
     - ruff check src/orca
     - mypy src/orca
   allow_failure: true
+
+# Auto-format code with ruff and commit back to the branch.
+# Only runs on merge requests where we have push access.
+# If changes are pushed, exits with failure to stop this pipeline;
+# a new pipeline will start with the formatted code.
+auto-format:
+  stage: format
+  extends:
+    - '.orca_opensuse_tumbleweed_x86_64'
+    - '.fdo.distribution-image@opensuse'
+  needs:
+    - job: opensuse-container@x86_64
+      artifacts: false
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script:
+    - source ci/env.sh
+    - ruff format src/orca
+    - ruff check --fix src/orca || true
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        git config user.name "GitLab CI"
+        git config user.email "ci@gitlab.gnome.org"
+        git remote set-url origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.gnome.org/${CI_MERGE_REQUEST_SOURCE_PROJECT_PATH}.git"
+        git fetch origin "${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
+        git checkout "${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
+        git add -A
+        git commit -m "style: auto-format with ruff"
+        git push origin "${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
+        echo "Pushed formatting changes. A new pipeline will run."
+        exit 1
+      else
+        echo "No formatting changes needed"
+      fi
 
 # Build a tarball for the release if we have a tag.
 build-release-tarball:
