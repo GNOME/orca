@@ -1658,9 +1658,9 @@ SPEECH_ONLY_SPEAK_DISPLAYED_TEXT = _("Only speak displayed text")
 SPEECH_SPEAK_COLORS_AS_NAMES = _("S_peak colors as names")
 
 # Translators: This is a label for a widget associated with whether Orca will
-# speak the mnemonic (underlined character) of an object, such as a button or
+# present the mnemonic (underlined character) of an object, such as a button or
 # menu item, when it becomes focused/selected.
-SPEECH_SPEAK_OBJECT_MNEMONICS = _("Mnemonics")
+PRESENT_OBJECT_MNEMONICS = _("Mnemonics")
 
 # Translators: If this widget is enabled, Orca will speak the accessible
 # description of an object. Whereas the accessible name of an object tends to
@@ -1726,9 +1726,9 @@ SPEECH_SPEAK_TUTORIAL_MESSAGES = _("Tutorial messages")
 # via speech (descriptions, mnemonics, child position).
 SPEECH_OBJECT_DETAILS = _("Spoken Object Details")
 
-# Translators: This is the label for a checkbox on the Speech preferences page.
-# When checked, Orca will provide detailed/verbose object descriptions.
-SPEECH_OBJECT_PRESENTATION_IS_DETAILED = _("Object presentation is detailed")
+# Translators: This is a setting in the Speech and Braille preferences pages.
+# When enabled, Orca will provide detailed/verbose object descriptions.
+OBJECT_PRESENTATION_IS_DETAILED = _("Object presentation is detailed")
 
 # Translators: This is the label for a checkbox on the Speech preferences page.
 # When checked, Orca will apply the user's pronunciation dictionary when speaking.

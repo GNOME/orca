@@ -288,7 +288,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 member_of=guilabels.GENERAL
             ),
             preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.SPEECH_OBJECT_PRESENTATION_IS_DETAILED,
+                label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=manager._get_verbosity_is_verbose,
                 setter=manager._set_verbosity_from_bool,
                 prefs_key="speechVerbosityLevel",
@@ -3457,7 +3457,7 @@ class SpeechAndVerbosityManager:
             ),
             SpeechPreference(
                 "enableMnemonicSpeaking",
-                guilabels.SPEECH_SPEAK_OBJECT_MNEMONICS,
+                guilabels.PRESENT_OBJECT_MNEMONICS,
                 self.get_speak_widget_mnemonic,
                 self.set_speak_widget_mnemonic,
             ),

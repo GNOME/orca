@@ -308,6 +308,13 @@ class BrailleGenerator(generator.Generator):
             result.append("(" + accelerator + ")")
         return result
 
+    def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if not (braille_presenter.get_presenter().get_present_mnemonics()
+                or args.get("forceMnemonic", False)):
+            return []
+
+        return super()._generate_keyboard_mnemonic(obj, **args)
+
     ################################ PROGRESS BARS ##################################
 
     @log_generator_output

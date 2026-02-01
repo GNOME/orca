@@ -164,6 +164,7 @@ brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
 brailleProgressBarUpdates: bool = False
 progressBarBrailleInterval: int = 10
 progressBarBrailleVerbosity: int = PROGRESS_BAR_APPLICATION
+displayObjectMnemonic: bool = True
 
 # Managed by mouse_review.py
 enableMouseReview: bool = False

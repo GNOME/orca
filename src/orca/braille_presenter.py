@@ -77,9 +77,10 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
     """GtkGrid containing the Braille Verbosity preferences page."""
 
     def __init__(self, presenter: BraillePresenter) -> None:
+        self._presenter = presenter
         controls = [
             preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.SPEECH_OBJECT_PRESENTATION_IS_DETAILED,
+                label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=presenter._get_verbosity_is_detailed,
                 setter=presenter._set_verbosity_is_detailed,
                 prefs_key="brailleVerbosityLevel"
@@ -94,11 +95,23 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.BRAILLE_ABBREVIATED_ROLE_NAMES,
                 getter=presenter._get_use_abbreviated_rolenames,
                 setter=presenter._set_use_abbreviated_rolenames,
-                prefs_key="brailleRolenameStyle"
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.PRESENT_OBJECT_MNEMONICS,
+                getter=presenter.get_present_mnemonics,
+                setter=presenter.set_present_mnemonics,
+                prefs_key="displayObjectMnemonic"
             ),
         ]
 
         super().__init__(guilabels.VERBOSITY, controls)
+
+    def save_settings(self) -> dict[str, Any]:
+        """Save settings, adding integer value for rolename style."""
+
+        result = super().save_settings()
+        result["brailleRolenameStyle"] = settings.brailleRolenameStyle
+        return result
 
 
 class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -567,6 +580,21 @@ class BraillePresenter:
         msg = f"BRAILLE PRESENTER: Setting rolename style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.brailleRolenameStyle = level.value
+        return True
+
+    @dbus_service.getter
+    def get_present_mnemonics(self) -> bool:
+        """Returns whether mnemonics are presented on the braille display."""
+
+        return settings.displayObjectMnemonic
+
+    @dbus_service.setter
+    def set_present_mnemonics(self, value: bool) -> bool:
+        """Sets whether mnemonics are presented on the braille display."""
+
+        msg = f"BRAILLE PRESENTER: Setting present mnemonics to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.displayObjectMnemonic = value
         return True
 
     @dbus_service.getter

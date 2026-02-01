@@ -770,6 +770,38 @@ class TestBraillePresenter:
         presenter._set_flash_duration_seconds(10)
         assert settings_mock.brailleFlashTime == 10000
 
+    def test_get_present_mnemonics(self, test_context: OrcaTestContext):
+        """Test getting present mnemonics setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock = essential_modules["orca.settings"]
+
+        settings_mock.displayObjectMnemonic = True
+        assert presenter.get_present_mnemonics() is True
+
+        settings_mock.displayObjectMnemonic = False
+        assert presenter.get_present_mnemonics() is False
+
+    def test_set_present_mnemonics(self, test_context: OrcaTestContext):
+        """Test setting present mnemonics."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        result = presenter.set_present_mnemonics(True)
+        assert result is True
+        assert settings_mock.displayObjectMnemonic is True
+
+        result = presenter.set_present_mnemonics(False)
+        assert result is True
+        assert settings_mock.displayObjectMnemonic is False
+
 
 @pytest.mark.unit
 class TestBraillePreferencesGridUI:
@@ -823,11 +855,14 @@ class TestBraillePreferencesGridUI:
         settings_mock.brailleProgressBarUpdates = True
         settings_mock.progressBarBrailleInterval = 10
         settings_mock.progressBarBrailleVerbosity = 0
+        settings_mock.displayObjectMnemonic = True
+        settings_mock.enableBrailleContext = True
 
         guilabels_mock = essential_modules["orca.guilabels"]
-        guilabels_mock.SPEECH_OBJECT_PRESENTATION_IS_DETAILED = "Detailed"
+        guilabels_mock.OBJECT_PRESENTATION_IS_DETAILED = "Detailed"
         guilabels_mock.BRAILLE_SHOW_CONTEXT = "Show context"
         guilabels_mock.BRAILLE_ABBREVIATED_ROLE_NAMES = "Abbreviated role names"
+        guilabels_mock.PRESENT_OBJECT_MNEMONICS = "Present mnemonics"
         guilabels_mock.VERBOSITY = "Verbosity"
         guilabels_mock.BRAILLE_ENABLE_CONTRACTED_BRAILLE = "Enable contracted braille"
         guilabels_mock.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR = "Expand word at cursor"
@@ -874,7 +909,7 @@ class TestBraillePreferencesGridUI:
         grid = BrailleVerbosityPreferencesGrid(presenter)
 
         assert isinstance(grid, Gtk.Grid)
-        assert len(grid._widgets) == 3
+        assert len(grid._widgets) == 4
 
     def test_braille_display_settings_grid_creates_widgets(
         self, test_context: OrcaTestContext
