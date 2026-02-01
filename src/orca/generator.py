@@ -606,6 +606,12 @@ class Generator:
         return role
 
     @log_generator_output
+    def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if mnemonic := AXObject.get_mnemonic(obj):
+            return [mnemonic]
+        return []
+
+    @log_generator_output
     def _get_presentable_descendants(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of presentable descendants of obj."""
 

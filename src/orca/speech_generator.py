@@ -1215,13 +1215,12 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        result: list[Any] = []
-        if speech_and_verbosity_manager.get_manager().get_speak_widget_mnemonic() \
-           or args.get("forceMnemonic", False):
-            mnemonic = AXObject.get_mnemonic(obj)
-            if mnemonic:
-                result = [mnemonic[-1]] # we just want a single character
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
+        if not (speech_and_verbosity_manager.get_manager().get_speak_widget_mnemonic() \
+                or args.get("forceMnemonic", False)):
+            return []
+
+        if result := super()._generate_keyboard_mnemonic(obj, **args):
+            result.extend(self.voice(SYSTEM, obj=obj, **args))
 
         return result
 
