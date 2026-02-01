@@ -377,8 +377,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         label = Gtk.Label(label=label_text, xalign=0)
         label.set_margin_start(12)
         label.set_margin_end(12)
-        label.set_margin_top(8)
-        label.set_margin_bottom(8)
+        label.set_margin_top(6)
+        label.set_margin_bottom(6)
         row.add(label)
 
         self.listbox.add(row)
