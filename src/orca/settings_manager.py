@@ -67,7 +67,7 @@ class SettingsManager:
     }
 
     def __init__(self) -> None:
-        debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initializing", True)
+        debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initializing. Here's some extra test for a long line which CI will hopefully catch and fix", True)
 
         self._profile: str = "default"
         self._prefs_dir: str = ""
