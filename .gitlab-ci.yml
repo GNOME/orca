@@ -106,11 +106,13 @@ auto-format:
     - ruff check --fix src/orca || true
     - |
       if [ -n "$(git status --porcelain)" ]; then
+        git stash
         git config user.name "GitLab CI"
         git config user.email "ci@gitlab.gnome.org"
         git remote set-url origin "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.gnome.org/${CI_MERGE_REQUEST_SOURCE_PROJECT_PATH}.git"
         git fetch origin "${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
         git checkout "${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
+        git stash pop
         git add -A
         git commit -m "style: auto-format with ruff"
         git push origin "${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
