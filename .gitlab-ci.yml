@@ -124,7 +124,7 @@ auto-format:
 
 # Build a tarball for the release if we have a tag.
 build-release-tarball:
-  stage: release
+  stage: build
   extends:
     - '.orca_opensuse_tumbleweed_x86_64'
     - '.fdo.distribution-image@opensuse'
