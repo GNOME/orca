@@ -364,6 +364,7 @@ class PreferencesGridBase(Gtk.Grid):
         self._multipage_category_map: dict[str, tuple[str, PreferencesGridBase]] | None = None
         self._multipage_enable_listbox: FocusManagedListBox | None = None
         self._multipage_categories_listbox: Gtk.ListBox | None = None
+        self._multipage_last_activated_row: Gtk.ListBoxRow | None = None
 
     @staticmethod
     def _set_margins(
@@ -1069,6 +1070,8 @@ class PreferencesGridBase(Gtk.Grid):
         if not category_id or not self._multipage_stack:
             return
 
+        self._multipage_last_activated_row = row
+
         if self._multipage_enable_listbox:
             self._multipage_enable_listbox.hide()
 
@@ -1173,6 +1176,12 @@ class PreferencesGridBase(Gtk.Grid):
         """Switch back to categories view in multi-page stack."""
 
         if self._multipage_stack:
+            # Explicitly hide the current child so AT-SPI updates visibility states
+            # for the categories listbox. Without this, items may be reported as
+            # "not showing" and not presented.
+            current_child = self._multipage_stack.get_visible_child()
+            if current_child:
+                current_child.hide()
             self._multipage_stack.set_visible_child_name("categories")
 
         if self._multipage_enable_listbox:
@@ -1182,6 +1191,11 @@ class PreferencesGridBase(Gtk.Grid):
             self._multipage_title_callback(self._multipage_main_title)
 
         if self._multipage_categories_listbox:
+            self._multipage_categories_listbox.show_all()
+
+        if self._multipage_last_activated_row:
+            self._multipage_last_activated_row.grab_focus()
+        elif self._multipage_categories_listbox:
             self._multipage_categories_listbox.grab_focus()
 
     def multipage_on_becoming_visible(self) -> None:
