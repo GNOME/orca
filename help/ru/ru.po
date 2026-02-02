@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2024-01-10 13:09+0000\n"
-"PO-Revision-Date: 2024-01-13 12:39+0300\n"
+"POT-Creation-Date: 2026-01-27 10:48+0000\n"
+"PO-Revision-Date: 2026-01-27 16:54+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: ru\n"
 "Language: ru\n"
@@ -16,147 +16,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
 msgstr "Olesya Gerasimenko <gammaray@basealt.ru>, 2019"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:6
-msgctxt "sort"
-msgid "4. Bookmarks"
-msgstr "4. Закладки"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:7
-msgctxt "link"
-msgid "Bookmarks"
-msgstr "Закладки"
-
-#. (itstool) path: info/desc
-#: C/commands_bookmarks.page:8
-msgid "Commands to bookmark and retrieve objects"
-msgstr "Команды для добавления в закладки и получения объектов"
-
-#. (itstool) path: credit/name
-#: C/commands_bookmarks.page:12 C/commands_braille.page:12
-#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
-#: C/commands_debugging.page:10 C/commands_find.page:12
-#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
-#: C/commands_mouse.page:13 C/commands.page:8 C/commands_profiles.page:12
-#: C/commands_reading.page:14 C/commands_speech_settings.page:12
-#: C/commands_structural_navigation.page:12 C/commands_table.page:12
-#: C/commands_time_date_notifications.page:12 C/commands_where_am_i.page:12
-#: C/howto_bookmarks.page:7 C/howto_documents.page:10
-#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
-#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
-#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
-#: C/howto_notifications.page:8 C/howto_orca_find.page:8
-#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
-#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
-#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_web.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_spellcheck.page:10
-#: C/preferences_table_navigation.page:14 C/preferences_text_attributes.page:13
-#: C/preferences_voice.page:11
-msgid "Joanmarie Diggs"
-msgstr "Joanmarie Diggs"
-
-#. (itstool) path: license/p
-#: C/commands_bookmarks.page:16 C/commands_braille.page:16
-#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
-#: C/commands_debugging.page:14 C/commands_find.page:16
-#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
-#: C/commands_mouse.page:17 C/commands.page:12 C/commands_profiles.page:16
-#: C/commands_reading.page:18 C/commands_speech_settings.page:16
-#: C/commands_structural_navigation.page:16 C/commands_table.page:16
-#: C/commands_time_date_notifications.page:16 C/commands_where_am_i.page:16
-#: C/howto_bookmarks.page:11 C/howto_documents.page:14
-#: C/howto_flat_review.page:12 C/howto_forms.page:14
-#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
-#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
-#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
-#: C/howto_orca_find.page:12 C/howto_profiles.page:12
-#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
-#: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
-#: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_web.page:16 C/preferences_general.page:15
-#: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
-#: C/preferences_key_echo.page:15 C/preferences.page:11
-#: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
-#: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
-#: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
-msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons Share Alike 3.0"
-
-#. (itstool) path: page/title
-#: C/commands_bookmarks.page:19
-msgid "Bookmark Commands"
-msgstr "Команды закладок"
-
-#. (itstool) path: page/p
-#: C/commands_bookmarks.page:20
-msgid ""
-"<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later."
-msgstr ""
-"<app>Orca</app> предоставляет несколько команд, которые можно использовать "
-"для добавления указанного объекта в закладки. Добавление в закладки "
-"позволяет в дальнейшем вернуться к этому объекту."
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:26
-msgid ""
-"Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
-"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Сохранить закладку в слот с номером: <keyseq><key>Модификатор Orca</key> "
-"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:32
-msgid ""
-"Save the defined bookmarks for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Alt</key><key>B</key></keyseq>"
-msgstr ""
-"Сохранить заданные закладки для приложения или страницы: "
-"<keyseq><key>Модификатор Orca</key><key>Alt</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:38
-msgid ""
-"Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
-"<key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Перейти к определённой закладке с номером: <keyseq><key>Модификатор Orca</"
-"key> <key>1</key></keyseq>-<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:44
-msgid ""
-"Go to the previous bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Shift</key><key>B</key> </keyseq>"
-msgstr ""
-"Перейти к предыдущей закладке для приложения или страницы: "
-"<keyseq><key>Модификатор Orca</key><key>Shift</key><key>B</key> </keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:51
-msgid ""
-"Go to the next bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>B</key></keyseq>"
-msgstr ""
-"Перейти к следующей закладке для приложения или страницы: "
-"<keyseq><key>Модификатор Orca</key><key>B</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -174,6 +39,62 @@ msgstr "Брайль"
 #: C/commands_braille.page:8
 msgid "Commands executable on braille displays"
 msgstr "Команды, которые выполняются на брайлевских дисплеях"
+
+#. (itstool) path: credit/name
+#: C/commands_braille.page:12 C/commands_chat.page:12
+#: C/commands_controlling_orca.page:11 C/commands_debugging.page:10
+#: C/commands_find.page:12 C/commands_flat_review.page:12
+#: C/commands_live_regions.page:12 C/commands_mouse.page:13 C/commands.page:8
+#: C/commands_profiles.page:12 C/commands_reading.page:14
+#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
+#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
+#: C/commands_where_am_i.page:12 C/howto_documents.page:10
+#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
+#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
+#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
+#: C/howto_notifications.page:7 C/howto_orca_find.page:8
+#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
+#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
+#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
+#: C/introduction.page:10 C/preferences_braille.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#. (itstool) path: license/p
+#: C/commands_braille.page:16 C/commands_chat.page:16
+#: C/commands_controlling_orca.page:15 C/commands_debugging.page:14
+#: C/commands_find.page:16 C/commands_flat_review.page:16
+#: C/commands_live_regions.page:16 C/commands_mouse.page:17 C/commands.page:12
+#: C/commands_profiles.page:16 C/commands_reading.page:18
+#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
+#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
+#: C/commands_where_am_i.page:16 C/howto_documents.page:14
+#: C/howto_flat_review.page:12 C/howto_forms.page:14
+#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
+#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
+#: C/howto_mouse_review.page:12 C/howto_notifications.page:11
+#: C/howto_orca_find.page:12 C/howto_profiles.page:12
+#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
+#: C/howto_tables.page:14 C/howto_text_attributes.page:14
+#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
+#: C/preferences_braille.page:15 C/preferences_chat.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
+msgid "Creative Commons Share Alike 3.0"
+msgstr "Creative Commons Share Alike 3.0"
 
 #. (itstool) path: page/title
 #: C/commands_braille.page:19
@@ -1089,54 +1010,48 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
 msgid ""
-"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-"key><key>Backslash</key></keyseq>"
+"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
+"keyseq>"
 msgstr ""
 "Следить за изменяющимися областями: <keyseq><key>Модификатор Orca</"
-"key><key>Shift</key><key>Обратная косая черта</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:33
-msgid "Advance live region politeness setting: <key>Backslash</key>"
-msgstr ""
-"Расширенные настройки работы с изменяющимися областями: <key>Обратная косая "
-"черта</key>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:38
-msgid ""
-"Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
-"key></keyseq>"
-msgstr ""
-"Отключить вежливое напоминание об изменяющихся областях: <keyseq><key>Shift</"
 "key><key>Обратная косая черта</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:44
-msgid ""
-"Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
-msgstr ""
-"Перейти к следующей/предыдущей изменяющейся области: <keyseq><key>D</key></"
-"keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
+#: C/commands_live_regions.page:33
+msgid "Advance live region politeness setting: (Unbound)"
+msgstr "Расширенные настройки работы с изменяющимися областями: (Без привязки)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:50
+#: C/commands_live_regions.page:36
+msgid "Set default politeness level to off: (Unbound)"
+msgstr ""
+"Установить уровень вежливости по умолчанию на «выключено»: (Без привязки)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:39
+msgid ""
+"Go to next/previous live region in the document's reading order: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
+msgstr ""
+"Перейти к следующей/предыдущей изменяющейся области в порядке чтения "
+"документа: <keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</"
+"key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:45
+msgid "Review the next/previous saved live region message: (Unbound)"
+msgstr ""
+"Просмотр следующего/предыдущего сохраненного уведомления изменяющейся "
+"области: (Без привязки)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:48
 msgid ""
 "Go to last live region which made an announcement: <keyseq><key>Y</key></"
 "keyseq>"
 msgstr ""
 "Перейти к последней объявленной изменяющейся области: <keyseq><key>Y</key></"
 "keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:56
-msgid ""
-"Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
-"key></keyseq> through <key>F9</key>"
-msgstr ""
-"Повторить предыдущие сообщения об изменяющихся областях: "
-"<keyseq><key>Модификатор Orca</key><key>F1</key></keyseq> по <key>F9</key>"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
@@ -2625,85 +2540,6 @@ msgstr ""
 "Сообщить размер и расположение текущего объекта в пикселах: (Не задано)"
 
 #. (itstool) path: info/title
-#: C/howto_bookmarks.page:4
-msgctxt "sort"
-msgid "6. Bookmarks"
-msgstr "6. Закладки"
-
-#. (itstool) path: info/desc
-#: C/howto_bookmarks.page:5
-msgid "Storing and retrieving objects"
-msgstr "Хранение и получение объектов"
-
-#. (itstool) path: page/title
-#: C/howto_bookmarks.page:14
-msgid "Bookmarks"
-msgstr "Закладки"
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:15
-msgid ""
-"<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
-"of interest. It includes the following features:"
-msgstr ""
-"Благодаря закладкам <app>Orca</app> можно отмечать интересные объекты. "
-"Поддерживаются следующие возможности:"
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:21
-msgid ""
-"You are not limited to a single object: You can set up to six bookmarks per "
-"environment. You can also save bookmarks so that they will persist from Orca "
-"session to Orca session."
-msgstr ""
-"В закладки можно добавить несколько объектов — поддерживается установка до "
-"шести закладок в текущей рабочей среде. Их также можно сохранить, чтобы они "
-"не пропали по завершению текущего сеанса Orca."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:28
-msgid ""
-"Having set a bookmark you can navigate to it later, and do so regardless of "
-"whether or not you have chosen to permanently save the bookmarks associated "
-"with your current environment. Navigation can be based on the number of the "
-"bookmark should you wish to jump directly to a specific item. Alternatively, "
-"you can navigate to the next or previous bookmark just like you can a <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> object."
-msgstr ""
-"После установки закладки к соответствующему объекту будет можно вернуться в "
-"дальнейшем, независимо от того, задано ли постоянное хранение закладок, "
-"связанных с текущей рабочей средой. Можно выполнить навигацию по номеру "
-"закладки, если необходимо сразу перейти к определённому объекту. Или можно "
-"перейти к следующей или предыдущей закладке таким же образом, как к объекту "
-"<link xref=\"howto_structural_navigation\">структурной навигации</link>."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:39
-msgid ""
-"Bookmarkable objects can be widgets within an application or objects on the "
-"web page you are reading. Which environment you are in determines what "
-"happens as you navigate amongst bookmarks: If you are in web content, the "
-"caret will be moved to the bookmark so that you can continue reading; "
-"otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
-"activated with the bookmark becoming the current review item."
-msgstr ""
-"В закладки можно добавлять виджеты, имеющиеся внутри приложения, или объекты "
-"на веб-странице. Действия, которые выполняются при навигации по закладкам, "
-"зависят от текущей среды: если вы работаете с веб-содержимым, курсор будет "
-"перемещён на закладку, чтобы вы могли продолжить чтение; в ином случае будет "
-"активирован режим <link xref=\"howto_flat_review\">общего осмотра</link>, в "
-"котором закладка станет текущим элементом."
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"The specific keybindings associated with each of the above tasks can be "
-"found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
-msgstr ""
-"Клавиши, связанные с каждой из приведённых выше задач, доступны в разделе "
-"<link xref=\"commands_bookmarks\">Команды закладок</link>."
-
-#. (itstool) path: info/title
 #: C/howto_documents.page:5
 msgctxt "sort"
 msgid "1. Documents"
@@ -3369,14 +3205,14 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or "
-"\"assertive\" to the point of being \"rude.\""
+"within that region. Live regions can be \"off\", \"polite\", or \"assertive."
+"\""
 msgstr ""
 "С изменяющимися областями связаны уровни «вежливого уведомления». Они "
 "задаются автором, чтобы передать степень важности информации и предложить "
 "частоту, с которой пользователям будет сообщаться об обновлении информации с "
 "помощью вспомогательных технологий. Эти напоминания могут быть «отключены» "
-"или находиться в «вежливом», «напористом» или «грубом» режимах."
+"или находиться в «вежливом» или «напористом» режимах."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3514,23 +3350,23 @@ msgstr ""
 "независимо друг от друга."
 
 #. (itstool) path: info/title
-#: C/howto_notifications.page:5
+#: C/howto_notifications.page:4
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Уведомления"
 
 #. (itstool) path: info/desc
-#: C/howto_notifications.page:6
+#: C/howto_notifications.page:5
 msgid "Reading previously-received messages"
 msgstr "Чтение ранее полученных сообщений"
 
 #. (itstool) path: page/title
-#: C/howto_notifications.page:15
+#: C/howto_notifications.page:14
 msgid "Notifications"
 msgstr "Уведомления"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:16
+#: C/howto_notifications.page:15
 msgid ""
 "The GNOME Desktop includes a \"notification area\" which can be used by "
 "applications to present information to the user. Examples of notifications "
@@ -3545,7 +3381,7 @@ msgstr ""
 "предупреждения о низком уровне заряда батареи."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:23
+#: C/howto_notifications.page:22
 msgid ""
 "Because notifications are intended to present information to users without "
 "interrupting what the user is doing, these messages tend to appear and "
@@ -3565,22 +3401,22 @@ msgstr ""
 "показанным уведомлениям:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:35
+#: C/howto_notifications.page:34
 msgid "Present the last (most recent) notification message"
 msgstr "Сообщить последнее (самое недавнее) уведомление"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:38
+#: C/howto_notifications.page:37
 msgid "Present the previous notification message"
 msgstr "Сообщить предыдущее уведомление"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:41
+#: C/howto_notifications.page:40
 msgid "Present list of all notification messages"
 msgstr "Сообщить список всех уведомлений"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:44
+#: C/howto_notifications.page:43
 msgid ""
 "The first two commands are designed mainly for quick access to a message you "
 "just received. The last command is the most powerful as it stores your "
@@ -3591,7 +3427,7 @@ msgstr ""
 "широкими возможностями, так как хранит историю уведомлений."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:49
+#: C/howto_notifications.page:48
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
@@ -3600,41 +3436,41 @@ msgstr ""
 "следующие варианты действий:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:54
+#: C/howto_notifications.page:53
 msgid "Press H for help."
 msgstr "Нажмите H для получения справки."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:55
+#: C/howto_notifications.page:54
 msgid "Use Up, Down, Home or End to navigate in the list."
 msgstr ""
 "Используйте для перемещения по списку клавиши со стрелками вверх и вниз, а "
 "также клавиши Home и End."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:56
+#: C/howto_notifications.page:55
 msgid "Press Escape to exit."
 msgstr "Нажмите клавишу Escape для выхода."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:57
+#: C/howto_notifications.page:56
 msgid "Press Space to repeat the last message read."
 msgstr "Нажмите клавишу Пробел для повтора последнего озвученного сообщения."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:58
+#: C/howto_notifications.page:57
 msgid "Press one digit to read a specific message."
 msgstr "Нажмите одну цифру для озвучивания определённого сообщения."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:60
+#: C/howto_notifications.page:59
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr ""
 "Обратите внимание, что самое последнее озвученное сообщение является первым "
 "в списке."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:63
+#: C/howto_notifications.page:62
 msgid ""
 "Each of <app>Orca</app>'s notification review commands is unbound by "
 "default. You can bind any or all of them to the shortcut or shortcuts you "
@@ -5174,8 +5010,8 @@ msgstr ""
 #: C/introduction.page:125
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
-"<cmd>--debug</cmd>: записывать отладочные данные в debug-ГГГГ-ММ-ДД-ЧЧ:ММ:СС."
-"out"
+"<cmd>--debug</cmd>: записывать отладочные данные в debug-ГГГГ-ММ-ДД-"
+"ЧЧ:ММ:СС.out"
 
 #. (itstool) path: item/p
 #: C/introduction.page:130
@@ -5223,17 +5059,17 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_web.page:58
-#: C/preferences_web.page:100 C/preferences_web.page:205
-#: C/preferences_general.page:52 C/preferences_general.page:70
-#: C/preferences_general.page:119 C/preferences_general.page:228
-#: C/preferences_general.page:239 C/preferences_key_echo.page:112
-#: C/preferences_key_echo.page:122 C/preferences_key_echo.page:157
-#: C/preferences_key_echo.page:179 C/preferences_speech.page:105
-#: C/preferences_speech.page:135 C/preferences_speech.page:160
-#: C/preferences_speech.page:171 C/preferences_speech.page:183
-#: C/preferences_speech.page:343 C/preferences_table_navigation.page:65
-#: C/preferences_voice.page:122 C/preferences_voice.page:133
+#: C/preferences_chat.page:54 C/preferences_general.page:52
+#: C/preferences_general.page:70 C/preferences_general.page:119
+#: C/preferences_general.page:228 C/preferences_general.page:239
+#: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
+#: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
+#: C/preferences_speech.page:105 C/preferences_speech.page:135
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
+#: C/preferences_table_navigation.page:65 C/preferences_voice.page:118
+#: C/preferences_web.page:58 C/preferences_web.page:100
+#: C/preferences_web.page:205
 msgid "Default value: not checked"
 msgstr "Значение по умолчанию: не отмечено"
 
@@ -5433,25 +5269,25 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_web.page:35 C/preferences_web.page:78
-#: C/preferences_web.page:123 C/preferences_web.page:165
-#: C/preferences_web.page:193 C/preferences_general.page:140
-#: C/preferences_general.page:217 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:148
-#: C/preferences_speech.page:195 C/preferences_speech.page:208
-#: C/preferences_speech.page:220 C/preferences_speech.page:234
-#: C/preferences_speech.page:251 C/preferences_speech.page:265
-#: C/preferences_speech.page:279 C/preferences_speech.page:293
-#: C/preferences_speech.page:307 C/preferences_speech.page:319
-#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
-#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
-#: C/preferences_table_navigation.page:34
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
+#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
+#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193
 msgid "Default value: checked"
 msgstr "Значение по умолчанию: отмечено"
 
@@ -5628,351 +5464,6 @@ msgstr "<gui>Все каналы, когда активно любое окно 
 #: C/preferences_chat.page:75
 msgid "Default value: all channels"
 msgstr "Значение по умолчанию: все каналы"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:5
-msgctxt "sort"
-msgid "1. Web Navigation"
-msgstr "1. Web навигация"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:6
-msgctxt "link"
-msgid "Web Navigation"
-msgstr "Web навигация"
-
-#. (itstool) path: info/desc
-#: C/preferences_web.page:7
-msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
-"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
-msgstr ""
-"Настройка поддержки <app>Orca</app> для <app>Firefox</app>, "
-"<app>Thunderbird</app>, и <app>Chrome</app>/<app>Chromium</app>"
-
-#. (itstool) path: page/title
-#: C/preferences_web.page:19
-msgid "Web Navigation Preferences"
-msgstr "Параметры Web навигации"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:21
-msgid "Page Navigation"
-msgstr "Перемещение по странице"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:22
-msgid ""
-"The <gui>Page Navigation</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents, and allow you to interact with, text "
-"and other content."
-msgstr ""
-"Группа элементов управления <gui>Перемещение по странице</gui> позволяет "
-"настроить то, как <app>Orca</app> предоставляет и позволяет "
-"взаимодействовать с текстом и другим содержимым."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:28
-msgid "Control caret navigation"
-msgstr "Управление курсорной навигацией"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:29
-msgid ""
-"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
-"is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, the browser's native caret navigation is active."
-msgstr ""
-"Этот флажок включает и отключает курсорную навигацию <app>Orca</app>. Если "
-"он установлен, <app>Orca</app> управляет курсором, когда вы перемещаетесь по "
-"странице с помощью клавиш со стрелками; если он снят, активна встроенная "
-"курсорная навигация браузера."
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:39 C/preferences_web.page:82
-#: C/preferences_voice.page:76
-msgid "This setting can be toggled on the fly"
-msgstr "Этот параметр можно переключать «на лету»"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:40
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>F12</key></keyseq>."
-msgstr ""
-"Чтобы переключить этот параметр «на лету», не сохраняя выбранное значение, "
-"воспользуйтесь комбинацией клавиш <keyseq><key>Модификатор Orca</"
-"key><key>F12</key></keyseq>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:47
-msgid "Automatic focus mode during caret navigation"
-msgstr "Автоматический режим фокуса, включаемый при курсорной навигации"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:48
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use caret navigation commands to navigate to a form "
-"field. For example, pressing <key>Down</key> would allow you to move into an "
-"entry but once you had done so, Orca would switch to focus mode and "
-"subsequent presses of <key>Down</key> would be controlled by the web browser "
-"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
-"continue to control what happens when you press <key>Down</key>, thus making "
-"it possible to arrow out of the entry and continue reading."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> будет автоматически включать "
-"режим фокуса, когда вы используете команды курсорной навигации для "
-"перемещения к полю формы. Например, нажатие клавиши <key>Стрелка вниз</key> "
-"позволит вам перейти к полю ввода, но после этого Orca перейдёт в режим "
-"фокуса и последующие нажатия клавиши <key>Стрелка вниз</key> будут "
-"обрабатываться веб-браузером, а не Orca. Если этот флажок не установлен, "
-"<app>Orca</app> продолжит обрабатывать нажатия клавиши <key>Стрелка вниз</"
-"key>, таким образом позволяя выйти из поля ввода с помощью клавиши и "
-"продолжить чтение."
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:62 C/preferences_web.page:104
-#: C/preferences_web.page:127
-msgid "Manually switching between browse mode and focus mode"
-msgstr "Ручное переключение между режимом чтения и режимом фокуса"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:63 C/preferences_web.page:105
-#: C/preferences_web.page:128
-msgid ""
-"In order to start or stop interacting with the focused form field, use "
-"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
-"browse mode and focus mode."
-msgstr ""
-"Чтобы начать или завершить взаимодействие с полем формы с фокусом, "
-"воспользуйтесь комбинацией клавиш <keyseq><key>Модификатор Orca</key><key>A</"
-"key></keyseq> для переключения между режимом чтения и режимом фокуса."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:71
-msgid "Enable structural navigation"
-msgstr "Включить структурную навигацию"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:72
-msgid ""
-"This checkbox toggles <app>Orca</app>'s <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
-"off. Structural Navigation allows you to navigate by elements such as "
-"headings, links, and form fields."
-msgstr ""
-"Этот флажок включает и отключает <link "
-"xref=\"howto_structural_navigation\">структурную навигацию</link> <app>Orca</"
-"app>. Структурная навигация позволяет перемещаться по таким элементам, как "
-"заголовки, ссылки и поля форм."
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:83
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>Z</key></keyseq>."
-msgstr ""
-"Чтобы переключить этот параметр «на лету», не сохраняя выбранное значение, "
-"воспользуйтесь комбинацией клавиш <keyseq><key>Модификатор Orca</key><key>Z</"
-"key></keyseq>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:90
-msgid "Automatic focus mode during structural navigation"
-msgstr "Автоматический режим фокуса, включаемый при структурной навигации"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:91
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use structural navigation commands to navigate to a form "
-"field. For example, pressing <key>E</key> to move to the next entry would "
-"move focus there and also turn focus mode on so that your next press of "
-"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> будет автоматически включать "
-"режим фокуса, когда вы используете команды структурной навигации для "
-"перехода к полю формы. Например, нажатие клавиши <key>E</key> для перехода к "
-"следующему полю ввода переместит туда фокус и приведёт к включению режима "
-"фокуса, поэтому при следующем нажатии клавиши <key>E</key> в этом поле ввода "
-"будет напечатана буква «e». Если этот флажок не установлен, <app>Orca</app> "
-"останется в режиме чтения, поэтому при следующем нажатии клавиши <key>E</"
-"key> вы перейдёте к следующему полю ввода на этой странице."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:113
-msgid "Automatic focus mode during native navigation"
-msgstr "Автоматический режим фокуса, включаемый при курсорной навигации"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:114
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use native browser navigation commands to navigate to a "
-"form field. For example, pressing <key>Tab</key> to move to the next entry "
-"would move focus there and also turn focus mode on so that your next press "
-"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> будет автоматически включать "
-"режим фокуса, когда вы используете команды нативной навигации для перехода к "
-"полю формы. Например, нажатие клавиши <key>Tab</key> для перехода к "
-"следующему полю ввода переместит туда фокус и приведёт к включению режима "
-"фокуса, поэтому при следующем нажатии клавиши <key>E</key> в этом поле ввода "
-"будет напечатана буква «e». Если этот флажок не установлен, <app>Orca</app> "
-"останется в режиме чтения, поэтому при следующем нажатии клавиши <key>E</"
-"key> вы перейдёте к следующему полю ввода на этой странице."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:136
-msgid "Automatically start speaking a page when it is first loaded"
-msgstr ""
-"Автоматически начинать чтение страницы, когда она загружена в первый раз"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:137
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
-"newly opened web page or email."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> будет выполнять команду «Читать "
-"всё» для впервые загруженной веб-страницы или сообщения электронной почты."
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:141 C/preferences_web.page:152
-msgid "Default value: checked for Firefox; not checked for Thunderbird"
-msgstr ""
-"Значение по умолчанию: отмечено для Firefox; не отмечено для Thunderbird"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:146
-msgid "Present summary of a page when it is first loaded"
-msgstr ""
-"Предоставлять сводку сведений о странице, когда она загружена в первый раз"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:147
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will summarize details about "
-"the newly opened web page or email, such as the number of headings, "
-"landmarks, and links."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> будет предоставлять сводку "
-"сведений о впервые загруженной веб-странице или сообщении электронной почты, "
-"в том числе количество заголовков, ориентиров и ссылок."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:157
-msgid "Enable layout mode for content"
-msgstr "Включить режим макета для содержимого"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:158
-msgid ""
-"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
-"the on-screen layout of the content and present the full line, including any "
-"links or form fields on that line. If this checkbox is not checked, "
-"<app>Orca</app> will treat objects such as links and form fields as if they "
-"were on separate lines, both for presentation and navigation."
-msgstr ""
-"Если этот флажок установлен, при курсорной навигации <app>Orca</app> будет "
-"учитывать экранный макет содержимого и озвучивать строку целиком, включая "
-"любые присутствующие в ней ссылки или поля форм. Если этот флажок не "
-"установлен, <app>Orca</app> будет выполнять озвучивание и навигацию по "
-"ссылкам и полям форм так, как если бы они находились в отдельных строках."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:171
-msgid "Table Options"
-msgstr "Параметры таблиц"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:173
-msgid ""
-"To learn more about <app>Orca</app>'s options for navigating within tables, "
-"please see <link xref=\"preferences_table_navigation\">Table Navigation "
-"Preferences</link>."
-msgstr ""
-"Более подробные сведения о параметрах <app>Orca</app>, предназначенных для "
-"перемещения внутри таблиц, доступны в разделе <link "
-"xref=\"preferences_table_navigation\">Параметры перемещения по таблицам</"
-"link>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:181
-msgid "Find Options"
-msgstr "Параметры поиска"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:182
-msgid ""
-"The <gui>Find Options</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents the results of a search conducted "
-"using the application's built-in search functionality."
-msgstr ""
-"Группа элементов управления <gui>Параметры поиска</gui> позволяет настроить "
-"то, как <app>Orca</app> предоставляет результаты поиска, выполненного с "
-"помощью встроенной в приложение функции поиска."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:188
-msgid "Speak results during find"
-msgstr "Произносить результаты во время поиска"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:189
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will read the line which "
-"matches your current search query."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> будет озвучивать строку, "
-"которая соответствует текущему поисковому запросу."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:198
-msgid "Only speak changed lines during find"
-msgstr "Во время поиска озвучивать изменение строки"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:199
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will not present the matching "
-"line if it is the same line as the previous match. This option is designed "
-"to prevent \"chattiness\" on a line with multiple instances of the string "
-"for which you are searching."
-msgstr ""
-"Если этот флажок установлен, <app>Orca</app> не будет повторно озвучивать "
-"строку, если в ней обнаружено ещё одно соответствие. Этот параметр "
-"предназначен для предотвращения «избыточного» озвучивания в строках, "
-"содержащих несколько соответствий поисковому запросу."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:210
-msgid "Minimum length of matched text"
-msgstr "Минимальная длина совпавшего текста"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:211
-msgid ""
-"This editable spin button is where you can specify the number of characters "
-"which must match before <app>Orca</app> announces the matching line. This "
-"option is also designed to prevent \"chattiness\" as there are many matches "
-"when you first begin typing the string for which you are searching."
-msgstr ""
-"Этот изменяемый счётчик позволяет указать количество символов, которые "
-"должны совпасть, чтобы программа <app>Orca</app> озвучила соответствующую "
-"строку. Этот параметр также предназначен для предотвращения «избыточного» "
-"озвучивания, потому что при начале ввода поискового запроса обычно имеется "
-"много совпадений."
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:218
-msgid "Default value: 4"
-msgstr "Значение по умолчанию: 4"
 
 #. (itstool) path: info/title
 #: C/preferences_general.page:3
@@ -8161,6 +7652,12 @@ msgstr "<gui>Произносить</gui>: произнести слово «п�
 msgid "<gui>None</gui>"
 msgstr "<gui>Нет</gui>"
 
+#. (itstool) path: note/title
+#: C/preferences_voice.page:76 C/preferences_web.page:39
+#: C/preferences_web.page:82
+msgid "This setting can be toggled on the fly"
+msgstr "Этот параметр можно переключать «на лету»"
+
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
 msgid ""
@@ -8220,34 +7717,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:112
-msgid "Speak multicase strings as words"
-msgstr "Произносить по словам строки со смешанным регистром"
-
-#. (itstool) path: section/p
-#: C/preferences_voice.page:113
-msgid ""
-"In some text, and especially when working with code, one often comes across "
-"a \"word\" consisting of several words with alternating case, such as "
-"\"MultiCaseString.\" Speech synthesizers do not always pronounce such "
-"multicase strings correctly. Checking the <gui>Speak multicase strings as "
-"words</gui> checkbox will cause <app>Orca</app> to break a word like "
-"\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
-"\"String\") prior to passing it along to the speech synthesizer."
-msgstr ""
-"В некоторых текстах (особенно в коде) часто встречаются «слова», которые "
-"состоят из нескольких слов с буквами в разном регистре, например "
-"«СтрокаСоСмешаннымРегистром». Если флажок <gui>Произносить по словам строки "
-"со смешанным регистром</gui> установлен, <app>Orca</app> будет разбивать "
-"такие слова, как «СтрокаСоСмешаннымРегистром», на отдельные слова («Строка», "
-"«Со», «Смешанным», «Регистром») перед их передачей синтезатору речи."
-
-#. (itstool) path: section/title
-#: C/preferences_voice.page:127
 msgid "Speak numbers as digits"
 msgstr "Произносить числа цифрами"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:128
+#: C/preferences_voice.page:113
 msgid ""
 "Checking the <gui>Speak numbers as digits</gui> checkbox will cause "
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
@@ -8256,6 +7730,503 @@ msgstr ""
 "Если флажок <gui>Произносить числа цифрами</gui> установлен, <app>Orca</app> "
 "будет разбивать такие числа, как «123», на отдельные цифры («1», «2» и «3») "
 "перед их передачей синтезатору речи."
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:5
+msgctxt "sort"
+msgid "1. Web Navigation"
+msgstr "1. Web навигация"
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:6
+msgctxt "link"
+msgid "Web Navigation"
+msgstr "Web навигация"
+
+#. (itstool) path: info/desc
+#: C/preferences_web.page:7
+msgid ""
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
+msgstr ""
+"Настройка поддержки <app>Orca</app> для <app>Firefox</app>, "
+"<app>Thunderbird</app>, и <app>Chrome</app>/<app>Chromium</app>"
+
+#. (itstool) path: page/title
+#: C/preferences_web.page:19
+msgid "Web Navigation Preferences"
+msgstr "Параметры Web навигации"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:21
+msgid "Page Navigation"
+msgstr "Перемещение по странице"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:22
+msgid ""
+"The <gui>Page Navigation</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents, and allow you to interact with, text "
+"and other content."
+msgstr ""
+"Группа элементов управления <gui>Перемещение по странице</gui> позволяет "
+"настроить то, как <app>Orca</app> предоставляет и позволяет "
+"взаимодействовать с текстом и другим содержимым."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:28
+msgid "Control caret navigation"
+msgstr "Управление курсорной навигацией"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:29
+msgid ""
+"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
+"is on, <app>Orca</app> takes control of the caret as you arrow around within "
+"a page; when it is off, the browser's native caret navigation is active."
+msgstr ""
+"Этот флажок включает и отключает курсорную навигацию <app>Orca</app>. Если "
+"он установлен, <app>Orca</app> управляет курсором, когда вы перемещаетесь по "
+"странице с помощью клавиш со стрелками; если он снят, активна встроенная "
+"курсорная навигация браузера."
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:40
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>F12</key></keyseq>."
+msgstr ""
+"Чтобы переключить этот параметр «на лету», не сохраняя выбранное значение, "
+"воспользуйтесь комбинацией клавиш <keyseq><key>Модификатор Orca</"
+"key><key>F12</key></keyseq>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr "Автоматический режим фокуса, включаемый при курсорной навигации"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> будет автоматически включать "
+"режим фокуса, когда вы используете команды курсорной навигации для "
+"перемещения к полю формы. Например, нажатие клавиши <key>Стрелка вниз</key> "
+"позволит вам перейти к полю ввода, но после этого Orca перейдёт в режим "
+"фокуса и последующие нажатия клавиши <key>Стрелка вниз</key> будут "
+"обрабатываться веб-браузером, а не Orca. Если этот флажок не установлен, "
+"<app>Orca</app> продолжит обрабатывать нажатия клавиши <key>Стрелка вниз</"
+"key>, таким образом позволяя выйти из поля ввода с помощью клавиши и "
+"продолжить чтение."
+
+#. (itstool) path: note/title
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
+msgid "Manually switching between browse mode and focus mode"
+msgstr "Ручное переключение между режимом чтения и режимом фокуса"
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+"Чтобы начать или завершить взаимодействие с полем формы с фокусом, "
+"воспользуйтесь комбинацией клавиш <keyseq><key>Модификатор Orca</key><key>A</"
+"key></keyseq> для переключения между режимом чтения и режимом фокуса."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:71
+msgid "Enable structural navigation"
+msgstr "Включить структурную навигацию"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:72
+msgid ""
+"This checkbox toggles <app>Orca</app>'s <link "
+"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
+"off. Structural Navigation allows you to navigate by elements such as "
+"headings, links, and form fields."
+msgstr ""
+"Этот флажок включает и отключает <link "
+"xref=\"howto_structural_navigation\">структурную навигацию</link> <app>Orca</"
+"app>. Структурная навигация позволяет перемещаться по таким элементам, как "
+"заголовки, ссылки и поля форм."
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:83
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>Z</key></keyseq>."
+msgstr ""
+"Чтобы переключить этот параметр «на лету», не сохраняя выбранное значение, "
+"воспользуйтесь комбинацией клавиш <keyseq><key>Модификатор Orca</key><key>Z</"
+"key></keyseq>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:90
+msgid "Automatic focus mode during structural navigation"
+msgstr "Автоматический режим фокуса, включаемый при структурной навигации"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:91
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> будет автоматически включать "
+"режим фокуса, когда вы используете команды структурной навигации для "
+"перехода к полю формы. Например, нажатие клавиши <key>E</key> для перехода к "
+"следующему полю ввода переместит туда фокус и приведёт к включению режима "
+"фокуса, поэтому при следующем нажатии клавиши <key>E</key> в этом поле ввода "
+"будет напечатана буква «e». Если этот флажок не установлен, <app>Orca</app> "
+"останется в режиме чтения, поэтому при следующем нажатии клавиши <key>E</"
+"key> вы перейдёте к следующему полю ввода на этой странице."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:113
+msgid "Automatic focus mode during native navigation"
+msgstr "Автоматический режим фокуса, включаемый при курсорной навигации"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> будет автоматически включать "
+"режим фокуса, когда вы используете команды нативной навигации для перехода к "
+"полю формы. Например, нажатие клавиши <key>Tab</key> для перехода к "
+"следующему полю ввода переместит туда фокус и приведёт к включению режима "
+"фокуса, поэтому при следующем нажатии клавиши <key>E</key> в этом поле ввода "
+"будет напечатана буква «e». Если этот флажок не установлен, <app>Orca</app> "
+"останется в режиме чтения, поэтому при следующем нажатии клавиши <key>E</"
+"key> вы перейдёте к следующему полю ввода на этой странице."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
+msgid "Automatically start speaking a page when it is first loaded"
+msgstr ""
+"Автоматически начинать чтение страницы, когда она загружена в первый раз"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:137
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
+"newly opened web page or email."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> будет выполнять команду «Читать "
+"всё» для впервые загруженной веб-страницы или сообщения электронной почты."
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:141 C/preferences_web.page:152
+msgid "Default value: checked for Firefox; not checked for Thunderbird"
+msgstr ""
+"Значение по умолчанию: отмечено для Firefox; не отмечено для Thunderbird"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:146
+msgid "Present summary of a page when it is first loaded"
+msgstr ""
+"Предоставлять сводку сведений о странице, когда она загружена в первый раз"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:147
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will summarize details about "
+"the newly opened web page or email, such as the number of headings, "
+"landmarks, and links."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> будет предоставлять сводку "
+"сведений о впервые загруженной веб-странице или сообщении электронной почты, "
+"в том числе количество заголовков, ориентиров и ссылок."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:157
+msgid "Enable layout mode for content"
+msgstr "Включить режим макета для содержимого"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:158
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+"Если этот флажок установлен, при курсорной навигации <app>Orca</app> будет "
+"учитывать экранный макет содержимого и озвучивать строку целиком, включая "
+"любые присутствующие в ней ссылки или поля форм. Если этот флажок не "
+"установлен, <app>Orca</app> будет выполнять озвучивание и навигацию по "
+"ссылкам и полям форм так, как если бы они находились в отдельных строках."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:171
+msgid "Table Options"
+msgstr "Параметры таблиц"
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:173
+msgid ""
+"To learn more about <app>Orca</app>'s options for navigating within tables, "
+"please see <link xref=\"preferences_table_navigation\">Table Navigation "
+"Preferences</link>."
+msgstr ""
+"Более подробные сведения о параметрах <app>Orca</app>, предназначенных для "
+"перемещения внутри таблиц, доступны в разделе <link "
+"xref=\"preferences_table_navigation\">Параметры перемещения по таблицам</"
+"link>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:181
+msgid "Find Options"
+msgstr "Параметры поиска"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:182
+msgid ""
+"The <gui>Find Options</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents the results of a search conducted "
+"using the application's built-in search functionality."
+msgstr ""
+"Группа элементов управления <gui>Параметры поиска</gui> позволяет настроить "
+"то, как <app>Orca</app> предоставляет результаты поиска, выполненного с "
+"помощью встроенной в приложение функции поиска."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:188
+msgid "Speak results during find"
+msgstr "Произносить результаты во время поиска"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:189
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will read the line which "
+"matches your current search query."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> будет озвучивать строку, "
+"которая соответствует текущему поисковому запросу."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:198
+msgid "Only speak changed lines during find"
+msgstr "Во время поиска озвучивать изменение строки"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:199
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will not present the matching "
+"line if it is the same line as the previous match. This option is designed "
+"to prevent \"chattiness\" on a line with multiple instances of the string "
+"for which you are searching."
+msgstr ""
+"Если этот флажок установлен, <app>Orca</app> не будет повторно озвучивать "
+"строку, если в ней обнаружено ещё одно соответствие. Этот параметр "
+"предназначен для предотвращения «избыточного» озвучивания в строках, "
+"содержащих несколько соответствий поисковому запросу."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:210
+msgid "Minimum length of matched text"
+msgstr "Минимальная длина совпавшего текста"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:211
+msgid ""
+"This editable spin button is where you can specify the number of characters "
+"which must match before <app>Orca</app> announces the matching line. This "
+"option is also designed to prevent \"chattiness\" as there are many matches "
+"when you first begin typing the string for which you are searching."
+msgstr ""
+"Этот изменяемый счётчик позволяет указать количество символов, которые "
+"должны совпасть, чтобы программа <app>Orca</app> озвучила соответствующую "
+"строку. Этот параметр также предназначен для предотвращения «избыточного» "
+"озвучивания, потому что при начале ввода поискового запроса обычно имеется "
+"много совпадений."
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:218
+msgid "Default value: 4"
+msgstr "Значение по умолчанию: 4"
+
+#~ msgctxt "sort"
+#~ msgid "4. Bookmarks"
+#~ msgstr "4. Закладки"
+
+#~ msgctxt "link"
+#~ msgid "Bookmarks"
+#~ msgstr "Закладки"
+
+#~ msgid "Commands to bookmark and retrieve objects"
+#~ msgstr "Команды для добавления в закладки и получения объектов"
+
+#~ msgid "Bookmark Commands"
+#~ msgstr "Команды закладок"
+
+#~ msgid ""
+#~ "<app>Orca</app> provides several commands which can be used to "
+#~ "\"bookmark\" a given object for the purpose of navigating back to it "
+#~ "later."
+#~ msgstr ""
+#~ "<app>Orca</app> предоставляет несколько команд, которые можно "
+#~ "использовать для добавления указанного объекта в закладки. Добавление в "
+#~ "закладки позволяет в дальнейшем вернуться к этому объекту."
+
+#~ msgid ""
+#~ "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
+#~ "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Сохранить закладку в слот с номером: <keyseq><key>Модификатор Orca</key> "
+#~ "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+
+#~ msgid ""
+#~ "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>Alt</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Сохранить заданные закладки для приложения или страницы: "
+#~ "<keyseq><key>Модификатор Orca</key><key>Alt</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
+#~ "<key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Перейти к определённой закладке с номером: <keyseq><key>Модификатор Orca</"
+#~ "key> <key>1</key></keyseq>-<key>6</key>"
+
+#~ msgid ""
+#~ "Go to the previous bookmark for the application or page: "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>B</key> </keyseq>"
+#~ msgstr ""
+#~ "Перейти к предыдущей закладке для приложения или страницы: "
+#~ "<keyseq><key>Модификатор Orca</key><key>Shift</key><key>B</key> </keyseq>"
+
+#~ msgid ""
+#~ "Go to the next bookmark for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Перейти к следующей закладке для приложения или страницы: "
+#~ "<keyseq><key>Модификатор Orca</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Set default politeness level to off: <keyseq><key>Shift</"
+#~ "key><key>Backslash</key></keyseq>"
+#~ msgstr ""
+#~ "Отключить вежливое напоминание об изменяющихся областях: "
+#~ "<keyseq><key>Shift</key><key>Обратная косая черта</key></keyseq>"
+
+#~ msgid ""
+#~ "Review live region announcements: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Повторить предыдущие сообщения об изменяющихся областях: "
+#~ "<keyseq><key>Модификатор Orca</key><key>F1</key></keyseq> по <key>F9</key>"
+
+#~ msgctxt "sort"
+#~ msgid "6. Bookmarks"
+#~ msgstr "6. Закладки"
+
+#~ msgid "Storing and retrieving objects"
+#~ msgstr "Хранение и получение объектов"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Закладки"
+
+#~ msgid ""
+#~ "<app>Orca</app>'s Bookmarks support allows you to indicate that an object "
+#~ "is of interest. It includes the following features:"
+#~ msgstr ""
+#~ "Благодаря закладкам <app>Orca</app> можно отмечать интересные объекты. "
+#~ "Поддерживаются следующие возможности:"
+
+#~ msgid ""
+#~ "You are not limited to a single object: You can set up to six bookmarks "
+#~ "per environment. You can also save bookmarks so that they will persist "
+#~ "from Orca session to Orca session."
+#~ msgstr ""
+#~ "В закладки можно добавить несколько объектов — поддерживается установка "
+#~ "до шести закладок в текущей рабочей среде. Их также можно сохранить, "
+#~ "чтобы они не пропали по завершению текущего сеанса Orca."
+
+#~ msgid ""
+#~ "Having set a bookmark you can navigate to it later, and do so regardless "
+#~ "of whether or not you have chosen to permanently save the bookmarks "
+#~ "associated with your current environment. Navigation can be based on the "
+#~ "number of the bookmark should you wish to jump directly to a specific "
+#~ "item. Alternatively, you can navigate to the next or previous bookmark "
+#~ "just like you can a <link xref=\"howto_structural_navigation\">Structural "
+#~ "Navigation</link> object."
+#~ msgstr ""
+#~ "После установки закладки к соответствующему объекту будет можно вернуться "
+#~ "в дальнейшем, независимо от того, задано ли постоянное хранение закладок, "
+#~ "связанных с текущей рабочей средой. Можно выполнить навигацию по номеру "
+#~ "закладки, если необходимо сразу перейти к определённому объекту. Или "
+#~ "можно перейти к следующей или предыдущей закладке таким же образом, как к "
+#~ "объекту <link xref=\"howto_structural_navigation\">структурной навигации</"
+#~ "link>."
+
+#~ msgid ""
+#~ "Bookmarkable objects can be widgets within an application or objects on "
+#~ "the web page you are reading. Which environment you are in determines "
+#~ "what happens as you navigate amongst bookmarks: If you are in web "
+#~ "content, the caret will be moved to the bookmark so that you can continue "
+#~ "reading; otherwise, <link xref=\"howto_flat_review\">Flat Review</link> "
+#~ "will be activated with the bookmark becoming the current review item."
+#~ msgstr ""
+#~ "В закладки можно добавлять виджеты, имеющиеся внутри приложения, или "
+#~ "объекты на веб-странице. Действия, которые выполняются при навигации по "
+#~ "закладкам, зависят от текущей среды: если вы работаете с веб-содержимым, "
+#~ "курсор будет перемещён на закладку, чтобы вы могли продолжить чтение; в "
+#~ "ином случае будет активирован режим <link "
+#~ "xref=\"howto_flat_review\">общего осмотра</link>, в котором закладка "
+#~ "станет текущим элементом."
+
+#~ msgid ""
+#~ "The specific keybindings associated with each of the above tasks can be "
+#~ "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
+#~ msgstr ""
+#~ "Клавиши, связанные с каждой из приведённых выше задач, доступны в разделе "
+#~ "<link xref=\"commands_bookmarks\">Команды закладок</link>."
+
+#~ msgid "Speak multicase strings as words"
+#~ msgstr "Произносить по словам строки со смешанным регистром"
+
+#~ msgid ""
+#~ "In some text, and especially when working with code, one often comes "
+#~ "across a \"word\" consisting of several words with alternating case, such "
+#~ "as \"MultiCaseString.\" Speech synthesizers do not always pronounce such "
+#~ "multicase strings correctly. Checking the <gui>Speak multicase strings as "
+#~ "words</gui> checkbox will cause <app>Orca</app> to break a word like "
+#~ "\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
+#~ "\"String\") prior to passing it along to the speech synthesizer."
+#~ msgstr ""
+#~ "В некоторых текстах (особенно в коде) часто встречаются «слова», которые "
+#~ "состоят из нескольких слов с буквами в разном регистре, например "
+#~ "«СтрокаСоСмешаннымРегистром». Если флажок <gui>Произносить по словам "
+#~ "строки со смешанным регистром</gui> установлен, <app>Orca</app> будет "
+#~ "разбивать такие слова, как «СтрокаСоСмешаннымРегистром», на отдельные "
+#~ "слова («Строка», «Со», «Смешанным», «Регистром») перед их передачей "
+#~ "синтезатору речи."
 
 #~ msgctxt "text"
 #~ msgid "Orca Screen Reader"
