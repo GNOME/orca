@@ -1083,7 +1083,7 @@ class PreferencesGridBase(Gtk.Grid):
 
         self._multipage_stack.set_visible_child_name(category_id)
         if self._multipage_title_callback and self._multipage_category_map is not None:
-            label, grid = self._multipage_category_map.get(
+            label, _ = self._multipage_category_map.get(
                 category_id, (self._multipage_main_title or "", None)
             )
             self._multipage_title_callback(label or "")
