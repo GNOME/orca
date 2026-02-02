@@ -1892,6 +1892,9 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_code(obj):
             return False
 
+        if self.is_document(obj):
+            return False
+
         rv = self._cached_element_lines_are_single_words.get(hash(obj))
         if rv is not None:
             return rv
@@ -1937,6 +1940,9 @@ class Utilities(script_utilities.Utilities):
 
     def _element_lines_are_single_chars(self, obj: Atspi.Accessible) -> bool:
         if not (obj and self.in_document_content(obj)):
+            return False
+
+        if self.is_document(obj):
             return False
 
         rv = self._cached_element_lines_are_single_chars.get(hash(obj))
