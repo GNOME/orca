@@ -1086,6 +1086,7 @@ class PreferencesGridBase(Gtk.Grid):
         if self._multipage_category_map is not None and category_id in self._multipage_category_map:
             _, grid = self._multipage_category_map[category_id]
             if grid:
+                grid.show_all()
                 GLib.idle_add(self._multipage_focus_first_widget, grid)
 
     def _multipage_focus_first_widget(self, grid: "PreferencesGridBase") -> bool:
