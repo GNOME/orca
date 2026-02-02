@@ -714,14 +714,14 @@ class BrailleGenerator(generator.Generator):
         else:
             offset = 0
 
+        value = self._generate_value(obj, **args)
+        if value and value[0] in self._as_string(label):
+            value = []
+
         result += [
             braille.Component(
                 obj,
-                self._as_string(
-                    label
-                    + self._generate_value(obj, **args)
-                    + self._generate_accessible_role(obj, **args)
-                ),
+                self._as_string(label + value + self._generate_accessible_role(obj, **args)),
                 offset,
             )
         ]
