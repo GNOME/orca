@@ -1899,6 +1899,9 @@ class Utilities(script_utilities.Utilities):
         if rv is not None:
             return rv
 
+        if AXUtilities.has_non_inline_children(obj):
+            return False
+
         n_chars = AXText.get_character_count(obj)
         if not n_chars:
             return False
@@ -1948,6 +1951,9 @@ class Utilities(script_utilities.Utilities):
         rv = self._cached_element_lines_are_single_chars.get(hash(obj))
         if rv is not None:
             return rv
+
+        if AXUtilities.has_non_inline_children(obj):
+            return False
 
         n_chars = AXText.get_character_count(obj)
         if not n_chars:

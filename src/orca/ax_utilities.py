@@ -697,6 +697,16 @@ class AXUtilities:
         return False
 
     @staticmethod
+    def has_non_inline_children(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj has children with block, flex, or table display."""
+
+        for child in AXObject.iter_children(obj):
+            display = AXObject.get_attribute(child, "display")
+            if display in ("block", "flex", "table"):
+                return True
+        return False
+
+    @staticmethod
     def get_displayed_label(obj: Atspi.Accessible) -> str:
         """Returns the displayed label of obj."""
 
