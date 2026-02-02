@@ -436,6 +436,7 @@ class BrailleGenerator(generator.Generator):
                     + self._generate_accessible_role(obj, **args)
                     + self._generate_state_required(obj, **args)
                     + self._generate_state_invalid(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -468,7 +469,9 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     or self._generate_accessible_placeholder_text(obj, **args)
                 ),
-                self._as_string(self._generate_eol(obj, **args)),
+                self._as_string(
+                    self._generate_eol(obj, **args) + self._generate_keyboard_mnemonic(obj, **args)
+                ),
                 args.get("startOffset"),
                 args.get("endOffset"),
                 args.get("caretOffset"),
@@ -576,6 +579,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -670,6 +674,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                     + self._generate_keyboard_accelerator(obj, **args)
                 ),
                 indicator=self._as_string(self._generate_state_checked(obj, **args)),
@@ -721,7 +726,12 @@ class BrailleGenerator(generator.Generator):
         result += [
             braille.Component(
                 obj,
-                self._as_string(label + value + self._generate_accessible_role(obj, **args)),
+                self._as_string(
+                    label
+                    + value
+                    + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
+                ),
                 offset,
             )
         ]
@@ -792,6 +802,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_value(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                     + self._generate_accessible_role(obj, **args)
                 ),
             )
@@ -1086,6 +1097,7 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_value(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -1107,11 +1119,13 @@ class BrailleGenerator(generator.Generator):
                 ),
             )
         ]
-
         rolename = self._generate_accessible_role(obj, **args)
         if rolename:
-            result += [braille.Region(" " + self._as_string(rolename))]
-
+            result += [
+                braille.Region(
+                    " " + self._as_string(rolename + self._generate_keyboard_mnemonic(obj, **args))
+                )
+            ]
         result += self._generate_default_suffix(obj, **args)
         return result
 
@@ -1259,6 +1273,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -1280,6 +1295,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_state_expanded(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                     + self._generate_keyboard_accelerator(obj, **args)
                 ),
                 indicator=self._as_string(self._generate_state_checked_if_checkable(obj, **args)),
@@ -1327,6 +1343,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                     + self._generate_keyboard_accelerator(obj, **args)
                 ),
             )
@@ -1411,6 +1428,7 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_state_expanded(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -1436,6 +1454,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
                 indicator=self._as_string(
                     self._generate_state_selected_for_radio_button(obj, **args)
@@ -1455,6 +1474,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                     + self._generate_keyboard_accelerator(obj, **args)
                 ),
                 indicator=self._as_string(
@@ -1517,6 +1537,7 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_value(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -1549,6 +1570,7 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_value(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
             )
         ]
@@ -1613,6 +1635,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
                 indicator=self._as_string(self._generate_state_checked_for_switch(obj, **args)),
             )
@@ -1751,6 +1774,7 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_state_expanded(obj, **args)
                     + self._generate_accessible_role(obj, **args)
+                    + self._generate_keyboard_mnemonic(obj, **args)
                 ),
                 indicator=self._as_string(self._generate_state_pressed(obj, **args)),
             )
