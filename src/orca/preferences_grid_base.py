@@ -1075,6 +1075,12 @@ class PreferencesGridBase(Gtk.Grid):
         if self._multipage_enable_listbox:
             self._multipage_enable_listbox.hide()
 
+        # Show the child before switching to it (it may have been hidden when leaving)
+        if self._multipage_category_map is not None and category_id in self._multipage_category_map:
+            _, grid = self._multipage_category_map[category_id]
+            if grid:
+                grid.show_all()
+
         self._multipage_stack.set_visible_child_name(category_id)
         if self._multipage_title_callback and self._multipage_category_map is not None:
             label, grid = self._multipage_category_map.get(
@@ -1086,7 +1092,6 @@ class PreferencesGridBase(Gtk.Grid):
         if self._multipage_category_map is not None and category_id in self._multipage_category_map:
             _, grid = self._multipage_category_map[category_id]
             if grid:
-                grid.show_all()
                 GLib.idle_add(self._multipage_focus_first_widget, grid)
 
     def _multipage_focus_first_widget(self, grid: "PreferencesGridBase") -> bool:
