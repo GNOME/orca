@@ -1179,7 +1179,9 @@ class BrailleGenerator(generator.Generator):
         if level:
             result += [braille.Region(" " + self._as_string(level))]
 
-        result += self._generate_descendants(obj, **args)
+        format_type = args.get("formatType", "unfocused")
+        if format_type not in ["focused", "ancestor"]:
+            result += self._generate_descendants(obj, **args)
         return result
 
     def _generate_log(self, obj: Atspi.Accessible, **args) -> list[Any]:
