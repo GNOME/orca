@@ -1123,7 +1123,12 @@ class BrailleGenerator(generator.Generator):
         if rolename:
             result += [
                 braille.Region(
-                    " " + self._as_string(rolename + self._generate_keyboard_mnemonic(obj, **args))
+                    " "
+                    + self._as_string(
+                        rolename
+                        + self._generate_keyboard_mnemonic(obj, **args)
+                        + self._generate_keyboard_accelerator(obj, **args)
+                    )
                 )
             ]
         result += self._generate_default_suffix(obj, **args)
@@ -1274,6 +1279,7 @@ class BrailleGenerator(generator.Generator):
                     self._generate_accessible_label_and_name(obj, **args)
                     + self._generate_accessible_role(obj, **args)
                     + self._generate_keyboard_mnemonic(obj, **args)
+                    + self._generate_keyboard_accelerator(obj, **args)
                 ),
             )
         ]
@@ -1429,6 +1435,7 @@ class BrailleGenerator(generator.Generator):
                     + self._generate_state_expanded(obj, **args)
                     + self._generate_accessible_role(obj, **args)
                     + self._generate_keyboard_mnemonic(obj, **args)
+                    + self._generate_keyboard_accelerator(obj, **args)
                 ),
             )
         ]
