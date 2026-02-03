@@ -22,6 +22,8 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 
+from __future__ import annotations
+
 """Utilities for obtaining relation-related information."""
 
 import threading

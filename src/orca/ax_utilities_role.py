@@ -25,6 +25,8 @@
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
 
+from __future__ import annotations
+
 """Utilities for obtaining role-related information."""
 
 import gi

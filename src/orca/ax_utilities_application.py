@@ -21,6 +21,8 @@
 
 # pylint: disable=wrong-import-position
 
+from __future__ import annotations
+
 """Utilities for obtaining information about accessible applications."""
 
 import subprocess
