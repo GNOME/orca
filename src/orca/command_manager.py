@@ -603,8 +603,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             key_name, modifiers, click_count = self._captured_key
             script = script_manager.get_manager().get_active_script()
 
-            is_orca_modifier = modifiers & keybindings.ORCA_MODIFIER_MASK
-            if key_name in ["Delete", "BackSpace"] and not is_orca_modifier:
+            if key_name in ["Delete", "BackSpace"] and not modifiers:
                 capture_entry.set_text("")
                 self._captured_key = ("", 0, 0)
 
@@ -854,8 +853,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if not key_name:
                 return False
 
-            is_orca_modifier = modifiers & keybindings.ORCA_MODIFIER_MASK
-            if key_name in ["Delete", "BackSpace"] and not is_orca_modifier:
+            if key_name in ["Delete", "BackSpace"] and not modifiers:
                 entry.set_text("")
                 script.present_message(messages.KB_DELETED)
                 self._captured_key = ("", 0, 0)
