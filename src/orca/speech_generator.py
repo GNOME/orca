@@ -4208,19 +4208,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_tearoff_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the tearoff-menu-item role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
-        return result
+        return self._generate_menu_item(obj, **args)
 
     def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the terminal role."""
