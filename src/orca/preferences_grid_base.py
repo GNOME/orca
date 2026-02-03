@@ -1182,11 +1182,13 @@ class PreferencesGridBase(Gtk.Grid):
         """Switch back to categories view in multi-page stack."""
 
         if self._multipage_stack:
-            # Explicitly hide the current child so AT-SPI updates visibility states
-            # for the categories listbox. Without this, items may be reported as
-            # "not showing" and not presented.
+            # Explicitly hide the current child if it's a detail page so AT-SPI
+            # updates visibility states for the categories listbox. Without this,
+            # items may be reported as "not showing" and not presented. However,
+            # if the current child is already the categories listbox, hiding it
+            # causes GTK Stack to fall back to another child.
             current_child = self._multipage_stack.get_visible_child()
-            if current_child:
+            if current_child and current_child != self._multipage_categories_listbox:
                 current_child.hide()
             self._multipage_stack.set_visible_child_name("categories")
 
