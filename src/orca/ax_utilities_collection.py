@@ -22,8 +22,6 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
 
-from __future__ import annotations
-
 """Utilities for finding all objects that meet a certain criteria."""
 
 import inspect

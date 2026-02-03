@@ -24,8 +24,6 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
 
-from __future__ import annotations
-
 """Utilities for obtaining event-related information."""
 
 import enum
