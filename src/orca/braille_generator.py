@@ -1194,7 +1194,7 @@ class BrailleGenerator(generator.Generator):
             result += [braille.Region(" " + self._as_string(level))]
 
         format_type = args.get("formatType", "unfocused")
-        if format_type not in ["focused", "ancestor"]:
+        if format_type != "ancestor":
             result += self._generate_descendants(obj, **args)
         return result
 
