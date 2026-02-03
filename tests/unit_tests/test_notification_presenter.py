@@ -38,21 +38,40 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
+    from unittest.mock import MagicMock
+
     from .orca_test_context import OrcaTestContext
 
+
+class Fake():
+    pass
 
 @pytest.mark.unit
 class TestNotificationPresenter:
     """Test NotificationPresenter class methods."""
 
-    def _setup_dependencies(self, test_context: OrcaTestContext):
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns all dependencies needed for NotificationPresenter testing."""
 
-        additional_modules = ["gi", "gi.repository", "gi.repository.GObject", "gi.repository.Gtk"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "gi.repository.GObject",
+            "gi.repository.Gtk",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         gobject_mock = essential_modules["gi.repository.GObject"]
         gobject_mock.TYPE_STRING = str
@@ -599,11 +618,25 @@ class TestNotificationListGUI:
     def _setup_dependencies(self, test_context: OrcaTestContext):
         """Returns all dependencies needed for NotificationPresenter testing."""
 
-        additional_modules = ["gi", "gi.repository", "gi.repository.GObject", "gi.repository.Gtk"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "gi.repository.GObject",
+            "gi.repository.Gtk",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         gobject_mock = essential_modules["gi.repository.GObject"]
         gobject_mock.TYPE_STRING = str
@@ -709,11 +742,25 @@ class TestNotificationPresenterModule:
     def _setup_dependencies(self, test_context: OrcaTestContext):
         """Returns all dependencies needed for NotificationPresenter testing."""
 
-        additional_modules = ["gi", "gi.repository", "gi.repository.GObject", "gi.repository.Gtk"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "gi.repository.GObject",
+            "gi.repository.Gtk",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         gobject_mock = essential_modules["gi.repository.GObject"]
         gobject_mock.TYPE_STRING = str

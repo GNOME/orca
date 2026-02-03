@@ -39,6 +39,9 @@ if TYPE_CHECKING:
     from unittest.mock import MagicMock
 
 
+class Fake():
+    pass
+
 @pytest.mark.unit
 class TestFlatReviewPresenter:
     """Test FlatReviewPresenter class methods."""
@@ -72,6 +75,10 @@ class TestFlatReviewPresenter:
 
         gi_repository_mock = essential_modules["gi.repository"]
         atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
         gi_repository_mock.Atspi = atspi_mock
 
         gtk_mock = essential_modules["gi.repository.Gtk"]

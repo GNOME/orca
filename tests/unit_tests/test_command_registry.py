@@ -403,6 +403,8 @@ EXPECTED_TOTAL_COMMANDS = (
     + len(DOCUMENT_PRESENTER_HANDLERS)
 )
 
+class Fake():
+    pass
 
 @pytest.mark.unit
 class TestCommandRegistry:
@@ -418,6 +420,7 @@ class TestCommandRegistry:
             "gi.repository.Gtk",
             "gi.repository.GLib",
             "gi.repository.Gio",
+            "gi.repository.Wnck",
             "dasbus",
             "dasbus.connection",
             "dasbus.error",
@@ -444,6 +447,10 @@ class TestCommandRegistry:
 
         gi_repository_mock = essential_modules["gi.repository"]
         atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
         gi_repository_mock.Atspi = atspi_mock
 
         gtk_mock = essential_modules["gi.repository.Gtk"]
@@ -465,12 +472,25 @@ class TestCommandRegistry:
         gio_mock = essential_modules["gi.repository.Gio"]
         gi_repository_mock.Gio = gio_mock
 
+        gio_wnck = essential_modules["gi.repository.Wnck"]
+        class Screen:
+            def get_windows_stacked():
+                return []
+            def get_active_workspace():
+                return None
+            def connect(fill1, fill2):
+                return None
+        gio_wnck.Screen.get_default = test_context.Mock(
+            return_value=Screen
+        )
+        gi_repository_mock.Wnck = gio_wnck
+
         debug_mock = essential_modules["orca.debug"]
         debug_mock.debugFile = None
 
         flat_review_mock = essential_modules["orca.flat_review"]
         flat_review_context_mock = test_context.Mock()
-        flat_review_mock.Context = test_context.Mock(return_value=flat_review_context_mock)
+        flat_review_mock.Context = Fake
 
         return essential_modules
 

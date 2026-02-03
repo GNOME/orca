@@ -38,21 +38,39 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
+    from unittest.mock import MagicMock
+
     from .orca_test_context import OrcaTestContext
 
+
+class Fake():
+    pass
 
 @pytest.mark.unit
 class TestLivePoliteness:
     """Test LivePoliteness enum."""
 
-    def _setup_dependencies(self, test_context: OrcaTestContext):
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up dependencies for live_region_presenter module testing."""
 
-        additional_modules = ["gi", "gi.repository", "gi.repository.GLib"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "gi.repository.GLib",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -116,11 +134,24 @@ class TestLiveRegionMessage:
     def _setup_dependencies(self, test_context: OrcaTestContext):
         """Set up dependencies for live_region_presenter module testing."""
 
-        additional_modules = ["gi", "gi.repository", "gi.repository.GLib"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "gi.repository.GLib",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -248,11 +279,24 @@ class TestLiveRegionMessageQueue:
     def _setup_dependencies(self, test_context: OrcaTestContext):
         """Set up dependencies for live_region_presenter module testing."""
 
-        additional_modules = ["gi", "gi.repository", "gi.repository.GLib"]
+        additional_modules = [
+            "gi",
+            "gi.repository",
+            "gi.repository.Atspi",
+            "gi.repository.GLib",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -445,6 +489,7 @@ class TestLiveRegionPresenter:
         additional_modules = [
             "gi",
             "gi.repository",
+            "gi.repository.Atspi",
             "gi.repository.GLib",
             "orca.cmdnames",
             "orca.dbus_service",
@@ -462,6 +507,14 @@ class TestLiveRegionPresenter:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -836,6 +889,7 @@ class TestLiveRegionPresenterModule:
         additional_modules = [
             "gi",
             "gi.repository",
+            "gi.repository.Atspi",
             "gi.repository.GLib",
             "orca.cmdnames",
             "orca.dbus_service",
@@ -853,6 +907,14 @@ class TestLiveRegionPresenterModule:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
+
+        gi_repository_mock = essential_modules["gi.repository"]
+        atspi_mock = essential_modules["gi.repository.Atspi"]
+        atspi_mock.Role = Fake
+        atspi_mock.Accessible = Fake
+        atspi_mock.MatchRule = Fake
+        atspi_mock.Relation = Fake
+        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
