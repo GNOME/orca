@@ -2637,7 +2637,6 @@ class SpeechGenerator(generator.Generator):
         if format_type.endswith("WhereAmI"):
             result += self._generate_value_as_percentage(obj, **args)
 
-        result += self._generate_keyboard_accelerator(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return result
 
