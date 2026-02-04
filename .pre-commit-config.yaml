@@ -5,3 +5,12 @@ repos:
       - id: ruff-format
       - id: ruff
         args: [--fix]
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: python
+        types: [python]
+        additional_dependencies:
+          - mypy
