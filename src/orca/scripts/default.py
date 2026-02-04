@@ -504,14 +504,14 @@ class Script(script.Script):
     ########################################################################
 
     def show_app_preferences_gui(
-        self, script: Script | None = None, _event: input_event.InputEvent | None = None
+        self, current_script: Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Shows the app Preferences dialog."""
 
-        script = script or self
-        settings_manager.get_manager().load_app_settings(script)
+        current_script = current_script or self
+        settings_manager.get_manager().load_app_settings(current_script)
         prefs = settings_manager.get_manager().get_settings()
-        ui = orca_gui_prefs.OrcaSetupGUI(script, prefs)
+        ui = orca_gui_prefs.OrcaSetupGUI(current_script, prefs)
         ui.show_gui()
         return True
 
@@ -536,7 +536,7 @@ class Script(script.Script):
 
     def pan_braille_left(
         self,
-        _script: Script | None = None,
+        current_script: Script | None = None,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0,
     ) -> bool:
@@ -550,6 +550,12 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        target = current_script or self
+        if target is not self:
+            return target.pan_braille_left(target, event, pan_amount)
+
+        tokens = ["DEFAULT: pan_braille_left using", target]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._pan_braille_left(event, pan_amount)
 
     def _pan_braille_left(
@@ -600,7 +606,7 @@ class Script(script.Script):
 
     def pan_braille_right(
         self,
-        _script: Script | None = None,
+        current_script: Script | None = None,
         event: input_event.InputEvent | None = None,
         pan_amount: int = 0,
     ) -> bool:
@@ -614,6 +620,12 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        target = current_script or self
+        if target is not self:
+            return target.pan_braille_right(target, event, pan_amount)
+
+        tokens = ["DEFAULT: pan_braille_right using", target]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._pan_braille_right(event, pan_amount)
 
     def _pan_braille_right(
@@ -1168,7 +1180,7 @@ class Script(script.Script):
 
         return True
 
-    def on_sensitive_changed(self, event: Atspi.Event) -> bool:
+    def on_sensitive_changed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
         """Callback for object:state-changed:sensitive accessibility events."""
 
         return True
