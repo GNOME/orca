@@ -549,7 +549,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         capture_entry = Gtk.Entry()
         capture_entry.set_alignment(0.0)
-        capture_entry.get_style_context().add_class("dim-label")
 
         binding = command.get_keybinding()
         if binding and binding.keysymstring:
@@ -560,7 +559,13 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         vbox.pack_start(capture_entry, False, False, 0)
         capture_entry.show()
-        capture_entry.grab_focus()
+
+        # Grab focus after the entry is allocated to avoid scroll position reset
+        def on_size_allocate(_widget, _allocation):
+            capture_entry.disconnect(alloc_handler_id)
+            capture_entry.grab_focus()
+
+        alloc_handler_id = capture_entry.connect("size-allocate", on_size_allocate)
 
         self._captured_key = ("", 0, 0)
         self._keybinding_being_edited = command.get_name()
