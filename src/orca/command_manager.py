@@ -657,9 +657,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     ) -> None:
         """Finish inline editing of a keybinding."""
 
-        get_manager().set_active_commands(self._saved_commands, "Done capturing keys")
-        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
-
+        # Update keybinding before restoring commands so grabs match actual keybindings.
+        # Otherwise a deleted binding's grab remains, consuming keystrokes without executing
+        # anything (is_active() returns False when keybinding is None).
         if not canceled:
             captured_text = capture_entry.get_text().strip()
             script = script_manager.get_manager().get_active_script()
@@ -692,6 +692,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             binding = command.get_keybinding()
             binding_text = self._format_keybinding_text(binding) or ""
             binding_label.set_text(binding_text)
+
+        get_manager().set_active_commands(self._saved_commands, "Done capturing keys")
+        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
         vbox.remove(capture_entry)
         vbox.pack_start(binding_label, False, False, 0)
