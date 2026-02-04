@@ -1212,6 +1212,7 @@ class PreferencesGridBase(Gtk.Grid):
         Call this from your on_becoming_visible() override if using multi-page stack.
         """
 
+        self._multipage_last_activated_row = None
         self.multipage_show_categories()
 
 
