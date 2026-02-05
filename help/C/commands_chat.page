@@ -28,8 +28,12 @@
   <list>
     <item>
       <p>
-        Present previous chat room messages:
-        <keyseq><key>Orca Modifier</key><key>F1</key></keyseq> through <key>F9</key>
+        Present previous chat room message: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>
+        Present next chat room message: (Unbound)
       </p>
     </item>
     <item>
@@ -38,10 +42,15 @@
       </p>
     </item>
     <item>
+      <p>
+        Toggle chat room specific message histories: (unbound)
+      </p>
+    </item>
+    <item>
       <p>Enable/disable announcement of buddy typing status: (Unbound)</p>
     </item>
     <item>
-      <p>Enable/disable room-specific histories: (Unbound)</p>
+      <p>Toggle room name presentation: (Unbound)</p>
     </item>
   </list>
 </page>

@@ -31,5 +31,10 @@
           Cycle to the next profile: (Unbound)
         </p>
       </item>
+      <item>
+        <p>
+          Present the current profile: (Unbound)
+        </p>
+      </item>
     </list>
 </page>

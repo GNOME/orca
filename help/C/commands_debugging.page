@@ -23,7 +23,13 @@
   </p>
   <list>
     <item>
+      <p>Capture snapshot for debugging: (Unbound)</p>
+    </item>
+    <item>
       <p>Cycle to the next debug level: (Unbound)</p>
+    </item>
+    <item>
+      <p>Clear the AT-SPI cache for the current application: (Unbound)</p>
     </item>
   </list>
 </page>

@@ -189,11 +189,14 @@
         Copy the contents under flat review to the clipboard: (Unbound)
       </p>
       </item>
-        <item>
+      <item>
         <p>
           Append the contents under flat review to the clipboard: (Unbound)
       </p>
       </item>
+      <item><p>Move flat review to the bottom left: (Unbound)</p></item>
+      <item><p>Show flat review contents: (Unbound)</p></item>
+      <item><p>Toggle restricting flat review to the current object: (Unbound)</p></item>
     </list>
   </section>
 </page>

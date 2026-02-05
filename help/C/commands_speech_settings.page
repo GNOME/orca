@@ -16,7 +16,7 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Speech Settings Commands</title>
+  <title>Speech And Verbosity Settings Commands</title>
   <p>
     The following commands can be used to customize <app>Orca</app>'s
     speech output. You will notice that a number of these commands are
@@ -76,6 +76,9 @@
     </item>
     <item>
       <p>Increase the volume: (Unbound)</p>
+    </item>
+    <item>
+      <p>Cycle to the next speech synthesizer: (Unbound)</p>
     </item>
   </list>
 </page>

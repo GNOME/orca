@@ -27,7 +27,7 @@
     <list>
       <item>
         <p>
-          Toggle <app>Orca</app> on and off in GNOME:
+          Toggle <app>Orca</app> on and off in supported desktop environments:
           <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>.
         </p>
         <note style="tip">
@@ -54,9 +54,33 @@
       </item>
       <item>
         <p>
-          Pass the next command on to the current application:
-          <keyseq><key>Orca Modifier</key><key>BackSpace</key></keyseq>
+          Toggle all Orca command keys:
+          <keyseq><key>Alt></key><key>BackSpace</key></keyseq>
         </p>
+      </item>
+      <item>
+        <p>Toggle keyboard layout: (Unbound)</p>
+      </item>
+      <item>
+        <p>Cycle to the next key echo level: (Unbound)</p>
+      </item>
+      <item>
+        <p>Quit the screen reader: (Unbound)</p>
+      </item>
+    </list>
+  </section>
+  <section id="braille_keyboard_bindings">
+    <title>Braille Commands</title>
+    <p>The following commands can be used to control and customize Orca's braille output.</p>
+    <list>
+      <item>
+        <p>Pan the braille display to the left: (Unbound)</p>
+      </item>
+      <item>
+        <p>Pan the braille display to the right: (Unbound)</p>
+      </item>
+      <item>
+        <p>Turn contracted braille on and off: (Unbound)</p>
       </item>
     </list>
   </section>
