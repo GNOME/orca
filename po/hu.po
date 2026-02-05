@@ -4,14 +4,14 @@
 #
 # Kálmán Kéménczy <kkemenczy at novell dot com>, 2006, 2007.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
-# Attila Hammer <hammera at pickup dot hu>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023, 2024., 2025., 2026.
+# Attila Hammer <hammera at pickup dot hu>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023, 2024, 2025, 2026.
 # Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2018, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-02-01 15:48+0000\n"
-"PO-Revision-Date: 2026-01-31 16:35+0100\n"
+"PO-Revision-Date: 2026-02-05 19:05+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -1374,7 +1374,7 @@ msgstr "Gépelési bejelentések ki-/bekapcsolása"
 #. or off.
 #: src/orca/cmdnames.py:609
 msgid "Toggle chat room specific message histories"
-msgstr "A csevegőszoba üzenetelőzményeinek megjelenítése."
+msgstr "A csevegőszobára jellemző üzenetelőzmények be- és kikapcsolása."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -1385,7 +1385,7 @@ msgstr "A csevegőszoba üzenetelőzményeinek megjelenítése."
 #. the command to toggle room name presentation on or off.
 #: src/orca/cmdnames.py:618
 msgid "Toggle room name presentation"
-msgstr "Szoba nevének megjelenítésének be-/kikapcsolása"
+msgstr "Csevegőszoba nevének megjelenítésének be-/kikapcsolása"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -3988,14 +3988,14 @@ msgstr "Billentyűzetkiosztás"
 #. laptop layout is intended for use with a laptop-style keyboard.
 #: src/orca/guilabels.py:606
 msgid "Desktop"
-msgstr "As_ztali"
+msgstr "Asztali"
 
 #. Translators: This label refers to the keyboard layout (desktop or laptop).
 #. The desktop layout is intended for use with a full-size keyboard, while the
 #. laptop layout is intended for use with a laptop-style keyboard.
 #: src/orca/guilabels.py:611
 msgid "Laptop"
-msgstr "_Laptop"
+msgstr "Laptop"
 
 #. Translators: Orca has a feature to list all of the notification messages
 #. received, similar to the functionality gnome-shell provides when you press
