@@ -84,7 +84,7 @@ class Script(default.Script):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             flat_review_presenter.get_presenter().is_active()
-            or not braille.beginningIsShowing
+            or not braille.is_beginning_showing()
             or self.utilities.is_spreadsheet_cell(focus)
             or not AXUtilities.is_paragraph(focus)
         ):
@@ -111,7 +111,7 @@ class Script(default.Script):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             flat_review_presenter.get_presenter().is_active()
-            or not braille.endIsShowing
+            or not braille.is_end_showing()
             or self.utilities.is_spreadsheet_cell(focus)
             or not AXUtilities.is_paragraph(focus)
         ):

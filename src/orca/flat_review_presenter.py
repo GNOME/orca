@@ -264,15 +264,17 @@ class FlatReviewPresenter:
         ]
 
         braille_bindings: dict[str, tuple[int, ...]] = {}
-        try:
-            braille_bindings = {
-                "reviewAboveHandler": (braille.brlapi.KEY_CMD_LNUP,),
-                "reviewBelowHandler": (braille.brlapi.KEY_CMD_LNDN,),
-                "toggleFlatReviewModeHandler": (braille.brlapi.KEY_CMD_FREEZE,),
-                "reviewHomeHandler": (braille.brlapi.KEY_CMD_TOP_LEFT,),
-                "reviewBottomLeftHandler": (braille.brlapi.KEY_CMD_BOT_LEFT,),
-            }
-        except AttributeError:
+        bindings = [
+            ("reviewAboveHandler", braille.BRLAPI_KEY_CMD_LNUP),
+            ("reviewBelowHandler", braille.BRLAPI_KEY_CMD_LNDN),
+            ("toggleFlatReviewModeHandler", braille.BRLAPI_KEY_CMD_FREEZE),
+            ("reviewHomeHandler", braille.BRLAPI_KEY_CMD_TOP_LEFT),
+            ("reviewBottomLeftHandler", braille.BRLAPI_KEY_CMD_BOT_LEFT),
+        ]
+        for name, key in bindings:
+            if key is not None:
+                braille_bindings[name] = (key,)
+        if not braille_bindings:
             msg = "FLAT REVIEW PRESENTER: Braille bindings unavailable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -1090,11 +1092,10 @@ class FlatReviewPresenter:
             braille.refresh(True)
             return
 
-        line = braille.Line()
-        line.add_regions(regions)
-        braille.set_lines([line])
-        braille.setFocus(focused_region)
-        braille.refresh(True)
+        braille_presenter.get_presenter().present_regions(
+            list(regions),
+            focused_region,
+        )
 
     # TODO - JD: See what adjustments might be needed for the pan_amount parameter
     def pan_braille_left(
@@ -1106,18 +1107,22 @@ class FlatReviewPresenter:
         """Pans the braille display left."""
 
         self._context = self.get_or_create_context(script)
-        if braille.beginningIsShowing:
+        if braille.is_beginning_showing():
             self._context.go_to_start_of(flat_review.Context.LINE)
             self._context.go_previous_character()
             self._update_braille(script)
             return True
 
-        braille.panLeft(pan_amount)
-        braille_region, offset_in_zone = braille.getRegionAtCell(1)
+        braille.pan_left(pan_amount)
+        region_info = braille.get_region_at_cell(1)
+        braille_region = region_info.region
+        offset_in_zone = region_info.offset_in_region
         while braille_region and not hasattr(braille_region, "zone"):
-            if not braille.panLeft(1):
+            if not braille.pan_left(1):
                 break
-            braille_region, offset_in_zone = braille.getRegionAtCell(1)
+            region_info = braille.get_region_at_cell(1)
+            braille_region = region_info.region
+            offset_in_zone = region_info.offset_in_region
 
         if braille_region and not hasattr(braille_region, "zone"):
             self._context.go_to_start_of(flat_review.Context.LINE)
@@ -1140,17 +1145,21 @@ class FlatReviewPresenter:
         """Pans the braille display right."""
 
         self._context = self.get_or_create_context(script)
-        if braille.endIsShowing:
+        if braille.is_end_showing():
             self._context.go_next_line()
             self._update_braille(script)
             return True
 
-        braille.panRight(pan_amount)
-        braille_region, offset_in_zone = braille.getRegionAtCell(1)
+        braille.pan_right(pan_amount)
+        region_info = braille.get_region_at_cell(1)
+        braille_region = region_info.region
+        offset_in_zone = region_info.offset_in_region
         while braille_region and not hasattr(braille_region, "zone"):
-            if not braille.panRight(1):
+            if not braille.pan_right(1):
                 break
-            braille_region, offset_in_zone = braille.getRegionAtCell(1)
+            region_info = braille.get_region_at_cell(1)
+            braille_region = region_info.region
+            offset_in_zone = region_info.offset_in_region
 
         if braille_region and not hasattr(braille_region, "zone"):
             self._context.go_next_line()

@@ -59,7 +59,7 @@ class TestSleepModeManager:
         ax_object_mock.get_name = test_context.Mock(return_value="TestApp")
 
         braille_mock = essential_modules["orca.braille"]
-        braille_mock.clear = test_context.Mock()
+        braille_mock.clear_display = test_context.Mock()
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
         cmdnames_mock.TOGGLE_SLEEP_MODE = "Toggle sleep mode for the current application"
@@ -180,7 +180,7 @@ class TestSleepModeManager:
         manager.set_up_commands()
         # Verify the command has a keybinding
         cmd_manager = command_manager.get_manager()
-        cmd = cmd_manager.get_command("toggle_sleep_mode")
+        cmd = cmd_manager.get_keyboard_command("toggle_sleep_mode")
         assert cmd is not None
         keybinding = cmd.get_keybinding()
         assert keybinding is not None
@@ -263,7 +263,7 @@ class TestSleepModeManager:
             assert app_hash in manager._apps
 
         if not initially_active:
-            essential_modules["orca.braille"].clear.assert_called()
+            essential_modules["orca.braille"].clear_display.assert_called()
 
         if notify_user and expected_message_contains:
             if initially_active:

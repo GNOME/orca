@@ -105,7 +105,7 @@ class Script(default.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-            braille.clear()
+            braille.clear_display()
             self.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
             return True
 
@@ -271,7 +271,7 @@ class Script(default.Script):
         """Callback for window:activate accessibility events."""
 
         focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-        braille.clear()
+        braille.clear_display()
         self.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
         return True
 

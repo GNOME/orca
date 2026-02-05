@@ -51,15 +51,6 @@ class TestBraillePresenter:
         additional_modules = ["orca.braille", "orca.orca_platform"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        braille_mock = essential_modules["orca.braille"]
-        braille_mock.get_table_files.return_value = [
-            "en-us-g1.ctb",
-            "en-us-g2.ctb",
-            "en-us-comp8.ctb",
-            "fr-bfu-g2.ctb",
-            "de-g2.ctb",
-        ]
-
         platform_mock = essential_modules["orca.orca_platform"]
         platform_mock.tablesdir = "/usr/share/liblouis/tables"
 
@@ -71,6 +62,17 @@ class TestBraillePresenter:
         settings_mock.BRAILLE_UNDERLINE_BOTH = 0xC0
         settings_mock.VERBOSITY_LEVEL_BRIEF = 0
         settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
+
+        test_context.patch(
+            "orca.braille_presenter.BraillePresenter._get_table_files",
+            return_value=[
+                "en-us-g1.ctb",
+                "en-us-g2.ctb",
+                "en-us-comp8.ctb",
+                "fr-bfu-g2.ctb",
+                "de-g2.ctb",
+            ],
+        )
 
         return essential_modules
 
@@ -814,16 +816,6 @@ class TestBraillePreferencesGridUI:
         additional_modules = ["orca.braille", "orca.orca_platform"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        braille_mock = essential_modules["orca.braille"]
-        braille_mock.get_table_files.return_value = [
-            "en-us-g1.ctb",
-            "en-us-g2.ctb",
-        ]
-        braille_mock.list_tables.return_value = {
-            "en-us-g1": "English Grade 1",
-            "en-us-g2": "English Grade 2",
-        }
-
         platform_mock = essential_modules["orca.orca_platform"]
         platform_mock.tablesdir = "/usr/share/liblouis/tables"
 
@@ -848,6 +840,14 @@ class TestBraillePreferencesGridUI:
         settings_mock.brailleLinkIndicator = 0x00
         settings_mock.brailleSelectorIndicator = 0x00
         settings_mock.textAttributesBrailleIndicator = 0x00
+
+        test_context.patch(
+            "orca.braille_presenter.BraillePresenter._get_table_files",
+            return_value=[
+                "en-us-g1.ctb",
+                "en-us-g2.ctb",
+            ],
+        )
         settings_mock.enableFlashMessages = True
         settings_mock.flashIsPersistent = False
         settings_mock.flashVerbosityLevel = 1
@@ -1081,6 +1081,7 @@ class TestBraillePreferencesGridUI:
         grid = BrailleVerbosityPreferencesGrid(presenter)
 
         detailed_switch = grid.get_widget(0)
+        assert detailed_switch is not None
         assert detailed_switch.get_active() is True
 
     def test_verbosity_grid_switch_toggle_updates_setting(
@@ -1101,6 +1102,7 @@ class TestBraillePreferencesGridUI:
         grid = BrailleVerbosityPreferencesGrid(presenter)
 
         detailed_switch = grid.get_widget(0)
+        assert detailed_switch is not None
         assert detailed_switch.get_active() is False
 
         grid._initializing = False
@@ -1125,6 +1127,7 @@ class TestBraillePreferencesGridUI:
         grid = BrailleFlashMessagesPreferencesGrid(presenter)
 
         duration_spinbutton = grid.get_widget(3)
+        assert duration_spinbutton is not None
         assert duration_spinbutton.get_value() == 3
 
     def test_display_settings_combobox_initial_value(self, test_context: OrcaTestContext) -> None:
@@ -1143,4 +1146,5 @@ class TestBraillePreferencesGridUI:
         grid = BrailleDisplaySettingsPreferencesGrid(presenter)
 
         link_combo = grid.get_widget(5)
+        assert link_combo is not None
         assert link_combo.get_active() == 1

@@ -179,7 +179,7 @@ class _StringContext:
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW
         )
         self._script.speak_message(string, voice=voice, interrupt=False)
-        self._script.display_message(self._string, -1)
+        self._script.display_message(self._string)
         return True
 
 

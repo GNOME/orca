@@ -105,8 +105,8 @@ class TestScriptManager:
         ax_utilities_mock.AXUtilities = ax_utilities_class_mock
 
         braille_mock = essential_modules["orca.braille"]
-        braille_mock.checkBrailleSetting = test_context.Mock()
-        braille_mock.setupKeyRanges = test_context.Mock()
+        braille_mock.check_braille_setting = test_context.Mock()
+        braille_mock.setup_key_ranges = test_context.Mock()
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -210,8 +210,8 @@ class TestScriptManager:
         )
 
         braille_module = test_context.Mock()
-        braille_module.checkBrailleSetting = test_context.Mock()
-        braille_module.setupKeyRanges = test_context.Mock()
+        braille_module.check_braille_setting = test_context.Mock()
+        braille_module.setup_key_ranges = test_context.Mock()
 
         essential_modules["default_module"] = default_module
         essential_modules["sleepmode_module"] = sleepmode_module
@@ -835,10 +835,10 @@ class TestScriptManager:
 
         mock_check_braille = test_context.Mock()
         test_context.patch(
-            "orca.script_manager.braille.checkBrailleSetting", new=mock_check_braille
+            "orca.script_manager.braille.check_braille_setting", new=mock_check_braille
         )
         mock_setup_ranges = test_context.Mock()
-        test_context.patch("orca.script_manager.braille.setupKeyRanges", new=mock_setup_ranges)
+        test_context.patch("orca.script_manager.braille.setup_key_ranges", new=mock_setup_ranges)
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(
             "orca.script_manager.speech_and_verbosity_manager.get_manager",
@@ -933,8 +933,8 @@ class TestScriptManager:
         settings_mock = essential_modules["orca.settings"]
         from orca.script_manager import ScriptManager
 
-        test_context.patch("orca.script_manager.braille.checkBrailleSetting", return_value=None)
-        test_context.patch("orca.script_manager.braille.setupKeyRanges", return_value=None)
+        test_context.patch("orca.script_manager.braille.check_braille_setting", return_value=None)
+        test_context.patch("orca.script_manager.braille.setup_key_ranges", return_value=None)
         speech_patch = "orca.script_manager.speech_and_verbosity_manager.get_manager"
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(speech_patch, new=mock_get_speech_manager)

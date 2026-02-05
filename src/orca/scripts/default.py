@@ -294,25 +294,39 @@ class Script(script.Script):
             )
 
         braille_bindings: dict[str, tuple[int, ...]] = {}
-        try:
-            braille_bindings = {
-                "panBrailleLeftHandler": (
-                    braille.brlapi.KEY_CMD_HWINLT,
-                    braille.brlapi.KEY_CMD_FWINLT,
-                    braille.brlapi.KEY_CMD_FWINLTSKIP,
-                ),
-                "panBrailleRightHandler": (
-                    braille.brlapi.KEY_CMD_HWINRT,
-                    braille.brlapi.KEY_CMD_FWINRT,
-                    braille.brlapi.KEY_CMD_FWINRTSKIP,
-                ),
-                "goBrailleHomeHandler": (braille.brlapi.KEY_CMD_HOME,),
-                "contractedBrailleHandler": (braille.brlapi.KEY_CMD_SIXDOTS,),
-                "processRoutingKeyHandler": (braille.brlapi.KEY_CMD_ROUTE,),
-                "processBrailleCutBeginHandler": (braille.brlapi.KEY_CMD_CUTBEGIN,),
-                "processBrailleCutLineHandler": (braille.brlapi.KEY_CMD_CUTLINE,),
-            }
-        except AttributeError:
+        left_keys = tuple(
+            key
+            for key in (
+                braille.BRLAPI_KEY_CMD_HWINLT,
+                braille.BRLAPI_KEY_CMD_FWINLT,
+                braille.BRLAPI_KEY_CMD_FWINLTSKIP,
+            )
+            if key is not None
+        )
+        right_keys = tuple(
+            key
+            for key in (
+                braille.BRLAPI_KEY_CMD_HWINRT,
+                braille.BRLAPI_KEY_CMD_FWINRT,
+                braille.BRLAPI_KEY_CMD_FWINRTSKIP,
+            )
+            if key is not None
+        )
+        if left_keys:
+            braille_bindings["panBrailleLeftHandler"] = left_keys
+        if right_keys:
+            braille_bindings["panBrailleRightHandler"] = right_keys
+        if braille.BRLAPI_KEY_CMD_HOME is not None:
+            braille_bindings["goBrailleHomeHandler"] = (braille.BRLAPI_KEY_CMD_HOME,)
+        if braille.BRLAPI_KEY_CMD_SIXDOTS is not None:
+            braille_bindings["contractedBrailleHandler"] = (braille.BRLAPI_KEY_CMD_SIXDOTS,)
+        if braille.BRLAPI_KEY_CMD_ROUTE is not None:
+            braille_bindings["processRoutingKeyHandler"] = (braille.BRLAPI_KEY_CMD_ROUTE,)
+        if braille.BRLAPI_KEY_CMD_CUTBEGIN is not None:
+            braille_bindings["processBrailleCutBeginHandler"] = (braille.BRLAPI_KEY_CMD_CUTBEGIN,)
+        if braille.BRLAPI_KEY_CMD_CUTLINE is not None:
+            braille_bindings["processBrailleCutLineHandler"] = (braille.BRLAPI_KEY_CMD_CUTLINE,)
+        if not braille_bindings:
             msg = "DEFAULT: Braille bindings unavailable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -483,19 +497,12 @@ class Script(script.Script):
         if not result:
             return
 
-        braille.clear()
-        line = braille.Line()
-        braille.add_line(line)
-        line.add_regions(result)
-
         extra_region = args.get("extraRegion")
-        if extra_region:
-            line.add_region(extra_region)
-            braille.setFocus(extra_region)
-        else:
-            braille.setFocus(focused_region)
-
-        braille.refresh(True)
+        braille_presenter.get_presenter().present_regions(
+            list(result),
+            focused_region,
+            extra_region=extra_region,
+        )
 
     ########################################################################
     #                                                                      #
@@ -575,7 +582,7 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
-        if braille.beginningIsShowing and is_text_area:
+        if braille.is_beginning_showing() and is_text_area:
             # If we're at the beginning of a line of a multiline text
             # area, then force it's caret to the end of the previous
             # line.  The assumption here is that we're currently
@@ -597,10 +604,8 @@ class Script(script.Script):
                 flat_review_presenter.get_presenter().go_start_of_line(self, event)
                 flat_review_presenter.get_presenter().go_previous_character(self, event)
         else:
-            braille.panLeft(pan_amount)
-            # We might be panning through a flashed message.
-            braille.resetFlashTimer()
-            braille.refresh(False, stopFlash=False)
+            braille.pan_left(pan_amount)
+            braille.refresh(False, stop_flash=False)
 
         return True
 
@@ -645,7 +650,7 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
-        if braille.endIsShowing and is_text_area:
+        if braille.is_end_showing() and is_text_area:
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
             # assumption here is that we're currently viewing the line that
@@ -657,10 +662,8 @@ class Script(script.Script):
             if end_offset < AXText.get_character_count(focus):
                 AXText.set_caret_offset(focus, end_offset)
         else:
-            braille.panRight(pan_amount)
-            # We might be panning through a flashed message.
-            braille.resetFlashTimer()
-            braille.refresh(False, stopFlash=False)
+            braille.pan_right(pan_amount)
+            braille.refresh(False, stop_flash=False)
 
         return True
 
@@ -674,18 +677,18 @@ class Script(script.Script):
             return True
 
         self.interrupt_presentation()
-        return braille.returnToRegionWithFocus(event)
+        return braille.return_to_region_with_focus(event)
 
     def set_contracted_braille(
         self, _script: Script | None = None, event: input_event.InputEvent | None = None
     ) -> bool:
         """Toggles contracted braille."""
 
-        braille.set_contracted_braille(event)
+        braille.toggle_contracted_braille(event)
         return True
 
     def process_routing_key(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.BrailleEvent | None = None
     ) -> bool:
         """Processes a cursor routing key."""
 
@@ -693,45 +696,51 @@ class Script(script.Script):
         # then process the routing key. If the contents accept a click action, this
         # would result in clicking on the link instead of clearing the flash message.
         self.interrupt_presentation(kill_flash=False)
+        if event is None:
+            return True
         braille.process_routing_key(event)
         return True
 
     def process_braille_cut_begin(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.BrailleEvent | None = None
     ) -> bool:
         """Clears the selection and moves the caret offset in the currently
         active text area.
         """
 
-        obj, offset = braille.getCaretContext(event)
-        if offset < 0:
+        if event is None:
+            return True
+        caret_context = braille.get_caret_context(event)
+        if caret_context.offset < 0:
             return True
 
         self.interrupt_presentation()
-        AXText.clear_all_selected_text(obj)
-        self.utilities.set_caret_offset(obj, offset)
+        AXText.clear_all_selected_text(caret_context.accessible)
+        self.utilities.set_caret_offset(caret_context.accessible, caret_context.offset)
         return True
 
     def process_braille_cut_line(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self, _script: Script | None = None, event: input_event.BrailleEvent | None = None
     ) -> bool:
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
 
-        obj, offset = braille.getCaretContext(event)
-        if offset < 0:
+        if event is None:
+            return True
+        caret_context = braille.get_caret_context(event)
+        if caret_context.offset < 0:
             return True
 
         self.interrupt_presentation()
-        start_offset = AXText.get_selection_start_offset(obj)
-        end_offset = AXText.get_selection_end_offset(obj)
+        start_offset = AXText.get_selection_start_offset(caret_context.accessible)
+        end_offset = AXText.get_selection_end_offset(caret_context.accessible)
         if start_offset < 0 or end_offset < 0:
-            caret_offset = AXText.get_caret_offset(obj)
-            start_offset = min(offset, caret_offset)
-            end_offset = max(offset, caret_offset)
+            caret_offset = AXText.get_caret_offset(caret_context.accessible)
+            start_offset = min(caret_context.offset, caret_offset)
+            end_offset = max(caret_context.offset, caret_offset)
 
-        AXText.set_selected_text(obj, start_offset, end_offset)
-        text = AXText.get_selected_text(obj)[0]
+        AXText.set_selected_text(caret_context.accessible, start_offset, end_offset)
+        text = AXText.get_selected_text(caret_context.accessible)[0]
         clipboard.get_presenter().set_text(text)
         return True
 
@@ -1570,17 +1579,10 @@ class Script(script.Script):
         if not braille_presenter.get_presenter().use_braille():
             return
 
-        needs_repainting = True
-        line = braille.getShowingLine()
-        for region in line.regions:
-            if isinstance(region, braille.Text) and region.accessible == obj:
-                if region.reposition_cursor():
-                    braille.refresh(True)
-                    needs_repainting = False
-                break
+        if braille.try_reposition_cursor(obj):
+            return
 
-        if needs_repainting:
-            self.update_braille(obj)
+        self.update_braille(obj)
 
     def _present_caret_moved_event(
         self,
@@ -1835,10 +1837,6 @@ class Script(script.Script):
         if not braille_presenter.get_presenter().use_braille():
             return
 
-        braille.clear()
-        line = braille.Line()
-        braille.add_line(line)
-
         regions_list, focused_region = self.braille_generator.generate_contents(contents, **args)
         if not regions_list:
             msg = "DEFAULT: Generating braille contents failed"
@@ -1853,14 +1851,18 @@ class Script(script.Script):
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        flattened_regions: list[braille.Region] = []
         for regions in regions_list:
-            line.add_regions(regions)
+            flattened_regions.extend(regions)
 
-        if line.regions:
-            line.regions[-1].string = line.regions[-1].string.rstrip(" ")
+        if flattened_regions:
+            flattened_regions[-1].string = flattened_regions[-1].string.rstrip(" ")
 
-        braille.setFocus(focused_region, indicate_links=False)
-        braille.refresh(panToCursor=True, indicate_links=False)
+        braille_presenter.get_presenter().present_regions(
+            flattened_regions,
+            focused_region,
+            indicate_links=False,
+        )
 
     def spell_phonetically(self, item_string: str) -> None:
         """Phonetically spell item_string."""
@@ -1884,7 +1886,7 @@ class Script(script.Script):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         speech_and_verbosity_manager.get_manager().interrupt_speech()
         if kill_flash:
-            braille.killFlash()
+            braille.kill_flash()
         live_region_presenter.get_presenter().flush_messages()
 
     def present_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
@@ -1932,7 +1934,7 @@ class Script(script.Script):
             message = " ".join(message)
 
         duration = presenter.get_flashtime_from_settings()
-        braille.displayMessage(message, flashTime=duration)
+        braille.display_message(message, flash_time=duration)
 
     @staticmethod
     def __play(sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
@@ -1948,24 +1950,15 @@ class Script(script.Script):
             _player.play(sounds[i], interrupt=False)
 
     @staticmethod
-    def display_message(message: str, cursor: int = -1, flash_time: int = 0) -> None:
-        """Displays a single line, setting the cursor to the given position,
-        ensuring that the cursor is in view.
+    def display_message(message: str) -> None:
+        """Displays a single line on braille using user flash settings."""
 
-        Arguments:
-        - message: the string to display
-        - cursor: the 0-based cursor position, where -1 (default) means no cursor
-        - flash_time:  if non-0, the number of milliseconds to display the
-          regions before reverting back to what was there before. A 0 means
-          to not do any flashing.  A negative number means to display the
-          message until some other message comes along or the user presses
-          a cursor routing key.
-        """
-
-        if not braille_presenter.get_presenter().use_braille():
+        presenter = braille_presenter.get_presenter()
+        if not (presenter.use_braille() and presenter.get_flash_messages_are_enabled()):
             return
 
-        braille.displayMessage(message, cursor, flash_time)
+        duration = presenter.get_flashtime_from_settings()
+        braille.display_message(message, duration)
 
     def spell_item(self, text: str) -> None:
         """Speak the characters in the string one by one."""

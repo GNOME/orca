@@ -32,6 +32,8 @@ from enum import Enum
 from typing import Any
 
 from . import braille
+from . import brltablenames
+from . import cmdnames
 from . import dbus_service
 from . import debug
 from . import guilabels
@@ -422,6 +424,90 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("BraillePresenter", self)
+        self._command_names: dict[int, str] | None = None
+        self._table_names: dict[str, str] | None = None
+
+    @staticmethod
+    def _build_table_names() -> dict[str, str]:
+        """Returns display names for braille translation tables."""
+
+        return {
+            "Cz-Cz-g1": brltablenames.CZ_CZ_G1,
+            "Es-Es-g1": brltablenames.ES_ES_G1,
+            "Fr-Ca-g2": brltablenames.FR_CA_G2,
+            "Fr-Fr-g2": brltablenames.FR_FR_G2,
+            "Lv-Lv-g1": brltablenames.LV_LV_G1,
+            "Nl-Nl-g1": brltablenames.NL_NL_G1,
+            "No-No-g0": brltablenames.NO_NO_G0,
+            "No-No-g1": brltablenames.NO_NO_G1,
+            "No-No-g2": brltablenames.NO_NO_G2,
+            "No-No-g3": brltablenames.NO_NO_G3,
+            "Pl-Pl-g1": brltablenames.PL_PL_G1,
+            "Pt-Pt-g1": brltablenames.PT_PT_G1,
+            "Se-Se-g1": brltablenames.SE_SE_G1,
+            "ar-ar-g1": brltablenames.AR_AR_G1,
+            "cy-cy-g1": brltablenames.CY_CY_G1,
+            "cy-cy-g2": brltablenames.CY_CY_G2,
+            "de-de-g0": brltablenames.DE_DE_G0,
+            "de-de-g1": brltablenames.DE_DE_G1,
+            "de-de-g2": brltablenames.DE_DE_G2,
+            "en-GB-g2": brltablenames.EN_GB_G2,
+            "en-gb-g1": brltablenames.EN_GB_G1,
+            "en-us-g1": brltablenames.EN_US_G1,
+            "en-us-g2": brltablenames.EN_US_G2,
+            "fr-ca-g1": brltablenames.FR_CA_G1,
+            "fr-fr-g1": brltablenames.FR_FR_G1,
+            "gr-gr-g1": brltablenames.GR_GR_G1,
+            "hi-in-g1": brltablenames.HI_IN_G1,
+            "hu-hu-comp8": brltablenames.HU_HU_8DOT,
+            "hu-hu-g1": brltablenames.HU_HU_G1,
+            "hu-hu-g2": brltablenames.HU_HU_G2,
+            "it-it-g1": brltablenames.IT_IT_G1,
+            "nl-be-g1": brltablenames.NL_BE_G1,
+        }
+
+    def get_table_names(self) -> dict[str, str]:
+        """Returns table aliases mapped to localized display names."""
+
+        if self._table_names is None:
+            self._table_names = self._build_table_names()
+        return dict(self._table_names)
+
+    @staticmethod
+    def _build_command_names() -> dict[int, str]:
+        """Return BrlTTY command names for presentation in the UI."""
+
+        command_names: dict[int, str] = {}
+
+        def add_command(command_id: int | None, label: str) -> None:
+            if command_id is not None:
+                command_names[command_id] = label
+
+        add_command(braille.BRLAPI_KEY_CMD_HWINLT, cmdnames.BRAILLE_LINE_LEFT)
+        add_command(braille.BRLAPI_KEY_CMD_FWINLT, cmdnames.BRAILLE_LINE_LEFT)
+        add_command(braille.BRLAPI_KEY_CMD_FWINLTSKIP, cmdnames.BRAILLE_LINE_LEFT)
+        add_command(braille.BRLAPI_KEY_CMD_HWINRT, cmdnames.BRAILLE_LINE_RIGHT)
+        add_command(braille.BRLAPI_KEY_CMD_FWINRT, cmdnames.BRAILLE_LINE_RIGHT)
+        add_command(braille.BRLAPI_KEY_CMD_FWINRTSKIP, cmdnames.BRAILLE_LINE_RIGHT)
+        add_command(braille.BRLAPI_KEY_CMD_LNUP, cmdnames.BRAILLE_LINE_UP)
+        add_command(braille.BRLAPI_KEY_CMD_LNDN, cmdnames.BRAILLE_LINE_DOWN)
+        add_command(braille.BRLAPI_KEY_CMD_FREEZE, cmdnames.BRAILLE_FREEZE)
+        add_command(braille.BRLAPI_KEY_CMD_TOP_LEFT, cmdnames.BRAILLE_TOP_LEFT)
+        add_command(braille.BRLAPI_KEY_CMD_BOT_LEFT, cmdnames.BRAILLE_BOTTOM_LEFT)
+        add_command(braille.BRLAPI_KEY_CMD_HOME, cmdnames.BRAILLE_HOME)
+        add_command(braille.BRLAPI_KEY_CMD_SIXDOTS, cmdnames.BRAILLE_SIX_DOTS)
+        add_command(braille.BRLAPI_KEY_CMD_ROUTE, cmdnames.BRAILLE_ROUTE_CURSOR)
+        add_command(braille.BRLAPI_KEY_CMD_CUTBEGIN, cmdnames.BRAILLE_CUT_BEGIN)
+        add_command(braille.BRLAPI_KEY_CMD_CUTLINE, cmdnames.BRAILLE_CUT_LINE)
+
+        return command_names
+
+    def get_command_names(self) -> dict[int, str]:
+        """Returns a mapping of BrlTTY command IDs to user-visible labels."""
+
+        if self._command_names is None:
+            self._command_names = self._build_command_names()
+        return dict(self._command_names)
 
     def create_preferences_grid(
         self, title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
@@ -496,6 +582,33 @@ class BraillePresenter:
             msg = "BRAILLE PRESENTER: Braille is disabled."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
+
+    def present_regions(
+        self,
+        regions: list[braille.Region],
+        focused_region: braille.Region | None,
+        extra_region: braille.Region | None = None,
+        *,
+        pan_to_cursor: bool = True,
+        indicate_links: bool = True,
+        stop_flash: bool = True,
+    ) -> None:
+        """Build a line from regions and present it as a single braille line."""
+
+        if extra_region is not None:
+            regions = list(regions)
+            regions.append(extra_region)
+            focused_region = extra_region
+
+        line = braille.Line()
+        line.add_regions(regions)
+        braille.display_line(
+            line,
+            focused_region,
+            pan_to_cursor=pan_to_cursor,
+            indicate_links=indicate_links,
+            stop_flash=stop_flash,
+        )
 
     @dbus_service.getter
     def get_braille_is_enabled(self) -> bool:
@@ -699,19 +812,24 @@ class BraillePresenter:
     def get_available_contraction_tables(self) -> list[str]:
         """Returns a list of available contraction table names."""
 
-        table_files = braille.get_table_files()
+        table_files = self._get_table_files()
         return [os.path.splitext(filename)[0] for filename in table_files]
 
     def get_contraction_tables_dict(self) -> dict[str, str]:
         """Returns a dictionary mapping display names to table file paths."""
 
-        return braille.list_tables()
+        names = self.get_table_names()
+        tables = {}
+        for fname in self._get_table_files():
+            alias = fname[:-4]
+            tables[names.get(alias, alias)] = os.path.join(tablesdir, fname)
+        return tables
 
     @dbus_service.setter
     def set_contraction_table(self, value: str) -> bool:
         """Sets the current braille contraction table."""
 
-        table_files = braille.get_table_files()
+        table_files = self._get_table_files()
         base_name = os.path.splitext(value)[0]
         filename = None
         for table_file in table_files:
@@ -729,6 +847,15 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.brailleContractionTable = full_path
         return True
+
+    @staticmethod
+    def _get_table_files() -> list[str]:
+        """Returns a list of braille table filenames in the tables directory."""
+
+        try:
+            return [fname for fname in os.listdir(tablesdir) if fname[-4:] in (".utb", ".ctb")]
+        except OSError:
+            return []
 
     def set_contraction_table_from_path(self, file_path: str) -> bool:
         """Sets the current braille contraction table from a file path."""

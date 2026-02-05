@@ -876,7 +876,7 @@ class TypingEchoPresenter:
         if locking_state_string := event.get_locking_state_string():
             keyname = event.get_key_name()
             msg = f"{keyname} {locking_state_string}"
-            braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+            braille.display_message(msg, flash_time=settings.brailleFlashTime)
 
         self._speak_key_event(script, event)
 

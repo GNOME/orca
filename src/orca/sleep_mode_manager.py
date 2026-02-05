@@ -130,7 +130,7 @@ class SleepModeManager:
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
-        braille.clear()
+        braille.clear_display()
         if notify_user:
             script.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
         _script_manager.set_active_script(

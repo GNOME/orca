@@ -615,7 +615,7 @@ class SpellCheckPresenter:
         if self._script is None:
             return False
 
-        braille.clear()
+        braille.clear_display()
         msg = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
             self._widgets.error_widget
         )

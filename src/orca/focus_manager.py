@@ -145,9 +145,9 @@ class FocusManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._active_mode = mode
             if mode == FLAT_REVIEW:
-                braille.setBrlapiPriority(braille.BRLAPI_PRIORITY_HIGH)
+                braille.set_brlapi_priority(braille.BRLAPI_PRIORITY_HIGH)
             else:
-                braille.setBrlapiPriority()
+                braille.set_brlapi_priority()
 
         tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

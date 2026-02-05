@@ -68,7 +68,7 @@ class TestProfileManager:
         speech_manager_mock.get_manager.return_value.refresh_speech.return_value = None
 
         braille_mock = essential_modules["orca.braille"]
-        braille_mock.checkBrailleSetting.return_value = None
+        braille_mock.check_braille_setting.return_value = None
 
         orca_mock = essential_modules["orca.orca"]
         orca_mock.load_user_settings.return_value = None

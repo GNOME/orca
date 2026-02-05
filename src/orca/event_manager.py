@@ -573,7 +573,7 @@ class EventManager:
         if script_manager.get_manager().get_active_script() is None:
             default_script = script_manager.get_manager().get_default_script()
             script_manager.get_manager().set_active_script(default_script, "No focus")
-            braille.disableBraille()
+            braille.disable_braille()
 
         return False
 

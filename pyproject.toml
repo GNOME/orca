@@ -22,13 +22,12 @@ disable = [
 ]
 
 [tool.mypy]
+mypy_path = "src"
 exclude = [
   "gnome-shell",             # mypy doesn't like the name
   "notification-daemon",     # mypy doesn't like the name
   "smuxi-frontend-gnome",    # mypy doesn't like the name
-  "J2SE-access-bridge",      # mypy doesn't like the name
   "subprojects",             # beyond our control
-  "test-historical",         # legacy and mostly not python
 ]
 
 [[tool.mypy.overrides]]

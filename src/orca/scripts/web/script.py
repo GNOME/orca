@@ -399,7 +399,7 @@ class Script(default.Script):
         if (
             flat_review_presenter.get_presenter().is_active()
             or not self.utilities.in_document_content()
-            or not braille.beginningIsShowing
+            or not braille.is_beginning_showing()
         ):
             return super()._pan_braille_left(event, pan_amount)
 
@@ -414,7 +414,7 @@ class Script(default.Script):
         # Hack: When panning to the left in a document, we want to start at
         # the right/bottom of each new object. For now, we'll pan there.
         # When time permits, we'll give our braille code some smarts.
-        while braille.panRight(0):
+        while braille.pan_right(0):
             pass
 
         braille.refresh(False)
@@ -428,7 +428,7 @@ class Script(default.Script):
         if (
             flat_review_presenter.get_presenter().is_active()
             or not self.utilities.in_document_content()
-            or not braille.endIsShowing
+            or not braille.is_end_showing()
         ):
             return super()._pan_braille_right(event, pan_amount)
 
@@ -443,7 +443,7 @@ class Script(default.Script):
         # Hack: When panning to the right in a document, we want to start at
         # the left/top of each new object. For now, we'll pan there. When time
         # permits, we'll give our braille code some smarts.
-        while braille.panLeft(0):
+        while braille.pan_left(0):
             pass
 
         braille.refresh(False)

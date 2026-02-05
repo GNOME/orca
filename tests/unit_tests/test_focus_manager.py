@@ -137,7 +137,7 @@ class TestFocusManager:
         settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
         braille_mock = essential_modules["orca.braille"]
-        braille_mock.setBrlapiPriority = test_context.Mock()
+        braille_mock.set_brlapi_priority = test_context.Mock()
         braille_mock.BRLAPI_PRIORITY_HIGH = 1
 
         script_manager_mock = essential_modules["orca.script_manager"]
@@ -383,10 +383,10 @@ class TestFocusManager:
 
             manager.emit_region_changed(mock_obj, mode=FLAT_REVIEW)
             braille_mock = essential_modules["orca.braille"]
-            braille_mock.setBrlapiPriority.assert_called_with(braille_mock.BRLAPI_PRIORITY_HIGH)
+            braille_mock.set_brlapi_priority.assert_called_with(braille_mock.BRLAPI_PRIORITY_HIGH)
 
             manager.emit_region_changed(mock_obj, mode=FOCUS_TRACKING)
-            braille_mock.setBrlapiPriority.assert_called_with()
+            braille_mock.set_brlapi_priority.assert_called_with()
 
     @pytest.mark.parametrize(
         "active_mode, expected",

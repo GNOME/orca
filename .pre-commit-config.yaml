@@ -12,5 +12,8 @@ repos:
         entry: mypy
         language: python
         types: [python]
+        args: [--no-incremental]
         additional_dependencies:
           - mypy
+          - pytest
+          - pytest-mock

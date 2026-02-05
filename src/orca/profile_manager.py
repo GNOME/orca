@@ -687,7 +687,7 @@ class ProfileManager:
 
         self.set_active_profile(profile_id, update_locale=True)
 
-        braille.checkBrailleSetting()
+        braille.check_braille_setting()
         speech_and_verbosity_manager.get_manager().refresh_speech()
 
         if script is not None:

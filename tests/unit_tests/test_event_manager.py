@@ -84,7 +84,7 @@ class TestEventManager:
         debug_mock.debugLevel = 0
 
         braille_mock = essential_modules["orca.braille"]
-        braille_mock.disableBraille = test_context.Mock()
+        braille_mock.disable_braille = test_context.Mock()
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_mgr_instance = test_context.Mock()
@@ -1517,7 +1517,7 @@ class TestEventManager:
         result = manager._on_no_focus()
         assert result is False
         mock_script_mgr.set_active_script.assert_called_once()
-        mock_braille.disableBraille.assert_called_once()
+        mock_braille.disable_braille.assert_called_once()
 
     def test_dequeue_object_event_empty_queue(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._dequeue_object_event with empty queue."""

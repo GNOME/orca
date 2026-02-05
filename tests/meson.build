@@ -27,6 +27,7 @@ unit_tests = [
   'unit_tests/test_ax_utilities_role.py',
   'unit_tests/test_ax_utilities_state.py',
   'unit_tests/test_ax_value.py',
+  'unit_tests/test_braille.py',
   'unit_tests/test_braille_presenter.py',
   'unit_tests/test_bypass_mode_manager.py',
   'unit_tests/test_caret_navigator.py',
