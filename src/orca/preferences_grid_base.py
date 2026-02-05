@@ -748,25 +748,6 @@ class PreferencesGridBase(Gtk.Grid):
         combo.connect("changed", changed_handler)
         return combo
 
-    def _create_labeled_combo_box(  # pylint: disable=too-many-arguments, too-many-positional-arguments
-        self,
-        grid: Gtk.Grid,
-        row: int,
-        label_text: str,
-        model: Gtk.ListStore,
-        changed_handler: Callable[[Gtk.ComboBox], None],
-    ) -> Gtk.ComboBox:
-        """Create a label and combo box pair, attach to grid, and return the combo."""
-
-        label = self._create_label(label_text)
-        grid.attach(label, 0, row, 1, 1)
-
-        combo = self._create_combo_box(model, changed_handler)
-        label.set_mnemonic_widget(combo)
-        grid.attach(combo, 1, row, 1, 1)
-
-        return combo
-
     def _create_scrolled_window(self, widget: Gtk.Widget) -> Gtk.ScrolledWindow:
         """Create a scrolled window containing the widget with standard settings."""
 

@@ -303,7 +303,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
         self._orca_modifier_combo: Gtk.ComboBox | None = None
-        self._combos_grid: Gtk.Grid | None = None
+        self._combos_listbox: preferences_grid_base.FocusManagedListBox | None = None
 
         self._build()
         self._initializing = False
@@ -313,10 +313,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        self._combos_grid = Gtk.Grid()
-        self._combos_grid.set_column_spacing(24)
-        self._combos_grid.set_row_spacing(12)
-
         keyboard_layout_model = Gtk.ListStore(str, int)
         keyboard_layout_model.append(
             [guilabels.KEYBOARD_LAYOUT_DESKTOP, settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP]
@@ -324,28 +320,38 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         keyboard_layout_model.append(
             [guilabels.KEYBOARD_LAYOUT_LAPTOP, settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP]
         )
-        self.keyboard_layout_combo = self._create_labeled_combo_box(
-            self._combos_grid,
-            0,
-            guilabels.KEYBOARD_LAYOUT,
-            keyboard_layout_model,
-            self._on_keyboard_layout_changed,
-        )
 
         orca_model = Gtk.ListStore(str)
         orca_model.append(["Insert, KP_Insert"])
         orca_model.append(["KP_Insert"])
         orca_model.append(["Insert"])
         orca_model.append(["Caps_Lock, Shift_Lock"])
-        self._orca_modifier_combo = self._create_labeled_combo_box(
-            self._combos_grid,
-            1,
-            guilabels.KEY_BINDINGS_SCREEN_READER_MODIFIER_KEY_S,
-            orca_model,
-            self._on_orca_modifier_changed,
-        )
 
-        self.attach(self._combos_grid, 0, row, 1, 1)
+        self._combos_listbox = preferences_grid_base.FocusManagedListBox()
+        combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+
+        row_data = [
+            (guilabels.KEYBOARD_LAYOUT, keyboard_layout_model, self._on_keyboard_layout_changed),
+            (
+                guilabels.KEY_BINDINGS_SCREEN_READER_MODIFIER_KEY_S,
+                orca_model,
+                self._on_orca_modifier_changed,
+            ),
+        ]
+
+        combos: list[Gtk.ComboBox] = []
+        for label_text, model, changed_handler in row_data:
+            row_widget, combo, _label = self._create_combo_box_row(
+                label_text, model, changed_handler, include_top_separator=False
+            )
+            combo_size_group.add_widget(combo)
+            self._combos_listbox.add_row_with_widget(row_widget, combo)
+            combos.append(combo)
+
+        self.keyboard_layout_combo = combos[0]
+        self._orca_modifier_combo = combos[1]
+
+        self.attach(self._combos_listbox, 0, row, 1, 1)
         row += 1
 
         stack, _categories_listbox, _detail_listbox = self._create_stacked_preferences(
@@ -356,7 +362,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._categories_listbox.get_accessible().set_name(guilabels.COMMANDS)
         self.attach(stack, 0, row, 1, 1)
 
-        self._register_stack_disable_widgets(self._combos_grid)
+        self._register_stack_disable_widgets(self._combos_listbox)
 
     def reload(self) -> None:
         """Reload keybindings from the script."""
