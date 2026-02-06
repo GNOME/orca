@@ -1612,8 +1612,16 @@ class BrailleGenerator(generator.Generator):
                 ),
             )
         ]
-        result += [braille.Region(" ")]
-        result += self._generate_descendants(obj, **args)
+        content = self._generate_descendants(obj, **args)
+        if not content:
+            text = self._generate_text_content(obj, **args)
+            if not text and AXObject.get_child_count(obj) == 1:
+                text = self._generate_text_content(AXObject.get_child(obj, 0), **args)
+            if text:
+                content = [braille.Region(self._as_string(text))]
+        if content:
+            result += [braille.Region(" ")]
+            result += content
         result += self._generate_default_suffix(obj, **args)
         return result
 
