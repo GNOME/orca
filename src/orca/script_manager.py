@@ -30,11 +30,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-# TODO - JD: The script manager should not be interacting with speech or braille directly.
-# When the presentation manager is created, it should handle speech and braille.
-
-from . import braille
-from . import command_manager
 from . import debug
 from . import settings_manager
 from . import sleep_mode_manager
@@ -366,11 +361,6 @@ class ScriptManager:
                 self._app_settings_snapshots[new_script.app]
             )
 
-        braille.check_braille_setting()
-        all_braille_keys: set[int] = set()
-        for cmd in command_manager.get_manager().get_all_braille_commands():
-            all_braille_keys.update(cmd.get_braille_bindings())
-        braille.setup_key_ranges(all_braille_keys)
         speech_and_verbosity_manager.get_manager().check_speech_setting()
 
     def reclaim_scripts(self) -> None:

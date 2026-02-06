@@ -30,13 +30,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from orca import braille
+from orca import braille_presenter
 from orca import debug
 from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
 from orca import input_event
 from orca import messages
+from orca import presentation_manager
 from orca import speech_and_verbosity_manager
 from orca import structural_navigator
 from orca import table_navigator
@@ -76,20 +77,21 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def _pan_braille_left(
-        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
-    ) -> bool:
+    def _pan_braille_left(self, event: input_event.InputEvent | None = None) -> bool:
         """Pans the braille display to the left."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             flat_review_presenter.get_presenter().is_active()
-            or not braille.is_beginning_showing()
             or self.utilities.is_spreadsheet_cell(focus)
             or not AXUtilities.is_paragraph(focus)
         ):
-            return super()._pan_braille_left(event, pan_amount)
+            return super()._pan_braille_left(event)
 
+        if braille_presenter.get_presenter().pan_left():
+            return True
+
+        # At edge of a paragraph. Try to move caret to previous line.
         start_offset = AXText.get_line_at_offset(focus)[1]
         if 0 < start_offset:
             AXText.set_caret_offset(focus, start_offset - 1)
@@ -101,22 +103,23 @@ class Script(default.Script):
             AXText.set_caret_offset_to_end(obj)
             return True
 
-        return super()._pan_braille_left(event, pan_amount)
+        return super()._pan_braille_left(event)
 
-    def _pan_braille_right(
-        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
-    ) -> bool:
+    def _pan_braille_right(self, event: input_event.InputEvent | None = None) -> bool:
         """Pans the braille display to the right."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             flat_review_presenter.get_presenter().is_active()
-            or not braille.is_end_showing()
             or self.utilities.is_spreadsheet_cell(focus)
             or not AXUtilities.is_paragraph(focus)
         ):
-            return super()._pan_braille_right(event, pan_amount)
+            return super()._pan_braille_right(event)
 
+        if braille_presenter.get_presenter().pan_right():
+            return True
+
+        # At edge of a paragraph. Try to move caret to next line.
         end_offset = AXText.get_line_at_offset(focus)[2]
         if end_offset < AXText.get_character_count(focus):
             AXText.set_caret_offset(focus, end_offset)
@@ -128,7 +131,7 @@ class Script(default.Script):
             AXText.set_caret_offset_to_start(obj)
             return True
 
-        return super()._pan_braille_right(event, pan_amount)
+        return super()._pan_braille_right(event)
 
     def locus_of_focus_changed(
         self,
@@ -162,7 +165,7 @@ class Script(default.Script):
                 string = AXText.get_all_text(new_focus)
                 if string:
                     voice = self.speech_generator.voice(obj=new_focus, string=string)
-                    self.speak_message(string, voice=voice)
+                    presentation_manager.get_manager().speak_message(string, voice=voice)
                     self.update_braille(new_focus)
                     offset = AXText.get_caret_offset(new_focus)
                     focus_manager.get_manager().set_last_cursor_position(new_focus, offset)
@@ -270,7 +273,7 @@ class Script(default.Script):
             else:
                 full = messages.TABLE_ROW_INSERTED_AT_END
                 brief = messages.TABLE_ROW_INSERTED
-            self.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
             return True
 
         return super().on_children_added(event)

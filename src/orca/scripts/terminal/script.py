@@ -29,6 +29,7 @@ from typing import TYPE_CHECKING
 from orca import debug
 from orca import flat_review_presenter
 from orca import focus_manager
+from orca import presentation_manager
 from orca import typing_echo_presenter
 from orca.scripts import default
 from orca.ax_text import AXText
@@ -95,10 +96,10 @@ class Script(default.Script):
 
         new_string = self.utilities.inserted_text(event)
         if len(new_string) == 1:
-            self.speak_character(new_string)
+            presentation_manager.get_manager().speak_character(new_string)
         else:
             voice = self.speech_generator.voice(obj=event.source, string=new_string)
-            self.speak_message(new_string, voice)
+            presentation_manager.get_manager().speak_message(new_string, voice)
 
         if flat_review_presenter.get_presenter().is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"

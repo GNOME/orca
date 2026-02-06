@@ -28,6 +28,7 @@ from typing import TYPE_CHECKING
 
 from orca import messages
 from orca import notification_presenter
+from orca import presentation_manager
 from orca.scripts import default
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -49,5 +50,5 @@ class Script(default.Script):
         text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
         voice = self.speech_generator.voice(obj=event.source, string=text)
-        self.present_message(text, voice=voice)
+        presentation_manager.get_manager().present_message(text, voice=voice)
         notification_presenter.get_presenter().save_notification(text)

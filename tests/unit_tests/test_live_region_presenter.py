@@ -43,8 +43,9 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
 
-class Fake():
+class Fake:
     pass
+
 
 @pytest.mark.unit
 class TestLivePoliteness:
@@ -58,6 +59,8 @@ class TestLivePoliteness:
             "gi.repository",
             "gi.repository.Atspi",
             "gi.repository.GLib",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -139,6 +142,8 @@ class TestLiveRegionMessage:
             "gi.repository",
             "gi.repository.Atspi",
             "gi.repository.GLib",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -284,6 +289,8 @@ class TestLiveRegionMessageQueue:
             "gi.repository",
             "gi.repository.Atspi",
             "gi.repository.GLib",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -502,6 +509,8 @@ class TestLiveRegionPresenter:
             "orca.settings_manager",
             "orca.AXObject",
             "orca.AXUtilities",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -720,7 +729,8 @@ class TestLiveRegionPresenter:
         result = presenter.toggle_monitoring(mock_script, mock_event)
 
         assert result is True
-        mock_script.present_message.assert_called_with("Live regions monitoring enabled")
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with("Live regions monitoring enabled")
 
     def test_toggle_monitoring_disable(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.toggle_monitoring disables monitoring."""
@@ -738,7 +748,8 @@ class TestLiveRegionPresenter:
         result = presenter.toggle_monitoring(mock_script, mock_event)
 
         assert result is True
-        mock_script.present_message.assert_called_with("Live regions monitoring disabled")
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with("Live regions monitoring disabled")
 
     def test_flush_messages(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.flush_messages."""
@@ -764,7 +775,7 @@ class TestLiveRegionPresenter:
     ) -> None:
         """Test present_previous_live_region_message with no messages."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
         presenter = LiveRegionPresenter()
@@ -774,7 +785,8 @@ class TestLiveRegionPresenter:
         result = presenter.present_previous_live_region_message(mock_script, None)
 
         assert result is True
-        mock_script.present_message.assert_called_with("No live region messages")
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with("No live region messages")
 
     def test_present_previous_live_region_message_disabled(
         self, test_context: OrcaTestContext
@@ -793,14 +805,15 @@ class TestLiveRegionPresenter:
         result = presenter.present_previous_live_region_message(mock_script, None)
 
         assert result is False
-        mock_script.present_message.assert_called_with("Live regions support disabled")
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with("Live regions support disabled")
 
     def test_present_next_live_region_message_no_messages(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test present_next_live_region_message with no messages."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
         presenter = LiveRegionPresenter()
@@ -810,7 +823,8 @@ class TestLiveRegionPresenter:
         result = presenter.present_next_live_region_message(mock_script, None)
 
         assert result is True
-        mock_script.present_message.assert_called_with("No live region messages")
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with("No live region messages")
 
     def test_go_last_live_region_no_message(self, test_context: OrcaTestContext) -> None:
         """Test go_last_live_region with no last message."""
@@ -902,6 +916,8 @@ class TestLiveRegionPresenterModule:
             "orca.settings_manager",
             "orca.AXObject",
             "orca.AXUtilities",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 

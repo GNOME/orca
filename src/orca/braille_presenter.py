@@ -1082,6 +1082,101 @@ class BraillePresenter:
         settings.textAttributesBrailleIndicator = indicator.value
         return True
 
+    def kill_flash(self, restore_saved: bool = True) -> None:
+        """Kills any flashed message currently being displayed."""
+
+        braille.kill_flash(restore_saved)
+
+    def display_message(self, message: str, restore_previous: bool = True) -> None:
+        """Displays a single line message in braille."""
+
+        if not self.use_braille():
+            return
+
+        flash_time = self.get_flashtime_from_settings()
+
+        if not restore_previous and flash_time:
+            braille.kill_flash(restore_saved=False)
+
+        braille.display_message(message, flash_time=flash_time)
+
+    def pan_left(self) -> bool:
+        """Pans the braille display left, returning True if the display moved."""
+
+        if not self.use_braille():
+            return False
+
+        moved = braille.pan_left()
+        if moved:
+            braille.refresh(pan_to_cursor=False, stop_flash=False)
+        return moved
+
+    def pan_right(self) -> bool:
+        """Pans the braille display right, returning True if the display moved."""
+
+        if not self.use_braille():
+            return False
+
+        moved = braille.pan_right()
+        if moved:
+            braille.refresh(pan_to_cursor=False, stop_flash=False)
+        return moved
+
+    def pan_to_beginning(self) -> None:
+        """Pans the braille display all the way to the beginning of the line."""
+
+        if not self.use_braille():
+            return
+
+        while braille.pan_left():
+            pass
+        braille.refresh(pan_to_cursor=False, stop_flash=True)
+
+    def pan_to_end(self) -> None:
+        """Pans the braille display all the way to the end of the line."""
+
+        if not self.use_braille():
+            return
+
+        while braille.pan_right():
+            pass
+        braille.refresh(pan_to_cursor=False, stop_flash=True)
+
+    def check_braille_setting(self) -> None:
+        """Checks the braille setting and disables braille if necessary."""
+
+        braille.check_braille_setting()
+
+    def disable_braille(self) -> None:
+        """Idles or shuts down braille output if enabled."""
+
+        braille.disable_braille()
+
+    def set_brlapi_priority(self, high: bool = False) -> None:
+        """Sets the BrlAPI priority level.
+
+        Args:
+            high: If True, use high priority (for flat review). Otherwise use default.
+        """
+
+        if high:
+            braille.set_brlapi_priority(braille.BRLAPI_PRIORITY_HIGH)
+        else:
+            braille.set_brlapi_priority()
+
+    def init_braille(self) -> None:
+        """Initializes braille if enabled."""
+
+        if not self.get_braille_is_enabled():
+            return
+
+        braille.init(input_event_manager.get_manager().process_braille_event)
+
+    def shutdown_braille(self) -> None:
+        """Shuts down braille."""
+
+        braille.shutdown()
+
 
 _presenter: BraillePresenter = BraillePresenter()
 

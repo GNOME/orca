@@ -43,7 +43,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
-from . import braille
+from . import braille_presenter
 from . import debug
 from . import focus_manager
 from . import input_event
@@ -573,7 +573,7 @@ class EventManager:
         if script_manager.get_manager().get_active_script() is None:
             default_script = script_manager.get_manager().get_default_script()
             script_manager.get_manager().set_active_script(default_script, "No focus")
-            braille.disable_braille()
+            braille_presenter.get_presenter().disable_braille()
 
         return False
 

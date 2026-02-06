@@ -44,7 +44,12 @@ class TestBypassModeManager:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns dependencies for bypass_mode_manager module testing."""
 
-        additional_modules = ["orca.orca_modifier_manager", "orca.command_manager"]
+        additional_modules = [
+            "orca.orca_modifier_manager",
+            "orca.command_manager",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         debug_mock = essential_modules["orca.debug"]
@@ -217,10 +222,11 @@ class TestBypassModeManager:
         assert result is True
         assert manager._is_active is expected_active
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         if expected_message:
-            mock_script.present_message.assert_called_with(expected_message)
+            pres_manager.present_message.assert_called_with(expected_message)
         else:
-            mock_script.present_message.assert_not_called()
+            pres_manager.present_message.assert_not_called()
 
         # Verify set_active_commands was called
         cmd_manager = essential_modules["command_manager_instance"]

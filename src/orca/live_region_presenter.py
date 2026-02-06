@@ -43,6 +43,7 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from .ax_object import AXObject
@@ -380,8 +381,7 @@ class LiveRegionPresenter:
                 return False
 
             if self._monitoring:
-                if script := script_manager.get_manager().get_active_script():
-                    script.present_message(message.text)
+                presentation_manager.get_manager().present_message(message.text)
             else:
                 msg = "INFO: Not presenting message because monitoring is off"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -403,7 +403,9 @@ class LiveRegionPresenter:
         """Advance the politeness level of the given object"""
 
         if not self.get_is_enabled():
-            script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
+            presentation_manager.get_manager().present_message(
+                messages.LIVE_REGIONS_SUPPORT_DISABLED
+            )
             return False
 
         obj = focus_manager.get_manager().get_locus_of_focus()
@@ -419,13 +421,15 @@ class LiveRegionPresenter:
 
         if cur_priority == LivePoliteness.OFF:
             self._politeness_overrides[object_id] = LivePoliteness.POLITE
-            script.present_message(messages.LIVE_REGIONS_LEVEL_POLITE)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_LEVEL_POLITE)
         elif cur_priority == LivePoliteness.POLITE:
             self._politeness_overrides[object_id] = LivePoliteness.ASSERTIVE
-            script.present_message(messages.LIVE_REGIONS_LEVEL_ASSERTIVE)
+            presentation_manager.get_manager().present_message(
+                messages.LIVE_REGIONS_LEVEL_ASSERTIVE
+            )
         elif cur_priority == LivePoliteness.ASSERTIVE:
             self._politeness_overrides[object_id] = LivePoliteness.OFF
-            script.present_message(messages.LIVE_REGIONS_LEVEL_OFF)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_LEVEL_OFF)
         return True
 
     def go_last_live_region(
@@ -439,12 +443,16 @@ class LiveRegionPresenter:
             return False
 
         if not self.get_is_enabled():
-            script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
+            presentation_manager.get_manager().present_message(
+                messages.LIVE_REGIONS_SUPPORT_DISABLED
+            )
             return False
 
         obj = self._last_presented_message.obj
         script.utilities.set_caret_position(obj, 0)
-        script.speak_contents(script.utilities.get_object_contents_at_offset(obj, 0))
+        presentation_manager.get_manager().speak_contents(
+            script.utilities.get_object_contents_at_offset(obj, 0)
+        )
         return True
 
     def present_previous_live_region_message(
@@ -453,7 +461,9 @@ class LiveRegionPresenter:
         """Presents the previous live region message."""
 
         if not self.get_is_enabled():
-            script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
+            presentation_manager.get_manager().present_message(
+                messages.LIVE_REGIONS_SUPPORT_DISABLED
+            )
             return False
 
         tokens = [
@@ -465,14 +475,14 @@ class LiveRegionPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.msg_cache:
-            script.present_message(messages.LIVE_REGIONS_NO_MESSAGES)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_NO_MESSAGES)
             return True
 
         oldest_index = -len(self.msg_cache)
         if self._current_index == oldest_index:
-            script.present_message(messages.LIVE_REGIONS_LIST_TOP)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_LIST_TOP)
             message = self.msg_cache[oldest_index]
-            script.present_message(message)
+            presentation_manager.get_manager().present_message(message)
             return True
 
         if self._current_index >= 0:
@@ -481,7 +491,7 @@ class LiveRegionPresenter:
             self._current_index -= 1
 
         message = self.msg_cache[self._current_index]
-        script.present_message(message)
+        presentation_manager.get_manager().present_message(message)
         return True
 
     def present_next_live_region_message(
@@ -490,7 +500,9 @@ class LiveRegionPresenter:
         """Presents the next live region message."""
 
         if not self.get_is_enabled():
-            script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
+            presentation_manager.get_manager().present_message(
+                messages.LIVE_REGIONS_SUPPORT_DISABLED
+            )
             return False
 
         tokens = [
@@ -502,14 +514,14 @@ class LiveRegionPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self.msg_cache:
-            script.present_message(messages.LIVE_REGIONS_NO_MESSAGES)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_NO_MESSAGES)
             return True
 
         oldest_index = -len(self.msg_cache)
         if self._current_index == -1:
-            script.present_message(messages.LIVE_REGIONS_LIST_BOTTOM)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_LIST_BOTTOM)
             message = self.msg_cache[-1]
-            script.present_message(message)
+            presentation_manager.get_manager().present_message(message)
             return True
 
         if self._current_index >= 0:
@@ -520,7 +532,7 @@ class LiveRegionPresenter:
             self._current_index += 1
 
         message = self.msg_cache[self._current_index]
-        script.present_message(message)
+        presentation_manager.get_manager().present_message(message)
         return True
 
     def get_is_enabled(self) -> bool:
@@ -560,13 +572,13 @@ class LiveRegionPresenter:
 
         if not self.get_is_enabled():
             self.set_is_enabled(True)
-            script.present_message(messages.LIVE_REGIONS_ENABLED)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_ENABLED)
             return True
 
         self.set_is_enabled(False)
         self.flush_messages()
         self._current_index = self.QUEUE_SIZE
-        script.present_message(messages.LIVE_REGIONS_DISABLED)
+        presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_DISABLED)
         return True
 
     def toggle_live_region_presentation(
@@ -575,7 +587,9 @@ class LiveRegionPresenter:
         """Toggles between presenting live regions and not presenting them."""
 
         if not self.get_is_enabled():
-            script.present_message(messages.LIVE_REGIONS_SUPPORT_DISABLED)
+            presentation_manager.get_manager().present_message(
+                messages.LIVE_REGIONS_SUPPORT_DISABLED
+            )
             return False
 
         document = script.utilities.active_document()
@@ -583,7 +597,7 @@ class LiveRegionPresenter:
         # The user is currently monitoring live regions but now wants to
         # change all live region politeness on page to LivePoliteness.OFF.
         if self._monitoring:
-            script.present_message(messages.LIVE_REGIONS_ALL_OFF)
+            presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_ALL_OFF)
             self.msg_queue.clear()
 
             self._restore_overrides = copy.copy(self._politeness_overrides)
@@ -601,7 +615,7 @@ class LiveRegionPresenter:
         # The user wants to restore politeness levels,
         for key, value in self._restore_overrides.items():
             self._politeness_overrides[key] = value
-        script.present_message(messages.LIVE_REGIONS_ALL_RESTORED)
+        presentation_manager.get_manager().present_message(messages.LIVE_REGIONS_ALL_RESTORED)
         self._monitoring = True
         return True
 

@@ -40,64 +40,16 @@ from gi.repository import Atspi
 from . import debug
 from . import generator
 from . import object_properties
+from . import settings
 from . import settings_manager
 from . import sound_presenter
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
+from .sound import Icon, Tone
 
 if TYPE_CHECKING:
     from . import script
-
-
-class Icon:
-    """Sound file representing a particular aspect of an object."""
-
-    def __init__(self, location: str, filename: str) -> None:
-        self.path = os.path.join(location, filename)
-        msg = f"SOUND GENERATOR: Looking for '{filename}' in {location}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def __str__(self) -> str:
-        return f"Icon(path: {self.path}, is_valid: {self.is_valid()})"
-
-    def is_valid(self) -> bool:
-        """Returns True if the path associated with this icon is valid."""
-        return os.path.isfile(self.path)
-
-
-class Tone:
-    """Tone representing a particular aspect of an object."""
-
-    SINE_WAVE = 0
-    SQUARE_WAVE = 1
-    SAW_WAVE = 2
-    TRIANGLE_WAVE = 3
-    SILENCE = 4
-    WHITE_UNIFORM_NOISE = 5
-    PINK_NOISE = 6
-    SINE_WAVE_USING_TABLE = 7
-    PERIODIC_TICKS = 8
-    WHITE_GAUSSIAN_NOISE = 9
-    RED_NOISE = 10
-    INVERTED_PINK_NOISE = 11
-    INVERTED_RED_NOISE = 12
-
-    def __init__(
-        self, duration: float, frequency: int, volume_multiplier: float = 1, wave: int = SINE_WAVE
-    ) -> None:
-        self.duration = duration
-        self.frequency = min(max(0, frequency), 20000)
-        self.volume = sound_presenter.get_presenter().get_sound_volume() * volume_multiplier
-        self.wave = wave
-
-    def __str__(self) -> str:
-        return (
-            f"Tone(duration: {self.duration}, "
-            f"frequency: {self.frequency}, "
-            f"volume: {self.volume}, "
-            f"wave: {self.wave})"
-        )
 
 
 class SoundGenerator(generator.Generator):
@@ -297,7 +249,8 @@ class SoundGenerator(generator.Generator):
         else:
             frequency = int(percent * 22)
 
-        return [Tone(duration, frequency, volume_multiplier, Tone.SINE_WAVE)]
+        volume = settings.soundVolume * volume_multiplier
+        return [Tone(duration, frequency, volume, Tone.SINE_WAVE)]
 
     def _get_progress_bar_update_interval(self) -> int:
         interval = sound_presenter.get_presenter().get_progress_bar_beep_interval()

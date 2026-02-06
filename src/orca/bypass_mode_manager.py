@@ -34,6 +34,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import orca_modifier_manager
+from . import presentation_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -85,14 +86,14 @@ class BypassModeManager:
         manager = command_manager.get_manager()
         if not self._is_active:
             if event is not None:
-                script.present_message(messages.BYPASS_MODE_DISABLED)
+                presentation_manager.get_manager().present_message(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
             manager.set_active_commands(self._saved_commands, reason)
             orca_modifier_manager.get_manager().refresh_orca_modifiers(reason)
             return True
 
         if event is not None:
-            script.present_message(messages.BYPASS_MODE_ENABLED)
+            presentation_manager.get_manager().present_message(messages.BYPASS_MODE_ENABLED)
 
         reason = "bypass mode enabled"
         self._saved_commands = manager.get_keyboard_commands()

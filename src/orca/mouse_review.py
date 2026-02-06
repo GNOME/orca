@@ -50,7 +50,7 @@ try:
         gi.require_version("Wnck", "3.0")
         from gi.repository import Wnck
 
-        _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None
+        _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None  # pylint: disable=no-value-for-parameter
 except Exception:
     pass
 
@@ -63,6 +63,7 @@ from . import guilabels
 from . import input_event
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import speech_and_verbosity_manager
@@ -178,8 +179,9 @@ class _StringContext:
         focus_manager.get_manager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW
         )
-        self._script.speak_message(string, voice=voice, interrupt=False)
-        self._script.display_message(self._string)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_message(string, voice=voice, interrupt=False)
+        presenter.display_message(self._string)
         return True
 
 
@@ -344,7 +346,7 @@ class _ItemContext:
 
         assert self._script, "Script must not be None"
         if interrupt:
-            self._script.interrupt_presentation()
+            presentation_manager.get_manager().interrupt_presentation()
 
         if self._frame and self._frame != prior.get_frame():
             self._script.present_object(
@@ -475,7 +477,7 @@ class MouseReviewer:
         self._current_mouse_over = _ItemContext(obj=obj, frame=frame, script=script)
 
         self._event_listener.register("mouse:abs")
-        screen = Wnck.Screen.get_default()
+        screen = Wnck.Screen.get_default()  # pylint: disable=no-value-for-parameter
         if screen is None:
             self._active = False
             return
@@ -605,7 +607,7 @@ class MouseReviewer:
                 msg = messages.MOUSE_REVIEW_ENABLED
             else:
                 msg = messages.MOUSE_REVIEW_DISABLED
-            script.present_message(msg)
+            presentation_manager.get_manager().present_message(msg)
 
         return True
 

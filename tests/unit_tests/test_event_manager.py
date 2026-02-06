@@ -74,6 +74,7 @@ class TestEventManager:
             "orca.orca_modifier_manager",
             "orca.ax_utilities_debugging",
             "orca.ax_utilities",
+            "orca.braille_presenter",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -83,8 +84,12 @@ class TestEventManager:
         debug_mock.LEVEL_SEVERE = 3
         debug_mock.debugLevel = 0
 
-        braille_mock = essential_modules["orca.braille"]
-        braille_mock.disable_braille = test_context.Mock()
+        braille_presenter_mock = essential_modules["orca.braille_presenter"]
+        braille_presenter_instance = test_context.Mock()
+        braille_presenter_instance.disable_braille = test_context.Mock()
+        braille_presenter_mock.get_presenter = test_context.Mock(
+            return_value=braille_presenter_instance
+        )
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_mgr_instance = test_context.Mock()
@@ -1501,8 +1506,10 @@ class TestEventManager:
         test_context.patch("orca.event_manager.focus_manager.get_manager", new=mock_get_focus_mgr)
         mock_get_script_mgr = test_context.Mock()
         test_context.patch("orca.event_manager.script_manager.get_manager", new=mock_get_script_mgr)
-        mock_braille = test_context.Mock()
-        test_context.patch("orca.event_manager.braille", new=mock_braille)
+        mock_braille_presenter = test_context.Mock()
+        mock_presenter_instance = test_context.Mock()
+        mock_braille_presenter.get_presenter.return_value = mock_presenter_instance
+        test_context.patch("orca.event_manager.braille_presenter", new=mock_braille_presenter)
         mock_focus_mgr = test_context.Mock()
         mock_script_mgr = test_context.Mock()
         mock_get_focus_mgr.return_value = mock_focus_mgr
@@ -1517,7 +1524,7 @@ class TestEventManager:
         result = manager._on_no_focus()
         assert result is False
         mock_script_mgr.set_active_script.assert_called_once()
-        mock_braille.disable_braille.assert_called_once()
+        mock_presenter_instance.disable_braille.assert_called_once()
 
     def test_dequeue_object_event_empty_queue(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._dequeue_object_event with empty queue."""

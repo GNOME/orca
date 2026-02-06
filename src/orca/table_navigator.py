@@ -43,6 +43,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import settings
 from . import speech_and_verbosity_manager
 from .ax_object import AXObject
@@ -236,9 +237,13 @@ class TableNavigator:
 
         if notify_user:
             if self._enabled:
-                script.present_message(messages.TABLE_NAVIGATION_ENABLED)
+                presentation_manager.get_manager().present_message(
+                    messages.TABLE_NAVIGATION_ENABLED
+                )
             else:
-                script.present_message(messages.TABLE_NAVIGATION_DISABLED)
+                presentation_manager.get_manager().present_message(
+                    messages.TABLE_NAVIGATION_DISABLED
+                )
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(
@@ -355,12 +360,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_start_of_row(current):
             if notify_user:
-                script.present_message(messages.TABLE_ROW_BEGINNING)
+                presentation_manager.get_manager().present_message(messages.TABLE_ROW_BEGINNING)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -396,12 +401,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_end_of_row(current):
             if notify_user:
-                script.present_message(messages.TABLE_ROW_END)
+                presentation_manager.get_manager().present_message(messages.TABLE_ROW_END)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -437,12 +442,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_top_of_column(current):
             if notify_user:
-                script.present_message(messages.TABLE_COLUMN_TOP)
+                presentation_manager.get_manager().present_message(messages.TABLE_COLUMN_TOP)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -478,12 +483,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_bottom_of_column(current):
             if notify_user:
-                script.present_message(messages.TABLE_COLUMN_BOTTOM)
+                presentation_manager.get_manager().present_message(messages.TABLE_COLUMN_BOTTOM)
             return True
 
         row, col = self._get_cell_coordinates(current)
@@ -519,7 +524,7 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
@@ -550,7 +555,7 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
@@ -588,12 +593,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_start_of_row(current):
             if notify_user:
-                script.present_message(messages.TABLE_ROW_BEGINNING)
+                presentation_manager.get_manager().present_message(messages.TABLE_ROW_BEGINNING)
             return True
 
         cell = AXTable.get_start_of_row(current)
@@ -624,12 +629,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_end_of_row(current):
             if notify_user:
-                script.present_message(messages.TABLE_ROW_END)
+                presentation_manager.get_manager().present_message(messages.TABLE_ROW_END)
             return True
 
         cell = AXTable.get_end_of_row(current)
@@ -660,12 +665,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_top_of_column(current):
             if notify_user:
-                script.present_message(messages.TABLE_COLUMN_TOP)
+                presentation_manager.get_manager().present_message(messages.TABLE_COLUMN_TOP)
             return True
 
         row = self._get_cell_coordinates(current)[0]
@@ -697,12 +702,12 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         if AXTable.is_bottom_of_column(current):
             if notify_user:
-                script.present_message(messages.TABLE_COLUMN_BOTTOM)
+                presentation_manager.get_manager().present_message(messages.TABLE_COLUMN_BOTTOM)
             return True
 
         row = self._get_cell_coordinates(current)[0]
@@ -734,7 +739,7 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
@@ -742,7 +747,9 @@ class TableNavigator:
             row = AXTable.get_cell_coordinates(current)[0]
             AXTable.set_dynamic_column_headers_row(table, row)
             if notify_user:
-                script.present_message(messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1))
+                presentation_manager.get_manager().present_message(
+                    messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1)
+                )
 
         return True
 
@@ -769,15 +776,17 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table:
             AXTable.clear_dynamic_column_headers_row(table)
             if notify_user:
-                script.interrupt_presentation()
-                script.present_message(messages.DYNAMIC_COLUMN_HEADER_CLEARED)
+                presentation_manager.get_manager().interrupt_presentation()
+                presentation_manager.get_manager().present_message(
+                    messages.DYNAMIC_COLUMN_HEADER_CLEARED
+                )
 
         return True
 
@@ -804,7 +813,7 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(current)
@@ -812,7 +821,7 @@ class TableNavigator:
             column = AXTable.get_cell_coordinates(current)[1]
             AXTable.set_dynamic_row_headers_column(table, column)
             if notify_user:
-                script.present_message(
+                presentation_manager.get_manager().present_message(
                     messages.DYNAMIC_ROW_HEADER_SET
                     % script.utilities.convert_column_to_string(column + 1)
                 )
@@ -842,15 +851,17 @@ class TableNavigator:
         current = self._get_current_cell()
         if current is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table:
             AXTable.clear_dynamic_row_headers_column(table)
             if notify_user:
-                script.interrupt_presentation()
-                script.present_message(messages.DYNAMIC_ROW_HEADER_CLEARED)
+                presentation_manager.get_manager().interrupt_presentation()
+                presentation_manager.get_manager().present_message(
+                    messages.DYNAMIC_ROW_HEADER_CLEARED
+                )
 
         return True
 
@@ -894,7 +905,7 @@ class TableNavigator:
         manager = speech_and_verbosity_manager.get_manager()
         # TODO - JD: This should be part of the normal table cell presentation.
         if manager.get_announce_cell_coordinates():
-            script.present_message(
+            presentation_manager.get_manager().present_message(
                 messages.TABLE_CELL_COORDINATES % {"row": row + 1, "column": col + 1}
             )
 
@@ -902,7 +913,9 @@ class TableNavigator:
         if manager.get_announce_cell_span():
             rowspan, colspan = AXTable.get_cell_spans(cell)
             if rowspan > 1 or colspan > 1:
-                script.present_message(messages.cell_span(rowspan, colspan))
+                presentation_manager.get_manager().present_message(
+                    messages.cell_span(rowspan, colspan)
+                )
 
     @dbus_service.getter
     def get_is_enabled(self) -> bool:

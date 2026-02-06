@@ -69,6 +69,8 @@ class TestDBusService:
             "orca.input_event_manager",
             "orca.orca_platform",
             "orca.script_manager",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
 
         all_modules = external_modules + internal_modules
@@ -1364,32 +1366,37 @@ class TestDBusService:
     def test_present_message_success(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.PresentMessage success."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca import dbus_service
 
         mock_script = test_context.Mock()
-        mock_script.present_message.return_value = None
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = mock_script
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         service = dbus_service.OrcaDBusServiceInterface()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = service.PresentMessage("Test message")
         assert result is True
-        mock_script.present_message.assert_called_once_with("Test message")
+        pres_manager.present_message.assert_called_once_with("Test message")
 
     def test_present_message_no_script(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.PresentMessage no script."""
+        """Test OrcaDBusServiceInterface.PresentMessage works without active script."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca import dbus_service
 
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
         mock_manager.get_default_script.return_value = None
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.PresentMessage("Test message")
-        assert result is False
+        # presentation_manager works without a script now
+        assert result is True
+        pres_manager.present_message.assert_called_once_with("Test message")
 
     @pytest.mark.parametrize(
         "case",

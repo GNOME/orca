@@ -34,6 +34,7 @@ from gi.repository import Gtk
 from . import guilabels
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import script_manager
 from . import settings_manager
 from . import speech_and_verbosity_manager
@@ -214,7 +215,9 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         script = script_manager.get_manager().get_active_script()
         if script:
-            script.present_message(messages.PRONUNCIATION_DELETED % phrase)
+            presentation_manager.get_manager().present_message(
+                messages.PRONUNCIATION_DELETED % phrase
+            )
 
     def _on_listbox_realize(self, _widget: Gtk.Widget) -> None:
         """Disable pronunciation dictionary when listbox is shown."""

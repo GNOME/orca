@@ -62,6 +62,7 @@ from . import mathsymbols
 from . import messages
 from . import object_properties
 from . import preferences_grid_base
+from . import presentation_manager
 from . import pronunciation_dictionary_manager
 from . import settings
 from . import speech
@@ -2229,7 +2230,7 @@ class SpeechAndVerbosityManager:
 
         server.decrease_speech_rate()
         if notify_user and script is not None:
-            script.present_message(messages.SPEECH_SLOWER)
+            presentation_manager.get_manager().present_message(messages.SPEECH_SLOWER)
 
         return True
 
@@ -2260,7 +2261,7 @@ class SpeechAndVerbosityManager:
 
         server.increase_speech_rate()
         if notify_user and script is not None:
-            script.present_message(messages.SPEECH_FASTER)
+            presentation_manager.get_manager().present_message(messages.SPEECH_FASTER)
 
         return True
 
@@ -2319,7 +2320,7 @@ class SpeechAndVerbosityManager:
 
         server.decrease_speech_pitch()
         if notify_user and script is not None:
-            script.present_message(messages.SPEECH_LOWER)
+            presentation_manager.get_manager().present_message(messages.SPEECH_LOWER)
 
         return True
 
@@ -2350,7 +2351,7 @@ class SpeechAndVerbosityManager:
 
         server.increase_speech_pitch()
         if notify_user and script is not None:
-            script.present_message(messages.SPEECH_HIGHER)
+            presentation_manager.get_manager().present_message(messages.SPEECH_HIGHER)
 
         return True
 
@@ -2409,7 +2410,7 @@ class SpeechAndVerbosityManager:
 
         server.decrease_speech_volume()
         if notify_user and script is not None:
-            script.present_message(messages.SPEECH_SOFTER)
+            presentation_manager.get_manager().present_message(messages.SPEECH_SOFTER)
 
         return True
 
@@ -2440,7 +2441,7 @@ class SpeechAndVerbosityManager:
 
         server.increase_speech_volume()
         if notify_user and script is not None:
-            script.present_message(messages.SPEECH_LOUDER)
+            presentation_manager.get_manager().present_message(messages.SPEECH_LOUDER)
 
         return True
 
@@ -2502,7 +2503,7 @@ class SpeechAndVerbosityManager:
 
         settings.capitalizationStyle = new_style
         if script is not None and notify_user:
-            script.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
         self.update_capitalization_style()
         return True
 
@@ -2580,7 +2581,7 @@ class SpeechAndVerbosityManager:
 
         settings.verbalizePunctuationStyle = new_level
         if script is not None and notify_user:
-            script.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
         self.update_punctuation_level()
         return True
 
@@ -2664,7 +2665,7 @@ class SpeechAndVerbosityManager:
 
         server.set_output_module(available[index])
         if script is not None and notify_user:
-            script.present_message(available[index])
+            presentation_manager.get_manager().present_message(available[index])
         return True
 
     @dbus_service.getter
@@ -3092,7 +3093,7 @@ class SpeechAndVerbosityManager:
 
         self.set_speak_numbers_as_digits(not speak_digits)
         if script is not None and notify_user:
-            script.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
         return True
 
     def get_speech_is_enabled_and_not_muted(self) -> bool:
@@ -3218,19 +3219,19 @@ class SpeechAndVerbosityManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if script is not None:
-            script.interrupt_presentation()
+            presentation_manager.get_manager().interrupt_presentation()
         if self.get_speech_is_muted():
             self.set_speech_is_muted(False)
             if script is not None and notify_user:
-                script.present_message(messages.SPEECH_ENABLED)
+                presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         elif not settings.enableSpeech:
             settings.enableSpeech = True
             speech.init()
             if script is not None and notify_user:
-                script.present_message(messages.SPEECH_ENABLED)
+                presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         else:
             if script is not None and notify_user:
-                script.present_message(messages.SPEECH_DISABLED)
+                presentation_manager.get_manager().present_message(messages.SPEECH_DISABLED)
             self.set_speech_is_muted(True)
         return True
 
@@ -3316,11 +3317,13 @@ class SpeechAndVerbosityManager:
 
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             if script is not None and notify_user:
-                script.present_message(messages.SPEECH_VERBOSITY_VERBOSE)
+                presentation_manager.get_manager().present_message(
+                    messages.SPEECH_VERBOSITY_VERBOSE
+                )
             settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
         else:
             if script is not None and notify_user:
-                script.present_message(messages.SPEECH_VERBOSITY_BRIEF)
+                presentation_manager.get_manager().present_message(messages.SPEECH_VERBOSITY_BRIEF)
             settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         return True
 
@@ -3385,7 +3388,7 @@ class SpeechAndVerbosityManager:
             full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
             brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
         if script is not None and notify_user:
-            script.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
         return True
 
     @dbus_service.command
@@ -3415,7 +3418,7 @@ class SpeechAndVerbosityManager:
 
         table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table is None and notify_user:
-            script.present_message(messages.TABLE_NOT_IN_A)
+            presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         # TODO - JD: Use the new getters and setters for this.
@@ -3435,7 +3438,7 @@ class SpeechAndVerbosityManager:
             msg = messages.TABLE_MODE_CELL
 
         if notify_user:
-            script.present_message(msg)
+            presentation_manager.get_manager().present_message(msg)
         return True
 
     @staticmethod

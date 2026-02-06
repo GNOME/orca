@@ -104,7 +104,7 @@ class TestFocusManager:
             "orca.orca_i18n",
             "orca.guilabels",
             "orca.text_attribute_names",
-            "orca.braille",
+            "orca.braille_presenter",
             "orca.ax_table",
             "orca.ax_text",
             "orca.ax_utilities",
@@ -136,9 +136,10 @@ class TestFocusManager:
         manager_instance.set_setting = test_context.Mock(return_value=True)
         settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
-        braille_mock = essential_modules["orca.braille"]
-        braille_mock.set_brlapi_priority = test_context.Mock()
-        braille_mock.BRLAPI_PRIORITY_HIGH = 1
+        braille_presenter_mock = essential_modules["orca.braille_presenter"]
+        presenter_instance = test_context.Mock()
+        presenter_instance.set_brlapi_priority = test_context.Mock()
+        braille_presenter_mock.get_presenter = test_context.Mock(return_value=presenter_instance)
 
         script_manager_mock = essential_modules["orca.script_manager"]
         script_mgr_instance = test_context.Mock()
@@ -382,11 +383,12 @@ class TestFocusManager:
             assert manager._object_of_interest == mock_obj
 
             manager.emit_region_changed(mock_obj, mode=FLAT_REVIEW)
-            braille_mock = essential_modules["orca.braille"]
-            braille_mock.set_brlapi_priority.assert_called_with(braille_mock.BRLAPI_PRIORITY_HIGH)
+            braille_presenter_mock = essential_modules["orca.braille_presenter"]
+            presenter = braille_presenter_mock.get_presenter.return_value
+            presenter.set_brlapi_priority.assert_called_with(high=True)
 
             manager.emit_region_changed(mock_obj, mode=FOCUS_TRACKING)
-            braille_mock.set_brlapi_priority.assert_called_with()
+            presenter.set_brlapi_priority.assert_called_with()
 
     @pytest.mark.parametrize(
         "active_mode, expected",

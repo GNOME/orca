@@ -36,6 +36,7 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import speech_and_verbosity_manager
 from . import spellcheck_presenter
 from . import text_attribute_manager
@@ -237,7 +238,9 @@ class WhereAmIPresenter:
             key = ax_text_attr.get_attribute_name()
             value = attrs.get(key)
             if not ax_text_attr.value_is_default(value):
-                script.speak_message(self._localize_text_attribute(key, value))
+                presentation_manager.get_manager().speak_message(
+                    self._localize_text_attribute(key, value)
+                )
 
         return True
 
@@ -269,12 +272,12 @@ class WhereAmIPresenter:
         if AXComponent.is_empty_rect(rect):
             full = messages.LOCATION_NOT_FOUND_FULL
             brief = messages.LOCATION_NOT_FOUND_BRIEF
-            script.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
             return True
 
         full = messages.SIZE_AND_POSITION_FULL % (rect.width, rect.height, rect.x, rect.y)
         brief = messages.SIZE_AND_POSITION_BRIEF % (rect.width, rect.height, rect.x, rect.y)
-        script.present_message(full, brief)
+        presentation_manager.get_manager().present_message(full, brief)
         return True
 
     @dbus_service.command
@@ -301,12 +304,12 @@ class WhereAmIPresenter:
             obj = focus_manager.get_manager().get_active_window()
 
         if obj is None or AXObject.is_dead(obj):
-            script.present_message(messages.LOCATION_NOT_FOUND_FULL)
+            presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         title = script.speech_generator.generate_window_title(obj)
         for string, voice in title:
-            script.present_message(string, voice=voice)
+            presentation_manager.get_manager().present_message(string, voice=voice)
         return True
 
     @dbus_service.command
@@ -334,21 +337,25 @@ class WhereAmIPresenter:
             _frame, dialog = script.utilities.frame_and_dialog(obj)
         if dialog is None:
             if notify_user:
-                script.present_message(messages.DIALOG_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.DIALOG_NOT_IN_A)
             return True
 
         button = AXUtilities.get_default_button(dialog)
         if button is None:
             if notify_user:
-                script.present_message(messages.DEFAULT_BUTTON_NOT_FOUND)
+                presentation_manager.get_manager().present_message(
+                    messages.DEFAULT_BUTTON_NOT_FOUND
+                )
             return True
 
         name = AXObject.get_name(button)
         if not AXUtilities.is_sensitive(button):
-            script.present_message(messages.DEFAULT_BUTTON_IS_GRAYED % name)
+            presentation_manager.get_manager().present_message(
+                messages.DEFAULT_BUTTON_IS_GRAYED % name
+            )
             return True
 
-        script.present_message(messages.DEFAULT_BUTTON_IS % name)
+        presentation_manager.get_manager().present_message(messages.DEFAULT_BUTTON_IS % name)
         return True
 
     @dbus_service.command
@@ -374,14 +381,14 @@ class WhereAmIPresenter:
         cell = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_cell)
         if cell is None:
             if notify_user:
-                script.present_message(messages.TABLE_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
         text = AXTable.get_cell_formula(cell)
         if not text:
             text = AXText.get_all_text(cell) or AXText.get_all_text(focus) or messages.EMPTY
         if notify_user:
-            script.present_message(text)
+            presentation_manager.get_manager().present_message(text)
 
         return True
 
@@ -413,7 +420,7 @@ class WhereAmIPresenter:
             else:
                 full = messages.STATUS_BAR_NOT_FOUND_FULL
                 brief = messages.STATUS_BAR_NOT_FOUND_BRIEF
-                script.present_message(full, brief)
+                presentation_manager.get_manager().present_message(full, brief)
 
             infobar = AXUtilities.get_info_bar(frame)
             if infobar and AXUtilities.is_showing(infobar) and AXUtilities.is_visible(infobar):
@@ -443,7 +450,7 @@ class WhereAmIPresenter:
         link = focus_manager.get_manager().get_locus_of_focus()
         if not script.utilities.is_link(link):
             if notify_user:
-                script.present_message(messages.NOT_ON_A_LINK)
+                presentation_manager.get_manager().present_message(messages.NOT_ON_A_LINK)
             return True
 
         return self._do_where_am_i(script, True, link)
@@ -494,19 +501,19 @@ class WhereAmIPresenter:
 
         obj = focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
-            script.speak_message(messages.LOCATION_NOT_FOUND_FULL)
+            presentation_manager.get_manager().speak_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         text = self._get_all_selected_text(script, obj)
         if not text:
-            script.speak_message(messages.NO_SELECTED_TEXT)
+            presentation_manager.get_manager().speak_message(messages.NO_SELECTED_TEXT)
             return True
 
         manager = speech_and_verbosity_manager.get_manager()
         indentation = manager.get_indentation_description(text, only_if_changed=False)
         text = manager.adjust_for_presentation(obj, text)
         msg = messages.SELECTED_TEXT_IS % f"{indentation} {text}"
-        script.speak_message(msg)
+        presentation_manager.get_manager().speak_message(msg)
         return True
 
     @dbus_service.command
@@ -531,7 +538,7 @@ class WhereAmIPresenter:
         obj = focus_manager.get_manager().get_locus_of_focus()
         if obj is None:
             if not script.utilities.is_link(obj):
-                script.speak_message(messages.LOCATION_NOT_FOUND_FULL)
+                presentation_manager.get_manager().speak_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         tokens = ["WHERE AM I PRESENTER: presenting selection for", obj]
@@ -549,13 +556,15 @@ class WhereAmIPresenter:
 
         selected_count = script.utilities.selected_child_count(container)
         child_count = script.utilities.selectable_child_count(container)
-        script.present_message(messages.selected_items_count(selected_count, child_count))
+        presentation_manager.get_manager().present_message(
+            messages.selected_items_count(selected_count, child_count)
+        )
         if not selected_count:
             return True
 
         selected_items = script.utilities.selected_children(container)
         item_names = ",".join(map(AXObject.get_name, selected_items))
-        script.speak_message(item_names)
+        presentation_manager.get_manager().speak_message(item_names)
         return True
 
     def _do_where_am_i(
@@ -578,7 +587,7 @@ class WhereAmIPresenter:
 
         if obj is None or AXObject.is_dead(obj):
             if notify_user:
-                script.present_message(messages.LOCATION_NOT_FOUND_FULL)
+                presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         if basic_only:
@@ -656,7 +665,7 @@ class WhereAmIPresenter:
         # in response to the first click. Then we do the detailed one in
         # response to the second click. Until that's fixed, interrupt the
         # first one.
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         return self._do_where_am_i(script, False, notify_user=notify_user)
 
 

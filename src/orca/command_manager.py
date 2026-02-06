@@ -50,6 +50,7 @@ from . import keynames
 from . import messages
 from . import orca_modifier_manager
 from . import preferences_grid_base
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -591,10 +592,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         key_name, modifiers, click_count, handler_name
                     )
                     if description_dup:
-                        script = script_manager.get_manager().get_active_script()
 
                         def present_duplicate_error():
-                            script.present_message(messages.KB_ALREADY_BOUND % description_dup)
+                            presentation_manager.get_manager().present_message(
+                                messages.KB_ALREADY_BOUND % description_dup
+                            )
                             return False
 
                         GLib.idle_add(present_duplicate_error)
@@ -612,14 +614,13 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 return True
 
             key_name, modifiers, click_count = self._captured_key
-            script = script_manager.get_manager().get_active_script()
 
             if key_name in ["Delete", "BackSpace"] and not modifiers:
                 capture_entry.set_text("")
                 self._captured_key = ("", 0, 0)
 
                 def present_delete_message():
-                    script.present_message(messages.KB_DELETED)
+                    presentation_manager.get_manager().present_message(messages.KB_DELETED)
                     return False
 
                 GLib.idle_add(present_delete_message)
@@ -633,7 +634,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             capture_entry.set_text(new_string)
 
             def present_message_after_keypress():
-                script.present_message(messages.KB_CAPTURED % new_string)
+                presentation_manager.get_manager().present_message(
+                    messages.KB_CAPTURED % new_string
+                )
                 return False
 
             GLib.idle_add(present_message_after_keypress)
@@ -645,7 +648,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         script = script_manager.get_manager().get_active_script()
         assert script
-        script.present_message(messages.KB_ENTER_NEW_KEY)
+        presentation_manager.get_manager().present_message(messages.KB_ENTER_NEW_KEY)
         self._saved_commands = get_manager().get_keyboard_commands()
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
         get_manager().set_active_commands({}, "Capturing keys")
@@ -668,7 +671,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # anything (is_active() returns False when keybinding is None).
         if not canceled:
             captured_text = capture_entry.get_text().strip()
-            script = script_manager.get_manager().get_active_script()
+            script_manager.get_manager().get_active_script()
             handler_name = command.get_name()
             if not captured_text:
                 command.set_keybinding(None)
@@ -676,7 +679,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 self._has_unsaved_changes = True
 
                 def present_delete_confirmation():
-                    script.present_message(messages.KB_DELETED_CONFIRMATION)
+                    presentation_manager.get_manager().present_message(
+                        messages.KB_DELETED_CONFIRMATION
+                    )
                     return False
 
                 GLib.idle_add(present_delete_confirmation)
@@ -690,7 +695,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
                     def present_confirmation():
                         msg = messages.KB_CAPTURED_CONFIRMATION % captured_text
-                        script.present_message(msg)
+                        presentation_manager.get_manager().present_message(msg)
                         return False
 
                     GLib.idle_add(present_confirmation)
@@ -869,7 +874,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
             if key_name in ["Delete", "BackSpace"] and not modifiers:
                 entry.set_text("")
-                script.present_message(messages.KB_DELETED)
+                presentation_manager.get_manager().present_message(messages.KB_DELETED)
                 self._captured_key = ("", 0, 0)
                 return True
 
@@ -888,13 +893,13 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 msg = messages.KB_ALREADY_BOUND % description_dup
             else:
                 msg = messages.KB_CAPTURED % new_string
-            script.present_message(msg)
+            presentation_manager.get_manager().present_message(msg)
 
             return True
 
         entry.connect("key-press-event", on_key_press)
 
-        script.present_message(messages.KB_ENTER_NEW_KEY)
+        presentation_manager.get_manager().present_message(messages.KB_ENTER_NEW_KEY)
 
         dialog.show_all()
         entry.grab_focus()
@@ -1171,9 +1176,9 @@ class CommandManager:
 
         if script is not None and notify_user:
             if new_is_desktop:
-                script.present_message(messages.KEYBOARD_LAYOUT_DESKTOP)
+                presentation_manager.get_manager().present_message(messages.KEYBOARD_LAYOUT_DESKTOP)
             else:
-                script.present_message(messages.KEYBOARD_LAYOUT_LAPTOP)
+                presentation_manager.get_manager().present_message(messages.KEYBOARD_LAYOUT_LAPTOP)
 
         return True
 

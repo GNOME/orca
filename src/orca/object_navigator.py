@@ -42,6 +42,7 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -261,7 +262,7 @@ class ObjectNavigator:
             self._set_navigator_focus(parent)
             self._present(script, notify_user)
         elif notify_user:
-            script.present_message(messages.NAVIGATOR_NO_PARENT)
+            presentation_manager.get_manager().present_message(messages.NAVIGATOR_NO_PARENT)
         return True
 
     @dbus_service.command
@@ -287,7 +288,7 @@ class ObjectNavigator:
         children = self._children(script, self._navigator_focus)
         if not children:
             if notify_user:
-                script.present_message(messages.NAVIGATOR_NO_CHILDREN)
+                presentation_manager.get_manager().present_message(messages.NAVIGATOR_NO_CHILDREN)
             return True
 
         self._set_navigator_focus(children[0])
@@ -317,7 +318,7 @@ class ObjectNavigator:
         parent = self._parent(script, self._navigator_focus)
         if parent is None:
             if notify_user:
-                script.present_message(messages.NAVIGATOR_NO_NEXT)
+                presentation_manager.get_manager().present_message(messages.NAVIGATOR_NO_NEXT)
             return True
 
         siblings = self._children(script, parent)
@@ -327,7 +328,7 @@ class ObjectNavigator:
                 self._set_navigator_focus(siblings[index + 1])
                 self._present(script, notify_user)
             elif notify_user:
-                script.present_message(messages.NAVIGATOR_NO_NEXT)
+                presentation_manager.get_manager().present_message(messages.NAVIGATOR_NO_NEXT)
         else:
             self._set_navigator_focus(parent)
             self._present(script, notify_user)
@@ -356,7 +357,7 @@ class ObjectNavigator:
         parent = self._parent(script, self._navigator_focus)
         if parent is None:
             if notify_user:
-                script.present_message(messages.NAVIGATOR_NO_PREVIOUS)
+                presentation_manager.get_manager().present_message(messages.NAVIGATOR_NO_PREVIOUS)
             return True
 
         siblings = self._children(script, parent)
@@ -366,7 +367,7 @@ class ObjectNavigator:
                 self._set_navigator_focus(siblings[index - 1])
                 self._present(script, notify_user)
             elif notify_user:
-                script.present_message(messages.NAVIGATOR_NO_PREVIOUS)
+                presentation_manager.get_manager().present_message(messages.NAVIGATOR_NO_PREVIOUS)
         else:
             self._set_navigator_focus(parent)
             self._present(script, notify_user)
@@ -394,9 +395,13 @@ class ObjectNavigator:
         self._simplify = not self._simplify
         if notify_user:
             if self._simplify:
-                script.present_message(messages.NAVIGATOR_SIMPLIFIED_ENABLED)
+                presentation_manager.get_manager().present_message(
+                    messages.NAVIGATOR_SIMPLIFIED_ENABLED
+                )
             else:
-                script.present_message(messages.NAVIGATOR_SIMPLIFIED_DISABLED)
+                presentation_manager.get_manager().present_message(
+                    messages.NAVIGATOR_SIMPLIFIED_DISABLED
+                )
         return True
 
     @dbus_service.command

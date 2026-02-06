@@ -137,6 +137,7 @@ class OrcaTestContext:
             "orca.text_attribute_names",
             "orca.focus_manager",
             "orca.braille",
+            "orca.orca_platform",
         ]
 
         if additional_modules:
@@ -244,6 +245,37 @@ class OrcaTestContext:
             input_event_mock.KEY_PRESSED_EVENT = "key-pressed"
             input_event_mock.KEY_RELEASED_EVENT = "key-released"
             input_event_mock.MOUSE_BUTTON_CLICKED_EVENT = "mouse-clicked"
+
+        if "orca.orca_platform" in essential_modules:
+            orca_platform_mock = essential_modules["orca.orca_platform"]
+            orca_platform_mock.tablesdir = "/usr/share/liblouis/tables"
+
+        if "orca.braille_presenter" in essential_modules:
+            braille_presenter_mock = essential_modules["orca.braille_presenter"]
+            presenter_instance = self.mocker.Mock()
+            presenter_instance.use_braille = self.mocker.Mock(return_value=False)
+            presenter_instance.get_braille_is_enabled = self.mocker.Mock(return_value=False)
+            presenter_instance.get_flash_messages_are_enabled = self.mocker.Mock(return_value=False)
+            presenter_instance.get_flash_messages_are_detailed = self.mocker.Mock(
+                return_value=False
+            )
+            presenter_instance.get_flashtime_from_settings = self.mocker.Mock(return_value=5000)
+            braille_presenter_mock.get_presenter = self.mocker.Mock(return_value=presenter_instance)
+
+        if "orca.presentation_manager" in essential_modules:
+            presentation_manager_mock = essential_modules["orca.presentation_manager"]
+            manager_instance = self.mocker.Mock()
+            manager_instance.interrupt_presentation = self.mocker.Mock()
+            manager_instance.present_message = self.mocker.Mock()
+            manager_instance.speak_message = self.mocker.Mock()
+            manager_instance.speak_character = self.mocker.Mock()
+            manager_instance.display_message = self.mocker.Mock()
+            manager_instance.spell_item = self.mocker.Mock()
+            manager_instance.spell_phonetically = self.mocker.Mock()
+            manager_instance.play_sound = self.mocker.Mock()
+            manager_instance.speak_contents = self.mocker.Mock()
+            manager_instance.display_contents = self.mocker.Mock()
+            presentation_manager_mock.get_manager = self.mocker.Mock(return_value=manager_instance)
 
     def get_mock(self, name: str) -> MagicMock | None:
         """Returns mock object if it exists, None otherwise."""

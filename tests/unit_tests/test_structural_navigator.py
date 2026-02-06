@@ -72,6 +72,8 @@ class TestStructuralNavigator:
             "orca.AXText",
             "orca.AXUtilities",
             "orca.input_event",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
         self._setup_mocks(test_context, essential_modules)
@@ -297,11 +299,13 @@ class TestStructuralNavigator:
         if supports_collection:
             essential_modules["orca.AXObject"].supports_collection.return_value = True
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = nav.cycle_mode(mock_script, None, True)
         assert result is True
         mock_get_mode.assert_called_once_with(mock_script)
         mock_set_mode.assert_called_once_with(mock_script, expected_nav_mode)
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     @pytest.mark.parametrize(
         "scenario, notify_user, is_active_script, expected_result, expects_message_call",
@@ -339,8 +343,9 @@ class TestStructuralNavigator:
         result = nav.cycle_mode(mock_script, None, notify_user)
         assert result is expected_result
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         if expects_message_call is False:
-            mock_script.present_message.assert_not_called()
+            pres_manager.present_message.assert_not_called()
         elif scenario == "inactive_script":
             mock_is_active_script.assert_called_once_with(mock_script)
 

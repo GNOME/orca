@@ -34,7 +34,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Callable, Iterable, TYPE_CHECKING
 
-from . import braille
 from . import cmdnames
 from . import command_manager
 from . import dbus_service
@@ -43,9 +42,9 @@ from . import guilabels
 from . import input_event
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import settings
 from . import sleep_mode_manager
-from . import speech
 from . import speech_and_verbosity_manager
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -391,7 +390,7 @@ class TypingEchoPresenter:
         settings.enableEchoByWord = new_word
         settings.enableEchoBySentence = new_sentence
         if script is not None and notify_user:
-            script.present_message(full, brief)
+            presentation_manager.get_manager().present_message(full, brief)
         return True
 
     @dbus_service.getter
@@ -629,7 +628,7 @@ class TypingEchoPresenter:
             return False
 
         voice = script.speech_generator.voice(obj=obj, string=sentence)
-        script.speak_message(sentence, voice, obj=obj)
+        presentation_manager.get_manager().speak_message(sentence, voice, obj=obj)
         return True
 
     def echo_previous_word(self, script: default.Script, obj: Atspi.Accessible) -> bool:
@@ -660,7 +659,7 @@ class TypingEchoPresenter:
             return False
 
         voice = script.speech_generator.voice(obj=obj, string=word)
-        script.speak_message(word, voice, obj=obj)
+        presentation_manager.get_manager().speak_message(word, voice, obj=obj)
         return True
 
     # pylint: disable-next=too-many-statements
@@ -813,19 +812,6 @@ class TypingEchoPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def _speak_key_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
-        """Speaks the given keyboard event."""
-
-        msg = "TYPING ECHO PRESENTER: Presenting keyboard event"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        key_name = None
-        if event.is_printable_key():
-            key_name = event.get_key_name()
-
-        voice = script.speech_generator.voice(string=key_name)
-        speech.speak_key_event(event, voice[0] if voice else None)
-
     def echo_delayed_terminal_press(self, script: default.Script, event: Atspi.Event) -> None:
         """Echoes a previously delayed terminal key press if it matches the inserted text."""
 
@@ -843,7 +829,7 @@ class TypingEchoPresenter:
         if event.any_data.lower() == character:
             msg = "TYPING ECHO PRESENTER: Echoing delayed terminal press."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._speak_key_event(script, self._delayed_terminal_press)
+            presentation_manager.get_manager().present_key_event(self._delayed_terminal_press)
             self._delayed_terminal_press = None
 
     def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
@@ -876,9 +862,9 @@ class TypingEchoPresenter:
         if locking_state_string := event.get_locking_state_string():
             keyname = event.get_key_name()
             msg = f"{keyname} {locking_state_string}"
-            braille.display_message(msg, flash_time=settings.brailleFlashTime)
+            presentation_manager.get_manager().display_message(msg)
 
-        self._speak_key_event(script, event)
+        presentation_manager.get_manager().present_key_event(event)
 
 
 _presenter: TypingEchoPresenter = TypingEchoPresenter()

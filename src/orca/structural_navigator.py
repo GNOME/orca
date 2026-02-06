@@ -53,6 +53,7 @@ from . import keybindings
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
+from . import presentation_manager
 from . import say_all_presenter
 from . import script_manager
 from . import settings
@@ -602,12 +603,12 @@ class StructuralNavigator:
             msg = messages.STRUCTURAL_NAVIGATION_KEYS_GUI
 
         if notify_user:
-            script.present_message(msg)
+            presentation_manager.get_manager().present_message(msg)
         self.set_mode(script, mode)
         if mode == NavigationMode.DOCUMENT:
             root = self._determine_root_container(script)
             if not AXObject.supports_collection(root) and notify_user:
-                script.present_message(
+                presentation_manager.get_manager().present_message(
                     messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_FULL,
                     messages.STRUCTURAL_NAVIGATION_NOT_SUPPORTED_BRIEF,
                 )
@@ -700,14 +701,14 @@ class StructuralNavigator:
                 if not should_wrap:
                     return None
                 if notify_user:
-                    script.present_message(messages.WRAPPING_TO_TOP)
+                    presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
                 return objects[0]
             if index > 0:
                 return objects[index - 1]
             if not should_wrap:
                 return None
             if notify_user:
-                script.present_message(messages.WRAPPING_TO_BOTTOM)
+                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
             return objects[-1]
 
         # If we're not in a matching object, find the next/previous one based on the path.
@@ -726,10 +727,10 @@ class StructuralNavigator:
 
         if is_next:
             if notify_user:
-                script.present_message(messages.WRAPPING_TO_TOP)
+                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
         else:
             if notify_user:
-                script.present_message(messages.WRAPPING_TO_BOTTOM)
+                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
         if obj != objects[0]:
             return objects[0]
 
@@ -856,7 +857,9 @@ class StructuralNavigator:
     ) -> None:
         if obj is None:
             if notify_user:
-                script.present_message(not_found_message, messages.STRUCTURAL_NAVIGATION_NOT_FOUND)
+                presentation_manager.get_manager().present_message(
+                    not_found_message, messages.STRUCTURAL_NAVIGATION_NOT_FOUND
+                )
             return
 
         if offset is None:
@@ -868,7 +871,7 @@ class StructuralNavigator:
             AXObject.grab_focus(obj)
             AXObject.clear_cache(obj, False, "Checking state after focus grab")
             if not AXUtilities.is_focused(obj) and notify_user:
-                script.present_message(messages.NOT_FOCUSED)
+                presentation_manager.get_manager().present_message(messages.NOT_FOCUSED)
             return
 
         presenter = say_all_presenter.get_presenter()
@@ -899,7 +902,7 @@ class StructuralNavigator:
         dialog_title = f"{dialog_title}: {messages.items_found(len(objects))}"
         if not objects:
             if notify_user:
-                script.present_message(dialog_title)
+                presentation_manager.get_manager().present_message(dialog_title)
             return
 
         current_object = script.utilities.get_caret_context()[0]
@@ -2293,7 +2296,7 @@ class StructuralNavigator:
             return
 
         if notify_user:
-            script.present_message(AXObject.get_name(obj))
+            presentation_manager.get_manager().present_message(AXObject.get_name(obj))
         self._present_line(script, obj, 0)
 
     @dbus_service.command
@@ -3377,7 +3380,7 @@ class StructuralNavigator:
         container = self._get_current_container(script)
         if container is None:
             if notify_user:
-                script.present_message(messages.CONTAINER_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.CONTAINER_NOT_IN_A)
             return True
 
         obj, offset = script.utilities.next_context(container, -1)
@@ -3404,7 +3407,7 @@ class StructuralNavigator:
         container = self._get_current_container(script)
         if container is None:
             if notify_user:
-                script.present_message(messages.CONTAINER_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.CONTAINER_NOT_IN_A)
             return True
 
         # Unlike going to the start of the container, when we move to the next edge

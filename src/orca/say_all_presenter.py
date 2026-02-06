@@ -48,6 +48,7 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import speech
 from . import settings
 from . import speechserver
@@ -246,10 +247,10 @@ class SayAllPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._script = script
-        self._script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not obj or AXObject.is_dead(obj):
-            self._script.present_message(messages.LOCATION_NOT_FOUND_FULL)
+            presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
         speech.say_all(self._say_all_iter(obj, offset), self._progress_callback)
@@ -534,7 +535,7 @@ class SayAllPresenter:
                     and structural_navigator.get_navigator().last_input_event_was_navigation_command()
                 ):
                     return
-                self._script.interrupt_presentation()
+                presentation_manager.get_manager().interrupt_presentation()
                 AXText.set_caret_offset(context.obj, context.current_offset)
                 self._say_all_is_running = False
         else:

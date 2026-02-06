@@ -31,12 +31,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 
-from orca import braille
 from orca import command_manager
 from orca import debug
 from orca import focus_manager
 from orca import messages
 from orca import orca_modifier_manager
+from orca import presentation_manager
 from orca import sleep_mode_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
@@ -105,8 +105,12 @@ class Script(default.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if old_focus is None and AXUtilities.is_application(AXObject.get_parent(new_focus)):
             focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-            braille.clear_display()
-            self.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
+            msg = messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app)
+            manager = presentation_manager.get_manager()
+            manager.speak_message(msg)
+
+            # Don't restore previous braille content because Orca is no longer active.
+            manager.display_message(msg, restore_previous=False)
             return True
 
         msg = "SLEEP MODE: Ignoring event."
@@ -271,8 +275,12 @@ class Script(default.Script):
         """Callback for window:activate accessibility events."""
 
         focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")
-        braille.clear_display()
-        self.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app))
+        msg = messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(self.app)
+        manager = presentation_manager.get_manager()
+        manager.speak_message(msg)
+
+        # Don't restore previous braille content because Orca is no longer active.
+        manager.display_message(msg, restore_previous=False)
         return True
 
     def on_window_deactivated(self, event: Atspi.Event) -> bool:

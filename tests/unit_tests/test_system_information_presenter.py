@@ -48,7 +48,7 @@ class TestSystemInformationPresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for system_information_presenter dependencies."""
 
-        additional_modules = ["psutil"]
+        additional_modules = ["psutil", "orca.braille_presenter", "orca.presentation_manager"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
@@ -253,7 +253,8 @@ class TestSystemInformationPresenter:
             essential_modules["orca.debug"].print_tokens.assert_called_once()
 
         mock_strftime.assert_called_once_with(format_string, mock_time_tuple)
-        mock_script.present_message.assert_called_once_with(expected_output)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_once_with(expected_output)
         assert result
 
     @pytest.mark.parametrize(
@@ -299,9 +300,11 @@ class TestSystemInformationPresenter:
 
         presenter = SystemInformationPresenter()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.present_battery_status(mock_script, mock_event, True)
 
-        mock_script.present_message.assert_called_once_with(expected_message)
+        pres_manager.present_message.assert_called_once_with(expected_message)
         assert result
 
     @pytest.mark.parametrize(
@@ -338,9 +341,10 @@ class TestSystemInformationPresenter:
                 return original_import(name, *args, **kwargs)
 
             test_context.patch("builtins.__import__", side_effect=mock_import)
-            essential_modules = test_context.setup_shared_dependencies([])
+            essential_modules = test_context.setup_shared_dependencies(
+                ["orca.presentation_manager"]
+            )
             mock_script = test_context.Mock()
-            mock_script.present_message = test_context.Mock()
             messages_mock = essential_modules["orca.messages"]
             messages_mock.CPU_AND_MEMORY_USAGE_UNKNOWN = "CPU and memory usage unknown"
         else:
@@ -366,7 +370,8 @@ class TestSystemInformationPresenter:
             elif memory_size == "mb":
                 essential_modules["orca.messages"].memory_usage_mb.assert_called_once()
 
-        mock_script.present_message.assert_called_once_with(expected_message)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_once_with(expected_message)
         assert result
 
         if check_debug:

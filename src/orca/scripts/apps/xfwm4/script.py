@@ -24,6 +24,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from orca import presentation_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -44,7 +45,7 @@ class Script(default.Script):
         if not AXUtilities.is_label(event.source):
             return default.Script.on_text_inserted(self, event)
 
-        self.present_message(AXObject.get_name(event.source))
+        presentation_manager.get_manager().present_message(AXObject.get_name(event.source))
         return True
 
     def on_text_deleted(self, event: Atspi.Event) -> bool:
@@ -53,5 +54,5 @@ class Script(default.Script):
         if not AXUtilities.is_label(event.source):
             return default.Script.on_text_deleted(self, event)
 
-        self.present_message(AXObject.get_name(event.source))
+        presentation_manager.get_manager().present_message(AXObject.get_name(event.source))
         return True

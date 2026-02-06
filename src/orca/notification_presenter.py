@@ -48,6 +48,7 @@ from . import debug
 from . import guilabels
 from . import input_event
 from . import messages
+from . import presentation_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -175,12 +176,14 @@ class NotificationPresenter:
 
         if not self._notifications:
             if notify_user:
-                script.present_message(messages.NOTIFICATION_NO_MESSAGES)
+                presentation_manager.get_manager().present_message(
+                    messages.NOTIFICATION_NO_MESSAGES
+                )
             return True
 
         message, timestamp = self._notifications[-1]
         string = f"{message} {self._timestamp_to_string(timestamp)}"
-        script.present_message(string)
+        presentation_manager.get_manager().present_message(string)
         self._current_index = -1
         return True
 
@@ -207,12 +210,14 @@ class NotificationPresenter:
 
         if not self._notifications:
             if notify_user:
-                script.present_message(messages.NOTIFICATION_NO_MESSAGES)
+                presentation_manager.get_manager().present_message(
+                    messages.NOTIFICATION_NO_MESSAGES
+                )
             return True
 
         # This is the first (oldest) message in the list.
         if self._current_index == 0:
-            script.present_message(messages.NOTIFICATION_LIST_TOP)
+            presentation_manager.get_manager().present_message(messages.NOTIFICATION_LIST_TOP)
             message, timestamp = self._notifications[self._current_index]
         else:
             try:
@@ -222,11 +227,11 @@ class NotificationPresenter:
             except IndexError:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                script.present_message(messages.NOTIFICATION_LIST_TOP)
+                presentation_manager.get_manager().present_message(messages.NOTIFICATION_LIST_TOP)
                 message, timestamp = self._notifications[self._current_index]
 
         string = f"{message} {self._timestamp_to_string(timestamp)}"
-        script.present_message(string)
+        presentation_manager.get_manager().present_message(string)
         return True
 
     @dbus_service.command
@@ -252,12 +257,14 @@ class NotificationPresenter:
 
         if not self._notifications:
             if notify_user:
-                script.present_message(messages.NOTIFICATION_NO_MESSAGES)
+                presentation_manager.get_manager().present_message(
+                    messages.NOTIFICATION_NO_MESSAGES
+                )
             return True
 
         # This is the last (newest) message in the list.
         if self._current_index == -1:
-            script.present_message(messages.NOTIFICATION_LIST_BOTTOM)
+            presentation_manager.get_manager().present_message(messages.NOTIFICATION_LIST_BOTTOM)
             message, timestamp = self._notifications[self._current_index]
         else:
             try:
@@ -267,11 +274,13 @@ class NotificationPresenter:
             except IndexError:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                script.present_message(messages.NOTIFICATION_LIST_BOTTOM)
+                presentation_manager.get_manager().present_message(
+                    messages.NOTIFICATION_LIST_BOTTOM
+                )
                 message, timestamp = self._notifications[self._current_index]
 
         string = f"{message} {self._timestamp_to_string(timestamp)}"
-        script.present_message(string)
+        presentation_manager.get_manager().present_message(string)
         return True
 
     @dbus_service.command
@@ -295,7 +304,9 @@ class NotificationPresenter:
 
         if not self._notifications:
             if notify_user:
-                script.present_message(messages.NOTIFICATION_NO_MESSAGES)
+                presentation_manager.get_manager().present_message(
+                    messages.NOTIFICATION_NO_MESSAGES
+                )
             return True
 
         if self._gui:
@@ -392,7 +403,7 @@ class NotificationListGUI:
         if response == Gtk.ResponseType.APPLY and self._model is not None:
             self._model.clear()
             get_presenter().clear_list()
-            self._script.present_message(messages.NOTIFICATION_NO_MESSAGES)
+            presentation_manager.get_manager().present_message(messages.NOTIFICATION_NO_MESSAGES)
             time.sleep(1)
             self._gui.destroy()
 

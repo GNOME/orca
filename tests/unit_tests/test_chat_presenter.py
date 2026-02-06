@@ -52,6 +52,8 @@ class TestConversation:
                 "orca.ax_utilities",
                 "orca.ax_text",
                 "orca.input_event_manager",
+                "orca.braille_presenter",
+                "orca.presentation_manager",
             ]
         )
 
@@ -200,6 +202,8 @@ class TestConversationList:
                 "orca.ax_utilities",
                 "orca.ax_text",
                 "orca.input_event_manager",
+                "orca.braille_presenter",
+                "orca.presentation_manager",
             ]
         )
 
@@ -328,6 +332,8 @@ class TestChat:
                 "orca.ax_utilities",
                 "orca.ax_text",
                 "orca.input_event_manager",
+                "orca.braille_presenter",
+                "orca.presentation_manager",
             ]
         )
 
@@ -420,6 +426,8 @@ class TestChatPresenter:
                 "orca.ax_utilities",
                 "orca.ax_text",
                 "orca.input_event_manager",
+                "orca.braille_presenter",
+                "orca.presentation_manager",
             ]
         )
 
@@ -500,11 +508,13 @@ class TestChatPresenter:
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_prefix(mock_script, None)
 
         assert result is True
         assert settings_mock.chatSpeakRoomName is False
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_OFF
         )
 
@@ -519,11 +529,13 @@ class TestChatPresenter:
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_prefix(mock_script, None)
 
         assert result is True
         assert settings_mock.chatSpeakRoomName is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_ROOM_NAME_PREFIX_ON
         )
 
@@ -538,11 +550,13 @@ class TestChatPresenter:
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_buddy_typing(mock_script, None)
 
         assert result is True
         assert settings_mock.chatAnnounceBuddyTyping is False
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_BUDDY_TYPING_OFF
         )
 
@@ -557,11 +571,13 @@ class TestChatPresenter:
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_buddy_typing(mock_script, None)
 
         assert result is True
         assert settings_mock.chatAnnounceBuddyTyping is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_BUDDY_TYPING_ON
         )
 
@@ -576,11 +592,13 @@ class TestChatPresenter:
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_message_histories(mock_script, None)
 
         assert result is True
         assert settings_mock.chatRoomHistories is False
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_OFF
         )
 
@@ -595,11 +613,13 @@ class TestChatPresenter:
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_message_histories(mock_script, None)
 
         assert result is True
         assert settings_mock.chatRoomHistories is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_SEPARATE_HISTORIES_ON
         )
 
@@ -636,10 +656,12 @@ class TestChatPresenter:
         mock_script.chat = chat
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.present_previous_message(mock_script, None)
 
         assert result is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_NO_MESSAGES
         )
 
@@ -654,10 +676,12 @@ class TestChatPresenter:
         mock_script.chat = chat
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.present_next_message(mock_script, None)
 
         assert result is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_NO_MESSAGES
         )
 
@@ -703,13 +727,14 @@ class TestChatPresenter:
         chat._conversation_list.add_message("Message 2", conversation)
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         presenter.present_previous_message(mock_script, None)
         presenter.present_previous_message(mock_script, None)
 
-        mock_script.present_message.reset_mock()
+        pres_manager.present_message.reset_mock()
         presenter.present_previous_message(mock_script, None)
 
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_LIST_TOP
         )
 
@@ -729,11 +754,12 @@ class TestChatPresenter:
         chat._conversation_list.add_message("Message 2", conversation)
 
         presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         presenter.present_previous_message(mock_script, None)
 
-        mock_script.present_message.reset_mock()
+        pres_manager.present_message.reset_mock()
         presenter.present_next_message(mock_script, None)
 
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_LIST_BOTTOM
         )

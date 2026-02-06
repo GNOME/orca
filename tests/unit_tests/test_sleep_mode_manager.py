@@ -47,7 +47,9 @@ class TestSleepModeManager:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns dependencies for sleep_mode_manager module testing."""
 
-        essential_modules = test_context.setup_shared_dependencies([])
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.braille_presenter", "orca.presentation_manager"]
+        )
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -58,8 +60,13 @@ class TestSleepModeManager:
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.get_name = test_context.Mock(return_value="TestApp")
 
-        braille_mock = essential_modules["orca.braille"]
-        braille_mock.clear_display = test_context.Mock()
+        braille_presenter_mock = essential_modules["orca.braille_presenter"]
+        braille_presenter_instance = test_context.Mock()
+        braille_presenter_instance.use_braille = test_context.Mock(return_value=True)
+        braille_presenter_instance.display_message = test_context.Mock()
+        braille_presenter_mock.get_presenter = test_context.Mock(
+            return_value=braille_presenter_instance
+        )
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
         cmdnames_mock.TOGGLE_SLEEP_MODE = "Toggle sleep mode for the current application"
@@ -254,6 +261,8 @@ class TestSleepModeManager:
             return_value=script_manager_instance,
         )
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = manager.toggle_sleep_mode(mock_script, mock_event, notify_user=notify_user)
         assert result is True
 
@@ -262,22 +271,18 @@ class TestSleepModeManager:
         else:
             assert app_hash in manager._apps
 
-        if not initially_active:
-            essential_modules["orca.braille"].clear_display.assert_called()
-
         if notify_user and expected_message_contains:
             if initially_active:
-                new_script.present_message.assert_called_once()
-                call_args = new_script.present_message.call_args[0][0]
+                pres_manager.present_message.assert_called_once()
+                call_args = pres_manager.present_message.call_args[0][0]
+                assert expected_message_contains in call_args
             else:
-                mock_script.present_message.assert_called_once()
-                call_args = mock_script.present_message.call_args[0][0]
-            assert expected_message_contains in call_args
-        else:
-            if initially_active:
-                new_script.present_message.assert_not_called()
-            else:
-                mock_script.present_message.assert_not_called()
+                pres_manager.speak_message.assert_called_once()
+                call_args = pres_manager.speak_message.call_args[0][0]
+                assert expected_message_contains in call_args
+        elif not notify_user:
+            pres_manager.present_message.assert_not_called()
+            pres_manager.speak_message.assert_not_called()
 
         if initially_active:
             script_manager_instance.get_script.assert_called_with(mock_app)

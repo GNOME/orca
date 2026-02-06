@@ -32,6 +32,7 @@ from orca import debug
 from orca import focus_manager
 from orca import input_event_manager
 from orca import messages
+from orca import presentation_manager
 from orca import script_utilities
 from orca import table_navigator
 from orca.ax_object import AXObject
@@ -156,16 +157,18 @@ class Utilities(script_utilities.Utilities):
         if first_coords == (-1, -1) or last_coords == (-1, -1):
             return False
 
-        self._script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
 
         if first_coords == last_coords:
             cell = self._get_cell_name_for_coordinates(obj, *first_coords, True)
-            self._script.speak_message(messages.CELL_SELECTED % cell)
+            presentation_manager.get_manager().speak_message(messages.CELL_SELECTED % cell)
             return True
 
         cell1 = self._get_cell_name_for_coordinates(obj, *first_coords, True)
         cell2 = self._get_cell_name_for_coordinates(obj, *last_coords, True)
-        self._script.speak_message(messages.CELL_RANGE_SELECTED % (cell1, cell2))
+        presentation_manager.get_manager().speak_message(
+            messages.CELL_RANGE_SELECTED % (cell1, cell2)
+        )
         return True
 
     # pylint: disable-next=too-many-locals
@@ -213,10 +216,10 @@ class Utilities(script_utilities.Utilities):
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
         if msgs:
-            self._script.interrupt_presentation()
+            presentation_manager.get_manager().interrupt_presentation()
 
         for msg in msgs:
-            self._script.speak_message(msg, interrupt=False)
+            presentation_manager.get_manager().speak_message(msg, interrupt=False)
 
         return bool(msgs)
 
@@ -252,11 +255,11 @@ class Utilities(script_utilities.Utilities):
 
         column_count = AXTable.get_column_count(obj)
         if len(cols) == column_count:
-            self._script.speak_message(messages.DOCUMENT_SELECTED_ALL)
+            presentation_manager.get_manager().speak_message(messages.DOCUMENT_SELECTED_ALL)
             return True
 
         if not cols and len(unselected_cols) == column_count:
-            self._script.speak_message(messages.DOCUMENT_UNSELECTED_ALL)
+            presentation_manager.get_manager().speak_message(messages.DOCUMENT_UNSELECTED_ALL)
             return True
 
         msgs = []
@@ -287,9 +290,9 @@ class Utilities(script_utilities.Utilities):
             msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selected_rows[0], selected_rows[-1]))
 
         if msgs:
-            self._script.interrupt_presentation()
+            presentation_manager.get_manager().interrupt_presentation()
 
         for msg in msgs:
-            self._script.speak_message(msg, interrupt=False)
+            presentation_manager.get_manager().speak_message(msg, interrupt=False)
 
         return bool(msgs)

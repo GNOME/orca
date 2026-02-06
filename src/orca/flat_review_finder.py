@@ -44,6 +44,7 @@ from . import focus_manager
 from . import guilabels
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import script_manager
 
 from .flat_review import Context
@@ -216,7 +217,7 @@ class FlatReviewFinder:
         context = presenter.get_or_create_context(script)
         location = self._do_find(query, context)
         if not location:
-            script.present_message(messages.STRING_NOT_FOUND)
+            presentation_manager.get_manager().present_message(messages.STRING_NOT_FOUND)
         else:
             context.set_current_location(location.get_current_location())
             presenter.present_item(script)
@@ -250,10 +251,10 @@ class FlatReviewFinder:
             script = script_manager.get_manager().get_active_script()
             assert script is not None
             if query.search_backwards:
-                script.present_message(messages.WRAPPING_TO_BOTTOM)
+                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
                 moved = context.go_previous_line(True)
             else:
-                script.present_message(messages.WRAPPING_TO_TOP)
+                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
                 moved = context.go_next_line(True)
             return moved
 

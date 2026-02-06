@@ -124,6 +124,8 @@ class TestTypingEchoPresenter:
             "orca.AXText",
             "orca.AXUtilities",
             "orca.input_event",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -480,7 +482,7 @@ class TestTypingEchoPresenter:
         assert _settings_mock.enableEchoBySentence is False
 
     def test_cycle_key_echo_with_script_presentation(self, test_context: OrcaTestContext) -> None:
-        """Test cycle_key_echo calls script.present_message when script is provided."""
+        """Test cycle_key_echo calls present_message when script is provided."""
         presenter, _manager_instance, value_map, _settings_mock = self._setup_presenter(
             test_context
         )
@@ -494,12 +496,17 @@ class TestTypingEchoPresenter:
         _settings_mock.enableEchoByWord = False
         _settings_mock.enableEchoBySentence = False
 
-        presenter.cycle_key_echo(script_mock, None, True)
-        script_mock.present_message.assert_called_once()
+        from orca import presentation_manager
 
-        script_mock.present_message.reset_mock()
+        pres_manager = presentation_manager.get_manager()
+        pres_manager.present_message.reset_mock()
+
+        presenter.cycle_key_echo(script_mock, None, True)
+        pres_manager.present_message.assert_called_once()
+
+        pres_manager.present_message.reset_mock()
         presenter.cycle_key_echo(script_mock, None, False)
-        script_mock.present_message.assert_not_called()
+        pres_manager.present_message.assert_not_called()
 
         presenter.cycle_key_echo(None, None, True)
 
@@ -838,9 +845,14 @@ class TestTypingEchoPresenter:
 
         script_mock.speech_generator.voice.return_value = ["voice"]
 
+        from orca import presentation_manager
+
+        pres_manager = presentation_manager.get_manager()
+        pres_manager.speak_message.reset_mock()
+
         result = presenter.echo_previous_word(script_mock, obj_mock)
         assert result is True
-        script_mock.speak_message.assert_called_with("hello", ["voice"], obj=obj_mock)
+        pres_manager.speak_message.assert_called_with("hello", ["voice"], obj=obj_mock)
 
         char_mock_4 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_4.side_effect = [(" ", 4, 5), ("a", 3, 4)]
@@ -877,9 +889,14 @@ class TestTypingEchoPresenter:
 
         script_mock.speech_generator.voice.return_value = ["voice"]
 
+        from orca import presentation_manager
+
+        pres_manager = presentation_manager.get_manager()
+        pres_manager.speak_message.reset_mock()
+
         result = presenter.echo_previous_sentence(script_mock, obj_mock)
         assert result is True
-        script_mock.speak_message.assert_called_with("Hello world.", ["voice"], obj=obj_mock)
+        pres_manager.speak_message.assert_called_with("Hello world.", ["voice"], obj=obj_mock)
 
         char_mock_3 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_3.side_effect = [(" ", 9, 10), (".", 8, 9)]

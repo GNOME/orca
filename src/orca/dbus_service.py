@@ -454,19 +454,12 @@ class OrcaDBusServiceInterface(Publishable):
     def PresentMessage(self, message: str) -> bool:  # pylint: disable=invalid-name
         """Presents message to the user."""
 
-        from . import script_manager  # pylint: disable=import-outside-toplevel
+        from . import presentation_manager  # pylint: disable=import-outside-toplevel
 
         msg = f"DBUS SERVICE: PresentMessage called with: '{message}'"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        manager = script_manager.get_manager()
-        script = manager.get_active_script() or manager.get_default_script()
-        if script is None:
-            msg = "DBUS SERVICE: No script available"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
-            return False
-
-        script.present_message(message)
+        presentation_manager.get_manager().present_message(message)
         return True
 
     def GetVersion(self) -> str:  # pylint: disable=invalid-name

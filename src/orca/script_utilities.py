@@ -40,6 +40,7 @@ from . import focus_manager
 from . import input_event_manager
 from . import messages
 from . import object_properties
+from . import presentation_manager
 from . import settings
 from . import sound_presenter
 from . import speech_and_verbosity_manager
@@ -1344,14 +1345,14 @@ class Utilities:
 
         if input_event_manager.get_manager().last_event_was_undo():
             if not self._script.point_of_reference.get("undo"):
-                self._script.present_message(messages.UNDO)
+                presentation_manager.get_manager().present_message(messages.UNDO)
                 self._script.point_of_reference["undo"] = True
             AXText.update_cached_selected_text(event.source)
             return True
 
         if input_event_manager.get_manager().last_event_was_redo():
             if not self._script.point_of_reference.get("redo"):
-                self._script.present_message(messages.REDO)
+                presentation_manager.get_manager().present_message(messages.REDO)
                 self._script.point_of_reference["redo"] = True
             AXText.update_cached_selected_text(event.source)
             return True
@@ -1363,13 +1364,13 @@ class Utilities:
 
         if input_event_manager.get_manager().last_event_was_undo():
             if not self._script.point_of_reference.get("undo"):
-                self._script.present_message(messages.UNDO)
+                presentation_manager.get_manager().present_message(messages.UNDO)
                 self._script.point_of_reference["undo"] = True
             return True
 
         if input_event_manager.get_manager().last_event_was_redo():
             if not self._script.point_of_reference.get("redo"):
-                self._script.present_message(messages.REDO)
+                presentation_manager.get_manager().present_message(messages.REDO)
                 self._script.point_of_reference["redo"] = True
             return True
 
@@ -1380,7 +1381,7 @@ class Utilities:
 
         if input_event_manager.get_manager().last_event_was_paste():
             if not self._script.point_of_reference.get("paste"):
-                self._script.present_message(
+                presentation_manager.get_manager().present_message(
                     messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
                 )
                 self._script.point_of_reference["paste"] = True
@@ -1425,7 +1426,7 @@ class Utilities:
 
         self._script.point_of_reference["allItemsSelected"] = all_currently_selected
         if input_event_manager.get_manager().last_event_was_select_all() and all_currently_selected:
-            self._script.present_message(messages.CONTAINER_SELECTED_ALL)
+            presentation_manager.get_manager().present_message(messages.CONTAINER_SELECTED_ALL)
             focus_manager.get_manager().set_locus_of_focus(None, obj, False)
             return True
 
@@ -1452,7 +1453,7 @@ class Utilities:
 
         if input_event_manager.get_manager().last_event_was_select_all() and new_string:
             if new_string != old_string:
-                self._script.speak_message(messages.DOCUMENT_SELECTED_ALL)
+                presentation_manager.get_manager().speak_message(messages.DOCUMENT_SELECTED_ALL)
             return True
 
         # Even though we present a message, treat it as unhandled so the new location is
@@ -1462,7 +1463,7 @@ class Utilities:
             and old_string
             and not new_string
         ):
-            self._script.speak_message(messages.SELECTION_REMOVED)
+            presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
             return False
 
         changes = []
@@ -1508,13 +1509,17 @@ class Utilities:
 
             if len(string) > 5000 and speak_message:
                 if message == messages.TEXT_SELECTED:
-                    self._script.speak_message(messages.selected_character_count(len(string)))
+                    presentation_manager.get_manager().speak_message(
+                        messages.selected_character_count(len(string))
+                    )
                 else:
-                    self._script.speak_message(messages.unselected_character_count(len(string)))
+                    presentation_manager.get_manager().speak_message(
+                        messages.unselected_character_count(len(string))
+                    )
             else:
                 self._script.say_phrase(obj, start, end)
                 if speak_message and not ends_with_child:
-                    self._script.speak_message(message, interrupt=False)
+                    presentation_manager.get_manager().speak_message(message, interrupt=False)
 
             if ends_with_child:
                 child = AXHypertext.find_child_at_offset(obj, end)

@@ -53,10 +53,10 @@ from . import messages
 from . import mouse_review
 from . import orca
 from . import preferences_grid_base
+from . import presentation_manager
 from . import profile_manager
 from . import pronunciation_dictionary_manager
 from . import say_all_presenter
-from . import script_manager
 from . import settings
 from . import settings_manager
 from . import sound_presenter
@@ -539,12 +539,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.write_user_preferences(pronunciation_dict, key_bindings_dict)
         orca.load_user_settings(self.script, skip_reload_message=True)
 
-        # Speak the settings reloaded message using the active script
-        # (after a delay to ensure speech has fully started)
+        # Speak the settings reloaded message after a delay to ensure speech has fully started.
         def speak_settings_reloaded() -> bool:
-            active_script = script_manager.get_manager().get_active_script()
-            if active_script:
-                active_script.speak_message(messages.SETTINGS_RELOADED)
+            presentation_manager.get_manager().speak_message(messages.SETTINGS_RELOADED)
             return False
 
         GLib.timeout_add(100, speak_settings_reloaded)

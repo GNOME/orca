@@ -48,6 +48,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import settings
 
 
@@ -314,7 +315,9 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         time_format = self._get_time_format_string()
-        script.present_message(time.strftime(time_format, time.localtime()))
+        presentation_manager.get_manager().present_message(
+            time.strftime(time_format, time.localtime())
+        )
         return True
 
     @dbus_service.command
@@ -337,7 +340,9 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         date_format = self._get_date_format_string()
-        script.present_message(time.strftime(date_format, time.localtime()))
+        presentation_manager.get_manager().present_message(
+            time.strftime(date_format, time.localtime())
+        )
         return True
 
     @dbus_service.command
@@ -360,7 +365,7 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not (_PSUTIL_AVAILABLE and psutil.sensors_battery()):
-            script.present_message(messages.BATTERY_STATUS_UNKNOWN)
+            presentation_manager.get_manager().present_message(messages.BATTERY_STATUS_UNKNOWN)
             return True
 
         battery = psutil.sensors_battery()
@@ -369,7 +374,7 @@ class SystemInformationPresenter:
         else:
             msg = f"{messages.BATTERY_LEVEL % battery.percent} {messages.BATTERY_PLUGGED_IN_FALSE}"
 
-        script.present_message(msg)
+        presentation_manager.get_manager().present_message(msg)
         return True
 
     @dbus_service.command
@@ -392,7 +397,9 @@ class SystemInformationPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not _PSUTIL_AVAILABLE:
-            script.present_message(messages.CPU_AND_MEMORY_USAGE_UNKNOWN)
+            presentation_manager.get_manager().present_message(
+                messages.CPU_AND_MEMORY_USAGE_UNKNOWN
+            )
             return True
 
         cpu_usage = round(psutil.cpu_percent())
@@ -405,7 +412,7 @@ class SystemInformationPresenter:
             details = messages.memory_usage_mb(memory.used / (1024**2), memory.total / (1024**2))
 
         msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_percent)}. {details}"
-        script.present_message(msg)
+        presentation_manager.get_manager().present_message(msg)
         return True
 
 

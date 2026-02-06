@@ -37,7 +37,6 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca import braille
 from orca import dbus_service
 from orca import debug
 from orca import focus_manager
@@ -45,6 +44,7 @@ from orca import guilabels
 from orca import messages
 from orca import object_properties
 from orca import preferences_grid_base
+from orca import presentation_manager
 from orca import settings
 from orca import speech_and_verbosity_manager
 from orca.ax_object import AXObject
@@ -567,7 +567,7 @@ class SpellCheckPresenter:
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string.strip()
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speak_message(msg, voice=voice)
+        presentation_manager.get_manager().speak_message(msg, voice=voice)
         return True
 
     def _get_context_string(self, word: str) -> str:
@@ -615,12 +615,14 @@ class SpellCheckPresenter:
         if self._script is None:
             return False
 
-        braille.clear_display()
         msg = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
             self._widgets.error_widget
         )
-        voice = self._script.speech_generator.voice(string=msg)
-        self._script.present_message(msg, voice=voice[0] if voice else None)
+        manager = presentation_manager.get_manager()
+        manager.speak_message(msg)
+
+        # Don't restore previous braille content to prevent accidental clicks on old elements.
+        manager.display_message(msg, restore_previous=False)
         self._state.completion_announced = True
         return True
 
@@ -664,9 +666,9 @@ class SpellCheckPresenter:
 
         msg = messages.MISSPELLED_WORD % word
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speak_message(msg, voice=voice)
+        presentation_manager.get_manager().speak_message(msg, voice=voice)
         if detailed or self.get_spell_error():
-            self._script.spell_item(word)
+            presentation_manager.get_manager().spell_item(word)
 
         return True
 
@@ -690,9 +692,9 @@ class SpellCheckPresenter:
         string = AXText.get_substring(self._widgets.change_to_entry, 0, -1)
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speak_message(msg, voice=voice)
+        presentation_manager.get_manager().speak_message(msg, voice=voice)
         if detailed or self.get_spell_suggestion():
-            self._script.spell_item(string)
+            presentation_manager.get_manager().spell_item(string)
 
         items = AXSelection.get_selected_children(self._widgets.suggestions_list)
         if len(items) == 1:
@@ -731,9 +733,9 @@ class SpellCheckPresenter:
 
         msg = f"{label} {string}"
         voice = self._script.speech_generator.voice(string=msg)
-        self._script.speak_message(msg.strip(), voice=voice)
+        presentation_manager.get_manager().speak_message(msg.strip(), voice=voice)
         if detailed or self.get_spell_suggestion():
-            self._script.spell_item(string)
+            presentation_manager.get_manager().spell_item(string)
 
         if (
             speech_and_verbosity_manager.get_manager().get_speak_position_in_set()
@@ -742,7 +744,7 @@ class SpellCheckPresenter:
             index = AXUtilities.get_position_in_set(items[0]) + 1
             total = AXUtilities.get_set_size(items[0])
             msg = object_properties.GROUP_INDEX_SPEECH % {"index": index, "total": total}
-            self._script.speak_message(msg)
+            presentation_manager.get_manager().speak_message(msg)
 
         return True
 

@@ -37,7 +37,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from orca import braille
 from orca import braille_presenter
 from orca import caret_navigator
 from orca import debug
@@ -49,6 +48,7 @@ from orca import input_event_manager
 from orca import label_inference
 from orca import live_region_presenter
 from orca import messages
+from orca import presentation_manager
 from orca import say_all_presenter
 from orca import speech
 from orca import speech_and_verbosity_manager
@@ -163,15 +163,16 @@ class Script(default.Script):
         obj, start, _end, string = contents[0]
         if start > 0 and string == "\n":
             if speech_manager.get_speak_blank_lines():
-                self.speak_message(messages.BLANK, interrupt=False)
+                presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
                 return
 
+        presenter = presentation_manager.get_manager()
         if string:
             if error := speech_manager.get_error_description(obj, start):
-                self.speak_message(error)
-            self.speak_character(string)
+                presenter.speak_message(error)
+            presenter.speak_character(string)
         else:
-            self.speak_contents(contents)
+            presenter.speak_contents(contents)
 
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
@@ -199,11 +200,13 @@ class Script(default.Script):
 
         speech_manager = speech_and_verbosity_manager.get_manager()
         if error := speech_manager.get_error_description(text_obj, start_offset):
-            self.speak_message(error)
+            presentation_manager.get_manager().speak_message(error)
 
         # TODO - JD: Clean up the focused + alreadyFocused mess which by side effect is causing
         # the content of some objects (e.g. table cells) to not be generated.
-        self.speak_contents(word_contents, alreadyFocused=AXUtilities.is_text_input(text_obj))
+        presentation_manager.get_manager().speak_contents(
+            word_contents, alreadyFocused=AXUtilities.is_text_input(text_obj)
+        )
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
@@ -248,7 +251,7 @@ class Script(default.Script):
         ):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
 
-        self.speak_contents(contents, priorObj=prior_obj)
+        presentation_manager.get_manager().speak_contents(contents, priorObj=prior_obj)
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
     def present_object(self, obj: Atspi.Accessible, **args) -> None:
@@ -327,8 +330,9 @@ class Script(default.Script):
             and not document_presenter.get_presenter().in_focus_mode(self.app)
         ):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
-        self.display_contents(contents)
-        self.speak_contents(contents, **args)
+        presenter = presentation_manager.get_manager()
+        presenter.display_contents(contents)
+        presenter.speak_contents(contents, **args)
 
     def _update_braille_caret_position(self, obj: Atspi.Accessible) -> None:
         """Try to reposition the cursor without having to do a full update."""
@@ -389,20 +393,22 @@ class Script(default.Script):
             offset = min(offset, AXText.get_character_count(obj))
 
         contents = self.utilities.get_line_contents_at_offset(obj, offset)
-        self.display_contents(contents, documentFrame=document)
+        presentation_manager.get_manager().display_contents(contents, documentFrame=document)
 
-    def _pan_braille_left(
-        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
-    ) -> bool:
+    def _pan_braille_left(self, event: input_event.InputEvent | None = None) -> bool:
         """Pans braille to the left."""
 
         if (
             flat_review_presenter.get_presenter().is_active()
             or not self.utilities.in_document_content()
-            or not braille.is_beginning_showing()
         ):
-            return super()._pan_braille_left(event, pan_amount)
+            return super()._pan_braille_left(event)
 
+        presenter = braille_presenter.get_presenter()
+        if presenter.pan_left():
+            return True
+
+        # At edge, get previous line from document.
         contents = self.utilities.get_previous_line_contents()
         if not contents:
             return False
@@ -410,28 +416,23 @@ class Script(default.Script):
         obj, start, _end, _string = contents[0]
         self.utilities.set_caret_position(obj, start)
         self.update_braille(obj)
-
-        # Hack: When panning to the left in a document, we want to start at
-        # the right/bottom of each new object. For now, we'll pan there.
-        # When time permits, we'll give our braille code some smarts.
-        while braille.pan_right(0):
-            pass
-
-        braille.refresh(False)
+        presenter.pan_to_end()
         return True
 
-    def _pan_braille_right(
-        self, event: input_event.InputEvent | None = None, pan_amount: int = 0
-    ) -> bool:
+    def _pan_braille_right(self, event: input_event.InputEvent | None = None) -> bool:
         """Pans braille to the right."""
 
         if (
             flat_review_presenter.get_presenter().is_active()
             or not self.utilities.in_document_content()
-            or not braille.is_end_showing()
         ):
-            return super()._pan_braille_right(event, pan_amount)
+            return super()._pan_braille_right(event)
 
+        presenter = braille_presenter.get_presenter()
+        if presenter.pan_right():
+            return True
+
+        # At edge, get next line from document.
         contents = self.utilities.get_next_line_contents()
         if not contents:
             return False
@@ -439,14 +440,7 @@ class Script(default.Script):
         obj, start, _end, _string = contents[0]
         self.utilities.set_caret_position(obj, start)
         self.update_braille(obj)
-
-        # Hack: When panning to the right in a document, we want to start at
-        # the left/top of each new object. For now, we'll pan there. When time
-        # permits, we'll give our braille code some smarts.
-        while braille.pan_left(0):
-            pass
-
-        braille.refresh(False)
+        presenter.pan_to_beginning()
         return True
 
     def locus_of_focus_changed(
@@ -615,10 +609,10 @@ class Script(default.Script):
                 return True
 
         if self.utilities.should_interrupt_for_locus_of_focus_change(old_focus, new_focus, event):
-            self.interrupt_presentation()
+            presentation_manager.get_manager().interrupt_presentation()
 
         if contents:
-            self.speak_contents(contents, **args)
+            presentation_manager.get_manager().speak_contents(contents, **args)
         else:
             utterances = self.speech_generator.generate_speech(new_focus, **args)
             speech.speak(utterances)
@@ -724,15 +718,15 @@ class Script(default.Script):
 
         if should_present and AXDocument.get_uri(event.source).startswith("http"):
             if event.detail1:
-                self.present_message(messages.PAGE_LOADING_START)
+                presentation_manager.get_manager().present_message(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
                 if not mgr.use_verbose_speech():
                     msg = AXObject.get_name(event.source)
                 else:
                     msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
-                self.present_message(msg, reset_styles=False)
+                presentation_manager.get_manager().present_message(msg, reset_styles=False)
             else:
-                self.present_message(messages.PAGE_LOADING_END)
+                presentation_manager.get_manager().present_message(messages.PAGE_LOADING_END)
 
         self._loading_content = event.detail1
         if event.detail1:
@@ -756,7 +750,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             summary = AXDocument.get_document_summary(event.source)
             if summary:
-                self.present_message(summary)
+                presentation_manager.get_manager().present_message(summary)
 
         obj, offset = self.utilities.get_caret_context()
         if not AXUtilities.is_busy(event.source):
@@ -797,7 +791,9 @@ class Script(default.Script):
         elif not document_presenter.get_presenter().get_say_all_on_load():
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.speak_contents(self.utilities.get_line_contents_at_offset(obj, offset))
+            presentation_manager.get_manager().speak_contents(
+                self.utilities.get_line_contents_at_offset(obj, offset)
+            )
         elif speech_and_verbosity_manager.get_manager().get_speech_is_enabled_and_not_muted():
             msg = "WEB: Doing SayAll"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1131,11 +1127,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.present_message(messages.TABLE_REORDERED_COLUMNS)
+        presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_COLUMNS)
         header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXTable.get_presentable_sort_order_from_header(header, True)
         if msg:
-            self.present_message(msg)
+            presentation_manager.get_manager().present_message(msg)
         return True
 
     def on_document_load_complete(self, event: Atspi.Event) -> bool:
@@ -1264,7 +1260,7 @@ class Script(default.Script):
             if self.utilities.should_interrupt_for_locus_of_focus_change(
                 focus, event.source, event
             ):
-                self.interrupt_presentation()
+                presentation_manager.get_manager().interrupt_presentation()
 
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
@@ -1399,11 +1395,11 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        self.present_message(messages.TABLE_REORDERED_ROWS)
+        presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_ROWS)
         header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXTable.get_presentable_sort_order_from_header(header, True)
         if msg:
-            self.present_message(msg)
+            presentation_manager.get_manager().present_message(msg)
         return True
 
     def on_selected_changed(self, event: Atspi.Event) -> bool:

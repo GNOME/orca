@@ -29,6 +29,7 @@ from typing import TYPE_CHECKING
 from orca import chat_presenter
 from orca import debug
 from orca import messages
+from orca import presentation_manager
 from orca import settings
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -88,7 +89,7 @@ class Script(gtk.Script):
 
         line = messages.CHAT_NEW_TAB % AXObject.get_name(event.any_data)
         voice = self.speech_generator.voice(obj=event.any_data, string=line)
-        self.speak_message(line, voice=voice)
+        presentation_manager.get_manager().speak_message(line, voice=voice)
         return True
 
     def on_name_changed(self, event: Atspi.Event) -> bool:

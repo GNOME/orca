@@ -56,6 +56,8 @@ class TestDocumentPresenter:
             "orca.script_manager",
             "orca.structural_navigator",
             "orca.table_navigator",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -490,14 +492,17 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._made_find_announcement = False
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.speak_contents.reset_mock()
+        pres_manager.present_message.reset_mock()
         mock_obj = MagicMock()
         result = presenter.present_find_results(mock_obj, 0)
 
         assert result is True
         assert presenter._made_find_announcement is True
-        mock_script.speak_contents.assert_called_once()
+        pres_manager.speak_contents.assert_called_once()
         mock_script.update_braille.assert_called_once()
-        mock_script.present_message.assert_called_once_with("1 of 5")
+        pres_manager.present_message.assert_called_once_with("1 of 5")
 
     def test_present_find_results_skips_same_line_when_only_changed(
         self, test_context: OrcaTestContext
@@ -531,11 +536,13 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._made_find_announcement = True  # Already announced
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.speak_contents.reset_mock()
         mock_obj = MagicMock()
         result = presenter.present_find_results(mock_obj, 5)
 
         assert result is False
-        mock_script.speak_contents.assert_not_called()
+        pres_manager.speak_contents.assert_not_called()
 
     def test_use_focus_mode_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test use_focus_mode returns False when no active script."""
@@ -1021,10 +1028,12 @@ class TestDocumentPresenter:
         mocks["orca.messages"].DOCUMENT_NOT_IN_A = "Not in document"
 
         presenter = module.get_presenter()
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter._set_presentation_mode(mock_script, True, obj=MagicMock())
 
         assert result is False
-        mock_script.present_message.assert_called_once()
+        pres_manager.present_message.assert_called_once()
 
     def test_set_presentation_mode_same_mode(self, test_context: OrcaTestContext) -> None:
         """Test set_presentation_mode returns False when already in requested mode."""
@@ -1173,56 +1182,62 @@ class TestDocumentPresenter:
 
         from unittest.mock import MagicMock
 
-        module, _mocks = self._setup_presenter(test_context)
+        module, mocks = self._setup_presenter(test_context)
 
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
 
         presenter = module.get_presenter()
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.enable_sticky_focus_mode(mock_script)
 
         assert result is True
         assert presenter.in_focus_mode(mock_app) is True
         assert presenter.focus_mode_is_sticky(mock_app) is True
         assert presenter.browse_mode_is_sticky(mock_app) is False
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     def test_enable_sticky_browse_mode(self, test_context: OrcaTestContext) -> None:
         """Test enable_sticky_browse_mode sets sticky browse mode."""
 
         from unittest.mock import MagicMock
 
-        module, _mocks = self._setup_presenter(test_context)
+        module, mocks = self._setup_presenter(test_context)
 
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
 
         presenter = module.get_presenter()
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.enable_sticky_browse_mode(mock_script)
 
         assert result is True
         assert presenter.in_focus_mode(mock_app) is False
         assert presenter.focus_mode_is_sticky(mock_app) is False
         assert presenter.browse_mode_is_sticky(mock_app) is True
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     def test_toggle_presentation_mode_not_in_document(self, test_context: OrcaTestContext) -> None:
         """Test toggle_presentation_mode when not in document."""
 
         from unittest.mock import MagicMock
 
-        module, _mocks = self._setup_presenter(test_context)
+        module, mocks = self._setup_presenter(test_context)
 
         mock_script = MagicMock()
         mock_script.utilities.in_document_content.return_value = False
 
         presenter = module.get_presenter()
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.toggle_presentation_mode(mock_script)
 
         assert result is True
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     def test_toggle_presentation_mode_to_focus(self, test_context: OrcaTestContext) -> None:
         """Test toggle_presentation_mode switches to focus mode."""
@@ -1392,10 +1407,12 @@ class TestDocumentPresenter:
             in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
         )
 
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
         assert result is True
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     def test_update_mode_if_needed_sticky_browse(self, test_context: OrcaTestContext) -> None:
         """Test update_mode_if_needed with sticky browse mode when entering document."""
@@ -1418,10 +1435,12 @@ class TestDocumentPresenter:
             in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
         )
 
+        pres_manager = mocks["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())
 
         assert result is True
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
         struct_nav.get_navigator.return_value.set_mode.assert_called()
         caret_nav.get_navigator.return_value.set_enabled_for_script.assert_called()
 

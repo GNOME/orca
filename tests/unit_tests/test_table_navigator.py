@@ -67,6 +67,8 @@ class TestTableNavigator:
             "orca.AXText",
             "orca.AXUtilities",
             "orca.input_event",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -322,14 +324,15 @@ class TestTableNavigator:
         navigator = TableNavigator()
         navigator._enabled = initial_enabled
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=True)
         assert result is True
         assert navigator.is_enabled() is expected_enabled
         assert navigator._last_input_event is None
         expected_message = getattr(essential_modules["orca.messages"], expected_message_attr)
-        mock_script.present_message.assert_called_once_with(expected_message)
+        pres_manager.present_message.assert_called_once_with(expected_message)
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_toggle_enabled_no_notify(self, test_context: OrcaTestContext) -> None:
@@ -356,12 +359,13 @@ class TestTableNavigator:
         navigator = TableNavigator()
         navigator._enabled = False  # Start disabled so toggle enables it
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=False)
         assert result is True
         assert navigator.is_enabled() is True
-        mock_script.present_message.assert_not_called()
+        pres_manager.present_message.assert_not_called()
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     @pytest.mark.parametrize(
@@ -649,11 +653,13 @@ class TestTableNavigator:
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         move_method = getattr(navigator, f"move_{direction}")
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
 
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        pres_manager.present_message.reset_mock()
         result = move_method(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
         assert navigator._last_input_event == mock_event
@@ -661,10 +667,10 @@ class TestTableNavigator:
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch(f"orca.table_navigator.AXTable.{boundary_check}", return_value=True)
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
-        mock_script.reset_mock()
+        pres_manager.present_message.reset_mock()
         result = move_method(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_with(
+        pres_manager.present_message.assert_called_with(
             getattr(essential_modules["orca.messages"], boundary_message)
         )
 
@@ -775,9 +781,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_up(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
         assert navigator._last_input_event == mock_event
@@ -802,9 +810,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_up(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_COLUMN_TOP
         )
 
@@ -892,9 +902,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_first_cell(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1134,10 +1146,12 @@ class TestTableNavigator:
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_right(mock_script)
         # move_right returns True even at end of row, but presents a message
         assert result is True
-        mock_script.present_message.assert_called_once()
+        pres_manager.present_message.assert_called_once()
 
     def test_move_to_last_cell_not_in_table(self, test_context: OrcaTestContext) -> None:
         """Test move_to_last_cell presents not in table message when current cell is None."""
@@ -1157,9 +1171,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_last_cell(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
         assert navigator._last_input_event == mock_event
@@ -1217,9 +1233,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_top_of_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1243,9 +1261,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_top_of_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_COLUMN_TOP
         )
 
@@ -1310,9 +1330,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_bottom_of_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1338,9 +1360,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_bottom_of_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_COLUMN_BOTTOM
         )
 
@@ -1405,9 +1429,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_beginning_of_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1431,9 +1457,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_beginning_of_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_ROW_BEGINNING
         )
 
@@ -1496,9 +1524,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_end_of_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1522,9 +1552,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.move_to_end_of_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_ROW_END
         )
 
@@ -1592,9 +1624,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.set_dynamic_column_headers_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1627,9 +1661,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.set_dynamic_column_headers_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with("Column header row set to 2")
+        pres_manager.present_message.assert_called_once_with("Column header row set to 2")
 
     def test_clear_dynamic_column_headers_row_not_in_table(
         self, test_context: OrcaTestContext
@@ -1654,9 +1690,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.clear_dynamic_column_headers_row(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1689,10 +1727,13 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
+        pres_manager.interrupt_presentation.reset_mock()
         result = navigator.clear_dynamic_column_headers_row(mock_script, mock_event)
         assert result is True
-        mock_script.interrupt_presentation.assert_called_once()
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.interrupt_presentation.assert_called_once()
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].DYNAMIC_COLUMN_HEADER_CLEARED
         )
 
@@ -1719,9 +1760,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.set_dynamic_row_headers_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1756,9 +1799,11 @@ class TestTableNavigator:
         mock_script = test_context.Mock()
         mock_script.utilities.convert_column_to_string.return_value = "B"
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.set_dynamic_row_headers_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with("Row header column set to B")
+        pres_manager.present_message.assert_called_once_with("Row header column set to B")
 
     def test_clear_dynamic_row_headers_column_not_in_table(
         self, test_context: OrcaTestContext
@@ -1783,9 +1828,11 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = navigator.clear_dynamic_row_headers_column(mock_script, mock_event)
         assert result is True
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].TABLE_NOT_IN_A
         )
 
@@ -1818,10 +1865,13 @@ class TestTableNavigator:
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
+        pres_manager.interrupt_presentation.reset_mock()
         result = navigator.clear_dynamic_row_headers_column(mock_script, mock_event)
         assert result is True
-        mock_script.interrupt_presentation.assert_called_once()
-        mock_script.present_message.assert_called_once_with(
+        pres_manager.interrupt_presentation.assert_called_once()
+        pres_manager.present_message.assert_called_once_with(
             essential_modules["orca.messages"].DYNAMIC_ROW_HEADER_CLEARED
         )
 
@@ -1892,9 +1942,10 @@ class TestTableNavigator:
         mock_script.utilities.grab_focus_when_setting_caret.return_value = False
         mock_script.utilities.is_gui_cell.return_value = False
         mock_script.present_object = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_previous_cell = test_context.Mock(spec=Atspi.Accessible)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         navigator._present_cell(mock_script, mock_cell, 1, 2, mock_previous_cell)
         assert navigator._previous_reported_row == 1
         assert navigator._previous_reported_col == 2
@@ -1902,7 +1953,7 @@ class TestTableNavigator:
         mock_script.present_object.assert_called_once_with(
             mock_cell, offset=0, priorObj=mock_previous_cell, interrupt=True
         )
-        assert mock_script.present_message.call_count == 2
+        assert pres_manager.present_message.call_count == 2
 
     def test_present_cell_with_text_descendant_and_gui_cell(
         self, test_context: OrcaTestContext

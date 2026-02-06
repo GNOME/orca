@@ -69,6 +69,8 @@ class TestSayAllPresenter:
             "orca.AXTable",
             "orca.AXText",
             "orca.AXUtilities",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -257,11 +259,14 @@ class TestSayAllPresenter:
         messages_mock = essential_modules["orca.messages"]
         messages_mock.LOCATION_NOT_FOUND_FULL = "Location not found"
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
+        pres_manager.interrupt_presentation.reset_mock()
         result = presenter.say_all(mock_script, obj=None)
         assert result is True
 
-        mock_script.interrupt_presentation.assert_called_once()
-        mock_script.present_message.assert_called_once_with("Location not found")
+        pres_manager.interrupt_presentation.assert_called_once()
+        pres_manager.present_message.assert_called_once_with("Location not found")
 
     @pytest.mark.parametrize(
         "direction,enabled,contents_available,obj_valid,expected_result",

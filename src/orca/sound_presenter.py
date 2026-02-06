@@ -26,7 +26,7 @@
 from __future__ import annotations
 
 
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 import gi
 
@@ -38,6 +38,10 @@ from . import debug
 from . import guilabels
 from . import preferences_grid_base
 from . import settings
+from . import sound
+
+if TYPE_CHECKING:
+    from .sound import Icon, Tone
 
 
 class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -309,6 +313,33 @@ class SoundPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.progressBarBeepVerbosity = value
         return True
+
+    def play(self, sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
+        """Plays the specified sound(s)."""
+
+        if not sounds:
+            return
+
+        if not isinstance(sounds, list):
+            sounds = [sounds]
+
+        player = sound.get_player()
+        player.play(sounds[0], interrupt)
+        for i in range(1, len(sounds)):
+            player.play(sounds[i], interrupt=False)
+
+    def init_sound(self) -> None:
+        """Initializes sound if enabled."""
+
+        if not self.get_sound_is_enabled():
+            return
+
+        sound.get_player().init()
+
+    def shutdown_sound(self) -> None:
+        """Shuts down sound."""
+
+        sound.get_player().shutdown()
 
 
 _presenter: SoundPresenter = SoundPresenter()

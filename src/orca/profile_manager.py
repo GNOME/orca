@@ -38,7 +38,6 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk
 
-from . import braille
 from . import cmdnames
 from . import command_manager
 from . import dbus_service
@@ -48,9 +47,9 @@ from . import input_event
 from . import messages
 from . import orca
 from . import preferences_grid_base
+from . import presentation_manager
 from . import script_manager
 from . import settings_manager
-from . import speech_and_verbosity_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -668,7 +667,7 @@ class ProfileManager:
         profile_names = self.get_available_profiles()
         if not profile_names:
             if script is not None and notify_user:
-                script.present_message(messages.PROFILE_NOT_FOUND)
+                presentation_manager.get_manager().present_message(messages.PROFILE_NOT_FOUND)
             return True
 
         profiles = [(profile[0], profile[1]) for profile in profile_names]
@@ -687,13 +686,14 @@ class ProfileManager:
 
         self.set_active_profile(profile_id, update_locale=True)
 
-        braille.check_braille_setting()
-        speech_and_verbosity_manager.get_manager().refresh_speech()
+        presentation_manager.get_manager().refresh_presenters()
 
         if script is not None:
             script.set_up_commands()
             if notify_user:
-                script.present_message(messages.PROFILE_CHANGED % name, name)
+                presentation_manager.get_manager().present_message(
+                    messages.PROFILE_CHANGED % name, name
+                )
 
         return True
 
@@ -726,7 +726,9 @@ class ProfileManager:
                 break
 
         if script is not None and notify_user:
-            script.present_message(messages.PROFILE_CURRENT % name, name)
+            presentation_manager.get_manager().present_message(
+                messages.PROFILE_CURRENT % name, name
+            )
 
         return True
 

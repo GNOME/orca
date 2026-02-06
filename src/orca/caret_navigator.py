@@ -40,6 +40,7 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import say_all_presenter
 from . import script_manager
 from . import settings
@@ -280,7 +281,7 @@ class CaretNavigator:
             script.utilities.clear_caret_context()
 
         if notify_user:
-            script.present_message(string)
+            presentation_manager.get_manager().present_message(string)
 
         self.set_is_enabled(enabled)
         return True
@@ -406,7 +407,7 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
             obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR
@@ -442,7 +443,7 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
             obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR
@@ -498,7 +499,7 @@ class CaretNavigator:
             end -= 1
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -542,7 +543,7 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -605,7 +606,7 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
 
         if line != contents:
             obj, offset, end, _string = contents[0]
@@ -621,8 +622,9 @@ class CaretNavigator:
             return True
 
         # Setting the last object on the current line as priorObj prevents re-announcing context.
-        script.speak_contents(contents, priorObj=line[-1][0])
-        script.display_contents(contents)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_contents(contents, priorObj=line[-1][0])
+        presenter.display_contents(contents)
         return True
 
     @dbus_service.command
@@ -676,7 +678,7 @@ class CaretNavigator:
             return False
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -686,8 +688,9 @@ class CaretNavigator:
             return True
 
         # Setting the first object on the current line as priorObj prevents re-announcing context.
-        script.speak_contents(contents, priorObj=line[0][0])
-        script.display_contents(contents)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_contents(contents, priorObj=line[0][0])
+        presenter.display_contents(contents)
         return True
 
     @dbus_service.command
@@ -716,7 +719,7 @@ class CaretNavigator:
 
         self._last_input_event = event
         obj, start, end, _string = line[0]
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -726,7 +729,7 @@ class CaretNavigator:
             return True
 
         script.say_character(obj)
-        script.display_contents(line)
+        presentation_manager.get_manager().display_contents(line)
         return True
 
     @dbus_service.command
@@ -758,7 +761,7 @@ class CaretNavigator:
             end -= 1
 
         self._last_input_event = event
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -768,7 +771,7 @@ class CaretNavigator:
             return True
 
         script.say_character(obj)
-        script.display_contents(line)
+        presentation_manager.get_manager().display_contents(line)
         return True
 
     @dbus_service.command
@@ -800,7 +803,7 @@ class CaretNavigator:
 
         self._last_input_event = event
         obj, start, end, _string = contents[0]
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -809,8 +812,9 @@ class CaretNavigator:
         if not notify_user:
             return True
 
-        script.speak_contents(contents)
-        script.display_contents(contents)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_contents(contents)
+        presenter.display_contents(contents)
         return True
 
     @dbus_service.command
@@ -842,7 +846,7 @@ class CaretNavigator:
 
         self._last_input_event = event
         obj, start, end, _string = contents[-1]
-        script.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
             obj, start, end, focus_manager.CARET_NAVIGATOR
@@ -850,8 +854,9 @@ class CaretNavigator:
         if not notify_user:
             return True
 
-        script.speak_contents(contents)
-        script.display_contents(contents)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_contents(contents)
+        presenter.display_contents(contents)
         return True
 
 

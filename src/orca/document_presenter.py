@@ -50,6 +50,7 @@ from . import keybindings
 from . import live_region_presenter
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import structural_navigator
@@ -555,7 +556,7 @@ class DocumentPresenter:
 
         if not script.utilities.in_document_content(obj):
             if notify_user:
-                script.present_message(messages.DOCUMENT_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.DOCUMENT_NOT_IN_A)
             return False
 
         has_state = self.has_state_for_app(script.app)
@@ -584,9 +585,9 @@ class DocumentPresenter:
 
         if notify_user:
             if use_focus_mode:
-                script.present_message(messages.MODE_FOCUS)
+                presentation_manager.get_manager().present_message(messages.MODE_FOCUS)
             else:
-                script.present_message(messages.MODE_BROWSE)
+                presentation_manager.get_manager().present_message(messages.MODE_BROWSE)
 
         state = self._get_state_for_app(script.app)
         state.in_focus_mode = use_focus_mode
@@ -736,13 +737,13 @@ class DocumentPresenter:
 
         if not script.utilities.in_document_content():
             if notify_user:
-                script.present_message(messages.DOCUMENT_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.DOCUMENT_NOT_IN_A)
             return True
 
         state = self._get_state_for_app(script.app)
 
         if not state.browse_mode_is_sticky or notify_user:
-            script.present_message(messages.MODE_BROWSE_IS_STICKY)
+            presentation_manager.get_manager().present_message(messages.MODE_BROWSE_IS_STICKY)
 
         state.in_focus_mode = False
         state.focus_mode_is_sticky = False
@@ -767,13 +768,13 @@ class DocumentPresenter:
 
         if not script.utilities.in_document_content():
             if notify_user:
-                script.present_message(messages.DOCUMENT_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.DOCUMENT_NOT_IN_A)
             return True
 
         state = self._get_state_for_app(script.app)
 
         if not state.focus_mode_is_sticky or notify_user:
-            script.present_message(messages.MODE_FOCUS_IS_STICKY)
+            presentation_manager.get_manager().present_message(messages.MODE_FOCUS_IS_STICKY)
 
         state.in_focus_mode = True
         state.focus_mode_is_sticky = True
@@ -796,7 +797,7 @@ class DocumentPresenter:
 
         if not script.utilities.in_document_content():
             if notify_user:
-                script.present_message(messages.DOCUMENT_NOT_IN_A)
+                presentation_manager.get_manager().present_message(messages.DOCUMENT_NOT_IN_A)
             return True
 
         use_focus = not self.in_focus_mode(script.app)
@@ -896,13 +897,13 @@ class DocumentPresenter:
         """Handles mode/navigator setup when entering a document from outside."""
 
         if self.focus_mode_is_sticky(script.app):
-            script.present_message(messages.MODE_FOCUS_IS_STICKY)
+            presentation_manager.get_manager().present_message(messages.MODE_FOCUS_IS_STICKY)
             reason = "locus of focus now in document, focus mode is sticky"
             self.suspend_navigators(script, True, reason)
             return True
 
         if self.browse_mode_is_sticky(script.app):
-            script.present_message(messages.MODE_BROWSE_IS_STICKY)
+            presentation_manager.get_manager().present_message(messages.MODE_BROWSE_IS_STICKY)
             reason = "locus of focus now in document, browse mode is sticky"
             self._enable_document_navigators(script, reason)
             self.suspend_navigators(script, False, reason)
@@ -935,9 +936,9 @@ class DocumentPresenter:
 
         if AXUtilities.get_application(old_focus) != AXUtilities.get_application(new_focus):
             if use_focus:
-                script.present_message(messages.MODE_FOCUS)
+                presentation_manager.get_manager().present_message(messages.MODE_FOCUS)
             else:
-                script.present_message(messages.MODE_BROWSE)
+                presentation_manager.get_manager().present_message(messages.MODE_BROWSE)
 
         return True
 
@@ -1164,9 +1165,9 @@ class DocumentPresenter:
         layout_mode = not self.get_layout_mode()
         if notify_user:
             if layout_mode:
-                script.present_message(messages.MODE_LAYOUT)
+                presentation_manager.get_manager().present_message(messages.MODE_LAYOUT)
             else:
-                script.present_message(messages.MODE_OBJECT)
+                presentation_manager.get_manager().present_message(messages.MODE_OBJECT)
         self.set_layout_mode(layout_mode)
         return True
 
@@ -1210,12 +1211,12 @@ class DocumentPresenter:
                 return False
 
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
-        script.speak_contents(contents)
+        presentation_manager.get_manager().speak_contents(contents)
         script.update_braille(obj)
 
         results_count = script.utilities.get_find_results_count()
         if results_count:
-            script.present_message(results_count)
+            presentation_manager.get_manager().present_message(results_count)
 
         self._made_find_announcement = True
         return True

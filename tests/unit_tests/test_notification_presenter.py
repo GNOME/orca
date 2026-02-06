@@ -43,8 +43,9 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
 
-class Fake():
+class Fake:
     pass
+
 
 @pytest.mark.unit
 class TestNotificationPresenter:
@@ -59,6 +60,8 @@ class TestNotificationPresenter:
             "gi.repository.Atspi",
             "gi.repository.GObject",
             "gi.repository.Gtk",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -336,25 +339,25 @@ class TestNotificationPresenter:
     def test_present_last_notification_no_messages(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_last_notification with no messages."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         result = presenter.present_last_notification(mock_script, None, True)
 
         assert result is True
-        mock_script.present_message.assert_called_once_with("No notification messages")
+        pres_manager.present_message.assert_called_once_with("No notification messages")
 
     def test_present_last_notification_with_messages(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_last_notification with messages."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         current_time = 1234567890
         test_message = "Last notification"
@@ -362,49 +365,53 @@ class TestNotificationPresenter:
         test_context.patch("time.time", return_value=current_time - 60)
         presenter.save_notification(test_message)
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         test_context.patch("time.time", return_value=current_time)
         result = presenter.present_last_notification(mock_script, None, True)
 
         assert result is True
-        mock_script.present_message.assert_called_once_with(f"{test_message} 1 minutes ago")
+        pres_manager.present_message.assert_called_once_with(f"{test_message} 1 minutes ago")
         assert presenter._current_index == -1
 
     def test_present_last_notification_no_notify(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_last_notification with notify_user=False."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         result = presenter.present_last_notification(mock_script, None, False)
 
         assert result is True
-        mock_script.present_message.assert_not_called()
+        pres_manager.present_message.assert_not_called()
 
     def test_present_previous_notification_no_messages(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_previous_notification with no messages."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         result = presenter.present_previous_notification(mock_script, None, True)
 
         assert result is True
-        mock_script.present_message.assert_called_once_with("No notification messages")
+        pres_manager.present_message.assert_called_once_with("No notification messages")
 
     def test_present_previous_notification_at_top(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_previous_notification at list top."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         current_time = 1234567890
 
@@ -413,23 +420,24 @@ class TestNotificationPresenter:
         presenter.save_notification("Message 2")
         presenter._current_index = 0
         test_context.patch("time.time", return_value=current_time)
+        pres_manager.present_message.reset_mock()
         result = presenter.present_previous_notification(mock_script, None, True)
 
         assert result is True
-        assert mock_script.present_message.call_count == 2
-        mock_script.present_message.assert_any_call("Beginning of notification list")
-        mock_script.present_message.assert_any_call("Message 1 1 minutes ago")
+        assert pres_manager.present_message.call_count == 2
+        pres_manager.present_message.assert_any_call("Beginning of notification list")
+        pres_manager.present_message.assert_any_call("Message 1 1 minutes ago")
 
     def test_present_previous_notification_normal_navigation(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test NotificationPresenter.present_previous_notification normal navigation."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         current_time = 1234567890
 
@@ -438,11 +446,12 @@ class TestNotificationPresenter:
         presenter.save_notification("Message 2")
         presenter._current_index = -1
         test_context.patch("time.time", return_value=current_time)
+        pres_manager.present_message.reset_mock()
         result = presenter.present_previous_notification(mock_script, None, True)
 
         assert result is True
         assert presenter._current_index == -2
-        mock_script.present_message.assert_called_once_with("Message 1 1 minutes ago")
+        pres_manager.present_message.assert_called_once_with("Message 1 1 minutes ago")
 
     @pytest.mark.parametrize(
         "method_name,start_index",
@@ -455,11 +464,11 @@ class TestNotificationPresenter:
         self, test_context: OrcaTestContext, method_name, start_index
     ) -> None:
         """Test notification navigation methods handle IndexError scenarios."""
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         current_time = 1234567890
 
@@ -470,36 +479,38 @@ class TestNotificationPresenter:
         original_notifications = presenter._notifications.copy()
         presenter._notifications = []
         test_context.patch("time.time", return_value=current_time)
+        pres_manager.present_message.reset_mock()
 
         method = getattr(presenter, method_name)
         result = method(mock_script, None, True)
 
         presenter._notifications = original_notifications
         assert result is True
-        mock_script.present_message.assert_called_with("No notification messages")
+        pres_manager.present_message.assert_called_with("No notification messages")
 
     def test_present_next_notification_no_messages(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_next_notification with no messages."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         result = presenter.present_next_notification(mock_script, None, True)
 
         assert result is True
-        mock_script.present_message.assert_called_once_with("No notification messages")
+        pres_manager.present_message.assert_called_once_with("No notification messages")
 
     def test_present_next_notification_at_bottom(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.present_next_notification at list bottom."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         current_time = 1234567890
 
@@ -508,23 +519,24 @@ class TestNotificationPresenter:
         presenter.save_notification("Message 2")
         presenter._current_index = -1
         test_context.patch("time.time", return_value=current_time)
+        pres_manager.present_message.reset_mock()
         result = presenter.present_next_notification(mock_script, None, True)
 
         assert result is True
-        assert mock_script.present_message.call_count == 2
-        mock_script.present_message.assert_any_call("End of notification list")
-        mock_script.present_message.assert_any_call("Message 2 1 minutes ago")
+        assert pres_manager.present_message.call_count == 2
+        pres_manager.present_message.assert_any_call("End of notification list")
+        pres_manager.present_message.assert_any_call("Message 2 1 minutes ago")
 
     def test_present_next_notification_normal_navigation(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test NotificationPresenter.present_next_notification normal navigation."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         current_time = 1234567890
 
@@ -533,25 +545,27 @@ class TestNotificationPresenter:
         presenter.save_notification("Message 2")
         presenter._current_index = -2
         test_context.patch("time.time", return_value=current_time)
+        pres_manager.present_message.reset_mock()
         result = presenter.present_next_notification(mock_script, None, True)
 
         assert result is True
         assert presenter._current_index == -1
-        mock_script.present_message.assert_called_once_with("Message 2 1 minutes ago")
+        pres_manager.present_message.assert_called_once_with("Message 2 1 minutes ago")
 
     def test_show_notification_list_no_messages(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.show_notification_list with no messages."""
 
-        self._setup_dependencies(test_context)
+        deps = self._setup_dependencies(test_context)
         from orca.notification_presenter import NotificationPresenter
 
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         presenter = NotificationPresenter()
         result = presenter.show_notification_list(mock_script, None, True)
 
         assert result is True
-        mock_script.present_message.assert_called_once_with("No notification messages")
+        pres_manager.present_message.assert_called_once_with("No notification messages")
 
     def test_show_notification_list_create_gui(self, test_context: OrcaTestContext) -> None:
         """Test NotificationPresenter.show_notification_list creates GUI."""

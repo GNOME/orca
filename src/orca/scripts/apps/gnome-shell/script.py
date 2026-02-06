@@ -30,6 +30,7 @@ from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
+from orca import presentation_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import default
@@ -126,7 +127,7 @@ class Script(default.Script):
         if dialog and AXObject.is_ancestor(event.source, dialog):
             msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.present_message(AXObject.get_name(event.source))
+            presentation_manager.get_manager().present_message(AXObject.get_name(event.source))
 
         return True
 

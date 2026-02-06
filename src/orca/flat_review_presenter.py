@@ -50,6 +50,7 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import speech_and_verbosity_manager
@@ -389,7 +390,7 @@ class FlatReviewPresenter:
             return
 
         if speech_and_verbosity_manager.get_manager().use_verbose_speech():
-            script.present_message(messages.FLAT_REVIEW_START)
+            presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_START)
         self._item_presentation(script, event)
 
     def quit(
@@ -412,7 +413,7 @@ class FlatReviewPresenter:
             return
 
         if speech_and_verbosity_manager.get_manager().use_verbose_speech():
-            script.present_message(messages.FLAT_REVIEW_STOP)
+            presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_STOP)
         script.update_braille(focus)
 
     @dbus_service.command
@@ -1097,27 +1098,31 @@ class FlatReviewPresenter:
             focused_region,
         )
 
-    # TODO - JD: See what adjustments might be needed for the pan_amount parameter
     def pan_braille_left(
         self,
         script: default.Script,
         _event: input_event.InputEvent | None = None,
-        pan_amount: int = 0,
     ) -> bool:
         """Pans the braille display left."""
 
         self._context = self.get_or_create_context(script)
-        if braille.is_beginning_showing():
+
+        # Try to pan left. If we couldn't (at edge), move to previous line.
+        if not braille_presenter.get_presenter().pan_left():
             self._context.go_to_start_of(flat_review.Context.LINE)
             self._context.go_previous_character()
             self._update_braille(script)
             return True
 
-        braille.pan_left(pan_amount)
+        # After panning, find a region that has a zone attribute to sync flat review context.
+        # We do cell-by-cell panning here because not all braille regions have zones (e.g.,
+        # buttons don't have zones, only text regions do). This finds the first region with
+        # a zone so we can update the flat review position accordingly.
         region_info = braille.get_region_at_cell(1)
         braille_region = region_info.region
         offset_in_zone = region_info.offset_in_region
         while braille_region and not hasattr(braille_region, "zone"):
+            # Cell-by-cell panning (amount=1) to find the first region with a zone attribute.
             if not braille.pan_left(1):
                 break
             region_info = braille.get_region_at_cell(1)
@@ -1127,34 +1132,36 @@ class FlatReviewPresenter:
         if braille_region and not hasattr(braille_region, "zone"):
             self._context.go_to_start_of(flat_review.Context.LINE)
             self._context.go_previous_character()
-            self._update_braille(script)
-            return True
-
-        if braille_region and hasattr(braille_region, "zone"):
+        elif braille_region and hasattr(braille_region, "zone"):
             self._context.set_current_zone(braille_region.zone, offset_in_zone)
-            self._update_braille(script)
+
+        self._update_braille(script)
         return True
 
-    # TODO - JD: See what adjustments might be needed for the pan_amount parameter
     def pan_braille_right(
         self,
         script: default.Script,
         _event: input_event.InputEvent | None = None,
-        pan_amount: int = 0,
     ) -> bool:
         """Pans the braille display right."""
 
         self._context = self.get_or_create_context(script)
-        if braille.is_end_showing():
+
+        # Try to pan right. If we couldn't (at edge), move to next line.
+        if not braille_presenter.get_presenter().pan_right():
             self._context.go_next_line()
             self._update_braille(script)
             return True
 
-        braille.pan_right(pan_amount)
+        # After panning, find a region that has a zone attribute to sync flat review context.
+        # We do cell-by-cell panning here because not all braille regions have zones (e.g.,
+        # buttons don't have zones, only text regions do). This finds the first region with
+        # a zone so we can update the flat review position accordingly.
         region_info = braille.get_region_at_cell(1)
         braille_region = region_info.region
         offset_in_zone = region_info.offset_in_region
         while braille_region and not hasattr(braille_region, "zone"):
+            # Cell-by-cell panning (amount=1) to find the first region with a zone attribute.
             if not braille.pan_right(1):
                 break
             region_info = braille.get_region_at_cell(1)
@@ -1163,12 +1170,10 @@ class FlatReviewPresenter:
 
         if braille_region and not hasattr(braille_region, "zone"):
             self._context.go_next_line()
-            self._update_braille(script)
-            return True
-
-        if braille_region and hasattr(braille_region, "zone"):
+        elif braille_region and hasattr(braille_region, "zone"):
             self._context.set_current_zone(braille_region.zone, offset_in_zone)
-            self._update_braille(script)
+
+        self._update_braille(script)
         return True
 
     def _get_all_lines(
@@ -1209,7 +1214,9 @@ class FlatReviewPresenter:
 
         for string in self._get_all_lines(script, event)[0]:
             if not string.isspace():
-                script.speak_message(string, script.speech_generator.voice(string=string))
+                presentation_manager.get_manager().speak_message(
+                    string, script.speech_generator.voice(string=string)
+                )
 
         return True
 
@@ -1260,12 +1267,12 @@ class FlatReviewPresenter:
 
         if not self.is_active():
             if notify_user:
-                script.present_message(messages.FLAT_REVIEW_NOT_IN)
+                presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
         clipboard.get_presenter().set_text(self._current_contents.rstrip("\n"))
         if notify_user:
-            script.present_message(messages.FLAT_REVIEW_COPIED)
+            presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_COPIED)
         return True
 
     @dbus_service.command
@@ -1289,12 +1296,12 @@ class FlatReviewPresenter:
 
         if not self.is_active():
             if notify_user:
-                script.present_message(messages.FLAT_REVIEW_NOT_IN)
+                presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_NOT_IN)
             return True
 
         clipboard.get_presenter().append_text(self._current_contents.rstrip("\n"))
         if notify_user:
-            script.present_message(messages.FLAT_REVIEW_APPENDED)
+            presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_APPENDED)
         return True
 
     @dbus_service.getter
@@ -1336,10 +1343,12 @@ class FlatReviewPresenter:
 
         if self._restrict:
             if notify_user:
-                script.present_message(messages.FLAT_REVIEW_RESTRICTED)
+                presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_RESTRICTED)
         else:
             if notify_user:
-                script.present_message(messages.FLAT_REVIEW_UNRESTRICTED)
+                presentation_manager.get_manager().present_message(
+                    messages.FLAT_REVIEW_UNRESTRICTED
+                )
         if self.is_active():
             # Reset the context
             self._context = None
@@ -1360,22 +1369,23 @@ class FlatReviewPresenter:
         voice = script.speech_generator.voice(string=line_string)
 
         if not isinstance(event, input_event.BrailleEvent):
+            presenter = presentation_manager.get_manager()
             if not line_string or line_string == "\n":
-                script.speak_message(messages.BLANK)
+                presenter.speak_message(messages.BLANK)
             elif line_string.isspace():
-                script.speak_message(messages.WHITE_SPACE)
+                presenter.speak_message(messages.WHITE_SPACE)
             elif line_string.isupper() and (speech_type < 2 or speech_type > 3):
-                script.speak_message(line_string, voice)
+                presenter.speak_message(line_string, voice)
             elif speech_type == 2:
-                script.spell_item(line_string)
+                presenter.spell_item(line_string)
             elif speech_type == 3:
-                script.spell_phonetically(line_string)
+                presenter.spell_phonetically(line_string)
             else:
                 manager = speech_and_verbosity_manager.get_manager()
                 line_string = manager.adjust_for_presentation(
                     self._context.get_current_object(), line_string
                 )
-                script.speak_message(line_string, voice)
+                presenter.speak_message(line_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
@@ -1396,26 +1406,27 @@ class FlatReviewPresenter:
         word_string = self._context.get_current_word_string()
         voice = script.speech_generator.voice(string=word_string)
         if not isinstance(event, input_event.BrailleEvent):
+            presenter = presentation_manager.get_manager()
             if not word_string or word_string == "\n":
-                script.speak_message(messages.BLANK)
+                presenter.speak_message(messages.BLANK)
             else:
                 line_string = self._context.get_current_line_string()
                 if line_string == "\n":
-                    script.speak_message(messages.BLANK)
+                    presenter.speak_message(messages.BLANK)
                 elif word_string.isspace():
-                    script.speak_message(messages.WHITE_SPACE)
+                    presenter.speak_message(messages.WHITE_SPACE)
                 elif word_string.isupper() and speech_type == 1:
-                    script.speak_message(word_string, voice)
+                    presenter.speak_message(word_string, voice)
                 elif speech_type == 2:
-                    script.spell_item(word_string)
+                    presenter.spell_item(word_string)
                 elif speech_type == 3:
-                    script.spell_phonetically(word_string)
+                    presenter.spell_phonetically(word_string)
                 elif speech_type == 1:
                     manager = speech_and_verbosity_manager.get_manager()
                     word_string = manager.adjust_for_presentation(
                         self._context.get_current_object(), word_string
                     )
-                    script.speak_message(word_string, voice)
+                    presenter.speak_message(word_string, voice)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
@@ -1439,17 +1450,18 @@ class FlatReviewPresenter:
             self._context = self.get_or_create_context(script)
             char_string = self._context.get_current_character_string()
         if not isinstance(event, input_event.BrailleEvent):
+            presenter = presentation_manager.get_manager()
             if not char_string:
-                script.speak_message(messages.BLANK)
+                presenter.speak_message(messages.BLANK)
             else:
                 if char_string == "\n" and speech_type != 3:
-                    script.speak_message(messages.BLANK)
+                    presenter.speak_message(messages.BLANK)
                 elif speech_type == 3:
-                    script.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
+                    presenter.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
                 elif speech_type == 2:
-                    script.spell_phonetically(char_string)
+                    presenter.spell_phonetically(char_string)
                 else:
-                    script.speak_character(char_string)
+                    presenter.speak_character(char_string)
 
         if not self._context:
             return True

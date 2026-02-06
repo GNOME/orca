@@ -35,7 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import braille
+from . import braille_presenter
 from . import debug
 from . import script_manager
 from .ax_object import AXObject
@@ -145,9 +145,9 @@ class FocusManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._active_mode = mode
             if mode == FLAT_REVIEW:
-                braille.set_brlapi_priority(braille.BRLAPI_PRIORITY_HIGH)
+                braille_presenter.get_presenter().set_brlapi_priority(high=True)
             else:
-                braille.set_brlapi_priority()
+                braille_presenter.get_presenter().set_brlapi_priority()
 
         tokens = ["FOCUS MANAGER: Region of interest:", obj, f"({start_offset}, {end_offset})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

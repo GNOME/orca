@@ -56,6 +56,8 @@ class TestDebuggingToolsManager:
             "orca.ax_utilities_debugging",
             "faulthandler",
             "subprocess",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -239,7 +241,8 @@ class TestDebuggingToolsManager:
         result = manager._cycle_debug_level(script_mock, event_mock)
         assert result
         assert essential_modules["orca.debug"].debugLevel == expected_level
-        script_mock.present_message.assert_called_with(expected_message, expected_brief)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with(expected_message, expected_brief)
 
     @pytest.mark.parametrize(
         "test_scenario,focus_object,application_object,expected_message,"
@@ -318,7 +321,8 @@ class TestDebuggingToolsManager:
 
         result = manager._clear_atspi_app_cache(script_mock)
         assert result
-        script_mock.present_message.assert_called_with(expected_message)
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_with(expected_message)
 
         if expects_clear_cache:
             mock_clear_cache.assert_called_once_with(
@@ -394,8 +398,9 @@ class TestDebuggingToolsManager:
             assert result
             assert essential_modules["orca.debug"].debugLevel == scenario_data["original_level"]
 
+            pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             expected_calls = [call(msg) for msg in scenario_data["expected_calls"]]
-            script_mock.present_message.assert_has_calls(expected_calls)
+            pres_manager.present_message.assert_has_calls(expected_calls)
 
             if scenario_data["expects_debug"]:
                 essential_modules["orca.debug"].print_message.assert_called()

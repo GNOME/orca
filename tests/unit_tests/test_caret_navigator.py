@@ -66,6 +66,8 @@ class TestCaretNavigator:
             "orca.AXText",
             "orca.AXUtilities",
             "orca.input_event",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -220,9 +222,10 @@ class TestCaretNavigator:
         assert result == expected_result
 
         if expected_result:
+            pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             assert navigator._last_input_event == mock_event
             mock_script.utilities.set_caret_position.assert_called_once()
-            mock_script.interrupt_presentation.assert_called_once()
+            pres_manager.interrupt_presentation.assert_called_once()
             mock_script.update_braille.assert_called_once()
             mock_script.say_character.assert_called_once()
 
@@ -251,7 +254,7 @@ class TestCaretNavigator:
     ) -> None:
         """Test word navigation (next/previous) with various error conditions."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -266,7 +269,6 @@ class TestCaretNavigator:
         mock_script.utilities.get_word_contents_at_offset.return_value = word_contents or []
 
         mock_script.utilities.set_caret_position = test_context.Mock()
-        mock_script.interrupt_presentation = test_context.Mock()
         mock_script.update_braille = test_context.Mock()
         mock_script.say_word = test_context.Mock()
 
@@ -275,15 +277,16 @@ class TestCaretNavigator:
 
         assert result == expected_result
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         if expected_result:
             assert navigator._last_input_event == mock_event
             mock_script.utilities.set_caret_position.assert_called()
-            mock_script.interrupt_presentation.assert_called_once()
+            pres_manager.interrupt_presentation.assert_called_once()
             mock_script.update_braille.assert_called_once()
             mock_script.say_word.assert_called_once()
         else:
             mock_script.utilities.set_caret_position.assert_not_called()
-            mock_script.interrupt_presentation.assert_not_called()
+            pres_manager.interrupt_presentation.assert_not_called()
 
     @pytest.mark.parametrize(
         "test_method,expected_result",
@@ -430,9 +433,11 @@ class TestCaretNavigator:
             test_context.patch_object(navigator, "_is_navigable_object", return_value=True)
 
         mock_script.utilities.set_caret_position = test_context.Mock()
-        mock_script.interrupt_presentation = test_context.Mock()
-        mock_script.speak_contents = test_context.Mock()
-        mock_script.display_contents = test_context.Mock()
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.interrupt_presentation.reset_mock()
+        pres_manager.speak_contents.reset_mock()
+        pres_manager.display_contents.reset_mock()
 
         navigation_method = getattr(navigator, f"{navigation_type}")
         result = navigation_method(mock_script, mock_event)
@@ -442,9 +447,9 @@ class TestCaretNavigator:
         if expected_result and not in_say_all:
             assert navigator._last_input_event == mock_event
             mock_script.utilities.set_caret_position.assert_called()
-            mock_script.interrupt_presentation.assert_called_once()
-            mock_script.speak_contents.assert_called_once()
-            mock_script.display_contents.assert_called_once()
+            pres_manager.interrupt_presentation.assert_called_once()
+            pres_manager.speak_contents.assert_called_once()
+            pres_manager.display_contents.assert_called_once()
         elif in_say_all:
             assert navigator._last_input_event != mock_event
 
@@ -471,7 +476,7 @@ class TestCaretNavigator:
     ) -> None:
         """Test start/end of line navigation."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -482,9 +487,11 @@ class TestCaretNavigator:
         mock_script.utilities.get_line_contents_at_offset.return_value = line_contents
 
         mock_script.utilities.set_caret_position = test_context.Mock()
-        mock_script.interrupt_presentation = test_context.Mock()
         mock_script.say_character = test_context.Mock()
-        mock_script.display_contents = test_context.Mock()
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.interrupt_presentation.reset_mock()
+        pres_manager.display_contents.reset_mock()
 
         navigation_method = getattr(navigator, f"{navigation_type}")
         result = navigation_method(mock_script, mock_event)
@@ -494,9 +501,9 @@ class TestCaretNavigator:
         if expected_result:
             assert navigator._last_input_event == mock_event
             mock_script.utilities.set_caret_position.assert_called()
-            mock_script.interrupt_presentation.assert_called_once()
+            pres_manager.interrupt_presentation.assert_called_once()
             mock_script.say_character.assert_called_once()
-            mock_script.display_contents.assert_called_once()
+            pres_manager.display_contents.assert_called_once()
 
     @pytest.mark.parametrize(
         "script_is_active,expected_result",

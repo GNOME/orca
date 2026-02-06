@@ -38,8 +38,6 @@ from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import GLib
 
-from . import braille
-from . import braille_presenter
 from . import clipboard
 from . import command_manager
 from . import dbus_service
@@ -47,16 +45,14 @@ from . import debug
 from . import debugging_tools_manager
 from . import event_manager
 from . import focus_manager
-from . import input_event_manager
 from . import messages
 from . import mouse_review
 from . import orca_modifier_manager
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import settings_manager
 from . import speech_and_verbosity_manager
-from . import sound
-from . import sound_presenter
 from . import systemd
 from .ax_utilities import AXUtilities
 
@@ -67,9 +63,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     debug.print_message(debug.LEVEL_INFO, "ORCA: Loading User Settings", True)
 
     if is_reload:
-        sound.get_player().shutdown()
-        speech_and_verbosity_manager.get_manager().shutdown_speech()
-        braille.shutdown()
+        presentation_manager.get_manager().shutdown_presenters()
         mouse_review.get_reviewer().deactivate()
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
@@ -85,22 +79,14 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     is_desktop = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
     command_manager.get_manager().set_keyboard_layout(is_desktop)
 
-    speech_manager = speech_and_verbosity_manager.get_manager()
-    if speech_manager.get_speech_is_enabled():
-        speech_manager.start_speech()
-        if is_reload and not skip_reload_message:
-            script.speak_message(messages.SETTINGS_RELOADED)
-
-    if braille_presenter.get_presenter().get_braille_is_enabled():
-        braille.init(input_event_manager.get_manager().process_braille_event)
+    presentation_manager.get_manager().start_presenters()
+    if is_reload and not skip_reload_message:
+        presentation_manager.get_manager().speak_message(messages.SETTINGS_RELOADED)
 
     # TODO - JD: This ultimately belongs in an extension manager.
     mouse_reviewer = mouse_review.get_reviewer()
     if mouse_reviewer.get_is_enabled():
         mouse_reviewer.activate()
-
-    if sound_presenter.get_presenter().get_sound_is_enabled():
-        sound.get_player().init()
 
     # Handle the case where a change was made in the Orca Preferences dialog.
     orca_modifier_manager.get_manager().refresh_orca_modifiers("Loading user settings.")
@@ -137,10 +123,10 @@ def shutdown(script=None, _event=None, _signum=None):
     dbus_service.get_remote_controller().shutdown()
 
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
-    if script := script_manager.get_manager().get_active_script():
-        if speech_and_verbosity_manager.get_manager().get_current_server():
-            script.interrupt_presentation()
-            script.present_message(messages.STOP_ORCA, reset_styles=False)
+    if speech_and_verbosity_manager.get_manager().get_current_server():
+        manager = presentation_manager.get_manager()
+        manager.interrupt_presentation()
+        manager.present_message(messages.STOP_ORCA, reset_styles=False)
 
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
@@ -154,16 +140,7 @@ def shutdown(script=None, _event=None, _signum=None):
     clipboard.get_presenter().deactivate()
     mouse_review.get_reviewer().deactivate()
 
-    # Shutdown all the other support.
-    speech_manager = speech_and_verbosity_manager.get_manager()
-    if speech_manager.get_speech_is_enabled():
-        speech_manager.shutdown_speech()
-
-    if braille_presenter.get_presenter().get_braille_is_enabled():
-        braille.shutdown()
-    if sound_presenter.get_presenter().get_sound_is_enabled():
-        player = sound.get_player()
-        player.shutdown()
+    presentation_manager.get_manager().shutdown_presenters()
 
     signal.alarm(0)
     debug.print_message(debug.LEVEL_INFO, "ORCA: Quitting Atspi main event loop", True)
@@ -248,8 +225,7 @@ def main():
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     dbus_service.get_remote_controller().start()
-    script = script_manager.get_manager().get_default_script()
-    script.present_message(messages.START_ORCA)
+    presentation_manager.get_manager().present_message(messages.START_ORCA)
 
     event_manager.get_manager().activate()
     script_manager.get_manager().activate()

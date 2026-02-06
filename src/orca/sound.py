@@ -19,6 +19,8 @@
 
 """Utilities for playing sounds."""
 
+import os
+
 import gi
 from gi.repository import GLib
 
@@ -31,7 +33,56 @@ else:
     _GSTREAMER_AVAILABLE = True
 
 from . import debug
-from .sound_generator import Icon, Tone
+
+
+class Icon:
+    """Sound file representing a particular aspect of an object."""
+
+    def __init__(self, location: str, filename: str) -> None:
+        self.path = os.path.join(location, filename)
+        msg = f"SOUND: Looking for '{filename}' in {location}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def __str__(self) -> str:
+        return f"Icon(path: {self.path}, is_valid: {self.is_valid()})"
+
+    def is_valid(self) -> bool:
+        """Returns True if the path associated with this icon is valid."""
+        return os.path.isfile(self.path)
+
+
+class Tone:
+    """Tone representing a particular aspect of an object."""
+
+    SINE_WAVE = 0
+    SQUARE_WAVE = 1
+    SAW_WAVE = 2
+    TRIANGLE_WAVE = 3
+    SILENCE = 4
+    WHITE_UNIFORM_NOISE = 5
+    PINK_NOISE = 6
+    SINE_WAVE_USING_TABLE = 7
+    PERIODIC_TICKS = 8
+    WHITE_GAUSSIAN_NOISE = 9
+    RED_NOISE = 10
+    INVERTED_PINK_NOISE = 11
+    INVERTED_RED_NOISE = 12
+
+    def __init__(
+        self, duration: float, frequency: int, volume: float = 1.0, wave: int = SINE_WAVE
+    ) -> None:
+        self.duration = duration
+        self.frequency = min(max(0, frequency), 20000)
+        self.volume = volume
+        self.wave = wave
+
+    def __str__(self) -> str:
+        return (
+            f"Tone(duration: {self.duration}, "
+            f"frequency: {self.frequency}, "
+            f"volume: {self.volume}, "
+            f"wave: {self.wave})"
+        )
 
 
 class Player:

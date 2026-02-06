@@ -39,6 +39,7 @@ from . import input_event
 from . import input_event_manager
 from . import messages
 from . import preferences_grid_base
+from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import settings_manager
@@ -467,8 +468,8 @@ class ChatPresenter:
 
         if text.strip():
             voice = script.speech_generator.voice(string=text)
-            script.speak_message(text, voice=voice)
-        script.display_message(text)
+            presentation_manager.get_manager().speak_message(text, voice=voice)
+        presentation_manager.get_manager().display_message(text)
 
     def present_message_at_index(self, script: default.Script, index: int) -> None:
         """Presents the chat message at the specified index."""
@@ -524,7 +525,7 @@ class ChatPresenter:
         if chat.is_auto_completed_text_event(event):
             text = event.any_data
             voice = script.speech_generator.voice(string=text)
-            script.speak_message(text, voice=voice)
+            presentation_manager.get_manager().speak_message(text, voice=voice)
             return True
 
         return False
@@ -541,7 +542,7 @@ class ChatPresenter:
         conversation = chat.get_conversation_for_object(event.source)
         if conversation and status != conversation.get_typing_status():
             voice = script.speech_generator.voice(string=status)
-            script.speak_message(status, voice=voice)
+            presentation_manager.get_manager().speak_message(status, voice=voice)
             conversation.set_typing_status(status)
             return True
 
@@ -570,7 +571,7 @@ class ChatPresenter:
         message_count = chat.get_message_count()
         if message_count == 0:
             if notify_user:
-                script.present_message(messages.CHAT_NO_MESSAGES)
+                presentation_manager.get_manager().present_message(messages.CHAT_NO_MESSAGES)
             return True
 
         oldest_index = -message_count
@@ -582,7 +583,7 @@ class ChatPresenter:
 
         if current_index == oldest_index:
             if notify_user:
-                script.present_message(messages.CHAT_LIST_TOP)
+                presentation_manager.get_manager().present_message(messages.CHAT_LIST_TOP)
             self.present_message_at_index(script, oldest_index)
             return True
 
@@ -617,7 +618,7 @@ class ChatPresenter:
         message_count = chat.get_message_count()
         if message_count == 0:
             if notify_user:
-                script.present_message(messages.CHAT_NO_MESSAGES)
+                presentation_manager.get_manager().present_message(messages.CHAT_NO_MESSAGES)
             return True
 
         oldest_index = -message_count
@@ -629,7 +630,7 @@ class ChatPresenter:
 
         if current_index == -1:
             if notify_user:
-                script.present_message(messages.CHAT_LIST_BOTTOM)
+                presentation_manager.get_manager().present_message(messages.CHAT_LIST_BOTTOM)
             self.present_message_at_index(script, -1)
             return True
 
@@ -739,7 +740,7 @@ class ChatPresenter:
         if speak_room_name:
             line = messages.CHAT_ROOM_NAME_PREFIX_OFF
         if notify_user:
-            script.present_message(line)
+            presentation_manager.get_manager().present_message(line)
         return True
 
     @dbus_service.command
@@ -767,7 +768,7 @@ class ChatPresenter:
         if announce_typing:
             line = messages.CHAT_BUDDY_TYPING_OFF
         if notify_user:
-            script.present_message(line)
+            presentation_manager.get_manager().present_message(line)
         return True
 
     @dbus_service.command
@@ -795,7 +796,7 @@ class ChatPresenter:
         if room_histories:
             line = messages.CHAT_SEPARATE_HISTORIES_OFF
         if notify_user:
-            script.present_message(line)
+            presentation_manager.get_manager().present_message(line)
         return True
 
 

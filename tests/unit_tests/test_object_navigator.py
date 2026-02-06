@@ -65,6 +65,9 @@ class TestObjectNavigator:
                 "orca.ax_event_synthesizer",
                 "orca.ax_object",
                 "orca.ax_utilities",
+                "orca.orca_platform",
+                "orca.braille_presenter",
+                "orca.presentation_manager",
             ]
         )
 
@@ -496,14 +499,15 @@ class TestObjectNavigator:
     def test_toggle_simplify_announces_state_change(self, test_context: OrcaTestContext) -> None:
         """Test toggle_simplify announces the state change to user."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         navigator = ObjectNavigator()
         navigator.toggle_simplify(mock_script)
-        mock_script.present_message.assert_called_once()
+        pres_manager.present_message.assert_called_once()
 
     def test_perform_action_calls_synthesizer(self, test_context: OrcaTestContext) -> None:
         """Test perform_action uses AXEventSynthesizer for action execution."""
@@ -593,17 +597,18 @@ class TestObjectNavigator:
     def test_toggle_simplify_announces_on_state(self, test_context: OrcaTestContext) -> None:
         """Test toggle_simplify announces state change correctly."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.object_navigator import ObjectNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = ObjectNavigator()
         navigator._simplify = False
         mock_script = test_context.Mock()
-        mock_script.present_message = test_context.Mock()
 
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
         navigator.toggle_simplify(mock_script)
 
-        mock_script.present_message.assert_called_once()
+        pres_manager.present_message.assert_called_once()
         assert navigator._simplify is True
 
     def test_get_navigator_returns_singleton_instance(self, test_context: OrcaTestContext) -> None:

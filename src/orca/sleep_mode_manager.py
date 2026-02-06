@@ -28,7 +28,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import braille
 from . import cmdnames
 from . import command_manager
 from . import dbus_service
@@ -37,6 +36,7 @@ from . import guilabels
 from . import input_event
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import script_manager
 from .ax_object import AXObject
 
@@ -124,15 +124,19 @@ class SleepModeManager:
             self._apps.remove(hash(script.app))
             new_script = _script_manager.get_script(script.app)
             if notify_user:
-                new_script.present_message(
+                presentation_manager.get_manager().present_message(
                     messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app)
                 )
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True
 
-        braille.clear_display()
         if notify_user:
-            script.present_message(messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app))
+            msg = messages.SLEEP_MODE_ENABLED_FOR % AXObject.get_name(script.app)
+            manager = presentation_manager.get_manager()
+            manager.speak_message(msg)
+
+            # Don't restore previous braille content because Orca is no longer active.
+            manager.display_message(msg, restore_previous=False)
         _script_manager.set_active_script(
             _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on"
         )

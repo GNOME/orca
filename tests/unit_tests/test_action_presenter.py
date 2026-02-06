@@ -47,7 +47,12 @@ class TestActionPresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns all dependencies needed for ActionPresenter testing."""
 
-        additional_modules = ["orca.brltablenames", "orca.speech"]
+        additional_modules = [
+            "orca.brltablenames",
+            "orca.speech",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         essential_modules["orca.cmdnames"].SHOW_ACTIONS_LIST = SHOW_ACTIONS_LIST_CMD
@@ -216,12 +221,13 @@ class TestActionPresenter:
         assert result is True
 
         if expected_message:
+            pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             if LOCATION_NOT_FOUND_MSG in expected_message:
-                mock_script.present_message.assert_called_once_with(
+                pres_manager.present_message.assert_called_once_with(
                     LOCATION_NOT_FOUND_FULL_MSG, LOCATION_NOT_FOUND_BRIEF_MSG
                 )
             else:
-                mock_script.present_message.assert_called_once_with(expected_message)
+                pres_manager.present_message.assert_called_once_with(expected_message)
 
         if expects_gui_creation and n_actions > 0:
             assert mock_action_list_class is not None

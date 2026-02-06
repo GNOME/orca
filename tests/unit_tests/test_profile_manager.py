@@ -50,6 +50,8 @@ class TestProfileManager:
             "orca.braille",
             "orca.orca",
             "orca.speech_and_verbosity_manager",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -241,6 +243,8 @@ class TestProfileManager:
 
         manager = ProfileManager()
         mock_script = MagicMock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
 
         result = manager.cycle_settings_profile(script=mock_script)
 
@@ -248,7 +252,7 @@ class TestProfileManager:
         essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value.set_profile.assert_called_with("spanish", True)
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     def test_cycle_settings_profile_wraps_around(self, test_context: OrcaTestContext) -> None:
         """Test cycle_settings_profile wraps to first profile at end."""
@@ -282,27 +286,31 @@ class TestProfileManager:
 
         manager = ProfileManager()
         mock_script = MagicMock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
 
         result = manager.cycle_settings_profile(script=mock_script)
 
         assert result is True
-        mock_script.present_message.assert_called()
+        pres_manager.present_message.assert_called()
 
     def test_present_current_profile(self, test_context: OrcaTestContext) -> None:
         """Test present_current_profile presents the current profile name."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
 
         manager = ProfileManager()
         mock_script = MagicMock()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
 
         result = manager.present_current_profile(script=mock_script)
 
         assert result is True
-        mock_script.present_message.assert_called()
-        call_args = mock_script.present_message.call_args
+        pres_manager.present_message.assert_called()
+        call_args = pres_manager.present_message.call_args
         assert "Default" in call_args[0][0]
 
 
@@ -317,6 +325,8 @@ class TestProfilePreferencesGridUI:
             "orca.braille",
             "orca.orca",
             "orca.speech_and_verbosity_manager",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 

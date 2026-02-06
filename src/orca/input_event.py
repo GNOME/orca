@@ -50,6 +50,7 @@ from . import keybindings
 from . import keynames
 from . import messages
 from . import orca_modifier_manager
+from . import presentation_manager
 from . import script_manager
 from .ax_utilities import AXUtilities
 
@@ -598,7 +599,7 @@ class KeyboardEvent(InputEvent):
             return
 
         if self.is_pressed_key():
-            self._script.interrupt_presentation()
+            presentation_manager.get_manager().interrupt_presentation()
 
         # pylint: disable=import-outside-toplevel
         from . import learn_mode_presenter
@@ -606,7 +607,7 @@ class KeyboardEvent(InputEvent):
         if learn_mode_presenter.get_presenter().is_active():
             return
 
-        self._script.present_keyboard_event(self)
+        presentation_manager.get_manager().present_keyboard_event(self._script, self)
 
     def process(self) -> None:
         """Processes this input event."""

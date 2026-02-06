@@ -46,8 +46,8 @@ from . import input_event
 from . import input_event_manager
 from . import keybindings
 from . import messages
+from . import presentation_manager
 from . import script_manager
-from . import speech
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -92,7 +92,7 @@ class LearnModePresenter:
         return self._is_active
 
     def start(
-        self, script: default.Script | None = None, _event: input_event.InputEvent | None = None
+        self, _script: default.Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Starts learn mode."""
 
@@ -101,13 +101,10 @@ class LearnModePresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if script is None:
-            script = script_manager.get_manager().get_active_script()
-
-        if script is not None:
-            script.present_message(messages.VERSION)
-            script.speak_message(messages.LEARN_MODE_START_SPEECH)
-            script.display_message(messages.LEARN_MODE_START_BRAILLE)
+        presenter = presentation_manager.get_manager()
+        presenter.present_message(messages.VERSION)
+        presenter.speak_message(messages.LEARN_MODE_START_SPEECH)
+        presenter.display_message(messages.LEARN_MODE_START_BRAILLE)
 
         input_event_manager.get_manager().grab_keyboard("Entering learn mode")
         msg = "LEARN MODE PRESENTER: Is now active"
@@ -117,7 +114,7 @@ class LearnModePresenter:
         return True
 
     def quit(
-        self, script: default.Script | None = None, _event: input_event.InputEvent | None = None
+        self, _script: default.Script | None = None, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Quits learn mode."""
 
@@ -126,11 +123,8 @@ class LearnModePresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if script is None:
-            script = script_manager.get_manager().get_active_script()
-
-        if script is not None:
-            script.present_message(messages.LEARN_MODE_STOP)
+        presenter = presentation_manager.get_manager()
+        presenter.present_message(messages.LEARN_MODE_STOP)
 
         input_event_manager.get_manager().ungrab_keyboard("Exiting learn mode")
         msg = "LEARN MODE PRESENTER: Is now inactive"
@@ -150,15 +144,10 @@ class LearnModePresenter:
         if script is None:
             return False
 
-        key_name = None
-        if event.is_printable_key():
-            key_name = event.get_key_name()
-
-        voice = script.speech_generator.voice(string=key_name)
-        speech.speak_key_event(event, voice[0] if voice else None)
+        presentation_manager.get_manager().present_key_event(event)
 
         if event.is_printable_key() and event.get_click_count() == 2 and command is None:
-            script.spell_phonetically(event.get_key_name())
+            presentation_manager.get_manager().spell_phonetically(event.get_key_name())
 
         if event.keyval_name == "Escape":
             self.quit(script, event)
@@ -175,14 +164,14 @@ class LearnModePresenter:
         if command is not None:
             description = command.get_description()
             if description:
-                script.present_message(description)
+                presentation_manager.get_manager().present_message(description)
 
         return True
 
     def handle_braille_event(
         self,
-        script: default.Script,
-        event: input_event.BrailleEvent,
+        _script: default.Script,
+        _event: input_event.BrailleEvent,
         command: command_manager.BrailleCommand | None,
     ) -> bool:
         """Handles braille event in learn mode. Returns True if command should not execute."""
@@ -192,7 +181,7 @@ class LearnModePresenter:
 
         description = command.get_description()
         if description:
-            script.speak_message(description)
+            presentation_manager.get_manager().speak_message(description)
 
         return not command.executes_in_learn_mode()
 
@@ -213,7 +202,7 @@ class LearnModePresenter:
 
         title = messages.shortcuts_found_orca(items)
         if not commands_by_group:
-            script.present_message(title)
+            presentation_manager.get_manager().present_message(title)
             return True
 
         self.quit(script, event)
@@ -234,7 +223,7 @@ class LearnModePresenter:
         uri = "help:orca"
         if page:
             uri += f"/{page}"
-        Gtk.show_uri(Gdk.Screen.get_default(), uri, time.time())
+        Gtk.show_uri(Gdk.Screen.get_default(), uri, time.time())  # pylint: disable=no-value-for-parameter
         return True
 
 

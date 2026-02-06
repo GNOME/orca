@@ -29,6 +29,7 @@ from typing import TYPE_CHECKING
 
 from orca import debug
 from orca import focus_manager
+from orca import presentation_manager
 from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -76,10 +77,10 @@ class Script(default.Script):
         msg = "SWITCHER: Treating event as selection change"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self.interrupt_presentation()
+        presentation_manager.get_manager().interrupt_presentation()
         focus_manager.get_manager().set_active_window(self.utilities.top_level_object(event.source))
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        self.present_message(
+        presentation_manager.get_manager().present_message(
             self.utilities.get_selection_name(event.source), reset_styles=False, force=True
         )
         return True

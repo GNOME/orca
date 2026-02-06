@@ -52,6 +52,7 @@ from . import guilabels
 from . import input_event
 from . import input_event_manager
 from . import messages
+from . import presentation_manager
 from . import script_manager
 from .ax_utilities import AXUtilities
 
@@ -384,7 +385,9 @@ class ClipboardPresenter:
         contents = self._manager.get_contents()
         if not contents or len(contents) > 5000:
             contents = messages.character_count(len(contents))
-        script.present_message(messages.CLIPBOARD_CONTAINS % contents, contents)
+        presentation_manager.get_manager().present_message(
+            messages.CLIPBOARD_CONTAINS % contents, contents
+        )
         return True
 
     def _connect(self) -> None:
@@ -540,15 +543,21 @@ class ClipboardPresenter:
 
         manager = input_event_manager.get_manager()
         if manager.last_event_was_cut():
-            script.present_message(messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF)
+            presentation_manager.get_manager().present_message(
+                messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF
+            )
             return
 
         if manager.last_event_was_copy():
-            script.present_message(messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF)
+            presentation_manager.get_manager().present_message(
+                messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF
+            )
             return
 
         if manager.last_event_was_paste():
-            script.present_message(messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF)
+            presentation_manager.get_manager().present_message(
+                messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
+            )
             return
 
         msg = "CLIPBOARD PRESENTER: Not presenting change: is not cut, copy, or paste"
