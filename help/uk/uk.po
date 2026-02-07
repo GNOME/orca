@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2026-01-23 19:38+0000\n"
-"PO-Revision-Date: 2026-01-24 08:12+0200\n"
+"POT-Creation-Date: 2026-02-07 20:52+0000\n"
+"PO-Revision-Date: 2026-02-07 23:01+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -97,7 +97,8 @@ msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Share Alike 3.0"
 
 #. (itstool) path: page/title
-#: C/commands_braille.page:19
+#. (itstool) path: section/title
+#: C/commands_braille.page:19 C/commands_controlling_orca.page:73
 msgid "Braille Commands"
 msgstr "Команди Брайля"
 
@@ -212,31 +213,42 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-msgid ""
-"Present previous chat room messages: <keyseq><key>Orca Modifier</"
-"key><key>F1</key></keyseq> through <key>F9</key>"
+#| msgid "Present the previous notification message: (Unbound)"
+msgid "Present previous chat room message: (Unbound)"
 msgstr ""
-"Надати попередні повідомлення кімнати спілкування: від "
-"<keyseq><key>Модифікатор Orca</key><key>F1</key></keyseq> до <key>F9</key>"
+"Прочитати попереднє повідомлення у кімнаті спілкування: (не пов'язано)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:36
+#: C/commands_chat.page:35
+#| msgid "Present the next notification message: (Unbound)"
+msgid "Present next chat room message: (Unbound)"
+msgstr "Прочитати наступне повідомлення у кімнаті спілкування: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:40
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
 "Увімкнути/вимкнути озвучування назви кімнати із повідомленнями: (не "
 "пов'язано)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:41
+#: C/commands_chat.page:45
+#| msgid "Provide chat room specific message histories"
+msgid "Toggle chat room specific message histories: (unbound)"
+msgstr "Перемкнути журнали певних повідомлень кімнати бесіди: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:50
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
 "Увімкнути/вимкнути озвучування стану введення повідомлення друзями: (не "
 "пов'язано)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:44
-msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr "Увімкнути або вимкнути специфічні для кімнат журнали: (не пов'язано)"
+#: C/commands_chat.page:53
+#| msgid "Cycle to the next spoken punctuation level: (Unbound)"
+msgid "Toggle room name presentation: (Unbound)"
+msgstr "Перемкнути представлення назви кімнати: (не пов'язано)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -279,12 +291,16 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
+#| msgid ""
+#| "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
+#| "key><key>Alt</key><key>S</key></keyseq>."
 msgid ""
-"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Toggle <app>Orca</app> on and off in supported desktop environments: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Вмикання і вимикання <app>Orca</app> у GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Щоб увімкнути або вимкнути <app>Orca</app> у стільничних середовищах із"
+" підтримкою: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -323,21 +339,68 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
+#| msgid ""
+#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
-"Pass the next command on to the current application: <keyseq><key>Orca "
-"Modifier</key><key>BackSpace</key></keyseq>"
+"Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
+"key></keyseq>"
 msgstr ""
-"Передати наступну команду поточній програмі: <keyseq><key>Модифікатор Orca</"
-"key><key>BackSpace</key></keyseq>"
+"Увімкнути або вимкнути усі клавіші команд Orca: <keyseq><key>Alt&gt;</key><"
+"key>BackSpace</"
+"key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:62
+msgid "Toggle keyboard layout: (Unbound)"
+msgstr "Перемкнути розкладку клавіатури: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
+msgid "Cycle to the next key echo level: (Unbound)"
+msgstr ""
+"Циклічний перехід на наступний рівень супроводу натискання клавіш: (не "
+"пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:68
+#| msgid "Decrease the rate: (Unbound)"
+msgid "Quit the screen reader: (Unbound)"
+msgstr "Вийти з програми для читання з екрана: (не пов'язано)"
+
+#. (itstool) path: section/p
+#: C/commands_controlling_orca.page:74
+msgid ""
+"The following commands can be used to control and customize Orca's braille "
+"output."
+msgstr ""
+"Наведеними нижче командами можна скористатися для керування і налаштовування"
+" виведення Orca у брайлі."
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:77
+#| msgid "Pan braille display to the left: Line Left"
+msgid "Pan the braille display to the left: (Unbound)"
+msgstr "Пристосувати дисплей Брайля ліворуч: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:80
+#| msgid "Pan braille display to the right: Line Right"
+msgid "Pan the braille display to the right: (Unbound)"
+msgstr "Пристосувати дисплей Брайля справа: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:83
+msgid "Turn contracted braille on and off: (Unbound)"
+msgstr "Увімкнути або вимкнути обмеження брайля: (не пов'язано)"
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:64
+#: C/commands_controlling_orca.page:88
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Команди для навчання користуванню <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:65 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:89 C/howto_learn_modes.page:18
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
@@ -350,14 +413,15 @@ msgstr ""
 "містить усі команди <app>Orca</app>, якими ви можете скористатися."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:73
-msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
+#: C/commands_controlling_orca.page:97
+msgid ""
+"Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Вхід до режиму навчання: <keyseq><key>Модифікатор Orca</key><key>H</key></"
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:79
+#: C/commands_controlling_orca.page:103
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Вихід з режиму навчання: <keyseq><key>Esc</key></keyseq>"
 
@@ -400,8 +464,19 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
+msgid "Capture snapshot for debugging: (Unbound)"
+msgstr "Зробити знімок для діагностики: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:29
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr "Циклічний перехід на наступний рівень діагностики: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:32
+#| msgid "Cycle to the next capitalization style: (Unbound)"
+msgid "Clear the AT-SPI cache for the current application: (Unbound)"
+msgstr "Очистити кеш AT-SPI для поточної програми: (не пов'язано)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -884,7 +959,8 @@ msgstr "Робоча станція: <keyseq><key>3 на ЦБ</key></keyseq>"
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:155
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq>"
-msgstr "Ноутбук: <keyseq><key>Модифікатор Orca</key><key>крапка</key></keyseq>"
+msgstr ""
+"Ноутбук: <keyseq><key>Модифікатор Orca</key><key>крапка</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_flat_review.page:158
@@ -985,6 +1061,25 @@ msgid "Append the contents under flat review to the clipboard: (Unbound)"
 msgstr ""
 "Дописати вміст у загальному перегляді до буфера обміну даними: (не пов'язано)"
 
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:197
+#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
+msgid "Move flat review to the bottom left: (Unbound)"
+msgstr "Перемістити плоский перегляд вниз ліворуч: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:198
+msgid "Show flat review contents: (Unbound)"
+msgstr "Показати вміст загального перегляду: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:199
+#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
+msgid "Toggle restricting flat review to the current object: (Unbound)"
+msgstr ""
+"Увімкнути або вимкнути обмеження плоского перегляду поточним об'єктом: (не"
+" пов'язано)"
+
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
@@ -1019,9 +1114,6 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
-#| msgid ""
-#| "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-#| "key><key>Backslash</key></keyseq>"
 msgid ""
 "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
 "keyseq>"
@@ -1031,37 +1123,33 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:33
-#| msgid "Advance live region politeness setting: <key>Backslash</key>"
 msgid "Advance live region politeness setting: (Unbound)"
-msgstr "Розширені параметри роботи із змінюваними областями: (немає прив'язки)"
+msgstr ""
+"Розширені параметри роботи із змінюваними областями: (немає прив'язки)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:36
 msgid "Set default politeness level to off: (Unbound)"
 msgstr ""
-"Встановити для типового рівня змінюваності значення «вимкнено»: (немає"
-" прив'язки)"
+"Встановити для типового рівня змінюваності значення «вимкнено»: (немає "
+"прив'язки)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:39
-#| msgid ""
-#| "Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-#| "<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgid ""
 "Go to next/previous live region in the document's reading order: "
 "<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgstr ""
-"Перейти до наступної або попередньої інтерактивної області у порядку читання"
-" документа: <keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key"
-"></keyseq>"
+"Перейти до наступної або попередньої інтерактивної області у порядку читання "
+"документа: <keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</"
+"key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:45
-#| msgid "Present the previous notification message: (Unbound)"
 msgid "Review the next/previous saved live region message: (Unbound)"
 msgstr ""
-"Переглянути повідомлення наступної/попередньої збереженої інтерактивної"
-" області: (немає прив'язки)"
+"Переглянути повідомлення наступної/попередньої збереженої інтерактивної "
+"області: (немає прив'язки)"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:48
@@ -1297,6 +1385,12 @@ msgstr ""
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
 msgstr "Циклічний перехід до наступного профілю: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_profiles.page:35
+#| msgid "Cycle to the next profile: (Unbound)"
+msgid "Present the current profile: (Unbound)"
+msgstr "Показати поточний профіль: (не пов'язано)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1613,8 +1707,9 @@ msgstr "Команди для налаштовування виведення д
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-msgid "Speech Settings Commands"
-msgstr "Команди параметрів озвучення"
+#| msgid "Speech Settings Commands"
+msgid "Speech And Verbosity Settings Commands"
+msgstr "Команди параметрів озвучення та докладності"
 
 #. (itstool) path: page/p
 #: C/commands_speech_settings.page:20
@@ -1677,13 +1772,6 @@ msgstr ""
 "пов'язано)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
-msgid "Cycle to the next key echo level: (Unbound)"
-msgstr ""
-"Циклічний перехід на наступний рівень супроводу натискання клавіш: (не "
-"пов'язано)"
-
-#. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
@@ -1718,6 +1806,12 @@ msgstr "Зменшити гучність: (не пов'язано)"
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
 msgstr "Збільшити гучність: (не пов'язано)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:81
+#| msgid "Cycle to the next key echo level: (Unbound)"
+msgid "Cycle to the next speech synthesizer: (Unbound)"
+msgstr "Циклічний перехід до наступного синтезатора мови: (не пов'язано)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -2425,8 +2519,10 @@ msgstr "Отримання даних щодо часу і дати"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:28
-msgid "Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
-msgstr "Вимовити час: <keyseq><key>Модифікатор Orca</key><key>T</key></keyseq>"
+msgid ""
+"Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
+msgstr ""
+"Вимовити час: <keyseq><key>Модифікатор Orca</key><key>T</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:33
@@ -2611,7 +2707,8 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/howto_documents.page:26
-msgid "Use <key>Left</key> and <key>Right</key> to move and read by character."
+msgid ""
+"Use <key>Left</key> and <key>Right</key> to move and read by character."
 msgstr ""
 "Скористайтеся клавішами <key>стрілка ліворуч</key> і <key>стрілка праворуч</"
 "key> для пересування і читання тексту за окремими символами."
@@ -3248,12 +3345,6 @@ msgstr "Рівні ввічливості для інтерактивних об
 
 #. (itstool) path: section/p
 #: C/howto_live_regions.page:28
-#| msgid ""
-#| "Live regions have an associated \"politeness\" level which is set by the "
-#| "author as a means to convey the importance of the information and to "
-#| "suggest when users should be informed by their assistive technology of "
-#| "updates made within that region. Live regions can be \"off\", \"polite\", "
-#| "or \"assertive\" to the point of being \"rude.\""
 msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
@@ -3265,7 +3356,8 @@ msgstr ""
 "встановлюється автором сторінки як міра важливості інформації або для "
 "визначення моментів, коли користувачам слід повідомляти за допомогою "
 "допоміжних технологій про оновлення відповідної області. Інтерактивні "
-"області можуть перебувати у станах «вимкнено», «ввічливий» або «наполегливий»."
+"області можуть перебувати у станах «вимкнено», «ввічливий» або "
+"«наполегливий»."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3506,11 +3598,13 @@ msgstr "Натисніть Пробіл, щоб повторити читанн�
 #. (itstool) path: item/p
 #: C/howto_notifications.page:57
 msgid "Press one digit to read a specific message."
-msgstr "Натисніть клавішу із цифрою, щоб почути певне нумероване повідомлення."
+msgstr ""
+"Натисніть клавішу із цифрою, щоб почути певне нумероване повідомлення."
 
 #. (itstool) path: page/p
 #: C/howto_notifications.page:59
-msgid "Note that the most recently-received message is at the top of the list."
+msgid ""
+"Note that the most recently-received message is at the top of the list."
 msgstr ""
 "Зауважте, що більшість нещодавно отриманих повідомлень розташовуватиметься у "
 "верхній частині списку."
@@ -4972,7 +5066,8 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/introduction.page:73
 msgid "<cmd>-s</cmd>, <cmd>--setup</cmd>: Set up user preferences"
-msgstr "<cmd>-s</cmd>, <cmd>--setup</cmd>: встановити налаштування користувача"
+msgstr ""
+"<cmd>-s</cmd>, <cmd>--setup</cmd>: встановити налаштування користувача"
 
 #. (itstool) path: item/p
 #: C/introduction.page:78
@@ -8121,6 +8216,31 @@ msgstr ""
 #: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Типове значення: 4"
+
+#~ msgid ""
+#~ "Present previous chat room messages: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Надати попередні повідомлення кімнати спілкування: від "
+#~ "<keyseq><key>Модифікатор Orca</key><key>F1</key></keyseq> до <key>F9</key>"
+
+#~ msgid "Enable/disable room-specific histories: (Unbound)"
+#~ msgstr ""
+#~ "Увімкнути або вимкнути специфічні для кімнат журнали: (не пов'язано)"
+
+#~ msgid ""
+#~ "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+#~ msgstr ""
+#~ "Вмикання і вимикання <app>Orca</app> у GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+
+#~ msgid ""
+#~ "Pass the next command on to the current application: <keyseq><key>Orca "
+#~ "Modifier</key><key>BackSpace</key></keyseq>"
+#~ msgstr ""
+#~ "Передати наступну команду поточній програмі: <keyseq><key>Модифікатор "
+#~ "Orca</key><key>BackSpace</key></keyseq>"
 
 #~ msgctxt "sort"
 #~ msgid "4. Bookmarks"
