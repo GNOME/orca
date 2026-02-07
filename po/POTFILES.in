@@ -1,6 +1,7 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 orca-autostart.desktop.in
+orca.desktop.in
 src/orca/braille_rolenames.py
 src/orca/brltablenames.py
 src/orca/cmdnames.py

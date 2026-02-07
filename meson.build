@@ -97,6 +97,14 @@ install_data(
     install_dir: systemd_user_unit_dir
 )
 i18n.merge_file(
+  input: 'orca.desktop.in',
+  output: '@BASENAME@',
+  type: 'desktop',
+  po_dir: meson.project_source_root() / 'po',
+  install: true,
+  install_dir: get_option('datadir') / 'applications',
+)
+i18n.merge_file(
   input: 'orca-autostart.desktop.in',
   output: '@BASENAME@',
   type: 'desktop',
