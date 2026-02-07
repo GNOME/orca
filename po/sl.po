@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-01 15:48+0000\n"
-"PO-Revision-Date: 2026-02-01 21:05+0100\n"
+"POT-Creation-Date: 2026-02-07 09:57+0000\n"
+"PO-Revision-Date: 2026-02-07 16:48+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -26,6 +26,10 @@ msgstr ""
 #: orca-autostart.desktop.in:3
 msgid "Orca Screen Reader"
 msgstr "Zaslonski bralnik Orka"
+
+#: orca.desktop.in:3
+msgid "Orca"
+msgstr "Orka"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
